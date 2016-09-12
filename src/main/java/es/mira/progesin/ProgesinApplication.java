@@ -15,6 +15,7 @@ import es.mira.progesin.persistence.repositories.IUserRepository;
 		org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class
 		,es.mira.progesin.configuration.security.SecurityConfig.class
 		//deshabilita la petición de user y password por defecto de login.
+		//deshabilita la petición de user y password por defecto de login.
 })
 @EnableJpaRepositories("es.mira.progesin.persistence.repositories")
 public class ProgesinApplication implements CommandLineRunner {
