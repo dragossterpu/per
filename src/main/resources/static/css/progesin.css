@@ -8,6 +8,11 @@
     display: inline;
   /*  background: url("../images/menu_separator.gif") no-repeat scroll left center transparent;*/
     float: right;
+     -moz-border-radius: 20px;
+    -webkit-border-radius: 10px;
+    border-radius: 20px;
+    background-color: blue;
+   	margin-left: 5px;
 }
 
 .menu {
@@ -15,7 +20,6 @@
     height: 32px;
     padding-top: 0.5em;
     font-size: 14px;
-    background-color: blue;
 }
 
 .menu-lista li a {

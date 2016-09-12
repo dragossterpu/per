@@ -10,15 +10,15 @@
 		<p>
 			<p:outputLabel value="Usuario:">#{request.remoteUser}</p:outputLabel>
 		</p>
-		<p:link href="" value="Mi perfil"></p:link>
+		<p:link href="/miperfil" value="Mi perfil"></p:link>
 		|
 		<p:link href="/login/logout" value="Desconectar"></p:link>
 	</div>
-	
-	<div class="menu"> 
-				 <ul class="menu-lista"> 
-					  <li> <p:link href="/logSistema" value="LOG DEL SISTEMA"/> </li> 
-					  <li> <p:link href="/index" value="MENÚ PRINCIPAL"/></li> 
-				  </ul> 
-			  </div>
+
+	 <div class="menu">
+		<ul class="menu-lista">
+			<li ><p:link href="/logSistema" value="LOG DEL SISTEMA" /></li>
+			<li><p:link href="/index" value="MENÚ PRINCIPAL" /></li>
+		</ul>
+	</div> 
 </ui:composition>
