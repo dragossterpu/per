@@ -32,7 +32,7 @@ public class User {
     protected String username;
 
     @NotNull
-    @Column(name="password", length=15)
+    @Column(name="password", length=15, nullable=false)
     protected String password;
 
     @NotNull
