@@ -10,20 +10,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/login")
-public class PrincipalController {
+public class LoginController {
     @RequestMapping(method = RequestMethod.GET)
     public String login() {
-        return "acceso/login";
+        return "login";
     }
     
     @RequestMapping(method = RequestMethod.GET, value="/recuperarPassword")
     public String recuperarPassword() {
-        return "acceso/recuperarPassword";
+        return "recuperarPassword";
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/logout")
     public String logout() {
-        return "acceso/logout";
+        return "logout";
     }
 
 }

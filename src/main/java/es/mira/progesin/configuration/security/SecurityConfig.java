@@ -26,10 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.userDetailsService(userDetailsServiceBean());
-        http.headers().frameOptions().sameOrigin();
+       // http.headers().frameOptions().sameOrigin();
         http.csrf().disable()
 	        .authorizeRequests()
-            .antMatchers("/css/**", "/images/**").permitAll()
+            .antMatchers("/css/**", "/images/**", "/javax.faces.resource/**").permitAll()
             .antMatchers("/login/**").anonymous()
 	        .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
 	        .anyRequest().authenticated()
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .formLogin()
 	        .loginPage("/login")
 	        .loginProcessingUrl("/login")
-	        .defaultSuccessUrl("/index")
+	        .defaultSuccessUrl("/index.xhtml")
 	        .failureUrl("/login")
 	        .and()
 	        .logout().logoutUrl("/login/logout").logoutSuccessUrl("/login");

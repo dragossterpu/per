@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MenuController {
 
-	@RequestMapping(method = RequestMethod.GET, value="/index")
-    public String verPaginaPrincipal(Principal principal) {
-        return "principal/index";
-    }
+//	@RequestMapping(method = RequestMethod.GET, value="/index.xhtml")
+//    public String verPaginaPrincipal(Principal principal) {
+//		System.out.println("******************* verPaginaPrincipal ************************");
+//        return "principal/index";
+//    }
 }

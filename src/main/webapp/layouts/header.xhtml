@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:graphicImage id="img" value="/images/logo.png" />
+
+	<div id="headerDatos">
+			<div>
+				<p:outputLabel value="Usuario:">#{request.remoteUser}</p:outputLabel>
+			</div>
+			
+			<h:form>
+				<h:commandLink action="#{userBean.getUserPerfil}" value="Mi perfil" />
+				|
+				<p:link href="/login/logout" value="Desconectar"/>
+			</h:form>
+	</div>
+
+	<div class="menu">
+		<ul class="menu-lista">
+			<li><p:link href="/logSistema" value="LOG DEL SISTEMA" /></li>
+			<li><p:link outcome="/principal/index" value="MENÚ PRINCIPAL" /></li>
+		</ul>
+	</div>
+</ui:composition>

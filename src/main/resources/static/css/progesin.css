@@ -1,26 +1,47 @@
 @CHARSET "UTF-8";
 
+body {
+	overflow: visible;
+}
+
+h1, h2, h3 {
+    line-height: 20px;
+}
+
+#headerDatos {
+	float: right;
+	padding: 10px;
+}
+
+#menuLateral{
+	width: 25%;
+	float: left;
+}
+
+#contenido {
+	width: 70%;
+	float:left;
+	height: auto;
+	padding: 10px;
+}
 .ui-menu {
     width: auto;
 }
 
-.menu-lista li {
-    display: inline;
-  /*  background: url("../images/menu_separator.gif") no-repeat scroll left center transparent;*/
-    float: right;
-     -moz-border-radius: 20px;
-    -webkit-border-radius: 10px;
-    border-radius: 20px;
-    background-color: blue;
-   	margin-left: 5px;
-}
-
 .menu {
-    /*background: url(../images/menu.jpg) no-repeat;*/
+    background: url(../images/menu.jpg) no-repeat;
     height: 32px;
     padding-top: 0.5em;
     font-size: 14px;
 }
+
+.menu-lista li {
+    display: inline;
+    background: url(../images/menu_separator.gif) no-repeat scroll left
+ center transparent;
+    float: right;
+}
+
 
 .menu-lista li a {
     text-transform: uppercase;
@@ -30,4 +51,37 @@
 .menu a {
     color: #FFF;
     font: 1em;
+}
+
+.container-fluid {
+    background-color: #fff;
+    max-width: 950px;
+    margin: auto;
+    padding: 1em;
+    padding-top: inherit;
+    font-size: 12px;
+}
+
+.bloqueFormulario{
+	width: 100%;
+	height: auto;
+	display: table;
+}
+
+.columnaIzdaFormulario {
+	width: 40%;
+	float: left;
+}
+
+.columnaDchaFormulario {
+	width: 40%;
+	float: right;
+}
+
+input, textarea, .uneditable-input {
+   width: 100%; /* para que no coja el tamaño de bootstrap */
+}
+
+.clear {
+	clear: both;
 }

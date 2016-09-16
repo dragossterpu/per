@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+		<h2>Mi Perfil</h2>
+
+		<div class="bloqueFormulario">
+				<h3>Datos Personales</h3>
+				<div class="columnaIzdaFormulario">
+					<h:outputLabel for="nombre" value="Nombre:" />
+					<p:inputText id="nombre" value="#{userBean.nombre}" disabled="true" />
+
+					<h:outputLabel for="apellido1" value="Primer apellido:" />
+					<p:inputText id="apellido1" value="#{userBean.apellido1}"
+						disabled="true" />
+
+					<h:outputLabel for="numIdentificacion" value="Número de identificación:" />
+					<p:inputText id="numIdentificacion" value="#{userBean.numIdentificacion}"
+						disabled="true" />
+
+					<h:outputLabel for="correo" value="Correo electrónico: " />
+					<p:inputText id="correo" value="#{userBean.correo}" disabled="true" />
+				</div>
+
+				<div class="columnaDchaFormulario">
+					<h:outputLabel for="fechaAlta" value="Fecha alta:" />
+					<p:inputText id="fechaAlta" value="#{userBean.fechaAlta}" disabled="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+
+					<h:outputLabel for="apellido2" value="Segundo apellido:" />
+					<p:inputText id="apellido2" value="#{userBean.apellido2}" disabled="true" />
+
+					<h:outputLabel for="telefono" value="Teléfono:" />
+					<p:inputText id="telefono" value="#{userBean.telefono}" disabled="true" />
+
+					<h:outputLabel for="docIndentidad" value="NIF: " />
+					<p:inputText id="docIndentidad" value="#{userBean.docIndentidad}" disabled="true" />
+				</div>
+		</div>
+
+		<div class="bloqueFormulario">
+			<h3>Perfil</h3>
+
+			<div class="columnaIzdaFormulario">
+				<h:outputLabel for="username" value="Nombre usuario:" />
+				<p:inputText id="username" value="#{userBean.username}"
+					disabled="true" />
+					
+				<h:outputLabel for="estado" value="Estado:" />
+				<p:inputText id="estado" value="#{userBean.estadoTexto}" disabled="true" />
+			</div>
+			
+			<div class="columnaDchaFormulario">
+				<h:outputLabel for="cuerpoEstado" value="Cuerpo del estado:" />
+				<p:inputText id="cuerpoEstado" value="" disabled="true" />
+
+				<h:outputLabel for="envioNotificacion"
+					value="¿Envío notificaciones?" />
+				<p:inputText id="envioNotificacion"
+					value="#{userBean.envioNotificacion}" disabled="true" />
+			</div>
+		</div>
+		
+		<h3>Contraseña</h3>
+		
+		<div class="bloqueFormulario">
+			<div class="columnaIzdaFormulario">
+				<h:form id="passwordForm">
+					<h:outputLabel for="claveActual" value="Contraseña actual:" />
+					<p:password value="#{userController.claveActual}" required="true"
+						id="claveActual" requiredMessage="Introduzca la contraseña actual" />
+
+					<h:outputLabel for="claveNueva" value="Nueva contraseña:" />
+					<p:password value="#{userController.claveNueva}" required="true"
+						feedback="true" id="claveNueva"
+						requiredMessage="Introduzca la nueva contraseña"
+						promptLabel="Por favor, introduce una contraseña"
+						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
+
+					<h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
+					<p:password value="#{userController.claveConfirm}" required="true"
+						feedback="true" id="claveConfirm"
+						requiredMessage="Repita la nueva contraseña"
+						promptLabel="Por favor, introduce una contraseña"
+						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
+
+				
+					<p:commandButton action="#{userController.cambiarClave}"
+						value="Guardar" />
+
+					<p:commandButton value="Limpiar" update="passwordForm"
+						process="@this">
+						<p:resetInput target="passwordForm" />
+					</p:commandButton>
+				
+				</h:form>
+			</div>
+			<div class="clear">
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+			</div>
+		</div>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

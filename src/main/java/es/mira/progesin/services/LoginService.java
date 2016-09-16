@@ -1,6 +1,9 @@
 package es.mira.progesin.services;
 
-import es.mira.progesin.persistence.entities.User;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,12 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import es.mira.progesin.persistence.entities.User;
 
 @Service
 public class LoginService implements UserDetailsService {
@@ -25,8 +23,6 @@ public class LoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findOne(username);
         if (null == user) {
-        	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos de acceso incorrectos", "failure");
-        	FacesContext.getCurrentInstance().addMessage(null, msg);
             throw new UsernameNotFoundException("El usuario " + username + " no existe.");
         } else {
             return new UserRepositoryUserDetails(user);

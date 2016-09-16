@@ -1,18 +1,20 @@
 package es.mira.progesin.persistence.entities;
 
-import lombok.*;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AllArgsConstructor
@@ -27,55 +29,45 @@ import javax.validation.constraints.Size;
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
-    //@Size(min=1, max=15, message="user.username.size")
     @Column(name="username", length=15)
     protected String username;
 
-    @NotNull
     @Column(name="password", length=15, nullable=false)
     protected String password;
 
-    @NotNull
-    @Column(length=1)
-    protected String activo;
+    @Column(name="estado", length=1, nullable=false)
+    protected String estado;
     
-    @NotNull
-    @Column(name="nombre", length=50)
+    @Column(name="nombre", length=50, nullable=false)
     protected String nombre;
 
-    @NotNull
-    @Column(name="prim_apellido", length=50)
+    @Column(name="prim_apellido", length=50, nullable=false)
     protected String apellido1;
 
     @Column(name="segundo_apellido", length=50)
     protected String apellido2;
 
-    @NotNull
-    @Column(name="doc_identidad",length=12)
+    @Column(name="doc_identidad",length=12, nullable=false)
     protected String docIndentidad;
     
     @Column(name="telefono",length=12)
     protected String telefono;
     
-    @NotNull
-    @Column(name="correo", length=50)
+    @Column(name="correo", length=50, nullable=false)
     protected String correo;
     
-    @NotNull
+    @Column(name="role", length=10, nullable=false)
     protected RoleEnum role;
     
-    @NotNull
-    @Column(name="num_inspector", length=15)
-    protected String numInspector;
+    @Column(name="num_identificacion", length=15, nullable=false)
+    protected String numIdentificacion;
     
-    @NotNull
-    @Column(name="envio_notif", length=2)
+    @Column(name="envio_notif", length=2, nullable=false)
     protected String envioNotificacion;
 
     // CuerpoEstado cuerpo_estado;
     
-    @NotNull
-    @Column(name="fecha_alta")
+    @Column(name="fecha_alta", nullable=false)
     protected Date fechaAlta;
     
     @Column(name="fecha_baja")
@@ -87,8 +79,7 @@ public class User {
     @Column(name="fecha_inactivo")
     protected Date fechaInactivo;
     
-    @NotNull
-    @Column(name="username_alta", length=12)
+    @Column(name="username_alta", length=12, nullable=false)
     protected String usernameAlta;
     
     @Column(name="username_modif", length=12)
@@ -97,8 +88,5 @@ public class User {
     @Column(name="username_baja", length=12)
     protected String usernameBaja;
     
-    
-    
-
 }
 
