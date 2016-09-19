@@ -1,11 +1,11 @@
 package es.mira.progesin.services;
 
-import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.persistence.entities.UserWeb;
-import es.mira.progesin.persistence.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.repositories.IUserRepository;
 
 @Service
 public class UserService implements IUserService {

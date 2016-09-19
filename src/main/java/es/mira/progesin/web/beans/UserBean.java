@@ -1,7 +1,10 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.security.Principal;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
@@ -19,19 +22,21 @@ import lombok.Setter;
 @Getter
 @Component("userBean")
 //@ManagedBean
-@SessionScoped
+@RequestScoped
 public class UserBean extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String estadoTexto;
-	private User user = new User();
+	private User user;
 
 	@Autowired
 	IUserService userService;
 	
+	List<User> listaUsuarios;
+	
 	public String getUserPerfil() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		this.user = userService.findOne(username);
+		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//this.user = userService.findOne(username);
 		setUserBeanFromUser(user);
 		return "/principal/miPerfil.xhtml";
 	}
@@ -47,12 +52,20 @@ public class UserBean extends User implements Serializable {
 		this.docIndentidad = user.getDocIndentidad();
 		this.username = user.getUsername();
 		this.estado = user.getEstado();
-		if("1".equals(user.getEstado())) {
-			this.estadoTexto = Constantes.ESTADO_ACTIVO;
-		} else {
-			this.estadoTexto = Constantes.ESTADO_INACTIVO;
-		}
 		this.envioNotificacion = user.getEnvioNotificacion();
 	}
+	
+	public List<User> getUsers() {
+		listaUsuarios = (List<User>) userService.findAll();
+		return listaUsuarios;
+	}
+	
+	@PostConstruct
+    public void init(){
+         getUsers();
+    }
+	
+	
+	
 	
 }

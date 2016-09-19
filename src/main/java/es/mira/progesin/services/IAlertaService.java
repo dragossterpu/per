@@ -1,18 +1,14 @@
 package es.mira.progesin.services;
 
-import java.util.List;
-
 import es.mira.progesin.persistence.entities.Alerta;
 
 
 public interface IAlertaService {
-    void delete(String id);
+    void delete(Integer id);
     void deleteAll();
-    boolean exists(String id);
+    boolean exists(Integer id);
     Iterable<Alerta> findAll();
-  
-    Alerta findOne(String id);
+    Alerta findOne(Integer id);
     Iterable<Alerta> save(Iterable<Alerta> entities);
     Alerta save(Alerta entity);
-
 }

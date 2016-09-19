@@ -1,6 +1,6 @@
 package es.mira.progesin.persistence.entities;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,10 +36,10 @@ public class Alerta implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ID_ALERTA", length = 15)
-	private int idAlerta;
+	private Integer idAlerta;
 
-	@Column(name = "TITULO", length = 50)
-	private String titulo;
+	@Column(name = "NOMBRE_SECCION", length = 50)
+	private String nombreSeccion;
 
 	@Column(name = "DESCRIPCION", length = 4000)
 	private String descripcion;
@@ -48,10 +48,10 @@ public class Alerta implements Serializable {
 	private Date fechaAlta;
 
 	@Column(name = "USUARIO_REGISTRO", length = 50)
-	private String usuario;
+	private String usernameAlerta;;
 
-	@Column(name = "ACTIV")
-	private Boolean activ;
+	@Column(name = "TIPO_ALERTA", length = 20)
+	private String tipoAlerta;
 
 	
 }

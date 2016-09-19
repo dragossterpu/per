@@ -85,3 +85,17 @@ input, textarea, .uneditable-input {
 .clear {
 	clear: both;
 }
+
+#alertas {
+	height: 360px;
+	margin-top: 10px;
+}
+
+#notificaciones {
+	height: 360px;
+	margin-top: 10px;
+}
+
+.textoDerecha {
+	text-align: right;
+}

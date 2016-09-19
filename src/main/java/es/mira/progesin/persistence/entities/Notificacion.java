@@ -1,6 +1,5 @@
 package es.mira.progesin.persistence.entities;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+import es.mira.progesin.persistence.entities.Alerta.AlertaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -18,9 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -29,30 +26,23 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="SUGERENCIA", schema="public")
-
-
-public class Sugerencia implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@Table(name="NOTIFICACIONES", schema="public")
+public class Notificacion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_SUGERENCIA", length = 15)
-	private Integer idSugerencia;
-
-	@Column(name = "MODULO", length = 50)
-	private String modulo;
+	@Column(name = "ID_NOTIFICACION", length = 15)
+	private Integer idNotificacion;
 
 	@Column(name = "DESCRIPCION", length = 4000)
 	private String descripcion;
 
-	@Column(name = "FECHA_REGISTRO")
+	@Column(name = "FECHA_NOTIFICACION")
 	private Date fechaAlta;
 
 	@Column(name = "USUARIO_REGISTRO", length = 50)
-	private String usuario;
+	private String usernameAlerta;
 
-	@Column(name = "ESTADO", length = 10)
-	private String estado;
+	@Column(name = "TIPO_NOTIFICACION", length = 20)
+	private String tipoNotificacion;
 }

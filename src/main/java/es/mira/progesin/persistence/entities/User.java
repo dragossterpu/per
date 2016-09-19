@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="USER2", schema="public")
+@Table(name="USERS", schema="public")
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
@@ -35,7 +35,7 @@ public class User {
     @Column(name="password", length=15, nullable=false)
     protected String password;
 
-    @Column(name="estado", length=1, nullable=false)
+    @Column(name="estado", length=8, nullable=false)
     protected String estado;
     
     @Column(name="nombre", length=50, nullable=false)

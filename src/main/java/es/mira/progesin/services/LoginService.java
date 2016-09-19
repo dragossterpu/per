@@ -41,6 +41,14 @@ public class LoginService implements UserDetailsService {
             apellido1 = user.getApellido1();
             apellido2 = user.getApellido2();
             role = user.getRole();
+            correo = user.getCorreo();
+            docIndentidad = user.getDocIndentidad();
+            envioNotificacion = user.getEnvioNotificacion();
+            estado = user.getEstado();
+            telefono = user.getTelefono();
+            fechaAlta = user.getFechaAlta();
+            fechaBaja = user.getFechaBaja();
+            numIdentificacion = user.getNumIdentificacion();
         }
 
         @Override

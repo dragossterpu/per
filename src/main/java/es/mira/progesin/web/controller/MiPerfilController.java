@@ -2,7 +2,6 @@ package es.mira.progesin.web.controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
