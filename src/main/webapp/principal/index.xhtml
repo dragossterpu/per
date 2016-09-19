@@ -11,6 +11,77 @@
         <ui:define name="title">Progesin</ui:define>
         <ui:define name="content">
             PÁGINA PRINCIPAL
+            
+            <div class="columnaDchaFormulario">
+			    <p:growl id="growl" life="2000" />
+			 
+			    <p:commandLink id="ajax" update="growl" actionListener="#{buttonView.buttonAction}">
+			        <h:outputText value="Sugerencia de mejora" />
+			    </p:commandLink>
+			 
+			</div>
+            <br></br><br></br><br></br><br></br>
+            <h3>Alertas</h3>
+			<h:form>
+    <p:dataTable id="tbl" var="alerta" value="#{dataExporterView.alertas}"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" rows="10" style="margin-bottom:20px">
+ 
+        <f:facet name="{Exporters}">
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="tbl" fileName="alertas" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="tbl" fileName="alertas"/>
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="tbl" fileName="alertas" />
+            </h:commandLink>
+ 
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/xml.png" width="24"/>
+                <p:dataExporter type="xml" target="tbl" fileName="alertas" />
+            </h:commandLink>
+        </f:facet>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Id" />
+            </f:facet>
+            <h:outputText value="#{alerta.idAlerta}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Titulo"/>
+            </f:facet>
+            <h:outputText value="#{alerta.titulo}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Brand" />
+            </f:facet>
+            <h:outputText value="#{alerta.descripcion}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Fecha" />
+            </f:facet>
+            <h:outputText value="#{alerta.fechaAlta}" />
+        </p:column>
+    </p:dataTable>
+ 
+    
+</h:form>
+            
+			
         </ui:define>
     </ui:composition>
 </f:view>
