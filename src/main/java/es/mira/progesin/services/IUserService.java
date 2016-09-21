@@ -13,5 +13,8 @@ public interface IUserService {
     User findOne(String id);
     Iterable<User> save(Iterable<User> entities);
     User save(User entity);
+    User findByParams(String nif, String correo);
+    User findByCorreo(String correo);
+     User findByCorreoOrDocIndentidad(String nif, String correo);
 
 }

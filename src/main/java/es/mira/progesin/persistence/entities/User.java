@@ -39,7 +39,7 @@ public class User {
     @Column(name="username", length=15)
     protected String username;
 
-    @Column(name="password", length=15, nullable=false)
+    @Column(name="password", length=100, nullable=false)
     protected String password;
 
     @Column(name="estado", length=8, nullable=false)
