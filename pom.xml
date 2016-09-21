@@ -87,7 +87,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
+			<artifactId>jsf-es.mira.progesin.model.dao.impl</artifactId>
 			<version>2.2.13</version>
 			<scope>compile</scope>
 		</dependency> -->

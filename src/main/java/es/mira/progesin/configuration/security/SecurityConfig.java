@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .authorizeRequests()
             .antMatchers("/css/**", "/images/**", "/javax.faces.resource/**").permitAll()
             .antMatchers("/login/**").anonymous()
+            .antMatchers("/acceso/**").anonymous()
 	        .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
 	        .anyRequest().authenticated()
 	        .and()

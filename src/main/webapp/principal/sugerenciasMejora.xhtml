@@ -9,7 +9,44 @@
 <f:view>
     <ui:composition template="../layouts/layoutInterior.xhtml">
         <ui:define name="content">
-           SUGERENCIAS DE MEJORA
+         	<h3>SUGERENCIAS DE MEJORA</h3>  
+         	<br></br><br></br>
+         	<h5>Este apartado permite registrar sugerencias de mejora para <strong>POSIBLES</strong> nuevas versiones</h5>
+         	<br></br><br></br>
+         	<h5>Propuesta de Mejora (Indica detallamente el módulo donde se propone incluir la mejora, cantidad, campos, etc.):</h5>
+         	<br></br><br></br>
+         	<h:form id="sugerenciaForm">
+			  
+			   
+			   <p:outputLabel for="modulo" value="Modulo: " />
+			        <p:selectOneMenu id="modulo" value="#{sugerenciasBean.modulo}" effect="fold" >
+			            <f:selectItem itemLabel="Elige el módulo: " itemValue="" />
+			             <f:selectItem itemLabel="Módulo de GuÍas" itemValue="GUIA" />
+			            <f:selectItem itemLabel="Módulo de Informes" itemValue="INFORME" />
+			            <f:selectItem itemLabel="Módulo de Inspecciones" itemValue="INSPECCIONES" />
+			            <f:selectItem itemLabel="Módulo de Cuestionario" itemValue="CUESTIONARIO" />
+			            <f:selectItem itemLabel="Gestor documental" itemValue="DOCUMENTAL" />
+			            <f:selectItem itemLabel="Generic" itemValue="GENERIC" />
+			            <f:selectItem itemLabel="Herramientas" itemValue="HERRAMIENTAS" />
+			        </p:selectOneMenu>
+
+			       <br></br><br></br>
+			       <h3>Descripción</h3>
+				   <br></br><br></br> 
+				    <p:inputTextarea rows="8" cols="25" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="true"  value="#{sugerenciasBean.descripcion}"/>
+				    <h:outputText id="display" value="#{sugerenciasBean.descripcion}" />
+			   <br></br><br></br>
+			  		<p:commandButton action="#{sugerenciasBean.guardarSugerencia}"
+						value="Guardar" />&nbsp;&nbsp;&nbsp;
+
+					<p:commandButton value="Limpiar" update="sugerenciaForm"
+						process="@this">
+						<p:resetInput target="sugerenciaForm" />
+			 		 </p:commandButton>
+			  </h:form>
+			  <div class="clear">
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+			</div>
         </ui:define>
     </ui:composition>
 </f:view>

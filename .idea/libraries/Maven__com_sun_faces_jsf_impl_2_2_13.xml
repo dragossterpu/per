@@ -1,13 +1,13 @@
 <component name="libraryTable">
-  <library name="Maven: com.sun.faces:jsf-impl:2.2.13">
+  <library name="Maven: com.sun.faces:jsf-es.mira.progesin.model.dao.impl:2.2.13">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/sun/faces/jsf-impl/2.2.13/jsf-impl-2.2.13.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/faces/jsf-es.mira.progesin.model.dao.impl/2.2.13/jsf-es.mira.progesin.model.dao.impl-2.2.13.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/sun/faces/jsf-impl/2.2.13/jsf-impl-2.2.13-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/faces/jsf-es.mira.progesin.model.dao.impl/2.2.13/jsf-es.mira.progesin.model.dao.impl-2.2.13-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/sun/faces/jsf-impl/2.2.13/jsf-impl-2.2.13-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/faces/jsf-es.mira.progesin.model.dao.impl/2.2.13/jsf-es.mira.progesin.model.dao.impl-2.2.13-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
