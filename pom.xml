@@ -24,7 +24,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<jsf-mojarra.version>2.2.11</jsf-mojarra.version>
-        <primefaces.version>5.2</primefaces.version>
+        <primefaces.version>6.0</primefaces.version>
 	</properties>
 
 	<dependencies>

@@ -29,6 +29,7 @@ public class MiPerfilController {
     @Autowired 
     IUserService userService;
 	
+    
 
 	public MiPerfilController() {
 //		FacesContext.getCurrentInstance().getViewRoot()
@@ -60,4 +61,9 @@ public class MiPerfilController {
 		return null;
 	}
 
+	public String altaUsuario() {
+		System.out.println("alta usuario");
+		System.out.println(user.getUser());
+		return null;
+	}
 }

@@ -16,38 +16,9 @@
 
 <h:form id="busquedaUsers">
 
-					<div >
-						<!-- 1Âª Columna -->
-							
-								<div class="columnaIzdaFormulario">
-									<h:outputLabel for="name" value="Nombre usuario:" />
-									<p:inputText id="name" value="#{userBean.username}" />
-										
-									<h:outputLabel for="primerApellido" value="Primer apellido:" />
-									<p:inputText id="primerApellido" value="#{userBean.apellido1}" />
-									
-									<h:outputLabel for="segundoApellido" value="Segundo apellido:" />
-									<p:inputText id="segundoApellido" value="#{userBean.apellido2}" />
-								</div>
-								<div class="columnaDchaFormulario">
-									
-									<p:outputLabel for="dateDesde" value="Fecha Desde:" />
-        							<p:calendar id="dateDesde" value="#{calendarView.date5}" locale="es" navigator="true" pattern="dd/MM/yyyy" />
-									<p:outputLabel for="dateHasta" value="Fecha Hasta:" />
-        							<p:calendar id="dateHasta" value="#{calendarView.date5}" locale="es" navigator="true" pattern="dd/MM/yyyy" />
-									
-									
-								</div>
-								
-									
-							
-							
-		
-						
-					</div>
+					
 
-
-				
+				<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" />
 </h:form>
 
 		</ui:define>

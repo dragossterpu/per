@@ -1,6 +1,6 @@
 package es.mira.progesin.configuration.security;
 
-import es.mira.progesin.persistence.entities.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

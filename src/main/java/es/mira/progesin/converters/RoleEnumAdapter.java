@@ -1,7 +1,9 @@
-package es.mira.progesin.persistence.entities;
+package es.mira.progesin.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 @Converter(autoApply = true)
 public class RoleEnumAdapter implements AttributeConverter<RoleEnum, String> {

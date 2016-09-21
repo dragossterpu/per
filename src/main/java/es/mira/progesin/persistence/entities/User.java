@@ -3,10 +3,17 @@ package es.mira.progesin.persistence.entities;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -36,7 +43,8 @@ public class User {
     protected String password;
 
     @Column(name="estado", length=8, nullable=false)
-    protected String estado;
+    @Enumerated(EnumType.STRING)
+    protected EstadoEnum estado;
     
     @Column(name="nombre", length=50, nullable=false)
     protected String nombre;
@@ -65,10 +73,22 @@ public class User {
     @Column(name="envio_notif", length=2, nullable=false)
     protected String envioNotificacion;
 
-    // CuerpoEstado cuerpo_estado;
+    @ManyToOne
+    @JoinColumn(name="ID_CUERPO", nullable=false)
+    private CuerpoEstado cuerpoEstado;
+    
+    @ManyToOne
+    @JoinColumn(name="ID_PUESTO", nullable=false)
+    private PuestoTrabajo puestoTrabajo;
+    
+    @Column(name="nivel", nullable=false)
+    private Integer nivel;
     
     @Column(name="fecha_alta", nullable=false)
     protected Date fechaAlta;
+    
+    @Column(name="fecha_destino_ipss", nullable=false)
+    protected Date fechaDestinoIPSS;
     
     @Column(name="fecha_baja")
     protected Date fechaBaja;
@@ -87,6 +107,7 @@ public class User {
     
     @Column(name="username_baja", length=12)
     protected String usernameBaja;
+    
     
 }
 
