@@ -99,3 +99,8 @@ input, textarea, .uneditable-input {
 .textoDerecha {
 	text-align: right;
 }
+
+.botonesFormulario {
+	padding: 30px;
+	text-align: center;
+}

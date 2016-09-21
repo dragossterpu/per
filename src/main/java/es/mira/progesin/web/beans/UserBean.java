@@ -1,19 +1,21 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.services.ICuerpoEstadoService;
+import es.mira.progesin.services.IPuestoTrabajoService;
 import es.mira.progesin.services.IUserService;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,51 +23,61 @@ import lombok.Setter;
 @Setter
 @Getter
 @Component("userBean")
-//@ManagedBean
 @RequestScoped
-public class UserBean extends User implements Serializable {
+public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private User user;
+	private User 				user;
+	private List<CuerpoEstado>	cuerposEstado;
+	private CuerpoEstado 		cuerpoEstadoSeleccionado;
+	private List<PuestoTrabajo> puestosTrabajo;
+	private PuestoTrabajo		puestoTrabajoSeleccionado;
 
+	
 	@Autowired
 	IUserService userService;
+	@Autowired
+	ICuerpoEstadoService cuerposEstadoService;
+	@Autowired
+	IPuestoTrabajoService puestosTrabajoService;
 	
 	List<User> listaUsuarios;
 	
 	public String getUserPerfil() {
-		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		//this.user = userService.findOne(username);
-		setUserBeanFromUser(user);
-		return "/principal/miPerfil.xhtml";
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		user = userService.findOne(username);
+		return "/principal/miPerfil";
 	}
 	
-	public void setUserBeanFromUser(User user) {
-		this.nombre = user.getNombre();
-		this.apellido1 = user.getApellido1();
-		this.apellido2 = user.getApellido2();
-		this.fechaAlta = user.getFechaAlta();
-		this.numIdentificacion = user.getNumIdentificacion();
-		this.telefono = user.getTelefono();
-		this.correo = user.getCorreo();
-		this.docIndentidad = user.getDocIndentidad();
-		this.username = user.getUsername();
-		this.estado = user.getEstado();
-		this.envioNotificacion = user.getEnvioNotificacion();
+	
+//	public List<User> getUsers() {
+//		listaUsuarios = (List<User>) userService.findAll();
+//		return listaUsuarios;
+//	}
+//	
+//	@PostConstruct
+//    public void init(){
+//         getUsers();
+//    }
+	
+	/**
+	 * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para
+	 * mostrar correctamente la página (cuerpos de estado, puestos de trabajo, usuario nuevo).
+	 * Se llama desde la página de búsqueda de usuarios.
+	 * @return
+	 */
+	public String nuevoUsuario() {
+		user = new User();
+		user.setFechaAlta(new Date());
+		user.setEstado(EstadoEnum.ACTIVO);
+		cuerposEstado = (List<CuerpoEstado>) cuerposEstadoService.findAll();
+		puestosTrabajo = (List<PuestoTrabajo>) puestosTrabajoService.findAll();
+		return "/users/altaUsuario";
 	}
 	
-	public List<User> getUsers() {
-		listaUsuarios = (List<User>) userService.findAll();
-		return listaUsuarios;
+	public String altaUsuario() {
+		System.out.println("alta usuario");
+		System.out.println(user);
+		return null;
 	}
-	
-	@PostConstruct
-    public void init(){
-         getUsers();
-    }
-	
-	
-	
-	
 }

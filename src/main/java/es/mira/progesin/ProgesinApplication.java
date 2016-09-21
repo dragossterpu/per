@@ -1,6 +1,7 @@
 package es.mira.progesin;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,9 @@ import javax.servlet.annotation.HandlesTypes;
 
 import org.apache.catalina.Context;
 import org.primefaces.util.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,12 +33,23 @@ import org.springframework.context.annotation.Configuration;
 import com.sun.faces.config.FacesInitializer;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
+import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.PuestoTrabajo;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.repositories.IUserRepository;
+import es.mira.progesin.services.IUserService;
+import es.mira.progesin.services.UserService;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-public class ProgesinApplication extends SpringBootServletInitializer {
+public class ProgesinApplication extends SpringBootServletInitializer implements CommandLineRunner{
     
+	@Autowired
+	IUserRepository repository;
+	
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ProgesinApplication.class, args);
     }
@@ -89,6 +103,7 @@ public class ProgesinApplication extends SpringBootServletInitializer {
                 context.addMimeMapping("eot", "application/vnd.ms-fontobject");
                 context.addMimeMapping("ttf", "application/x-font-ttf");
                 context.addMimeMapping("woff", "application/x-font-woff");
+                context.addMimeMapping("woff2", "application/fontawesome-webfont.woff2");
             }
         });
         
@@ -110,5 +125,34 @@ public class ProgesinApplication extends SpringBootServletInitializer {
         
         return classesSet;
     }
+
+	@Override
+	public void run(String... arg0) throws Exception {
+//		User user = new User();
+//		user.setUsername("pepe");
+//		user.setPassword("pepe");
+//		user.setEstado(EstadoEnum.ACTIVO);
+//		user.setNombre("Nombre");
+//		user.setApellido1("apellido1");
+//		user.setDocIndentidad("111111111");
+//		user.setCorreo("correo@correo.es");
+//		user.setRole(RoleEnum.ADMIN);
+//		user.setNumIdentificacion("555555555");
+//		user.setEnvioNotificacion("SI");
+//		CuerpoEstado cuerpoEstado = new CuerpoEstado();
+//		cuerpoEstado.setId(1);
+//		user.setCuerpoEstado(cuerpoEstado);
+//		PuestoTrabajo puestoTrabajo = new PuestoTrabajo();
+//		puestoTrabajo.setId(2);
+//		user.setPuestoTrabajo(puestoTrabajo);
+//		user.setNivel(20);
+//		user.setFechaDestinoIPSS(new Date());
+//		user.setFechaAlta(new Date());
+//		user.setUsernameAlta("userAlta");
+//		IUserService userService = new UserService();
+//		//userService.save(user);
+//		System.out.println(repository.findAll());
+//		repository.save(user);
+	}
 	
 }
