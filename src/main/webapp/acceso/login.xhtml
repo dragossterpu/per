@@ -12,7 +12,8 @@
 			<div id="login_form">
 
 				<h1>Acceso Usuarios Registrados</h1>
-
+				<font color="red"> <h:outputLabel value="${msg}" />
+				</font>
 				<form action="login" id="acceso" method="post">
 					<fieldset>
 						<legend>Acceso</legend>
@@ -26,12 +27,11 @@
 						<!-- <p:inputText id="password" required="true" /> -->
 						<input type="submit" value="Continuar" />
 					</fieldset>
-					<p:link outcome="/acceso/recuperarPassword" value="Usuario / Clave olvidada"/>	
+					
 					<p>
-			
+				<a href="#{request.contextPath}/login/recuperarPassword">Usuario / Clave olvidada</a>		
 			</p>
 				</form>
-					
 			</div>
 		</ui:define>
 	</ui:composition>
