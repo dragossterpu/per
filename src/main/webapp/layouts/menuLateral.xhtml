@@ -3,7 +3,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
+<h:form>
 	<p:menu>
 		<p:submenu label="Herramientas Administrativas">
 			<p:menuitem value="Usuarios" outcome="/users/usuarios" />
@@ -11,6 +11,7 @@
 			<p:menuitem value="Administrar equipos" outcome="/equipos/equipos" />
 			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
 			<p:menuitem value="Registro de actividad" outcome="/registro/registro" />
+			<p:menuitem value="Sugerencias de mejora" action="#{sugerenciasBean.sugerenciasListado}" />
 		</p:submenu>
 		<p:submenu label="Gestor Documental">
 			<p:menuitem value="Búsqueda de documentos" outcome="/enConstruccion" />
@@ -35,5 +36,5 @@
 			<p:menuitem value="Búsqueda modelo de informe" outcome="/enConstruccion" />
 		</p:submenu>
 	</p:menu>
-
+</h:form>
 </ui:composition>

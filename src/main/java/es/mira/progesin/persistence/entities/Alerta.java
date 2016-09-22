@@ -35,7 +35,7 @@ public class Alerta implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_ALERTA", length = 15)
+	@Column(name = "ID_ALERTA", length = 5)
 	private Integer idAlerta;
 
 	@Column(name = "NOMBRE_SECCION", length = 50)

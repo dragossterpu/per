@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -38,7 +38,7 @@ public class Sugerencia implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_SUGERENCIA", length = 15)
+	@Column(name = "ID_SUGERENCIA", length = 5)
 	private Integer idSugerencia;
 
 	@Column(name = "MODULO", length = 50)
@@ -53,6 +53,6 @@ public class Sugerencia implements Serializable {
 	@Column(name = "USUARIO_REGISTRO", length = 50)
 	private String usuario;
 
-	@Column(name = "ESTADO", length = 10)
+	@Column(name = "ESTADO")
 	private String estado;
 }
