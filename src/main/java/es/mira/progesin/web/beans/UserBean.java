@@ -14,9 +14,11 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.IPuestoTrabajoService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -78,6 +80,15 @@ public class UserBean implements Serializable {
 	public String altaUsuario() {
 		System.out.println("alta usuario");
 		System.out.println(user);
+		user.setCuerpoEstado(getCuerpoEstadoSeleccionado());
+		user.setPuestoTrabajo(getPuestoTrabajoSeleccionado());
+		String password = Utilities.getPassword();
+		// TODO enviar correo al usuario con la contraseña
+		String passwordEncrycted = Utilities.codePassword(password);
+		user.setPassword(passwordEncrycted);
+		user.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+		user.setRole(RoleEnum.ADMIN);
+		userService.save(user);
 		return null;
 	}
 }

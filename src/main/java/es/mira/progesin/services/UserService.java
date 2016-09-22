@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.IUserRepository;
+import es.mira.progesin.util.Utilities;
 
 @Service
 public class UserService implements IUserService {
@@ -59,16 +60,16 @@ public class UserService implements IUserService {
 	public User save(User entity) {
 		return userRepository.save(entity);
 	}
-	@Transactional(readOnly = false)
+	
 	public User findByParams(String correo,String nif) {
 		return userRepository.findByCorreoIgnoringCaseOrDocIndentidadIgnoringCase(correo,nif );
 	}
-	@Transactional(readOnly = false)
 	public User findByCorreoOrDocIndentidad(String correo,String nif) {
 		return userRepository.findByCorreoOrDocIndentidad(correo,nif );
 	}
-	@Transactional(readOnly = false)
+	
 	public User findByCorreo(String correo) {
 		return userRepository.findByCorreo(correo);
 	}
+	
 }
