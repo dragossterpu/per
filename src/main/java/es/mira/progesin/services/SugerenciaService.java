@@ -1,12 +1,12 @@
 package es.mira.progesin.services;
 
+import javax.annotation.ManagedBean;
+import javax.faces.bean.ApplicationScoped;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Sugerencia;
-import es.mira.progesin.persistence.repositories.IAlertaRepository;
 import es.mira.progesin.persistence.repositories.ISugerenciaRepository;
 
 
@@ -19,7 +19,6 @@ public class SugerenciaService implements ISugerenciaService {
 	public void delete(Integer id) {
 		sugerenciaRepository.delete(id);
 	}
-
 
 	public  Iterable<Sugerencia> findAll() {
 		return sugerenciaRepository.findAll();

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <ui:composition template="../layouts/layoutInterior.xhtml">
+        <ui:define name="content">
+         	<h3>SUGERENCIAS DE MEJORA </h3>  
+         	<br></br><br></br>
+         	<h:form>
+			    <div id="alertas">
+			<p:dataTable var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" paginator="true" rows="8">
+				<f:facet name="header">
+					Sugerencias
+				</f:facet>
+				<p:column>
+					<f:facet name="header">
+						Fecha
+					</f:facet>
+					<h:outputText value="#{sugerencia.fechaAlta}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Descripción de la sugerencia" />
+					</f:facet>
+					<h:outputText value="#{sugerencia.descripcion}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Usuario de la sugerencia" />
+					</f:facet>
+					<h:outputText value="#{sugerencia.usuario}" />
+				</p:column>
+				<p:column style="width:24px">
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+						<h:inputHidden value="#{sugerencia.idSugerencia}" />
+						<p:graphicImage id="img" value="/images/eliminar.png" />
+				</p:column>
+				<p:column style="width:24px">
+					<f:facet name="header">
+						<h:outputText value="" />
+					</f:facet>
+						<h:inputHidden value="#{sugerencia.idSugerencia}" />
+						<p:graphicImage id="img" value="/images/responder.png" />
+				</p:column>
+			</p:dataTable>
+		</div>
+			    
+			    
+<!-- 			    <p:dataTable id="tbl" var="sugerencia" value="#{sugerenciaBean.sugerenciasListado}" -->
+<!-- 			                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}" -->
+<!-- 			                 paginator="true" rows="10" style="margin-bottom:20px" rowsPerPageTemplate="5,10,20">		  -->
+<!-- 			        <p:column> -->
+<!-- 			            <f:facet name="header"> -->
+<!-- 			                <h:outputText value="Fecha sugerencia" /> -->
+<!-- 			            </f:facet> -->
+<!-- 			            <h:outputText value="#{sugerencia.fechaAlta}" /> -->
+<!-- 			        </p:column> -->
+			 
+<!-- 			        <p:column> -->
+<!-- 			            <f:facet name="header"> -->
+<!-- 			                <h:outputText value="Descripción de la sugerencia"/> -->
+<!-- 			            </f:facet> -->
+<!-- 			            <h:outputText value="#{sugerencia.descripcion}" /> -->
+<!-- 			        </p:column> -->
+			 
+<!-- 			        <p:column> -->
+<!-- 			            <f:facet name="header"> -->
+<!-- 			                <h:outputText value="Usuario de la sugerencia" /> -->
+<!-- 			            </f:facet> -->
+<!-- 			            <h:outputText value="#{sugerencia.usuario}" /> -->
+<!-- 			        </p:column> -->
+			 
+			      
+<!-- 			    </p:dataTable> -->
+			 
+			  
+			</h:form>
+        </ui:define>
+    </ui:composition>
+</f:view>
+</html>
