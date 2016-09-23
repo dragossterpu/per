@@ -9,7 +9,7 @@ insert into users (username, prim_apellido, segundo_apellido, correo, doc_identi
   nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
   fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
   values ( 'silpe', 'apellido1', 'apellido2', 'correo@correo.es', '111111111', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'Silvia',
-  '2222222222', '1', 'ADMIN', '665566544', 'user_alta', null, null, '01/09/2016', 1, 2, 20);
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/09/2016', 1, 2, 20);
   
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
   values (1, 'cuestionario modificado', '01/09/2016', 'cuestionarios 1', 'USER', 'userAltaAlerta');
