@@ -5,10 +5,12 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.UserBean;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +30,8 @@ public class MiPerfilController {
     
     @Autowired 
     IUserService userService;
-	
+    @Autowired
+	private PasswordEncoder passwordEncoder;
     
 
 	public MiPerfilController() {
@@ -44,13 +47,14 @@ public class MiPerfilController {
 							"Las contraseñas introducidas no coinciden", ""));
 		} else {
 			User usuario = user.getUser();
+			// TODO Comprobar que cumple los siguientes criterios: como mínimo un carácter en mayúscula y un número, permitiéndose cualquier carácter UTF-8, en cualquier posición.
 			if(usuario.getPassword().equals(this.getClaveActual()) == false) {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
 								"La contraseña actual introducida no es válida. Inténtelo de nuevo", ""));
 			} else {
-				usuario.setPassword(this.getClaveNueva());
+				usuario.setPassword(passwordEncoder.encode(this.getClaveNueva()));
 				userService.save(usuario);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -58,12 +62,6 @@ public class MiPerfilController {
 								"La contraseña ha sido modificada con éxito", ""));
 			}
 		}
-		return null;
-	}
-
-	public String altaUsuario() {
-		System.out.println("alta usuario");
-		System.out.println(user.getUser());
 		return null;
 	}
 }

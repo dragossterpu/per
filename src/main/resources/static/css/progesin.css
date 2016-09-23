@@ -108,3 +108,12 @@ input, textarea, .uneditable-input {
 table {
 	background-color: transparent;
 }
+
+select {
+	margin-bottom: 10px !important;
+}
+
+.aclaraciones {
+	padding: 10px;
+	font-style: italic;
+}

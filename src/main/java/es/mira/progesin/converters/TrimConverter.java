@@ -3,15 +3,15 @@ package es.mira.progesin.converters;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
+
+import org.springframework.stereotype.Component;
 
 /**
- * Clase para evitar los espacios en blanco en los formularios de entrada. Se aplica de forma automática al 
- * recuperar los valores del inputs
+ * Clase para evitar los espacios en blanco en los formularios de entrada.
  * @author sperezp
  *
  */
-@FacesConverter(forClass=String.class)
+@Component("trimConverter")
 public class TrimConverter implements Converter {
 
     @Override
@@ -22,7 +22,7 @@ public class TrimConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-        return (modelValue != null) ? modelValue.toString() : "";
+        return (modelValue != null) ? modelValue.toString() : null;
     }
 
 }

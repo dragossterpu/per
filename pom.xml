@@ -98,7 +98,7 @@
 			<artifactId>javax.faces</artifactId>
 			<version>${jsf-mojarra.version}</version>
 		</dependency>
-
+		
 	</dependencies>
 	<repositories>
 		<repository>
