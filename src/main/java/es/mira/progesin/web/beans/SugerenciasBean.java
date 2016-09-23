@@ -97,8 +97,8 @@ public class SugerenciasBean implements Serializable {
 			Date fecha = new Date();
 			sugerencia.setFechaBaja(fecha);
 			sugerencia.setUsuarioBaja(user.getUsername());
-			SendMailwithAttachment.sendSugerenciaWithAttachment( );
-//			SendSimpleMail.sendSugerencia();
+//			SendMailwithAttachment.sendMailWithAttachment( );
+			SendSimpleMail.sendMail();
 //			sugerenciaService.save(sugerencia);
 			System.out.println("entramos");
 			return "/principal/sugerenciasListado";

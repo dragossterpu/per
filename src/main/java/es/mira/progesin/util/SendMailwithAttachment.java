@@ -19,7 +19,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import es.mira.progesin.configuration.web.AppConfig;
 
 public class SendMailwithAttachment {
-	public static void sendSugerenciaWithAttachment() throws MessagingException {
+	public static void sendMailWithAttachment() throws MessagingException {
 		  
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 	       ctx.register(AppConfig.class);

@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 
 public class SendSimpleMail {
-	public static void sendSugerencia() throws MessagingException {
+	public static void sendMail() throws MessagingException {
 		 
 		final String username = "progesinipss@gmail.com";
 	    final String password = "ipss2016";
