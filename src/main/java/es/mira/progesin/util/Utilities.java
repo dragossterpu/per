@@ -15,13 +15,48 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class Utilities {
 
+	@Autowired
+    private static JavaMailSender javaMailSender;
+	
+
+//	public void sendEmail(){
+//	   final Email email = EmailImpl.builder()
+//	        .from(new InternetAddress("mymail@mail.co.uk"))
+//	        .replyTo(new InternetAddress("someone@localhost"))
+//	        .to(Lists.newArrayList(new InternetAddress("someone@localhost")))
+//	        .subject("Lorem ipsum")
+//	        .body("Lorem ipsum dolor sit amet [...]")
+//	        .encoding(Charset.forName("UTF-8")).build();
+//
+//	   emailService.send(email);
+//	}
+
+//	public static void sendSugerencia() {
+//        MimeMessage mail = javaMailSender.createMimeMessage();
+//        try {
+//            MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+//            helper.setTo("dragossterpu@gmail.com");
+//            helper.setReplyTo("dragossterpu@gmail.com");
+//            helper.setFrom("progesinipss@gmail.com");
+//            helper.setSubject("Prueba");
+//            helper.setText("prueba [...]");
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        } finally {}
+//        javaMailSender.send(mail);
+//    }
 
 	/**
 	 * @author STAD Method for getting current timestamp in a 16 char

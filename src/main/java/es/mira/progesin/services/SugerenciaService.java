@@ -21,10 +21,12 @@ public class SugerenciaService implements ISugerenciaService {
 	}
 
 	public  Iterable<Sugerencia> findAll() {
-		return sugerenciaRepository.findAll();
+		return sugerenciaRepository.findByFechaBajaIsNull();
 	}
 
-
+	public  Sugerencia findOne(Integer id) {
+		return sugerenciaRepository.findOne(id);
+	}
 	@Transactional(readOnly = false)
 	public Sugerencia save(Sugerencia entity) {
 		return sugerenciaRepository.save(entity);

@@ -13,76 +13,41 @@
          	<br></br><br></br>
          	<h:form>
 			    <div id="alertas">
-			<p:dataTable var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" paginator="true" rows="8">
-				<f:facet name="header">
-					Sugerencias
-				</f:facet>
-				<p:column>
-					<f:facet name="header">
-						Fecha
-					</f:facet>
-					<h:outputText value="#{sugerencia.fechaAlta}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Descripción de la sugerencia" />
-					</f:facet>
-					<h:outputText value="#{sugerencia.descripcion}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Usuario de la sugerencia" />
-					</f:facet>
-					<h:outputText value="#{sugerencia.usuario}" />
-				</p:column>
-				<p:column style="width:24px">
-					<f:facet name="header">
-						<h:outputText value="" />
-					</f:facet>
-						<h:inputHidden value="#{sugerencia.idSugerencia}" />
-						<p:graphicImage id="img" value="/images/eliminar.png" />
-				</p:column>
-				<p:column style="width:24px">
-					<f:facet name="header">
-						<h:outputText value="" />
-					</f:facet>
-						<h:inputHidden value="#{sugerencia.idSugerencia}" />
-						<p:graphicImage id="img" value="/images/responder.png" />
-				</p:column>
-			</p:dataTable>
-		</div>
-			    
-			    
-<!-- 			    <p:dataTable id="tbl" var="sugerencia" value="#{sugerenciaBean.sugerenciasListado}" -->
-<!-- 			                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}" -->
-<!-- 			                 paginator="true" rows="10" style="margin-bottom:20px" rowsPerPageTemplate="5,10,20">		  -->
-<!-- 			        <p:column> -->
-<!-- 			            <f:facet name="header"> -->
-<!-- 			                <h:outputText value="Fecha sugerencia" /> -->
-<!-- 			            </f:facet> -->
-<!-- 			            <h:outputText value="#{sugerencia.fechaAlta}" /> -->
-<!-- 			        </p:column> -->
-			 
-<!-- 			        <p:column> -->
-<!-- 			            <f:facet name="header"> -->
-<!-- 			                <h:outputText value="Descripción de la sugerencia"/> -->
-<!-- 			            </f:facet> -->
-<!-- 			            <h:outputText value="#{sugerencia.descripcion}" /> -->
-<!-- 			        </p:column> -->
-			 
-<!-- 			        <p:column> -->
-<!-- 			            <f:facet name="header"> -->
-<!-- 			                <h:outputText value="Usuario de la sugerencia" /> -->
-<!-- 			            </f:facet> -->
-<!-- 			            <h:outputText value="#{sugerencia.usuario}" /> -->
-<!-- 			        </p:column> -->
-			 
-			      
-<!-- 			    </p:dataTable> -->
-			 
-			  
+						<p:dataTable id="sugerencias" var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" paginator="true" rows="10"
+						 rowsPerPageTemplate="5,10,15">
+							<f:facet name="header">
+								Sugerencias
+							<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+        				<p:columnToggler datasource="sugerencias" trigger="toggler" />
+							
+							</f:facet>
+							 <p:column headerText="Fecha" sortBy="#{sugerencia.fechaAlta}">
+								<h:outputText value="#{sugerencia.fechaAlta}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							 <p:column headerText="Descripción de la sugerencia" sortBy="#{sugerencia.descripcion}">
+								<h:outputText value="#{sugerencia.descripcion}" />
+							</p:column>
+							 <p:column headerText="Usuario de la sugerencia" sortBy="#{sugerencia.usuario}">
+								<h:outputText value="#{sugerencia.usuario}" />
+							</p:column>
+							<p:column style="width:24px">
+								<f:facet name="header">
+									
+								</f:facet>
+									<h:inputHidden value="#{sugerencia.idSugerencia}" />
+									 <p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{sugerenciasBean.eliminarSugerencia(sugerencia.idSugerencia)}"/>
+							</p:column>
+							<p:column style="width:24px">
+								<f:facet name="header">
+								
+								</f:facet>
+									<h:inputHidden value="#{sugerencia.idSugerencia}" />					
+									 <p:commandButton title="Contestar" icon="ui-icon-contact" action="#{sugerenciasBean.contestarSugerencia(sugerencia.idSugerencia)}"/>
+							</p:column>
+						</p:dataTable>
+					</div>	  
 			</h:form>
         </ui:define>
     </ui:composition>

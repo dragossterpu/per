@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,9 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.ISugerenciaService;
+import es.mira.progesin.util.SendMailwithAttachment;
+import es.mira.progesin.util.SendSimpleMail;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,8 +59,8 @@ public class SugerenciasBean implements Serializable {
 	    	sugerencia.setModulo(modulo);
 	    	sugerencia.setDescripcion(descripcion);
 	    	sugerencia.setFechaAlta(fecha);
+	    	sugerencia.setFechaBaja(null);
 	    	sugerencia.setUsuario(user.getUsername());
-	    	sugerencia.setEstado("ACTIVO");
 	    	sugerenciaService.save(sugerencia);
 	    	System.out.println("modulo"+modulo);
 		 	System.out.println("descripcion"+descripcion);
@@ -76,10 +81,28 @@ public class SugerenciasBean implements Serializable {
 		
 		
 		
-//		public String eliminarSugerencia() {
-//			return "/principal/sugerenciasListado";
-//		}
-		
+		public String eliminarSugerencia(Integer idSugerencia) {
+			Sugerencia sugerencia =sugerenciaService.findOne(idSugerencia);
+			user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Date fecha = new Date();
+			sugerencia.setFechaBaja(fecha);
+			sugerencia.setUsuarioBaja(user.getUsername());
+			sugerenciaService.save(sugerencia);
+			System.out.println("entramos");
+			return "/principal/sugerenciasListado";
+		}
+		public String contestarSugerencia(Integer idSugerencia) throws MessagingException {
+			Sugerencia sugerencia =sugerenciaService.findOne(idSugerencia);
+			user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Date fecha = new Date();
+			sugerencia.setFechaBaja(fecha);
+			sugerencia.setUsuarioBaja(user.getUsername());
+			SendMailwithAttachment.sendSugerenciaWithAttachment();
+//			SendSimpleMail.sendSugerencia();
+//			sugerenciaService.save(sugerencia);
+			System.out.println("entramos");
+			return "/principal/sugerenciasListado";
+		}
 		
 		
     @PostConstruct
