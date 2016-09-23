@@ -6,4 +6,6 @@ import es.mira.progesin.persistence.entities.Sugerencia;
 
 
 public interface ISugerenciaRepository extends CrudRepository<Sugerencia, Integer>{
+	
+	Iterable<Sugerencia> findByFechaBajaIsNull();
 }

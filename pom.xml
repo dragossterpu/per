@@ -98,7 +98,14 @@
 			<artifactId>javax.faces</artifactId>
 			<version>${jsf-mojarra.version}</version>
 		</dependency>
-		
+		<!-- ========== Mail ========== -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		    <version>1.2.3.RELEASE</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+
 	</dependencies>
 	<repositories>
 		<repository>
@@ -113,7 +120,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				  <configuration>
+			        <mainClass>es.mira.progesin.ProgesinApplication</mainClass>
+			    </configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 

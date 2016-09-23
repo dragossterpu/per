@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -53,6 +52,9 @@ public class Sugerencia implements Serializable {
 	@Column(name = "USUARIO_REGISTRO", length = 50)
 	private String usuario;
 
-	@Column(name = "ESTADO")
-	private String estado;
+	@Column(name = "FECHA_BAJA")
+	private Date fechaBaja;
+	
+	@Column(name = "USUARIO_BAJA", length = 50)
+	private String usuarioBaja;
 }
