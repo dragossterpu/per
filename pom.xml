@@ -106,6 +106,10 @@
 		    <version>1.2.3.RELEASE</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -120,9 +124,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				  <configuration>
+				  <!-- <configuration>
 			        <mainClass>es.mira.progesin.ProgesinApplication</mainClass>
-			    </configuration>
+			    </configuration> -->
 			</plugin>
 			
 		</plugins>

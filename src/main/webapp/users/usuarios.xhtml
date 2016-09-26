@@ -10,16 +10,132 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h2>Usuarios</h2>
+		<h3>Búsqueda de usuarios</h3>
 
+		<h:form id="busquedaUsers" >
+		
+			<div class="bloqueFormulario">
+					<div class="columnaIzdaFormulario">
+						<h:outputLabel for="username" value="Nombre de usuario:" />
+						<p:inputText id="username" value="#{userBean.userBusqueda.username}" />
+	
+						<h:outputLabel for="nombre" value="Nombre:" />
+						<p:inputText id="nombre" value="#{userBean.userBusqueda.nombre}"/>
+						
+						<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo:" />
+						<p:selectOneMenu value="#{userBean.userBusqueda.puestoTrabajo}" id="puestoTrabajoSelect" 
+							converter="#{selectConverter}">
+						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
+							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
+						</p:selectOneMenu> 
+						
+						<h:outputLabel for="role" value="Role:" />
+				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
+							allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role">
+							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+							<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
+								itemLabel="#{roleUser}" itemValue="#{roleUser}" />
+						</p:selectOneMenu> 
+					</div>
+	
+					<div class="columnaDchaFormulario">
+						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+						<p:calendar value="#{userBean.userBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"/>
+	
+						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+						<p:calendar value="#{userBean.userBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
+						
+						<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado" />
+						<p:selectOneMenu value="#{userBean.userBusqueda.cuerpoEstado}" id="cuerpoEstadoSelect"
+							converter="#{selectConverter}">
+							<f:selectItem itemLabel="Seleccione uno" itemValue="" />
+							<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
+								itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
+						</p:selectOneMenu>
+					</div>
+			</div>
 
-
-<h:form id="busquedaUsers">
-
-						<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" />
- </h:form>
-
+						<p:commandButton action="#{userBean.buscarUsuario}" value="Buscar" update="tablaUsuarios" icon="ui-icon-search"/>
+						<p:commandButton value="Borrar" update=":busquedaUsers" immediate="true">
+                    		<p:resetInput target=":busquedaUsers" />
+                		</p:commandButton>
+						<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" icon="fa fa-fw fa-user-plus"/>
+ 		</h:form>
+ 		
+ 		<div id="listadoUsuarios">
+ 			<p:dataTable id="tablaUsuarios" var="user" value="#{userBean.userBusqueda.listaUsuarios}" paginator="true" rows="8">
+				<f:facet name="header">
+					Usuarios
+				</f:facet>
+				<p:column>
+					<f:facet name="header">
+						Fecha alta
+					</f:facet>
+					<h:outputText value="#{user.fechaAlta}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Usuario" />
+					</f:facet>
+					<h:outputText value="#{user.username}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nombre" />
+					</f:facet>
+					<h:outputText value="#{user.nombre}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Primer apellido" />
+					</f:facet>
+					<h:outputText value="#{user.apellido1}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Segundo apellido" />
+					</f:facet>
+					<h:outputText value="#{user.apellido2}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Estado" />
+					</f:facet>
+					<h:outputText value="#{user.estado}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Cuerpo" />
+					</f:facet>
+					<h:outputText value="#{user.cuerpoEstado.descripcion}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Puesto trabajo" />
+					</f:facet>
+					<h:outputText value="#{user.puestoTrabajo.descripcion}" />
+				</p:column>
+				<p:column>
+					<p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios"/>
+				</p:column>
+				<p:column>
+					<p:commandButton title="Modificar usuario" icon="fa fa-fw fa-edit" action="#{userBean.modificarUsuario(user)}" update="tablaUsuarios"/>
+				</p:column>
+			</p:dataTable>
+		</div>
+		
 		</ui:define>
+		<script>
+			function reset() {
+				alert("reset");
+				calendarWidget.setDate(null);
+			}
+		</script>
 	</ui:composition>
 </f:view>
+
 </html>

@@ -1,9 +1,11 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -19,7 +21,6 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
-import es.mira.progesin.services.IPuestoTrabajoService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -37,18 +38,17 @@ public class UserBean implements Serializable {
 	private CuerpoEstado 		cuerpoEstadoSeleccionado;
 	private List<PuestoTrabajo> puestosTrabajo;
 	private PuestoTrabajo		puestoTrabajoSeleccionado;
-
+	private UserBusqueda		userBusqueda;
 	
 	@Autowired
-	IUserService userService;
+	ApplicationBean 	applicationBean;
+	@Autowired
+	IUserService 		userService;
 	@Autowired
 	ICuerpoEstadoService cuerposEstadoService;
 	@Autowired
-	IPuestoTrabajoService puestosTrabajoService;
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	List<User> listaUsuarios;
 	
 	public String getUserPerfil() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -56,16 +56,6 @@ public class UserBean implements Serializable {
 		return "/principal/miPerfil";
 	}
 	
-	
-//	public List<User> getUsers() {
-//		listaUsuarios = (List<User>) userService.findAll();
-//		return listaUsuarios;
-//	}
-//	
-//	@PostConstruct
-//    public void init(){
-//         getUsers();
-//    }
 	
 	/**
 	 * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para
@@ -78,7 +68,7 @@ public class UserBean implements Serializable {
 		user.setFechaAlta(new Date());
 		user.setEstado(EstadoEnum.ACTIVO);
 		cuerposEstado = (List<CuerpoEstado>) cuerposEstadoService.findAll();
-		puestosTrabajo = (List<PuestoTrabajo>) puestosTrabajoService.findAll();
+		puestosTrabajo = applicationBean.getListaPuestosTrabajo();
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
 		puestoTrabajoSeleccionado = null; 
 		cuerpoEstadoSeleccionado = null;
@@ -97,7 +87,7 @@ public class UserBean implements Serializable {
 			user.setCuerpoEstado(getCuerpoEstadoSeleccionado());
 			user.setPuestoTrabajo(getPuestoTrabajoSeleccionado());
 			String password = Utilities.getPassword();
-			// TODO enviar correo al usuario con la contraseña
+// TODO enviar correo al usuario con la contraseña
 			user.setPassword(passwordEncoder.encode(password));
 			user.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 			if (userService.save(user) != null) {
@@ -106,8 +96,37 @@ public class UserBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 				context.execute("PF('dialogMessage').show()");
 			}
+			
+			// TODO generar NOTIFICACIÓN
+			// TODO registrar actividad en log
 		}
 		return null;
 	}
 	
+	public String getFormularioBusquedaUsuarios() {
+		userBusqueda.resetValues();
+		return "/users/usuarios";
+	}
+	
+	public void buscarUsuario() {
+		List<User> listaUsuarios = userService.buscarUsuarioCriteria(userBusqueda);
+		userBusqueda.setListaUsuarios(listaUsuarios);
+	}
+	
+	public void eliminarUsuario(User user) {
+		user.setFechaBaja(new Date());
+		user.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+		userService.save(user);
+		userBusqueda.getListaUsuarios().remove(user);
+	}
+	
+	@PostConstruct
+	public void init(){
+		userBusqueda = new UserBusqueda();
+		this.cuerposEstado =(List<CuerpoEstado>) cuerposEstadoService.findAll();
+		this.puestosTrabajo = applicationBean.getListaPuestosTrabajo();
+		// para que en el select cargue por defecto la opción "Seleccine uno..."
+		this.puestoTrabajoSeleccionado = null;
+		this.cuerpoEstadoSeleccionado = null;
+    }
 }

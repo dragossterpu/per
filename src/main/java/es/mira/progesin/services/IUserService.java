@@ -1,6 +1,9 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.web.beans.UserBusqueda;
 
 public interface IUserService {
     void delete(String id);
@@ -15,6 +18,6 @@ public interface IUserService {
     User save(User entity);
     User findByParams(String nif, String correo);
     User findByCorreo(String correo);
-     User findByCorreoOrDocIndentidad(String nif, String correo);
-
+    User findByCorreoOrDocIndentidad(String nif, String correo);
+    List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda);
 }

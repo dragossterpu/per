@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.UserBean;
 import lombok.Getter;
 import lombok.Setter;

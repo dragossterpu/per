@@ -1,19 +1,27 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.IUserRepository;
-import es.mira.progesin.util.Utilities;
+import es.mira.progesin.web.beans.UserBusqueda;
 
 @Service
 public class UserService implements IUserService {
 	@Autowired
 	IUserRepository userRepository;
-
-	
-	
+	@Autowired  
+	private SessionFactory sessionFactory;
 	
 	@Transactional(readOnly = false)
 	public void delete(String id) {
@@ -70,6 +78,40 @@ public class UserService implements IUserService {
 	
 	public User findByCorreo(String correo) {
 		return userRepository.findByCorreo(correo);
+	}
+	
+	public List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(User.class);
+
+		if (userBusqueda.getFechaDesde() != null) {
+			criteria.add(Restrictions.ge("fechaAlta", userBusqueda.getFechaDesde()));
+		}
+		if (userBusqueda.getFechaHasta() != null) {
+			criteria.add(Restrictions.lt("fechaAlta", userBusqueda.getFechaHasta()));
+		}
+		if (userBusqueda.getApellido1() != null && userBusqueda.getApellido1().isEmpty() == false) {
+			criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
+		}
+		if (userBusqueda.getUsername() != null && userBusqueda.getUsername().isEmpty() == false) {
+			criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
+		}
+		if (userBusqueda.getCuerpoEstado() != null) {
+			criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
+		}
+		if (userBusqueda.getPuestoTrabajo() != null) {
+			criteria.add(Restrictions.eq("puestoTrabajo", userBusqueda.getPuestoTrabajo()));
+		}
+		if (userBusqueda.getRole() != null) {
+			criteria.add(Restrictions.eq("role", userBusqueda.getRole()));
+		}
+		criteria.add(Restrictions.isNull("fechaBaja"));
+		criteria.addOrder(Order.desc("fechaAlta"));
+		
+		List<User> listaUsuarios =  criteria.list();
+		session.close();
+		
+		return listaUsuarios;
 	}
 	
 }

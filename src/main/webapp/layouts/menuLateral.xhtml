@@ -6,7 +6,7 @@
 <h:form>
 	<p:menu>
 		<p:submenu label="Herramientas Administrativas">
-			<p:menuitem value="Usuarios" outcome="/users/usuarios" />
+			<p:menuitem value="Usuarios" action="#{userBean.getFormularioBusquedaUsuarios}"/>
 			<p:menuitem value="Administrar cuerpos del estado" outcome="/cuerpos/cuerpos" />
 			<p:menuitem value="Administrar equipos" outcome="/equipos/equipos" />
 			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
