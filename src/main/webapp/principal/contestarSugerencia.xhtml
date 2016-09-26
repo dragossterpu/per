@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <ui:composition template="../layouts/layoutInterior.xhtml">
+        <ui:define name="content">
+         	<h3>CONTESTACIÓN SUGERENCIA </h3>  
+         	<br></br><br></br>
+
+         	
+         	<h:form>
+			  <div class="bloqueFormulario">
+					<div class="columnaIzdaFormulario">				
+						<h:outputLabel for="descripcion" value="Descripción de la sugerencia:" />
+						<p:inputTextarea   rows="8" cols="50" id="descripcion" value="#{sugerenciasBean.sugerencia.descripcion}" 
+						disabled="true" />																				
+					</div>
+				<div class="columnaDchaFormulario">
+					<h:outputLabel for="fechaAlta" value="Fecha de la sugerencia:" />
+					<p:inputText id="fechaAlta" value="#{sugerenciasBean.sugerencia.fechaAlta}" disabled="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+					<h:outputLabel for="usuario" value="Usuario de la sugerencia:" />
+					<p:inputText id="usuario" value="#{sugerenciasBean.sugerencia.usuario}"
+						disabled="true" />
+						<h:inputHidden value="#{sugerenciasBean.sugerencia.idSugerencia}" />	
+				</div>
+				</div>	
+ <h3>Contestar a la sugerencia</h3>
+   					<p:inputTextarea rows="8" cols="50" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="false" value="#{contestacion}"/>
+    				<h:outputText id="display" value="#{contestacion}" />
+				
+				<p:commandButton action="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}"
+						value="Guardar" />
+			</h:form>
+        </ui:define>
+    </ui:composition>
+</f:view>
+</html>
+
