@@ -57,4 +57,6 @@ public class Sugerencia implements Serializable {
 	
 	@Column(name = "USUARIO_BAJA", length = 50)
 	private String usuarioBaja;
+
+	
 }

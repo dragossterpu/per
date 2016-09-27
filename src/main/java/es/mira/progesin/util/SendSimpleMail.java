@@ -1,5 +1,6 @@
 package es.mira.progesin.util;
 
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -10,11 +11,16 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
+import es.mira.progesin.web.beans.SugerenciasBean;
+
 
 
 public class SendSimpleMail {
-	public static void sendMail() throws MessagingException {
-		 
+	static Logger LOG = Logger.getLogger(SendSimpleMail.class);
+	public static void sendMail(String asunto,String correoEnvio,String nombre,String respuesta) throws MessagingException {
+		Date fecha = new Date();
 		final String username = "progesinipss@gmail.com";
 	    final String password = "ipss2016";
 	    	    
@@ -38,11 +44,9 @@ public class SendSimpleMail {
 	        Message message = new MimeMessage(session);
 	        message.setFrom(new InternetAddress("progesinipss@gmail.com"));
 	        message.setRecipients(Message.RecipientType.TO,
-	                InternetAddress.parse("dragossterpu@gmail.com"));
-	        message.setSubject("Testing Subject");
-	        message.setText("Dear Mail Crawler,"
-	                + "\n\n No spam to my email, please!");
-
+	                InternetAddress.parse(correoEnvio));
+	        message.setSubject(asunto);
+	        message.setContent(getMailBody(respuesta,nombre,asunto), "text/plain");
 	        Transport.send(message);
 
 	        System.out.println("Done");
@@ -51,5 +55,19 @@ public class SendSimpleMail {
 	        throw new RuntimeException(e);
 	    }
 
+	}
+	
+	public static String getMailBody(String respuesta, String nombre, String asunto) {
+		   StringBuffer body = new StringBuffer();
+		 
+			 LOG.info("Cuerpo correo envio:   " );	
+			  body.append(asunto );
+			   body.append("\r\n");
+			   body.append("Estimado/a :" +nombre);
+			   body.append("\r\n");
+			   body.append(respuesta);
+			   body.append("\r\n");
+			   body.append("\t" + "Muchas gracias" + "\r\n");
+			   return body.toString();
 	}
 }

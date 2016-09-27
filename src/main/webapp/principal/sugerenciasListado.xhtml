@@ -6,6 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
 <f:view>
     <ui:composition template="../layouts/layoutInterior.xhtml">
         <ui:define name="content">
@@ -43,13 +44,17 @@
 								<f:facet name="header">
 								
 								</f:facet>
-									<h:inputHidden value="#{sugerencia.idSugerencia}" />					
-									 <p:commandButton title="Contestar" icon="ui-icon-contact" action="#{sugerenciasBean.contestarSugerencia(sugerencia.idSugerencia)}"/>
+									<h:inputHidden value="#{sugerencia.idSugerencia}" />														 
+									 <p:commandButton title="Contestar" icon="ui-icon-contact"  action="#{sugerenciasBean.contestarSugerencia(sugerencia.idSugerencia)}"/>
+									
 							</p:column>
 						</p:dataTable>
-					</div>	  
+					</div>	
+
+				
 			</h:form>
         </ui:define>
     </ui:composition>
 </f:view>
 </html>
+
