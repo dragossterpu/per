@@ -59,11 +59,13 @@ public class UserService implements IUserService {
 		return userRepository.findOne(id);
 	}
 
+	@Override
 	@Transactional(readOnly = false)
 	public Iterable<User> save(Iterable<User> entities) {
 		return userRepository.save(entities);
 	}
 
+	@Override
 	@Transactional(readOnly = false)
 	public User save(User entity) {
 		return userRepository.save(entity);
@@ -80,6 +82,7 @@ public class UserService implements IUserService {
 		return userRepository.findByCorreo(correo);
 	}
 	
+	@Override
 	public List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(User.class);
@@ -90,10 +93,13 @@ public class UserService implements IUserService {
 		if (userBusqueda.getFechaHasta() != null) {
 			criteria.add(Restrictions.lt("fechaAlta", userBusqueda.getFechaHasta()));
 		}
-		if (userBusqueda.getApellido1() != null && userBusqueda.getApellido1().isEmpty() == false) {
+		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
+			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
+		}
+		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
 			criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
 		}
-		if (userBusqueda.getUsername() != null && userBusqueda.getUsername().isEmpty() == false) {
+		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
 			criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
@@ -105,10 +111,14 @@ public class UserService implements IUserService {
 		if (userBusqueda.getRole() != null) {
 			criteria.add(Restrictions.eq("role", userBusqueda.getRole()));
 		}
+		if (userBusqueda.getEstado() != null) {
+			criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
+		}
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc("fechaAlta"));
 		
-		List<User> listaUsuarios =  criteria.list();
+		@SuppressWarnings("unchecked")
+		List<User> listaUsuarios = (List<User>) criteria.list();
 		session.close();
 		
 		return listaUsuarios;

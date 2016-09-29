@@ -10,6 +10,8 @@ import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
@@ -49,7 +51,8 @@ public class RecoverBean implements Serializable {
 			  if (user != null) {
 					// Generating new Password
 					String newPassword = Utilities.getPassword();
-					String codePassword =Utilities.codePassword(newPassword);
+					PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+					String codePassword = passwordEncoder.encode(newPassword);
 					user.setPassword(codePassword);
 					// Send mail
 					// Utilities.sendMail(user);

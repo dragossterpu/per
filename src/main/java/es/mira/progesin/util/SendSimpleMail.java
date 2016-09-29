@@ -13,12 +13,13 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
-import es.mira.progesin.web.beans.SugerenciasBean;
+import es.mira.progesin.constantes.Constantes;
 
 
 
 public class SendSimpleMail {
 	static Logger LOG = Logger.getLogger(SendSimpleMail.class);
+	
 	public static void sendMail(String asunto,String correoEnvio,String nombre,String respuesta) throws MessagingException {
 		Date fecha = new Date();
 		final String username = "progesinipss@gmail.com";
@@ -40,17 +41,13 @@ public class SendSimpleMail {
 	            });
 
 	    try {
-
 	        Message message = new MimeMessage(session);
-	        message.setFrom(new InternetAddress("progesinipss@gmail.com"));
+	        message.setFrom(new InternetAddress(Constantes.EMAIL_FROM_IPSS));
 	        message.setRecipients(Message.RecipientType.TO,
 	                InternetAddress.parse(correoEnvio));
 	        message.setSubject(asunto);
-	        message.setContent(getMailBody(respuesta,nombre,asunto), "text/plain");
+	        message.setContent(respuesta, "text/plain; charset=UTF-8");
 	        Transport.send(message);
-
-	        System.out.println("Done");
-
 	    } catch (MessagingException e) {
 	        throw new RuntimeException(e);
 	    }
@@ -58,16 +55,16 @@ public class SendSimpleMail {
 	}
 	
 	public static String getMailBody(String respuesta, String nombre, String asunto) {
-		   StringBuffer body = new StringBuffer();
+		   StringBuilder body = new StringBuilder();
 		 
-			 LOG.info("Cuerpo correo envio:   " );	
-			  body.append(asunto );
-			   body.append("\r\n");
-			   body.append("Estimado/a :" +nombre);
-			   body.append("\r\n");
-			   body.append(respuesta);
-			   body.append("\r\n");
-			   body.append("\t" + "Muchas gracias" + "\r\n");
-			   return body.toString();
+		 LOG.info("Cuerpo correo envio:   " );	
+		 body.append(asunto );
+		 body.append("\r\n");
+		 body.append("Estimado/a :" +nombre);
+		 body.append("\r\n");
+		 body.append(respuesta);
+		 body.append("\r\n");
+		 body.append("\t" + "Muchas gracias" + "\r\n");
+		 return body.toString();
 	}
 }

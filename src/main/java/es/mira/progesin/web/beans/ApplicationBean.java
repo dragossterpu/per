@@ -1,11 +1,13 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
@@ -17,7 +19,9 @@ import lombok.NoArgsConstructor;
 @Component
 @Getter
 @NoArgsConstructor
-public class ApplicationBean {
+public class ApplicationBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	IPuestoTrabajoService puestosTrabajoService;

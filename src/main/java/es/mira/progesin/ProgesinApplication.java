@@ -1,7 +1,6 @@
 package es.mira.progesin;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,14 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.HandlesTypes;
 
 import org.apache.catalina.Context;
-import org.hibernate.SessionFactory;
-import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.primefaces.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
@@ -29,26 +26,16 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.boot.context.web.NonEmbeddedServletContainerFactory;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.sun.faces.config.FacesInitializer;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.persistence.entities.enums.EstadoEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IUserRepository;
-import es.mira.progesin.services.IUserService;
-import es.mira.progesin.services.UserService;
 
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
+// SpringBootApplication Equivale a @Configuration @EnableAutoConfiguration @ComponentScan
+@SpringBootApplication
 public class ProgesinApplication extends SpringBootServletInitializer implements CommandLineRunner{
     
 	@Autowired
@@ -105,7 +92,6 @@ public class ProgesinApplication extends SpringBootServletInitializer implements
                         getServletContainerInitializerHandlesTypes(FacesInitializer.class));
                 
                 // add configuration from web.xml
-//                context.addWelcomeFile("index.jsf");
                 context.addWelcomeFile("index.xhtml");
                 
                 // register additional mime-types that Spring Boot doesn't register
