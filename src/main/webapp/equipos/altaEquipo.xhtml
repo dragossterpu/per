@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+		<h3>Nuevo Equipo</h3>
+
+		
+		<h:form id="formAlta">
+			<div class="bloqueFormulario">
+									
+				
+				   <p:dataTable id="eqipoJefes" var="jefeInspector" value="#{equiposBean.listadoJefes}" paginator="true" rows="3" selection="#{equiposBean.jefeSelecionado}" rowKey="#{jefeInspector.username}">
+				        <f:facet name="header">
+				            Jefes de inspeciones
+				        </f:facet>
+				        <p:column selectionMode="single" style="width:16px;text-align:center"  required="true" requiredMessage="Seleccione un jefe de equipo"/>
+				        <p:column headerText="Nombre" sortBy="#{jefeInspector.nombre}" filterBy="#{jefeInspector.nombre}">
+				            <h:outputText value="#{jefeInspector.nombre}" />
+				        </p:column>
+				        <p:column headerText="Primer Apellido" sortBy="#{jefeInspector.apellido1}" filterBy="#{jefeInspector.apellido1}">
+				            <h:outputText value="#{jefeInspector.apellido1}" />
+				        </p:column>
+				        <p:column headerText="Segundo Apellido" sortBy="#{jefeInspector.apellido2}" filterBy="#{jefeInspector.apellido2}">
+				            <h:outputText value="#{jefeInspector.apellido2}" />
+				        </p:column>				      
+				    </p:dataTable>
+				    <br></br>
+				    <p:dataTable id="equipoMiembros" var="inspector" value="#{equiposBean.listadoMiembros}" paginator="true" rows="3" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{inspector.username}" >
+				        <f:facet name="header">
+				            Inspectores
+				        </f:facet>
+				        <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
+				        <p:column headerText="Nombre" sortBy="#{inspector.nombre}"  filterBy="#{inspector.nombre}">
+				            <h:outputText value="#{inspector.nombre}" />
+				        </p:column>
+				        <p:column headerText="Primer Apellido" sortBy="#{inspector.apellido1}" filterBy="#{inspector.apellido2}">
+				            <h:outputText value="#{inspector.apellido1}" />
+				        </p:column>
+				        <p:column headerText="Segundo Apellido" sortBy="#{inspector.apellido2}" filterBy="#{inspector.apellido2}">
+				            <h:outputText value="#{inspector.apellido2}" />
+				        </p:column>
+				    </p:dataTable>
+				     <br></br>
+				    <p:dataTable id="equipoColaboradores" var="colaborador" value="#{equiposBean.listadoColaboradores}" paginator="true" rows="3" selection="#{equiposBean.colaboradoresSelecionados}" rowKey="#{colaborador.username}" >
+				        <f:facet name="header">
+				            Colaboradores
+				        </f:facet>
+				        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+				        <p:column headerText="Nombre" sortBy="#{colaborador.nombre}" filterBy="#{colaborador.nombre}">
+				            <h:outputText value="#{colaborador.nombre}" />
+				        </p:column>
+				        <p:column headerText="Primer Apellido" sortBy="#{colaborador.apellido1}" filterBy="#{colaborador.apellido1}">
+				            <h:outputText value="#{colaborador.apellido1}" />
+				        </p:column>
+				        <p:column headerText="Segundo Apellido" sortBy="#{colaborador.apellido2}" filterBy="#{colaborador.apellido2}">
+				            <h:outputText value="#{colaborador.apellido2}" />
+				        </p:column>
+				    </p:dataTable>
+				</div>
+				<div class="botonesFormulario">
+				<p:commandButton actionListener="#{equiposBean.altaEquipo}" value="Crear equipo" />
+						<p:commandButton value="Borrar" update=":formAlta" immediate="true">
+						<p:resetInput target="@form"/> 
+                		</p:commandButton>
+				<p:button outcome="/equipos/equipos" value="Cancelar"/>
+				</div>
+		</h:form>
+		
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

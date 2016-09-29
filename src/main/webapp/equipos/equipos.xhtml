@@ -10,22 +10,110 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h2>Equipos</h2>
+		<h3>Búsqueda de equipos</h3>
 		<br></br><br></br><br></br>
-<h:form>
-   <div>
-        <h:outputText value="Opciones:" />
-        <p:selectOneButton value="#{selectOneView.option}">
-            <f:selectItem itemLabel="Buscar equipos" itemValue="verEquipos" />
-            <f:selectItem itemLabel="Nuevo equipo" itemValue="nuevoEquipo" />
-        </p:selectOneButton>
- 
-        <p:commandButton value="Submit"  />
-   
-   </div>
-</h:form>
+		<h:form id="busquedaEquipos" >
+		
+			<div class="bloqueFormulario">
+					<div class="columnaIzdaFormulario">
+						<h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
+						<p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" />
+			
+						<h:outputLabel for="nombreMiembro" value="Nombre de miembro de equipo:" />
+						<p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
+						
+						<h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
+						<p:inputText id="nombreEquipo" value="#{equiposBean.equipoBusqueda.nombreEquipo}" />
+		
+					</div>
+	
+					<div class="columnaDchaFormulario">
+						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+						<p:calendar value="#{equiposBean.equipoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"/>
+	
+						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+						<p:calendar value="#{equiposBean.equipoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
+						
+					</div>
+			</div>
+				<br></br>
+						<p:commandButton action="#{equiposBean.equipoBusqueda}" value="Buscar" update="tablaEquipos" icon="ui-icon-search"/>
+						<p:commandButton value="Borrar" update=":busquedaEquipos" immediate="true">
+                    		<p:resetInput target=":busquedaEquipos" />
+                		</p:commandButton>
+						<p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/>
+ 		</h:form>
+		<div id="listadoEquipos">
+ 			<p:dataTable id="tablaEquipos" var="user" value="#{equiposBean.equipoBusqueda.listaEquipos}" paginator="true" rows="8">
+				<f:facet name="header">
+					Usuarios
+				</f:facet>
+				<p:column>
+					<f:facet name="header">
+						Fecha alta
+					</f:facet>
+<!-- 					<h:outputText value="#{user.fechaAlta}"> -->
+<!-- 						<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 					</h:outputText> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Usuario" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.username}" /> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nombre" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.nombre}" /> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Primer apellido" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.apellido1}" /> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Segundo apellido" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.apellido2}" /> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Estado" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.estado}" /> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Cuerpo" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.cuerpoEstado.descripcion}" /> -->
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Puesto trabajo" />
+					</f:facet>
+<!-- 					<h:outputText value="#{user.puestoTrabajo.descripcion}" /> -->
+				</p:column>
+<!-- 				<p:column> -->
+<!-- 					<p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios"/> -->
+<!-- 				</p:column> -->
+<!-- 				<p:column> -->
+<!-- 					<p:commandButton title="Modificar usuario" icon="fa fa-fw fa-edit" action="#{userBean.modificarUsuario(user)}" update="tablaUsuarios"/> -->
+<!-- 				</p:column> -->
+			</p:dataTable>
+		</div>
 		
 		</ui:define>
+		<script>
+			function reset() {
+				alert("reset");
+				calendarWidget.setDate(null);
+			}
+		</script>
 	</ui:composition>
 </f:view>
 </html>
