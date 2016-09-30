@@ -1,7 +1,6 @@
 package es.mira.progesin.web.beans;
 
-import java.io.Serializable;
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +9,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,23 +22,28 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.SendSimpleMail;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Setter
 @Getter
 @Component("userBean")
 @RequestScoped
-public class UserBean implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class UserBean {
+
 	private User 				user;
 	private List<CuerpoEstado>	cuerposEstado;
 	private CuerpoEstado 		cuerpoEstadoSeleccionado;
 	private List<PuestoTrabajo> puestosTrabajo;
 	private PuestoTrabajo		puestoTrabajoSeleccionado;
 	private UserBusqueda		userBusqueda;
+	private List<Boolean> list;
+	private int numeroColumnasListadoUsarios = 9;
 	
 	@Autowired
 	ApplicationBean 	applicationBean;
@@ -89,12 +94,8 @@ public class UserBean implements Serializable {
 			String password = Utilities.getPassword();
 // TODO enviar correo al usuario con la contraseña
 			user.setPassword(passwordEncoder.encode(password));
-			user.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 			if (userService.save(user) != null) {
-				RequestContext context = RequestContext.getCurrentInstance();
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta", "El usuario ha sido creado con éxito");
-				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-				context.execute("PF('dialogMessage').show()");
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta", "El usuario ha sido creado con éxito");
 			}
 			
 			// TODO generar NOTIFICACIÓN
@@ -108,17 +109,65 @@ public class UserBean implements Serializable {
 		return "/users/usuarios";
 	}
 	
+	/**
+	 * Busca los usuarios según los filtros introducidos en el formulariod de búsqueda
+	 */
 	public void buscarUsuario() {
 		List<User> listaUsuarios = userService.buscarUsuarioCriteria(userBusqueda);
 		userBusqueda.setListaUsuarios(listaUsuarios);
 	}
 	
+	/**
+	 * Realiza una eliminación lógico del usuario (le pone fecha de baja) 
+	 * @param user El usuario seleccionado de la tabla del resultado de la búsqueda
+	 */
 	public void eliminarUsuario(User user) {
 		user.setFechaBaja(new Date());
 		user.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		userService.save(user);
 		userBusqueda.getListaUsuarios().remove(user);
 	}
+	
+	/**
+	 * Pasa los datos del usuario que queremos modificar al formulario de modificación para que cambien los
+	 * valores que quieran
+	 * @param user usuario recuperado del formulario de búsqueda de usuarios
+	 * @return
+	 */
+	public String getFormModificarUsuario(User user) {
+		this.user = user;
+		return "/users/modificarUsuario";
+	}
+	
+	/**
+	 * Modifica los datos del usuario en función de los valores recuperados del formulario
+	 */
+	public void modificarUsuario() {
+		if(userService.save(user) != null){
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación", "El usuario ha sido modificado con éxito");
+		}
+	}
+	
+	/**
+	 * Genera una contraseña nueva y se la envía por correo al usuario
+	 */
+	public void restaurarClave() {
+		try {
+			String password = Utilities.getPassword();
+			this.user.setPassword(passwordEncoder.encode(password));
+			String cuerpoCorreo = "Su nueva contraseña es: " + password;
+			userService.save(user);
+			SendSimpleMail.sendMail("Restauración de la contraseña", user.getCorreo(), user.getNombre(), cuerpoCorreo);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave", "Se ha enviado un correo al usuario con la nueva contraseña");
+		} catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave", "Se ha producido un error en la regeneración o envío de la contraseña");
+			log.error("Error en la restaruación de la contraseña", e);
+		}
+	}
+	
+	public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+    }
 	
 	@PostConstruct
 	public void init(){
@@ -128,5 +177,9 @@ public class UserBean implements Serializable {
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
 		this.puestoTrabajoSeleccionado = null;
 		this.cuerpoEstadoSeleccionado = null;
+		list = new ArrayList<>();
+		for (int i = 0; i <= numeroColumnasListadoUsarios; i++)    {
+			list.add(Boolean.TRUE);
+		}
     }
 }

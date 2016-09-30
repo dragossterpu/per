@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
@@ -21,50 +20,41 @@ import es.mira.progesin.web.beans.UserBusqueda;
 public class UserService implements IUserService {
 	@Autowired
 	IUserRepository userRepository;
-
-	@Autowired
+	@Autowired  
 	private SessionFactory sessionFactory;
-
-	@Override
+	
 	@Transactional(readOnly = false)
 	public void delete(String id) {
 		userRepository.delete(id);
 	}
 
-	@Override
 	@Transactional(readOnly = false)
 	public void delete(Iterable<User> entities) {
 		userRepository.delete(entities);
 	}
 
-	@Override
 	@Transactional(readOnly = false)
 	public void delete(User entity) {
 		userRepository.delete(entity);
 	}
 
-	@Override
 	@Transactional(readOnly = false)
 	public void deleteAll() {
 		userRepository.deleteAll();
 	}
 
-	@Override
 	public boolean exists(String id) {
 		return userRepository.exists(id);
 	}
 
-	@Override
 	public Iterable<User> findAll() {
 		return userRepository.findAll();
 	}
 
-	@Override
 	public Iterable<User> findAll(Iterable<String> ids) {
 		return userRepository.findAll(ids);
 	}
 
-	@Override
 	public User findOne(String id) {
 		return userRepository.findOne(id);
 	}
@@ -87,12 +77,11 @@ public class UserService implements IUserService {
 	public User findByCorreoOrDocIndentidad(String correo,String nif) {
 		return userRepository.findByCorreoOrDocIndentidad(correo,nif );
 	}
-
-	@Override
+	
 	public User findByCorreo(String correo) {
 		return userRepository.findByCorreo(correo);
 	}
-
+	
 	@Override
 	public List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda) {
 		Session session = sessionFactory.openSession();
@@ -104,10 +93,13 @@ public class UserService implements IUserService {
 		if (userBusqueda.getFechaHasta() != null) {
 			criteria.add(Restrictions.lt("fechaAlta", userBusqueda.getFechaHasta()));
 		}
-		if (userBusqueda.getApellido1() != null && userBusqueda.getApellido1().isEmpty() == false) {
+		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
+			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
+		}
+		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
 			criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
 		}
-		if (userBusqueda.getUsername() != null && userBusqueda.getUsername().isEmpty() == false) {
+		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
 			criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
@@ -119,13 +111,17 @@ public class UserService implements IUserService {
 		if (userBusqueda.getRole() != null) {
 			criteria.add(Restrictions.eq("role", userBusqueda.getRole()));
 		}
+		if (userBusqueda.getEstado() != null) {
+			criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
+		}
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc("fechaAlta"));
 		
-		List<User> listaUsuarios =  criteria.list();
+		@SuppressWarnings("unchecked")
+		List<User> listaUsuarios = (List<User>) criteria.list();
 		session.close();
-
+		
 		return listaUsuarios;
 	}
-
+	
 }

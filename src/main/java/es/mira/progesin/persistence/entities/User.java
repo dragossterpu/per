@@ -1,9 +1,11 @@
 package es.mira.progesin.persistence.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -12,6 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -32,10 +40,13 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "USERS", schema = "public")
 // @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class User {
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "username", length = 15)
 	protected String username;
@@ -88,6 +99,7 @@ public class User {
 	@Column(name = "nivel", nullable = false)
 	private Integer nivel;
 
+	@CreatedDate
 	@Column(name = "fecha_alta", nullable = false)
 	protected Date fechaAlta;
 
@@ -97,15 +109,18 @@ public class User {
 	@Column(name = "fecha_baja")
 	protected Date fechaBaja;
 
+	@LastModifiedDate
 	@Column(name = "fecha_modificacion")
 	protected Date fechaModificacion;
 
 	@Column(name = "fecha_inactivo")
 	protected Date fechaInactivo;
 
+	@CreatedBy
 	@Column(name = "username_alta", length = 12, nullable = false)
 	protected String usernameAlta;
 
+	@LastModifiedBy
 	@Column(name = "username_modif", length = 12)
 	protected String usernameModif;
 

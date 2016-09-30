@@ -86,24 +86,24 @@
 			<div class="columnaIzdaFormulario">
 				<h:form id="passwordForm">
 					<h:outputLabel for="claveActual" value="Contraseña actual:" />
-					<p:password value="#{userController.claveActual}" required="true"
+					<p:password value="#{miPerfilBean.claveActual}" required="true"
 						id="claveActual" requiredMessage="Introduzca la contraseña actual" />
 
 					<h:outputLabel for="claveNueva" value="Nueva contraseña:" />
-					<p:password value="#{userController.claveNueva}" required="true"
+					<p:password value="#{miPerfilBean.claveNueva}" required="true"
 						feedback="true" id="claveNueva"
 						requiredMessage="Introduzca la nueva contraseña"
 						promptLabel="Por favor, introduce una contraseña"
 						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
 					<h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
-					<p:password value="#{userController.claveConfirm}" required="true"
+					<p:password value="#{miPerfilBean.claveConfirm}" required="true"
 						feedback="true" id="claveConfirm"
 						requiredMessage="Repita la nueva contraseña"
 						promptLabel="Por favor, introduce una contraseña"
 						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
-					<p:commandButton action="#{userController.cambiarClave}"
+					<p:commandButton action="#{miPerfilBean.cambiarClave}"
 						value="Guardar" />
 
 					<p:commandButton value="Limpiar" update="passwordForm"

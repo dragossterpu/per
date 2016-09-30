@@ -15,7 +15,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
-		System.out.println("************************* InternalResourceViewResolver ********************************");
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/acceso/");
 		resolver.setSuffix(".xhtml");

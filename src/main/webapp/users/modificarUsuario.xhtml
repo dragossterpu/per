@@ -10,7 +10,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h3>Nuevo Usuario</h3>
+		<h3>Modificar Usuario</h3>
 		<div class="aclaraciones">
 			Los campos marcados con (*) son obligatorios
 		</div>
@@ -66,17 +66,22 @@
 	
 				<div class="columnaIzdaFormulario">
 					<h:outputLabel for="username" value="Nombre usuario (*):" />
-					<p:inputText id="username" value="#{userBean.user.username}" required="true" requiredMessage="Introduzca el nombre de usuario" converter="#{trimConverter}"/>
-					<p:messages for="username" autoUpdate="true"  closable="true" showDetail="true"/>
+					<p:inputText id="username" value="#{userBean.user.username}" readonly="true"/>
 						
 					<h:outputLabel for="estado" value="Estado:" />
-					<p:inputText id="estado" value="#{userBean.user.estado}" readonly="true" />
+					<p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados"
+						allSuffix="ALL_ENUM_VALUES" />
+					<p:selectOneMenu value="#{userBean.user.estado}" id="estado"
+							required="true" requiredMessage="Seleccione un estado para el usuario">
+						<f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoUser"
+							itemLabel="#{estadoUser}" itemValue="#{estadoUser}" />
+					</p:selectOneMenu>
+					 <p:messages for="estado" autoUpdate="true"  closable="true"/> 
 					
 					<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
-					<p:selectOneMenu value="#{userBean.puestoTrabajoSeleccionado}" id="puestoTrabajoSelect" 
+					<p:selectOneMenu value="#{userBean.user.puestoTrabajo}" id="puestoTrabajoSelect" 
 							required="true" requiredMessage="Seleccione un puesto de trabajo"
 							converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
 							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
 					</p:selectOneMenu>
@@ -104,10 +109,9 @@
 					 <p:messages for="role" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado (*):" />
-					<p:selectOneMenu value="#{userBean.cuerpoEstadoSeleccionado}" id="cuerpoEstadoSelect"
+					<p:selectOneMenu value="#{userBean.user.cuerpoEstado}" id="cuerpoEstadoSelect"
 							required="true" requiredMessage="Seleccione un cuerpo del estado"
 							converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 							itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
 					</p:selectOneMenu>
@@ -120,8 +124,9 @@
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.altaUsuario}" value="Crear usuario" icon="fa fa-fw fa-save"/>
+				<p:commandButton actionListener="#{userBean.modificarUsuario}" value="Guardar cambios" icon="fa fa-fw fa-save"/>
 				<p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+				<p:commandButton actionListener="#{userBean.restaurarClave}" value="Restaurar clave" />
 			</div>
 			
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
