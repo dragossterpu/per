@@ -36,118 +36,118 @@ import es.mira.progesin.persistence.repositories.IUserRepository;
 
 // SpringBootApplication Equivale a @Configuration @EnableAutoConfiguration @ComponentScan
 @SpringBootApplication
-public class ProgesinApplication extends SpringBootServletInitializer implements CommandLineRunner{
-    
+public class ProgesinApplication extends SpringBootServletInitializer implements CommandLineRunner {
+
 	@Autowired
 	IUserRepository repository;
-	
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(ProgesinApplication.class, args);
-    }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(ProgesinApplication.class);
-    }
-    
-    @Bean
-    public HibernateJpaSessionFactoryBean sessionFactory() {
-        return new HibernateJpaSessionFactoryBean();
-    }
-    
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(ProgesinApplication.class, args);
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(ProgesinApplication.class);
+	}
+
+	@Bean
+	public HibernateJpaSessionFactoryBean sessionFactory() {
+		return new HibernateJpaSessionFactoryBean();
+	}
+
 	@Bean
 	public static CustomScopeConfigurer customScopeConfigurer() {
 		CustomScopeConfigurer configurer = new CustomScopeConfigurer();
-        configurer.setScopes(Collections.<String, Object>singletonMap(
-                FacesViewScope.NAME, new FacesViewScope()));
+		configurer.setScopes(Collections.<String, Object> singletonMap(FacesViewScope.NAME, new FacesViewScope()));
 		return configurer;
 	}
-	
+
 	@Bean
 	public ServletContextInitializer servletContextCustomizer() {
-	    return new ServletContextInitializer() {
-            @Override
-            public void onStartup(ServletContext sc) throws ServletException {
-                sc.setInitParameter(Constants.ContextParams.THEME, "bootstrap");
-                sc.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
-                sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Development.name());
-//                sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Production.name());
-            }
-	    };
+		return new ServletContextInitializer() {
+			@Override
+			public void onStartup(ServletContext sc) throws ServletException {
+				sc.setInitParameter(Constants.ContextParams.THEME, "bootstrap");
+				sc.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
+				sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Development.name());
+				// sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Production.name());
+			}
+		};
 	}
-    
+
 	/**
 	 * This bean is only needed when running with embedded Tomcat.
 	 */
-    @Bean
-    @ConditionalOnMissingBean(NonEmbeddedServletContainerFactory.class)
-    public EmbeddedServletContainerFactory embeddedServletContainerFactory() {
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-        
-        tomcat.addContextCustomizers(new TomcatContextCustomizer() {
-            @Override
-            public void customize(Context context) {
-                // register FacesInitializer
-                context.addServletContainerInitializer(new FacesInitializer(),
-                        getServletContainerInitializerHandlesTypes(FacesInitializer.class));
-                
-                // add configuration from web.xml
-                context.addWelcomeFile("index.xhtml");
-                
-                // register additional mime-types that Spring Boot doesn't register
-                context.addMimeMapping("eot", "application/vnd.ms-fontobject");
-                context.addMimeMapping("ttf", "application/x-font-ttf");
-                context.addMimeMapping("woff", "application/x-font-woff");
-                context.addMimeMapping("woff2", "application/fontawesome-webfont.woff2");
-            }
-        });
-        
-        return tomcat;
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private Set<Class<?>> getServletContainerInitializerHandlesTypes(Class<? extends ServletContainerInitializer> sciClass) {
-        HandlesTypes annotation = sciClass.getAnnotation(HandlesTypes.class);
-        if (annotation == null) {
-            return Collections.emptySet();
-        }
-        
-        Class[] classesArray = annotation.value();
-        Set<Class<?>> classesSet = new HashSet<Class<?>>(classesArray.length);
-        for (Class clazz: classesArray) {
-            classesSet.add(clazz);
-        }
-        
-        return classesSet;
-    }
+	@Bean
+	@ConditionalOnMissingBean(NonEmbeddedServletContainerFactory.class)
+	public EmbeddedServletContainerFactory embeddedServletContainerFactory() {
+		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+
+		tomcat.addContextCustomizers(new TomcatContextCustomizer() {
+			@Override
+			public void customize(Context context) {
+				// register FacesInitializer
+				context.addServletContainerInitializer(new FacesInitializer(),
+						getServletContainerInitializerHandlesTypes(FacesInitializer.class));
+
+				// add configuration from web.xml
+				context.addWelcomeFile("index.xhtml");
+
+				// register additional mime-types that Spring Boot doesn't register
+				context.addMimeMapping("eot", "application/vnd.ms-fontobject");
+				context.addMimeMapping("ttf", "application/x-font-ttf");
+				context.addMimeMapping("woff", "application/x-font-woff");
+				context.addMimeMapping("woff2", "application/fontawesome-webfont.woff2");
+			}
+		});
+
+		return tomcat;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private Set<Class<?>> getServletContainerInitializerHandlesTypes(
+			Class<? extends ServletContainerInitializer> sciClass) {
+		HandlesTypes annotation = sciClass.getAnnotation(HandlesTypes.class);
+		if (annotation == null) {
+			return Collections.emptySet();
+		}
+
+		Class[] classesArray = annotation.value();
+		Set<Class<?>> classesSet = new HashSet<Class<?>>(classesArray.length);
+		for (Class clazz : classesArray) {
+			classesSet.add(clazz);
+		}
+
+		return classesSet;
+	}
 
 	@Override
 	public void run(String... arg0) throws Exception {
-//		User user = new User();
-//		user.setUsername("pepe");
-//		user.setPassword("pepe");
-//		user.setEstado(EstadoEnum.ACTIVO);
-//		user.setNombre("Nombre");
-//		user.setApellido1("apellido1");
-//		user.setDocIndentidad("111111111");
-//		user.setCorreo("correo@correo.es");
-//		user.setRole(RoleEnum.ADMIN);
-//		user.setNumIdentificacion("555555555");
-//		user.setEnvioNotificacion("SI");
-//		CuerpoEstado cuerpoEstado = new CuerpoEstado();
-//		cuerpoEstado.setId(1);
-//		user.setCuerpoEstado(cuerpoEstado);
-//		PuestoTrabajo puestoTrabajo = new PuestoTrabajo();
-//		puestoTrabajo.setId(2);
-//		user.setPuestoTrabajo(puestoTrabajo);
-//		user.setNivel(20);
-//		user.setFechaDestinoIPSS(new Date());
-//		user.setFechaAlta(new Date());
-//		user.setUsernameAlta("userAlta");
-//		IUserService userService = new UserService();
-//		//userService.save(user);
-//		System.out.println(repository.findAll());
-//		repository.save(user);
+		// User user = new User();
+		// user.setUsername("pepe");
+		// user.setPassword("pepe");
+		// user.setEstado(EstadoEnum.ACTIVO);
+		// user.setNombre("Nombre");
+		// user.setApellido1("apellido1");
+		// user.setDocIndentidad("111111111");
+		// user.setCorreo("correo@correo.es");
+		// user.setRole(RoleEnum.ADMIN);
+		// user.setNumIdentificacion("555555555");
+		// user.setEnvioNotificacion("SI");
+		// CuerpoEstado cuerpoEstado = new CuerpoEstado();
+		// cuerpoEstado.setId(1);
+		// user.setCuerpoEstado(cuerpoEstado);
+		// PuestoTrabajo puestoTrabajo = new PuestoTrabajo();
+		// puestoTrabajo.setId(2);
+		// user.setPuestoTrabajo(puestoTrabajo);
+		// user.setNivel(20);
+		// user.setFechaDestinoIPSS(new Date());
+		// user.setFechaAlta(new Date());
+		// user.setUsernameAlta("userAlta");
+		// IUserService userService = new UserService();
+		// //userService.save(user);
+		// System.out.println(repository.findAll());
+		// repository.save(user);
 	}
-	
+
 }

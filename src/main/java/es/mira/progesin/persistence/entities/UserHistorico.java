@@ -5,6 +5,6 @@ import javax.persistence.Table;
 
 //@Entity
 //@Table(name="USER2", schema="historico")
-public class UserHistorico extends User{
+public class UserHistorico extends User {
 
 }

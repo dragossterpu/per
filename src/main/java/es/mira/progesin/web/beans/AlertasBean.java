@@ -22,15 +22,15 @@ import lombok.Setter;
 @Scope(FacesViewScope.NAME)
 public class AlertasBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	IAlertaService alertasService;
-	
+
 	private List<Alerta> listaAlertas = new ArrayList<Alerta>();
-   
-    @PostConstruct
-    public void init(){
-    	listaAlertas = (List<Alerta>) alertasService.findAll();
-    }
-    
+
+	@PostConstruct
+	public void init() {
+		listaAlertas = (List<Alerta>) alertasService.findAll();
+	}
+
 }

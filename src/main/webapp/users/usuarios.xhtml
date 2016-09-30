@@ -95,7 +95,9 @@
  			<p:dataTable  var="user" value="#{userBean.userBusqueda.listaUsuarios}"  rows="10" scrollable="true" scrollWidth="100%" id="tablaUsuarios"
                          draggableColumns="true"
                          paginator="true"
-                         rowsPerPageTemplate="5,10,15" style="width: 100%;">
+                         rowsPerPageTemplate="5,10,15" 
+                         resizableColumns="true"
+                         style="width: 100%;">
 				 <f:facet name="header">
 					Usuarios
 					 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>

@@ -18,6 +18,9 @@
 	opacity: inherit;
 }
 
+.ui-datatable-resizable thead th, .ui-datatable-resizable tbody td, .ui-datatable-resizable tfoot td {
+    white-space: normal;
+}
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {

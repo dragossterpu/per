@@ -7,11 +7,11 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 
 @Service
-public class CuerpoEstadoService implements ICuerpoEstadoService{
+public class CuerpoEstadoService implements ICuerpoEstadoService {
 
-	@Autowired 
+	@Autowired
 	ICuerpoEstadoRepository cuerpoEstadoRepository;
-	
+
 	public Iterable<CuerpoEstado> findAll() {
 		return cuerpoEstadoRepository.findAll();
 	}

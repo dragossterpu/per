@@ -7,13 +7,13 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 
 @Service
-public class PuestoTrabajoService implements IPuestoTrabajoService{
+public class PuestoTrabajoService implements IPuestoTrabajoService {
 
-	@Autowired 
+	@Autowired
 	IPuestoTrabajoRepository puestoTrabajoRepository;
-	
+
 	public Iterable<PuestoTrabajo> findAll() {
 		return puestoTrabajoRepository.findAll();
 	}
-	
+
 }

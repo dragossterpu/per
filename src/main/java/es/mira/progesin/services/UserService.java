@@ -20,9 +20,10 @@ import es.mira.progesin.web.beans.UserBusqueda;
 public class UserService implements IUserService {
 	@Autowired
 	IUserRepository userRepository;
-	@Autowired  
+
+	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Transactional(readOnly = false)
 	public void delete(String id) {
 		userRepository.delete(id);
@@ -70,18 +71,19 @@ public class UserService implements IUserService {
 	public User save(User entity) {
 		return userRepository.save(entity);
 	}
-	
-	public User findByParams(String correo,String nif) {
-		return userRepository.findByCorreoIgnoringCaseOrDocIndentidadIgnoringCase(correo,nif );
+
+	public User findByParams(String correo, String nif) {
+		return userRepository.findByCorreoIgnoringCaseOrDocIndentidadIgnoringCase(correo, nif);
 	}
-	public User findByCorreoOrDocIndentidad(String correo,String nif) {
-		return userRepository.findByCorreoOrDocIndentidad(correo,nif );
+
+	public User findByCorreoOrDocIndentidad(String correo, String nif) {
+		return userRepository.findByCorreoOrDocIndentidad(correo, nif);
 	}
-	
+
 	public User findByCorreo(String correo) {
 		return userRepository.findByCorreo(correo);
 	}
-	
+
 	@Override
 	public List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda) {
 		Session session = sessionFactory.openSession();
@@ -116,12 +118,12 @@ public class UserService implements IUserService {
 		}
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc("fechaAlta"));
-		
+
 		@SuppressWarnings("unchecked")
 		List<User> listaUsuarios = (List<User>) criteria.list();
 		session.close();
-		
+
 		return listaUsuarios;
 	}
-	
+
 }

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 
-public interface ICuerpoEstadoRepository  extends CrudRepository<CuerpoEstado, Integer>{
+public interface ICuerpoEstadoRepository extends CrudRepository<CuerpoEstado, Integer> {
 
 }
