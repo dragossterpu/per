@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -46,23 +44,10 @@ public class Equipo {
 	private String nombreEquipo;
 
 	@OneToOne
-	@JoinColumn(name = "username")
 	private User jefeEquipo;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "equipo_miembros", joinColumns = { @JoinColumn(name = "ID_EQUIPO") }, inverseJoinColumns = {
-			@JoinColumn(name = "ID_MIEMBROS") })
+	@OneToMany(mappedBy = "equipo", cascade = CascadeType.ALL)
 	private List<Miembros> miembros = new ArrayList<Miembros>();
-
-	// @OneToMany(cascade = CascadeType.ALL)
-	// @JoinTable(name = "usuarios_miembros", joinColumns = { @JoinColumn(name = "ID_EQUIPO") }, inverseJoinColumns = {
-	// @JoinColumn(name = "USERNAME") })
-	// private List<User> miembros = new ArrayList<User>();
-
-	// @OneToMany(cascade = CascadeType.ALL)
-	// @JoinTable(name = "usuarios_colaboradores", joinColumns = {
-	// @JoinColumn(name = "ID_EQUIPO") }, inverseJoinColumns = { @JoinColumn(name = "USERNAME") })
-	// private List<User> colaboradores = new ArrayList<User>();
 
 	@Column(name = "equipoEspecial", length = 2)
 	private String equipoEspecial;

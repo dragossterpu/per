@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IUserService;
@@ -45,7 +46,7 @@ public class EquiposBean implements Serializable {
 
 	private User jefeSelecionado;
 
-	private List<User> miembrosSelecionados;
+	private List<Miembros> miembrosSelecionados;
 
 	private List<User> colaboradoresSelecionados;
 
@@ -122,7 +123,7 @@ public class EquiposBean implements Serializable {
 
 		// TODO generar NOTIFICACIÓN
 		// TODO registrar actividad en log
-		return null;
+		return "/equipos/equipos";
 	}
 
 	public String getFormularioBusquedaEquipos() {
