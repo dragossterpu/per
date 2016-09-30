@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IUserService;
@@ -46,9 +45,7 @@ public class EquiposBean implements Serializable {
 
 	private User jefeSelecionado;
 
-	private List<Miembros> miembrosSelecionados;
-
-	private List<User> colaboradoresSelecionados;
+	private List<User> miembrosSelecionados;
 
 	List<User> listadoJefes = new ArrayList<User>();
 
@@ -57,9 +54,6 @@ public class EquiposBean implements Serializable {
 	List<User> listadoColaboradores = new ArrayList<User>();
 
 	private EquipoBusqueda equipoBusqueda;
-
-	@Autowired
-	ApplicationBean applicationBean;
 
 	@Autowired
 	IEquipoService equipoService;
@@ -73,6 +67,9 @@ public class EquiposBean implements Serializable {
 	 * @return
 	 */
 	public String nuevoEquipo() {
+		this.jefeSelecionado = null;
+		this.miembrosSelecionados = null;
+
 		equipo = new Equipo();
 		equipo.setFechaAlta(new Date());
 		equipo.setEquipoEspecial("NO");
@@ -106,13 +103,15 @@ public class EquiposBean implements Serializable {
 					"Se debe elegir un jefe de equipo");
 			FacesContext.getCurrentInstance().addMessage("eqipoJefes", message);
 		}
-		equipo.setJefeEquipo(jefeSelecionado);
-		equipo.setMiembros(miembrosSelecionados);
+
+		miembrosSelecionados.add(jefeSelecionado);
+		equipo.setJefeEquipo(jefeSelecionado.getUsername());
+		equipo.setListMiembros(miembrosSelecionados);
 		// equipo.setColaboradores(colaboradoresSelecionados);
 		equipo.setEquipoEspecial("NO");
-		equipo.setFechaAlta(new Date());
+		// equipo.setFechaAlta(new Date());
 		equipo.setNombreEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1());
-		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+		// equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (equipoService.save(equipo) != null) {
 			RequestContext context = RequestContext.getCurrentInstance();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
@@ -123,11 +122,11 @@ public class EquiposBean implements Serializable {
 
 		// TODO generar NOTIFICACIÓN
 		// TODO registrar actividad en log
-		return "/equipos/equipos";
+		return null;
 	}
 
 	public String getFormularioBusquedaEquipos() {
-		// equipoBusqueda.resetValues();
+		equipoBusqueda.resetValues();
 		return "/equipos/equipos";
 	}
 

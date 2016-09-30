@@ -42,6 +42,9 @@ public class Miembros {
 	@JoinColumn(name = "ID_EQUIPO")
 	private Equipo equipo;
 
+	// @OneToOne
+	// private User miembro;
+
 	@Column(name = "equipoEspecial", length = 2)
 	private String equipoEspecial;
 

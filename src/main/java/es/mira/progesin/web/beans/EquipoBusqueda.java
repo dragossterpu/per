@@ -29,8 +29,6 @@ public class EquipoBusqueda implements Serializable {
 
 	private List<User> miembros;
 
-	private List<User> colaboradores;
-
 	private List<Equipo> listaEquipos;
 
 	public void resetValues() {
@@ -41,7 +39,6 @@ public class EquipoBusqueda implements Serializable {
 		this.miembros = null;
 		this.nombreJefe = null;
 		this.nombreMiembro = null;
-		this.colaboradores = null;
 		this.listaEquipos = null;
 	}
 
