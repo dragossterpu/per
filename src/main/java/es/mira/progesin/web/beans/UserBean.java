@@ -74,7 +74,7 @@ public class UserBean {
 	 * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para mostrar
 	 * correctamente la página (cuerpos de estado, puestos de trabajo, usuario nuevo). Se llama desde la página de
 	 * búsqueda de usuarios.
-	 * @return
+	 * @return la página a mostrar
 	 */
 	public String nuevoUsuario() {
 		user = new User();
@@ -123,9 +123,10 @@ public class UserBean {
 	/**
 	 * Busca los usuarios según los filtros introducidos en el formulariod de búsqueda
 	 */
-	public void buscarUsuario() {
+	public String buscarUsuario() {
 		List<User> listaUsuarios = userService.buscarUsuarioCriteria(userBusqueda);
 		userBusqueda.setListaUsuarios(listaUsuarios);
+		return "/users/usuarios";
 	}
 
 	/**

@@ -10,9 +10,64 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h2>Cuerpos de estado</h2>
+			<h3>Cuerpos de estado</h3>
 
-		
+			<div class="bloqueFormulario" >
+				<h:form id="form">
+				
+					<p:growl id="msgs" showDetail="true"/>
+				
+					<p:dataTable id="tablaCuerpos" var="cuerpo" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
+						value="#{cuerposEstadoBean.listaCuerposEstado}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+						<p:ajax event="rowEdit" listener="#{cuerposEstadoBean.onRowEdit}"
+							update=":form:msgs" />
+						<p:ajax event="rowEditCancel" listener="#{cuerposEstadoBean.onRowCancel}"
+							update=":form:msgs" />
+
+						<p:column headerText="Cuerpo">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cuerpo.descripcion}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="cuerpoInput" value="#{cuerpo.descripcion}" converter="#{trimConverter}" required="true"
+										requiredMessage="El nombre del cuerpo no puede estar vacío" />
+										<p:messages for="cuerpoInput" autoUpdate="true"  closable="true"/>
+								</f:facet>
+							</p:cellEditor> 
+				       </p:column>
+
+						<p:column style="width:30px">
+							<p:rowEditor />
+						</p:column>
+						<p:column style="width:30px">
+							<p:commandButton title="Eliminar" icon="ui-icon-trash"
+								actionListener="#{cuerposEstadoBean.eliminarCuerpo(cuerpo)}"
+								update="tablaCuerpos">
+								<p:confirm header="Eliminar cuerpo del estado"
+									message="¿Está seguro que desea eliminar este cuerpo del estado?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					
+					<div class="botonesFormulario">
+						<p:button value="Nuevo cuerpo" outcome="/cuerpos/altaCuerpo" icon="fa fa-fw fa-user-plus"/>
+					</div>
+					
+					
+					<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</div>
+					</p:confirmDialog>
+					
+				</h:form>
+			</div>
+			
 		</ui:define>
 	</ui:composition>
 </f:view>

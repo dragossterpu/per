@@ -21,6 +21,16 @@
 .ui-datatable-resizable thead th, .ui-datatable-resizable tbody td, .ui-datatable-resizable tfoot td {
     white-space: normal;
 }
+
+.ui-widget {
+    font-size: 12px !important;
+}
+
+.ui-datatable-odd {
+    background: #f0f7ff;
+}
+
+
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {
