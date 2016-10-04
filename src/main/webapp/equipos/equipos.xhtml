@@ -33,79 +33,22 @@
 	
 						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
 						<p:calendar value="#{equiposBean.equipoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
-						
+						<p:outputLabel for="estado" value="Estado equipo: " />
+					        <p:selectOneMenu id="estado" value="#{equiposBean.estado}" effect="fold" >
+					            <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+					             <f:selectItem itemLabel="Inactivo" itemValue="INACTIVO" />
+					            <f:selectItem itemLabel="Activo" itemValue="ACTIVO" />
+					        </p:selectOneMenu>
 					</div>
 			</div>
 				<br></br>
-						<p:commandButton action="#{equiposBean.equipoBusqueda}" value="Buscar" update="tablaEquipos" icon="ui-icon-search"/>
-						<p:commandButton value="Borrar" update=":busquedaEquipos" immediate="true">
+						<p:commandButton action="#{equiposBean.buscarEquipo}" value="Buscar"  icon="ui-icon-search"/>
+						<p:commandButton value="Limpiar" update=":busquedaEquipos" immediate="true" icon="fa fa-fw fa-eraser">
                     		<p:resetInput target=":busquedaEquipos" />
                 		</p:commandButton>
 						<p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/>
  		</h:form>
-		<div id="listadoEquipos">
- 			<p:dataTable id="tablaEquipos" var="user" value="#{equiposBean.equipoBusqueda.listaEquipos}" paginator="true" rows="8">
-				<f:facet name="header">
-					Usuarios
-				</f:facet>
-				<p:column>
-					<f:facet name="header">
-						Fecha alta
-					</f:facet>
-<!-- 					<h:outputText value="#{user.fechaAlta}"> -->
-<!-- 						<f:convertDateTime pattern="dd/MM/yyyy" /> -->
-<!-- 					</h:outputText> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Usuario" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.username}" /> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Nombre" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.nombre}" /> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Primer apellido" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.apellido1}" /> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Segundo apellido" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.apellido2}" /> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Estado" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.estado}" /> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Cuerpo" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.cuerpoEstado.descripcion}" /> -->
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Puesto trabajo" />
-					</f:facet>
-<!-- 					<h:outputText value="#{user.puestoTrabajo.descripcion}" /> -->
-				</p:column>
-<!-- 				<p:column> -->
-<!-- 					<p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios"/> -->
-<!-- 				</p:column> -->
-<!-- 				<p:column> -->
-<!-- 					<p:commandButton title="Modificar usuario" icon="fa fa-fw fa-edit" action="#{userBean.modificarUsuario(user)}" update="tablaUsuarios"/> -->
-<!-- 				</p:column> -->
-			</p:dataTable>
-		</div>
+	
 		
 		</ui:define>
 		<script>

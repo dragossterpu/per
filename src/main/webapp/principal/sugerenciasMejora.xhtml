@@ -36,10 +36,10 @@
 				    <p:inputTextarea rows="8" cols="25" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="true"  value="#{sugerenciasBean.descripcion}"/>
 				    <h:outputText id="display" value="#{sugerenciasBean.descripcion}" />
 			   <br></br><br></br>
-			  		<p:commandButton action="#{sugerenciasBean.guardarSugerencia}"
+			  		<p:commandButton action="#{sugerenciasBean.guardarSugerencia}" icon="fa fa-fw fa-save"
 						value="Guardar" />&nbsp;&nbsp;&nbsp;
 
-					<p:commandButton value="Limpiar" update="sugerenciaForm"
+					<p:commandButton value="Limpiar" update="sugerenciaForm" icon="fa fa-fw fa-eraser"
 						process="@this">
 						<p:resetInput target="sugerenciaForm" />
 			 		 </p:commandButton>
