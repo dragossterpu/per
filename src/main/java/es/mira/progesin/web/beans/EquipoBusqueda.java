@@ -31,12 +31,15 @@ public class EquipoBusqueda implements Serializable {
 
 	private List<Equipo> listaEquipos;
 
+	private String estado;
+
 	public void resetValues() {
 		this.fechaDesde = null;
 		this.fechaHasta = null;
 		this.nombreEquipo = null;
 		this.jefeEquipo = null;
 		this.miembros = null;
+		this.estado = null;
 		this.nombreJefe = null;
 		this.nombreMiembro = null;
 		this.listaEquipos = null;

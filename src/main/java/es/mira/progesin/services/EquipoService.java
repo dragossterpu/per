@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
+import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 @Service
@@ -23,53 +25,40 @@ public class EquipoService implements IEquipoService {
 	IEquipoRepository equipoRepository;
 
 	@Autowired
+	IMiembrosRepository miembrosRepository;
+
+	@Autowired
 	private SessionFactory sessionFactory;
-
-	// @Override
-	// @Transactional(readOnly = false)
-	// public void delete(Integer id) {
-	// equipoRepository.delete(id);
-	// }
-	//
-	// @Override
-	// @Transactional(readOnly = false)
-	// public void delete(Equipo entity) {
-	// equipoRepository.delete(entity);
-	// }
-
-	// @Override
-	// public boolean exists(Integer id) {
-	// return equipoRepository.exists(id);
-	// }
 
 	@Override
 	public Iterable<Equipo> findAll() {
 		return equipoRepository.findAll();
 	}
 
-	// @Override
-	// public Equipo findOne(Integer id) {
-	// return equipoRepository.findOne(id);
-	// }
-
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = true)
 	public Iterable<Equipo> save(Iterable<Equipo> entities) {
 		return equipoRepository.save(entities);
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+
 	public Equipo save(Equipo entity) {
 		return equipoRepository.save(entity);
 	}
 
-	// @Override
-	// public Equipo findByEquipoEspecial(String equipoEspecial) {
-	// return equipoRepository.findByEquipoEspecial(equipoEspecial);
-	// }
+	@Override
+	public Miembros save(Miembros miembro) {
+		return miembrosRepository.save(miembro);
+	}
 
 	@Override
+	public List<Miembros> findByIdMiembros(Integer idMiembros) {
+		return miembrosRepository.findByIdMiembros(idMiembros);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Equipo.class);
@@ -80,16 +69,20 @@ public class EquipoService implements IEquipoService {
 		if (equipoBusqueda.getFechaHasta() != null) {
 			criteria.add(Restrictions.lt("fechaAlta", equipoBusqueda.getFechaHasta()));
 		}
-		if (equipoBusqueda.getJefeEquipo() != null && equipoBusqueda.getJefeEquipo().getUsername().isEmpty() == false) {
-			criteria.add(
-					Restrictions.ilike("jefeEquipo", equipoBusqueda.getJefeEquipo().getUsername(), MatchMode.ANYWHERE));
+		if (equipoBusqueda.getNombreJefe() != null && equipoBusqueda.getNombreJefe().isEmpty() == false) {
+			criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
 		}
 		if (equipoBusqueda.getNombreEquipo() != null && equipoBusqueda.getNombreEquipo().isEmpty() == false) {
-			criteria.add(Restrictions.ilike("username", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
 		}
-
-		criteria.add(Restrictions.isNull("fechaBaja"));
-		criteria.addOrder(Order.desc("fechaAlta"));
+		if (equipoBusqueda.getEstado().equals("INACTIVO")) {
+			criteria.add(Restrictions.isNotNull("fechaBaja"));
+			criteria.addOrder(Order.desc("fechaBaja"));
+		}
+		else {
+			criteria.add(Restrictions.isNull("fechaBaja"));
+			criteria.addOrder(Order.desc("fechaAlta"));
+		}
 
 		List<Equipo> listEquipos = criteria.list();
 		session.close();

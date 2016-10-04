@@ -1,14 +1,12 @@
 package es.mira.progesin.persistence.entities;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -48,9 +46,6 @@ public class Equipo {
 	@Column(name = "jefeEquipo", length = 100, nullable = false)
 	private String jefeEquipo;
 
-	@OneToMany
-	private List<User> listMiembros;
-
 	@Column(name = "equipoEspecial", length = 2)
 	private String equipoEspecial;
 
@@ -69,5 +64,8 @@ public class Equipo {
 	@LastModifiedBy
 	@Column(name = "username_baja", length = 12)
 	private String usernameBaja;
+
+	@Column(name = "nombreJefe", length = 150)
+	private String nombreJefe;
 
 }
