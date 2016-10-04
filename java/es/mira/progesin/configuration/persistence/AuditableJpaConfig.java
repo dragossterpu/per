@@ -13,6 +13,6 @@ public class AuditableJpaConfig {
 
 	@Bean
 	public AuditorAware<String> auditorProvider() {
-	   return new UsernameSecurityAuditorAwareImpl();
+		return new UsernameSecurityAuditorAwareImpl();
 	}
 }

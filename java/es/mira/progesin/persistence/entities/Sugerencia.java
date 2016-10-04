@@ -28,8 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="SUGERENCIA", schema="public")
-
+@Table(name = "SUGERENCIA", schema = "public")
 
 public class Sugerencia implements Serializable {
 
@@ -54,9 +53,8 @@ public class Sugerencia implements Serializable {
 
 	@Column(name = "FECHA_BAJA")
 	private Date fechaBaja;
-	
+
 	@Column(name = "USUARIO_BAJA", length = 50)
 	private String usuarioBaja;
 
-	
 }

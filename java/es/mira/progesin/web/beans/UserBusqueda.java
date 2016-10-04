@@ -12,30 +12,36 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Setter
 @Getter
-public class UserBusqueda implements Serializable{
+public class UserBusqueda implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Date fechaDesde;
+
 	private Date fechaHasta;
+
 	private String username;
+
 	private String nombre;
+
 	private String apellido1;
-	private	RoleEnum role;
+
+	private RoleEnum role;
+
 	private EstadoEnum estado;
+
 	private CuerpoEstado cuerpoEstado;
+
 	private PuestoTrabajo puestoTrabajo;
-	
-	
+
 	private List<User> listaUsuarios;
-	
+
 	/**
 	 * Resetea los valores del formulario de búsqueda de usuarios
 	 */
-	public void resetValues(){
+	public void resetValues() {
 		this.fechaDesde = null;
 		this.fechaHasta = null;
 		this.username = null;
@@ -47,5 +53,5 @@ public class UserBusqueda implements Serializable{
 		this.listaUsuarios = null;
 		this.estado = null;
 	}
-	
+
 }

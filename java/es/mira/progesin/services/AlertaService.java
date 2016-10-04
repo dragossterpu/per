@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.repositories.IAlertaRepository;
 
-
 @Service
 public class AlertaService implements IAlertaService {
 	@Autowired
@@ -18,7 +17,6 @@ public class AlertaService implements IAlertaService {
 		alertaRepository.delete(id);
 	}
 
-
 	@Transactional(readOnly = false)
 	public void deleteAll() {
 		alertaRepository.deleteAll();
@@ -28,7 +26,7 @@ public class AlertaService implements IAlertaService {
 		return alertaRepository.exists(id);
 	}
 
-	public  Iterable<Alerta> findAll() {
+	public Iterable<Alerta> findAll() {
 		return alertaRepository.findAll();
 	}
 

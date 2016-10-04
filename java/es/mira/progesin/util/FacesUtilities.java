@@ -25,12 +25,13 @@ public class FacesUtilities {
 		String url = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, pagina));
 
 		try {
-		     extContext.redirect(url);
-		} catch (IOException ioe) {
-		    throw new FacesException(ioe);
+			extContext.redirect(url);
+		}
+		catch (IOException ioe) {
+			throw new FacesException(ioe);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param severity

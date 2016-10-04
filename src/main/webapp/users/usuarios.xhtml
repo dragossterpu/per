@@ -70,79 +70,85 @@
 					</div>
 			</div>
 			<div class="botonesFormulario">
-				<p:commandButton action="#{userBean.buscarUsuario}" value="Buscar" update="tablaUsuarios" icon="ui-icon-search" />
+				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="ui-icon-search" />
 	            <p:commandButton action="#{userBean.getFormularioBusquedaUsuarios}" value="Borrar" update="busquedaUsers" icon="fa fa-fw fa-eraser" />
 				<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" icon="fa fa-fw fa-user-plus"/>
 			</div>
 			
- 		<div id="listadoUsuarios">
- 		 	<h:commandLink>
-               <p:graphicImage  value="/images/xls.png" />
-               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
-            </h:commandLink>
-            <h:commandLink>
-               <p:graphicImage  value="/images/pdf.png" />
-               <p:dataExporter type="pdf" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
-            </h:commandLink>
-            <h:commandLink>
-               <p:graphicImage  value="/images/csv.png" />
-               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
-            </h:commandLink>
-            <h:commandLink>
-            	<p:graphicImage  value="/images/imprimir.jpg" />
-            	<p:printer target="busquedaUsers" />
-            </h:commandLink>
- 			<p:dataTable  var="user" value="#{userBean.userBusqueda.listaUsuarios}"  rows="10" scrollable="true" scrollWidth="100%" id="tablaUsuarios"
-                         draggableColumns="true"
-                         paginator="true"
-                         rowsPerPageTemplate="5,10,15" style="width: 100%;">
-				 <f:facet name="header">
-					Usuarios
-					 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>
-        			 <p:columnToggler datasource="tablaUsuarios" trigger="toggler">
-        			 	  <p:ajax event="toggle" listener="#{userBean.onToggle}" />
-        			 </p:columnToggler>
-				</f:facet>
-				<p:column headerText="Fecha alta" sortBy="#{user.fechaAlta}" width="70" visible="#{userBean.list[0]}" exportable="#{userBean.list[0]}">
-					<h:outputText value="#{user.fechaAlta}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Usuario" sortBy="#{user.username}" width="70" visible="#{userBean.list[1]}" exportable="#{userBean.list[1]}">
-					<h:outputText value="#{user.username}" />
-				</p:column>
-				<p:column headerText="Nombre" sortBy="#{user.nombre}"  width="70" visible="#{userBean.list[2]}" exportable="#{userBean.list[2]}">
-					<h:outputText value="#{user.nombre}" />
-				</p:column>
-				<p:column headerText="Primer apellido" sortBy="#{user.apellido1}" width="100" visible="#{userBean.list[3]}" exportable="#{userBean.list[3]}">
-					<h:outputText value="#{user.apellido1}" />
-				</p:column>
-				<p:column headerText="Segundo apellido" sortBy="#{user.apellido2}" width="110" visible="#{userBean.list[4]}" exportable="#{userBean.list[4]}">
-					<h:outputText value="#{user.apellido2}" />
-				</p:column>
-				<p:column headerText="Estado" sortBy="#{user.estado}">
-					<h:outputText value="#{user.estado}" />
-				</p:column>
-				<p:column headerText="Cuerpo estado" sortBy="#{user.cuerpoEstado.descripcion}" width="110" visible="#{userBean.list[5]}" exportable="#{userBean.list[5]}">
-					<h:outputText value="#{user.cuerpoEstado.descripcion}" />
-				</p:column>
-				<p:column headerText="Puesto trabajo" sortBy="#{user.puestoTrabajo.descripcion}" width="110" visible="#{userBean.list[6]}" exportable="#{userBean.list[6]}">
-					<h:outputText value="#{user.puestoTrabajo.descripcion}" />
-				</p:column>
-				<p:column width="30" exportable="false">
-					<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios">
-						<p:confirm header="Eliminar usuario" message="¿Está seguro que desea eliminar este usuario?" icon="ui-icon-alert"/>
-					</p:commandButton>
-				</p:column>
-				<p:column width="30" exportable="false"> 
-					<p:commandButton title="Modificar usuario" icon="fa fa-fw fa-edit" action="#{userBean.getFormModificarUsuario(user)}" update="tablaUsuarios"/>
-				</p:column>
-				
-				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{fn:length(userBean.userBusqueda.listaUsuarios)} usuarios.
-    			</f:facet>
-			</p:dataTable>
-		</div>
+ 			<p:outputPanel layout="block" id="panelUsuarios" >
+ 				<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
+	 				<h:commandLink>
+		               <p:graphicImage  value="/images/xls.png" />
+		               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/pdf.png" />
+		               <p:dataExporter type="pdf" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/csv.png" />
+		               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		            	<p:graphicImage  value="/images/imprimir.jpg" />
+		            	<p:printer target="busquedaUsers" />
+		            </h:commandLink>
+	            </p:outputPanel>
+	 			<p:dataTable  var="user" value="#{userBean.userBusqueda.listaUsuarios}"  rows="10" id="tablaUsuarios"
+	                         draggableColumns="true"
+	                         paginator="true"
+	                         rowsPerPageTemplate="5,10,15" 
+	                         resizableColumns="true"
+	                         rendered="#{not empty userBean.userBusqueda.listaUsuarios}"
+	                         style="">
+					 <f:facet name="header">
+						Usuarios
+						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>
+	        			 <p:columnToggler datasource="tablaUsuarios" trigger="toggler">
+	        			 	  <p:ajax event="toggle" listener="#{userBean.onToggle}" />
+	        			 </p:columnToggler>
+					</f:facet>
+					<p:column headerText="Fecha alta" sortBy="#{user.fechaAlta}" width="70" visible="#{userBean.list[0]}" exportable="#{userBean.list[0]}">
+						<h:outputText value="#{user.fechaAlta}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Usuario" sortBy="#{user.username}" width="70" visible="#{userBean.list[1]}" exportable="#{userBean.list[1]}">
+						<h:outputText value="#{user.username}" />
+					</p:column>
+					<p:column headerText="Nombre" sortBy="#{user.nombre}"  width="70" visible="#{userBean.list[2]}" exportable="#{userBean.list[2]}">
+						<h:outputText value="#{user.nombre}" />
+					</p:column>
+					<p:column headerText="Primer apellido" sortBy="#{user.apellido1}" width="100" visible="#{userBean.list[3]}" exportable="#{userBean.list[3]}">
+						<h:outputText value="#{user.apellido1}" />
+					</p:column>
+					<p:column headerText="Segundo apellido" sortBy="#{user.apellido2}" width="110" visible="#{userBean.list[4]}" exportable="#{userBean.list[4]}">
+						<h:outputText value="#{user.apellido2}" />
+					</p:column>
+					<p:column headerText="Estado" sortBy="#{user.estado}"  width="80" visible="#{userBean.list[5]}" exportable="#{userBean.list[5]}">
+						<h:outputText value="#{user.estado}" />
+					</p:column>
+					<p:column headerText="Cuerpo estado" sortBy="#{user.cuerpoEstado.descripcion}" width="110" visible="#{userBean.list[6]}" exportable="#{userBean.list[6]}">
+						<h:outputText value="#{user.cuerpoEstado.descripcion}" />
+					</p:column>
+					<p:column headerText="Puesto trabajo" sortBy="#{user.puestoTrabajo.descripcion}" width="110" visible="#{userBean.list[7]}" exportable="#{userBean.list[7]}">
+						<h:outputText value="#{user.puestoTrabajo.descripcion}" />
+					</p:column>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios">
+							<p:confirm header="Eliminar usuario" message="¿Está seguro que desea eliminar este usuario?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>
+					<p:column width="30" exportable="false"> 
+						<p:commandButton title="Modificar usuario" icon="fa fa-fw fa-edit" action="#{userBean.getFormModificarUsuario(user)}" update="tablaUsuarios"/>
+					</p:column>
+					
+					<f:facet name="footer">
+	       				 Resultado de la búsqueda: #{fn:length(userBean.userBusqueda.listaUsuarios)} usuarios.
+	    			</f:facet>
+				</p:dataTable>
+			</p:outputPanel>
+			<!-- </h:panelGroup> -->
 </h:form>
 
 		<p:confirmDialog global="true">
