@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.repositories.ISugerenciaRepository;
 
-
 @Service
 public class SugerenciaService implements ISugerenciaService {
 	@Autowired
@@ -20,13 +19,14 @@ public class SugerenciaService implements ISugerenciaService {
 		sugerenciaRepository.delete(id);
 	}
 
-	public  Iterable<Sugerencia> findAll() {
+	public Iterable<Sugerencia> findAll() {
 		return sugerenciaRepository.findByFechaBajaIsNull();
 	}
 
-	public  Sugerencia findOne(Integer id) {
+	public Sugerencia findOne(Integer id) {
 		return sugerenciaRepository.findOne(id);
 	}
+
 	@Transactional(readOnly = false)
 	public Sugerencia save(Sugerencia entity) {
 		return sugerenciaRepository.save(entity);

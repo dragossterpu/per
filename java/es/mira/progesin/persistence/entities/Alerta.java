@@ -1,4 +1,5 @@
 package es.mira.progesin.persistence.entities;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="ALERTAS", schema="public")
+@Table(name = "ALERTAS", schema = "public")
 public class Alerta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,5 +53,4 @@ public class Alerta implements Serializable {
 	@Column(name = "TIPO_ALERTA", length = 20)
 	private String tipoAlerta;
 
-	
 }

@@ -25,16 +25,16 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name="PUESTOSTRABAJO", schema="public")
+@Table(name = "PUESTOSTRABAJO", schema = "public")
 public class PuestoTrabajo implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ID", length = 2)
-	private Integer	id;
-	
+	private Integer id;
+
 	@Column(name = "DESCRIPCION", length = 100)
 	private String descripcion;
 
