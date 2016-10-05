@@ -11,6 +11,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -51,7 +53,9 @@ public class EquiposBean implements Serializable {
 
 	private List<User> miembrosSelecionados;
 
-	// private Miembros listMiembros;
+	private List<User> colaboradoresSelecionados;
+
+	private List<Boolean> list;
 
 	private List<User> miembros;
 
@@ -59,13 +63,17 @@ public class EquiposBean implements Serializable {
 
 	private String estado = null;
 
+	private Boolean equipoEspecial;
+
 	Miembros miembro = new Miembros();
 
 	List<User> listadoJefes = new ArrayList<User>();
 
 	List<User> listadoMiembros = new ArrayList<User>();
 
-	List<User> listadoColaboradores = new ArrayList<User>();
+	List<User> listadoColaboradores;
+
+	private int numeroColumnasListadoEquipos = 5;
 
 	private EquipoBusqueda equipoBusqueda;
 
@@ -83,16 +91,19 @@ public class EquiposBean implements Serializable {
 	public String nuevoEquipo() {
 		this.jefeSelecionado = null;
 		this.miembrosSelecionados = null;
-
+		this.equipo = null;
 		equipo = new Equipo();
 		equipo.setFechaAlta(new Date());
-		equipo.setEquipoEspecial("NO");
+		if (equipoEspecial) {
+			equipo.setEquipoEspecial("SI");
+		}
+		else {
+			equipo.setEquipoEspecial("NO");
+		}
 		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		List<User> listaUsuarios = (List<User>) userService.findAll();
-		listadoJefes = new ArrayList<User>();
-		listadoMiembros = new ArrayList<User>();
-		listadoColaboradores = new ArrayList<User>();
+		nuevosListados();
 		for (User user : listaUsuarios) {
 			if (user.getPuestoTrabajo().getId() == 6) {
 				listadoJefes.add(user);
@@ -117,12 +128,9 @@ public class EquiposBean implements Serializable {
 					"Se debe elegir un jefe de equipo");
 			FacesContext.getCurrentInstance().addMessage("eqipoJefes", message);
 		}
-
-		miembrosSelecionados.add(jefeSelecionado);
 		equipo.setJefeEquipo(jefeSelecionado.getUsername());
 		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
-		equipo.setEquipoEspecial("NO");
 		equipo.setNombreEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1());
 		if (equipoService.save(equipo) != null) {
 			RequestContext context = RequestContext.getCurrentInstance();
@@ -131,22 +139,11 @@ public class EquiposBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 			context.execute("PF('dialogMessage').show()");
 		}
-		Miembros miembro = new Miembros();
-		miembro.setIdMiembros(equipo.getIdEquipo());
-		miembro.setNombreCompleto(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
-				+ jefeSelecionado.getApellido2());
-		miembro.setUsername(jefeSelecionado.getUsername());
-		miembro.setPosicion("Jefe de equipo");
-		equipoService.save(miembro);
-		for (User user : miembrosSelecionados) {
-			Miembros miembro2 = new Miembros();
-			miembro2.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-			miembro2.setIdMiembros(equipo.getIdEquipo());
-			miembro2.setUsername(user.getUsername());
-			miembro2.setPosicion("Miembro");
-			equipoService.save(miembro2);
-		}
+		// alta en la tabla miembros de un equipo
+		altaJefeEquipo();
+		altaMiembrosEquipo();
 
+		this.equipoEspecial = false;
 		// TODO generar NOTIFICACIÓN
 		// TODO registrar actividad en log
 		return null;
@@ -154,30 +151,25 @@ public class EquiposBean implements Serializable {
 
 	public String getFormularioBusquedaEquipos() {
 		equipoBusqueda.resetValues();
+		this.estado = null;
 		return "/equipos/equipos";
 	}
 
 	public String buscarEquipo() {
-		limpiarValores();
-		equipoBusqueda.resetValues();
-		equipoBusqueda.setListaEquipos(null);
-		if (estado.equals("") || estado.equals("ACTIVO")) {
-			equipoBusqueda.setEstado("ACTIVO");
-		}
-		else {
-			equipoBusqueda.setEstado("INACTIVO");
-		}
-		listaEquipos = equipoService.buscarEquipoCriteria(equipoBusqueda);
+
+		List<Equipo> listaEquipos = equipoService.buscarEquipoCriteria(equipoBusqueda);
 		for (Equipo equipo : listaEquipos) {
 			User user = userService.findOne(equipo.getJefeEquipo());
 			equipo.setNombreJefe(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 		}
 		equipoBusqueda.setListaEquipos(listaEquipos);
-		return "/equipos/listadoEquipos";
+		return "/equipos/equipos";
 	}
 
 	public String limpiarValores() {
-		equipoBusqueda.resetValues();
+		this.equipoEspecial = false;
+		// limpiamos los datos del formulario
+		this.miembrosSelecionados = null;
 		return null;
 	}
 
@@ -186,7 +178,7 @@ public class EquiposBean implements Serializable {
 		equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		equipoService.save(equipo);
 		equipoBusqueda.getListaEquipos().remove(equipo);
-		return "/equipos/listadoEquipos";
+		return "/equipos/equipos";
 	}
 
 	/**
@@ -196,17 +188,14 @@ public class EquiposBean implements Serializable {
 	 * @return
 	 */
 	public String getFormModificarEquipo(Equipo equipo) {
+		this.listMiembros = null;
+		this.listadoColaboradores = null;
 		listMiembros = new ArrayList<Miembros>();
 		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
 		listMiembros = equipoService.findByIdMiembros(equipo.getIdEquipo());
-		equipo.setJefeEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
+		equipo.setJefeEquipo(jefeSelecionado.getUsername());
+		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
-		// for (Miembros listado : listMiembros) {
-		//
-		// User user = userService.findOne(listado.getUsername());
-		// listadoMiembros.add(user);
-		// }
-
 		this.equipo = equipo;
 		return "/equipos/modificarEquipo";
 	}
@@ -215,9 +204,92 @@ public class EquiposBean implements Serializable {
 	 * Modifica los datos de un equipo en función de los valores recuperados del formulario
 	 */
 	public void modificarEquipo() {
+		this.listadoColaboradores = null;
 		if (equipoService.save(equipo) != null) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 					"El equipo ha sido modificado con éxito");
+		}
+	}
+
+	public String aniadirMiembro(Equipo equipo) {
+		return "/equipos/equipos";
+	}
+
+	public String borrarMiembro(Equipo equipo) {
+		return "/equipos/equipos";
+	}
+
+	public String aniadirColaborador() {
+		this.listadoColaboradores = null;
+		colaboradoresSelecionados = null;
+		listadoColaboradores = new ArrayList<User>();
+		List<User> listaUsuarios = (List<User>) userService.findAll();
+		for (User user : listaUsuarios) {
+			if (user.getPuestoTrabajo().getId() != 6 || user.getPuestoTrabajo().getId() != 7) {
+				listadoColaboradores.add(user);
+			}
+		}
+		return "/equipos/anadirColaboradorEquipo";
+	}
+
+	public String guardarColaborador() {
+
+		for (User user : colaboradoresSelecionados) {
+			Miembros miembro = new Miembros();
+			miembro.setIdMiembros(equipo.getIdEquipo());
+			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
+			miembro.setUsername(user.getUsername());
+			miembro.setPosicion("Colaborador");
+			equipoService.save(miembro);
+		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+				"Colaborador/es añadido/s con éxito");
+		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+		context.execute("PF('dialogMessage').show()");
+		return null;
+	}
+
+	public void onToggle(ToggleEvent e) {
+		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+	}
+
+	/**
+	 * 
+	 */
+	private void nuevosListados() {
+		this.listadoJefes = null;
+		listadoJefes = new ArrayList<User>();
+		this.listadoMiembros = null;
+		listadoMiembros = new ArrayList<User>();
+		this.listadoColaboradores = null;
+		listadoColaboradores = new ArrayList<User>();
+	}
+
+	/**
+	 * 
+	 */
+	private void altaJefeEquipo() {
+		Miembros miembro = new Miembros();
+		miembro.setIdMiembros(equipo.getIdEquipo());
+		miembro.setNombreCompleto(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
+				+ jefeSelecionado.getApellido2());
+		miembro.setUsername(jefeSelecionado.getUsername());
+		miembro.setPosicion("Jefe de equipo");
+		equipoService.save(miembro);
+	}
+
+	/**
+	 * 
+	 */
+	private void altaMiembrosEquipo() {
+		for (User user : miembrosSelecionados) {
+			Miembros miembro2 = new Miembros();
+			miembro2.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
+			miembro2.setIdMiembros(equipo.getIdEquipo());
+			miembro2.setUsername(user.getUsername());
+			miembro2.setPosicion("Miembro");
+			equipoService.save(miembro2);
 		}
 	}
 
@@ -225,7 +297,13 @@ public class EquiposBean implements Serializable {
 	public void init() {
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
 		estado = null;
+		this.equipo = null;
+		this.equipoEspecial = false;
 		equipoBusqueda = new EquipoBusqueda();
-
+		equipoBusqueda.resetValues();
+		list = new ArrayList<>();
+		for (int i = 0; i <= numeroColumnasListadoEquipos; i++) {
+			list.add(Boolean.TRUE);
+		}
 	}
 }
