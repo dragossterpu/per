@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
@@ -20,41 +21,50 @@ import es.mira.progesin.web.beans.UserBusqueda;
 public class UserService implements IUserService {
 	@Autowired
 	IUserRepository userRepository;
-	@Autowired  
+
+	@Autowired
 	private SessionFactory sessionFactory;
-	
+
+	@Override
 	@Transactional(readOnly = false)
 	public void delete(String id) {
 		userRepository.delete(id);
 	}
 
+	@Override
 	@Transactional(readOnly = false)
 	public void delete(Iterable<User> entities) {
 		userRepository.delete(entities);
 	}
 
+	@Override
 	@Transactional(readOnly = false)
 	public void delete(User entity) {
 		userRepository.delete(entity);
 	}
 
+	@Override
 	@Transactional(readOnly = false)
 	public void deleteAll() {
 		userRepository.deleteAll();
 	}
 
+	@Override
 	public boolean exists(String id) {
 		return userRepository.exists(id);
 	}
 
+	@Override
 	public Iterable<User> findAll() {
 		return userRepository.findAll();
 	}
 
+	@Override
 	public Iterable<User> findAll(Iterable<String> ids) {
 		return userRepository.findAll(ids);
 	}
 
+	@Override
 	public User findOne(String id) {
 		return userRepository.findOne(id);
 	}
@@ -70,18 +80,22 @@ public class UserService implements IUserService {
 	public User save(User entity) {
 		return userRepository.save(entity);
 	}
-	
-	public User findByParams(String correo,String nif) {
-		return userRepository.findByCorreoIgnoringCaseOrDocIndentidadIgnoringCase(correo,nif );
+
+	@Override
+	public User findByParams(String correo, String nif) {
+		return userRepository.findByCorreoIgnoringCaseOrDocIndentidadIgnoringCase(correo, nif);
 	}
-	public User findByCorreoOrDocIndentidad(String correo,String nif) {
-		return userRepository.findByCorreoOrDocIndentidad(correo,nif );
+
+	@Override
+	public User findByCorreoOrDocIndentidad(String correo, String nif) {
+		return userRepository.findByCorreoOrDocIndentidad(correo, nif);
 	}
-	
+
+	@Override
 	public User findByCorreo(String correo) {
 		return userRepository.findByCorreo(correo);
 	}
-	
+
 	@Override
 	public List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda) {
 		Session session = sessionFactory.openSession();
@@ -116,12 +130,17 @@ public class UserService implements IUserService {
 		}
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc("fechaAlta"));
-		
+
 		@SuppressWarnings("unchecked")
-		List<User> listaUsuarios = (List<User>) criteria.list();
+		List<User> listaUsuarios = criteria.list();
 		session.close();
-		
+
 		return listaUsuarios;
 	}
-	
+
+	@Override
+	public List<User> findByCuerpoEstado(CuerpoEstado cuerpo) {
+		return userRepository.findByCuerpoEstado(cuerpo);
+	}
+
 }

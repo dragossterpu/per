@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.ICuerpoEstadoService;
+import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,31 +44,56 @@ public class CuerposEstadoBean implements Serializable {
 	@Autowired
 	ICuerpoEstadoService cuerposEstadoService;
 
+	@Autowired
+	IUserService userService;
+
 	/**
 	 * Eliminación lógica (se pone fecha de baja) de un cuerpo del estado
 	 * @param cuerpo cuerpo del estado a eliminar
 	 */
 	public void eliminarCuerpo(CuerpoEstado cuerpo) {
-		cuerpo.setFechaBaja(new Date());
-		cuerpo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-		cuerposEstadoService.save(cuerpo);
-		listaCuerposEstado.remove(cuerpo);
+		if (existenUsuariosCuerpo(cuerpo)) {
+			FacesContext.getCurrentInstance()
+					.addMessage("msgs",
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
+									+ cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo",
+									""));
+		}
+		else {
+			cuerpo.setFechaBaja(new Date());
+			cuerpo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+			cuerposEstadoService.save(cuerpo);
+			listaCuerposEstado.remove(cuerpo);
+		}
+	}
+
+	public boolean existenUsuariosCuerpo(CuerpoEstado cuerpo) {
+		boolean tieneUsuarios = false;
+		List<User> usuarios = userService.findByCuerpoEstado(cuerpo);
+		if (usuarios != null && usuarios.isEmpty() == Boolean.FALSE) {
+			tieneUsuarios = true;
+		}
+		return tieneUsuarios;
 	}
 
 	/**
-	 * Da de alta un nuevo cuerpo del estado
+	 * Alta un nuevo cuerpo del estado
 	 */
 	public void altaCuerpo() {
 		CuerpoEstado cuerpoEstado = new CuerpoEstado();
 		cuerpoEstado.setDescripcion(cuerpoNuevo);
-		if (cuerposEstadoService.save(cuerpoEstado) != null) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-					"El cuerpo ha sido creado con éxito");
+		try {
+			if (cuerposEstadoService.save(cuerpoEstado) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+						"El cuerpo ha sido creado con éxito");
+			}
 		}
-		else {
+		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
 					"Se ha producido un error al dar de alta el cuerpo de estado, inténtelo de nuevo más tarde");
+			// TODO log de errores
 		}
+		// TODO generar alerta / notificación
 	}
 
 	/**
@@ -77,7 +104,7 @@ public class CuerposEstadoBean implements Serializable {
 		CuerpoEstado cuerpoEstado = (CuerpoEstado) event.getObject();
 		cuerposEstadoService.save(cuerpoEstado);
 		FacesMessage msg = new FacesMessage("Cuerpo de estado modificado", cuerpoEstado.getDescripcion());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 
 	/**
@@ -87,7 +114,7 @@ public class CuerposEstadoBean implements Serializable {
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
 				((CuerpoEstado) event.getObject()).getDescripcion());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 
 	/**

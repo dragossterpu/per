@@ -96,6 +96,7 @@ h1, h2, h3 {
 	width: 100%;
 	height: auto;
 	display: table;
+	padding: 20px 20px 20px 0px;
 }
 
 .columnaIzdaFormulario {
@@ -150,4 +151,8 @@ select {
 
 .centrarBotonesDialog{
 	text-align: center;
+}
+
+.botonTabla{
+	width:30px
 }

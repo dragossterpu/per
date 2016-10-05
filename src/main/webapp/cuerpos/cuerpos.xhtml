@@ -15,7 +15,6 @@
 			<div class="bloqueFormulario" >
 				<h:form id="form">
 				
-					<p:growl id="msgs" showDetail="true"/>
 				
 					<p:dataTable id="tablaCuerpos" var="cuerpo" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
 						value="#{cuerposEstadoBean.listaCuerposEstado}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
@@ -65,6 +64,7 @@
 						</div>
 					</p:confirmDialog>
 					
+					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
 				</h:form>
 			</div>
 			
