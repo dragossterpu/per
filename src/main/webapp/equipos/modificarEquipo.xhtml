@@ -18,15 +18,10 @@
 		<div id="listadoEquipos">
 
 				<h4>  Equipo : </h4>
-			<p:dataTable var="jefe" value="#{equiposBean.equipo}">
-
-					    <p:column headerText="Nombre ">
-					        <h:outputText value="#{jefe.jefeEquipo}" />
-					    </p:column>
-			</p:dataTable>
-			<br ></br>
-				   <p:dataTable id="eqipo" var="miembro" value="#{equiposBean.listMiembros}" 
-				   paginator="true" rows="5" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{miembro.username}">
+				
+				  <p:dataTable id="eqipo" var="miembro" value="#{equiposBean.listMiembros}" 
+				   paginator="true" rows="5" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{miembro.username}"
+				   style="white-space:pre-line;">
 				        <f:facet name="header">
 				             Miembros 
 				        </f:facet>
@@ -38,11 +33,10 @@
 					     <p:column headerText="Posición" sortBy="#{miembro.posicion}">
 					        <h:outputText value="#{miembro.posicion}" />
 					    </p:column>
-					    <h:inputHidden value="#{miembro.username}" />
 					  <f:facet name="footer">
-       				 Miembros del equipo: #{fn:length(equiposBean.listMiembros)}.
-    			</f:facet>
-			</p:dataTable>
+       					 Miembros del equipo: #{fn:length(equiposBean.listMiembros)}.
+    				 </f:facet>
+				</p:dataTable>
 		</div>
 			<div class="botonesFormulario">
 			<p:commandButton title="Añadir miembro" value="Añadir miembro" icon="fa fa-fw fa-user-plus" actionListener="#{equiposBean.aniadirMiembro(equipo,miembro)}" update="eqipo">
@@ -55,10 +49,7 @@
 			</div>
 				
 			</h:form>
-			<div class="centrarBotonesDialog">
-				<p:button outcome="/equipos/equipos" value="Cancelar" icon="fa fa-fw fa-undo"/>
-<!--  					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/equipos/equipos')}" />  -->
-				</div>
+
 			<p:confirmDialog global="true">
                    <div class="centrarBotonesDialog">
                         <p:commandButton value="Aceptar" type="button"

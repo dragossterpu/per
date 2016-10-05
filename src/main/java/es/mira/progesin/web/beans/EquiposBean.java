@@ -73,7 +73,7 @@ public class EquiposBean implements Serializable {
 
 	List<User> listadoColaboradores;
 
-	private int numeroColumnasListadoEquipos = 4;
+	private int numeroColumnasListadoEquipos = 5;
 
 	private EquipoBusqueda equipoBusqueda;
 
@@ -193,7 +193,8 @@ public class EquiposBean implements Serializable {
 		listMiembros = new ArrayList<Miembros>();
 		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
 		listMiembros = equipoService.findByIdMiembros(equipo.getIdEquipo());
-		equipo.setJefeEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
+		equipo.setJefeEquipo(jefeSelecionado.getUsername());
+		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
 		this.equipo = equipo;
 		return "/equipos/modificarEquipo";
@@ -296,6 +297,7 @@ public class EquiposBean implements Serializable {
 	public void init() {
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
 		estado = null;
+		this.equipo = null;
 		this.equipoEspecial = false;
 		equipoBusqueda = new EquipoBusqueda();
 		equipoBusqueda.resetValues();

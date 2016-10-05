@@ -12,15 +12,15 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h3>Búsqueda de equipos</h3>
-		<br></br><br></br><br></br>
+		<h3 style="white-space:pre-line;" >Búsqueda de equipos</h3>
+		
 		<h:form id="busquedaEquipos" >
 		
 			<div class="bloqueFormulario">
 					<div class="columnaIzdaFormulario">
 						<h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
 						<p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" />
-			
+						
 						<h:outputLabel for="nombreMiembro" value="Nombre de miembro de equipo:" />
 						<p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
 						
@@ -74,21 +74,18 @@
 				            	<p:printer target="busquedaEquipos" />
 				            </h:commandLink>
 			            </p:outputPanel>
-			      <p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="10" id="tablaEquipos"
+			  		<p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="10" id="tablaEquipos"
 	                         draggableColumns="true"
 	                         paginator="true"
 	                         rowsPerPageTemplate="5,10,15" 
 	                         resizableColumns="true"
 	                         rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}"
 	                         style="">
-					 <f:facet name="header">
-						Equipos
-						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>
-	        			 <p:columnToggler datasource="tablaEquipos" trigger="toggler">
-	        			 	  <p:ajax event="toggle" listener="#{equiposBean.onToggle}" />
-	        			 </p:columnToggler>
-					</f:facet>
-					<p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}" width="70" visible="#{equiposBean.list[0]}" exportable="#{userBean.list[0]}">
+						<f:facet name="header">
+							Equipos
+	
+						</f:facet>
+					<p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}" width="70" visible="#{equiposBean.list[0]}" exportable="#{equiposBean.list[0]}">
 						<h:outputText value="#{equipo.fechaAlta}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -97,13 +94,17 @@
 					<p:column headerText="Nombre equipo" sortBy="#{equipo.nombreEquipo}" width="70" visible="#{equiposBean.list[1]}" exportable="#{equiposBean.list[1]}">
 						<h:outputText value="#{equipo.nombreEquipo}" />
 					</p:column>
-					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" visible="#{equiposBean.list[2]}" exportable="#{equiposBean.list[2]}">
+					<p:column headerText="Usuario jefe de equipo" sortBy="#{equipo.jefeEquipo}"  width="90" visible="#{equiposBean.list[2]}" exportable="#{equiposBean.list[2]}">
+						<h:outputText value="#{equipo.jefeEquipo}}" />
+					</p:column>
+					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" visible="#{equiposBean.list[3]}" exportable="#{equiposBean.list[2]}">
 						<h:outputText value="#{equipo.nombreJefe}" />
 					</p:column>
-					<p:column headerText="Equipo especial" sortBy="#{equipo.equipoEspecial}"  width="70" visible="#{equiposBean.list[3]}" exportable="#{equiposBean.list[3]}">
+					
+					<p:column headerText="Equipo especial" sortBy="#{equipo.equipoEspecial}"  width="70" visible="#{equiposBean.list[4]}" exportable="#{equiposBean.list[3]}">
 						<h:outputText value="#{equipo.equipoEspecial}" />
 					</p:column>	
-					<h:inputHidden value="#{equipo.jefeEquipo}" />				
+		
 					<p:column width="20" exportable="false"  rendered="#{equiposBean.equipo.fechaBaja eq null}">
 						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}" update="tablaEquipos" >
 							<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="ui-icon-alert"/>
@@ -113,21 +114,21 @@
 						<p:commandButton title="Modificar Equipo" icon="fa fa-fw fa-edit" action="#{equiposBean.getFormModificarEquipo(equipo)}" />
 					</p:column> 
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{fn:length(equiposBean.listaEquipos)} equipos.
+       				 Resultado de la búsqueda: #{fn:length(equiposBean.equipoBusqueda.listaEquipos)} equipos.
     			</f:facet>
 
 				</p:dataTable>
 			</p:outputPanel>			
  		</h:form>
-	
+		<p:confirmDialog global="true">
+			<div class="centrarBotonesDialog">
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</div>
+		</p:confirmDialog>
 		
 		</ui:define>
-		<script>
-			function reset() {
-				alert("reset");
-				calendarWidget.setDate(null);
-			}
-		</script>
+		
 	</ui:composition>
 </f:view>
 </html>
