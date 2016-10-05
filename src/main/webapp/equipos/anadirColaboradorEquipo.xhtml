@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions" >
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+		<h3>Modificar equipo</h3>
+		<br></br>
+		<h:form id="modificarEquipo" >
+		<div id="listadoEquipos">
+
+				<h4>  Añadir colaboradores : </h4>
+			
+			<p:dataTable var="jefe" value="#{equiposBean.equipo}">
+
+					    <p:column headerText="Nombre ">
+					        <h:outputText value="#{jefe.jefeEquipo}" />
+					    </p:column>
+			</p:dataTable>
+		</div>
+			
+			<div class="botonesFormulario">
+						 <p:dataTable id="colaborador" var="colaborador" value="#{equiposBean.listadoColaboradores}" paginator="true" rows="8" 
+						 selection="#{equiposBean.colaboradoresSelecionados}" rowKey="#{colaborador.username}"
+	                         draggableColumns="true"
+	                         rowsPerPageTemplate="5,10,15" 
+	                         resizableColumns="true"
+	                         style="">
+	                    <f:facet name="header">
+				            Colaboradores
+				        </f:facet>
+				        <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
+				        <p:column headerText="Nombre" sortBy="#{colaborador.nombre}"  filterBy="#{colaborador.nombre}">
+				            <h:outputText value="#{colaborador.nombre}" />
+				        </p:column>
+				        <p:column headerText="Primer Apellido" sortBy="#{colaborador.apellido1}" filterBy="#{colaborador.apellido2}">
+				            <h:outputText value="#{colaborador.apellido1}" />
+				        </p:column>
+				        <p:column headerText="Segundo Apellido" sortBy="#{colaborador.apellido2}" filterBy="#{colaborador.apellido2}">
+				            <h:outputText value="#{colaborador.apellido2}" />
+				        </p:column>
+	                  </p:dataTable>
+				</div>
+						<div class="botonesFormulario">
+								<p:commandButton action="#{equiposBean.guardarColaborador}" value="Guardar colaborador/es"  icon="fa fa-fw fa-save" />
+						</div>
+							
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+				<p:ajax event="close" listener="#{facesUtilities.redirect('/principal/index')}" />
+				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/equipos/equipos')}" />
+				</div>
+			</p:dialog>
+						
+			</h:form>
+		
+
+		</ui:define>
+	
+	</ui:composition>
+</f:view>
+</html>

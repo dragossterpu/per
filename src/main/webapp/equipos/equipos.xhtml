@@ -5,7 +5,9 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions" >
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
@@ -33,20 +35,89 @@
 	
 						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
 						<p:calendar value="#{equiposBean.equipoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
-						<p:outputLabel for="estado" value="Estado equipo: " />
-					        <p:selectOneMenu id="estado" value="#{equiposBean.estado}" effect="fold" >
-					            <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-					             <f:selectItem itemLabel="Inactivo" itemValue="INACTIVO" />
-					            <f:selectItem itemLabel="Activo" itemValue="ACTIVO" />
-					        </p:selectOneMenu>
+						<h:outputLabel for="estado" value="Estado:" />
+				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados"
+							allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu value="#{equiposBean.equipoBusqueda.estado}" id="estado"  effect="fold">
+							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+							<f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoEquipo"
+								itemLabel="#{estadoEquipo}" itemValue="#{estadoEquipo}" />
+						</p:selectOneMenu> 				       
 					</div>
 			</div>
-				<br></br>
-						<p:commandButton action="#{equiposBean.buscarEquipo}" value="Buscar"  icon="ui-icon-search"/>
-						<p:commandButton value="Limpiar" update=":busquedaEquipos" immediate="true" icon="fa fa-fw fa-eraser">
-                    		<p:resetInput target=":busquedaEquipos" />
-                		</p:commandButton>
-						<p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/>
+				<div class="botonesFormularioEquipos">
+						<p:commandButton actionListener="#{equiposBean.buscarEquipo}" value="Buscar" update="panelEquipos" icon="ui-icon-search" />
+						 <p:commandButton action="#{equiposBean.getFormularioBusquedaEquipos}" value="Limpiar" update="busquedaEquipos" icon="fa fa-fw fa-eraser" />
+                		</div>
+						<p:separator title="Alta nuevo equipo" styleClass="separator ui-state-disabled"/>
+						<div class="botonesFormulario">
+						 <h:outputText value="¿Equipo especial?: " />&nbsp;
+        				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp; &nbsp; &nbsp; 
+					        <p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/> 
+						</div>
+					<p:outputPanel layout="block" id="panelEquipos" >
+		 				<p:outputPanel rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
+			 				<h:commandLink>
+				               <p:graphicImage  value="/images/xls.png" />
+				               <p:dataExporter type="xls" target="tablaEquipos" fileName="listaEquipos" pageOnly="true"/>
+				            </h:commandLink>
+				            <h:commandLink>
+				               <p:graphicImage  value="/images/pdf.png" />
+				               <p:dataExporter type="pdf" target="tablaEquipos" fileName="listaEquipos" pageOnly="true"/>
+				            </h:commandLink>
+				            <h:commandLink>
+				               <p:graphicImage  value="/images/csv.png" />
+				               <p:dataExporter type="csv" target="tablaEquipos" fileName="listaEquipos" pageOnly="true"/>
+				            </h:commandLink>
+				            <h:commandLink>
+				            	<p:graphicImage  value="/images/imprimir.jpg" />
+				            	<p:printer target="busquedaEquipos" />
+				            </h:commandLink>
+			            </p:outputPanel>
+			      <p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="10" id="tablaEquipos"
+	                         draggableColumns="true"
+	                         paginator="true"
+	                         rowsPerPageTemplate="5,10,15" 
+	                         resizableColumns="true"
+	                         rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}"
+	                         style="">
+					 <f:facet name="header">
+						Equipos
+						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>
+	        			 <p:columnToggler datasource="tablaEquipos" trigger="toggler">
+	        			 	  <p:ajax event="toggle" listener="#{equiposBean.onToggle}" />
+	        			 </p:columnToggler>
+					</f:facet>
+					<p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}" width="70" visible="#{equiposBean.list[0]}" exportable="#{userBean.list[0]}">
+						<h:outputText value="#{equipo.fechaAlta}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Nombre equipo" sortBy="#{equipo.nombreEquipo}" width="70" visible="#{equiposBean.list[1]}" exportable="#{equiposBean.list[1]}">
+						<h:outputText value="#{equipo.nombreEquipo}" />
+					</p:column>
+					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" visible="#{equiposBean.list[2]}" exportable="#{equiposBean.list[2]}">
+						<h:outputText value="#{equipo.nombreJefe}" />
+					</p:column>
+					<p:column headerText="Equipo especial" sortBy="#{equipo.equipoEspecial}"  width="70" visible="#{equiposBean.list[3]}" exportable="#{equiposBean.list[3]}">
+						<h:outputText value="#{equipo.equipoEspecial}" />
+					</p:column>	
+					<h:inputHidden value="#{equipo.jefeEquipo}" />				
+					<p:column width="20" exportable="false"  rendered="#{equiposBean.equipo.fechaBaja eq null}">
+						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}" update="tablaEquipos" >
+							<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>
+					<p:column width="20" exportable="false"> 
+						<p:commandButton title="Modificar Equipo" icon="fa fa-fw fa-edit" action="#{equiposBean.getFormModificarEquipo(equipo)}" />
+					</p:column> 
+				<f:facet name="footer">
+       				 Resultado de la búsqueda: #{fn:length(equiposBean.listaEquipos)} equipos.
+    			</f:facet>
+
+				</p:dataTable>
+			</p:outputPanel>			
  		</h:form>
 	
 		

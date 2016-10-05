@@ -16,8 +16,7 @@
          	<h5>Propuesta de Mejora (Indica detallamente el módulo donde se propone incluir la mejora, cantidad, campos, etc.):</h5>
          	<br></br><br></br>
          	<h:form id="sugerenciaForm">
-			  
-			   
+   			 <p:panel id="panel"  >
 			   <p:outputLabel for="modulo" value="Modulo: " />
 			        <p:selectOneMenu id="modulo" value="#{sugerenciasBean.modulo}" effect="fold" >
 			            <f:selectItem itemLabel="Elige el módulo: " itemValue="" />
@@ -36,13 +35,10 @@
 				    <p:inputTextarea rows="8" cols="25" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="true"  value="#{sugerenciasBean.descripcion}"/>
 				    <h:outputText id="display" value="#{sugerenciasBean.descripcion}" />
 			   <br></br><br></br>
+			    </p:panel>
 			  		<p:commandButton action="#{sugerenciasBean.guardarSugerencia}" icon="fa fa-fw fa-save"
 						value="Guardar" />&nbsp;&nbsp;&nbsp;
-
-					<p:commandButton value="Limpiar" update="sugerenciaForm" icon="fa fa-fw fa-eraser"
-						process="@this">
-						<p:resetInput target="sugerenciaForm" />
-			 		 </p:commandButton>
+ 				<p:commandButton value="Limpiar" update="panel" process="@this" actionListener="#{sugerenciasBean.resetFail}"  />
 			  </h:form>
 			  <div class="clear">
 				<p:messages id="messages" autoUpdate="true" closable="true" />

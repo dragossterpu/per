@@ -22,12 +22,12 @@
         				<p:columnToggler datasource="sugerencias" trigger="toggler" />
 							
 							</f:facet>
-							 <p:column headerText="Fecha" sortBy="#{sugerencia.fechaAlta}">
+							 <p:column headerText="Fecha" sortBy="#{sugerencia.fechaAlta}" width="90">
 								<h:outputText value="#{sugerencia.fechaAlta}">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:column>
-							 <p:column headerText="Descripción de la sugerencia" sortBy="#{sugerencia.descripcion}">
+							 <p:column headerText="Descripción de la sugerencia" sortBy="#{sugerencia.descripcion}" width="220">
 								<h:outputText value="#{sugerencia.descripcion}" />
 							</p:column>
 							 <p:column headerText="Usuario de la sugerencia" sortBy="#{sugerencia.usuario}">
@@ -38,7 +38,7 @@
 									
 								</f:facet>
 									<h:inputHidden value="#{sugerencia.idSugerencia}" />
-									 <p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{sugerenciasBean.eliminarSugerencia(sugerencia.idSugerencia)}"/>
+									 <p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{sugerenciasBean.eliminarSugerencia(sugerencia.idSugerencia)}" update="sugerencias"/>
 							</p:column>
 							<p:column style="width:24px">
 								<f:facet name="header">

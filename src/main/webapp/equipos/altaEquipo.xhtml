@@ -58,7 +58,7 @@
                 		</p:commandButton>
 				<p:button outcome="/equipos/equipos" value="Cancelar"/>
 				</div>
-							<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 				<p:ajax event="close" listener="#{facesUtilities.redirect('/equipos/equipos')}" />
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">

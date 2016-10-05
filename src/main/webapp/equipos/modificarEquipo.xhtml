@@ -13,31 +13,52 @@
 		<ui:define name="content">
 
 		<h3>Modificar equipo</h3>
-		<br></br><br></br>
+		<br></br>
+		<h:form id="modificarEquipo" >
 		<div id="listadoEquipos">
 
 				<h4>  Equipo : </h4>
 			<p:dataTable var="jefe" value="#{equiposBean.equipo}">
-					    <f:facet name="header">
-					       Equipo : <h:outputText value="#{jefe.nombreEquipo}" />
-					    </f:facet>
+
 					    <p:column headerText="Nombre ">
 					        <h:outputText value="#{jefe.jefeEquipo}" />
 					    </p:column>
 			</p:dataTable>
-			<br ></br><br ></br>
-			<p:dataTable var="miembro" value="#{equiposBean.listMiembros}">
-					    <f:facet name="header">
-					       Miembros 
-					    </f:facet>
-					    <p:column headerText="Nombre miembro">
+			<br ></br>
+				   <p:dataTable id="eqipo" var="miembro" value="#{equiposBean.listMiembros}" 
+				   paginator="true" rows="5" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{miembro.username}">
+				        <f:facet name="header">
+				             Miembros 
+				        </f:facet>
+
+					    <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
+					    <p:column headerText="Nombre miembro" sortBy="#{miembro.nombreCompleto}">
 					        <h:outputText value="#{miembro.nombreCompleto}" />
 					    </p:column>
-					     <p:column headerText="Posición">
+					     <p:column headerText="Posición" sortBy="#{miembro.posicion}">
 					        <h:outputText value="#{miembro.posicion}" />
 					    </p:column>
+					    <h:inputHidden value="#{miembro.username}" />
+					  <f:facet name="footer">
+       				 Miembros del equipo: #{fn:length(equiposBean.listMiembros)}.
+    			</f:facet>
 			</p:dataTable>
 		</div>
+			<div class="botonesFormulario">
+			<p:commandButton title="Añadir miembro" value="Añadir miembro" icon="fa fa-fw fa-user-plus" actionListener="#{equiposBean.aniadirMiembro(equipo,miembro)}" update="eqipo">
+							<p:confirm header="Añadir miembro" message="Se va a crear un nuevo equipo ¿Está seguro que desea añadir un nuevo miembro?" icon="ui-icon-alert"/>
+						</p:commandButton>
+									<p:commandButton title="Borrar miembro/s" value="Borrar miembro/s" icon="fa fa-fw fa-eraser"  actionListener="#{equiposBean.borrarMiembro(equipo,miembro)}" update="eqipo">
+							<p:confirm header="Borrar miembro/s" message="Se va a crear un nuevo equipo ¿Está seguro que desea eliminar miembro/s del equipo?" icon="ui-icon-alert"/>
+						</p:commandButton>
+				<p:commandButton action="#{equiposBean.aniadirColaborador}" value="Añadir colaborador"  icon="fa fa-fw fa-user-plus" />
+			</div>
+				
+			</h:form>
+			<div class="centrarBotonesDialog">
+				<p:button outcome="/equipos/equipos" value="Cancelar" icon="fa fa-fw fa-undo"/>
+<!--  					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/equipos/equipos')}" />  -->
+				</div>
 			<p:confirmDialog global="true">
                    <div class="centrarBotonesDialog">
                         <p:commandButton value="Aceptar" type="button"

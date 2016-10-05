@@ -46,10 +46,19 @@
 						
 					</div>
 			</div>
-				<br></br>
-						<p:commandButton action="#{equiposBean.buscarEquipo}" value="Buscar" update="tablaEquipos" icon="ui-icon-search"/>
-						<p:commandButton action="#{equiposBean.limpiarValores}" value="Limpiar" update="busquedaEquipos" icon="fa fa-fw fa-eraser"/>
-						<p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/>
+						<div class="botonesFormularioEquipos">
+							<p:commandButton action="#{equiposBean.buscarEquipo}" update=":busquedaEquipos" value="Buscar"  icon="ui-icon-search"/>
+							<p:commandButton value="Limpiar" update=":busquedaEquipos" immediate="true" icon="fa fa-fw fa-eraser">
+	                    		<p:resetInput target=":busquedaEquipos" />
+	                		</p:commandButton>
+                		</div>
+						
+						<p:separator title="Alta nuevo equipo" styleClass="separator ui-state-disabled"/>
+						<div class="botonesFormularioEquipos">
+						 <h:outputText value="¿Equipo especial?: " />&nbsp;
+        				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp;&nbsp;&nbsp;
+					        <p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/> 
+						</div>
  		</h:form>
 		<div id="listadoEquipos">
 

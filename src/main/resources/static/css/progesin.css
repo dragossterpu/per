@@ -135,6 +135,11 @@ input, textarea, .uneditable-input {
 	text-align: center;
 }
 
+.botonesFormularioEquipos {
+	padding: 5px;
+	text-align: center;
+}
+
 table {
 	background-color: transparent;
 }

@@ -72,18 +72,24 @@ public class EquipoService implements IEquipoService {
 		if (equipoBusqueda.getNombreJefe() != null && equipoBusqueda.getNombreJefe().isEmpty() == false) {
 			criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
 		}
+
 		if (equipoBusqueda.getNombreEquipo() != null && equipoBusqueda.getNombreEquipo().isEmpty() == false) {
 			criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
 		}
-		if (equipoBusqueda.getEstado().equals("INACTIVO")) {
+		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals("INACTIVO")) {
 			criteria.add(Restrictions.isNotNull("fechaBaja"));
 			criteria.addOrder(Order.desc("fechaBaja"));
 		}
-		else {
+		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals("ACTIVO")) {
 			criteria.add(Restrictions.isNull("fechaBaja"));
+		}
+		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals("INACTIVO")) {
+			criteria.addOrder(Order.desc("fechaBaja"));
+
+		}
+		else {
 			criteria.addOrder(Order.desc("fechaAlta"));
 		}
-
 		List<Equipo> listEquipos = criteria.list();
 		session.close();
 
