@@ -20,7 +20,19 @@ insert into PUESTOSTRABAJO values(11, 'Jefe Sección');
 insert into PUESTOSTRABAJO values(12, 'Secretario Técnico');
 insert into PUESTOSTRABAJO values(13, 'Subdirector General');
  
+Insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values (1, 'Gestión  Inspección Área Prevención de Riesgos Laborales.'),
+	(2, 'Gestión Inspecciones Generales.'),
+	(3, 'Gestión Inspecciones de Seguimiento.'),
+	(4, 'Gestión Inspecciones Incidentales.'),
+	(5, 'Gestión Inspecciones Prevención de Riesgos Laborales.'),
+	(6, 'Gestión Inspecciones Temáticas (CIES).'),
+	(7, 'Gestión Servicio de Calidad y Quejas'),
+	(8, 'Otros');
+
  
+
+
+
 --insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
 --  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
 --  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
