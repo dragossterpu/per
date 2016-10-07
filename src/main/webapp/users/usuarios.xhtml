@@ -57,7 +57,7 @@
 						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role">
 							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 							<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
-								itemLabel="#{roleUser}" itemValue="#{roleUser}" />
+								itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
 						</p:selectOneMenu> 
 						
 						<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado" />
@@ -79,15 +79,15 @@
  				<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
-		               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
+		               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listausuarios"/>
 		            </h:commandLink>
 		            <h:commandLink>
 		               <p:graphicImage  value="/images/pdf.png" />
-		               <p:dataExporter type="pdf" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
+		               <p:dataExporter type="pdf" target="tablaUsuarios" fileName="listausuarios"/>
 		            </h:commandLink>
 		            <h:commandLink>
 		               <p:graphicImage  value="/images/csv.png" />
-		               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios" pageOnly="true"/>
+		               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios"/>
 		            </h:commandLink>
 		            <h:commandLink>
 		            	<p:graphicImage  value="/images/imprimir.jpg" />

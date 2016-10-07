@@ -127,3 +127,8 @@ a:link, a:visited {
     color: #0c0c0c;
     padding: 35px;
 }
+
+.error {
+	color: red;
+	padding-top: 10px;
+}

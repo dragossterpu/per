@@ -12,7 +12,7 @@
 			<div id="login_form">
 
 				<h1>Acceso Usuarios Registrados</h1>
-
+                
 				<form action="login" id="acceso" method="post">
 					<fieldset>
 						<legend>Acceso</legend>
@@ -26,10 +26,16 @@
 						<!-- <p:inputText id="password" required="true" /> -->
 						<input type="submit" value="Continuar" />
 					</fieldset>
+					<br/>
 					<p:link outcome="/acceso/recuperarPassword" value="Usuario / Clave olvidada"/>	
-					<p>
-			
-			</p>
+					
+			     	<h:outputLabel value="* Su cuenta está bloqueada. Póngase en contacto con el administrador de la aplicación" 
+			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('locked')}" styleClass="error"/>
+			     		
+			     	<h:outputLabel value="* Usuario o contraseña incorrectos. Inténtelo de nuevo" 
+ 			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Bad credentials')}" styleClass="error"/>
+ 			     		
+		
 				</form>
 					
 			</div>

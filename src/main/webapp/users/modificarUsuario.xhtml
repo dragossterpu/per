@@ -104,7 +104,7 @@
 							required="true" requiredMessage="Seleccione un role para el usuario">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
-							itemLabel="#{roleUser}" itemValue="#{roleUser}" />
+							itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
 					</p:selectOneMenu>
 					 <p:messages for="role" autoUpdate="true"  closable="true"/>
 					

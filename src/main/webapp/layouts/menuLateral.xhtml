@@ -5,10 +5,9 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:form>
 	<p:menu>
-		<p:submenu label="Herramientas Administrativas">
+		<p:submenu label="Herramientas Administrativas" rendered="#{p:ifGranted('ADMIN')}">
 			<p:menuitem value="Usuarios" action="#{userBean.getFormularioBusquedaUsuarios}"/>
 			<p:menuitem value="Administrar cuerpos del estado" outcome="/cuerpos/cuerpos" />
-			<p:menuitem value="Administrar equipos" action="#{equiposBean.getFormularioBusquedaEquipos}"/>
 			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
 			<p:menuitem value="Registro de actividad" outcome="/registro/registro" />
 			<p:menuitem value="Sugerencias de mejora" action="#{sugerenciasBean.sugerenciasListado}" />
@@ -21,6 +20,7 @@
 			<p:menuitem value="Búsqueda modelo de guías" outcome="/enConstruccion" />
 		</p:submenu>
 		<p:submenu label="Inspección">
+			<p:menuitem value="Administrar equipos" action="#{equiposBean.getFormularioBusquedaEquipos}" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 			<p:menuitem value="Búsqueda de inspecciones" outcome="/enConstruccion" />
 			<p:menuitem value="Búsqueda modelo de inspecciones" outcome="/enConstruccion" />
 			<p:menuitem value="Estadísiticas" outcome="/enConstruccion" />

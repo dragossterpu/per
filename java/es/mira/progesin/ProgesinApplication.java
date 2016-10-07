@@ -69,6 +69,7 @@ public class ProgesinApplication extends SpringBootServletInitializer implements
 				sc.setInitParameter(Constants.ContextParams.THEME, "bootstrap");
 				sc.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
 				sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Development.name());
+
 				// sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Production.name());
 			}
 		};
@@ -91,12 +92,13 @@ public class ProgesinApplication extends SpringBootServletInitializer implements
 
 				// add configuration from web.xml
 				context.addWelcomeFile("index.xhtml");
-
+				
 				// register additional mime-types that Spring Boot doesn't register
 				context.addMimeMapping("eot", "application/vnd.ms-fontobject");
 				context.addMimeMapping("ttf", "application/x-font-ttf");
 				context.addMimeMapping("woff", "application/x-font-woff");
 				context.addMimeMapping("woff2", "application/fontawesome-webfont.woff2");
+				
 			}
 		});
 

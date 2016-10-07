@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,14 +13,11 @@ import javax.faces.bean.SessionScoped;
 
 import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.DatosModeloCuestionario;
 import es.mira.progesin.persistence.entities.ModeloCuestionario;
-import es.mira.progesin.services.IDatosModeloCuestionarioService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,21 +36,15 @@ public class ModelosCuestionarioBean {
 
 	private StreamedContent file;
 
-	// para el picklist
-	private DualListModel<DatosModeloCuestionario> datosDualList;
-
 	@Autowired
 	IModeloCuestionarioService modeloCuestionarioService;
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Autowired
-	private IDatosModeloCuestionarioService datosModeloCuestionarioService;
-
 	@PostConstruct
 	public void init() {
-		// insertar();
+		insertar();
 		listadoCuestionarios = (List<ModeloCuestionario>) modeloCuestionarioService.findAll();
 	}
 
@@ -69,7 +58,7 @@ public class ModelosCuestionarioBean {
 			else if (cuestionario.getExtension().startsWith("xls")) {
 				contentType = "application/x-msexcel";
 			}
-			file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombre());
+			file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -78,13 +67,6 @@ public class ModelosCuestionarioBean {
 
 	public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
 		String page = null;
-		List<DatosModeloCuestionario> listadoDatosCuestionario = datosModeloCuestionarioService
-				.findByModeloCuestionario(modeloCuestionario);
-		if (listadoDatosCuestionario != null && listadoDatosCuestionario.isEmpty() == Boolean.FALSE) {
-			mapaDatosCuestionario = new HashMap<>();
-			datosDualList = new DualListModel<>(listadoDatosCuestionario, new ArrayList<DatosModeloCuestionario>());
-			page = "/cuestionarios/editarCuestionario";
-		}
 
 		return page;
 	}
@@ -104,7 +86,7 @@ public class ModelosCuestionarioBean {
 				cuestionario.setCodigo("codigo");
 				cuestionario.setDescripcion(
 						fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
-				cuestionario.setNombre(fichero.getName());
+				cuestionario.setNombreFichero(fichero.getName());
 				System.out.println(fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1));
 				cuestionario.setExtension(
 						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());

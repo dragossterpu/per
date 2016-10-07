@@ -74,7 +74,7 @@ public class User implements Serializable {
 	@Column(name = "correo", length = 50, nullable = false)
 	protected String correo;
 
-	@Column(name = "role", length = 10, nullable = false)
+	@Column(name = "role", length = 20, nullable = false)
 	protected RoleEnum role;
 
 	@Column(name = "num_identificacion", length = 15, nullable = false)

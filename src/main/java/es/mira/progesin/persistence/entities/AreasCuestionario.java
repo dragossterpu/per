@@ -27,37 +27,20 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "modeloscuestionarios", schema = "public")
-public class ModeloCuestionario implements Serializable {
-
+@Table(name = "areascuestionario", schema = "public")
+public class AreasCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 
-	@Column(name = "codigo", nullable = false)
-	private String codigo;
+	@Column(name = "area", nullable = false)
+	private String area;
 
-	@Column(name = "descipcion", nullable = false)
-	private String descripcion;
+	private Long idCuestionario;
 
-	@Column(name = "extension", nullable = false, length = 4)
-	private String extension;
-
-	// no vale con postgres
-	// @Column(name = "fichero")
-	// @Lob
-	// private Blob fichero;
-
-	@Column(name = "nombre", nullable = false)
-	private String nombreFichero;
-
-	@Column(name = "fichero", nullable = false)
-	private byte[] fichero;
-
-	@OneToMany(mappedBy = "idCuestionario")
-	private List<AreasCuestionario> areas;
-
+	@OneToMany(mappedBy = "idArea")
+	private List<PreguntasCuestionario> preguntas;
 }

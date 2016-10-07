@@ -34,10 +34,10 @@ insert into users (username, prim_apellido, segundo_apellido, correo, doc_identi
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/09/2016', 1, 2, 20),
   
  ( 'pedro', 'CARRETERO', 'LIAU', 'correo@correo.es', '111111111', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'PEDRO ',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', 'n10323', 'user_alta', null, null, '05/06/2000', 2, 2, 18),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '10323', 'user_alta', null, null, '05/06/2000', 2, 2, 18),
    
 ( 'jmanuel', 'SIERRA', 'EXOJO', 'correo@correo.es', 'n10704', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'JOSE MANUEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '22/06/2016', 3, 2, 20),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2016', 3, 2, 20),
   	
 	( 'alopez', 'LOPEZ', 'BETRIAN', 'correo@correo.es', 'n10971', 'SI', 'ACTIVO', '12/11/2007', NULL, NULL, NULL, 'ANTONIO',
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/04/2014', 5, 3, 15),
@@ -153,47 +153,47 @@ insert into users (username, prim_apellido, segundo_apellido, correo, doc_identi
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/09/2000', 4, 1, 18),
      
  ( 'ajgarcia', 'GARCIA', 'ABASCAL', 'correo@correo.es', 'n24519', 'SI', 'ACTIVO', '01/02/2007', NULL, NULL, NULL, 'ANGEL JESUS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '22/06/2009', 3, 2, 21),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2009', 3, 2, 21),
   
  ( 'mafan', 'AFAN', 'FAJARDO', 'correo@correo.es', 'n24639', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'MIGUEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '22/06/2016', 3, 1, 21),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2016', 3, 1, 21),
   
  ( 'parbona', 'ARBONA', 'CAMPOMAR', 'correo@correo.es', 'n25044', 'NO', 'ACTIVO', '01/02/2003', NULL, NULL, NULL, 'PEDRO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '12/08/2007', 9, 2, 21),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '12/08/2007', 9, 2, 21),
   
   ( 'jicerezo', 'CEREZO', 'HERNANDEZ', 'correo@correo.es', 'N25342', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'JOSE IGNACIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '22/06/2016', 9, 1, 21),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2016', 9, 1, 21),
      
  ( 'jlcalonge', 'CALONGE', 'DELSO', 'correo@correo.es', 'n25583', 'SI', 'ACTIVO', '01/02/2007', NULL, NULL, NULL, 'JOSE LUIS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '22/06/2009', 9, 2, 21),
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2009', 9, 2, 21),
   
   ( 'jcgalan', 'GALAN', 'VIVAR', 'correo@correo.es', 'n25655', 'SI', 'ACTIVO', '11/04/2001', NULL, NULL, NULL, 'JOSE CARLOS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'USER', '665566544', 'user_alta', null, null, '22/04/2013', 9, 1, 21);
+  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/04/2013', 9, 1, 21);
   
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (1, 'cuestionario modificado', '01/09/2016', 'cuestionarios 1', 'USER', 'userAltaAlerta');
+  values (1, 'cuestionario modificado', '01/09/2016', 'cuestionarios 1', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (2, 'cuestionario modificado', '01/09/2016', 'cuestionarios 2', 'USER', 'userAltaAlerta');
+  values (2, 'cuestionario modificado', '01/09/2016', 'cuestionarios 2', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (3, 'cuestionario modificado', '01/09/2016', 'cuestionarios 3', 'USER', 'userAltaAlerta');
+  values (3, 'cuestionario modificado', '01/09/2016', 'cuestionarios 3', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (4, 'cuestionario modificado', '01/09/2016', 'cuestionarios 4', 'USER', 'userAltaAlerta');
+  values (4, 'cuestionario modificado', '01/09/2016', 'cuestionarios 4', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (5, 'cuestionario modificado', '01/09/2016', 'cuestionarios 5', 'USER', 'userAltaAlerta');
+  values (5, 'cuestionario modificado', '01/09/2016', 'cuestionarios 5', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (6, 'cuestionario modificado', '01/09/2016', 'cuestionarios 6', 'USER', 'userAltaAlerta');
+  values (6, 'cuestionario modificado', '01/09/2016', 'cuestionarios 6', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (7, 'cuestionario modificado', '01/09/2016', 'cuestionarios 7', 'USER', 'userAltaAlerta');
+  values (7, 'cuestionario modificado', '01/09/2016', 'cuestionarios 7', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (8, 'cuestionario modificado', '01/09/2016', 'cuestionarios 8', 'USER', 'userAltaAlerta');
+  values (8, 'cuestionario modificado', '01/09/2016', 'cuestionarios 8', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (9, 'cuestionario modificado', '01/09/2016', 'cuestionarios 9', 'USER', 'userAltaAlerta');
+  values (9, 'cuestionario modificado', '01/09/2016', 'cuestionarios 9', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (10, 'cuestionario modificado', '01/09/2016', 'cuestionarios 10', 'USER', 'userAltaAlerta');
+  values (10, 'cuestionario modificado', '01/09/2016', 'cuestionarios 10', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (11, 'cuestionario modificado', '01/09/2016', 'cuestionarios 11', 'USER', 'userAltaAlerta');
+  values (11, 'cuestionario modificado', '01/09/2016', 'cuestionarios 11', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (12, 'cuestionario modificado', '01/09/2016', 'cuestionarios 12', 'USER', 'userAltaAlerta');
+  values (12, 'cuestionario modificado', '01/09/2016', 'cuestionarios 12', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (13, 'cuestionario modificado', '01/09/2016', 'cuestionarios 13', 'USER', 'userAltaAlerta');
+  values (13, 'cuestionario modificado', '01/09/2016', 'cuestionarios 13', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   
