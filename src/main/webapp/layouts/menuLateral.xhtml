@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:form>
 	<p:menu>
+
 		<p:submenu label="Herramientas Administrativas">
 			<p:menuitem value="Usuarios" action="#{userBean.getFormularioBusquedaUsuarios}"/>
 			<p:menuitem value="Administrar cuerpos del estado" outcome="/cuerpos/cuerpos" />
@@ -12,7 +13,9 @@
 			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
 			<p:menuitem value="Registro de actividad" outcome="/registro/registro" />
 			<p:menuitem value="Sugerencias de mejora" action="#{sugerenciasBean.sugerenciasListado}" />
+			<p:menuitem value="Administrar tipos de equipos" action="#{tipoEquipoBean.tipoEquipoListado}"/>
 		</p:submenu>
+
 		<p:submenu label="Gestor Documental">
 			<p:menuitem value="Búsqueda de documentos" outcome="/enConstruccion" />
 		</p:submenu>

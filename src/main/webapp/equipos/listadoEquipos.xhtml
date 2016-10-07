@@ -12,108 +12,30 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h3>Búsqueda de equipos</h3>
-		<br></br><br></br><br></br>
-		<h:form id="busquedaEquipos" >
-		
-			<div class="bloqueFormulario">
-					<div class="columnaIzdaFormulario">
-						<h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
-						<p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" />
-			
-						<h:outputLabel for="nombreMiembro" value="Nombre de miembro de equipo:" />
-						<p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
-						
-						<h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
-						<p:inputText id="nombreEquipo" value="#{equiposBean.equipoBusqueda.nombreEquipo}" />
-		
-					</div>
-	
-					<div class="columnaDchaFormulario">
-						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-						<p:calendar value="#{equiposBean.equipoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"/>
-	
-						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-						<p:calendar value="#{equiposBean.equipoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
-						<p:outputLabel for="estado" value="Selecione uno" />
-					        <p:selectOneMenu id="estado" value="#{equiposBean.estado}" effect="fold" >
-					            <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-					             <f:selectItem itemLabel="Inactivo" itemValue="INACTIVO" />
-					            <f:selectItem itemLabel="Activo" itemValue="ACTIVO" />
-					        </p:selectOneMenu>
-						
-						
-						
-					</div>
-			</div>
-						<div class="botonesFormularioEquipos">
-							<p:commandButton action="#{equiposBean.buscarEquipo}" update=":busquedaEquipos" value="Buscar"  icon="ui-icon-search"/>
-							<p:commandButton value="Limpiar" update=":busquedaEquipos" immediate="true" icon="fa fa-fw fa-eraser">
-	                    		<p:resetInput target=":busquedaEquipos" />
-	                		</p:commandButton>
-                		</div>
-						
-						<p:separator title="Alta nuevo equipo" styleClass="separator ui-state-disabled"/>
-						<div class="botonesFormularioEquipos">
-						 <h:outputText value="¿Equipo especial?: " />&nbsp;
-        				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp;&nbsp;&nbsp;
-					        <p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/> 
-						</div>
- 		</h:form>
+		<h3>Tipos de equipos</h3>
+		<br></br><br></br>
+
 		<div id="listadoEquipos">
 
-		
-			<p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="8" scrollable="true" 
-			scrollWidth="100%" id="tablaEquipos"                         
-                         paginator="true"
-                         rowsPerPageTemplate="5,10,15" style="width: 100%;"
-                          autoSubmit="true" buttonBarPosition="both" widgetVar="dynaFormWidget" rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
+			<p:dataTable  var="tipoEquipo" value="#{tipoEquipoBean.listaTipoEquipo}" 
+			scrollWidth="100%" id="tablaEquipos"  style="width: 100%;"
+                          autoSubmit="true" buttonBarPosition="both" widgetVar="dynaFormWidget" >
 				 <f:facet name="header">
-					Lista equipos
-					
+					Lista  tipos de equipos					
 				</f:facet>
 
-				<p:column headerText="Nombre equipo" sortBy="#{equipo.nombreEquipo}" width="70" >
-					<h:outputText value="#{equipo.nombreEquipo}" />
+				<p:column headerText="Nombre tipo de equipo" sortBy="#{tipoEquipo.descripcion}" width="70" >
+					<h:outputText value="#{tipoEquipo.descripcion}" />
 				</p:column>
-					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" >
-					<h:outputText value="#{equipo.nombreJefe}" />
-				</p:column>
-				<p:column headerText="Equipo especial" sortBy="#{equipo.equipoEspecial}"  width="70" >
-					<h:outputText value="#{equipo.equipoEspecial}" />
-				</p:column>	
-				<h:inputHidden value="#{equipo.jefeEquipo}" />				
-				<p:column width="20" exportable="false"  rendered="#{equiposBean.equipo.fechaBaja eq null}">
-					<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}" update="tablaEquipos" >
-						<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="ui-icon-alert"/>
-					</p:commandButton>
-				</p:column>
-				<p:column width="20" exportable="false"> 
-					<p:commandButton title="Modificar Equipo" icon="fa fa-fw fa-edit" action="#{equiposBean.getFormModificarEquipo(equipo)}" />
-				</p:column>
-				 <p:commandButton type="button" value="Show / hide advanced search" style="margin-left: 5px;"  
-                             onclick="PF('dynaFormWidget').toggleExtended()"/>  
+  
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{fn:length(equiposBean.listaEquipos)} equipos.
+       				 Hay: #{fn:length(tipoEquipoBean.listaTipoEquipo)} equipos.
     			</f:facet>
 			</p:dataTable>
 		</div>
-			<p:confirmDialog global="true">
-                   <div class="centrarBotonesDialog">
-                        <p:commandButton value="Aceptar" type="button"
-                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                       <p:commandButton value="Cancelar" type="button"
-                        styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                   </div>
-            </p:confirmDialog>
-
+			
 		</ui:define>
-		<script>
-			function reset() {
-				alert("reset");
-				calendarWidget.setDate(null);
-			}
-		</script>
+		
 	</ui:composition>
 </f:view>
 </html>
