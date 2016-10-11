@@ -8,9 +8,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +33,11 @@ import lombok.Setter;
 @Getter
 @Component("equiposBean")
 @RequestScoped
+@ViewScoped
 public class EquiposBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger LOG = Logger.getLogger(EquiposBean.class.getName());
 
 	private Equipo equipo;
 
@@ -77,6 +83,12 @@ public class EquiposBean implements Serializable {
 
 	private EquipoBusqueda equipoBusqueda;
 
+	private boolean skip;
+
+	private String tipoEquipo;
+
+	List<User> listaUsuarios;
+
 	@Autowired
 	IEquipoService equipoService;
 
@@ -91,8 +103,12 @@ public class EquiposBean implements Serializable {
 	public String nuevoEquipo() {
 		this.jefeSelecionado = null;
 		this.miembrosSelecionados = null;
+		this.listadoMiembros = null;
 		this.equipo = null;
+		this.tipoEquipo = null;
 		equipo = new Equipo();
+		jefeSelecionado = new User();
+		miembrosSelecionados = new ArrayList<User>();
 		equipo.setFechaAlta(new Date());
 		if (equipoEspecial) {
 			equipo.setEquipoEspecial("SI");
@@ -101,20 +117,8 @@ public class EquiposBean implements Serializable {
 			equipo.setEquipoEspecial("NO");
 		}
 		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-
-		List<User> listaUsuarios = (List<User>) userService.findAll();
-		nuevosListados();
-		for (User user : listaUsuarios) {
-			if (user.getPuestoTrabajo().getId() == 6) {
-				listadoJefes.add(user);
-			}
-			else if (user.getPuestoTrabajo().getId() == 7) {
-				listadoMiembros.add(user);
-			}
-			else {
-				listadoColaboradores.add(user);
-			}
-		}
+		listaUsuarios = (List<User>) userService.findAll();
+		listadoJefes = listaUsuarios;
 		return "/equipos/altaEquipo";
 	}
 
@@ -123,15 +127,12 @@ public class EquiposBean implements Serializable {
 	 * @return
 	 */
 	public String altaEquipo() {
-		if (jefeSelecionado == null) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-					"Se debe elegir un jefe de equipo");
-			FacesContext.getCurrentInstance().addMessage("eqipoJefes", message);
-		}
+
 		equipo.setJefeEquipo(jefeSelecionado.getUsername());
 		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
-		equipo.setNombreEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1());
+		// equipo.setNombreEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1());
+		equipo.setTipoEquipo(tipoEquipo);
 		if (equipoService.save(equipo) != null) {
 			RequestContext context = RequestContext.getCurrentInstance();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
@@ -146,7 +147,7 @@ public class EquiposBean implements Serializable {
 		this.equipoEspecial = false;
 		// TODO generar NOTIFICACIÓN
 		// TODO registrar actividad en log
-		return null;
+		return "/equipos/equipos";
 	}
 
 	public String getFormularioBusquedaEquipos() {
@@ -188,7 +189,7 @@ public class EquiposBean implements Serializable {
 	 * @return
 	 */
 	public String getFormModificarEquipo(Equipo equipo) {
-		this.listMiembros = null;
+		this.miembrosSelecionados = null;
 		this.listadoColaboradores = null;
 		listMiembros = new ArrayList<Miembros>();
 		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
@@ -293,6 +294,47 @@ public class EquiposBean implements Serializable {
 		}
 	}
 
+	public String onFlowProcess(FlowEvent event) {
+		cleanParam(event);
+		if (skip) {
+			skip = false; // reset in case user goes back
+			return "confirm";
+		}
+		else {
+			return event.getNewStep();
+		}
+	}
+
+	/**
+	 * @param event
+	 */
+	private void cleanParam(FlowEvent event) {
+		if (event.getOldStep().equals("jefeEquipo") & event.getNewStep().equals("miembros")) {
+			User jefe = jefeSelecionado;
+			listadoJefes.remove(jefe);
+			listadoMiembros = listadoJefes;
+		}
+		if (event.getOldStep().equals("confirm") & event.getNewStep().equals("miembros")) {
+			this.miembrosSelecionados = null;
+			listadoJefes = listaUsuarios;
+		}
+		if (event.getOldStep().equals("miembros") & event.getNewStep().equals("jefeEquipo")) {
+			listadoJefes.add(jefeSelecionado);
+			this.jefeSelecionado = null;
+		}
+		if (event.getOldStep().equals("jefeEquipo") & event.getNewStep().equals("general")) {
+			this.equipo.setNombreEquipo("");
+			this.tipoEquipo = null;
+			this.jefeSelecionado = null;
+			this.miembrosSelecionados = null;
+		}
+	}
+
+	public void save() {
+		FacesMessage msg = new FacesMessage("Successful", "Welcome :" + equipo.getIdEquipo());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
 	@PostConstruct
 	public void init() {
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
@@ -305,5 +347,13 @@ public class EquiposBean implements Serializable {
 		for (int i = 0; i <= numeroColumnasListadoEquipos; i++) {
 			list.add(Boolean.TRUE);
 		}
+	}
+
+	public boolean isSkip() {
+		return skip;
+	}
+
+	public void setSkip(boolean skip) {
+		this.skip = skip;
 	}
 }

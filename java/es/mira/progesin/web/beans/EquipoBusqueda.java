@@ -32,6 +32,8 @@ public class EquipoBusqueda implements Serializable {
 	private List<Equipo> listaEquipos;
 
 	private String estado;
+	
+	private String tipoEquipo;
 
 	public void resetValues() {
 		this.fechaDesde = null;
@@ -39,6 +41,7 @@ public class EquipoBusqueda implements Serializable {
 		this.nombreEquipo = null;
 		this.jefeEquipo = null;
 		this.miembros = null;
+		this.tipoEquipo = null;
 		this.estado = null;
 		this.nombreJefe = null;
 		this.nombreMiembro = null;

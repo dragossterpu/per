@@ -6,6 +6,7 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,8 @@ public class EquipoBusqueda implements Serializable {
 
 	private String estado;
 
+	private RolEquipoEnum role;
+
 	public void resetValues() {
 		this.fechaDesde = null;
 		this.fechaHasta = null;
@@ -40,6 +43,7 @@ public class EquipoBusqueda implements Serializable {
 		this.jefeEquipo = null;
 		this.miembros = null;
 		this.estado = null;
+		this.role = null;
 		this.nombreJefe = null;
 		this.nombreMiembro = null;
 		this.listaEquipos = null;

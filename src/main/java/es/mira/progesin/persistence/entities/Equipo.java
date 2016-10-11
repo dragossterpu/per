@@ -43,6 +43,9 @@ public class Equipo {
 	@Column(name = "nombreEquipo", length = 100, nullable = false)
 	private String nombreEquipo;
 
+	@Column(name = "tipoEquipo", length = 100, nullable = false)
+	private String tipoEquipo;
+
 	@Column(name = "jefeEquipo", length = 100, nullable = false)
 	private String jefeEquipo;
 
