@@ -44,7 +44,7 @@ public class ModelosCuestionarioBean {
 
 	@PostConstruct
 	public void init() {
-		insertar();
+//		insertar();
 		listadoCuestionarios = (List<ModeloCuestionario>) modeloCuestionarioService.findAll();
 	}
 
