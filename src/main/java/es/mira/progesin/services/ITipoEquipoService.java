@@ -7,5 +7,8 @@ public interface ITipoEquipoService {
 	Iterable<TipoEquipo> findAll();
 
 	void delete(Integer id);
+	
+	TipoEquipo save(TipoEquipo entity);
+	
 
 }
