@@ -14,10 +14,8 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class Utilities {
-
 
 	/**
 	 * @author STAD Method for getting current timestamp in a 16 char
@@ -121,16 +119,18 @@ public class Utilities {
 		String pswd = getPinLetters() + getPinNumber();
 		return pswd;
 	}
+
 	/**
 	 * @author EZENTIS STAD
 	 * @param getPassword
 	 * @return
 	 * @comment getPassword
 	 */
-	public static String codePassword(String password ) {
+	public static String codePassword(String password) {
 		String passwordCode = codeMD5(password);
 		return passwordCode;
 	}
+
 	public static String NUMBARS = "0123456789";
 
 	public static String LETTERS = "ABCDEFGHIJKLMNOPRSTUVXYZWQ";
@@ -164,8 +164,6 @@ public class Utilities {
 	}
 
 	// ************* Generating new password Progesin END ********************//
-
-
 
 	// ************* Validate Email Progesin ********************
 	/**
@@ -228,8 +226,22 @@ public class Utilities {
 
 	// ************* CodeMD5 for password Progesin END********************
 
-	
-	
+	// ************* Descripcion message error Progesin ********************
+	/**
+	 * @param e
+	 * @return
+	 */
+	public static String messageError(Exception e) {
+		String message = null;
+		if (e.getMessage().length() > 4000) {
+			message = e.getMessage().substring(4000);
+		}
+		else {
+			message = e.getMessage();
+		}
+		return message;
+	}
 
-	
+	// ************* Descripcion message error Progesin END********************
+
 }

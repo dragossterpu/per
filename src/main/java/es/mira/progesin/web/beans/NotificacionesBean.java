@@ -7,11 +7,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Notificacion;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.services.INotificacionService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,22 +24,30 @@ import lombok.Setter;
 @Scope(FacesViewScope.NAME)
 public class NotificacionesBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+	@Autowired
+	static INotificacionService notificacionService;
+
 	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
-	
-    private void initList(){
-    	Notificacion notificacion1 = new Notificacion(1, "Cuestionario general de comisaría local generado", new Date(), "userAlta", "USER");
-    	Notificacion notificacion2 = new Notificacion(1, "Guía comisaría generada", new Date(), "userAlta", "USER");
-    	Notificacion notificacion3 = new Notificacion(1, "Cuestionario Riesgos laborales genereado", new Date(), "userAlta", "USER");
-        listaNotificaciones.add(notificacion1);
-        listaNotificaciones.add(notificacion2);
-        listaNotificaciones.add(notificacion3);
-    }
-   
-    @PostConstruct
-    public void init(){
-    	initList();
-    }
-    
+
+	private void initList() {
+		// listaNotificaciones = notificacionService.findAll();
+
+		Notificacion notificacion1 = new Notificacion(1, "Cuestionario general de comisaría local generado", new Date(),
+				"userAlta", EstadoRegActividadEnum.ALTA.name(), "Usuarios");
+		Notificacion notificacion2 = new Notificacion(1, "Guía comisaría generada", new Date(), "userAlta",
+				EstadoRegActividadEnum.ALTA.name(), "Usuarios");
+		Notificacion notificacion3 = new Notificacion(1, "Cuestionario Riesgos laborales genereado", new Date(),
+				"userAlta", EstadoRegActividadEnum.ALTA.name(), "Usuarios");
+		listaNotificaciones.add(notificacion1);
+		listaNotificaciones.add(notificacion2);
+		listaNotificaciones.add(notificacion3);
+
+	}
+
+	@PostConstruct
+	public void init() {
+		initList();
+	}
 
 }

@@ -22,10 +22,16 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Notificacion;
+import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.IEquipoService;
+import es.mira.progesin.services.INotificacionService;
+import es.mira.progesin.services.IRegActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -87,13 +93,23 @@ public class EquiposBean implements Serializable {
 
 	private String tipoEquipo;
 
+	RegActividad regActividad = new RegActividad();
+
 	List<User> listaUsuarios;
+
+	private final String NOMBRESECCION = "Equipos de inspecciones";
 
 	@Autowired
 	IEquipoService equipoService;
 
 	@Autowired
 	IUserService userService;
+
+	@Autowired
+	IRegActividadService regActividadService;
+
+	@Autowired
+	INotificacionService notificacionService;
 
 	/**
 	 * Método que nos lleva al formulario de alta de nuevos equipos, inicializando todo lo necesario para mostrar
@@ -133,20 +149,33 @@ public class EquiposBean implements Serializable {
 				+ jefeSelecionado.getApellido2());
 		// equipo.setNombreEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1());
 		equipo.setTipoEquipo(tipoEquipo);
-		if (equipoService.save(equipo) != null) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
-					"El equipo ha sido creado con éxito");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute("PF('dialogMessage').show()");
+		try {
+			if (equipoService.save(equipo) != null) {
+				RequestContext context = RequestContext.getCurrentInstance();
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+						"El equipo ha sido creado con éxito");
+				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+				context.execute("PF('dialogMessage').show()");
+			}
+			// alta en la tabla miembros de un equipo
+			altaJefeEquipo();
+			altaMiembrosEquipo();
+			String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSelecionado.getNombre()
+					+ " " + jefeSelecionado.getApellido1() + " " + jefeSelecionado.getApellido2();
+			// Guardamos la actividad en bbdd
+			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
+
+			// Guardamos la notificacion en bbdd
+			saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
 		}
-		// alta en la tabla miembros de un equipo
-		altaJefeEquipo();
-		altaMiembrosEquipo();
+		catch (Exception e) {
+			// Guardamos loe posibles errores en bbdd
+			altaRegActivError(e);
+		}
 
 		this.equipoEspecial = false;
-		// TODO generar NOTIFICACIÓN
-		// TODO registrar actividad en log
 		return "/equipos/equipos";
 	}
 
@@ -177,8 +206,21 @@ public class EquiposBean implements Serializable {
 	public String eliminarEquipo(Equipo equipo) {
 		equipo.setFechaBaja(new Date());
 		equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-		equipoService.save(equipo);
-		equipoBusqueda.getListaEquipos().remove(equipo);
+		try {
+			equipoService.save(equipo);
+			equipoBusqueda.getListaEquipos().remove(equipo);
+			String descripcion = "Se ha eliminado el equipo inspecciones. Nombre jefe equipo " + equipo.getNombreJefe();
+			// Guardamos la actividad en bbdd
+			saveReg(descripcion, EstadoRegActividadEnum.BAJA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
+			// Guardamos la notificacion en bbdd
+			saveNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
+		}
+		catch (Exception e) {
+			altaRegActivError(e);
+		}
+
 		return "/equipos/equipos";
 	}
 
@@ -206,10 +248,24 @@ public class EquiposBean implements Serializable {
 	 */
 	public void modificarEquipo() {
 		this.listadoColaboradores = null;
-		if (equipoService.save(equipo) != null) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-					"El equipo ha sido modificado con éxito");
+		try {
+			if (equipoService.save(equipo) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+						"El equipo ha sido modificado con éxito");
+			}
+			String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
+					+ equipo.getNombreJefe();
+			// Guardamos la actividad en bbdd
+			saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
+			// Guardamos la notificacion en bbdd
+			saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
 		}
+		catch (Exception e) {
+			altaRegActivError(e);
+		}
+
 	}
 
 	public String aniadirMiembro(Equipo equipo) {
@@ -241,7 +297,21 @@ public class EquiposBean implements Serializable {
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
 			miembro.setPosicion("Colaborador");
-			equipoService.save(miembro);
+			try {
+				equipoService.save(miembro);
+				String descripcion = "Se ha añadido un nuevo colaborador al equipo inspecciones. Nombre colaborador "
+						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
+				// Guardamos la actividad en bbdd
+				saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						SecurityContextHolder.getContext().getAuthentication().getName());
+				// Guardamos la notificacion en bbdd
+				saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						SecurityContextHolder.getContext().getAuthentication().getName());
+			}
+			catch (Exception e) {
+				altaRegActivError(e);
+			}
+
 		}
 		RequestContext context = RequestContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
@@ -253,18 +323,6 @@ public class EquiposBean implements Serializable {
 
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-	}
-
-	/**
-	 * 
-	 */
-	private void nuevosListados() {
-		this.listadoJefes = null;
-		listadoJefes = new ArrayList<User>();
-		this.listadoMiembros = null;
-		listadoMiembros = new ArrayList<User>();
-		this.listadoColaboradores = null;
-		listadoColaboradores = new ArrayList<User>();
 	}
 
 	/**
@@ -356,4 +414,49 @@ public class EquiposBean implements Serializable {
 	public void setSkip(boolean skip) {
 		this.skip = skip;
 	}
+
+	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
+	/**
+	 * @param descripcion
+	 * @param tipoReg
+	 * @param username
+	 */
+	private void saveReg(String descripcion, String tipoReg, String username) {
+		RegActividad regActividad = new RegActividad();
+		regActividad.setTipoRegActividad(tipoReg);
+		regActividad.setUsernameRegActividad(username);
+		regActividad.setFechaAlta(new Date());
+		regActividad.setNombreSeccion(NOMBRESECCION);
+		regActividad.setDescripcion(descripcion);
+		regActividadService.save(regActividad);
+	}
+
+	/**
+	 * @param descripcion
+	 * @param tipoReg
+	 * @param username
+	 */
+	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
+		Notificacion notificacion = new Notificacion();
+		notificacion.setTipoNotificacion(tipoNotificacion);
+		notificacion.setUsernameNotificacion(username);
+		notificacion.setNombreSeccion(NOMBRESECCION);
+		notificacion.setFechaAlta(new Date());
+		notificacion.setDescripcion(descripcion);
+		notificacionService.save(notificacion);
+	}
+
+	/**
+	 * @param e
+	 */
+	private void altaRegActivError(Exception e) {
+		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
+		String message = Utilities.messageError(e);
+		regActividad.setFechaAlta(new Date());
+		regActividad.setNombreSeccion(NOMBRESECCION);
+		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
+		regActividad.setDescripcion(message);
+		regActividadService.save(regActividad);
+	}
+	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 }

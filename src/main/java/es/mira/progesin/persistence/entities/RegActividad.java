@@ -1,5 +1,6 @@
 package es.mira.progesin.persistence.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -25,26 +26,29 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "NOTIFICACIONES", schema = "public")
-public class Notificacion {
+@Table(name = "REG_ACTIVIDAD", schema = "public")
+public class RegActividad implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_NOTIFICACION", length = 15)
-	private Integer idNotificacion;
+	@Column(name = "REG_ACTIVIDAD", length = 5)
+	private Integer idRegActividad;
+
+	@Column(name = "NOMBRE_SECCION", length = 50)
+	private String nombreSeccion;
 
 	@Column(name = "DESCRIPCION", length = 4000)
 	private String descripcion;
 
-	@Column(name = "FECHA_NOTIFICACION", nullable = false)
+	@Column(name = "FECHA_REGISTRO")
 	private Date fechaAlta;
 
 	@Column(name = "USUARIO_REGISTRO", length = 50)
-	private String usernameNotificacion;
+	private String usernameRegActividad;
 
-	@Column(name = "TIPO_NOTIFICACION", length = 20)
-	private String tipoNotificacion;
+	@Column(name = "TIPO_REG_ACTIVIDAD", length = 50)
+	private String tipoRegActividad;
 
-	@Column(name = "NOMBRE_SECCION", length = 50)
-	private String nombreSeccion;
 }
