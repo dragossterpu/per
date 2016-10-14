@@ -17,13 +17,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -39,8 +37,14 @@ public class AreasCuestionario implements Serializable {
 	@Column(name = "area", nullable = false)
 	private String area;
 
-	private Long idCuestionario;
+	private Integer idCuestionario;
 
 	@OneToMany(mappedBy = "idArea")
 	private List<PreguntasCuestionario> preguntas;
+
+	@Override
+	public String toString() {
+		return "AreasCuestionario [id=" + id + ", area=" + area + ", idCuestionario=" + idCuestionario + "]";
+	}
+
 }

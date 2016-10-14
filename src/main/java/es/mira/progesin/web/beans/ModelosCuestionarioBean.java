@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
@@ -30,10 +28,6 @@ public class ModelosCuestionarioBean {
 
 	List<ModeloCuestionario> listadoCuestionarios;
 
-	Map<String, String> mapaDatosCuestionario;
-
-	Set<String> areas;
-
 	private StreamedContent file;
 
 	@Autowired
@@ -44,7 +38,7 @@ public class ModelosCuestionarioBean {
 
 	@PostConstruct
 	public void init() {
-//		insertar();
+		// insertar();
 		listadoCuestionarios = (List<ModeloCuestionario>) modeloCuestionarioService.findAll();
 	}
 
@@ -63,12 +57,6 @@ public class ModelosCuestionarioBean {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
-		String page = null;
-
-		return page;
 	}
 
 	public void insertar() {
