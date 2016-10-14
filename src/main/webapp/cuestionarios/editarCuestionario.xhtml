@@ -10,21 +10,35 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-			<h3>Modelos de cuestionario</h3>
-
-			<div class="bloqueFormulario" >
-				<h:form id="form">
-					<ui:repeat var="area" value="#{modelosCuestionarioBean.areas}">
-						<p:outputLabel value="#{area}" />
-					</ui:repeat>
-					
-					<p:dataTable value="#{modelosCuestionarioBean.myHashMapEntryList}" var="myEntry">
-						in here reference as: #{myEntry.key} #{myEntry.value}
-					</p:dataTable>
-			
-				</h:form>
+			<div class="tituloCuestionario">
+				<h:outputText value="#{edicionCuestionarioBean.nombreCuestionario}"/> 
 			</div>
+			<h:form id="form">
 			
+				<p:growl id="message"/>
+
+				<ui:repeat value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
+					<p:accordionPanel multiple="true">
+						<p:tab title="#{areaCuestionario.area}">
+							<p:selectManyCheckbox value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" layout="grid" 
+								columns="1" converter="#{selectConverter}">
+						        <f:selectItems value="#{edicionCuestionarioBean.getPreguntasArea(areaCuestionario.id)}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
+						        	itemValue="#{preguntaArea}" />
+						    </p:selectManyCheckbox>
+						</p:tab>
+					</p:accordionPanel>
+				</ui:repeat>
+
+				<div class="botonesFormulario">
+					<p:commandButton action="#{edicionCuestionarioBean.previsualizarFormulario}" value="Previsualizar formulario" icon="fa fa-fw fa-search" update="message"/>
+					<p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+					<p:commandButton value="Limpiar" update="form" process="@this" icon="fa fa-fw fa-eraser">
+						<p:resetInput target="form" />
+					</p:commandButton>
+				</div>
+
+			</h:form>
+
 		</ui:define>
 	</ui:composition>
 </f:view>

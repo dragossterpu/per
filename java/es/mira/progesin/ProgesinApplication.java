@@ -37,8 +37,8 @@ import es.mira.progesin.persistence.repositories.IUserRepository;
 @SpringBootApplication
 public class ProgesinApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
-	@Autowired
-	IUserRepository repository;
+//	@Autowired
+//	IUserRepository repository;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(ProgesinApplication.class, args);
@@ -124,31 +124,7 @@ public class ProgesinApplication extends SpringBootServletInitializer implements
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		// User user = new User();
-		// user.setUsername("pepe");
-		// user.setPassword("pepe");
-		// user.setEstado(EstadoEnum.ACTIVO);
-		// user.setNombre("Nombre");
-		// user.setApellido1("apellido1");
-		// user.setDocIndentidad("111111111");
-		// user.setCorreo("correo@correo.es");
-		// user.setRole(RoleEnum.ADMIN);
-		// user.setNumIdentificacion("555555555");
-		// user.setEnvioNotificacion("SI");
-		// CuerpoEstado cuerpoEstado = new CuerpoEstado();
-		// cuerpoEstado.setId(1);
-		// user.setCuerpoEstado(cuerpoEstado);
-		// PuestoTrabajo puestoTrabajo = new PuestoTrabajo();
-		// puestoTrabajo.setId(2);
-		// user.setPuestoTrabajo(puestoTrabajo);
-		// user.setNivel(20);
-		// user.setFechaDestinoIPSS(new Date());
-		// user.setFechaAlta(new Date());
-		// user.setUsernameAlta("userAlta");
-		// IUserService userService = new UserService();
-		// //userService.save(user);
-		// System.out.println(repository.findAll());
-		// repository.save(user);
+		
 	}
 
 }

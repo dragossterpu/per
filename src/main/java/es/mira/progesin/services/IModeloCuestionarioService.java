@@ -7,4 +7,7 @@ public interface IModeloCuestionarioService {
 	public void save(ModeloCuestionario modeloCuestionario);
 
 	public Iterable<ModeloCuestionario> findAll();
+
+	ModeloCuestionario findOne(Integer id);
+
 }

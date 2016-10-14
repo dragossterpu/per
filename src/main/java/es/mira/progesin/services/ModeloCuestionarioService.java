@@ -23,4 +23,9 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
 		return modeloCuestionarioRepository.findAll();
 	}
 
+	@Override
+	public ModeloCuestionario findOne(Integer id) {
+		return modeloCuestionarioRepository.findOne(id);
+	}
+
 }

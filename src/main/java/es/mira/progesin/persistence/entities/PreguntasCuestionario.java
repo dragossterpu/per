@@ -35,7 +35,7 @@ public class PreguntasCuestionario implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "pregunta", nullable = false)
+	@Column(name = "pregunta", nullable = false, length = 4000)
 	private String pregunta;
 
 	private Long idArea;
