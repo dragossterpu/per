@@ -36,19 +36,14 @@ public class NotificacionService implements INotificacionService {
 		return notificacionRepository.findAll();
 	}
 
-	public Iterable<Notificacion> findAll(Iterable<Integer> ids) {
-		return notificacionRepository.findAll(ids);
+	@Override
+	public List<Notificacion> findByFechaBajaIsNull() {
+		return notificacionRepository.findByFechaBajaIsNull();
 	}
 
 	@Override
 	public Notificacion findOne(Integer id) {
 		return notificacionRepository.findOne(id);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Iterable<Notificacion> save(Iterable<Notificacion> entities) {
-		return notificacionRepository.save(entities);
 	}
 
 	@Override

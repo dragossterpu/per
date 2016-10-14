@@ -47,4 +47,10 @@ public class Notificacion {
 
 	@Column(name = "NOMBRE_SECCION", length = 50)
 	private String nombreSeccion;
+
+	@Column(name = "FECHA_BAJA")
+	private Date fechaBaja;
+
+	@Column(name = "USUARIO_BAJA", length = 50)
+	private String usernameBaja;
 }

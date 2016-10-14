@@ -55,4 +55,10 @@ public class Alerta implements Serializable {
 	@Column(name = "TIPO_ALERTA", length = 20)
 	private String tipoAlerta;
 
+	@Column(name = "FECHA_BAJA")
+	private Date fechaBaja;
+
+	@Column(name = "USUARIO_BAJA", length = 50)
+	private String usernameBaja;
+
 }

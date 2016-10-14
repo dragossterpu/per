@@ -5,71 +5,136 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">>
 <f:view>
 	<ui:composition template="layouts/layoutInterior.xhtml">
 		<ui:define name="title">Progesin</ui:define>
 		<ui:define name="content">
-		
-		
         <div class="textoDerecha">
 			<h:form>
 				<h:link outcome="/principal/sugerenciasMejora" value="Sugerencias de mejora" />
 			</h:form>
 		</div>
-
-
-			
-
+		<h:form id="busquedaAlertas" >
 		<div id="alertas">
-			<p:dataTable var="alerta" value="#{alertasBean.listaAlertas}" paginator="true" rows="8">
-				<f:facet name="header">
-					Alertas
-				</f:facet>
-				<p:column>
+				<p:outputPanel layout="block" id="panelAlertas" >
+					 <p:outputPanel rendered="#{not empty alertasBean.listaAlertas}">
+		 				<h:commandLink>
+			               <p:graphicImage  value="/images/xls.png" />
+			               <p:dataExporter type="xls" target="tablaAlertas" fileName="listaAlertas"/>
+			            </h:commandLink>
+			            <h:commandLink>
+			               <p:graphicImage  value="/images/pdf.png" />
+			               <p:dataExporter type="pdf" target="tablaAlertas" fileName="listaAlertas"/>
+			            </h:commandLink>
+			            <h:commandLink>
+			               <p:graphicImage  value="/images/csv.png" />
+			               <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas"/>
+			            </h:commandLink>
+	 					<h:commandLink>
+			            	<p:graphicImage  value="/images/imprimir.jpg" />
+			            	<p:printer target="busquedaAlertas" />
+			            </h:commandLink>
+		            </p:outputPanel>
+					 <p:dataTable var="alerta" value="#{alertasBean.listaAlertas}" 
+					rendered="#{not empty alertasBean.listaAlertas}"
+					id="tablaAlertas"
+					paginator="true" rows="5">
 					<f:facet name="header">
-						Fecha
+						Alertas
 					</f:facet>
-					<h:outputText value="#{alerta.fechaAlta}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Sección" />
-					</f:facet>
-					<h:outputText value="#{alerta.nombreSeccion}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Descripción" />
-					</f:facet>
-					<h:outputText value="#{alerta.descripcion}" />
-				</p:column>
-			</p:dataTable>
-		</div>
+					<p:column headerText="Fecha alta" sortBy="#{alerta.fechaAlta}" width="70" visible="#{alertasBean.list[0]}" exportable="#{alertasBean.list[0]}">
+							<h:outputText value="#{alerta.fechaAlta}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Descripción" sortBy="#{alerta.descripcion}" width="70" visible="#{alertasBean.list[1]}" exportable="#{alertasBean.list[1]}">
+							<h:outputText value="#{alerta.descripcion}" />
+						</p:column>
+						<p:column headerText="Usuario" sortBy="#{alerta.usernameAlerta}" width="70" visible="#{alertasBean.list[2]}" exportable="#{alertasBean.list[2]}">
+							<h:outputText value="#{alerta.usernameAlerta}" />
+						</p:column>
+						<p:column headerText="Sección" sortBy="#{alerta.nombreSeccion}" width="70" visible="#{alertasBean.list[3]}" exportable="#{alertasBean.list[3]}">
+							<h:outputText value="#{alerta.nombreSeccion}" />
+						</p:column>
+						<p:column headerText="Tipo alerta" sortBy="#{alerta.tipoAlerta}" width="70" visible="#{alertasBean.list[4]}" exportable="#{alertasBean.list[4]}">
+							<h:outputText value="#{alerta.tipoAlerta}" />
+						</p:column>
+						<p:column width="20" exportable="false">
+							<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{alertasBean.eliminarAlertas(alerta)}" update="tablaAlertas">
+								<p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="ui-icon-alert"/>
+							</p:commandButton>
+						</p:column>
+					<f:facet name="footer">
+		       				 Encontrados : #{fn:length(alertasBean.listaAlertas)} alertas.
+		    			</f:facet>
+				</p:dataTable>
+			</p:outputPanel>
+				</div>
+			</h:form>
+	
 			
+		<h:form id="busquedaNotificaciones" >	
 		<div id="notificaciones">
-			<p:dataTable var="notificacion" value="#{notificacionesBean.listaNotificaciones}" paginator="true" rows="8">
+		<p:outputPanel layout="block" id="panelNotificaciones" >
+ 				<p:outputPanel rendered="#{not empty notificacionesBean.listaNotificaciones}">
+	 				<h:commandLink>
+		               <p:graphicImage  value="/images/xls.png" />
+		               <p:dataExporter type="xls" target="tablaNotificaciones" fileName="listaNotificaciones"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/pdf.png" />
+		               <p:dataExporter type="pdf" target="tablaNotificaciones" fileName="listaNotificaciones"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/csv.png" />
+		               <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones"/>
+		            </h:commandLink>
+ 					<h:commandLink>
+		            	<p:graphicImage  value="/images/imprimir.jpg" />
+		            	<p:printer target="busquedaNotificaciones" />
+		            </h:commandLink>
+	            </p:outputPanel>
+			<p:dataTable var="notificacion" value="#{notificacionesBean.listaNotificaciones}" 
+			rendered="#{not empty notificacionesBean.listaNotificaciones}"
+			id="tablaNotificaciones"
+			paginator="true" rows="5">
 				<f:facet name="header">
 					Notificaciones
 				</f:facet>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Fecha" />
-					</f:facet>
-					<h:outputText value="#{notificacion.fechaAlta}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Descripción" />
-					</f:facet>
-					<h:outputText value="#{notificacion.descripcion}" />
-				</p:column>
+				<p:column headerText="Fecha alta" sortBy="#{notificacion.fechaAlta}" width="70" visible="#{notificacionesBean.list[0]}" exportable="#{notificacionesBean.list[0]}">
+						<h:outputText value="#{notificacion.fechaAlta}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="70" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
+						<h:outputText value="#{notificacion.descripcion}" />
+					</p:column>
+					<p:column headerText="Usuario" sortBy="#{notificacion.usernameNotificacion}" width="70" visible="#{notificacionesBean.list[2]}" exportable="#{notificacionesBean.list[2]}">
+						<h:outputText value="#{notificacion.usernameNotificacion}" />
+					</p:column>
+					<p:column headerText="Sección" sortBy="#{notificacion.nombreSeccion}" width="70" visible="#{notificacionesBean.list[3]}" exportable="#{notificacionesBean.list[3]}">
+						<h:outputText value="#{notificacion.nombreSeccion}" />
+					</p:column>
+					<p:column width="20" exportable="false">
+						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{notificacionesBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
+							<p:confirm header="Eliminar notificación" message="¿Está seguro que desea eliminar esta notificación?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>
+				<f:facet name="footer">
+	       				 Encontrados : #{fn:length(notificacionesBean.listaNotificaciones)} notificaciones.
+	    			</f:facet>
 			</p:dataTable>
+		</p:outputPanel>
 		</div>
+		</h:form>
+		<p:confirmDialog global="true">
+			<div class="centrarBotonesDialog">
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</div>
+		</p:confirmDialog>
 		</ui:define>
 	</ui:composition>
 </f:view>

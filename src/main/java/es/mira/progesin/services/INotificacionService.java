@@ -5,6 +5,7 @@ import java.util.List;
 import es.mira.progesin.persistence.entities.Notificacion;
 
 public interface INotificacionService {
+
 	void delete(Integer id);
 
 	void deleteAll();
@@ -13,9 +14,9 @@ public interface INotificacionService {
 
 	List<Notificacion> findAll();
 
-	Notificacion findOne(Integer id);
+	List<Notificacion> findByFechaBajaIsNull();
 
-	Iterable<Notificacion> save(Iterable<Notificacion> entities);
+	Notificacion findOne(Integer id);
 
 	Notificacion save(Notificacion entity);
 }

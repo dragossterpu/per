@@ -45,6 +45,12 @@ public class RegActividad implements Serializable {
 	@Column(name = "FECHA_REGISTRO")
 	private Date fechaAlta;
 
+	@Column(name = "FECHA_BAJA")
+	private Date fechaBaja;
+
+	@Column(name = "USUARIO_BAJA", length = 50)
+	private String usernameBaja;
+
 	@Column(name = "USUARIO_REGISTRO", length = 50)
 	private String usernameRegActividad;
 
