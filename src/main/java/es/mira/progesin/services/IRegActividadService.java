@@ -1,6 +1,9 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.web.beans.RegActividadBusqueda;
 
 public interface IRegActividadService {
 	void delete(Integer id);
@@ -13,7 +16,7 @@ public interface IRegActividadService {
 
 	RegActividad findOne(Integer id);
 
-	Iterable<RegActividad> save(Iterable<RegActividad> entities);
-
 	RegActividad save(RegActividad entity);
+	
+	List<RegActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda);
 }
