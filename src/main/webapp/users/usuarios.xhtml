@@ -75,7 +75,7 @@
 				<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" icon="fa fa-fw fa-user-plus"/>
 			</div>
 			
- 			<p:outputPanel layout="block" id="panelUsuarios" >
+ 			<p:outputPanel layout="block" id="panelUsuarios" autoUpdate="true">
  				<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />

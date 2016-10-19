@@ -40,7 +40,7 @@ public class ModeloCuestionario implements Serializable {
 	@Column(name = "codigo", nullable = false)
 	private String codigo;
 
-	@Column(name = "descipcion", nullable = false)
+	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
 	@Column(name = "extension", nullable = false, length = 4)

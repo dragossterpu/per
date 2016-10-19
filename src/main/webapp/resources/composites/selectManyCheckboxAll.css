@@ -1,0 +1,20 @@
+.checkboxes-all {
+   text-align: justify;
+}
+
+.checkboxes-all .ui-selectmanycheckbox,
+.checkboxes-all .all {
+    vertical-align: middle;
+}
+
+.checkboxes-all .all .ui-chkbox {
+    margin: 1px 4px 0 0;
+    vertical-align: top;
+}
+
+.checkboxes-all .all label {
+    display: inline-block;
+    font-size: 14px !important;
+    font-weight: bold;
+    font-style: italic;
+}

@@ -11,9 +11,9 @@
 		<ui:define name="content">
 
 			<div class="tituloCuestionario">
-				<h:outputText value="#{edicionCuestionarioBean.nombreCuestionario}"/> 
+				<h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}"/> 
 			</div>
-			<h:form>
+			<h:form id="form">
 
 				<ui:repeat value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
 					<p:accordionPanel multiple="true">
@@ -28,10 +28,30 @@
 				</ui:repeat>
 
 				<div class="botonesFormulario">
-					<p:commandButton actionListener="#{edicionCuestionarioBean.guardarFormulario}" value="Guardar formulario" icon="fa fa-fw fa-save"/>
+					<p:commandButton value="Guardar cuestionario" type="button" onclick="PF('cuestionarioDialog').show()" icon="fa fa-fw fa-save" />
 					<p:button outcome="/cuestionarios/editarCuestionario" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
 
+				<p:dialog id="nombreCuestionario" widgetVar="cuestionarioDialog" header="Guardar cuestionario personalizado" position="center">
+						<h:outputLabel for="inputNombre" value="Nombre (*):" />
+						<p:inputText id="inputNombre" value="#{edicionCuestionarioBean.nombreCuestionario}" 
+							required="true" requiredMessage="Introduzca un nombre para el cuestionario"/>
+						<p:messages for="inputNombre" autoUpdate="true"  closable="true"/>
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Guardar" actionListener="#{edicionCuestionarioBean.guardarFormulario}"/>
+							<p:commandButton value="Cerrar" onclick="PF('cuestionarioDialog').hide()"/>
+						</div>
+				</p:dialog>
+
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+					<p:ajax event="close" listener="#{facesUtilities.redirect('/cuestionarios/modelosCuestionarios')}" />
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/modelosCuestionarios')}" />
+					</div>
+				</p:dialog>
+				
+				
 			</h:form>
 
 		</ui:define>
