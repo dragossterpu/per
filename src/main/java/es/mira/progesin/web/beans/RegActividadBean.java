@@ -67,6 +67,7 @@ public class RegActividadBean implements Serializable {
 		regActividadBusqueda.setListaRegActividad(listaRegActividad);
 	}
 
+
 	
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);

@@ -40,6 +40,7 @@
 			
 			<div class="botonesFormulario">
 			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="ui-icon-search" />
+			<p:commandButton actionListener="#{regActividadBean.getFormularioRegActividad()}" value="Limpiar" update="busquedalistaRegActividad" icon="ui-icon-search" />
 
 			</div>
 			<p:outputPanel layout="block" id="panelRegActividad" >
