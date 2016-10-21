@@ -1,13 +1,20 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import es.mira.progesin.persistence.entities.ModeloCuestionario;
+import es.mira.progesin.persistence.entities.PreEnvioCuestionario;
 
 public interface IModeloCuestionarioService {
 
-	public void save(ModeloCuestionario modeloCuestionario);
+	void save(ModeloCuestionario modeloCuestionario);
 
-	public Iterable<ModeloCuestionario> findAll();
+	Iterable<ModeloCuestionario> findAll();
 
 	ModeloCuestionario findOne(Integer id);
+
+	List<PreEnvioCuestionario> findAllPre();
+
+	void savePre(PreEnvioCuestionario preEnvioCuestionario);
 
 }

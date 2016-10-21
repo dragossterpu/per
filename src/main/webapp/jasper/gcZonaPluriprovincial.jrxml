@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gcZonaPluriprovincial" pageWidth="800" pageHeight="900" columnWidth="740" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="40f81c5f-aa51-460f-91a6-65a2443ed4e5">
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="19"/>
+	<parameter name="identificadorTrimestre" class="java.lang.String">
+		<defaultValueExpression><![CDATA["tercer cuatrimestre del año 2016"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoDestinatario" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Policia "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mensaje_1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[ "           En virtud de lo establecido por la Instrucción núm.5/2015, de la Secretaria de Estado de Seguridad, sobre organización y funciones de la  Inspección de Personal y Servicios de Seguridad (publicada en la O.G. núm. 2133 de 22-06-2015) y en relación con el Plan Anual de Inspecciones aprobado  por el secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el "+ $P{identificadorTrimestre}+", se va a realizar una inspección de carácter " + $P{tipoInspeccion}+" en esta Jefatura de su mando."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoInspeccion" class="java.lang.String">
+		<defaultValueExpression><![CDATA["general periódica"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numeroReferencia" class="java.lang.String">
+		<defaultValueExpression><![CDATA["PRUEBA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="asunto" class="java.lang.String">
+		<defaultValueExpression><![CDATA["PRUEBA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="destinatario" class="java.lang.String">
+		<defaultValueExpression><![CDATA["PRUEBA"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numeroReferencia" class="java.lang.String"/>
+	<field name="destinatario" class="java.lang.String"/>
+	<field name="asunto" class="java.lang.String"/>
+	<background>
+		<band height="2"/>
+	</background>
+	<title>
+		<band height="80"/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="160">
+			<image isLazy="true">
+				<reportElement key="image-1" x="10" y="-68" width="718" height="68" uuid="406d135a-8c7e-4008-9301-5fffea8babd5"/>
+				<imageExpression><![CDATA["src/main/resources/static/images/headerJasper.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="47" y="6" width="146" height="26" uuid="23d0144f-d4cf-4eaf-bc3d-e756ae08c464">
+					<property name="net.sf.jasperreports.export.html.class" value="NonPrintable"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O    F    I    C    I    O]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" positionType="Float" mode="Transparent" x="29" y="6" width="1" height="130" forecolor="#000000" backcolor="#FFFFFF" uuid="66bdc7d0-7f14-488c-b31d-a6cb1069e803"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="146" y="82" width="100" height="20" uuid="ddba90d9-d0ea-4697-84af-a123b63fd25c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="47" y="51" width="52" height="17" uuid="c0a87d4a-ea60-495c-ad2e-dfa383105ca4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S/REF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="68" width="52" height="17" uuid="ae67295f-b8c8-4195-a23f-54b96e1bd96d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N/REF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="85" width="52" height="17" uuid="e812024a-48cf-46fe-a3db-b9bb52da96f0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="82" width="55" height="20" uuid="bdb10d96-0149-49bf-95d5-0d394a9b64e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<text><![CDATA[Madrid, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="102" width="67" height="17" uuid="29f26658-f38b-4e2b-80a0-724d861afcda"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASUNTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="119" width="107" height="17" uuid="9d26e0fe-0473-454a-b7f7-fd45f040a3bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESTINATARIO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" isPrintRepeatedValues="false" mode="Opaque" x="99" y="65" width="156" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="7edbea0d-f591-4746-a943-64f700e9be2a"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Verdana" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroReferencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Opaque" x="154" y="119" width="522" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="931a2565-e285-40fb-b2ff-7eb10d9e0d15"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Verdana" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{destinatario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Opaque" x="114" y="102" width="597" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="3318cbb9-3797-454f-bef8-392b2095548a"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Verdana" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{asunto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="160">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="154" y="14" width="522" height="119" forecolor="#000000" backcolor="#FFFFFF" uuid="d0014290-6686-46c6-8d45-9fd76ca3dc32"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mensaje_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="80"/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
