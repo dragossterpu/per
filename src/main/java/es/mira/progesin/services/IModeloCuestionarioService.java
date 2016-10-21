@@ -3,7 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.ModeloCuestionario;
-import es.mira.progesin.persistence.entities.PreEnvioCuestionario;
+import es.mira.progesin.persistence.entities.PreEnvioCuest;
 
 public interface IModeloCuestionarioService {
 
@@ -13,8 +13,8 @@ public interface IModeloCuestionarioService {
 
 	ModeloCuestionario findOne(Integer id);
 
-	List<PreEnvioCuestionario> findAllPre();
+	List<PreEnvioCuest> findAllPre();
 
-	void savePre(PreEnvioCuestionario preEnvioCuestionario);
+	void savePre(PreEnvioCuest preEnvioCuest);
 
 }

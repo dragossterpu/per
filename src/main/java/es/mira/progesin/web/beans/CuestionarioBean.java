@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DatosJasper;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.PreEnvioCuestionario;
+import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.IModeloCuestionarioService;
@@ -55,7 +55,7 @@ public class CuestionarioBean implements Serializable {
 	@Autowired
 	IModeloCuestionarioService modeloCuestionarioService;
 
-	List<PreEnvioCuestionario> listadoPreEnvioCuestionarios;
+	List<PreEnvioCuest> listadoPreEnvioCuestionarios;
 
 	private StreamedContent file;
 
@@ -121,7 +121,7 @@ public class CuestionarioBean implements Serializable {
 
 				// Obtiene el contenido del fichero en []bytes
 				byte[] data = Files.readAllBytes(fichero.toPath());
-				PreEnvioCuestionario cuestionario = new PreEnvioCuestionario();
+				PreEnvioCuest cuestionario = new PreEnvioCuest();
 				cuestionario.setCodigo("codigo");
 				cuestionario.setDescripcion(
 						fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
@@ -143,12 +143,12 @@ public class CuestionarioBean implements Serializable {
 	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
 	 * @return
 	 */
-	public String enviarPreCuestionario(PreEnvioCuestionario cuestionario) {
+	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
 
 		return "/cuestionarios/preenvio";
 	}
 
-	public void descargarFichero(PreEnvioCuestionario cuestionario) {
+	public void descargarFichero(PreEnvioCuest cuestionario) {
 		try {
 			InputStream stream = new ByteArrayInputStream(cuestionario.getFichero());
 			String contentType = "application/msword";

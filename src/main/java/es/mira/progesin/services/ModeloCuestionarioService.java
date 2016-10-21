@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.ModeloCuestionario;
-import es.mira.progesin.persistence.entities.PreEnvioCuestionario;
+import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreEnvioCuestionarioRepository;
 
@@ -36,13 +36,13 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
 	}
 
 	@Override
-	public List<PreEnvioCuestionario> findAllPre() {
+	public List<PreEnvioCuest> findAllPre() {
 		return preEnvioCuestiRepository.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public void savePre(PreEnvioCuestionario preEnvioCuestionario) {
-		preEnvioCuestiRepository.save(preEnvioCuestionario);
+	public void savePre(PreEnvioCuest preEnvioCuest) {
+		preEnvioCuestiRepository.save(preEnvioCuest);
 	}
 }
