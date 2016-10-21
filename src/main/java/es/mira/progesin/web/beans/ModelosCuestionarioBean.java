@@ -9,7 +9,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
 
-import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +26,12 @@ import lombok.Setter;
 @SessionScoped
 public class ModelosCuestionarioBean {
 
-	List<ModeloCuestionario> listadoCuestionarios;
+	private List<ModeloCuestionario> listadoCuestionarios;
 
 	private StreamedContent file;
 
 	@Autowired
-	IModeloCuestionarioService modeloCuestionarioService;
-
-	@Autowired
-	private SessionFactory sessionFactory;
+	private IModeloCuestionarioService modeloCuestionarioService;
 
 	@PostConstruct
 	public void init() {
@@ -53,7 +49,7 @@ public class ModelosCuestionarioBean {
 			else if (cuestionario.getExtension().startsWith("xls")) {
 				contentType = "application/x-msexcel";
 			}
-			file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
+			this.file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
 		}
 		catch (Exception e) {
 			e.printStackTrace();

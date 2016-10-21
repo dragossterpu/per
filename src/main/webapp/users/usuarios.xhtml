@@ -75,7 +75,7 @@
 				<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" icon="fa fa-fw fa-user-plus"/>
 			</div>
 			
- 			<p:outputPanel layout="block" id="panelUsuarios" autoUpdate="true">
+ 			<p:outputPanel layout="block" id="panelUsuarios" >
  				<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
@@ -99,8 +99,8 @@
 	                         paginator="true"
 	                         rowsPerPageTemplate="5,10,15" 
 	                         resizableColumns="true"
-	                         rendered="#{not empty userBean.userBusqueda.listaUsuarios}"
-	                         style="">
+	                         rendered="#{not empty userBean.userBusqueda.listaUsuarios}" >
+	                        
 					 <f:facet name="header">
 						Usuarios
 						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>

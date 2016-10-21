@@ -39,4 +39,10 @@ public class PreguntasCuestionario implements Serializable {
 	private String pregunta;
 
 	private Long idArea;
+	// @ManyToOne
+	// @JoinColumn(name = "id_area", nullable = false)
+	// private AreasCuestionario area;
+
+	@Column(name = "tipo_respuesta", nullable = true, length = 100)
+	private String tipoRespuesta;
 }

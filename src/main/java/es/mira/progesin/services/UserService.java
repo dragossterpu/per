@@ -25,6 +25,9 @@ public class UserService implements IUserService {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	// Obligado por sonar
+	private static final String FECHA_ALTA = "fechaAlta";
+
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(String id) {
@@ -102,10 +105,10 @@ public class UserService implements IUserService {
 		Criteria criteria = session.createCriteria(User.class);
 
 		if (userBusqueda.getFechaDesde() != null) {
-			criteria.add(Restrictions.ge("fechaAlta", userBusqueda.getFechaDesde()));
+			criteria.add(Restrictions.ge(FECHA_ALTA, userBusqueda.getFechaDesde()));
 		}
 		if (userBusqueda.getFechaHasta() != null) {
-			criteria.add(Restrictions.lt("fechaAlta", userBusqueda.getFechaHasta()));
+			criteria.add(Restrictions.lt(FECHA_ALTA, userBusqueda.getFechaHasta()));
 		}
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
@@ -129,7 +132,7 @@ public class UserService implements IUserService {
 			criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
 		}
 		criteria.add(Restrictions.isNull("fechaBaja"));
-		criteria.addOrder(Order.desc("fechaAlta"));
+		criteria.addOrder(Order.desc(FECHA_ALTA));
 
 		@SuppressWarnings("unchecked")
 		List<User> listaUsuarios = criteria.list();

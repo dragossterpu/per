@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -58,8 +59,12 @@ public class CuestionarioPersonalizado implements Serializable {
 	@Column(name = "username_creacion", length = 15, nullable = false)
 	private String usernameCreacion;
 
-	@Column(name = "id_modelo_cuestionario", nullable = false)
-	private Integer idModeloCuestionario;
+	// @Column(name = "id_modelo_cuestionario", nullable = false)
+	// private Integer idModeloCuestionario;
+
+	@ManyToOne
+	@JoinColumn(name = "id_modelo_cuestionario", nullable = false)
+	private ModeloCuestionario modeloCuestionario;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "cuestionario_personalizado_preguntas", joinColumns = @JoinColumn(name = "id_cuest_pers"), inverseJoinColumns = @JoinColumn(name = "id_preg_elegida"))

@@ -208,9 +208,41 @@ insert into users (username, prim_apellido, segundo_apellido, correo, doc_identi
   values (12, 'cuestionario modificado', '01/09/2016', 'cuestionarios 12', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
   values (13, 'cuestionario modificado', '01/09/2016', 'cuestionarios 13', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  
+
+  -- modelos cuestionarios
+  /*
+create or replace function bytea_import(p_path text, p_result out bytea)
+                   language plpgsql as $$
+declare
+  l_oid oid;
+  r record;
+begin
+  p_result := '';
+  select lo_import(p_path) into l_oid;
+  for r in ( select data
+             from pg_largeobject
+             where loid = l_oid
+             order by pageno ) loop
+    p_result = p_result || r.data;
+  end loop;
+  perform lo_unlink(l_oid);
+end;$$;
+*/
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('1', 'codigo1', 'CUESTIONARIO.CIES', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'CUESTIONARIO.CIES.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('2', 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'), 'A - GC - Cuestionario Zona GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('3', 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'), 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('4', 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'), 'B - GC - Cuestionario Comandancia GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('5', 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'), 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('6', 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'), 'C - GC - Cuestionario Compañía GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('7', 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'), 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('8', 'codigo8', 'CUESTIONARIO PRLCNP', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'), 'CUESTIONARIO PRLCNP.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('9', 'codigo9', 'CUESTIONARIO.CIES _ TIPOS RESPUESTA', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES _ TIPOS RESPUESTA.doc'), 'CUESTIONARIO.CIES _ TIPOS RESPUESTA.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('10', 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'), 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('11', 'codigo11', 'CUESTIONARIOPRLGC', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'), 'CUESTIONARIOPRLGC.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('12', 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'), 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
+
   ------------- áreas cuestionario
-/*  
+  
 Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS', '1');
 Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', '2');
 Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES', '3');
@@ -476,4 +508,3 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (208, 'Acreditac
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (209, 'Número de visitas de ONG,s.', '12');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (210, 'Número de comunicaciones a ONG,s sobre solicitud de visitas por parte de internos.', '12');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (211, 'Numero de exámenes a que han estado sometidos sus integrantes, causas y resultados.', '12');
-*/

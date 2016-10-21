@@ -70,16 +70,6 @@ public class EdicionCuestionarioBean {
 			}
 			cont++;
 		}
-		// for (AreasCuestionario area : listaAreasCuestionario) {
-		// Object[] preg = preguntasSelecciondas.get(area);
-		// if (preg.length > 0) {
-		// System.err.println(preg[0]);
-		// PreguntasCuestionario pc = (PreguntasCuestionario) preg[0];
-		// System.err.println("....." + pc.getPregunta());
-		// hayPreguntasSeleccionadas = true;
-		// }
-		// }
-
 		if (hayPreguntasSeleccionadas) {
 			page = "/cuestionarios/previsualizarCuestionario";
 		}
@@ -96,7 +86,7 @@ public class EdicionCuestionarioBean {
 		try {
 			RequestContext.getCurrentInstance().execute("PF('cuestionarioDialog').hide()");
 			CuestionarioPersonalizado cp = new CuestionarioPersonalizado();
-			cp.setIdModeloCuestionario(modeloCuestionario.getId());
+			cp.setModeloCuestionario(modeloCuestionario);
 			cp.setNombreCuestionario(nombreCuestionario);
 			List<PreguntasCuestionario> preguntasElegidas = new ArrayList<>();
 			for (AreasCuestionario area : listaAreasCuestionario) {

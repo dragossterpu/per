@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<div class="tituloCuestionario">
+				<h:outputText value="#{cuestionarioPersonalizadoBean.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
+			</div>
+			
+			<h:form id="form">
+
+				<ui:repeat value="#{cuestionarioPersonalizadoBean.areas}" var="area">
+					<p:accordionPanel multiple="true">
+						<p:tab title="#{cuestionarioPersonalizadoBean.getNombreArea(area)}">
+							<ui:repeat value="#{cuestionarioPersonalizadoBean.mapaAreaPreguntas[area]}" var="preguntaArea">
+								<div class="prevPregCuest">
+									<h:outputText value="#{preguntaArea.pregunta}"/>
+									<br/>
+									<p:inputText value="" rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" size="10" maxlength="1000"/>
+									<p:inputTextarea value="" rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="4000"/>
+									<div style="width: 30%">
+										<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" navigator="true" showOn="both" />
+									</div>
+									<p:selectOneRadio rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}">
+										<f:selectItems value="#{cuestionarioPersonalizadoBean.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
+											var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
+									</p:selectOneRadio>
+								</div>
+							</ui:repeat>
+						</p:tab>
+					</p:accordionPanel>
+				</ui:repeat>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

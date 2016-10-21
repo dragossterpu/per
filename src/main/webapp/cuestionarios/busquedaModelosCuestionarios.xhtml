@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<h3>Búsqueda de modelos de cuestionarios personalizados</h3>
+
+			<h:form id="busquedaCuestionario" >
+		
+			<div class="bloqueFormulario">
+					<div class="columnaIzdaFormulario">
+						<h:outputLabel for="username" value="Usuario de creación:" />
+						<p:inputText id="username" value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.username}" />
+						
+						<h:outputLabel for="nombreCuestionario" value="Nombre del cuestionario:" />
+						<p:inputText id="nombreCuestionario" value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.nombreCuestionario}" />
+						
+						<h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
+						<p:selectOneMenu value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" 
+							converter="#{selectConverter}">
+						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+						<f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario"
+							itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
+						</p:selectOneMenu> 
+						
+					</div>
+	
+					<div class="columnaDchaFormulario">
+						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"/>
+	
+						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
+					</div>
+			</div>
+		
+			<div class="botonesFormulario">
+				<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="ui-icon-search" />
+	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioPersonalizadoBean.limpiar}" update="panelCuestionarios" icon="fa fa-fw fa-eraser" />
+				<p:button outcome="/cuestionarios/modelosCuestionarios" value="Nuevo cuestionario" icon="fa fa-fw fa-user-plus"/>
+			</div>
+ 			
+ 			<p:outputPanel layout="block" id="panelCuestionarios">
+ 				<p:outputPanel rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
+	 				<h:commandLink>
+		               <p:graphicImage  value="/images/xls.png" />
+		               <p:dataExporter type="xls" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/pdf.png" />
+		               <p:dataExporter type="pdf" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/csv.png" />
+		               <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		            	<p:graphicImage  value="/images/imprimir.jpg" />
+		            	<p:printer target="tablaCuestionarios" />
+		            </h:commandLink>
+	            </p:outputPanel>
+	 			<p:dataTable  var="cuestionario" value="#{cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"  rows="10" id="tablaCuestionarios"
+	                         paginator="true"
+	                         rowsPerPageTemplate="5,10,15" 
+	                         resizableColumns="true"
+	                         rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"
+	             >
+					 <f:facet name="header">
+						Cuestionarios personalizados
+					</f:facet>
+					<p:column headerText="Fecha creación" sortBy="#{cuestionario.fechaCreacion}" width="70" >
+						<h:outputText value="#{cuestionario.fechaCreacion}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Usuario" sortBy="#{cuestionario.usernameCreacion}" width="70">
+						<h:outputText value="#{cuestionario.usernameCreacion}" />
+					</p:column>
+					<p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.nombreCuestionario}">
+						<h:outputText value="#{cuestionario.nombreCuestionario}" />
+					</p:column>
+					<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.nombreCuestionario}">
+						<h:outputText value="#{cuestionario.modeloCuestionario.descripcion}" />
+					</p:column>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
+							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="ui-icon-alert"/>
+						</p:commandButton>
+					</p:column>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Ver" icon="fa fa-fw fa-eye" action="#{cuestionarioPersonalizadoBean.visualizar(cuestionario)}"/>
+					</p:column>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Enviar" icon="fa fa-fw fa-envelope-o" action="#{cuestionarioPersonalizadoBean.enviar(cuestionario)}"/>
+					</p:column>
+					
+					<f:facet name="footer">
+	       				 Resultado de la búsqueda: #{fn:length(cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado)} cuestionarios.
+	    			</f:facet>
+				</p:dataTable>
+			</p:outputPanel>
+</h:form>
+
+		<p:confirmDialog global="true">
+			<div class="centrarBotonesDialog">
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</div>
+		</p:confirmDialog>
+			
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

@@ -1,6 +1,9 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
+import es.mira.progesin.web.beans.CuestionarioPersonalizadoBusqueda;
 
 public interface ICuestionarioPersonalizadoService {
 	void delete(Long id);
@@ -22,4 +25,8 @@ public interface ICuestionarioPersonalizadoService {
 	Iterable<CuestionarioPersonalizado> save(Iterable<CuestionarioPersonalizado> entities);
 
 	CuestionarioPersonalizado save(CuestionarioPersonalizado entity);
+
+	List<CuestionarioPersonalizado> buscarCuestionarioPersonalizadoCriteria(
+			CuestionarioPersonalizadoBusqueda cuestionarioBusqueda);
+
 }
