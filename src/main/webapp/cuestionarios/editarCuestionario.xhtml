@@ -5,13 +5,14 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:my="http://java.sun.com/jsf/composite/composites">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
 			<div class="tituloCuestionario">
-				<h:outputText value="#{edicionCuestionarioBean.nombreCuestionario}"/> 
+				<h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}"/> 
 			</div>
 			<h:form id="form">
 			
@@ -20,11 +21,10 @@
 				<ui:repeat value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
 					<p:accordionPanel multiple="true">
 						<p:tab title="#{areaCuestionario.area}">
-							<p:selectManyCheckbox value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" layout="grid" 
-								columns="1" converter="#{selectConverter}">
+							<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}"   >
 						        <f:selectItems value="#{edicionCuestionarioBean.getPreguntasArea(areaCuestionario.id)}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
 						        	itemValue="#{preguntaArea}" />
-						    </p:selectManyCheckbox>
+						    </my:selectManyCheckboxAll>
 						</p:tab>
 					</p:accordionPanel>
 				</ui:repeat>
@@ -38,8 +38,8 @@
 				</div>
 
 			</h:form>
-
 		</ui:define>
 	</ui:composition>
+	
 </f:view>
 </html>

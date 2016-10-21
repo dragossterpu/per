@@ -1,0 +1,28 @@
+<ui:component
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+    xmlns:p="http://primefaces.org/ui"
+>
+    <cc:interface>
+        <cc:attribute name="value" />
+        <cc:editableValueHolder name="input" targets="checkboxes" />
+    </cc:interface>
+    <cc:implementation>
+        <h:outputStylesheet library="composites" name="selectManyCheckboxAll.css" target="head" />
+        <h:outputScript library="composites" name="selectManyCheckboxAll.js" target="head" />
+        <div id="#{cc.clientId}" class="checkboxes-all" 
+            data-widget-checkboxes="#{p:widgetVarFromContext('checkboxes', cc).split('\'')[1]}" 
+            data-widget-all="#{p:widgetVarFromContext('all', cc).split('\'')[1]}">
+            <div class="all">
+                <p:selectBooleanCheckbox id="all" />
+                <p:outputLabel for="all" value="Seleccionar todo" />
+            </div>
+            <p:selectManyCheckbox id="checkboxes" value="#{cc.attrs.value}" layout="grid" columns="1" converter="#{selectConverter}">
+                <cc:insertChildren />
+            </p:selectManyCheckbox>
+        </div>
+    </cc:implementation>          
+</ui:component>

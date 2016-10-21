@@ -33,6 +33,10 @@
 .ui-accordion {
 	    background: #bed6f8 url(/progesin/javax.faces.resource/images/header.png.xhtml?ln=primefaces-bluesky) repeat-x;
 }
+
+.ui-dialog.ui-widget-content .ui-dialog-title {
+	font-size: 16px;
+}
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {
@@ -174,5 +178,6 @@ select {
 
 .prevPregCuest {
 	padding: 5px;
-	
+	font-size: 14px;
 }
+

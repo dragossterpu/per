@@ -23,6 +23,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Component("modelosCuestionarioBean")
+// @ApplicationScoped
 @SessionScoped
 public class ModelosCuestionarioBean {
 

@@ -116,7 +116,6 @@ public class UserBean {
 			FacesContext.getCurrentInstance().addMessage("username", message);
 		}
 		else {
-			RegActividad regActividad = new RegActividad();
 			user.setCuerpoEstado(getCuerpoEstadoSeleccionado());
 			user.setPuestoTrabajo(getPuestoTrabajoSeleccionado());
 			String password = Utilities.getPassword();
