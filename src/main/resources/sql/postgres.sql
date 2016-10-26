@@ -228,6 +228,7 @@ begin
   perform lo_unlink(l_oid);
 end;$$;
 */
+
 Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('1', 'codigo1', 'CUESTIONARIO.CIES', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'CUESTIONARIO.CIES.doc');
 Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('2', 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'), 'A - GC - Cuestionario Zona GENERICO.docx');
 Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('3', 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'), 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
@@ -239,6 +240,20 @@ Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombr
 Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('10', 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'), 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
 Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('11', 'codigo11', 'CUESTIONARIOPRLGC', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'), 'CUESTIONARIOPRLGC.doc');
 Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('12', 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'), 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
+
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('1', 'codigo1', 'CUESTIONARIO.CIES', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\CUESTIONARIO.CIES.doc'), 'CUESTIONARIO.CIES.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('2', 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\A - GC - Cuestionario Zona GENERICO.docx'), 'A - GC - Cuestionario Zona GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('3', 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'), 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('4', 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\B - GC - Cuestionario Comandancia GENERICO.docx'), 'B - GC - Cuestionario Comandancia GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('5', 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'), 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('6', 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\C - GC - Cuestionario Compania GENERICO.docx'), 'C - GC - Cuestionario Compañía GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('7', 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'), 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('8', 'codigo8', 'CUESTIONARIO PRLCNP', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\CUESTIONARIO PRLCNP.doc'), 'CUESTIONARIO PRLCNP.doc');
+
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('10', 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'), 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('11', 'codigo11', 'CUESTIONARIOPRLGC', 'doc' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\CUESTIONARIOPRLGC.doc'), 'CUESTIONARIOPRLGC.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,extension,fichero,nombre) Values ('12', 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 'docx' ,bytea_import('C:\Program Files\PostgreSQL\9.6\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'), 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
+
 
   ------------- áreas cuestionario
   
@@ -507,3 +522,27 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (208, 'Acreditac
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (209, 'Número de visitas de ONG,s.', '12');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (210, 'Número de comunicaciones a ONG,s sobre solicitud de visitas por parte de internos.', '12');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (211, 'Numero de exámenes a que han estado sometidos sus integrantes, causas y resultados.', '12');
+
+
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (41, 'Organigramas de la Unidad, con detalle de sus Unidades y Servicios', 'DOC, DOCX, PPTX,PPT, PUB', '1_organigrama');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (42, 'Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico', 'DOC, DOCX', '2_RM');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (43, 'Documentación relativa al Plan Territorial. Objetivos operativos fijados para 2015', 'PDF', '3_PTyO');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (44, 'Convenios de colaboración con Policías Locales (tanto genéricos como específicos)', 'PDF', '4_CCPL');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (45, 'Actas de las Juntas Locales de Seguridad de los años 2014 y 2015', 'PDF', '5_AJLS');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (46, 'Plan de Emergencia', 'PDF', '6_PE');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (47, 'Evaluación de Riesgos Laborales', 'PDF', '7_PRL');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (48, 'Memoria Anual de 2015', 'PDF', '8_MA');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (49, 'Copia de las actas de las reuniones sindicales celebradas en 2014 y 2015', 'PDF', '9_CAS');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (50, 'Actas de las Comisiones de Coordinación de Policía Judicial de los años 2014 y 2015', 'PDF', '10_ACCPJ');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (51, 'Actas de las Comisiones Provinciales de Seguridad Privada de los años 2014 y 2015', 'PDF', '11_ACPSP');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (52, 'Relación de municipios que configuran la demarcación de la compañía', 'DOC, DOCX', '12_RMD');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (53, 'Catálogo de Puestos de Trabajo (última aprobación CECIR) y fuerza en revista', 'XLSX', '13_CPT');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (54, 'Relación de mandos de las distintas Unidades, de categoría Oficial, con indicación de teléfonos y correos electrónicos de contacto', 'PDF', '14_RM');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (55, 'Plan de Seguridad Ciudadana', 'PDF', '15_PSC');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (56, 'Libro de Organización y Libro de Normas de Régimen Interno', 'PDF', '16_LOYRI');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (57, 'Memoria Anual 2015', 'PDF', '17_MA');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (58, 'Mapa con la distribución territorial de sus Unidades subordinadas.', 'JPEG/JPG, PNG, BMP', '18_mapa');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (59, 'Organigrama de la Zona (Unidades Territoriales y Especialidades)', 'DOC, DOCX, PPTX, PPT, PUB', '19_organigrama');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (70, 'Plan anual de la Unidad Orgánica de Policía Judicial vigente', 'PDF', '20_PAUOPJ');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (71, 'Organigrama de la Comandancia (Unidades Territoriales y Especialidades)', 'DOC, DOCX, PPTX, PPT, PUB', '21_organigrama');
+Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (72, 'Actas de las Juntas de Coordinación de 2015', 'PDF', '22_AJC');
