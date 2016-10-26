@@ -104,7 +104,40 @@ h1, h2, h3 {
 	display: table;
 	padding: 20px 20px 20px 0px;
 }
+.bloqueVista{
+	width: 100%;
+	height: auto;
+	display: table;
+	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
 
+}
+.div_celda {
+	width:150px; 
+	height: 40px;
+	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
+    float:left; vertical-align: middle;
+    text-align: center;
+    border: 1px solid #000000;
+    }
+
+.tablaApoyo{
+	width: 100%;
+	border: 1px solid #000000;
+    text-indent: 0px;
+    vertical-align: middle;
+    text-align: center;
+	height: auto;
+	display: table;
+	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
+
+}
+.bloqueVistaTitulo{
+	width: 100%;
+	height: auto;
+	display: table;
+	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
+padding: 20px 20px 20px 0px;
+}
 .columnaIzdaFormulario {
 	width: 40%;
 	float: left;

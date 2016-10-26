@@ -5,17 +5,25 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FlowEvent;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -24,10 +32,14 @@ import es.mira.progesin.persistence.entities.DatosJasper;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
+import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.util.DescargasHelper;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -57,9 +69,34 @@ public class CuestionarioBean implements Serializable {
 
 	List<PreEnvioCuest> listadoPreEnvioCuestionarios;
 
+	String nombreCuestionarioPrevio;
+
+	List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
+
+	private List<Boolean> list;
+
+	@Autowired
+	ISolicitudDocumentacionService solicitudDocumentacionService;
+
+	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+
+	private boolean skip;
+
+	private Integer anio;
+
 	private StreamedContent file;
 
 	private DatosJasper model;
+
+	private String fechaAntes;
+
+	private String fechaLimite;
+
+	private String fechaEmision;
+
+	List<User> listadoDocumentos = new ArrayList<User>();
+
+	private List<User> documentosSelecionados;
 
 	// Url de la plantilla jasper
 	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
@@ -73,14 +110,16 @@ public class CuestionarioBean implements Serializable {
 	public String execute() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession session = (HttpSession) externalContext.getSession(true);
-		final DatosJasper datosjasper = new DatosJasper();
+		DatosJasper datosjasper = new DatosJasper();
+		datosjasper = model;
 		datosjasper.setNombre("GC_ZONA_PLURI_PROVINCIAL");
 		datosjasper.setUrl(RUTA_JASPER);
 		try {
-			DescargasHelper.preparaDescargaJasper(datosjasper, session);
-			String descripcion = "Creación de nuevo cuestionario previo. Nombre del cuestionario"
-					+ datosjasper.getNombre() + " Usuario creación : "
+			SolicitudDocumentacion documento = new SolicitudDocumentacion();
+			DescargasHelper.preparaDescargaJasper(datosjasper, session, documento);
+			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
 					+ SecurityContextHolder.getContext().getAuthentication().getName();
+			solicitudDocumentacionService.save(documento);
 			// Guardamos la actividad en bbdd
 			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
 					SecurityContextHolder.getContext().getAuthentication().getName());
@@ -88,6 +127,8 @@ public class CuestionarioBean implements Serializable {
 			// Guardamos la notificacion en bbdd
 			saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
 					SecurityContextHolder.getContext().getAuthentication().getName());
+
+			model.resetValues();
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
@@ -97,14 +138,105 @@ public class CuestionarioBean implements Serializable {
 
 	}
 
+	public String executeSolicitud() {
+		this.fechaAntes = null;
+		this.fechaLimite = null;
+		try {
+			if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
+					|| solicitudDocumentacionPrevia.getApoyoCorreo().trim().equals("")) {
+				solicitudDocumentacionPrevia.setApoyoCorreo("mmayo@interior.es");
+			}
+			if (solicitudDocumentacionPrevia.getApoyoNombre() == null
+					|| solicitudDocumentacionPrevia.getApoyoNombre().trim().equals("")) {
+				solicitudDocumentacionPrevia.setApoyoNombre("Manuel Mayo Rodríguez");
+			}
+			if (solicitudDocumentacionPrevia.getApoyoPuesto() == null
+					|| solicitudDocumentacionPrevia.getApoyoPuesto().trim().equals("")) {
+				solicitudDocumentacionPrevia.setApoyoPuesto("Inspector Auditor, Jefe del Servicio de Apoyo");
+			}
+			if (solicitudDocumentacionPrevia.getApoyoTelefono() == null
+					|| solicitudDocumentacionPrevia.getApoyoTelefono().trim().equals("")) {
+				solicitudDocumentacionPrevia.setApoyoTelefono("91.537.25.41");
+			}
+			solicitudDocumentacionPrevia.setIdentificadorTrimestre(
+					solicitudDocumentacionPrevia.getIdentificadorTrimestre() + " del año " + anio);
+			solicitudDocumentacionPrevia.setNombreCuestionarioPrevio(nombreCuestionarioPrevio);
+			solicitudDocumentacionPrevia.setFechaAlta(new Date());
+			solicitudDocumentacionPrevia
+					.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+				RequestContext context = RequestContext.getCurrentInstance();
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+						"La solicitud de documentación ha sido creada con éxito");
+				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+				context.execute("PF('dialogMessage').show()");
+			}
+
+			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
+					+ SecurityContextHolder.getContext().getAuthentication().getName();
+			// Guardamos la actividad en bbdd
+			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
+
+			// Guardamos la notificacion en bbdd
+			saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
+			this.solicitudDocumentacionPrevia = null;
+		}
+		catch (Exception e) {
+			// Guardamos loe posibles errores en bbdd
+			altaRegActivError(e);
+		}
+		return "/cuestionarios/previo";
+
+	}
+
+	public String getListaSolicitudes() {
+		this.listaSolicitudesPrevia = null;
+		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
+		return "/cuestionarios/listaSolicitudes";
+	}
+
+	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		fechaEmision = formatter.format(solicitud.getFechaAlta());
+		fechaAntes = formatter.format(solicitud.getFechaAntes());
+		fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
+		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+		solicitudDocumentacionPrevia = solicitud;
+		return "/cuestionarios/vistaSolicitud";
+	}
+
+	/**
+	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
+	 * @return
+	 */
+	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
+		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+		nombreCuestionarioPrevio = cuestionario.getDescripcion();
+		return "/cuestionarios/previo";
+	}
+
+	/**
+	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
+	 * @return
+	 */
+	public String enviarPreCuestionarioOld(PreEnvioCuest cuestionario) {
+
+		return "/cuestionarios/preenvio";
+	}
+
 	public String limpiar() {
-		// this.model = null;
+		model.resetValues();
 		return "/cuestionarios/preenvio";
 	}
 
 	@PostConstruct
 	public void init() {
-
+		nombreCuestionarioPrevio = null;
+		anio = null;
+		listaSolicitudesPrevia = new ArrayList<SolicitudDocumentacionPrevia>();
+		model = new DatosJasper();
 		// insertar();
 		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
 
@@ -139,15 +271,6 @@ public class CuestionarioBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
-	 * @return
-	 */
-	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
-
-		return "/cuestionarios/preenvio";
-	}
-
 	public void descargarFichero(PreEnvioCuest cuestionario) {
 		try {
 			InputStream stream = new ByteArrayInputStream(cuestionario.getFichero());
@@ -163,6 +286,21 @@ public class CuestionarioBean implements Serializable {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String onFlowProcess(FlowEvent event) {
+		// cleanParam(event);
+		if (skip) {
+			skip = false; // reset in case user goes back
+			return "confirm";
+		}
+		else {
+			return event.getNewStep();
+		}
+	}
+
+	public void onToggle(ToggleEvent e) {
+		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
 
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************

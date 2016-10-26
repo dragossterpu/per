@@ -10,65 +10,53 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		 <h:head>
-        <title>Datos Report Solicitud documentación</title>
-    </h:head>
-   
+  <h3>Datos Solicitud documentación</h3>
+   	<div class="aclaraciones">
+			Los campos marcados con (*) son obligatorios
+		</div>
         <h:form id="datosReporte" >
         		<div class="bloqueFormulario">
-					<div class="columnaIzdaFormulario">
-						<h:outputLabel for="username" value="Nombre de usuario:" />
-						<p:inputText id="username" value="#{userBean.userBusqueda.username}" />
+					<h4>Titulo</h4>
+					
+						<h:outputLabel for="numeroReferencia" value="N/REF:" />
+						<p:inputText id="numeroReferencia" value="#{cuestionarioBean.model.numeroReferencia}" />
 						
-						<h:outputLabel for="nombre" value="Nombre:" />
-						<p:inputText id="nombre" value="#{userBean.userBusqueda.nombre}"/>
+						<h:outputLabel for="asunto" value="ASUNTO:" />
+						<p:inputText id="asunto" value="#{cuestionarioBean.model.asunto}"/>
 						
-						<h:outputLabel for="apellido1" value="Primer apellido:" />
-						<p:inputText id="apellido1" value="#{userBean.userBusqueda.apellido1}"/>
+						<h:outputLabel for="destinatario" value="DESTINATARIO:" />
+						<p:inputText id="destinatario" value="#{cuestionarioBean.model.destinatario}"/>
+												
+				
+				
+				
+					<h4>Contenido</h4>
+					
+						<h:outputLabel for="identificadorTrimestre" value="CUARTRIMESTRE Y AÑO:" />
+						<p:inputText id="identificadorTrimestre" value="#{cuestionarioBean.model.identificadorTrimestre}" />
 						
-						<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo:" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.puestoTrabajo}" id="puestoTrabajoSelect" 
-							converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
-							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
-						</p:selectOneMenu> 
+						<h:outputLabel for="tipoInspeccion" value="CARÁCTER INSPECCIÓN:" />
+						<p:inputText id="tipoInspeccion" value="#{cuestionarioBean.model.tipoInspeccion}"/>
 						
-						<h:outputLabel for="estado" value="Estado:" />
-				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados"
-							allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.estado}" id="estado">
-							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-							<f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoUser"
-								itemLabel="#{estadoUser}" itemValue="#{estadoUser}" />
-						</p:selectOneMenu> 
-					</div>
+						<h:outputLabel for="correoApoyo" value="CORREO APOYO:" />
+						<p:inputText id="correoApoyo" value="#{cuestionarioBean.model.correoApoyo}"/>
+						
+						<h:outputLabel for="fechaAntes" value="FECHA LIMITE ENVÍO DOCUMENTACIÓNs:" />
+						<p:calendar value="#{cuestionarioBean.model.fechaAntes}" id="fechaAntes" pattern="dd/MM/yyyy" navigator="true"/>
+						
+						<h:outputLabel for="fechaCumplimentar" value="FECHA LIMITE CUMPLIMENTAR CUESTIONARIO:" />
+						<p:calendar value="#{cuestionarioBean.model.fechaCumplimentar}" id="fechaCumplimentar" pattern="dd/MM/yyyy" navigator="true"/>						
+					
 	
-					<div class="columnaDchaFormulario">
-						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-						<p:calendar value="#{userBean.userBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"/>
-	
-						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-						<p:calendar value="#{userBean.userBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"/>
+					<h4>Jefe Inspector Auditor</h4>
+				
+						<h:outputLabel for="puestoInspector" value="PUESTO JEFE INSPECTOR AUDITOR:" />
+						<p:inputText id="puestoInspector" value="#{cuestionarioBean.model.puestoInspector}" />
 						
-						<h:outputLabel for="role" value="Role:" />
-				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
-							allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role">
-							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-							<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
-								itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
-						</p:selectOneMenu> 
-						
-						<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.cuerpoEstado}" id="cuerpoEstadoSelect"
-							converter="#{selectConverter}">
-							<f:selectItem itemLabel="Seleccione uno" itemValue="" />
-							<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
-								itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
-						</p:selectOneMenu>
-					</div>
-			</div>
+						<h:outputLabel for="nombreInspector" value="NOMBRE JEFE INSPECTOR AUDITOR:" />
+						<p:inputText id="nombreInspector" value="#{cuestionarioBean.model.nombreInspector}" />
+					
+				</div>
 			<div class="botonesFormulario">
 	            <p:commandButton action="#{cuestionarioBean.limpiar}" value="Limpiar" update="datosReporte" icon="fa fa-fw fa-eraser" />
 				<p:commandButton action="#{cuestionarioBean.execute}" value="Enviar solicitud documentación" icon="fa fa-fw fa-user-plus"/>

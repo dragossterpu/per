@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+		<h3>Solicitud documentación previa cuestionario</h3>
+	<div class="bloqueVistaTitulo">
+	<h4>Nombre Cuestionario </h4>#{cuestionarioBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+		</div>
+		<h:form id="formAlta">
+			
+					<div class="bloqueVistaTitulo">
+						<p>N/REF: #{cuestionarioBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	
+						<p>FECHA: Madrid, #{cuestionarioBean.fechaEmision}</p>
+						<p>ASUNTO: 	#{cuestionarioBean.solicitudDocumentacionPrevia.asunto}</p>	
+						<p><strong>DESTINATARIO: #{cuestionarioBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
+					</div>	
+					<div class="bloqueVista">	
+					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{cuestionarioBean.solicitudDocumentacionPrevia.identificadorTrimestre}</strong>, se va a realizar una  inspección de carácter
+					<strong>#{cuestionarioBean.solicitudDocumentacionPrevia.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
+					</div>
+					<div class="bloqueVista">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
+					se solicita se envíe por correo electrónico a la dirección <strong>apoyo_ipss@interior.es</strong>, lo siguiente:</p>
+					</div>	
+					<div class="bloqueVista">
+					<p>1.	A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de 
+					esa Unidad con indicación del nombre y apellidos, categoría y cargo, 
+					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa guardiacivil.org o guardiacivil.es, 
+					no cuenta personal).</p>
+					</div>
+					<div class="bloqueVista">
+					<p >2.	Antes del <strong> #{cuestionarioBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
+					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
+					</div>
+					<div class="bloqueVista">
+					<p >3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
+					deberá tener entrada en esta IPSS antes del <strong> #{cuestionarioBean.fechaLimite}</strong>.</p>
+					</div>
+					<div class="bloqueVista">
+					<p >Para cualquier aclaración, podrá dirigirse a:</p>
+					</div>
+					<div class="div_celda">
+					#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoPuesto}
+					</div>
+					<div class="div_celda">
+					#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoNombre}
+					</div>
+					<div class="div_celda">
+					#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoTelefono}
+					</div>
+					<div class="div_celda">
+					<strong>#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
+					</div>
+					<div class="bloqueVistaTitulo">
+					<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
+					se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.</p>
+					</div>
+					
+					<div class="bloqueVistaTitulo">
+					<p><strong> #{cuestionarioBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}</strong></p>	
+					</div>
+					<div class="bloqueVistaTitulo">
+					<p><strong> #{cuestionarioBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</strong></p>	
+					</div>
+		</h:form>
+		
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

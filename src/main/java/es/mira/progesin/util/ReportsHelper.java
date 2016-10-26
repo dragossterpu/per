@@ -3,6 +3,7 @@ package es.mira.progesin.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -56,10 +59,11 @@ public class ReportsHelper {
 	 * @throws Exception
 	 */
 	public void generarReporte(final String pathReporte, final Map<String, Object> reportParameters,
-			final JRBeanCollectionDataSource data, final String nombreFichero, final HttpSession session) {
+			final JRBeanCollectionDataSource data, final String nombreFichero, final HttpSession session,
+			final SolicitudDocumentacion documento) {
 		final InputStream inputStream = session.getServletContext().getResourceAsStream("/WEB-INF/" + pathReporte);
 		generarReporte(inputStream, reportParameters, data, session,
-				StringUtils.isEmpty(nombreFichero) ? calcularNombreFichero(pathReporte) : nombreFichero);
+				StringUtils.isEmpty(nombreFichero) ? calcularNombreFichero(pathReporte) : nombreFichero, documento);
 	}
 
 	/**
@@ -74,7 +78,8 @@ public class ReportsHelper {
 	 */
 
 	protected void generarReporte(final InputStream inputStream, final Map<String, Object> reportParameters,
-			final JRBeanCollectionDataSource data, final HttpSession session, final String nombreFicheroDescarga) {
+			final JRBeanCollectionDataSource data, final HttpSession session, final String nombreFicheroDescarga,
+			SolicitudDocumentacion documento) {
 
 		try {
 
@@ -92,6 +97,15 @@ public class ReportsHelper {
 				// Cargar con los datos obtenidos del formulario
 				jasperPrint = JasperFillManager.fillReport(jasperReport, reportParameters, data);
 				// Formato html
+				byte[] bytes = JasperExportManager.exportReportToPdf(jasperPrint);
+
+				documento.setCodigo("cdpdf");
+				documento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+				documento.setFechaAlta(new Date());
+				documento.setExtension("pdf");
+				documento.setNombreFichero(jasperReport.getName());
+				documento.setFichero(bytes);
+
 				JasperExportManager.exportReportToHtmlFile(jasperPrint,
 						"C:/Users/Admin/Desktop/jasper/GC_ZONA_PLURI_PROVINCIAL/gcZonaPluriprovincial.html");
 				LOG.info("Generando reporte en HTML ");

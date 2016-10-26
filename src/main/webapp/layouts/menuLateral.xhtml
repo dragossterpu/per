@@ -29,7 +29,9 @@
 		<p:submenu label="Cuestionario">
 			<p:menuitem value="Modelos cuestionario" outcome="/cuestionarios/modelosCuestionarios" />
 			<p:menuitem value="Búsqueda modelo cuestionario" outcome="/cuestionarios/busquedaModelosCuestionarios" />
-			<p:menuitem value="Pre envío cuestionario" outcome="/cuestionarios/preEnvioCuestionarios" />
+			<p:menuitem value="Solicitud documentación Old" outcome="/cuestionarios/preEnvioCuestionariosOld" />
+			<p:menuitem value="Solicitud documentación" outcome="/cuestionarios/preEnvioCuestionarios" />
+			<p:menuitem value="Lista solicitudes documentación" action="#{cuestionarioBean.getListaSolicitudes}" />
 			<p:menuitem value="Responder cuestionario" outcome="/enConstruccion" />
 			<p:menuitem value="Búsqueda de cuestionario" outcome="/enConstruccion" />
 		</p:submenu>
