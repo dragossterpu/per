@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.TipoDocumentacion;
+import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ITipoDocumentacionRepository;
 
 @Service
 public class TipoDocumentacionService implements ITipoDocumentacionService {
 	@Autowired
 	ITipoDocumentacionRepository tipoDocumentacionRepository;
+
+	@Autowired
+	IDocumentacionPreviaRepository documentacionPreviaRepository;
 
 	@Override
 	public List<TipoDocumentacion> findAll() {
@@ -30,4 +35,16 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
 	public TipoDocumentacion save(TipoDocumentacion entity) {
 		return tipoDocumentacionRepository.save(entity);
 	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public DocumentacionPrevia save(DocumentacionPrevia entity) {
+		return documentacionPreviaRepository.save(entity);
+	}
+
+	@Override
+	public List<DocumentacionPrevia> findByIdSolicitud(Integer idSolicitud) {
+		return documentacionPreviaRepository.findByIdSolicitud(idSolicitud);
+	}
+
 }

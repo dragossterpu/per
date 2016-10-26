@@ -41,6 +41,19 @@
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
+					<p:dataTable  var="solicitud" value="#{cuestionarioBean.listadoDocumentosPrevios}" >
+							<p:column headerText="DOCUMENTO" sortBy="#{solicitud.descripcion}"  >
+								<h:outputText value="#{solicitud.descripcion}" />
+							</p:column>
+							<p:column headerText="NOMBRE" sortBy="#{solicitud.nombre}"  >
+								<h:outputText value="#{solicitud.nombre}" />
+							</p:column>
+							<p:column headerText="EXTENSION" sortBy="#{solicitud.extension}"  >
+								<h:outputText value="#{solicitud.extension}" />
+							</p:column>
+					</p:dataTable>	
+					</div>
+					<div class="bloqueVistaTitulo">
 					<p >3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
 					deberá tener entrada en esta IPSS antes del <strong> #{cuestionarioBean.fechaLimite}</strong>.</p>
 					</div>

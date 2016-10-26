@@ -65,14 +65,12 @@
 	            					  <br></br>
 	            					<p:messages />	
 	            					<h:panelGrid columns="2" columnClasses="label, value">          
-			             				 <p:dataTable id="documentosSolicitud" var="documento"  value="#{cuestionarioBean.listadoDocumentos}" paginator="true" rows="10" selection="#{cuestionarioBean.documentosSelecionados}" rowKey="#{documento.id}" >
+			             				 <p:dataTable id="documentosSolicitud" var="documento"  value="#{cuestionarioBean.listadoDocumentos}" paginator="true" rows="10" selection="#{cuestionarioBean.documentosSelecionados}" rowKey="#{documento.idTipoDocumento}" >
 									        <f:facet name="header">
 									            Documentos previos cuestionario
 									        </f:facet>
 									        <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
-									        <p:column headerText="Id" sortBy="#{documento.id}"  filterBy="#{documento.id}">
-									            <h:outputText value="#{documento.id}" />
-									        </p:column>
+
 									        <p:column headerText="Descripcion" sortBy="#{documento.descripcion}" filterBy="#{documento.descripcion}">
 									            <h:outputText value="#{documento.descripcion}" />
 									        </p:column>

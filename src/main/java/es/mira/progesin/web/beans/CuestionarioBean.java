@@ -29,17 +29,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DatosJasper;
+import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
-import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.TipoDocumentacion;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
+import es.mira.progesin.services.ITipoDocumentacionService;
 import es.mira.progesin.util.DescargasHelper;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -78,6 +80,9 @@ public class CuestionarioBean implements Serializable {
 	@Autowired
 	ISolicitudDocumentacionService solicitudDocumentacionService;
 
+	@Autowired
+	ITipoDocumentacionService tipoDocumentacionService;
+
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
 	private boolean skip;
@@ -94,9 +99,11 @@ public class CuestionarioBean implements Serializable {
 
 	private String fechaEmision;
 
-	List<User> listadoDocumentos = new ArrayList<User>();
+	List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
 
-	private List<User> documentosSelecionados;
+	private List<TipoDocumentacion> documentosSelecionados;
+
+	List<TipoDocumentacion> listadoDocumentos = new ArrayList<TipoDocumentacion>();
 
 	// Url de la plantilla jasper
 	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
@@ -171,7 +178,7 @@ public class CuestionarioBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 				context.execute("PF('dialogMessage').show()");
 			}
-
+			altaDocumentos();
 			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
 					+ SecurityContextHolder.getContext().getAuthentication().getName();
 			// Guardamos la actividad en bbdd
@@ -191,6 +198,21 @@ public class CuestionarioBean implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 */
+	private void altaDocumentos() {
+
+		for (TipoDocumentacion documento : documentosSelecionados) {
+			DocumentacionPrevia docPrevia = new DocumentacionPrevia();
+			docPrevia.setIdSolicitud(solicitudDocumentacionPrevia.getId());
+			docPrevia.setDescripcion(documento.getDescripcion());
+			docPrevia.setExtension(documento.getExtension());
+			docPrevia.setNombre(documento.getNombre());
+			tipoDocumentacionService.save(docPrevia);
+		}
+	}
+
 	public String getListaSolicitudes() {
 		this.listaSolicitudesPrevia = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
@@ -198,6 +220,7 @@ public class CuestionarioBean implements Serializable {
 	}
 
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
+		listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		fechaEmision = formatter.format(solicitud.getFechaAlta());
 		fechaAntes = formatter.format(solicitud.getFechaAntes());
@@ -214,6 +237,7 @@ public class CuestionarioBean implements Serializable {
 	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		nombreCuestionarioPrevio = cuestionario.getDescripcion();
+		listadoDocumentos = tipoDocumentacionService.findAll();
 		return "/cuestionarios/previo";
 	}
 

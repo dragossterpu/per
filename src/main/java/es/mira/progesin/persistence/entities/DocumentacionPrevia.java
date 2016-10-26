@@ -39,7 +39,10 @@ public class DocumentacionPrevia {
 	@Column(name = "descripcion")
 	private String descripcion;
 
-	@Column(name = "idTipoDocumento")
-	private String idTipoDocumento;
+	@Column(name = "NOMBRE", length = 255)
+	private String nombre;
+
+	@Column(name = "EXTENSION", length = 25)
+	private String extension;
 
 }
