@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<h3>Alta de documentación</h3>
+
+			<div class="bloqueFormulario" style="width: 50%">
+				<h:form id="form">
+				
+					<h:outputLabel for="descripcion" value="Descripcion del tipo de documento (*):" />
+					<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
+					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="nombre" value="Nombre del tipo de documento (*):" />
+					<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" converter="#{trimConverter}"/>
+					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="extension" value="Extensión del tipo de documento (*):" />
+					<p:inputText id="extension" value="#{tipoDocumentacionBean.extensionNuevo}" required="true" requiredMessage="Introduzca la extensión del documento" converter="#{trimConverter}"/>
+					<p:messages for="extension" autoUpdate="true"  closable="true"/>
+					
+					<div class="botonesFormulario">
+						<p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save"/>
+						<p:button outcome="/documentacionPrevia/documentacionPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
+					</div>
+			
+					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+						<p:ajax event="close" listener="#{facesUtilities.redirect('/documentacionPrevia/documentacionPrevia')}" />
+						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/documentacionPrevia/documentacionPrevia')}" />
+						</div>
+					</p:dialog>
+					
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>
