@@ -198,13 +198,20 @@ public class CuestionarioBean implements Serializable {
 	}
 
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
+		formatearFecha(solicitud);
+		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+		solicitudDocumentacionPrevia = solicitud;
+		return "/cuestionarios/vistaSolicitud";
+	}
+
+	/**
+	 * @param solicitud
+	 */
+	private void formatearFecha(SolicitudDocumentacionPrevia solicitud) {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		fechaEmision = formatter.format(solicitud.getFechaAlta());
 		fechaAntes = formatter.format(solicitud.getFechaAntes());
 		fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
-		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-		solicitudDocumentacionPrevia = solicitud;
-		return "/cuestionarios/vistaSolicitud";
 	}
 
 	/**
@@ -237,7 +244,7 @@ public class CuestionarioBean implements Serializable {
 		anio = null;
 		listaSolicitudesPrevia = new ArrayList<SolicitudDocumentacionPrevia>();
 		model = new DatosJasper();
-		// insertar();
+//		 insertar();
 		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
 
 	}
@@ -245,7 +252,7 @@ public class CuestionarioBean implements Serializable {
 	public void insertar() {
 		try {
 
-			File directory = new File("C:\\Users\\Admin\\Desktop\\Documentación IPSS\\preenvioCuestionarios");
+			File directory = new File("C:\\Users\\rgarciao\\Documents\\previoscuestionarios");
 
 			File[] listaFicheros = directory.listFiles();
 			for (int i = 0; i < listaFicheros.length; i++) {
