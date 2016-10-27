@@ -20,9 +20,11 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,6 +47,7 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.ITipoDocumentacionService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.util.DescargasHelper;
+import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,6 +73,8 @@ public class CuestionarioBean implements Serializable {
 
 	@Autowired
 	IModeloCuestionarioService modeloCuestionarioService;
+
+	private UploadedFile ficheroNuevo;
 
 	List<PreEnvioCuest> listadoPreEnvioCuestionarios;
 
@@ -401,4 +406,60 @@ public class CuestionarioBean implements Serializable {
 		regActividadService.save(regActividad);
 	}
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
+
+	public void eliminarPreEnvioCuestionario(PreEnvioCuest cuestionario) {
+		modeloCuestionarioService.delete(cuestionario.getId());
+		this.listadoPreEnvioCuestionarios = null;
+		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
+	}
+
+	public void altaPreEnvioCuestionario() {
+		if (ficheroNuevo != null && !ficheroNuevo.getFileName().trim().equals("")) {
+			try {
+				PreEnvioCuest cuestionario = new PreEnvioCuest();
+				cuestionario.setCodigo("codigo");
+				cuestionario.setFichero(ficheroNuevo.getContents());
+				cuestionario.setDescripcion(ficheroNuevo.getFileName()
+						.substring(0, ficheroNuevo.getFileName().lastIndexOf('.')).toUpperCase());
+				cuestionario.setNombreFichero(ficheroNuevo.getFileName());
+				System.out
+						.println(ficheroNuevo.getFileName().substring(ficheroNuevo.getFileName().lastIndexOf('.') + 1));
+				cuestionario.setExtension(ficheroNuevo.getFileName()
+						.substring(ficheroNuevo.getFileName().lastIndexOf('.') + 1).toLowerCase());
+				// Obtiene el contenido del fichero en []bytes
+				cuestionario.setFichero(ficheroNuevo.getContents());
+
+				if (modeloCuestionarioService.savePreAlta(cuestionario) != null) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+							"La solicitud de cuestionario ha sido creada con éxito");
+				}
+			}
+			catch (Exception e) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+						"Se ha producido un error al dar de alta la solicitud de cuestionario, inténtelo de nuevo más tarde");
+				// TODO log de errores
+			}
+
+		}
+		else {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta abortada",
+					"No se ha seleccionado un archivo al dar de alta la solicitud de cuestionario");
+		}
+		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
+		// TODO generar alerta / notificación
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		PreEnvioCuest cuestionario = (PreEnvioCuest) event.getObject();
+		modeloCuestionarioService.savePre2(cuestionario);
+		FacesMessage msg = new FacesMessage("Solicitud de cuestionario modificada", cuestionario.getDescripcion());
+		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Modificación cancelada",
+				((PreEnvioCuest) event.getObject()).getDescripcion());
+		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+	}
+
 }
