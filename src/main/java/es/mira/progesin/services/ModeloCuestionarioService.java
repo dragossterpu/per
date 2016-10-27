@@ -45,4 +45,16 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
 	public void savePre(PreEnvioCuest preEnvioCuest) {
 		preEnvioCuestiRepository.save(preEnvioCuest);
 	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public PreEnvioCuest savePreAlta(PreEnvioCuest preEnvioCuest) {
+		return preEnvioCuestiRepository.save(preEnvioCuest);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		preEnvioCuestiRepository.delete(id);
+	}
 }

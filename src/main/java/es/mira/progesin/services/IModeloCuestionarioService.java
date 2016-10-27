@@ -17,4 +17,8 @@ public interface IModeloCuestionarioService {
 
 	void savePre(PreEnvioCuest preEnvioCuest);
 
+	PreEnvioCuest savePreAlta(PreEnvioCuest preEnvioCuest);
+
+	void delete(Integer id);
+
 }
