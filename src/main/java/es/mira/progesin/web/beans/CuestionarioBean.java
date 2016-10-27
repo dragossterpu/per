@@ -234,8 +234,7 @@ public class CuestionarioBean implements Serializable {
 
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		try {
-			listadoDocumentosCargados = gestDocumentacionService
-					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+			listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
 			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			fechaEmision = formatter.format(solicitud.getFechaAlta());
@@ -292,6 +291,7 @@ public class CuestionarioBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
 		nombreCuestionarioPrevio = null;
 		anio = null;
 		listaSolicitudesPrevia = new ArrayList<SolicitudDocumentacionPrevia>();
