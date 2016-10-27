@@ -40,4 +40,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		return solicitudDocumentacionPreviaRepository.findAll();
 	}
 
+	@Override
+	public SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo) {
+		return solicitudDocumentacionPreviaRepository.findByCorreoDestiantario(correo);
+	}
+
 }

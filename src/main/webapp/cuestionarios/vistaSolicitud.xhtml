@@ -8,12 +8,16 @@
 	xmlns:p="http://primefaces.org/ui">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
+		
 		<ui:define name="content">
 
 		<h3>Solicitud documentación previa cuestionario</h3>
-	<div class="bloqueVistaTitulo">
-	<h4>Nombre Cuestionario </h4>#{cuestionarioBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+		<div class="bloqueVistaTitulo">	
+			<h4>Nombre Cuestionario </h4>#{cuestionarioBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
 		</div>
+		
+			
+
 		<h:form id="formAlta">
 			
 					<div class="bloqueVistaTitulo">
@@ -42,13 +46,13 @@
 					</div>
 					<div class="bloqueVista">
 					<p:dataTable  var="solicitud" value="#{cuestionarioBean.listadoDocumentosPrevios}" >
-							<p:column headerText="DOCUMENTO" sortBy="#{solicitud.descripcion}"  >
+							<p:column headerText="DOCUMENTO" >
 								<h:outputText value="#{solicitud.descripcion}" />
 							</p:column>
-							<p:column headerText="NOMBRE" sortBy="#{solicitud.nombre}"  >
+							<p:column headerText="NOMBRE" >
 								<h:outputText value="#{solicitud.nombre}" />
 							</p:column>
-							<p:column headerText="EXTENSION" sortBy="#{solicitud.extension}"  >
+							<p:column headerText="EXTENSION" >
 								<h:outputText value="#{solicitud.extension}" />
 							</p:column>
 					</p:dataTable>	
@@ -78,11 +82,22 @@
 					</div>
 					
 					<div class="bloqueVistaTitulo">
-					<p><strong> #{cuestionarioBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}</strong></p>	
+					<p><strong><center> #{cuestionarioBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}</center></strong></p>	
 					</div>
 					<div class="bloqueVistaTitulo">
-					<p><strong> #{cuestionarioBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</strong></p>	
+					<p><strong><center> #{cuestionarioBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
 					</div>
+					<div class="botonesFormulario">				        
+						<p:commandButton actionListener="#{cuestionarioBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
+						<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+					</div>
+					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+						<p:ajax event="close" listener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+					</div>
+					</p:dialog>		
 		</h:form>
 		
 		</ui:define>

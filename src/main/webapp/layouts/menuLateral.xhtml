@@ -4,7 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:form>
-	<p:menu>
+	<p:menu rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
 		<p:submenu label="Herramientas Administrativas" rendered="#{p:ifGranted('ADMIN')}">
 			<p:menuitem value="Usuarios" action="#{userBean.getFormularioBusquedaUsuarios}"/>
 			<p:menuitem value="Administrar cuerpos del estado" outcome="/cuerpos/cuerpos" />
@@ -14,7 +14,7 @@
 			<p:menuitem value="Administrar tipos de equipos" action="#{tipoEquipoBean.tipoEquipoListado}" />
 			<p:menuitem value="Documentación Previa" outcome="/documentacionPrevia/documentacionPrevia" />
 		</p:submenu>
-		<p:submenu label="Gestor Documental">
+		<p:submenu label="Gestor Documental" >
 			<p:menuitem value="Búsqueda de documentos" outcome="/enConstruccion" />
 		</p:submenu>
 		<p:submenu label="Guías">
@@ -41,5 +41,15 @@
 			<p:menuitem value="Búsqueda modelo de informe" outcome="/enConstruccion" />
 		</p:submenu>
 	</p:menu>
+		
+
+	<p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD,PROV_CUESTIONARIO')}">
+	<p:submenu label="CUESTIONARIO">
+			<p:menuitem value="SOLICITUD DOCUMENTACIÓN" action="#{provisionalBean.visualizarSolicitud}"  rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}"/>
+			<p:menuitem value="CONTESTAR CUESTIONARIO" outcome="/enConstruccion" rendered="#{p:ifAnyGranted('PROV_CUESTIONARIO')}"/>			
+		</p:submenu>
+	</p:menu>
+	
 </h:form>
+
 </ui:composition>

@@ -93,4 +93,13 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 
 	@Column(name = "nombreCuestionarioPrevio")
 	private String nombreCuestionarioPrevio;
+
+	@Column(name = "fechaValidApoyo")
+	private Date fechaValidApoyo;
+
+	@Column(name = "usernameValidApoyo")
+	protected String usernameValidApoyo;
+
+	@Column(name = "usernameEnvio")
+	protected String usernameEnvio;
 }

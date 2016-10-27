@@ -10,4 +10,6 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
 	@Override
 	List<SolicitudDocumentacionPrevia> findAll();
 
+	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
+
 }

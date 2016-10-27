@@ -37,11 +37,13 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.TipoDocumentacion;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.ITipoDocumentacionService;
+import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.util.DescargasHelper;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -101,9 +103,14 @@ public class CuestionarioBean implements Serializable {
 
 	List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
 
+	List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
+
 	private List<TipoDocumentacion> documentosSelecionados;
 
 	List<TipoDocumentacion> listadoDocumentos = new ArrayList<TipoDocumentacion>();
+
+	@Autowired
+	IGestDocSolicitudDocumentacionService gestDocumentacionService;
 
 	// Url de la plantilla jasper
 	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
@@ -215,23 +222,46 @@ public class CuestionarioBean implements Serializable {
 
 	public String getListaSolicitudes() {
 		this.listaSolicitudesPrevia = null;
+		anio = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
 		return "/cuestionarios/listaSolicitudes";
 	}
 
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
-		listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		fechaEmision = formatter.format(solicitud.getFechaAlta());
-		fechaAntes = formatter.format(solicitud.getFechaAntes());
-		fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
-		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-		solicitudDocumentacionPrevia = solicitud;
-		return "/cuestionarios/vistaSolicitud";
+		try {
+			listadoDocumentosCargados = gestDocumentacionService
+					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			fechaEmision = formatter.format(solicitud.getFechaAlta());
+			fechaAntes = formatter.format(solicitud.getFechaAntes());
+			fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
+			solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+			solicitudDocumentacionPrevia = solicitud;
+			return "/cuestionarios/vistaSolicitud";
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+	}
+
+	public String validacionApoyo() {
+		solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
+		solicitudDocumentacionPrevia
+				.setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+					"Se ha validado con éxito la solicitud de documentación");
+			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+			context.execute("PF('dialogMessage').show()");
+		}
+		return "/cuestionarios/previo";
 	}
 
 	/**
-	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
+	 * @metodo Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
 	 * @return
 	 */
 	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
@@ -242,7 +272,7 @@ public class CuestionarioBean implements Serializable {
 	}
 
 	/**
-	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
+	 * @metodo Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
 	 * @return
 	 */
 	public String enviarPreCuestionarioOld(PreEnvioCuest cuestionario) {

@@ -13,10 +13,10 @@
 		<ui:define name="content">
         <div class="textoDerecha">
 			<h:form>
-				<h:link outcome="/principal/sugerenciasMejora" value="Sugerencias de mejora" />
+				<h:link outcome="/principal/sugerenciasMejora" value="Sugerencias de mejora" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
 			</h:form>
 		</div>
-		<h:form id="busquedaAlertas" >
+		<h:form id="busquedaAlertas" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
 		<div id="alertas">
 				<p:outputPanel layout="block" id="panelAlertas">
 					 <p:outputPanel rendered="#{not empty alertasBean.listaAlertas}">
@@ -75,7 +75,7 @@
 			</h:form>
 	
 			
-		<h:form id="busquedaNotificaciones" >	
+		<h:form id="busquedaNotificaciones" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">	
 		<div id="notificaciones">
 		<p:outputPanel layout="block" id="panelNotificaciones" autoUpdate="true">
  				<p:outputPanel rendered="#{not empty notificacionesBean.listaNotificaciones}">

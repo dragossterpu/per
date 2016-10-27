@@ -8,11 +8,11 @@
 	<p:graphicImage id="img1" value="/images/cabecera_PROGESIN.png" />
 	<div id="headerDatos">
 			<div>
-				<p:outputLabel value="Usuario:">#{request.remoteUser}</p:outputLabel>
+				<p:outputLabel value="Usuario:" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">#{request.remoteUser}</p:outputLabel>
 			</div>
 			
 			<h:form>
-				<h:commandLink action="#{userBean.getUserPerfil}" value="Mi perfil" />
+				<h:commandLink action="#{userBean.getUserPerfil}" value="Mi perfil"  rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
 				|
 				<p:link href="/login/logout" value="Desconectar"/>
 			</h:form>
@@ -21,7 +21,7 @@
 	<div class="menu">
 		<ul class="menu-lista">
 <!-- 			<li><p:link href="/logSistema" value="REGISTRO DE ACTIVIDAD" /></li> -->
-			<li><p:link outcome="/index" value="MENÚ PRINCIPAL" /></li>
+			<li><p:link outcome="/index" value="MENÚ PRINCIPAL" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/></li>
 		</ul>
 	</div>
 </ui:composition>
