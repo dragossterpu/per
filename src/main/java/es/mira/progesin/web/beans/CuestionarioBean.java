@@ -451,7 +451,7 @@ public class CuestionarioBean implements Serializable {
 
 	public void onRowEdit(RowEditEvent event) {
 		PreEnvioCuest cuestionario = (PreEnvioCuest) event.getObject();
-		modeloCuestionarioService.savePre2(cuestionario);
+		modeloCuestionarioService.savePreAlta(cuestionario);
 		FacesMessage msg = new FacesMessage("Solicitud de cuestionario modificada", cuestionario.getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
