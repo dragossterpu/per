@@ -1,5 +1,7 @@
 package es.mira.progesin.web.beans;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,9 +12,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -73,6 +79,8 @@ public class ProvisionalBean implements Serializable {
 
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
+	private UploadedFile docNuevo;
+
 	private Integer anio;
 
 	private String fechaAntes;
@@ -98,15 +106,33 @@ public class ProvisionalBean implements Serializable {
 			return "/provisional/provisional";
 		}
 		catch (Exception e) {
+			altaRegActivError(e);
 			return null;
 		}
 
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
-		FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-		FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-				"Documento/s subidos  con éxito");
+		try {
+			GestDocSolicitudDocumentacion documento = new GestDocSolicitudDocumentacion();
+			documento.setFechaAlta(new Date());
+			documento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+			documento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
+			documento.setFichero(event.getFile().getContents());
+			documento.setNombreFichero(event.getFile().getFileName());
+			documento.setExtension(event.getFile().getFileName()
+					.substring(event.getFile().getFileName().lastIndexOf('.') + 1).toLowerCase());
+			if (gestDocumentacionService.save(documento) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+						"Documento/s subidos  con éxito");
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+					"Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
+			altaRegActivError(e);
+		}
+
 	}
 
 	@PostConstruct
@@ -125,7 +151,6 @@ public class ProvisionalBean implements Serializable {
 	 * @param username
 	 */
 	private void saveReg(String descripcion, String tipoReg, String username) {
-		RegActividad regActividad = new RegActividad();
 		regActividad.setTipoRegActividad(tipoReg);
 		regActividad.setUsernameRegActividad(username);
 		regActividad.setFechaAlta(new Date());
@@ -162,4 +187,73 @@ public class ProvisionalBean implements Serializable {
 		regActividadService.save(regActividad);
 	}
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
+
+	public void onRowEdit(RowEditEvent event) {
+		GestDocSolicitudDocumentacion document = (GestDocSolicitudDocumentacion) event.getObject();
+		gestDocumentacionService.save(document);
+		FacesMessage msg = new FacesMessage("Nombre de documento modificado con exito", document.getNombreFichero());
+		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Modificación cancelada",
+				((GestDocSolicitudDocumentacion) event.getObject()).getNombreFichero());
+		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+	}
+
+	/**
+	 * Eliminación fisica
+	 * @param documento documento a eliminar
+	 */
+	public void eliminarDocumento(GestDocSolicitudDocumentacion documento) {
+		gestDocumentacionService.delete(documento);
+		listadoDocumentosCargados.remove(documento);
+	}
+
+	public void descargarFichero(GestDocSolicitudDocumentacion documento) {
+		try {
+			InputStream stream = new ByteArrayInputStream(documento.getFichero());
+			String contentType = "application/msword";
+			if ("pdf".equals(documento.getExtension())) {
+				contentType = "application/pdf";
+			}
+			else if (documento.getExtension().startsWith("xls")) {
+				contentType = "application/x-msexcel";
+			}
+
+			file = new DefaultStreamedContent(stream, contentType, documento.getNombreFichero());
+		}
+		catch (Exception e) {
+			altaRegActivError(e);
+		}
+	}
+
+	public String limpiar() {
+		solicitudDocumentacionPrevia.setTelefonoInterlocutor("");
+		solicitudDocumentacionPrevia.setCategoriaInterlocutor("");
+		solicitudDocumentacionPrevia.setCargoInterlocutor("");
+		solicitudDocumentacionPrevia.setCorreoCorporativoInterlocutor("");
+		solicitudDocumentacionPrevia.setNombreCompletoInterlocutor("");
+		return null;
+	}
+
+	public String finalizacionSolicitud() {
+		try {
+			solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
+			solicitudDocumentacionPrevia
+					.setUsuarioFinalizacion(SecurityContextHolder.getContext().getAuthentication().getName());
+			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+						"Solicitud de documentación cumplimentada  con éxito");
+			}
+
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
+			altaRegActivError(e);
+		}
+		return "/index";
+
+	}
 }

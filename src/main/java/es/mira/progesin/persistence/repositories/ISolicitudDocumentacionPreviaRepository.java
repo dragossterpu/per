@@ -10,6 +10,8 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
 	@Override
 	List<SolicitudDocumentacionPrevia> findAll();
 
+	List<SolicitudDocumentacionPrevia> findByFechaValidApoyoIsNotNull();
+
 	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
 
 }

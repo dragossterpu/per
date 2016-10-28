@@ -41,6 +41,11 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	}
 
 	@Override
+	public List<SolicitudDocumentacionPrevia> findAllPreviaEnvio() {
+		return solicitudDocumentacionPreviaRepository.findByFechaValidApoyoIsNotNull();
+	}
+
+	@Override
 	public SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo) {
 		return solicitudDocumentacionPreviaRepository.findByCorreoDestiantario(correo);
 	}

@@ -15,6 +15,8 @@ public interface ISolicitudDocumentacionService {
 
 	List<SolicitudDocumentacionPrevia> findAllPrevia();
 
+	List<SolicitudDocumentacionPrevia> findAllPreviaEnvio();
+
 	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
 
 }

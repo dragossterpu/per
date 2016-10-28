@@ -61,9 +61,11 @@ public class CuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	final String cuestionarios_preenvio = "/cuestionarios/preenvio";
+
 	RegActividad regActividad = new RegActividad();
 
-	private final String NOMBRESECCION = "Generación de plantilla jasper";
+	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
 	@Autowired
 	IRegActividadService regActividadService;
@@ -106,6 +108,8 @@ public class CuestionarioBean implements Serializable {
 
 	private String fechaEmision;
 
+	private String cuerpoEstado;
+
 	List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
 
 	List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
@@ -120,12 +124,23 @@ public class CuestionarioBean implements Serializable {
 	// Url de la plantilla jasper
 	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
 
+	/**
+	 * @param
+	 * @comment Metodo que crea una solicitus de documentacion
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
 	public String creaCuestionario() {
-
-		return "/cuestionarios/preenvio";
+		return cuestionarios_preenvio;
 
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que crea una solicitus de documentacion
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
 	public String execute() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession session = (HttpSession) externalContext.getSession(true);
@@ -157,26 +172,20 @@ public class CuestionarioBean implements Serializable {
 
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que crea una solicitus de documentacion
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
 	public String executeSolicitud() {
 		this.fechaAntes = null;
 		this.fechaLimite = null;
+
 		try {
-			if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
-					|| solicitudDocumentacionPrevia.getApoyoCorreo().trim().equals("")) {
-				solicitudDocumentacionPrevia.setApoyoCorreo("mmayo@interior.es");
-			}
-			if (solicitudDocumentacionPrevia.getApoyoNombre() == null
-					|| solicitudDocumentacionPrevia.getApoyoNombre().trim().equals("")) {
-				solicitudDocumentacionPrevia.setApoyoNombre("Manuel Mayo Rodríguez");
-			}
-			if (solicitudDocumentacionPrevia.getApoyoPuesto() == null
-					|| solicitudDocumentacionPrevia.getApoyoPuesto().trim().equals("")) {
-				solicitudDocumentacionPrevia.setApoyoPuesto("Inspector Auditor, Jefe del Servicio de Apoyo");
-			}
-			if (solicitudDocumentacionPrevia.getApoyoTelefono() == null
-					|| solicitudDocumentacionPrevia.getApoyoTelefono().trim().equals("")) {
-				solicitudDocumentacionPrevia.setApoyoTelefono("91.537.25.41");
-			}
+			datosApoyo();
+			dirigido();
+
 			solicitudDocumentacionPrevia.setIdentificadorTrimestre(
 					solicitudDocumentacionPrevia.getIdentificadorTrimestre() + " del año " + anio);
 			solicitudDocumentacionPrevia.setNombreCuestionarioPrevio(nombreCuestionarioPrevio);
@@ -206,12 +215,59 @@ public class CuestionarioBean implements Serializable {
 			// Guardamos loe posibles errores en bbdd
 			altaRegActivError(e);
 		}
-		return "/cuestionarios/previo";
+		return "cuestionarios/preEnvioCuestionarios";
 
 	}
 
 	/**
-	 * 
+	 * @param
+	 * @comment Metodo que muestra el mensaje para quien es dirigida la solicitud
+	 * @author EZENTIS STAD
+	 * @return
+	 */
+	private void dirigido() {
+		if ("GC".trim().equals(cuerpoEstado)) {
+			solicitudDocumentacionPrevia
+					.setMensajeCorreo("(cuenta corporativa guardiacivil.org o guardiacivil.es, no cuenta personal).");
+		}
+		else if ("PN".trim().equals(cuerpoEstado)) {
+			solicitudDocumentacionPrevia.setMensajeCorreo("(cuenta corporativa policia.es, no cuenta personal).");
+		}
+		else {
+			solicitudDocumentacionPrevia.setMensajeCorreo("(no cuenta personal).");
+		}
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo para obtener los datos del jefe del equipo de apoyo
+	 * @author EZENTIS STAD
+	 * @return
+	 */
+	private void datosApoyo() {
+		if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
+				|| solicitudDocumentacionPrevia.getApoyoCorreo().trim().equals("")) {
+			solicitudDocumentacionPrevia.setApoyoCorreo("mmayo@interior.es");
+		}
+		if (solicitudDocumentacionPrevia.getApoyoNombre() == null
+				|| solicitudDocumentacionPrevia.getApoyoNombre().trim().equals("")) {
+			solicitudDocumentacionPrevia.setApoyoNombre("Manuel Mayo Rodríguez");
+		}
+		if (solicitudDocumentacionPrevia.getApoyoPuesto() == null
+				|| solicitudDocumentacionPrevia.getApoyoPuesto().trim().equals("")) {
+			solicitudDocumentacionPrevia.setApoyoPuesto("Inspector Auditor, Jefe del Servicio de Apoyo");
+		}
+		if (solicitudDocumentacionPrevia.getApoyoTelefono() == null
+				|| solicitudDocumentacionPrevia.getApoyoTelefono().trim().equals("")) {
+			solicitudDocumentacionPrevia.setApoyoTelefono("91.537.25.41");
+		}
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo que permite dar de alta los documentos selecionados
+	 * @author EZENTIS STAD
+	 * @return
 	 */
 	private void altaDocumentos() {
 
@@ -225,15 +281,43 @@ public class CuestionarioBean implements Serializable {
 		}
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que obtiene la lista de los solicitudes creadas
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
 	public String getListaSolicitudes() {
+		this.documentosSelecionados = null;
 		this.listaSolicitudesPrevia = null;
 		anio = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
 		return "/cuestionarios/listaSolicitudes";
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que obtiene la lista de los solicitudes pendientes de enviar
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
+	public String getListaSolicitudesPendientes() {
+		this.documentosSelecionados = null;
+		this.listaSolicitudesPrevia = null;
+		anio = null;
+		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPreviaEnvio();
+		return "/cuestionarios/listaSolicitudesPrevia";
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo que permite visualizar una solicitud creada
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		try {
+
 			listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
 			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -245,11 +329,18 @@ public class CuestionarioBean implements Serializable {
 			return "/cuestionarios/vistaSolicitud";
 		}
 		catch (Exception e) {
+			altaRegActivError(e);
 			return null;
 		}
 
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que permite al equipo de apoyo validar la solicitud de documentacion
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
 	public String validacionApoyo() {
 		solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
 		solicitudDocumentacionPrevia
@@ -265,10 +356,14 @@ public class CuestionarioBean implements Serializable {
 	}
 
 	/**
-	 * @metodo Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
-	 * @return
+	 * @param cuestionario
+	 * @comment Metodo que envia una solicitud de documentacion
+	 * @author EZENTIS STAD
+	 * @return vista
 	 */
 	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
+		this.anio = null;
+		this.documentosSelecionados = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		nombreCuestionarioPrevio = cuestionario.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
@@ -276,31 +371,49 @@ public class CuestionarioBean implements Serializable {
 	}
 
 	/**
-	 * @metodo Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
-	 * @return
+	 * @param cuestionario
+	 * @comment Metodo que envia una solicitud de documentacion
+	 * @author EZENTIS STAD
 	 */
 	public String enviarPreCuestionarioOld(PreEnvioCuest cuestionario) {
 
 		return "/cuestionarios/preenvio";
 	}
 
+	/**
+	 * @param cuestionario
+	 * @comment Metodo que limpia los valores
+	 * @author EZENTIS STAD
+	 */
 	public String limpiar() {
 		model.resetValues();
 		return "/cuestionarios/preenvio";
 	}
 
+	/**
+	 * @param
+	 * @comment PostConstruct
+	 * @author EZENTIS STAD
+	 * @return
+	 */
 	@PostConstruct
 	public void init() {
-		listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
+		listadoDocumentosCargados = new ArrayList<>();
 		nombreCuestionarioPrevio = null;
 		anio = null;
-		listaSolicitudesPrevia = new ArrayList<SolicitudDocumentacionPrevia>();
+		cuerpoEstado = null;
+		listaSolicitudesPrevia = new ArrayList<>();
 		model = new DatosJasper();
 		// insertar();
 		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
 
 	}
 
+	/**
+	 * @param cuestionario
+	 * @comment Metodo que permite insertar ficheros desde una ruta local
+	 * @author EZENTIS STAD
+	 */
 	public void insertar() {
 		try {
 
@@ -317,7 +430,6 @@ public class CuestionarioBean implements Serializable {
 				cuestionario.setDescripcion(
 						fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
 				cuestionario.setNombreFichero(fichero.getName());
-				System.out.println(fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1));
 				cuestionario.setExtension(
 						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
 				// Blob fichero = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
@@ -326,10 +438,15 @@ public class CuestionarioBean implements Serializable {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			altaRegActivError(e);
 		}
 	}
 
+	/**
+	 * @param cuestionario
+	 * @comment Metodo que permite descargar el fichero selecionado
+	 * @author EZENTIS STAD
+	 */
 	public void descargarFichero(PreEnvioCuest cuestionario) {
 		try {
 			InputStream stream = new ByteArrayInputStream(cuestionario.getFichero());
@@ -343,10 +460,15 @@ public class CuestionarioBean implements Serializable {
 			file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			altaRegActivError(e);
 		}
 	}
 
+	/**
+	 * @param event
+	 * @comment Metodo que permite el webFlow
+	 * @author EZENTIS STAD
+	 */
 	public String onFlowProcess(FlowEvent event) {
 		// cleanParam(event);
 		if (skip) {
@@ -369,7 +491,6 @@ public class CuestionarioBean implements Serializable {
 	 * @param username
 	 */
 	private void saveReg(String descripcion, String tipoReg, String username) {
-		RegActividad regActividad = new RegActividad();
 		regActividad.setTipoRegActividad(tipoReg);
 		regActividad.setUsernameRegActividad(username);
 		regActividad.setFechaAlta(new Date());
@@ -407,14 +528,24 @@ public class CuestionarioBean implements Serializable {
 	}
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 
+	/**
+	 * @param cuestionario
+	 * @comment Metodo que elimina el cuestionario
+	 * @author EZENTIS STAD
+	 */
 	public void eliminarPreEnvioCuestionario(PreEnvioCuest cuestionario) {
 		modeloCuestionarioService.delete(cuestionario.getId());
 		this.listadoPreEnvioCuestionarios = null;
 		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que da de alta el cuestionario
+	 * @author EZENTIS STAD
+	 */
 	public void altaPreEnvioCuestionario() {
-		if (ficheroNuevo != null && !ficheroNuevo.getFileName().trim().equals("")) {
+		if (ficheroNuevo != null && !"".equals(ficheroNuevo.getFileName().trim())) {
 			try {
 				PreEnvioCuest cuestionario = new PreEnvioCuest();
 				cuestionario.setCodigo("codigo");
@@ -422,8 +553,6 @@ public class CuestionarioBean implements Serializable {
 				cuestionario.setDescripcion(ficheroNuevo.getFileName()
 						.substring(0, ficheroNuevo.getFileName().lastIndexOf('.')).toUpperCase());
 				cuestionario.setNombreFichero(ficheroNuevo.getFileName());
-				System.out
-						.println(ficheroNuevo.getFileName().substring(ficheroNuevo.getFileName().lastIndexOf('.') + 1));
 				cuestionario.setExtension(ficheroNuevo.getFileName()
 						.substring(ficheroNuevo.getFileName().lastIndexOf('.') + 1).toLowerCase());
 				// Obtiene el contenido del fichero en []bytes
@@ -437,7 +566,7 @@ public class CuestionarioBean implements Serializable {
 			catch (Exception e) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
 						"Se ha producido un error al dar de alta la solicitud de cuestionario, inténtelo de nuevo más tarde");
-				// TODO log de errores
+				altaRegActivError(e);
 			}
 
 		}
@@ -446,9 +575,14 @@ public class CuestionarioBean implements Serializable {
 					"No se ha seleccionado un archivo al dar de alta la solicitud de cuestionario");
 		}
 		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
-		// TODO generar alerta / notificación
+
 	}
 
+	/**
+	 * @param event
+	 * @comment Metodo que permite editar en caliente un registro
+	 * @author EZENTIS STAD
+	 */
 	public void onRowEdit(RowEditEvent event) {
 		PreEnvioCuest cuestionario = (PreEnvioCuest) event.getObject();
 		modeloCuestionarioService.savePreAlta(cuestionario);
@@ -456,6 +590,11 @@ public class CuestionarioBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 
+	/**
+	 * @param
+	 * @comment Metodo que anula la edicion en caliente un registro
+	 * @author EZENTIS STAD
+	 */
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
 				((PreEnvioCuest) event.getObject()).getDescripcion());

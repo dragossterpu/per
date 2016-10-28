@@ -6,8 +6,10 @@ import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 
 public interface IGestDocSolicitudDocumentacionService {
 
-	void save(GestDocSolicitudDocumentacion documento);
+	GestDocSolicitudDocumentacion save(GestDocSolicitudDocumentacion documento);
 
 	List<GestDocSolicitudDocumentacion> findByIdSolicitud(Integer idSolicitud);
+
+	void delete(GestDocSolicitudDocumentacion documento);
 
 }

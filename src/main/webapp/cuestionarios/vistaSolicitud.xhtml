@@ -37,8 +37,7 @@
 					<div class="bloqueVista">
 					<p>1.	A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de 
 					esa Unidad con indicación del nombre y apellidos, categoría y cargo, 
-					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa guardiacivil.org o guardiacivil.es, 
-					no cuenta personal).</p>
+					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico #{cuestionarioBean.solicitudDocumentacionPrevia.mensajeCorreo}</p>
 					</div>
 					<div class="bloqueVista">
 					<p >2.	Antes del <strong> #{cuestionarioBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
@@ -87,17 +86,30 @@
 					<div class="bloqueVistaTitulo">
 					<p><strong><center> #{cuestionarioBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
 					</div>
-					<div class="botonesFormulario">				        
+					<p:outputPanel rendered="#{empty cuestionarioBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
+					<div class="botonesFormulario">				        						
 						<p:commandButton actionListener="#{cuestionarioBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
 						<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
+					</p:outputPanel>
+					
+						<p:outputPanel rendered="#{empty cuestionarioBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty cuestionarioBean.solicitudDocumentacionPrevia.fechaValidApoyo }">
+						<div class="botonesFormulario">				        						
+							<p:commandButton actionListener="#{cuestionarioBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-user-plus"/>
+							<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+						</div>
+						</p:outputPanel>
+
 					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 						<p:ajax event="close" listener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
 						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
 					</div>
-					</p:dialog>		
+					</p:dialog>	
+					<p:outputPanel rendered="#{not empty cuestionarioBean.listadoDocumentosCargados}">
+					
+					</p:outputPanel>	
 		</h:form>
 		
 		</ui:define>

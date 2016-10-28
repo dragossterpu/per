@@ -16,16 +16,15 @@ import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 
-
 @Service
 public class RegActividadService implements IRegActividadService {
-	
+
 	@Autowired
 	IRegActividadRepository regActividadRepository;
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Integer id) {
@@ -57,13 +56,12 @@ public class RegActividadService implements IRegActividadService {
 		return regActividadRepository.findOne(id);
 	}
 
-
 	@Override
 	@Transactional(readOnly = false)
 	public RegActividad save(RegActividad entity) {
 		return regActividadRepository.save(entity);
 	}
-	
+
 	@Override
 	public List<RegActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda) {
 		Session session = sessionFactory.openSession();
@@ -76,15 +74,20 @@ public class RegActividadService implements IRegActividadService {
 			criteria.add(Restrictions.lt("fechaAlta", regActividadBusqueda.getFechaHasta()));
 		}
 		if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
-			criteria.add(Restrictions.ilike("nombreSeccion", regActividadBusqueda.getNombreSeccion(), MatchMode.ANYWHERE));
+			criteria.add(
+					Restrictions.ilike("nombreSeccion", regActividadBusqueda.getNombreSeccion(), MatchMode.ANYWHERE));
 		}
-		if (regActividadBusqueda.getTipoRegActividad() != null && !regActividadBusqueda.getTipoRegActividad().isEmpty()) {
-			criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(), MatchMode.ANYWHERE));
+		if (regActividadBusqueda.getTipoRegActividad() != null
+				&& !regActividadBusqueda.getTipoRegActividad().isEmpty()) {
+			criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(),
+					MatchMode.ANYWHERE));
 		}
-		if (regActividadBusqueda.getUsernameRegActividad() != null && !regActividadBusqueda.getUsernameRegActividad().isEmpty()) {
-			criteria.add(Restrictions.ilike("usernameRegActividad", regActividadBusqueda.getUsernameRegActividad(), MatchMode.ANYWHERE));
+		if (regActividadBusqueda.getUsernameRegActividad() != null
+				&& !regActividadBusqueda.getUsernameRegActividad().isEmpty()) {
+			criteria.add(Restrictions.ilike("usernameRegActividad", regActividadBusqueda.getUsernameRegActividad(),
+					MatchMode.ANYWHERE));
 		}
-		
+
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc("fechaAlta"));
 

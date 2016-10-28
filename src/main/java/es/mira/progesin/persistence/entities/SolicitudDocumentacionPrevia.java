@@ -86,10 +86,10 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	private Date fechaAlta;
 
 	@Column(name = "username_alta", length = 12, nullable = false)
-	protected String usernameAlta;
+	private String usernameAlta;
 
 	@Column(name = "fecha_envio")
-	protected Date fechaEnvio;
+	private Date fechaEnvio;
 
 	@Column(name = "nombreCuestionarioPrevio")
 	private String nombreCuestionarioPrevio;
@@ -98,8 +98,33 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	private Date fechaValidApoyo;
 
 	@Column(name = "usernameValidApoyo")
-	protected String usernameValidApoyo;
+	private String usernameValidApoyo;
 
 	@Column(name = "usernameEnvio")
-	protected String usernameEnvio;
+	private String usernameEnvio;
+
+	@Column(name = "nombreCompletoInterlocutor")
+	private String nombreCompletoInterlocutor;
+
+	@Column(name = "categoriaInterlocutor")
+	private String categoriaInterlocutor;
+
+	@Column(name = "cargoInterlocutor")
+	private String cargoInterlocutor;
+
+	@Column(name = "correoCorporativoInterlocutor")
+	private String correoCorporativoInterlocutor;
+
+	@Column(name = "telefonoInterlocutor")
+	private String telefonoInterlocutor;
+
+	@Column(name = "mensajeCorreo")
+	private String mensajeCorreo;
+
+	@Column(name = "fechaFinalizacion")
+	private Date fechaFinalizacion;
+
+	@Column(name = "usuarioFinalizacion")
+	private String usuarioFinalizacion;
+
 }

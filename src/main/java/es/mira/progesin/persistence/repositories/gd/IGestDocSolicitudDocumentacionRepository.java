@@ -9,5 +9,4 @@ import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 public interface IGestDocSolicitudDocumentacionRepository
 		extends CrudRepository<GestDocSolicitudDocumentacion, Integer> {
 	List<GestDocSolicitudDocumentacion> findByIdSolicitud(Integer idSolicitud);
-
 }

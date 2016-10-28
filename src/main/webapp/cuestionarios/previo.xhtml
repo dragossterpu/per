@@ -44,9 +44,18 @@
 									            <f:selectItem itemLabel="segundo cuatrimestre" itemValue="segundo cuatrimestre" />
 									             <f:selectItem itemLabel="tercer cuatrimestre" itemValue="tercer cuatrimestre" />
 									              <f:selectItem itemLabel="cuarto cuatrimestre" itemValue="cuarto cuatrimestre" />
-									        </p:selectOneMenu>											
-											<h:outputText for="anio" value="AÑO: *" />
-											<p:inputText value="#{cuestionarioBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="AÑO: *"/>
+									        </p:selectOneMenu>
+									        <h:outputText for="anio" value="AÑO: *" />
+											<p:inputText value="#{cuestionarioBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="AÑO: *"/>     
+									        <h:outputText for="cuerpoEstado" value="CUERPO ESTADO: *" />
+											<p:selectOneMenu id="cuerpoEstado" value="#{cuestionarioBean.cuerpoEstado}" effect="fold" width="50" 
+									        required="true" requiredMessage="Seleccione el cuerpo de estado"
+											converter="#{selectConverter}">
+									            <f:selectItem itemLabel="Seleccione uno: " itemValue="" />
+									            <f:selectItem itemLabel="GUARDIA CIVIL" itemValue="GC" />
+									            <f:selectItem itemLabel="POLICÍA NACIONAL" itemValue="PN" />
+									            <f:selectItem itemLabel="OTRO" itemValue="O" />
+									        </p:selectOneMenu>												
 											
 											<h:outputText for="tipoInspeccion" value="CARÁCTER INSPECCIÓN: *" />
 											<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio un cuartrimestre" label="CARÁCTER INSPECCIÓN: *"/>

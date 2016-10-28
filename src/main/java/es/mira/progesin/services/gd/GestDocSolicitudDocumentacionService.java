@@ -17,13 +17,20 @@ public class GestDocSolicitudDocumentacionService implements IGestDocSolicitudDo
 
 	@Override
 	@Transactional(readOnly = false)
-	public void save(GestDocSolicitudDocumentacion documento) {
-		gestSolicitudDocumentacionRepository.save(documento);
+	public GestDocSolicitudDocumentacion save(GestDocSolicitudDocumentacion documento) {
+		return gestSolicitudDocumentacionRepository.save(documento);
 	}
 
 	@Override
 	public List<GestDocSolicitudDocumentacion> findByIdSolicitud(Integer idSolicitud) {
 		return gestSolicitudDocumentacionRepository.findByIdSolicitud(idSolicitud);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(GestDocSolicitudDocumentacion documento) {
+		gestSolicitudDocumentacionRepository.delete(documento.getId());
+
 	}
 
 }
