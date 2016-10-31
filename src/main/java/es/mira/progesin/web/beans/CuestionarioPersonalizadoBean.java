@@ -13,6 +13,7 @@ import javax.faces.bean.RequestScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
@@ -48,6 +49,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 
 	@Autowired
 	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
+
+	// Tipos de respuesta
+	private List<DatosTablaGenerica> listaTablaSalidas;
+
+	private String respuesta;
 
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
@@ -87,10 +93,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		// JSF ui:repeat no funciona con Set
 		setAreas(new ArrayList<>(areasSet));
 
-		/*******/
-		List<String> valores = configuracionRespuestaRepository.findValuesForKey("CHECKBOXSINO");
-		/*******/
-
 		return "/cuestionarios/previsualizarEnvioCuestionario";
 	}
 
@@ -107,9 +109,30 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		return configuracionRespuestaRepository.findValuesForKey(tipo);
 	}
 
+	public void aniadirFila(PreguntasCuestionario pregunta) {
+		if ("TABLASALIDAS".equals(pregunta.getTipoRespuesta())) {
+			if (listaTablaSalidas == null) {
+				listaTablaSalidas = new ArrayList<>();
+			}
+			DatosTablaGenerica datos = new DatosTablaGenerica();
+			// datos.setMeses("5");
+			// datos.setMotivos("motivos");
+			// datos.setNumSalidas("6");
+			// datos.setSexo("M");
+			listaTablaSalidas.add(datos);
+		}
+	}
+
 	@PostConstruct
 	public void init() {
 		cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
+		listaTablaSalidas = new ArrayList<>();
+		DatosTablaGenerica datos = new DatosTablaGenerica();
+		// datos.setMeses("5");
+		// datos.setMotivos("motivos");
+		// datos.setNumSalidas("6");
+		// datos.setSexo("M");
+		listaTablaSalidas.add(datos);
 	}
 
 }

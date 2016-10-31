@@ -14,7 +14,9 @@ import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.ModeloCuestionario;
+import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,23 +35,28 @@ public class ModelosCuestionarioBean {
 	@Autowired
 	private IModeloCuestionarioService modeloCuestionarioService;
 
+	@Autowired
+	private IDocumentoService documentoService;
+
 	@PostConstruct
 	public void init() {
-		// insertar();
 		listadoCuestionarios = (List<ModeloCuestionario>) modeloCuestionarioService.findAll();
 	}
 
 	public void descargarFichero(ModeloCuestionario cuestionario) {
 		try {
-			InputStream stream = new ByteArrayInputStream(cuestionario.getFichero());
-			String contentType = "application/msword";
-			if ("pdf".equals(cuestionario.getExtension())) {
-				contentType = "application/pdf";
+			Documento documento = documentoService.findOne(cuestionario.getIdDocumento());
+			if (documento != null) {
+				InputStream stream = new ByteArrayInputStream(documento.getFichero());
+				String contentType = "application/msword";
+				if ("pdf".equals(cuestionario.getExtension())) {
+					contentType = "application/pdf";
+				}
+				else if (cuestionario.getExtension().startsWith("xls")) {
+					contentType = "application/x-msexcel";
+				}
+				this.file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
 			}
-			else if (cuestionario.getExtension().startsWith("xls")) {
-				contentType = "application/x-msexcel";
-			}
-			this.file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -76,7 +83,7 @@ public class ModelosCuestionarioBean {
 				cuestionario.setExtension(
 						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
 				// Blob fichero = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
-				cuestionario.setFichero(data);
+				// cuestionario.setFichero(data);
 				modeloCuestionarioService.save(cuestionario);
 			}
 		}

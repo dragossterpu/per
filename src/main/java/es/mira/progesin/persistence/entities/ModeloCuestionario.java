@@ -46,16 +46,11 @@ public class ModeloCuestionario implements Serializable {
 	@Column(name = "extension", nullable = false, length = 4)
 	private String extension;
 
-	// no vale con postgres
-	// @Column(name = "fichero")
-	// @Lob
-	// private Blob fichero;
-
 	@Column(name = "nombre", nullable = false)
 	private String nombreFichero;
 
-	@Column(name = "fichero", nullable = false)
-	private byte[] fichero;
+	@Column(name = "id_documento", nullable = false)
+	private Long idDocumento;
 
 	@OneToMany(mappedBy = "idCuestionario")
 	private List<AreasCuestionario> areas;

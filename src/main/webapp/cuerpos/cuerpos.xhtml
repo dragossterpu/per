@@ -16,7 +16,7 @@
 				<h:form id="form">
 				
 				
-					<p:dataTable id="tablaCuerpos" var="cuerpo" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
+					<p:dataTable id="tablaCuerpos" var="cuerpo" rowIndexVar="rowIndex" 
 						value="#{cuerposEstadoBean.listaCuerposEstado}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{cuerposEstadoBean.onRowEdit}"
 							update=":form:msgs" />
