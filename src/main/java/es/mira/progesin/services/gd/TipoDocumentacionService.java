@@ -1,4 +1,4 @@
-package es.mira.progesin.services;
+package es.mira.progesin.services.gd;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
-import es.mira.progesin.persistence.entities.TipoDocumentacion;
+import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
-import es.mira.progesin.persistence.repositories.ITipoDocumentacionRepository;
+import es.mira.progesin.persistence.repositories.gd.ITipoDocumentacionRepository;
 
 @Service
 public class TipoDocumentacionService implements ITipoDocumentacionService {

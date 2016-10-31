@@ -1,9 +1,9 @@
-package es.mira.progesin.services;
+package es.mira.progesin.services.gd;
 
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
-import es.mira.progesin.persistence.entities.TipoDocumentacion;
+import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 
 public interface ITipoDocumentacionService {
 
