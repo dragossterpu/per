@@ -10,7 +10,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-			<h3>Listado solicitudes previas cuestionario</h3>
+			<h3>Listado solicitudes previas cuestionario pendiente de enviar</h3>
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
@@ -36,7 +36,7 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="Nombre cuestionario" sortBy="#{solicitud.nombreCuestionarioPrevio}"  >
+							<p:column headerText="Nombre cuestionario" sortBy="#{solicitud.nombreCuestionarioPrevio}" width="320"  >
 								<h:outputText value="#{solicitud.nombreCuestionarioPrevio}" />
 							</p:column>
 						<p:column styleClass="botonTabla">

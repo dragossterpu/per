@@ -46,8 +46,19 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	}
 
 	@Override
+	public List<SolicitudDocumentacionPrevia> findAllFinalizadas() {
+		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNotNull();
+	}
+
+	@Override
 	public SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo) {
 		return solicitudDocumentacionPreviaRepository.findByCorreoDestiantario(correo);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		solicitudDocumentacionPreviaRepository.delete(id);
 	}
 
 }

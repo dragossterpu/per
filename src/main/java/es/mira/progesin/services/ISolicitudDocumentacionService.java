@@ -15,8 +15,12 @@ public interface ISolicitudDocumentacionService {
 
 	List<SolicitudDocumentacionPrevia> findAllPrevia();
 
+	List<SolicitudDocumentacionPrevia> findAllFinalizadas();
+
 	List<SolicitudDocumentacionPrevia> findAllPreviaEnvio();
 
 	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
+
+	void delete(Integer id);
 
 }

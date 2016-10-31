@@ -45,7 +45,7 @@
 					</div>
 					<div class="bloqueVista">
 					<p:dataTable  var="solicitud" value="#{cuestionarioBean.listadoDocumentosPrevios}" >
-							<p:column headerText="DOCUMENTO" >
+							<p:column headerText="DOCUMENTO" width="450">
 								<h:outputText value="#{solicitud.descripcion}" />
 							</p:column>
 							<p:column headerText="NOMBRE" >
@@ -89,22 +89,22 @@
 					<p:outputPanel rendered="#{empty cuestionarioBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
 					<div class="botonesFormulario">				        						
 						<p:commandButton actionListener="#{cuestionarioBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
-						<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+						<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>
 					
 						<p:outputPanel rendered="#{empty cuestionarioBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty cuestionarioBean.solicitudDocumentacionPrevia.fechaValidApoyo }">
 						<div class="botonesFormulario">				        						
 							<p:commandButton actionListener="#{cuestionarioBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-user-plus"/>
-							<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+							<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
 						</div>
 						</p:outputPanel>
 
 					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-						<p:ajax event="close" listener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+						<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
 					</div>
 					</p:dialog>	
 					<p:outputPanel rendered="#{not empty cuestionarioBean.listadoDocumentosCargados}">

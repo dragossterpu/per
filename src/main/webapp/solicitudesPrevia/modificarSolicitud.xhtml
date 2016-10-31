@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+		<h3>Modificar Solicitud docmentación previa cuestionario</h3>
+		<div class="aclaraciones">
+			Los campos marcados con (*) son obligatorios
+		</div>
+		
+		<h:form id="formAlta">
+			<div class="bloqueFormulario">
+					<h4>Datos Personales</h4>
+					<div class="columnaIzdaFormulario">
+						<h:outputText for="numeroReferencia" value="N/REF: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.numeroReferencia}" required="true" requiredMessage="Es obligatorio un numero de referencia" label="N/REF: *"/>
+						
+						<h:outputText for="asunto" value="ASUNTO: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" label="ASUNTO: *"/>
+										
+						<h:outputText for="destinatario" value="DESTINATARIO: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" label="DESTINATARIO: *"/>
+									
+						<h:outputText for="correoDestiantario" value="CORREO DESTINATARIO: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.correoDestiantario}" required="true" requiredMessage="Es obligatorio un correo del destinatariodestinatario" label="CORREO DESTINATARIO: *"/>
+						
+						<h:outputText for="identificadorTrimestre" value="CUARTRIMESTRE Y AÑO: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.identificadorTrimestre}" required="true" requiredMessage="Es obligatorio el cuartrimestre" label="CUARTRIMESTRE Y AÑO: *"/>			
+						
+						<h:outputText for="tipoInspeccion" value="CARÁCTER INSPECCIÓN: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio un cuartrimestre" label="CARÁCTER INSPECCIÓN: *"/>
+											
+						<h:outputText for="fechaAntes" value="FECHA LIMITE ENVÍO DOCUMENTACIÓN: *" />
+						<p:calendar value="#{cuestionarioBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" label="FECHA LIMITE ENVÍO DOCUMENTACIÓN: *"/>
+											
+						<h:outputText for="fechaLimiteCumplimentar" value="FECHA LIMITE CUMPLIMENTAR CUESTIONARIO: *" />
+						<p:calendar value="#{cuestionarioBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" label="FECHA LIMITE ENVÍO DOCUMENTACIÓN: *"/>					
+						
+					</div>
+	
+					<div class="columnaDchaFormulario">
+						<h:outputText for="apoyoPuesto" value="PUESTO PERSONA APOYO:" />
+						<p:inputText id="apoyoPuesto" value="#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoPuesto}" />
+											
+						<h:outputText for="apoyoNombre" value="NOMBRE PERSONA APOYO:" />
+						<p:inputText id="apoyoNombre" value="#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoNombre}"/>
+											
+						<h:outputText for="apoyoTelefono" value="TELÉFONO PERSONA APOYO:" />
+						<p:inputText id="apoyoTelefono" value="#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoTelefono}" />
+											
+						<h:outputText for="apoyoCorreo" value=" CORREO PERSONA APOYO:" />
+						<p:inputText id="apoyoCorreo" value="#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoCorreo}"/>
+																						
+						<h:outputText for="puestoJefeInspectorAuditor" value="PUESTO JEFE INSPECTOR AUDITOR: *" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio un puesto inspector auditor" label="PUESTO JEFE INSPECTOR AUDITOR: *"/>
+										
+						<h:outputText for="nombreJefeInspectorAuditor" value="NOMBRE JEFE INSPECTOR AUDITOR:" />
+						<p:inputText value="#{cuestionarioBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio unnombre del inspector auditor" label="NOMBRE JEFE INSPECTOR AUDITOR: *"/>
+						
+					</div>
+			</div>
+	
+			
+			<div class="botonesFormulario">
+				<p:commandButton actionListener="#{cuestionarioBean.modificarSolicitud}" value="Guardar cambios" icon="fa fa-fw fa-save"/>
+				<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
+			</div>
+			
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+				<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
+				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
+				</div>
+			</p:dialog>
+			
+		</h:form>
+		
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

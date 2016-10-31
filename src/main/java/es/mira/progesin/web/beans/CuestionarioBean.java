@@ -61,7 +61,7 @@ public class CuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	final String cuestionarios_preenvio = "/cuestionarios/preenvio";
+	final String cuestionarios_preenvio = "/solicitudesPrevia/preenvio";
 
 	RegActividad regActividad = new RegActividad();
 
@@ -83,6 +83,8 @@ public class CuestionarioBean implements Serializable {
 	String nombreCuestionarioPrevio;
 
 	List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
+
+	List<SolicitudDocumentacionPrevia> listaSolicitudesFinalizadas;
 
 	private List<Boolean> list;
 
@@ -215,7 +217,7 @@ public class CuestionarioBean implements Serializable {
 			// Guardamos loe posibles errores en bbdd
 			altaRegActivError(e);
 		}
-		return "cuestionarios/preEnvioCuestionarios";
+		return "solicitudesPrevia/preEnvioCuestionarios";
 
 	}
 
@@ -292,7 +294,7 @@ public class CuestionarioBean implements Serializable {
 		this.listaSolicitudesPrevia = null;
 		anio = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
-		return "/cuestionarios/listaSolicitudes";
+		return "/solicitudesPrevia/listaSolicitudes";
 	}
 
 	/**
@@ -306,7 +308,31 @@ public class CuestionarioBean implements Serializable {
 		this.listaSolicitudesPrevia = null;
 		anio = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPreviaEnvio();
-		return "/cuestionarios/listaSolicitudesPrevia";
+		return "/solicitudesPrevia/listaSolicitudesPrevia";
+	}
+
+	/**
+	 * @comment Pasa los datos dela solicitud que queremos modificar al formulario de modificación para que cambien los
+	 * valores que quieran
+	 * @param solicitud recuperado del formulario
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
+	public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
+		this.solicitudDocumentacionPrevia = solicitud;
+		return "/solicitudesPrevia/modificarSolicitud";
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo que obtiene la lista de los solicitudes finalizadas
+	 * @author EZENTIS STAD
+	 * @return vista
+	 */
+	public String getListaSolicitudesFinalizadas() {
+		listaSolicitudesPrevia = new ArrayList<>();
+		listaSolicitudesPrevia = solicitudDocumentacionService.findAllFinalizadas();
+		return "/solicitudesPrevia/listaSolicitudesFinalizadas";
 	}
 
 	/**
@@ -326,7 +352,7 @@ public class CuestionarioBean implements Serializable {
 			fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
 			solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 			solicitudDocumentacionPrevia = solicitud;
-			return "/cuestionarios/vistaSolicitud";
+			return "/solicitudesPrevia/vistaSolicitud";
 		}
 		catch (Exception e) {
 			altaRegActivError(e);
@@ -352,7 +378,7 @@ public class CuestionarioBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 			context.execute("PF('dialogMessage').show()");
 		}
-		return "/cuestionarios/previo";
+		return "/solicitudesPrevia/previo";
 	}
 
 	/**
@@ -367,7 +393,7 @@ public class CuestionarioBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		nombreCuestionarioPrevio = cuestionario.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
-		return "/cuestionarios/previo";
+		return "/solicitudesPrevia/previo";
 	}
 
 	/**
@@ -377,7 +403,7 @@ public class CuestionarioBean implements Serializable {
 	 */
 	public String enviarPreCuestionarioOld(PreEnvioCuest cuestionario) {
 
-		return "/cuestionarios/preenvio";
+		return "/solicitudesPrevia/preenvio";
 	}
 
 	/**
@@ -387,7 +413,7 @@ public class CuestionarioBean implements Serializable {
 	 */
 	public String limpiar() {
 		model.resetValues();
-		return "/cuestionarios/preenvio";
+		return "/solicitudesPrevia/preenvio";
 	}
 
 	/**
@@ -540,6 +566,17 @@ public class CuestionarioBean implements Serializable {
 	}
 
 	/**
+	 * @param cuestionario
+	 * @comment Metodo que elimina la solicitud previa de documentacion
+	 * @author EZENTIS STAD
+	 */
+	public void eliminarSolicitudCuestionario(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
+		solicitudDocumentacionService.delete(solicitudDocumentacionPrevia.getId());
+		this.listaSolicitudesPrevia = null;
+		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
+	}
+
+	/**
 	 * @param
 	 * @comment Metodo que da de alta el cuestionario
 	 * @author EZENTIS STAD
@@ -599,6 +636,31 @@ public class CuestionarioBean implements Serializable {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
 				((PreEnvioCuest) event.getObject()).getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+	}
+
+	/**
+	 * @param cuestionario
+	 * @comment Metodo que modifica los datos de la solicitud previa de cuestionario
+	 * @author EZENTIS STAD
+	 */
+	public void modificarSolicitud() {
+		try {
+
+			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+				RequestContext context = RequestContext.getCurrentInstance();
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificación",
+						"La solicitud de documentación ha sido modificada con éxito");
+				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+				context.execute("PF('dialogMessage').show()");
+				listadoDocumentosCargados = gestDocumentacionService
+						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+			}
+		}
+		catch (Exception e) {
+			// Guardamos loe posibles errores en bbdd
+			altaRegActivError(e);
+		}
+
 	}
 
 }

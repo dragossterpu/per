@@ -14,7 +14,7 @@
    
         <h:form id="datosReporte" >
         		 <p:growl id="growl" sticky="true" showDetail="true"/> 
-    				<p:wizard flowListener="#{cuestionarioBean.onFlowProcess}">
+    				<p:wizard flowListener="#{cuestionarioBean.onFlowProcess}" nextLabel="Siguiente" backLabel="Atr&aacute;s" >
         		
 		        		<div class="bloqueFormulario">
 							<p:tab id="general" title="Datos contenido">
@@ -138,14 +138,14 @@
                     				 </h:panelGrid>
                 					</h:panelGrid>
 									<div class="botonesFormulario">				        
-										<p:commandButton actionListener="#{cuestionarioBean.executeSolicitud}" value="Enviar solicitud documentación" icon="fa fa-fw fa-user-plus"/>
-										<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+										<p:commandButton actionListener="#{cuestionarioBean.executeSolicitud}" value="Crear solicitud documentación previa" icon="fa fa-fw fa-user-plus"/>
+										<p:button outcome="/solicitudesPrevia/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 									</div>
 									<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-										<p:ajax event="close" listener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+										<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/preEnvioCuestionarios')}" />
 										<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 										<div class="centrarBotonesDialog">
-											<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+											<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/preEnvioCuestionarios')}" />
 										</div>
 									</p:dialog>
 							</p:panel>

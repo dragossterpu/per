@@ -12,6 +12,8 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
 
 	List<SolicitudDocumentacionPrevia> findByFechaValidApoyoIsNotNull();
 
+	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNotNull();
+
 	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
 
 }

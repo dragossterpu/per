@@ -21,14 +21,14 @@
 					
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{cuestionarioBean.altaPreEnvioCuestionario}" value="Crear solicitud de cuestionario" ajax="false" icon="fa fa-fw fa-save" />
-						<p:button outcome="/cuestionarios/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+						<p:button outcome="/solicitudesPrevia/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 			
 					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-						<p:ajax event="close" listener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+						<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/preEnvioCuestionarios')}" />
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 						<div class="centrarBotonesDialog">
-							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/preEnvioCuestionarios')}" />
+							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/preEnvioCuestionarios')}" />
 						</div>
 					</p:dialog>
 					

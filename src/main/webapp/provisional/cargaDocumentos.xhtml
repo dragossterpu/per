@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<f:view >
+
+	<ui:composition template="../layouts/layoutInteriorProv.xhtml">
+		
+		<ui:define name="content">
+<h3>Adjuntar documentos solicitud </h3>
+		<div class="bloqueVistaTitulo">	
+			<h4>Nombre Cuestionario </h4>#{provisionalBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+		</div>
+						<div class="aclaraciones">
+						Se puede cargar uno o varios documentos
+						</div>
+			
+
+				<h:form id="formAlta">
+					 
+					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+			         sizeLimit="100000000"  update="tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" />			 			   					   		 
+			   		
+					
+					<p:outputPanel rendered="#{not empty provisionalBean.listadoDocumentosCargados}">
+					<p:dataTable id="tablaDocumentos" var="documento" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
+						value="#{provisionalBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+						<p:ajax event="rowEdit" listener="#{provisionalBean.onRowEdit}"
+							update=":formAlta:msgs" />
+						<p:ajax event="rowEditCancel" listener="#{provisionalBean.onRowCancel}"
+							update=":formAlta:msgs" />
+
+						<p:column headerText="Documentos">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{documento.nombreFichero}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="documentoInput" value="#{documento.nombreFichero}" converter="#{trimConverter}" required="true"
+										requiredMessage="El nombre del documento no puede estar vacío" />
+										<p:messages for="documentoInput" autoUpdate="true"  closable="true"/>
+								</f:facet>
+							</p:cellEditor> 
+				       </p:column>
+
+						<p:column style="width:30px">
+							<p:rowEditor />
+						</p:column>
+						<p:column style="width:30px">
+							<p:commandButton title="Eliminar" icon="ui-icon-trash"
+								actionListener="#{provisionalBean.eliminarDocumento(documento)}"
+								update="tablaDocumentos">
+								<p:confirm header="Eliminar documento"
+									message="¿Está seguro que desea eliminar este documento?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+						<p:column styleClass="botonTabla">
+							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalBean.descargarFichero(documento)}" title="Descargar documento">
+								<p:fileDownload value="#{provisionalBean.file}" />
+							</p:commandButton>
+						</p:column>
+						
+					</p:dataTable>
+					</p:outputPanel>
+					<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</div>
+					</p:confirmDialog>
+					<div class="botonesFormulario">
+						<p:button outcome="/provisional/provisional" value="Volver" icon="fa fa-fw fa-undo"/>
+					</div>
+
+					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+			</h:form>
+					
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

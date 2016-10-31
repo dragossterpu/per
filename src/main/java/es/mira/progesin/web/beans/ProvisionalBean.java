@@ -112,7 +112,7 @@ public class ProvisionalBean implements Serializable {
 
 	}
 
-	public void handleFileUpload(FileUploadEvent event) {
+	public String handleFileUpload(FileUploadEvent event) {
 		try {
 			GestDocSolicitudDocumentacion documento = new GestDocSolicitudDocumentacion();
 			documento.setFechaAlta(new Date());
@@ -132,7 +132,8 @@ public class ProvisionalBean implements Serializable {
 					"Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
 			altaRegActivError(e);
 		}
-
+		listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+		return "/provisional/cargaDocumentos";
 	}
 
 	@PostConstruct
@@ -199,6 +200,16 @@ public class ProvisionalBean implements Serializable {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
 				((GestDocSolicitudDocumentacion) event.getObject()).getNombreFichero());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+	}
+
+	/**
+	 * @param cuestionario
+	 * @comment Metodo que envia una solicitud de documentacion
+	 * @author EZENTIS STAD
+	 */
+	public String adjuntarDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
+
+		return "/provisional/cargaDocumentos";
 	}
 
 	/**
