@@ -37,6 +37,11 @@
 .ui-dialog.ui-widget-content .ui-dialog-title {
 	font-size: 16px;
 }
+
+.ui-wizard-step-title {
+    font-size: 14px;
+    font-weight: normal;
+}
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {
