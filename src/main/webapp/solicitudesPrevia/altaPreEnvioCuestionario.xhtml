@@ -16,11 +16,11 @@
 				<h:form id="form" enctype="multipart/form-data">		
 												
 					<h:outputLabel for="fichero" value="Fichero de la solicitud de cuestionario (*):" />
-					<p:fileUpload id="fichero" value="#{cuestionarioBean.ficheroNuevo}" required="true" requiredMessage="Introduzca el fichero de la solicitud de cuestionario" mode="simple" skinSimple="true"  label="Elegir fichero"/>
+					<p:fileUpload id="fichero" value="#{solicitudDocPreviaBean.ficheroNuevo}" required="true" requiredMessage="Introduzca el fichero de la solicitud de cuestionario" mode="simple" skinSimple="true"  label="Elegir fichero"/>
 					<p:messages for="fichero" autoUpdate="true"  closable="true"/>
 					
 					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{cuestionarioBean.altaPreEnvioCuestionario}" value="Crear solicitud de cuestionario" ajax="false" icon="fa fa-fw fa-save" />
+						<p:commandButton actionListener="#{solicitudDocPreviaBean.altaPreEnvioCuestionario}" value="Crear solicitud de cuestionario" ajax="false" icon="fa fa-fw fa-save" />
 						<p:button outcome="/solicitudesPrevia/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 			

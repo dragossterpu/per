@@ -13,7 +13,7 @@
 
 		<h3>Solicitud documentación previa cuestionario</h3>
 		<div class="bloqueVistaTitulo">	
-			<h4>Nombre Cuestionario </h4>#{cuestionarioBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+			<h4>Nombre Cuestionario </h4>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
 		</div>
 		
 			
@@ -21,14 +21,14 @@
 		<h:form id="formAlta">
 			
 					<div class="bloqueVistaTitulo">
-						<p>N/REF: #{cuestionarioBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	
-						<p>FECHA: Madrid, #{cuestionarioBean.fechaEmision}</p>
-						<p>ASUNTO: 	#{cuestionarioBean.solicitudDocumentacionPrevia.asunto}</p>	
-						<p><strong>DESTINATARIO: #{cuestionarioBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
+						<p>N/REF: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	
+						<p>FECHA: Madrid, #{solicitudDocPreviaBean.fechaEmision}</p>
+						<p>ASUNTO: 	#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}</p>	
+						<p><strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
 					</div>	
 					<div class="bloqueVista">	
-					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{cuestionarioBean.solicitudDocumentacionPrevia.identificadorTrimestre}</strong>, se va a realizar una  inspección de carácter
-					<strong>#{cuestionarioBean.solicitudDocumentacionPrevia.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
+					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.identificadorTrimestre}</strong>, se va a realizar una  inspección de carácter
+					<strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
 					</div>
 					<div class="bloqueVista">
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
@@ -37,14 +37,14 @@
 					<div class="bloqueVista">
 					<p>1.	A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de 
 					esa Unidad con indicación del nombre y apellidos, categoría y cargo, 
-					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico #{cuestionarioBean.solicitudDocumentacionPrevia.mensajeCorreo}</p>
+					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.mensajeCorreo}</p>
 					</div>
 					<div class="bloqueVista">
-					<p >2.	Antes del <strong> #{cuestionarioBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
+					<p >2.	Antes del <strong> #{solicitudDocPreviaBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
-					<p:dataTable  var="solicitud" value="#{cuestionarioBean.listadoDocumentosPrevios}" >
+					<p:dataTable  var="solicitud" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" >
 							<p:column headerText="DOCUMENTO" width="450">
 								<h:outputText value="#{solicitud.descripcion}" />
 							</p:column>
@@ -58,22 +58,22 @@
 					</div>
 					<div class="bloqueVistaTitulo">
 					<p >3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
-					deberá tener entrada en esta IPSS antes del <strong> #{cuestionarioBean.fechaLimite}</strong>.</p>
+					deberá tener entrada en esta IPSS antes del <strong> #{solicitudDocPreviaBean.fechaLimite}</strong>.</p>
 					</div>
 					<div class="bloqueVista">
 					<p >Para cualquier aclaración, podrá dirigirse a:</p>
 					</div>
 					<div class="div_celda">
-					#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoPuesto}
+					#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}
 					</div>
 					<div class="div_celda">
-					#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoNombre}
+					#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}
 					</div>
 					<div class="div_celda">
-					#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoTelefono}
+					#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}
 					</div>
 					<div class="div_celda">
-					<strong>#{cuestionarioBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
+					<strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
 					</div>
 					<div class="bloqueVistaTitulo">
 					<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
@@ -81,21 +81,21 @@
 					</div>
 					
 					<div class="bloqueVistaTitulo">
-					<p><strong><center> #{cuestionarioBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}</center></strong></p>	
+					<p><strong><center> #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}</center></strong></p>	
 					</div>
 					<div class="bloqueVistaTitulo">
-					<p><strong><center> #{cuestionarioBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
+					<p><strong><center> #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
 					</div>
-					<p:outputPanel rendered="#{empty cuestionarioBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
+					<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
 					<div class="botonesFormulario">				        						
-						<p:commandButton actionListener="#{cuestionarioBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
+						<p:commandButton actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
 						<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>
 					
-						<p:outputPanel rendered="#{empty cuestionarioBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty cuestionarioBean.solicitudDocumentacionPrevia.fechaValidApoyo }">
+						<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }">
 						<div class="botonesFormulario">				        						
-							<p:commandButton actionListener="#{cuestionarioBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-user-plus"/>
+							<p:commandButton actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-user-plus"/>
 							<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
 						</div>
 						</p:outputPanel>
@@ -107,7 +107,7 @@
 						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
 					</div>
 					</p:dialog>	
-					<p:outputPanel rendered="#{not empty cuestionarioBean.listadoDocumentosCargados}">
+					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados}">
 					
 					</p:outputPanel>	
 		</h:form>
