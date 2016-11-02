@@ -19,50 +19,50 @@
 			<div class="bloqueFormulario">
 					<h4>Datos Personales</h4>
 					<div class="columnaIzdaFormulario">
-						<h:outputText for="numeroReferencia" value="N/REF: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}" required="true" requiredMessage="Es obligatorio un numero de referencia" label="N/REF: *"/>
+						<h:outputText for="numeroReferencia" value="N/Ref: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}" required="true" requiredMessage="Es obligatorio un número de referencia" label="N/Ref: *"/>
 						
-						<h:outputText for="asunto" value="ASUNTO: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" label="ASUNTO: *"/>
+						<h:outputText for="asunto" value="Asunto: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" label="Asunto: *"/>
 										
-						<h:outputText for="destinatario" value="DESTINATARIO: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" label="DESTINATARIO: *"/>
+						<h:outputText for="destinatario" value="Destinatario: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" label="Destinatario: *"/>
 									
-						<h:outputText for="correoDestiantario" value="CORREO DESTINATARIO: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}" required="true" requiredMessage="Es obligatorio un correo del destinatariodestinatario" label="CORREO DESTINATARIO: *"/>
+						<h:outputText for="correoDestiantario" value="Correo destinatario: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}" required="true" requiredMessage="Es obligatorio un correo del destinatariodestinatario" label="Correo destinatario: *"/>
 						
-						<h:outputText for="identificadorTrimestre" value="CUARTRIMESTRE Y AÑO: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.identificadorTrimestre}" required="true" requiredMessage="Es obligatorio el cuartrimestre" label="CUARTRIMESTRE Y AÑO: *"/>			
+						<h:outputText for="identificadorTrimestre" value="Cuatrimestre y año: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.identificadorTrimestre}" required="true" requiredMessage="Es obligatorio el cuartrimestre" label="Cuatrimestre y año: *"/>			
 						
-						<h:outputText for="tipoInspeccion" value="CARÁCTER INSPECCIÓN: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio un cuartrimestre" label="CARÁCTER INSPECCIÓN: *"/>
+						<h:outputText for="tipoInspeccion" value="Carácter inspección: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio un cuartrimestre" label="Carácter inspección: *"/>
 											
-						<h:outputText for="fechaAntes" value="FECHA LIMITE ENVÍO DOCUMENTACIÓN: *" />
-						<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" label="FECHA LIMITE ENVÍO DOCUMENTACIÓN: *"/>
+						<h:outputText for="fechaAntes" value="Fecha límite envío documentación: *" />
+						<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" label="Fecha límite envío documentación: *"/>
 											
-						<h:outputText for="fechaLimiteCumplimentar" value="FECHA LIMITE CUMPLIMENTAR CUESTIONARIO: *" />
-						<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" label="FECHA LIMITE ENVÍO DOCUMENTACIÓN: *"/>					
+						<h:outputText for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario: *" />
+						<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" label="Fecha límite envio cuestionario: *"/>					
 						
 					</div>
 	
 					<div class="columnaDchaFormulario">
-						<h:outputText for="apoyoPuesto" value="PUESTO PERSONA APOYO:" />
+						<h:outputText for="apoyoPuesto" value="Puesto persona apoyo:" />
 						<p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" />
 											
-						<h:outputText for="apoyoNombre" value="NOMBRE PERSONA APOYO:" />
+						<h:outputText for="apoyoNombre" value="Nombre persona apoyo:" />
 						<p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}"/>
 											
-						<h:outputText for="apoyoTelefono" value="TELÉFONO PERSONA APOYO:" />
+						<h:outputText for="apoyoTelefono" value="Teléfono persona apoyo:" />
 						<p:inputText id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" />
 											
-						<h:outputText for="apoyoCorreo" value=" CORREO PERSONA APOYO:" />
+						<h:outputText for="apoyoCorreo" value=" Correo persona apoyo:" />
 						<p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"/>
 																						
-						<h:outputText for="puestoJefeInspectorAuditor" value="PUESTO JEFE INSPECTOR AUDITOR: *" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio un puesto inspector auditor" label="PUESTO JEFE INSPECTOR AUDITOR: *"/>
+						<h:outputText for="puestoJefeInspectorAuditor" value="Puesto jefe inspector auditor: *" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio un puesto inspector auditor" label="Puesto jefe inspector auditor: *"/>
 										
-						<h:outputText for="nombreJefeInspectorAuditor" value="NOMBRE JEFE INSPECTOR AUDITOR:" />
-						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio unnombre del inspector auditor" label="NOMBRE JEFE INSPECTOR AUDITOR: *"/>
+						<h:outputText for="nombreJefeInspectorAuditor" value="Nombre jefe inspector auditor:" />
+						<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio unnombre del inspector auditor" label="Nombre jefe inspector auditor: *"/>
 						
 					</div>
 			</div>
