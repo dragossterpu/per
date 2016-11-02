@@ -406,6 +406,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
 		this.anio = null;
 		this.documentosSelecionados = null;
+		this.cuerpoEstado = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		nombreCuestionarioPrevio = cuestionario.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
