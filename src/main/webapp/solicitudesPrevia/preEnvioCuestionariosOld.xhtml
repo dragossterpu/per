@@ -14,7 +14,7 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					<p:dataTable id="tablaPreEnvioCuestionarios" var="cuestionario" value="#{cuestionarioBean.listadoPreEnvioCuestionarios}" >
+					<p:dataTable id="tablaPreEnvioCuestionarios" var="cuestionario" value="#{solicitudDocPreviaBean.listadoPreEnvioCuestionarios}" >
 						
 						<p:column headerText="Código" style="width: 20%">
 							<h:outputText value="#{cuestionario.codigo}"/>
@@ -24,12 +24,12 @@
 							<h:outputText value="#{cuestionario.descripcion}"/>
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{cuestionarioBean.descargarFichero(cuestionario)}" title="Descargar modelo">
-								<p:fileDownload value="#{cuestionarioBean.file}" />
+							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(cuestionario)}" title="Descargar modelo">
+								<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
 							</p:commandButton>
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-edit" action="#{cuestionarioBean.enviarPreCuestionario(cuestionario)}" title="Editar cuestionario"/>
+							<p:commandButton icon="fa fa-fw fa-edit" action="#{solicitudDocPreviaBean.enviarPreCuestionario(cuestionario)}" title="Editar cuestionario"/>
 						</p:column> 
 						
 					</p:dataTable>

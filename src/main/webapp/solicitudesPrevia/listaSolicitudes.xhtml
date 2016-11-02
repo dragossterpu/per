@@ -17,21 +17,20 @@
 	
 				
 				<p:outputPanel layout="block" id="panelSolicitudes" >
- 				<p:outputPanel rendered="#{not empty cuestionarioBean.listaSolicitudesPrevia}">
+ 				<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
 	            </p:outputPanel>
-					<p:dataTable  var="solicitud" value="#{cuestionarioBean.listaSolicitudesPrevia}"  rows="10" id="tablaSolicitudes"
-							rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}"
+					<p:dataTable  var="solicitud" value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}"  rows="10" id="tablaSolicitudes"
 	                         draggableColumns="true"
 	                         paginator="true"
 	                         rowsPerPageTemplate="5,10,15" 
 	                         resizableColumns="true"
 	                         scrollable="true" scrollWidth="690" 
-	                         rendered="#{not empty cuestionarioBean.listaSolicitudesPrevia}" >
+	                         rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}" >
 							 <f:facet name="header">
 								Solicitudes documentación
 								 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator"/>
 			        			 <p:columnToggler datasource="tablaSolicitudes" trigger="toggler">
-			        			 	  <p:ajax event="toggle" listener="#{cuestionarioBean.onToggle}" />
+			        			 	  <p:ajax event="toggle" listener="#{solicitudDocPreviaBean.onToggle}" />
 			        			 </p:columnToggler>
 							</f:facet>
 							<p:column headerText="Nombre cuestionario" sortBy="#{solicitud.nombreCuestionarioPrevio}" width="340" >
@@ -60,14 +59,14 @@
 							
 							
 						<p:column width="30" exportable="false"> 
-							<p:commandButton title="Ver solicitud" icon="fa fa-fw fa-eye" action="#{cuestionarioBean.visualizarSolicitud(solicitud)}" />
+							<p:commandButton title="Ver solicitud" icon="fa fa-fw fa-eye" action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
 						</p:column>				
 						<p:column width="30" exportable="false"> 
-							<p:commandButton title="Modificar solicitud" icon="fa fa-fw fa-edit" action="#{cuestionarioBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>
+							<p:commandButton title="Modificar solicitud" icon="fa fa-fw fa-edit" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
-								actionListener="#{cuestionarioBean.eliminarSolicitudCuestionario(solicitud)}"
+								actionListener="#{solicitudDocPreviaBean.eliminarSolicitudCuestionario(solicitud)}"
 								update="tablaSolicitudes">
 								<p:confirm header="Eliminar solicitud"
 									message="¿Está seguro que desea eliminar esta solicitud previa de cuestionario?"

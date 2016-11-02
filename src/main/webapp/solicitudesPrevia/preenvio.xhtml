@@ -19,13 +19,13 @@
 					<h4>Titulo</h4>
 					
 						<h:outputLabel for="numeroReferencia" value="N/REF:" />
-						<p:inputText id="numeroReferencia" value="#{cuestionarioBean.model.numeroReferencia}" />
+						<p:inputText id="numeroReferencia" value="#{solicitudDocPreviaBean.model.numeroReferencia}" />
 						
 						<h:outputLabel for="asunto" value="ASUNTO:" />
-						<p:inputText id="asunto" value="#{cuestionarioBean.model.asunto}"/>
+						<p:inputText id="asunto" value="#{solicitudDocPreviaBean.model.asunto}"/>
 						
 						<h:outputLabel for="destinatario" value="DESTINATARIO:" />
-						<p:inputText id="destinatario" value="#{cuestionarioBean.model.destinatario}"/>
+						<p:inputText id="destinatario" value="#{solicitudDocPreviaBean.model.destinatario}"/>
 												
 				
 				
@@ -33,33 +33,33 @@
 					<h4>Contenido</h4>
 					
 						<h:outputLabel for="identificadorTrimestre" value="CUARTRIMESTRE Y AÑO:" />
-						<p:inputText id="identificadorTrimestre" value="#{cuestionarioBean.model.identificadorTrimestre}" />
+						<p:inputText id="identificadorTrimestre" value="#{solicitudDocPreviaBean.model.identificadorTrimestre}" />
 						
 						<h:outputLabel for="tipoInspeccion" value="CARÁCTER INSPECCIÓN:" />
-						<p:inputText id="tipoInspeccion" value="#{cuestionarioBean.model.tipoInspeccion}"/>
+						<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.model.tipoInspeccion}"/>
 						
 						<h:outputLabel for="correoApoyo" value="CORREO APOYO:" />
-						<p:inputText id="correoApoyo" value="#{cuestionarioBean.model.correoApoyo}"/>
+						<p:inputText id="correoApoyo" value="#{solicitudDocPreviaBean.model.correoApoyo}"/>
 						
 						<h:outputLabel for="fechaAntes" value="FECHA LIMITE ENVÍO DOCUMENTACIÓNs:" />
-						<p:calendar value="#{cuestionarioBean.model.fechaAntes}" id="fechaAntes" pattern="dd/MM/yyyy" navigator="true"/>
+						<p:calendar value="#{solicitudDocPreviaBean.model.fechaAntes}" id="fechaAntes" pattern="dd/MM/yyyy" navigator="true"/>
 						
 						<h:outputLabel for="fechaCumplimentar" value="FECHA LIMITE CUMPLIMENTAR CUESTIONARIO:" />
-						<p:calendar value="#{cuestionarioBean.model.fechaCumplimentar}" id="fechaCumplimentar" pattern="dd/MM/yyyy" navigator="true"/>						
+						<p:calendar value="#{solicitudDocPreviaBean.model.fechaCumplimentar}" id="fechaCumplimentar" pattern="dd/MM/yyyy" navigator="true"/>						
 					
 	
 					<h4>Jefe Inspector Auditor</h4>
 				
 						<h:outputLabel for="puestoInspector" value="PUESTO JEFE INSPECTOR AUDITOR:" />
-						<p:inputText id="puestoInspector" value="#{cuestionarioBean.model.puestoInspector}" />
+						<p:inputText id="puestoInspector" value="#{solicitudDocPreviaBean.model.puestoInspector}" />
 						
 						<h:outputLabel for="nombreInspector" value="NOMBRE JEFE INSPECTOR AUDITOR:" />
-						<p:inputText id="nombreInspector" value="#{cuestionarioBean.model.nombreInspector}" />
+						<p:inputText id="nombreInspector" value="#{solicitudDocPreviaBean.model.nombreInspector}" />
 					
 				</div>
 			<div class="botonesFormulario">
-	            <p:commandButton action="#{cuestionarioBean.limpiar}" value="Limpiar" update="datosReporte" icon="fa fa-fw fa-eraser" />
-				<p:commandButton action="#{cuestionarioBean.execute}" value="Enviar solicitud documentación" icon="fa fa-fw fa-user-plus"/>
+	            <p:commandButton action="#{solicitudDocPreviaBean.limpiar}" value="Limpiar" update="datosReporte" icon="fa fa-fw fa-eraser" />
+				<p:commandButton action="#{solicitudDocPreviaBean.execute}" value="Enviar solicitud documentación" icon="fa fa-fw fa-user-plus"/>
 			</div>
 
         </h:form>

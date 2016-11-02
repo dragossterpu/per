@@ -17,7 +17,7 @@
 			<p:menuitem value="Tipo documentación Previa" outcome="/documentacionPrevia/documentacionPrevia" />
 			<p:menuitem value="Solicitud documentación Old" outcome="/solicitudesPrevia/preEnvioCuestionariosOld" />
 			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/preEnvioCuestionarios" />
-			<p:menuitem value="Lista solicitudes documentación" action="#{cuestionarioBean.getListaSolicitudes}" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
+			<p:menuitem value="Lista solicitudes documentación" action="#{cuestionarioBean.getListaSolicitudes}" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE,ADMIN')}"/>
 			<p:menuitem value="Solicitudes pendiente enviar" action="#{cuestionarioBean.getListaSolicitudesPendientes}" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
 			<p:menuitem value="Lista solicitudes completadas" action="#{cuestionarioBean.getListaSolicitudesFinalizadas}" />
 		</p:submenu>

@@ -54,10 +54,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("cuestionarioBean")
+@Component("solicitudDocPreviaBean")
 @SessionScoped
 
-public class CuestionarioBean implements Serializable {
+public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

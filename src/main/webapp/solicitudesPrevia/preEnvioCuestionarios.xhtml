@@ -16,10 +16,10 @@
 			<div class="bloqueFormulario" >
 				<h:form id="form">
 					<p:dataTable id="tablaPreEnvioCuestionarios" var="cuestionario"  rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
-					value="#{cuestionarioBean.listadoPreEnvioCuestionarios}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
-						<p:ajax event="rowEdit" listener="#{cuestionarioBean.onRowEdit}"
+					value="#{solicitudDocPreviaBean.listadoPreEnvioCuestionarios}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
+						<p:ajax event="rowEdit" listener="#{solicitudDocPreviaBean.onRowEdit}"
 							update=":form:msgs" />
-						<p:ajax event="rowEditCancel" listener="#{cuestionarioBean.onRowCancel}"
+						<p:ajax event="rowEditCancel" listener="#{solicitudDocPreviaBean.onRowCancel}"
 							update=":form:msgs" />
 							
 						<p:column headerText="Descripción">
@@ -35,19 +35,19 @@
 							</p:cellEditor> 
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{cuestionarioBean.descargarFichero(cuestionario)}" title="Descargar modelo">
-								<p:fileDownload value="#{cuestionarioBean.file}" />
+							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(cuestionario)}" title="Descargar modelo">
+								<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
 							</p:commandButton>
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-edit" action="#{cuestionarioBean.enviarPreCuestionario(cuestionario)}" title="Completar cuestionario previo"/>
+							<p:commandButton icon="fa fa-fw fa-edit" action="#{solicitudDocPreviaBean.enviarPreCuestionario(cuestionario)}" title="Completar cuestionario previo"/>
 						</p:column> 
 				       <p:column style="width:30px">
 							<p:rowEditor editTitle="Editar descripción" saveTitle="Guardar" cancelTitle="Cancelar"/>
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
-								actionListener="#{cuestionarioBean.eliminarPreEnvioCuestionario(cuestionario)}"
+								actionListener="#{solicitudDocPreviaBean.eliminarPreEnvioCuestionario(cuestionario)}"
 								update="tablaPreEnvioCuestionarios">
 								<p:confirm header="Eliminar cuestionario"
 									message="¿Está seguro que desea eliminar esta solicitud de cuestionario?"
@@ -55,7 +55,7 @@
 							</p:commandButton>
 						</p:column>
 						<f:facet name="footer">
-		       				 Hay: #{fn:length(cuestionarioBean.listadoPreEnvioCuestionarios)} solicitudes de cuestionario.
+		       				 Hay: #{fn:length(solicitudDocPreviaBean.listadoPreEnvioCuestionarios)} solicitudes de cuestionario.
 		    			</f:facet>
 					</p:dataTable>
 							<p:confirmDialog global="true">
