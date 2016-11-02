@@ -221,6 +221,9 @@ select {
 
 .prevPregCuest {
 	padding: 5px;
-	font-size: 14px;
+	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
 }
 
+.respuestaCuestionario {
+	margin-top: 10px;
+}

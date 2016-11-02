@@ -127,4 +127,6 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "usuarioFinalizacion")
 	private String usuarioFinalizacion;
 
+	@Column(name = "fechaCumplimentacion")
+	private Date fechaCumplimentacion;
 }

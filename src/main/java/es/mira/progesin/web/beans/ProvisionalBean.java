@@ -203,16 +203,6 @@ public class ProvisionalBean implements Serializable {
 	}
 
 	/**
-	 * @param cuestionario
-	 * @comment Metodo que envia una solicitud de documentacion
-	 * @author EZENTIS STAD
-	 */
-	public String adjuntarDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
-
-		return "/provisional/cargaDocumentos";
-	}
-
-	/**
 	 * Eliminación fisica
 	 * @param documento documento a eliminar
 	 */
@@ -248,11 +238,9 @@ public class ProvisionalBean implements Serializable {
 		return null;
 	}
 
-	public String finalizacionSolicitud() {
+	public String enviarDocumentacionPrevia() {
 		try {
-			solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
-			solicitudDocumentacionPrevia
-					.setUsuarioFinalizacion(SecurityContextHolder.getContext().getAuthentication().getName());
+			solicitudDocumentacionPrevia.setFechaCumplimentacion(new Date());
 			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"Solicitud de documentación cumplimentada  con éxito");
@@ -266,5 +254,19 @@ public class ProvisionalBean implements Serializable {
 		}
 		return "/index";
 
+	}
+
+	public void guardarBorrardor() {
+		try {
+			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
+						"El borrador se ha guardado con éxito");
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+					"Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
+			altaRegActivError(e);
+		}
 	}
 }

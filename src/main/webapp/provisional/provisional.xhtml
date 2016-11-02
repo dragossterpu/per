@@ -109,7 +109,8 @@
 							
 							<div class="botonesFormulario">				        						
 								<p:button  outcome="/provisional/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
-								<p:commandButton actionListener="#{provisionalBean.finalizacionSolicitud}" value="Finalizacion solicitud" icon="fa fa-fw fa-user-plus"/>	
+								<p:commandButton action="#{provisionalBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
+								<p:commandButton actionListener="#{provisionalBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
 							</div>					
 					</div>	
 						</h:form>	
