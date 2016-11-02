@@ -61,7 +61,7 @@ public class CuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	final String cuestionarios_preenvio = "/solicitudesPrevia/preenvio";
+	static final String dialogMessage = "PF('dialogMessage').show()";
 
 	RegActividad regActividad = new RegActividad();
 
@@ -71,28 +71,28 @@ public class CuestionarioBean implements Serializable {
 	IRegActividadService regActividadService;
 
 	@Autowired
-	INotificacionService notificacionService;
+	transient INotificacionService notificacionService;
 
 	@Autowired
-	IModeloCuestionarioService modeloCuestionarioService;
+	transient IModeloCuestionarioService modeloCuestionarioService;
 
-	private UploadedFile ficheroNuevo;
+	private transient UploadedFile ficheroNuevo;
 
-	List<PreEnvioCuest> listadoPreEnvioCuestionarios;
+	transient List<PreEnvioCuest> listadoPreEnvioCuestionarios;
 
 	String nombreCuestionarioPrevio;
 
-	List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
+	transient List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
 
-	List<SolicitudDocumentacionPrevia> listaSolicitudesFinalizadas;
+	transient List<SolicitudDocumentacionPrevia> listaSolicitudesFinalizadas;
 
 	private List<Boolean> list;
 
 	@Autowired
-	ISolicitudDocumentacionService solicitudDocumentacionService;
+	transient ISolicitudDocumentacionService solicitudDocumentacionService;
 
 	@Autowired
-	ITipoDocumentacionService tipoDocumentacionService;
+	transient ITipoDocumentacionService tipoDocumentacionService;
 
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
@@ -100,9 +100,9 @@ public class CuestionarioBean implements Serializable {
 
 	private Integer anio;
 
-	private StreamedContent file;
+	private transient StreamedContent file;
 
-	private DatosJasper model;
+	private transient DatosJasper model;
 
 	private String fechaAntes;
 
@@ -112,16 +112,16 @@ public class CuestionarioBean implements Serializable {
 
 	private String cuerpoEstado;
 
-	List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
+	transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
 
-	List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
+	transient List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
 	private List<TipoDocumentacion> documentosSelecionados;
 
-	List<TipoDocumentacion> listadoDocumentos = new ArrayList<TipoDocumentacion>();
+	transient List<TipoDocumentacion> listadoDocumentos = new ArrayList<>();
 
 	@Autowired
-	IGestDocSolicitudDocumentacionService gestDocumentacionService;
+	transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
 
 	// Url de la plantilla jasper
 	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
@@ -133,7 +133,7 @@ public class CuestionarioBean implements Serializable {
 	 * @return vista
 	 */
 	public String creaCuestionario() {
-		return cuestionarios_preenvio;
+		return "/solicitudesPrevia/preenvio";
 
 	}
 
@@ -146,13 +146,11 @@ public class CuestionarioBean implements Serializable {
 	public String execute() {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession session = (HttpSession) externalContext.getSession(true);
-		DatosJasper datosjasper = new DatosJasper();
-		datosjasper = model;
-		datosjasper.setNombre("GC_ZONA_PLURI_PROVINCIAL");
-		datosjasper.setUrl(RUTA_JASPER);
+		model.setNombre("GC_ZONA_PLURI_PROVINCIAL");
+		model.setUrl(RUTA_JASPER);
 		try {
 			SolicitudDocumentacion documento = new SolicitudDocumentacion();
-			DescargasHelper.preparaDescargaJasper(datosjasper, session, documento);
+			DescargasHelper.preparaDescargaJasper(model, session, documento);
 			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
 					+ SecurityContextHolder.getContext().getAuthentication().getName();
 			solicitudDocumentacionService.save(documento);
@@ -199,7 +197,7 @@ public class CuestionarioBean implements Serializable {
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
 						"La solicitud de documentación ha sido creada con éxito");
 				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-				context.execute("PF('dialogMessage').show()");
+				context.execute(dialogMessage);
 			}
 			altaDocumentos();
 			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
@@ -223,6 +221,7 @@ public class CuestionarioBean implements Serializable {
 
 	/**
 	 * @param
+	 * @see executeSolicitud()
 	 * @comment Metodo que muestra el mensaje para quien es dirigida la solicitud
 	 * @author EZENTIS STAD
 	 * @return
@@ -242,6 +241,7 @@ public class CuestionarioBean implements Serializable {
 
 	/**
 	 * @param
+	 * @see executeSolicitud()
 	 * @comment Metodo para obtener los datos del jefe del equipo de apoyo
 	 * @author EZENTIS STAD
 	 * @return
@@ -267,6 +267,7 @@ public class CuestionarioBean implements Serializable {
 
 	/**
 	 * @param
+	 * @see executeSolicitud() //Indica que este metodo esta componente del metodo indicado
 	 * @comment Metodo que permite dar de alta los documentos selecionados
 	 * @author EZENTIS STAD
 	 * @return
@@ -376,7 +377,7 @@ public class CuestionarioBean implements Serializable {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
 					"Se ha validado con éxito la solicitud de documentación");
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute("PF('dialogMessage').show()");
+			context.execute(dialogMessage);
 		}
 		return "/solicitudesPrevia/previo";
 	}
@@ -651,7 +652,7 @@ public class CuestionarioBean implements Serializable {
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificación",
 						"La solicitud de documentación ha sido modificada con éxito");
 				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-				context.execute("PF('dialogMessage').show()");
+				context.execute(dialogMessage);
 				listadoDocumentosCargados = gestDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 			}
