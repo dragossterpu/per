@@ -16,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
@@ -28,6 +29,7 @@ import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DatosJasper;
@@ -37,17 +39,22 @@ import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
+import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.DescargasHelper;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.SendSimpleMail;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,7 +68,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static final String dialogMessage = "PF('dialogMessage').show()";
+	static String dialogMessage = "PF('dialogMessage').show()";
+
+	static String system = "system";
 
 	RegActividad regActividad = new RegActividad();
 
@@ -125,6 +134,12 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	// Url de la plantilla jasper
 	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
+
+	@Autowired
+	transient IUserService userService;
+
+	@Autowired
+	private transient PasswordEncoder passwordEncoder;
 
 	/**
 	 * @param
@@ -288,7 +303,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param
 	 * @comment Metodo que obtiene la lista de los solicitudes creadas
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista listaSolicitudes
 	 */
 	public String getListaSolicitudes() {
 		this.documentosSelecionados = null;
@@ -302,7 +317,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param
 	 * @comment Metodo que obtiene la lista de los solicitudes pendientes de enviar
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista listaSolicitudesPrevia
 	 */
 	public String getListaSolicitudesPendientes() {
 		this.documentosSelecionados = null;
@@ -317,7 +332,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * valores que quieran
 	 * @param solicitud recuperado del formulario
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista modificarSolicitud
 	 */
 	public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		this.solicitudDocumentacionPrevia = solicitud;
@@ -328,7 +343,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param
 	 * @comment Metodo que obtiene la lista de los solicitudes finalizadas
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista listaSolicitudesFinalizadas
 	 */
 	public String getListaSolicitudesFinalizadas() {
 		listaSolicitudesPrevia = new ArrayList<>();
@@ -340,7 +355,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param
 	 * @comment Metodo que permite visualizar una solicitud creada
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista visualizarSolicitud
 	 */
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		try {
@@ -366,7 +381,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param
 	 * @comment Metodo que permite al equipo de apoyo validar la solicitud de documentacion
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista previo
 	 */
 	public String validacionApoyo() {
 		solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
@@ -386,7 +401,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param cuestionario
 	 * @comment Metodo que envia una solicitud de documentacion
 	 * @author EZENTIS STAD
-	 * @return vista
+	 * @return vista previo
 	 */
 	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
 		this.anio = null;
@@ -516,6 +531,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param descripcion
 	 * @param tipoReg
 	 * @param username
+	 * @see todos los metodos que guarda registro de actividad
 	 */
 	private void saveReg(String descripcion, String tipoReg, String username) {
 		regActividad.setTipoRegActividad(tipoReg);
@@ -530,6 +546,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param descripcion
 	 * @param tipoReg
 	 * @param username
+	 * @see todos los metodos que guarda notificaciones
 	 */
 	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
 		Notificacion notificacion = new Notificacion();
@@ -543,6 +560,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	/**
 	 * @param e
+	 * @see todos los metodos que guarda errores
 	 */
 	private void altaRegActivError(Exception e) {
 		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
@@ -640,7 +658,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @param cuestionario
+	 * @param
 	 * @comment Metodo que modifica los datos de la solicitud previa de cuestionario
 	 * @author EZENTIS STAD
 	 */
@@ -662,6 +680,63 @@ public class SolicitudDocPreviaBean implements Serializable {
 			altaRegActivError(e);
 		}
 
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo que permite al jefe de equipo de inspeciones validar la solicitud de documentacion y enviarla
+	 * @author EZENTIS STAD
+	 * @return vista previo
+	 */
+	public String enviarSolicitud() {
+		solicitudDocumentacionPrevia.setFechaEnvio(new Date());
+		solicitudDocumentacionPrevia.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+					"Se ha validado con éxito la solicitud de documentación");
+			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+			context.execute(dialogMessage);
+			userProvisionalSolicitud();
+		}
+		return "/solicitudesPrevia/previo";
+	}
+
+	/**
+	 * @param
+	 * @param
+	 * @param
+	 * @see todos los metodos que guarda registro de actividad
+	 */
+	private void userProvisionalSolicitud() {
+		User user = new User();
+		user.setFechaAlta(new Date());
+		user.setUsername(solicitudDocumentacionPrevia.getCorreoDestiantario());
+		String password = Utilities.getPassword();
+		System.out.println("Password usuario provisional  : " + password);
+
+		String asunto = "Usuario provisional solicitud documentación";
+		String correoEnvio = "dragossterpu@gmail.com";
+		String nombre = "Prueba";
+		String respuesta = "El password es :" + password;
+		try {
+			SendSimpleMail.sendMail(asunto, correoEnvio, nombre, respuesta);
+		}
+		catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		user.setPassword(passwordEncoder.encode(password));
+		user.setEstado(EstadoEnum.ACTIVO);
+		user.setUsernameAlta(system);
+		user.setNombre("Provisional");
+		user.setApellido1("Solicitud documentación");
+		user.setDocIndentidad(system);
+		user.setCorreo(solicitudDocumentacionPrevia.getCorreoDestiantario());
+		user.setRole(RoleEnum.PROV_SOLICITUD);
+		user.setNumIdentificacion(system);
+		user.setEnvioNotificacion("NO");
+		userService.save(user);
 	}
 
 }

@@ -65,7 +65,7 @@ public class GestDocSolicitudDocumentacion implements Serializable {
 	@Column(name = "fecha_baja")
 	protected Date fechaBaja;
 
-	@Column(name = "username_alta", length = 12, nullable = false)
+	@Column(name = "username_alta", nullable = false)
 	protected String usernameAlta;
 
 	@Column(name = "username_modificacion")

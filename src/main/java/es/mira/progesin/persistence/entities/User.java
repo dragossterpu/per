@@ -46,7 +46,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "username", length = 15)
+	@Column(name = "username")
 	protected String username;
 
 	@Column(name = "password", length = 100, nullable = false)
@@ -84,21 +84,21 @@ public class User implements Serializable {
 	protected String envioNotificacion;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_CUERPO", nullable = false)
+	@JoinColumn(name = "ID_CUERPO")
 	private CuerpoEstado cuerpoEstado;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_PUESTO", nullable = false)
+	@JoinColumn(name = "ID_PUESTO")
 	private PuestoTrabajo puestoTrabajo;
 
-	@Column(name = "nivel", nullable = false)
+	@Column(name = "nivel")
 	private Integer nivel;
 
 	@CreatedDate
 	@Column(name = "fecha_alta", nullable = false)
 	protected Date fechaAlta;
 
-	@Column(name = "fecha_destino_ipss", nullable = false)
+	@Column(name = "fecha_destino_ipss")
 	protected Date fechaDestinoIPSS;
 
 	@Column(name = "fecha_baja")

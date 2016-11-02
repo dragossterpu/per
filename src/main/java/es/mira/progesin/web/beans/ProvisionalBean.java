@@ -95,7 +95,7 @@ public class ProvisionalBean implements Serializable {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 		// ñapa
 		try {
-			solicitudDocumentacionPrevia = solicitudDocumentacionService.findByCorreoDestiantario("prueba@gmail.com");
+			solicitudDocumentacionPrevia = solicitudDocumentacionService.findByCorreoDestiantario(correo);
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 			listadoDocumentosCargados = gestDocumentacionService
 					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());

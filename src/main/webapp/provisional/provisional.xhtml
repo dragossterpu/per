@@ -108,7 +108,7 @@
 							<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " />
 							
 							<div class="botonesFormulario">				        						
-								<p:commandButton action="#{provisionalBean.adjuntarDocumentos(solicitudDocumentacionPrevia)}" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
+								<p:button  outcome="/provisional/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
 								<p:commandButton actionListener="#{provisionalBean.finalizacionSolicitud}" value="Finalizacion solicitud" icon="fa fa-fw fa-user-plus"/>	
 							</div>					
 					</div>	
