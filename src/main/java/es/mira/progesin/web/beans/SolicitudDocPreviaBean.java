@@ -364,7 +364,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
 			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			fechaEmision = formatter.format(solicitud.getFechaAlta());
-			fechaAntes = formatter.format(solicitud.getFechaAntes());
 			fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
 			solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 			solicitudDocumentacionPrevia = solicitud;
@@ -501,6 +500,24 @@ public class SolicitudDocPreviaBean implements Serializable {
 				contentType = "application/x-msexcel";
 			}
 			file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
+		}
+		catch (Exception e) {
+			altaRegActivError(e);
+		}
+	}
+
+	public void descargarFicheroCargado(GestDocSolicitudDocumentacion documento) {
+		try {
+			InputStream stream = new ByteArrayInputStream(documento.getFichero());
+			String contentType = "application/msword";
+			if ("pdf".equals(documento.getExtension())) {
+				contentType = "application/pdf";
+			}
+			else if (documento.getExtension().startsWith("xls")) {
+				contentType = "application/x-msexcel";
+			}
+
+			file = new DefaultStreamedContent(stream, contentType, documento.getNombreFichero());
 		}
 		catch (Exception e) {
 			altaRegActivError(e);

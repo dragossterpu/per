@@ -87,32 +87,55 @@
 					<p><strong><center> #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
 					</div>
 					
-<!-- 					de aqui entra los datos de interlocutor -->
-<!-- 					solicitudDocumentacionPrevia.nombreCompletoInterlocutor -->
-<!-- 					solicitudDocumentacionPrevia.categoriaInterlocutor -->
-<!-- 					solicitudDocumentacionPrevia.cargoInterlocutor -->
-<!-- 					solicitudDocumentacionPrevia.telefonoInterlocutor -->
-<!-- 					solicitudDocumentacionPrevia.correoCorporativoInterlocutor} -->
-<!-- 					esto seria el formato -->
-<!-- 					<div class="bloqueVistaTitulo"> -->
-<!-- 						<p>N/REF: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	 -->
-<!-- 						<p>FECHA: Madrid, #{solicitudDocPreviaBean.fechaEmision}</p> -->
-<!-- 						<p>ASUNTO: 	#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}</p>	 -->
-<!-- 						<p><strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	 -->
-<!-- 					</div>	 -->
-					
-
-					
-					
-					
-					
 					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
-					
-					<!-- 				montar otra tabla normal y coriente -->
-					
-<!-- 					NOMBRE, EXTENSION Y DESCARGAR -->
-					
 
+					<h4>Datos interlocutor </h4>
+<!-- 					de aqui entra los datos de interlocutor -->
+
+					<h:form id="busquedaInterlocutor" >
+	
+					<div class="bloqueInterlocutor">
+					<br></br>
+						<p>Nombre completo: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}</p>	
+						<p>Categoría: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.categoriaInterlocutor}</p>
+						<p>Cargo: 	#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cargoInterlocutor}</p>	
+						<p>Telefono: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.telefonoInterlocutor}</p>
+						<p>Correo corporativo: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}</p>	
+					</div>						
+					</h:form>	
+					
+				
+
+			<div class="bloqueDocumentos" >
+				<h:form id="form">			
+					<p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.listadoDocumentosCargados}"  >
+
+						<p:column headerText="Nombre">
+									<h:outputText value="#{documento.nombreFichero}" />
+				       </p:column>
+				       <p:column headerText="Extensión">
+									<h:outputText value="#{documento.extension}" />
+				       </p:column>
+							<p:column styleClass="botonTabla">
+								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFicheroCargado(documento)}" title="Descargar documento">
+									<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
+								</p:commandButton>
+							</p:column>
+					</p:dataTable>	
+					
+					<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</div>
+					</p:confirmDialog>
+					
+					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+				</h:form>
+			</div>
+				
 					</p:outputPanel>
 
 					<div class="botonesFormulario">
