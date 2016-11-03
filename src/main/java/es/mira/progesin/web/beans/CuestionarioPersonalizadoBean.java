@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
 
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +54,9 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	// Tipos de respuesta
 	private List<DatosTablaGenerica> listaTablaSalidas;
 
-	private String respuesta;
+	private Map<PreguntasCuestionario, Object> mapaRespuestas;
+
+	private Map<PreguntasCuestionario, DatosTablaGenerica> mapaRespuestasTabla;
 
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
@@ -109,6 +112,18 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		return configuracionRespuestaRepository.findValuesForKey(tipo);
 	}
 
+	/************************************* Métodos para responder al cuestionario ***********************************/
+	public String responderCuestinario() {
+		String pagina = null;
+		// TODO Esto es para probar, hay que cambiarlo y que busque el cuestionario asociado al username logado.
+		List<CuestionarioPersonalizado> cp = (List<CuestionarioPersonalizado>) cuestionarioPersonalizadoService
+				.findAll();
+		if (cp != null && cp.isEmpty() == Boolean.FALSE) {
+			pagina = visualizar(cp.get(0));
+		}
+		return pagina;
+	}
+
 	public void aniadirFila(PreguntasCuestionario pregunta) {
 		if ("TABLASALIDAS".equals(pregunta.getTipoRespuesta())) {
 			if (listaTablaSalidas == null) {
@@ -120,19 +135,25 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 			// datos.setNumSalidas("6");
 			// datos.setSexo("M");
 			listaTablaSalidas.add(datos);
+			mapaRespuestas.put(pregunta, listaTablaSalidas);
 		}
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		System.out.println("upload file");
+	}
+
+	public void guardarRespuestas() {
+		System.out.println("guardar respuestas");
+		System.out.println(mapaRespuestas);
 	}
 
 	@PostConstruct
 	public void init() {
 		cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
 		listaTablaSalidas = new ArrayList<>();
-		DatosTablaGenerica datos = new DatosTablaGenerica();
-		// datos.setMeses("5");
-		// datos.setMotivos("motivos");
-		// datos.setNumSalidas("6");
-		// datos.setSexo("M");
-		listaTablaSalidas.add(datos);
+		mapaRespuestas = new HashMap<>();
+		mapaRespuestasTabla = new HashMap<>();
 	}
 
 }
