@@ -86,11 +86,24 @@
 					<div class="bloqueVistaTitulo">
 					<p><strong><center> #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
 					</div>
+		
+				
+					<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</div>
+					</p:confirmDialog>
 					
-					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
+					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+				</h:form>
+			
+				
+		<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
 
 					<h4>Datos interlocutor </h4>
-<!-- 					de aqui entra los datos de interlocutor -->
 
 					<h:form id="busquedaInterlocutor" >
 	
@@ -106,37 +119,25 @@
 					
 				
 
-			<div class="bloqueDocumentos" >
-				<h:form id="form">			
-					<p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.listadoDocumentosCargados}"  >
-
-						<p:column headerText="Nombre">
-									<h:outputText value="#{documento.nombreFichero}" />
-				       </p:column>
-				       <p:column headerText="Extensión">
-									<h:outputText value="#{documento.extension}" />
-				       </p:column>
-							<p:column styleClass="botonTabla">
-								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFicheroCargado(documento)}" title="Descargar documento">
-									<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
-								</p:commandButton>
-							</p:column>
-					</p:dataTable>	
-					
-					<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</div>
-					</p:confirmDialog>
-					
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
-				</h:form>
-			</div>
-				
-					</p:outputPanel>
+					<div class="bloqueDocumentos" >
+						<h:form id="form">			
+							<p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.listadoDocumentosCargados}"  >
+		
+								<p:column headerText="Nombre">
+											<h:outputText value="#{documento.nombreFichero}" />
+						       </p:column>
+						       <p:column headerText="Extensión">
+											<h:outputText value="#{documento.extension}" />
+						       </p:column>
+								<p:column styleClass="botonTabla">
+									<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalBean.descargarFichero(documento)}" title="Descargar documento">
+										<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>	
+						</h:form>
+					</div>
+	</p:outputPanel>	
 
 					<div class="botonesFormulario">
 						<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Volver" icon="fa fa-fw fa-undo"/>
@@ -171,7 +172,6 @@
 					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados}">
 					
 					</p:outputPanel>	
-		</h:form>
 		
 		</ui:define>
 	</ui:composition>

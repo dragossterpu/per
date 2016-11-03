@@ -506,24 +506,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 		}
 	}
 
-	public void descargarFicheroCargado(GestDocSolicitudDocumentacion documento) {
-		try {
-			InputStream stream = new ByteArrayInputStream(documento.getFichero());
-			String contentType = "application/msword";
-			if ("pdf".equals(documento.getExtension())) {
-				contentType = "application/pdf";
-			}
-			else if (documento.getExtension().startsWith("xls")) {
-				contentType = "application/x-msexcel";
-			}
-
-			file = new DefaultStreamedContent(stream, contentType, documento.getNombreFichero());
-		}
-		catch (Exception e) {
-			altaRegActivError(e);
-		}
-	}
-
 	/**
 	 * @param event
 	 * @comment Metodo que permite el webFlow
