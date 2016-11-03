@@ -88,6 +88,7 @@ public class EquipoService implements IEquipoService {
 
 		}
 		else {
+
 			criteria.addOrder(Order.desc("fechaAlta"));
 		}
 		List<Equipo> listEquipos = criteria.list();

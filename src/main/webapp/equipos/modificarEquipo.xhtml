@@ -11,8 +11,12 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-
+		<p:outputPanel rendered="#{ empty equiposBean.equipo.fechaBaja}">
 		<h3>Modificar equipo</h3>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{ not empty equiposBean.equipo.fechaBaja}">
+		<h3>Ver equipo</h3>
+		</p:outputPanel>
 		<br></br>
 		<h:form id="modificarEquipo" >
 		<div id="listadoEquipos">
@@ -38,16 +42,12 @@
     				 </f:facet>
 				</p:dataTable>
 		</div>
+			<p:outputPanel rendered="#{empty equiposBean.equipo.fechaBaja}">
 			<div class="botonesFormulario">
-			<p:commandButton title="Añadir miembro" value="Añadir miembro" icon="fa fa-fw fa-user-plus" actionListener="#{equiposBean.aniadirMiembro(equipo,miembro)}" update="eqipo">
-							<p:confirm header="Añadir miembro" message="Se va a crear un nuevo equipo ¿Está seguro que desea añadir un nuevo miembro?" icon="ui-icon-alert"/>
-						</p:commandButton>
-									<p:commandButton title="Borrar miembro/s" value="Borrar miembro/s" icon="fa fa-fw fa-eraser"  actionListener="#{equiposBean.borrarMiembro(equipo,miembro)}" update="eqipo">
-							<p:confirm header="Borrar miembro/s" message="Se va a crear un nuevo equipo ¿Está seguro que desea eliminar miembro/s del equipo?" icon="ui-icon-alert"/>
-						</p:commandButton>
-				<p:commandButton action="#{equiposBean.aniadirColaborador}" value="Añadir colaborador"  icon="fa fa-fw fa-user-plus" />
+			<p:button  outcome="/equipos/anadirMiembroEquipo"  value="Añadir miembro"  icon="fa fa-fw fa-user-plus" />
+				<p:button  outcome="/equipos/anadirColaboradorEquipo" action="#{equiposBean.aniadirColaborador}" value="Añadir colaborador"  icon="fa fa-fw fa-user-plus" />
 			</div>
-				
+			</p:outputPanel>	
 			</h:form>
 
 			<p:confirmDialog global="true">

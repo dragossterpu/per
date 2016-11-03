@@ -268,25 +268,24 @@ public class EquiposBean implements Serializable {
 
 	}
 
-	public String aniadirMiembro(Equipo equipo) {
-		return "/equipos/equipos";
-	}
-
 	public String borrarMiembro(Equipo equipo) {
 		return "/equipos/equipos";
 	}
 
 	public String aniadirColaborador() {
-		this.listadoColaboradores = null;
-		colaboradoresSelecionados = null;
-		listadoColaboradores = new ArrayList<User>();
-		List<User> listaUsuarios = (List<User>) userService.findAll();
-		for (User user : listaUsuarios) {
-			if (user.getPuestoTrabajo().getId() != 6 || user.getPuestoTrabajo().getId() != 7) {
-				listadoColaboradores.add(user);
-			}
-		}
+		listaUsuarios = (List<User>) userService.findAll();
 		return "/equipos/anadirColaboradorEquipo";
+	}
+
+	public String borrarMiembro() {
+		listaUsuarios = (List<User>) userService.findAll();
+		return "/equipos/anadirColaboradorEquipo";
+	}
+
+	public String aniadirMiembro() {
+		this.miembrosSelecionados = null;
+		listaUsuarios = (List<User>) userService.findAll();
+		return "/equipos/anadirMiembroEquipo";
 	}
 
 	public String guardarColaborador() {
@@ -318,7 +317,38 @@ public class EquiposBean implements Serializable {
 				"Colaborador/es añadido/s con éxito");
 		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 		context.execute("PF('dialogMessage').show()");
-		return null;
+		return "/equipos/equipos";
+	}
+
+	public String guardarMiembro() {
+
+		for (User user : miembrosSelecionados) {
+			Miembros miembro = new Miembros();
+			miembro.setIdMiembros(equipo.getIdEquipo());
+			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
+			miembro.setUsername(user.getUsername());
+			miembro.setPosicion("Miembro");
+			try {
+				equipoService.save(miembro);
+				String descripcion = "Se ha añadido un nuevo miembro al equipo inspecciones. Nombre miembro "
+						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
+				// Guardamos la actividad en bbdd
+				saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						SecurityContextHolder.getContext().getAuthentication().getName());
+				// Guardamos la notificacion en bbdd
+				saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						SecurityContextHolder.getContext().getAuthentication().getName());
+			}
+			catch (Exception e) {
+				altaRegActivError(e);
+			}
+
+		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta", "Miembro/es añadido/s con éxito");
+		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+		context.execute("PF('dialogMessage').show()");
+		return "/equipos/equipos";
 	}
 
 	public void onToggle(ToggleEvent e) {

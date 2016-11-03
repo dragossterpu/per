@@ -108,7 +108,8 @@
 					</p:column>	
 		
 					<p:column width="20" exportable="false"  rendered="#{equiposBean.equipo.fechaBaja eq null}">
-						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}" update="tablaEquipos" >
+						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}"
+						update=":busquedaEquipos:panelEquipos tablaEquipos "  >
 							<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="ui-icon-alert"/>
 						</p:commandButton>
 					</p:column>
