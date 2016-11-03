@@ -15,4 +15,6 @@ public interface IUserRepository extends CrudRepository<User, String> {
 	User findByCorreoOrDocIndentidad(String correo, String docIndentidad);
 
 	List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
+
+	List<User> findByfechaBajaIsNull();
 }

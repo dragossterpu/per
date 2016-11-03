@@ -43,6 +43,7 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.IModeloCuestionarioService;
@@ -73,6 +74,20 @@ public class SolicitudDocPreviaBean implements Serializable {
 	static String system = "system";
 
 	RegActividad regActividad = new RegActividad();
+
+	private List<User> listaUsuarios;
+
+	private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
+
+	private Date fechaActual = new Date();
+
+	private Date fechaDesde;
+
+	private Date fechaHasta;
+
+	private SolicitudDocPreviaEnum estado;
+
+	private User usuarioCreacion;
 
 	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
@@ -440,6 +455,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
+		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
 		nombreCuestionarioPrevio = null;
 		anio = null;
@@ -737,6 +753,30 @@ public class SolicitudDocPreviaBean implements Serializable {
 		user.setNumIdentificacion(system);
 		user.setEnvioNotificacion("NO");
 		userService.save(user);
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo que limpia y presenta el formulario de búsqueda de solicitudes previas de cuestionario
+	 * @author EZENTIS GR
+	 */
+	public String getFormularioBusquedaSolicitudesDocPrevia() {
+		solicitudDocPreviaBusqueda.resetValues();
+		listaUsuarios = userService.findByfechaBajaIsNull();
+		return "/solicitudesPrevia/busquedaSolicitudesDocPrevia";
+
+	}
+
+	/**
+	 * @param
+	 * @comment Metodo que busca las solicitudes previas de cuestionario según los filtros introducidos en el formulario
+	 * de búsqueda
+	 * @author EZENTIS GR
+	 */
+	public void buscarSolicitudDocPrevia() {
+		List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = solicitudDocumentacionService
+				.buscarSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
+		solicitudDocPreviaBusqueda.setListaSolicitudesDocPrevia(listaSolicitudesDocPrevia);
 	}
 
 }

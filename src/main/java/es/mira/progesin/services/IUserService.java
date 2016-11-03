@@ -36,4 +36,6 @@ public interface IUserService {
 	List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda);
 
 	List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
+
+	List<User> findByfechaBajaIsNull();
 }

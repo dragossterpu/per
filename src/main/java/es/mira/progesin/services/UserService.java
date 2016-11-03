@@ -146,4 +146,9 @@ public class UserService implements IUserService {
 		return userRepository.findByCuerpoEstado(cuerpo);
 	}
 
+	@Override
+	public List<User> findByfechaBajaIsNull() {
+		return userRepository.findByfechaBajaIsNull();
+	}
+
 }

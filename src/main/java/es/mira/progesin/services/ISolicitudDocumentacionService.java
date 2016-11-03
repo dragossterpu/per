@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 public interface ISolicitudDocumentacionService {
 
@@ -22,5 +23,8 @@ public interface ISolicitudDocumentacionService {
 	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
 
 	void delete(Integer id);
+
+	List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(
+			SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
 
 }
