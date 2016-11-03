@@ -108,7 +108,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="70" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
+					<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="300" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
 						<h:outputText value="#{notificacion.descripcion}" />
 					</p:column>
 					<p:column headerText="Usuario" sortBy="#{notificacion.usernameNotificacion}" width="70" visible="#{notificacionesBean.list[2]}" exportable="#{notificacionesBean.list[2]}">
