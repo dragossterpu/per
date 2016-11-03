@@ -51,8 +51,13 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:column>
-								<p:column headerText="Cumplimentada" sortBy="#{solicitud.fechaCumplimentacion}" width="100" >
+							<p:column headerText="Cumplimentada" sortBy="#{solicitud.fechaCumplimentacion}" width="100" >
 								<h:outputText value="#{solicitud.fechaCumplimentacion}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Finalizada" sortBy="#{solicitud.fechaFinalizacion}" width="100" >
+								<h:outputText value="#{solicitud.fechafechaFinalizacion}">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:column>

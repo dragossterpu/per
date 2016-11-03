@@ -86,6 +86,44 @@
 					<div class="bloqueVistaTitulo">
 					<p><strong><center> #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}</center></strong></p>	
 					</div>
+					
+<!-- 					de aqui entra los datos de interlocutor -->
+<!-- 					solicitudDocumentacionPrevia.nombreCompletoInterlocutor -->
+<!-- 					solicitudDocumentacionPrevia.categoriaInterlocutor -->
+<!-- 					solicitudDocumentacionPrevia.cargoInterlocutor -->
+<!-- 					solicitudDocumentacionPrevia.telefonoInterlocutor -->
+<!-- 					solicitudDocumentacionPrevia.correoCorporativoInterlocutor} -->
+<!-- 					esto seria el formato -->
+<!-- 					<div class="bloqueVistaTitulo"> -->
+<!-- 						<p>N/REF: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	 -->
+<!-- 						<p>FECHA: Madrid, #{solicitudDocPreviaBean.fechaEmision}</p> -->
+<!-- 						<p>ASUNTO: 	#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}</p>	 -->
+<!-- 						<p><strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	 -->
+<!-- 					</div>	 -->
+					
+
+					
+					
+					
+					
+					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
+					
+					<!-- 				montar otra tabla normal y coriente -->
+					
+<!-- 					NOMBRE, EXTENSION Y DESCARGAR -->
+					
+
+					</p:outputPanel>
+
+					<div class="botonesFormulario">
+						<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Volver" icon="fa fa-fw fa-undo"/>
+					</div>
+
+					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+					
+					
+					
+					
 					<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
 					<div class="botonesFormulario">				        						
 						<p:commandButton actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
