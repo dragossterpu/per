@@ -23,49 +23,49 @@
 				<h:form id="formAlta">
 					 
 					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-			         sizeLimit="100000000"  update="tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" />			 			   					   		 
+			         sizeLimit="100000000"  update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" />			 			   					   		 
 			   		
 					
-					<p:outputPanel rendered="#{not empty provisionalBean.listadoDocumentosCargados}">
-					<p:dataTable id="tablaDocumentos" var="documento" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
-						value="#{provisionalBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
-						<p:ajax event="rowEdit" listener="#{provisionalBean.onRowEdit}"
-							update=":formAlta:msgs" />
-						<p:ajax event="rowEditCancel" listener="#{provisionalBean.onRowCancel}"
-							update=":formAlta:msgs" />
-
-						<p:column headerText="Documentos">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{documento.nombreFichero}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText id="documentoInput" value="#{documento.nombreFichero}" converter="#{trimConverter}" required="true"
-										requiredMessage="El nombre del documento no puede estar vacío" />
-										<p:messages for="documentoInput" autoUpdate="true"  closable="true"/>
-								</f:facet>
-							</p:cellEditor> 
-				       </p:column>
-
-						<p:column style="width:30px">
-							<p:rowEditor />
-						</p:column>
-						<p:column style="width:30px">
-							<p:commandButton title="Eliminar" icon="ui-icon-trash"
-								actionListener="#{provisionalBean.eliminarDocumento(documento)}"
-								update="tablaDocumentos">
-								<p:confirm header="Eliminar documento"
-									message="¿Está seguro que desea eliminar este documento?"
-									icon="ui-icon-alert" />
-							</p:commandButton>
-						</p:column>
-						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalBean.descargarFichero(documento)}" title="Descargar documento">
-								<p:fileDownload value="#{provisionalBean.file}" />
-							</p:commandButton>
-						</p:column>
-						
-					</p:dataTable>
+					<p:outputPanel id="panelAdjuntos">
+						<p:dataTable id="tablaDocumentos" var="documento"
+							value="#{provisionalBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+							<p:ajax event="rowEdit" listener="#{provisionalBean.onRowEdit}"
+								update=":formAlta:msgs" />
+							<p:ajax event="rowEditCancel" listener="#{provisionalBean.onRowCancel}"
+								update=":formAlta:msgs" />
+	
+							<p:column headerText="Documentos">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{documento.nombreFichero}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText id="documentoInput" value="#{documento.nombreFichero}" converter="#{trimConverter}" required="true"
+											requiredMessage="El nombre del documento no puede estar vacío" />
+											<p:messages for="documentoInput" autoUpdate="true"  closable="true"/>
+									</f:facet>
+								</p:cellEditor> 
+					       </p:column>
+	
+							<p:column style="width:30px">
+								<p:rowEditor />
+							</p:column>
+							<p:column style="width:30px">
+								<p:commandButton title="Eliminar" icon="ui-icon-trash"
+									actionListener="#{provisionalBean.eliminarDocumento(documento)}"
+									update=":formAlta:panelAdjuntos tablaDocumentos">
+									<p:confirm header="Eliminar documento"
+										message="¿Está seguro que desea eliminar este documento?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</p:column>
+							<p:column styleClass="botonTabla">
+								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalBean.descargarFichero(documento)}" title="Descargar documento">
+									<p:fileDownload value="#{provisionalBean.file}" />
+								</p:commandButton>
+							</p:column>
+							
+						</p:dataTable>
 					</p:outputPanel>
 					<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
