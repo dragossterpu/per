@@ -140,7 +140,7 @@
 	</p:outputPanel>	
 
 					<div class="botonesFormulario">
-						<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Volver" icon="fa fa-fw fa-undo"/>
+						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 
 					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
@@ -151,22 +151,22 @@
 					<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
 					<div class="botonesFormulario">				        						
 						<p:commandButton actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
-						<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
+						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>
 					
 						<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }">
 						<div class="botonesFormulario">				        						
 							<p:commandButton actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-user-plus"/>
-							<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
+							<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
 						</div>
 						</p:outputPanel>
 
 					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-						<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
+						<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 					</div>
 					</p:dialog>	
 					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados}">
