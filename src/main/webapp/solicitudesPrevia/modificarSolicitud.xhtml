@@ -70,14 +70,14 @@
 			
 			<div class="botonesFormulario">
 				<p:commandButton actionListener="#{solicitudDocPreviaBean.modificarSolicitud}" value="Guardar cambios" icon="fa fa-fw fa-save"/>
-				<p:button outcome="/solicitudesPrevia/listaSolicitudes" value="Cancelar" icon="fa fa-fw fa-undo"/>
+				<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			</div>
 			
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-				<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
+				<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/listaSolicitudes')}" />
+					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 				</div>
 			</p:dialog>
 			
