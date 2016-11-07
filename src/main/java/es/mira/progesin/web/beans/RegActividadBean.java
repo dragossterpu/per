@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
+
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +26,21 @@ import lombok.Setter;
 @Component("regActividadBean")
 @RequestScoped
 public class RegActividadBean implements Serializable {
-	
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private List<RegActividad> listaRegActividad;
 
 	private final String NOMBRESECCION = "Registros de actividad";
+
 	private List<Boolean> list;
-	
+
 	private RegActividad regActividad;
-	
-	private Integer numColListRegActividad = 4;
 
-	private RegActividadBusqueda regActividadBusqueda; 
+	private Integer numColListRegActividad = 5;
 
-	
+	private RegActividadBusqueda regActividadBusqueda;
+
 	public void eliminarRegActividad(RegActividad regActividad) {
 		regActividad.setFechaBaja(new Date());
 		regActividad.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -54,21 +54,18 @@ public class RegActividadBean implements Serializable {
 		}
 
 	}
-	
+
 	@Autowired
 	IRegActividadService regActividadService;
-	
+
 	@Autowired
 	ApplicationBean applicationBean;
-	
 
 	public void buscarRegActividad() {
-		List<RegActividad> listaRegActividad = regActividadService.buscarRegActividadCriteria(regActividadBusqueda);		
+		List<RegActividad> listaRegActividad = regActividadService.buscarRegActividadCriteria(regActividadBusqueda);
 		regActividadBusqueda.setListaRegActividad(listaRegActividad);
 	}
 
-
-	
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
@@ -77,6 +74,7 @@ public class RegActividadBean implements Serializable {
 		regActividadBusqueda.resetValues();
 		return "/registro/registro";
 	}
+
 	@PostConstruct
 	public void init() {
 		regActividadBusqueda = new RegActividadBusqueda();
@@ -86,7 +84,7 @@ public class RegActividadBean implements Serializable {
 		}
 	}
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	
+
 	/**
 	 * @param e
 	 */

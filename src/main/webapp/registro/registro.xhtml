@@ -90,6 +90,9 @@
 					</p:column>
 					<p:column headerText="Descripción" sortBy="#{regActividad.descripcion}" width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
 						<h:outputText value="#{regActividad.descripcion}" />
+					</p:column>					
+					<p:column headerText="Tipo notificación" sortBy="#{regActividad.tipoRegActividad}" width="100" visible="#{regActividadBean.list[4]}" exportable="#{regActividadBean.list[4]}">
+						<h:outputText value="#{regActividad.tipoRegActividad}" />
 					</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
