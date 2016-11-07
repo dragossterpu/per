@@ -14,10 +14,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
@@ -32,12 +30,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.DatosJasper;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.entities.RegActividad;
-import es.mira.progesin.persistence.entities.SolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -53,7 +49,6 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
-import es.mira.progesin.util.DescargasHelper;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.SendSimpleMail;
 import es.mira.progesin.util.Utilities;
@@ -91,6 +86,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
+	private static final String PREVIO = "/solicitudesPrevia/previo";
+
+	private static final String PREENVIO = "/solicitudesPrevia/preenvio";
+
 	@Autowired
 	IRegActividadService regActividadService;
 
@@ -126,8 +125,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private transient StreamedContent file;
 
-	private transient DatosJasper model;
-
 	private String fechaAntes;
 
 	private String fechaLimite;
@@ -147,9 +144,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
 
-	// Url de la plantilla jasper
-	private static final String RUTA_JASPER = "jasper/gcZonaPluriprovincial.jasper";
-
 	@Autowired
 	transient IUserService userService;
 
@@ -163,42 +157,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista
 	 */
 	public String creaCuestionario() {
-		return "/solicitudesPrevia/preenvio";
-
-	}
-
-	/**
-	 * @param
-	 * @comment Metodo que crea una solicitus de documentacion
-	 * @author EZENTIS STAD
-	 * @return vista
-	 */
-	public String execute() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		HttpSession session = (HttpSession) externalContext.getSession(true);
-		model.setNombre("GC_ZONA_PLURI_PROVINCIAL");
-		model.setUrl(RUTA_JASPER);
-		try {
-			SolicitudDocumentacion documento = new SolicitudDocumentacion();
-			DescargasHelper.preparaDescargaJasper(model, session, documento);
-			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
-					+ SecurityContextHolder.getContext().getAuthentication().getName();
-			solicitudDocumentacionService.save(documento);
-			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
-
-			// Guardamos la notificacion en bbdd
-			saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
-
-			model.resetValues();
-		}
-		catch (Exception e) {
-			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
-		}
-		return null;
+		return PREENVIO;
 
 	}
 
@@ -315,34 +274,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que obtiene la lista de los solicitudes creadas
-	 * @author EZENTIS STAD
-	 * @return vista listaSolicitudes
-	 */
-	public String getListaSolicitudes() {
-		this.documentosSelecionados = null;
-		this.listaSolicitudesPrevia = null;
-		anio = null;
-		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
-		return "/solicitudesPrevia/listaSolicitudes";
-	}
-
-	/**
-	 * @param
-	 * @comment Metodo que obtiene la lista de los solicitudes pendientes de enviar
-	 * @author EZENTIS STAD
-	 * @return vista listaSolicitudesPrevia
-	 */
-	public String getListaSolicitudesPendientes() {
-		this.documentosSelecionados = null;
-		this.listaSolicitudesPrevia = null;
-		anio = null;
-		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPreviaEnvio();
-		return "/solicitudesPrevia/listaSolicitudesPrevia";
-	}
-
-	/**
 	 * @comment Pasa los datos dela solicitud que queremos modificar al formulario de modificación para que cambien los
 	 * valores que quieran
 	 * @param solicitud recuperado del formulario
@@ -352,18 +283,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		this.solicitudDocumentacionPrevia = solicitud;
 		return "/solicitudesPrevia/modificarSolicitud";
-	}
-
-	/**
-	 * @param
-	 * @comment Metodo que obtiene la lista de los solicitudes finalizadas
-	 * @author EZENTIS STAD
-	 * @return vista listaSolicitudesFinalizadas
-	 */
-	public String getListaSolicitudesFinalizadas() {
-		listaSolicitudesPrevia = new ArrayList<>();
-		listaSolicitudesPrevia = solicitudDocumentacionService.findAllFinalizadas();
-		return "/solicitudesPrevia/listaSolicitudesFinalizadas";
 	}
 
 	/**
@@ -408,7 +327,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 			context.execute(dialogMessage);
 		}
-		return "/solicitudesPrevia/previo";
+		return PREVIO;
 	}
 
 	/**
@@ -424,27 +343,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		nombreCuestionarioPrevio = cuestionario.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
-		return "/solicitudesPrevia/previo";
-	}
-
-	/**
-	 * @param cuestionario
-	 * @comment Metodo que envia una solicitud de documentacion
-	 * @author EZENTIS STAD
-	 */
-	public String enviarPreCuestionarioOld(PreEnvioCuest cuestionario) {
-
-		return "/solicitudesPrevia/preenvio";
-	}
-
-	/**
-	 * @param cuestionario
-	 * @comment Metodo que limpia los valores
-	 * @author EZENTIS STAD
-	 */
-	public String limpiar() {
-		model.resetValues();
-		return "/solicitudesPrevia/preenvio";
+		return PREVIO;
 	}
 
 	/**
@@ -455,13 +354,13 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
+		listaUsuarios = userService.findByfechaBajaIsNull();
 		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
 		nombreCuestionarioPrevio = null;
 		anio = null;
 		cuerpoEstado = null;
 		listaSolicitudesPrevia = new ArrayList<>();
-		model = new DatosJasper();
 		// insertar();
 		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
 
@@ -715,7 +614,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			context.execute(dialogMessage);
 			userProvisionalSolicitud();
 		}
-		return "/solicitudesPrevia/previo";
+		return PREVIO;
 	}
 
 	/**
@@ -762,7 +661,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String getFormularioBusquedaSolicitudesDocPrevia() {
 		solicitudDocPreviaBusqueda.resetValues();
-		listaUsuarios = userService.findByfechaBajaIsNull();
 		return "/solicitudesPrevia/busquedaSolicitudesDocPrevia";
 
 	}
