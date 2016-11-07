@@ -72,7 +72,7 @@
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
 								actionListener="#{solicitudDocPreviaBean.eliminarSolicitudCuestionario(solicitud)}"
-								update="tablaSolicitudes">
+								update=":form:panelSolicitudes tablaSolicitudes" >
 								<p:confirm header="Eliminar solicitud"
 									message="¿Está seguro que desea eliminar esta solicitud previa de cuestionario?"
 									icon="ui-icon-alert" />
