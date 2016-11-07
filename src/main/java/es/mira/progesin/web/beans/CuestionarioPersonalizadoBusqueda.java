@@ -23,10 +23,11 @@ public class CuestionarioPersonalizadoBusqueda implements Serializable {
 	private String nombreCuestionario;
 
 	public void limpiar() {
-		setFechaDesde(null);
-		setFechaHasta(null);
-		setUsername(null);
-		setNombreCuestionario(null);
+		this.fechaDesde = null;
+		this.fechaHasta = null;
+		this.username = null;
+		this.nombreCuestionario = null;
+		this.modeloCuestionarioSeleccionado = null;
 	}
 
 }
