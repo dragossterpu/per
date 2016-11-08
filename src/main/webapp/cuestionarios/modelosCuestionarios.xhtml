@@ -24,15 +24,16 @@
 							<h:outputText value="#{cuestionario.descripcion}"/>
 						</p:column>
 						
-						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{modelosCuestionarioBean.descargarFichero(cuestionario)}" title="Descargar modelo">
+						<p:column styleClass="botonTablaDownload">
+							 <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{modelosCuestionarioBean.descargarFichero(cuestionario)}" title="Descargar modelo">
 								<p:fileDownload value="#{modelosCuestionarioBean.file}" />
 							</p:commandButton>
+							
 						</p:column>
 						
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-edit" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}" title="Editar cuestionario"/>
-						</p:column> 
+							<h:commandLink action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}" styleClass="fa fa-fw fa-edit" title="Editar cuestionario"/>
+ 						</p:column> 
 						
 					</p:dataTable>
 			

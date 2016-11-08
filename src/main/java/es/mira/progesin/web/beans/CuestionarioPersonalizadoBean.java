@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
 
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,13 @@ import es.mira.progesin.persistence.entities.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
+import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Component("cuestionarioPersonalizadoBean")
-@RequestScoped
 public class CuestionarioPersonalizadoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -56,7 +55,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 
 	private Map<PreguntasCuestionario, Object> mapaRespuestas;
 
-	private Map<PreguntasCuestionario, DatosTablaGenerica> mapaRespuestasTabla;
+	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
 
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
@@ -79,17 +78,24 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
 		mapaAreaPreguntas = new HashMap<>();
+		mapaRespuestasTabla = new HashMap<>();
 		List<PreguntasCuestionario> listaPreguntas;
 		for (PreguntasCuestionario pregunta : preguntas) {
 			listaPreguntas = mapaAreaPreguntas.get(pregunta.getIdArea());
 			if (listaPreguntas != null) {
 				listaPreguntas.add(pregunta);
 				mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
+				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
+					construirTipoRespuestaTabla(pregunta);
+				}
 			}
 			else {
 				listaPreguntas = new ArrayList<>();
 				listaPreguntas.add(pregunta);
 				mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
+				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
+					construirTipoRespuestaTabla(pregunta);
+				}
 			}
 		}
 		Set<Long> areasSet = mapaAreaPreguntas.keySet();
@@ -124,18 +130,19 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		return pagina;
 	}
 
-	public void aniadirFila(PreguntasCuestionario pregunta) {
-		if ("TABLASALIDAS".equals(pregunta.getTipoRespuesta())) {
-			if (listaTablaSalidas == null) {
-				listaTablaSalidas = new ArrayList<>();
-			}
-			DatosTablaGenerica datos = new DatosTablaGenerica();
-			// datos.setMeses("5");
-			// datos.setMotivos("motivos");
-			// datos.setNumSalidas("6");
-			// datos.setSexo("M");
-			listaTablaSalidas.add(datos);
-			mapaRespuestas.put(pregunta, listaTablaSalidas);
+	public void aniadirFilaRespuestaTabla(PreguntasCuestionario pregunta) {
+		if (mapaRespuestasTabla.get(pregunta) != null) {
+			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
+			dataTableView.crearFilaVacia();
+			mapaRespuestasTabla.put(pregunta, dataTableView);
+		}
+	}
+
+	public void eliminarFilaRespuestaTabla(PreguntasCuestionario pregunta) {
+		if (mapaRespuestasTabla.get(pregunta) != null) {
+			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
+			dataTableView.eliminarFila();
+			mapaRespuestasTabla.put(pregunta, dataTableView);
 		}
 	}
 
@@ -151,9 +158,22 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
-		listaTablaSalidas = new ArrayList<>();
 		mapaRespuestas = new HashMap<>();
 		mapaRespuestasTabla = new HashMap<>();
 	}
 
+	/******************************** pruebas *********************************************/
+	public void construirTipoRespuestaTabla(PreguntasCuestionario pregunta) {
+		DataTableView dataTableView = new DataTableView();
+		List<String> valoresColumnas = configuracionRespuestaRepository.findValuesForKey(pregunta.getTipoRespuesta());
+		dataTableView.crearColumnasDinamicamente(valoresColumnas);
+		mapaRespuestasTabla.put(pregunta, dataTableView);
+	}
+
+	public String visualizarPrueba() {
+		DataTableView cv = new DataTableView();
+		List<String> valoresColumnas = configuracionRespuestaRepository.findValuesForKey("TABLASALIDAS");
+		cv.crearColumnasDinamicamente(valoresColumnas);
+		return "/cuestionarios/responderCuestionario";
+	}
 }

@@ -17,7 +17,7 @@
 			
 			<h:form id="form">
 				<ui:repeat value="#{cuestionarioPersonalizadoBean.areas}" var="area">
-					<p:accordionPanel multiple="true">
+					<p:accordionPanel>
 						<p:tab title="#{cuestionarioPersonalizadoBean.getNombreArea(area)}">
 							<ui:repeat value="#{cuestionarioPersonalizadoBean.mapaAreaPreguntas[area]}" var="preguntaArea">
 								<div class="prevPregCuest">
@@ -37,40 +37,33 @@
 										    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar"
 										                  multiple="true" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" invalidFileMessage="El tipo del documento seleccionado no es válido"/>
 										</p:outputPanel>
-										
-											<p:dataTable  rendered="#{preguntaArea.tipoRespuesta eq 'TABLASALIDAS'}" rows="5" value="#{cuestionarioPersonalizadoBean.listaTablaSalidas}" var="respuestTabla" id="tablaSalidas"  >
-													<p:column headerText="Num.salidas">
-														<p:inputText value="#{respuestTabla.numSalidas}" required="true" requiredMessage="Introduzca un valor"/>
-													</p:column>
-													<p:column headerText="Sexo">
-														<p:inputText value="#{respuestTabla.sexo}" required="true" requiredMessage="Introduzca un valor"/>
-													</p:column>
-													<p:column headerText="Meses" >
-														<p:inputText value="#{respuestTabla.meses}" required="true" requiredMessage="Introduzca un valor"/>
-													</p:column>
-													<p:column headerText="Periodo permanencia">
-														<p:inputText value="#{respuestTabla.periodoPermanencia}" required="true" requiredMessage="Introduzca un valor"/>
-													</p:column>
-													<p:column headerText="Motivos">
-														<p:inputText value="#{respuestTabla.motivos}" required="true" requiredMessage="Introduzca un valor"/>
-													</p:column>
-													<f:facet name="footer">
-															<p:commandButton value="Añadir fila" actionListener="#{cuestionarioPersonalizadoBean.aniadirFila(preguntaArea)}" update="tablaSalidas"/>
-													</f:facet>
-											</p:dataTable>
-										</div>
+											
+										<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}"
+													id="tablaPregunta" var="registroTabla" value="#{cuestionarioPersonalizadoBean.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
+									        <p:columns value="#{cuestionarioPersonalizadoBean.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+									            <f:facet name="header">
+									                <h:outputText value="#{column.header}" />
+									            </f:facet>
+									            <p:inputText value="#{registroTabla[column.property]}" />
+									        </p:columns>
+									        <f:facet name="footer">
+										        <p:commandButton value="Añadir fila" actionListener="#{cuestionarioPersonalizadoBean.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
+										        <p:commandButton value="Eliminar fila" actionListener="#{cuestionarioPersonalizadoBean.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
+										    </f:facet>
+						    			</p:dataTable>
+									</div>
 								</div>
 							</ui:repeat>
 						</p:tab>
 					</p:accordionPanel>
 				</ui:repeat>
 				
-				<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}">
+				<!-- <p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> -->
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.guardarRespuestas}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
 						<p:commandButton action="#{solicitudDocPreviaBean.enviarCuestionario}" value="Enviar cuestionario" icon="fa fa-fw fa-user-plus"/>
 					</div>
-				</p:outputPanel>
+				<!-- </p:outputPanel> -->
 				
 				<p:outputPanel rendered="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
 					<div class="botonesFormulario">

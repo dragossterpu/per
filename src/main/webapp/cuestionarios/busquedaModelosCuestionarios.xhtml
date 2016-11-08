@@ -26,9 +26,9 @@
 						<h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
 						<p:selectOneMenu value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" 
 							converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-						<f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario"
-							itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
+							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+							<f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario"
+								itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
 						</p:selectOneMenu> 
 						
 					</div>
@@ -90,16 +90,16 @@
 					<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.nombreCuestionario}">
 						<h:outputText value="#{cuestionario.modeloCuestionario.descripcion}" />
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTablaDownload" exportable="false">
 						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="ui-icon-alert"/>
 						</p:commandButton>
 					</p:column>
-					<p:column width="30" exportable="false">
-						<p:commandButton title="Ver" icon="fa fa-fw fa-eye" action="#{cuestionarioPersonalizadoBean.visualizar(cuestionario)}"/>
+					<p:column styleClass="botonTabla" exportable="false">
+						<h:commandLink action="#{cuestionarioPersonalizadoBean.visualizar(cuestionario)}" styleClass="fa fa-fw fa-eye"/>
 					</p:column>
-					<p:column width="30" exportable="false">
-						<p:commandButton title="Enviar" icon="fa fa-fw fa-envelope-o" action="#{cuestionarioPersonalizadoBean.enviar(cuestionario)}"/>
+					<p:column styleClass="botonTabla" exportable="false">
+						<h:commandLink title="Enviar" styleClass="fa fa-fw fa-envelope-o" action="#{cuestionarioPersonalizadoBean.enviar(cuestionario)}"/>
 					</p:column>
 					
 					<f:facet name="footer">

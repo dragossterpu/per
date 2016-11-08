@@ -100,8 +100,8 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 					Restrictions.ilike("usernameCreacion", cuestionarioBusqueda.getUsername(), MatchMode.ANYWHERE));
 		}
 		if (cuestionarioBusqueda.getModeloCuestionarioSeleccionado() != null) {
-			criteria.add(Restrictions.eq("idModeloCuestionario",
-					cuestionarioBusqueda.getModeloCuestionarioSeleccionado().getId()));
+			criteria.add(
+					Restrictions.eq("modeloCuestionario", cuestionarioBusqueda.getModeloCuestionarioSeleccionado()));
 		}
 		if (cuestionarioBusqueda.getNombreCuestionario() != null
 				&& !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
