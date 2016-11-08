@@ -61,26 +61,26 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class);
-		String campoFecha = "fecha_alta";
+		String campoFecha = "this_.fecha_alta";
 		if (solicitudDocPreviaBusqueda.getEstado() != null) {
 			switch (solicitudDocPreviaBusqueda.getEstado()) {
 			case VALIDADA_APOYO:
-				campoFecha = "fecha_valid_apoyo";
+				campoFecha = "this_.fecha_valid_apoyo";
 				criteria.add(Restrictions.isNotNull("fechaValidApoyo"));
 				criteria.add(Restrictions.isNull("fechaEnvio"));
 				break;
 			case ENVIADA:
-				campoFecha = "fecha_envio";
+				campoFecha = "this_.fecha_envio";
 				criteria.add(Restrictions.isNotNull("fechaEnvio"));
 				criteria.add(Restrictions.isNull("fechaCumplimentacion"));
 				break;
 			case CUMPLIMENTADA:
-				campoFecha = "fecha_cumplimentacion";
+				campoFecha = "this_.fecha_cumplimentacion";
 				criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
 				criteria.add(Restrictions.isNull("fechaFinalizacion"));
 				break;
 			case FINALIZADA:
-				campoFecha = "fecha_finalizacion";
+				campoFecha = "this_.fecha_finalizacion";
 				criteria.add(Restrictions.isNotNull("fechaFinalizacion"));
 				break;
 
@@ -94,6 +94,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
+			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
 			criteria.add(Restrictions.sqlRestriction(
 					"DATE_TRUNC('day'," + campoFecha + ") >= '" + solicitudDocPreviaBusqueda.getFechaDesde() + "'"));
 		}
@@ -102,6 +103,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
+			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
 			criteria.add(Restrictions.sqlRestriction(
 					"DATE_TRUNC('day'," + campoFecha + ") <= '" + solicitudDocPreviaBusqueda.getFechaHasta() + "'"));
 		}

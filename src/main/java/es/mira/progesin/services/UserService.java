@@ -105,10 +105,24 @@ public class UserService implements IUserService {
 		Criteria criteria = session.createCriteria(User.class);
 
 		if (userBusqueda.getFechaDesde() != null) {
-			criteria.add(Restrictions.ge(FECHA_ALTA, userBusqueda.getFechaDesde()));
+			// criteria.add(Restrictions.ge(FECHA_ALTA, userBusqueda.getFechaDesde()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
+			criteria.add(Restrictions.sqlRestriction(
+					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") >= '" + userBusqueda.getFechaDesde() + "'"));
 		}
 		if (userBusqueda.getFechaHasta() != null) {
-			criteria.add(Restrictions.lt(FECHA_ALTA, userBusqueda.getFechaHasta()));
+			// criteria.add(Restrictions.lt(FECHA_ALTA, userBusqueda.getFechaHasta()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
+			criteria.add(Restrictions.sqlRestriction(
+					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") <= '" + userBusqueda.getFechaHasta() + "'"));
 		}
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));

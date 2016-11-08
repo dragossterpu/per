@@ -64,10 +64,24 @@ public class EquipoService implements IEquipoService {
 		Criteria criteria = session.createCriteria(Equipo.class);
 
 		if (equipoBusqueda.getFechaDesde() != null) {
-			criteria.add(Restrictions.ge("fechaAlta", equipoBusqueda.getFechaDesde()));
+			// criteria.add(Restrictions.ge("fechaAlta", equipoBusqueda.getFechaDesde()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
+			criteria.add(Restrictions.sqlRestriction(
+					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") >= '" + equipoBusqueda.getFechaDesde() + "'"));
 		}
 		if (equipoBusqueda.getFechaHasta() != null) {
-			criteria.add(Restrictions.lt("fechaAlta", equipoBusqueda.getFechaHasta()));
+			// criteria.add(Restrictions.lt("fechaAlta", equipoBusqueda.getFechaHasta()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
+			criteria.add(Restrictions.sqlRestriction(
+					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") <= '" + equipoBusqueda.getFechaHasta() + "'"));
 		}
 		if (equipoBusqueda.getNombreJefe() != null && equipoBusqueda.getNombreJefe().isEmpty() == false) {
 			criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
