@@ -109,6 +109,9 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "correoCorporativoInterlocutor")
 	private String correoCorporativoInterlocutor;
 
+	@Column(name = "correoCorporativoInterlocutorCompl")
+	private String correoCorporativoInterlocutorCompl;
+
 	@Column(name = "telefonoInterlocutor")
 	private String telefonoInterlocutor;
 
