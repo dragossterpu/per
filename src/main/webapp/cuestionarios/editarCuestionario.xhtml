@@ -18,17 +18,15 @@
 			
 				<p:growl id="message"/>
 
-				<ui:repeat value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
-					<p:accordionPanel>
-						<p:tab title="#{areaCuestionario.area}">
-							<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}"   >
-						        <f:selectItems value="#{edicionCuestionarioBean.getPreguntasArea(areaCuestionario.id)}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
-						        	itemValue="#{preguntaArea}" />
-						    </my:selectManyCheckboxAll>
-						</p:tab>
-					</p:accordionPanel>
-				</ui:repeat>
-
+				<p:accordionPanel multiple="true" activeIndex="-1" value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
+					<p:tab title="#{areaCuestionario.area}">
+						<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}"   >
+					        	<f:selectItems value="#{areaCuestionario.preguntas}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
+					        	itemValue="#{preguntaArea}" />
+					    </my:selectManyCheckboxAll>
+					</p:tab>
+				</p:accordionPanel>
+				
 				<div class="botonesFormulario">
 					<p:commandButton action="#{edicionCuestionarioBean.previsualizarFormulario}" value="Previsualizar formulario" icon="fa fa-fw fa-search" update="message"/>
 					<p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>

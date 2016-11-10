@@ -55,10 +55,6 @@ public class EdicionCuestionarioBean {
 		return "/cuestionarios/editarCuestionario";
 	}
 
-	public List<PreguntasCuestionario> getPreguntasArea(Long idArea) {
-		return pregunaCuestionarioRepository.findByIdArea(idArea);
-	}
-
 	public String previsualizarFormulario() {
 		boolean hayPreguntasSeleccionadas = false;
 		String page;

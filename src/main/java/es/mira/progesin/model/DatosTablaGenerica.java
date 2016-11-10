@@ -6,14 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Getter
 @Setter
 public class DatosTablaGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private String nombreFila; // para cuando haya que dibujar matrices
 
 	private String campo1;
 

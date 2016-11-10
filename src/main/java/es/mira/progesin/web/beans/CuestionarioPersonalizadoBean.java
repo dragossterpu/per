@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.AreasCuestionario;
 import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
@@ -23,6 +24,12 @@ import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 
+ * @author EZENTIS Esta clase contiene todos los métodos necesarios para el tratamiento de los cuestionarios creados a
+ * partir de un modelo
+ *
+ */
 @Setter
 @Getter
 @Component("cuestionarioPersonalizadoBean")
@@ -37,9 +44,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	// para la visualización
 	private CuestionarioPersonalizado cuestionarioPersonalizado;
 
-	private Map<Long, List<PreguntasCuestionario>> mapaAreaPreguntas;
+	// private Map<Long, List<PreguntasCuestionario>> mapaAreaPreguntas;
+	private Map<AreasCuestionario, List<PreguntasCuestionario>> mapaAreaPreguntas;
 
-	private List<Long> areas;
+	// private List<Long> areas;
+	private List<AreasCuestionario> areas;
 
 	@Autowired
 	ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
@@ -53,7 +62,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	// Tipos de respuesta
 	private List<DatosTablaGenerica> listaTablaSalidas;
 
-	private Map<PreguntasCuestionario, Object> mapaRespuestas;
+	private Map<PreguntasCuestionario, String> mapaRespuestas;
 
 	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
 
@@ -62,17 +71,30 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 				.buscarCuestionarioPersonalizadoCriteria(cuestionarioBusqueda);
 	}
 
+	/**
+	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
+	 */
 	public void limpiar() {
 		cuestionarioBusqueda.limpiar();
 		listaCuestionarioPersonalizado = null;
 	}
 
+	/**
+	 * Elimina un cuestionario
+	 * @param cuestionario Cuestionario a eliminar
+	 */
 	public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
 		// TODO comprobar que no se ha usado para el envío antes de borrar
 		cuestionarioPersonalizadoService.delete(cuestionario);
 		listaCuestionarioPersonalizado.remove(cuestionario);
 	}
 
+	/**
+	 * Se muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
+	 * texto, adjuntos, tablas...)
+	 * @param cuestionario que se desea visualizar
+	 * @return Nombre de la vista a mostrar
+	 */
 	public String visualizar(CuestionarioPersonalizado cuestionario) {
 		this.setCuestionarioPersonalizado(cuestionario);
 		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
@@ -81,55 +103,99 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		mapaRespuestasTabla = new HashMap<>();
 		List<PreguntasCuestionario> listaPreguntas;
 		for (PreguntasCuestionario pregunta : preguntas) {
-			listaPreguntas = mapaAreaPreguntas.get(pregunta.getIdArea());
+			AreasCuestionario a = pregunta.getArea();
+			listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
 			if (listaPreguntas != null) {
 				listaPreguntas.add(pregunta);
-				mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
+				// mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
+				mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
 				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
 					construirTipoRespuestaTabla(pregunta);
+				}
+				else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
+					construirTipoRespuestaMatriz(pregunta);
 				}
 			}
 			else {
 				listaPreguntas = new ArrayList<>();
 				listaPreguntas.add(pregunta);
-				mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
+				// mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
+				mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
 				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
 					construirTipoRespuestaTabla(pregunta);
 				}
+				else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
+					construirTipoRespuestaMatriz(pregunta);
+				}
 			}
 		}
-		Set<Long> areasSet = mapaAreaPreguntas.keySet();
+		// Set<Long> areasSet = mapaAreaPreguntas.keySet();
+		Set<AreasCuestionario> areasSet = mapaAreaPreguntas.keySet();
 		// JSF ui:repeat no funciona con Set
 		setAreas(new ArrayList<>(areasSet));
 
 		return "/cuestionarios/previsualizarEnvioCuestionario";
 	}
 
+	/**
+	 * 
+	 * @param cuestionario Cuestionario a enviar
+	 * @return Nombre de la vista del formulario de envío
+	 */
 	public String enviar(CuestionarioPersonalizado cuestionario) {
 		System.out.println("enviar");
 		return null;
 	}
 
+	/**
+	 * Método usado del xhtml para obtener el nombre de las áreas
+	 * @param idArea
+	 * @return Nombre del área del cuestionario
+	 */
 	public String getNombreArea(Long idArea) {
 		return areaService.getNombreArea(idArea);
 	}
 
+	/**
+	 * Método usado dentro del xhtml para obtener los valores de los diferentes CHECKBOX
+	 * @param tipo Tipo de respuesta de la pregunta
+	 * @return Lista de valores asociados al tipo de respuesta
+	 */
 	public List<String> getValoresTipoRespuesta(String tipo) {
 		return configuracionRespuestaRepository.findValuesForKey(tipo);
 	}
 
-	/************************************* Métodos para responder al cuestionario ***********************************/
-	public String responderCuestinario() {
-		String pagina = null;
-		// TODO Esto es para probar, hay que cambiarlo y que busque el cuestionario asociado al username logado.
-		List<CuestionarioPersonalizado> cp = (List<CuestionarioPersonalizado>) cuestionarioPersonalizadoService
-				.findAll();
-		if (cp != null && cp.isEmpty() == Boolean.FALSE) {
-			pagina = visualizar(cp.get(0));
-		}
-		return pagina;
+	/**
+	 * Método usado para construir la tabla que se usará en el formulario para responder las preguntas cuyo tipo de
+	 * respuesta empieza por TABLA
+	 * @see visualizar
+	 * @param pregunta Pregunta del tipo respuesta TABLAxx
+	 */
+	public void construirTipoRespuestaTabla(PreguntasCuestionario pregunta) {
+		DataTableView dataTableView = new DataTableView();
+		List<String> valoresColumnas = configuracionRespuestaRepository.findValuesForKey(pregunta.getTipoRespuesta());
+		dataTableView.crearTabla(valoresColumnas);
+		mapaRespuestasTabla.put(pregunta, dataTableView);
 	}
 
+	/**
+	 * Método usado para construir la tabla que se usará en el formulario para responder las preguntas cuyo tipo de
+	 * respuesta empieza por MATRIZ
+	 * @see visualizar
+	 * @param pregunta Pregunta del tipo respuesta MATRIZxx
+	 */
+	public void construirTipoRespuestaMatriz(PreguntasCuestionario pregunta) {
+		DataTableView dataTableView = new DataTableView();
+		List<String> valores = configuracionRespuestaRepository.findValuesForKey(pregunta.getTipoRespuesta());
+		dataTableView.crearMatriz(valores);
+		mapaRespuestasTabla.put(pregunta, dataTableView);
+	}
+
+	/**
+	 * Añade una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
+	 * empezar por TABLA
+	 * @param pregunta Pregunta de un cuestionario
+	 */
 	public void aniadirFilaRespuestaTabla(PreguntasCuestionario pregunta) {
 		if (mapaRespuestasTabla.get(pregunta) != null) {
 			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
@@ -138,6 +204,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Elimina una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
+	 * empezar por TABLA
+	 * @param pregunta Pregunta de un cuestionario
+	 */
 	public void eliminarFilaRespuestaTabla(PreguntasCuestionario pregunta) {
 		if (mapaRespuestasTabla.get(pregunta) != null) {
 			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
@@ -162,18 +233,14 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		mapaRespuestasTabla = new HashMap<>();
 	}
 
-	/******************************** pruebas *********************************************/
-	public void construirTipoRespuestaTabla(PreguntasCuestionario pregunta) {
-		DataTableView dataTableView = new DataTableView();
-		List<String> valoresColumnas = configuracionRespuestaRepository.findValuesForKey(pregunta.getTipoRespuesta());
-		dataTableView.crearColumnasDinamicamente(valoresColumnas);
-		mapaRespuestasTabla.put(pregunta, dataTableView);
-	}
-
-	public String visualizarPrueba() {
-		DataTableView cv = new DataTableView();
-		List<String> valoresColumnas = configuracionRespuestaRepository.findValuesForKey("TABLASALIDAS");
-		cv.crearColumnasDinamicamente(valoresColumnas);
-		return "/cuestionarios/responderCuestionario";
+	public String responderCuestinario() {
+		String pagina = null;
+		// TODO Esto es para probar, hay que cambiarlo y que busque el cuestionario asociado al username logado.
+		List<CuestionarioPersonalizado> cp = (List<CuestionarioPersonalizado>) cuestionarioPersonalizadoService
+				.findAll();
+		if (cp != null && cp.isEmpty() == Boolean.FALSE) {
+			pagina = visualizar(cp.get(0));
+		}
+		return pagina;
 	}
 }

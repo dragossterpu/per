@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -35,13 +37,14 @@ public class PreguntasCuestionario implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "pregunta", nullable = false, length = 4000)
+	@Column(name = "pregunta", nullable = false, length = 2000)
 	private String pregunta;
 
-	private Long idArea;
-	// @ManyToOne
-	// @JoinColumn(name = "id_area", nullable = false)
-	// private AreasCuestionario area;
+	// private Long idArea;
+
+	@ManyToOne
+	@JoinColumn(name = "id_area")
+	private AreasCuestionario area;
 
 	@Column(name = "tipo_respuesta", nullable = true, length = 100)
 	private String tipoRespuesta;

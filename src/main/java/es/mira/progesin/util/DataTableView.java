@@ -20,6 +20,34 @@ public class DataTableView implements Serializable {
 
 	private List<DatosTablaGenerica> listaDatosTabla;
 
+	public void crearTabla(List<String> valoresColumnas) {
+		crearColumnasDinamicamente(valoresColumnas);
+		crearFilaVacia();
+	}
+
+	public void crearMatriz(List<String> valores) {
+		List<String> nombresFilas = new ArrayList<>();
+		List<String> valoresColumnas = new ArrayList<>();
+		for (String valor : valores) {
+			if (valor.startsWith("nombreFila")) {
+				nombresFilas.add(valor.substring(valor.indexOf('#') + 1));
+			}
+			else {
+				valoresColumnas.add(valor);
+			}
+		}
+		crearColumnasDinamicamente(valoresColumnas);
+		for (String nombreFila : nombresFilas) {
+			crearFilaMatriz(nombreFila);
+		}
+	}
+
+	public void crearFilaMatriz(String nombreFila) {
+		DatosTablaGenerica dtg = new DatosTablaGenerica();
+		dtg.setNombreFila(nombreFila);
+		listaDatosTabla.add(dtg);
+	}
+
 	public void crearColumnasDinamicamente(List<String> valoresColumnas) {
 		// valoresColumnas = campo1#nombreColumna1, campo2#nombreColumna2 ...
 		columns = new ArrayList<ColumnModel>();
@@ -33,7 +61,6 @@ public class DataTableView implements Serializable {
 
 		// Inicializado la lista con un campo vacío para que muestre el datatable con una fila vacía de inputText
 		listaDatosTabla = new ArrayList<>();
-		crearFilaVacia();
 	}
 
 	public void crearFilaVacia() {

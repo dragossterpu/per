@@ -16,15 +16,15 @@
 			</div>
 			
 			<h:form id="form">
-				<ui:repeat value="#{cuestionarioPersonalizadoBean.areas}" var="area">
+				<ui:repeat value="#{cuestionarioPersonalizadoBean.areas}" var="areaCuestionario"> 
 					<p:accordionPanel>
-						<p:tab title="#{cuestionarioPersonalizadoBean.getNombreArea(area)}">
-							<ui:repeat value="#{cuestionarioPersonalizadoBean.mapaAreaPreguntas[area]}" var="preguntaArea">
+						<p:tab title="#{areaCuestionario.area}">
+							<ui:repeat value="#{cuestionarioPersonalizadoBean.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
 								<div class="prevPregCuest">
 									<h:outputText value="#{preguntaArea.pregunta}"/>
 									<div class="respuestaCuestionario">
 										<p:inputText value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}" rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" size="10" maxlength="1000"/>
-										<p:inputTextarea value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}" rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="4000"/>
+										<p:inputTextarea value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}" rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"/>
 										<div style="width: 30%">
 											<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" navigator="true" showOn="both" />
 										</div>
@@ -50,6 +50,20 @@
 										        <p:commandButton value="Añadir fila" actionListener="#{cuestionarioPersonalizadoBean.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
 										        <p:commandButton value="Eliminar fila" actionListener="#{cuestionarioPersonalizadoBean.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
 										    </f:facet>
+						    			</p:dataTable>
+						    			
+						    			<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}"
+													id="matrizPregunta" var="registroTabla" value="#{cuestionarioPersonalizadoBean.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
+									        
+									        <p:column headerText="" styleClass="ui-widget-header">
+									        	<h:outputText value="#{registroTabla.nombreFila}"/>
+									        </p:column>
+									        <p:columns value="#{cuestionarioPersonalizadoBean.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+									            <f:facet name="header">
+									                <h:outputText value="#{column.header}" />
+									            </f:facet>
+									            <p:inputText value="#{registroTabla[column.property]}" />
+									        </p:columns>
 						    			</p:dataTable>
 									</div>
 								</div>

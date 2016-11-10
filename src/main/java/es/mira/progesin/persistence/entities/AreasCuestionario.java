@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class AreasCuestionario implements Serializable {
 
 	private Integer idCuestionario;
 
-	@OneToMany(mappedBy = "idArea")
+	@OneToMany(mappedBy = "area", fetch = FetchType.EAGER)
 	private List<PreguntasCuestionario> preguntas;
 
 	@Override
