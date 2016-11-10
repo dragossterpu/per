@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
 
@@ -145,6 +146,8 @@ public class UserService implements IUserService {
 		if (userBusqueda.getEstado() != null) {
 			criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
 		}
+		criteria.add(Restrictions.not(Restrictions.in("role", RoleEnum.getRolesProv())));
+
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc(FECHA_ALTA));
 
@@ -161,8 +164,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public List<User> findByfechaBajaIsNull() {
-		return userRepository.findByfechaBajaIsNull();
+	public List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv) {
+		return userRepository.findByfechaBajaIsNullAndRoleNotIn(rolesProv);
 	}
 
 }

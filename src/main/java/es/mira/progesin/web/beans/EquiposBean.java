@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
@@ -133,7 +134,7 @@ public class EquiposBean implements Serializable {
 			equipo.setEquipoEspecial("NO");
 		}
 		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-		listaUsuarios = (List<User>) userService.findAll();
+		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		listadoJefes = listaUsuarios;
 		return "/equipos/altaEquipo";
 	}
@@ -273,18 +274,18 @@ public class EquiposBean implements Serializable {
 	}
 
 	public String aniadirColaborador() {
-		listaUsuarios = (List<User>) userService.findAll();
+		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		return "/equipos/anadirColaboradorEquipo";
 	}
 
 	public String borrarMiembro() {
-		listaUsuarios = (List<User>) userService.findAll();
+		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		return "/equipos/anadirColaboradorEquipo";
 	}
 
 	public String aniadirMiembro() {
 		this.miembrosSelecionados = null;
-		listaUsuarios = (List<User>) userService.findAll();
+		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		return "/equipos/anadirMiembroEquipo";
 	}
 

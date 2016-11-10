@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.web.beans.UserBusqueda;
 
 public interface IUserService {
@@ -37,5 +38,6 @@ public interface IUserService {
 
 	List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
 
-	List<User> findByfechaBajaIsNull();
+	List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv);
+
 }

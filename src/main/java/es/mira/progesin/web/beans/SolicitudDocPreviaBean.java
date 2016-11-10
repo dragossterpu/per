@@ -354,7 +354,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		listaUsuarios = userService.findByfechaBajaIsNull();
+		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
 		nombreCuestionarioPrevio = null;

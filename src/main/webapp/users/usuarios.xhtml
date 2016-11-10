@@ -54,10 +54,10 @@
 						<h:outputLabel for="role" value="Rol:" />
 				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
 							allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role">
+						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role" panelStyleClass="hideDisabled" >
 							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 							<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
-								itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
+								itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" itemDisabled="#{roleUser.prov}" />
 						</p:selectOneMenu> 
 						
 						<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado" />

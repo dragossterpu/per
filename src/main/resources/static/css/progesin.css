@@ -10,6 +10,11 @@
 	margin-right: 1em;
 }
 
+/* esconder opciones deshabilitadas en select */
+.ui-selectonemenu-panel.hideDisabled .ui-selectonemenu-item.ui-state-disabled {
+    display: none !important;
+}
+
 /* fondo de las tablas*/
 .ui-widget-content {
 } 

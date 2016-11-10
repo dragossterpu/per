@@ -92,14 +92,14 @@
 				</div>
 				
 				<div class="columnaDchaFormulario">
-				   <h:outputLabel for="role" value="Role: (*)" />
+				   <h:outputLabel for="role" value="Rol: (*)" />
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
 						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.role}" id="role"
-							required="true" requiredMessage="Seleccione un role para el usuario">
+							required="true" requiredMessage="Seleccione un role para el usuario" panelStyleClass="hideDisabled">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
-							itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
+							itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" itemDisabled="#{roleUser.prov}" />
 					</p:selectOneMenu>
 					 <p:messages for="role" autoUpdate="true"  closable="true"/>
 					
