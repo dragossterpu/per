@@ -79,42 +79,51 @@
 					<div class="bloqueVistaTitulo">
 					<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
 					se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.</p>
-					</div>
-						 
-							<div class="bloqueFormulario">
-						<h4>Datos Interlocutor</h4>										
-							<h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
-							<p:inputText id="nombreCompletoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="true" requiredMessage="Introduzca el nombre completo del interlocutor " />
-		
-							<h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
-							<p:inputText id="categoriaInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="true" requiredMessage="Introduzca la categoría del interlocutor " />
-							
-							<h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
-							<p:inputText id="cargoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="true" requiredMessage="Introduzca el cargo del interlocutor " />
+					</div>			 
+			
+					<div class="bloqueFormulario">
 					
-							<h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
-							<p:inputText id="telefonoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="true" requiredMessage="Introduzca el teléfono del interlocutor " />
+				<h4>Datos Interlocutor</h4>		
+												
+					<h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
+					<p:inputText id="nombreCompletoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="true" requiredMessage="Introduzca el nombre completo del interlocutor " />
+					<p:messages for="nombreCompletoInterlocutor" autoUpdate="true"  closable="true"/>
+		
+					<h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
+					<p:inputText id="categoriaInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="true" requiredMessage="Introduzca la categoría del interlocutor " />	
+					<p:messages for="categoriaInterlocutor" autoUpdate="true"  closable="true"/>
 							
-							<h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
-							<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " 
-							validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
-							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-							</p:inputText>
+					<h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
+					<p:inputText id="cargoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="true" requiredMessage="Introduzca el cargo del interlocutor " />
+					<p:messages for="cargoInterlocutor" autoUpdate="true"  closable="true"/>
+		
+				
+					<h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
+					<p:inputText id="telefonoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="true" requiredMessage="Introduzca el teléfono del interlocutor " />
+					<p:messages for="telefonoInterlocutor" autoUpdate="true"  closable="true"/>
 							
-							<h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
-							<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
-							validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
-							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-							</p:inputText>
+					<h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
+					<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " 
+					validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
+					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					<p:messages for="correoCorporativoInterlocutor" autoUpdate="true"  closable="true"/>
+					</p:inputText>
 							
-							<div class="botonesFormulario">				        						
-								<p:button  outcome="/provisional/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
-								<p:commandButton action="#{provisionalBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
-								<p:commandButton actionListener="#{provisionalBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
-							</div>					
+					<h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
+					<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
+					validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
+					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					<p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true"  closable="true"/>
+					</p:inputText>
+							
+					<div class="botonesFormulario">				        						
+						<p:button  outcome="/provisional/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
+						<p:commandButton action="#{provisionalBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
+						<p:commandButton actionListener="#{provisionalBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
+					</div>					
 					</div>	
 						</h:form>	
-						<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 						<p:ajax event="close"  listener="#{facesUtilities.redirect('/index')}" />
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 						<div class="centrarBotonesDialog">
