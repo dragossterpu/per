@@ -54,7 +54,7 @@
 						<p:inputText id="apellido2" value="#{userBean.user.apellido2}"  converter="#{trimConverter}"/>
 	
 						<h:outputLabel for="telefono" value="Teléfono:" />
-						<p:inputNumber id="telefono" value="#{userBean.user.telefono}"  maxValue="999999999" />
+						<p:inputNumber id="telefono" value="#{userBean.user.telefono}"  maxValue="999999999" decimalPlaces="0" thousandSeparator=""/>
 	
 						<h:outputLabel for="docIndentidad" value="NIF: " />
 						<p:inputText id="docIndentidad" value="#{userBean.user.docIndentidad}" converter="#{trimConverter}"/>
@@ -114,7 +114,7 @@
 					<p:messages for="cuerpoEstadoSelect" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="nivel" value="Nivel (*):" />
-					<p:inputNumber id="nivel" value="#{userBean.user.nivel}"  required="true" requiredMessage="Introduzca el nivel del usuario" maxValue="99" converter="#{trimConverter}"/>
+					<p:inputNumber id="nivel" value="#{userBean.user.nivel}"  decimalPlaces="0" required="true" requiredMessage="Introduzca el nivel del usuario" maxValue="99" converter="#{trimConverter}"/>
 					<p:messages for="nivel" autoUpdate="true"  closable="true"/>
 				</div>
 			</div>
