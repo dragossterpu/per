@@ -661,6 +661,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String getFormularioBusquedaSolicitudesDocPrevia() {
 		solicitudDocPreviaBusqueda.resetValues();
+		listaSolicitudesPrevia = null;
 		return "/solicitudesPrevia/busquedaSolicitudesDocPrevia";
 
 	}
@@ -672,9 +673,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @author EZENTIS GR
 	 */
 	public void buscarSolicitudDocPrevia() {
-		List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = solicitudDocumentacionService
+		listaSolicitudesPrevia = solicitudDocumentacionService
 				.buscarSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
-		solicitudDocPreviaBusqueda.setListaSolicitudesDocPrevia(listaSolicitudesDocPrevia);
 	}
 
 }

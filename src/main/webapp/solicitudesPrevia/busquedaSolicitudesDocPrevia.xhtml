@@ -5,14 +5,15 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
 			<h3>Búsqueda solicitudes de documentación</h3>
 
-			<h:form id="form">
+			<h:form id="busquedaSolicitudDocPrevia">
 
 				<div class="bloqueFormulario">
 					<div class="columnaIzdaFormulario">
@@ -66,100 +67,102 @@
 						value="Buscar" update="panelSolicitudes" icon="ui-icon-search" />
 					<p:commandButton
 						action="#{solicitudDocPreviaBean.getFormularioBusquedaSolicitudesDocPrevia}"
-						value="Limpiar" update="form" icon="fa fa-fw fa-eraser" />
+						value="Limpiar" update="busquedaSolicitudDocPrevia"
+						icon="fa fa-fw fa-eraser" />
 				</div>
 
-				<div class="bloqueFormulario">
-					<p:outputPanel layout="block" id="panelSolicitudes">
-						<p:outputPanel
-							rendered="#{not empty solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaSolicitudesDocPrevia}">
-						</p:outputPanel>
-						<p:dataTable var="solicitud"
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaSolicitudesDocPrevia}"
-							rows="10" id="tablaSolicitudes" draggableColumns="true"
-							paginator="true" rowsPerPageTemplate="5,10,15"
-							resizableColumns="true" scrollable="true" scrollWidth="690"
-							rendered="#{not empty solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaSolicitudesDocPrevia}">
-							<f:facet name="header">
-								Solicitudes documentación
-								 <p:commandButton id="toggler" type="button" value="Columnas"
-									style="float:right" icon="ui-icon-calculator" />
-								<p:columnToggler datasource="tablaSolicitudes" trigger="toggler">
-									<p:ajax event="toggle"
-										listener="#{solicitudDocPreviaBean.onToggle}" />
-								</p:columnToggler>
-							</f:facet>
-							<p:column headerText="Nombre cuestionario"
-								sortBy="#{solicitud.nombreCuestionarioPrevio}" width="340">
-								<h:outputText value="#{solicitud.nombreCuestionarioPrevio}" />
-							</p:column>
-							<p:column headerText="Fecha alta" sortBy="#{solicitud.fechaAlta}"
-								width="70">
-								<h:outputText value="#{solicitud.fechaAlta}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</p:column>
-							<p:column headerText="Validación apoyo"
-								sortBy="#{solicitud.fechaValidApoyo}" width="110">
-								<h:outputText value="#{solicitud.fechaValidApoyo}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</p:column>
-							<p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}"
-								width="60">
-								<h:outputText value="#{solicitud.fechaEnvio}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</p:column>
-							<p:column headerText="Cumplimentada"
-								sortBy="#{solicitud.fechaCumplimentacion}" width="100">
-								<h:outputText value="#{solicitud.fechaCumplimentacion}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</p:column>
-							<p:column headerText="Finalizada"
-								sortBy="#{solicitud.fechaFinalizacion}" width="60">
-								<h:outputText value="#{solicitud.fechaFinalizacion}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</p:column>
-
-
-							<p:column width="30" exportable="false">
-								<p:commandButton title="Ver solicitud" icon="fa fa-fw fa-eye"
-									action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
-							</p:column>
-							<p:column width="30" exportable="false">
-								<p:commandButton title="Modificar solicitud"
-									icon="fa fa-fw fa-edit"
-									action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}"
-									update="tablaSolicitudes" />
-							</p:column>
-							<p:column style="width:30px">
-								<p:commandButton title="Eliminar" icon="ui-icon-trash"
-									actionListener="#{solicitudDocPreviaBean.eliminarSolicitudCuestionario(solicitud)}"
-									update=":form:panelSolicitudes tablaSolicitudes">
-									<p:confirm header="Eliminar solicitud"
-										message="¿Está seguro que desea eliminar esta solicitud previa de cuestionario?"
-										icon="ui-icon-alert" />
-								</p:commandButton>
-							</p:column>
-						</p:dataTable>
-						<p:confirmDialog global="true">
-							<div class="centrarBotonesDialog">
-								<p:commandButton value="Aceptar" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-								<p:commandButton value="Cancelar" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-							</div>
-						</p:confirmDialog>
-
-
-						<p:messages id="msgs" autoUpdate="true" closable="true"
-							showDetail="true" />
-
+				<p:outputPanel layout="block" id="panelSolicitudes">
+					<p:outputPanel
+						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
 					</p:outputPanel>
-				</div>
+					<p:dataTable var="solicitud"
+						value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}" rows="10"
+						id="tablaSolicitudes" draggableColumns="true" paginator="true"
+						rowsPerPageTemplate="5,10,15" resizableColumns="true"
+						scrollable="true" scrollWidth="690"
+						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+						<f:facet name="header">
+							Solicitudes documentación
+						 	<p:commandButton id="toggler" type="button" value="Columnas"
+								style="float:right" icon="ui-icon-calculator" />
+							<p:columnToggler datasource="tablaSolicitudes" trigger="toggler">
+								<p:ajax event="toggle"
+									listener="#{solicitudDocPreviaBean.onToggle}" />
+							</p:columnToggler>
+						</f:facet>
+						<p:column headerText="Nombre cuestionario"
+							sortBy="#{solicitud.nombreCuestionarioPrevio}" width="340">
+							<h:outputText value="#{solicitud.nombreCuestionarioPrevio}" />
+						</p:column>
+						<p:column headerText="Fecha alta" sortBy="#{solicitud.fechaAlta}"
+							width="70">
+							<h:outputText value="#{solicitud.fechaAlta}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Validación apoyo"
+							sortBy="#{solicitud.fechaValidApoyo}" width="110">
+							<h:outputText value="#{solicitud.fechaValidApoyo}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}"
+							width="60">
+							<h:outputText value="#{solicitud.fechaEnvio}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Cumplimentada"
+							sortBy="#{solicitud.fechaCumplimentacion}" width="100">
+							<h:outputText value="#{solicitud.fechaCumplimentacion}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Finalizada"
+							sortBy="#{solicitud.fechaFinalizacion}" width="60">
+							<h:outputText value="#{solicitud.fechaFinalizacion}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+
+						<p:column width="30" exportable="false">
+							<p:commandButton title="Ver solicitud" icon="fa fa-fw fa-eye"
+								action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
+						</p:column>
+						<p:column width="30" exportable="false">
+							<p:commandButton title="Modificar solicitud"
+								icon="fa fa-fw fa-edit"
+								action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}"
+								update="tablaSolicitudes" />
+						</p:column>
+						<p:column style="width:30px">
+							<p:commandButton title="Eliminar" icon="ui-icon-trash"
+								actionListener="#{solicitudDocPreviaBean.eliminarSolicitudCuestionario(solicitud)}"
+								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes">
+								<p:confirm header="Eliminar solicitud"
+									message="¿Está seguro que desea eliminar esta solicitud previa de cuestionario?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+						<f:facet name="footer">
+	       					Resultado de la búsqueda: #{fn:length(solicitudDocPreviaBean.listaSolicitudesPrevia)} solicitudes.
+	    				</f:facet>
+					</p:dataTable>
+					<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</div>
+					</p:confirmDialog>
+
+
+					<p:messages id="msgs" autoUpdate="true" closable="true"
+						showDetail="true" />
+
+				</p:outputPanel>
 			</h:form>
 		</ui:define>
 	</ui:composition>
