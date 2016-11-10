@@ -105,7 +105,16 @@
 							<p:inputText id="telefonoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="true" requiredMessage="Introduzca el teléfono del interlocutor " />
 							
 							<h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
-							<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " />
+							<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " 
+							validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
+							
+							<h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
+							<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
+							validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
 							
 							<div class="botonesFormulario">				        						
 								<p:button  outcome="/provisional/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>

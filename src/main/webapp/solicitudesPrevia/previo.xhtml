@@ -48,7 +48,7 @@
 									        </p:selectOneMenu>
 
 									        <h:outputText for="anio" value="Año: *" style="font-weight: normal;"/>
-											<p:inputText value="#{solicitudDocPreviaBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="Año: *" maxlength="4" />     
+											<p:inputNumber value="#{solicitudDocPreviaBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="Año: *" maxValue="9999" />     
 									        <h:outputText for="cuerpoEstado" value="Cuerpo estado	: *" style="font-weight: normal;"/>
 											<p:selectOneMenu id="cuerpoEstado" value="#{solicitudDocPreviaBean.cuerpoEstado}" effect="fold" width="50" 
 
@@ -114,22 +114,6 @@
 										</h:panelGrid>
 		            				</p:panel>
 							</p:tab>	
-							<p:tab id="inspectorAuditor" title="Inspector Auditor" >
-            					  <br></br>
-            					<p:panel header="Jefe Inspector Auditor" >
-	            					  <br></br>
-	            					 <p:messages />	
-	            					<h:panelGrid columns="2" columnClasses="label, value">          
-		             				  											
-										<h:outputText for="puestoJefeInspectorAuditor" value="Puesto jefe inspector auditor: *" style="font-weight: normal;"/>
-										<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.puestoJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio un puesto inspector auditor" label="Puseto jefe inspector auditor: *"/>
-										
-										<h:outputText for="nombreJefeInspectorAuditor" value="Nombre jefe inspector auditor: *" style="font-weight: normal;"/>
-										<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}" required="true" requiredMessage="Es obligatorio un nombre del inspector auditor" label="Nombre jefe inspector auditor: *"/>
-
-									</h:panelGrid>
-		            			</p:panel>
-							</p:tab>
 							 <p:tab id="confirm" title="Confirmar">            				
             					  <br></br>
             					<p:panel header="Confirmar">          						
@@ -138,7 +122,6 @@
                     				<h:panelGrid columns="2" columnClasses="label,value">
 
                     				 <h:outputText value="Creación solicitud documentación previa cuestionario: " style="font-weight: normal;"/>
-                       				 <h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreJefeInspectorAuditor}" styleClass="outputLabel"/>
 
                     				 </h:panelGrid>
                 					</h:panelGrid>

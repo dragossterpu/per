@@ -76,12 +76,6 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "apoyoCorreo")
 	private String apoyoCorreo;
 
-	@Column(name = "puestoJefeInspectorAuditor")
-	private String puestoJefeInspectorAuditor;
-
-	@Column(name = "nombreJefeInspectorAuditor")
-	private String nombreJefeInspectorAuditor;
-
 	@Column(name = "fechaAlta")
 	private Date fechaAlta;
 
