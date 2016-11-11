@@ -91,7 +91,7 @@ public class ProvisionalBean implements Serializable {
 
 	private StreamedContent file;
 
-	public String visualizarSolicitud() {
+	public void visualizarSolicitud() {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 		// ñapa
 		try {
@@ -103,11 +103,9 @@ public class ProvisionalBean implements Serializable {
 			fechaEmision = formatter.format(solicitudDocumentacionPrevia.getFechaAlta());
 			fechaAntes = formatter.format(solicitudDocumentacionPrevia.getFechaAntes());
 			fechaLimite = formatter.format(solicitudDocumentacionPrevia.getFechaLimiteCumplimentar());
-			return "/provisional/provisional";
 		}
 		catch (Exception e) {
 			altaRegActivError(e);
-			return null;
 		}
 
 	}

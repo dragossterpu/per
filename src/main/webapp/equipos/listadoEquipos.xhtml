@@ -14,6 +14,9 @@
 
 		<h3>Tipos de equipo de inspección</h3>
 		<br></br><br></br>
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
+		</h:form>
 
 		<div id="listadoEquipos">
 	<h:form id="form">
@@ -39,12 +42,12 @@
 							<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>
 						</p:column>
 						<p:column style="width:30px">
-							<p:commandButton title="Eliminar" icon="ui-icon-trash"
+							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{tipoEquipoBean.eliminarEquipo(tipoEquipo)}"
 								update="tablaEquipos">
 								<p:confirm header="Eliminar tipo de equipo"
 									message="¿Está seguro que desea eliminar este tipo de equipo?"
-									icon="ui-icon-alert" />
+									icon="fa fa-warning-sign" />
 							</p:commandButton>
 						</p:column>
 				<f:facet name="footer">
@@ -54,9 +57,9 @@
 							<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
 							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
 							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 						</div>
 					</p:confirmDialog>
 					

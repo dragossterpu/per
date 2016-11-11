@@ -41,12 +41,11 @@ public class TipoEquipoBean implements Serializable {
 	ITipoEquipoService tipoEquipoService;
 
 	/**
-	 * Método que nos lleva al listado de los tipos de equipos. Se llama desde el menu lateral
-	 * @return
+	 * Método que nos lleva al listado de los tipos de equipos. Se llama en la carga de la página
+	 * 
 	 */
-	public String tipoEquipoListado() {
+	public void tipoEquipoListado() {
 		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
-		return "/equipos/listadoEquipos";
 	}
 
 	public void eliminarEquipo(TipoEquipo equipo) {

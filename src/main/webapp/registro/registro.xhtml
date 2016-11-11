@@ -12,6 +12,10 @@
 		<ui:define name="content">
 
 		<h3>Búsqueda de registro de actividad</h3>
+		
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{regActividadBean.getFormularioRegActividad}" autoRun="true" />
+		</h:form>
 
 		<h:form id="busquedalistaRegActividad" >
 		
@@ -39,8 +43,8 @@
 			</div>
 			
 			<div class="botonesFormulario">
-			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="ui-icon-search" />
-			<p:commandButton actionListener="#{regActividadBean.getFormularioRegActividad()}" value="Limpiar" update="busquedalistaRegActividad" icon="ui-icon-search" />
+			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" />
+			<p:commandButton actionListener="#{regActividadBean.getFormularioRegActividad()}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-search" />
 
 			</div>
 			<p:outputPanel layout="block" id="panelRegActividad" >
@@ -72,7 +76,7 @@
 	                         style="">
 					 <f:facet name="header">
 						Registros de actividad
-						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>
+						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="fa fa-th"/>
 	        			 <p:columnToggler datasource="tablaRegActividad" trigger="toggler">
 	        			 	  <p:ajax event="toggle" listener="#{regActividadBean.onToggle}" />
 	        			 </p:columnToggler>
@@ -95,12 +99,12 @@
 						<h:outputText value="#{regActividad.tipoRegActividad}" />
 					</p:column>
 						<p:column style="width:30px">
-							<p:commandButton title="Eliminar" icon="ui-icon-trash"
+							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{regActividadBean.eliminarRegActividad(regActividad)}"
 								update="tablaRegActividad">
 								<p:confirm header="Eliminar registro de actividad"
 									message="¿Está seguro que desea eliminar este registro de actividad?"
-									icon="ui-icon-alert" />
+									icon="fa fa-warning-sign" />
 							</p:commandButton>
 						</p:column>
 					<f:facet name="footer">
@@ -111,8 +115,8 @@
 </h:form>
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
-				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 			</div>
 		</p:confirmDialog>
 

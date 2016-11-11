@@ -62,8 +62,8 @@
 							<h:outputText value="#{alerta.tipoAlerta}" />
 						</p:column>
 						<p:column width="20" exportable="false">
-							<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{alertasBean.eliminarAlertas(alerta)}" update="tablaAlertas">
-								<p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="ui-icon-alert"/>
+							<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{alertasBean.eliminarAlertas(alerta)}" update="tablaAlertas">
+								<p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="fa fa-warning-sign"/>
 							</p:commandButton>
 						</p:column>
 					<f:facet name="footer">
@@ -118,8 +118,8 @@
 						<h:outputText value="#{notificacion.nombreSeccion}" />
 					</p:column>
 					<p:column width="20" exportable="false">
-						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{notificacionesBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
-							<p:confirm header="Eliminar notificación" message="¿Está seguro que desea eliminar esta notificación?" icon="ui-icon-alert"/>
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{notificacionesBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
+							<p:confirm header="Eliminar notificación" message="¿Está seguro que desea eliminar esta notificación?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
 				<f:facet name="footer">
@@ -131,8 +131,8 @@
 		</h:form>
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
-				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 			</div>
 		</p:confirmDialog>
 		</ui:define>

@@ -129,8 +129,7 @@ public class EquiposBean implements Serializable {
 		equipo.setFechaAlta(new Date());
 		if (equipoEspecial) {
 			equipo.setEquipoEspecial("SI");
-		}
-		else {
+		} else {
 			equipo.setEquipoEspecial("NO");
 		}
 		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -180,10 +179,9 @@ public class EquiposBean implements Serializable {
 		return "/equipos/equipos";
 	}
 
-	public String getFormularioBusquedaEquipos() {
+	public void getFormularioBusquedaEquipos() {
 		equipoBusqueda.resetValues();
 		this.estado = null;
-		return "/equipos/equipos";
 	}
 
 	public String buscarEquipo() {

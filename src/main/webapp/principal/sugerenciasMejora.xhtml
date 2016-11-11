@@ -36,8 +36,9 @@
 				    <h:outputText id="display" value="#{sugerenciasBean.descripcion}" />
 			   <br></br><br></br>
 			    </p:panel>
-			  		<p:commandButton action="#{sugerenciasBean.guardarSugerencia}" icon="fa fa-fw fa-save"
-						value="Guardar" />&nbsp;&nbsp;&nbsp;
+			  	<h:commandLink title="Guardar" action="#{sugerenciasBean.guardarSugerencia}"  styleClass="fa fa-save ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+					<span class="ui-CommandLink-texto">Guardar</span>
+				</h:commandLink>
  				<p:commandButton value="Limpiar" update="panel" process="@this" actionListener="#{sugerenciasBean.resetFail}"  />
 			  </h:form>
 			  <div class="clear">

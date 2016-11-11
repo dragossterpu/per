@@ -26,9 +26,9 @@
 						<h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
 						<p:selectOneMenu value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" 
 							converter="#{selectConverter}">
-							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-							<f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario"
-								itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
+						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+						<f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario"
+							itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
 						</p:selectOneMenu> 
 						
 					</div>
@@ -43,7 +43,7 @@
 			</div>
 		
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="ui-icon-search" />
+				<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" />
 	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioPersonalizadoBean.limpiar}" update="busquedaCuestionario" icon="fa fa-fw fa-eraser" />
 				<p:button outcome="/cuestionarios/modelosCuestionarios" value="Nuevo cuestionario" icon="fa fa-fw fa-user-plus"/>
 			</div>
@@ -90,16 +90,16 @@
 					<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.nombreCuestionario}">
 						<h:outputText value="#{cuestionario.modeloCuestionario.descripcion}" />
 					</p:column>
-					<p:column styleClass="botonTablaDownload" exportable="false">
-						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
-							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="ui-icon-alert"/>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
+							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
-					<p:column styleClass="botonTabla" exportable="false">
-						<h:commandLink action="#{cuestionarioPersonalizadoBean.visualizar(cuestionario)}" styleClass="fa fa-fw fa-eye"/>
+					<p:column width="30" exportable="false">
+						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioPersonalizadoBean.visualizar(cuestionario)}" />
 					</p:column>
-					<p:column styleClass="botonTabla" exportable="false">
-						<h:commandLink title="Enviar" styleClass="fa fa-fw fa-envelope-o" action="#{cuestionarioPersonalizadoBean.enviar(cuestionario)}"/>
+					<p:column width="30" exportable="false">
+						<h:commandLink title="Enviar" styleClass="fa fa-fw fa-envelope-o ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioPersonalizadoBean.enviar(cuestionario)}" />
 					</p:column>
 					
 					<f:facet name="footer">
@@ -111,8 +111,8 @@
 
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
-				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 			</div>
 		</p:confirmDialog>
 			

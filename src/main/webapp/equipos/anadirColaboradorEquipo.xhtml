@@ -48,7 +48,9 @@
 				</div>
 						
 						<div class="botonesFormulario">
-								<p:commandButton action="#{equiposBean.guardarColaborador}" value="Guardar colaborador/es"  icon="fa fa-fw fa-save" />
+							<h:commandLink title="Guardar colaborador/es" action="#{equiposBean.guardarColaborador}"  styleClass="ui-state-default ui-corner-all fa fa-save ui-CommandLink ui-CommandLink-icono-texto">
+								<span class="ui-CommandLink-texto">Guardar colaborador/es</span>
+							</h:commandLink>
 						</div>	
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 				<p:ajax event="close" listener="#{facesUtilities.redirect('/principal/index')}" />

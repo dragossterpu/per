@@ -232,3 +232,39 @@ select {
 .respuestaCuestionario {
 	margin-top: 10px;
 }
+
+.ui-CommandLink-icono {
+	padding: 0.4em 0.5em;
+	width: 1.226em;
+	
+}
+
+.ui-CommandLink-icono-texto {
+	padding: 0.4em 1em;
+	
+}
+
+.ui-CommandLink-icono-texto {
+	padding: 0.4em 1em;
+	
+}
+
+.ui-CommandLink-texto {
+	font-family: Arial, Verdana, sans-serif;
+	color:#000000;
+}
+
+.ui-CommandLink {
+	margin-right: 1em;
+	cursor: pointer;
+    text-align: center;
+	font-weight: bold;
+ }
+ 
+.ui-CommandLink:link {
+	text-decoration:none;
+} 
+ 
+.fa {
+	color:#3c82b4 !important;
+} 

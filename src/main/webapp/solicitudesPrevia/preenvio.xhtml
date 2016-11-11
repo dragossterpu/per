@@ -58,8 +58,12 @@
 					
 				</div>
 			<div class="botonesFormulario">
-	            <p:commandButton action="#{solicitudDocPreviaBean.limpiar}" value="Limpiar" update="datosReporte" icon="fa fa-fw fa-eraser" />
-				<p:commandButton action="#{solicitudDocPreviaBean.execute}" value="Enviar solicitud documentación" icon="fa fa-fw fa-user-plus"/>
+				<h:commandLink title="Limpiar" action="#{solicitudDocPreviaBean.limpiar}"  update="datosReporte" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
+					<span class="ui-CommandLink-texto">Limpiar</span>
+				</h:commandLink>
+				<h:commandLink title="Enviar solicitud documentación" action="#{solicitudDocPreviaBean.execute}"  update="busquedaUsers" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+	<span class="ui-CommandLink-texto">"Enviar solicitud documentación</span>
+</h:commandLink>
 			</div>
 
         </h:form>

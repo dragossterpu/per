@@ -16,6 +16,10 @@
 
 		<h3 style="white-space:pre-line;" >Búsqueda de equipos</h3>
 		
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{equiposBean.getFormularioBusquedaEquipos}" autoRun="true" />
+		</h:form>
+		
 		<h:form id="busquedaEquipos" >
 		
 			<div class="bloqueFormulario">
@@ -48,14 +52,18 @@
 					</div>
 			</div>
 				<div class="botonesFormularioEquipos">
-						<p:commandButton actionListener="#{equiposBean.buscarEquipo}" value="Buscar" update="panelEquipos" icon="ui-icon-search" />
-						 <p:commandButton action="#{equiposBean.getFormularioBusquedaEquipos}" value="Limpiar" update="busquedaEquipos" icon="fa fa-fw fa-eraser" />
+						<p:commandButton actionListener="#{equiposBean.buscarEquipo}" value="Buscar" update="panelEquipos" icon="fa fa-search" />
+						 <h:commandLink title="Limpiar" action="#{equiposBean.getFormularioBusquedaEquipos}" update="busquedaEquipos" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">Limpiar</span>
+						</h:commandLink>
                 		</div>
 						<p:separator title="Alta nuevo equipo" styleClass="separator ui-state-disabled"/>
 						<div class="botonesFormulario">
 						 <h:outputText value="¿Equipo especial?: " />&nbsp;
-        				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp; &nbsp; &nbsp; 
-					        <p:commandButton action="#{equiposBean.nuevoEquipo}" value="Nuevo equipo" icon="fa fa-fw fa-user-plus"/> 
+        				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp; &nbsp; &nbsp;  
+					        <h:commandLink title="Nuevo equipo" action="#{equiposBean.nuevoEquipo}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto"/>>
+								<span class="ui-CommandLink-texto">Nuevo equipo</span>
+							</h:commandLink>
 						</div>
 					<p:outputPanel layout="block" id="panelEquipos" >
 		 				<p:outputPanel rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
@@ -108,9 +116,9 @@
 					</p:column>	
 		
 					<p:column width="20" exportable="false"  rendered="#{equiposBean.equipo.fechaBaja eq null}">
-						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}"
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}"
 						update=":busquedaEquipos:panelEquipos tablaEquipos "  >
-							<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="ui-icon-alert"/>
+							<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
 					<p:column width="20" exportable="false"> 
@@ -125,8 +133,8 @@
  		</h:form>
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
-				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 			</div>
 		</p:confirmDialog>
 		

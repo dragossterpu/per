@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Getter
 @Component("userBean")
-@RequestScoped
+
 public class UserBean {
 
 	private User user;
@@ -144,9 +145,8 @@ public class UserBean {
 		return null;
 	}
 
-	public String getFormularioBusquedaUsuarios() {
+	public void getFormularioBusquedaUsuarios() {
 		userBusqueda.resetValues();
-		return "/users/usuarios";
 	}
 
 	/**
@@ -253,6 +253,7 @@ public class UserBean {
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
+	
 
 	@PostConstruct
 	public void init() {

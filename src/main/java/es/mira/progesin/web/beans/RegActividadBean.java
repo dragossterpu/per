@@ -70,9 +70,9 @@ public class RegActividadBean implements Serializable {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
 
-	public String getFormularioRegActividad() {
+	
+	public void getFormularioRegActividad() {
 		regActividadBusqueda.resetValues();
-		return "/registro/registro";
 	}
 
 	@PostConstruct

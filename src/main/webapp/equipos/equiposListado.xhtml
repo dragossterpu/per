@@ -18,7 +18,7 @@
 						 rowsPerPageTemplate="5,10,15">
 							<f:facet name="header">
 								Sugerencias
-							<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+							<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="fa fa-th" />
         				<p:columnToggler datasource="sugerencias" trigger="toggler" />
 							
 							</f:facet>
@@ -38,15 +38,16 @@
 									
 								</f:facet>
 									<h:inputHidden value="#{sugerencia.idSugerencia}" />
-									 <p:commandButton title="Eliminar" icon="ui-icon-trash" action="#{sugerenciasBean.eliminarSugerencia(sugerencia.idSugerencia)}" update="sugerencias"/>
+									 <h:commandLink title="Eliminar" action="#{sugerenciasBean.eliminarSugerencia(sugerencia.idSugerencia)}" update="sugerencias" styleClass="ui-state-default ui-corner-all fa fa-trash ui-CommandLink ui-CommandLink-icono-texto">
+										<span class="ui-CommandLink-texto">Eliminar</span>
+									</h:commandLink>
 							</p:column>
 							<p:column style="width:24px">
 								<f:facet name="header">
 								
 								</f:facet>
 									<h:inputHidden value="#{sugerencia.idSugerencia}" />														 
-									 <p:commandButton title="Contestar" icon="ui-icon-contact"  action="#{sugerenciasBean.contestarSugerencia(sugerencia.idSugerencia)}"/>
-									
+									 <h:commandLink title="Contestar" styleClass="fa fa-vcard-o ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{sugerenciasBean.contestarSugerencia(sugerencia.idSugerencia)}" />
 							</p:column>
 						</p:dataTable>
 					</div>	

@@ -51,12 +51,12 @@
 								<p:rowEditor />
 							</p:column>
 							<p:column style="width:30px">
-								<p:commandButton title="Eliminar" icon="ui-icon-trash"
+								<p:commandButton title="Eliminar" icon="fa fa-trash"
 									actionListener="#{provisionalBean.eliminarDocumento(documento)}"
 									update=":formAlta:panelAdjuntos tablaDocumentos">
 									<p:confirm header="Eliminar documento"
 										message="¿Está seguro que desea eliminar este documento?"
-										icon="ui-icon-alert" />
+										icon="fa fa-warning-sign" />
 								</p:commandButton>
 							</p:column>
 							<p:column styleClass="botonTabla">
@@ -70,9 +70,9 @@
 					<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
 							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
 							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 						</div>
 					</p:confirmDialog>
 					<div class="botonesFormulario">

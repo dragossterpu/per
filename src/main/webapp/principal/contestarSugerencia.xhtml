@@ -36,8 +36,8 @@
    					<p:inputTextarea rows="8" cols="50" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="false" value="#{contestacion}"/>
     				<h:outputText id="display" value="#{contestacion}" />
 				
-				<p:commandButton action="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}"
-						value="Guardar" />
+				
+						<h:commandLink title="Guardar" styleClass="fa fa-fw fa-save ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}" />
 			</h:form>
         </ui:define>
     </ui:composition>

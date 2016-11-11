@@ -152,7 +152,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	/**
 	 * @param
-	 * @comment Metodo que crea una solicitus de documentacion
+	 * @comment Metodo que crea una solicitud de documentacion
 	 * @author EZENTIS STAD
 	 * @return vista
 	 */
@@ -163,7 +163,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	/**
 	 * @param
-	 * @comment Metodo que crea una solicitus de documentacion
+	 * @comment Metodo que crea una solicitud de documentacion
 	 * @author EZENTIS STAD
 	 * @return vista
 	 */
@@ -659,10 +659,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @comment Metodo que limpia y presenta el formulario de búsqueda de solicitudes previas de cuestionario
 	 * @author EZENTIS GR
 	 */
-	public String getFormularioBusquedaSolicitudesDocPrevia() {
+	public void getFormularioBusquedaSolicitudesDocPrevia() {
 		solicitudDocPreviaBusqueda.resetValues();
 		listaSolicitudesPrevia = null;
-		return "/solicitudesPrevia/busquedaSolicitudesDocPrevia";
 
 	}
 

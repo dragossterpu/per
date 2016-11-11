@@ -12,6 +12,9 @@
 		<ui:define name="content">
 
 		<h3>Búsqueda de usuarios</h3>
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{userBean.getFormularioBusquedaUsuarios}" update="busquedaUsers" autoRun="true" />
+		</h:form>
 
 		<h:form id="busquedaUsers" >
 		
@@ -70,9 +73,14 @@
 					</div>
 			</div>
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="ui-icon-search" />
-	            <p:commandButton action="#{userBean.getFormularioBusquedaUsuarios}" value="Limpiar" update="busquedaUsers" icon="fa fa-fw fa-eraser" />
-				<p:commandButton action="#{userBean.nuevoUsuario}" value="Nuevo usuario" icon="fa fa-fw fa-user-plus"/>
+				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" />
+				<h:commandLink title="Limpiar" action="#{userBean.getFormularioBusquedaUsuarios}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+					<span class="ui-CommandLink-texto">Limpiar</span>
+				</h:commandLink>
+	            <h:commandLink title="Nuevo usuario" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{userBean.nuevoUsuario}">
+	            	<span class="ui-CommandLink-texto">Nuevo usuario</span>
+	            </h:commandLink>
+
 			</div>
 			
  			<p:outputPanel layout="block" id="panelUsuarios" >
@@ -103,7 +111,7 @@
 	                        
 					 <f:facet name="header">
 						Usuarios
-						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator"/>
+						 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="fa fa-th"/>
 	        			 <p:columnToggler datasource="tablaUsuarios" trigger="toggler">
 	        			 	  <p:ajax event="toggle" listener="#{userBean.onToggle}" />
 	        			 </p:columnToggler>
@@ -135,12 +143,12 @@
 						<h:outputText value="#{user.puestoTrabajo.descripcion}" />
 					</p:column>
 					<p:column width="30" exportable="false">
-						<p:commandButton title="Eliminar" icon="ui-icon-trash" actionListener="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios">
-							<p:confirm header="Eliminar usuario" message="¿Está seguro que desea eliminar este usuario?" icon="ui-icon-alert"/>
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios">
+							<p:confirm header="Eliminar usuario" message="¿Está seguro que desea eliminar este usuario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
 					<p:column width="30" exportable="false"> 
-						<p:commandButton title="Modificar usuario" icon="fa fa-fw fa-edit" action="#{userBean.getFormModificarUsuario(user)}" update="tablaUsuarios"/>
+						<h:commandLink title="Modificar usuario" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{userBean.getFormModificarUsuario(user)}" update="tablaUsuarios" />
 					</p:column>
 					
 					<f:facet name="footer">
@@ -153,8 +161,8 @@
 
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
-				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 			</div>
 		</p:confirmDialog>
 

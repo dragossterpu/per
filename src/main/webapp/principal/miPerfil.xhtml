@@ -103,8 +103,9 @@
 						promptLabel="Por favor, introduce una contraseña"
 						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
-					<p:commandButton action="#{miPerfilBean.cambiarClave}"
-						value="Guardar" />
+					<h:commandLink title="Guardar" action="#{miPerfilBean.cambiarClave}" update="busquedaUsers" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
+						<span class="ui-CommandLink-texto">Guardar</span>
+					</h:commandLink>
 
 					<p:commandButton value="Limpiar" update="passwordForm"
 						process="@this">

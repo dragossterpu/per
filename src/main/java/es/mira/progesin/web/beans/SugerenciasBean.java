@@ -83,10 +83,9 @@ public class SugerenciasBean implements Serializable {
 	 * Método que nos lleva al listado de sugerencias Se llama desde el menu lateral
 	 * @return
 	 */
-	public String sugerenciasListado() {
+	public void sugerenciasListado() {
 
 		sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
-		return "/principal/sugerenciasListado";
 	}
 
 	public void eliminarSugerencia(Integer idSugerencia) {
