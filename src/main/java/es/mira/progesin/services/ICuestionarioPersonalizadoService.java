@@ -2,7 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.web.beans.CuestionarioPersonalizadoBusqueda;
 
 public interface ICuestionarioPersonalizadoService {

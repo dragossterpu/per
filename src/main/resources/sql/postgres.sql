@@ -229,18 +229,18 @@ begin
 end;$$;
 */
 
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (1, 'codigo1', 'CUESTIONARIO.CIES', 'doc' ,1, 'CUESTIONARIO.CIES.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (2, 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 'docx' ,2, 'A - GC - Cuestionario Zona GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (3, 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 'docx' ,3, 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (4, 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 'docx' ,4, 'B - GC - Cuestionario Comandancia GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (5, 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 'docx' ,5, 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (6, 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 'docx' ,6, 'C - GC - Cuestionario Compañía GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (7, 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 'docx' ,7, 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (8, 'codigo8', 'CUESTIONARIO PRLCNP', 'doc' ,8, 'CUESTIONARIO PRLCNP.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (9, 'codigo9', 'CUESTIONARIO.CIES _ TIPOS RESPUESTA', 'doc' ,9, 'CUESTIONARIO.CIES _ TIPOS RESPUESTA.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (10, 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 'doc' ,10, 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (11, 'codigo11', 'CUESTIONARIOPRLGC', 'doc' ,11, 'CUESTIONARIOPRLGC.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,extension,id_documento,nombre) Values (12, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 'docx' ,12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (1, 'codigo1', 'CUESTIONARIO.CIES', 1, 'CUESTIONARIO.CIES.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (2, 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 2, 'A - GC - Cuestionario Zona GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (3, 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 3, 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (4, 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 4, 'B - GC - Cuestionario Comandancia GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (5, 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 5, 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (6, 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 6, 'C - GC - Cuestionario Compañía GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (7, 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 7, 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (8, 'codigo8', 'CUESTIONARIO PRLCNP', 8, 'CUESTIONARIO PRLCNP.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (9, 'codigo9', 'CUESTIONARIO.CIES _ TIPOS RESPUESTA', 9, 'CUESTIONARIO.CIES _ TIPOS RESPUESTA.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (10, 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 10, 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (11, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (12, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
 
 insert into documentos values (1, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'));
 insert into documentos values (2, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'));
@@ -273,255 +273,204 @@ Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'RELACIONES 
   ------------- preguntas cuestionario
   
   
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (1, 'Situación y estado del centro', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (2, 'Fecha de creación', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (3, 'Instalaciones. Descripción de las mismas', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (4, 'Disponibilidad de accesos para personas con movilidad reducida', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (5, 'Capacidad, diferenciando por sexos.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (6, 'Numero de módulos destinados al alojamiento de hombres', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (7, 'Número de módulos destinados al alojamiento de mujeres', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (8, 'Número de alojamientos para unidades familiares.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (9, 'Número de módulos independientes. Dimensiones.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (10, 'Número de habitaciones para llevar a cabo la separación preventiva.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (11, 'Numero de dependencias y descripción de las mismas, destinadas a alojar a internos, que aun no necesitando atención hospitalaria, por las características de la enfermedad física o psíquica aconseje su separación del resto de los internos', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (12, 'Instalaciones que se utilizan para el alojamiento de internados en virtud del art.89.8 del C.P', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (13, 'Como se consigue la intimidad necesaria para los internos', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (14, 'Espacios para el esparcimiento y recreo. Descripción', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (15, 'Espacio para almacenamiento de equipajes. Caja fuerte. Capacidad', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (16, 'Almacén de equipos básicos de higiene diaria. Descripción', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (17, 'Número de teléfonos públicos para uso de los internos.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (18, 'Locutorios para abogados y sala de visita', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (19, 'Carteles Informativos. Horarios/Zona Videovigilada', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (20, 'Limpieza: Empresa, número de personal, horario, horario en los servicios de 24 horas, grado de satisfacción, incidencias', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (21, 'Ascensores y aparatos elevadores', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (22, 'Ascensores. Número de ellos y ubicación', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (23, 'Montacargas. Número de ellos y peso máximo', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (24, 'Instalaciones eléctrica (AT y BT) (RD 614/2001, disposiciones mínimas de protección contra riesgos eléctricos', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (25, 'Alta Tensión. Centros de transformación, centrales eléctricas o subestaciones', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (26, 'Baja Tensión. Cuadros eléctricos', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (27, 'Grupos electrógenos', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (28, 'Sistema de Alimentación Ininterrumpida (S.A.I.)/Baterías de acumuladores', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (29, 'Sistema de ventilación, climatización y ACS', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (30, 'Calderas de calefacción y ACS', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (31, 'Aire acondicionado y/o ventilación forzada', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (32, 'Aparatos a presión (compresores)', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (33, 'Depósitos de combustibles', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (34, 'Combustibles líquidos', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (35, 'Combustibles gaseosos.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (36, 'Prevención/control Legionelosis', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (37, 'ibro del edificio', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (38, 'Libros de mantenimiento de cada una de las instalaciones, con sus informes, actas, etc. correspondientes a las operaciones de mantenimiento, revisiones e inspecciones.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (39, 'Protección contra incendios', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (40, 'Central de alarmas', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (41, 'Sistemas automáticos de detección y alarma de incendios', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (42, 'Sistemas  manuales (pulsadores) de alarma de incendio', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (43, 'Sirenas de alarma y megafonía', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (44, 'Señalización de equipos contra incendios (de BIE,s, extintores, dirección evacuación, etc.)', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (45, 'Número de extintores portátiles', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (46, 'Número de bocas de Incendio Equipadas (BIE,s)', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (47, 'Sistema fijo de extinción. Agua. Gas. Espuma.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (48, 'Sistema de abastecimiento de agua.', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (49, 'Hidrantes exteriores', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (50, 'Columnas secas', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (51, 'Alumbrado de emergencias', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (52, 'Otros', '1');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (53, 'Plan de Emergencia/ Plan de Autoprotección ', '1');
-
-
---Preguntas area DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (54, 'Estructura orgánica', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (55, 'Catálogo de puestos de trabajo personal CNP. Tiempo promedio en el destino.', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (56, 'Catálogo de puestos de trabajo funcionarios Administración General del Estado. Tiempo promedio en el destino.', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (57, 'Catálogo de puestos de trabajo personal laboral. Tiempo promedio en el destino.', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (58, 'Otro personal. Tipo de contratación y requisitos exigidos.', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (59, 'Horarios de trabajo', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (60, 'Número de actividades formativas dirigidas al personal del CNP y resto de funcionarios y empleados públicos, diferenciando las referidas a derechos humanos, régimen de extranjería, seguridad y enfoque de género y violencia contra las mujeres, con expresión de número de participantes en cada una de ellas, así como personal o institución que las impartió', '2');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (61, 'Número de actividades formativas dirigidas al personal no incluido en el párrafo anterior, con expresión de número de participantes en cada una de ellas, así como personal o institución que las impartió', '2');
-
---Preguntas area DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (62, 'Inventario de recursos materiales, con expresión de fecha de adjudicación o reposición y estado de conservación.', '3');
-
-
---Preguntas area LIBROS OFICIALES
-
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (63, 'Libros en poder del Centro y fecha de diligencia de cada uno de ellos', '4');
-
-
---Preguntas area DIRECCIÓN
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (64, 'Copia del nombramiento del Director', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (65, 'Periodos de sustitución y motivo', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (66, 'Número de respuestas a escritos, quejas y peticiones de los internos o remitidas a la autoridad competentes', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (67, 'Número de reservas de plazas aceptadas o denegadas', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (68, 'Visitas fuera de horarios, autorizadas y causas', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (69, 'Iniciativas trasladadas a superiores', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (70, 'Normas de régimen interior y, en su caso,  modificaciones', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (71, 'Número de entrevistas personales de internos con el director.', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (72, 'Medidas a imponer a los internos que incumplan las normas', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (73, 'Número de reconocimientos médicos ordenados por causas de salud colectiva', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (74, 'Cómo se efectúa el control sobre la custodia y cumplimentación de los libros', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (75, 'Número de reuniones de seguimiento de la gestión entre Comisaria General de extranjería y Fronteras, con directores e instituciones. Remitir actas.', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (76, 'Número de visitas del Juez competente, especificando los motivos.  ', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (77, 'Número de inspecciones, con inclusión de fechas, distinguiendo las llevadas a cabo por la autoridad judicial, el CNP, u otros organismos. ', '5');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (78, ' Datos anuales publicados por la Comisaría General de Extranjería y Fronteras.', '5');
-
-
---Preguntas area JUNTA DE COORDINACIÓN
-
- Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (79, 'Composición de la junta de coordinación.', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (80, ' Normas de funcionamiento.', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (81, ' Remitir actas de reuniones ordinarias o extraordinarias.', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (82, 'Informes a consultas sobre:', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (83, 'Normas de régimen interior.', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (84, ' Directrices e instrucciones sobre organización de los distintos servicios.', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (85, 'Criterios de actuación en cuestiones de alteración del orden, o   incumplimiento de normas.', '6');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (86, 'Sobre peticiones y quejas', '6');
-
-
---Preguntas area UNIDAD DE SEGURIDAD
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (87, 'Estructura orgánica', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (88, 'Copia del nombramiento del Jefe de la Unidad de Seguridad', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (89, 'Catálogo de puestos de trabajo personal CNP', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (90, 'Criterios de selección', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (91, 'Horarios de trabajo', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (92, 'Directrices de organización', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (93, 'Número de atestados instruidos', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (94, 'Relación de objetos prohibidos intervenidos a internos y destino dados a los mismos ', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (95, 'Relación de objetos no autorizados intervenidos a internos', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (96, 'Custodia y depósito en caja fuerte de objetos de valor y dinero. Procedimiento.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (97, 'Relación de objetos prohibidos intervenidos a visitantes', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (98, 'Relación  de objetos no autorizados intervenidos a visitantes', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (99, 'Control de seguridad al que se somete la correspondencia recibida o remitida.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (100, 'Número de registros de correspondencia autorizadas por la autoridad judicial.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (101, 'Control de seguridad al que se somete la paquetería recibida.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (102, 'Número de paquetería devuelta por falta de autorización a su apertura.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (103, 'Número de objetos intervenidos en paquetería y destinos dado a los mismos.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (104, 'Detalle de instrumentos de control instalados, con expresión de clase, y ubicación (cámaras, arcos detectores, etc.).', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (105, 'Destino dado a las grabaciones y tiempo de permanencia.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (107, ' Número de incautaciones de medios de captación de imágenes', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (109, ' Número de borrados de imágenes', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (111, ' Enumerar lugares donde se presta servicio sin armas de fuego', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (113, 'Número de inspecciones y registros en las instalaciones de uso común.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (114, 'Número de ocasiones en que, por razón de urgencia, se han adoptados medidas tendentes a restablecer y asegurar el orden', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (115, 'Número de ocasiones en que se ha dado cuenta al director del incumplimiento  de las normas de régimen interior', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (116, 'Número de inspecciones y registros en las instalaciones destinadas a dormitorios de los internos, ropas y enseres de los mismos, indicando las causas y resultado de las mismas.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (117, 'Número de registros personales de los internos, indicando cuales lo fueron mediante desnudo integral, las causas que motivaron los mismos, diferenciando los autorizados por el Director de aquellos otros autorizados por el Jefe de la Unidad de seguridad. Indicar funcionarios encargados de practicarlos y lugar donde se llevaron a cabo.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (118, 'Número de ocasiones en que ha sido necesario el empleo de medios de contención física personal, especificando en que han consistido y causa que las hayan motivado. Separar las que se han tomado previa notificación escrita y aquellas, que por razón de urgencia se haya notificado verbalmente.', '7');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (119, 'Número de ocasiones en que ha sido necesaria la separación preventiva individual de algún interno, especificando su causa.', '7');
-
-
---Preguntas area ADMINISTRACIÓN
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (120, 'Estructura.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (121, 'Copia del nombramiento del administrador', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (122, ' Catálogo de puestos de trabajo', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (123, 'Número de quejas ante:', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (124, 'Órganos administrativos.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (125, 'Órganos judiciales.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (126, 'El Ministerio Fiscal.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (127, 'El Defensor del Pueblo.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (128, 'El Director del Centro.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (129, 'Otros organismos', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (130, 'Número de solicitud de entrevistas personales con el Director.  ', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (131, 'Número de propuestas de alteración de horarios.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (132, 'Número de informes sobre deficiencias.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (133, 'Número de instrucciones recibidas del servicio sanitario respecto a la alimentación, limpieza y aseo.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (134, 'Medidas adoptadas en base a las creencias religiosas de los internos.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (135, 'Medios destinados a facilitar la práctica de diferentes confesiones religiosas', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (136, 'Solicitudes de internos para entrar en contactos con ONG,s', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (137, 'Horario de visita a internos, lugar donde se llevan a cabo. Duración de las mismas. Limitaciones.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (138, 'Como se aborda el problema de idioma de internos.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (139, 'Número de ejemplares de libros que contiene la biblioteca. Indicar idioma de los mismos.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (140, 'Descripción de medios lúdicos instalados en la sala de estar.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (141, 'Número de ejemplares de prensa diaria, con indicación de nombre e idioma de edición.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (142, 'Horarios del centro, con especificación de actividades', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (143, 'Numero de autorizaciones de dispositivos captadores de imágenes.', '8');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (144, 'Identificación de todas personas que prestan servicios en el centro', '8');
-
-
---Preguntas area SECRETARÍA
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (145, 'Estructura', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (146, ' Copia del nombramiento del Secretario', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (147, ' Catálogo de puestos de trabajo.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (148, ' Número de deficiencias o irregularidades apreciadas.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (149, ' Número de trámites documentales con las Unidades policiales que gestionan los expedientes de extranjeros.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (150, ' Número de trámites documentales con los juzgados competentes para el control de extranjeros internados.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (151, ' Número de ingresos y reingresos diferenciados por sexos, meses y periodo de permanencia de  los internos, especificando los motivos. ', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (152, ' Número de salidas, diferenciadas por sexos, meses y periodo de permanencia de  los internos, especificando los motivos. ', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (153, ' Número de traslados:', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (154, 'A otros centros y de otros centro, especificando los motivos.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (155, 'Por comparecencias.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (156, 'Por cuestiones médicas', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (157, 'Número de ceses de internamiento, especificando sus causas.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (158, 'Número de situaciones que se han producido en las cuales no se pueda llevar a efecto la expulsión de un interno por el art. 89.8 del CP.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (159, 'Número de reingresos por no poderse llevar a cabo la expulsión, devolución o regreso.', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (160, 'Tratamiento de los datos de carácter personal en los expedientes', '9');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (161, 'Información sobre derechos y obligaciones del nuevo interno. Boletín Informativo.', '9');
-
-
---Preguntas area SERVICIO DE ASISTENCIA SANITARIA
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (162, 'Médico de la administración, responsable del servicio de Asistencia sanitaria.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (163, 'Número de ATS/Diplomado/Graduado Universitario.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (164, 'Número de inspecciones,  informes y propuestas sobre:', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (165, 'Alimentación.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (166, 'Aseo de los internos, sus ropas y pertenencias.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (167, 'Higiene, calefacción, iluminación, y ventilación de las dependencias.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (168, 'Controles periódicos de salubridad.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (169, 'Prevención de epidemias y medidas de aislamiento de pacientes infecto-contagiosos', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (170, 'Entrega de elementos de aseo y abrigo', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (171, 'Número de actos médicos.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (172, 'Número de actos de enfermería.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (173, 'Servicio sanitario. Descripción de las instalaciones. Capacidad.  Material del que dispone. Capacidad para atender urgencias.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (174, ' Convenios con otra Admón. pública para casos de hospitalización o especialidades.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (175, 'Convenios con entidades privadas para casos de hospitalización o especialidades. ', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (176, 'Numero de reconocimientos médicos mediante mandamiento judicial, por negación del interno.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (177, 'Numero de reconocimientos ordenados por el Director.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (178, 'Número de internos de ese Cie, hospitalizados.  ', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (179, 'Numero de partes de lesiones, por las producidas anteriores al ingreso, y que estuvieran descritas en el parte facultativo de lesiones que aportan los funcionarios que hacen entrega del interno.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (180, 'Numero de partes de lesiones, por las producidas anteriores al ingreso, y que no estuvieran descritas en el parte facultativo de lesiones que aportan los funcionarios que hacen entrega del interno.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (181, 'Número de reuniones entre la Comisaria General de Extranjería y Fronteras y representante de las entidades con las que se haya suscritos convenios de sanidad.', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (182, 'Atención farmacéutica. En qué consiste y, cómo y dónde se almacenan los productos', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (183, 'Procedimiento para la solicitud de asistencia médica', '10');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (184, 'Tratamiento de los datos de salud. En, su caso, Entidades concertadas', '10');
-
-
---Preguntas area SERVICIOS DE ASISTENCIA SOCIAL, JURÍDICA Y CULTURAL
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (185, 'Estructura ', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (186, 'Número de trabajadores sociales.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (187, 'Planes o proyectos de actuación presentados.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (188, 'Planes o proyectos de actuación aprobados. ', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (189, 'Convenios con órganos de otros Ministerios, con entidades públicas y privadas y con ONG,s.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (190, 'Entidades colaboradoras. Detallando la actividad que realiza cada una.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (191, 'Actividades llevadas a cabo. ', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (192, 'Formación en derechos humanos, extranjería, protección internacional, mediación intercultural y violencia de género. Numero de curso, jornadas, etc. que han recibido los trabajadores sociales.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (193, 'Convenios con colegios de abogados.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (194, 'Dependencias destinadas a asegurar la confidencialidad en la orientación jurídica.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (195, 'Número de entrevistas y comunicaciones con abogados y representantes diplomáticos y consulares.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (196, 'Horarios de visitas.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (197, 'Limitaciones establecidas para las visitas.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (198, 'Número de personas por visita.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (199, 'Donde tienen lugar.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (200, 'Como se informa a los visitantes de las normas de régimen interior.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (201, 'Número de personas que pueden simultanear la visita.', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (202, 'Comunicaciones telefónicas que se realizan al ingreso', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (203, 'Como se informa de su situación al interno y de las resoluciones administrativas y judiciales. ', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (204, 'Números de casos de asistencia de intérprete', '11');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (205, 'Plazo de entrevista con servicio de asistencia social interno nuevo', '11');
-
-
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (206, 'Entidades colaboradoras. Detallando la actividad que realiza cada una.', '12');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (207, 'Numero de organizaciones que están autorizadas para realizar visitas al centro.', '12');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (208, 'Acreditaciones concedidas.', '12');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (209, 'Número de visitas de ONG,s.', '12');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (210, 'Número de comunicaciones a ONG,s sobre solicitud de visitas por parte de internos.', '12');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area) Values (211, 'Numero de exámenes a que han estado sometidos sus integrantes, causas y resultados.', '12');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (1, 'Situación y estado del centro', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (2, 'Fecha de creación', 1,'CALENDAR');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (3, 'Instalaciones. Descripción de las mismas', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (4, 'Disponibilidad de accesos para personas con movilidad reducida', 1,'CHECKBOXSINO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (5, 'Capacidad, diferenciando por sexos.', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (6, 'Numero de módulos destinados al alojamiento de hombres', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (7, 'Número de módulos destinados al alojamiento de mujeres', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (8, 'Número de alojamientos para unidades familiares.', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (9, 'Número de módulos independientes. Dimensiones.', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (10, 'Número de habitaciones para llevar a cabo la separación preventiva.', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (11, 'Numero de dependencias y descripción de las mismas, destinadas a alojar a internos, que aun no necesitando atención hospitalaria, por las características de la enfermedad física o psíquica aconseje su separación del resto de los internos', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (12, 'Instalaciones que se utilizan para el alojamiento de internados en virtud del art.89.8 del C.P', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (13, 'Como se consigue la intimidad necesaria para los internos', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (14, 'Espacios para el esparcimiento y recreo. Descripción', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (15, 'Espacio para almacenamiento de equipajes. Caja fuerte. Capacidad', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (16, 'Almacén de equipos básicos de higiene diaria. Descripción', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (17, 'Número de teléfonos públicos para uso de los internos.', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (18, 'Locutorios para abogados y sala de visita', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (19, 'Carteles Informativos. Horarios/Zona Videovigilada', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (20, 'Limpieza: Empresa, número de personal, horario, horario en los servicios de 24 horas, grado de satisfacción, incidencias', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (21, 'Ascensores. Número de ellos y ubicación', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (22, 'Montacargas. Número de ellos y peso máximo', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (23, 'Alta Tensión. Centros de transformación, centrales eléctricas o subestaciones', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (24, 'Baja Tensión. Cuadros eléctricos', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (25, 'Grupos electrógenos', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (26, 'Sistema de Alimentación Ininterrumpida (S.A.I.)/Baterías de acumuladores', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (27, 'Calderas de calefacción y ACS', 1,'CHECKBOXSINO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (28, 'Aire acondicionado y/o ventilación forzada', 1,'CHECKBOXSINO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (29, 'Aparatos a presión (compresores)', 1,'CHECKBOXSINO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (30, 'Depósitos de  Combustibles gaseosos.', 1,'CHECKBOXSINO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (31, 'Combustibles gaseosos.', 1,'CHECKBOXSINO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (32, 'Prevención/control Legionelosis', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (33, 'Libro del edificio', 1,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (34, 'Libros de mantenimiento de cada una de las instalaciones, con sus informes, actas, etc. correspondientes a las operaciones de mantenimiento, revisiones e inspecciones.', 1,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (35, 'PCI. Central de alarmas ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (36, 'PCI Sistemas automáticos de detección y alarma de incendios ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (37, 'PCI Sistemas  manuales (pulsadores) de alarma de incendio ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (38, 'PCI Sirenas de alarma y megafonía ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (39, 'PCI Señalización de equipos contra incendios (de BIE,s, extintores, dirección evacuación, etc.) ', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (40, 'PCI Número de extintores portátiles ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (41, 'PCI Número de bocas de Incendio Equipadas (BIE,s) ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (42, 'PCI Sistema fijo de extinción. Agua. Gas. Espuma', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (43, 'PCI Sistema de abastecimiento de agua. ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (44, 'PCI Hidrantes exteriores ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (45, 'PCI Columnas secas ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (46, 'PCI Alumbrado de emergencias ', 1,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (47, 'PCI Otros ', 1,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (48, 'Plan de Emergencia/ Plan de Autoprotección ', 1,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (49, 'Estructura orgánica', 2,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (50, 'Catálogo de puestos de trabajo personal CNP. Tiempo promedio en el destino.', 2,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (51, 'Catálogo de puestos de trabajo funcionarios Administración General del Estado. Tiempo promedio en el destino.', 2,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (52, 'Catálogo de puestos de trabajo personal laboral. Tiempo promedio en el destino.', 2,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (53, 'Otro personal. Tipo de contratación y requisitos exigidos.', 2,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (54, 'Horarios de trabajo', 2,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (55, 'Número de actividades formativas dirigidas al personal del CNP y resto de funcionarios y empleados públicos, diferenciando las referidas a derechos humanos, régimen de extranjería, seguridad y enfoque de género y violencia contra las mujeres, con expresión de número de participantes en cada una de ellas, así como personal o institución que las impartió', 2,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (56, 'Número de actividades formativas dirigidas al personal no incluido en el párrafo anterior, con expresión de número de participantes en cada una de ellas, así como personal o institución que las impartió', 2,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (57, 'Inventario de recursos materiales, con expresión de fecha de adjudicación o reposición y estado de conservación.', 3,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (58, 'Libros en poder del Centro y fecha de diligencia de cada uno de ellos', 4,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (59, 'Copia del nombramiento del Director', 5,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (60, 'Periodos de sustitución y motivo', 5,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (61, 'Número de respuestas a escritos, quejas y peticiones de los internos o remitidas a la autoridad competentes', 5,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (62, 'Número de reservas de plazas aceptadas o denegadas', 5,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (63, 'Visitas fuera de horarios, autorizadas y causas', 5,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (64, 'Iniciativas trasladadas a superiores', 5,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (65, 'Normas de régimen interior y, en su caso,  modificaciones', 5,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (66, 'Número de entrevistas personales de internos con el director.', 5,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (67, 'Medidas a imponer a los internos que incumplan las normas', 5,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (68, 'Número de reconocimientos médicos ordenados por causas de salud colectiva', 5,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (69, 'Cómo se efectúa el control sobre la custodia y cumplimentación de los libros', 5,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (70, 'Número de reuniones de seguimiento de la gestión entre Comisaria General de extranjería y Fronteras, con directores e instituciones. Remitir actas.', 5,'TEXTAREA+ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (71, 'Número de visitas del Juez competente, especificando los motivos.  ', 5,'TEXTAREA ');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (72, 'Número de inspecciones, con inclusión de fechas, distinguiendo las llevadas a cabo por la autoridad judicial, el CNP, u otros organismos. ', 5,'TEXTAREA ');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (73, 'Datos anuales publicados por la Comisaría General de Extranjería y Fronteras.', 5,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (74, 'Composición de la junta de coordinación.', 6,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (75, 'Normas de funcionamiento.', 6,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (76, 'Remitir actas de reuniones ordinarias o extraordinarias.', 6,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (77, 'Normas de régimen interior.', 6,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (78, 'Directrices e instrucciones sobre organización de los distintos servicios.', 6,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (79, 'Criterios de actuación en cuestiones de alteración del orden, o   incumplimiento de normas.', 6,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (80, 'Sobre peticiones y quejas', 6,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (81, 'Estructura orgánica', 7,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (82, 'Copia del nombramiento del Jefe de la Unidad de Seguridad', 7,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (83, 'Catálogo de puestos de trabajo personal CNP', 7,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (84, 'Criterios de selección', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (85, 'Horarios de trabajo', 7,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (86, 'Directrices de organización', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (87, 'Número de atestados instruidos', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (88, 'Relación de objetos prohibidos intervenidos a internos y destino dados a los mismos ', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (89, 'Relación de objetos no autorizados intervenidos a internos', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (90, 'Custodia y depósito en caja fuerte de objetos de valor y dinero. Procedimiento.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (91, 'Relación de objetos prohibidos intervenidos a visitantes', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (92, 'Relación  de objetos no autorizados intervenidos a visitantes', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (93, 'Control de seguridad al que se somete la correspondencia recibida o remitida.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (94, 'Número de registros de correspondencia autorizadas por la autoridad judicial.', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (95, 'Control de seguridad al que se somete la paquetería recibida.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (96, 'Número de paquetería devuelta por falta de autorización a su apertura.', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (97, 'Número de objetos intervenidos en paquetería y destinos dado a los mismos.', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (98, 'Detalle de instrumentos de control instalados, con expresión de clase, y ubicación (cámaras, arcos detectores, etc.).', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (99, 'Destino dado a las grabaciones y tiempo de permanencia.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (100, 'Número de incautaciones de medios de captación de imágenes', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (101, 'Número de borrados de imágenes', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (102, 'Enumerar lugares donde se presta servicio sin armas de fuego', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (103, 'Número de inspecciones y registros en las instalaciones de uso común.', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (104, 'Número de ocasiones en que, por razón de urgencia, se han adoptados medidas tendentes a restablecer y asegurar el orden', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (105, 'Número de ocasiones en que se ha dado cuenta al director del incumplimiento  de las normas de régimen interior', 7,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (106, 'Número de inspecciones y registros en las instalaciones destinadas a dormitorios de los internos, ropas y enseres de los mismos, indicando las causas y resultado de las mismas.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (107, 'Número de registros personales de los internos, indicando cuales lo fueron mediante desnudo integral, las causas que motivaron los mismos, diferenciando los autorizados por el Director de aquellos otros autorizados por el Jefe de la Unidad de seguridad. Indicar funcionarios encargados de practicarlos y lugar donde se llevaron a cabo.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (108, 'Número de ocasiones en que ha sido necesario el empleo de medios de contención física personal, especificando en que han consistido y causa que las hayan motivado. Separar las que se han tomado previa notificación escrita y aquellas, que por razón de urgencia se haya notificado verbalmente.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (109, 'Número de ocasiones en que ha sido necesaria la separación preventiva individual de algún interno, especificando su causa.', 7,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (110, 'Estructura.', 8,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (111, 'Copia del nombramiento del administrador', 8,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (112, 'Catálogo de puestos de trabajo', 8,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (113, 'Órganos administrativos.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (114, 'Órganos judiciales.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (115, 'El Ministerio Fiscal.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (116, 'El Defensor del Pueblo.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (117, 'El Director del Centro.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (118, 'Otros organismos', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (119, 'Número de solicitud de entrevistas personales con el Director.  ', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (120, 'Número de propuestas de alteración de horarios.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (121, 'Número de informes sobre deficiencias.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (122, 'Número de instrucciones recibidas del servicio sanitario respecto a la alimentación, limpieza y aseo.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (123, 'Medidas adoptadas en base a las creencias religiosas de los internos.', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (124, 'Medios destinados a facilitar la práctica de diferentes confesiones religiosas', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (125, 'Solicitudes de internos para entrar en contactos con ONG,s', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (126, 'Horario de visita a internos, lugar donde se llevan a cabo. Duración de las mismas. Limitaciones.', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (127, 'Como se aborda el problema de idioma de internos.', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (128, 'Número de ejemplares de libros que contiene la biblioteca. Indicar idioma de los mismos.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (129, 'Descripción de medios lúdicos instalados en la sala de estar.', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (130, 'Número de ejemplares de prensa diaria, con indicación de nombre e idioma de edición.', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (131, 'Horarios del centro, con especificación de actividades', 8,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (132, 'Numero de autorizaciones de dispositivos captadores de imágenes.', 8,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (133, 'Identificación de todas personas que prestan servicios en el centro', 8,'TABLA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (134, 'Estructura', 9,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (135, 'Copia del nombramiento del Secretario', 9,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (136, 'Catálogo de puestos de trabajo.', 9,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (137, 'Número de deficiencias o irregularidades apreciadas.', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (138, 'Número de trámites documentales con las Unidades policiales que gestionan los expedientes de extranjeros.', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (139, 'Número de trámites documentales con los juzgados competentes para el control de extranjeros internados.', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (140, 'Número de ingresos y reingresos diferenciados por sexos, meses y periodo de permanencia de  los internos, especificando los motivos. ', 9,'MATRIZINGRESOS');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (141, 'Número de salidas, diferenciadas por sexos, meses y periodo de permanencia de  los internos, especificando los motivos. ', 9,'TABLASALIDAS');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (142, 'A otros centros y de otros centro, especificando los motivos.', 9,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (143, 'Por comparecencias.', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (144, 'Por cuestiones médicas', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (145, 'Número de ceses de internamiento, especificando sus causas.', 9,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (146, 'Número de situaciones que se han producido en las cuales no se pueda llevar a efecto la expulsión de un interno por el art. 89.8 del CP.', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (147, 'Número de reingresos por no poderse llevar a cabo la expulsión, devolución o regreso.', 9,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (148, 'Tratamiento de los datos de carácter personal en los expedientes', 9,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (149, 'Información sobre derechos y obligaciones del nuevo interno. Boletín Informativo.', 9,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (150, 'Médico de la administración, responsable del servicio de Asistencia sanitaria.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (151, 'Número de ATS/Diplomado/Graduado Universitario.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (152, 'Alimentación.', 10,'INPUT+ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (153, 'Aseo de los internos, sus ropas y pertenencias.', 10,'INPUT+ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (154, 'Higiene, calefacción, iluminación, y ventilación de las dependencias.', 10,'INPUT+ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (155, 'Controles periódicos de salubridad.', 10,'INPUT+ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (156, 'Prevención de epidemias y medidas de aislamiento de pacientes infecto-contagiosos', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (157, 'Entrega de elementos de aseo y abrigo', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (158, 'Número de actos médicos.', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (159, 'Número de actos de enfermería.', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (160, 'Servicio sanitario. Descripción de las instalaciones. Capacidad.  Material del que dispone. Capacidad para atender urgencias.', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (161, 'Convenios con otra Admón. pública para casos de hospitalización o especialidades.', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (162, 'Convenios con entidades privadas para casos de hospitalización o especialidades. ', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (163, 'Numero de reconocimientos médicos mediante mandamiento judicial, por negación del interno.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (164, 'Numero de reconocimientos ordenados por el Director.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (165, 'Número de internos de ese Cie, hospitalizados.  ', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (166, 'Numero de partes de lesiones, por las producidas anteriores al ingreso, y que estuvieran descritas en el parte facultativo de lesiones que aportan los funcionarios que hacen entrega del interno.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (167, 'Numero de partes de lesiones, por las producidas anteriores al ingreso, y que no estuvieran descritas en el parte facultativo de lesiones que aportan los funcionarios que hacen entrega del interno.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (168, 'Número de reuniones entre la Comisaria General de Extranjería y Fronteras y representante de las entidades con las que se haya suscritos convenios de sanidad.', 10,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (169, 'Atención farmacéutica. En qué consiste y, cómo y dónde se almacenan los productos', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (170, 'Procedimiento para la solicitud de asistencia médica', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (171, 'Tratamiento de los datos de salud. En, su caso, Entidades concertadas', 10,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (172, 'Estructura ', 11,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (173, 'Número de trabajadores sociales.', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (174, 'Planes o proyectos de actuación presentados.', 11,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (175, 'Planes o proyectos de actuación aprobados. ', 11,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (176, 'Convenios con órganos de otros Ministerios, con entidades públicas y privadas y con ONG,s.', 11,'ADJUNTO');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (177, 'Entidades colaboradoras. Detallando la actividad que realiza cada una.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (178, 'Actividades llevadas a cabo. ', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (179, 'Formación en derechos humanos, extranjería, protección internacional, mediación intercultural y violencia de género. Numero de curso, jornadas, etc. que han recibido los trabajadores sociales.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (180, 'Convenios con colegios de abogados.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (181, 'Dependencias destinadas a asegurar la confidencialidad en la orientación jurídica.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (182, 'Número de entrevistas y comunicaciones con abogados y representantes diplomáticos y consulares.', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (183, 'Horarios de visitas.', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (184, 'Limitaciones establecidas para las visitas.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (185, 'Número de personas por visita.', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (186, 'Donde tienen lugar.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (187, 'Como se informa a los visitantes de las normas de régimen interior.', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (188, 'Número de personas que pueden simultanear la visita.', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (189, 'Comunicaciones telefónicas que se realizan al ingreso', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (190, 'Como se informa de su situación al interno y de las resoluciones administrativas y judiciales. ', 11,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (191, 'Números de casos de asistencia de intérprete', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (192, 'Plazo de entrevista con servicio de asistencia social interno nuevo', 11,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (193, 'Entidades colaboradoras. Detallando la actividad que realiza cada una.', 12,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (194, 'Numero de organizaciones que están autorizadas para realizar visitas al centro.', 12,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (195, 'Acreditaciones concedidas.', 12,'TEXTAREA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (196, 'Número de visitas de ONG,s.', 12,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (197, 'Número de comunicaciones a ONG,s sobre solicitud de visitas por parte de internos.', 12,'INPUT');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (198, 'Numero de exámenes a que han estado sometidos sus integrantes, causas y resultados.', 12,'INPUT');
 
 --Comienzo id en 41 debido a problema con las altas de nueva documentacion
 
@@ -547,3 +496,21 @@ Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTEN
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (60, 'Plan anual de la Unidad Orgánica de Policía Judicial vigente', '_PAUOPJ', 'PDF');
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (61, 'Organigrama de la Comandancia (Unidades Territoriales y Especialidades)', '_organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (62, 'Actas de las Juntas de Coordinación de 2015', '_AJC', 'PDF');
+
+
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('CHECKBOXSINO', 'NO');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('CHECKBOXSINO', 'SI');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('MATRIZINGRESOS', 'campo1#SEXO');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('MATRIZINGRESOS', 'campo2#MESES');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('MATRIZINGRESOS', 'campo3#PERIODOS');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('MATRIZINGRESOS', 'nombreFila#Fila 1');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('MATRIZINGRESOS', 'nombreFila#Fila 2');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('MATRIZINGRESOS', 'nombreFila#Fila 3');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLAPRUEBA', 'campo1#COLUMNA1');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLAPRUEBA', 'campo2#COLUMNA2');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLAPRUEBA', 'campo3#COLUMNA3');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo1#MESES');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo2#MOTIVOS');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo3#NUM_SALIDAS');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo4#MOTIVOS');
+insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo5#PRUEBA');

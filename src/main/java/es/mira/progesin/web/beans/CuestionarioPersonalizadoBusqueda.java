@@ -3,7 +3,7 @@ package es.mira.progesin.web.beans;
 import java.io.Serializable;
 import java.util.Date;
 
-import es.mira.progesin.persistence.entities.ModeloCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import lombok.Getter;
 import lombok.Setter;
 

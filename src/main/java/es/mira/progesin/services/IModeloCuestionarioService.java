@@ -2,8 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import es.mira.progesin.persistence.entities.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.PreEnvioCuest;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 
 public interface IModeloCuestionarioService {
 

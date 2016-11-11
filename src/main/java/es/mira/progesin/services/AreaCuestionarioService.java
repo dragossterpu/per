@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.persistence.entities.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 
 @Service
@@ -76,13 +76,4 @@ public class AreaCuestionarioService implements IAreaCuestionarioService {
 		return areaRepository.findByIdCuestionario(idCuestionario);
 	}
 
-	@Override
-	public String getNombreArea(Long idArea) {
-		String nombre = "";
-		AreasCuestionario area = findOne(idArea);
-		if (area != null) {
-			nombre = area.getArea();
-		}
-		return nombre;
-	}
 }

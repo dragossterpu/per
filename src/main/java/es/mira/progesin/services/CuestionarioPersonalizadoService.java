@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
 import es.mira.progesin.web.beans.CuestionarioPersonalizadoBusqueda;
 
