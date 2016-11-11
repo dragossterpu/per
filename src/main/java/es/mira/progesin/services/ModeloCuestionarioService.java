@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.persistence.entities.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.PreEnvioCuest;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreEnvioCuestionarioRepository;
 

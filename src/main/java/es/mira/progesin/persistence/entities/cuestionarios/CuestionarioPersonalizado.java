@@ -1,4 +1,4 @@
-package es.mira.progesin.persistence.entities;
+package es.mira.progesin.persistence.entities.cuestionarios;
 
 import java.io.Serializable;
 import java.util.Date;

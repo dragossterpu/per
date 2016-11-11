@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
-import es.mira.progesin.persistence.entities.AreasCuestionario;
-import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
-import es.mira.progesin.persistence.entities.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
@@ -103,36 +104,27 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		mapaRespuestasTabla = new HashMap<>();
 		List<PreguntasCuestionario> listaPreguntas;
 		for (PreguntasCuestionario pregunta : preguntas) {
-			AreasCuestionario a = pregunta.getArea();
 			listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
-			if (listaPreguntas != null) {
-				listaPreguntas.add(pregunta);
-				// mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
-				mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
-					construirTipoRespuestaTabla(pregunta);
-				}
-				else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
-					construirTipoRespuestaMatriz(pregunta);
-				}
-			}
-			else {
+			if (listaPreguntas == null) {
 				listaPreguntas = new ArrayList<>();
-				listaPreguntas.add(pregunta);
-				// mapaAreaPreguntas.put(pregunta.getIdArea(), listaPreguntas);
-				mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
-					construirTipoRespuestaTabla(pregunta);
-				}
-				else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
-					construirTipoRespuestaMatriz(pregunta);
-				}
+			}
+			listaPreguntas.add(pregunta);
+			mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
+			if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
+				construirTipoRespuestaTabla(pregunta);
+			}
+			else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
+				construirTipoRespuestaMatriz(pregunta);
 			}
 		}
-		// Set<Long> areasSet = mapaAreaPreguntas.keySet();
+
 		Set<AreasCuestionario> areasSet = mapaAreaPreguntas.keySet();
+
 		// JSF ui:repeat no funciona con Set
 		setAreas(new ArrayList<>(areasSet));
+
+		// Ordeno las áreas por su id para que aparezcan en el mismo orden que en el modelo
+		Collections.sort(areas, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
 
 		return "/cuestionarios/previsualizarEnvioCuestionario";
 	}
@@ -145,15 +137,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	public String enviar(CuestionarioPersonalizado cuestionario) {
 		System.out.println("enviar");
 		return null;
-	}
-
-	/**
-	 * Método usado del xhtml para obtener el nombre de las áreas
-	 * @param idArea
-	 * @return Nombre del área del cuestionario
-	 */
-	public String getNombreArea(Long idArea) {
-		return areaService.getNombreArea(idArea);
 	}
 
 	/**

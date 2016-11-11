@@ -1,4 +1,4 @@
-package es.mira.progesin.persistence.entities;
+package es.mira.progesin.persistence.entities.cuestionarios;
 
 import java.io.Serializable;
 import java.util.List;
@@ -42,9 +42,6 @@ public class ModeloCuestionario implements Serializable {
 
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
-
-	@Column(name = "extension", nullable = false, length = 4)
-	private String extension;
 
 	@Column(name = "nombre", nullable = false)
 	private String nombreFichero;

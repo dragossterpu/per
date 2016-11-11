@@ -2,7 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import es.mira.progesin.persistence.entities.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 
 public interface IAreaCuestionarioService {
 	void delete(Long id);
@@ -27,5 +27,4 @@ public interface IAreaCuestionarioService {
 
 	List<AreasCuestionario> findByIdCuestionario(Integer idCuestionario);
 
-	String getNombreArea(Long idArea);
 }

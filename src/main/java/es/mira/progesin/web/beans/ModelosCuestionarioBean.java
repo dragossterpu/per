@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Documento;
-import es.mira.progesin.persistence.entities.ModeloCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import lombok.Getter;
@@ -22,8 +21,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @Component("modelosCuestionarioBean")
-// @ApplicationScoped
-@SessionScoped
 public class ModelosCuestionarioBean {
 
 	private List<ModeloCuestionario> listadoCuestionarios;
@@ -47,12 +44,12 @@ public class ModelosCuestionarioBean {
 			if (documento != null) {
 				InputStream stream = new ByteArrayInputStream(documento.getFichero());
 				String contentType = "application/msword";
-				if ("pdf".equals(cuestionario.getExtension())) {
-					contentType = "application/pdf";
-				}
-				else if (cuestionario.getExtension().startsWith("xls")) {
-					contentType = "application/x-msexcel";
-				}
+				// if ("pdf".equals(cuestionario.getExtension())) {
+				// contentType = "application/pdf";
+				// }
+				// else if (cuestionario.getExtension().startsWith("xls")) {
+				// contentType = "application/x-msexcel";
+				// }
 				this.file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
 			}
 		}

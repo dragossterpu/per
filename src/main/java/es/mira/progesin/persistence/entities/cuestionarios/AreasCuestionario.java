@@ -1,14 +1,15 @@
-package es.mira.progesin.persistence.entities;
+package es.mira.progesin.persistence.entities.cuestionarios;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -17,19 +18,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
-@Table(name = "preguntascuestionario", schema = "public")
-public class PreguntasCuestionario implements Serializable {
-
+@Table(name = "areascuestionario")
+public class AreasCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,15 +35,17 @@ public class PreguntasCuestionario implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "pregunta", nullable = false, length = 2000)
-	private String pregunta;
+	@Column(name = "area", nullable = false)
+	private String area;
 
-	// private Long idArea;
+	private Integer idCuestionario;
 
-	@ManyToOne
-	@JoinColumn(name = "id_area")
-	private AreasCuestionario area;
+	@OneToMany(mappedBy = "area", fetch = FetchType.EAGER)
+	private List<PreguntasCuestionario> preguntas;
 
-	@Column(name = "tipo_respuesta", nullable = true, length = 100)
-	private String tipoRespuesta;
+	@Override
+	public String toString() {
+		return "AreasCuestionario [id=" + id + ", area=" + area + ", cuestionario=" + idCuestionario + "]";
+	}
+
 }

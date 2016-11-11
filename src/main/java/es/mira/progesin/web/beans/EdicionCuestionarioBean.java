@@ -13,10 +13,10 @@ import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.AreasCuestionario;
-import es.mira.progesin.persistence.entities.CuestionarioPersonalizado;
-import es.mira.progesin.persistence.entities.ModeloCuestionario;
-import es.mira.progesin.persistence.entities.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;

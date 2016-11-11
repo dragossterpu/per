@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import es.mira.progesin.persistence.entities.AreasCuestionario;
-import es.mira.progesin.persistence.entities.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 
 public interface IPreguntaCuestionarioRepository extends CrudRepository<PreguntasCuestionario, Long> {
 
