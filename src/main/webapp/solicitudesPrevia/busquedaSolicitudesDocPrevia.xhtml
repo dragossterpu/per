@@ -65,10 +65,10 @@
 					<p:commandButton
 						actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}"
 						value="Buscar" update="panelSolicitudes" icon="ui-icon-search" />
-					<p:commandButton
-						action="#{solicitudDocPreviaBean.getFormularioBusquedaSolicitudesDocPrevia}"
-						value="Limpiar" update="busquedaSolicitudDocPrevia"
-						icon="fa fa-fw fa-eraser" />
+					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.getFormularioBusquedaSolicitudesDocPrevia}">
+		            	<span class="ui-CommandLink-texto">Limpiar</span>
+		            </h:commandLink>	
+						
 				</div>
 
 				<p:outputPanel layout="block" id="panelSolicitudes">
@@ -131,10 +131,9 @@
 								action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
 						</p:column>
 						<p:column width="30" exportable="false">
-							<p:commandButton title="Modificar solicitud"
-								icon="fa fa-fw fa-edit"
-								action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}"
-								update="tablaSolicitudes" />
+							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes">
+				            	<span class="ui-CommandLink-texto">Modificar solicitud</span>
+				            </h:commandLink>	
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
