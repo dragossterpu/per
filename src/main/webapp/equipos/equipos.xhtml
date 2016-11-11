@@ -56,15 +56,15 @@
 						 <h:commandLink title="Limpiar" action="#{equiposBean.getFormularioBusquedaEquipos}" update="busquedaEquipos" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">Limpiar</span>
 						</h:commandLink>
-                		</div>
+                </div>
 						<p:separator title="Alta nuevo equipo" styleClass="separator ui-state-disabled"/>
-						<div class="botonesFormulario">
+				<div class="botonesFormulario">
 						 <h:outputText value="¿Equipo especial?: " />&nbsp;
         				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp; &nbsp; &nbsp;  
-					        <h:commandLink title="Nuevo equipo" action="#{equiposBean.nuevoEquipo}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto"/>>
+					        <h:commandLink title="Nuevo equipo" action="#{equiposBean.nuevoEquipo}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
 								<span class="ui-CommandLink-texto">Nuevo equipo</span>
 							</h:commandLink>
-						</div>
+				</div>
 					<p:outputPanel layout="block" id="panelEquipos" >
 		 				<p:outputPanel rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
 			 				<h:commandLink>
