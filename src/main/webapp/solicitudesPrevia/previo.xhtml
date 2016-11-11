@@ -48,7 +48,7 @@
 									        </p:selectOneMenu>
 
 									        <h:outputText for="anio" value="Año: *" style="font-weight: normal;"/>
-											<p:inputNumber value="#{solicitudDocPreviaBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="Año: *" maxValue="9999" />     
+											<p:inputNumber value="#{solicitudDocPreviaBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="Año: *" maxValue="9999" decimalSeparator="" thousandSeparator="" decimalPlaces="0" />     
 									        <h:outputText for="cuerpoEstado" value="Cuerpo estado	: *" style="font-weight: normal;"/>
 											<p:selectOneMenu id="cuerpoEstado" value="#{solicitudDocPreviaBean.cuerpoEstado}" effect="fold" width="50" 
 
