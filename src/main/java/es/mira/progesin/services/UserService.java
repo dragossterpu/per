@@ -106,7 +106,6 @@ public class UserService implements IUserService {
 		Criteria criteria = session.createCriteria(User.class);
 
 		if (userBusqueda.getFechaDesde() != null) {
-			// criteria.add(Restrictions.ge(FECHA_ALTA, userBusqueda.getFechaDesde()));
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
@@ -116,7 +115,6 @@ public class UserService implements IUserService {
 					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") >= '" + userBusqueda.getFechaDesde() + "'"));
 		}
 		if (userBusqueda.getFechaHasta() != null) {
-			// criteria.add(Restrictions.lt(FECHA_ALTA, userBusqueda.getFechaHasta()));
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
@@ -146,7 +144,6 @@ public class UserService implements IUserService {
 		if (userBusqueda.getEstado() != null) {
 			criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
 		}
-		criteria.add(Restrictions.not(Restrictions.in("role", RoleEnum.getRolesProv())));
 
 		criteria.add(Restrictions.isNull("fechaBaja"));
 		criteria.addOrder(Order.desc(FECHA_ALTA));
