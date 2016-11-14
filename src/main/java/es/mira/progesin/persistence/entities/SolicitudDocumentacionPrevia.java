@@ -9,6 +9,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -43,8 +45,13 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "asunto")
 	private String asunto;
 
+	// TODO Borrar este campo
 	@Column(name = "numeroReferencia")
 	private String numeroReferencia;
+
+	@ManyToOne
+	@JoinColumn(name = "id_inspeccion")
+	private Inspeccion inspeccion;
 
 	@Column(name = "destinatario")
 	private String destinatario;

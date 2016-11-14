@@ -1,5 +1,6 @@
 package es.mira.progesin.persistence.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -34,7 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 @Table(name = "EQUIPO", schema = "public")
 
-public class Equipo {
+public class Equipo implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ID_EQUIPO", length = 5)

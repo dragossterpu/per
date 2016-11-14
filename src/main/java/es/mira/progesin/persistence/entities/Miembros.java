@@ -34,7 +34,7 @@ public class Miembros {
 	private Integer id;
 
 	@Column(name = "ID_MIEMBROS", length = 5)
-	private Integer idMiembros;
+	private Integer idMiembros; // Esto en verdad es el id del equipo
 
 	@Column(name = "username")
 	private String username;

@@ -44,7 +44,7 @@
 									            <f:facet name="header">
 									                <h:outputText value="#{column.header}" />
 									            </f:facet>
-									            <p:inputText value="#{registroTabla[column.property]}" />
+									            <p:inputText value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"/>
 									        </p:columns>
 									        <f:facet name="footer">
 										        <p:commandButton value="Añadir fila" actionListener="#{cuestionarioPersonalizadoBean.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
@@ -62,7 +62,7 @@
 									            <f:facet name="header">
 									                <h:outputText value="#{column.header}" />
 									            </f:facet>
-									            <p:inputText value="#{registroTabla[column.property]}" />
+									            <p:inputText value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"/>
 									        </p:columns>
 						    			</p:dataTable>
 									</div>

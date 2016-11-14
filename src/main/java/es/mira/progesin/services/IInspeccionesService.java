@@ -1,13 +1,13 @@
 package es.mira.progesin.services;
 
-import es.mira.progesin.persistence.entities.Inspecciones;
+import es.mira.progesin.persistence.entities.Inspeccion;
 
 
 public interface IInspeccionesService {
 
-	public Inspecciones save(Inspecciones inspecciones);
+	public Inspeccion save(Inspeccion inspecciones);
 
-	public Iterable<Inspecciones> findAll();
+	public Iterable<Inspeccion> findAll();
 	
-	public void delete(Inspecciones inspecciones);
+	public void delete(Inspeccion inspecciones);
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import es.mira.progesin.persistence.entities.Inspecciones;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 
 @Service
@@ -14,19 +14,19 @@ public class InspeccionesService implements IInspeccionesService {
 	IInspeccionesRepository inspeccionesRepository;
 
 	@Override
-	public Iterable<Inspecciones> findAll() {
+	public Iterable<Inspeccion> findAll() {
 		return inspeccionesRepository.findAll();
 	}
 
 
 	@Override
-	public Inspecciones save(Inspecciones inspecciones) {
+	public Inspeccion save(Inspeccion inspecciones) {
 		return inspeccionesRepository.save(inspecciones);
 		
 	}
 
 	@Override
-	public void delete(Inspecciones inspecciones) {
+	public void delete(Inspeccion inspecciones) {
 		inspeccionesRepository.delete(inspecciones);
 		
 	}
