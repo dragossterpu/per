@@ -21,6 +21,13 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador de las operaciones relacionadas con los tipos de documentación necesarios para las solicitudes de
+ * documentación previas al envio de cuestionarios.
+ * 
+ * @author EZENTIS
+ * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
+ */
 @Setter
 @Getter
 @Component("tipoDocumentacionBean")
@@ -46,13 +53,22 @@ public class TipoDocumentacionBean implements Serializable {
 
 	/**
 	 * Método que nos lleva al listado de la documentacion. Se llama desde el menu lateral
-	 * @return
+	 * 
+	 * @author EZENTIS
+	 * @return vista documentacionPrevia
 	 */
 	public String tipoDocumentacionListado() {
 		listaTipoDocumentacion = tipoDocumentacionService.findAll();
 		return "/documentacionPrevia/documentacionPrevia";
 	}
 
+	/**
+	 * Método que elimina un tipo de documentación. Elimina el tipo de documentación y actualiza la lista de la vista
+	 * documentacionPrevia
+	 * 
+	 * @author EZENTIS
+	 * @param documentacion objeto tipo de documentacion a eliminar
+	 */
 	public void eliminarDocumentacion(TipoDocumentacion documentacion) {
 		tipoDocumentacionService.delete(documentacion.getIdTipoDocumento());
 		this.listaTipoDocumentacion = null;
@@ -65,6 +81,12 @@ public class TipoDocumentacionBean implements Serializable {
 
 	}
 
+	/**
+	 * Método que da de alta un nuevo tipo de documentación. Recupera del formulario altaTipoDocumentacion los campos
+	 * descripción, nombre y extensión, y muestra una ventana flotante con el mensaje resultado de la operación.
+	 * 
+	 * @author EZENTIS
+	 */
 	public void altaTipo() {
 		TipoDocumentacion documentacion = new TipoDocumentacion();
 		documentacion.setDescripcion(descripcionNuevo);
@@ -85,6 +107,13 @@ public class TipoDocumentacionBean implements Serializable {
 		// TODO generar alerta / notificación
 	}
 
+	/**
+	 * Método que guarda las modificaciones realizadas en caliente a un registro de la lista y cambia su estado a no
+	 * editable
+	 * 
+	 * @author EZENTIS
+	 * @param event evento disparado al pulsar el botón modificar edición
+	 */
 	public void onRowEdit(RowEditEvent event) {
 		TipoDocumentacion documentacion = (TipoDocumentacion) event.getObject();
 		tipoDocumentacionService.save(documentacion);
@@ -92,6 +121,12 @@ public class TipoDocumentacionBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 
+	/**
+	 * Método que cancela el estado de edición en caliente de un registro de la lista
+	 * 
+	 * @author EZENTIS
+	 * @param event evento disparado al pulsar el botón cancelar edición
+	 */
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
 				((TipoDocumentacion) event.getObject()).getDescripcion());
