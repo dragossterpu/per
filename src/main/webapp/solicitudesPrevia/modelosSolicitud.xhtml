@@ -15,8 +15,8 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					<p:dataTable id="tablaPreEnvioCuestionarios" var="cuestionario"  rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
-					value="#{solicitudDocPreviaBean.listadoPreEnvioCuestionarios}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
+					<p:dataTable id="tablaModelosSolicitud" var="modeloSolicitud"  rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
+					value="#{solicitudDocPreviaBean.listadoModelosSolicitud}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{solicitudDocPreviaBean.onRowEdit}"
 							update=":form:msgs" />
 						<p:ajax event="rowEditCancel" listener="#{solicitudDocPreviaBean.onRowCancel}"
@@ -25,37 +25,37 @@
 						<p:column headerText="Descripción">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{cuestionario.descripcion}"/>
+									<h:outputText value="#{modeloSolicitud.descripcion}"/>
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText id="cuestionarioInput" value="#{cuestionario.descripcion}" converter="#{trimConverter}" required="true"
+									<p:inputText id="modeloSolicitudInput" value="#{modeloSolicitud.descripcion}" converter="#{trimConverter}" required="true"
 										requiredMessage="La solicitud no puede estar vacía" />
-									<p:messages for="cuestionarioInput" autoUpdate="true"  closable="true"/>
+									<p:messages for="modeloSolicitudInput" autoUpdate="true"  closable="true"/>
 								</f:facet>
 							</p:cellEditor> 
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(cuestionario)}" title="Descargar modelo">
+							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(modeloSolicitud)}" title="Descargar modelo">
 								<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
 							</p:commandButton>
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<h:commandLink title="Completar cuestionario previo" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.enviarPreCuestionario(cuestionario)}" />
+							<h:commandLink title="Crear solicitud" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud(modeloSolicitud)}" />
 						</p:column> 
 				       <p:column style="width:30px">
 							<p:rowEditor editTitle="Editar descripción" saveTitle="Guardar" cancelTitle="Cancelar"/>
 						</p:column>
 						<p:column style="width:30px">
-							<p:commandButton title="Eliminar" icon="fa fa-trash"
-								actionListener="#{solicitudDocPreviaBean.eliminarPreEnvioCuestionario(cuestionario)}"
-								update="tablaPreEnvioCuestionarios">
-								<p:confirm header="Eliminar cuestionario"
-									message="¿Está seguro que desea eliminar esta solicitud de cuestionario?"
+							<p:commandButton title="Eliminar modelo" icon="fa fa-trash"
+								actionListener="#{solicitudDocPreviaBean.eliminarModeloSolicitud(modeloSolicitud)}"
+								update="tablaModelosSolicitud">
+								<p:confirm header="Eliminar modelo de solicitud"
+									message="¿Está seguro que desea eliminar este modelo de solicitud de documentación previa?"
 									icon="fa fa-warning-sign" />
 							</p:commandButton>
 						</p:column>
 						<f:facet name="footer">
-		       				 Hay: #{fn:length(solicitudDocPreviaBean.listadoPreEnvioCuestionarios)} solicitudes de cuestionario.
+		       				 Hay: #{fn:length(solicitudDocPreviaBean.listadoModelosSolicitud)} modelos.
 		    			</f:facet>
 					</p:dataTable>
 							<p:confirmDialog global="true">
@@ -71,7 +71,7 @@
 				</h:form>
 			</div>
 			<div class="botonesFormulario">
-				<p:button value="Nuevo modelo solicitud de Cuestionario" outcome="/solicitudesPrevia/altaPreEnvioCuestionario" icon="fa fa-fw fa-user-plus"/>
+				<p:button value="Nuevo modelo de solicitud" outcome="/solicitudesPrevia/altaModeloSolicitud" icon="fa fa-fw fa-user-plus"/>
 			</div>			
 		</ui:define>
 	</ui:composition>

@@ -25,8 +25,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "preEnvioCuestionarios", schema = "public")
-public class PreEnvioCuest implements Serializable {
+@Table(name = "modelosSolicitud", schema = "public")
+public class ModeloSolicitud implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class PreEnvioCuest implements Serializable {
 	@Column(name = "codigo", nullable = false)
 	private String codigo;
 
-	@Column(name = "descipcion", nullable = false)
+	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
 	@Column(name = "extension", nullable = false, length = 4)

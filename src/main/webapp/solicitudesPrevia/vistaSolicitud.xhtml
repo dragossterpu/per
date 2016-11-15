@@ -13,7 +13,7 @@
 
 		<h3>Solicitud documentación previa cuestionario</h3>
 		<div class="bloqueVistaTitulo">	
-			<h4>Nombre Cuestionario </h4>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+			<h4>Nombre Solicitud </h4>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreSolicitud}
 		</div>
 		
 			
@@ -132,27 +132,20 @@
 							</p:dataTable>	
 						</h:form>
 					</div>
-	</p:outputPanel>	
-
-					<div class="botonesFormulario">
-						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
-					</div>
+	</p:outputPanel>
 
 					
 					
-					<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
+					<p:outputPanel>
 					<div class="botonesFormulario">				        						
-						<p:commandButton actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
-						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}" actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('EQUIPO_INSPECCIONES,ADMIN') and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud sin aprobación del jefe de inspecciones" icon="fa fa-fw fa-envelope-o"/>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-envelope-o"/>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check"/>
+						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>
 					
-						<p:outputPanel rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }">
-						<div class="botonesFormulario">				        						
-							<p:commandButton actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-user-plus"/>
-							<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
-						</div>
-						</p:outputPanel>
 
 					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 						<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />

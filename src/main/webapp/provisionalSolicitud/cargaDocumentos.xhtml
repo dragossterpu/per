@@ -13,7 +13,7 @@
 		<ui:define name="content">
 <h3>Adjuntar documentos solicitud </h3>
 		<div class="bloqueVistaTitulo">	
-			<h4>Nombre Cuestionario </h4>#{provisionalBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+			<h4>Nombre Cuestionario </h4>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreSolicitud}
 		</div>
 						<div class="aclaraciones">
 						Se puede cargar uno o varios documentos
@@ -22,16 +22,16 @@
 
 				<h:form id="formAlta">
 					 
-					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalSolicitudBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
 			         sizeLimit="100000000"  update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" />			 			   					   		 
 			   		
 					
 					<p:outputPanel id="panelAdjuntos">
 						<p:dataTable id="tablaDocumentos" var="documento"
-							value="#{provisionalBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
-							<p:ajax event="rowEdit" listener="#{provisionalBean.onRowEdit}"
+							value="#{provisionalSolicitudBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+							<p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}"
 								update=":formAlta:msgs" />
-							<p:ajax event="rowEditCancel" listener="#{provisionalBean.onRowCancel}"
+							<p:ajax event="rowEditCancel" listener="#{provisionalSolicitudBean.onRowCancel}"
 								update=":formAlta:msgs" />
 	
 							<p:column headerText="Documentos">
@@ -52,7 +52,7 @@
 							</p:column>
 							<p:column style="width:30px">
 								<p:commandButton title="Eliminar" icon="fa fa-trash"
-									actionListener="#{provisionalBean.eliminarDocumento(documento)}"
+									actionListener="#{provisionalSolicitudBean.eliminarDocumento(documento)}"
 									update=":formAlta:panelAdjuntos tablaDocumentos">
 									<p:confirm header="Eliminar documento"
 										message="¿Está seguro que desea eliminar este documento?"
@@ -60,8 +60,8 @@
 								</p:commandButton>
 							</p:column>
 							<p:column styleClass="botonTabla">
-								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalBean.descargarFichero(documento)}" title="Descargar documento">
-									<p:fileDownload value="#{provisionalBean.file}" />
+								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento)}" title="Descargar documento">
+									<p:fileDownload value="#{provisionalSolicitudBean.file}" />
 								</p:commandButton>
 							</p:column>
 							
@@ -76,7 +76,7 @@
 						</div>
 					</p:confirmDialog>
 					<div class="botonesFormulario">
-						<p:button outcome="/provisional/provisional" value="Volver" icon="fa fa-fw fa-undo"/>
+						<p:button outcome="/provisionalSolicitud/provisionalSolicitud" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 
 					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />

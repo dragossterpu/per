@@ -12,9 +12,9 @@
 
 			<h3>Alta de documentación</h3>
 
-			<div class="bloqueFormulario" style="width: 50%">
+			<div class="bloqueFormulario">
 				<h:form id="form">
-				
+				 <div style="margin: auto; width: 50%">
 					<h:outputLabel for="descripcion" value="Descripcion del tipo de documento (*):" />
 					<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
 					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
@@ -26,7 +26,7 @@
 					<h:outputLabel for="extension" value="Extensión del tipo de documento (*):" />
 					<p:inputText id="extension" value="#{tipoDocumentacionBean.extensionNuevo}" required="true" requiredMessage="Introduzca la extensión del documento" converter="#{trimConverter}"/>
 					<p:messages for="extension" autoUpdate="true"  closable="true"/>
-					
+					</div>
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save"/>
 						<p:button outcome="/documentacionPrevia/documentacionPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>

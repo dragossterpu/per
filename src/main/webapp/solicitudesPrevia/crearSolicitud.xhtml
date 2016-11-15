@@ -64,10 +64,10 @@
 											<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio un cuartrimestre" label="Carácter inspección: *"/>
 											
 											<h:outputText for="fechaAntes" value="Fecha límite envío documentación: *" style="font-weight: normal;"/>
-											<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" label="Fecha límite envío documentación: *"/>
+											<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" mindate="#{solicitudDocPreviaBean.fechaActual}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" label="Fecha límite envío documentación: *"/>
 											
 											<h:outputText for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario: *" style="font-weight: normal;"/>
-											<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" label="Fecha límite cumplimentar cuestionario: *"/>					
+											<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" mindate="#{solicitudDocPreviaBean.fechaActual}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" label="Fecha límite cumplimentar cuestionario: *"/>					
 							        </h:panelGrid>
 	            				</p:panel>
 							</p:tab>
@@ -126,14 +126,14 @@
                     				 </h:panelGrid>
                 					</h:panelGrid>
 									<div class="botonesFormulario">				        
-										<p:commandButton actionListener="#{solicitudDocPreviaBean.executeSolicitud}" value="Crear solicitud documentación previa" icon="fa fa-fw fa-user-plus"/>
-										<p:button outcome="/solicitudesPrevia/preEnvioCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+										<p:commandButton actionListener="#{solicitudDocPreviaBean.crearSolicitud}" value="Crear solicitud documentación previa" icon="fa fa-fw fa-user-plus"/>
+										<p:button outcome="/solicitudesPrevia/modelosSolicitud" value="Cancelar" icon="fa fa-fw fa-undo"/>
 									</div>
 									<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-										<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/preEnvioCuestionarios')}" />
+										<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
 										<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 										<div class="centrarBotonesDialog">
-											<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/preEnvioCuestionarios')}" />
+											<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
 										</div>
 									</p:dialog>
 							</p:panel>

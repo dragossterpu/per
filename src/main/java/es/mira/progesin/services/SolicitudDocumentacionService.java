@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
+import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 @Service
@@ -25,24 +27,17 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	@Autowired
 	ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
 
+	@Autowired
+	IUserRepository userRepository;
+
 	@Override
-	public SolicitudDocumentacionPrevia savePrevia(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
+	public SolicitudDocumentacionPrevia save(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
 		return solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
 	}
 
 	@Override
-	public List<SolicitudDocumentacionPrevia> findAllPrevia() {
-		return solicitudDocumentacionPreviaRepository.findAll();
-	}
-
-	@Override
-	public List<SolicitudDocumentacionPrevia> findAllPreviaEnvio() {
-		return solicitudDocumentacionPreviaRepository.findByFechaValidApoyoIsNotNull();
-	}
-
-	@Override
-	public List<SolicitudDocumentacionPrevia> findAllFinalizadas() {
-		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNotNull();
+	public List<SolicitudDocumentacionPrevia> findAll() {
+		return (List<SolicitudDocumentacionPrevia>) solicitudDocumentacionPreviaRepository.findAll();
 	}
 
 	@Override
@@ -119,6 +114,38 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 
 		return listaSolicitudesDocPrevia;
 
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+			User usuarioProv) {
+		boolean result = false;
+		try {
+			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+			userRepository.save(usuarioProv);
+			result = true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+			String usuarioProv) {
+		boolean result = false;
+		try {
+			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+			userRepository.delete(usuarioProv);
+			result = true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
 	}
 
 }

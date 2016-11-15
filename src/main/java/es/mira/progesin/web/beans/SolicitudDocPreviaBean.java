@@ -31,8 +31,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.ModeloSolicitud;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.PreEnvioCuest;
 import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
@@ -42,7 +42,8 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.services.IModeloCuestionarioService;
+import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.IModeloSolicitudService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
@@ -55,11 +56,18 @@ import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador de las operaciones relacionadas con las solicitudes de documentación previas al envio de cuestionarios.
+ * Carga de nuevos modelos de solicitud, creación de solicitudes, validación por parte de apoyo, envío a la unidad en
+ * cuestión, cumplimentación por parte de ésta y finalización de las mismas.
+ * 
+ * @author EZENTIS
+ * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
+ */
 @Setter
 @Getter
 @Component("solicitudDocPreviaBean")
 @SessionScoped
-
 public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -86,9 +94,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
-	private static final String PREVIO = "/solicitudesPrevia/previo";
-
-	private static final String PREENVIO = "/solicitudesPrevia/preenvio";
+	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
 	@Autowired
 	IRegActividadService regActividadService;
@@ -97,17 +103,15 @@ public class SolicitudDocPreviaBean implements Serializable {
 	transient INotificacionService notificacionService;
 
 	@Autowired
-	transient IModeloCuestionarioService modeloCuestionarioService;
+	transient IModeloSolicitudService modeloSolicitudService;
 
 	private transient UploadedFile ficheroNuevo;
 
-	transient List<PreEnvioCuest> listadoPreEnvioCuestionarios;
+	transient List<ModeloSolicitud> listadoModelosSolicitud;
 
-	String nombreCuestionarioPrevio;
+	String nombreSolicitud;
 
 	transient List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
-
-	transient List<SolicitudDocumentacionPrevia> listaSolicitudesFinalizadas;
 
 	private List<Boolean> list;
 
@@ -148,26 +152,19 @@ public class SolicitudDocPreviaBean implements Serializable {
 	transient IUserService userService;
 
 	@Autowired
+	transient IDocumentoService documentoService;
+
+	@Autowired
 	private transient PasswordEncoder passwordEncoder;
 
 	/**
-	 * @param
-	 * @comment Metodo que crea una solicitud de documentacion
-	 * @author EZENTIS STAD
-	 * @return vista
+	 * Método que crea una solicitud de documentación en base a un modelo y los datos introducidos en el formulario de
+	 * la vista crearSolicitud.
+	 * 
+	 * @author EZENTIS
+	 * @return vista modelosSolicitud
 	 */
-	public String creaCuestionario() {
-		return PREENVIO;
-
-	}
-
-	/**
-	 * @param
-	 * @comment Metodo que crea una solicitud de documentacion
-	 * @author EZENTIS STAD
-	 * @return vista
-	 */
-	public String executeSolicitud() {
+	public String crearSolicitud() {
 		this.fechaAntes = null;
 		this.fechaLimite = null;
 
@@ -177,11 +174,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 			solicitudDocumentacionPrevia.setIdentificadorTrimestre(
 					solicitudDocumentacionPrevia.getIdentificadorTrimestre() + " del año " + anio);
-			solicitudDocumentacionPrevia.setNombreCuestionarioPrevio(nombreCuestionarioPrevio);
+			solicitudDocumentacionPrevia.setNombreSolicitud(nombreSolicitud);
 			solicitudDocumentacionPrevia.setFechaAlta(new Date());
 			solicitudDocumentacionPrevia
 					.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				RequestContext context = RequestContext.getCurrentInstance();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
 						"La solicitud de documentación ha sido creada con éxito");
@@ -189,7 +186,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 				context.execute(dialogMessage);
 			}
 			altaDocumentos();
-			String descripcion = "Solicitud documentación cuestionario. Usuario creación : "
+			String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
 					+ SecurityContextHolder.getContext().getAuthentication().getName();
 			// Guardamos la actividad en bbdd
 			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
@@ -201,19 +198,18 @@ public class SolicitudDocPreviaBean implements Serializable {
 			this.solicitudDocumentacionPrevia = null;
 		}
 		catch (Exception e) {
-			// Guardamos loe posibles errores en bbdd
+			// Guardamos los posibles errores en bbdd
 			altaRegActivError(e);
 		}
-		return "solicitudesPrevia/preEnvioCuestionarios";
+		return "solicitudesPrevia/modelosSolicitud";
 
 	}
 
 	/**
-	 * @param
-	 * @see executeSolicitud()
-	 * @comment Metodo que muestra el mensaje para quien es dirigida la solicitud
-	 * @author EZENTIS STAD
-	 * @return
+	 * Método que muestra el mensaje para quien está dirigida la solicitud.
+	 * 
+	 * @author EZENTIS
+	 * @see #crearSolicitud()
 	 */
 	private void dirigido() {
 		if ("GC".trim().equals(cuerpoEstado)) {
@@ -229,37 +225,35 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @param
-	 * @see executeSolicitud()
-	 * @comment Metodo para obtener los datos del jefe del equipo de apoyo
-	 * @author EZENTIS STAD
-	 * @return
+	 * Método para obtener los datos del jefe del equipo de apoyo.
+	 * 
+	 * @author EZENTIS
+	 * @see #crearSolicitud()
 	 */
 	private void datosApoyo() {
 		if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
-				|| solicitudDocumentacionPrevia.getApoyoCorreo().trim().equals("")) {
+				|| "".equals(solicitudDocumentacionPrevia.getApoyoCorreo().trim())) {
 			solicitudDocumentacionPrevia.setApoyoCorreo("mmayo@interior.es");
 		}
 		if (solicitudDocumentacionPrevia.getApoyoNombre() == null
-				|| solicitudDocumentacionPrevia.getApoyoNombre().trim().equals("")) {
+				|| "".equals(solicitudDocumentacionPrevia.getApoyoNombre().trim())) {
 			solicitudDocumentacionPrevia.setApoyoNombre("Manuel Mayo Rodríguez");
 		}
 		if (solicitudDocumentacionPrevia.getApoyoPuesto() == null
-				|| solicitudDocumentacionPrevia.getApoyoPuesto().trim().equals("")) {
+				|| "".equals(solicitudDocumentacionPrevia.getApoyoPuesto().trim())) {
 			solicitudDocumentacionPrevia.setApoyoPuesto("Inspector Auditor, Jefe del Servicio de Apoyo");
 		}
 		if (solicitudDocumentacionPrevia.getApoyoTelefono() == null
-				|| solicitudDocumentacionPrevia.getApoyoTelefono().trim().equals("")) {
+				|| "".equals(solicitudDocumentacionPrevia.getApoyoTelefono().trim())) {
 			solicitudDocumentacionPrevia.setApoyoTelefono("91.537.25.41");
 		}
 	}
 
 	/**
-	 * @param
-	 * @see executeSolicitud() //Indica que este metodo esta componente del metodo indicado
-	 * @comment Metodo que permite dar de alta los documentos selecionados
-	 * @author EZENTIS STAD
-	 * @return
+	 * Método que permite dar de alta los documentos seleccionados.
+	 * 
+	 * @author EZENTIS
+	 * @see #crearSolicitud()
 	 */
 	private void altaDocumentos() {
 
@@ -274,10 +268,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @comment Pasa los datos dela solicitud que queremos modificar al formulario de modificación para que cambien los
-	 * valores que quieran
+	 * Pasa los datos de la solicitud que queremos modificar al formulario de modificación para que cambien los valores
+	 * que quieran.
+	 * 
+	 * @author EZENTIS
 	 * @param solicitud recuperado del formulario
-	 * @author EZENTIS STAD
 	 * @return vista modificarSolicitud
 	 */
 	public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
@@ -286,10 +281,13 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que permite visualizar una solicitud creada
-	 * @author EZENTIS STAD
-	 * @return vista visualizarSolicitud
+	 * Método que permite visualizar una solicitud creada, muestra su información y dependiendo del estado en que se
+	 * encuentre permite pasar al siguiente estado si se tiene el rol adecuado. Posibles estados: alta, validada por
+	 * apoyo, enviada, cumplimentada y finalizada
+	 * 
+	 * @author EZENTIS
+	 * @param solicitud
+	 * @return vista vistaSolicitud
 	 */
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		try {
@@ -311,65 +309,67 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que permite al equipo de apoyo validar la solicitud de documentacion
-	 * @author EZENTIS STAD
-	 * @return vista previo
+	 * Método que permite al equipo de apoyo validar la solicitud de documentación
+	 * 
+	 * @author EZENTIS
+	 * @return vista vistaSolicitud
 	 */
 	public String validacionApoyo() {
 		solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
 		solicitudDocumentacionPrevia
 				.setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
-		if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+		if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
 					"Se ha validado con éxito la solicitud de documentación");
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 			context.execute(dialogMessage);
 		}
-		return PREVIO;
+		return VISTASOLICITUD;
 	}
 
 	/**
-	 * @param cuestionario
-	 * @comment Metodo que envia una solicitud de documentacion
-	 * @author EZENTIS STAD
-	 * @return vista previo
+	 * Método que carga el formulario para crear una solicitud basada en un modelo.
+	 * 
+	 * @author EZENTIS
+	 * @param modeloSolicitud
+	 * @return vista crearSolicitud
 	 */
-	public String enviarPreCuestionario(PreEnvioCuest cuestionario) {
+	public String getFormularioCrearSolicitud(ModeloSolicitud modeloSolicitud) {
 		this.anio = null;
 		this.documentosSelecionados = null;
 		this.cuerpoEstado = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-		nombreCuestionarioPrevio = cuestionario.getDescripcion();
+		nombreSolicitud = modeloSolicitud.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
-		return PREVIO;
+		return "/solicitudesPrevia/crearSolicitud";
 	}
 
 	/**
-	 * @param
-	 * @comment PostConstruct
-	 * @author EZENTIS STAD
-	 * @return
+	 * PostConstruct, inicializa el bean
+	 * 
+	 * @author EZENTIS
 	 */
 	@PostConstruct
 	public void init() {
 		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
-		nombreCuestionarioPrevio = null;
+		nombreSolicitud = null;
 		anio = null;
 		cuerpoEstado = null;
 		listaSolicitudesPrevia = new ArrayList<>();
 		// insertar();
-		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
+		listadoModelosSolicitud = modeloSolicitudService.findAll();
 
 	}
 
 	/**
-	 * @param cuestionario
-	 * @comment Metodo que permite insertar ficheros desde una ruta local
-	 * @author EZENTIS STAD
+	 * Método que permite insertar ficheros desde una ruta local. Utilizado para cargar los tipos de documentación
+	 * previa.
+	 * 
+	 * @author EZENTIS
+	 * @see #init()
 	 */
 	public void insertar() {
 		try {
@@ -382,16 +382,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 				// Obtiene el contenido del fichero en []bytes
 				byte[] data = Files.readAllBytes(fichero.toPath());
-				PreEnvioCuest cuestionario = new PreEnvioCuest();
-				cuestionario.setCodigo("codigo");
-				cuestionario.setDescripcion(
+				ModeloSolicitud modeloSolicitud = new ModeloSolicitud();
+				modeloSolicitud.setCodigo("codigo");
+				modeloSolicitud.setDescripcion(
 						fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
-				cuestionario.setNombreFichero(fichero.getName());
-				cuestionario.setExtension(
+				modeloSolicitud.setNombreFichero(fichero.getName());
+				modeloSolicitud.setExtension(
 						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
 				// Blob fichero = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
-				cuestionario.setFichero(data);
-				modeloCuestionarioService.savePre(cuestionario);
+				modeloSolicitud.setFichero(data);
+				modeloSolicitudService.save(modeloSolicitud);
 			}
 		}
 		catch (Exception e) {
@@ -400,21 +400,22 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * @param cuestionario
-	 * @comment Metodo que permite descargar el fichero selecionado
-	 * @author EZENTIS STAD
+	 * Método que permite descargar el fichero seleccionado.
+	 * 
+	 * @author EZENTIS
+	 * @param modeloSolicitud
 	 */
-	public void descargarFichero(PreEnvioCuest cuestionario) {
+	public void descargarFichero(ModeloSolicitud modeloSolicitud) {
 		try {
-			InputStream stream = new ByteArrayInputStream(cuestionario.getFichero());
+			InputStream stream = new ByteArrayInputStream(modeloSolicitud.getFichero());
 			String contentType = "application/msword";
-			if ("pdf".equals(cuestionario.getExtension())) {
+			if ("pdf".equals(modeloSolicitud.getExtension())) {
 				contentType = "application/pdf";
 			}
-			else if (cuestionario.getExtension().startsWith("xls")) {
+			else if (modeloSolicitud.getExtension().startsWith("xls")) {
 				contentType = "application/x-msexcel";
 			}
-			file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
+			file = new DefaultStreamedContent(stream, contentType, modeloSolicitud.getNombreFichero());
 		}
 		catch (Exception e) {
 			altaRegActivError(e);
@@ -422,9 +423,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
+	 * Método que permite el webFlow
+	 * 
+	 * @author EZENTIS
 	 * @param event
-	 * @comment Metodo que permite el webFlow
-	 * @author EZENTIS STAD
+	 * @return
 	 */
 	public String onFlowProcess(FlowEvent event) {
 		// cleanParam(event);
@@ -443,10 +446,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
 	/**
+	 * @author EZENTIS
 	 * @param descripcion
 	 * @param tipoReg
 	 * @param username
-	 * @see todos los metodos que guarda registro de actividad
+	 * @see #crearSolicitud()
 	 */
 	private void saveReg(String descripcion, String tipoReg, String username) {
 		regActividad.setTipoRegActividad(tipoReg);
@@ -458,10 +462,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
+	 * @author EZENTIS
 	 * @param descripcion
-	 * @param tipoReg
+	 * @param tipoNotificacion
 	 * @param username
-	 * @see todos los metodos que guarda notificaciones
+	 * @see #crearSolicitud()
 	 */
 	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
 		Notificacion notificacion = new Notificacion();
@@ -474,8 +479,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
+	 * Método que registra los errores generados por otros métodos
+	 * 
+	 * @author EZENTIS
 	 * @param e
-	 * @see todos los metodos que guarda errores
+	 * @see #altaModeloSolicitud
+	 * @see #descargarFichero(ModeloSolicitud)
+	 * @see #crearSolicitud()
+	 * @see #insertar()
+	 * @see #modificarSolicitud()
+	 * @see #visualizarSolicitud(SolicitudDocumentacionPrevia)
 	 */
 	private void altaRegActivError(Exception e) {
 		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
@@ -489,98 +502,103 @@ public class SolicitudDocPreviaBean implements Serializable {
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 
 	/**
-	 * @param cuestionario
-	 * @comment Metodo que elimina el cuestionario
-	 * @author EZENTIS STAD
+	 * Método que elimina un modelo de solicitud de documentación previa
+	 * 
+	 * @author EZENTIS
+	 * @param modeloSolicitud
 	 */
-	public void eliminarPreEnvioCuestionario(PreEnvioCuest cuestionario) {
-		modeloCuestionarioService.delete(cuestionario.getId());
-		this.listadoPreEnvioCuestionarios = null;
-		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
+	public void eliminarModeloSolicitud(ModeloSolicitud modeloSolicitud) {
+		modeloSolicitudService.delete(modeloSolicitud.getId());
+		this.listadoModelosSolicitud = null;
+		listadoModelosSolicitud = modeloSolicitudService.findAll();
 	}
 
 	/**
-	 * @param cuestionario
-	 * @comment Metodo que elimina la solicitud previa de documentacion
-	 * @author EZENTIS STAD
+	 * Método que elimina la solicitud de documentación previa
+	 * 
+	 * @author EZENTIS
+	 * @param solicitudDocumentacionPrevia solicitud a eliminar
 	 */
-	public void eliminarSolicitudCuestionario(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
+	public void eliminarSolicitudDocumentacion(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
 		solicitudDocumentacionService.delete(solicitudDocumentacionPrevia.getId());
 		this.listaSolicitudesPrevia = null;
-		listaSolicitudesPrevia = solicitudDocumentacionService.findAllPrevia();
+		listaSolicitudesPrevia = solicitudDocumentacionService.findAll();
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que da de alta el cuestionario
-	 * @author EZENTIS STAD
+	 * Método que da de alta un nuevo modelo de solicitud de documentación previa
+	 * 
+	 * @author EZENTIS
 	 */
-	public void altaPreEnvioCuestionario() {
+	public void altaModeloSolicitud() {
 		if (ficheroNuevo != null && !"".equals(ficheroNuevo.getFileName().trim())) {
 			try {
-				PreEnvioCuest cuestionario = new PreEnvioCuest();
-				cuestionario.setCodigo("codigo");
-				cuestionario.setFichero(ficheroNuevo.getContents());
-				cuestionario.setDescripcion(ficheroNuevo.getFileName()
+				ModeloSolicitud modeloSolicitud = new ModeloSolicitud();
+				modeloSolicitud.setCodigo("codigo");
+				modeloSolicitud.setFichero(ficheroNuevo.getContents());
+				modeloSolicitud.setDescripcion(ficheroNuevo.getFileName()
 						.substring(0, ficheroNuevo.getFileName().lastIndexOf('.')).toUpperCase());
-				cuestionario.setNombreFichero(ficheroNuevo.getFileName());
-				cuestionario.setExtension(ficheroNuevo.getFileName()
+				modeloSolicitud.setNombreFichero(ficheroNuevo.getFileName());
+				modeloSolicitud.setExtension(ficheroNuevo.getFileName()
 						.substring(ficheroNuevo.getFileName().lastIndexOf('.') + 1).toLowerCase());
 				// Obtiene el contenido del fichero en []bytes
-				cuestionario.setFichero(ficheroNuevo.getContents());
+				modeloSolicitud.setFichero(ficheroNuevo.getContents());
 
-				if (modeloCuestionarioService.savePreAlta(cuestionario) != null) {
+				if (modeloSolicitudService.save(modeloSolicitud) != null) {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-							"La solicitud de cuestionario ha sido creada con éxito");
+							"El modelo de solicitud de documentación ha sido creada con éxito");
 				}
 			}
 			catch (Exception e) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
-						"Se ha producido un error al dar de alta la solicitud de cuestionario, inténtelo de nuevo más tarde");
+						"Se ha producido un error al dar de alta el modelo de solicitud de documentación, inténtelo de nuevo más tarde");
 				altaRegActivError(e);
 			}
 
 		}
 		else {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta abortada",
-					"No se ha seleccionado un archivo al dar de alta la solicitud de cuestionario");
+					"No se ha seleccionado un archivo al dar de alta el modelo de solicitud de documentación");
 		}
-		listadoPreEnvioCuestionarios = modeloCuestionarioService.findAllPre();
+		listadoModelosSolicitud = modeloSolicitudService.findAll();
 
 	}
 
 	/**
-	 * @param event
-	 * @comment Metodo que permite editar en caliente un registro
+	 * Método que permite la edición en caliente de un registro
+	 * 
 	 * @author EZENTIS STAD
+	 * @param event evento disparado al pulsar el botón editar
 	 */
 	public void onRowEdit(RowEditEvent event) {
-		PreEnvioCuest cuestionario = (PreEnvioCuest) event.getObject();
-		modeloCuestionarioService.savePreAlta(cuestionario);
-		FacesMessage msg = new FacesMessage("Solicitud de cuestionario modificada", cuestionario.getDescripcion());
+		ModeloSolicitud modeloSolicitud = (ModeloSolicitud) event.getObject();
+		modeloSolicitudService.save(modeloSolicitud);
+		FacesMessage msg = new FacesMessage("Modelo de solicitud de documentación modificado",
+				modeloSolicitud.getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que anula la edicion en caliente un registro
-	 * @author EZENTIS STAD
+	 * Método que anula la edición en caliente de un registro
+	 * 
+	 * @author EZENTIS
+	 * @param event evento disparado al pulsar el botón cancelar edición
 	 */
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
-				((PreEnvioCuest) event.getObject()).getDescripcion());
+				((ModeloSolicitud) event.getObject()).getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que modifica los datos de la solicitud previa de cuestionario
-	 * @author EZENTIS STAD
+	 * Método que modifica los datos de la solicitud de documentación previa
+	 * 
+	 * @author EZENTIS
 	 */
 	public void modificarSolicitud() {
 		try {
 
-			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				RequestContext context = RequestContext.getCurrentInstance();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificación",
 						"La solicitud de documentación ha sido modificada con éxito");
@@ -591,56 +609,63 @@ public class SolicitudDocPreviaBean implements Serializable {
 			}
 		}
 		catch (Exception e) {
-			// Guardamos loe posibles errores en bbdd
+			// Guardamos los posibles errores en bbdd
 			altaRegActivError(e);
 		}
 
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que permite al jefe de equipo de inspeciones validar la solicitud de documentacion y enviarla
-	 * @author EZENTIS STAD
-	 * @return vista previo
+	 * Método que permite al jefe de equipo de inspecciones validar la solicitud de documentación y enviarla y dar de
+	 * alta un usuario provisional para que algún miembro de la unidad a inspeccionar la cumplimente.
+	 * 
+	 * @author EZENTIS
+	 * @return vista vistaSolicitud
 	 */
 	public String enviarSolicitud() {
+
+		String password = Utilities.getPassword();
+		User usuarioProv = userProvisionalSolicitud(password);
+
 		solicitudDocumentacionPrevia.setFechaEnvio(new Date());
 		solicitudDocumentacionPrevia.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
-		if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+
+		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+			System.out.println("Password usuario provisional  : " + password);
+
+			String asunto = "Usuario provisional solicitud documentación";
+			String correoEnvio = "dragossterpu@gmail.com";
+			String nombre = "Prueba";
+			String respuesta = "El password es :" + password;
+			try {
+				SendSimpleMail.sendMail(asunto, correoEnvio, nombre, respuesta);
+			}
+			catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
-					"Se ha validado con éxito la solicitud de documentación");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Envío",
+					"Se ha enviado con éxito la solicitud de documentación");
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 			context.execute(dialogMessage);
-			userProvisionalSolicitud();
 		}
-		return PREVIO;
+		return VISTASOLICITUD;
 	}
 
 	/**
-	 * @param
-	 * @param
-	 * @param
-	 * @see todos los metodos que guarda registro de actividad
+	 * Método que crea un usuario provisional al enviarse una solicitud de documentación previa, de forma que ésta pueda
+	 * ser cumplimentada. Sus credenciales son el correo electrónico como username y una contraseña generada
+	 * automáticamente. Dado que su rol es PROV_SOLICITUD, no se le permite alterar ningún dato de su perfil ni acceder
+	 * a otra acción que no sea la de cumplimentar la solicitud.
+	 * 
+	 * @author EZENTIS
+	 * @see #enviarSolicitud()
 	 */
-	private void userProvisionalSolicitud() {
+	private User userProvisionalSolicitud(String password) {
 		User user = new User();
 		user.setFechaAlta(new Date());
 		user.setUsername(solicitudDocumentacionPrevia.getCorreoDestiantario());
-		String password = Utilities.getPassword();
-		System.out.println("Password usuario provisional  : " + password);
-
-		String asunto = "Usuario provisional solicitud documentación";
-		String correoEnvio = "dragossterpu@gmail.com";
-		String nombre = "Prueba";
-		String respuesta = "El password es :" + password;
-		try {
-			SendSimpleMail.sendMail(asunto, correoEnvio, nombre, respuesta);
-		}
-		catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		user.setPassword(passwordEncoder.encode(password));
 		user.setEstado(EstadoEnum.ACTIVO);
 		user.setUsernameAlta(system);
@@ -651,29 +676,71 @@ public class SolicitudDocPreviaBean implements Serializable {
 		user.setRole(RoleEnum.PROV_SOLICITUD);
 		user.setNumIdentificacion(system);
 		user.setEnvioNotificacion("NO");
-		userService.save(user);
+		return user;
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que limpia y presenta el formulario de búsqueda de solicitudes previas de cuestionario
-	 * @author EZENTIS GR
+	 * Método que permite al jefe de inspecciones finalizar una solicitud de documentación ya cumplimentada, después de
+	 * revisar la documentación adjuntada por la unidad que se va a inspeccionar. Adicionalmente elimina el usuario
+	 * provisinal que se usó para llevarla a cabo puesto que ya no se va a usar más.
+	 * 
+	 * @author EZENTIS
+	 * @return vista vistaSolicitud
 	 */
-	public void getFormularioBusquedaSolicitudesDocPrevia() {
+	public String finalizarSolicitud() {
+		solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
+		solicitudDocumentacionPrevia
+				.setUsuarioFinalizacion(SecurityContextHolder.getContext().getAuthentication().getName());
+		String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestiantario();
+		if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Finalización",
+					"Se ha finalizado con éxito la solicitud de documentación");
+			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+			context.execute(dialogMessage);
+		}
+		return VISTASOLICITUD;
+	}
+
+	/**
+	 * Método que devuelve al formulario de búsqueda de solicitudes de documentación previa a su estado inicial y borra
+	 * los resultados de búsquedas anteriores.
+	 * 
+	 * @author EZENTIS
+	 */
+	public void limpiarBusqueda() {
 		solicitudDocPreviaBusqueda.resetValues();
 		listaSolicitudesPrevia = null;
-
 	}
 
 	/**
-	 * @param
-	 * @comment Metodo que busca las solicitudes previas de cuestionario según los filtros introducidos en el formulario
-	 * de búsqueda
-	 * @author EZENTIS GR
+	 * Método que busca las solicitudes de documentación previa según los filtros introducidos en el formulario de
+	 * búsqueda.
+	 * 
+	 * @author EZENTIS
 	 */
 	public void buscarSolicitudDocPrevia() {
 		listaSolicitudesPrevia = solicitudDocumentacionService
 				.buscarSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
+	}
+
+	/**
+	 * Método que comprueba si el usuario logueado es el jefe del equipo encargado de la solicitud de inspeccion.
+	 * 
+	 * @author EZENTIS
+	 */
+	public boolean esJefeEquipoInspeccion() {
+		boolean result = false;
+
+		// TODO Si -> User.role = RoleEnum.EQUIPO_INSPECCIONES
+		// solicituddocumentacionprevia.numeroReferencia (nº ref inspeccion) -> inspeccion(numero)
+		// inspeccion(id_equipo) -> miembro(id_equipo)
+		// miembro(posicion) -> RolEquipoEnum.JEFE
+		//
+		// ¿User.id = miembro.id?
+		//
+
+		return result;
 	}
 
 }

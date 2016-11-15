@@ -13,6 +13,10 @@
 
 			<h3>Búsqueda solicitudes de documentación</h3>
 
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.limpiarBusqueda}" update="busquedaSolicitudDocPrevia" autoRun="true" />
+		</h:form>
+		
 			<h:form id="busquedaSolicitudDocPrevia">
 
 				<div class="bloqueFormulario">
@@ -65,7 +69,7 @@
 					<p:commandButton
 						actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}"
 						value="Buscar" update="panelSolicitudes" icon="ui-icon-search" />
-					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.getFormularioBusquedaSolicitudesDocPrevia}">
+					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.limpiarBusqueda}">
 		            	<span class="ui-CommandLink-texto">Limpiar</span>
 		            </h:commandLink>	
 						
@@ -90,9 +94,9 @@
 									listener="#{solicitudDocPreviaBean.onToggle}" />
 							</p:columnToggler>
 						</f:facet>
-						<p:column headerText="Nombre cuestionario"
-							sortBy="#{solicitud.nombreCuestionarioPrevio}" width="340">
-							<h:outputText value="#{solicitud.nombreCuestionarioPrevio}" />
+						<p:column headerText="Nombre solicitud"
+							sortBy="#{solicitud.nombreSolicitud}" width="340">
+							<h:outputText value="#{solicitud.nombreSolicitud}" />
 						</p:column>
 						<p:column headerText="Fecha alta" sortBy="#{solicitud.fechaAlta}"
 							width="70">
@@ -135,10 +139,10 @@
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
-								actionListener="#{solicitudDocPreviaBean.eliminarSolicitudCuestionario(solicitud)}"
+								actionListener="#{solicitudDocPreviaBean.eliminarSolicitudDocumentacion(solicitud)}"
 								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes">
 								<p:confirm header="Eliminar solicitud"
-									message="¿Está seguro que desea eliminar esta solicitud previa de cuestionario?"
+									message="¿Está seguro que desea eliminar esta solicitud de documentación previa?"
 									icon="ui-icon-alert" />
 							</p:commandButton>
 						</p:column>

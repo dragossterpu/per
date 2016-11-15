@@ -42,10 +42,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("provisionalBean")
+@Component("provisionalSolicitudBean")
 @SessionScoped
 
-public class ProvisionalBean implements Serializable {
+public class ProvisionalSolicitudBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class ProvisionalBean implements Serializable {
 	@Autowired
 	IModeloCuestionarioService modeloCuestionarioService;
 
-	String nombreCuestionarioPrevio;
+	String nombreSolicitud;
 
 	@Autowired
 	ISolicitudDocumentacionService solicitudDocumentacionService;
@@ -96,6 +96,7 @@ public class ProvisionalBean implements Serializable {
 		// ñapa
 		try {
 			solicitudDocumentacionPrevia = solicitudDocumentacionService.findByCorreoDestiantario(correo);
+			nombreSolicitud = solicitudDocumentacionPrevia.getNombreSolicitud();
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 			listadoDocumentosCargados = gestDocumentacionService
 					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
@@ -131,7 +132,7 @@ public class ProvisionalBean implements Serializable {
 			altaRegActivError(e);
 		}
 		listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-		return "/provisional/cargaDocumentos";
+		return "/provisionalSolicitud/cargaDocumentos";
 	}
 
 	@PostConstruct
@@ -139,7 +140,7 @@ public class ProvisionalBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
 		listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
-		nombreCuestionarioPrevio = null;
+		nombreSolicitud = null;
 		anio = null;
 	}
 
@@ -239,7 +240,7 @@ public class ProvisionalBean implements Serializable {
 	public String enviarDocumentacionPrevia() {
 		try {
 			solicitudDocumentacionPrevia.setFechaCumplimentacion(new Date());
-			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"Solicitud de documentación cumplimentada  con éxito");
 			}
@@ -256,7 +257,7 @@ public class ProvisionalBean implements Serializable {
 
 	public void guardarBorrardor() {
 		try {
-			if (solicitudDocumentacionService.savePrevia(solicitudDocumentacionPrevia) != null) {
+			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
 						"El borrador se ha guardado con éxito");
 			}

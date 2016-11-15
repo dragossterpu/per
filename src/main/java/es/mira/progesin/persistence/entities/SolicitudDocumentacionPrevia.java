@@ -92,8 +92,8 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "fecha_envio")
 	private Date fechaEnvio;
 
-	@Column(name = "nombreCuestionarioPrevio")
-	private String nombreCuestionarioPrevio;
+	@Column(name = "nombreSolicitud")
+	private String nombreSolicitud;
 
 	@Column(name = "fechaValidApoyo")
 	private Date fechaValidApoyo;

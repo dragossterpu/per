@@ -12,23 +12,26 @@
 		
 		<ui:define name="content">
 <h3>Solicitud documentación previa cuestionario</h3>
+
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.visualizarSolicitud}" update="formAlta" autoRun="true" />
+		</h:form>
+		
 		<div class="bloqueVistaTitulo">	
-			<h4>Nombre Cuestionario </h4>#{provisionalBean.solicitudDocumentacionPrevia.nombreCuestionarioPrevio}
+			<h4>Nombre Cuestionario </h4>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreSolicitud}
 		</div>
 		
-			
-
 		<h:form id="formAlta">
 			
 					<div class="bloqueVistaTitulo">
-						<p>N/REF: #{provisionalBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	
-						<p>FECHA: Madrid, #{provisionalBean.fechaEmision}</p>
-						<p>ASUNTO: 	#{provisionalBean.solicitudDocumentacionPrevia.asunto}</p>	
-						<p><strong>DESTINATARIO: #{provisionalBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
+						<p>N/REF: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.numeroReferencia}</p>	
+						<p>FECHA: Madrid, #{provisionalSolicitudBean.fechaEmision}</p>
+						<p>ASUNTO: 	#{provisionalSolicitudBean.solicitudDocumentacionPrevia.asunto}</p>	
+						<p><strong>DESTINATARIO: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
 					</div>	
 					<div class="bloqueVista">	
-					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{provisionalBean.solicitudDocumentacionPrevia.identificadorTrimestre}</strong>, se va a realizar una  inspección de carácter
-					<strong>#{provisionalBean.solicitudDocumentacionPrevia.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
+					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.identificadorTrimestre}</strong>, se va a realizar una  inspección de carácter
+					<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
 					</div>
 					<div class="bloqueVista">
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
@@ -37,14 +40,14 @@
 					<div class="bloqueVista">
 					<p>1.	A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de 
 					esa Unidad con indicación del nombre y apellidos, categoría y cargo, 
-					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico #{provisionalBean.solicitudDocumentacionPrevia.mensajeCorreo}</p>
+					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico #{provisionalSolicitudBean.solicitudDocumentacionPrevia.mensajeCorreo}</p>
 					</div>
 					<div class="bloqueVista">
-					<p >2.	Antes del <strong> #{provisionalBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
+					<p >2.	Antes del <strong> #{provisionalSolicitudBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
-					<p:dataTable  var="solicitud" value="#{provisionalBean.listadoDocumentosPrevios}" >
+					<p:dataTable  var="solicitud" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" >
 							<p:column headerText="DOCUMENTO" width="450">
 								<h:outputText value="#{solicitud.descripcion}" />
 							</p:column>
@@ -59,22 +62,22 @@
 					</div>
 					<div class="bloqueVistaTitulo">
 					<p >3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
-					deberá tener entrada en esta IPSS antes del <strong> #{provisionalBean.fechaLimite}</strong>.</p>
+					deberá tener entrada en esta IPSS antes del <strong> #{provisionalSolicitudBean.fechaLimite}</strong>.</p>
 					</div>
 					<div class="bloqueVista">
 					<p >Para cualquier aclaración, podrá dirigirse a:</p>
 					</div>
 					<div class="div_celda">
-					#{provisionalBean.solicitudDocumentacionPrevia.apoyoPuesto}
+					#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoPuesto}
 					</div>
 					<div class="div_celda">
-					#{provisionalBean.solicitudDocumentacionPrevia.apoyoNombre}
+					#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoNombre}
 					</div>
 					<div class="div_celda">
-					#{provisionalBean.solicitudDocumentacionPrevia.apoyoTelefono}
+					#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoTelefono}
 					</div>
 					<div class="div_celda">
-					<strong>#{provisionalBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
+					<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
 					</div>
 					<div class="bloqueVistaTitulo">
 					<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
@@ -86,40 +89,40 @@
 				<h4>Datos Interlocutor</h4>		
 												
 					<h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
-					<p:inputText id="nombreCompletoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="true" requiredMessage="Introduzca el nombre completo del interlocutor " />
+					<p:inputText id="nombreCompletoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="true" requiredMessage="Introduzca el nombre completo del interlocutor " />
 					<p:messages for="nombreCompletoInterlocutor" autoUpdate="true"  closable="true"/>
 		
 					<h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
-					<p:inputText id="categoriaInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="true" requiredMessage="Introduzca la categoría del interlocutor " />	
+					<p:inputText id="categoriaInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="true" requiredMessage="Introduzca la categoría del interlocutor " />	
 					<p:messages for="categoriaInterlocutor" autoUpdate="true"  closable="true"/>
 							
 					<h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
-					<p:inputText id="cargoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="true" requiredMessage="Introduzca el cargo del interlocutor " />
+					<p:inputText id="cargoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="true" requiredMessage="Introduzca el cargo del interlocutor " />
 					<p:messages for="cargoInterlocutor" autoUpdate="true"  closable="true"/>
 		
 				
 					<h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
-					<p:inputText id="telefonoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="true" requiredMessage="Introduzca el teléfono del interlocutor " />
+					<p:inputText id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="true" requiredMessage="Introduzca el teléfono del interlocutor " />
 					<p:messages for="telefonoInterlocutor" autoUpdate="true"  closable="true"/>
 							
 					<h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
-					<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " 
+					<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="true" requiredMessage="Introduzca el correo corporativo del interlocutor " 
 					validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
 					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					<p:messages for="correoCorporativoInterlocutor" autoUpdate="true"  closable="true"/>
 					</p:inputText>
 							
 					<h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
-					<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
+					<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
 					validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
 					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					<p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true"  closable="true"/>
 					</p:inputText>
 							
 					<div class="botonesFormulario">				        						
-						<p:button  outcome="/provisional/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
-						<p:commandButton action="#{provisionalBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
-						<p:commandButton actionListener="#{provisionalBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
+						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
+						<p:commandButton action="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
+						<p:commandButton actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
 					</div>					
 					</div>	
 						</h:form>	
