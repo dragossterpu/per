@@ -41,4 +41,10 @@ public class Documento implements Serializable {
 
 	@Column(name = "fichero", nullable = false)
 	private byte[] fichero;
+
+	@Column(name = "tipoContenido", nullable = false)
+	private String tipoContenido;
+	
+	@Column(name = "nombre")
+	private String nombre;
 }

@@ -39,23 +39,7 @@ public class ModelosCuestionarioBean {
 	}
 
 	public void descargarFichero(ModeloCuestionario cuestionario) {
-		try {
-			Documento documento = documentoService.findOne(cuestionario.getIdDocumento());
-			if (documento != null) {
-				InputStream stream = new ByteArrayInputStream(documento.getFichero());
-				String contentType = "application/msword";
-				// if ("pdf".equals(cuestionario.getExtension())) {
-				// contentType = "application/pdf";
-				// }
-				// else if (cuestionario.getExtension().startsWith("xls")) {
-				// contentType = "application/x-msexcel";
-				// }
-				this.file = new DefaultStreamedContent(stream, contentType, cuestionario.getNombreFichero());
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.file= documentoService.descargaDocumento(cuestionario.getIdDocumento());
 	}
 
 }
