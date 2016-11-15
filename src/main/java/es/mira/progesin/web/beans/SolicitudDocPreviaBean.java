@@ -365,8 +365,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite insertar ficheros desde una ruta local. Utilizado para cargar los tipos de documentación
-	 * previa.
+	 * Método que permite insertar ficheros desde una ruta local. Utilizado para cargar los modelos de solicitud de
+	 * documentación previa.
 	 * 
 	 * @author EZENTIS
 	 * @see #init()
