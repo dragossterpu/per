@@ -125,7 +125,7 @@
 											<h:outputText value="#{documento.extension}" />
 						       </p:column>
 								<p:column styleClass="botonTabla">
-									<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalBean.descargarFichero(documento)}" title="Descargar documento">
+									<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
 										<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
 									</p:commandButton>
 								</p:column>

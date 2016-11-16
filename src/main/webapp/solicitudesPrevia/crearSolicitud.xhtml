@@ -10,137 +10,230 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-  <h3>Datos Solicitud documentación</h3>
-   
-        <h:form id="datosReporte" >
+			<h3>Datos Solicitud documentación</h3>
 
-        		 <p:growl id="growl" sticky="true"  showDetail="true" /> 
-    				<p:wizard flowListener="#{solicitudDocPreviaBean.onFlowProcess}"  nextLabel="Siguiente" backLabel="Atr&aacute;s" >
-		        		<div class="bloqueFormulario" >
-							<p:tab id="general" title="Datos contenido" >
-								   <br></br>
-								 <p:panel header="Contenido">
-									  <br></br>
-									 <p:messages />	
-									 <h:panelGrid columns="2" columnClasses="label, value">
+			<h:form id="datosReporte">
 
-										<h:outputText for="numeroReferencia" value="N/Ref: *" style="font-weight: normal;" />
-										<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}" required="true" requiredMessage="Es obligatorio un numero de referencia" label="N/Ref: *"/>
-						
-										<h:outputText for="asunto" value="Asunto: *" style="font-weight: normal;" />
-										<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" label="Asunto: *"/>
-										
-										<h:outputText for="destinatario" value="Destinatario: *" style="font-weight: normal;"/>
-										<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" label="Destinatario: *"/>
-									
-										<h:outputText for="correoDestiantario" value="Correo destinatario: *" style="font-weight: normal;"/>
-										<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}" required="true" requiredMessage="Es obligatorio un correo del destinatariodestinatario" label="Correo destinatario: *"/>
-							        	
-							        	<h:outputText for="identificadorTrimestre" value="Cuatrimestre y año: *" style="font-weight: normal;" />
-										<p:selectOneMenu id="identificadorTrimestre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.identificadorTrimestre}" effect="fold" width="50" 
-									        required="true" requiredMessage="Seleccione el cuartrimestre"
-											converter="#{selectConverter}">
-									            <f:selectItem itemLabel="Seleccione uno: " itemValue="" />
-									            <f:selectItem itemLabel="primer cuatrimestre" itemValue="primer cuatrimestre" />
-									            <f:selectItem itemLabel="segundo cuatrimestre" itemValue="segundo cuatrimestre" />
-									             <f:selectItem itemLabel="tercer cuatrimestre" itemValue="tercer cuatrimestre" />
-									              <f:selectItem itemLabel="cuarto cuatrimestre" itemValue="cuarto cuatrimestre" />
-									        </p:selectOneMenu>
+				<p:growl id="growl" sticky="true" showDetail="true" />
+				<p:wizard flowListener="#{solicitudDocPreviaBean.onFlowProcess}"
+					nextLabel="Siguiente" backLabel="Atr&aacute;s">
+					<div class="bloqueFormulario">
+						<p:tab id="general" title="Datos contenido">
+							<br></br>
+							<p:panel header="Contenido">
+								<br></br>
+								<p:messages />
+								<h:panelGrid columns="2" columnClasses="label, value">
 
-									        <h:outputText for="anio" value="Año: *" style="font-weight: normal;"/>
-											<p:inputNumber value="#{solicitudDocPreviaBean.anio}" required="true" requiredMessage="Es obligatorio un año" label="Año: *" maxValue="9999" decimalSeparator="" thousandSeparator="" decimalPlaces="0" />     
-									        <h:outputText for="cuerpoEstado" value="Cuerpo estado	: *" style="font-weight: normal;"/>
-											<p:selectOneMenu id="cuerpoEstado" value="#{solicitudDocPreviaBean.cuerpoEstado}" effect="fold" width="50" 
+									<h:outputText for="numeroReferencia" value="N/Ref: *"
+										style="font-weight: normal;" />
+									<p:inputText
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}"
+										required="true"
+										requiredMessage="Es obligatorio un numero de referencia"
+										label="N/Ref: *" converter="#{trimConverter}" />
 
-									        required="true" requiredMessage="Seleccione el cuerpo de estado"
-											converter="#{selectConverter}">
-									            <f:selectItem itemLabel="Seleccione uno: " itemValue="" />
-									            <f:selectItem itemLabel="GUARDIA CIVIL" itemValue="GC" />
-									            <f:selectItem itemLabel="POLICÍA NACIONAL" itemValue="PN" />
-									            <f:selectItem itemLabel="OTRO" itemValue="O" />
-									        </p:selectOneMenu>												
+									<h:outputText for="asunto" value="Asunto: *"
+										style="font-weight: normal;" />
+									<p:inputText
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}"
+										required="true" requiredMessage="Es obligatorio un asunto"
+										label="Asunto: *" converter="#{trimConverter}" />
 
-											<h:outputText for="tipoInspeccion" value="Carácter inspección: *" style="font-weight: normal;"/>
-											<p:inputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio un cuartrimestre" label="Carácter inspección: *"/>
-											
-											<h:outputText for="fechaAntes" value="Fecha límite envío documentación: *" style="font-weight: normal;"/>
-											<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" mindate="#{solicitudDocPreviaBean.fechaActual}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" label="Fecha límite envío documentación: *"/>
-											
-											<h:outputText for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario: *" style="font-weight: normal;"/>
-											<p:calendar value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" mindate="#{solicitudDocPreviaBean.fechaActual}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" label="Fecha límite cumplimentar cuestionario: *"/>					
-							        </h:panelGrid>
-	            				</p:panel>
-							</p:tab>
-						    <p:tab id="documentacion" title="Documentación" >
-            					  <br></br>
-            					<p:panel header="documentacion" >
-	            					  <br></br>
-	            					<p:messages />	
-	            					<h:panelGrid columns="2" columnClasses="label, value">          
-			             				 <p:dataTable id="documentosSolicitud" var="documento"  value="#{solicitudDocPreviaBean.listadoDocumentos}" paginator="true" rows="10" selection="#{solicitudDocPreviaBean.documentosSelecionados}" rowKey="#{documento.idTipoDocumento}" >
-									        <f:facet name="header">
+									<h:outputText for="destinatario" value="Destinatario: *"
+										style="font-weight: normal;" />
+									<p:inputText
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}"
+										required="true"
+										requiredMessage="Es obligatorio un destinatario"
+										label="Destinatario: *" converter="#{trimConverter}" />
+
+									<h:outputText for="correoDestiantario"
+										value="Correo destinatario: *" style="font-weight: normal;" />
+									<p:inputText
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}"
+										required="true"
+										requiredMessage="Es obligatorio un correo del destinatario"
+										label="Correo destinatario: *"
+										validatorMessage="Formato de correo incorrecto"
+										converter="#{trimConverter}">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</p:inputText>
+
+									<h:outputText for="identificadorTrimestre"
+										value="Cuatrimestre y año: *" style="font-weight: normal;" />
+									<p:selectOneMenu id="identificadorTrimestre"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.identificadorTrimestre}"
+										effect="fold" width="50" required="true"
+										requiredMessage="Seleccione el cuartrimestre"
+										converter="#{selectConverter}">
+										<f:selectItem itemLabel="Seleccione uno: " itemValue="" />
+										<f:selectItem itemLabel="primer cuatrimestre"
+											itemValue="primer cuatrimestre" />
+										<f:selectItem itemLabel="segundo cuatrimestre"
+											itemValue="segundo cuatrimestre" />
+										<f:selectItem itemLabel="tercer cuatrimestre"
+											itemValue="tercer cuatrimestre" />
+										<f:selectItem itemLabel="cuarto cuatrimestre"
+											itemValue="cuarto cuatrimestre" />
+									</p:selectOneMenu>
+
+									<h:outputText for="anio" value="Año: *"
+										style="font-weight: normal;" />
+									<p:inputNumber value="#{solicitudDocPreviaBean.anio}"
+										required="true" requiredMessage="Es obligatorio un año"
+										label="Año: *" maxValue="9999" decimalSeparator=""
+										thousandSeparator="" decimalPlaces="0" />
+									<h:outputText for="cuerpoEstado" value="Cuerpo estado	: *"
+										style="font-weight: normal;" />
+									<p:selectOneMenu id="cuerpoEstado"
+										value="#{solicitudDocPreviaBean.cuerpoEstado}" effect="fold"
+										width="50" required="true"
+										requiredMessage="Seleccione el cuerpo de estado"
+										converter="#{selectConverter}">
+										<f:selectItem itemLabel="Seleccione uno: " itemValue="" />
+										<f:selectItem itemLabel="GUARDIA CIVIL" itemValue="GC" />
+										<f:selectItem itemLabel="POLICÍA NACIONAL" itemValue="PN" />
+										<f:selectItem itemLabel="OTRO" itemValue="O" />
+									</p:selectOneMenu>
+
+									<h:outputText for="tipoInspeccion"
+										value="Carácter inspección: *" style="font-weight: normal;" />
+									<p:inputText
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}"
+										required="true"
+										requiredMessage="Es obligatorio un cuartrimestre"
+										label="Carácter inspección: *" converter="#{trimConverter}" />
+
+									<h:outputText for="fechaAntes"
+										value="Fecha límite envío documentación: *"
+										style="font-weight: normal;" />
+									<p:calendar
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}"
+										pattern="dd/MM/yyyy"
+										mindate="#{solicitudDocPreviaBean.fechaActual}"
+										navigator="true" required="true"
+										requiredMessage="Es obligatorio una fecha limite envío documentación"
+										label="Fecha límite envío documentación: *" />
+
+									<h:outputText for="fechaLimiteCumplimentar"
+										value="Fecha límite cumplimentar cuestionario: *"
+										style="font-weight: normal;" />
+									<p:calendar
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
+										pattern="dd/MM/yyyy"
+										mindate="#{solicitudDocPreviaBean.fechaActual}"
+										navigator="true" required="true"
+										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"
+										label="Fecha límite cumplimentar cuestionario: *" />
+								</h:panelGrid>
+							</p:panel>
+						</p:tab>
+						<p:tab id="documentacion" title="Documentación">
+							<br></br>
+							<p:panel header="documentacion">
+								<br></br>
+								<p:messages />
+								<h:panelGrid columns="2" columnClasses="label, value">
+									<p:dataTable id="documentosSolicitud" var="documento"
+										value="#{solicitudDocPreviaBean.listadoDocumentos}"
+										paginator="true" rows="10"
+										selection="#{solicitudDocPreviaBean.documentosSelecionados}"
+										rowKey="#{documento.idTipoDocumento}">
+										<f:facet name="header">
 									            Documentos previos cuestionario
 									        </f:facet>
-									        <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
+										<p:column selectionMode="multiple"
+											style="width:16px;text-align:center" />
 
-									        <p:column headerText="Descripcion" style="font-weight: normal;" sortBy="#{documento.descripcion}" filterBy="#{documento.descripcion}">
-									            <h:outputText value="#{documento.descripcion}" />
-									        </p:column>
-									    </p:dataTable>								
-											
-									</h:panelGrid>
-		            				</p:panel>
-							</p:tab>
-							
-							 <p:tab id="apoyo" title="Apoyo">
-            					  <br></br>
-            					<p:panel header="Apoyo">
-	            					  <br></br>
-	            					 <p:messages />	
-	            					<h:panelGrid columns="2" columnClasses="label, value">          
+										<p:column headerText="Descripcion"
+											style="font-weight: normal;"
+											sortBy="#{documento.descripcion}"
+											filterBy="#{documento.descripcion}">
+											<h:outputText value="#{documento.descripcion}" />
+										</p:column>
+									</p:dataTable>
 
-											<h:outputText for="apoyoPuesto" value="Puesto persona apoyo:" style="font-weight: normal;"/>
-											<p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" />
-											
-											<h:outputText for="apoyoNombre" value="Nombre persona apoyo:" style="font-weight: normal;"/>
-											<p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}"/>
-											
-											<h:outputText for="apoyoTelefono" value="Teléfono persona apoyo:" style="font-weight: normal;"/>
-											<p:inputText id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" />
-											
-											<h:outputText for="apoyoCorreo" value=" Correo persona apoyo:" style="font-weight: normal;"/>
-											<p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"/>
-
-										</h:panelGrid>
-		            				</p:panel>
-							</p:tab>	
-							 <p:tab id="confirm" title="Confirmar">            				
-            					  <br></br>
-            					<p:panel header="Confirmar">          						
-                					  <br></br>
-                					<h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                    				<h:panelGrid columns="2" columnClasses="label,value">
-
-                    				 <h:outputText value="Creación solicitud documentación previa cuestionario: " style="font-weight: normal;"/>
-
-                    				 </h:panelGrid>
-                					</h:panelGrid>
-									<div class="botonesFormulario">				        
-										<p:commandButton actionListener="#{solicitudDocPreviaBean.crearSolicitud}" value="Crear solicitud documentación previa" icon="fa fa-fw fa-user-plus"/>
-										<p:button outcome="/solicitudesPrevia/modelosSolicitud" value="Cancelar" icon="fa fa-fw fa-undo"/>
-									</div>
-									<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-										<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
-										<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-										<div class="centrarBotonesDialog">
-											<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
-										</div>
-									</p:dialog>
+								</h:panelGrid>
 							</p:panel>
-       					 </p:tab>
-       				</div>
-    		</p:wizard>
-	</h:form>
+						</p:tab>
+
+						<p:tab id="apoyo" title="Apoyo">
+							<br></br>
+							<p:panel header="Apoyo">
+								<br></br>
+								<p:messages />
+								<h:panelGrid columns="2" columnClasses="label, value">
+
+									<h:outputText for="apoyoPuesto" value="Puesto persona apoyo:"
+										style="font-weight: normal;" />
+									<p:inputText id="apoyoPuesto"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}"
+										converter="#{trimConverter}" />
+
+									<h:outputText for="apoyoNombre" value="Nombre persona apoyo:"
+										style="font-weight: normal;" />
+									<p:inputText id="apoyoNombre"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}"
+										converter="#{trimConverter}" />
+
+									<h:outputText for="apoyoTelefono"
+										value="Teléfono persona apoyo:" style="font-weight: normal;" />
+									<p:inputText id="apoyoTelefono"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}"
+										converter="#{trimConverter}" />
+
+									<h:outputText for="apoyoCorreo" value=" Correo persona apoyo:"
+										style="font-weight: normal;" />
+									<p:inputText id="apoyoCorreo"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"
+										validatorMessage="Formato de correo incorrecto"
+										converter="#{trimConverter}">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</p:inputText>
+
+								</h:panelGrid>
+							</p:panel>
+						</p:tab>
+						<p:tab id="confirm" title="Confirmar">
+							<br></br>
+							<p:panel header="Confirmar">
+								<br></br>
+								<h:panelGrid id="confirmation" columns="3"
+									columnClasses="grid,grid,grid">
+									<h:panelGrid columns="2" columnClasses="label,value">
+
+										<h:outputText
+											value="Creación solicitud documentación previa cuestionario: "
+											style="font-weight: normal;" />
+
+									</h:panelGrid>
+								</h:panelGrid>
+								<div class="botonesFormulario">
+									<p:commandButton
+										actionListener="#{solicitudDocPreviaBean.crearSolicitud}"
+										value="Crear solicitud documentación previa"
+										icon="fa fa-fw fa-user-plus" />
+									<p:button outcome="/solicitudesPrevia/modelosSolicitud"
+										value="Cancelar" icon="fa fa-fw fa-undo" />
+								</div>
+								<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+									<p:ajax event="close"
+										listener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
+									<p:messages for="dialogMessage" autoUpdate="true"
+										showDetail="true" showSummary="true" />
+									<div class="centrarBotonesDialog">
+										<p:commandButton value="Cerrar"
+											actionListener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
+									</div>
+								</p:dialog>
+							</p:panel>
+						</p:tab>
+					</div>
+				</p:wizard>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </f:view>

@@ -22,7 +22,7 @@
 
 				<h:form id="formAlta">
 					 
-					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalSolicitudBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalSolicitudBean.gestionarCargaDocumento}" mode="advanced" dragDropSupport="true"
 			         sizeLimit="100000000"  update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" />			 			   					   		 
 			   		
 					
@@ -60,7 +60,7 @@
 								</p:commandButton>
 							</p:column>
 							<p:column styleClass="botonTabla">
-								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento)}" title="Descargar documento">
+								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
 									<p:fileDownload value="#{provisionalSolicitudBean.file}" />
 								</p:commandButton>
 							</p:column>

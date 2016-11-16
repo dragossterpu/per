@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
-import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 @Service
@@ -28,7 +27,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
 
 	@Autowired
-	IUserRepository userRepository;
+	IUserService userService;
 
 	@Override
 	public SolicitudDocumentacionPrevia save(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
@@ -123,7 +122,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		boolean result = false;
 		try {
 			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-			userRepository.save(usuarioProv);
+			// TODO cambiar la creacion de usuario provisional
+			userService.save(usuarioProv);
 			result = true;
 		}
 		catch (Exception e) {
@@ -139,7 +139,24 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		boolean result = false;
 		try {
 			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-			userRepository.delete(usuarioProv);
+			userService.delete(usuarioProv);
+			result = true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+			String usuarioProv) {
+		boolean result = false;
+		try {
+			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+			// TODO Desactivar usuario provisional al enviar solicitud cumplimentada
+			// userService.inactivo(usuarioProv);
 			result = true;
 		}
 		catch (Exception e) {

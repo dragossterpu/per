@@ -44,16 +44,11 @@ public class GestDocSolicitudDocumentacion implements Serializable {
 	@Column(name = "extension", nullable = false, length = 4)
 	private String extension;
 
-	// no vale con postgres
-	// @Column(name = "fichero")
-	// @Lob
-	// private Blob fichero;
-
 	@Column(name = "nombre", nullable = false)
 	private String nombreFichero;
 
-	@Column(name = "fichero", nullable = false)
-	private byte[] fichero;
+	@Column(name = "idDocumento", nullable = false)
+	private Long idDocumento;
 
 	@Column(name = "fecha_alta", nullable = false)
 	protected Date fechaAlta;

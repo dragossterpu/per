@@ -1,7 +1,5 @@
 package es.mira.progesin.web.beans;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,7 +14,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +21,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
+import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegActividadService;
@@ -73,6 +72,9 @@ public class ProvisionalSolicitudBean implements Serializable {
 	@Autowired
 	IGestDocSolicitudDocumentacionService gestDocumentacionService;
 
+	@Autowired
+	IDocumentoService documentoService;
+
 	List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
 
 	List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
@@ -111,19 +113,21 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	}
 
-	public String handleFileUpload(FileUploadEvent event) {
+	public String gestionarCargaDocumento(FileUploadEvent event) {
 		try {
-			GestDocSolicitudDocumentacion documento = new GestDocSolicitudDocumentacion();
-			documento.setFechaAlta(new Date());
-			documento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-			documento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
-			documento.setFichero(event.getFile().getContents());
-			documento.setNombreFichero(event.getFile().getFileName());
-			documento.setExtension(event.getFile().getFileName()
-					.substring(event.getFile().getFileName().lastIndexOf('.') + 1).toLowerCase());
-			if (gestDocumentacionService.save(documento) != null) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-						"Documento/s subidos  con éxito");
+			Documento documento = documentoService.cargaDocumento(event);
+			if (documento != null) {
+				GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
+				gestDocumento.setFechaAlta(new Date());
+				gestDocumento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+				gestDocumento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
+				gestDocumento.setIdDocumento(documento.getId());
+				gestDocumento.setNombreFichero(documento.getNombre());
+				gestDocumento.setExtension(Utilities.getExtensionTipoContenido(documento.getTipoContenido()));
+				if (gestDocumentacionService.save(gestDocumento) != null) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+							"Documento/s subidos  con éxito");
+				}
 			}
 		}
 		catch (Exception e) {
@@ -205,23 +209,15 @@ public class ProvisionalSolicitudBean implements Serializable {
 	 * Eliminación fisica
 	 * @param documento documento a eliminar
 	 */
-	public void eliminarDocumento(GestDocSolicitudDocumentacion documento) {
-		gestDocumentacionService.delete(documento);
-		listadoDocumentosCargados.remove(documento);
+	public void eliminarDocumento(GestDocSolicitudDocumentacion gestDocumento) {
+		documentoService.delete(gestDocumento.getIdDocumento());
+		gestDocumentacionService.delete(gestDocumento);
+		listadoDocumentosCargados.remove(gestDocumento);
 	}
 
-	public void descargarFichero(GestDocSolicitudDocumentacion documento) {
+	public void descargarFichero(Long idDocumento) {
 		try {
-			InputStream stream = new ByteArrayInputStream(documento.getFichero());
-			String contentType = "application/msword";
-			if ("pdf".equals(documento.getExtension())) {
-				contentType = "application/pdf";
-			}
-			else if (documento.getExtension().startsWith("xls")) {
-				contentType = "application/x-msexcel";
-			}
-
-			file = new DefaultStreamedContent(stream, contentType, documento.getNombreFichero());
+			file = documentoService.descargaDocumento(idDocumento);
 		}
 		catch (Exception e) {
 			altaRegActivError(e);
@@ -240,9 +236,11 @@ public class ProvisionalSolicitudBean implements Serializable {
 	public String enviarDocumentacionPrevia() {
 		try {
 			solicitudDocumentacionPrevia.setFechaCumplimentacion(new Date());
-			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestiantario();
+			if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
+					usuarioProv)) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-						"Solicitud de documentación cumplimentada  con éxito");
+						"Solicitud de documentación cumplimentada con éxito");
 			}
 
 		}

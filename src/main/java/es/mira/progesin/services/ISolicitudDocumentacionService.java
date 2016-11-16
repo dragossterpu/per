@@ -23,4 +23,7 @@ public interface ISolicitudDocumentacionService {
 
 	boolean transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, String usuarioProv);
 
+	boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+			String usuarioProv);
+
 }

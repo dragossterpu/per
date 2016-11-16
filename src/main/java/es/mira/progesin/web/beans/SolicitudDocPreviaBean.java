@@ -423,6 +423,22 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
+	 * Método que permite descargar el fichero seleccionado. Utilizado tanto para modelos de solicitud como documentos
+	 * previos subidos por el interlocutor de una unidad al cumplimentar una solicitud.
+	 * 
+	 * @author EZENTIS
+	 * @param idDocumento
+	 */
+	public void descargarFichero(Long idDocumento) {
+		try {
+			file = documentoService.descargaDocumento(idDocumento);
+		}
+		catch (Exception e) {
+			altaRegActivError(e);
+		}
+	}
+
+	/**
 	 * Método que permite el webFlow
 	 * 
 	 * @author EZENTIS

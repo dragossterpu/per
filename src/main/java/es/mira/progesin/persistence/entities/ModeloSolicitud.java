@@ -51,4 +51,7 @@ public class ModeloSolicitud implements Serializable {
 	@Column(name = "fichero", nullable = false)
 	private byte[] fichero;
 
+	// @Column(name = "idDocumento", nullable = false)
+	// private Long idDocumento;
+
 }
