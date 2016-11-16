@@ -78,8 +78,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 				campoFecha = "this_.fecha_finalizacion";
 				criteria.add(Restrictions.isNotNull("fechaFinalizacion"));
 				break;
-
-			default:// CREADA:
+			// case CREADA:
+			default:
 				criteria.add(Restrictions.isNull("fechaValidApoyo"));
 				break;
 			}

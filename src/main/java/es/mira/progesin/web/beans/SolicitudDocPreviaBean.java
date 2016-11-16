@@ -432,7 +432,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String onFlowProcess(FlowEvent event) {
 		// cleanParam(event);
 		if (skip) {
-			skip = false; // reset in case user goes back
+			// reset in case user goes back
+			skip = false;
 			return "confirm";
 		}
 		else {
@@ -567,7 +568,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	/**
 	 * Método que permite la edición en caliente de un registro
 	 * 
-	 * @author EZENTIS STAD
+	 * @author EZENTIS
 	 * @param event evento disparado al pulsar el botón editar
 	 */
 	public void onRowEdit(RowEditEvent event) {
@@ -728,12 +729,13 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * Método que comprueba si el usuario logueado es el jefe del equipo encargado de la solicitud de inspeccion.
 	 * 
 	 * @author EZENTIS
+	 * @return result booleano
 	 */
 	public boolean esJefeEquipoInspeccion() {
 		boolean result = false;
 
 		// TODO Si -> User.role = RoleEnum.EQUIPO_INSPECCIONES
-		// solicituddocumentacionprevia.numeroReferencia (nº ref inspeccion) -> inspeccion(numero)
+		// solicituddocumentacionprevia.inspeccion -> inspeccion(numero)
 		// inspeccion(id_equipo) -> miembro(id_equipo)
 		// miembro(posicion) -> RolEquipoEnum.JEFE
 		//
