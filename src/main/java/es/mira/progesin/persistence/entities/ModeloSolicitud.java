@@ -44,14 +44,10 @@ public class ModeloSolicitud implements Serializable {
 	@Column(name = "extension", nullable = false, length = 4)
 	private String extension;
 
+	@Column(name = "idDocumento", nullable = false)
+	private Long idDocumento;
+
 	@Column(name = "nombre", nullable = false)
 	private String nombreFichero;
-
-	// TODO Borrar, sustituir por id_documento y guardar fichero en tabla documentos
-	@Column(name = "fichero", nullable = false)
-	private byte[] fichero;
-
-	// @Column(name = "idDocumento", nullable = false)
-	// private Long idDocumento;
 
 }

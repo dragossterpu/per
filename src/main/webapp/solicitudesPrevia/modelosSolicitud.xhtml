@@ -35,7 +35,7 @@
 							</p:cellEditor> 
 						</p:column>
 						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(modeloSolicitud)}" title="Descargar modelo">
+							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(modeloSolicitud.idDocumento)}" title="Descargar modelo">
 								<p:fileDownload value="#{solicitudDocPreviaBean.file}" />
 							</p:commandButton>
 						</p:column>

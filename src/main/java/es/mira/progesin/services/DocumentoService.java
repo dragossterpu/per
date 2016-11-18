@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 
 public class DocumentoService implements IDocumentoService {
-	
-	
+
 	@Autowired
 	IDocumentoRepository documentoRepository;
 
@@ -25,14 +25,13 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * delete
 	 * 
-	 * Elimina un documento de la base de datos. 
-	 * El documento se identifica por su id
+	 * Elimina un documento de la base de datos. El documento se identifica por su id
 	 * 
-	 * @author 	Ezentis
-	 * @param	Long id Identificador del documento a eliminar
+	 * @author Ezentis
+	 * @param Long id Identificador del documento a eliminar
 	 *
-	 * *************************************/
-	
+	 *************************************/
+
 	@Override
 	public void delete(Long id) {
 		documentoRepository.delete(id);
@@ -42,13 +41,12 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * delete
 	 * 
-	 * Elimina una serie de documentos de la base de datos. 
-	 * Los documentos se identifican por sus id
+	 * Elimina una serie de documentos de la base de datos. Los documentos se identifican por sus id
 	 * 
-	 * @author 	Ezentis
-	 * @param	Iterable<Documento> entities Identificadores de los documentos a eliminar
+	 * @author Ezentis
+	 * @param Iterable<Documento> entities Identificadores de los documentos a eliminar
 	 * 
-	 * *************************************/
+	 *************************************/
 	@Override
 	public void delete(Iterable<Documento> entities) {
 		documentoRepository.delete(entities);
@@ -58,13 +56,12 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * delete
 	 * 
-	 * Elimina una serie de documentos de la base de datos. 
-	 * El documento a eliminar se pasa como parámetro.
+	 * Elimina una serie de documentos de la base de datos. El documento a eliminar se pasa como parámetro.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Documento entity Documento a eliminar
-	 *  
-	 * *************************************/
+	 * @author Ezentis
+	 * @param Documento entity Documento a eliminar
+	 * 
+	 *************************************/
 	@Override
 	public void delete(Documento entity) {
 		documentoRepository.delete(entity);
@@ -76,9 +73,9 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * Elimina todos los documentos de la base de datos
 	 * 
-	 * @author 	Ezentis
+	 * @author Ezentis
 	 *
-	 * *************************************/
+	 *************************************/
 	@Override
 	public void deleteAll() {
 		documentoRepository.deleteAll();
@@ -88,14 +85,14 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * exists
 	 * 
-	 * Localiza un documento identificado por su id en la base de datos.
-	 * Devuelve un booleano con el resultado de la búsqueda.
+	 * Localiza un documento identificado por su id en la base de datos. Devuelve un booleano con el resultado de la
+	 * búsqueda.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Long id	Identificador del documento a buscar
-	 * @return	boolean Resultado de la búsqueda
+	 * @author Ezentis
+	 * @param Long id Identificador del documento a buscar
+	 * @return boolean Resultado de la búsqueda
 	 * 
-	 * *************************************/
+	 *************************************/
 	@Override
 	public boolean exists(Long id) {
 		return documentoRepository.exists(id);
@@ -105,13 +102,12 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * findAll
 	 * 
-	 * Busca todos los documentos almacenados en base de datos
-	 * y los devuelve
+	 * Busca todos los documentos almacenados en base de datos y los devuelve
 	 * 
-	 * @author 	Ezentis
-	 * @return	Iterable<Documento> Todos los documentos almacenados en base de datos 
+	 * @author Ezentis
+	 * @return Iterable<Documento> Todos los documentos almacenados en base de datos
 	 * 
-	 * *************************************/
+	 *************************************/
 	@Override
 	public Iterable<Documento> findAll() {
 		return documentoRepository.findAll();
@@ -121,15 +117,14 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * findAll
 	 * 
-	 * Busca una serie de documentos almacenados en base de datos.
-	 * Los documentos a buscar están identificados por sus id.
-	 * Devuelve los documentos buscados
+	 * Busca una serie de documentos almacenados en base de datos. Los documentos a buscar están identificados por sus
+	 * id. Devuelve los documentos buscados
 	 * 
-	 * @author 	Ezentis
-	 * @param	Iterable<Long> ids Identificadores de los documentos a buscar
-	 * @return	Iterable<Documento> Documentos seleccionados
+	 * @author Ezentis
+	 * @param Iterable<Long> ids Identificadores de los documentos a buscar
+	 * @return Iterable<Documento> Documentos seleccionados
 	 * 
-	 * *************************************/
+	 *************************************/
 	@Override
 	public Iterable<Documento> findAll(Iterable<Long> ids) {
 		return documentoRepository.findAll(ids);
@@ -139,14 +134,13 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * findOne
 	 * 
-	 * Busca un documento en base de datos identificado por su id
-	 * y lu devuelve.
+	 * Busca un documento en base de datos identificado por su id y lu devuelve.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Long id Identificador del documento a localizar
-	 * @return	Documento Documento localizado
+	 * @author Ezentis
+	 * @param Long id Identificador del documento a localizar
+	 * @return Documento Documento localizado
 	 * 
-	 * *************************************/
+	 *************************************/
 	@Override
 	public Documento findOne(Long id) {
 		return documentoRepository.findOne(id);
@@ -156,14 +150,14 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * save
 	 * 
-	 * Guarda una serie de documentos en base de datos. Como parámetro recibe los documentos a guardar 
-	 * y devuelve los documentos guardados.
+	 * Guarda una serie de documentos en base de datos. Como parámetro recibe los documentos a guardar y devuelve los
+	 * documentos guardados.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Iterable<Documento> entities Documentos a salvar
-	 * @return	Iterable<Documento> Documentos salvado
+	 * @author Ezentis
+	 * @param Iterable<Documento> entities Documentos a salvar
+	 * @return Iterable<Documento> Documentos salvado
 	 * 
-	 * *************************************/
+	 *************************************/
 	@Override
 	public Iterable<Documento> save(Iterable<Documento> entities) {
 		return documentoRepository.save(entities);
@@ -173,13 +167,13 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * save
 	 * 
-	 * Guarda un documento en base de datos. Como parámetro recibe el documento a guardar 
-	 * y devuelve el documento guardado.
+	 * Guarda un documento en base de datos. Como parámetro recibe el documento a guardar y devuelve el documento
+	 * guardado.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Documento Documento a guardar
-	 * @return	Documento Documento guardado
-	 * *************************************/
+	 * @author Ezentis
+	 * @param Documento Documento a guardar
+	 * @return Documento Documento guardado
+	 *************************************/
 	@Override
 	public Documento save(Documento entity) {
 		return documentoRepository.save(entity);
@@ -191,59 +185,85 @@ public class DocumentoService implements IDocumentoService {
 	 * 
 	 * Recibe un documento como parámetro y devuelve un stream para realizar la descarga.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Documento Documento a descargar
-	 * @return	DefaultStreamedContent Flujo de descarga
-	 * *************************************/
+	 * @author Ezentis
+	 * @param Documento Documento a descargar
+	 * @return DefaultStreamedContent Flujo de descarga
+	 *************************************/
+	@Override
 	public DefaultStreamedContent descargaDocumento(Documento entity) {
 		InputStream stream = new ByteArrayInputStream(entity.getFichero());
-		return new DefaultStreamedContent(stream, entity.getTipoContenido(),entity.getNombre());	
+		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 	}
-	
+
 	/***************************************
 	 * 
 	 * descargaDocumento
 	 * 
 	 * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
 	 * 
-	 * @author 	Ezentis
-	 * @param	Documento Documento a descargar
-	 * @return	DefaultStreamedContent Flujo de descarga
-	 * *************************************/
+	 * @author Ezentis
+	 * @param Documento Documento a descargar
+	 * @return DefaultStreamedContent Flujo de descarga
+	 *************************************/
+	@Override
 	public DefaultStreamedContent descargaDocumento(Long id) {
-		Documento entity= findOne(id);
+		Documento entity = findOne(id);
 		InputStream stream = new ByteArrayInputStream(entity.getFichero());
-		return new DefaultStreamedContent(stream, entity.getTipoContenido(),entity.getNombre());	
+		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 	}
 
 	/***************************************
 	 * 
 	 * cargaDocumento
 	 * 
-	 * Recibe un evento FileUploadEvent del que recupera los datos para generar un 
-	 * Documento que se almacenará en base da datos. Devuelve el documento almacenado
+	 * Recibe un evento FileUploadEvent del que recupera los datos para generar un Documento que se almacenará en base
+	 * da datos. Devuelve el documento almacenado
 	 * 
-	 * @author 	Ezentis
-	 * @param	FileUploadEvent	
-	 * @return	Documento 
-	 * *************************************/
-	
+	 * @author Ezentis
+	 * @param FileUploadEvent
+	 * @return Documento
+	 *************************************/
+
 	@Override
-	public Documento cargaDocumento(FileUploadEvent event){
-		Documento docu=new Documento();
-		try{
+	public Documento cargaDocumento(FileUploadEvent event) {
+		Documento docu = new Documento();
+		try {
 			docu.setNombre(event.getFile().getFileName());
 			docu.setFichero(event.getFile().getContents());
 			docu.setTipoContenido(event.getFile().getContentType());
 			return documentoRepository.save(docu);
-		}catch (Exception ex){
+		}
+		catch (Exception ex) {
 			log.error("Error en la carga de documentos", ex);
 		}
 		return docu;
 	}
 
-	
-	
-	
-	
+	/***************************************
+	 * 
+	 * cargaDocumento
+	 * 
+	 * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base da
+	 * datos. Devuelve el documento almacenado
+	 * 
+	 * @author Ezentis
+	 * @param UploadedFile
+	 * @return Documento
+	 *************************************/
+
+	@Override
+	public Documento cargaDocumento(UploadedFile file) {
+		Documento docu = new Documento();
+		try {
+			docu.setNombre(file.getFileName());
+			docu.setFichero(file.getContents());
+			docu.setTipoContenido(file.getContentType());
+			return documentoRepository.save(docu);
+		}
+		catch (Exception ex) {
+			log.error("Error en la carga de documentos", ex);
+		}
+		return docu;
+	}
+
 }

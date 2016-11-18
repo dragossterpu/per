@@ -1,10 +1,6 @@
 package es.mira.progesin.web.beans;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +17,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.ToggleEvent;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
@@ -125,8 +120,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private boolean skip;
 
-	private Integer anio;
-
 	private transient StreamedContent file;
 
 	private String fechaAntes;
@@ -172,12 +165,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 			datosApoyo();
 			dirigido();
 
-			solicitudDocumentacionPrevia.setIdentificadorTrimestre(
-					solicitudDocumentacionPrevia.getIdentificadorTrimestre() + " del año " + anio);
 			solicitudDocumentacionPrevia.setNombreSolicitud(nombreSolicitud);
-			solicitudDocumentacionPrevia.setFechaAlta(new Date());
-			solicitudDocumentacionPrevia
-					.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+			// solicitudDocumentacionPrevia.setFechaAlta(new Date());
+			// solicitudDocumentacionPrevia
+			// .setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				RequestContext context = RequestContext.getCurrentInstance();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
@@ -250,9 +241,12 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite dar de alta los documentos seleccionados.
+	 * Método que permite dar de alta los documentos seleccionados al crear una solicitud de documentación. Colección de
+	 * documentos de entre los disponibles en TipoDocumentación que se asignan a la solicitud.
 	 * 
 	 * @author EZENTIS
+	 * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
+	 * @see es.mira.progesin.persistence.entities.DocumentacionPrevia
 	 * @see #crearSolicitud()
 	 */
 	private void altaDocumentos() {
@@ -336,7 +330,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista crearSolicitud
 	 */
 	public String getFormularioCrearSolicitud(ModeloSolicitud modeloSolicitud) {
-		this.anio = null;
 		this.documentosSelecionados = null;
 		this.cuerpoEstado = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
@@ -356,70 +349,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
 		nombreSolicitud = null;
-		anio = null;
 		cuerpoEstado = null;
 		listaSolicitudesPrevia = new ArrayList<>();
-		// insertar();
 		listadoModelosSolicitud = modeloSolicitudService.findAll();
 
-	}
-
-	/**
-	 * Método que permite insertar ficheros desde una ruta local. Utilizado para cargar los modelos de solicitud de
-	 * documentación previa.
-	 * 
-	 * @author EZENTIS
-	 * @see #init()
-	 */
-	public void insertar() {
-		try {
-
-			File directory = new File("C:\\Users\\Admin\\Desktop\\Documentación IPSS\\preenvioCuestionarios");
-
-			File[] listaFicheros = directory.listFiles();
-			for (int i = 0; i < listaFicheros.length; i++) {
-				File fichero = listaFicheros[i];
-
-				// Obtiene el contenido del fichero en []bytes
-				byte[] data = Files.readAllBytes(fichero.toPath());
-				ModeloSolicitud modeloSolicitud = new ModeloSolicitud();
-				modeloSolicitud.setCodigo("codigo");
-				modeloSolicitud.setDescripcion(
-						fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
-				modeloSolicitud.setNombreFichero(fichero.getName());
-				modeloSolicitud.setExtension(
-						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
-				// Blob fichero = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
-				modeloSolicitud.setFichero(data);
-				modeloSolicitudService.save(modeloSolicitud);
-			}
-		}
-		catch (Exception e) {
-			altaRegActivError(e);
-		}
-	}
-
-	/**
-	 * Método que permite descargar el fichero seleccionado.
-	 * 
-	 * @author EZENTIS
-	 * @param modeloSolicitud
-	 */
-	public void descargarFichero(ModeloSolicitud modeloSolicitud) {
-		try {
-			InputStream stream = new ByteArrayInputStream(modeloSolicitud.getFichero());
-			String contentType = "application/msword";
-			if ("pdf".equals(modeloSolicitud.getExtension())) {
-				contentType = "application/pdf";
-			}
-			else if (modeloSolicitud.getExtension().startsWith("xls")) {
-				contentType = "application/x-msexcel";
-			}
-			file = new DefaultStreamedContent(stream, contentType, modeloSolicitud.getNombreFichero());
-		}
-		catch (Exception e) {
-			altaRegActivError(e);
-		}
 	}
 
 	/**
@@ -525,6 +458,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param modeloSolicitud
 	 */
 	public void eliminarModeloSolicitud(ModeloSolicitud modeloSolicitud) {
+		documentoService.delete(modeloSolicitud.getIdDocumento());
 		modeloSolicitudService.delete(modeloSolicitud.getId());
 		this.listadoModelosSolicitud = null;
 		listadoModelosSolicitud = modeloSolicitudService.findAll();
@@ -537,6 +471,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @param solicitudDocumentacionPrevia solicitud a eliminar
 	 */
 	public void eliminarSolicitudDocumentacion(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
+		// TODO ¿Eliminar documentos asociados si los tiene?
 		solicitudDocumentacionService.delete(solicitudDocumentacionPrevia.getId());
 		this.listaSolicitudesPrevia = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAll();
@@ -548,20 +483,17 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @author EZENTIS
 	 */
 	public void altaModeloSolicitud() {
-		if (ficheroNuevo != null && !"".equals(ficheroNuevo.getFileName().trim())) {
+
+		if (ficheroNuevo != null && !"".equals(ficheroNuevo.getFileName())) {
 			try {
 				ModeloSolicitud modeloSolicitud = new ModeloSolicitud();
 				modeloSolicitud.setCodigo("codigo");
-				modeloSolicitud.setFichero(ficheroNuevo.getContents());
 				modeloSolicitud.setDescripcion(ficheroNuevo.getFileName()
 						.substring(0, ficheroNuevo.getFileName().lastIndexOf('.')).toUpperCase());
 				modeloSolicitud.setNombreFichero(ficheroNuevo.getFileName());
-				modeloSolicitud.setExtension(ficheroNuevo.getFileName()
-						.substring(ficheroNuevo.getFileName().lastIndexOf('.') + 1).toLowerCase());
-				// Obtiene el contenido del fichero en []bytes
-				modeloSolicitud.setFichero(ficheroNuevo.getContents());
+				modeloSolicitud.setExtension(Utilities.getExtensionTipoContenido(ficheroNuevo.getContentType()));
 
-				if (modeloSolicitudService.save(modeloSolicitud) != null) {
+				if (modeloSolicitudService.transaccSaveGuardaDoc(modeloSolicitud, ficheroNuevo) != null) {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 							"El modelo de solicitud de documentación ha sido creada con éxito");
 				}
@@ -759,6 +691,18 @@ public class SolicitudDocPreviaBean implements Serializable {
 		//
 
 		return result;
+	}
+
+	/**
+	 * Método que comprueba si la solicitud de documentación ya ha sido validada por apoyo. En caso de ser así se
+	 * bloquea la modificación de solicitud.
+	 * 
+	 * @author EZENTIS
+	 * @param solicitud
+	 * @return result booleano
+	 */
+	public boolean estaValidadaApoyo(SolicitudDocumentacionPrevia solicitud) {
+		return solicitud.getFechaValidApoyo() != null;
 	}
 
 }

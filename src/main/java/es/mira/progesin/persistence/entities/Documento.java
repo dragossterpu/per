@@ -17,6 +17,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entidad Documento. Cualquier archivo subido a la aplicación se almacena en esta tabla.
+ * 
+ * @author EZENTIS
+ * @see es.mira.progesin.persistence.entities.ModeloSolicitud
+ * @see es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion
+ * @see es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario
+ * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
+ * @see es.mira.progesin.web.beans.ProvisionalSolicitudBean
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -44,7 +54,7 @@ public class Documento implements Serializable {
 
 	@Column(name = "tipoContenido", nullable = false)
 	private String tipoContenido;
-	
+
 	@Column(name = "nombre")
 	private String nombre;
 }

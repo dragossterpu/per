@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import es.mira.progesin.persistence.entities.Documento;
 
@@ -25,11 +26,13 @@ public interface IDocumentoService {
 	Iterable<Documento> save(Iterable<Documento> entities);
 
 	Documento save(Documento entity);
-	
+
 	DefaultStreamedContent descargaDocumento(Documento entity);
-	
+
 	DefaultStreamedContent descargaDocumento(Long id);
-	
+
 	Documento cargaDocumento(FileUploadEvent event);
-	
+
+	Documento cargaDocumento(UploadedFile file);
+
 }

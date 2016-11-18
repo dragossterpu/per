@@ -240,7 +240,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-						"Solicitud de documentación cumplimentada con éxito");
+						"Solicitud de documentación cumplimentada con éxito. Su sesión ha finalizado.");
 			}
 
 		}
@@ -249,7 +249,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
 			altaRegActivError(e);
 		}
-		return "/index";
+		return "/login/logout";
 
 	}
 

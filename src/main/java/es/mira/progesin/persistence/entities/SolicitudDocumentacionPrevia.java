@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -23,6 +28,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * POJO Solicitud de documentación previa basada en un modelo de solicitud y asociada a una inspección. Por cada
+ * solicitud podrá haber documentación previa que el interlocutor de una unidad deberá subir, por medio de un usuario
+ * provisional.
+ * 
+ * @author EZENTIS
+ * @see es.mira.progesin.persistence.entities.ModeloSolicitud
+ * @see es.mira.progesin.persistence.entities.Inspeccion
+ * @see es.mira.progesin.persistence.entities.DocumentacionPrevia
+ * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
+ * @see es.mira.progesin.web.beans.ProvisionalSolicitudBean
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -62,8 +79,12 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "tipoInspeccion")
 	private String tipoInspeccion;
 
-	@Column(name = "identificadorTrimestre")
-	private String identificadorTrimestre;
+	@Column(name = "cuatrimestre")
+	@Enumerated(EnumType.STRING)
+	private CuatrimestreEnum cuatrimestre;
+
+	@Column(name = "anio")
+	private Integer anio;
 
 	@Column(name = "fechaAntes")
 	private Date fechaAntes;
@@ -83,10 +104,12 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "apoyoCorreo")
 	private String apoyoCorreo;
 
+	@CreatedDate
 	@Column(name = "fechaAlta")
 	private Date fechaAlta;
 
-	@Column(name = "username_alta", length = 12, nullable = false)
+	@CreatedBy
+	@Column(name = "username_alta", nullable = false)
 	private String usernameAlta;
 
 	@Column(name = "fecha_envio")

@@ -275,7 +275,13 @@ public class Utilities {
 			extension = "XLSX";
 			break;
 		case "image/jpeg":
-			extension = "JPG";
+			extension = "JPEG";
+			break;
+		case "image/png":
+			extension = "PNG";
+			break;
+		case "image/bmp":
+			extension = "BMP";
 			break;
 		case "application/x-mspublisher":
 			extension = "PUB";

@@ -135,7 +135,7 @@
 								action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
 						</p:column>
 						<p:column width="30" exportable="false">
-							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>	
+							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" disabled="#{solicitudDocPreviaBean.estaValidadaApoyo(solicitud)}"/>	
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"
