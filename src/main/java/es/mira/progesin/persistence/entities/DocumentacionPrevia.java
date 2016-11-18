@@ -17,9 +17,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * POJO Tipo de documento relacionado con una solicitud de documentación previa en concreto al ser ésta creada. Al ser
- * enviada la solicitud, el interlocutor de la unidad a inspeccionar, con un usuario provisional, debe subir la
- * documentación ajustándose a dichos documentos tanto en nombre como en tipo.
+ * Entidad DocumentacionPrevia. Tipo de documentación relacionada con una solicitud de documentación previa en concreto.
  * 
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
@@ -37,7 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Entity
 @Table(name = "DOCUMENTACION_PREVIA", schema = "public")
-
+// Tipo de documento relacionado con una solicitud de documentación previa en concreto al ser ésta creada. Al ser
+// enviada la solicitud, el interlocutor de la unidad a inspeccionar debe subir la documentación, con un usuario
+// provisional, ajustándose a dichos documentos tanto en nombre como en tipo.
 public class DocumentacionPrevia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
