@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
@@ -163,6 +164,13 @@ public class UserService implements IUserService {
 	@Override
 	public List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv) {
 		return userRepository.findByfechaBajaIsNullAndRoleNotIn(rolesProv);
+	}
+
+	@Override
+	public void cambiarEstado(String usuario, EstadoEnum estado) {
+		User user = userRepository.findOne(usuario);
+		user.setEstado(estado);
+		userRepository.save(user);
 	}
 
 }

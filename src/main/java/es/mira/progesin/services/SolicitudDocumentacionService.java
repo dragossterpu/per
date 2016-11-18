@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
@@ -119,50 +120,28 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	@Transactional(readOnly = false)
 	public boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			User usuarioProv) {
-		boolean result = false;
-		try {
-			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-			// TODO cambiar la creacion de usuario provisional
-			userService.save(usuarioProv);
-			result = true;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-		return result;
+		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+		// TODO cambiar la creacion de usuario provisional
+		userService.save(usuarioProv);
+		return true;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public boolean transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String usuarioProv) {
-		boolean result = false;
-		try {
-			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-			userService.delete(usuarioProv);
-			result = true;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-		return result;
+		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+		userService.delete(usuarioProv);
+		return true;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String usuarioProv) {
-		boolean result = false;
-		try {
-			solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-			// TODO Desactivar usuario provisional al enviar solicitud cumplimentada
-			// userService.inactivo(usuarioProv);
-			result = true;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-		return result;
+		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+		userService.cambiarEstado(usuarioProv, EstadoEnum.INACTIVO);
+		return true;
 	}
 
 }

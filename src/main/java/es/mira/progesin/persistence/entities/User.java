@@ -112,14 +112,14 @@ public class User implements Serializable {
 	protected Date fechaInactivo;
 
 	@CreatedBy
-	@Column(name = "username_alta", length = 12, nullable = false)
+	@Column(name = "username_alta", nullable = false)
 	protected String usernameAlta;
 
 	@LastModifiedBy
-	@Column(name = "username_modif", length = 12)
+	@Column(name = "username_modif")
 	protected String usernameModif;
 
-	@Column(name = "username_baja", length = 12)
+	@Column(name = "username_baja")
 	protected String usernameBaja;
 
 }

@@ -16,6 +16,17 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * POJO Tipo de documento relacionado con una solicitud de documentación previa en concreto al ser ésta creada. Al ser
+ * enviada la solicitud, el interlocutor de la unidad a inspeccionar, con un usuario provisional, debe subir la
+ * documentación ajustándose a dichos documentos tanto en nombre como en tipo.
+ * 
+ * @author EZENTIS
+ * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
+ * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
+ * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
+ * @see es.mira.progesin.web.beans.ProvisionalSolicitudBean
+ */
 @Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
