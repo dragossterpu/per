@@ -62,10 +62,6 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "asunto")
 	private String asunto;
 
-	// TODO Borrar este campo
-	@Column(name = "numeroReferencia")
-	private String numeroReferencia;
-
 	@ManyToOne
 	@JoinColumn(name = "id_inspeccion")
 	private Inspeccion inspeccion;

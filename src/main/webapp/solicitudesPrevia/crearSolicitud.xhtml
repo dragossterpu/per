@@ -25,12 +25,12 @@
 								<p:messages />
 								<h:panelGrid columns="2" columnClasses="label, value">
 
-									<h:outputLabel for="numeroReferencia" value="N/Ref (*):"
+									<h:outputLabel for="numeroInspeccion" value="Nº Inspección (*):"
 										style="font-weight: normal;" />
-									<p:inputText id="numeroReferencia"
-										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.numeroReferencia}"
+									<p:inputText id="numeroInspeccion"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero}"
 										required="true"
-										requiredMessage="Es obligatorio un numero de referencia"
+										requiredMessage="Es obligatorio un numero de inspección"
 										converter="#{trimConverter}" />
 
 									<h:outputLabel for="asunto" value="Asunto (*):"
