@@ -249,7 +249,6 @@ insert into documentos (id, fichero, tipo_contenido, nombre) values (5, bytea_im
 insert into documentos (id, fichero, tipo_contenido, nombre) values (6, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (7, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (8, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'),'application/msword','CUESTIONARIO PRLCNP.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (9, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES _ TIPOS RESPUESTA.doc'),'application/msword','CUESTIONARIO.CIES _ TIPOS RESPUESTA.doc');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (10, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'),'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (11, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (12, bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
@@ -534,3 +533,10 @@ insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASA
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo3#NUM_SALIDAS');
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo4#MOTIVOS');
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo5#PRUEBA');
+
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, username_creacion) VALUES (1, '01/11/2016', '1/2017', 'silpe');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, username_creacion) VALUES (11, '01/11/2016', '11/2017', 'silpe');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, username_creacion) VALUES (101, '01/11/2016', '101/2017', 'silpe');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, username_creacion) VALUES (10, '01/11/2016', '10/2017', 'silpe');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, username_creacion) VALUES (12, '01/11/2016', '12/2017', 'silpe');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, username_creacion) VALUES (150, '01/11/2016', '150/2017', 'silpe');

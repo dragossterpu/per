@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
@@ -26,4 +27,5 @@ public interface ISolicitudDocumentacionService {
 	boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String usuarioProv);
 
+	SolicitudDocumentacionPrevia findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion);
 }

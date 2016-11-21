@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<h3>Envío de cuestionario</h3>
+			
+			<div class="aclaraciones">
+				Los campos marcados con (*) son obligatorios
+			</div>
+
+			<h:form id="envioCuestionario" >
+		
+				<div class="bloqueFormulario">
+					<h:outputLabel for="inspecc" value="Número de inspección (*):" />
+					<p:autoComplete id="inspecc" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}"
+                        var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
+                        required="true" requiredMessage="Introduzca el número de inspección"/>
+					<p:messages for="inspecc" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="nombre" value="Nombre (*):" />
+					<p:inputText id="nombre" value="#{envioCuestionarioBean.cuestionarioEnvio.nombreUsuarioEnvio}" maxlength="500"
+						required="true" requiredMessage="Introduzca el nombre de la persona a la que va dirigido el cuestionario"
+						converter="#{trimConverter}"/>
+					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="cargo" value="Cargo:" />
+					<p:inputText id="cargo" value="#{envioCuestionarioBean.cuestionarioEnvio.cargo}" maxlength="500" converter="#{trimConverter}"/>
+					
+					<h:outputLabel for="correo" value="Correo electrónico (*):" />
+					<p:inputText id="correo" value="#{envioCuestionarioBean.cuestionarioEnvio.correoEnvio}" maxlength="500"
+						required="true" requiredMessage="Introduzca el correo electrónico" converter="#{trimConverter}"
+						validatorMessage="Formato de correo incorrecto">
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
+					<p:messages for="correo" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
+					<p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000"
+						counter="contador" counterTemplate="Quedan {0} caractares."
+						required="true" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}"/>
+					<p:outputLabel id="contador"/>
+					<p:messages for="motivo" autoUpdate="true"  closable="true"/>
+				</div>
+			
+				<div class="botonesFormulario">
+					<p:commandButton actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>
+					<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+				</div>
+				
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+					<p:ajax event="close" listener="#{facesUtilities.redirect('/index')}" />
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/index')}" />
+					</div>
+				</p:dialog>
+				
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

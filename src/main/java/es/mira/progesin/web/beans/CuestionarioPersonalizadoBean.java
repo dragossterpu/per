@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnviado;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
@@ -45,10 +47,8 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	// para la visualización
 	private CuestionarioPersonalizado cuestionarioPersonalizado;
 
-	// private Map<Long, List<PreguntasCuestionario>> mapaAreaPreguntas;
 	private Map<AreasCuestionario, List<PreguntasCuestionario>> mapaAreaPreguntas;
 
-	// private List<Long> areas;
 	private List<AreasCuestionario> areas;
 
 	@Autowired
@@ -60,12 +60,17 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	@Autowired
 	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
 
+	@Autowired
+	EnvioCuestionarioBean envioCuestionarioBean;
+
 	// Tipos de respuesta
 	private List<DatosTablaGenerica> listaTablaSalidas;
 
 	private Map<PreguntasCuestionario, String> mapaRespuestas;
 
 	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
+
+	// private CuestionarioEnviado cuestionarioEnvio;
 
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
@@ -134,9 +139,15 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	 * @param cuestionario Cuestionario a enviar
 	 * @return Nombre de la vista del formulario de envío
 	 */
-	public String enviar(CuestionarioPersonalizado cuestionario) {
-		System.out.println("enviar");
-		return null;
+	public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
+		// cuestionarioEnvio = new CuestionarioEnviado();
+		// EnvioCuestionarioBean envioCuestionarioBean = new EnvioCuestionarioBean();
+		CuestionarioEnviado cuestionarioEnvio = new CuestionarioEnviado();
+		cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
+		Inspeccion inspeccion = new Inspeccion();
+		cuestionarioEnvio.setInspeccion(inspeccion);
+		envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
+		return "/cuestionarios/enviarCuestionario";
 	}
 
 	/**

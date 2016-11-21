@@ -103,7 +103,7 @@
 						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioPersonalizadoBean.visualizar(cuestionario)}" />
 					</p:column>
 					<p:column width="30" exportable="false">
-						<h:commandLink title="Enviar" styleClass="fa fa-fw fa-envelope-o ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioPersonalizadoBean.enviar(cuestionario)}" />
+						<h:commandLink title="Enviar" action="#{cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario)}" styleClass="fa fa-fw fa-envelope-o ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" />
 					</p:column>
 					
 					<f:facet name="footer">

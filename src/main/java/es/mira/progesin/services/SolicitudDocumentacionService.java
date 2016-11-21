@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -142,6 +143,11 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
 		userService.cambiarEstado(usuarioProv, EstadoEnum.INACTIVO);
 		return true;
+	}
+
+	@Override
+	public SolicitudDocumentacionPrevia findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion) {
+		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNotNullAndInspeccion(inspeccion);
 	}
 
 }
