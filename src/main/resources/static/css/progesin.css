@@ -46,6 +46,16 @@
 .ui-wizard-step-title {
     font-size: 14px;
 }
+
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
+    cursor: not-allowed;
+    background-color: #eee !important;
+}
+
+ ui-datepicker-unselectable ui-state-disabled {
+	opacity: 0.35 !important;
+}
+
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {
@@ -272,3 +282,4 @@ select {
 .inputsCuestionario {
 	width: 90%;
 }
+
