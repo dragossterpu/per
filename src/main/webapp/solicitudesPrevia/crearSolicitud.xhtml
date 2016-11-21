@@ -24,15 +24,15 @@
 								<br></br>
 								<p:messages />
 								<h:panelGrid columns="2" columnClasses="label, value">
-
-									<h:outputLabel for="numeroInspeccion" value="Nº Inspección (*):"
-										style="font-weight: normal;" />
-									<p:inputText id="numeroInspeccion"
-										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero}"
-										required="true"
-										requiredMessage="Es obligatorio un número de inspección"
-										converter="#{trimConverter}" />
-
+								
+									<h:outputLabel for="numeroInspeccion" value="Número de inspección (*):" />
+									<p:autoComplete id="numeroInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
+				                        var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
+				                        required="true" requiredMessage="Introduzca el número de inspección"/>
+									
+									<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" style="font-weight: normal;" />
+									<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion}" disabled="true"/>
+										
 									<h:outputLabel for="asunto" value="Asunto (*):"
 										style="font-weight: normal;" />
 									<p:inputText id="asunto"
@@ -95,14 +95,6 @@
 										<f:selectItem itemLabel="POLICÍA NACIONAL" itemValue="PN" />
 										<f:selectItem itemLabel="OTRO" itemValue="O" />
 									</p:selectOneMenu>
-
-									<h:outputLabel for="tipoInspeccion"
-										value="Carácter inspección (*):" style="font-weight: normal;" />
-									<p:inputText id="tipoInspeccion"
-										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}"
-										required="true"
-										requiredMessage="Es obligatorio el caracter de inspección"
-										converter="#{trimConverter}" />
 
 									<h:outputLabel for="fechaAntes"
 										value="Fecha límite envío documentación (*):"

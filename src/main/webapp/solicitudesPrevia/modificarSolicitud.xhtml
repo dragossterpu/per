@@ -20,9 +20,14 @@
 					<h4>Datos Personales</h4>
 					<p:messages />
 					<div class="columnaIzdaFormulario">
-						<h:outputLabel for="numeroInspeccion" value="Nº Inspección (*):" />
-						<p:inputText id="numeroInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero}" required="true" requiredMessage="Es obligatorio un número de inspección" converter="#{trimConverter}"/>
-						
+						<h:outputLabel for="numeroInspeccion" value="Número de inspección (*):" />
+						<p:autoComplete id="numeroInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
+	                        var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
+	                        required="true" requiredMessage="Introduzca el número de inspección"/>
+	                        
+						<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
+						<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion}" disabled="true"/>
+							
 						<h:outputLabel for="asunto" value="Asunto (*):" />
 						<p:inputText id="asunto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}"/>
 										
@@ -47,9 +52,6 @@
 						
 						<h:outputLabel for="anio" value="Año (*):" />
 						<p:inputNumber id="anio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}" required="true" requiredMessage="Es obligatorio un año" maxValue="9999" decimalSeparator="" thousandSeparator="" decimalPlaces="0" />
-						
-						<h:outputLabel for="tipoInspeccion" value="Carácter inspección (*):" />
-						<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.tipoInspeccion}" required="true" requiredMessage="Es obligatorio el caracter de inspección" converter="#{trimConverter}"/>
 											
 						<h:outputLabel for="fechaAntes" value="Fecha límite envío documentación (*):" />
 						<p:calendar id="fechaAntes" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación"/>

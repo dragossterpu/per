@@ -72,9 +72,6 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "correoDestiantario")
 	private String correoDestiantario;
 
-	@Column(name = "tipoInspeccion")
-	private String tipoInspeccion;
-
 	@Column(name = "cuatrimestre")
 	@Enumerated(EnumType.STRING)
 	private CuatrimestreEnum cuatrimestre;

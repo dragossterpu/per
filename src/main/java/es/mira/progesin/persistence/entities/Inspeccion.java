@@ -50,6 +50,9 @@ public class Inspeccion implements Serializable {
 	@Column(name = "numero", length = 100, nullable = false)
 	private String numero;
 
+	@Column(name = "tipoInspeccion")
+	private String tipoInspeccion;
+
 	// Lo comento de momento para poder crear inspecciones
 	// @ManyToOne
 	// @JoinColumn(name = "id_equipo")

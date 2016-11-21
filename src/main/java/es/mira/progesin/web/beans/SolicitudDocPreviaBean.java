@@ -26,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.ModeloSolicitud;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegActividad;
@@ -37,6 +38,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
+import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloSolicitudService;
 import es.mira.progesin.services.INotificacionService;
@@ -116,7 +118,12 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	transient ITipoDocumentacionService tipoDocumentacionService;
 
+	@Autowired
+	private IInspeccionesRepository inspeccionRepository;
+
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+
+	Inspeccion inspeccion = new Inspeccion();
 
 	private boolean skip;
 
@@ -352,7 +359,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		cuerpoEstado = null;
 		listaSolicitudesPrevia = new ArrayList<>();
 		listadoModelosSolicitud = modeloSolicitudService.findAll();
-
+		solicitudDocumentacionPrevia.setInspeccion(inspeccion);
 	}
 
 	/**
@@ -703,6 +710,17 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public boolean estaValidadaApoyo(SolicitudDocumentacionPrevia solicitud) {
 		return solicitud.getFechaValidApoyo() != null;
+	}
+
+	/**
+	 * Método que devuelve una lista con las inspecciones cuyo número contienen alguno de los caracteres pasado como
+	 * parámetro. Se usa en el formulario de envío para el autocompletado.
+	 * 
+	 * @param numeroInspeccion Número de inspección que teclea el usuario en los formularios de creación y modificación
+	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el número introducido
+	 */
+	public List<Inspeccion> autocompletarInspeccion(String numeroInspeccion) {
+		return inspeccionRepository.findByNumeroLike("%" + numeroInspeccion + "%");
 	}
 
 }
