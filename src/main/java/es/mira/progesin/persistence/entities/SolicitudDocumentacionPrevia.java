@@ -138,9 +138,6 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "telefonoInterlocutor")
 	private String telefonoInterlocutor;
 
-	@Column(name = "mensajeCorreo")
-	private String mensajeCorreo;
-
 	@Column(name = "fechaFinalizacion")
 	private Date fechaFinalizacion;
 

@@ -84,19 +84,6 @@
 										required="true" requiredMessage="Es obligatorio un año"
 										maxValue="9999" decimalSeparator=""
 										thousandSeparator="" decimalPlaces="0" />
-										
-									<h:outputLabel for="cuerpoEstado" value="Cuerpo estado (*):"
-										style="font-weight: normal;" />
-									<p:selectOneMenu id="cuerpoEstado"
-										value="#{solicitudDocPreviaBean.cuerpoEstado}" effect="fold"
-										width="50" required="true"
-										requiredMessage="Seleccione el cuerpo de estado"
-										converter="#{selectConverter}">
-										<f:selectItem itemLabel="Seleccione uno: " itemValue="" />
-										<f:selectItem itemLabel="GUARDIA CIVIL" itemValue="GC" />
-										<f:selectItem itemLabel="POLICÍA NACIONAL" itemValue="PN" />
-										<f:selectItem itemLabel="OTRO" itemValue="O" />
-									</p:selectOneMenu>
 
 									<h:outputLabel for="fechaAntes"
 										value="Fecha límite envío documentación (*):"
@@ -104,7 +91,7 @@
 									<p:calendar id="fechaAntes"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}"
 										pattern="dd/MM/yyyy"
-										mindate="#{solicitudDocPreviaBean.fechaActual}"
+										mindate="#{Utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite envío documentación" />
 
@@ -114,7 +101,7 @@
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
 										pattern="dd/MM/yyyy"
-										mindate="#{solicitudDocPreviaBean.fechaActual}"
+										mindate="#{Utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" />
 								</h:panelGrid>

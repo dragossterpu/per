@@ -4,7 +4,6 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 public interface ISolicitudDocumentacionService {
@@ -20,7 +19,7 @@ public interface ISolicitudDocumentacionService {
 	List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(
 			SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
 
-	boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, User usuarioProv);
+	boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, String password);
 
 	boolean transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, String usuarioProv);
 

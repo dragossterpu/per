@@ -32,7 +32,6 @@ import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
@@ -78,8 +77,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private List<User> listaUsuarios;
 
 	private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
-
-	private Date fechaActual = new Date();
 
 	private Date fechaDesde;
 
@@ -135,8 +132,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private String fechaEmision;
 
-	private String cuerpoEstado;
-
 	transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
 
 	transient List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
@@ -170,12 +165,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 		try {
 			datosApoyo();
-			dirigido();
 
 			solicitudDocumentacionPrevia.setNombreSolicitud(nombreSolicitud);
-			// solicitudDocumentacionPrevia.setFechaAlta(new Date());
-			// solicitudDocumentacionPrevia
-			// .setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				RequestContext context = RequestContext.getCurrentInstance();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
@@ -201,25 +192,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 		}
 		return "solicitudesPrevia/modelosSolicitud";
 
-	}
-
-	/**
-	 * Método que muestra el mensaje para quien está dirigida la solicitud.
-	 * 
-	 * @author EZENTIS
-	 * @see #crearSolicitud()
-	 */
-	private void dirigido() {
-		if ("GC".trim().equals(cuerpoEstado)) {
-			solicitudDocumentacionPrevia
-					.setMensajeCorreo("(cuenta corporativa guardiacivil.org o guardiacivil.es, no cuenta personal).");
-		}
-		else if ("PN".trim().equals(cuerpoEstado)) {
-			solicitudDocumentacionPrevia.setMensajeCorreo("(cuenta corporativa policia.es, no cuenta personal).");
-		}
-		else {
-			solicitudDocumentacionPrevia.setMensajeCorreo("(no cuenta personal).");
-		}
 	}
 
 	/**
@@ -338,7 +310,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String getFormularioCrearSolicitud(ModeloSolicitud modeloSolicitud) {
 		this.documentosSelecionados = null;
-		this.cuerpoEstado = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		nombreSolicitud = modeloSolicitud.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
@@ -356,7 +327,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
 		nombreSolicitud = null;
-		cuerpoEstado = null;
 		listaSolicitudesPrevia = new ArrayList<>();
 		listadoModelosSolicitud = modeloSolicitudService.findAll();
 		solicitudDocumentacionPrevia.setInspeccion(inspeccion);
@@ -581,12 +551,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String enviarSolicitud() {
 
 		String password = Utilities.getPassword();
-		User usuarioProv = userProvisionalSolicitud(password);
 
 		solicitudDocumentacionPrevia.setFechaEnvio(new Date());
 		solicitudDocumentacionPrevia.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
 
-		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, password)) {
 			System.out.println("Password usuario provisional  : " + password);
 
 			String asunto = "Usuario provisional solicitud documentación";
@@ -607,32 +576,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 			context.execute(dialogMessage);
 		}
 		return VISTASOLICITUD;
-	}
-
-	/**
-	 * Método que crea un usuario provisional al enviarse una solicitud de documentación previa, de forma que ésta pueda
-	 * ser cumplimentada. Sus credenciales son el correo electrónico como username y una contraseña generada
-	 * automáticamente. Dado que su rol es PROV_SOLICITUD, no se le permite alterar ningún dato de su perfil ni acceder
-	 * a otra acción que no sea la de cumplimentar la solicitud.
-	 * 
-	 * @author EZENTIS
-	 * @see #enviarSolicitud()
-	 */
-	private User userProvisionalSolicitud(String password) {
-		User user = new User();
-		user.setFechaAlta(new Date());
-		user.setUsername(solicitudDocumentacionPrevia.getCorreoDestiantario());
-		user.setPassword(passwordEncoder.encode(password));
-		user.setEstado(EstadoEnum.ACTIVO);
-		user.setUsernameAlta(system);
-		user.setNombre("Provisional");
-		user.setApellido1("Solicitud documentación");
-		user.setDocIndentidad(system);
-		user.setCorreo(solicitudDocumentacionPrevia.getCorreoDestiantario());
-		user.setRole(RoleEnum.PROV_SOLICITUD);
-		user.setNumIdentificacion(system);
-		user.setEnvioNotificacion("NO");
-		return user;
 	}
 
 	/**
