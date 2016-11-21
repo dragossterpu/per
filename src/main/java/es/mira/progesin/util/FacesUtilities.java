@@ -25,12 +25,13 @@ public class FacesUtilities {
 		String url = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, pagina));
 
 		try {
-		     extContext.redirect(url);
-		} catch (IOException ioe) {
-		    throw new FacesException(ioe);
+			extContext.redirect(url);
+		}
+		catch (IOException ioe) {
+			throw new FacesException(ioe);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param severity
@@ -42,5 +43,10 @@ public class FacesUtilities {
 		FacesMessage message = new FacesMessage(severity, summary, detail);
 		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 		context.execute("PF('dialogMessage').show()");
+	}
+
+	public static void setMensajeInformativo(Severity severity, String summary, String detail, String idMensaje) {
+		FacesMessage message = new FacesMessage(severity, summary, detail);
+		FacesContext.getCurrentInstance().addMessage(idMensaje, message);
 	}
 }

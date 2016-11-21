@@ -9,7 +9,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +23,6 @@ import es.mira.progesin.web.beans.UserBusqueda;
 public class UserService implements IUserService {
 	@Autowired
 	private IUserRepository userRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -177,23 +173,6 @@ public class UserService implements IUserService {
 		User user = userRepository.findOne(username);
 		user.setEstado(estado);
 		userRepository.save(user);
-	}
-
-	@Override
-	public User crearUsuarioProvisional(String username, String password, RoleEnum role) {
-		User user = new User();
-		user.setUsername(username);
-		user.setPassword(passwordEncoder.encode(password));
-		user.setRole(role);
-		user.setEstado(EstadoEnum.ACTIVO);
-		user.setNombre(PROVISIONAL);
-		user.setApellido1(PROVISIONAL);
-		user.setDocIndentidad(PROVISIONAL);
-		user.setCorreo(username);
-		user.setNumIdentificacion(PROVISIONAL);
-		user.setEnvioNotificacion("NO");
-		userRepository.save(user);
-		return user;
 	}
 
 }

@@ -43,6 +43,4 @@ public interface IUserService {
 
 	void cambiarEstado(String usuarioProv, EstadoEnum estado);
 
-	User crearUsuarioProvisional(String username, String password, RoleEnum role);
-
 }

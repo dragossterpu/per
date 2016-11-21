@@ -28,9 +28,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -44,6 +42,8 @@ import lombok.extern.slf4j.Slf4j;
 // @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private static final String PROVISIONAL = "provisional";
 
 	@Id
 	@Column(name = "username")
@@ -122,4 +122,16 @@ public class User implements Serializable {
 	@Column(name = "username_baja")
 	protected String usernameBaja;
 
+	public User(String username, String password, RoleEnum role) {
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setRole(role);
+		this.setEstado(EstadoEnum.ACTIVO);
+		this.setNombre(PROVISIONAL);
+		this.setApellido1(PROVISIONAL);
+		this.setDocIndentidad(PROVISIONAL);
+		this.setCorreo(username);
+		this.setNumIdentificacion(PROVISIONAL);
+		this.setEnvioNotificacion("NO");
+	}
 }
