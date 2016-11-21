@@ -26,8 +26,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "REG_ACTIVIDAD", schema = "public")
-public class RegActividad implements Serializable {
+@Table(name = "REG_ACTIVIDAD")
+public class RegistroActividad implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

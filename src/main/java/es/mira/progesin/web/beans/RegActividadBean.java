@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,19 +29,19 @@ public class RegActividadBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<RegActividad> listaRegActividad;
+	private List<RegistroActividad> listaRegActividad;
 
 	private final String NOMBRESECCION = "Registros de actividad";
 
 	private List<Boolean> list;
 
-	private RegActividad regActividad;
+	private RegistroActividad regActividad;
 
 	private Integer numColListRegActividad = 5;
 
 	private RegActividadBusqueda regActividadBusqueda;
 
-	public void eliminarRegActividad(RegActividad regActividad) {
+	public void eliminarRegActividad(RegistroActividad regActividad) {
 		regActividad.setFechaBaja(new Date());
 		regActividad.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
@@ -56,13 +56,13 @@ public class RegActividadBean implements Serializable {
 	}
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	@Autowired
 	ApplicationBean applicationBean;
 
 	public void buscarRegActividad() {
-		List<RegActividad> listaRegActividad = regActividadService.buscarRegActividadCriteria(regActividadBusqueda);
+		List<RegistroActividad> listaRegActividad = regActividadService.buscarRegActividadCriteria(regActividadBusqueda);
 		regActividadBusqueda.setListaRegActividad(listaRegActividad);
 	}
 
@@ -89,7 +89,7 @@ public class RegActividadBean implements Serializable {
 	 * @param e
 	 */
 	private void altaRegActivError(Exception e) {
-		RegActividad regActividad = new RegActividad();
+		RegistroActividad regActividad = new RegistroActividad();
 		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
 		String message = Utilities.messageError(e);
 		regActividad.setFechaAlta(new Date());

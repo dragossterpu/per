@@ -29,7 +29,7 @@ import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.ModeloSolicitud;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -42,7 +42,7 @@ import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloSolicitudService;
 import es.mira.progesin.services.INotificacionService;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
@@ -73,7 +73,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	static String system = "system";
 
-	RegActividad regActividad = new RegActividad();
+	RegistroActividad regActividad = new RegistroActividad();
 
 	private List<User> listaUsuarios;
 
@@ -94,7 +94,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	@Autowired
 	transient INotificacionService notificacionService;

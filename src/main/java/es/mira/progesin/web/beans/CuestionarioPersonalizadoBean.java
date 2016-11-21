@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
-import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnviado;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
@@ -142,7 +142,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
 		// cuestionarioEnvio = new CuestionarioEnviado();
 		// EnvioCuestionarioBean envioCuestionarioBean = new EnvioCuestionarioBean();
-		CuestionarioEnviado cuestionarioEnvio = new CuestionarioEnviado();
+		CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
 		cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
 		Inspeccion inspeccion = new Inspeccion();
 		cuestionarioEnvio.setInspeccion(inspeccion);

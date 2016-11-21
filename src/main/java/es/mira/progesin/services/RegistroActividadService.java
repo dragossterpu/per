@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -9,15 +10,18 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 
-@Service
-public class RegActividadService implements IRegActividadService {
+@Service("registroActividadService")
+public class RegistroActividadService implements IRegistroActividadService {
 
 	@Autowired
 	IRegActividadRepository regActividadRepository;
@@ -43,29 +47,29 @@ public class RegActividadService implements IRegActividadService {
 	}
 
 	@Override
-	public Iterable<RegActividad> findAll() {
+	public Iterable<RegistroActividad> findAll() {
 		return regActividadRepository.findAll();
 	}
 
-	public Iterable<RegActividad> findAll(Iterable<Integer> ids) {
+	public Iterable<RegistroActividad> findAll(Iterable<Integer> ids) {
 		return regActividadRepository.findAll(ids);
 	}
 
 	@Override
-	public RegActividad findOne(Integer id) {
+	public RegistroActividad findOne(Integer id) {
 		return regActividadRepository.findOne(id);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public RegActividad save(RegActividad entity) {
+	public RegistroActividad save(RegistroActividad entity) {
 		return regActividadRepository.save(entity);
 	}
 
 	@Override
-	public List<RegActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda) {
+	public List<RegistroActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(RegActividad.class);
+		Criteria criteria = session.createCriteria(RegistroActividad.class);
 
 		if (regActividadBusqueda.getFechaDesde() != null) {
 			criteria.add(Restrictions.ge("fechaAlta", regActividadBusqueda.getFechaDesde()));
@@ -92,10 +96,23 @@ public class RegActividadService implements IRegActividadService {
 		criteria.addOrder(Order.desc("fechaAlta"));
 
 		@SuppressWarnings("unchecked")
-		List<RegActividad> listaRegActividad = criteria.list();
+		List<RegistroActividad> listaRegActividad = criteria.list();
 		session.close();
 
 		return listaRegActividad;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void altaRegActivError(String nombreSeccion, Exception e) {
+		RegistroActividad registroActividad = new RegistroActividad();
+		registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
+		String message = Utilities.messageError(e);
+		registroActividad.setFechaAlta(new Date());
+		registroActividad.setNombreSeccion(nombreSeccion);
+		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
+		registroActividad.setDescripcion(message);
+		regActividadRepository.save(registroActividad);
 	}
 
 }

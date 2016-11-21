@@ -2,7 +2,7 @@ package es.mira.progesin.persistence.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 
-public interface IRegActividadRepository extends CrudRepository<RegActividad, Integer> {
+public interface IRegActividadRepository extends CrudRepository<RegistroActividad, Integer> {
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +24,7 @@ public class RegActividadBusqueda implements Serializable {
 	
 	private String tipoRegActividad;
 	
-	private List<RegActividad> listaRegActividad;
+	private List<RegistroActividad> listaRegActividad;
 
 	
 	public void resetValues() {

@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.INotificacionService;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,7 +41,7 @@ public class NotificacionesBean implements Serializable {
 	INotificacionService notificacionService;
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
 
@@ -49,7 +49,7 @@ public class NotificacionesBean implements Serializable {
 
 	private final String NOMBRESECCION = "Notificaciones";
 
-	private RegActividad regActividad = new RegActividad();
+	private RegistroActividad regActividad = new RegistroActividad();
 
 	private void initList() {
 		listaNotificaciones = notificacionService.findByFechaBajaIsNull();

@@ -6,13 +6,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,13 +18,13 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.INotificacionService;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.SendSimpleMail;
@@ -60,8 +58,6 @@ public class UserBean {
 
 	private String estadoUsuario = null;
 
-	RegActividad regActividad = new RegActividad();
-
 	@Autowired
 	ApplicationBean applicationBean;
 
@@ -72,7 +68,7 @@ public class UserBean {
 	ICuerpoEstadoService cuerposEstadoService;
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	@Autowired
 	INotificacionService notificacionService;
@@ -138,7 +134,7 @@ public class UserBean {
 			}
 			catch (Exception e) {
 				// Guardamos loe posibles errores en bbdd
-				altaRegActivError(e);
+				regActividadService.altaRegActivError(getNOMBRESECCION(), e);
 			}
 
 		}
@@ -163,7 +159,7 @@ public class UserBean {
 	 * @param user El usuario seleccionado de la tabla del resultado de la búsqueda
 	 */
 	public void eliminarUsuario(User user) {
-		RegActividad regActividad = new RegActividad();
+		RegistroActividad regActividad = new RegistroActividad();
 		user.setFechaBaja(new Date());
 		user.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
@@ -180,7 +176,7 @@ public class UserBean {
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(getNOMBRESECCION(), e);
 		}
 
 	}
@@ -222,8 +218,10 @@ public class UserBean {
 			}
 		}
 		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
+					"Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
 			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(getNOMBRESECCION(), e);
 		}
 
 	}
@@ -244,16 +242,14 @@ public class UserBean {
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
 					"Se ha producido un error en la regeneración o envío de la contraseña");
-			log.error("Error en la restaruación de la contraseña", e);
 			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(getNOMBRESECCION(), e);
 		}
 	}
 
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
-	
 
 	@PostConstruct
 	public void init() {
@@ -276,7 +272,7 @@ public class UserBean {
 	 * @param username
 	 */
 	private void saveReg(String descripcion, String tipoReg, String username) {
-		RegActividad regActividad = new RegActividad();
+		RegistroActividad regActividad = new RegistroActividad();
 		regActividad.setTipoRegActividad(tipoReg);
 		regActividad.setUsernameRegActividad(username);
 		regActividad.setFechaAlta(new Date());
@@ -300,17 +296,5 @@ public class UserBean {
 		notificacionService.save(notificacion);
 	}
 
-	/**
-	 * @param e
-	 */
-	private void altaRegActivError(Exception e) {
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
-	}
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 }

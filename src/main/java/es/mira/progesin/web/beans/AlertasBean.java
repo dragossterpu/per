@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.IAlertaService;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class AlertasBean implements Serializable {
 
 	private List<Alerta> listaAlertas = new ArrayList<Alerta>();
 
-	private RegActividad regActividad = new RegActividad();
+	private RegistroActividad regActividad = new RegistroActividad();
 
 	private final String NOMBRESECCION = "Alertas";
 
@@ -49,7 +49,7 @@ public class AlertasBean implements Serializable {
 	private int numColListAlert = 5;
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	/**
 	 * @comment Realiza una eliminación lógico de la alerta (le pone fecha de baja)

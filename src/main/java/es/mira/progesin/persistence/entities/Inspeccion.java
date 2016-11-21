@@ -17,7 +17,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnviado;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -25,9 +25,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -59,7 +57,7 @@ public class Inspeccion implements Serializable {
 	// private Equipo equipo;
 
 	@OneToOne(mappedBy = "inspeccion", fetch = FetchType.LAZY)
-	private CuestionarioEnviado cuestionarioEnviado;
+	private CuestionarioEnvio cuestionarioEnviado;
 
 	@CreatedDate
 	@Column(name = "fechaCreacion", nullable = false)

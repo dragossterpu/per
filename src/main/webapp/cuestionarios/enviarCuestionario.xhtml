@@ -23,7 +23,10 @@
 					<h:outputLabel for="inspecc" value="Número de inspección (*):" />
 					<p:autoComplete id="inspecc" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}"
                         var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
-                        required="true" requiredMessage="Introduzca el número de inspección"/>
+                        required="true" requiredMessage="Introduzca el número de inspección" 
+                        emptyMessage="No se encuentraron resultados coincidentes" cache="true">
+                    	<p:ajax event="blur" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
+                    </p:autoComplete>
 					<p:messages for="inspecc" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="nombre" value="Nombre (*):" />
@@ -64,6 +67,7 @@
 					</div>
 				</p:dialog>
 				
+				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 			</h:form>
 			
 		</ui:define>

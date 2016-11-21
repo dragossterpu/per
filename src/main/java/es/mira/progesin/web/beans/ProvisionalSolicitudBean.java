@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
@@ -50,10 +50,10 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private final String NOMBRESECCION = "Acceso a la solicitud de documentación";
 
-	RegActividad regActividad = new RegActividad();
+	RegistroActividad regActividad = new RegistroActividad();
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	@Autowired
 	IModeloCuestionarioService modeloCuestionarioService;

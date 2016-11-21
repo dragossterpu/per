@@ -192,6 +192,7 @@ public class UserService implements IUserService {
 		user.setCorreo(username);
 		user.setNumIdentificacion(PROVISIONAL);
 		user.setEnvioNotificacion("NO");
+		userRepository.save(user);
 		return user;
 	}
 

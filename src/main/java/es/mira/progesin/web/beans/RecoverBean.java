@@ -17,10 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class RecoverBean implements Serializable {
 	IUserService userService;
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	private List<User> listaUsers = new ArrayList<User>();
 
@@ -54,7 +54,7 @@ public class RecoverBean implements Serializable {
 		}
 		else {
 			User user = userService.findByParams(correo, nif);
-			RegActividad regActividad = new RegActividad();
+			RegistroActividad regActividad = new RegistroActividad();
 			if (user != null) {
 				// Generating new Password
 				String newPassword = Utilities.getPassword();

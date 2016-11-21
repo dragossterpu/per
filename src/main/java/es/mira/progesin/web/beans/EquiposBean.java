@@ -23,13 +23,13 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.RegActividad;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
-import es.mira.progesin.services.IRegActividadService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.Utilities;
@@ -94,7 +94,7 @@ public class EquiposBean implements Serializable {
 
 	private String tipoEquipo;
 
-	RegActividad regActividad = new RegActividad();
+	RegistroActividad regActividad = new RegistroActividad();
 
 	List<User> listaUsuarios;
 
@@ -107,7 +107,7 @@ public class EquiposBean implements Serializable {
 	IUserService userService;
 
 	@Autowired
-	IRegActividadService regActividadService;
+	IRegistroActividadService regActividadService;
 
 	@Autowired
 	INotificacionService notificacionService;
@@ -451,7 +451,7 @@ public class EquiposBean implements Serializable {
 	 * @param username
 	 */
 	private void saveReg(String descripcion, String tipoReg, String username) {
-		RegActividad regActividad = new RegActividad();
+		RegistroActividad regActividad = new RegistroActividad();
 		regActividad.setTipoRegActividad(tipoReg);
 		regActividad.setUsernameRegActividad(username);
 		regActividad.setFechaAlta(new Date());

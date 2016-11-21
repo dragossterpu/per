@@ -37,7 +37,7 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "CUESTIONARIOS_ENVIADOS")
-public class CuestionarioEnviado implements Serializable {
+public class CuestionarioEnvio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -64,6 +64,9 @@ public class CuestionarioEnviado implements Serializable {
 
 	@Column(name = "motivo", length = 2000, nullable = false)
 	private String motivoCuestionario;
+
+	@Column(nullable = false)
+	private Date fechaLimiteCuestionario;
 
 	@CreatedDate
 	private Date fechaEnvio;
