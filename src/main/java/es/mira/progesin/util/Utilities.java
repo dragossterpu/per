@@ -2,9 +2,12 @@ package es.mira.progesin.util;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component("utilities")
 public class Utilities {
 
-	public static Date getCurrentDate() {
+	public Date getCurrentDate() {
 		return new Date();
 	}
 

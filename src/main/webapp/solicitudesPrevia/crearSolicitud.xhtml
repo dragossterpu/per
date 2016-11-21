@@ -91,7 +91,7 @@
 									<p:calendar id="fechaAntes"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}"
 										pattern="dd/MM/yyyy"
-										mindate="#{Utilities.getCurrentDate()}"
+										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite envío documentación" />
 
@@ -101,7 +101,7 @@
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
 										pattern="dd/MM/yyyy"
-										mindate="#{Utilities.getCurrentDate()}"
+										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" />
 								</h:panelGrid>
