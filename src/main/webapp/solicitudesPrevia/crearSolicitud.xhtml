@@ -28,7 +28,9 @@
 									<h:outputLabel for="numeroInspeccion" value="Número de inspección (*):" />
 									<p:autoComplete id="numeroInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
 				                        var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
-				                        required="true" requiredMessage="Introduzca el número de inspección"/>
+				                        required="true" requiredMessage="Introduzca el número de inspección">
+				                        <p:ajax event="itemSelect" update="tipoInspeccion" />
+			                        </p:autoComplete>
 									
 									<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" style="font-weight: normal;" />
 									<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion}" disabled="true"/>
