@@ -25,7 +25,7 @@
                         var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
                         required="true" requiredMessage="Introduzca el número de inspección" 
                         emptyMessage="No se encuentraron resultados coincidentes" cache="true">
-                    	<p:ajax event="blur" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
+                    	<p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
                     </p:autoComplete>
 					<p:messages for="inspecc" autoUpdate="true"  closable="true"/>
 					
@@ -45,6 +45,14 @@
 							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					</p:inputText>
 					<p:messages for="correo" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="fechaLimite" value="Fecha límite de respuesta (*):" />
+					<p:calendar id="fechaLimite"
+						value="#{envioCuestionarioBean.cuestionarioEnvio.fechaLimiteCuestionario}"
+						pattern="dd/MM/yyyy"
+						mindate="#{utilities.getCurrentDate()}"
+						navigator="true" required="true"
+						requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario" />
 					
 					<h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
 					<p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000"
