@@ -133,5 +133,7 @@ public class User implements Serializable {
 		this.setCorreo(username);
 		this.setNumIdentificacion(PROVISIONAL);
 		this.setEnvioNotificacion("NO");
+		this.setFechaDestinoIPSS(new Date());
+		this.setNivel(0);
 	}
 }
