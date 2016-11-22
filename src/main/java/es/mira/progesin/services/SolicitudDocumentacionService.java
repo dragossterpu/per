@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
@@ -122,8 +123,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	public boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String password) {
 		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-		userService.crearUsuarioProvisional(solicitudDocumentacionPrevia.getCorreoDestiantario(), password,
-				RoleEnum.PROV_SOLICITUD);
+		User user = new User(solicitudDocumentacionPrevia.getCorreoDestiantario(), password, RoleEnum.PROV_SOLICITUD);
+		userService.save(user);
 		return true;
 	}
 

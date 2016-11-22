@@ -14,7 +14,6 @@ import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.util.FacesUtilities;
@@ -28,13 +27,13 @@ import lombok.Setter;
 public class TipoEquipoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private TipoEquipo equipo;
 
 	static Logger LOG = Logger.getLogger(TipoEquipoBean.class);
 
 	private List<TipoEquipo> listaTipoEquipo;
-	
+
 	private String tipoNuevo;
 
 	@Autowired
@@ -58,9 +57,9 @@ public class TipoEquipoBean implements Serializable {
 	public void init() throws MessagingException {
 
 		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
-		
 
 	}
+
 	public void altaTipo() {
 		TipoEquipo equipo = new TipoEquipo();
 		equipo.setDescripcion(tipoNuevo);
@@ -78,19 +77,18 @@ public class TipoEquipoBean implements Serializable {
 		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
 		// TODO generar alerta / notificación
 	}
+
 	public void onRowEdit(RowEditEvent event) {
 		TipoEquipo equipo = (TipoEquipo) event.getObject();
 		tipoEquipoService.save(equipo);
 		FacesMessage msg = new FacesMessage("Tipo de equipos  modificado", equipo.getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
+
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Modificación cancelada",
 				((TipoEquipo) event.getObject()).getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
-	
-
-
 
 }

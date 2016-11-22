@@ -4,19 +4,21 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,6 +50,9 @@ public class EnvioCuestionarioBean implements Serializable {
 	@Autowired
 	private IUserService userService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	/**
 	 * Método que devuelve una lista con las inspecciones cuyo número contienen alguno de los caracteres pasado como
 	 * parámetro. Se usa en el formulario de envío para el autocompletado.
@@ -66,15 +71,14 @@ public class EnvioCuestionarioBean implements Serializable {
 		try {
 			if (enviar) {
 				String password = Utilities.getPassword();
-				userService.crearUsuarioProvisional(this.cuestionarioEnvio.getCorreoEnvio(), password,
+
+				User user = new User(cuestionarioEnvio.getCorreoEnvio(), passwordEncoder.encode(password),
 						RoleEnum.PROV_CUESTIONARIO);
+				// TODO transaccion save usuario y save cuestionario envio
 				// TODO enviar correo al usuario con la contraseña y el tiempo restante
 			}
 			else {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-						"No se puede enviar el cuestionario ya que no existe documentación previa finalizada para la inspección. "
-								+ "Debe finalizar la solicitud de documentación previa antes de poder enviar el cuestionario.");
-				FacesContext.getCurrentInstance().addMessage("mensajeerror", message);
+				mostrarMensajeNoDocumentacionPrevia();
 			}
 		}
 		catch (Exception e) {
@@ -90,16 +94,21 @@ public class EnvioCuestionarioBean implements Serializable {
 				this.cuestionarioEnvio.setCorreoEnvio(solDocPrevia.getCorreoCorporativoInterlocutor());
 				this.cuestionarioEnvio.setNombreUsuarioEnvio(solDocPrevia.getNombreCompletoInterlocutor());
 				this.cuestionarioEnvio.setCargo(solDocPrevia.getCargoInterlocutor());
+				this.cuestionarioEnvio.setFechaLimiteCuestionario(solDocPrevia.getFechaLimiteCumplimentar());
 				enviar = true;
-				// TODO poner fecha límite
 			}
-			// this.cuestionarioEnvio.setCorreoEnvio("correo@gmail.com");
-			// this.cuestionarioEnvio.setNombreUsuarioEnvio("Pepito de los palotes");
-			// this.cuestionarioEnvio.setCargo("Coronel");
+			else {
+				mostrarMensajeNoDocumentacionPrevia();
+			}
 		}
 		catch (Exception e) {
 			regActividadService.altaRegActivError("ENVIO CUESTIONARIO", e);
 		}
 	}
 
+	private void mostrarMensajeNoDocumentacionPrevia() {
+		String mensaje = "No se puede enviar el cuestionario ya que no existe documentación previa finalizada para la inspección. "
+				+ "Debe finalizar la solicitud de documentación previa antes de poder enviar el cuestionario.";
+		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, "mensajeerror");
+	}
 }

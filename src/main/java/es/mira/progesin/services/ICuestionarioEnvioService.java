@@ -1,5 +1,10 @@
 package es.mira.progesin.services;
 
-public interface ICuestionarioEnvioService {
+import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 
+public interface ICuestionarioEnvioService {
+	CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
+
+	public boolean enviarCuestionarioService();
 }
