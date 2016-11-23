@@ -26,5 +26,5 @@ public interface ISolicitudDocumentacionService {
 	boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String usuarioProv);
 
-	SolicitudDocumentacionPrevia findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion);
+	List<SolicitudDocumentacionPrevia> findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion);
 }

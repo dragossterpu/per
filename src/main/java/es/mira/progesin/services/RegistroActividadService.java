@@ -103,7 +103,6 @@ public class RegistroActividadService implements IRegistroActividadService {
 	}
 
 	@Override
-	@Transactional(readOnly = false)
 	public void altaRegActivError(String nombreSeccion, Exception e) {
 		RegistroActividad registroActividad = new RegistroActividad();
 		registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
@@ -113,6 +112,18 @@ public class RegistroActividadService implements IRegistroActividadService {
 		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
 		registroActividad.setDescripcion(message);
 		regActividadRepository.save(registroActividad);
+	}
+
+	@Override
+	public void crearRegistroActividad(String descripcion, String tipoReg, String seccion) {
+		RegistroActividad registroActividad = new RegistroActividad();
+		registroActividad.setTipoRegActividad(tipoReg);
+		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
+		registroActividad.setFechaAlta(new Date());
+		registroActividad.setNombreSeccion(seccion);
+		registroActividad.setDescripcion(descripcion);
+		regActividadRepository.save(registroActividad);
+
 	}
 
 }

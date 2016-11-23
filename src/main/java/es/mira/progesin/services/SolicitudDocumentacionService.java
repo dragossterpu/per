@@ -147,8 +147,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	}
 
 	@Override
-	public SolicitudDocumentacionPrevia findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion) {
-		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNotNullAndInspeccion(inspeccion);
+	public List<SolicitudDocumentacionPrevia> findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion) {
+		return solicitudDocumentacionPreviaRepository
+				.findByFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(inspeccion);
 	}
 
 }
