@@ -253,6 +253,9 @@ insert into documentos (id, fichero, tipo_contenido, nombre) values (10, bytea_i
 insert into documentos (id, fichero, tipo_contenido, nombre) values (11, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (12, bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
 
+-- Ñapa para alta de nuevos documentos
+select setval('documentos_id_seq', 12) from documentos;
+
   ------------- áreas cuestionario
   
 Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS', '1');
@@ -494,31 +497,6 @@ Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTEN
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (60, 'Plan anual de la Unidad Orgánica de Policía Judicial vigente', '_PAUOPJ', 'PDF');
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (61, 'Organigrama de la Comandancia (Unidades Territoriales y Especialidades)', '_organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (62, 'Actas de las Juntas de Coordinación de 2015', '_AJC', 'PDF');
-
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (1, 'codigo1', '01_GC_COMANDANCIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 13, '01_GC_COMANDANCIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (2, 'codigo2', '01_GC_COMPANIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 14, '01_GC_COMPANIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (3, 'codigo3', '01_GC_ZONA_PLURI_PROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 15, '01_GC_ZONA_PLURI_PROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (4, 'codigo4', '01_GC_ZONA_UNIPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 16, '01_GC_ZONA_UNIPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (5, 'codigo5', '01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 17, '01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (6, 'codigo6', '01_PN_CaDISTRITO_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 18, '01_PN_CaDISTRITO_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (7, 'codigo7', '01_PN_CaLOCAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 19, '01_PN_CaLOCAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (8, 'codigo8', '01_PN_CaPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 20, '01_PN_CaPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-Insert into  modelos_solicitud (id,codigo,descripcion,extension,id_documento,nombre) Values (9, 'codigo9', '01_PN_JSP_COMUNICACION_INS_Y_SOL.DOCUMENTACION', 'docx', 21, '01_PN_JSP_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-
--- Empieza en 13 porque los 12 primeros documentos pertenecen a modelos de cuestionario (ver linea 232)
-
-insert into documentos (id, fichero, tipo_contenido, nombre) values (13, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_GC_COMANDANCIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_GC_COMANDANCIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (14, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_GC_COMPANIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_GC_COMPANIA_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (15, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_GC_ZONA_PLURI_PROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_GC_ZONA_PLURI_PROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (16, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_GC_ZONA_UNIPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_GC_ZONA_UNIPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (17, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (18, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CaDISTRITO_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_PN_CaDISTRITO_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (19, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CaLOCAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_PN_CaLOCAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (20, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CaPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_PN_CaPROVINCIAL_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (21, bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_JSP_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document','01_PN_JSP_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx');
-
--- Ñapa para alta de nuevos documentos
-select setval('documentos_id_seq', 21) from documentos;
 
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('CHECKBOXSINO', 'NO');
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('CHECKBOXSINO', 'SI');

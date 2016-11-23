@@ -15,7 +15,7 @@
 		</p:submenu>
 		<p:submenu label="Solicitud previa cuestionario">
 			<p:menuitem value="Tipo documentación Previa" outcome="/documentacionPrevia/documentacionPrevia" />
-			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/modelosSolicitud" />
+			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" />
 			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE,JEFE_INSPECCIONES,ADMIN')}"/>
 		</p:submenu>
 		<p:submenu label="Cuestionario">
