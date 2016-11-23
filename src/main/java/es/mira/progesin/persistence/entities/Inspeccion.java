@@ -11,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -44,14 +46,15 @@ public class Inspeccion implements Serializable {
 	@Id
 	@SequenceGenerator(name = "seq_inspeccion", sequenceName = "seq_inspeccion", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inspeccion")
-	@Column(name = "ID", length = 5)
+	@Column(name = "ID")
 	private Long id;
 
 	@Column(name = "numero", length = 100, nullable = false)
 	private String numero;
 
-	@Column(name = "tipoInspeccion")
-	private String tipoInspeccion;
+	@ManyToOne
+	@JoinColumn(name = "tipo_inspeccion")
+	private TipoInspeccion tipoInspeccion;
 
 	// Lo comento de momento para poder crear inspecciones
 	// @ManyToOne

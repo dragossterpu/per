@@ -537,9 +537,19 @@ insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASA
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo4#MOTIVOS');
 insert into configuracion_respuestas_cuestionario (clave,valor) values ('TABLASALIDAS', 'campo5#PRUEBA');
 
-INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (1, '01/11/2016', '1/2017', 'I. Gral. Periodica','silpe', 'Lérida', 'PN');
-INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (11, '01/11/2016', '11/2017', 'I. Gral. Seguimiento','silpe', 'Granada', 'GC');
-INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (101, '01/11/2016', '101/2017', 'I. Temática PRL','silpe', 'Lérida', 'PN');
-INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (10, '01/11/2016', '10/2017', 'I. Temática CIE','silpe', 'Granada', 'GC');
-INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (12, '01/11/2016', '12/2017', 'I. Temática otros','silpe', 'Lérida', 'PN');
-INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (150, '01/11/2016', '150/2017', 'I. Incidental extraordinaria','silpe', 'Granada', 'GC');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.G.P.','I.Gral.Periodica');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.G.S.','I.Gral.Seguimiento');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.T_PRL','I.Temática PRL');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.T_CIE','I.Temática CIE');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.T_OT','I.Temática otros');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.E_INCD','I. Incidental extraordinaria');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.E_PRL','I.PRL extraordinaria');
+insert into tipos_inspeccion (codigo,descripcion) values ('I.E_PUNT','I.Puntual extraordinaria');
+
+
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (1, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (11, '01/11/2016', '11/2017', 'I.G.P.','silpe', 'Granada', 'GC');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (101, '01/11/2016', '101/2017', 'I.G.P.','silpe', 'Lérida', 'PN');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (10, '01/11/2016', '10/2017', 'I.T_CIE','silpe', 'Granada', 'GC');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (12, '01/11/2016', '12/2017', 'I.G.S.','silpe', 'Lérida', 'PN');
+INSERT INTO public.inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (150, '01/11/2016', '150/2017', 'I.E_PUNT','silpe', 'Granada', 'GC');
