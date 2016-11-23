@@ -36,7 +36,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "INSPECCIONES", schema = "public")
+@Table(name = "INSPECCIONES")
 public class Inspeccion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -75,5 +75,11 @@ public class Inspeccion implements Serializable {
 	@CreatedBy
 	@Column(name = "usernameCreacion", nullable = false)
 	private String usernameCreacion;
+
+	@Column(name = "fecha_finalizacion")
+	private Date fechaFinalizacion;
+
+	@Column(name = "username_finalizacion")
+	private String usernameFinalizacion;
 
 }

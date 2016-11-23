@@ -30,8 +30,6 @@ public class UserService implements IUserService {
 	// Obligado por sonar
 	private static final String FECHA_ALTA = "fechaAlta";
 
-	private static final String PROVISIONAL = "provisional";
-
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(String id) {

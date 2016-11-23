@@ -9,4 +9,6 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long> {
 
 	List<Inspeccion> findByNumeroLike(String numeroInspeccion);
+
+	List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad);
 }
