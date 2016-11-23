@@ -118,7 +118,7 @@
 					</f:facet>
 					<p:column headerText="Fecha alta" sortBy="#{user.fechaAlta}" width="70" visible="#{userBean.list[0]}" exportable="#{userBean.list[0]}">
 						<h:outputText value="#{user.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Usuario" sortBy="#{user.username}" width="70" visible="#{userBean.list[1]}" exportable="#{userBean.list[1]}">

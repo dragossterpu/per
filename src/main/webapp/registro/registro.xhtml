@@ -83,7 +83,7 @@
 					</f:facet>
 					<p:column headerText="Fecha " sortBy="#{regActividad.fechaAlta}" width="70" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
 						<h:outputText value="#{regActividad.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Nombre Sección" sortBy="#{regActividad.nombreSeccion}" width="70" visible="#{regActividadBean.list[1]}" exportable="#{regActividadBean.list[1]}">

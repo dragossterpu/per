@@ -46,7 +46,7 @@
 					</f:facet>
 					<p:column headerText="Fecha alta" sortBy="#{alerta.fechaAlta}" width="70" visible="#{alertasBean.list[0]}" exportable="#{alertasBean.list[0]}">
 							<h:outputText value="#{alerta.fechaAlta}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Descripción" sortBy="#{alerta.descripcion}" width="70" visible="#{alertasBean.list[1]}" exportable="#{alertasBean.list[1]}">
@@ -105,7 +105,7 @@
 				</f:facet>
 				<p:column headerText="Fecha alta" sortBy="#{notificacion.fechaAlta}" width="70" visible="#{notificacionesBean.list[0]}" exportable="#{notificacionesBean.list[0]}">
 						<h:outputText value="#{notificacion.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="300" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">

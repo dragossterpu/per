@@ -31,14 +31,14 @@
 					
 					<h:outputLabel for="fechaDestino" value="Fecha destino IPSS:" />
 					<p:inputText id="fechaDestino" value="#{userBean.user.fechaDestinoIPSS}" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</p:inputText>
 				</div>
 
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="fechaAlta" value="Fecha alta:" />
 					<p:inputText id="fechaAlta" value="#{userBean.user.fechaAlta}" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</p:inputText>
 
 					<h:outputLabel for="apellido2" value="Segundo apellido:" />

@@ -27,7 +27,7 @@
 							</f:facet>
 							 <p:column headerText="Fecha" sortBy="#{sugerencia.fechaAlta}" width="90">
 								<h:outputText value="#{sugerencia.fechaAlta}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 								</h:outputText>
 							</p:column>
 							 <p:column headerText="Descripción de la sugerencia" sortBy="#{sugerencia.descripcion}" width="220">

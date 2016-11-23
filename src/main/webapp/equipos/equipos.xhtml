@@ -97,7 +97,7 @@
 						</f:facet>
 					<p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}" width="70" visible="#{equiposBean.list[0]}" exportable="#{equiposBean.list[0]}">
 						<h:outputText value="#{equipo.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
 					

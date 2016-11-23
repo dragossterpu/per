@@ -24,7 +24,7 @@
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="fechaAlta" value="Fecha de la sugerencia:" />
 					<p:inputText id="fechaAlta" value="#{sugerenciasBean.sugerencia.fechaAlta}" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</p:inputText>
 					<h:outputLabel for="usuario" value="Usuario de la sugerencia:" />
 					<p:inputText id="usuario" value="#{sugerenciasBean.sugerencia.usuario}"
