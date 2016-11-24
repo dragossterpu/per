@@ -22,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "CONFIGURACION_RESPUESTAS_CUESTIONARIO", schema = "public")
+@Table(name = "CONFIG_RESPUESTAS_CUESTIONARIO")
 public class ConfiguracionRespuestasCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 

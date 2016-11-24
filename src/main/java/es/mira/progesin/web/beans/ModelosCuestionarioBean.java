@@ -1,17 +1,13 @@
 package es.mira.progesin.web.beans;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;

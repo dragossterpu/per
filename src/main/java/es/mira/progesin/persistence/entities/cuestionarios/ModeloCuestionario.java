@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "modeloscuestionarios", schema = "public")
+@Table(name = "modeloscuestionarios")
 public class ModeloCuestionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;

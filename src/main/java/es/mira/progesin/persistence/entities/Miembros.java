@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name = "MIEMBROS", schema = "public")
+@Table(name = "MIEMBROS")
 
 public class Miembros {
 	@Id

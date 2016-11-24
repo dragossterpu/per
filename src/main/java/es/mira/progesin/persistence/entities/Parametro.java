@@ -22,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "parametros", schema = "public")
+@Table(name = "parametros")
 public class Parametro implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name = "EQUIPO", schema = "public")
+@Table(name = "EQUIPO")
 
 public class Equipo implements Serializable {
 	private static final long serialVersionUID = 1L;

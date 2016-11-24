@@ -40,7 +40,7 @@ import lombok.ToString;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "CUERPOSESTADO", schema = "public")
+@Table(name = "CUERPOSESTADO")
 public class CuerpoEstado implements Serializable {
 
 	private static final long serialVersionUID = 1L;

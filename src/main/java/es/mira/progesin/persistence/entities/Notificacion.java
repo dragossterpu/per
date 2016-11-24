@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "NOTIFICACIONES", schema = "public")
+@Table(name = "NOTIFICACIONES")
 public class Notificacion {
 
 	@Id

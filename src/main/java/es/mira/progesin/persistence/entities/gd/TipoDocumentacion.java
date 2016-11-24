@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name = "tipodocumentacionprevia", schema = "public")
+@Table(name = "tipodocumentacionprevia")
 
 public class TipoDocumentacion implements Serializable {
 

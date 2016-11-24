@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name = "DOCUMENTACION_PREVIA", schema = "public")
+@Table(name = "DOCUMENTACION_PREVIA")
 // Tipo de documento relacionado con una solicitud de documentación previa en concreto al ser ésta creada. Al ser
 // enviada la solicitud, el interlocutor de la unidad a inspeccionar debe subir la documentación, con un usuario
 // provisional, ajustándose a dichos documentos tanto en nombre como en tipo.

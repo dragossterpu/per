@@ -38,7 +38,7 @@ import lombok.ToString;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "CUESTIONARIO_PERSONALIZADO", schema = "public")
+@Table(name = "CUESTIONARIO_PERSONALIZADO")
 public class CuestionarioPersonalizado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -67,6 +67,6 @@ public class CuestionarioPersonalizado implements Serializable {
 	private ModeloCuestionario modeloCuestionario;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "cuestionario_personalizado_preguntas", joinColumns = @JoinColumn(name = "id_cuest_pers"), inverseJoinColumns = @JoinColumn(name = "id_preg_elegida"))
+	@JoinTable(name = "cuest_per_preguntas", joinColumns = @JoinColumn(name = "id_cuest_pers"), inverseJoinColumns = @JoinColumn(name = "id_preg_elegida"))
 	private List<PreguntasCuestionario> preguntasElegidas;
 }

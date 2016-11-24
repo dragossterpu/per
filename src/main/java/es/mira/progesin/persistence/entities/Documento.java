@@ -35,7 +35,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "documentos", schema = "public")
+@Table(name = "documentos")
 public class Documento implements Serializable {
 	private static final long serialVersionUID = 1L;
 

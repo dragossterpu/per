@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name="PUESTOSTRABAJO", schema="public")
+@Table(name="PUESTOSTRABAJO")
 public class PuestoTrabajo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

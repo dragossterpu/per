@@ -28,7 +28,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "gestdocsolicituddocumentacion", schema = "public")
+@Table(name = "gestdocsolicituddocumentacion")
 public class GestDocSolicitudDocumentacion implements Serializable {
 
 	private static final long serialVersionUID = 1L;

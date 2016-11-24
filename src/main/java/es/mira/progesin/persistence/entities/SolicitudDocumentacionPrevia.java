@@ -49,7 +49,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "solicituddocumentacionprevia", schema = "public")
+@Table(name = "solicitudDocPrevia")
 public class SolicitudDocumentacionPrevia implements Serializable {
 
 	private static final long serialVersionUID = 1L;

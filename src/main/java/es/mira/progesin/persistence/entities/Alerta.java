@@ -30,7 +30,7 @@ import lombok.ToString;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "ALERTAS", schema = "public")
+@Table(name = "ALERTAS")
 public class Alerta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
