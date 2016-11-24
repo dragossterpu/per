@@ -11,27 +11,26 @@
 	<ui:composition template="../layouts/layoutInteriorProv.xhtml">
 		
 		<ui:define name="content">
-<h3>Solicitud documentación previa cuestionario</h3>
 
 		<h:form>
 		    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.visualizarSolicitud}" update="formAlta" autoRun="true" />
 		</h:form>
 		
 		<div class="bloqueVistaTitulo">	
-			<h4>Nombre Cuestionario </h4>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreSolicitud}
+			<h3>Solicitud documentación previa cuestionario</h3>
 		</div>
 		
 		<h:form id="formAlta">
 			
 					<div class="bloqueVistaTitulo">
 						<p>Nº Inspección: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.numero}</p>	
-						<p>FECHA: Madrid, #{provisionalSolicitudBean.fechaEmision}</p>
+						<p>FECHA: Madrid, <h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaAlta}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></p>
 						<p>ASUNTO: 	#{provisionalSolicitudBean.solicitudDocumentacionPrevia.asunto}</p>	
 						<p><strong>DESTINATARIO: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
 					</div>	
 					<div class="bloqueVista">	
 					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cuatrimestre.descripcion} del año #{provisionalSolicitudBean.solicitudDocumentacionPrevia.anio}</strong>, se va a realizar una  inspección de carácter
-					<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
+					<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> en esa Comandancia de su mando.</p>		
 					</div>
 					<div class="bloqueVista">
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
@@ -43,26 +42,26 @@
 					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa, no cuenta personal).</p>
 					</div>
 					<div class="bloqueVista">
-					<p >2.	Antes del <strong> #{provisionalSolicitudBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
+					<p >2.	Antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>, con el nombre de fichero de se indica y 
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
-					<p:dataTable  var="solicitud" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" >
+					<p:dataTable  var="documento" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" >
 							<p:column headerText="DOCUMENTO" width="450">
-								<h:outputText value="#{solicitud.descripcion}" />
+								<h:outputText value="#{documento.descripcion}" />
 							</p:column>
 							<p:column headerText="NOMBRE" width="70">
-								<h:outputText value="#{solicitud.nombre}" />
+								<h:outputText value="#{documento.nombre}" />
 							</p:column>
 							<p:column headerText="EXTENSION" width="70">
-								<h:outputText value="#{solicitud.extension}" />
+								<h:outputText value="#{documento.extension}" />
 							</p:column>
 							
 					</p:dataTable>	
 					</div>
 					<div class="bloqueVistaTitulo">
 					<p >3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
-					deberá tener entrada en esta IPSS antes del <strong> #{provisionalSolicitudBean.fechaLimite}</strong>.</p>
+					deberá tener entrada en esta IPSS antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>.</p>
 					</div>
 					<div class="bloqueVista">
 					<p >Para cualquier aclaración, podrá dirigirse a:</p>

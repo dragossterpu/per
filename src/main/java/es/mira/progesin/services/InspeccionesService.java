@@ -36,4 +36,9 @@ public class InspeccionesService implements IInspeccionesService {
 		return inspeccionesRepository.findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(nombreUnidad);
 	}
 
+	@Override
+	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion) {
+		return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+	}
+
 }

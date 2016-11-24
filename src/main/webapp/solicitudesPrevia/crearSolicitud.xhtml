@@ -10,7 +10,14 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud}" update="datosReporte" autoRun="true" />
+		</h:form>
+		
 			<h3>Datos Solicitud documentación</h3>
+			<div class="aclaraciones">
+				Los campos marcados con (*) son obligatorios
+			</div>
 
 			<h:form id="datosReporte">
 
@@ -25,33 +32,33 @@
 								<p:messages />
 								<h:panelGrid columns="2" columnClasses="label, value">
 								
-									<h:outputLabel for="numeroInspeccion" value="Número de inspección (*):" />
-									<p:autoComplete id="numeroInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
-				                        var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
-				                        required="true" requiredMessage="Introduzca el número de inspección">
-				                        <p:ajax event="itemSelect" update="tipoInspeccion" />
+									<h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
+									<p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
+				                        var="inspeccion" itemLabel="#{inspeccion.nombreUnidad} - #{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
+				                        required="true" requiredMessage="Introduzca la unidad o el número de la inspección" onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
+				                        <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion" />
 			                        </p:autoComplete>
+			                        	
+									<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
+									<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true"/>
+																			
+									<h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
+									<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito}" disabled="true"/>
 									
-									<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" style="font-weight: normal;" />
-									<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion}" disabled="true"/>
-										
-									<h:outputLabel for="asunto" value="Asunto (*):"
-										style="font-weight: normal;" />
+									<h:outputLabel for="asunto" value="Asunto (*):"/>
 									<p:inputText id="asunto"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}"
 										required="true" requiredMessage="Es obligatorio un asunto"
 										converter="#{trimConverter}" />
 
-									<h:outputLabel for="destinatario" value="Destinatario (*):"
-										style="font-weight: normal;" />
+									<h:outputLabel for="destinatario" value="Destinatario (*):"/>
 									<p:inputText id="destinatario"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}"
 										required="true"
 										requiredMessage="Es obligatorio un destinatario"
 										converter="#{trimConverter}" />
 
-									<h:outputLabel for="correoDestiantario"
-										value="Correo destinatario (*):" style="font-weight: normal;" />
+									<h:outputLabel for="correoDestiantario" value="Correo destinatario (*):"/>
 									<p:inputText id="correoDestiantario"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}"
 										required="true"
@@ -62,8 +69,7 @@
 											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 									</p:inputText>
 
-									<h:outputLabel for="cuatrimestre"
-										value="Cuatrimestre (*):" style="font-weight: normal;" />
+									<h:outputLabel for="cuatrimestre" value="Cuatrimestre (*):"/>
 									<p:importEnum
 										type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
 										var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
@@ -78,32 +84,30 @@
 											itemValue="#{cuatrimestreSolicitudDocPrevia}" />
 									</p:selectOneMenu>
 
-									<h:outputLabel for="anio" value="Año (*):"
-										style="font-weight: normal;" />
+									<h:outputLabel for="anio" value="Año (*):"/>
 									<p:inputNumber id="anio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}"
 										required="true" requiredMessage="Es obligatorio un año"
 										maxValue="9999" decimalSeparator=""
 										thousandSeparator="" decimalPlaces="0" />
 
-									<h:outputLabel for="fechaAntes"
-										value="Fecha límite envío documentación (*):"
-										style="font-weight: normal;" />
-									<p:calendar id="fechaAntes"
-										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAntes}"
+									<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):"/>
+									<p:calendar id="fechaLimiteEnvio"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"
 										pattern="dd/MM/yyyy"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite envío documentación" />
 
-									<h:outputLabel for="fechaLimiteCumplimentar"
-										value="Fecha límite cumplimentar cuestionario (*):"
-										style="font-weight: normal;" />
+									<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):"/>
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
 										pattern="dd/MM/yyyy"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" />
+										
+									<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
+									<p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
 								</h:panelGrid>
 							</p:panel>
 						</p:tab>
@@ -193,17 +197,17 @@
 										actionListener="#{solicitudDocPreviaBean.crearSolicitud}"
 										value="Crear solicitud documentación previa"
 										icon="fa fa-fw fa-user-plus" />
-									<p:button outcome="/solicitudesPrevia/modelosSolicitud"
+									<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia"
 										value="Cancelar" icon="fa fa-fw fa-undo" />
 								</div>
 								<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 									<p:ajax event="close"
-										listener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
+										listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 									<p:messages for="dialogMessage" autoUpdate="true"
 										showDetail="true" showSummary="true" />
 									<div class="centrarBotonesDialog">
 										<p:commandButton value="Cerrar"
-											actionListener="#{facesUtilities.redirect('/solicitudesPrevia/modelosSolicitud')}" />
+											actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 									</div>
 								</p:dialog>
 							</p:panel>

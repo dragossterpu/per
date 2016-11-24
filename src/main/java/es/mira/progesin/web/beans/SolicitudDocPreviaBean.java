@@ -1,8 +1,6 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +9,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.mail.MessagingException;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.ModeloSolicitud;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -37,17 +31,14 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.services.IDocumentoService;
-import es.mira.progesin.services.IModeloSolicitudService;
+import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
-import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.SendSimpleMail;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -96,15 +87,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	transient INotificacionService notificacionService;
 
-	@Autowired
-	transient IModeloSolicitudService modeloSolicitudService;
-
-	private transient UploadedFile ficheroNuevo;
-
-	transient List<ModeloSolicitud> listadoModelosSolicitud;
-
-	String nombreSolicitud;
-
 	transient List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
 
 	private List<Boolean> list;
@@ -116,7 +98,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	transient ITipoDocumentacionService tipoDocumentacionService;
 
 	@Autowired
-	private IInspeccionesRepository inspeccionRepository;
+	transient IInspeccionesService inspeccionesService;
 
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
@@ -125,12 +107,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private boolean skip;
 
 	private transient StreamedContent file;
-
-	private String fechaAntes;
-
-	private String fechaLimite;
-
-	private String fechaEmision;
 
 	transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
 
@@ -153,20 +129,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private transient PasswordEncoder passwordEncoder;
 
 	/**
-	 * Método que crea una solicitud de documentación en base a un modelo y los datos introducidos en el formulario de
-	 * la vista crearSolicitud.
+	 * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
 	 * 
 	 * @author EZENTIS
-	 * @return vista modelosSolicitud
+	 * @return vista busquedaSolicitudesDocPrevia
 	 */
 	public String crearSolicitud() {
-		this.fechaAntes = null;
-		this.fechaLimite = null;
 
 		try {
 			datosApoyo();
 
-			solicitudDocumentacionPrevia.setNombreSolicitud(nombreSolicitud);
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				RequestContext context = RequestContext.getCurrentInstance();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
@@ -190,12 +162,12 @@ public class SolicitudDocPreviaBean implements Serializable {
 			// Guardamos los posibles errores en bbdd
 			altaRegActivError(e);
 		}
-		return "solicitudesPrevia/modelosSolicitud";
+		return "solicitudesPrevia/crearSolicitud";
 
 	}
 
 	/**
-	 * Método para obtener los datos del jefe del equipo de apoyo.
+	 * Obtener los datos del jefe del equipo de apoyo.
 	 * 
 	 * @author EZENTIS
 	 * @see #crearSolicitud()
@@ -220,8 +192,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite dar de alta los documentos seleccionados al crear una solicitud de documentación. Colección de
-	 * documentos de entre los disponibles en TipoDocumentación que se asignan a la solicitud.
+	 * Permite dar de alta los documentos seleccionados al crear una solicitud de documentación. Colección de documentos
+	 * de entre los disponibles en TipoDocumentación que se asignan a la solicitud.
 	 * 
 	 * @author EZENTIS
 	 * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
@@ -254,9 +226,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite visualizar una solicitud creada, muestra su información y dependiendo del estado en que se
-	 * encuentre permite pasar al siguiente estado si se tiene el rol adecuado. Posibles estados: alta, validada por
-	 * apoyo, enviada, cumplimentada y finalizada
+	 * Permite visualizar una solicitud creada, muestra su información y dependiendo del estado en que se encuentre
+	 * permite pasar al siguiente estado si se tiene el rol adecuado. Posibles estados: alta, validada por apoyo,
+	 * enviada, cumplimentada y finalizada
 	 * 
 	 * @author EZENTIS
 	 * @param solicitud
@@ -267,9 +239,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 			listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			fechaEmision = formatter.format(solicitud.getFechaAlta());
-			fechaLimite = formatter.format(solicitud.getFechaLimiteCumplimentar());
 			solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 			solicitudDocumentacionPrevia = solicitud;
 			return "/solicitudesPrevia/vistaSolicitud";
@@ -282,7 +251,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite al equipo de apoyo validar la solicitud de documentación
+	 * Permite al equipo de apoyo validar la solicitud de documentación
 	 * 
 	 * @author EZENTIS
 	 * @return vista vistaSolicitud
@@ -302,16 +271,14 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que carga el formulario para crear una solicitud basada en un modelo.
+	 * Carga el formulario para crear una solicitud.
 	 * 
 	 * @author EZENTIS
-	 * @param modeloSolicitud
 	 * @return vista crearSolicitud
 	 */
-	public String getFormularioCrearSolicitud(ModeloSolicitud modeloSolicitud) {
+	public String getFormularioCrearSolicitud() {
 		this.documentosSelecionados = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-		nombreSolicitud = modeloSolicitud.getDescripcion();
 		listadoDocumentos = tipoDocumentacionService.findAll();
 		return "/solicitudesPrevia/crearSolicitud";
 	}
@@ -326,15 +293,13 @@ public class SolicitudDocPreviaBean implements Serializable {
 		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
 		listadoDocumentosCargados = new ArrayList<>();
-		nombreSolicitud = null;
 		listaSolicitudesPrevia = new ArrayList<>();
-		listadoModelosSolicitud = modeloSolicitudService.findAll();
 		solicitudDocumentacionPrevia.setInspeccion(inspeccion);
 	}
 
 	/**
-	 * Método que permite descargar el fichero seleccionado. Utilizado tanto para modelos de solicitud como documentos
-	 * previos subidos por el interlocutor de una unidad al cumplimentar una solicitud.
+	 * Permite descargar el fichero seleccionado. Utilizado para documentos previos subidos por el interlocutor de una
+	 * unidad al cumplimentar una solicitud.
 	 * 
 	 * @author EZENTIS
 	 * @param idDocumento
@@ -349,7 +314,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite el webFlow
+	 * Permite el webFlow
 	 * 
 	 * @author EZENTIS
 	 * @param event
@@ -406,14 +371,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que registra los errores generados por otros métodos
+	 * Registra los errores generados por otras funciones
 	 * 
 	 * @author EZENTIS
 	 * @param e
-	 * @see #altaModeloSolicitud
-	 * @see #descargarFichero(ModeloSolicitud)
 	 * @see #crearSolicitud()
-	 * @see #insertar()
 	 * @see #modificarSolicitud()
 	 * @see #visualizarSolicitud(SolicitudDocumentacionPrevia)
 	 */
@@ -429,20 +391,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 
 	/**
-	 * Método que elimina un modelo de solicitud de documentación previa
-	 * 
-	 * @author EZENTIS
-	 * @param modeloSolicitud
-	 */
-	public void eliminarModeloSolicitud(ModeloSolicitud modeloSolicitud) {
-		documentoService.delete(modeloSolicitud.getIdDocumento());
-		modeloSolicitudService.delete(modeloSolicitud.getId());
-		this.listadoModelosSolicitud = null;
-		listadoModelosSolicitud = modeloSolicitudService.findAll();
-	}
-
-	/**
-	 * Método que elimina la solicitud de documentación previa
+	 * Elimina la solicitud de documentación previa
 	 * 
 	 * @author EZENTIS
 	 * @param solicitudDocumentacionPrevia solicitud a eliminar
@@ -455,69 +404,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que da de alta un nuevo modelo de solicitud de documentación previa
-	 * 
-	 * @author EZENTIS
-	 */
-	public void altaModeloSolicitud() {
-
-		if (ficheroNuevo != null && !"".equals(ficheroNuevo.getFileName())) {
-			try {
-				ModeloSolicitud modeloSolicitud = new ModeloSolicitud();
-				modeloSolicitud.setCodigo("codigo");
-				modeloSolicitud.setDescripcion(ficheroNuevo.getFileName()
-						.substring(0, ficheroNuevo.getFileName().lastIndexOf('.')).toUpperCase());
-				modeloSolicitud.setNombreFichero(ficheroNuevo.getFileName());
-				modeloSolicitud.setExtension(Utilities.getExtensionTipoContenido(ficheroNuevo.getContentType()));
-
-				if (modeloSolicitudService.transaccSaveGuardaDoc(modeloSolicitud, ficheroNuevo) != null) {
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-							"El modelo de solicitud de documentación ha sido creada con éxito");
-				}
-			}
-			catch (Exception e) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
-						"Se ha producido un error al dar de alta el modelo de solicitud de documentación, inténtelo de nuevo más tarde");
-				altaRegActivError(e);
-			}
-
-		}
-		else {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta abortada",
-					"No se ha seleccionado un archivo al dar de alta el modelo de solicitud de documentación");
-		}
-		listadoModelosSolicitud = modeloSolicitudService.findAll();
-
-	}
-
-	/**
-	 * Método que permite la edición en caliente de un registro
-	 * 
-	 * @author EZENTIS
-	 * @param event evento disparado al pulsar el botón editar
-	 */
-	public void onRowEdit(RowEditEvent event) {
-		ModeloSolicitud modeloSolicitud = (ModeloSolicitud) event.getObject();
-		modeloSolicitudService.save(modeloSolicitud);
-		FacesMessage msg = new FacesMessage("Modelo de solicitud de documentación modificado",
-				modeloSolicitud.getDescripcion());
-		FacesContext.getCurrentInstance().addMessage("msgs", msg);
-	}
-
-	/**
-	 * Método que anula la edición en caliente de un registro
-	 * 
-	 * @author EZENTIS
-	 * @param event evento disparado al pulsar el botón cancelar edición
-	 */
-	public void onRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Modificación cancelada",
-				((ModeloSolicitud) event.getObject()).getDescripcion());
-		FacesContext.getCurrentInstance().addMessage("msgs", msg);
-	}
-
-	/**
-	 * Método que modifica los datos de la solicitud de documentación previa
+	 * Modifica los datos de la solicitud de documentación previa
 	 * 
 	 * @author EZENTIS
 	 */
@@ -542,8 +429,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite al jefe de equipo de inspecciones validar la solicitud de documentación y enviarla y dar de
-	 * alta un usuario provisional para que algún miembro de la unidad a inspeccionar la cumplimente.
+	 * Permite al jefe de equipo de inspecciones validar la solicitud de documentación y enviarla y dar de alta un
+	 * usuario provisional para que algún miembro de la unidad a inspeccionar la cumplimente.
 	 * 
 	 * @author EZENTIS
 	 * @return vista vistaSolicitud
@@ -555,20 +442,23 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocumentacionPrevia.setFechaEnvio(new Date());
 		solicitudDocumentacionPrevia.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
 
-		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, password)) {
-			System.out.println("Password usuario provisional  : " + password);
+		User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestiantario(),
+				passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
 
-			String asunto = "Usuario provisional solicitud documentación";
-			String correoEnvio = "dragossterpu@gmail.com";
-			String nombre = "Prueba";
-			String respuesta = "El password es :" + password;
-			try {
-				SendSimpleMail.sendMail(asunto, correoEnvio, nombre, respuesta);
-			}
-			catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+			System.out.println("Password usuario provisional  : " + password);
+			// TODO usar servicio correo
+			// String asunto = "Usuario provisional solicitud documentación";
+			// String correoEnvio = "dragossterpu@gmail.com";
+			// String nombre = "Prueba";
+			// String respuesta = "El password es :" + password;
+			// try {
+			// SendSimpleMail.sendMail(asunto, correoEnvio, nombre, respuesta);
+			// }
+			// catch (MessagingException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 			RequestContext context = RequestContext.getCurrentInstance();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Envío",
 					"Se ha enviado con éxito la solicitud de documentación");
@@ -579,9 +469,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que permite al jefe de inspecciones finalizar una solicitud de documentación ya cumplimentada, después de
-	 * revisar la documentación adjuntada por la unidad que se va a inspeccionar. Adicionalmente elimina el usuario
-	 * provisinal que se usó para llevarla a cabo puesto que ya no se va a usar más.
+	 * Permite al jefe de inspecciones finalizar una solicitud de documentación ya cumplimentada, después de revisar la
+	 * documentación adjuntada por la unidad que se va a inspeccionar. Adicionalmente elimina el usuario provisinal que
+	 * se usó para llevarla a cabo puesto que ya no se va a usar más.
 	 * 
 	 * @author EZENTIS
 	 * @return vista vistaSolicitud
@@ -602,8 +492,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que devuelve al formulario de búsqueda de solicitudes de documentación previa a su estado inicial y borra
-	 * los resultados de búsquedas anteriores.
+	 * Devuelve al formulario de búsqueda de solicitudes de documentación previa a su estado inicial y borra los
+	 * resultados de búsquedas anteriores.
 	 * 
 	 * @author EZENTIS
 	 */
@@ -613,8 +503,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que busca las solicitudes de documentación previa según los filtros introducidos en el formulario de
-	 * búsqueda.
+	 * Busca las solicitudes de documentación previa según los filtros introducidos en el formulario de búsqueda.
 	 * 
 	 * @author EZENTIS
 	 */
@@ -624,7 +513,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que comprueba si el usuario logueado es el jefe del equipo encargado de la solicitud de inspeccion.
+	 * Comprueba si el usuario logueado es el jefe del equipo encargado de la solicitud de inspeccion.
 	 * 
 	 * @author EZENTIS
 	 * @return result booleano
@@ -644,26 +533,15 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Método que comprueba si la solicitud de documentación ya ha sido validada por apoyo. En caso de ser así se
-	 * bloquea la modificación de solicitud.
+	 * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
+	 * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
 	 * 
-	 * @author EZENTIS
-	 * @param solicitud
-	 * @return result booleano
+	 * @param inspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en los
+	 * formularios de creación y modificación
+	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
 	 */
-	public boolean estaValidadaApoyo(SolicitudDocumentacionPrevia solicitud) {
-		return solicitud.getFechaValidApoyo() != null;
-	}
-
-	/**
-	 * Método que devuelve una lista con las inspecciones cuyo número contienen alguno de los caracteres pasado como
-	 * parámetro. Se usa en el formulario de envío para el autocompletado.
-	 * 
-	 * @param numeroInspeccion Número de inspección que teclea el usuario en los formularios de creación y modificación
-	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el número introducido
-	 */
-	public List<Inspeccion> autocompletarInspeccion(String numeroInspeccion) {
-		return inspeccionRepository.findByNumeroLike("%" + numeroInspeccion + "%");
+	public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
+		return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
 	}
 
 }

@@ -25,22 +25,22 @@ import lombok.extern.slf4j.Slf4j;
 
 public class GestorDocumentalBean {
 
-	List<Documento> listadoDocumentos= new ArrayList<>();
-	
+	List<Documento> listadoDocumentos = new ArrayList<>();
+
 	private StreamedContent file;
-	
+
 	@Autowired
 	IDocumentoService documentoService;
-	
+
 	@PostConstruct
 	public void init() {
 		recargaLista();
 	}
-	
-	public void recargaLista(){
-		listadoDocumentos= (List<Documento>) documentoService.findAll();
+
+	public void recargaLista() {
+		listadoDocumentos = (List<Documento>) documentoService.findAll();
 	}
-	
+
 	public void descargarFichero(Documento documento) {
 		try {
 			file = documentoService.descargaDocumento(documento);
@@ -49,14 +49,14 @@ public class GestorDocumentalBean {
 			log.error("Error en la descarga de documentos: ", e);
 		}
 	}
-	
-	public void cargaFichero(FileUploadEvent event){
-		
-		documentoService.cargaDocumento(event);
+
+	public void cargaFichero(FileUploadEvent event) {
+
+		documentoService.cargaDocumento(event.getFile());
 		recargaLista();
 	}
-	
-	public void eliminarDocumento(Documento documento){
+
+	public void eliminarDocumento(Documento documento) {
 		documentoService.delete(documento);
 		recargaLista();
 	}

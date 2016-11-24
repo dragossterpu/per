@@ -11,24 +11,21 @@
 		
 		<ui:define name="content">
 
-		<h3>Solicitud documentación previa cuestionario</h3>
 		<div class="bloqueVistaTitulo">	
-			<h4>Nombre Solicitud </h4>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreSolicitud}
+			<h3>Solicitud documentación previa cuestionario</h3>
 		</div>
 		
-			
-
 		<h:form id="formAlta">
 			
 					<div class="bloqueVistaTitulo">
 						<p>Nº Inspección: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero}</p>	
-						<p>FECHA: Madrid, #{solicitudDocPreviaBean.fechaEmision}</p>
+						<p>FECHA: Madrid, <h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAlta}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></p>
 						<p>ASUNTO: 	#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}</p>	
 						<p><strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
 					</div>	
 					<div class="bloqueVista">	
 					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cuatrimestre.descripcion} del año #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}</strong>, se va a realizar una  inspección de carácter
-					<strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion}</strong> en esa Comandancia de su mando.</p>		
+					<strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> en esa Comandancia de su mando.</p>		
 					</div>
 					<div class="bloqueVista">
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
@@ -40,7 +37,7 @@
 					números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa, no cuenta personal).</p>
 					</div>
 					<div class="bloqueVista">
-					<p >2.	Antes del <strong> #{solicitudDocPreviaBean.fechaAntes}</strong>, con el nombre de fichero de se indica y 
+					<p >2.	Antes del <strong><h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>, con el nombre de fichero de se indica y 
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
@@ -58,7 +55,7 @@
 					</div>
 					<div class="bloqueVistaTitulo">
 					<p >3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
-					deberá tener entrada en esta IPSS antes del <strong> #{solicitudDocPreviaBean.fechaLimite}</strong>.</p>
+					deberá tener entrada en esta IPSS antes del <strong><h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>.</p>
 					</div>
 					<div class="bloqueVista">
 					<p >Para cualquier aclaración, podrá dirigirse a:</p>

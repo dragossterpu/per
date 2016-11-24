@@ -22,7 +22,6 @@ import lombok.ToString;
  * Entidad Documento. Cualquier archivo subido a la aplicación se almacena en esta tabla.
  * 
  * @author EZENTIS
- * @see es.mira.progesin.persistence.entities.ModeloSolicitud
  * @see es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion
  * @see es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario
  * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean

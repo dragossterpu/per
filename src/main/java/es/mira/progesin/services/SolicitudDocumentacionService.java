@@ -16,7 +16,6 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
@@ -121,10 +120,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	@Override
 	@Transactional(readOnly = false)
 	public boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
-			String password) {
+			User usuarioProv) {
 		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-		User user = new User(solicitudDocumentacionPrevia.getCorreoDestiantario(), password, RoleEnum.PROV_SOLICITUD);
-		userService.save(user);
+		userService.save(usuarioProv);
 		return true;
 	}
 

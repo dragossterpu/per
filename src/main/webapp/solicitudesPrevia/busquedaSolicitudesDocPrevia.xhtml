@@ -94,48 +94,59 @@
 									listener="#{solicitudDocPreviaBean.onToggle}" />
 							</p:columnToggler>
 						</f:facet>
-						<p:column headerText="Nombre solicitud"
-							sortBy="#{solicitud.nombreSolicitud}" width="340">
-							<h:outputText value="#{solicitud.nombreSolicitud}" />
+						<p:column headerText="Número Inspección"
+							sortBy="#{solicitud.inspeccion.numero}" width="110">
+							<h:outputText value="#{solicitud.inspeccion.numero}" />
+						</p:column>
+						<p:column headerText="Ámbito Inspección"
+							sortBy="#{solicitud.inspeccion.ambito}" width="60">
+							<h:outputText value="#{solicitud.inspeccion.ambito}" />
+						</p:column>
+						<p:column headerText="Unidad"
+							sortBy="#{solicitud.inspeccion.nombreUnidad}" width="100">
+							<h:outputText value="#{solicitud.inspeccion.nombreUnidad}" />
+						</p:column>
+						<p:column headerText="Tipo Inspección"
+							sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="110">
+							<h:outputText value="#{solicitud.inspeccion.tipoInspeccion.descripcion}" />
 						</p:column>
 						<p:column headerText="Fecha alta" sortBy="#{solicitud.fechaAlta}"
 							width="70">
 							<h:outputText value="#{solicitud.fechaAlta}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Validación apoyo"
 							sortBy="#{solicitud.fechaValidApoyo}" width="110">
 							<h:outputText value="#{solicitud.fechaValidApoyo}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}"
 							width="60">
 							<h:outputText value="#{solicitud.fechaEnvio}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Cumplimentada"
 							sortBy="#{solicitud.fechaCumplimentacion}" width="100">
 							<h:outputText value="#{solicitud.fechaCumplimentacion}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Finalizada"
 							sortBy="#{solicitud.fechaFinalizacion}" width="60">
 							<h:outputText value="#{solicitud.fechaFinalizacion}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 
 
 						<p:column width="30" exportable="false">
-							<p:commandButton title="Ver solicitud" icon="fa fa-fw fa-eye"
-								action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
+							<h:commandLink title="Ver solicitud" styleClass="fa fa-eye ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}"/>
 						</p:column>
 						<p:column width="30" exportable="false">
-							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" disabled="#{solicitudDocPreviaBean.estaValidadaApoyo(solicitud)}"/>	
+							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>	
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="ui-icon-trash"

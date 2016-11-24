@@ -1,8 +1,6 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +13,6 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -48,48 +45,38 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String NOMBRESECCION = "Acceso a la solicitud de documentación";
+	private static final String NOMBRESECCION = "Acceso a la solicitud de documentación";
+
+	private static final String ERROR = "Error";
 
 	RegistroActividad regActividad = new RegistroActividad();
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	transient IRegistroActividadService regActividadService;
 
 	@Autowired
-	IModeloCuestionarioService modeloCuestionarioService;
-
-	String nombreSolicitud;
+	transient IModeloCuestionarioService modeloCuestionarioService;
 
 	@Autowired
-	ISolicitudDocumentacionService solicitudDocumentacionService;
+	transient ISolicitudDocumentacionService solicitudDocumentacionService;
 
 	@Autowired
-	INotificacionService notificacionService;
+	transient INotificacionService notificacionService;
 
 	@Autowired
-	ITipoDocumentacionService tipoDocumentacionService;
+	transient ITipoDocumentacionService tipoDocumentacionService;
 
 	@Autowired
-	IGestDocSolicitudDocumentacionService gestDocumentacionService;
+	transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
 
 	@Autowired
-	IDocumentoService documentoService;
+	transient IDocumentoService documentoService;
 
-	List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
+	private List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
 
-	List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
+	private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-
-	private UploadedFile docNuevo;
-
-	private Integer anio;
-
-	private String fechaAntes;
-
-	private String fechaLimite;
-
-	private String fechaEmision;
 
 	private StreamedContent file;
 
@@ -98,14 +85,9 @@ public class ProvisionalSolicitudBean implements Serializable {
 		// ñapa
 		try {
 			solicitudDocumentacionPrevia = solicitudDocumentacionService.findByCorreoDestiantario(correo);
-			nombreSolicitud = solicitudDocumentacionPrevia.getNombreSolicitud();
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 			listadoDocumentosCargados = gestDocumentacionService
 					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			fechaEmision = formatter.format(solicitudDocumentacionPrevia.getFechaAlta());
-			fechaAntes = formatter.format(solicitudDocumentacionPrevia.getFechaAntes());
-			fechaLimite = formatter.format(solicitudDocumentacionPrevia.getFechaLimiteCumplimentar());
 		}
 		catch (Exception e) {
 			altaRegActivError(e);
@@ -115,7 +97,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	public String gestionarCargaDocumento(FileUploadEvent event) {
 		try {
-			Documento documento = documentoService.cargaDocumento(event);
+			Documento documento = documentoService.cargaDocumento(event.getFile());
 			if (documento != null) {
 				GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
 				gestDocumento.setFechaAlta(new Date());
@@ -126,12 +108,12 @@ public class ProvisionalSolicitudBean implements Serializable {
 				gestDocumento.setExtension(Utilities.getExtensionTipoContenido(documento.getTipoContenido()));
 				if (gestDocumentacionService.save(gestDocumento) != null) {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-							"Documento/s subidos  con éxito");
+							"Documento/s subidos con éxito");
 				}
 			}
 		}
 		catch (Exception e) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
 			altaRegActivError(e);
 		}
@@ -142,10 +124,8 @@ public class ProvisionalSolicitudBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-		listadoDocumentosPrevios = new ArrayList<DocumentacionPrevia>();
-		listadoDocumentosCargados = new ArrayList<GestDocSolicitudDocumentacion>();
-		nombreSolicitud = null;
-		anio = null;
+		listadoDocumentosPrevios = new ArrayList<>();
+		listadoDocumentosCargados = new ArrayList<>();
 	}
 
 	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
@@ -245,7 +225,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 		}
 		catch (Exception e) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
 			altaRegActivError(e);
 		}
@@ -261,7 +241,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			}
 		}
 		catch (Exception e) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
 			altaRegActivError(e);
 		}

@@ -3,7 +3,6 @@ package es.mira.progesin.services;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,33 +209,6 @@ public class DocumentoService implements IDocumentoService {
 		Documento entity = findOne(id);
 		InputStream stream = new ByteArrayInputStream(entity.getFichero());
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
-	}
-
-	/***************************************
-	 * 
-	 * cargaDocumento
-	 * 
-	 * Recibe un evento FileUploadEvent del que recupera los datos para generar un Documento que se almacenará en base
-	 * da datos. Devuelve el documento almacenado
-	 * 
-	 * @author Ezentis
-	 * @param FileUploadEvent
-	 * @return Documento
-	 *************************************/
-
-	@Override
-	public Documento cargaDocumento(FileUploadEvent event) {
-		Documento docu = new Documento();
-		try {
-			docu.setNombre(event.getFile().getFileName());
-			docu.setFichero(event.getFile().getContents());
-			docu.setTipoContenido(event.getFile().getContentType());
-			return documentoRepository.save(docu);
-		}
-		catch (Exception ex) {
-			log.error("Error en la carga de documentos", ex);
-		}
-		return docu;
 	}
 
 	/***************************************

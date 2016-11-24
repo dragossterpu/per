@@ -34,7 +34,7 @@ import lombok.ToString;
  * provisional.
  * 
  * @author EZENTIS
- * @see es.mira.progesin.persistence.entities.ModeloSolicitud
+ * @see es.mira.progesin.persistence.entities.BORRARModeloSolicitud
  * @see es.mira.progesin.persistence.entities.Inspeccion
  * @see es.mira.progesin.persistence.entities.DocumentacionPrevia
  * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
@@ -79,11 +79,14 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "anio")
 	private Integer anio;
 
-	@Column(name = "fechaAntes")
-	private Date fechaAntes;
+	@Column(name = "fechaLimiteEnvio")
+	private Date fechaLimiteEnvio;
 
 	@Column(name = "fechaLimiteCumplimentar")
 	private Date fechaLimiteCumplimentar;
+
+	@Column(name = "descargaPlantillas")
+	private boolean descargaPlantillas;
 
 	@Column(name = "apoyoPuesto")
 	private String apoyoPuesto;

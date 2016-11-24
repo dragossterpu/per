@@ -13,4 +13,6 @@ public interface IInspeccionesService {
 	public void delete(Inspeccion inspecciones);
 
 	public List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad);
+
+	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion);
 }

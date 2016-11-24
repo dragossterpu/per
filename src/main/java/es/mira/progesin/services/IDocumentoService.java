@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -30,8 +29,6 @@ public interface IDocumentoService {
 	DefaultStreamedContent descargaDocumento(Documento entity);
 
 	DefaultStreamedContent descargaDocumento(Long id);
-
-	Documento cargaDocumento(FileUploadEvent event);
 
 	Documento cargaDocumento(UploadedFile file);
 
