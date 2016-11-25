@@ -1,6 +1,7 @@
 package es.mira.progesin.util;
 
 import java.io.File;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -13,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,13 +48,14 @@ public class CorreoElectronico implements ICorreoElectronico {
 		
 		try {
 			
-			
-			String host= parametro.findValueForKey("mailHost");
-			String puerto= parametro.findValueForKey("mailHostPort");
-			String auth= parametro.findValueForKey("mailAuth");
-			String tls= parametro.findValueForKey("mailTLS");
-			String usuario= parametro.findValueForKey("mailUser");
-			String pass= parametro.findValueForKey("mailUserPwd");
+			List<Parametro> parametrosMail=parametro.findParametrosForSeccion("mail");
+		
+			String host= parametro.findValueForKey("Host","mail");
+			String puerto= parametro.findValueForKey("HostPort","mail");
+			String auth= parametro.findValueForKey("Auth","mail");
+			String tls= parametro.findValueForKey("TLS","mail");
+			String usuario= parametro.findValueForKey("User","mail");
+			String pass= parametro.findValueForKey("UserPwd","mail");
 			
 			
 			Properties mailProperties = new Properties();
