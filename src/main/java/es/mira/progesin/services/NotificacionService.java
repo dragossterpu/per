@@ -1,8 +1,10 @@
 package es.mira.progesin.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +52,18 @@ public class NotificacionService implements INotificacionService {
 	@Transactional(readOnly = false)
 	public Notificacion save(Notificacion entity) {
 		return notificacionRepository.save(entity);
+	}
+
+	@Override
+	public void crearNotificacion(String descripcion, String tipoNotificacion, String seccion) {
+		Notificacion notificacion = new Notificacion();
+		notificacion.setTipoNotificacion(tipoNotificacion);
+		notificacion.setUsernameNotificacion(SecurityContextHolder.getContext().getAuthentication().getName());
+		notificacion.setNombreSeccion(seccion);
+		notificacion.setFechaAlta(new Date());
+		notificacion.setDescripcion(descripcion);
+		notificacionRepository.save(notificacion);
+
 	}
 
 }

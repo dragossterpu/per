@@ -19,4 +19,6 @@ public interface INotificacionService {
 	Notificacion findOne(Integer id);
 
 	Notificacion save(Notificacion entity);
+
+	void crearNotificacion(String descripcion, String tipoNotificacion, String seccion);
 }
