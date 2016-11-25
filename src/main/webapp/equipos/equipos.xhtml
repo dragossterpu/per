@@ -84,10 +84,9 @@
 				            	<p:printer target="busquedaEquipos" />
 				            </h:commandLink>
 			            </p:outputPanel>
-			  		<p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="10" id="tablaEquipos"
+			  		<p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="20" id="tablaEquipos"
 	                         draggableColumns="true"
 	                         paginator="true"
-	                         rowsPerPageTemplate="5,10,15" 
 	                         resizableColumns="true"
 	                         rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}"
 	                         style="">

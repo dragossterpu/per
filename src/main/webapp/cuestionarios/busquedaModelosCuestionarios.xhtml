@@ -71,9 +71,8 @@
 		            	<p:printer target="tablaCuestionarios" />
 		            </h:commandLink>
 	            </p:outputPanel>
-	 			<p:dataTable  var="cuestionario" value="#{cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"  rows="10" id="tablaCuestionarios"
-	                         paginator="true"
-	                         rowsPerPageTemplate="5,10,15" 
+	 			<p:dataTable  var="cuestionario" value="#{cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"  rows="20" id="tablaCuestionarios"
+	                         paginator="true" 
 	                         resizableColumns="true"
 	                         rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"
 	             >

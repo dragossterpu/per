@@ -382,20 +382,20 @@ Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Va
 Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (11, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
 Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (12, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
 
---insert into documentos (id, fichero, tipo_contenido, nombre) values (1, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'application/msword','CUESTIONARIO.CIES.doc');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (2, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (3, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A.- Cuestionario  JEFATURA SUPERIOR .docx');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (4, bytea_import('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B - GC - Cuestionario Comandancia GENERICO.docx');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (5, bytea_import('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B.- Cuestionario COMISARIA PROVINCIAL.docx');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (6, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (7, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (8, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'),'application/msword','CUESTIONARIO PRLCNP.doc');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (10, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'),'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (11, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
---insert into documentos (id, fichero, tipo_contenido, nombre) values (12, bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (1, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'application/msword','CUESTIONARIO.CIES.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (2, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (3, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A.- Cuestionario  JEFATURA SUPERIOR .docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (4, bytea_import('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B - GC - Cuestionario Comandancia GENERICO.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (5, bytea_import('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B.- Cuestionario COMISARIA PROVINCIAL.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (6, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (7, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (8, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'),'application/msword','CUESTIONARIO PRLCNP.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (10, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'),'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (11, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (12, bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
 
 -- Ñapa para alta de nuevos documentos
---select setval('documentos_id_seq', 12) from documentos;
+select setval('seq_documentos', 12) from documentos;
 
   ------------- áreas cuestionario
   

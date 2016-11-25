@@ -115,7 +115,7 @@ public class EquiposBean implements Serializable {
 		if (jefeSelecionado == null) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
 					"Se debe elegir un jefe de equipo");
-			FacesContext.getCurrentInstance().addMessage("eqipoJefes", message);
+			FacesContext.getCurrentInstance().addMessage("equipoJefes", message);
 		}
 
 		miembrosSelecionados.add(jefeSelecionado);

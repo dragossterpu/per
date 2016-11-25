@@ -52,7 +52,7 @@
            
                 <p:messages />
                <div class="botonesFormulario">
-					 <p:dataTable id="eqipoJefes" var="jefeInspector" value="#{equiposBean.listadoJefes}" paginator="true" rows="10" selection="#{equiposBean.jefeSelecionado}" rowKey="#{jefeInspector.username}">
+					 <p:dataTable id="equipoJefes" var="jefeInspector" value="#{equiposBean.listadoJefes}" paginator="true" rows="20" selection="#{equiposBean.jefeSelecionado}" rowKey="#{jefeInspector.username}">
 				        <f:facet name="header">
 				            Jefe de inspeción
 				        </f:facet>
@@ -81,7 +81,7 @@
             <p:panel header="Miembros">
             <br></br>
                 <p:messages />
-                   <p:dataTable id="equipoMiembros" var="inspector"  value="#{equiposBean.listadoMiembros}" paginator="true" rows="10" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{inspector.username}"
+                   <p:dataTable id="equipoMiembros" var="inspector"  value="#{equiposBean.listadoMiembros}" paginator="true" rows="20" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{inspector.username}"
                     >
 				        <f:facet name="header">
 				            Inspectores

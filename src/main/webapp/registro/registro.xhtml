@@ -67,10 +67,9 @@
 		            </h:commandLink>
 	            </p:outputPanel>
 
-	 			<p:dataTable  var="regActividad" value="#{regActividadBean.regActividadBusqueda.listaRegActividad}"  rows="10" id="tablaRegActividad"
+	 			<p:dataTable  var="regActividad" value="#{regActividadBean.regActividadBusqueda.listaRegActividad}"  rows="20" id="tablaRegActividad"
 	                         draggableColumns="true"
-	                         paginator="true"
-	                         rowsPerPageTemplate="5,10,15" 
+	                         paginator="true" 
 	                         resizableColumns="true"
 	                         rendered="#{not empty regActividadBean.regActividadBusqueda.listaRegActividad}"
 	                         style="">
