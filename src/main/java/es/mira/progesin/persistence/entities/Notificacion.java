@@ -33,7 +33,7 @@ public class Notificacion {
 	@Column(name = "ID_NOTIFICACION", length = 15)
 	private Integer idNotificacion;
 
-	@Column(name = "DESCRIPCION", length = 4000)
+	@Column(name = "DESCRIPCION", length = 2000)
 	private String descripcion;
 
 	@Column(name = "FECHA_NOTIFICACION", nullable = false)

@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
@@ -43,12 +45,14 @@ public class Alerta implements Serializable {
 	@Column(name = "NOMBRE_SECCION", length = 50)
 	private String nombreSeccion;
 
-	@Column(name = "DESCRIPCION", length = 4000)
+	@Column(name = "DESCRIPCION", length = 2000)
 	private String descripcion;
 
+	@CreatedDate
 	@Column(name = "FECHA_REGISTRO")
 	private Date fechaAlta;
 
+	@CreatedBy
 	@Column(name = "USUARIO_REGISTRO", length = 50)
 	private String usernameAlerta;
 
