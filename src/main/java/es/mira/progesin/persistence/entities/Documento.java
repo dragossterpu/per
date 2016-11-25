@@ -1,12 +1,14 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -45,13 +47,13 @@ public class Documento implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	// no vale con postgres
-	// @Column(name = "fichero")
-	// @Lob
-	// private Blob fichero;
+	
+	 @Column(name = "fichero")
+	 @Lob
+	 private Blob fichero;
 
-	@Column(name = "fichero", nullable = false)
-	private byte[] fichero;
+//	@Column(name = "fichero", nullable = false)
+//	private byte[] fichero;
 
 	@Column(name = "tipoContenido", nullable = false)
 	private String tipoContenido;

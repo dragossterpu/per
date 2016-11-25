@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -48,7 +50,7 @@ public class ModelosGuiaBean {
 
 	public void descargarFichero(ModeloGuia guia) {
 		try {
-			InputStream stream = new ByteArrayInputStream(guia.getFichero());
+			InputStream stream = guia.getFichero().getBinaryStream();
 			String contentType = "application/msword";
 			if ("pdf".equals(guia.getExtension())) {
 				contentType = "application/pdf";
@@ -88,8 +90,9 @@ public class ModelosGuiaBean {
 				System.out.println(fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1));
 				guia.setExtension(
 						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
-				// Blob fichero = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
-				guia.setFichero(data);
+				Blob fichero2 = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
+				//guia.setFichero(data);
+				guia.setFichero(fichero2);
 				modeloGuiaService.save(guia);
 			}
 		}

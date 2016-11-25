@@ -1,14 +1,14 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -46,16 +46,15 @@ public class ModeloGuia implements Serializable {
 	@Column(name = "extension", nullable = false, length = 4)
 	private String extension;
 
-	// no vale con postgres
-	// @Column(name = "fichero")	
-	// @Lob
-	// private Blob fichero;
+	 @Column(name = "fichero")	
+	 @Lob
+	 private Blob fichero;
 
 	@Column(name = "nombre", nullable = false)
 	private String nombreFichero;
 
-	@Column(name = "fichero", nullable = false)
-	private byte[] fichero;
+//	@Column(name = "fichero", nullable = false)
+//	private byte[] fichero;
 
 
 }
