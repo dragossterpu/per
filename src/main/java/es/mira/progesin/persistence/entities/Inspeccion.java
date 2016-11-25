@@ -57,9 +57,9 @@ public class Inspeccion implements Serializable {
 	private TipoInspeccion tipoInspeccion;
 
 	// Lo comento de momento para poder crear inspecciones
-	// @ManyToOne
-	// @JoinColumn(name = "id_equipo")
-	// private Equipo equipo;
+	@ManyToOne
+	@JoinColumn(name = "id_equipo")
+	private Equipo equipo;
 
 	// @OneToOne(mappedBy = "inspeccion", fetch = FetchType.LAZY)
 	// private CuestionarioEnvio cuestionarioEnviado;

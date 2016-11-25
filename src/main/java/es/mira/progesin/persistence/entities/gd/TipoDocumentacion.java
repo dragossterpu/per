@@ -38,7 +38,7 @@ public class TipoDocumentacion implements Serializable {
 	@SequenceGenerator(name = "id_tipo_doc_seq", sequenceName = "id_tipo_doc_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID_TIPO_DOCUMENTO", unique = true, updatable = false)
-	private Integer idTipoDocumento;
+	private Long idTipoDocumento;
 
 	@Column(name = "DESCRIPCION", length = 255)
 	private String descripcion;

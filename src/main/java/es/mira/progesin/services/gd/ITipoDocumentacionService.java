@@ -9,12 +9,12 @@ public interface ITipoDocumentacionService {
 
 	List<TipoDocumentacion> findAll();
 
-	void delete(Integer id);
+	void delete(Long id);
 
 	TipoDocumentacion save(TipoDocumentacion entity);
 
 	DocumentacionPrevia save(DocumentacionPrevia entity);
 
-	List<DocumentacionPrevia> findByIdSolicitud(Integer idSolicitud);
+	List<DocumentacionPrevia> findByIdSolicitud(Long idSolicitud);
 
 }

@@ -129,13 +129,26 @@
 					
 					<p:outputPanel>
 					<div class="botonesFormulario">				        						
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}" actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación apoyo" icon="fa fa-fw fa-user-plus"/>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('EQUIPO_INSPECCIONES,ADMIN') and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud sin aprobación del jefe de inspecciones" icon="fa fa-fw fa-envelope-o">
-							<p:confirm header="Eliminar documentacion" icon="fa fa-warning-sign"
-								message="¿Está seguro que desea enviar esta solicitud sin aprobación del jefe de inspecciones?"/>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}" actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación Apoyo" icon="fa fa-fw fa-user-plus">
+							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+								message="¿Está seguro que desea validar esta solicitud?"/>
 						</p:commandButton>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-envelope-o"/>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check"/>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidJefeEquipo and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.validacionJefeEquipo}" value="Validación Jefe Equipo" icon="fa fa-fw fa-user-plus">
+							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+								message="¿Está seguro que desea validar esta solicitud?"/>
+						</p:commandButton>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidJefeEquipo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-envelope-o">
+							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+								message="¿Está seguro que desea enviar esta solicitud?"/>
+						</p:commandButton>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check">
+							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+								message="¿Está seguro que desea finalizar esta solicitud?"/>
+						</p:commandButton>
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.noConformeSolicitud}" value="No conforme" icon="fa fa-fw fa-undo">
+							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+								message="¿Está seguro que desea declara no conforme esta solicitud y reenviarla?"/>
+						</p:commandButton>
 						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>

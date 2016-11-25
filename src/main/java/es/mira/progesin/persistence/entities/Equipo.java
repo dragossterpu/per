@@ -40,8 +40,8 @@ public class Equipo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_EQUIPO", length = 5)
-	private Integer idEquipo;
+	@Column(name = "ID_EQUIPO")
+	private Long idEquipo;
 
 	@Column(name = "nombreEquipo", length = 100, nullable = false)
 	private String nombreEquipo;

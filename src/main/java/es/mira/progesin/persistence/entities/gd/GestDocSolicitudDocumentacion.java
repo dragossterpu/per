@@ -36,10 +36,10 @@ public class GestDocSolicitudDocumentacion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "idSolicitud")
-	private Integer idSolicitud;
+	private Long idSolicitud;
 
 	@Column(name = "extension", nullable = false, length = 4)
 	private String extension;

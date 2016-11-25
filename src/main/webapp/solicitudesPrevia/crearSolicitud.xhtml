@@ -60,7 +60,7 @@
 
 									<h:outputLabel for="correoDestiantario" value="Correo destinatario (*):"/>
 									<p:inputText id="correoDestiantario"
-										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}"
+										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}"
 										required="true"
 										requiredMessage="Es obligatorio un correo del destinatario"
 										validatorMessage="Formato de correo incorrecto"
@@ -104,7 +104,7 @@
 										pattern="dd/MM/yyyy"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
-										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" />
+										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"/>
 										
 									<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
 									<p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
@@ -119,7 +119,7 @@
 								<h:panelGrid columns="2" columnClasses="label, value">
 									<p:dataTable id="documentosSolicitud" var="documento"
 										value="#{solicitudDocPreviaBean.listadoDocumentos}"
-										paginator="true" rows="10"
+										paginator="true" rows="20"
 										selection="#{solicitudDocPreviaBean.documentosSelecionados}"
 										rowKey="#{documento.idTipoDocumento}">
 										<f:facet name="header">
@@ -145,6 +145,11 @@
 							<p:panel header="Apoyo">
 								<br></br>
 								<p:messages />
+								
+								<div class="aclaraciones">
+									Los campos en blanco serán rellenados con los datos de la persona de apoyo por defecto.
+								</div>
+									
 								<h:panelGrid columns="2" columnClasses="label, value">
 
 									<h:outputLabel for="apoyoPuesto" value="Puesto persona apoyo:"

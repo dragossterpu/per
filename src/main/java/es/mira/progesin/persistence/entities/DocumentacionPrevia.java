@@ -41,11 +41,11 @@ import lombok.extern.slf4j.Slf4j;
 public class DocumentacionPrevia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID", length = 5)
-	private Integer id;
+	@Column(name = "ID")
+	private Long id;
 
-	@Column(name = "ID_SOLICITUD", length = 5)
-	private Integer idSolicitud;
+	@Column(name = "ID_SOLICITUD")
+	private Long idSolicitud;
 
 	@Column(name = "descripcion")
 	private String descripcion;

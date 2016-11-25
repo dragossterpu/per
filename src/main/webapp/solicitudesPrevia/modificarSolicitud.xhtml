@@ -29,10 +29,12 @@
                         </p:autoComplete>
                         
 						<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
-						<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true"/>
+						<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" 
+							disabled="true"/>
 																						
 						<h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
-						<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito}" disabled="true"/>
+						<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito}" 
+							disabled="true"/>
 						
 						<h:outputLabel for="asunto" value="Asunto (*):" />
 						<p:inputText id="asunto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}"
@@ -42,35 +44,19 @@
 						<p:inputText id="destinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" converter="#{trimConverter}"
 							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio}"/>
 									
-						<h:outputLabel for="correoDestiantario" value="Correo destinatario (*):" />
-						<p:inputText id="correoDestiantario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestiantario}" required="true" requiredMessage="Es obligatorio un correo del destinatariodestinatario" converter="#{trimConverter}"
+						<h:outputLabel for="correoDestinatario" value="Correo destinatario (*):" />
+						<p:inputText id="correoDestinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" converter="#{trimConverter}"
 							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio}">
 							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</p:inputText>
-						
-						<h:outputLabel for="cuatrimestre" value="Cuatrimestre (*):" />
-						<p:importEnum
-							type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
-							var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu id="cuatrimestre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cuatrimestre}" effect="fold" required="true" requiredMessage="Es obligatorio el cuartrimestre">
-							<f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}"
-								var="cuatrimestreSolicitudDocPrevia"
-								itemLabel="#{cuatrimestreSolicitudDocPrevia.descripcion}"
-								itemValue="#{cuatrimestreSolicitudDocPrevia}" />
-						</p:selectOneMenu>
-						
-						<h:outputLabel for="anio" value="Año (*):" />
-						<p:inputNumber id="anio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}" required="true" requiredMessage="Es obligatorio un año" maxValue="9999" decimalSeparator="" thousandSeparator="" decimalPlaces="0" />
-											
+				
 						<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
 						<p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación"/>
 											
 						<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):" />
-						<p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"/>					
-						
-						<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
-						<p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
-						
+						<p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"
+							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio}"/>					
+
 					</div>
 	
 					<div class="columnaDchaFormulario">
@@ -85,7 +71,24 @@
 											
 						<h:outputLabel for="apoyoCorreo" value=" Correo persona apoyo:" />
 						<p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"/>
-																												
+													
+						<h:outputLabel for="cuatrimestre" value="Cuatrimestre (*):" />
+						<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
+							var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu id="cuatrimestre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cuatrimestre}" effect="fold" required="true" requiredMessage="Es obligatorio el cuartrimestre">
+							<f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}"
+								var="cuatrimestreSolicitudDocPrevia"
+								itemLabel="#{cuatrimestreSolicitudDocPrevia.descripcion}"
+								itemValue="#{cuatrimestreSolicitudDocPrevia}" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel for="anio" value="Año (*):" />
+						<p:inputNumber id="anio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}" required="true" requiredMessage="Es obligatorio un año" maxValue="9999" decimalSeparator="" thousandSeparator="" decimalPlaces="0" />
+						
+						<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
+						<p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
+																										
 					</div>
 			</div>
 	

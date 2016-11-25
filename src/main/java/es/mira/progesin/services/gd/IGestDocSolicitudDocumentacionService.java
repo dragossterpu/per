@@ -8,7 +8,7 @@ public interface IGestDocSolicitudDocumentacionService {
 
 	GestDocSolicitudDocumentacion save(GestDocSolicitudDocumentacion documento);
 
-	List<GestDocSolicitudDocumentacion> findByIdSolicitud(Integer idSolicitud);
+	List<GestDocSolicitudDocumentacion> findByIdSolicitud(Long idSolicitud);
 
 	void delete(GestDocSolicitudDocumentacion documento);
 

@@ -26,7 +26,7 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		tipoDocumentacionRepository.delete(id);
 	}
 
@@ -43,7 +43,7 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
 	}
 
 	@Override
-	public List<DocumentacionPrevia> findByIdSolicitud(Integer idSolicitud) {
+	public List<DocumentacionPrevia> findByIdSolicitud(Long idSolicitud) {
 		return documentacionPreviaRepository.findByIdSolicitud(idSolicitud);
 	}
 

@@ -30,12 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 public class Miembros {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID", length = 5)
-	private Integer id;
+	@Column(name = "ID")
+	private Long id;
 
 	// TODO Esto en verdad es el id del equipo, cambiar y refractorizar
-	@Column(name = "ID_MIEMBROS", length = 5)
-	private Integer idMiembros;
+	@Column(name = "ID_MIEMBROS")
+	private Long idMiembros;
 
 	@Column(name = "username")
 	private String username;

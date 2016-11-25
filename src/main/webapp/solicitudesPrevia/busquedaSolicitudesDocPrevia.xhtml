@@ -21,7 +21,58 @@
 
 				<div class="bloqueFormulario">
 					<div class="columnaIzdaFormulario">
+																		
+						<h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
+						<p:inputText id="nombreUnidad" 
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
+						
+						<h:outputLabel for="numeroInspeccion" value="Número de la Inspeccion:" />
+						<p:inputText id="numeroInspeccion" 
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.numeroInspeccion}" converter="#{trimConverter}"/>
+						
+						<h:outputLabel for="ambitoInspeccion" value="Ambito de la Inpeccion:" />
+						<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+							var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.ambitoInspeccion}"
+							id="ambitoInspeccion">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+								var="ambitoInspeccionSolicitudDocPrevia"
+								itemLabel="#{ambitoInspeccionSolicitudDocPrevia.descripcion}"
+								itemValue="#{ambitoInspeccionSolicitudDocPrevia}" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel for="tipoInspeccionSelect"
+							value="Tipo de Inspección" />
+						<p:selectOneMenu
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.tipoInspeccion}"
+							id="tipoInspeccionSelect" converter="#{selectConverter}">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaTiposInspeccion}"
+								var="tipo"
+								itemLabel="#{tipo.descripcion}"
+								itemValue="#{tipo}" />
+						</p:selectOneMenu>
 
+					</div>
+
+					<div class="columnaDchaFormulario">
+					
+						<h:outputLabel for="usuarioCreacionSelect"
+							value="Usuario creación" />
+						<p:selectOneMenu
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.usuarioCreacion}"
+							id="usuarioCreacionSelect" converter="#{selectConverter}"
+							filter="true" filterMatchMode="startsWith">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaUsuarios}"
+								var="usuario"
+								itemLabel="#{usuario.apellido1}, #{usuario.nombre}"
+								itemValue="#{usuario}" />
+						</p:selectOneMenu>
+											
 						<h:outputLabel for="estado" value="Estado de la solicitud:" />
 						<p:importEnum
 							type="es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum"
@@ -35,23 +86,7 @@
 								itemLabel="#{estadoSolicitudDocPrevia.descripcion}"
 								itemValue="#{estadoSolicitudDocPrevia}" />
 						</p:selectOneMenu>
-
-						<h:outputLabel for="usuarioCreacionSelect"
-							value="Usuario creación" />
-						<p:selectOneMenu
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.usuarioCreacion}"
-							id="usuarioCreacionSelect" converter="#{selectConverter}"
-							filter="true" filterMatchMode="startsWith">
-							<f:selectItem itemLabel="Todos" itemValue="" />
-							<f:selectItems value="#{solicitudDocPreviaBean.listaUsuarios}"
-								var="usuario"
-								itemLabel="#{usuario.apellido1}, #{usuario.nombre}"
-								itemValue="#{usuario}" />
-						</p:selectOneMenu>
-
-					</div>
-
-					<div class="columnaDchaFormulario">
+						
 						<h:outputLabel for="fechaDesde" value="Fecha desde:" />
 						<p:calendar
 							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaDesde}"
@@ -63,6 +98,7 @@
 							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaHasta}"
 							id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"
 							maxdate="#{utilities.getCurrentDate()}" />
+							
 					</div>
 				</div>
 				<div class="botonesFormulario">
@@ -80,10 +116,8 @@
 						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
 					</p:outputPanel>
 					<p:dataTable var="solicitud"
-						value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}" rows="10"
-						id="tablaSolicitudes" draggableColumns="true" paginator="true"
-						rowsPerPageTemplate="5,10,15" resizableColumns="true"
-						scrollable="true" scrollWidth="690"
+						value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}" rows="20"
+						id="tablaSolicitudes" draggableColumns="true" paginator="true" resizableColumns="true" scrollable="true"
 						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
 						<f:facet name="header">
 							Solicitudes documentación
@@ -95,47 +129,53 @@
 							</p:columnToggler>
 						</f:facet>
 						<p:column headerText="Número Inspección"
-							sortBy="#{solicitud.inspeccion.numero}" width="110">
+							sortBy="#{solicitud.inspeccion.numero}" width="60">
 							<h:outputText value="#{solicitud.inspeccion.numero}" />
 						</p:column>
 						<p:column headerText="Ámbito Inspección"
 							sortBy="#{solicitud.inspeccion.ambito}" width="60">
 							<h:outputText value="#{solicitud.inspeccion.ambito}" />
 						</p:column>
+						<p:column headerText="Tipo Inspección"
+							sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="100">
+							<h:outputText value="#{solicitud.inspeccion.tipoInspeccion.descripcion}" />
+						</p:column>
 						<p:column headerText="Unidad"
 							sortBy="#{solicitud.inspeccion.nombreUnidad}" width="100">
 							<h:outputText value="#{solicitud.inspeccion.nombreUnidad}" />
 						</p:column>
-						<p:column headerText="Tipo Inspección"
-							sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="110">
-							<h:outputText value="#{solicitud.inspeccion.tipoInspeccion.descripcion}" />
-						</p:column>
-						<p:column headerText="Fecha alta" sortBy="#{solicitud.fechaAlta}"
+						<p:column headerText="Alta" sortBy="#{solicitud.fechaAlta}"
 							width="70">
 							<h:outputText value="#{solicitud.fechaAlta}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
-						<p:column headerText="Validación apoyo"
-							sortBy="#{solicitud.fechaValidApoyo}" width="110">
+						<p:column headerText="Validación Apoyo"
+							sortBy="#{solicitud.fechaValidApoyo}" width="70">
 							<h:outputText value="#{solicitud.fechaValidApoyo}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
+						<p:column headerText="Validación Jefe Equipo"
+							sortBy="#{solicitud.fechaValidJefeEquipo}" width="70">
+							<h:outputText value="#{solicitud.fechaValidJefeEquipo}">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+							</h:outputText>
+						</p:column>
 						<p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}"
-							width="60">
+							width="70">
 							<h:outputText value="#{solicitud.fechaEnvio}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Cumplimentada"
-							sortBy="#{solicitud.fechaCumplimentacion}" width="100">
+							sortBy="#{solicitud.fechaCumplimentacion}" width="90">
 							<h:outputText value="#{solicitud.fechaCumplimentacion}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Finalizada"
-							sortBy="#{solicitud.fechaFinalizacion}" width="60">
+							sortBy="#{solicitud.fechaFinalizacion}" width="70">
 							<h:outputText value="#{solicitud.fechaFinalizacion}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>

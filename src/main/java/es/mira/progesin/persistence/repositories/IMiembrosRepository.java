@@ -8,6 +8,6 @@ import es.mira.progesin.persistence.entities.Miembros;
 
 public interface IMiembrosRepository extends CrudRepository<Miembros, String> {
 
-	List<Miembros> findByIdMiembros(Integer idMiembros);
+	List<Miembros> findByIdMiembros(Long idMiembros);
 
 }

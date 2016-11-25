@@ -53,7 +53,7 @@ public class EquipoService implements IEquipoService {
 	}
 
 	@Override
-	public List<Miembros> findByIdMiembros(Integer idMiembros) {
+	public List<Miembros> findByIdMiembros(Long idMiembros) {
 		return miembrosRepository.findByIdMiembros(idMiembros);
 	}
 
