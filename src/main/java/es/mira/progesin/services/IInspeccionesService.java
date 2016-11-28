@@ -19,4 +19,8 @@ public interface IInspeccionesService {
 	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
 			String infoInspeccion);
 
+	List<Inspeccion> findByNumeroLike(String numeroInspeccion);
+
+	List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad);
+
 }
