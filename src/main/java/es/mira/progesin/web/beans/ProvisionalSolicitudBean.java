@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.ExtensionEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;
@@ -95,21 +97,41 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	}
 
+	private boolean esDocumentacionPrevia(UploadedFile archivo) {
+		String nombreArchivo = archivo.getFileName();
+		String extensionArchivo = ExtensionEnum.getExtension(archivo.getContentType()).name();
+		for (DocumentacionPrevia dp : listadoDocumentosPrevios) {
+			if (nombreArchivo.startsWith(dp.getNombre()))
+				for (String ext : dp.getExtension().replaceAll(" ", "").split(",")) {
+					if (extensionArchivo.equals(ext))
+						return true;
+				}
+		}
+		return false;
+	}
+
 	public String gestionarCargaDocumento(FileUploadEvent event) {
 		try {
-			Documento documento = documentoService.cargaDocumento(event.getFile());
-			if (documento != null) {
-				GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
-				gestDocumento.setFechaAlta(new Date());
-				gestDocumento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-				gestDocumento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
-				gestDocumento.setIdDocumento(documento.getId());
-				gestDocumento.setNombreFichero(documento.getNombre());
-				gestDocumento.setExtension(Utilities.getExtensionTipoContenido(documento.getTipoContenido()));
-				if (gestDocumentacionService.save(gestDocumento) != null) {
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-							"Documento/s subidos con éxito");
+			UploadedFile archivo = event.getFile();
+			if (esDocumentacionPrevia(archivo)) {
+				Documento documento = documentoService.cargaDocumento(archivo);
+				if (documento != null) {
+					GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
+					gestDocumento.setFechaAlta(new Date());
+					gestDocumento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+					gestDocumento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
+					gestDocumento.setIdDocumento(documento.getId());
+					gestDocumento.setNombreFichero(documento.getNombre());
+					gestDocumento.setExtension(Utilities.getExtensionTipoContenido(documento.getTipoContenido()));
+					if (gestDocumentacionService.save(gestDocumento) != null) {
+						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+								"Documento/s subidos con éxito");
+					}
 				}
+			}
+			else {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+						"El archivo " + archivo.getFileName() + " no es válido.");
 			}
 		}
 		catch (Exception e) {
