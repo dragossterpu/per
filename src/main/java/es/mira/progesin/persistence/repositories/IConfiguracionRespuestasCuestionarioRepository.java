@@ -12,7 +12,9 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 public interface IConfiguracionRespuestasCuestionarioRepository
 		extends CrudRepository<ConfiguracionRespuestasCuestionario, ConfiguracionRespuestasCuestionarioId> {
 
-	@Query("select c.configuracionRespuestas.valor from ConfiguracionRespuestasCuestionario c where c.configuracionRespuestas.clave = :clave)")
-	List<String> findValuesForKey(@Param("clave") String clave);
+	@Query("select c.config.valor from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion)")
+	List<String> findValoresPorSeccion(@Param("seccion") String seccion);
+
+	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionOrderByConfigClaveAsc(String seccion);
 
 }

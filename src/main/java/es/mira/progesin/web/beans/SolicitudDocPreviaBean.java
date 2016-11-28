@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
@@ -31,6 +30,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
+import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
@@ -82,7 +82,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	transient IRegistroActividadService regActividadService;
 
 	@Autowired
 	transient INotificacionService notificacionService;
@@ -126,6 +126,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	transient IDocumentoService documentoService;
 
 	@Autowired
+	transient IParametrosRepository parametrosRepository;
+
+	@Autowired
 	private transient PasswordEncoder passwordEncoder;
 
 	/**
@@ -150,17 +153,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 			String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
 					+ SecurityContextHolder.getContext().getAuthentication().getName();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 
 			// Guardamos la notificacion en bbdd
-			saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			// TODO usar NotificacionEnum
+			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 			this.solicitudDocumentacionPrevia = null;
 		}
 		catch (Exception e) {
 			// Guardamos los posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		return "solicitudesPrevia/crearSolicitud";
 
@@ -173,6 +175,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @see #crearSolicitud()
 	 */
 	private void datosApoyo() {
+		// TODO extraer datos de la tabla parametros
+		// paramDatosApoyo = parametrosRepository.findBySeccion("Apoyo");
 		if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
 				|| "".equals(solicitudDocumentacionPrevia.getApoyoCorreo().trim())) {
 			solicitudDocumentacionPrevia.setApoyoCorreo("mmayo@interior.es");
@@ -244,7 +248,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			return "/solicitudesPrevia/vistaSolicitud";
 		}
 		catch (Exception e) {
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 			return null;
 		}
 
@@ -260,6 +264,26 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
 		solicitudDocumentacionPrevia
 				.setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
+					"Se ha validado con éxito la solicitud de documentación");
+			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+			context.execute(dialogMessage);
+		}
+		return VISTASOLICITUD;
+	}
+
+	/**
+	 * Permite al jefe del equipo de apoyo validar la solicitud de documentación
+	 * 
+	 * @author EZENTIS
+	 * @return vista vistaSolicitud
+	 */
+	public String validacionJefeEquipo() {
+		solicitudDocumentacionPrevia.setFechaValidJefeEquipo(new Date());
+		solicitudDocumentacionPrevia
+				.setUsernameValidJefeEquipo(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 			RequestContext context = RequestContext.getCurrentInstance();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
@@ -309,7 +333,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			file = documentoService.descargaDocumento(idDocumento);
 		}
 		catch (Exception e) {
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 	}
 
@@ -335,60 +359,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
-
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	/**
-	 * @author EZENTIS
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 * @see #crearSolicitud()
-	 */
-	private void saveReg(String descripcion, String tipoReg, String username) {
-		regActividad.setTipoRegActividad(tipoReg);
-		regActividad.setUsernameRegActividad(username);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setDescripcion(descripcion);
-		regActividadService.save(regActividad);
-	}
-
-	/**
-	 * @author EZENTIS
-	 * @param descripcion
-	 * @param tipoNotificacion
-	 * @param username
-	 * @see #crearSolicitud()
-	 */
-	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
-		Notificacion notificacion = new Notificacion();
-		notificacion.setTipoNotificacion(tipoNotificacion);
-		notificacion.setUsernameNotificacion(username);
-		notificacion.setNombreSeccion(NOMBRESECCION);
-		notificacion.setFechaAlta(new Date());
-		notificacion.setDescripcion(descripcion);
-		notificacionService.save(notificacion);
-	}
-
-	/**
-	 * Registra los errores generados por otras funciones
-	 * 
-	 * @author EZENTIS
-	 * @param e
-	 * @see #crearSolicitud()
-	 * @see #modificarSolicitud()
-	 * @see #visualizarSolicitud(SolicitudDocumentacionPrevia)
-	 */
-	private void altaRegActivError(Exception e) {
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
-	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 
 	/**
 	 * Elimina la solicitud de documentación previa
@@ -423,7 +393,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		}
 		catch (Exception e) {
 			// Guardamos los posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 
 	}
@@ -442,7 +412,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocumentacionPrevia.setFechaEnvio(new Date());
 		solicitudDocumentacionPrevia.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestiantario(),
+		User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
 				passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
 
 		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
@@ -469,7 +439,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Permite al jefe de inspecciones finalizar una solicitud de documentación ya cumplimentada, después de revisar la
+	 * Permite al jefe del equipo finalizar una solicitud de documentación ya cumplimentada, después de revisar la
 	 * documentación adjuntada por la unidad que se va a inspeccionar. Adicionalmente elimina el usuario provisinal que
 	 * se usó para llevarla a cabo puesto que ya no se va a usar más.
 	 * 
@@ -477,14 +447,41 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista vistaSolicitud
 	 */
 	public String finalizarSolicitud() {
+		// TODO ¿avisar destinatario?
 		solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
-		solicitudDocumentacionPrevia
-				.setUsuarioFinalizacion(SecurityContextHolder.getContext().getAuthentication().getName());
-		String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestiantario();
+		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+		solicitudDocumentacionPrevia.setUsuarioFinalizacion(usuarioActual);
+		String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
 		if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
 			RequestContext context = RequestContext.getCurrentInstance();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Finalización",
 					"Se ha finalizado con éxito la solicitud de documentación");
+			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+			context.execute(dialogMessage);
+		}
+		return VISTASOLICITUD;
+	}
+
+	/**
+	 * Permite al jefe de equipo declarar no conforme una solicitud de documentación ya cumplimentada, después de
+	 * revisar la documentación adjuntada por la unidad que se va a inspeccionar. Para ello elimina la fecha de
+	 * cumplimentación y reenvia la solicitud al destinatario de la unidad con el motivo de dicha no conformidad.
+	 * Adicionalmente reactiva el usuario provisinal que se usó para llevarla a cabo.
+	 * 
+	 * @author EZENTIS
+	 * @return vista vistaSolicitud
+	 */
+	public String noConformeSolicitud() {
+		// TODO avisar destinatario y permitir añadir un motivo
+		solicitudDocumentacionPrevia.setFechaCumplimentacion(null);
+		solicitudDocumentacionPrevia.setFechaNoConforme(new Date());
+		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+		solicitudDocumentacionPrevia.setUsuarioNoConforme(usuarioActual);
+		String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
+		if (solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No Conforme",
+					"Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
 			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 			context.execute(dialogMessage);
 		}
@@ -519,17 +516,35 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return result booleano
 	 */
 	public boolean esJefeEquipoInspeccion() {
-		boolean result = false;
-
-		// TODO Si -> User.role = RoleEnum.EQUIPO_INSPECCIONES
+		// Si -> User.role = RoleEnum.EQUIPO_INSPECCIONES
 		// solicituddocumentacionprevia.inspeccion -> inspeccion(numero)
 		// inspeccion(id_equipo) -> miembro(id_equipo)
 		// miembro(posicion) -> RolEquipoEnum.JEFE
 		//
 		// ¿User.id = miembro.id?
 		//
+		// TODO Cargar Equipos en el script de la BBDD y asignarlos a las inspecciones para probarlo
+		boolean esJefe = false;
+		User usuarioActual = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+			String nombreJefeEquipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getEquipo()
+					.getNombreJefe();
+			esJefe = usuarioActual.getUsername().equals(nombreJefeEquipoInspeccion);
+		}
+		return esJefe || RoleEnum.ADMIN.equals(usuarioActual.getRole());
+	}
 
-		return result;
+	/**
+	 * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
+	 * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
+	 * 
+	 * @param inspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en los
+	 * formularios de creación y modificación
+	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
+	 */
+	public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
+		return inspeccionesService
+				.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada("%" + infoInspeccion + "%");
 	}
 
 }

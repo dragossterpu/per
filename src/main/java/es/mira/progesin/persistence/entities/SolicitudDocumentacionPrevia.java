@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -40,6 +41,7 @@ import lombok.ToString;
  * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
  * @see es.mira.progesin.web.beans.ProvisionalSolicitudBean
  */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -49,13 +51,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "solicitudDocPrevia")
+@Table(name = "SOLICITUD_DOC_PREVIA")
 public class SolicitudDocumentacionPrevia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "seq_soldocprevia", sequenceName = "seq_soldocprevia", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_soldocprevia")
 	@Column(name = "id", nullable = false)
 	private Long id;
 
@@ -135,10 +138,10 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "cargoInterlocutor")
 	private String cargoInterlocutor;
 
-	@Column(name = "correoCorporativoInterlocutor")
+	@Column(name = "correoCorporativoInter")
 	private String correoCorporativoInterlocutor;
 
-	@Column(name = "correoCorporativoInterlocutorCompl")
+	@Column(name = "correoCorporativoInterCompl")
 	private String correoCorporativoInterlocutorCompl;
 
 	@Column(name = "telefonoInterlocutor")

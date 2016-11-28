@@ -32,13 +32,12 @@ public class InspeccionesService implements IInspeccionesService {
 	}
 
 	@Override
-	public List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad) {
-		return inspeccionesRepository.findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(nombreUnidad);
-	}
-
-	@Override
 	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(String infoInspeccion) {
 		return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(infoInspeccion);
+
+	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(String infoInspeccion) {
+		return inspeccionesRepository
+				.buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(infoInspeccion);
 	}
 
 	@Override

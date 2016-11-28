@@ -27,5 +27,5 @@ public class ConfiguracionRespuestasCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	ConfiguracionRespuestasCuestionarioId configuracionRespuestas;
+	ConfiguracionRespuestasCuestionarioId config;
 }

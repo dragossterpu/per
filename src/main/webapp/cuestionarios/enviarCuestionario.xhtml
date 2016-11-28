@@ -20,14 +20,15 @@
 			<h:form id="envioCuestionario" >
 		
 				<div class="bloqueFormulario">
-					<h:outputLabel for="inspecc" value="Número de inspección (*):" />
-					<p:autoComplete id="inspecc" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}"
-                        var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
-                        required="true" requiredMessage="Introduzca el número de inspección" 
-                        emptyMessage="No se encuentraron resultados coincidentes" cache="true">
-                    	<p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
+					<h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
+					<p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}"
+                        var="inspeccion" itemLabel="#{inspeccion.nombreUnidad} - #{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
+                        required="true" requiredMessage="Introduzca la unidad o el número de la inspección" 
+                        emptyMessage="No se encuentraron resultados coincidentes"
+                        onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
+                        <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
                     </p:autoComplete>
-					<p:messages for="inspecc" autoUpdate="true"  closable="true"/>
+					<p:messages for="infoInspeccion" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="nombre" value="Nombre (*):" />
 					<p:inputText id="nombre" value="#{envioCuestionarioBean.cuestionarioEnvio.nombreUsuarioEnvio}" maxlength="500"
@@ -76,8 +77,6 @@
 						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/index')}" />
 					</div>
 				</p:dialog>
-				
-				
 			</h:form>
 			
 		</ui:define>

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public enum RoleEnum {
 	ADMIN("Administrador", false), JEFE_INSPECCIONES("Jefe de inspecciones", false), EQUIPO_INSPECCIONES(
 			"Equipo de inspecciones", false), SERVICIO_APOYO("Servicio de apoyo", false), GABINETE(
-					"Gabinete de estudios y análisis", false), PROV_SOLICITUD("Provisional vista documentación previa",
+					"Gabinete de estudio y análisis", false), PROV_SOLICITUD("Provisional vista documentación previa",
 							true), PROV_CUESTIONARIO("Provisional vista cuestionario", true);
 
 	private String descripcion;

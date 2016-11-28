@@ -19,6 +19,8 @@ import lombok.ToString;
 public class ConfiguracionRespuestasCuestionarioId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	String seccion;
+
 	String clave;
 
 	String valor;

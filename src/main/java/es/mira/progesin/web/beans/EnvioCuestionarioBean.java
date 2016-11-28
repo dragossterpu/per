@@ -20,6 +20,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,16 +58,18 @@ public class EnvioCuestionarioBean implements Serializable {
 	@Autowired
 	private ICuestionarioEnvioService cuestionarioEnvioService;
 
+	@Autowired
+	private transient ICorreoElectronico envioCorreo;
+
 	/**
-	 * Método que devuelve una lista con las inspecciones cuyo número contienen alguno de los caracteres pasado como
-	 * parámetro. Se usa en el formulario de envío para el autocompletado.
+	 * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasado como parámetro. Se
+	 * usa en el formulario de envío para el autocompletado.
 	 * 
 	 * @param numeroInspeccion Número de inspección que teclea el usuario en el formulario de envío
 	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el número introducido
 	 */
 	public List<Inspeccion> autocompletarInspeccion(String nombreUnidad) {
-		// TODO añadir que no tenga ya un cuestionario sin finalizar
-		return inspeccionService.findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull("%" + nombreUnidad + "%");
+		return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(nombreUnidad);
 	}
 
 	/**
@@ -102,9 +105,9 @@ public class EnvioCuestionarioBean implements Serializable {
 	}
 
 	/**
-	 * Método que guarda los datos introducidos en el formulario de envío en BBDD.Además crea un usuario provisional
-	 * para el destinatario del correo 1 y le envía un correo electrónico informando de la URL de acceso a la aplicación
-	 * y su contraseña.
+	 * Guarda los datos introducidos en el formulario de envío en BBDD.Además crea un usuario provisional para el
+	 * destinatario del correo 1 y le envía un correo electrónico informando de la URL de acceso a la aplicación y su
+	 * contraseña.
 	 */
 	public void enviarCuestionario() {
 		try {
@@ -114,14 +117,14 @@ public class EnvioCuestionarioBean implements Serializable {
 				User user = new User(cuestionarioEnvio.getCorreoEnvio(), passwordEncoder.encode(password),
 						RoleEnum.PROV_CUESTIONARIO);
 				cuestionarioEnvioService.enviarCuestionarioService(user, cuestionarioEnvio);
+				// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
 				String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-				String textoAutomatico = "Para responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
+				String textoAutomatico = "\r\n \r\nPara responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
 						+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
-						+ password + "\r\n. Una vez enviado el cuestionario su usuario quedará inativo. \r\n"
+						+ password + ". \r\n \r\nUna vez enviado el cuestionario su usuario quedará inativo. \r\n \r\n"
 						+ "Muchas gracias y un saludo.";
 				String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico);
-				// TODO enviar correo
-				// envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+				envioCorreo.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
 				// TODO crear notificación
 			}
 			else {
@@ -129,6 +132,7 @@ public class EnvioCuestionarioBean implements Serializable {
 			}
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 					"El cuestionario se ha enviado con éxito");
+			// TODO crear registro actividad
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,

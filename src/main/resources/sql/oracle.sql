@@ -547,7 +547,7 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (130, 'Número de ejemplares de prensa diaria, con indicación de nombre e idioma de edición.', 8,'TEXTAREA');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (131, 'Horarios del centro, con especificación de actividades', 8,'TEXTAREA');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (132, 'Numero de autorizaciones de dispositivos captadores de imágenes.', 8,'INPUT');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (133, 'Identificación de todas personas que prestan servicios en el centro', 8,'TABLA');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (133, 'Identificación de todas personas que prestan servicios en el centro', 8,'TABLAPRUEBA');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (134, 'Estructura', 9,'ADJUNTO');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (135, 'Copia del nombramiento del Secretario', 9,'ADJUNTO');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (136, 'Catálogo de puestos de trabajo.', 9,'ADJUNTO');
@@ -639,22 +639,22 @@ Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTEN
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (61, 'Organigrama de la Comandancia (Unidades Territoriales y Especialidades)', '_organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
 Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSION) Values (62, 'Actas de las Juntas de Coordinación de 2015', '_AJC', 'PDF');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('CHECKBOXSINO', 'NO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('CHECKBOXSINO', 'SI');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('MATRIZINGRESOS', 'campo1#SEXO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('MATRIZINGRESOS', 'campo2#MESES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('MATRIZINGRESOS', 'campo3#PERIODOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('MATRIZINGRESOS', 'nombreFila#Fila 1');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('MATRIZINGRESOS', 'nombreFila#Fila 2');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('MATRIZINGRESOS', 'nombreFila#Fila 3');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLAPRUEBA', 'campo1#COLUMNA1');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLAPRUEBA', 'campo2#COLUMNA2');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLAPRUEBA', 'campo3#COLUMNA3');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLASALIDAS', 'campo1#MESES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLASALIDAS', 'campo2#MOTIVOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLASALIDAS', 'campo3#NUM_SALIDAS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLASALIDAS', 'campo4#MOTIVOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (clave,valor) values ('TABLASALIDAS', 'campo5#PRUEBA');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('CHECKBOXSINO', 'NO', 'NO');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('CHECKBOXSINO', 'SI', 'SI');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'campo1', 'SEXO');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'campo2', 'MESES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'campo3', 'PERIODOS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'nombreFila', 'Fila 1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'nombreFila', 'Fila 2');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'nombreFila', 'Fila 3');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPRUEBA', 'campo1', 'COLUMNA1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPRUEBA', 'campo2', 'COLUMNA2');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPRUEBA', 'campo3', 'COLUMNA3');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo1','MESES 1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo2','MOTIVOS 2 ');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo3','NUM_SALIDAS 3');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo4','COLUMNA 4');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo5','PRUEBA 5');
 
 insert into tipos_inspeccion (codigo,descripcion) values ('I.G.P.','I.Gral.Periodica');
 insert into tipos_inspeccion (codigo,descripcion) values ('I.G.S.','I.Gral.Seguimiento');

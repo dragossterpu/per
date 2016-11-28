@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -49,7 +48,7 @@ public class CuestionarioEnvio implements Serializable {
 	@JoinColumn(name = "id_cuestionario_personalizado", nullable = false)
 	private CuestionarioPersonalizado cuestionarioPersonalizado;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_inspeccion", nullable = false)
 	private Inspeccion inspeccion;
 
@@ -67,6 +66,9 @@ public class CuestionarioEnvio implements Serializable {
 
 	@Column(nullable = false)
 	private Date fechaLimiteCuestionario;
+
+	@Column
+	private Date fechaFinalizacion;
 
 	@CreatedDate
 	private Date fechaEnvio;

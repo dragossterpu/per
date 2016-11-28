@@ -17,7 +17,8 @@ public class DatosTablaGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String nombreFila; // para cuando haya que dibujar matrices
+	// Para cuando haya que dibujar matrices
+	private String nombreFila;
 
 	private String campo1;
 

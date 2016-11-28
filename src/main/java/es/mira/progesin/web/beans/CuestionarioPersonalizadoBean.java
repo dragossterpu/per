@@ -12,11 +12,14 @@ import javax.annotation.PostConstruct;
 
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -52,13 +55,13 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	private List<AreasCuestionario> areas;
 
 	@Autowired
-	ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
+	private transient ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
 
 	@Autowired
-	IAreaCuestionarioService areaService;
+	private transient IAreaCuestionarioService areaService;
 
 	@Autowired
-	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
+	private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
 
 	@Autowired
 	EnvioCuestionarioBean envioCuestionarioBean;
@@ -69,8 +72,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	private Map<PreguntasCuestionario, String> mapaRespuestas;
 
 	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
-
-	// private CuestionarioEnviado cuestionarioEnvio;
 
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
@@ -98,6 +99,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	/**
 	 * Se muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
 	 * texto, adjuntos, tablas...)
+	 * 
 	 * @param cuestionario que se desea visualizar
 	 * @return Nombre de la vista a mostrar
 	 */
@@ -135,13 +137,14 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 * mostrarFormularioEnvio
+	 *
+	 * Muestra la pantalla de envío del cuestionario
+	 *
 	 * @param cuestionario Cuestionario a enviar
 	 * @return Nombre de la vista del formulario de envío
 	 */
 	public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
-		// cuestionarioEnvio = new CuestionarioEnviado();
-		// EnvioCuestionarioBean envioCuestionarioBean = new EnvioCuestionarioBean();
 		CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
 		cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
 		Inspeccion inspeccion = new Inspeccion();
@@ -151,23 +154,29 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	}
 
 	/**
-	 * Método usado dentro del xhtml para obtener los valores de los diferentes CHECKBOX
+	 * getValoresTipoRespuesta
+	 * 
+	 * Obtiene los valores asociados a un tipo de respuesta CHECKBOX o similar. Se usa dentro del xhtml para obtener los
+	 * valores a visualizar en pantalla.
+	 * 
 	 * @param tipo Tipo de respuesta de la pregunta
 	 * @return Lista de valores asociados al tipo de respuesta
 	 */
 	public List<String> getValoresTipoRespuesta(String tipo) {
-		return configuracionRespuestaRepository.findValuesForKey(tipo);
+		return configuracionRespuestaRepository.findValoresPorSeccion(tipo);
 	}
 
 	/**
-	 * Método usado para construir la tabla que se usará en el formulario para responder las preguntas cuyo tipo de
-	 * respuesta empieza por TABLA
+	 * Construye la tabla que se usará en el formulario para responder las preguntas cuyo tipo de respuesta empieza por
+	 * TABLA
+	 * 
 	 * @see visualizar
 	 * @param pregunta Pregunta del tipo respuesta TABLAxx
 	 */
 	public void construirTipoRespuestaTabla(PreguntasCuestionario pregunta) {
 		DataTableView dataTableView = new DataTableView();
-		List<String> valoresColumnas = configuracionRespuestaRepository.findValuesForKey(pregunta.getTipoRespuesta());
+		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
+				.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
 		dataTableView.crearTabla(valoresColumnas);
 		mapaRespuestasTabla.put(pregunta, dataTableView);
 	}
@@ -180,8 +189,9 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	 */
 	public void construirTipoRespuestaMatriz(PreguntasCuestionario pregunta) {
 		DataTableView dataTableView = new DataTableView();
-		List<String> valores = configuracionRespuestaRepository.findValuesForKey(pregunta.getTipoRespuesta());
-		dataTableView.crearMatriz(valores);
+		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
+				.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
+		dataTableView.crearMatriz(valoresColumnas);
 		mapaRespuestasTabla.put(pregunta, dataTableView);
 	}
 
@@ -236,5 +246,10 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 			pagina = visualizar(cp.get(0));
 		}
 		return pagina;
+	}
+
+	public void comprobarAcceso() {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println("comprobar acceso: ");
 	}
 }
