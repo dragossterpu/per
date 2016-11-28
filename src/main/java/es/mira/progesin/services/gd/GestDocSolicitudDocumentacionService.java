@@ -22,7 +22,7 @@ public class GestDocSolicitudDocumentacionService implements IGestDocSolicitudDo
 	}
 
 	@Override
-	public List<GestDocSolicitudDocumentacion> findByIdSolicitud(Integer idSolicitud) {
+	public List<GestDocSolicitudDocumentacion> findByIdSolicitud(Long idSolicitud) {
 		return gestSolicitudDocumentacionRepository.findByIdSolicitud(idSolicitud);
 	}
 

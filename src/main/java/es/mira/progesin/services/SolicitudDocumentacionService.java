@@ -42,13 +42,13 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	}
 
 	@Override
-	public SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo) {
-		return solicitudDocumentacionPreviaRepository.findByCorreoDestiantario(correo);
+	public SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo) {
+		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		solicitudDocumentacionPreviaRepository.delete(id);
 	}
 
@@ -56,7 +56,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	public List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(
 			SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class);
+		Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class, "solicitud");
 		String campoFecha = "this_.fecha_alta";
 		if (solicitudDocPreviaBusqueda.getEstado() != null) {
 			switch (solicitudDocPreviaBusqueda.getEstado()) {
@@ -108,6 +108,27 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			criteria.add(Restrictions.ilike("usernameAlta",
 					solicitudDocPreviaBusqueda.getUsuarioCreacion().getUsername(), MatchMode.ANYWHERE));
 		}
+
+		criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
+		criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
+		if (solicitudDocPreviaBusqueda.getNombreUnidad() != null
+				&& !solicitudDocPreviaBusqueda.getNombreUnidad().isEmpty()) {
+			criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", solicitudDocPreviaBusqueda.getNombreUnidad(),
+					MatchMode.ANYWHERE));
+		}
+		if (solicitudDocPreviaBusqueda.getNumeroInspeccion() != null
+				&& !solicitudDocPreviaBusqueda.getNumeroInspeccion().isEmpty()) {
+			criteria.add(Restrictions.ilike("inspeccion.numero", solicitudDocPreviaBusqueda.getNumeroInspeccion(),
+					MatchMode.ANYWHERE));
+		}
+		if (solicitudDocPreviaBusqueda.getAmbitoInspeccion() != null) {
+			criteria.add(Restrictions.eq("inspeccion.ambito", solicitudDocPreviaBusqueda.getAmbitoInspeccion()));
+		}
+		if (solicitudDocPreviaBusqueda.getTipoInspeccion() != null
+				&& !solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo().isEmpty()) {
+			criteria.add(Restrictions.eq("tipoInspeccion.codigo",
+					solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo()));
+		}
 		criteria.addOrder(Order.desc("fechaAlta"));
 		@SuppressWarnings("unchecked")
 		List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = criteria.list();
@@ -141,6 +162,15 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			String usuarioProv) {
 		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
 		userService.cambiarEstado(usuarioProv, EstadoEnum.INACTIVO);
+		return true;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+			String usuarioProv) {
+		solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+		userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO);
 		return true;
 	}
 

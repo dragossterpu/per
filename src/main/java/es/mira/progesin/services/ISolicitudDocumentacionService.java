@@ -13,9 +13,9 @@ public interface ISolicitudDocumentacionService {
 
 	List<SolicitudDocumentacionPrevia> findAll();
 
-	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
+	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo);
 
-	void delete(Integer id);
+	void delete(Long id);
 
 	List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(
 			SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
@@ -27,5 +27,9 @@ public interface ISolicitudDocumentacionService {
 	boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String usuarioProv);
 
+	boolean transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+			String usuarioProv);
+
 	List<SolicitudDocumentacionPrevia> findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion);
+
 }

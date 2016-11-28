@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
-import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -84,13 +83,14 @@ public class ProvisionalSolicitudBean implements Serializable {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 		// ñapa
 		try {
-			solicitudDocumentacionPrevia = solicitudDocumentacionService.findByCorreoDestiantario(correo);
+			solicitudDocumentacionPrevia = solicitudDocumentacionService
+					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 			listadoDocumentosCargados = gestDocumentacionService
 					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 		}
 		catch (Exception e) {
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 
 	}
@@ -115,7 +115,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 		return "/provisionalSolicitud/cargaDocumentos";
@@ -127,50 +127,6 @@ public class ProvisionalSolicitudBean implements Serializable {
 		listadoDocumentosPrevios = new ArrayList<>();
 		listadoDocumentosCargados = new ArrayList<>();
 	}
-
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveReg(String descripcion, String tipoReg, String username) {
-		regActividad.setTipoRegActividad(tipoReg);
-		regActividad.setUsernameRegActividad(username);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setDescripcion(descripcion);
-		regActividadService.save(regActividad);
-	}
-
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
-		Notificacion notificacion = new Notificacion();
-		notificacion.setTipoNotificacion(tipoNotificacion);
-		notificacion.setUsernameNotificacion(username);
-		notificacion.setNombreSeccion(NOMBRESECCION);
-		notificacion.setFechaAlta(new Date());
-		notificacion.setDescripcion(descripcion);
-		notificacionService.save(notificacion);
-	}
-
-	/**
-	 * @param e
-	 */
-	private void altaRegActivError(Exception e) {
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
-	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 
 	public void onRowEdit(RowEditEvent event) {
 		GestDocSolicitudDocumentacion document = (GestDocSolicitudDocumentacion) event.getObject();
@@ -200,7 +156,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			file = documentoService.descargaDocumento(idDocumento);
 		}
 		catch (Exception e) {
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 	}
 
@@ -216,18 +172,28 @@ public class ProvisionalSolicitudBean implements Serializable {
 	public String enviarDocumentacionPrevia() {
 		try {
 			solicitudDocumentacionPrevia.setFechaCumplimentacion(new Date());
-			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestiantario();
+			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
 			if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"Solicitud de documentación cumplimentada con éxito. Su sesión ha finalizado.");
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				// Guardamos la actividad en bbdd
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// Guardamos la notificacion en bbdd
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 			}
 
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		return "/login/logout";
 
@@ -238,12 +204,16 @@ public class ProvisionalSolicitudBean implements Serializable {
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
 						"El borrador se ha guardado con éxito");
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 	}
 }

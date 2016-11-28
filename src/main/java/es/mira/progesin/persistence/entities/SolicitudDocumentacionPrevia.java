@@ -57,7 +57,7 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "asunto")
 	private String asunto;
@@ -69,8 +69,8 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "destinatario")
 	private String destinatario;
 
-	@Column(name = "correoDestiantario")
-	private String correoDestiantario;
+	@Column(name = "correoDestinatario")
+	private String correoDestinatario;
 
 	@Column(name = "cuatrimestre")
 	@Enumerated(EnumType.STRING)
@@ -86,7 +86,7 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	private Date fechaLimiteCumplimentar;
 
 	@Column(name = "descargaPlantillas")
-	private boolean descargaPlantillas;
+	private String descargaPlantillas;
 
 	@Column(name = "apoyoPuesto")
 	private String apoyoPuesto;
@@ -108,17 +108,20 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	@Column(name = "username_alta", nullable = false)
 	private String usernameAlta;
 
-	@Column(name = "fecha_envio")
-	private Date fechaEnvio;
-
-	@Column(name = "nombreSolicitud")
-	private String nombreSolicitud;
-
 	@Column(name = "fechaValidApoyo")
 	private Date fechaValidApoyo;
 
 	@Column(name = "usernameValidApoyo")
 	private String usernameValidApoyo;
+
+	@Column(name = "fechaValidJefeEquipo")
+	private Date fechaValidJefeEquipo;
+
+	@Column(name = "usernameValidJefeEquipo")
+	private String usernameValidJefeEquipo;
+
+	@Column(name = "fecha_envio")
+	private Date fechaEnvio;
 
 	@Column(name = "usernameEnvio")
 	private String usernameEnvio;
@@ -149,4 +152,10 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 
 	@Column(name = "fechaCumplimentacion")
 	private Date fechaCumplimentacion;
+
+	@Column(name = "fechaNoConforme")
+	private Date fechaNoConforme;
+
+	@Column(name = "usuarioNoConforme")
+	private String usuarioNoConforme;
 }

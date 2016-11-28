@@ -7,9 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 
-public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<SolicitudDocumentacionPrevia, Integer> {
+public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<SolicitudDocumentacionPrevia, Long> {
 
-	SolicitudDocumentacionPrevia findByCorreoDestiantario(String correo);
+	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo);
 
 	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(
 			Inspeccion inspeccion);

@@ -2,10 +2,8 @@ package es.mira.progesin.services;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -23,7 +21,7 @@ public class DocumentoService implements IDocumentoService {
 
 	@Autowired
 	IDocumentoRepository documentoRepository;
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -197,15 +195,17 @@ public class DocumentoService implements IDocumentoService {
 	 *************************************/
 	@Override
 	public DefaultStreamedContent descargaDocumento(Documento entity) {
-		InputStream stream;
-		try {
-			stream = entity.getFichero().getBinaryStream();
-			return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		InputStream stream = new ByteArrayInputStream(entity.getFichero());
+		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+		// InputStream stream;
+		// try {
+		// stream = entity.getFichero().getBinaryStream();
+		// return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// return null;
 	}
 
 	/***************************************
@@ -217,20 +217,24 @@ public class DocumentoService implements IDocumentoService {
 	 * @author Ezentis
 	 * @param Documento Documento a descargar
 	 * @return DefaultStreamedContent Flujo de descarga
-	 * @throws SQLException 
+	 * @throws SQLException
 	 *************************************/
 	@Override
 	public DefaultStreamedContent descargaDocumento(Long id) {
 		Documento entity = findOne(id);
-		InputStream stream;
-		try {
-			stream = entity.getFichero().getBinaryStream();
-			return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+
+		InputStream stream = new ByteArrayInputStream(entity.getFichero());
+		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+		// InputStream stream;
+		// try {
+		// stream = entity.getFichero().getBinaryStream();
+		// return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+		// }
+		// catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// return null;
 	}
 
 	/***************************************
@@ -250,9 +254,9 @@ public class DocumentoService implements IDocumentoService {
 		Documento docu = new Documento();
 		try {
 			docu.setNombre(file.getFileName());
-			//docu.setFichero(file.getContents());
-			Blob fileBlob= Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
-			docu.setFichero(fileBlob);
+			docu.setFichero(file.getContents());
+			// Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
+			// docu.setFichero(fileBlob);
 			docu.setTipoContenido(file.getContentType());
 			return documentoRepository.save(docu);
 		}
