@@ -665,12 +665,13 @@ insert into tipos_inspeccion (codigo,descripcion) values ('I.E_INCD','I. Inciden
 insert into tipos_inspeccion (codigo,descripcion) values ('I.E_PRL','I.PRL extraordinaria');
 insert into tipos_inspeccion (codigo,descripcion) values ('I.E_PUNT','I.Puntual extraordinaria');
 
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','Host','smtp.gmail.com');
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','HostPort','587');
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','User','progesinipss@gmail.com');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.host','smtp.gmail.com');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.ssl.trust','smtp.gmail.com');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.port','587');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.user','progesinipss@gmail.com');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','UserPwd','ipss2016');
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','Auth','true');
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','TLS','true');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.auth','true');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.starttls.enable','true');
 
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (1, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN');
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (11, '01/11/2016', '11/2017', 'I.G.P.','silpe', 'Granada', 'GC');

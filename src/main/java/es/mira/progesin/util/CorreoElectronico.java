@@ -18,7 +18,6 @@ import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component("correoElectronico")
 
 public class CorreoElectronico implements ICorreoElectronico {
@@ -36,36 +35,25 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 *
 	 *************************************/
 
-	public JavaMailSenderImpl conexionServidor() {
+	public JavaMailSenderImpl conexionServidor() throws Exception{
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-		try {
 
 			List<Parametro> parametrosMail = parametro.findParamByParamSeccion("mail");
-
-			String host = parametro.findValueForKey("Host", "mail");
-			String puerto = parametro.findValueForKey("HostPort", "mail");
-			String auth = parametro.findValueForKey("Auth", "mail");
-			String tls = parametro.findValueForKey("TLS", "mail");
-			String usuario = parametro.findValueForKey("User", "mail");
 			String pass = parametro.findValueForKey("UserPwd", "mail");
+			
+			
 
 			Properties mailProperties = new Properties();
-			mailProperties.put("mail.smtp.auth", auth);
-			mailProperties.put("mail.smtp.ssl.trust", host);
-			mailProperties.put("mail.smtp.starttls.enable", tls);
-			mailProperties.put("mail.smtp.host", host);
-			mailProperties.put("mail.smtp.port", puerto);
+			for (Parametro param:parametrosMail){
+				mailProperties.put(param.getParam().getClave(),param.getParam().getValor());
+			}
+
 
 			mailSender.setJavaMailProperties(mailProperties);
-
-			mailSender.setUsername(usuario);
 			mailSender.setPassword(pass);
 
-		}
-		catch (Exception e) {
-			log.error("Error en la conexión con el servidor: ", e);
-		}
+		
 		return mailSender;
 	}
 
@@ -83,9 +71,9 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 *************************************/
 
 	@Override
-	public void envioCorreo(String[] destino, String asunto, String cuerpo) {
+	public void envioCorreo(String[] destino, String asunto, String cuerpo) throws Exception {
 
-		try {
+		
 			JavaMailSenderImpl mailSender = conexionServidor();
 			SimpleMailMessage msg = new SimpleMailMessage();
 
@@ -94,10 +82,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 			msg.setText(cuerpo);
 
 			mailSender.send(msg);
-		}
-		catch (MailException e) {
-			log.error("Error en el envío de correo: ", e);
-		}
+		
 
 	}
 
@@ -111,11 +96,12 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * @param String Destinatario de correo
 	 * @param String Asunto del correo
 	 * @param String Cuerpo del correo
+	 * @throws Exception 
 	 *
 	 *************************************/
 
 	@Override
-	public void envioCorreo(String destino, String asunto, String cuerpo) {
+	public void envioCorreo(String destino, String asunto, String cuerpo) throws Exception {
 
 		String[] destinos = new String[1];
 		destinos[0] = destino;
@@ -134,25 +120,23 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * @param String Asunto del correo
 	 * @param String Cuerpo del correo
 	 * @param File Adjunto
+	 * @throws Exception 
 	 *
 	 *************************************/
 
 	@Override
-	public void envioCorreoAdjuntos(String[] destino, String asunto, String cuerpo, File adjunto) {
+	public void envioCorreoAdjuntos(String[] destino, String asunto, String cuerpo, File adjunto) throws Exception {
 		JavaMailSenderImpl mailSender = conexionServidor();
 		MimeMessage message = mailSender.createMimeMessage();
 
-		try {
+		
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setTo(destino);
 			helper.setSubject(asunto);
 			helper.setText(cuerpo);
 			helper.addAttachment(adjunto.getName(), adjunto);
 
-		}
-		catch (MessagingException e) {
-			log.error("Error en el envío de correo: ", e);
-		}
+		
 
 		mailSender.send(message);
 	}
@@ -168,11 +152,12 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * @param String Asunto del correo
 	 * @param String Cuerpo del correo
 	 * @param File Adjunto
+	 * @throws Exception 
 	 *
 	 *************************************/
 
 	@Override
-	public void envioCorreoAdjuntos(String destino, String asunto, String cuerpo, File adjunto) {
+	public void envioCorreoAdjuntos(String destino, String asunto, String cuerpo, File adjunto) throws Exception {
 		String[] destinos = new String[1];
 		destinos[0] = destino;
 		envioCorreoAdjuntos(destinos, asunto, cuerpo, adjunto);
