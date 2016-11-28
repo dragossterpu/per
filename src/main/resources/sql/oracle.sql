@@ -673,6 +673,11 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','UserPwd','ipss2016
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.auth','true');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.starttls.enable','true');
 
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoCorreo','mmayo@interior.es');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoNombre','Manuel Mayo Rodríguez');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoPuesto','Inspector Auditor, Jefe del Servicio de Apoyo');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoTelefono','91.537.25.41');
+
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO','2016-11-28 13:16:49.861','silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO','2016-11-28 14:43:58.097','cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO','2016-11-28 14:50:50.742','mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');

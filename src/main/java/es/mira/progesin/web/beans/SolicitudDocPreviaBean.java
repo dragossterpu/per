@@ -27,7 +27,6 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
-import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
@@ -65,21 +64,14 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	RegistroActividad regActividad = new RegistroActividad();
 
-	private List<User> listaUsuarios;
-
+	@Autowired
 	private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
-
-	private Date fechaDesde;
-
-	private Date fechaHasta;
-
-	private SolicitudDocPreviaEnum estado;
-
-	private User usuarioCreacion;
 
 	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
+
+	private static final String DATOSAPOYO = "datosApoyo";
 
 	@Autowired
 	transient IRegistroActividadService regActividadService;
@@ -101,8 +93,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	transient IInspeccionesService inspeccionesService;
 
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-
-	Inspeccion inspeccion = new Inspeccion();
 
 	private boolean skip;
 
@@ -169,30 +159,35 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Obtener los datos del jefe del equipo de apoyo.
+	 * Obtener los datos del jefe del equipo de apoyo. Se encuentran almacenados en la tabla parametros para que puedan
+	 * ser modificados por el DBA
 	 * 
 	 * @author EZENTIS
 	 * @see #crearSolicitud()
+	 * @see es.mira.progesin.persistence.entities.Parametro
 	 */
 	private void datosApoyo() {
-		// TODO extraer datos de la tabla parametros
-		// paramDatosApoyo = parametrosRepository.findBySeccion("Apoyo");
 		if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
 				|| "".equals(solicitudDocumentacionPrevia.getApoyoCorreo().trim())) {
-			solicitudDocumentacionPrevia.setApoyoCorreo("mmayo@interior.es");
+			solicitudDocumentacionPrevia
+					.setApoyoCorreo(parametrosRepository.findValueForKey("ApoyoCorreo", DATOSAPOYO));
 		}
 		if (solicitudDocumentacionPrevia.getApoyoNombre() == null
 				|| "".equals(solicitudDocumentacionPrevia.getApoyoNombre().trim())) {
-			solicitudDocumentacionPrevia.setApoyoNombre("Manuel Mayo Rodríguez");
+			solicitudDocumentacionPrevia
+					.setApoyoNombre(parametrosRepository.findValueForKey("ApoyoNombre", DATOSAPOYO));
 		}
 		if (solicitudDocumentacionPrevia.getApoyoPuesto() == null
 				|| "".equals(solicitudDocumentacionPrevia.getApoyoPuesto().trim())) {
-			solicitudDocumentacionPrevia.setApoyoPuesto("Inspector Auditor, Jefe del Servicio de Apoyo");
+			solicitudDocumentacionPrevia
+					.setApoyoPuesto(parametrosRepository.findValueForKey("ApoyoPuesto", DATOSAPOYO));
 		}
 		if (solicitudDocumentacionPrevia.getApoyoTelefono() == null
 				|| "".equals(solicitudDocumentacionPrevia.getApoyoTelefono().trim())) {
-			solicitudDocumentacionPrevia.setApoyoTelefono("91.537.25.41");
+			solicitudDocumentacionPrevia
+					.setApoyoTelefono(parametrosRepository.findValueForKey("ApoyoTelefono", DATOSAPOYO));
 		}
+
 	}
 
 	/**
@@ -314,11 +309,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
-		solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
+		solicitudDocPreviaBusqueda.resetValues();
 		listadoDocumentosCargados = new ArrayList<>();
 		listaSolicitudesPrevia = new ArrayList<>();
-		solicitudDocumentacionPrevia.setInspeccion(inspeccion);
+		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
 	}
 
 	/**
@@ -516,20 +510,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return result booleano
 	 */
 	public boolean esJefeEquipoInspeccion() {
-		// Si -> User.role = RoleEnum.EQUIPO_INSPECCIONES
-		// solicituddocumentacionprevia.inspeccion -> inspeccion(numero)
-		// inspeccion(id_equipo) -> miembro(id_equipo)
-		// miembro(posicion) -> RolEquipoEnum.JEFE
-		//
-		// ¿User.id = miembro.id?
-		//
-		// TODO Cargar Equipos en el script de la BBDD y asignarlos a las inspecciones para probarlo
 		boolean esJefe = false;
 		User usuarioActual = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-			String nombreJefeEquipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getEquipo()
-					.getNombreJefe();
-			esJefe = usuarioActual.getUsername().equals(nombreJefeEquipoInspeccion);
+			String jefeEquipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getEquipo().getJefeEquipo();
+			esJefe = usuarioActual.getUsername().equals(jefeEquipoInspeccion);
 		}
 		return esJefe || RoleEnum.ADMIN.equals(usuarioActual.getRole());
 	}
