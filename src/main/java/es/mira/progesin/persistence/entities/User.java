@@ -39,7 +39,6 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "USERS")
-// @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 

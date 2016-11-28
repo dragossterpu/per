@@ -14,7 +14,7 @@
 			<h:form>
 				<h:commandLink action="#{userBean.getUserPerfil}" value="Mi perfil"  rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
 				|
-				<p:link href="/login/logout" value="Desconectar"/>
+				<p:link href="/logout" value="Desconectar"/>
 			</h:form>
 	</div>
 

@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
 				.antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name()).anyRequest()
 				.authenticated().and().formLogin().loginPage("/login").loginProcessingUrl("/login")
-				.defaultSuccessUrl("/index.xhtml").failureUrl("/login").and().logout().logoutUrl("/login/logout")
+				.defaultSuccessUrl("/index.xhtml").failureUrl("/login").and().logout().logoutUrl("/logout")
 				.logoutSuccessUrl("/login");
 
 	}

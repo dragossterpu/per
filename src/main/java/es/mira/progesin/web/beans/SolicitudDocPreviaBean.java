@@ -532,16 +532,4 @@ public class SolicitudDocPreviaBean implements Serializable {
 		return result;
 	}
 
-	/**
-	 * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
-	 * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
-	 * 
-	 * @param inspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en los
-	 * formularios de creación y modificación
-	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
-	 */
-	public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-		return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
-	}
-
 }

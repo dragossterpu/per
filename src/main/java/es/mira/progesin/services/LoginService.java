@@ -31,7 +31,7 @@ public class LoginService implements UserDetailsService {
 		}
 	}
 
-	private final static class UserRepositoryUserDetails extends User implements UserDetails {
+	private static final class UserRepositoryUserDetails extends User implements UserDetails {
 
 		private static final long serialVersionUID = 1L;
 
