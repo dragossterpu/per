@@ -653,7 +653,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAP
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo1','MESES');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo2','MOTIVOS');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo3','NUM_SALIDAS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo4','COLUMNA 4'');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo4','COLUMNA 4');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASALIDAS', 'campo5','PRUEBA');
 
 insert into tipos_inspeccion (codigo,descripcion) values ('I.G.P.','I.Gral.Periodica');
