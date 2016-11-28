@@ -1,7 +1,6 @@
 package es.mira.progesin.util;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
@@ -10,17 +9,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.services.IInspeccionesService;
 
 @Component("facesUtilities")
 public class FacesUtilities {
-
-	@Autowired
-	private IInspeccionesService inspeccionesService;
 
 	/**
 	 * 
@@ -58,15 +50,4 @@ public class FacesUtilities {
 		FacesContext.getCurrentInstance().addMessage(idMensaje, message);
 	}
 
-	/**
-	 * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
-	 * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
-	 * 
-	 * @param inspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en los
-	 * formularios de creación y modificación
-	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
-	 */
-	public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-		return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
-	}
 }

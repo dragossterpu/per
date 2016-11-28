@@ -34,7 +34,9 @@ public class InspeccionesService implements IInspeccionesService {
 	@Override
 	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(String infoInspeccion) {
 		return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(infoInspeccion);
+	}
 
+	@Override
 	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(String infoInspeccion) {
 		return inspeccionesRepository
 				.buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(infoInspeccion);
@@ -46,5 +48,15 @@ public class InspeccionesService implements IInspeccionesService {
 		return inspeccionesRepository
 				.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
 						infoInspeccion);
+	}
+
+	@Override
+	public List<Inspeccion> findByNumeroLike(String numeroInspeccion) {
+		return inspeccionesRepository.findByNumeroLike("%" + numeroInspeccion + "%");
+	}
+
+	@Override
+	public List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad) {
+		return inspeccionesRepository.findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(nombreUnidad);
 	}
 }
