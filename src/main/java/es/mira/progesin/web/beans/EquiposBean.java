@@ -129,7 +129,8 @@ public class EquiposBean implements Serializable {
 		equipo.setFechaAlta(new Date());
 		if (equipoEspecial) {
 			equipo.setEquipoEspecial("SI");
-		} else {
+		}
+		else {
 			equipo.setEquipoEspecial("NO");
 		}
 		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -234,7 +235,7 @@ public class EquiposBean implements Serializable {
 		this.listadoColaboradores = null;
 		listMiembros = new ArrayList<Miembros>();
 		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
-		listMiembros = equipoService.findByIdMiembros(equipo.getIdEquipo());
+		listMiembros = equipoService.findByIdEquipo(equipo.getIdEquipo());
 		equipo.setJefeEquipo(jefeSelecionado.getUsername());
 		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
@@ -291,7 +292,7 @@ public class EquiposBean implements Serializable {
 
 		for (User user : colaboradoresSelecionados) {
 			Miembros miembro = new Miembros();
-			miembro.setIdMiembros(equipo.getIdEquipo());
+			miembro.setIdEquipo(equipo.getIdEquipo());
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
 			miembro.setPosicion("Colaborador");
@@ -323,7 +324,7 @@ public class EquiposBean implements Serializable {
 
 		for (User user : miembrosSelecionados) {
 			Miembros miembro = new Miembros();
-			miembro.setIdMiembros(equipo.getIdEquipo());
+			miembro.setIdEquipo(equipo.getIdEquipo());
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
 			miembro.setPosicion("Miembro");
@@ -359,7 +360,7 @@ public class EquiposBean implements Serializable {
 	 */
 	private void altaJefeEquipo() {
 		Miembros miembro = new Miembros();
-		miembro.setIdMiembros(equipo.getIdEquipo());
+		miembro.setIdEquipo(equipo.getIdEquipo());
 		miembro.setNombreCompleto(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
 		miembro.setUsername(jefeSelecionado.getUsername());
@@ -374,7 +375,7 @@ public class EquiposBean implements Serializable {
 		for (User user : miembrosSelecionados) {
 			Miembros miembro2 = new Miembros();
 			miembro2.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-			miembro2.setIdMiembros(equipo.getIdEquipo());
+			miembro2.setIdEquipo(equipo.getIdEquipo());
 			miembro2.setUsername(user.getUsername());
 			miembro2.setPosicion("Miembro");
 			equipoService.save(miembro2);

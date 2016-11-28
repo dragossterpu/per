@@ -18,7 +18,7 @@ public interface IEquipoService {
 
 	Miembros save(Miembros miembro);
 
-	List<Miembros> findByIdMiembros(Long idMiembros);
+	List<Miembros> findByIdEquipo(Long idEquipo);
 
 	Equipo save(Equipo entity);
 

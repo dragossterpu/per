@@ -673,9 +673,24 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','UserPwd','ipss2016
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.auth','true');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.starttls.enable','true');
 
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (1, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN');
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (11, '01/11/2016', '11/2017', 'I.G.P.','silpe', 'Granada', 'GC');
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (101, '01/11/2016', '101/2017', 'I.G.P.','silpe', 'Lérida', 'PN');
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (10, '01/11/2016', '10/2017', 'I.T_CIE','silpe', 'Granada', 'GC');
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (12, '01/11/2016', '12/2017', 'I.G.S.','silpe', 'Lérida', 'PN');
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito) VALUES (150, '01/11/2016', '150/2017', 'I.E_PUNT','silpe', 'Granada', 'GC');
+insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO','2016-11-28 13:16:49.861','silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
+insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO','2016-11-28 14:43:58.097','cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
+insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO','2016-11-28 14:50:50.742','mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');
+
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (1,1,'Silvia apellido1 apellido2','Jefe de equipo','silpe');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (2,1,'PEDRO  CARRETERO LIAU','Miembro','pedro');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (3,1,'JOSE MANUEL SIERRA EXOJO','Miembro','jmanuel');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (4,1,'ANTONIO LOPEZ BETRIAN','Miembro','alopez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (5,2,'CARLOS GONZÁLEZ CASTILLO','Jefe de equipo','cgonzalez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (6,2,'AMADEO MATEOS CHICO','Miembro','amateos');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (7,2,'ELIAS MARTINEZ ALLER','Miembro','emartinez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (8,3,'MARCELO FRANCISCO GONZALEZ FERNANDEZ','Jefe de equipo','mfgonzalez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (9,3,'JOSE LUIS CALONGE DELSO','Miembro','jlcalonge');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (10,3,'JOSE IGNACIO CEREZO HERNANDEZ','Miembro','jicerezo');
+
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, id_equipo) VALUES (1, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, id_equipo) VALUES (11, '01/11/2016', '11/2017', 'I.G.P.','silpe', 'Granada', 'GC', 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, id_equipo) VALUES (101, '01/11/2016', '101/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, id_equipo) VALUES (10, '01/11/2016', '10/2017', 'I.T_CIE','silpe', 'Granada', 'GC', 2);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, id_equipo) VALUES (12, '01/11/2016', '12/2017', 'I.G.S.','silpe', 'Lérida', 'PN', 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, id_equipo) VALUES (150, '01/11/2016', '150/2017', 'I.E_PUNT','silpe', 'Granada', 'GC', 3);

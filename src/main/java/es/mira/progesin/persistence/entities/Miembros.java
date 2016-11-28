@@ -33,9 +33,8 @@ public class Miembros {
 	@Column(name = "ID")
 	private Long id;
 
-	// TODO Esto en verdad es el id del equipo, cambiar y refractorizar
-	@Column(name = "ID_MIEMBROS")
-	private Long idMiembros;
+	@Column(name = "ID_EQUIPO")
+	private Long idEquipo;
 
 	@Column(name = "username")
 	private String username;
