@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,6 +35,8 @@ import lombok.Setter;
 @Component("envioCuestionarioBean")
 public class EnvioCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private static final String ETIQUETA_ERROR = "mensajeerror";
 
 	private CuestionarioEnvio cuestionarioEnvio;
 
@@ -112,31 +114,43 @@ public class EnvioCuestionarioBean implements Serializable {
 	public void enviarCuestionario() {
 		try {
 			if (enviar) {
-				String password = Utilities.getPassword();
-				System.out.println(password);
-				User user = new User(cuestionarioEnvio.getCorreoEnvio(), passwordEncoder.encode(password),
-						RoleEnum.PROV_CUESTIONARIO);
-				cuestionarioEnvioService.enviarCuestionarioService(user, cuestionarioEnvio);
-				// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
-				String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-				String textoAutomatico = "\r\n \r\nPara responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
-						+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
-						+ password + ". \r\n \r\nUna vez enviado el cuestionario su usuario quedará inativo. \r\n \r\n"
-						+ "Muchas gracias y un saludo.";
-				String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico);
-				envioCorreo.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
-				// TODO crear notificación
+				// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
+				CuestionarioEnvio cuestionario = cuestionarioEnvioService
+						.findByCorreoEnvioAndFechaFinalizacionIsNull(cuestionarioEnvio.getCorreoEnvio());
+				if (cuestionario == null) {
+					String password = Utilities.getPassword();
+					System.out.println(password);
+					User user = new User(cuestionarioEnvio.getCorreoEnvio(), passwordEncoder.encode(password),
+							RoleEnum.PROV_CUESTIONARIO);
+					cuestionarioEnvioService.enviarCuestionarioService(user, cuestionarioEnvio);
+					// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
+					String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
+					String textoAutomatico = "\r\n \r\nPara responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
+							+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
+							+ password
+							+ ". \r\n \r\nUna vez enviado el cuestionario su usuario quedará inativo. \r\n \r\n"
+							+ "Muchas gracias y un saludo.";
+					String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico);
+					envioCorreo.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+					// TODO crear notificación
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
+							"El cuestionario se ha enviado con éxito");
+				}
+				else {
+					FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+							"El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
+									+ " ya tiene otro cuestionario abierto. Finalícelo antes de enviar otro cuestionario.",
+							"", ETIQUETA_ERROR);
+				}
 			}
 			else {
 				mostrarMensajeNoDocumentacionPrevia();
 			}
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
-					"El cuestionario se ha enviado con éxito");
 			// TODO crear registro actividad
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-					"Se ha produdico un error en el envio del cuestionario", e.getMessage(), "mensajeerror");
+					"Se ha produdico un error en el envio del cuestionario", e.getMessage(), ETIQUETA_ERROR);
 			regActividadService.altaRegActivError("ENVIO CUESTIONARIO", e);
 		}
 	}
@@ -148,6 +162,6 @@ public class EnvioCuestionarioBean implements Serializable {
 	private void mostrarMensajeNoDocumentacionPrevia() {
 		String mensaje = "No se puede enviar el cuestionario ya que no existe documentación previa finalizada para la inspección. "
 				+ "Debe finalizar la solicitud de documentación previa antes de poder enviar el cuestionario.";
-		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, "mensajeerror");
+		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, ETIQUETA_ERROR);
 	}
 }

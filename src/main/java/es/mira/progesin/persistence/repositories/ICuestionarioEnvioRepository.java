@@ -8,4 +8,6 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 public interface ICuestionarioEnvioRepository extends CrudRepository<CuestionarioEnvio, Long> {
 
 	CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
+
+	CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNull(String correo);
 }

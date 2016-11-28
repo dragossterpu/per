@@ -41,4 +41,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 				EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
 	}
 
+	@Override
+	public CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNull(String correo) {
+		return cuestionarioEnvioRepository.findByCorreoEnvioAndFechaFinalizacionIsNull(correo);
+	}
+
 }

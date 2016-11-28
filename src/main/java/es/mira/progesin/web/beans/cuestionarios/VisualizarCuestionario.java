@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,44 +8,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
-import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
-import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
-import es.mira.progesin.services.IAreaCuestionarioService;
-import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 
- * @author EZENTIS Esta clase contiene todos los métodos necesarios para el tratamiento de los cuestionarios creados a
- * partir de un modelo
- *
- */
 @Setter
 @Getter
-@Component("cuestionarioPersonalizadoBean")
-public class CuestionarioPersonalizadoBean implements Serializable {
+@Component("visualizarCuestionario")
+public class VisualizarCuestionario implements Serializable {
+
+	@Autowired
+	private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
 
 	private static final long serialVersionUID = 1L;
-
-	private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
-
-	private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
 
 	// para la visualización
 	private CuestionarioPersonalizado cuestionarioPersonalizado;
@@ -54,47 +39,12 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 
 	private List<AreasCuestionario> areas;
 
-	@Autowired
-	private transient ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
-
-	@Autowired
-	private transient IAreaCuestionarioService areaService;
-
-	@Autowired
-	private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
-
-	@Autowired
-	EnvioCuestionarioBean envioCuestionarioBean;
-
 	// Tipos de respuesta
 	private List<DatosTablaGenerica> listaTablaSalidas;
 
 	private Map<PreguntasCuestionario, String> mapaRespuestas;
 
 	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
-
-	public void buscarCuestionario() {
-		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
-				.buscarCuestionarioPersonalizadoCriteria(cuestionarioBusqueda);
-	}
-
-	/**
-	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
-	 */
-	public void limpiar() {
-		cuestionarioBusqueda.limpiar();
-		listaCuestionarioPersonalizado = null;
-	}
-
-	/**
-	 * Elimina un cuestionario
-	 * @param cuestionario Cuestionario a eliminar
-	 */
-	public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
-		// TODO comprobar que no se ha usado para el envío antes de borrar
-		cuestionarioPersonalizadoService.delete(cuestionario);
-		listaCuestionarioPersonalizado.remove(cuestionario);
-	}
 
 	/**
 	 * Se muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -103,12 +53,13 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	 * @param cuestionario que se desea visualizar
 	 * @return Nombre de la vista a mostrar
 	 */
-	public String visualizar(CuestionarioPersonalizado cuestionario) {
+	public String visualizarVacio(CuestionarioPersonalizado cuestionario) {
 		this.setCuestionarioPersonalizado(cuestionario);
 		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
 		mapaAreaPreguntas = new HashMap<>();
 		mapaRespuestasTabla = new HashMap<>();
+		mapaRespuestas = new HashMap<>();
 		List<PreguntasCuestionario> listaPreguntas;
 		for (PreguntasCuestionario pregunta : preguntas) {
 			listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
@@ -133,24 +84,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		// Ordeno las áreas por su id para que aparezcan en el mismo orden que en el modelo
 		Collections.sort(areas, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
 
-		return "/cuestionarios/previsualizarEnvioCuestionario";
-	}
-
-	/**
-	 * mostrarFormularioEnvio
-	 *
-	 * Muestra la pantalla de envío del cuestionario
-	 *
-	 * @param cuestionario Cuestionario a enviar
-	 * @return Nombre de la vista del formulario de envío
-	 */
-	public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
-		CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-		cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
-		Inspeccion inspeccion = new Inspeccion();
-		cuestionarioEnvio.setInspeccion(inspeccion);
-		envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-		return "/cuestionarios/enviarCuestionario";
+		return "/cuestionarios/responderCuestionario";
 	}
 
 	/**
@@ -225,31 +159,4 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 		System.out.println("upload file");
 	}
 
-	public void guardarRespuestas() {
-		System.out.println("guardar respuestas");
-		System.out.println(mapaRespuestas);
-	}
-
-	@PostConstruct
-	public void init() {
-		cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
-		mapaRespuestas = new HashMap<>();
-		mapaRespuestasTabla = new HashMap<>();
-	}
-
-	public String responderCuestinario() {
-		String pagina = null;
-		// TODO Esto es para probar, hay que cambiarlo y que busque el cuestionario asociado al username logado.
-		List<CuestionarioPersonalizado> cp = (List<CuestionarioPersonalizado>) cuestionarioPersonalizadoService
-				.findAll();
-		if (cp != null && cp.isEmpty() == Boolean.FALSE) {
-			pagina = visualizar(cp.get(0));
-		}
-		return pagina;
-	}
-
-	public void comprobarAcceso() {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println("comprobar acceso: ");
-	}
 }

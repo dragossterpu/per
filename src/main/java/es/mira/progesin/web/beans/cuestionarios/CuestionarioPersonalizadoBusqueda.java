@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
-import es.mira.progesin.web.beans.CuestionarioPersonalizadoBusqueda;
+import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {

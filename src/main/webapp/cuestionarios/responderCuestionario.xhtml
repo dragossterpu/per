@@ -8,11 +8,87 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
-	
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<div class="tituloCuestionario">
+				<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
+			</div>
 			
-			<p:outputLabel value="#{responderCuestionarioBean.titulo}"></p:outputLabel>
+			<h:form id="form">
+				<ui:repeat value="#{responderCuestionarioBean.visualizarCuestionario.areas}" var="areaCuestionario"> 
+					<p:accordionPanel>
+						<p:tab title="#{areaCuestionario.area}">
+							<ui:repeat value="#{responderCuestionarioBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
+								<div class="prevPregCuest">
+									<h:outputText value="#{preguntaArea.pregunta}"/>
+									<div class="respuestaCuestionario">
+										<p:inputText value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" size="10" maxlength="1000"/>
+										<p:inputTextarea value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"/>
+										<div style="width: 30%">
+											<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" navigator="true" showOn="both" />
+										</div>
+										<p:selectOneRadio rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}">
+											<f:selectItems value="#{responderCuestionarioBean.visualizarCuestionario.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
+												var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
+										</p:selectOneRadio>
+										<p:outputPanel rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
+										    <p:fileUpload fileUploadListener="#{responderCuestionarioBean.visualizarCuestionario.handleFileUpload}" mode="advanced" dragDropSupport="false"
+										    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar"
+										                  multiple="true" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" invalidFileMessage="El tipo del documento seleccionado no es válido"/>
+										</p:outputPanel>
+											
+										<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}"
+													id="tablaPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
+									        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+									            <f:facet name="header">
+									                <h:outputText value="#{column.header}" />
+									            </f:facet>
+									            <p:inputText value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"/>
+									        </p:columns>
+									        <f:facet name="footer">
+										        <p:commandButton value="Añadir fila" actionListener="#{responderCuestionarioBean.visualizarCuestionario.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
+										        <p:commandButton value="Eliminar fila" actionListener="#{responderCuestionarioBean.visualizarCuestionario.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"/>
+										    </f:facet>
+						    			</p:dataTable>
+						    			
+						    			<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}"
+													id="matrizPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
+									        
+									        <p:column headerText="" styleClass="ui-widget-header">
+									        	<h:outputText value="#{registroTabla.nombreFila}"/>
+									        </p:column>
+									        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+									            <f:facet name="header">
+									                <h:outputText value="#{column.header}" />
+									            </f:facet>
+									            <p:inputText value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"/>
+									        </p:columns>
+						    			</p:dataTable>
+									</div>
+								</div>
+							</ui:repeat>
+						</p:tab>
+					</p:accordionPanel>
+				</ui:repeat>
+				
+			 	<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> 
+					<div class="botonesFormulario">
+						<p:commandButton actionListener="#{responderCuestionarioBean.visualizarCuestionario.guardarRespuestas}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
+						<h:commandLink title="Enviar cuestionario" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">Responder</span>
+						</h:commandLink>
+					</div>
+				</p:outputPanel> 
+				
+				<p:outputPanel rendered="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
+					<div class="botonesFormulario">
+						<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
+					</div>
+				</p:outputPanel>
+			</h:form>
 
-			<ui:include src="/cuestionarios/previsualizarEnvioCuestionario.xhtml"></ui:include>
-
+		</ui:define>
+	</ui:composition>
 </f:view>
 </html>

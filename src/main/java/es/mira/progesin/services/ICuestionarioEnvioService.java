@@ -9,5 +9,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 public interface ICuestionarioEnvioService extends Serializable {
 	CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
 
-	public void enviarCuestionarioService(User user, CuestionarioEnvio cuestionarioEnvio);
+	void enviarCuestionarioService(User user, CuestionarioEnvio cuestionarioEnvio);
+
+	CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNull(String correo);
 }

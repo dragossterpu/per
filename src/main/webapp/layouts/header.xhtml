@@ -8,7 +8,7 @@
 	<p:graphicImage id="img1" value="/images/cabecera_PROGESIN.png" />
 	<div id="headerDatos">
 			<div>
-				<p:outputLabel value="Usuario:" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">#{request.remoteUser}</p:outputLabel>
+				<p:outputLabel>#{request.remoteUser}</p:outputLabel>
 			</div>
 			
 			<h:form>
