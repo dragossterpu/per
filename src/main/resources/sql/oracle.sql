@@ -370,17 +370,17 @@ begin
 end;$$;
 */
 
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo1', 'CUESTIONARIO.CIES', 1, 'CUESTIONARIO.CIES.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 2, 'A - GC - Cuestionario Zona GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 3, 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 4, 'B - GC - Cuestionario Comandancia GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 5, 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 6, 'C - GC - Cuestionario Compañía GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 7, 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo8', 'CUESTIONARIO PRLCNP', 8, 'CUESTIONARIO PRLCNP.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 10, 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (1, 'codigo1', 'CUESTIONARIO.CIES', 1, 'CUESTIONARIO.CIES.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (2, 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 2, 'A - GC - Cuestionario Zona GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (3, 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 3, 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (4, 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 4, 'B - GC - Cuestionario Comandancia GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (5, 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 5, 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (6, 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 6, 'C - GC - Cuestionario Compañía GENERICO.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (7, 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 7, 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (8, 'codigo8', 'CUESTIONARIO PRLCNP', 8, 'CUESTIONARIO PRLCNP.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (10, 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 10, 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (11, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
+Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (12, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
 
 insert into documentos (id, fichero, tipo_contenido, nombre) values (1, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'application/msword','CUESTIONARIO.CIES.doc');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (2, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
@@ -678,9 +678,9 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoNombre'
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoPuesto','Inspector Auditor, Jefe del Servicio de Apoyo');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoTelefono','91.537.25.41');
 
-insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO','2016-11-28 13:16:49.861','silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
-insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO','2016-11-28 14:43:58.097','cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
-insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO','2016-11-28 14:50:50.742','mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');
+insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO',sysdate,'silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
+insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO',sysdate,'cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
+insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO',sysdate,'mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');
 
 insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (1,1,'Silvia apellido1 apellido2','Jefe de equipo','silpe');
 insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (2,1,'PEDRO  CARRETERO LIAU','Miembro','pedro');
