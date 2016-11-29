@@ -57,8 +57,6 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
 	 *
 	 *************************************/
 
-	@Query("select param from Parametro c where c.param.seccion= :seccion)")
-	List<Parametro> findParametrosForSeccion(@Param("seccion") String seccion);
 
 	List<Parametro> findParamByParamSeccion(String seccion);
 }
