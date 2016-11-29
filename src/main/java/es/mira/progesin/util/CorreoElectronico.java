@@ -2,6 +2,7 @@ package es.mira.progesin.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,90 +39,163 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Crea un mensaje.
+	 * Realiza el envío de correo electrónico.
 	 * 
 	 * @author Ezentis
-	 * @param List<String> Destinatarios de correo
-	 * @param List<String> Destinatarios en copia
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param	List<String> Destinatarios
+	 * @param	List<String> Destinatarios en copia
+	 * @param	String Asunto
+	 * @param	String Cuerpo
+	 * @param	List<File> Adjuntos 
 	 *
 	 *************************************/
 	
-	public void setDatos(List<String> paramDestino,  List<String> paramCC, String paramAsunto,String paramCuerpo){
-		this.destino=paramDestino;
-		this.conCopia=paramCC;
-		this.asunto=paramAsunto;
-		this.cuerpo=paramCuerpo;
-	}
-	
-	
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Crea un mensaje.
-	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios de correo
-	 * @param List<String> Destinatarios en copia
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Ficheros adjunto
-	 *
-	 *************************************/
-	
-	public void setDatos(List<String> paramDestino, List<String> paramCC, String paramAsunto,String paramCuerpo, List<File> paramAdjunto){
+	public void setDatos(List<String> paramDestino,  List<String> paramCC, String paramAsunto,String paramCuerpo, List<File> paramAdjunto){
 		this.destino=paramDestino;
 		this.conCopia=paramCC;
 		this.asunto=paramAsunto;
 		this.cuerpo=paramCuerpo;
 		this.adjunto=paramAdjunto;
 	}
-
+	
+	
 	/***************************************
 	 * 
 	 * setDatos
 	 * 
-	 * Crea un mensaje.
+	 * Realiza el envío de correo electrónico.
 	 * 
 	 * @author Ezentis
-	 * @param List<String> Destinatarios de correo
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param	List<String> Destinatarios
+	 * @param	String Asunto
+	 * @param	String Cuerpo
+	 * @param	List<File> Adjuntos 
 	 *
 	 *************************************/
 	
-	@Override
-	public void setDatos(List<String> paramDestino, String paramAsunto, String paramCuerpo) {
+	public void setDatos(List<String> paramDestino, List<String> paramCC, String paramAsunto,String paramCuerpo){
 		this.destino=paramDestino;
+		this.conCopia=paramCC;
 		this.asunto=paramAsunto;
 		this.cuerpo=paramCuerpo;
-		
 	}
-
-
+	
 	/***************************************
 	 * 
 	 * setDatos
 	 * 
-	 * Crea un mensaje.
+	 * Realiza el envío de correo electrónico.
 	 * 
 	 * @author Ezentis
-	 * @param List<String> Destinatarios de correo
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Fichero adjunto
+	 * @param	List<String> Destinatarios
+	 * @param	String Asunto
+	 * @param	String Cuerpo
 	 *
 	 *************************************/
-	@Override
-	public void setDatos(List<String> paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjuntos) {
+	
+	public void setDatos(List<String> paramDestino,  String paramAsunto,String paramCuerpo){
 		this.destino=paramDestino;
 		this.asunto=paramAsunto;
 		this.cuerpo=paramCuerpo;
-		this.adjunto=paramAdjuntos;
+	}
+	
+	/***************************************
+	 * 
+	 * setDatos
+	 * 
+	 * Realiza el envío de correo electrónico.
+	 * 
+	 * @author Ezentis
+	 * @param	List<String> Destinatarios
+	 * @param	String Asunto
+	 * @param	String Cuerpo
+	 * @param	List<File> Adjuntos 
+	 *
+	 *************************************/
+	
+	public void setDatos(List<String> paramDestino,  String paramAsunto,String paramCuerpo, List<File> paramAdjunto){
+		this.destino=paramDestino;
+		this.asunto=paramAsunto;
+		this.cuerpo=paramCuerpo;
+		this.adjunto=paramAdjunto;
+	}
+	
+	/***************************************
+	 * 
+	 * setDatos
+	 * 
+	 * Realiza el envío de correo electrónico.
+	 * 
+	 * @author Ezentis
+	 * @param	String Destinatario único
+	 * @param	String Destinatario en copia
+	 * @param	String Asunto
+	 * @param	String Cuerpo
+	 * @param	List<File> Adjuntos 
+	 *
+	 *************************************/
+	
+	public void setDatos(String paramDestino,  String paramCC, String paramAsunto,String paramCuerpo, List<File> paramAdjunto){
+		List<String> lista=new ArrayList<String>();
+		lista.add(paramDestino);
+		this.destino=lista;
+		List<String> cc=new ArrayList<String>();
+		lista.add(paramCC);
+		this.conCopia=cc;
+		this.asunto=paramAsunto;
+		this.cuerpo=paramCuerpo;
+		this.adjunto=paramAdjunto;
+	}
+	
+	/***************************************
+	 * 
+	 * setDatos
+	 * 
+	 * Realiza el envío de correo electrónico.
+	 * 
+	 * @author Ezentis
+	 * @param	String Destinatario único
+	 * @param	String Asunto
+	 * @param	String Cuerpo
+	 * @param	List<File> Adjuntos 
+	 *
+	 *************************************/
+	
+	public void setDatos(String paramDestino,  String paramAsunto,String paramCuerpo, List<File> paramAdjunto){
+		List<String> lista=new ArrayList<String>();
+		lista.add(paramDestino);
+		this.destino=lista;
+		this.asunto=paramAsunto;
+		this.cuerpo=paramCuerpo;
+		this.adjunto=paramAdjunto;
+	}
+	
+	/***************************************
+	 * 
+	 * setDatos
+	 * 
+	 * Realiza el envío de correo electrónico.
+	 * 
+	 * @author Ezentis
+	 * @param	String Destinatario único
+	 * @param	String Asunto
+	 * @param	String Cuerpo
+	 *
+	 *************************************/
+	
+	public void setDatos(String paramDestino,  String paramAsunto,String paramCuerpo){
+		List<String> lista=new ArrayList<String>();
+		lista.add(paramDestino);
+		this.destino=lista;
+		this.asunto=paramAsunto;
+		this.cuerpo=paramCuerpo;
 		
 	}
+	
+	
+	
+	
+
 
 	/***************************************
 	 * 
