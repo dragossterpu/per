@@ -3,7 +3,9 @@ package es.mira.progesin.web.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
@@ -71,8 +74,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
-	private static final String DATOSAPOYO = "datosApoyo";
-
 	@Autowired
 	transient IRegistroActividadService regActividadService;
 
@@ -81,7 +82,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	transient List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
 
-	private List<Boolean> list;
+	private List<Boolean> listaColumnToggler;
 
 	@Autowired
 	transient ISolicitudDocumentacionService solicitudDocumentacionService;
@@ -117,6 +118,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	@Autowired
 	transient IParametrosRepository parametrosRepository;
+
+	private Map<String, String> datosApoyo;
 
 	@Autowired
 	private transient PasswordEncoder passwordEncoder;
@@ -163,31 +166,14 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * ser modificados por el DBA
 	 * 
 	 * @author EZENTIS
-	 * @see #crearSolicitud()
+	 * @see #getFormularioCrearSolicitud()
 	 * @see es.mira.progesin.persistence.entities.Parametro
 	 */
 	private void datosApoyo() {
-		if (solicitudDocumentacionPrevia.getApoyoCorreo() == null
-				|| "".equals(solicitudDocumentacionPrevia.getApoyoCorreo().trim())) {
-			solicitudDocumentacionPrevia
-					.setApoyoCorreo(parametrosRepository.findValueForKey("ApoyoCorreo", DATOSAPOYO));
-		}
-		if (solicitudDocumentacionPrevia.getApoyoNombre() == null
-				|| "".equals(solicitudDocumentacionPrevia.getApoyoNombre().trim())) {
-			solicitudDocumentacionPrevia
-					.setApoyoNombre(parametrosRepository.findValueForKey("ApoyoNombre", DATOSAPOYO));
-		}
-		if (solicitudDocumentacionPrevia.getApoyoPuesto() == null
-				|| "".equals(solicitudDocumentacionPrevia.getApoyoPuesto().trim())) {
-			solicitudDocumentacionPrevia
-					.setApoyoPuesto(parametrosRepository.findValueForKey("ApoyoPuesto", DATOSAPOYO));
-		}
-		if (solicitudDocumentacionPrevia.getApoyoTelefono() == null
-				|| "".equals(solicitudDocumentacionPrevia.getApoyoTelefono().trim())) {
-			solicitudDocumentacionPrevia
-					.setApoyoTelefono(parametrosRepository.findValueForKey("ApoyoTelefono", DATOSAPOYO));
-		}
-
+		solicitudDocumentacionPrevia.setApoyoCorreo(datosApoyo.get("ApoyoCorreo"));
+		solicitudDocumentacionPrevia.setApoyoNombre(datosApoyo.get("ApoyoNombre"));
+		solicitudDocumentacionPrevia.setApoyoPuesto(datosApoyo.get("ApoyoPuesto"));
+		solicitudDocumentacionPrevia.setApoyoTelefono(datosApoyo.get("ApoyoTelefono"));
 	}
 
 	/**
@@ -298,6 +284,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String getFormularioCrearSolicitud() {
 		this.documentosSelecionados = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
+		datosApoyo();
 		listadoDocumentos = tipoDocumentacionService.findAll();
 		return "/solicitudesPrevia/crearSolicitud";
 	}
@@ -312,7 +300,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocPreviaBusqueda.resetValues();
 		listadoDocumentosCargados = new ArrayList<>();
 		listaSolicitudesPrevia = new ArrayList<>();
-		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
+		List<Parametro> parametrosDatosApoyo = parametrosRepository.findParamByParamSeccion("datosApoyo");
+		datosApoyo = new HashMap<>();
+		for (Parametro p : parametrosDatosApoyo) {
+			datosApoyo.put(p.getParam().getClave(), p.getParam().getValor());
+		}
 	}
 
 	/**
@@ -351,7 +343,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	public void onToggle(ToggleEvent e) {
-		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+		listaColumnToggler.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
 
 	/**

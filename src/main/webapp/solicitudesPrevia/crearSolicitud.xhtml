@@ -123,13 +123,12 @@
 										selection="#{solicitudDocPreviaBean.documentosSelecionados}"
 										rowKey="#{documento.idTipoDocumento}">
 										<f:facet name="header">
-								            Documentos previos cuestionario
+								            Tipos de documentación previa
 								        </f:facet>
 										<p:column selectionMode="multiple"
 											style="width:16px;text-align:center" />
 
 										<p:column headerText="Descripcion"
-											style="font-weight: normal;"
 											sortBy="#{documento.descripcion}"
 											filterBy="#{documento.descripcion}">
 											<h:outputText value="#{documento.descripcion}" />
@@ -147,35 +146,39 @@
 								<p:messages />
 								
 								<div class="aclaraciones">
-									Los campos en blanco serán rellenados con los datos de la persona de apoyo por defecto.
+									Datos de la persona de apoyo por defecto.
 								</div>
 									
 								<h:panelGrid columns="2" columnClasses="label, value">
 
-									<h:outputLabel for="apoyoPuesto" value="Puesto persona apoyo:"
-										style="font-weight: normal;" />
+									<h:outputLabel for="apoyoPuesto" value="Puesto persona apoyo (*):" />
 									<p:inputText id="apoyoPuesto"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}"
-										converter="#{trimConverter}" />
+										converter="#{trimConverter}"
+										required="true"
+										requiredMessage="Es obligatorio un puesto persona apoyo"/>
 
-									<h:outputLabel for="apoyoNombre" value="Nombre persona apoyo:"
-										style="font-weight: normal;" />
+									<h:outputLabel for="apoyoNombre" value="Nombre persona apoyo (*):"/>
 									<p:inputText id="apoyoNombre"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}"
-										converter="#{trimConverter}" />
+										converter="#{trimConverter}" 
+										required="true"
+										requiredMessage="Es obligatorio un nombre persona apoyo"/>
 
-									<h:outputLabel for="apoyoTelefono"
-										value="Teléfono persona apoyo:" style="font-weight: normal;" />
+									<h:outputLabel for="apoyoTelefono" value="Teléfono persona apoyo (*):" />
 									<p:inputText id="apoyoTelefono"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}"
-										converter="#{trimConverter}" />
+										converter="#{trimConverter}" 
+										required="true"
+										requiredMessage="Es obligatorio un teléfono persona apoyo"/>
 
-									<h:outputLabel for="apoyoCorreo" value=" Correo persona apoyo:"
-										style="font-weight: normal;" />
+									<h:outputLabel for="apoyoCorreo" value=" Correo persona apoyo (*):" />
 									<p:inputText id="apoyoCorreo"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"
 										validatorMessage="Formato de correo incorrecto"
-										converter="#{trimConverter}">
+										converter="#{trimConverter}"
+										required="true"
+										requiredMessage="Es obligatorio un correo persona apoyo">
 										<f:validateRegex
 											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 									</p:inputText>
@@ -191,9 +194,7 @@
 									columnClasses="grid,grid,grid">
 									<h:panelGrid columns="2" columnClasses="label,value">
 
-										<h:outputText
-											value="Creación solicitud documentación previa cuestionario: "
-											style="font-weight: normal;" />
+										<h:outputText value="Creación solicitud documentación previa cuestionario: "/>
 
 									</h:panelGrid>
 								</h:panelGrid>
