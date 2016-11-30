@@ -29,7 +29,7 @@
 							<br></br>
 							<p:panel header="Contenido">
 								<br></br>
-								<p:messages />
+								<p:messages autoUpdate="true" closable="true"/>
 								<h:panelGrid columns="2" columnClasses="label, value">
 								
 									<h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
@@ -115,12 +115,12 @@
 							<br></br>
 							<p:panel header="documentacion">
 								<br></br>
-								<p:messages />
+								<p:messages autoUpdate="true" closable="true"/>
 								<h:panelGrid columns="2" columnClasses="label, value">
 									<p:dataTable id="documentosSolicitud" var="documento"
 										value="#{solicitudDocPreviaBean.listadoDocumentos}"
 										paginator="true" rows="20"
-										selection="#{solicitudDocPreviaBean.documentosSelecionados}"
+										selection="#{solicitudDocPreviaBean.documentosSeleccionados}"
 										rowKey="#{documento.idTipoDocumento}">
 										<f:facet name="header">
 								            Tipos de documentación previa
@@ -143,7 +143,7 @@
 							<br></br>
 							<p:panel header="Apoyo">
 								<br></br>
-								<p:messages />
+								<p:messages autoUpdate="true" closable="true"/>
 								
 								<div class="aclaraciones">
 									Datos de la persona de apoyo por defecto.
