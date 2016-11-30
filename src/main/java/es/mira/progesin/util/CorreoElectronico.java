@@ -37,9 +37,28 @@ public class CorreoElectronico implements ICorreoElectronico {
 	
 	/***************************************
 	 * 
+	 * unSetDatos
+	 * 
+	 * Incicializa a null los parámetros.
+	 * 
+	 * @author Ezentis
+	 *
+	 *************************************/
+	
+	private void unSetDatos(){
+		this.destino=null;
+		this.conCopia=null;
+		this.asunto=null;
+		this.cuerpo=null;
+		this.adjunto=null;
+		
+	};
+	
+	/***************************************
+	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	List<String> Destinatarios
@@ -63,7 +82,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	List<String> Destinatarios
@@ -84,7 +103,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	List<String> Destinatarios
@@ -103,7 +122,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	List<String> Destinatarios
@@ -124,7 +143,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	String Destinatario único
@@ -151,7 +170,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	String Destinatario único
@@ -174,7 +193,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * setDatos
 	 * 
-	 * Realiza el envío de correo electrónico.
+	 * Inicializa los datos de envío.
 	 * 
 	 * @author Ezentis
 	 * @param	String Destinatario único
@@ -248,6 +267,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 		else {
 			envioCorreoSinAdjuntos();
 			}
+		unSetDatos();
 	}
 
 	/***************************************
