@@ -20,13 +20,11 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.ExtensionEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.services.IDocumentoService;
-import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
@@ -50,13 +48,8 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private static final String ERROR = "Error";
 
-	RegistroActividad regActividad = new RegistroActividad();
-
 	@Autowired
 	transient IRegistroActividadService regActividadService;
-
-	@Autowired
-	transient IModeloCuestionarioService modeloCuestionarioService;
 
 	@Autowired
 	transient ISolicitudDocumentacionService solicitudDocumentacionService;
