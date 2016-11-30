@@ -129,7 +129,7 @@
 					
 					<p:outputPanel>
 					<div class="botonesFormulario">				        						
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}" actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación Apoyo" icon="fa fa-fw fa-user-plus">
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo and p:ifAnyGranted('SERVICIO_APOYO,ADMIN')}" actionListener="#{solicitudDocPreviaBean.validacionApoyo}" value="Validación Apoyo" icon="fa fa-fw fa-user-plus">
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea validar esta solicitud?"/>
 						</p:commandButton>
