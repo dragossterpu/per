@@ -11,7 +11,7 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
 
 	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo);
 
-	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(
+	List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(
 			Inspeccion inspeccion);
 
 }

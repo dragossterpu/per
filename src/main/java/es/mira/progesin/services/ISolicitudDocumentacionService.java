@@ -32,4 +32,6 @@ public interface ISolicitudDocumentacionService {
 
 	List<SolicitudDocumentacionPrevia> findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion);
 
+	void transaccDeleteElimDocPrevia(Long idSolicitud);
+
 }

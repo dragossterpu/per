@@ -10,4 +10,6 @@ public interface IDocumentacionPreviaRepository extends CrudRepository<Documenta
 
 	List<DocumentacionPrevia> findByIdSolicitud(Long idSolicitud);
 
+	void deleteByIdSolicitud(Long idSolicitud);
+
 }

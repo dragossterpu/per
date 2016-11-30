@@ -16,6 +16,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
@@ -30,6 +31,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 
 	@Autowired
 	IUserService userService;
+
+	@Autowired
+	IDocumentacionPreviaRepository documentacionPreviaRepository;
 
 	@Override
 	public SolicitudDocumentacionPrevia save(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
@@ -129,6 +133,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			criteria.add(Restrictions.eq("tipoInspeccion.codigo",
 					solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo()));
 		}
+
+		criteria.add(Restrictions.isNull("fechaBaja"));
+
 		criteria.addOrder(Order.desc("fechaAlta"));
 		@SuppressWarnings("unchecked")
 		List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = criteria.list();
@@ -177,7 +184,16 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	@Override
 	public List<SolicitudDocumentacionPrevia> findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion) {
 		return solicitudDocumentacionPreviaRepository
-				.findByFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(inspeccion);
+				.findByFechaBajaIsNullAndFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(
+						inspeccion);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void transaccDeleteElimDocPrevia(Long idSolicitud) {
+		documentacionPreviaRepository.deleteByIdSolicitud(idSolicitud);
+		solicitudDocumentacionPreviaRepository.delete(idSolicitud);
+
 	}
 
 }
