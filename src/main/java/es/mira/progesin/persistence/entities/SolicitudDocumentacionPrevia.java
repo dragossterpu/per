@@ -161,4 +161,10 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 
 	@Column(name = "usuarioNoConforme")
 	private String usuarioNoConforme;
+
+	@Column(name = "fechaBaja")
+	private Date fechaBaja;
+
+	@Column(name = "usernameBaja")
+	private String usernameBaja;
 }
