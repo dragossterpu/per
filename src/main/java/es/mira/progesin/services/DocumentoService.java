@@ -150,6 +150,21 @@ public class DocumentoService implements IDocumentoService {
 	public Documento findOne(Long id) {
 		return documentoRepository.findOne(id);
 	}
+	
+	/***************************************
+	 * 
+	 * findByFechaBajaIsNotNull
+	 * 
+	 * Busca todos los usuarios no eliminados.
+	 * 
+	 * @author Ezentis
+	 * @return Iterable<Documento> Documentos seleccionados
+	 * 
+	 *************************************/
+	@Override
+	public Iterable<Documento> findByFechaBajaIsNull() {
+		return documentoRepository.findByFechaBajaIsNull();
+	}
 
 	/***************************************
 	 * 

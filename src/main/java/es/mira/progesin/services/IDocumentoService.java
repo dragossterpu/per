@@ -32,4 +32,6 @@ public interface IDocumentoService {
 
 	Documento cargaDocumento(UploadedFile file);
 
+	Iterable<Documento> findByFechaBajaIsNull();
+
 }
