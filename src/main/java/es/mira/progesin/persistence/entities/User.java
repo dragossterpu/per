@@ -134,5 +134,6 @@ public class User implements Serializable {
 		this.setEnvioNotificacion("NO");
 		this.setFechaDestinoIPSS(new Date());
 		this.setNivel(0);
+		this.setFechaAlta(new Date());
 	}
 }

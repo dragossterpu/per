@@ -13,23 +13,25 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.services.IPuestoTrabajoService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @ApplicationScoped
 @Component
 @Getter
+@Setter
 @NoArgsConstructor
 public class ApplicationBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	IPuestoTrabajoService puestosTrabajoService;
+	private transient IPuestoTrabajoService puestosTrabajoService;
 
 	// Los cargo en la aplicación porque van a ser siempre los mismo y así agilizo la aplicación
 	private List<PuestoTrabajo> listaPuestosTrabajo;
 
 	@PostConstruct
 	public void init() {
-		this.listaPuestosTrabajo = (List<PuestoTrabajo>) puestosTrabajoService.findAll();
+		setListaPuestosTrabajo((List<PuestoTrabajo>) puestosTrabajoService.findAll());
 	}
 }

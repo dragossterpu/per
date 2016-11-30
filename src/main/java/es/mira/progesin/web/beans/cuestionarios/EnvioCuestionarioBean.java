@@ -131,7 +131,8 @@ public class EnvioCuestionarioBean implements Serializable {
 							+ ". \r\n \r\nUna vez enviado el cuestionario su usuario quedará inativo. \r\n \r\n"
 							+ "Muchas gracias y un saludo.";
 					String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico);
-					envioCorreo.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+					envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+					envioCorreo.envioCorreo();
 					// TODO crear notificación
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 							"El cuestionario se ha enviado con éxito");
