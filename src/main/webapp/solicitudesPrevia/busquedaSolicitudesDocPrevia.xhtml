@@ -189,12 +189,11 @@
 							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>	
 						</p:column>
 						<p:column style="width:30px">
-							<p:commandButton title="Eliminar" icon="ui-icon-trash"
-								actionListener="#{solicitudDocPreviaBean.eliminarSolicitudDocumentacion(solicitud)}"
-								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes">
-								<p:confirm header="Eliminar solicitud"
-									message="¿Está seguro que desea eliminar esta solicitud de documentación previa?"
-									icon="ui-icon-alert" />
+							<p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se dará de baja y se mantendrá en el registro." icon="ui-icon-trash"
+								actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}"
+								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes" disabled="#{not empty solicitud.fechaFinalizacion}">
+								<p:confirm header="Eliminar" icon="ui-icon-alert"
+									message="¿Está seguro de que desea eliminar esta solicitud?"/>
 							</p:commandButton>
 						</p:column>
 						<f:facet name="footer">

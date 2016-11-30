@@ -10,9 +10,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.StreamedContent;
@@ -25,7 +23,6 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Parametro;
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -41,6 +38,8 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
+import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,18 +60,14 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static String dialogMessage = "PF('dialogMessage').show()";
-
-	static String system = "system";
-
-	RegistroActividad regActividad = new RegistroActividad();
-
 	@Autowired
 	private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
 
 	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
+
+	private static final String ERROR = "Error";
 
 	@Autowired
 	transient IRegistroActividadService regActividadService;
@@ -103,7 +98,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	transient List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
-	private List<TipoDocumentacion> documentosSelecionados;
+	private List<TipoDocumentacion> documentosSeleccionados;
 
 	transient List<TipoDocumentacion> listadoDocumentos = new ArrayList<>();
 
@@ -124,6 +119,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	private transient PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private transient ICorreoElectronico correoElectronico;
+
 	/**
 	 * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
 	 * 
@@ -136,11 +134,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 			datosApoyo();
 
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-				RequestContext context = RequestContext.getCurrentInstance();
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"La solicitud de documentación ha sido creada con éxito");
-				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-				context.execute(dialogMessage);
 			}
 			altaDocumentos();
 			String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
@@ -151,9 +146,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 			// Guardamos la notificacion en bbdd
 			// TODO usar NotificacionEnum
 			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
-			this.solicitudDocumentacionPrevia = null;
 		}
 		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al crear la solicitud, inténtelo de nuevo más tarde");
 			// Guardamos los posibles errores en bbdd
 			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
@@ -187,7 +183,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	private void altaDocumentos() {
 
-		for (TipoDocumentacion documento : documentosSelecionados) {
+		for (TipoDocumentacion documento : documentosSeleccionados) {
 			DocumentacionPrevia docPrevia = new DocumentacionPrevia();
 			docPrevia.setIdSolicitud(solicitudDocumentacionPrevia.getId());
 			docPrevia.setDescripcion(documento.getDescripcion());
@@ -224,7 +220,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 			listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
-			solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 			solicitudDocumentacionPrevia = solicitud;
 			return "/solicitudesPrevia/vistaSolicitud";
 		}
@@ -242,16 +237,30 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista vistaSolicitud
 	 */
 	public String validacionApoyo() {
-		solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
-		solicitudDocumentacionPrevia
-				.setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
-		if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
-					"Se ha validado con éxito la solicitud de documentación");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute(dialogMessage);
+		try {
+			solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
+			solicitudDocumentacionPrevia
+					.setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
+			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
+						"Se ha validado con éxito la solicitud de documentación");
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario validación jefe equipo : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+			}
 		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al validar jefe equipo la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
+		}
+
 		return VISTASOLICITUD;
 	}
 
@@ -262,15 +271,29 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista vistaSolicitud
 	 */
 	public String validacionJefeEquipo() {
-		solicitudDocumentacionPrevia.setFechaValidJefeEquipo(new Date());
-		solicitudDocumentacionPrevia
-				.setUsernameValidJefeEquipo(SecurityContextHolder.getContext().getAuthentication().getName());
-		if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
-					"Se ha validado con éxito la solicitud de documentación");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute(dialogMessage);
+		try {
+			solicitudDocumentacionPrevia.setFechaValidJefeEquipo(new Date());
+			solicitudDocumentacionPrevia
+					.setUsernameValidJefeEquipo(SecurityContextHolder.getContext().getAuthentication().getName());
+			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
+						"Se ha validado con éxito la solicitud de documentación");
+
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario validación jefe equipo : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al validar jefe equipo la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
@@ -282,7 +305,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista crearSolicitud
 	 */
 	public String getFormularioCrearSolicitud() {
-		this.documentosSelecionados = null;
+		this.documentosSeleccionados = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
 		datosApoyo();
@@ -347,14 +370,49 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Elimina la solicitud de documentación previa
+	 * Elimina la solicitud de documentación previa. Se hace eliminación física si no ha sido enviada aún sino sólo
+	 * lógica junto a la eliminación física del usuario provisional. Además desde la interfaz las solicitudes
+	 * finalizadas no se pueden eliminar.
 	 * 
 	 * @author EZENTIS
 	 * @param solicitudDocumentacionPrevia solicitud a eliminar
 	 */
-	public void eliminarSolicitudDocumentacion(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
-		// TODO ¿Eliminar documentos asociados si los tiene?
-		solicitudDocumentacionService.delete(solicitudDocumentacionPrevia.getId());
+	public void eliminarSolicitud(SolicitudDocumentacionPrevia solicitud) {
+		try {
+			// Si no ha sido enviada se trata como un borrador y se hace eliminación física
+			if (solicitud.getFechaEnvio() == null) {
+				solicitudDocumentacionService.transaccDeleteElimDocPrevia(solicitud.getId());
+
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
+						"Se ha eliminado con éxito la solicitud de documentación");
+			}
+			else {
+				// Enviada pero no finalizada, existe usuario provisional
+				solicitud.setFechaBaja(new Date());
+				solicitud.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+				solicitud.setFechaFinalizacion(new Date());
+				String usuarioProv = solicitud.getCorreoDestinatario();
+				if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv)) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Baja",
+							"Se ha dado de baja con éxito la solicitud de documentación");
+
+					String descripcion = "Solicitud documentación previa cuestionario. Usuario baja : "
+							+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
+							NOMBRESECCION);
+
+					// TODO usar NotificacionEnum
+					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(),
+							NOMBRESECCION);
+				}
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
+		}
 		this.listaSolicitudesPrevia = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAll();
 	}
@@ -364,24 +422,31 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * 
 	 * @author EZENTIS
 	 */
-	public void modificarSolicitud() {
+	public String modificarSolicitud() {
 		try {
-
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-				RequestContext context = RequestContext.getCurrentInstance();
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modificación",
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 						"La solicitud de documentación ha sido modificada con éxito");
-				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-				context.execute(dialogMessage);
 				listadoDocumentosCargados = gestDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario modificación : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 			}
 		}
 		catch (Exception e) {
-			// Guardamos los posibles errores en bbdd
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
-
+		return "/solicitudesPrevia/modificarSolicitud";
 	}
 
 	/**
@@ -392,34 +457,48 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista vistaSolicitud
 	 */
 	public String enviarSolicitud() {
+		try {
+			String password = Utilities.getPassword();
 
-		String password = Utilities.getPassword();
+			solicitudDocumentacionPrevia.setFechaEnvio(new Date());
+			solicitudDocumentacionPrevia
+					.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
 
-		solicitudDocumentacionPrevia.setFechaEnvio(new Date());
-		solicitudDocumentacionPrevia.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
+			User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
+					passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
 
-		User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
-				passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
+			if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+				System.out.println("Password usuario provisional  : " + password);
 
-		if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
-			System.out.println("Password usuario provisional  : " + password);
-			// TODO usar servicio correo
-			// String asunto = "Usuario provisional solicitud documentación";
-			// String correoEnvio = "dragossterpu@gmail.com";
-			// String nombre = "Prueba";
-			// String respuesta = "El password es :" + password;
-			// try {
-			// SendSimpleMail.sendMail(asunto, correoEnvio, nombre, respuesta);
-			// }
-			// catch (MessagingException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Envío",
-					"Se ha enviado con éxito la solicitud de documentación");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute(dialogMessage);
+				String asunto = "Solicitud de documentación previa para la inspección "
+						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
+				String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
+						+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
+						+ password
+						+ ". \r\n \r\nUna vez enviado la solicitud cumplimentada su usuario quedará inativo. \r\n \r\n"
+						+ "Muchas gracias y un saludo.";
+				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+				correoElectronico.envioCorreo();
+
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
+						"Se ha enviado con éxito la solicitud de documentación");
+
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario envío : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al enviar la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
@@ -433,17 +512,30 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista vistaSolicitud
 	 */
 	public String finalizarSolicitud() {
-		// TODO ¿avisar destinatario?
-		solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
-		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-		solicitudDocumentacionPrevia.setUsuarioFinalizacion(usuarioActual);
-		String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
-		if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Finalización",
-					"Se ha finalizado con éxito la solicitud de documentación");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute(dialogMessage);
+		try {
+			// TODO ¿avisar destinatario?
+			solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
+			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+			solicitudDocumentacionPrevia.setUsuarioFinalizacion(usuarioActual);
+			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
+			if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
+						"Se ha finalizado con éxito la solicitud de documentación");
+
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario finalización : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
@@ -458,18 +550,33 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista vistaSolicitud
 	 */
 	public String noConformeSolicitud() {
-		// TODO avisar destinatario y permitir añadir un motivo
-		solicitudDocumentacionPrevia.setFechaCumplimentacion(null);
-		solicitudDocumentacionPrevia.setFechaNoConforme(new Date());
-		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-		solicitudDocumentacionPrevia.setUsuarioNoConforme(usuarioActual);
-		String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
-		if (solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "No Conforme",
-					"Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute(dialogMessage);
+		try {
+			// TODO avisar destinatario y permitir añadir un motivo
+			solicitudDocumentacionPrevia.setFechaCumplimentacion(null);
+			solicitudDocumentacionPrevia.setFechaNoConforme(new Date());
+			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+			solicitudDocumentacionPrevia.setUsuarioNoConforme(usuarioActual);
+			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
+			if (solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia,
+					usuarioProv)) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
+						"Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
+
+				String descripcion = "Solicitud documentación previa cuestionario. Usuario no conforme : "
+						+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				// TODO usar NotificacionEnum
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
