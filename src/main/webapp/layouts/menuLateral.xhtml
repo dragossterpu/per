@@ -14,7 +14,7 @@
 			<p:menuitem value="Administrar tipos de equipos" outcome="/equipos/listadoEquipos"  />
 		</p:submenu>
 		<p:submenu label="Solicitud previa cuestionario">
-			<p:menuitem value="Tipo documentación Previa" outcome="/documentacionPrevia/documentacionPrevia" />
+			<p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" />
 			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" />
 			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE,JEFE_INSPECCIONES,ADMIN')}"/>
 		</p:submenu>
@@ -43,12 +43,17 @@
 			<p:menuitem value="Búsqueda modelo de informe" outcome="/enConstruccion" />
 		</p:submenu>
 	</p:menu>
-		
 
-	<p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD,PROV_CUESTIONARIO')}">
-	<p:submenu label="Cuestionario">
-			<p:menuitem value="Cumplimentar solicitud" outcome="/provisionalSolicitud/provisionalSolicitud"  rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}"/>
-			<p:menuitem value="Responder cuestionario" outcome="/cuestionarios/responderCuestionario" rendered="#{p:ifAnyGranted('PROV_CUESTIONARIO')}" />			
+
+	<p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}">
+		<p:submenu label="Solicitud previa cuestionario">
+			<p:menuitem value="Cumplimentar solicitud" outcome="/provisionalSolicitud/provisionalSolicitud"/>			
+		</p:submenu>
+	</p:menu>
+	
+	<p:menu rendered="#{p:ifAnyGranted('PROV_CUESTIONARIO')}">
+		<p:submenu label="Cuestionario">
+			<p:menuitem value="Responder cuestionario" outcome="/cuestionarios/responderCuestionario" />			
 		</p:submenu>
 	</p:menu>
 	
