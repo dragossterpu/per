@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum SolicitudDocPreviaEnum {
-	CREADA("Creada"), VALIDADA_APOYO("Validada por apoyo"), ENVIADA("Enviada"), CUMPLIMENTADA(
-			"Cumplimentada"), FINALIZADA("Finalizada");
+	CREADA("Creada"), VALIDADA_APOYO("Validada por apoyo"), VALIDADA_JEFE_EQUIPO("Validada por jefe equipo"), ENVIADA(
+			"Enviada"), CUMPLIMENTADA("Cumplimentada"), FINALIZADA("Finalizada"), NO_CONFORME("No conforme");
 	private String descripcion;
 }

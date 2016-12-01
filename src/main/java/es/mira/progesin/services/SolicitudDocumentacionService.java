@@ -65,22 +65,33 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		if (solicitudDocPreviaBusqueda.getEstado() != null) {
 			switch (solicitudDocPreviaBusqueda.getEstado()) {
 			case VALIDADA_APOYO:
-				campoFecha = "this_.fecha_valid_apoyo";
+				// campoFecha = "this_.fecha_valid_apoyo";
 				criteria.add(Restrictions.isNotNull("fechaValidApoyo"));
+				criteria.add(Restrictions.isNull("fechaValidJefeEquipo"));
+				break;
+			case VALIDADA_JEFE_EQUIPO:
+				// campoFecha = "this_.fecha_valid_jefe_equipo";
+				criteria.add(Restrictions.isNotNull("fechaValidJefeEquipo"));
 				criteria.add(Restrictions.isNull("fechaEnvio"));
 				break;
 			case ENVIADA:
-				campoFecha = "this_.fecha_envio";
+				// campoFecha = "this_.fecha_envio";
 				criteria.add(Restrictions.isNotNull("fechaEnvio"));
 				criteria.add(Restrictions.isNull("fechaCumplimentacion"));
 				break;
 			case CUMPLIMENTADA:
-				campoFecha = "this_.fecha_cumplimentacion";
+				// campoFecha = "this_.fecha_cumplimentacion";
 				criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
 				criteria.add(Restrictions.isNull("fechaFinalizacion"));
 				break;
+			// Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
+			case NO_CONFORME:
+				// campoFecha = "this_.fecha_no_conforme";
+				criteria.add(Restrictions.isNotNull("fechaNoConforme"));
+				criteria.add(Restrictions.isNull("fechaFinalizacion"));
+				break;
 			case FINALIZADA:
-				campoFecha = "this_.fecha_finalizacion";
+				// campoFecha = "this_.fecha_finalizacion";
 				criteria.add(Restrictions.isNotNull("fechaFinalizacion"));
 				break;
 			// case CREADA:
@@ -107,10 +118,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			criteria.add(Restrictions.sqlRestriction(
 					"DATE_TRUNC('day'," + campoFecha + ") <= '" + solicitudDocPreviaBusqueda.getFechaHasta() + "'"));
 		}
-		if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null
-				&& !solicitudDocPreviaBusqueda.getUsuarioCreacion().getUsername().isEmpty()) {
-			criteria.add(Restrictions.ilike("usernameAlta",
-					solicitudDocPreviaBusqueda.getUsuarioCreacion().getUsername(), MatchMode.ANYWHERE));
+		if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null) {
+			criteria.add(
+					Restrictions.eq("usernameAlta", solicitudDocPreviaBusqueda.getUsuarioCreacion().getUsername()));
 		}
 
 		criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
@@ -128,8 +138,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		if (solicitudDocPreviaBusqueda.getAmbitoInspeccion() != null) {
 			criteria.add(Restrictions.eq("inspeccion.ambito", solicitudDocPreviaBusqueda.getAmbitoInspeccion()));
 		}
-		if (solicitudDocPreviaBusqueda.getTipoInspeccion() != null
-				&& !solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo().isEmpty()) {
+		if (solicitudDocPreviaBusqueda.getTipoInspeccion() != null) {
 			criteria.add(Restrictions.eq("tipoInspeccion.codigo",
 					solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo()));
 		}

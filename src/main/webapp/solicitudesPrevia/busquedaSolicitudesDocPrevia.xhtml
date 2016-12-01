@@ -87,13 +87,13 @@
 								itemValue="#{estadoSolicitudDocPrevia}" />
 						</p:selectOneMenu>
 						
-						<h:outputLabel for="fechaDesde" value="Fecha desde:" />
+						<h:outputLabel for="fechaDesde" value="Fecha creación desde:" />
 						<p:calendar
 							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaDesde}"
 							id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"
 							maxdate="#{utilities.getCurrentDate()}" />
 
-						<h:outputLabel for="fechaHasta" value="Fecha hasta:" />
+						<h:outputLabel for="fechaHasta" value="Fecha creación hasta:" />
 						<p:calendar
 							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaHasta}"
 							id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"
@@ -171,6 +171,12 @@
 						<p:column headerText="Cumplimentada"
 							sortBy="#{solicitud.fechaCumplimentacion}" width="90">
 							<h:outputText value="#{solicitud.fechaCumplimentacion}">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="No conforme"
+							sortBy="#{solicitud.fechaNoConforme}" width="90">
+							<h:outputText value="#{solicitud.fechaNoConforme}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
