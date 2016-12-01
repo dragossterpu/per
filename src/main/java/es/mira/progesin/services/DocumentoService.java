@@ -150,7 +150,7 @@ public class DocumentoService implements IDocumentoService {
 	public Documento findOne(Long id) {
 		return documentoRepository.findOne(id);
 	}
-	
+
 	/***************************************
 	 * 
 	 * findByFechaBajaIsNotNull
@@ -208,12 +208,12 @@ public class DocumentoService implements IDocumentoService {
 	 * @author Ezentis
 	 * @param Documento Documento a descargar
 	 * @return DefaultStreamedContent Flujo de descarga
-	 * @throws SQLException 
+	 * @throws SQLException
 	 *************************************/
 	@Override
 	public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
-		InputStream stream;
-		stream = entity.getFichero().getBinaryStream();
+		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
+		InputStream stream = entity.getFichero().getBinaryStream();
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 	}
 
@@ -231,9 +231,9 @@ public class DocumentoService implements IDocumentoService {
 	@Override
 	public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
 		Documento entity = findOne(id);
-		InputStream stream;
-		
-		stream = entity.getFichero().getBinaryStream();
+
+		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
+		InputStream stream = entity.getFichero().getBinaryStream();
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 
 	}
@@ -248,13 +248,14 @@ public class DocumentoService implements IDocumentoService {
 	 * @author Ezentis
 	 * @param UploadedFile
 	 * @return Documento
+	 * @throws SQLException
 	 *************************************/
 
 	@Override
-	public Documento cargaDocumento(UploadedFile file) throws SQLException{
+	public Documento cargaDocumento(UploadedFile file) throws SQLException {
 		Documento docu = new Documento();
-		
 		docu.setNombre(file.getFileName());
+		// docu.setFichero(file.getContents());
 		Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
 		docu.setFichero(fileBlob);
 		docu.setTipoContenido(file.getContentType());
