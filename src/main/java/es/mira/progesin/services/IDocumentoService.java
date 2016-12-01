@@ -1,5 +1,7 @@
 package es.mira.progesin.services;
 
+import java.sql.SQLException;
+
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -26,11 +28,11 @@ public interface IDocumentoService {
 
 	Documento save(Documento entity);
 
-	DefaultStreamedContent descargaDocumento(Documento entity);
+	DefaultStreamedContent descargaDocumento(Documento entity) throws Exception;
 
-	DefaultStreamedContent descargaDocumento(Long id);
+	DefaultStreamedContent descargaDocumento(Long id) throws Exception;
 
-	Documento cargaDocumento(UploadedFile file);
+	Documento cargaDocumento(UploadedFile file) throws SQLException;
 
 	Iterable<Documento> findByFechaBajaIsNull();
 

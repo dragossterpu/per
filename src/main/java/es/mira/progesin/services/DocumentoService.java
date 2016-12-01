@@ -208,21 +208,13 @@ public class DocumentoService implements IDocumentoService {
 	 * @author Ezentis
 	 * @param Documento Documento a descargar
 	 * @return DefaultStreamedContent Flujo de descarga
+	 * @throws SQLException 
 	 *************************************/
 	@Override
-	public DefaultStreamedContent descargaDocumento(Documento entity) {
-		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
-		// return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+	public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
 		InputStream stream;
-		try {
-			stream = entity.getFichero().getBinaryStream();
-			return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		stream = entity.getFichero().getBinaryStream();
+		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 	}
 
 	/***************************************
@@ -237,21 +229,13 @@ public class DocumentoService implements IDocumentoService {
 	 * @throws SQLException
 	 *************************************/
 	@Override
-	public DefaultStreamedContent descargaDocumento(Long id) {
+	public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
 		Documento entity = findOne(id);
-
-		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
-		// return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 		InputStream stream;
-		try {
-			stream = entity.getFichero().getBinaryStream();
-			return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		
+		stream = entity.getFichero().getBinaryStream();
+		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+
 	}
 
 	/***************************************
@@ -267,20 +251,14 @@ public class DocumentoService implements IDocumentoService {
 	 *************************************/
 
 	@Override
-	public Documento cargaDocumento(UploadedFile file) {
+	public Documento cargaDocumento(UploadedFile file) throws SQLException{
 		Documento docu = new Documento();
-		try {
-			docu.setNombre(file.getFileName());
-			// docu.setFichero(file.getContents());
-			Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
-			docu.setFichero(fileBlob);
-			docu.setTipoContenido(file.getContentType());
-			return documentoRepository.save(docu);
-		}
-		catch (Exception ex) {
-			log.error("Error en la carga de documentos", ex);
-		}
-		return docu;
+		
+		docu.setNombre(file.getFileName());
+		Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
+		docu.setFichero(fileBlob);
+		docu.setTipoContenido(file.getContentType());
+		return documentoRepository.save(docu);
 	}
 
 }
