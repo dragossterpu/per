@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
@@ -36,14 +39,34 @@ public class ResponderCuestionarioBean implements Serializable {
 	@Autowired
 	private transient ICuestionarioPersonalizadoService cuestionarioPersService;
 
+	private RespuestaCuestionario respuestaCuestionario;
+
+	CuestionarioEnvio cuestionarioEnviado;
+
+	public void guardarRespuestas() {
+		System.out.println("GUARDAR RESPUESTAS");
+		Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
+
+		mapaRespuestas.forEach((pregunta, respuesta) -> {
+			System.out.println(
+					"pregunta: " + pregunta.getId() + " - " + pregunta.getPregunta() + ", respuesta: " + respuesta);
+			respuestaCuestionario = new RespuestaCuestionario();
+			respuestaCuestionario.setCuestionarioEnviado(cuestionarioEnviado);
+			respuestaCuestionario.setPregunta(pregunta);
+			respuestaCuestionario.setRespuestaTexto(respuesta);
+
+		});
+
+	}
+
 	@PostConstruct
 	public void init() {
 		System.out.println("INICIALIZANDO RESPUESTA......");
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (RoleEnum.PROV_CUESTIONARIO.equals(user.getRole())) {
-			CuestionarioEnvio cuestionario = cuestionarioEnvioService
+			cuestionarioEnviado = cuestionarioEnvioService
 					.findByCorreoEnvioAndFechaFinalizacionIsNull(user.getUsername());
-			visualizarCuestionario.visualizarVacio(cuestionario.getCuestionarioPersonalizado());
+			visualizarCuestionario.visualizarVacio(cuestionarioEnviado.getCuestionarioPersonalizado());
 		}
 	}
 }
