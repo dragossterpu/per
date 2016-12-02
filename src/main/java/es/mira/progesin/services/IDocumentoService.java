@@ -1,11 +1,15 @@
 package es.mira.progesin.services;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
+import org.apache.tika.exception.TikaException;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
+
 
 public interface IDocumentoService {
 	void delete(Long id);
@@ -35,5 +39,7 @@ public interface IDocumentoService {
 	Documento cargaDocumento(UploadedFile file) throws SQLException;
 
 	Iterable<Documento> findByFechaBajaIsNull();
+	
+	boolean extensionCorrecta(UploadedFile file);
 
 }

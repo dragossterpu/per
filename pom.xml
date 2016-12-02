@@ -131,6 +131,12 @@
 			<version>12.1.0.2</version>
 		</dependency>
 
+		<!-- para analizar Mime -->
+		<dependency>
+		    <groupId>org.apache.tika</groupId>
+		    <artifactId>tika-core</artifactId>
+		    <version>1.14</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>

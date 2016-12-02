@@ -1,28 +1,40 @@
 package es.mira.progesin.services;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
-@Slf4j
+
+@Service("documentoService")
+
 
 public class DocumentoService implements IDocumentoService {
 
 	@Autowired
 	IDocumentoRepository documentoRepository;
 
+	@Autowired
+	IRegistroActividadService registro;
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -249,17 +261,53 @@ public class DocumentoService implements IDocumentoService {
 	 * @param UploadedFile
 	 * @return Documento
 	 * @throws SQLException
+	 *  
 	 *************************************/
 
 	@Override
 	public Documento cargaDocumento(UploadedFile file) throws SQLException {
 		Documento docu = new Documento();
 		docu.setNombre(file.getFileName());
-		// docu.setFichero(file.getContents());
 		Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
 		docu.setFichero(fileBlob);
 		docu.setTipoContenido(file.getContentType());
 		return documentoRepository.save(docu);
 	}
+	
+	/***************************************
+	 * 
+	 * extensionCorrecta
+	 * 
+	 * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión)
+	 * se corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera)
+	 * 
+	 * @author Ezentis
+	 * @param UploadedFile
+	 * @return boolean
+	 *
+	 *************************************/
 
+	@Override
+	public boolean extensionCorrecta(UploadedFile file) {
+	
+	      ContentHandler contenthandler = new BodyContentHandler();
+	      Metadata metadata = new Metadata();
+	      metadata.set(Metadata.RESOURCE_NAME_KEY, file.getFileName());
+	      Parser x = new AutoDetectParser();
+	      try {
+			x.parse(file.getInputstream(), contenthandler, metadata, null);
+		} catch (IOException | SAXException | TikaException e) {
+			registro.altaRegActivError("DocumentoService", e);
+		}
+		
+	     
+	      String tipo= metadata.get("Content-Type");
+		
+		
+	      
+		return tipo.equalsIgnoreCase(file.getContentType());
+	}
+
+	
+	
 }
