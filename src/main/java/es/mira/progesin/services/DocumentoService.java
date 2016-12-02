@@ -21,7 +21,6 @@ import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
-import lombok.extern.slf4j.Slf4j;
 
 
 @Service("documentoService")

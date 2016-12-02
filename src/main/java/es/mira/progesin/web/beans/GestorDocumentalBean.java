@@ -71,9 +71,7 @@ public class GestorDocumentalBean {
 	}
 
 	public void cargaFichero(FileUploadEvent event) throws SQLException, IOException, TikaException, SAXException {
-		alertaService.crearAlerta("Gestor documental", "cargaFichero", null, null);
-		notificacionService.crearNotificacion("cargaFichero", "Prueba", "Gestor documental");
-		registroActividadService.crearRegistroActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(), "Gestor documental");
+		
 		if (documentoService.extensionCorrecta(event.getFile())){
 			documentoService.cargaDocumento(event.getFile());}
 		else{
