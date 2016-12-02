@@ -8,23 +8,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Getter
 @Setter
 @Controller
 public class LoginController {
 
+	private static final String LOGIN = "login";
+
 	@RequestMapping(method = RequestMethod.GET, value = "/login")
 	public String login() {
-		return "login";
+		return LOGIN;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "login";
+		return LOGIN;
 	}
 
 }

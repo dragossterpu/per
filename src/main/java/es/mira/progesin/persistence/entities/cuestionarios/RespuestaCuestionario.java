@@ -3,18 +3,11 @@ package es.mira.progesin.persistence.entities.cuestionarios;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import es.mira.progesin.model.DatosTablaGenerica;
@@ -39,28 +32,18 @@ import lombok.ToString;
 public class RespuestaCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@SequenceGenerator(name = "seq_respuestascuestionario", sequenceName = "seq_respuestascuestionario", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_respuestascuestionario")
-	@Column(name = "id", nullable = false)
-	private Long id;
+	@EmbeddedId
+	RespuestaCuestionarioId respuestaId;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "id_cuest_enviado")
-	private CuestionarioEnvio cuestionarioEnviado;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_pregunta")
-	private PreguntasCuestionario pregunta;
-
-	// private DataTableView respuestaTablaMatriz;
-
-	@OneToMany(mappedBy = "respuesta", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany
+	@JoinTable(name = "respuestas_cuest_tabla", joinColumns = { @JoinColumn(name = "id_cuestionario_enviado"),
+			@JoinColumn(name = "id_pregunta") }, inverseJoinColumns = @JoinColumn(name = "id_resp_tabla"))
 	private List<DatosTablaGenerica> respuestaTablaMatriz;
 
 	private String respuestaTexto;
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "respuestas_cuest_docs", joinColumns = @JoinColumn(name = "id_respuesta"), inverseJoinColumns = @JoinColumn(name = "id_documento"))
+	@OneToMany
+	@JoinTable(name = "respuestas_cuest_docs", joinColumns = { @JoinColumn(name = "id_cuestionario_enviado"),
+			@JoinColumn(name = "id_pregunta") }, inverseJoinColumns = @JoinColumn(name = "id_documento"))
 	private List<Documento> documentos;
 }

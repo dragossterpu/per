@@ -35,11 +35,6 @@
 										   				rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"
 										   				required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
 										   				
-										<div style="width: 30%">
-											<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" navigator="true" showOn="both" 
-														required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío"/>
-										</div>
-										
 										<p:selectOneRadio rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" 
 													value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
 													required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío">

@@ -7,12 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,9 +55,5 @@ public class DatosTablaGenerica implements Serializable {
 	private String campo9;
 
 	private String campo10;
-
-	@ManyToOne
-	@JoinColumn(name = "id_respuesta")
-	private RespuestaCuestionario respuesta;
 
 }

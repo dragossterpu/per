@@ -15,13 +15,22 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
+import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Bean para la visualización de los cuestionarios por pantalla
+ * 
+ * @author EZENTIS
+ *
+ */
 @Setter
 @Getter
 @Component("visualizarCuestionario")
@@ -29,6 +38,9 @@ public class VisualizarCuestionario implements Serializable {
 
 	@Autowired
 	private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
+
+	@Autowired
+	private transient IRespuestaCuestionarioRepository respuestaRepository;
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,19 +59,41 @@ public class VisualizarCuestionario implements Serializable {
 	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
 
 	/**
-	 * Se muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
+	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
 	 * texto, adjuntos, tablas...)
 	 * 
 	 * @param cuestionario que se desea visualizar
 	 * @return Nombre de la vista a mostrar
 	 */
 	public String visualizarVacio(CuestionarioPersonalizado cuestionario) {
+		mapaRespuestasTabla = new HashMap<>();
+		mapaRespuestas = new HashMap<>();
+		return visualizar(cuestionario);
+	}
+
+	/**
+	 * visualizarRespuestasCuestionario
+	 * 
+	 * Muestra en pantalla el cuestionario con las respuestas de la unidad inspeccionada
+	 * 
+	 * @param cuestionarioEnviado
+	 * @return
+	 */
+	public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
+		mapaRespuestas = new HashMap<>();
+		List<RespuestaCuestionario> listaRespuestas = respuestaRepository
+				.findByRespuestaIdCuestionarioEnviadoAndRespuestaTextoNotNull(cuestionarioEnviado);
+		mapaRespuestas = new HashMap<>();
+		listaRespuestas.forEach(respuesta -> mapaRespuestas.put(respuesta.getRespuestaId().getPregunta(),
+				respuesta.getRespuestaTexto()));
+		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado());
+	}
+
+	private String visualizar(CuestionarioPersonalizado cuestionario) {
+		mapaAreaPreguntas = new HashMap<>();
 		this.setCuestionarioPersonalizado(cuestionario);
 		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
-		mapaAreaPreguntas = new HashMap<>();
-		mapaRespuestasTabla = new HashMap<>();
-		mapaRespuestas = new HashMap<>();
 		List<PreguntasCuestionario> listaPreguntas;
 		for (PreguntasCuestionario pregunta : preguntas) {
 			listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());

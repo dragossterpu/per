@@ -3,6 +3,9 @@ package es.mira.progesin.persistence.entities.cuestionarios;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -18,12 +21,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @Embeddable
-public class ConfiguracionRespuestasCuestionarioId implements Serializable {
+public class RespuestaCuestionarioId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	String seccion;
+	@ManyToOne
+	@JoinColumn(name = "id_cuest_enviado")
+	private CuestionarioEnvio cuestionarioEnviado;
 
-	String clave;
-
-	String valor;
+	@OneToOne
+	@JoinColumn(name = "id_pregunta")
+	private PreguntasCuestionario pregunta;
 }
