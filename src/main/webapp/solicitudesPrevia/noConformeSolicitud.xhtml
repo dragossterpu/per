@@ -25,7 +25,7 @@
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{solicitudDocPreviaBean.noConformeSolicitud}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o">
+				<p:commandButton actionListener="#{solicitudDocPreviaBean.noConformeSolicitud}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" ajax="false">
 					<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 						message="¿Está seguro que desea declara no conforme esta solicitud y reenviarla?"/>
 				</p:commandButton>

@@ -72,7 +72,9 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
-	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+	private List<Parametro> parametrosPlantillasAmbito;
+
+	private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
 	transient StreamedContent file;
 
@@ -251,5 +253,23 @@ public class ProvisionalSolicitudBean implements Serializable {
 					"Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
+	}
+
+	public void plantillasAmbitoSolicitud() {
+		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+		try {
+			solicitudDocumentacionPrevia = solicitudDocumentacionService
+					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
+			if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
+				String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
+				if ("GC".equals(ambito) || "PN".equals(ambito)) {
+					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillas" + ambito);
+				}
+			}
+		}
+		catch (Exception e) {
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
+		}
+
 	}
 }

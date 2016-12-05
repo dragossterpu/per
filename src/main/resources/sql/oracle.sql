@@ -690,6 +690,20 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','BMP','image
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PUB','application/x-mspublisher');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PDF','application/pdf');
 
+-- seccion (plantillasGC/PN), clave (nombre archivo), valor (idDocumento) 
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla común', 13);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 1', 14);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 2', 15);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla común', 13);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 1', 16);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 2', 17);
+
+insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla común.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 1.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 2.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 1.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 2.docx');
+
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO',sysdate,'silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO',sysdate,'cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO',sysdate,'mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');

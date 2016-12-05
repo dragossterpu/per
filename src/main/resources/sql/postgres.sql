@@ -382,20 +382,20 @@ Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Va
 Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (11, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
 Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (12, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
 
-insert into documentos (id, fichero, tipo_contenido, nombre) values (1, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'application/msword','CUESTIONARIO.CIES.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (2, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (3, bytea_import('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A.- Cuestionario  JEFATURA SUPERIOR .docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (4, bytea_import('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B - GC - Cuestionario Comandancia GENERICO.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (5, bytea_import('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B.- Cuestionario COMISARIA PROVINCIAL.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (6, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (7, bytea_import('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (8, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'),'application/msword','CUESTIONARIO PRLCNP.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (10, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'),'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (11, bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (12, bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'application/msword','CUESTIONARIO.CIES.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A.- Cuestionario  JEFATURA SUPERIOR .docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B - GC - Cuestionario Comandancia GENERICO.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B.- Cuestionario COMISARIA PROVINCIAL.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'),'application/msword','CUESTIONARIO PRLCNP.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'),'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
 
 -- Ñapa para alta de nuevos documentos
-select setval('seq_documentos', 12) from documentos;
+--select setval('seq_documentos', 12) from documentos;
 
   ------------- áreas cuestionario
   
@@ -689,6 +689,20 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PNG','image
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','BMP','image/bmp');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PUB','application/x-mspublisher');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PDF','application/pdf');
+
+-- seccion (plantillasGC/PN), clave (nombre archivo), valor (idDocumento) 
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla común', 13);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 1', 14);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 2', 15);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla común', 13);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 1', 16);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 2', 17);
+
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla común.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 1.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 2.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 1.docx');
+insert into documentos (id, fichero, tipo_contenido, nombre) values (nextval('seq_documentos'), bytea_import('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 2.docx');
 
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO','2016-11-28 13:16:49.861','silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO','2016-11-28 14:43:58.097','cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
