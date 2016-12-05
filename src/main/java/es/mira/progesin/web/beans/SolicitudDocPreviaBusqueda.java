@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -24,6 +25,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Component("solicitudDocPreviaBusqueda")
+@SessionScoped
 // TODO usar @Scope("session") y arreglar errores o cambiar su uso en solicitudDocPreviaBean
 public class SolicitudDocPreviaBusqueda implements Serializable {
 

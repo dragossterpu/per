@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,7 +89,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	transient IInspeccionesService inspeccionesService;
 
-	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+	private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+
+	private Date backupFechaLimiteEnvio = null;
 
 	private boolean skip;
 
@@ -121,6 +124,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	@Autowired
 	private transient ICorreoElectronico correoElectronico;
+
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	private String motivosNoConforme;
 
 	/**
 	 * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -202,7 +209,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista modificarSolicitud
 	 */
 	public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
-		this.solicitudDocumentacionPrevia = solicitud;
+		solicitudDocumentacionPrevia = solicitud;
+		backupFechaLimiteEnvio = solicitud.getFechaLimiteEnvio();
 		return "/solicitudesPrevia/modificarSolicitud";
 	}
 
@@ -305,7 +313,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista crearSolicitud
 	 */
 	public String getFormularioCrearSolicitud() {
-		this.documentosSeleccionados = null;
+		documentosSeleccionados = null;
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
 		datosApoyo();
@@ -413,7 +421,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 					"Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
-		this.listaSolicitudesPrevia = null;
+		listaSolicitudesPrevia = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAll();
 	}
 
@@ -425,8 +433,24 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String modificarSolicitud() {
 		try {
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+				String mensajeCorreoEnviado = "";
+				// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
+				if (solicitudDocumentacionPrevia.getFechaEnvio() != null
+						&& !solicitudDocumentacionPrevia.getFechaLimiteEnvio().equals(backupFechaLimiteEnvio)) {
+					String asunto = "Solicitud de documentación previa para la inspección "
+							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
+					String textoAutomatico = "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado."
+							+ "\r\n \r\nFecha límite de envío anterior: " + sdf.format(backupFechaLimiteEnvio)
+							+ "\r\nFecha límite de envío nueva :"
+							+ sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio())
+							+ "\r\n \r\nMuchas gracias y un saludo.";
+					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+					correoElectronico.envioCorreo();
+					mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
+				}
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-						"La solicitud de documentación ha sido modificada con éxito");
+						"La solicitud de documentación ha sido modificada con éxito" + mensajeCorreoEnviado);
 				listadoDocumentosCargados = gestDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 
@@ -475,7 +499,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 				String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
 						+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
 						+ password
-						+ ". \r\n \r\nUna vez enviado la solicitud cumplimentada su usuario quedará inativo. \r\n \r\n"
+						+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inativo. \r\n \r\n"
 						+ "Muchas gracias y un saludo.";
 				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
 				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
@@ -551,7 +575,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String noConformeSolicitud() {
 		try {
-			// TODO avisar destinatario y permitir añadir un motivo
 			solicitudDocumentacionPrevia.setFechaCumplimentacion(null);
 			solicitudDocumentacionPrevia.setFechaNoConforme(new Date());
 			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -559,6 +582,19 @@ public class SolicitudDocPreviaBean implements Serializable {
 			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
 			if (solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
+
+				String asunto = "Solicitud de documentación previa para la inspección "
+						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
+				String textoAutomatico = "Se ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:"
+						+ "\r\n \r\n" + motivosNoConforme
+						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
+						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
+						+ "\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inativo de nuevo. \r\n \r\n"
+						+ "Muchas gracias y un saludo.";
+				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+				correoElectronico.envioCorreo();
+
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
 						"Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
 
@@ -578,7 +614,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 					"Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
-		return VISTASOLICITUD;
+		return "/solicitudesPrevia/noConformeSolicitud";
 	}
 
 	/**
