@@ -36,7 +36,7 @@
 									<p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
 				                        var="inspeccion" itemLabel="#{inspeccion.nombreUnidad} - #{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
 				                        required="true" requiredMessage="Introduzca la unidad o el número de la inspección" onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
-				                        <p:ajax event="itemSelect" update="form" />
+				                        <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
 			                        </p:autoComplete>
 			                        	
 									<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
