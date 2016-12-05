@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +16,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
+import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
+import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -42,11 +45,16 @@ public class TipoDocumentacionBean implements Serializable {
 
 	private List<TipoDocumentacion> listaTipoDocumentacion;
 
+	@Autowired
+	transient IParametrosRepository parametrosRepository;
+
+	private List<String> listaExtensionesPosibles = new ArrayList<>();
+
 	private String descripcionNuevo;
 
 	private String nombreNuevo;
 
-	private String extensionNuevo;
+	private List<String> extensionesNuevo;
 
 	@Autowired
 	ITipoDocumentacionService tipoDocumentacionService;
@@ -78,6 +86,10 @@ public class TipoDocumentacionBean implements Serializable {
 	@PostConstruct
 	public void init() throws MessagingException {
 		listaTipoDocumentacion = tipoDocumentacionService.findAll();
+		List<Parametro> parametrosExtensiones = parametrosRepository.findParamByParamSeccion("extensiones");
+		for (Parametro p : parametrosExtensiones) {
+			listaExtensionesPosibles.add(p.getParam().getClave());
+		}
 
 	}
 
@@ -91,7 +103,7 @@ public class TipoDocumentacionBean implements Serializable {
 		TipoDocumentacion documentacion = new TipoDocumentacion();
 		documentacion.setDescripcion(descripcionNuevo);
 		documentacion.setNombre(nombreNuevo);
-		documentacion.setExtension(extensionNuevo);
+		documentacion.setExtensiones(extensionesNuevo);
 		try {
 			if (tipoDocumentacionService.save(documentacion) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
@@ -115,9 +127,9 @@ public class TipoDocumentacionBean implements Serializable {
 	 * @param event evento disparado al pulsar el botón modificar edición
 	 */
 	public void onRowEdit(RowEditEvent event) {
-		TipoDocumentacion documentacion = (TipoDocumentacion) event.getObject();
-		tipoDocumentacionService.save(documentacion);
-		FacesMessage msg = new FacesMessage("Documentación modificada", documentacion.getDescripcion());
+		TipoDocumentacion tipoDoc = (TipoDocumentacion) event.getObject();
+		tipoDocumentacionService.save(tipoDoc);
+		FacesMessage msg = new FacesMessage("Documentación modificada", tipoDoc.getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
 	}
 

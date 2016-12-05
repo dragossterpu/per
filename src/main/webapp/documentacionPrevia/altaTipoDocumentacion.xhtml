@@ -22,9 +22,17 @@
 					<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" converter="#{trimConverter}"/>
 					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
 					
-					<h:outputLabel for="extension" value="Extensión del tipo de documento (*):" />
-					<p:inputText id="extension" value="#{tipoDocumentacionBean.extensionNuevo}" required="true" requiredMessage="Introduzca la extensión del documento" converter="#{trimConverter}"/>
-					<p:messages for="extension" autoUpdate="true"  closable="true"/>
+					<h:outputLabel for="extensiones" value="Extensiones del tipo de documento (*):" />
+					<p:selectManyMenu id="extensiones"
+						value="#{tipoDocumentacionBean.extensionesNuevo}"
+						 showCheckbox="true" effect="fold" required="true"
+						requiredMessage="Seleccione una o varias extensiones">
+						<f:selectItems value="#{tipoDocumentacionBean.listaExtensionesPosibles}"
+							var="extensionesTipoDocumentacion"
+							itemLabel="#{extensionesTipoDocumentacion}"
+							itemValue="#{extensionesTipoDocumentacion}" />
+					</p:selectManyMenu>
+					<p:messages for="extensiones" autoUpdate="true"  closable="true"/>
 					
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save"/>

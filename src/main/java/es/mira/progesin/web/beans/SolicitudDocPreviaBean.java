@@ -187,7 +187,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			DocumentacionPrevia docPrevia = new DocumentacionPrevia();
 			docPrevia.setIdSolicitud(solicitudDocumentacionPrevia.getId());
 			docPrevia.setDescripcion(documento.getDescripcion());
-			docPrevia.setExtension(documento.getExtension());
+			docPrevia.setExtensiones(documento.getExtensiones());
 			docPrevia.setNombre(documento.getNombre());
 			tipoDocumentacionService.save(docPrevia);
 		}

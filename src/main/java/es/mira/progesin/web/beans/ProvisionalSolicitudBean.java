@@ -3,7 +3,9 @@ package es.mira.progesin.web.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -20,10 +22,11 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
+import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
-import es.mira.progesin.persistence.entities.enums.ExtensionEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
+import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -31,7 +34,6 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,13 +68,18 @@ public class ProvisionalSolicitudBean implements Serializable {
 	@Autowired
 	transient IDocumentoService documentoService;
 
-	private List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
+	transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
 
 	private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
 	SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
-	private StreamedContent file;
+	transient StreamedContent file;
+
+	@Autowired
+	transient IParametrosRepository parametrosRepository;
+
+	private Map<String, String> extensiones;
 
 	public void visualizarSolicitud() {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -92,10 +99,10 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private boolean esDocumentacionPrevia(UploadedFile archivo) {
 		String nombreArchivo = archivo.getFileName();
-		String extensionArchivo = ExtensionEnum.getExtension(archivo.getContentType()).name();
+		String extensionArchivo = extensiones.get(archivo.getContentType());
 		for (DocumentacionPrevia dp : listadoDocumentosPrevios) {
 			if (nombreArchivo.startsWith(dp.getNombre()))
-				for (String ext : dp.getExtension().replaceAll(" ", "").split(",")) {
+				for (String ext : dp.getExtensiones()) {
 					if (extensionArchivo.equals(ext))
 						return true;
 				}
@@ -106,25 +113,33 @@ public class ProvisionalSolicitudBean implements Serializable {
 	public String gestionarCargaDocumento(FileUploadEvent event) {
 		try {
 			UploadedFile archivo = event.getFile();
-			if (esDocumentacionPrevia(archivo)) {
-				Documento documento = documentoService.cargaDocumento(archivo);
-				if (documento != null) {
-					GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
-					gestDocumento.setFechaAlta(new Date());
-					gestDocumento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-					gestDocumento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
-					gestDocumento.setIdDocumento(documento.getId());
-					gestDocumento.setNombreFichero(documento.getNombre());
-					gestDocumento.setExtension(Utilities.getExtensionTipoContenido(documento.getTipoContenido()));
-					if (gestDocumentacionService.save(gestDocumento) != null) {
-						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-								"Documento/s subidos con éxito");
+			if (documentoService.extensionCorrecta(archivo)) {
+				if (esDocumentacionPrevia(archivo)) {
+					Documento documento = documentoService.cargaDocumento(archivo);
+					if (documento != null) {
+						GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
+						gestDocumento.setFechaAlta(new Date());
+						gestDocumento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+						gestDocumento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
+						gestDocumento.setIdDocumento(documento.getId());
+						gestDocumento.setNombreFichero(documento.getNombre());
+						gestDocumento.setExtension(extensiones.get(documento.getTipoContenido()));
+						if (gestDocumentacionService.save(gestDocumento) != null) {
+							FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+									"Documento/s subidos con éxito");
+						}
 					}
+				}
+				else {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de archivos",
+							"El archivo " + archivo.getFileName()
+									+ " no es válido, el nombre o la extensión no se corresponde con alguno de los documentos solicitados.");
 				}
 			}
 			else {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-						"El archivo " + archivo.getFileName() + " no es válido.");
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de archivos",
+						"La extensión del archivo '" + event.getFile().getFileName()
+								+ "' no corresponde a su tipo real");
 			}
 		}
 		catch (Exception e) {
@@ -141,6 +156,12 @@ public class ProvisionalSolicitudBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		listadoDocumentosPrevios = new ArrayList<>();
 		listadoDocumentosCargados = new ArrayList<>();
+		List<Parametro> parametrosExtensiones = parametrosRepository.findParamByParamSeccion("extensiones");
+		extensiones = new HashMap<>();
+		for (Parametro p : parametrosExtensiones) {
+			// Invierto orden para buscar por contentType y obtener extension
+			extensiones.put(p.getParam().getValor(), p.getParam().getClave());
+		}
 	}
 
 	public void onRowEdit(RowEditEvent event) {

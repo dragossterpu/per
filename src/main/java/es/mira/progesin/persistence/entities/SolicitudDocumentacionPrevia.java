@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +18,6 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -74,13 +71,6 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 
 	@Column(name = "correoDestinatario")
 	private String correoDestinatario;
-
-	@Column(name = "cuatrimestre")
-	@Enumerated(EnumType.STRING)
-	private CuatrimestreEnum cuatrimestre;
-
-	@Column(name = "anio")
-	private Integer anio;
 
 	@Column(name = "fechaLimiteEnvio")
 	private Date fechaLimiteEnvio;

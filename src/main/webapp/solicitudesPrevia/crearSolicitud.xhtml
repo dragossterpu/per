@@ -11,15 +11,15 @@
 		<ui:define name="content">
 
 		<h:form>
-		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud}" update="datosReporte" autoRun="true" />
+		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud}" update="form" autoRun="true" />
 		</h:form>
 		
-			<h3>Datos Solicitud documentación</h3>
+			<h3>Crear solicitud de documentación</h3>
 			<div class="aclaraciones">
 				Los campos marcados con (*) son obligatorios
 			</div>
 
-			<h:form id="datosReporte">
+			<h:form id="form">
 
 				<p:growl id="growl" sticky="true" showDetail="true" />
 				<p:wizard flowListener="#{solicitudDocPreviaBean.onFlowProcess}"
@@ -36,7 +36,7 @@
 									<p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
 				                        var="inspeccion" itemLabel="#{inspeccion.nombreUnidad} - #{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
 				                        required="true" requiredMessage="Introduzca la unidad o el número de la inspección" onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
-				                        <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion" />
+				                        <p:ajax event="itemSelect" update="form" />
 			                        </p:autoComplete>
 			                        	
 									<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
@@ -44,7 +44,15 @@
 																			
 									<h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
 									<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito}" disabled="true"/>
+																											
+									<h:outputLabel for="cuatrimestreInspeccion" value="Cuatrimestre inspección:" />
+									<p:inputText id="cuatrimestreInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion}" 
+										disabled="true"/>
 									
+									<h:outputLabel for="anioInspeccion" value="Año inspección:" />
+									<p:inputText id="anioInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}" 
+										disabled="true"/>
+										
 									<h:outputLabel for="asunto" value="Asunto (*):"/>
 									<p:inputText id="asunto"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}"
@@ -68,27 +76,6 @@
 										<f:validateRegex
 											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 									</p:inputText>
-
-									<h:outputLabel for="cuatrimestre" value="Cuatrimestre (*):"/>
-									<p:importEnum
-										type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
-										var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
-									<p:selectOneMenu id="cuatrimestre"
-										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cuatrimestre}"
-										effect="fold" required="true"
-										requiredMessage="Seleccione el cuatrimestre">
-										<f:selectItem itemLabel="Seleccione uno: " itemValue="" />
-										<f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}"
-											var="cuatrimestreSolicitudDocPrevia"
-											itemLabel="#{cuatrimestreSolicitudDocPrevia.descripcion}"
-											itemValue="#{cuatrimestreSolicitudDocPrevia}" />
-									</p:selectOneMenu>
-
-									<h:outputLabel for="anio" value="Año (*):"/>
-									<p:inputNumber id="anio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}"
-										required="true" requiredMessage="Es obligatorio un año"
-										maxValue="9999" decimalSeparator=""
-										thousandSeparator="" decimalPlaces="0" />
 
 									<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):"/>
 									<p:calendar id="fechaLimiteEnvio"

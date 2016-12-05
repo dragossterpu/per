@@ -21,6 +21,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -70,6 +71,13 @@ public class Inspeccion implements Serializable {
 	@Column(name = "ambito", length = 10)
 	@Enumerated(EnumType.STRING)
 	private AmbitoInspeccionEnum ambito;
+
+	@Column(name = "cuatrimestre")
+	@Enumerated(EnumType.STRING)
+	private CuatrimestreEnum cuatrimestre;
+
+	@Column(name = "anio")
+	private Integer anio;
 
 	@CreatedDate
 	@Column(name = "fechaCreacion", nullable = false)

@@ -24,7 +24,7 @@
 						<p><strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
 					</div>	
 					<div class="bloqueVista">	
-					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cuatrimestre.descripcion} del año #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.anio}</strong>, se va a realizar una  inspección de carácter
+					<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion} del año #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}</strong>, se va a realizar una  inspección de carácter
 					<strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> en esa Comandancia de su mando.</p>		
 					</div>
 					<div class="bloqueVista">
@@ -41,15 +41,15 @@
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
-					<p:dataTable  var="solicitud" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" >
+					<p:dataTable  var="documentoPrevio" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" >
 							<p:column headerText="DOCUMENTO" width="450">
-								<h:outputText value="#{solicitud.descripcion}" />
+								<h:outputText value="#{documentoPrevio.descripcion}" />
 							</p:column>
 							<p:column headerText="NOMBRE" >
-								<h:outputText value="#{solicitud.nombre}" />
+								<h:outputText value="#{documentoPrevio.nombre}" />
 							</p:column>
 							<p:column headerText="EXTENSION" >
-								<h:outputText value="#{solicitud.extension}" />
+								<h:outputText value="#{documentoPrevio.extensiones}" converter="#{listaExtensionesConverter}" />
 							</p:column>
 					</p:dataTable>	
 					</div>
@@ -145,10 +145,7 @@
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea finalizar esta solicitud?"/>
 						</p:commandButton>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.noConformeSolicitud}" value="No conforme" icon="fa fa-fw fa-undo">
-							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
-								message="¿Está seguro que desea declara no conforme esta solicitud y reenviarla?"/>
-						</p:commandButton>
+						<p:button rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" outcome="/solicitudesPrevia/noConformeSolicitud" value="No conforme" icon="fa fa-fw fa-undo"/>
 						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>
