@@ -37,7 +37,7 @@ public class ModelosCuestionarioBean {
 
 	@PostConstruct
 	public void init() {
-		listadoCuestionarios = (List<ModeloCuestionario>) modeloCuestionarioService.findAll();
+		setListadoCuestionarios((List<ModeloCuestionario>) modeloCuestionarioService.findAll());
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class ModelosCuestionarioBean {
 	 */
 	public void descargarFichero(ModeloCuestionario cuestionario) {
 		try {
-			this.file = documentoService.descargaDocumento(cuestionario.getIdDocumento());
+			setFile(documentoService.descargaDocumento(cuestionario.getIdDocumento()));
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,

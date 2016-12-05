@@ -13,4 +13,7 @@ public interface IRespuestaCuestionarioRepository
 
 	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviadoAndRespuestaTextoNotNull(
 			CuestionarioEnvio cuestionarioEnviado);
+
+	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
+
 }

@@ -12,14 +12,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,9 +32,6 @@ import lombok.Setter;
 @Scope("session")
 public class ResponderCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	// @Autowired
-	// private CuestionarioPersonalizadoBean cuestionarioPersBean;
 
 	@Autowired
 	private VisualizarCuestionario visualizarCuestionario;
@@ -46,23 +46,78 @@ public class ResponderCuestionarioBean implements Serializable {
 	@Autowired
 	private transient IRespuestaCuestionarioRepository respuestaRepository;
 
-	public void guardarRespuestas() {
-		System.out.println("GUARDAR RESPUESTAS");
-		Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
+	@Autowired
+	private transient IDatosTablaGenericaRepository datosTablaRepository;
 
-		List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+	public void guardarRespuestas() {
+		try {
+			System.out.println("GUARDAR RESPUESTAS");
+			List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+			guardarRespuestasTipoTexto(listaRespuestas);
+			guardarRespuestasTipoTablaMatriz(listaRespuestas);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			// TODO guardar regActividad error
+			// TODO mostrar mensaje error
+		}
+	}
+
+	/**
+	 * @see guardarRespuestas
+	 * @param listaRespuestas Lista donde se guardarán todas las respuestas del cuestionario
+	 */
+	private void guardarRespuestasTipoTexto(List<RespuestaCuestionario> listaRespuestas) {
+		Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
 		mapaRespuestas.forEach((pregunta, respuesta) -> {
-			System.out.println(
-					"pregunta: " + pregunta.getId() + " - " + pregunta.getPregunta() + ", respuesta: " + respuesta);
-			respuestaCuestionario = new RespuestaCuestionario();
-			RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
-			idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
-			idRespuesta.setPregunta(pregunta);
-			respuestaCuestionario.setRespuestaId(idRespuesta);
-			respuestaCuestionario.setRespuestaTexto(respuesta);
-			listaRespuestas.add(respuestaCuestionario);
+			if (respuesta != null) {
+				System.out.println(
+						"pregunta: " + pregunta.getId() + " - " + pregunta.getPregunta() + ", respuesta: " + respuesta);
+				respuestaCuestionario = new RespuestaCuestionario();
+				RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
+				idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
+				idRespuesta.setPregunta(pregunta);
+				respuestaCuestionario.setRespuestaId(idRespuesta);
+				respuestaCuestionario.setRespuestaTexto(respuesta);
+				listaRespuestas.add(respuestaCuestionario);
+			}
+		});
+		if (listaRespuestas.isEmpty() == Boolean.FALSE) {
+			respuestaRepository.save(listaRespuestas);
+		}
+	}
+
+	/**
+	 * Guarda en BBDD las respuestas de tipo TABLA o MATRIZ
+	 * @see guardarRespuestas
+	 * @param listaRespuestas
+	 */
+	private void guardarRespuestasTipoTablaMatriz(List<RespuestaCuestionario> listaRespuestas) {
+		Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla = visualizarCuestionario.getMapaRespuestasTabla();
+		List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
+
+		mapaRespuestasTabla.forEach((pregunta, respuesta) -> {
+			if (respuesta != null) {
+				List<DatosTablaGenerica> listaDatosTabla = respuesta.getListaDatosTabla();
+				RespuestaCuestionario rtaCuestionario = new RespuestaCuestionario();
+				RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
+				idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
+				idRespuesta.setPregunta(pregunta);
+				rtaCuestionario.setRespuestaId(idRespuesta);
+				for (int i = 0; i < listaDatosTabla.size(); i++) {
+					DatosTablaGenerica datosTablaGenerica = listaDatosTabla.get(i);
+					RespuestaCuestionario respuestaCuestionarioTabla = new RespuestaCuestionario();
+					respuestaCuestionarioTabla.setRespuestaId(idRespuesta);
+					datosTablaGenerica.setRespuesta(respuestaCuestionarioTabla);
+					listaDatosTabla.set(i, datosTablaGenerica);
+				}
+				rtaCuestionario.setRespuestaTablaMatriz(listaDatosTabla);
+				listaRespuestas.add(rtaCuestionario);
+				listaDatosTablaSave.addAll(listaDatosTabla);
+			}
 		});
 		respuestaRepository.save(listaRespuestas);
+		datosTablaRepository.save(listaDatosTablaSave);
 	}
 
 	@PostConstruct

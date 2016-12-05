@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -35,9 +36,7 @@ public class RespuestaCuestionario implements Serializable {
 	@EmbeddedId
 	RespuestaCuestionarioId respuestaId;
 
-	@OneToMany
-	@JoinTable(name = "respuestas_cuest_tabla", joinColumns = { @JoinColumn(name = "id_cuestionario_enviado"),
-			@JoinColumn(name = "id_pregunta") }, inverseJoinColumns = @JoinColumn(name = "id_resp_tabla"))
+	@OneToMany(mappedBy = "respuesta", fetch = FetchType.EAGER)
 	private List<DatosTablaGenerica> respuestaTablaMatriz;
 
 	private String respuestaTexto;

@@ -20,6 +20,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
+import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
@@ -42,6 +43,9 @@ public class VisualizarCuestionario implements Serializable {
 	@Autowired
 	private transient IRespuestaCuestionarioRepository respuestaRepository;
 
+	@Autowired
+	private transient IDatosTablaGenericaRepository datosTablaRepository;
+
 	private static final long serialVersionUID = 1L;
 
 	// para la visualización
@@ -51,12 +55,11 @@ public class VisualizarCuestionario implements Serializable {
 
 	private List<AreasCuestionario> areas;
 
-	// Tipos de respuesta
-	private List<DatosTablaGenerica> listaTablaSalidas;
-
 	private Map<PreguntasCuestionario, String> mapaRespuestas;
 
 	private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
+
+	HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux;
 
 	/**
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -68,7 +71,7 @@ public class VisualizarCuestionario implements Serializable {
 	public String visualizarVacio(CuestionarioPersonalizado cuestionario) {
 		mapaRespuestasTabla = new HashMap<>();
 		mapaRespuestas = new HashMap<>();
-		return visualizar(cuestionario);
+		return visualizar(cuestionario, false, null);
 	}
 
 	/**
@@ -83,14 +86,24 @@ public class VisualizarCuestionario implements Serializable {
 		mapaRespuestas = new HashMap<>();
 		List<RespuestaCuestionario> listaRespuestas = respuestaRepository
 				.findByRespuestaIdCuestionarioEnviadoAndRespuestaTextoNotNull(cuestionarioEnviado);
-		mapaRespuestas = new HashMap<>();
 		listaRespuestas.forEach(respuesta -> mapaRespuestas.put(respuesta.getRespuestaId().getPregunta(),
 				respuesta.getRespuestaTexto()));
-		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado());
+
+		mapaRespuestasTablaAux = new HashMap<>();
+		listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+		listaRespuestas.forEach(respuesta -> mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
+				respuesta.getRespuestaTablaMatriz()));
+
+		mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {
+			System.out.println(pregunta.getTipoRespuesta() + ", " + pregunta.getPregunta());
+			listaDatos.forEach(datosTabla -> System.out.println("****************" + datosTabla));
+		});
+		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(), true, mapaRespuestasTablaAux);
 	}
 
-	private String visualizar(CuestionarioPersonalizado cuestionario) {
-		mapaAreaPreguntas = new HashMap<>();
+	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas,
+			HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux2) {
+		setMapaAreaPreguntas(new HashMap<>());
 		this.setCuestionarioPersonalizado(cuestionario);
 		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
@@ -103,13 +116,24 @@ public class VisualizarCuestionario implements Serializable {
 			listaPreguntas.add(pregunta);
 			mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
 			if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
-				construirTipoRespuestaTabla(pregunta);
+				if (visualizarRespuestas) {
+					construirTipoRespuestaConDatos();
+				}
+				else {
+					construirTipoRespuestaTablaVacia(pregunta);
+				}
 			}
 			else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
-				construirTipoRespuestaMatriz(pregunta);
+				if (visualizarRespuestas) {
+					// TODO CONSUTRIR MATRIZ CON DATOS
+				}
+				else {
+					construirTipoRespuestaMatrizVacia(pregunta);
+				}
 			}
 		}
 
+		// TODO dibujar tablas / matrices
 		Set<AreasCuestionario> areasSet = mapaAreaPreguntas.keySet();
 
 		// JSF ui:repeat no funciona con Set
@@ -141,7 +165,7 @@ public class VisualizarCuestionario implements Serializable {
 	 * @see visualizar
 	 * @param pregunta Pregunta del tipo respuesta TABLAxx
 	 */
-	public void construirTipoRespuestaTabla(PreguntasCuestionario pregunta) {
+	public void construirTipoRespuestaTablaVacia(PreguntasCuestionario pregunta) {
 		DataTableView dataTableView = new DataTableView();
 		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
 				.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
@@ -149,13 +173,29 @@ public class VisualizarCuestionario implements Serializable {
 		mapaRespuestasTabla.put(pregunta, dataTableView);
 	}
 
+	public void construirTipoRespuestaConDatos() {
+		mapaRespuestasTabla = new HashMap<>();
+		mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {
+			DataTableView dataTableView = new DataTableView();
+			List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
+					.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
+			if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
+				dataTableView.crearTablaConDatos(valoresColumnas, listaDatos);
+			}
+			else {
+				dataTableView.crearMatrizConDatos(valoresColumnas, listaDatos);
+			}
+			mapaRespuestasTabla.put(pregunta, dataTableView);
+		});
+	}
+
 	/**
-	 * Método usado para construir la tabla que se usará en el formulario para responder las preguntas cuyo tipo de
-	 * respuesta empieza por MATRIZ
+	 * Construye la tabla que se usará en el formulario para responder las preguntas cuyo tipo de respuesta empieza por
+	 * MATRIZ
 	 * @see visualizar
 	 * @param pregunta Pregunta del tipo respuesta MATRIZxx
 	 */
-	public void construirTipoRespuestaMatriz(PreguntasCuestionario pregunta) {
+	public void construirTipoRespuestaMatrizVacia(PreguntasCuestionario pregunta) {
 		DataTableView dataTableView = new DataTableView();
 		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
 				.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());

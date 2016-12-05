@@ -17,4 +17,6 @@ public interface IConfiguracionRespuestasCuestionarioRepository
 
 	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionOrderByConfigClaveAsc(String seccion);
 
+	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionIn(List<String> seccion);
+
 }

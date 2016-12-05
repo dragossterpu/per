@@ -28,4 +28,5 @@ public class ConfiguracionRespuestasCuestionario implements Serializable {
 
 	@EmbeddedId
 	ConfiguracionRespuestasCuestionarioId config;
+
 }

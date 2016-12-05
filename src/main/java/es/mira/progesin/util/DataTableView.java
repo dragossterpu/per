@@ -29,6 +29,12 @@ public class DataTableView implements Serializable {
 		crearFilaVacia();
 	}
 
+	public void crearTablaConDatos(List<ConfiguracionRespuestasCuestionario> valoresColumnas,
+			List<DatosTablaGenerica> listaDatos) {
+		crearColumnasDinamicamente(valoresColumnas);
+		setListaDatosTabla(listaDatos);
+	}
+
 	public void crearMatriz(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
 		// Inicializado la lista con un campo vacío para que muestre el datatable con una fila vacía de inputText
 		for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
@@ -47,8 +53,28 @@ public class DataTableView implements Serializable {
 		listaDatosTabla.add(dtg);
 	}
 
+	public void crearMatrizConDatos(List<ConfiguracionRespuestasCuestionario> valoresColumnas,
+			List<DatosTablaGenerica> listaDatos) {
+		setListaDatosTabla(listaDatos);
+		for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
+			if ("nombreFila".equals(config.getConfig().getClave())) {
+				crearFilaMatrizConDatos(config.getConfig().getValor());
+			}
+			else {
+				columns.add(new ColumnModel(config.getConfig().getValor(), config.getConfig().getClave()));
+			}
+		}
+	}
+
+	public void crearFilaMatrizConDatos(String nombreFila) {
+		for (DatosTablaGenerica datos : listaDatosTabla) {
+			if (nombreFila.equals(datos.getNombreFila())) {
+				datos.setNombreFila(nombreFila);
+			}
+		}
+	}
+
 	public void crearColumnasDinamicamente(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
-		// valoresColumnas = campo1#nombreColumna1, campo2#nombreColumna2 ...
 		String header;
 		String property;
 		for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
@@ -61,6 +87,10 @@ public class DataTableView implements Serializable {
 	public void crearFilaVacia() {
 		DatosTablaGenerica dtg = new DatosTablaGenerica();
 		listaDatosTabla.add(dtg);
+	}
+
+	public void crearFilasConDatos() {
+
 	}
 
 	/**
