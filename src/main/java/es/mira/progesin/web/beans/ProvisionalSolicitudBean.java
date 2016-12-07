@@ -265,6 +265,13 @@ public class ProvisionalSolicitudBean implements Serializable {
 				if ("GC".equals(ambito) || "PN".equals(ambito)) {
 					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillas" + ambito);
 				}
+				else {
+					// OTROS
+					// se muestran todas las de GC y PN, si se quiere se puede crear una categoria plantillasOTROS
+					// en tabla parametros e incluirlo en el if anterior
+					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillasGC");
+					parametrosPlantillasAmbito.addAll(parametrosRepository.findParamByParamSeccion("plantillasPN"));
+				}
 			}
 		}
 		catch (Exception e) {

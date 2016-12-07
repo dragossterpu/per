@@ -138,21 +138,30 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String crearSolicitud() {
 
 		try {
-			datosApoyo();
-
-			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-						"La solicitud de documentación ha sido creada con éxito");
+			String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
+			if (userService.exists(correoDestinatario)) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
+						"No se puede crear un usuario provisional para el destinatario con correo " + correoDestinatario
+								+ " ya existe para otra tarea.");
 			}
-			altaDocumentos();
-			String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
-					+ SecurityContextHolder.getContext().getAuthentication().getName();
-			// Guardamos la actividad en bbdd
-			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+			else {
+				if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+							"La solicitud de documentación ha sido creada con éxito");
 
-			// Guardamos la notificacion en bbdd
-			// TODO usar NotificacionEnum
-			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+					altaDocumentos();
+					String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
+							+ SecurityContextHolder.getContext().getAuthentication().getName();
+					// Guardamos la actividad en bbdd
+					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
+							NOMBRESECCION);
+
+					// Guardamos la notificacion en bbdd
+					// TODO usar NotificacionEnum
+					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
+							NOMBRESECCION);
+				}
+			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
@@ -482,41 +491,50 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String enviarSolicitud() {
 		try {
-			String password = Utilities.getPassword();
+			String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
+			if (userService.exists(correoDestinatario)) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Envío abortado",
+						"No se puede crear un usuario provisional para el destinatario con correo " + correoDestinatario
+								+ " ya existe para otra tarea.");
+			}
+			else {
+				String password = Utilities.getPassword();
 
-			solicitudDocumentacionPrevia.setFechaEnvio(new Date());
-			solicitudDocumentacionPrevia
-					.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
+				solicitudDocumentacionPrevia.setFechaEnvio(new Date());
+				solicitudDocumentacionPrevia
+						.setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
 
-			User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
-					passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
+				User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
+						passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
 
-			if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
-				System.out.println("Password usuario provisional  : " + password);
+				if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia,
+						usuarioProv)) {
+					System.out.println("Password usuario provisional  : " + password);
 
-				String asunto = "Solicitud de documentación previa para la inspección "
-						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-				String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
-						+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
-						+ password
-						+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inativo. \r\n \r\n"
-						+ "Muchas gracias y un saludo.";
-				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
-				correoElectronico.envioCorreo();
+					String asunto = "Solicitud de documentación previa para la inspección "
+							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
+					String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
+							+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
+							+ password
+							+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inativo. \r\n \r\n"
+							+ "Muchas gracias y un saludo.";
+					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+					correoElectronico.envioCorreo();
 
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
-						"Se ha enviado con éxito la solicitud de documentación");
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
+							"Se ha enviado con éxito la solicitud de documentación");
 
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario envío : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+					String descripcion = "Solicitud documentación previa cuestionario. Usuario envío : "
+							+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+							NOMBRESECCION);
 
-				// TODO usar NotificacionEnum
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+					// TODO usar NotificacionEnum
+					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+							NOMBRESECCION);
+				}
 			}
 		}
 		catch (Exception e) {
