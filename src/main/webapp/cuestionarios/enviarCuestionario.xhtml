@@ -50,7 +50,7 @@
 					<h:outputLabel for="fechaLimite" value="Fecha límite de respuesta (*):" />
 					<p:calendar id="fechaLimite"
 						value="#{envioCuestionarioBean.cuestionarioEnvio.fechaLimiteCuestionario}"
-						pattern="dd/MM/yyyy"
+						pattern="dd/MM/yyyy" locale="es"
 						mindate="#{utilities.getCurrentDate()}"
 						navigator="true" required="true"
 						requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario" />

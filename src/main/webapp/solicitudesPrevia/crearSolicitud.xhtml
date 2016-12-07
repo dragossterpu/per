@@ -9,7 +9,7 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-
+				
 		<h:form>
 		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud}" update="form" autoRun="true" />
 		</h:form>
@@ -80,7 +80,7 @@
 									<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):"/>
 									<p:calendar id="fechaLimiteEnvio"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"
-										pattern="dd/MM/yyyy"
+										pattern="dd/MM/yyyy" locale="es"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite envío documentación" />
@@ -88,7 +88,7 @@
 									<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):"/>
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
-										pattern="dd/MM/yyyy"
+										pattern="dd/MM/yyyy" locale="es" 
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"/>

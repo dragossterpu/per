@@ -90,13 +90,13 @@
 						<h:outputLabel for="fechaDesde" value="Fecha creación desde:" />
 						<p:calendar
 							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaDesde}"
-							id="fechaDesde" pattern="dd/MM/yyyy" navigator="true"
+							id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"
 							maxdate="#{utilities.getCurrentDate()}" />
 
 						<h:outputLabel for="fechaHasta" value="Fecha creación hasta:" />
 						<p:calendar
 							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaHasta}"
-							id="fechaHasta" pattern="dd/MM/yyyy" navigator="true"
+							id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"
 							maxdate="#{utilities.getCurrentDate()}" />
 							
 					</div>

@@ -67,10 +67,10 @@
 						</p:inputText>
 				
 						<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
-						<p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación"/>
+						<p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación"/>
 											
 						<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):" />
-						<p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"
+						<p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"
 							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}"/>					
 
 						<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />

@@ -30,7 +30,7 @@
 										<p:inputText value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}" rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" size="10" maxlength="1000"/>
 										<p:inputTextarea value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}" rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"/>
 										<div style="width: 30%">
-											<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" navigator="true" showOn="both" />
+											<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" locale="es" navigator="true" showOn="both" />
 										</div>
 										<p:selectOneRadio rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}">
 											<f:selectItems value="#{cuestionarioPersonalizadoBean.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
