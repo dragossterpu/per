@@ -25,12 +25,22 @@
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{solicitudDocPreviaBean.noConformeSolicitud}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" ajax="false">
+				<p:commandButton actionListener="#{solicitudDocPreviaBean.noConformeSolicitud}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" >
 					<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 						message="¿Está seguro que desea declara no conforme esta solicitud y reenviarla?"/>
 				</p:commandButton>
 				<p:button outcome="/solicitudesPrevia/vistaSolicitud" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			</div>
+			
+			
+			<p:confirmDialog global="true">
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Aceptar" type="button"
+						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="Cancelar" type="button"
+						styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+				</div>
+			</p:confirmDialog>
 			
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 				<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
