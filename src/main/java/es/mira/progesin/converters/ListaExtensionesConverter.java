@@ -1,5 +1,6 @@
 package es.mira.progesin.converters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,9 +11,7 @@ import javax.faces.convert.Converter;
 import org.springframework.stereotype.Component;
 
 /**
- * Clase para evitar los espacios en blanco en los formularios de entrada.
- * @author sperezp
- *
+ * @author EZENTIS
  */
 @Component("listaExtensionesConverter")
 public class ListaExtensionesConverter implements Converter {
@@ -21,7 +20,7 @@ public class ListaExtensionesConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-		return (submittedValue != null) ? Arrays.asList(submittedValue.split(SEPARADOR)) : null;
+		return (submittedValue != null) ? new ArrayList<>(Arrays.asList(submittedValue.split(SEPARADOR))) : null;
 	}
 
 	@SuppressWarnings("unchecked")

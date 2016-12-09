@@ -23,15 +23,15 @@
 					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="extensiones" value="Extensiones del tipo de documento (*):" />
-					<p:selectManyMenu id="extensiones"
+					<p:selectManyCheckbox id="extensiones" layout="responsive" columns="4"
 						value="#{tipoDocumentacionBean.extensionesNuevo}"
-						 showCheckbox="true" effect="fold" required="true"
+						showCheckbox="true" effect="fold" required="true"
 						requiredMessage="Seleccione una o varias extensiones">
 						<f:selectItems value="#{tipoDocumentacionBean.listaExtensionesPosibles}"
 							var="extensionesTipoDocumentacion"
 							itemLabel="#{extensionesTipoDocumentacion}"
 							itemValue="#{extensionesTipoDocumentacion}" />
-					</p:selectManyMenu>
+					</p:selectManyCheckbox>
 					<p:messages for="extensiones" autoUpdate="true"  closable="true"/>
 					
 					<div class="botonesFormulario">

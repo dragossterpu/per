@@ -1,5 +1,6 @@
 package es.mira.progesin.converters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ListaExtensionesAdapter implements AttributeConverter<Object, Strin
 	 */
 	@Override
 	public List<String> convertToEntityAttribute(String extensiones) {
-		return Arrays.asList(extensiones.split(SEPARADOR));
+		return new ArrayList<>(Arrays.asList(extensiones.split(SEPARADOR)));
 	}
 
 }
