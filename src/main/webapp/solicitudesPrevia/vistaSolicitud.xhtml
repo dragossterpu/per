@@ -76,7 +76,6 @@
 					<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
 					se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.</p>
 					</div>
-				</h:form>
 			
 				
 		<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
@@ -145,7 +144,9 @@
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea finalizar esta solicitud?"/>
 						</p:commandButton>
-						<p:button rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" outcome="/solicitudesPrevia/noConformeSolicitud" value="No conforme" icon="fa fa-fw fa-undo"/>
+						<h:commandLink rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and solicitudDocPreviaBean.esJefeEquipoInspeccion() and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" action="#{solicitudDocPreviaBean.getFormNoConformeSolicitud}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">No conforme</span>
+						</h:commandLink>
 						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 					</p:outputPanel>
@@ -162,6 +163,7 @@
 					
 					</p:outputPanel>	
 		
+				</h:form>
 		</ui:define>
 	</ui:composition>
 </f:view>

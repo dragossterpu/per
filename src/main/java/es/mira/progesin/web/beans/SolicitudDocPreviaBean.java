@@ -69,7 +69,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
 	private static final String ERROR = "Error";
-	
+
 	private String vieneDe;
 
 	@Autowired
@@ -447,7 +447,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 				String mensajeCorreoEnviado = "";
 				// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
 				if (solicitudDocumentacionPrevia.getFechaEnvio() != null
-						&& !solicitudDocumentacionPrevia.getFechaLimiteEnvio().equals(backupFechaLimiteEnvio)) {
+						&& !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
 					String asunto = "Solicitud de documentación previa para la inspección "
 							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
 					String textoAutomatico = "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado."
@@ -518,7 +518,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
 							+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
 							+ password
-							+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inativo. \r\n \r\n"
+							+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n"
 							+ "Muchas gracias y un saludo.";
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
 					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
@@ -585,6 +585,17 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
+	 * Carga el formulario para declarar no conforme una solicitud.
+	 * 
+	 * @author EZENTIS
+	 * @return vista noConformeSolicitud
+	 */
+	public String getFormNoConformeSolicitud() {
+		motivosNoConforme = null;
+		return "/solicitudesPrevia/noConformeSolicitud";
+	}
+
+	/**
 	 * Permite al jefe de equipo declarar no conforme una solicitud de documentación ya cumplimentada, después de
 	 * revisar la documentación adjuntada por la unidad que se va a inspeccionar. Para ello elimina la fecha de
 	 * cumplimentación y reenvia la solicitud al destinatario de la unidad con el motivo de dicha no conformidad.
@@ -605,11 +616,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 				String asunto = "Solicitud de documentación previa para la inspección "
 						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-				String textoAutomatico = "Se ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:"
+				String textoAutomatico = "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:"
 						+ "\r\n \r\n" + motivosNoConforme
 						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
 						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
-						+ "\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inativo de nuevo. \r\n \r\n"
+						+ "\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n"
 						+ "Muchas gracias y un saludo.";
 				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
 				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
