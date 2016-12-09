@@ -6,7 +6,12 @@
 <h:form>
 	<p:menu rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
 		<p:submenu label="Herramientas Administrativas" rendered="#{p:ifGranted('ADMIN')}">
-			<p:menuitem value="Usuarios" outcome="/users/usuarios"/>
+			
+			<p:menuitem value="Usuarios" outcome="/users/usuarios">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>
+
+			
 			<p:menuitem value="Administrar cuerpos del estado" outcome="/cuerpos/cuerpos" />
 			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
 			<p:menuitem value="Registro de actividad" outcome="/registro/registro" />
@@ -16,11 +21,15 @@
 		<p:submenu label="Solicitud previa cuestionario">
 			<p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" />
 			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" />
-			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE,JEFE_INSPECCIONES,ADMIN')}"/>
+			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE,JEFE_INSPECCIONES,ADMIN')}">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>
 		</p:submenu>
 		<p:submenu label="Cuestionario">
 			<p:menuitem value="Modelos cuestionario" outcome="/cuestionarios/modelosCuestionarios" />
-			<p:menuitem value="Búsqueda modelo cuestionario" outcome="/cuestionarios/busquedaModelosCuestionarios" />
+			<p:menuitem value="Búsqueda modelo cuestionario" outcome="/cuestionarios/busquedaModelosCuestionarios" >
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>
 			<p:menuitem value="Búsqueda de cuestionario" outcome="/enConstruccion" />
 		</p:submenu>
 		
@@ -32,7 +41,9 @@
 			<p:menuitem value="Búsqueda modelo de guías" outcome="/enConstruccion" />
 		</p:submenu>
 		<p:submenu label="Inspección">
-			<p:menuitem value="Administrar equipos" outcome="/equipos/equipos" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+			<p:menuitem value="Administrar equipos" outcome="/equipos/equipos" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>
 			<p:menuitem value="Búsqueda de inspecciones" outcome="/enConstruccion" />
 			<p:menuitem value="Búsqueda modelo de inspecciones" outcome="/enConstruccion" />
 			<p:menuitem value="Estadísticas" outcome="/enConstruccion" />
@@ -47,8 +58,7 @@
 
 	<p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}">
 		<p:submenu label="Solicitud previa cuestionario">
-			<p:menuitem value="Cumplimentar solicitud" outcome="/provisionalSolicitud/provisionalSolicitud"/>	
-			<p:menuitem value="Descarga de plantillas" outcome="/provisionalSolicitud/descargaPlantillas"/>		
+			<p:menuitem value="Cumplimentar solicitud" outcome="/provisionalSolicitud/provisionalSolicitud"/>			
 		</p:submenu>
 	</p:menu>
 	

@@ -69,6 +69,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
 	private static final String ERROR = "Error";
+	
+	private String vieneDe;
 
 	@Autowired
 	transient IRegistroActividadService regActividadService;
@@ -642,8 +644,12 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @author EZENTIS
 	 */
 	public void limpiarBusqueda() {
-		solicitudDocPreviaBusqueda.resetValues();
-		listaSolicitudesPrevia = null;
+		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+			solicitudDocPreviaBusqueda.resetValues();
+			listaSolicitudesPrevia = null;
+			this.vieneDe=null;
+			}
+		
 	}
 
 	/**

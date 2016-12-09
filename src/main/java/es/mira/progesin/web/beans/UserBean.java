@@ -31,12 +31,12 @@ import es.mira.progesin.util.SendSimpleMail;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @Setter
 @Getter
 @Component("userBean")
+
 
 public class UserBean {
 
@@ -57,6 +57,9 @@ public class UserBean {
 	private int numeroColumnasListadoUsarios = 9;
 
 	private String estadoUsuario = null;
+	
+	private String vieneDe;
+	
 
 	@Autowired
 	ApplicationBean applicationBean;
@@ -142,7 +145,9 @@ public class UserBean {
 	}
 
 	public void getFormularioBusquedaUsuarios() {
-		userBusqueda.resetValues();
+		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+			userBusqueda.resetValues();
+			this.vieneDe=null;}
 	}
 
 	/**

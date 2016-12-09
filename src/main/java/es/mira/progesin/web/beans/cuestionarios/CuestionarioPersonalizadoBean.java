@@ -32,6 +32,8 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
 
 	private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
+	
+	private String vieneDe;
 
 	// // para la visualización
 	// private CuestionarioPersonalizado cuestionarioPersonalizado;
@@ -65,8 +67,13 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
 	 */
 	public void limpiar() {
-		cuestionarioBusqueda.limpiar();
-		listaCuestionarioPersonalizado = null;
+		
+		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+			cuestionarioBusqueda.limpiar();
+			listaCuestionarioPersonalizado = null;
+			this.vieneDe=null;
+			}
+		
 	}
 
 	/**

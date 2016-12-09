@@ -99,6 +99,8 @@ public class EquiposBean implements Serializable {
 	List<User> listaUsuarios;
 
 	private final String NOMBRESECCION = "Equipos de inspecciones";
+	
+	private String vieneDe;
 
 	@Autowired
 	IEquipoService equipoService;
@@ -181,8 +183,12 @@ public class EquiposBean implements Serializable {
 	}
 
 	public void getFormularioBusquedaEquipos() {
-		equipoBusqueda.resetValues();
-		this.estado = null;
+		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+			equipoBusqueda.resetValues();
+			this.estado = null;
+			this.vieneDe=null;
+			}
+		
 	}
 
 	public String buscarEquipo() {

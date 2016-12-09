@@ -8,12 +8,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
+
+<f:metadata>
+    <f:viewParam name="vieneDe" value="#{userBean.vieneDe}" />
+</f:metadata>
+
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
 		<h3>Búsqueda de usuarios</h3>
 		<h:form>
-		    <p:remoteCommand name="onload" action="#{userBean.getFormularioBusquedaUsuarios}" update="busquedaUsers" autoRun="true" />
+		    <p:remoteCommand name="onload" action="#{userBean.getFormularioBusquedaUsuarios()}" update="busquedaUsers" autoRun="true" />
 		</h:form>
 
 		<h:form id="busquedaUsers" >
