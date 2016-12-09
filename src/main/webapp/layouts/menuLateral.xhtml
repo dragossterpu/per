@@ -58,7 +58,9 @@
 
 	<p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}">
 		<p:submenu label="Solicitud previa cuestionario">
-			<p:menuitem value="Cumplimentar solicitud" outcome="/provisionalSolicitud/provisionalSolicitud"/>		
+			<p:menuitem value="Cumplimentar solicitud" outcome="/provisionalSolicitud/provisionalSolicitud">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>		
 			<p:menuitem value="Descarga de plantillas" outcome="/provisionalSolicitud/descargaPlantillas"/>        
 				
 		</p:submenu>

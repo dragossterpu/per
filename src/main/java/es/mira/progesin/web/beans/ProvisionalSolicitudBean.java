@@ -83,20 +83,25 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private Map<String, String> extensiones;
 
-	public void visualizarSolicitud() {
-		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-		// ñapa
-		try {
-			solicitudDocumentacionPrevia = solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
-			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-			listadoDocumentosCargados = gestDocumentacionService
-					.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-		}
-		catch (Exception e) {
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
-		}
+	private String vieneDe;
 
+	public void visualizarSolicitud() {
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
+			this.vieneDe = null;
+			String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+			// ñapa
+			try {
+				solicitudDocumentacionPrevia = solicitudDocumentacionService
+						.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
+				listadoDocumentosPrevios = tipoDocumentacionService
+						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+				listadoDocumentosCargados = gestDocumentacionService
+						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+			}
+			catch (Exception e) {
+				regActividadService.altaRegActivError(NOMBRESECCION, e);
+			}
+		}
 	}
 
 	private boolean esDocumentacionPrevia(UploadedFile archivo) {

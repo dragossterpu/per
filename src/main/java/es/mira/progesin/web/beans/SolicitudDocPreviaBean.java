@@ -644,12 +644,12 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @author EZENTIS
 	 */
 	public void limpiarBusqueda() {
-		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
 			solicitudDocPreviaBusqueda.resetValues();
 			listaSolicitudesPrevia = null;
-			this.vieneDe=null;
-			}
-		
+			this.vieneDe = null;
+		}
+
 	}
 
 	/**
