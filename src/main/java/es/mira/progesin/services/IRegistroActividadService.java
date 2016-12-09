@@ -23,4 +23,8 @@ public interface IRegistroActividadService {
 	void altaRegActivError(String nombreSeccion, Exception e);
 
 	void crearRegistroActividad(String descripcion, String tipoReg, String seccion);
+	
+	public List<String> buscarPorNombreSeccion(String infoSeccion);
+	
+	public List<String> buscarPorUsuarioRegistro(String infoUsuario);
 }

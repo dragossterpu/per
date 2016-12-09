@@ -92,7 +92,7 @@ public class RegistroActividadService implements IRegistroActividadService {
 					MatchMode.ANYWHERE));
 		}
 
-		criteria.add(Restrictions.isNull("fechaBaja"));
+		
 		criteria.addOrder(Order.desc("fechaAlta"));
 
 		@SuppressWarnings("unchecked")
@@ -124,6 +124,16 @@ public class RegistroActividadService implements IRegistroActividadService {
 		registroActividad.setDescripcion(descripcion);
 		regActividadRepository.save(registroActividad);
 
+	}
+	
+	@Override
+	public List<String> buscarPorNombreSeccion(String infoSeccion) {
+		return regActividadRepository.buscarPorNombreSeccion("%"+infoSeccion+"%");
+	}
+	
+	@Override
+	public List<String> buscarPorUsuarioRegistro(String infoUsuario){
+		return regActividadRepository.buscarPorUsuarioRegistro("%"+infoUsuario+"%");
 	}
 
 }

@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -40,20 +42,12 @@ public class RegActividadBean implements Serializable {
 	private Integer numColListRegActividad = 5;
 
 	private RegActividadBusqueda regActividadBusqueda;
+	
+	private String vieneDe;
+	
+	@Autowired
+	IRegActividadRepository regActividadRepository;
 
-	public void eliminarRegActividad(RegistroActividad regActividad) {
-		regActividad.setFechaBaja(new Date());
-		regActividad.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-		try {
-			regActividadService.save(regActividad);
-			regActividadBusqueda.getListaRegActividad().remove(regActividad);
-		}
-		catch (Exception e) {
-			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
-		}
-
-	}
 
 	@Autowired
 	IRegistroActividadService regActividadService;
@@ -72,7 +66,11 @@ public class RegActividadBean implements Serializable {
 
 	
 	public void getFormularioRegActividad() {
-		regActividadBusqueda.resetValues();
+		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+			regActividadBusqueda.resetValues();
+			this.vieneDe=null;
+			}
+		
 	}
 
 	@PostConstruct
@@ -83,21 +81,14 @@ public class RegActividadBean implements Serializable {
 			list.add(Boolean.TRUE);
 		}
 	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-
-	/**
-	 * @param e
-	 */
-	private void altaRegActivError(Exception e) {
-		RegistroActividad regActividad = new RegistroActividad();
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
+	
+	
+	public List<String> autocompletarSeccion(String infoSeccion) {
+		return regActividadService.buscarPorNombreSeccion("%"+infoSeccion+"%");
 	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
+	
+	public List<String> autocompletarUsuario(String infoUsuario){
+		return regActividadService.buscarPorUsuarioRegistro("%"+infoUsuario+"%");
+	}
 
 }

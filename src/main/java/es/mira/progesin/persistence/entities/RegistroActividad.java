@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,11 +34,12 @@ import lombok.ToString;
 public class RegistroActividad implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REGISTRO")
+    @SequenceGenerator(name="SEQ_REGISTRO", sequenceName="SEQ_REGISTRO", allocationSize=1) 
 	@Column(name = "REG_ACTIVIDAD", length = 5)
-	private Integer idRegActividad;
+	private long idRegActividad;
 
 	@Column(name = "NOMBRE_SECCION", length = 50)
 	private String nombreSeccion;
@@ -42,15 +47,11 @@ public class RegistroActividad implements Serializable {
 	@Column(name = "DESCRIPCION", length = 4000)
 	private String descripcion;
 
+	@CreatedDate
 	@Column(name = "FECHA_REGISTRO")
 	private Date fechaAlta;
 
-	@Column(name = "FECHA_BAJA")
-	private Date fechaBaja;
-
-	@Column(name = "USUARIO_BAJA", length = 50)
-	private String usernameBaja;
-
+	@CreatedBy
 	@Column(name = "USUARIO_REGISTRO", length = 50)
 	private String usernameRegActividad;
 

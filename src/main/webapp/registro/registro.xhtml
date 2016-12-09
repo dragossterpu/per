@@ -22,10 +22,13 @@
 			<div class="bloqueFormulario">
 					<div class="columnaIzdaFormulario">
 						<h:outputLabel for="nombreSeccion" value="Nombre de la sección:" />
-						<p:inputText id="nombreSeccion" value="#{regActividadBean.regActividadBusqueda.nombreSeccion}" />
+						<p:autoComplete id="nombreSeccion" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.nombreSeccion}" 
+							completeMethod="#{regActividadBean.autocompletarSeccion}" effect="fade" />
 						
 						<h:outputLabel for="usernameRegActividad" value="Usuario del registro:" />
-						<p:inputText id="usernameRegActividad" value="#{regActividadBean.regActividadBusqueda.usernameRegActividad}"/>
+						<p:autoComplete id="usernameRegActividad" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.usernameRegActividad}" 
+							completeMethod="#{regActividadBean.autocompletarUsuario}" effect="fade" />
+						
 											        
 					</div>
 	
@@ -34,9 +37,16 @@
 						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
 						<h:outputLabel for="fechaHasta" value="Fecha hasta:" />
 						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
-												
-						<h:outputLabel for="tipoRegActividad" value="Tipo de notificación:" />
-						<p:inputText id="tipoRegActividad" value="#{regActividadBean.regActividadBusqueda.tipoRegActividad}"/>
+						
+						
+						<h:outputLabel for="tipo" value="Tipo de notificación" />
+				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum" var="tipos"
+							allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu value="#{regActividadBean.regActividadBusqueda.tipoRegActividad}" id="tipo">
+							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+							<f:selectItems value="#{tipos.ALL_ENUM_VALUES}" var="tipoRegistro"
+								itemLabel="#{tipoRegistro}" itemValue="#{tipoRegistro}" />
+						</p:selectOneMenu> 
 						
 					</div>
 					
@@ -80,9 +90,9 @@
 	        			 	  <p:ajax event="toggle" listener="#{regActividadBean.onToggle}" />
 	        			 </p:columnToggler>
 					</f:facet>
-					<p:column headerText="Fecha " sortBy="#{regActividad.fechaAlta}" width="70" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
+					<p:column headerText="Fecha " sortBy="#{regActividad.fechaAlta}" width="80" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
 						<h:outputText value="#{regActividad.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Nombre Sección" sortBy="#{regActividad.nombreSeccion}" width="70" visible="#{regActividadBean.list[1]}" exportable="#{regActividadBean.list[1]}">
@@ -97,15 +107,7 @@
 					<p:column headerText="Tipo notificación" sortBy="#{regActividad.tipoRegActividad}" width="100" visible="#{regActividadBean.list[4]}" exportable="#{regActividadBean.list[4]}">
 						<h:outputText value="#{regActividad.tipoRegActividad}" />
 					</p:column>
-						<p:column style="width:30px">
-							<p:commandButton title="Eliminar" icon="fa fa-trash"
-								actionListener="#{regActividadBean.eliminarRegActividad(regActividad)}"
-								update="tablaRegActividad">
-								<p:confirm header="Eliminar registro de actividad"
-									message="¿Está seguro que desea eliminar este registro de actividad?"
-									icon="fa fa-warning-sign" />
-							</p:commandButton>
-						</p:column>
+						
 					<f:facet name="footer">
 	       				 Resultado de la búsqueda: #{fn:length(regActividadBean.regActividadBusqueda.listaRegActividad)} registros.
 	    			</f:facet>
