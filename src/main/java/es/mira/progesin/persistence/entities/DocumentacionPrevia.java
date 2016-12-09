@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import es.mira.progesin.converters.ListaExtensionesAdapter;
@@ -44,8 +45,9 @@ import lombok.extern.slf4j.Slf4j;
 // provisional, ajustándose a dichos documentos tanto en nombre como en tipo.
 public class DocumentacionPrevia {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID")
+	@SequenceGenerator(name = "seq_documentacion_previa", sequenceName = "seq_documentacion_previa", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentacion_previa")
+	@Column(name = "ID", nullable = false)
 	private Long id;
 
 	@Column(name = "ID_SOLICITUD")

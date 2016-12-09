@@ -614,30 +614,29 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (197, 'Número de comunicaciones a ONG,s sobre solicitud de visitas por parte de internos.', 12,'INPUT');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (198, 'Numero de exámenes a que han estado sometidos sus integrantes, causas y resultados.', 12,'INPUT');
 
---Ñapa: Comienzo id en 41 debido a problema con las altas de nueva documentacion
+  ------------- tipos documentacion previa
 
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (41, 'Organigramas de la Unidad, con detalle de sus Unidades y Servicios', 'organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (42, 'Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico', 'RM', 'DOC, DOCX');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (43, 'Documentación relativa al Plan Territorial. Objetivos operativos fijados para 2015', 'PTyO', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (44, 'Convenios de colaboración con Policías Locales (tanto genéricos como específicos)', 'CCPL', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (45, 'Actas de las Juntas Locales de Seguridad de los años 2014 y 2015', 'AJLS', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (46, 'Plan de Emergencia', 'PE', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (47, 'Evaluación de Riesgos Laborales', 'PRL', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (48, 'Memoria Anual de 2015', 'MA', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (49, 'Copia de las actas de las reuniones sindicales celebradas en 2014 y 2015', 'CAS', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (50, 'Actas de las Comisiones de Coordinación de Policía Judicial de los años 2014 y 2015', 'ACCPJ', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (51, 'Actas de las Comisiones Provinciales de Seguridad Privada de los años 2014 y 2015', 'ACPSP', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (52, 'Relación de municipios que configuran la demarcación de la compañía', 'RMD', 'DOC, DOCX');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (53, 'Catálogo de Puestos de Trabajo (última aprobación CECIR) y fuerza en revista', 'CPT', 'XLSX');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (54, 'Relación de mandos de las distintas Unidades, de categoría Oficial, con indicación de teléfonos y correos electrónicos de contacto', 'RM', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (55, 'Plan de Seguridad Ciudadana', 'PSC', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (56, 'Libro de Organización y Libro de Normas de Régimen Interno', 'LOYRI', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (57, 'Memoria Anual 2015', 'MA', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (58, 'Mapa con la distribución territorial de sus Unidades subordinadas.', 'mapa', 'JPG, JPEG, PNG, BMP');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (59, 'Organigrama de la Zona (Unidades Territoriales y Especialidades)', 'organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (60, 'Plan anual de la Unidad Orgánica de Policía Judicial vigente', 'PAUOPJ', 'PDF');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (61, 'Organigrama de la Comandancia (Unidades Territoriales y Especialidades)', 'organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
-Insert into  tipodocumentacionprevia (ID_TIPO_DOCUMENTO,DESCRIPCION,NOMBRE,EXTENSIONES) Values (62, 'Actas de las Juntas de Coordinación de 2015', 'AJC', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Actas de las Comisiones Provinciales de Seguridad Privada de los años 2014 y 2015', 'ACPSP', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Actas de las Comisiones de Coordinación de Policía Judicial de los años 2014 y 2015', 'ACCPJ', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Actas de las Juntas Locales de Seguridad de los años 2014 y 2015', 'AJLS', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Actas de las Juntas de Coordinación de 2015', 'AJC', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Catálogo de Puestos de Trabajo (última aprobación CECIR) y fuerza en revista', 'CPT', 'XLSX');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Convenios de colaboración con Policías Locales (tanto genéricos como específicos)', 'CCPL', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Copia de las actas de las reuniones sindicales celebradas en 2014 y 2015', 'CAS', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Documentación relativa al Plan Territorial. Objetivos operativos fijados para 2015', 'PTyO', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Evaluación de Riesgos Laborales', 'PRL', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Libro de Organización y Libro de Normas de Régimen Interno', 'LOYRI', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Mapa con la distribución territorial de sus Unidades subordinadas.', 'mapa', 'JPG, JPEG, PNG, BMP');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Memoria Anual de 2015', 'MA', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Organigrama de la Comandancia (Unidades Territoriales y Especialidades)', 'organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Organigrama de la Zona (Unidades Territoriales y Especialidades)', 'organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Organigramas de la Unidad, con detalle de sus Unidades y Servicios', 'organigrama', 'DOC, DOCX, PPTX, PPT, PUB');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Plan anual de la Unidad Orgánica de Policía Judicial vigente', 'PAUOPJ', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Plan de Emergencia', 'PE', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Plan de Seguridad Ciudadana', 'PSC', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Relación de mandos de las distintas Unidades, de categoría Oficial, con indicación de teléfonos y correos electrónicos de contacto', 'RM', 'PDF');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Relación de municipios que configuran la demarcación de la compañía', 'RMD', 'DOC, DOCX');
+Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES) Values (seq_tipodocumentacionprevia.nextval, 'Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico', 'RM', 'DOC, DOCX');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('CHECKBOXSINO', 'NO', 'NO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('CHECKBOXSINO', 'SI', 'SI');

@@ -78,7 +78,7 @@ public class TipoDocumentacionBean implements Serializable {
 	 * @param documentacion objeto tipo de documentacion a eliminar
 	 */
 	public void eliminarDocumentacion(TipoDocumentacion documentacion) {
-		tipoDocumentacionService.delete(documentacion.getIdTipoDocumento());
+		tipoDocumentacionService.delete(documentacion.getId());
 		this.listaTipoDocumentacion = null;
 		listaTipoDocumentacion = tipoDocumentacionService.findAll();
 	}

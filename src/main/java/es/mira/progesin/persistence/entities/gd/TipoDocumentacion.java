@@ -38,10 +38,10 @@ public class TipoDocumentacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "id_tipo_doc_seq", sequenceName = "id_tipo_doc_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID_TIPO_DOCUMENTO", unique = true, updatable = false)
-	private Long idTipoDocumento;
+	@SequenceGenerator(name = "seq_tipodocumentacionprevia", sequenceName = "seq_tipodocumentacionprevia", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tipodocumentacionprevia")
+	@Column(name = "ID", nullable = false)
+	private Long id;
 
 	@Column(name = "DESCRIPCION", length = 255)
 	private String descripcion;
