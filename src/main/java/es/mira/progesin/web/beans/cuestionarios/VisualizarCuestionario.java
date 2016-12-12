@@ -71,7 +71,7 @@ public class VisualizarCuestionario implements Serializable {
 	public String visualizarVacio(CuestionarioPersonalizado cuestionario) {
 		mapaRespuestasTabla = new HashMap<>();
 		mapaRespuestas = new HashMap<>();
-		return visualizar(cuestionario, false, null);
+		return visualizar(cuestionario, false);
 	}
 
 	/**
@@ -84,13 +84,14 @@ public class VisualizarCuestionario implements Serializable {
 	 */
 	public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
 		mapaRespuestas = new HashMap<>();
+		mapaRespuestasTabla = new HashMap<>();
 		List<RespuestaCuestionario> listaRespuestas = respuestaRepository
 				.findByRespuestaIdCuestionarioEnviadoAndRespuestaTextoNotNull(cuestionarioEnviado);
 		listaRespuestas.forEach(respuesta -> mapaRespuestas.put(respuesta.getRespuestaId().getPregunta(),
 				respuesta.getRespuestaTexto()));
 
 		mapaRespuestasTablaAux = new HashMap<>();
-		listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+		listaRespuestas = respuestaRepository.findRespuestasTablaMatrizByCuestionarioEnviado(cuestionarioEnviado);
 		listaRespuestas.forEach(respuesta -> mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
 				respuesta.getRespuestaTablaMatriz()));
 
@@ -98,16 +99,16 @@ public class VisualizarCuestionario implements Serializable {
 			System.out.println(pregunta.getTipoRespuesta() + ", " + pregunta.getPregunta());
 			listaDatos.forEach(datosTabla -> System.out.println("****************" + datosTabla));
 		});
-		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(), true, mapaRespuestasTablaAux);
+		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(), true);
 	}
 
-	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas,
-			HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux2) {
+	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas) {
 		setMapaAreaPreguntas(new HashMap<>());
 		this.setCuestionarioPersonalizado(cuestionario);
 		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
 		List<PreguntasCuestionario> listaPreguntas;
+
 		for (PreguntasCuestionario pregunta : preguntas) {
 			listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
 			if (listaPreguntas == null) {
@@ -115,25 +116,18 @@ public class VisualizarCuestionario implements Serializable {
 			}
 			listaPreguntas.add(pregunta);
 			mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-			if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
-				if (visualizarRespuestas) {
-					construirTipoRespuestaConDatos();
-				}
-				else {
-					construirTipoRespuestaTablaVacia(pregunta);
-				}
-			}
-			else if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
-				if (visualizarRespuestas) {
-					// TODO CONSUTRIR MATRIZ CON DATOS
-				}
-				else {
-					construirTipoRespuestaMatrizVacia(pregunta);
-				}
+			if (pregunta.getTipoRespuesta() != null && (pregunta.getTipoRespuesta().startsWith("TABLA")
+					|| pregunta.getTipoRespuesta().startsWith("MATRIZ"))) {
+				construirTipoRespuestaTablaMatrizVacia(pregunta);
 			}
 		}
 
-		// TODO dibujar tablas / matrices
+		/******************************************************/
+		if (visualizarRespuestas) {
+			construirTipoRespuestaTablaMatrizConDatos();
+		}
+
+		/******************************************************/
 		Set<AreasCuestionario> areasSet = mapaAreaPreguntas.keySet();
 
 		// JSF ui:repeat no funciona con Set
@@ -159,48 +153,37 @@ public class VisualizarCuestionario implements Serializable {
 	}
 
 	/**
-	 * Construye la tabla que se usará en el formulario para responder las preguntas cuyo tipo de respuesta empieza por
-	 * TABLA
+	 * Construye la tabla o matriz que se usará en el formulario para responder las preguntas cuyo tipo de respuesta
+	 * empieza por TABLA o MATRIZ
 	 * 
 	 * @see visualizar
-	 * @param pregunta Pregunta del tipo respuesta TABLAxx
+	 * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
 	 */
-	public void construirTipoRespuestaTablaVacia(PreguntasCuestionario pregunta) {
+	private void construirTipoRespuestaTablaMatrizVacia(PreguntasCuestionario pregunta) {
 		DataTableView dataTableView = new DataTableView();
 		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
 				.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
-		dataTableView.crearTabla(valoresColumnas);
+		if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
+			dataTableView.crearTabla(valoresColumnas);
+		}
+		else {
+			dataTableView.crearMatriz(valoresColumnas);
+		}
 		mapaRespuestasTabla.put(pregunta, dataTableView);
-	}
-
-	public void construirTipoRespuestaConDatos() {
-		mapaRespuestasTabla = new HashMap<>();
-		mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {
-			DataTableView dataTableView = new DataTableView();
-			List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
-					.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
-			if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
-				dataTableView.crearTablaConDatos(valoresColumnas, listaDatos);
-			}
-			else {
-				dataTableView.crearMatrizConDatos(valoresColumnas, listaDatos);
-			}
-			mapaRespuestasTabla.put(pregunta, dataTableView);
-		});
 	}
 
 	/**
-	 * Construye la tabla que se usará en el formulario para responder las preguntas cuyo tipo de respuesta empieza por
-	 * MATRIZ
+	 * Construye la tabla o matriz que se usará del cuestionario con las respuestas cumplimentadas
+	 * 
 	 * @see visualizar
-	 * @param pregunta Pregunta del tipo respuesta MATRIZxx
+	 * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
 	 */
-	public void construirTipoRespuestaMatrizVacia(PreguntasCuestionario pregunta) {
-		DataTableView dataTableView = new DataTableView();
-		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
-				.findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
-		dataTableView.crearMatriz(valoresColumnas);
-		mapaRespuestasTabla.put(pregunta, dataTableView);
+	private void construirTipoRespuestaTablaMatrizConDatos() {
+		mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {
+			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
+			dataTableView.crearTablaMatriConDatos(listaDatos);
+			mapaRespuestasTabla.put(pregunta, dataTableView);
+		});
 	}
 
 	/**
@@ -212,19 +195,6 @@ public class VisualizarCuestionario implements Serializable {
 		if (mapaRespuestasTabla.get(pregunta) != null) {
 			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
 			dataTableView.crearFilaVacia();
-			mapaRespuestasTabla.put(pregunta, dataTableView);
-		}
-	}
-
-	/**
-	 * Elimina una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
-	 * empezar por TABLA
-	 * @param pregunta Pregunta de un cuestionario
-	 */
-	public void eliminarFilaRespuestaTabla(PreguntasCuestionario pregunta) {
-		if (mapaRespuestasTabla.get(pregunta) != null) {
-			DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
-			dataTableView.eliminarFila();
 			mapaRespuestasTabla.put(pregunta, dataTableView);
 		}
 	}

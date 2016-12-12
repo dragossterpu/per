@@ -57,7 +57,6 @@ public class Inspeccion implements Serializable {
 	@JoinColumn(name = "tipo_inspeccion")
 	private TipoInspeccion tipoInspeccion;
 
-	// Lo comento de momento para poder crear inspecciones
 	@ManyToOne
 	@JoinColumn(name = "id_equipo")
 	private Equipo equipo;

@@ -29,9 +29,7 @@ public class DataTableView implements Serializable {
 		crearFilaVacia();
 	}
 
-	public void crearTablaConDatos(List<ConfiguracionRespuestasCuestionario> valoresColumnas,
-			List<DatosTablaGenerica> listaDatos) {
-		crearColumnasDinamicamente(valoresColumnas);
+	public void crearTablaMatriConDatos(List<DatosTablaGenerica> listaDatos) {
 		setListaDatosTabla(listaDatos);
 	}
 
@@ -53,27 +51,6 @@ public class DataTableView implements Serializable {
 		listaDatosTabla.add(dtg);
 	}
 
-	public void crearMatrizConDatos(List<ConfiguracionRespuestasCuestionario> valoresColumnas,
-			List<DatosTablaGenerica> listaDatos) {
-		setListaDatosTabla(listaDatos);
-		for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
-			if ("nombreFila".equals(config.getConfig().getClave())) {
-				crearFilaMatrizConDatos(config.getConfig().getValor());
-			}
-			else {
-				columns.add(new ColumnModel(config.getConfig().getValor(), config.getConfig().getClave()));
-			}
-		}
-	}
-
-	public void crearFilaMatrizConDatos(String nombreFila) {
-		for (DatosTablaGenerica datos : listaDatosTabla) {
-			if (nombreFila.equals(datos.getNombreFila())) {
-				datos.setNombreFila(nombreFila);
-			}
-		}
-	}
-
 	public void crearColumnasDinamicamente(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
 		String header;
 		String property;
@@ -89,17 +66,16 @@ public class DataTableView implements Serializable {
 		listaDatosTabla.add(dtg);
 	}
 
-	public void crearFilasConDatos() {
-
-	}
-
 	/**
 	 * Elimina el último registro de la tabla, siempre y cuando la tabla tenga más de una fila
 	 */
-	public void eliminarFila() {
+	public DatosTablaGenerica eliminarFila() {
+		DatosTablaGenerica filaEliminar = null;
 		if (listaDatosTabla.size() > 1) {
+			filaEliminar = listaDatosTabla.get(listaDatosTabla.size() - 1);
 			listaDatosTabla.remove(listaDatosTabla.size() - 1);
 		}
+		return filaEliminar;
 	}
 
 	public class ColumnModel implements Serializable {
