@@ -142,10 +142,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 		try {
 			String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
-			if (userService.exists(correoDestinatario)) {
+			if (solicitudDocumentacionService
+					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correoDestinatario) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
-						"No se puede crear un usuario provisional para el destinatario con correo " + correoDestinatario
-								+ " ya existe para otra tarea.");
+						"No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
+								+ ", ya existe otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
 			}
 			else {
 				if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
@@ -448,36 +449,45 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String modificarSolicitud() {
 		try {
-			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-				String mensajeCorreoEnviado = "";
-				// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
-				if (solicitudDocumentacionPrevia.getFechaEnvio() != null
-						&& !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
-					String asunto = "Solicitud de documentación previa para la inspección "
-							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-					String textoAutomatico = "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado."
-							+ "\r\n \r\nFecha límite de envío anterior: " + sdf.format(backupFechaLimiteEnvio)
-							+ "\r\nFecha límite de envío nueva :"
-							+ sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio())
-							+ "\r\n \r\nMuchas gracias y un saludo.";
-					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
-					correoElectronico.envioCorreo();
-					mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
+			String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
+			if (solicitudDocumentacionService
+					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correoDestinatario) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Modificación abortada",
+						"No se puede cambiar el destinatario al de correo " + correoDestinatario
+								+ ", ya existe para otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
+			}
+			else {
+				if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+					String mensajeCorreoEnviado = "";
+					// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
+					if (solicitudDocumentacionPrevia.getFechaEnvio() != null
+							&& !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
+						String asunto = "Solicitud de documentación previa para la inspección "
+								+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
+						String textoAutomatico = "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado."
+								+ "\r\n \r\nFecha límite de envío anterior: " + sdf.format(backupFechaLimiteEnvio)
+								+ "\r\nFecha límite de envío nueva :"
+								+ sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio())
+								+ "\r\n \r\nMuchas gracias y un saludo.";
+						String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+						correoElectronico.setDatos(correoDestinatario, asunto, cuerpo);
+						correoElectronico.envioCorreo();
+						mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
+					}
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+							"La solicitud de documentación ha sido modificada con éxito" + mensajeCorreoEnviado);
+					listadoDocumentosCargados = gestDocumentacionService
+							.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+
+					String descripcion = "Solicitud documentación previa cuestionario. Usuario modificación : "
+							+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+							NOMBRESECCION);
+
+					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+							NOMBRESECCION);
 				}
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-						"La solicitud de documentación ha sido modificada con éxito" + mensajeCorreoEnviado);
-				listadoDocumentosCargados = gestDocumentacionService
-						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario modificación : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
-
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
-
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
 			}
 		}
 		catch (Exception e) {
@@ -501,7 +511,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			if (userService.exists(correoDestinatario)) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Envío abortado",
 						"No se puede crear un usuario provisional para el destinatario con correo " + correoDestinatario
-								+ " ya existe para otra tarea.");
+								+ ", ya existe para otra tarea en curso. Debe finalizarla o eliminarla antes de proseguir.");
 			}
 			else {
 				String password = Utilities.getPassword();

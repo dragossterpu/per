@@ -92,7 +92,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			// ñapa
 			try {
 				solicitudDocumentacionPrevia = solicitudDocumentacionService
-						.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
+						.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(correo);
 				listadoDocumentosPrevios = tipoDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 				listadoDocumentosCargados = gestDocumentacionService
@@ -264,16 +264,14 @@ public class ProvisionalSolicitudBean implements Serializable {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 		try {
 			solicitudDocumentacionPrevia = solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
+					.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(correo);
 			if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
 				String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
 				if ("GC".equals(ambito) || "PN".equals(ambito)) {
 					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillas" + ambito);
 				}
 				else {
-					// OTROS
-					// se muestran todas las de GC y PN, si se quiere se puede crear una categoria plantillasOTROS
-					// en tabla parametros e incluirlo en el if anterior
+					// OTROS se muestran todas las de GC y PN
 					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillasGC");
 					parametrosPlantillasAmbito.addAll(parametrosRepository.findParamByParamSeccion("plantillasPN"));
 				}

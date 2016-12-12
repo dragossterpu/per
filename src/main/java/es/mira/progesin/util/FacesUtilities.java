@@ -34,6 +34,25 @@ public class FacesUtilities {
 
 	/**
 	 * 
+	 * @param pagina
+	 * @param paramGET cadena con parametros que se quieran pasar a la página destino separados por '&'
+	 */
+	public void redirect(String pagina, String paramGET) {
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		ExternalContext extContext = ctx.getExternalContext();
+
+		String url = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, pagina));
+
+		try {
+			extContext.redirect(url + "?" + paramGET);
+		}
+		catch (IOException ioe) {
+			throw new FacesException(ioe);
+		}
+	}
+
+	/**
+	 * 
 	 * @param severity
 	 * @param summary
 	 * @param detail

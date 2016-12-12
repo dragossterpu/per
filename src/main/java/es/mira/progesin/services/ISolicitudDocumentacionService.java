@@ -15,6 +15,9 @@ public interface ISolicitudDocumentacionService {
 
 	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo);
 
+	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(
+			String correo);
+
 	void delete(Long id);
 
 	List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(
