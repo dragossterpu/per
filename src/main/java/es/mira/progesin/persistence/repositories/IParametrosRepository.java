@@ -46,7 +46,7 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
 
 	/***************************************
 	 * 
-	 * findParametrosForSeccion
+	 * findParamByParamSeccion
 	 * 
 	 * Devuelve una lista de objetos Parametro de una seccion localizada en la tabla de Parámetros de BDD.
 	 * 
@@ -57,6 +57,9 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
 	 *
 	 *************************************/
 
-
 	List<Parametro> findParamByParamSeccion(String seccion);
+	
+	
+	@Query("select distinct param.seccion from Parametro")
+	List<String> findSecciones();
 }
