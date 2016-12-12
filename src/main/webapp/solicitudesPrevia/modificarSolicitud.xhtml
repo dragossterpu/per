@@ -63,7 +63,7 @@
 						<h:outputLabel for="correoDestinatario" value="Correo destinatario (*):" />
 						<p:inputText id="correoDestinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" converter="#{trimConverter}"
 							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
-							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 						</p:inputText>
 				
 						<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
