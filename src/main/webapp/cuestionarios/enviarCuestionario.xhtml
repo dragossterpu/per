@@ -43,7 +43,7 @@
 					<p:inputText id="correo" value="#{envioCuestionarioBean.cuestionarioEnvio.correoEnvio}" maxlength="500"
 						required="true" requiredMessage="Introduzca el correo electrónico" converter="#{trimConverter}"
 						validatorMessage="Formato de correo incorrecto">
-							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 					</p:inputText>
 					<p:messages for="correo" autoUpdate="true"  closable="true"/>
 					

@@ -103,7 +103,7 @@
 							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}"
 							validatorMessage="Formato de correo incorrecto">
 							<f:validateRegex
-								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 						</p:inputText>
 																			
 					</div>

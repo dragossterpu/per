@@ -3,6 +3,7 @@ package es.mira.progesin.services.gd;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 
 public interface ITipoDocumentacionService {
@@ -12,6 +13,8 @@ public interface ITipoDocumentacionService {
 	void delete(Long id);
 
 	TipoDocumentacion save(TipoDocumentacion entity);
+
+	List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito);
 
 	DocumentacionPrevia save(DocumentacionPrevia entity);
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentacionRepository;
@@ -34,6 +35,11 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
 	@Transactional(readOnly = false)
 	public TipoDocumentacion save(TipoDocumentacion entity) {
 		return tipoDocumentacionRepository.save(entity);
+	}
+
+	@Override
+	public List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito) {
+		return tipoDocumentacionRepository.findByAmbito(ambito);
 	}
 
 	@Override

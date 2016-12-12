@@ -16,14 +16,14 @@
 
 		<div id="listadoDocumentacion">
 	<h:form id="form">
-			<p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
+			<p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" 
 			value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}"
 							update=":form:msgs" />
 						<p:ajax event="rowEditCancel" listener="#{tipoDocumentacionBean.onRowCancel}"
 							update=":form:msgs" />
 
-						<p:column headerText="Documento">
+						<p:column headerText="Documento" sortBy="#{tipoDocumentacion.descripcion}">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{tipoDocumentacion.descripcion}" />
@@ -35,7 +35,7 @@
 								</f:facet>
 							</p:cellEditor> 
 				       </p:column>
-				       <p:column headerText="Nombre Fichero" style="width:80px">
+				       <p:column headerText="Nombre Fichero" sortBy="#{tipoDocumentacion.nombre}" style="width:80px">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{tipoDocumentacion.nombre}" />
@@ -63,6 +63,28 @@
 											itemValue="#{extensionesTipoDocumentacion}"/>
 									</p:selectManyMenu>
 									<p:messages for="documentacionInput4" autoUpdate="true"  closable="true"/>
+								</f:facet>
+							</p:cellEditor> 
+				       </p:column>
+				       <p:column headerText="Ambito" sortBy="#{tipoDocumentacion.ambito}" style="width:100px">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{tipoDocumentacion.ambito.descripcion}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:importEnum
+										type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+										var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+									<p:selectOneMenu id="documentacionInput5"
+										value="#{tipoDocumentacion.ambito}"
+										effect="fold" required="true"
+										requiredMessage="Seleccione un ambito">
+										<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+											var="ambitoTipoDocumentacion"
+											itemLabel="#{ambitoTipoDocumentacion.descripcion}"
+											itemValue="#{ambitoTipoDocumentacion}"/>
+									</p:selectOneMenu>
+									<p:messages for="documentacionInput5" autoUpdate="true"  closable="true"/>
 								</f:facet>
 							</p:cellEditor> 
 				       </p:column>

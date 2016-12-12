@@ -43,7 +43,7 @@
 									<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true"/>
 																			
 									<h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
-									<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito}" disabled="true"/>
+									<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito.descripcion}" disabled="true"/>
 																											
 									<h:outputLabel for="cuatrimestreInspeccion" value="Cuatrimestre inspección:" />
 									<p:inputText id="cuatrimestreInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion}" 
@@ -120,6 +120,13 @@
 											filterBy="#{documento.descripcion}">
 											<h:outputText value="#{documento.descripcion}" />
 										</p:column>
+										
+										<p:column headerText="Ambito" width="50"
+											sortBy="#{documento.ambito}"
+											filterBy="#{documento.ambito}">
+											<h:outputText value="#{documento.ambito}" />
+										</p:column>
+										
 									</p:dataTable>
 
 								</h:panelGrid>
@@ -167,7 +174,7 @@
 										required="true"
 										requiredMessage="Es obligatorio un correo persona apoyo">
 										<f:validateRegex
-											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+											pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 									</p:inputText>
 
 								</h:panelGrid>

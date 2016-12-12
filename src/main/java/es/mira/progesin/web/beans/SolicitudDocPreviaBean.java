@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
@@ -159,7 +160,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 							NOMBRESECCION);
 
 					// Guardamos la notificacion en bbdd
-					// TODO usar NotificacionEnum
 					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
 							NOMBRESECCION);
 				}
@@ -269,7 +269,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				// TODO usar NotificacionEnum
 				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}
@@ -304,7 +303,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				// TODO usar NotificacionEnum
 				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}
@@ -328,7 +326,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
 		datosApoyo();
-		listadoDocumentos = tipoDocumentacionService.findAll();
 		return "/solicitudesPrevia/crearSolicitud";
 	}
 
@@ -380,6 +377,15 @@ public class SolicitudDocPreviaBean implements Serializable {
 			return "confirm";
 		}
 		else {
+			if ("documentacion".equals(event.getNewStep())) {
+				AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
+				if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
+					listadoDocumentos = tipoDocumentacionService.findAll();
+				}
+				else {
+					listadoDocumentos = tipoDocumentacionService.findByAmbito(ambito);
+				}
+			}
 			return event.getNewStep();
 		}
 	}
@@ -421,7 +427,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
 							NOMBRESECCION);
 
-					// TODO usar NotificacionEnum
 					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(),
 							NOMBRESECCION);
 				}
@@ -471,7 +476,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				// TODO usar NotificacionEnum
 				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}
@@ -533,7 +537,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 							NOMBRESECCION);
 
-					// TODO usar NotificacionEnum
 					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 							NOMBRESECCION);
 				}
@@ -557,7 +560,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String finalizarSolicitud() {
 		try {
-			// TODO ¿avisar destinatario?
 			solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
 			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
 			solicitudDocumentacionPrevia.setUsuarioFinalizacion(usuarioActual);
@@ -571,7 +573,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				// TODO usar NotificacionEnum
 				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}
@@ -635,7 +636,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				// TODO usar NotificacionEnum
 				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}

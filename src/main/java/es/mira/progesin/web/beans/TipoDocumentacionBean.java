@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
-import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Parametro;
+import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
@@ -39,10 +39,6 @@ public class TipoDocumentacionBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private TipoDocumentacion documentacion;
-
-	static Logger LOG = Logger.getLogger(TipoDocumentacionBean.class);
-
 	private List<TipoDocumentacion> listaTipoDocumentacion;
 
 	@Autowired
@@ -56,8 +52,10 @@ public class TipoDocumentacionBean implements Serializable {
 
 	private List<String> extensionesNuevo;
 
+	private AmbitoInspeccionEnum ambitoNuevo;
+
 	@Autowired
-	ITipoDocumentacionService tipoDocumentacionService;
+	transient ITipoDocumentacionService tipoDocumentacionService;
 
 	/**
 	 * Método que nos lleva al listado de la documentacion. Se llama desde el menu lateral
@@ -104,6 +102,7 @@ public class TipoDocumentacionBean implements Serializable {
 		documentacion.setDescripcion(descripcionNuevo);
 		documentacion.setNombre(nombreNuevo);
 		documentacion.setExtensiones(extensionesNuevo);
+		documentacion.setAmbito(ambitoNuevo);
 		try {
 			if (tipoDocumentacionService.save(documentacion) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",

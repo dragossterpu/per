@@ -28,21 +28,22 @@ public class ApplicationBean implements Serializable {
 
 	@Autowired
 	private transient IPuestoTrabajoService puestosTrabajoService;
-	
+
 	@Autowired
 	private transient IParametroService parametroService;
 
 	// Los cargo en la aplicación porque van a ser siempre los mismo y así agilizo la aplicación
 	private List<PuestoTrabajo> listaPuestosTrabajo;
-	
 
-	private Map<String,Map<String,String>> mapaParametros;
+	private Map<String, Map<String, String>> mapaParametros;
+
+	private String dominiosValidos;
 
 	@PostConstruct
 	public void init() {
 		setListaPuestosTrabajo((List<PuestoTrabajo>) puestosTrabajoService.findAll());
-		setMapaParametros((Map<String,Map<String,String>>) parametroService.getMapaParametros());
-		
-		
+		setMapaParametros(parametroService.getMapaParametros());
+		setDominiosValidos(mapaParametros.get("dominiosCorreo").get("dominiosCorreo"));
+
 	}
 }

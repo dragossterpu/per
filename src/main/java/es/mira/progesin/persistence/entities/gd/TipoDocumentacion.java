@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import es.mira.progesin.converters.ListaExtensionesAdapter;
+import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -52,4 +55,8 @@ public class TipoDocumentacion implements Serializable {
 	@Column(name = "EXTENSIONES")
 	@Convert(converter = ListaExtensionesAdapter.class)
 	private List<String> extensiones;
+
+	@Column(name = "ambito", length = 10)
+	@Enumerated(EnumType.STRING)
+	private AmbitoInspeccionEnum ambito;
 }

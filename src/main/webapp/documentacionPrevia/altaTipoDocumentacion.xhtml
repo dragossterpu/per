@@ -14,15 +14,15 @@
 
 			<div class="bloqueFormulario">
 				<h:form id="form">
-					<h:outputLabel for="descripcion" value="Descripcion del tipo de documento (*):" />
+					<h:outputLabel for="descripcion" value="Descripcion (*):" />
 					<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
 					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 					
-					<h:outputLabel for="nombre" value="Nombre del tipo de documento (*):" />
+					<h:outputLabel for="nombre" value="Nombre (*):" />
 					<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" converter="#{trimConverter}"/>
 					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
 					
-					<h:outputLabel for="extensiones" value="Extensiones del tipo de documento (*):" />
+					<h:outputLabel for="extensiones" value="Extensiones (*):" />
 					<p:selectManyCheckbox id="extensiones" layout="responsive" columns="4"
 						value="#{tipoDocumentacionBean.extensionesNuevo}"
 						showCheckbox="true" effect="fold" required="true"
@@ -33,6 +33,22 @@
 							itemValue="#{extensionesTipoDocumentacion}" />
 					</p:selectManyCheckbox>
 					<p:messages for="extensiones" autoUpdate="true"  closable="true"/>
+					
+					<h:outputLabel for="ambito" value="Ámbito (*):" />
+					<p:importEnum
+						type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+						var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+					<p:selectOneMenu id="ambito"
+						value="#{tipoDocumentacionBean.ambitoNuevo}"
+						effect="fold" required="true"
+						requiredMessage="Seleccione un ámbito">
+						<f:selectItem itemLabel="Seleccione un ámbito" itemValue="" />
+						<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+							var="ambitoTipoDocumentacion"
+							itemLabel="#{ambitoTipoDocumentacion.descripcion}"
+							itemValue="#{ambitoTipoDocumentacion}"/>
+					</p:selectOneMenu>
+					<p:messages for="ambito" autoUpdate="true"  closable="true"/>
 					
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save"/>
