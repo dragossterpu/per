@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public enum RolEquipoEnum {
-	JEFE("Jefe de equipo"), MIEMBRO("Miembro"), COLABORADOR("Colaborador");
+	JEFE_EQUIPO("Jefe de equipo"), MIEMBRO("Componente"), COLABORADOR("Colaborador");
 
 	private String descripcion;
 }

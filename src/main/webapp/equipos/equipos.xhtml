@@ -30,7 +30,7 @@
 						<h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
 						<p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" />
 						
-						<h:outputLabel for="nombreMiembro" value="Nombre de miembro de equipo:" />
+						<h:outputLabel for="nombreMiembro" value="Nombre de componente de equipo:" />
 						<p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
 						
 						<h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
@@ -87,7 +87,7 @@
 				            	<p:printer target="busquedaEquipos" />
 				            </h:commandLink>
 			            </p:outputPanel>
-			  		<p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}"  rows="20" id="tablaEquipos"
+			  		<p:dataTable  var="equipo" value="#{equiposBean.equipoBusqueda.listaEquipos}" rows="20" id="tablaEquipos"
 	                         draggableColumns="true"
 	                         paginator="true"
 	                         resizableColumns="true"

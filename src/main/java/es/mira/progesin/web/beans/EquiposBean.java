@@ -11,7 +11,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
@@ -22,17 +21,16 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
-import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,8 +41,6 @@ import lombok.Setter;
 @ViewScoped
 public class EquiposBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger LOG = Logger.getLogger(EquiposBean.class.getName());
 
 	private Equipo equipo;
 
@@ -58,13 +54,13 @@ public class EquiposBean implements Serializable {
 
 	private String nombreMiembro;
 
-	private List<Miembros> listMiembros;
+	private transient List<Miembros> listMiembros;
 
 	private String nombreEquipo;
 
 	private User jefeSelecionado;
 
-	private List<User> miembrosSelecionados;
+	private List<User> miembrosSeleccionados;
 
 	private List<User> colaboradoresSelecionados;
 
@@ -78,13 +74,13 @@ public class EquiposBean implements Serializable {
 
 	private Boolean equipoEspecial;
 
-	Miembros miembro = new Miembros();
+	private Miembros miembro = new Miembros();
 
-	List<User> listadoJefes = new ArrayList<User>();
+	private List<User> listadoJefes = new ArrayList<>();
 
-	List<User> listadoMiembros = new ArrayList<User>();
+	private List<User> listadoMiembros = new ArrayList<>();
 
-	List<User> listadoColaboradores;
+	private List<User> listadoColaboradores;
 
 	private int numeroColumnasListadoEquipos = 5;
 
@@ -96,23 +92,29 @@ public class EquiposBean implements Serializable {
 
 	RegistroActividad regActividad = new RegistroActividad();
 
-	List<User> listaUsuarios;
+	private List<User> listaUsuarios;
 
-	private final String NOMBRESECCION = "Equipos de inspecciones";
-	
+	private static final String NOMBRESECCION = "Equipos de inspecciones";
+
+	private static final String VISTAEQUIPOS = "/equipos/equipos";
+
+	private static final String JEFEEQUIPO = "jefeEquipo";
+
+	private static final String MIEMBROS = "miembros";
+
 	private String vieneDe;
 
 	@Autowired
-	IEquipoService equipoService;
+	transient IEquipoService equipoService;
 
 	@Autowired
-	IUserService userService;
+	transient IUserService userService;
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	transient IRegistroActividadService regActividadService;
 
 	@Autowired
-	INotificacionService notificacionService;
+	transient INotificacionService notificacionService;
 
 	/**
 	 * Método que nos lleva al formulario de alta de nuevos equipos, inicializando todo lo necesario para mostrar
@@ -121,13 +123,13 @@ public class EquiposBean implements Serializable {
 	 */
 	public String nuevoEquipo() {
 		this.jefeSelecionado = null;
-		this.miembrosSelecionados = null;
+		this.miembrosSeleccionados = null;
 		this.listadoMiembros = null;
 		this.equipo = null;
 		this.tipoEquipo = null;
 		equipo = new Equipo();
 		jefeSelecionado = new User();
-		miembrosSelecionados = new ArrayList<User>();
+		miembrosSeleccionados = new ArrayList<User>();
 		equipo.setFechaAlta(new Date());
 		if (equipoEspecial) {
 			equipo.setEquipoEspecial("SI");
@@ -166,29 +168,27 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSelecionado.getNombre()
 					+ " " + jefeSelecionado.getApellido1() + " " + jefeSelecionado.getApellido2();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 
 			// Guardamos la notificacion en bbdd
-			saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 
 		this.equipoEspecial = false;
-		return "/equipos/equipos";
+		return VISTAEQUIPOS;
 	}
 
 	public void getFormularioBusquedaEquipos() {
-		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
 			equipoBusqueda.resetValues();
 			this.estado = null;
-			this.vieneDe=null;
-			}
-		
+			this.vieneDe = null;
+		}
+
 	}
 
 	public String buscarEquipo() {
@@ -199,13 +199,13 @@ public class EquiposBean implements Serializable {
 			equipo.setNombreJefe(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 		}
 		equipoBusqueda.setListaEquipos(listaEquipos);
-		return "/equipos/equipos";
+		return VISTAEQUIPOS;
 	}
 
 	public String limpiarValores() {
 		this.equipoEspecial = false;
 		// limpiamos los datos del formulario
-		this.miembrosSelecionados = null;
+		this.miembrosSeleccionados = null;
 		return null;
 	}
 
@@ -217,17 +217,15 @@ public class EquiposBean implements Serializable {
 			equipoBusqueda.getListaEquipos().remove(equipo);
 			String descripcion = "Se ha eliminado el equipo inspecciones. Nombre jefe equipo " + equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
-			saveNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 
-		return "/equipos/equipos";
+		return VISTAEQUIPOS;
 	}
 
 	/**
@@ -237,9 +235,9 @@ public class EquiposBean implements Serializable {
 	 * @return
 	 */
 	public String getFormModificarEquipo(Equipo equipo) {
-		this.miembrosSelecionados = null;
+		this.miembrosSeleccionados = null;
 		this.listadoColaboradores = null;
-		listMiembros = new ArrayList<Miembros>();
+		listMiembros = new ArrayList<>();
 		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
 		listMiembros = equipoService.findByIdEquipo(equipo.getIdEquipo());
 		equipo.setJefeEquipo(jefeSelecionado.getUsername());
@@ -262,20 +260,20 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
 					+ equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
-			saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					NOMBRESECCION);
 		}
 		catch (Exception e) {
-			altaRegActivError(e);
+			regActividadService.altaRegActivError(NOMBRESECCION, e);
 		}
 
 	}
 
 	public String borrarMiembro(Equipo equipo) {
-		return "/equipos/equipos";
+		return VISTAEQUIPOS;
 	}
 
 	public String aniadirColaborador() {
@@ -289,7 +287,7 @@ public class EquiposBean implements Serializable {
 	}
 
 	public String aniadirMiembro() {
-		this.miembrosSelecionados = null;
+		this.miembrosSeleccionados = null;
 		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		return "/equipos/anadirMiembroEquipo";
 	}
@@ -301,20 +299,20 @@ public class EquiposBean implements Serializable {
 			miembro.setIdEquipo(equipo.getIdEquipo());
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
-			miembro.setPosicion("Colaborador");
+			miembro.setPosicion(RolEquipoEnum.COLABORADOR);
 			try {
 				equipoService.save(miembro);
 				String descripcion = "Se ha añadido un nuevo colaborador al equipo inspecciones. Nombre colaborador "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
-				saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 			}
 			catch (Exception e) {
-				altaRegActivError(e);
+				regActividadService.altaRegActivError(NOMBRESECCION, e);
 			}
 
 		}
@@ -323,38 +321,38 @@ public class EquiposBean implements Serializable {
 				"Colaborador/es añadido/s con éxito");
 		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 		context.execute("PF('dialogMessage').show()");
-		return "/equipos/equipos";
+		return VISTAEQUIPOS;
 	}
 
 	public String guardarMiembro() {
 
-		for (User user : miembrosSelecionados) {
+		for (User user : miembrosSeleccionados) {
 			Miembros miembro = new Miembros();
 			miembro.setIdEquipo(equipo.getIdEquipo());
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
-			miembro.setPosicion("Miembro");
+			miembro.setPosicion(RolEquipoEnum.MIEMBRO);
 			try {
 				equipoService.save(miembro);
-				String descripcion = "Se ha añadido un nuevo miembro al equipo inspecciones. Nombre miembro "
+				String descripcion = "Se ha añadido un nuevo componente al equipo inspecciones. Nombre componente "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
-				saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 			}
 			catch (Exception e) {
-				altaRegActivError(e);
+				regActividadService.altaRegActivError(NOMBRESECCION, e);
 			}
 
 		}
 		RequestContext context = RequestContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta", "Miembro/es añadido/s con éxito");
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta", "componente/s añadido/s con éxito");
 		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 		context.execute("PF('dialogMessage').show()");
-		return "/equipos/equipos";
+		return VISTAEQUIPOS;
 	}
 
 	public void onToggle(ToggleEvent e) {
@@ -370,7 +368,7 @@ public class EquiposBean implements Serializable {
 		miembro.setNombreCompleto(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
 		miembro.setUsername(jefeSelecionado.getUsername());
-		miembro.setPosicion("Jefe de equipo");
+		miembro.setPosicion(RolEquipoEnum.JEFE_EQUIPO);
 		equipoService.save(miembro);
 	}
 
@@ -378,12 +376,12 @@ public class EquiposBean implements Serializable {
 	 * 
 	 */
 	private void altaMiembrosEquipo() {
-		for (User user : miembrosSelecionados) {
+		for (User user : miembrosSeleccionados) {
 			Miembros miembro2 = new Miembros();
 			miembro2.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro2.setIdEquipo(equipo.getIdEquipo());
 			miembro2.setUsername(user.getUsername());
-			miembro2.setPosicion("Miembro");
+			miembro2.setPosicion(RolEquipoEnum.MIEMBRO);
 			equipoService.save(miembro2);
 		}
 	}
@@ -403,24 +401,24 @@ public class EquiposBean implements Serializable {
 	 * @param event
 	 */
 	private void cleanParam(FlowEvent event) {
-		if (event.getOldStep().equals("jefeEquipo") & event.getNewStep().equals("miembros")) {
+		if (JEFEEQUIPO.equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
 			User jefe = jefeSelecionado;
 			listadoJefes.remove(jefe);
 			listadoMiembros = listadoJefes;
 		}
-		if (event.getOldStep().equals("confirm") & event.getNewStep().equals("miembros")) {
-			this.miembrosSelecionados = null;
+		if ("confirm".equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
+			this.miembrosSeleccionados = null;
 			listadoJefes = listaUsuarios;
 		}
-		if (event.getOldStep().equals("miembros") & event.getNewStep().equals("jefeEquipo")) {
+		if (MIEMBROS.equals(event.getOldStep()) && JEFEEQUIPO.equals(event.getNewStep())) {
 			listadoJefes.add(jefeSelecionado);
 			this.jefeSelecionado = null;
 		}
-		if (event.getOldStep().equals("jefeEquipo") & event.getNewStep().equals("general")) {
+		if (JEFEEQUIPO.equals(event.getOldStep()) && "general".equals(event.getNewStep())) {
 			this.equipo.setNombreEquipo("");
 			this.tipoEquipo = null;
 			this.jefeSelecionado = null;
-			this.miembrosSelecionados = null;
+			this.miembrosSeleccionados = null;
 		}
 	}
 
@@ -431,7 +429,7 @@ public class EquiposBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		// para que en el select cargue por defecto la opción "Seleccine uno..."
+		// para que en el select cargue por defecto la opción "Seleccione uno..."
 		estado = null;
 		this.equipo = null;
 		this.equipoEspecial = false;
@@ -451,48 +449,4 @@ public class EquiposBean implements Serializable {
 		this.skip = skip;
 	}
 
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveReg(String descripcion, String tipoReg, String username) {
-		RegistroActividad regActividad = new RegistroActividad();
-		regActividad.setTipoRegActividad(tipoReg);
-		regActividad.setUsernameRegActividad(username);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setDescripcion(descripcion);
-		regActividadService.save(regActividad);
-	}
-
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
-		Notificacion notificacion = new Notificacion();
-		notificacion.setTipoNotificacion(tipoNotificacion);
-		notificacion.setUsernameNotificacion(username);
-		notificacion.setNombreSeccion(NOMBRESECCION);
-		notificacion.setFechaAlta(new Date());
-		notificacion.setDescripcion(descripcion);
-		notificacionService.save(notificacion);
-	}
-
-	/**
-	 * @param e
-	 */
-	private void altaRegActivError(Exception e) {
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
-	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 }

@@ -717,16 +717,16 @@ insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equip
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO',sysdate,'cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
 insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO',sysdate,'mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');
 
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (1,1,'Silvia apellido1 apellido2','Jefe de equipo','silpe');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (2,1,'PEDRO  CARRETERO LIAU','Miembro','pedro');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (3,1,'JOSE MANUEL SIERRA EXOJO','Miembro','jmanuel');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (4,1,'ANTONIO LOPEZ BETRIAN','Miembro','alopez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (5,2,'CARLOS GONZÁLEZ CASTILLO','Jefe de equipo','cgonzalez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (6,2,'AMADEO MATEOS CHICO','Miembro','amateos');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (7,2,'ELIAS MARTINEZ ALLER','Miembro','emartinez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (8,3,'MARCELO FRANCISCO GONZALEZ FERNANDEZ','Jefe de equipo','mfgonzalez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (9,3,'JOSE LUIS CALONGE DELSO','Miembro','jlcalonge');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (10,3,'JOSE IGNACIO CEREZO HERNANDEZ','Miembro','jicerezo');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (1,1,'Silvia apellido1 apellido2','JEFE_EQUIPO','silpe');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (2,1,'PEDRO  CARRETERO LIAU','MIEMBRO','pedro');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (3,1,'JOSE MANUEL SIERRA EXOJO','MIEMBRO','jmanuel');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (4,1,'ANTONIO LOPEZ BETRIAN','MIEMBRO','alopez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (5,2,'CARLOS GONZÁLEZ CASTILLO','JEFE_EQUIPO','cgonzalez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (6,2,'AMADEO MATEOS CHICO','MIEMBRO','amateos');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (7,2,'ELIAS MARTINEZ ALLER','MIEMBRO','emartinez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (8,3,'MARCELO FRANCISCO GONZALEZ FERNANDEZ','JEFE_EQUIPO','mfgonzalez');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (9,3,'JOSE LUIS CALONGE DELSO','MIEMBRO','jlcalonge');
+insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (10,3,'JOSE IGNACIO CEREZO HERNANDEZ','MIEMBRO','jicerezo');
 
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (1, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 'PRIMERO', 2017, 1);
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (11, '01/11/2016', '11/2017', 'I.G.P.','silpe', 'Granada', 'GC', 'SEGUNDO', 2017, 1);

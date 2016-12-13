@@ -24,27 +24,27 @@
 				<h4>  Equipo : </h4>
 				
 				  <p:dataTable id="equipo" var="miembro" value="#{equiposBean.listMiembros}" 
-				   paginator="true" rows="5" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{miembro.username}"
+				   paginator="true" rows="20" selection="#{equiposBean.miembrosSeleccionados}" rowKey="#{miembro.username}"
 				   style="white-space:pre-line;">
 				        <f:facet name="header">
-				             Miembros 
+				             Componentes 
 				        </f:facet>
 
 					    <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
-					    <p:column headerText="Nombre miembro" sortBy="#{miembro.nombreCompleto}">
+					    <p:column headerText="Nombre" sortBy="#{miembro.nombreCompleto}">
 					        <h:outputText value="#{miembro.nombreCompleto}" />
 					    </p:column>
 					     <p:column headerText="Posición" sortBy="#{miembro.posicion}">
-					        <h:outputText value="#{miembro.posicion}" />
+					        <h:outputText value="#{miembro.posicion.descripcion}" />
 					    </p:column>
 					  <f:facet name="footer">
-       					 Miembros del equipo: #{fn:length(equiposBean.listMiembros)}.
+       					 Componentes del equipo: #{fn:length(equiposBean.listMiembros)}.
     				 </f:facet>
 				</p:dataTable>
 		</div>
 			<p:outputPanel rendered="#{empty equiposBean.equipo.fechaBaja}">
 			<div class="botonesFormulario">
-			<p:button  outcome="/equipos/anadirMiembroEquipo"  value="Añadir miembro"  icon="fa fa-fw fa-user-plus" />
+			<p:button  outcome="/equipos/anadirMiembroEquipo"  value="Añadir componente"  icon="fa fa-fw fa-user-plus" />
 				<p:button  outcome="/equipos/anadirColaboradorEquipo" action="#{equiposBean.aniadirColaborador}" value="Añadir colaborador"  icon="fa fa-fw fa-user-plus" />
 			</div>
 			</p:outputPanel>	

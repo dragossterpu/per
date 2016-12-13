@@ -76,12 +76,12 @@
             </p:panel>
         </p:tab>
  
-        <p:tab id="miembros" title="Miembros">
+        <p:tab id="miembros" title="Componentes">
             <br></br>
-            <p:panel header="Miembros">
+            <p:panel header="Componentes">
             <br></br>
                 <p:messages />
-                   <p:dataTable id="equipoMiembros" var="inspector"  value="#{equiposBean.listadoMiembros}" paginator="true" rows="20" selection="#{equiposBean.miembrosSelecionados}" rowKey="#{inspector.username}"
+                   <p:dataTable id="equipoMiembros" var="inspector"  value="#{equiposBean.listadoMiembros}" paginator="true" rows="20" selection="#{equiposBean.miembrosSeleccionados}" rowKey="#{inspector.username}"
                     >
 				        <f:facet name="header">
 				            Inspectores
