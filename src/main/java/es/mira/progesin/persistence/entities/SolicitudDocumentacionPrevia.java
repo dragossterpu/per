@@ -32,7 +32,6 @@ import lombok.ToString;
  * provisional.
  * 
  * @author EZENTIS
- * @see es.mira.progesin.persistence.entities.BORRARModeloSolicitud
  * @see es.mira.progesin.persistence.entities.Inspeccion
  * @see es.mira.progesin.persistence.entities.DocumentacionPrevia
  * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
