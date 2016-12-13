@@ -32,7 +32,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
 
 	private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
-	
+
 	private String vieneDe;
 
 	// // para la visualización
@@ -64,16 +64,28 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	}
 
 	/**
+	 * Devuelve al formulario de búsqueda de modelos de cuestionario a su estado inicial y borra los resultados de
+	 * búsquedas anteriores si se navega desde el menú u otra sección.
+	 * 
+	 * @author EZENTIS
+	 */
+	public void getFormBusquedaModelosCuestionario() {
+
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
+			limpiar();
+			this.vieneDe = null;
+		}
+
+	}
+
+	/**
 	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
 	 */
 	public void limpiar() {
-		
-		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
-			cuestionarioBusqueda.limpiar();
-			listaCuestionarioPersonalizado = null;
-			this.vieneDe=null;
-			}
-		
+
+		cuestionarioBusqueda.limpiar();
+		listaCuestionarioPersonalizado = null;
+
 	}
 
 	/**

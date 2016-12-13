@@ -660,17 +660,26 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	/**
 	 * Devuelve al formulario de búsqueda de solicitudes de documentación previa a su estado inicial y borra los
-	 * resultados de búsquedas anteriores.
+	 * resultados de búsquedas anteriores si se navega desde el menú u otra sección.
+	 * 
+	 * @author EZENTIS
+	 */
+	public void getFormBusquedaSolicitudes() {
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
+			limpiarBusqueda();
+			this.vieneDe = null;
+		}
+
+	}
+
+	/**
+	 * Borra los resultados de búsquedas anteriores.
 	 * 
 	 * @author EZENTIS
 	 */
 	public void limpiarBusqueda() {
-		if ("menu".equalsIgnoreCase(this.vieneDe)) {
-			solicitudDocPreviaBusqueda.resetValues();
-			listaSolicitudesPrevia = null;
-			this.vieneDe = null;
-		}
-
+		solicitudDocPreviaBusqueda.resetValues();
+		listaSolicitudesPrevia = null;
 	}
 
 	/**

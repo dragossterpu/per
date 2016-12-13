@@ -32,11 +32,9 @@ import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Setter
 @Getter
 @Component("userBean")
-
 
 public class UserBean {
 
@@ -57,9 +55,8 @@ public class UserBean {
 	private int numeroColumnasListadoUsarios = 9;
 
 	private String estadoUsuario = null;
-	
+
 	private String vieneDe;
-	
 
 	@Autowired
 	ApplicationBean applicationBean;
@@ -144,10 +141,26 @@ public class UserBean {
 		return null;
 	}
 
+	/**
+	 * Devuelve al formulario de búsqueda de usuarios a su estado inicial y borra los resultados de búsquedas anteriores
+	 * si se navega desde el menú u otra sección.
+	 * 
+	 * @author EZENTIS
+	 */
 	public void getFormularioBusquedaUsuarios() {
-		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
-			userBusqueda.resetValues();
-			this.vieneDe=null;}
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
+			limpiarBusqueda();
+			this.vieneDe = null;
+		}
+	}
+
+	/**
+	 * Borra los resultados de búsquedas anteriores.
+	 * 
+	 * @author EZENTIS
+	 */
+	public void limpiarBusqueda() {
+		userBusqueda.resetValues();
 	}
 
 	/**

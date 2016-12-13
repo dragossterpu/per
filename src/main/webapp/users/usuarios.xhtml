@@ -34,6 +34,9 @@
 						<h:outputLabel for="apellido1" value="Primer apellido:" />
 						<p:inputText id="apellido1" value="#{userBean.userBusqueda.apellido1}"/>
 						
+						<h:outputLabel for="apellido2" value="Segundo apellido:" />
+						<p:inputText id="apellido2" value="#{userBean.userBusqueda.apellido2}"/>
+						
 						<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo:" />
 						<p:selectOneMenu value="#{userBean.userBusqueda.puestoTrabajo}" id="puestoTrabajoSelect" 
 							converter="#{selectConverter}">
@@ -79,7 +82,7 @@
 			</div>
 			<div class="botonesFormulario">
 				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" />
-				<h:commandLink title="Limpiar" action="#{userBean.getFormularioBusquedaUsuarios}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+				<h:commandLink title="Limpiar" action="#{userBean.limpiarBusqueda}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 					<span class="ui-CommandLink-texto">Limpiar</span>
 				</h:commandLink>
 	            <h:commandLink title="Nuevo usuario" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{userBean.nuevoUsuario}">

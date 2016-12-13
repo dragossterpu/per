@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -29,6 +30,8 @@ public class UserService implements IUserService {
 
 	// Obligado por sonar
 	private static final String FECHA_ALTA = "fechaAlta";
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
 	@Transactional(readOnly = false)
@@ -111,24 +114,25 @@ public class UserService implements IUserService {
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
-			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
-			criteria.add(Restrictions.sqlRestriction(
-					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") >= '" + userBusqueda.getFechaDesde() + "'"));
+			criteria.add(Restrictions
+					.sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(userBusqueda.getFechaDesde()) + "'"));
 		}
 		if (userBusqueda.getFechaHasta() != null) {
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
-			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
-			criteria.add(Restrictions.sqlRestriction(
-					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") <= '" + userBusqueda.getFechaHasta() + "'"));
+			criteria.add(Restrictions
+					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
 		}
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
 			criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
+		}
+		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
+			criteria.add(Restrictions.ilike("apellido2", userBusqueda.getApellido2(), MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
 			criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));

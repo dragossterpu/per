@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -34,6 +35,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 
 	@Autowired
 	IDocumentacionPreviaRepository documentacionPreviaRepository;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
 	public SolicitudDocumentacionPrevia save(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
@@ -112,18 +115,16 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
-			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
 			criteria.add(Restrictions.sqlRestriction(
-					"DATE_TRUNC('day'," + campoFecha + ") >= '" + solicitudDocPreviaBusqueda.getFechaDesde() + "'"));
+					"TRUNC(" + campoFecha + ") >= '" + sdf.format(solicitudDocPreviaBusqueda.getFechaDesde()) + "'"));
 		}
 		if (solicitudDocPreviaBusqueda.getFechaHasta() != null) {
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
-			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
 			criteria.add(Restrictions.sqlRestriction(
-					"DATE_TRUNC('day'," + campoFecha + ") <= '" + solicitudDocPreviaBusqueda.getFechaHasta() + "'"));
+					"TRUNC(" + campoFecha + ") <= '" + sdf.format(solicitudDocPreviaBusqueda.getFechaHasta()) + "'"));
 		}
 		if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null) {
 			criteria.add(

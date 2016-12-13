@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -14,12 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 @Service
 public class EquipoService implements IEquipoService {
+
+	private static final String FECHABAJA = "fechaBaja";
 
 	@Autowired
 	IEquipoRepository equipoRepository;
@@ -29,6 +33,8 @@ public class EquipoService implements IEquipoService {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
 	public Iterable<Equipo> findAll() {
@@ -64,41 +70,34 @@ public class EquipoService implements IEquipoService {
 		Criteria criteria = session.createCriteria(Equipo.class);
 
 		if (equipoBusqueda.getFechaDesde() != null) {
-			// criteria.add(Restrictions.ge("fechaAlta", equipoBusqueda.getFechaDesde()));
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
-			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
-			criteria.add(Restrictions.sqlRestriction(
-					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") >= '" + equipoBusqueda.getFechaDesde() + "'"));
+			criteria.add(Restrictions
+					.sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(equipoBusqueda.getFechaDesde()) + "'"));
 		}
 		if (equipoBusqueda.getFechaHasta() != null) {
-			// criteria.add(Restrictions.lt("fechaAlta", equipoBusqueda.getFechaHasta()));
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
 			 * compara con 0:00:00
 			 */
-			// PostgreSQL usa DATE_TRUNC, Oracle usa ROUND/TRUNC habrá que cambiarlo
-			criteria.add(Restrictions.sqlRestriction(
-					"DATE_TRUNC('day'," + "this_.fecha_alta" + ") <= '" + equipoBusqueda.getFechaHasta() + "'"));
+			criteria.add(Restrictions
+					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(equipoBusqueda.getFechaHasta()) + "'"));
 		}
-		if (equipoBusqueda.getNombreJefe() != null && equipoBusqueda.getNombreJefe().isEmpty() == false) {
+		if (equipoBusqueda.getNombreJefe() != null && !equipoBusqueda.getNombreJefe().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
 		}
 
-		if (equipoBusqueda.getNombreEquipo() != null && equipoBusqueda.getNombreEquipo().isEmpty() == false) {
+		if (equipoBusqueda.getNombreEquipo() != null && !equipoBusqueda.getNombreEquipo().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
 		}
-		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals("INACTIVO")) {
-			criteria.add(Restrictions.isNotNull("fechaBaja"));
-			criteria.addOrder(Order.desc("fechaBaja"));
+		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.ACTIVO.name())) {
+			criteria.add(Restrictions.isNull(FECHABAJA));
 		}
-		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals("ACTIVO")) {
-			criteria.add(Restrictions.isNull("fechaBaja"));
-		}
-		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals("INACTIVO")) {
-			criteria.addOrder(Order.desc("fechaBaja"));
+		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.INACTIVO.name())) {
+			criteria.add(Restrictions.isNotNull(FECHABAJA));
+			criteria.addOrder(Order.desc(FECHABAJA));
 
 		}
 		else {

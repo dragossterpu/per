@@ -19,7 +19,7 @@
 			<h3>Búsqueda solicitudes de documentación</h3>
 
 		<h:form>
-		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.limpiarBusqueda}" update="busquedaSolicitudDocPrevia" autoRun="true" />
+		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormBusquedaSolicitudes}" update="busquedaSolicitudDocPrevia" autoRun="true" />
 		</h:form>
 		
 			<h:form id="busquedaSolicitudDocPrevia">

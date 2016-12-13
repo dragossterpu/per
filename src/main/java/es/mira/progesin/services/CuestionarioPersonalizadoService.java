@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -24,6 +25,8 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	private static final String FECHA_CREACION = "fechaCreacion";
 
@@ -90,10 +93,20 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 		Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
 
 		if (cuestionarioBusqueda.getFechaDesde() != null) {
-			criteria.add(Restrictions.ge(FECHA_CREACION, cuestionarioBusqueda.getFechaDesde()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			criteria.add(Restrictions.sqlRestriction(
+					"TRUNC(this_.fecha_creacion) >= '" + sdf.format(cuestionarioBusqueda.getFechaDesde())));
 		}
 		if (cuestionarioBusqueda.getFechaHasta() != null) {
-			criteria.add(Restrictions.lt(FECHA_CREACION, cuestionarioBusqueda.getFechaHasta()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			criteria.add(Restrictions.sqlRestriction(
+					"TRUNC(this_.fecha_creacion) <= '" + sdf.format(cuestionarioBusqueda.getFechaHasta())));
 		}
 		if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
 			criteria.add(
