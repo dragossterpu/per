@@ -3,7 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 public interface IAlertaService {
@@ -21,7 +21,9 @@ public interface IAlertaService {
 	
 	void crearAlertaRol(String seccion, String descripcion, RoleEnum rol);
 	
-	void crearAlertaEquipo(String seccion, String descripcion, Long idEquipo);
+	void crearAlertaRol(String seccion, String descripcion, List<RoleEnum> roles);
 	
-	void crearAlertaJefeEquipo(String seccion, String descripcion, Long idEquipo);
+	void crearAlertaEquipo(String seccion, String descripcion, Inspeccion inspeccion);
+	
+	void crearAlertaJefeEquipo(String seccion, String descripcion, Inspeccion inspeccion);
 }

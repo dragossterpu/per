@@ -3,21 +3,18 @@ package es.mira.progesin.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Mensaje;
+import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.persistence.repositories.IMensajeRepository;
+import es.mira.progesin.persistence.repositories.AlertasNotificacionesUsuarioRepository;
 
 /********************
  * 
@@ -27,11 +24,11 @@ import es.mira.progesin.persistence.repositories.IMensajeRepository;
  ********************/
 
 @Service
-public class MensajeService implements IMensajeService {
+public class AlertasNotificacionesUsuarioService implements IAlertasNotificacionesUsuarioService {
 	
 	
 	@Autowired
-	IMensajeRepository mensajeRepo;
+	AlertasNotificacionesUsuarioRepository mensajeRepo;
 	
 	@Autowired
 	IUserService userService;
@@ -47,6 +44,10 @@ public class MensajeService implements IMensajeService {
 	
 	@Autowired
 	IEquipoService equipoService;
+	
+	@Autowired
+	IInspeccionesService inspeccionService;
+
 
 	/***************************
 	 * 
@@ -62,7 +63,7 @@ public class MensajeService implements IMensajeService {
 	 ***************************/
 	@Override
 	public void delete(String user, Long id, TipoMensajeEnum tipo) {
-		Mensaje men=mensajeRepo.findByUsuarioAndTipoAndIdMensaje(user,tipo,id);
+		AlertasNotificacionesUsuario men=mensajeRepo.findByUsuarioAndTipoAndIdMensaje(user,tipo,id);
 		mensajeRepo.delete(men);
 	
 	}
@@ -73,13 +74,13 @@ public class MensajeService implements IMensajeService {
 	 * 
 	 * Guarda un registro en base de datos.
 	 * 
-	 * @param 	Mensaje 	
+	 * @param 	AlertasNotificacionesUsuario 	
 	 * @return	Mensaje	
 	 * 
 	 ***************************/
 	
 	@Override
-	public Mensaje save(Mensaje entity) {
+	public AlertasNotificacionesUsuario save(AlertasNotificacionesUsuario entity) {
 		return mensajeRepo.save(entity);
 	}
 
@@ -97,11 +98,11 @@ public class MensajeService implements IMensajeService {
 
 	@Override
 	public List<Alerta> findAlertasByUser(String user) {
-		List<Mensaje> mensajesAlerta= mensajeRepo.findByUsuarioAndTipo(user, TipoMensajeEnum.ALERTA);
-		List<Alerta> respuesta=new ArrayList();
+		List<AlertasNotificacionesUsuario> mensajesAlerta= mensajeRepo.findByUsuarioAndTipo(user, TipoMensajeEnum.ALERTA);
+		List<Alerta> respuesta=new ArrayList<Alerta>();
 		
-		for (Mensaje mensaje:mensajesAlerta){
-			Alerta alerta=alertaService.findOne(mensaje.getIdMensaje());
+		for (AlertasNotificacionesUsuario alertasNotificacionesUsuario:mensajesAlerta){
+			Alerta alerta=alertaService.findOne(alertasNotificacionesUsuario.getIdMensaje());
 			respuesta.add(alerta);
 		}
 		return respuesta;
@@ -120,11 +121,11 @@ public class MensajeService implements IMensajeService {
 
 	@Override
 	public List<Notificacion> findNotificacionesByUser(String user) {
-		List<Mensaje> mensajesAlerta= mensajeRepo.findByUsuarioAndTipo(user, TipoMensajeEnum.NOTIFICACION);
-		List<Notificacion> respuesta=new ArrayList();
+		List<AlertasNotificacionesUsuario> mensajesAlerta= mensajeRepo.findByUsuarioAndTipo(user, TipoMensajeEnum.NOTIFICACION);
+		List<Notificacion> respuesta=new ArrayList<Notificacion>();
 		
-		for (Mensaje mensaje:mensajesAlerta){
-			Notificacion alerta=notificacionService.findOne(mensaje.getIdMensaje());
+		for (AlertasNotificacionesUsuario alertasNotificacionesUsuario:mensajesAlerta){
+			Notificacion alerta=notificacionService.findOne(alertasNotificacionesUsuario.getIdMensaje());
 			respuesta.add(alerta);
 		}
 		return respuesta;
@@ -143,8 +144,8 @@ public class MensajeService implements IMensajeService {
 	 * 
 	 ***************************/
 	@Override
-	public Mensaje grabarMensajeUsuario(Object entidad, String user) {
-		Mensaje men= new Mensaje();
+	public AlertasNotificacionesUsuario grabarMensajeUsuario(Object entidad, String user) {
+		AlertasNotificacionesUsuario men= new AlertasNotificacionesUsuario();
 		String nombre=entidad.getClass().getName().substring(entidad.getClass().getName().lastIndexOf('.')+1);
 		switch (nombre){
 		case "Alerta":
@@ -173,8 +174,8 @@ public class MensajeService implements IMensajeService {
 	 * 
 	 ***************************/
 	@Override
-	public Mensaje grabarMensajeJefeEquipo(Object entidad, Long equipo) {
-		return grabarMensajeUsuario(entidad,equipoService.buscarEquipo(equipo).getJefeEquipo());
+	public AlertasNotificacionesUsuario grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion) {
+		return grabarMensajeUsuario(entidad,inspeccion.getEquipo().getNombreJefe());
 	}
 
 	
@@ -196,6 +197,25 @@ public class MensajeService implements IMensajeService {
 		}
 		
 	}
+	
+	/***************************
+	 * 
+	 * grabarMensajeRol
+	 * 
+	 * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a una lista de roles
+	 * 
+	 * @param	Object
+	 * @param 	List<RoleEnum> 	
+	 * 
+	 ***************************/
+	
+	@Override
+	public void grabarMensajeRol(Object entidad, List<RoleEnum> roles) {
+		for(RoleEnum rol:roles){
+			grabarMensajeRol(entidad,rol);
+		}
+		
+	}
 
 	/***************************
 	 * 
@@ -208,8 +228,8 @@ public class MensajeService implements IMensajeService {
 	 * 
 	 ***************************/
 	@Override
-	public void grabarMensajeEquipo(Object entidad, Long equipo) {
-		List<Miembros> miembrosEquipo= equipoService.findByIdEquipo(equipo);
+	public void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion) {
+		List<Miembros> miembrosEquipo= equipoService.findByIdEquipo(inspeccion.getEquipo().getIdEquipo());
 		
 		for(Miembros miembro:miembrosEquipo){
 			grabarMensajeUsuario(entidad,miembro.getUsername());
@@ -221,15 +241,15 @@ public class MensajeService implements IMensajeService {
 	 * 
 	 * rellenarMensaje
 	 * 
-	 * Recoge datos de un entidad Alerta para generar una entidad Mensaje
+	 * Recoge datos de un entidad Alerta para generar una entidad AlertasNotificacionesUsuario
 	 * 
 	 * @param	Alerta	
-	 * @return	Mensaje	
+	 * @return	AlertasNotificacionesUsuario	
 	 * 
 	 ***************************/
 	
-	private Mensaje rellenarMensaje(Alerta entidad){
-		Mensaje men= new Mensaje();
+	private AlertasNotificacionesUsuario rellenarMensaje(Alerta entidad){
+		AlertasNotificacionesUsuario men= new AlertasNotificacionesUsuario();
 		men.setIdMensaje(entidad.getIdAlerta());
 		men.setNombreSeccion(entidad.getNombreSeccion());
 		men.setTipo(TipoMensajeEnum.ALERTA);
@@ -241,20 +261,22 @@ public class MensajeService implements IMensajeService {
 	 * 
 	 * rellenarMensaje
 	 * 
-	 * Recoge datos de un entidad Notificacion para generar una entidad Mensaje
+	 * Recoge datos de un entidad Notificacion para generar una entidad MensAlertasNotificacionesUsuarioaje
 	 * 
 	 * @param	Notificacion	
-	 * @return	Mensaje	
+	 * @return	AlertasNotificacionesUsuario	
 	 * 
 	 ***************************/
 	
-	private Mensaje rellenarMensaje(Notificacion entidad){
-		Mensaje men= new Mensaje();
+	private AlertasNotificacionesUsuario rellenarMensaje(Notificacion entidad){
+		AlertasNotificacionesUsuario men= new AlertasNotificacionesUsuario();
 		men.setIdMensaje(entidad.getIdNotificacion());
 		men.setNombreSeccion(entidad.getNombreSeccion());
 		men.setTipo(TipoMensajeEnum.NOTIFICACION);
 		return men;
 	}
+
+	
 
 	
 

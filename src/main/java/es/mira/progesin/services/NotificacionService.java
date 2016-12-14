@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -19,7 +20,7 @@ public class NotificacionService implements INotificacionService {
 	INotificacionRepository notificacionRepository;
 	
 	@Autowired
-	IMensajeService mensajeService;
+	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
 	
 	@Autowired
 	IRegistroActividadService registroActividadService;
@@ -82,7 +83,7 @@ public class NotificacionService implements INotificacionService {
 	public void crearNotificacionUsuario(String descripcion, String seccion, String usuario) {
 		try {
 			Notificacion notificacion=crearNotificacion(descripcion, seccion);
-			mensajeService.grabarMensajeUsuario(notificacion, usuario);
+			alertasNotificacionesUsuarioService.grabarMensajeUsuario(notificacion, usuario);
 		} catch (Exception e) {
 			registroActividadService.altaRegActividadError(seccion, e);
 		}
@@ -93,31 +94,44 @@ public class NotificacionService implements INotificacionService {
 	public void crearNotificacionRol(String descripcion, String seccion, RoleEnum rol) {
 		try {
 			Notificacion notificacion=crearNotificacion(descripcion, seccion);
-			mensajeService.grabarMensajeRol(notificacion, rol);
+			alertasNotificacionesUsuarioService.grabarMensajeRol(notificacion, rol);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+	}
+	
+	@Override
+	public void crearNotificacionRol(String seccion, String descripcion, List<RoleEnum> roles) {
+		try {
+			Notificacion notificacion=crearNotificacion(descripcion, seccion);
+			alertasNotificacionesUsuarioService.grabarMensajeRol(notificacion, roles);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+		
+	}
+
+	@Override
+	public void crearNotificacionEquipo(String descripcion, String seccion, Inspeccion inspeccion) {
+		try {
+			Notificacion notificacion=crearNotificacion(descripcion, seccion);
+			alertasNotificacionesUsuarioService.grabarMensajeEquipo(notificacion, inspeccion);
 		} catch (Exception e) {
 			registroActividadService.altaRegActividadError(seccion, e);
 		}
 	}
 
 	@Override
-	public void crearNotificacionEquipo(String descripcion, String seccion, Long idEquipo) {
+	public void crearNotificacionJefeEquipo(String descripcion, String seccion, Inspeccion inspeccion) {
 		try {
 			Notificacion notificacion=crearNotificacion(descripcion, seccion);
-			mensajeService.grabarMensajeEquipo(notificacion, idEquipo);
+			alertasNotificacionesUsuarioService.grabarMensajeJefeEquipo(notificacion, inspeccion);
 		} catch (Exception e) {
 			registroActividadService.altaRegActividadError(seccion, e);
 		}
 	}
 
-	@Override
-	public void crearNotificacionJefeEquipo(String descripcion, String seccion, Long idEquipo) {
-		try {
-			Notificacion notificacion=crearNotificacion(descripcion, seccion);
-			mensajeService.grabarMensajeJefeEquipo(notificacion, idEquipo);
-		} catch (Exception e) {
-			registroActividadService.altaRegActividadError(seccion, e);
-		}
-	}
+	
 
 
 	

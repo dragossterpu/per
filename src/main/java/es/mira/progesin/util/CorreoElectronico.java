@@ -19,10 +19,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.Parametro;
-import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
-import lombok.extern.slf4j.Slf4j;
 
 @Component("correoElectronico")
 

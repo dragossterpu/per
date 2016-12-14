@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Alerta;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -28,7 +29,7 @@ public class AlertaService implements IAlertaService {
 	IUserRepository userRepository;
 	
 	@Autowired
-	IMensajeService mensajeService;
+	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
 	
 	@Autowired
 	ICorreoElectronico correo;
@@ -98,7 +99,7 @@ public class AlertaService implements IAlertaService {
 			Alerta alerta=crearAlerta(seccion, descripcion);
 			User usu=userService.findOne(usuario);	
 			correo.setDatos(usu.getCorreo(), "Nueva alerta PROGESIN", "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
-			mensajeService.grabarMensajeUsuario(alerta, usuario);
+			alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario);
 			correo.envioCorreo();
 			registroActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), seccion);
 		} catch (MailException | FileNotFoundException | MessagingException e) {
@@ -121,9 +122,16 @@ public class AlertaService implements IAlertaService {
 	}
 
 	@Override
-	public void crearAlertaEquipo(String seccion, String descripcion, Long idEquipo) {
+	public void crearAlertaRol(String seccion, String descripcion, List<RoleEnum> roles) {
+		for(RoleEnum rol:roles){
+			crearAlertaRol(seccion, descripcion, rol);
+		}
+		
+	}
+	@Override
+	public void crearAlertaEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
 		try {
-			List<Miembros> miembrosEquipo= equipoService.findByIdEquipo(idEquipo);
+			List<Miembros> miembrosEquipo= equipoService.findByIdEquipo(inspeccion.getEquipo().getIdEquipo());
 			for(Miembros miembro:miembrosEquipo){
 				crearAlertaUsuario(seccion, descripcion,miembro.getUsername());
 			}
@@ -135,15 +143,17 @@ public class AlertaService implements IAlertaService {
 	}
 
 	@Override
-	public void crearAlertaJefeEquipo(String seccion, String descripcion, Long idEquipo) {
+	public void crearAlertaJefeEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
 		try {
-			crearAlertaUsuario(seccion, descripcion,equipoService.buscarEquipo(idEquipo).getJefeEquipo());
+			crearAlertaUsuario(seccion, descripcion,inspeccion.getEquipo().getNombreJefe());
 
 		} catch (Exception e) {
 			registroActividadService.altaRegActividadError(seccion, e);
 		}
 		
 	}
+
+	
 
 
 	

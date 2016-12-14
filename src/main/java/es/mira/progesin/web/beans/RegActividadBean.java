@@ -2,7 +2,6 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,15 +10,11 @@ import javax.faces.bean.RequestScoped;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 

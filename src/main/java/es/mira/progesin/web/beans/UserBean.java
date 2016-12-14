@@ -16,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -126,8 +124,8 @@ public class UserBean {
 					String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
 							+ user.getApellido2();
 					// Guardamos la actividad en bbdd
-					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
-							SecurityContextHolder.getContext().getAuthentication().getName());
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+					
 					// Guardamos la notificacion en bbdd
 					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
@@ -177,7 +175,7 @@ public class UserBean {
 	 * @param user El usuario seleccionado de la tabla del resultado de la búsqueda
 	 */
 	public void eliminarUsuario(User user) {
-		RegistroActividad regActividad = new RegistroActividad();
+		
 		user.setFechaBaja(new Date());
 		user.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
@@ -186,8 +184,7 @@ public class UserBean {
 			String descripcion = "Se ha eliminado el usuario " + user.getNombre() + " " + user.getApellido1() + " "
 					+ user.getApellido2();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -225,8 +222,7 @@ public class UserBean {
 					// Generamos la alerta
 				}
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				// Exception e = new Exception();

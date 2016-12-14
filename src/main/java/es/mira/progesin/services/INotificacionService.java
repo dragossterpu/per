@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
@@ -23,7 +24,9 @@ public interface INotificacionService {
 	
 	void crearNotificacionRol(String descripcion, String seccion, RoleEnum rol);
 	
-	void crearNotificacionEquipo(String descripcion, String seccion, Long idEquipo);
+	void crearNotificacionRol(String seccion, String descripcion, List<RoleEnum> roles);
 	
-	void crearNotificacionJefeEquipo(String descripcion, String seccion, Long idEquipo);
+	void crearNotificacionEquipo(String descripcion, String seccion, Inspeccion inspeccion);
+	
+	void crearNotificacionJefeEquipo(String descripcion, String seccion, Inspeccion inspeccion);
 }

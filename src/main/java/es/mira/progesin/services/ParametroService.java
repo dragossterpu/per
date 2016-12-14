@@ -2,18 +2,14 @@ package es.mira.progesin.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Parametro;
-import es.mira.progesin.persistence.entities.ParametroId;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
-import es.mira.progesin.web.beans.ApplicationBean;
 
 @Service
 public class ParametroService implements IParametroService {

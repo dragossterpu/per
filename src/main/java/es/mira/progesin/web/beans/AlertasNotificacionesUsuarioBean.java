@@ -2,7 +2,6 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +16,7 @@ import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.services.IMensajeService;
+import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,11 +30,11 @@ import lombok.Setter;
 @Getter
 @Component("mensajesBean")
 @Scope(FacesViewScope.NAME)
-public class MensajesBean implements Serializable {
+public class AlertasNotificacionesUsuarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	IMensajeService mensajeService;
+	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
 	
 	@Autowired
 	IRegistroActividadService regActividad;
@@ -45,8 +44,8 @@ public class MensajesBean implements Serializable {
 	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
 	
 	private void initList() {
-		listaAlertas=mensajeService.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
-		listaNotificaciones=mensajeService.findNotificacionesByUser(SecurityContextHolder.getContext().getAuthentication().getName());
+		listaAlertas=alertasNotificacionesUsuarioService.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
+		listaNotificaciones=alertasNotificacionesUsuarioService.findNotificacionesByUser(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	
@@ -60,7 +59,7 @@ public class MensajesBean implements Serializable {
 	
 	public void eliminarAlertas(Alerta alerta) {
 		try {
-			mensajeService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
+			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), "Alertas");
@@ -73,7 +72,7 @@ public class MensajesBean implements Serializable {
 	
 	public void eliminarNotificacion(Notificacion notificacion) {
 		try {
-			mensajeService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
+			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación :" + notificacion.getDescripcion();
 			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), "Notificaciones");

@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
-import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -32,7 +31,6 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -170,9 +168,7 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSelecionado.getNombre()
 					+ " " + jefeSelecionado.getApellido1() + " " + jefeSelecionado.getApellido2();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
-
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -220,8 +216,7 @@ public class EquiposBean implements Serializable {
 			equipoBusqueda.getListaEquipos().remove(equipo);
 			String descripcion = "Se ha eliminado el equipo inspecciones. Nombre jefe equipo " + equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -264,8 +259,7 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
 					+ equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -308,8 +302,7 @@ public class EquiposBean implements Serializable {
 				String descripcion = "Se ha añadido un nuevo colaborador al equipo inspecciones. Nombre colaborador "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
@@ -339,8 +332,7 @@ public class EquiposBean implements Serializable {
 				String descripcion = "Se ha añadido un nuevo componente al equipo inspecciones. Nombre componente "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}

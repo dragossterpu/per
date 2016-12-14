@@ -18,8 +18,7 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.services.IAlertaService;
-import es.mira.progesin.services.IMensajeService;
+import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +37,7 @@ public class AlertasBean implements Serializable {
 
 	
 	@Autowired
-	IMensajeService mensajeService;
+	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
 	
 	@Autowired
 	IRegistroActividadService regActividad;
@@ -63,7 +62,7 @@ public class AlertasBean implements Serializable {
 		alerta.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
 			//alertasService.save(alerta);
-			mensajeService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
+			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			// Guardamos la actividad en bbdd
@@ -79,7 +78,7 @@ public class AlertasBean implements Serializable {
 
 	private void initList() {
 		//listaAlertas = alertasService.findByFechaBajaIsNull();
-		listaAlertas=mensajeService.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
+		listaAlertas=alertasNotificacionesUsuarioService.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
 		//listaAlertas=alertasService.buscarAlertasUsuario(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 

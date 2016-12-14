@@ -31,11 +31,11 @@ import lombok.ToString;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "MENSAJES")
+@Table(name = "AlertasNotificacionesUsuario")
 
 
- @IdClass(Mensaje.class)
-public class Mensaje implements Serializable{
+ @IdClass(AlertasNotificacionesUsuario.class)
+public class AlertasNotificacionesUsuario implements Serializable{
 	
 	
 	
