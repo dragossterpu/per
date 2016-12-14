@@ -18,5 +18,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
 	List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
 
 	List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv);
+	
+	List<User> findByRole(RoleEnum rol);
 
 }

@@ -54,7 +54,7 @@ public class ModelosCuestionarioBean {
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Se ha produdico un error en la descarga del documento", e.getMessage(), "mensajeerror");
-			regActividadService.altaRegActivError("DESCARGA MODELO CUESTIONARIO", e);
+			regActividadService.altaRegActividadError("DESCARGA MODELO CUESTIONARIO", e);
 		}
 	}
 

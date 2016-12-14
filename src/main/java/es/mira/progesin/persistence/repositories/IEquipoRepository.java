@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.Equipo;
 
-public interface IEquipoRepository extends CrudRepository<Equipo, String> {
+public interface IEquipoRepository extends CrudRepository<Equipo, Long> {
 
 	// Equipo findByEquipoEspecial(String equipoEspecial);
 
@@ -14,4 +14,5 @@ public interface IEquipoRepository extends CrudRepository<Equipo, String> {
 
 	// Equipo findOne(Integer id);
 
+	
 }

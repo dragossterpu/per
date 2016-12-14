@@ -1,5 +1,6 @@
 package es.mira.progesin.util;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -65,10 +66,10 @@ public class Utilities {
 	public static String messageError(Exception e) {
 		String message = null;
 		if (e.getMessage().length() > 4000) {
-			message = e.getMessage().substring(4000);
+			message = Arrays.toString(e.getStackTrace()).substring(4000);
 		}
 		else {
-			message = e.getMessage();
+			message = Arrays.toString(e.getStackTrace());
 		}
 		return message;
 	}

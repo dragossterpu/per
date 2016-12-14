@@ -182,13 +182,15 @@ input, textarea, .uneditable-input {
 }
 
 #alertas {
-	height: 360px;
-	margin-top: 10px;
+/* 	height: 360px; */
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 #notificaciones {
-	height: 360px;
-	margin-top: 10px;
+/* 	height: 360px; */
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 .textoDerecha {

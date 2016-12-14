@@ -3,22 +3,27 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.Notificacion;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 public interface INotificacionService {
 
-	void delete(Integer id);
+	void delete(Long id);
 
 	void deleteAll();
 
-	boolean exists(Integer id);
+	boolean exists(Long id);
 
 	List<Notificacion> findAll();
 
 	List<Notificacion> findByFechaBajaIsNull();
 
-	Notificacion findOne(Integer id);
-
-	Notificacion save(Notificacion entity);
-
-	void crearNotificacion(String descripcion, String tipoNotificacion, String seccion);
+	Notificacion findOne(Long id);
+	
+	void crearNotificacionUsuario(String descripcion, String seccion, String usuario);
+	
+	void crearNotificacionRol(String descripcion, String seccion, RoleEnum rol);
+	
+	void crearNotificacionEquipo(String descripcion, String seccion, Long idEquipo);
+	
+	void crearNotificacionJefeEquipo(String descripcion, String seccion, Long idEquipo);
 }

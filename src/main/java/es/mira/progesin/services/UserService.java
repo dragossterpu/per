@@ -177,4 +177,9 @@ public class UserService implements IUserService {
 		userRepository.save(user);
 	}
 
+	@Override
+	public List<User> findByRole(RoleEnum rol) {
+		return userRepository.findByRole(rol);
+	}
+
 }

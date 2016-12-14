@@ -25,4 +25,7 @@ public interface IEquipoService {
 	// Equipo findByEquipoEspecial(String equipoEspecial);
 
 	List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda);
+	
+	
+	Equipo buscarEquipo(Long idEquipo);
 }

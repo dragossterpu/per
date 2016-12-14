@@ -110,4 +110,12 @@ public class EquipoService implements IEquipoService {
 		return listEquipos;
 	}
 
+	@Override
+	public Equipo buscarEquipo(Long idEquipo) {
+		
+		return equipoRepository.findOne(idEquipo);
+	}
+
+	
+
 }

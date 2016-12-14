@@ -36,7 +36,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	public void enviarCuestionarioService(User user, CuestionarioEnvio cuestionarioEnvio) {
 		userRepository.save(user);
 		cuestionarioEnvioRepository.save(cuestionarioEnvio);
-		regActividadService.crearRegistroActividad(
+		regActividadService.altaRegActividad(
 				"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
 				EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
 	}

@@ -6,10 +6,12 @@ import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.Notificacion;
 
-public interface INotificacionRepository extends CrudRepository<Notificacion, Integer> {
+public interface INotificacionRepository extends CrudRepository<Notificacion, Long> {
 
 	List<Notificacion> findByFechaBajaIsNull();
 
 	@Override
 	List<Notificacion> findAll();
+	
+	
 }

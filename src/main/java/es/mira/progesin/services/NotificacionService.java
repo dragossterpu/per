@@ -9,16 +9,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Notificacion;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.INotificacionRepository;
 
 @Service
 public class NotificacionService implements INotificacionService {
 	@Autowired
 	INotificacionRepository notificacionRepository;
+	
+	@Autowired
+	IMensajeService mensajeService;
+	
+	@Autowired
+	IRegistroActividadService registroActividadService;
 
 	@Override
 	@Transactional(readOnly = false)
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		notificacionRepository.delete(id);
 	}
 
@@ -29,7 +37,7 @@ public class NotificacionService implements INotificacionService {
 	}
 
 	@Override
-	public boolean exists(Integer id) {
+	public boolean exists(Long id) {
 		return notificacionRepository.exists(id);
 	}
 
@@ -44,26 +52,74 @@ public class NotificacionService implements INotificacionService {
 	}
 
 	@Override
-	public Notificacion findOne(Integer id) {
+	public Notificacion findOne(Long id) {
 		return notificacionRepository.findOne(id);
 	}
 
-	@Override
 	@Transactional(readOnly = false)
-	public Notificacion save(Notificacion entity) {
+	private Notificacion save(Notificacion entity) {
 		return notificacionRepository.save(entity);
 	}
 
-	@Override
-	public void crearNotificacion(String descripcion, String tipoNotificacion, String seccion) {
-		Notificacion notificacion = new Notificacion();
-		notificacion.setTipoNotificacion(tipoNotificacion);
-		notificacion.setUsernameNotificacion(SecurityContextHolder.getContext().getAuthentication().getName());
-		notificacion.setNombreSeccion(seccion);
-		notificacion.setFechaAlta(new Date());
-		notificacion.setDescripcion(descripcion);
-		notificacionRepository.save(notificacion);
+	
+	private Notificacion crearNotificacion(String descripcion, String seccion) {
+		try {
+			Notificacion notificacion = new Notificacion();
+			notificacion.setUsernameNotificacion(SecurityContextHolder.getContext().getAuthentication().getName());
+			notificacion.setNombreSeccion(seccion);
+			notificacion.setFechaAlta(new Date());
+			notificacion.setDescripcion(descripcion);
+			registroActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), seccion);
+			return notificacionRepository.save(notificacion);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+		return null;
 
 	}
+
+	@Override
+	public void crearNotificacionUsuario(String descripcion, String seccion, String usuario) {
+		try {
+			Notificacion notificacion=crearNotificacion(descripcion, seccion);
+			mensajeService.grabarMensajeUsuario(notificacion, usuario);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+		
+	}
+
+	@Override
+	public void crearNotificacionRol(String descripcion, String seccion, RoleEnum rol) {
+		try {
+			Notificacion notificacion=crearNotificacion(descripcion, seccion);
+			mensajeService.grabarMensajeRol(notificacion, rol);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+	}
+
+	@Override
+	public void crearNotificacionEquipo(String descripcion, String seccion, Long idEquipo) {
+		try {
+			Notificacion notificacion=crearNotificacion(descripcion, seccion);
+			mensajeService.grabarMensajeEquipo(notificacion, idEquipo);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+	}
+
+	@Override
+	public void crearNotificacionJefeEquipo(String descripcion, String seccion, Long idEquipo) {
+		try {
+			Notificacion notificacion=crearNotificacion(descripcion, seccion);
+			mensajeService.grabarMensajeJefeEquipo(notificacion, idEquipo);
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(seccion, e);
+		}
+	}
+
+
+	
 
 }

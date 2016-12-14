@@ -103,10 +103,10 @@ public class RegistroActividadService implements IRegistroActividadService {
 	}
 
 	@Override
-	public void altaRegActivError(String nombreSeccion, Exception e) {
+	public void altaRegActividadError(String nombreSeccion, Exception e) {
 		RegistroActividad registroActividad = new RegistroActividad();
-		registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
 		String message = Utilities.messageError(e);
+		registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
 		registroActividad.setFechaAlta(new Date());
 		registroActividad.setNombreSeccion(nombreSeccion);
 		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -115,7 +115,7 @@ public class RegistroActividadService implements IRegistroActividadService {
 	}
 
 	@Override
-	public void crearRegistroActividad(String descripcion, String tipoReg, String seccion) {
+	public void altaRegActividad(String descripcion, String tipoReg, String seccion) {
 		RegistroActividad registroActividad = new RegistroActividad();
 		registroActividad.setTipoRegActividad(tipoReg);
 		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());

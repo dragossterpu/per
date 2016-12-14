@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -125,16 +126,15 @@ public class UserBean {
 					String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
 							+ user.getApellido2();
 					// Guardamos la actividad en bbdd
-					saveReg(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
 							SecurityContextHolder.getContext().getAuthentication().getName());
 					// Guardamos la notificacion en bbdd
-					saveNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
-							SecurityContextHolder.getContext().getAuthentication().getName());
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
 			}
 			catch (Exception e) {
 				// Guardamos loe posibles errores en bbdd
-				regActividadService.altaRegActivError(getNOMBRESECCION(), e);
+				regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
 			}
 
 		}
@@ -186,15 +186,14 @@ public class UserBean {
 			String descripcion = "Se ha eliminado el usuario " + user.getNombre() + " " + user.getApellido1() + " "
 					+ user.getApellido2();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.BAJA.name(),
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
 					SecurityContextHolder.getContext().getAuthentication().getName());
 			// Guardamos la notificacion en bbdd
-			saveNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActivError(getNOMBRESECCION(), e);
+			regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
 		}
 
 	}
@@ -226,11 +225,10 @@ public class UserBean {
 					// Generamos la alerta
 				}
 				// Guardamos la actividad en bbdd
-				saveReg(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						SecurityContextHolder.getContext().getAuthentication().getName());
 				// Guardamos la notificacion en bbdd
-				saveNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						SecurityContextHolder.getContext().getAuthentication().getName());
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				// Exception e = new Exception();
 				// throw e;
 			}
@@ -239,7 +237,7 @@ public class UserBean {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
 					"Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActivError(getNOMBRESECCION(), e);
+			regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
 		}
 
 	}
@@ -261,7 +259,7 @@ public class UserBean {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
 					"Se ha producido un error en la regeneración o envío de la contraseña");
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActivError(getNOMBRESECCION(), e);
+			regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
 		}
 	}
 
@@ -282,37 +280,7 @@ public class UserBean {
 			list.add(Boolean.TRUE);
 		}
 	}
-
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveReg(String descripcion, String tipoReg, String username) {
-		RegistroActividad regActividad = new RegistroActividad();
-		regActividad.setTipoRegActividad(tipoReg);
-		regActividad.setUsernameRegActividad(username);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setDescripcion(descripcion);
-		regActividadService.save(regActividad);
-	}
-
-	/**
-	 * @param descripcion
-	 * @param tipoNotificacion
-	 * @param username
-	 */
-	private void saveNotificacion(String descripcion, String tipoNotificacion, String username) {
-		Notificacion notificacion = new Notificacion();
-		notificacion.setTipoNotificacion(tipoNotificacion);
-		notificacion.setNombreSeccion(NOMBRESECCION);
-		notificacion.setUsernameNotificacion(username);
-		notificacion.setFechaAlta(new Date());
-		notificacion.setDescripcion(descripcion);
-		notificacionService.save(notificacion);
-	}
-
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
+	
 }
+
+	

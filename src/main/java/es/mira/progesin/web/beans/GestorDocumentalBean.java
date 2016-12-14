@@ -52,6 +52,8 @@ public class GestorDocumentalBean {
 	@Autowired
 	IRegistroActividadService registroActividadService;
 	
+	
+	
 	@PostConstruct
 	public void init() {
 		recargaLista();
@@ -71,18 +73,26 @@ public class GestorDocumentalBean {
 	}
 
 	public void cargaFichero(FileUploadEvent event) throws SQLException, IOException, TikaException, SAXException {
-		
-		if (documentoService.extensionCorrecta(event.getFile())){
-			documentoService.cargaDocumento(event.getFile());}
-		else{
-			RequestContext context = RequestContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
-					"La extensión del fichero '"+ event.getFile().getFileName()+"' no corresponde a su tipo real");
-			FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-			context.execute("PF('dialogMessage').show()");
-		}
-		
-		recargaLista();
+		try{
+			
+			if (documentoService.extensionCorrecta(event.getFile())){
+				documentoService.cargaDocumento(event.getFile());
+				
+			}else{
+				RequestContext context = RequestContext.getCurrentInstance();
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+						"La extensión del fichero '"+ event.getFile().getFileName()+"' no corresponde a su tipo real");
+				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+				context.execute("PF('dialogMessage').show()");
+				registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",EstadoRegActividadEnum.ERROR.name(), "Gestor documental");
+			
+			}
+			
+			recargaLista();
+		}catch(SQLException ex){
+			registroActividadService.altaRegActividadError("Gestor documental", ex);
+			throw ex;
+		}	
 	}
 
 	public void eliminarDocumento(Documento documento) {

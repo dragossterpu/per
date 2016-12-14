@@ -157,12 +157,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
 							+ SecurityContextHolder.getContext().getAuthentication().getName();
 					// Guardamos la actividad en bbdd
-					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
 							NOMBRESECCION);
 
 					// Guardamos la notificacion en bbdd
-					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(),
-							NOMBRESECCION);
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
 			}
 		}
@@ -170,7 +169,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al crear la solicitud, inténtelo de nuevo más tarde");
 			// Guardamos los posibles errores en bbdd
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return "solicitudesPrevia/crearSolicitud";
 
@@ -244,7 +243,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			return "/solicitudesPrevia/vistaSolicitud";
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 			return null;
 		}
 
@@ -267,17 +266,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario validación jefe equipo : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al validar jefe equipo la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 		return VISTASOLICITUD;
@@ -301,17 +299,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario validación jefe equipo : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al validar jefe equipo la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
@@ -359,7 +356,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			file = documentoService.descargaDocumento(idDocumento);
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}
 
@@ -425,18 +422,17 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String descripcion = "Solicitud documentación previa cuestionario. Usuario baja : "
 							+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
 							NOMBRESECCION);
 
-					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(),
-							NOMBRESECCION);
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		listaSolicitudesPrevia = null;
 		listaSolicitudesPrevia = solicitudDocumentacionService.findAll();
@@ -482,18 +478,17 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String descripcion = "Solicitud documentación previa cuestionario. Usuario modificación : "
 							+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 							NOMBRESECCION);
 
-					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-							NOMBRESECCION);
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return "/solicitudesPrevia/modificarSolicitud";
 	}
@@ -544,18 +539,17 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String descripcion = "Solicitud documentación previa cuestionario. Usuario envío : "
 							+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-					regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 							NOMBRESECCION);
 
-					notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-							NOMBRESECCION);
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al enviar la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
@@ -580,17 +574,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario finalización : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
 	}
@@ -643,17 +636,16 @@ public class SolicitudDocPreviaBean implements Serializable {
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario no conforme : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
 
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return "/solicitudesPrevia/noConformeSolicitud";
 	}

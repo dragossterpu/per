@@ -20,9 +20,9 @@ public interface IRegistroActividadService {
 
 	List<RegistroActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda);
 
-	void altaRegActivError(String nombreSeccion, Exception e);
+	void altaRegActividadError(String nombreSeccion, Exception e);
 
-	void crearRegistroActividad(String descripcion, String tipoReg, String seccion);
+	void altaRegActividad(String descripcion, String tipoReg, String seccion);
 	
 	public List<String> buscarPorNombreSeccion(String infoSeccion);
 	

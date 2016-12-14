@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,9 +31,11 @@ import lombok.ToString;
 public class Notificacion {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_NOTIFICACIONES")
+    @SequenceGenerator(name="SEQ_NOTIFICACIONES", sequenceName="SEQ_NOTIFICACIONES", allocationSize=1) 
+
 	@Column(name = "ID_NOTIFICACION", length = 15)
-	private Integer idNotificacion;
+	private Long idNotificacion;
 
 	@Column(name = "DESCRIPCION", length = 2000)
 	private String descripcion;
@@ -53,4 +57,5 @@ public class Notificacion {
 
 	@Column(name = "USUARIO_BAJA", length = 50)
 	private String usernameBaja;
+	
 }

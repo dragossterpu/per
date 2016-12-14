@@ -102,7 +102,7 @@ public class EnvioCuestionarioBean implements Serializable {
 			}
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActivError("ENVIO CUESTIONARIO", e);
+			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Se ha produdico un error en el envio del cuestionario", e.getMessage(), ETIQUETA_ERROR);
-			regActividadService.altaRegActivError("ENVIO CUESTIONARIO", e);
+			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 		}
 	}
 

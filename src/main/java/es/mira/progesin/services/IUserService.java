@@ -42,5 +42,7 @@ public interface IUserService {
 	List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv);
 
 	void cambiarEstado(String usuarioProv, EstadoEnum estado);
+	
+	List<User> findByRole(RoleEnum rol);
 
 }

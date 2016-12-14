@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -31,6 +32,7 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -168,14 +170,15 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSelecionado.getNombre()
 					+ " " + jefeSelecionado.getApellido1() + " " + jefeSelecionado.getApellido2();
 			// Guardamos la actividad en bbdd
-			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
 
 			// Guardamos la notificacion en bbdd
-			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 		this.equipoEspecial = false;
@@ -217,12 +220,13 @@ public class EquiposBean implements Serializable {
 			equipoBusqueda.getListaEquipos().remove(equipo);
 			String descripcion = "Se ha eliminado el equipo inspecciones. Nombre jefe equipo " + equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
 			// Guardamos la notificacion en bbdd
-			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 		return VISTAEQUIPOS;
@@ -260,14 +264,13 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
 					+ equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-					NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					SecurityContextHolder.getContext().getAuthentication().getName());
 			// Guardamos la notificacion en bbdd
-			notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-					NOMBRESECCION);
+			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActivError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 	}
@@ -299,20 +302,19 @@ public class EquiposBean implements Serializable {
 			miembro.setIdEquipo(equipo.getIdEquipo());
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
-			miembro.setPosicion(RolEquipoEnum.COLABORADOR);
+			miembro.setPosicion(RolEquipoEnum.COLABORADOR); 
 			try {
 				equipoService.save(miembro);
 				String descripcion = "Se ha añadido un nuevo colaborador al equipo inspecciones. Nombre colaborador "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						SecurityContextHolder.getContext().getAuthentication().getName());
 				// Guardamos la notificacion en bbdd
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 			catch (Exception e) {
-				regActividadService.altaRegActivError(NOMBRESECCION, e);
+				regActividadService.altaRegActividadError(NOMBRESECCION, e);
 			}
 
 		}
@@ -337,14 +339,13 @@ public class EquiposBean implements Serializable {
 				String descripcion = "Se ha añadido un nuevo componente al equipo inspecciones. Nombre componente "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				regActividadService.crearRegistroActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						SecurityContextHolder.getContext().getAuthentication().getName());
 				// Guardamos la notificacion en bbdd
-				notificacionService.crearNotificacion(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 			catch (Exception e) {
-				regActividadService.altaRegActivError(NOMBRESECCION, e);
+				regActividadService.altaRegActividadError(NOMBRESECCION, e);
 			}
 
 		}

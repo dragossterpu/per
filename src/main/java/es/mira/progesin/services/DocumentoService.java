@@ -20,6 +20,9 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 
 
@@ -28,6 +31,15 @@ import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 
 public class DocumentoService implements IDocumentoService {
 
+	@Autowired
+	IAlertaService alertaService;
+	
+	@Autowired
+	INotificacionService notificacionService;
+	
+	@Autowired
+	IRegistroActividadService registroActividadService;
+	
 	@Autowired
 	IDocumentoRepository documentoRepository;
 
@@ -266,11 +278,21 @@ public class DocumentoService implements IDocumentoService {
 	@Override
 	public Documento cargaDocumento(UploadedFile file) throws SQLException {
 		Documento docu = new Documento();
-		docu.setNombre(file.getFileName());
-		Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
-		docu.setFichero(fileBlob);
-		docu.setTipoContenido(file.getContentType());
-		return documentoRepository.save(docu);
+		try{
+			docu.setNombre(file.getFileName());
+			Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
+			docu.setFichero(fileBlob);
+			docu.setTipoContenido(file.getContentType());
+			notificacionService.crearNotificacionRol("Carga fichero", SeccionesEnum.GESTOR.getDescripcion(), RoleEnum.ADMIN);
+			registroActividadService.altaRegActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.GESTOR.getDescripcion());
+			return documentoRepository.save(docu);
+			
+		}catch(Exception ex){
+			registroActividadService.altaRegActividadError("Carga documento", ex);
+			throw ex;
+		}
+		
+		
 	}
 	
 	/***************************************
@@ -296,7 +318,7 @@ public class DocumentoService implements IDocumentoService {
 	      try {
 			x.parse(file.getInputstream(), contenthandler, metadata, null);
 		} catch (IOException | SAXException | TikaException e) {
-			registro.altaRegActivError("DocumentoService", e);
+			registro.altaRegActividadError("DocumentoService", e);
 		}
 		
 	     

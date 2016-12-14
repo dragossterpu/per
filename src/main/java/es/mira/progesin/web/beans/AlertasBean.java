@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.services.IAlertaService;
+import es.mira.progesin.services.IMensajeService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,12 +35,15 @@ import lombok.Setter;
 public class AlertasBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
+	
 	@Autowired
-	IAlertaService alertasService;
+	IMensajeService mensajeService;
+	
+	@Autowired
+	IRegistroActividadService regActividad;
 
 	private List<Alerta> listaAlertas = new ArrayList<Alerta>();
-
-	private RegistroActividad regActividad = new RegistroActividad();
 
 	private final String NOMBRESECCION = "Alertas";
 
@@ -48,8 +51,6 @@ public class AlertasBean implements Serializable {
 
 	private int numColListAlert = 5;
 
-	@Autowired
-	IRegistroActividadService regActividadService;
 
 	/**
 	 * @comment Realiza una eliminación lógico de la alerta (le pone fecha de baja)
@@ -61,23 +62,25 @@ public class AlertasBean implements Serializable {
 		alerta.setFechaBaja(new Date());
 		alerta.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
-			alertasService.save(alerta);
+			//alertasService.save(alerta);
+			mensajeService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
+			regActividad.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 	}
 
 	private void initList() {
-		listaAlertas = alertasService.findByFechaBajaIsNull();
-
+		//listaAlertas = alertasService.findByFechaBajaIsNull();
+		listaAlertas=mensajeService.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
+		//listaAlertas=alertasService.buscarAlertasUsuario(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	public void onToggle(ToggleEvent e) {
@@ -94,33 +97,5 @@ public class AlertasBean implements Serializable {
 		}
 	}
 
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveReg(String descripcion, String tipoReg, String username) {
 
-		regActividad.setTipoRegActividad(tipoReg);
-		regActividad.setUsernameRegActividad(username);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setDescripcion(descripcion);
-		regActividadService.save(regActividad);
-	}
-
-	/**
-	 * @param e
-	 */
-	private void altaRegActivError(Exception e) {
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
-	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
 }

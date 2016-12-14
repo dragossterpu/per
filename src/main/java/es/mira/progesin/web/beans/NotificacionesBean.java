@@ -70,16 +70,14 @@ public class NotificacionesBean implements Serializable {
 		notificacion.setFechaBaja(new Date());
 		notificacion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
-			notificacionService.save(notificacion);
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
 			// Guardamos la actividad en bbdd
-			saveReg(descripcion, EstadoRegActividadEnum.BAJA.name(),
-					SecurityContextHolder.getContext().getAuthentication().getName());
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);		
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			altaRegActivError(e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 	}
@@ -93,33 +91,5 @@ public class NotificacionesBean implements Serializable {
 		}
 	}
 
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin ********************
-	/**
-	 * @param descripcion
-	 * @param tipoReg
-	 * @param username
-	 */
-	private void saveReg(String descripcion, String tipoReg, String username) {
-
-		regActividad.setTipoRegActividad(tipoReg);
-		regActividad.setUsernameRegActividad(username);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setDescripcion(descripcion);
-		regActividadService.save(regActividad);
-	}
-
-	/**
-	 * @param e
-	 */
-	private void altaRegActivError(Exception e) {
-		regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		String message = Utilities.messageError(e);
-		regActividad.setFechaAlta(new Date());
-		regActividad.setNombreSeccion(NOMBRESECCION);
-		regActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		regActividad.setDescripcion(message);
-		regActividadService.save(regActividad);
-	}
-	// ************* Alta mensajes de notificacion, regActividad y alertas Progesin END********************
+	
 }

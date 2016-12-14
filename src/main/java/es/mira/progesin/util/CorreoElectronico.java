@@ -3,7 +3,10 @@ package es.mira.progesin.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -18,14 +21,16 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.extern.slf4j.Slf4j;
 
 @Component("correoElectronico")
 
 public class CorreoElectronico implements ICorreoElectronico {
 
+	
 	@Autowired
-	IParametrosRepository parametro;
+	ApplicationBean applicationBean;
 	
 	List<String> destino;
 	List<String> conCopia;
@@ -229,17 +234,18 @@ public class CorreoElectronico implements ICorreoElectronico {
 	public JavaMailSenderImpl conexionServidor() throws MailException{
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-
-			List<Parametro> parametrosMail = parametro.findParamByParamSeccion("mail");
-			String pass = parametro.findValueForKey("UserPwd", "mail");
 			
-			
+			Map<String,String> parametrosMail =applicationBean.getMapaParametros().get("mail");
+			String pass= parametrosMail.get("UserPwd");
 
 			Properties mailProperties = new Properties();
-			for (Parametro param:parametrosMail){
-				mailProperties.put(param.getParam().getClave(),param.getParam().getValor());
-			}
 
+			Iterator<Entry<String, String>> it = parametrosMail.entrySet().iterator();
+
+		    while (it.hasNext()) {
+		        Map.Entry<String, String> param = (Map.Entry<String, String>)it.next();
+		        mailProperties.put(param.getKey(),param.getValue());
+		   }
 
 			mailSender.setJavaMailProperties(mailProperties);
 			mailSender.setPassword(pass);

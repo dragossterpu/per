@@ -19,7 +19,7 @@
 		<h:form id="busquedaAlertas" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
 		<div id="alertas">
 				<p:outputPanel layout="block" id="panelAlertas">
-					 <p:outputPanel rendered="#{not empty alertasBean.listaAlertas}">
+					 <p:outputPanel rendered="#{not empty mensajesBean.listaAlertas}">
 		 				<h:commandLink>
 			               <p:graphicImage  value="/images/xls.png" />
 			               <p:dataExporter type="xls" target="tablaAlertas" fileName="listaAlertas"/>
@@ -37,10 +37,9 @@
 			            	<p:printer target="busquedaAlertas" />
 			            </h:commandLink>
 		            </p:outputPanel>
-					 <p:dataTable var="alerta" value="#{alertasBean.listaAlertas}" 
-					rendered="#{not empty alertasBean.listaAlertas}"
+					 <p:dataTable var="alerta" value="#{mensajesBean.listaAlertas}" 
 					id="tablaAlertas"
-					paginator="true" rows="5">
+					paginator="true" rows="20">
 					<f:facet name="header">
 						Alertas
 					</f:facet>
@@ -62,12 +61,12 @@
 							<h:outputText value="#{alerta.tipoAlerta}" />
 						</p:column>
 						<p:column width="20" exportable="false">
-							<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{alertasBean.eliminarAlertas(alerta)}" update="tablaAlertas">
+							<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{mensajesBean.eliminarAlertas(alerta)}" update="tablaAlertas">
 								<p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="fa fa-warning-sign"/>
 							</p:commandButton>
 						</p:column>
 					<f:facet name="footer">
-		       				 Encontrados : #{fn:length(alertasBean.listaAlertas)} alertas.
+		       				 Encontrados : #{fn:length(mensajesBean.listaAlertas)} alertas.
 		    			</f:facet>
 				</p:dataTable>
 			</p:outputPanel>
@@ -78,7 +77,7 @@
 		<h:form id="busquedaNotificaciones" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">	
 		<div id="notificaciones">
 		<p:outputPanel layout="block" id="panelNotificaciones" autoUpdate="true">
- 				<p:outputPanel rendered="#{not empty notificacionesBean.listaNotificaciones}">
+ 				<p:outputPanel rendered="#{not empty mensajesBean.listaNotificaciones}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
 		               <p:dataExporter type="xls" target="tablaNotificaciones" fileName="listaNotificaciones"/>
@@ -96,10 +95,10 @@
 		            	<p:printer target="busquedaNotificaciones" />
 		            </h:commandLink>
 	            </p:outputPanel>
-			<p:dataTable var="notificacion" value="#{notificacionesBean.listaNotificaciones}" 
-			rendered="#{not empty notificacionesBean.listaNotificaciones}"
+			<p:dataTable var="notificacion" value="#{mensajesBean.listaNotificaciones}" 
+			
 			id="tablaNotificaciones"
-			paginator="true" rows="5">
+			paginator="true" rows="20">
 				<f:facet name="header">
 					Notificaciones
 				</f:facet>
@@ -118,12 +117,12 @@
 						<h:outputText value="#{notificacion.nombreSeccion}" />
 					</p:column>
 					<p:column width="20" exportable="false">
-						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{notificacionesBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{mensajesBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
 							<p:confirm header="Eliminar notificación" message="¿Está seguro que desea eliminar esta notificación?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
 				<f:facet name="footer">
-	       				 Encontrados : #{fn:length(notificacionesBean.listaNotificaciones)} notificaciones.
+	       				 Encontrados : #{fn:length(mensajesBean.listaNotificaciones)} notificaciones.
 	    			</f:facet>
 			</p:dataTable>
 		</p:outputPanel>
