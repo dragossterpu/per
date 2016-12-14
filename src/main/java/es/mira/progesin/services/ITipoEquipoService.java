@@ -6,9 +6,8 @@ public interface ITipoEquipoService {
 
 	Iterable<TipoEquipo> findAll();
 
-	void delete(Integer id);
-	
+	void delete(Long id);
+
 	TipoEquipo save(TipoEquipo entity);
-	
 
 }

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
 
-public interface ITipoEquiposRepository extends CrudRepository<TipoEquipo, Integer> {
+public interface ITipoEquiposRepository extends CrudRepository<TipoEquipo, Long> {
 
 }

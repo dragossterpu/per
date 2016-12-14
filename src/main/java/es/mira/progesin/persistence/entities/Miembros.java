@@ -2,12 +2,18 @@ package es.mira.progesin.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import lombok.AllArgsConstructor;
@@ -25,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode()
 @Builder
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @Entity
@@ -32,12 +39,14 @@ import lombok.extern.slf4j.Slf4j;
 
 public class Miembros {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID")
+	@SequenceGenerator(name = "seq_miembros", sequenceName = "seq_miembros", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_miembros")
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "ID_EQUIPO")
-	private Long idEquipo;
+	@ManyToOne
+	@JoinColumn(name = "ID_EQUIPO")
+	private Equipo equipo;
 
 	@Column(name = "username")
 	private String username;

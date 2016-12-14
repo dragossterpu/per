@@ -20,14 +20,14 @@ insert into PUESTOSTRABAJO values(11, 'Jefe Sección');
 insert into PUESTOSTRABAJO values(12, 'Secretario Técnico');
 insert into PUESTOSTRABAJO values(13, 'Subdirector General');
  
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values (1, 'Gestión  Inspección Área Prevención de Riesgos Laborales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(2, 'Gestión Inspecciones Generales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(3, 'Gestión Inspecciones de Seguimiento.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(4, 'Gestión Inspecciones Incidentales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(5, 'Gestión Inspecciones Prevención de Riesgos Laborales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(6, 'Gestión Inspecciones Temáticas (CIES).');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(7, 'Gestión Servicio de Calidad y Quejas');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(8, 'Otros');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión  Inspección Área Prevención de Riesgos Laborales.');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Generales.');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones de Seguimiento.');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Incidentales.');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Prevención de Riesgos Laborales.');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Temáticas (CIES).');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Servicio de Calidad y Quejas');
+insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Otros');
 
  
 
@@ -713,24 +713,24 @@ insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documen
 insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 1.docx');
 insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 2.docx');
 
-insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (1,'NO',sysdate,'silpe','Equipo A','Silvia apellido1 apellido2','IG','silpe');
-insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (2,'NO',sysdate,'cgonzalez','Equipo B','CARLOS GONZÁLEZ CASTILLO','CIES','silpe');
-insert into equipo(id_equipo,equipo_especial,fecha_alta,jefe_equipo,nombre_equipo,nombre_jefe,tipo_equipo,username_alta) values (3,'NO',sysdate,'mfgonzalez','Equipo C','MARCELO FRANCISCO GONZALEZ FERNANDEZ','IS','silpe');
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'silpe', 'Equipo A', 'Silvia apellido1 apellido2', 1, 'silpe');
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'CARLOS GONZÁLEZ CASTILLO', 2, 'silpe');
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'mfgonzalez', 'Equipo C', 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 3, 'silpe');
 
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (1,1,'Silvia apellido1 apellido2','JEFE_EQUIPO','silpe');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (2,1,'PEDRO  CARRETERO LIAU','MIEMBRO','pedro');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (3,1,'JOSE MANUEL SIERRA EXOJO','MIEMBRO','jmanuel');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (4,1,'ANTONIO LOPEZ BETRIAN','MIEMBRO','alopez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (5,2,'CARLOS GONZÁLEZ CASTILLO','JEFE_EQUIPO','cgonzalez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (6,2,'AMADEO MATEOS CHICO','MIEMBRO','amateos');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (7,2,'ELIAS MARTINEZ ALLER','MIEMBRO','emartinez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (8,3,'MARCELO FRANCISCO GONZALEZ FERNANDEZ','JEFE_EQUIPO','mfgonzalez');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (9,3,'JOSE LUIS CALONGE DELSO','MIEMBRO','jlcalonge');
-insert into miembros(id,id_equipo,nombre_completo,posicion,username) values (10,3,'JOSE IGNACIO CEREZO HERNANDEZ','MIEMBRO','jicerezo');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'Silvia apellido1 apellido2', 'JEFE_EQUIPO', 'silpe');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'PEDRO  CARRETERO LIAU', 'MIEMBRO', 'pedro');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'JOSE MANUEL SIERRA EXOJO', 'MIEMBRO', 'jmanuel');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'ANTONIO LOPEZ BETRIAN', 'MIEMBRO', 'alopez');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'CARLOS GONZÁLEZ CASTILLO', 'JEFE_EQUIPO', 'cgonzalez');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'AMADEO MATEOS CHICO', 'MIEMBRO', 'amateos');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'ELIAS MARTINEZ ALLER','MIEMBRO','emartinez');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 'JEFE_EQUIPO', 'mfgonzalez');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'JOSE LUIS CALONGE DELSO', 'MIEMBRO', 'jlcalonge');
+insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'JOSE IGNACIO CEREZO HERNANDEZ', 'MIEMBRO', 'jicerezo');
 
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (1, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 'PRIMERO', 2017, 1);
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (11, '01/11/2016', '11/2017', 'I.G.P.','silpe', 'Granada', 'GC', 'SEGUNDO', 2017, 1);
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (101, '01/11/2016', '101/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 'TERCERO', 2016, 1);
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (10, '01/11/2016', '10/2017', 'I.T_CIE','silpe', 'Granada', 'GC', 'SEGUNDO', 2017, 2);
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (12, '01/11/2016', '12/2017', 'I.G.S.','silpe', 'Lérida', 'PN', 'PRIMERO', 2017, 1);
-INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (150, '01/11/2016', '150/2017', 'I.E_PUNT','silpe', 'Granada', 'OTROS', 'CUARTO', 2016, 3);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '1/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 'PRIMERO', 2017, 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '2/2017', 'I.G.P.','silpe', 'Granada', 'GC', 'SEGUNDO', 2017, 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '3/2017', 'I.G.P.','silpe', 'Lérida', 'PN', 'TERCERO', 2016, 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '4/2017', 'I.T_CIE','silpe', 'Granada', 'GC', 'SEGUNDO', 2017, 2);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '5/2017', 'I.G.S.','silpe', 'Lérida', 'PN', 'PRIMERO', 2017, 1);
+INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '6/2017', 'I.E_PUNT','silpe', 'Granada', 'OTROS', 'CUARTO', 2016, 3);

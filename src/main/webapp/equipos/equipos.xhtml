@@ -17,10 +17,10 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h3 style="white-space:pre-line;" >Búsqueda de equipos</h3>
+		<h3>Búsqueda de equipos</h3>
 		
 		<h:form>
-		    <p:remoteCommand name="onload" action="#{equiposBean.getFormularioBusquedaEquipos}" autoRun="true" />
+		    <p:remoteCommand name="onload" action="#{equiposBean.getFormularioBusquedaEquipos}" update="busquedaEquipos" autoRun="true" />
 		</h:form>
 		
 		<h:form id="busquedaEquipos" >
@@ -35,7 +35,14 @@
 						
 						<h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
 						<p:inputText id="nombreEquipo" value="#{equiposBean.equipoBusqueda.nombreEquipo}" />
-		
+
+	                    <h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección:" />			       			        
+				        <p:selectOneMenu id="tipoEquipo" value="#{equiposBean.equipoBusqueda.tipoEquipo}" effect="fold" width="50" converter="#{selectConverter}">
+							<f:selectItem itemLabel="Seleccione uno" itemValue="" />
+							<f:selectItems value="#{equiposBean.tiposEquipo}" var="tipoEquipoSelect"
+								itemLabel="#{tipoEquipoSelect.descripcion}" itemValue="#{tipoEquipoSelect}" />
+				        </p:selectOneMenu>
+			        
 					</div>
 	
 					<div class="columnaDchaFormulario">
@@ -56,17 +63,15 @@
 			</div>
 				<div class="botonesFormularioEquipos">
 						<p:commandButton actionListener="#{equiposBean.buscarEquipo}" value="Buscar" update="panelEquipos" icon="fa fa-search" />
-						 <h:commandLink title="Limpiar" action="#{equiposBean.getFormularioBusquedaEquipos}" update="busquedaEquipos" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
+						 <h:commandLink title="Limpiar" action="#{equiposBean.limpiarBusqueda}" update="busquedaEquipos" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">Limpiar</span>
 						</h:commandLink>
                 </div>
 						<p:separator title="Alta nuevo equipo" styleClass="separator ui-state-disabled"/>
-				<div class="botonesFormulario">
-						 <h:outputText value="¿Equipo especial?: " />&nbsp;
-        				<p:selectBooleanCheckbox value="#{equiposBean.equipoEspecial}" />&nbsp; &nbsp; &nbsp;  
-					        <h:commandLink title="Nuevo equipo" action="#{equiposBean.nuevoEquipo}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
-								<span class="ui-CommandLink-texto">Nuevo equipo</span>
-							</h:commandLink>
+				<div class="botonesFormulario"> 
+				        <h:commandLink title="Nuevo equipo" action="#{equiposBean.nuevoEquipo}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">Nuevo equipo</span>
+						</h:commandLink>
 				</div>
 					<p:outputPanel layout="block" id="panelEquipos" >
 		 				<p:outputPanel rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
@@ -112,10 +117,6 @@
 					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" visible="#{equiposBean.list[3]}" exportable="#{equiposBean.list[2]}">
 						<h:outputText value="#{equipo.nombreJefe}" />
 					</p:column>
-					
-					<p:column headerText="Equipo especial" sortBy="#{equipo.equipoEspecial}"  width="70" visible="#{equiposBean.list[4]}" exportable="#{equiposBean.list[3]}">
-						<h:outputText value="#{equipo.equipoEspecial}" />
-					</p:column>	
 		
 					<p:column width="20" exportable="false"  rendered="#{equiposBean.equipo.fechaBaja eq null}">
 						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}"

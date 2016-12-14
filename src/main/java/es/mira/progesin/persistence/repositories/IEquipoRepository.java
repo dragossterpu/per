@@ -6,8 +6,6 @@ import es.mira.progesin.persistence.entities.Equipo;
 
 public interface IEquipoRepository extends CrudRepository<Equipo, Long> {
 
-	// Equipo findByEquipoEspecial(String equipoEspecial);
-
 	// boolean exists(Integer id);
 
 	// void delete(Integer id);

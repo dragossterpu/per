@@ -9,7 +9,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
-import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,16 +27,14 @@ public class TipoEquipoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private TipoEquipo equipo;
-
-	static Logger LOG = Logger.getLogger(TipoEquipoBean.class);
+	private TipoEquipo tipoEquipo;
 
 	private List<TipoEquipo> listaTipoEquipo;
 
 	private String tipoNuevo;
 
 	@Autowired
-	ITipoEquipoService tipoEquipoService;
+	transient ITipoEquipoService tipoEquipoService;
 
 	/**
 	 * Método que nos lleva al listado de los tipos de equipos. Se llama en la carga de la página
@@ -47,8 +44,8 @@ public class TipoEquipoBean implements Serializable {
 		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
 	}
 
-	public void eliminarEquipo(TipoEquipo equipo) {
-		tipoEquipoService.delete(equipo.getIdTipoEquipo());
+	public void eliminarTipo(TipoEquipo tipo) {
+		tipoEquipoService.delete(tipo.getId());
 		this.listaTipoEquipo = null;
 		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
 	}

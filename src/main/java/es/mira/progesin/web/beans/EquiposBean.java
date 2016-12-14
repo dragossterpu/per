@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembros;
-import es.mira.progesin.persistence.entities.RegistroActividad;
+import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
@@ -29,6 +29,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -72,8 +73,6 @@ public class EquiposBean implements Serializable {
 
 	private String estado = null;
 
-	private Boolean equipoEspecial;
-
 	private Miembros miembro = new Miembros();
 
 	private List<User> listadoJefes = new ArrayList<>();
@@ -88,9 +87,12 @@ public class EquiposBean implements Serializable {
 
 	private boolean skip;
 
-	private String tipoEquipo;
+	private TipoEquipo tipoEquipo;
 
-	RegistroActividad regActividad = new RegistroActividad();
+	@Autowired
+	transient ITipoEquipoService tipoEquipoService;
+
+	private transient Iterable<TipoEquipo> tiposEquipo;
 
 	private List<User> listaUsuarios;
 
@@ -129,15 +131,8 @@ public class EquiposBean implements Serializable {
 		this.tipoEquipo = null;
 		equipo = new Equipo();
 		jefeSelecionado = new User();
-		miembrosSeleccionados = new ArrayList<User>();
+		miembrosSeleccionados = new ArrayList<>();
 		equipo.setFechaAlta(new Date());
-		if (equipoEspecial) {
-			equipo.setEquipoEspecial("SI");
-		}
-		else {
-			equipo.setEquipoEspecial("NO");
-		}
-		equipo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
 		listadoJefes = listaUsuarios;
 		return "/equipos/altaEquipo";
@@ -152,7 +147,6 @@ public class EquiposBean implements Serializable {
 		equipo.setJefeEquipo(jefeSelecionado.getUsername());
 		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
-		// equipo.setNombreEquipo(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1());
 		equipo.setTipoEquipo(tipoEquipo);
 		try {
 			if (equipoService.save(equipo) != null) {
@@ -177,17 +171,21 @@ public class EquiposBean implements Serializable {
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
-		this.equipoEspecial = false;
 		return VISTAEQUIPOS;
 	}
 
 	public void getFormularioBusquedaEquipos() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
-			equipoBusqueda.resetValues();
-			this.estado = null;
+			limpiarBusqueda();
 			this.vieneDe = null;
+			tiposEquipo = tipoEquipoService.findAll();
 		}
 
+	}
+
+	public void limpiarBusqueda() {
+		equipoBusqueda.resetValues();
+		this.estado = null;
 	}
 
 	public String buscarEquipo() {
@@ -202,7 +200,6 @@ public class EquiposBean implements Serializable {
 	}
 
 	public String limpiarValores() {
-		this.equipoEspecial = false;
 		// limpiamos los datos del formulario
 		this.miembrosSeleccionados = null;
 		return null;
@@ -238,7 +235,7 @@ public class EquiposBean implements Serializable {
 		this.listadoColaboradores = null;
 		listMiembros = new ArrayList<>();
 		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
-		listMiembros = equipoService.findByIdEquipo(equipo.getIdEquipo());
+		listMiembros = equipoService.findByEquipo(equipo);
 		equipo.setJefeEquipo(jefeSelecionado.getUsername());
 		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
@@ -259,7 +256,8 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
 					+ equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -293,16 +291,17 @@ public class EquiposBean implements Serializable {
 
 		for (User user : colaboradoresSelecionados) {
 			Miembros miembro = new Miembros();
-			miembro.setIdEquipo(equipo.getIdEquipo());
+			miembro.setEquipo(equipo);
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
-			miembro.setPosicion(RolEquipoEnum.COLABORADOR); 
+			miembro.setPosicion(RolEquipoEnum.COLABORADOR);
 			try {
 				equipoService.save(miembro);
 				String descripcion = "Se ha añadido un nuevo colaborador al equipo inspecciones. Nombre colaborador "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
@@ -323,7 +322,7 @@ public class EquiposBean implements Serializable {
 
 		for (User user : miembrosSeleccionados) {
 			Miembros miembro = new Miembros();
-			miembro.setIdEquipo(equipo.getIdEquipo());
+			miembro.setEquipo(equipo);
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
 			miembro.setUsername(user.getUsername());
 			miembro.setPosicion(RolEquipoEnum.MIEMBRO);
@@ -332,7 +331,8 @@ public class EquiposBean implements Serializable {
 				String descripcion = "Se ha añadido un nuevo componente al equipo inspecciones. Nombre componente "
 						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
@@ -357,7 +357,7 @@ public class EquiposBean implements Serializable {
 	 */
 	private void altaJefeEquipo() {
 		Miembros miembro = new Miembros();
-		miembro.setIdEquipo(equipo.getIdEquipo());
+		miembro.setEquipo(equipo);
 		miembro.setNombreCompleto(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
 				+ jefeSelecionado.getApellido2());
 		miembro.setUsername(jefeSelecionado.getUsername());
@@ -372,7 +372,7 @@ public class EquiposBean implements Serializable {
 		for (User user : miembrosSeleccionados) {
 			Miembros miembro2 = new Miembros();
 			miembro2.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-			miembro2.setIdEquipo(equipo.getIdEquipo());
+			miembro2.setEquipo(equipo);
 			miembro2.setUsername(user.getUsername());
 			miembro2.setPosicion(RolEquipoEnum.MIEMBRO);
 			equipoService.save(miembro2);
@@ -416,7 +416,7 @@ public class EquiposBean implements Serializable {
 	}
 
 	public void save() {
-		FacesMessage msg = new FacesMessage("Successful", "Welcome :" + equipo.getIdEquipo());
+		FacesMessage msg = new FacesMessage("Successful", "Welcome :" + equipo.getId());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
@@ -425,7 +425,6 @@ public class EquiposBean implements Serializable {
 		// para que en el select cargue por defecto la opción "Seleccione uno..."
 		estado = null;
 		this.equipo = null;
-		this.equipoEspecial = false;
 		equipoBusqueda = new EquipoBusqueda();
 		equipoBusqueda.resetValues();
 		list = new ArrayList<>();

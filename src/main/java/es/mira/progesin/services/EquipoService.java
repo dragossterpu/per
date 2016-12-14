@@ -6,8 +6,11 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,16 +62,15 @@ public class EquipoService implements IEquipoService {
 	}
 
 	@Override
-	public List<Miembros> findByIdEquipo(Long idEquipo) {
-		return miembrosRepository.findByIdEquipo(idEquipo);
+	public List<Miembros> findByEquipo(Equipo equipo) {
+		return miembrosRepository.findByEquipo(equipo);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(Equipo.class);
-
+		Criteria criteria = session.createCriteria(Equipo.class, "equipo");
 		if (equipoBusqueda.getFechaDesde() != null) {
 			/**
 			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
@@ -88,9 +90,20 @@ public class EquipoService implements IEquipoService {
 		if (equipoBusqueda.getNombreJefe() != null && !equipoBusqueda.getNombreJefe().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
 		}
-
 		if (equipoBusqueda.getNombreEquipo() != null && !equipoBusqueda.getNombreEquipo().isEmpty()) {
 			criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
+		}
+		criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
+		if (equipoBusqueda.getTipoEquipo() != null) {
+			criteria.add(Restrictions.eq("tipoEquipo.id", equipoBusqueda.getTipoEquipo().getId()));
+		}
+		if (equipoBusqueda.getNombreMiembro() != null && !equipoBusqueda.getNombreMiembro().isEmpty()) {
+			DetachedCriteria subquery = DetachedCriteria.forClass(Miembros.class, "miembro");
+			subquery.add(Restrictions.ilike("miembro.nombreCompleto", equipoBusqueda.getNombreMiembro(),
+					MatchMode.ANYWHERE));
+			subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
+			subquery.setProjection(Projections.property("miembro.equipo"));
+			criteria.add(Property.forName("equipo.id").in(subquery));
 		}
 		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.ACTIVO.name())) {
 			criteria.add(Restrictions.isNull(FECHABAJA));
@@ -109,13 +122,5 @@ public class EquipoService implements IEquipoService {
 
 		return listEquipos;
 	}
-
-	@Override
-	public Equipo buscarEquipo(Long idEquipo) {
-		
-		return equipoRepository.findOne(idEquipo);
-	}
-
-	
 
 }

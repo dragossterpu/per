@@ -12,7 +12,7 @@
 
 			<h3>Alta tipo de equipo de inspecciones</h3>
 
-			<div class="bloqueFormulario" style="width: 50%">
+			<div class="bloqueFormulario">
 				<h:form id="form">
 				
 					<h:outputLabel for="descripcion" value="Nombre del tipo de equipo (*):" />
@@ -21,11 +21,11 @@
 					
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{tipoEquipoBean.altaTipo}" value="Crear tipo de equipo" icon="fa fa-fw fa-save"/>
-						<p:button outcome="/equipos/listadoEquipos" value="Cancelar" icon="fa fa-fw fa-undo"/>
+						<p:button outcome="/equipos/tiposEquipo" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 			
 					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-						<p:ajax event="close" listener="#{facesUtilities.redirect('/equipos/listadoEquipos')}" />
+						<p:ajax event="close" listener="#{facesUtilities.redirect('/equipos/tiposEquipo')}" />
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 						<div class="centrarBotonesDialog">
 							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/equipos/listadoEquipos')}" />

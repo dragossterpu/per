@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import lombok.Getter;
@@ -21,6 +22,8 @@ public class EquipoBusqueda implements Serializable {
 	private Date fechaHasta;
 
 	private String nombreEquipo;
+
+	private TipoEquipo tipoEquipo;
 
 	private String nombreJefe;
 
@@ -40,6 +43,7 @@ public class EquipoBusqueda implements Serializable {
 		this.fechaDesde = null;
 		this.fechaHasta = null;
 		this.nombreEquipo = null;
+		this.tipoEquipo = null;
 		this.jefeEquipo = null;
 		this.miembros = null;
 		this.estado = null;

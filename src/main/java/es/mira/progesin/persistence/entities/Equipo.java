@@ -2,18 +2,24 @@ package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode()
 @Builder
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @Entity
@@ -39,27 +46,25 @@ public class Equipo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "ID_EQUIPO")
-	private Long idEquipo;
+	@SequenceGenerator(name = "seq_equipo", sequenceName = "seq_equipo", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_equipo")
+	@Column(name = "id", nullable = false)
+	private Long id;
 
 	@Column(name = "nombreEquipo", length = 100, nullable = false)
 	private String nombreEquipo;
 
-	@Column(name = "tipoEquipo", length = 100, nullable = false)
-	private String tipoEquipo;
+	@ManyToOne
+	@JoinColumn(name = "idTipoEquipo")
+	private TipoEquipo tipoEquipo;
 
 	@Column(name = "jefeEquipo", length = 100, nullable = false)
 	private String jefeEquipo;
-
-	@Column(name = "equipoEspecial", length = 2)
-	private String equipoEspecial;
 
 	@CreatedDate
 	@Column(name = "fecha_alta", nullable = false)
 	private Date fechaAlta;
 
-	@LastModifiedDate
 	@Column(name = "fecha_baja")
 	private Date fechaBaja;
 
@@ -67,11 +72,13 @@ public class Equipo implements Serializable {
 	@Column(name = "username_alta", length = 12, nullable = false)
 	private String usernameAlta;
 
-	@LastModifiedBy
 	@Column(name = "username_baja", length = 12)
 	private String usernameBaja;
 
 	@Column(name = "nombreJefe", length = 150)
 	private String nombreJefe;
+
+	@OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY)
+	private List<Miembros> miembros;
 
 }

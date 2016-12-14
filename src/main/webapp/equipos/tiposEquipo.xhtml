@@ -7,54 +7,61 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:pe="http://primefaces.org/ui/extensions" >
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h3>Tipos de equipo de inspección</h3>
-		<br></br><br></br>
-		<h:form>
-		    <p:remoteCommand name="onload" action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
-		</h:form>
+			<h3>Tipos de equipo de inspección</h3>
+			<br></br>
+			<br></br>
+			<h:form>
+				<p:remoteCommand name="onload"
+					action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
+			</h:form>
 
-		<div id="listadoEquipos">
-	<h:form id="form">
-			<p:dataTable id="tablaEquipos" var="tipoEquipo" rowIndexVar="rowIndex" rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}" 
-			value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+			<div id="listadoTiposEquipo">
+				<h:form id="form">
+					<p:dataTable id="tablaTiposEquipo" var="tipoEquipo"
+						rowIndexVar="rowIndex"
+						rowStyleClass="#{(rowIndex mod 2) eq 0 ? '#FFFFFF' : '#111111'}"
+						value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"
+						onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}"
 							update=":form:msgs" />
-						<p:ajax event="rowEditCancel" listener="#{tipoEquipoBean.onRowCancel}"
-							update=":form:msgs" />
+						<p:ajax event="rowEditCancel"
+							listener="#{tipoEquipoBean.onRowCancel}" update=":form:msgs" />
 						<p:column headerText="Tipo equipo de inspección">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{tipoEquipo.descripcion}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText id="equipoInput" value="#{tipoEquipo.descripcion}" converter="#{trimConverter}" required="true"
+									<p:inputText id="equipoInput" value="#{tipoEquipo.descripcion}"
+										converter="#{trimConverter}" required="true"
 										requiredMessage="El nombre del equipo no puede estar vacío" />
-										<p:messages for="equipoInput" autoUpdate="true"  closable="true"/>
+									<p:messages for="equipoInput" autoUpdate="true" closable="true" />
 								</f:facet>
-							</p:cellEditor> 
-				       </p:column>
-				       <p:column style="width:30px">
-							<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="width:30px">
+							<p:rowEditor editTitle="Editar" saveTitle="Guardar"
+								cancelTitle="Cancelar" />
 						</p:column>
 						<p:column style="width:30px">
 							<p:commandButton title="Eliminar" icon="fa fa-trash"
-								actionListener="#{tipoEquipoBean.eliminarEquipo(tipoEquipo)}"
-								update="tablaEquipos">
+								actionListener="#{tipoEquipoBean.eliminarTipo(tipoEquipo)}"
+								update="tablaTiposEquipo">
 								<p:confirm header="Eliminar tipo de equipo"
 									message="¿Está seguro que desea eliminar este tipo de equipo?"
 									icon="fa fa-warning-sign" />
 							</p:commandButton>
 						</p:column>
-				<f:facet name="footer">
-       				 Hay: #{fn:length(tipoEquipoBean.listaTipoEquipo)} equipos.
+						<f:facet name="footer">
+       				 Hay: #{fn:length(tipoEquipoBean.listaTipoEquipo)} tipos de equipo.
     			</f:facet>
-			</p:dataTable>
-							<p:confirmDialog global="true">
+					</p:dataTable>
+					<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
 							<p:commandButton value="Aceptar" type="button"
 								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
@@ -62,14 +69,16 @@
 								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
 						</div>
 					</p:confirmDialog>
-					
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+
+					<p:messages id="msgs" autoUpdate="true" closable="true"
+						showDetail="true" />
 				</h:form>
-					</div>
-					<div class="botonesFormulario">
-						<p:button value="Nuevo equipo" outcome="/equipos/altaTipoEquipo" icon="fa fa-fw fa-user-plus"/>
-					</div>
+			</div>
+			<div class="botonesFormulario">
+				<p:button value="Nuevo tipo de equipo"
+					outcome="/equipos/altaTipoEquipo" icon="fa fa-fw fa-user-plus" />
+			</div>
 		</ui:define>
-			</ui:composition>
+	</ui:composition>
 </f:view>
 </html>

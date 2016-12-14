@@ -18,14 +18,10 @@ public interface IEquipoService {
 
 	Miembros save(Miembros miembro);
 
-	List<Miembros> findByIdEquipo(Long idEquipo);
+	List<Miembros> findByEquipo(Equipo equipo);
 
 	Equipo save(Equipo entity);
 
-	// Equipo findByEquipoEspecial(String equipoEspecial);
-
 	List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda);
-	
-	
-	Equipo buscarEquipo(Long idEquipo);
+
 }
