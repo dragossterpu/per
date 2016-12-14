@@ -25,27 +25,25 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 
-
 @Service("documentoService")
-
 
 public class DocumentoService implements IDocumentoService {
 
 	@Autowired
 	IAlertaService alertaService;
-	
+
 	@Autowired
 	INotificacionService notificacionService;
-	
+
 	@Autowired
 	IRegistroActividadService registroActividadService;
-	
+
 	@Autowired
 	IDocumentoRepository documentoRepository;
 
 	@Autowired
 	IRegistroActividadService registro;
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -272,35 +270,41 @@ public class DocumentoService implements IDocumentoService {
 	 * @param UploadedFile
 	 * @return Documento
 	 * @throws SQLException
-	 *  
+	 * 
 	 *************************************/
 
 	@Override
 	public Documento cargaDocumento(UploadedFile file) throws SQLException {
-		Documento docu = new Documento();
-		try{
-			docu.setNombre(file.getFileName());
-			Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
-			docu.setFichero(fileBlob);
-			docu.setTipoContenido(file.getContentType());
-			notificacionService.crearNotificacionRol("Carga fichero", SeccionesEnum.GESTOR.getDescripcion(), RoleEnum.ADMIN);
-			registroActividadService.altaRegActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.GESTOR.getDescripcion());
-			return documentoRepository.save(docu);
-			
-		}catch(Exception ex){
+		try {
+			notificacionService.crearNotificacionRol("Carga fichero", SeccionesEnum.GESTOR.getDescripcion(),
+					RoleEnum.ADMIN);
+			registroActividadService.altaRegActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(),
+					SeccionesEnum.GESTOR.getDescripcion());
+
+			return documentoRepository.save(crearDocumento(file));
+		}
+		catch (Exception ex) {
 			registroActividadService.altaRegActividadError("Carga documento", ex);
 			throw ex;
 		}
-		
-		
 	}
-	
+
+	@Override
+	public Documento crearDocumento(UploadedFile file) {
+		Documento docu = new Documento();
+		docu.setNombre(file.getFileName());
+		Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
+		docu.setFichero(fileBlob);
+		docu.setTipoContenido(file.getContentType());
+		return docu;
+	}
+
 	/***************************************
 	 * 
 	 * extensionCorrecta
 	 * 
-	 * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión)
-	 * se corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera)
+	 * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión) se
+	 * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera)
 	 * 
 	 * @author Ezentis
 	 * @param UploadedFile
@@ -310,25 +314,21 @@ public class DocumentoService implements IDocumentoService {
 
 	@Override
 	public boolean extensionCorrecta(UploadedFile file) {
-	
-	      ContentHandler contenthandler = new BodyContentHandler();
-	      Metadata metadata = new Metadata();
-	      metadata.set(Metadata.RESOURCE_NAME_KEY, file.getFileName());
-	      Parser x = new AutoDetectParser();
-	      try {
+
+		ContentHandler contenthandler = new BodyContentHandler();
+		Metadata metadata = new Metadata();
+		metadata.set(Metadata.RESOURCE_NAME_KEY, file.getFileName());
+		Parser x = new AutoDetectParser();
+		try {
 			x.parse(file.getInputstream(), contenthandler, metadata, null);
-		} catch (IOException | SAXException | TikaException e) {
+		}
+		catch (IOException | SAXException | TikaException e) {
 			registro.altaRegActividadError("DocumentoService", e);
 		}
-		
-	     
-	      String tipo= metadata.get("Content-Type");
-		
-		
-	      
+
+		String tipo = metadata.get("Content-Type");
+
 		return tipo.equalsIgnoreCase(file.getContentType());
 	}
 
-	
-	
 }

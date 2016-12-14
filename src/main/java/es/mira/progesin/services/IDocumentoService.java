@@ -7,7 +7,6 @@ import org.primefaces.model.UploadedFile;
 
 import es.mira.progesin.persistence.entities.Documento;
 
-
 public interface IDocumentoService {
 	void delete(Long id);
 
@@ -35,8 +34,10 @@ public interface IDocumentoService {
 
 	Documento cargaDocumento(UploadedFile file) throws SQLException;
 
+	Documento crearDocumento(UploadedFile file);
+
 	Iterable<Documento> findByFechaBajaIsNull();
-	
+
 	boolean extensionCorrecta(UploadedFile file);
 
 }
