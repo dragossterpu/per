@@ -2,7 +2,6 @@ package es.mira.progesin.services;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import org.apache.tika.exception.TikaException;
@@ -10,7 +9,6 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -293,8 +291,8 @@ public class DocumentoService implements IDocumentoService {
 	public Documento crearDocumento(UploadedFile file) {
 		Documento docu = new Documento();
 		docu.setNombre(file.getFileName());
-		Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
-		docu.setFichero(fileBlob);
+		// Blob fileBlob = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(file.getContents());
+		// docu.setFichero(fileBlob);
 		docu.setTipoContenido(file.getContentType());
 		return docu;
 	}

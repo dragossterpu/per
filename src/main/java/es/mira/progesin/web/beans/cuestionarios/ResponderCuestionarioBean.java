@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -23,6 +25,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -34,6 +37,8 @@ import lombok.Setter;
 @Scope("session")
 public class ResponderCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private static final String ETIQUETA_ERROR = "mensajeerror";
 
 	@Autowired
 	private VisualizarCuestionario visualizarCuestionario;
@@ -49,7 +54,8 @@ public class ResponderCuestionarioBean implements Serializable {
 	@Autowired
 	private transient IDatosTablaGenericaRepository datosTablaRepository;
 
-	// private List<RespuestaCuestionario> listaRespuestas;
+	@Autowired
+	private transient IDocumentoService documentoService;
 
 	public void guardarBorrador() {
 		try {
@@ -59,6 +65,7 @@ public class ResponderCuestionarioBean implements Serializable {
 					"El borrador se ha guardado con éxito");
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Se ha producido un error al guardar las respuestas", e.getMessage(), "mensajeerror");
 			// TODO registro actividad
@@ -67,14 +74,15 @@ public class ResponderCuestionarioBean implements Serializable {
 
 	/**
 	 * @see guardarRespuestas
-	 * @param listaRespuestas Lista donde se guardarán todas las respuestas del cuestionario
+	 *
 	 */
 	private void guardarRespuestasTipoTexto() {
 		List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
 		Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
 		mapaRespuestas.forEach((pregunta, respuesta) -> {
+			System.err.println("pregunta.getTipoRespuesta(): " + pregunta.getTipoRespuesta());
 			if (respuesta != null) {
-				System.out.println(
+				System.err.println(
 						"pregunta: " + pregunta.getId() + " - " + pregunta.getPregunta() + ", respuesta: " + respuesta);
 				RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
 				RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
@@ -82,18 +90,25 @@ public class ResponderCuestionarioBean implements Serializable {
 				idRespuesta.setPregunta(pregunta);
 				respuestaCuestionario.setRespuestaId(idRespuesta);
 				respuestaCuestionario.setRespuestaTexto(respuesta);
+				if ("ADJUNTO".equals(pregunta.getTipoRespuesta())
+						&& visualizarCuestionario.getMapaDocumentos().get(pregunta) != null) {
+					respuestaCuestionario.setDocumentos(visualizarCuestionario.getMapaDocumentos().get(pregunta));
+				}
 				listaRespuestas.add(respuestaCuestionario);
 			}
 		});
 		if (listaRespuestas.isEmpty() == Boolean.FALSE) {
 			respuestaRepository.save(listaRespuestas);
+			// // para que los documentos tengan id y sepa que no es un insert
+			// listaRespuestas.forEach(respuesta -> visualizarCuestionario.getMapaDocumentos()
+			// .put(respuesta.getRespuestaId().getPregunta(), respuesta.getDocumentos()));
 		}
 	}
 
 	/**
 	 * Guarda en BBDD las respuestas de tipo TABLA o MATRIZ
 	 * @see guardarRespuestas
-	 * @param listaRespuestas
+	 * 
 	 */
 	private void guardarRespuestasTipoTablaMatriz() {
 		List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
@@ -145,9 +160,39 @@ public class ResponderCuestionarioBean implements Serializable {
 		}
 	}
 
+	public void subirFichero(FileUploadEvent event) {
+		Documento documentoSubido;
+		List<Documento> listaDocumentos;
+		if (documentoService.extensionCorrecta(event.getFile())) {
+
+			try {
+				PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
+						.get("pregunta");
+				documentoSubido = documentoService.crearDocumento(event.getFile());
+				Map<PreguntasCuestionario, List<Documento>> mapaDocumentos = visualizarCuestionario.getMapaDocumentos();
+				listaDocumentos = mapaDocumentos.get(pregunta) != null ? mapaDocumentos.get(pregunta)
+						: new ArrayList<>();
+				listaDocumentos.add(documentoSubido);
+				mapaDocumentos.put(pregunta, listaDocumentos);
+				visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+						"Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.", e.getMessage(),
+						ETIQUETA_ERROR);
+				// TODO reg actividad
+			}
+		}
+		else {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+					"La extensión del documento no corresponde con el documento subido", "", ETIQUETA_ERROR);
+		}
+	}
+
 	@PostConstruct
 	public void init() {
-		System.out.println("INICIALIZANDO RESPUESTA......");
+		System.out.println("********************* INICIALIZANDO RESPUESTA **************************");
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (RoleEnum.PROV_CUESTIONARIO.equals(user.getRole())) {
 			cuestionarioEnviado = cuestionarioEnvioService

@@ -49,21 +49,22 @@ public class Documento implements Serializable {
 	private Long id;
 
 	@Column(name = "fichero")
-	 @Lob
-	 private Blob fichero;
+	@Lob
+	private Blob fichero;
 
-	//@Column(name = "fichero", nullable = false)
-	//private byte[] fichero;
+	// @Column(name = "fichero", nullable = false)
+	// private byte[] fichero;
 
 	@Column(name = "tipoContenido", nullable = false)
 	private String tipoContenido;
 
 	@Column(name = "nombre")
 	private String nombre;
-	
+
 	@Column(name = "fecha_baja")
 	protected Date fechaBaja;
-	
+
 	@Column(name = "username_baja")
 	protected String usernameBaja;
+
 }

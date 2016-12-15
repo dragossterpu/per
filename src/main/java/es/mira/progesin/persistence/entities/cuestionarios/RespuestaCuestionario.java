@@ -3,11 +3,14 @@ package es.mira.progesin.persistence.entities.cuestionarios;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,6 +31,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "respuestascuestionario")
+@NamedEntityGraph(name = "RespuestaCuestionario.documentos", attributeNodes = @NamedAttributeNode("documentos"))
 public class RespuestaCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +43,7 @@ public class RespuestaCuestionario implements Serializable {
 
 	private String respuestaTexto;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "respuestas_cuest_docs", joinColumns = { @JoinColumn(name = "id_cuestionario_enviado"),
 			@JoinColumn(name = "id_pregunta") }, inverseJoinColumns = @JoinColumn(name = "id_documento"))
 	private List<Documento> documentos;

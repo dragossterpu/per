@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -61,6 +62,8 @@ public class VisualizarCuestionario implements Serializable {
 
 	HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux;
 
+	private Map<PreguntasCuestionario, List<Documento>> mapaDocumentos;
+
 	/**
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
 	 * texto, adjuntos, tablas...)
@@ -71,6 +74,7 @@ public class VisualizarCuestionario implements Serializable {
 	public String visualizarVacio(CuestionarioPersonalizado cuestionario) {
 		mapaRespuestasTabla = new HashMap<>();
 		mapaRespuestas = new HashMap<>();
+		mapaDocumentos = new HashMap<>();
 		return visualizar(cuestionario, false);
 	}
 
@@ -85,20 +89,30 @@ public class VisualizarCuestionario implements Serializable {
 	public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
 		mapaRespuestas = new HashMap<>();
 		mapaRespuestasTabla = new HashMap<>();
-		List<RespuestaCuestionario> listaRespuestas = respuestaRepository
-				.findByRespuestaIdCuestionarioEnviadoAndRespuestaTextoNotNull(cuestionarioEnviado);
-		listaRespuestas.forEach(respuesta -> mapaRespuestas.put(respuesta.getRespuestaId().getPregunta(),
-				respuesta.getRespuestaTexto()));
-
+		mapaDocumentos = new HashMap<>();
 		mapaRespuestasTablaAux = new HashMap<>();
-		listaRespuestas = respuestaRepository.findRespuestasTablaMatrizByCuestionarioEnviado(cuestionarioEnviado);
-		listaRespuestas.forEach(respuesta -> mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
-				respuesta.getRespuestaTablaMatriz()));
-
-		mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {
-			System.out.println(pregunta.getTipoRespuesta() + ", " + pregunta.getPregunta());
-			listaDatos.forEach(datosTabla -> System.out.println("****************" + datosTabla));
+		List<RespuestaCuestionario> listaRespuestas = respuestaRepository
+				.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+		listaRespuestas.forEach(respuesta -> {
+			String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
+			if ((tipoRespuesta.startsWith("TABLA") || tipoRespuesta.startsWith("MATRIZ"))
+					&& respuesta.getRespuestaTablaMatriz() != null) {
+				mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
+						respuesta.getRespuestaTablaMatriz());
+			}
+			else {
+				mapaRespuestas.put(respuesta.getRespuestaId().getPregunta(), respuesta.getRespuestaTexto());
+				if (respuesta.getDocumentos() != null && respuesta.getDocumentos().isEmpty() == Boolean.FALSE) {
+					mapaDocumentos.put(respuesta.getRespuestaId().getPregunta(), respuesta.getDocumentos());
+				}
+			}
 		});
+
+		// mapaRespuestasTablaAux = new HashMap<>();
+		// listaRespuestas = respuestaRepository.findRespuestasTablaMatrizByCuestionarioEnviado(cuestionarioEnviado);
+		// listaRespuestas.forEach(respuesta -> mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
+		// respuesta.getRespuestaTablaMatriz()));
+
 		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(), true);
 	}
 

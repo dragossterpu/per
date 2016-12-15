@@ -44,15 +44,23 @@
 										</p:selectOneRadio>
 										<p:messages for="radio" autoUpdate="true"  closable="true"/>
 										
-										<p:outputPanel rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
+										<p:outputPanel id="panelAdjuntos" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
 											<p:inputText id="adjunto" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 													 size="10" maxlength="1000"
 													 required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
 										    <p:messages for="adjunto" autoUpdate="true"  closable="true"/>
 										    
-										    <p:fileUpload fileUploadListener="#{responderCuestionarioBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
-										    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar"
-										                  multiple="true" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" invalidFileMessage="El tipo del documento seleccionado no es válido"/>
+										    <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" mode="advanced" dragDropSupport="false"
+										    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos"
+										                  multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" invalidFileMessage="El tipo del documento seleccionado no es válido">
+										         <f:attribute name="pregunta" value="#{preguntaArea}" />
+											</p:fileUpload>    
+											
+											<p:dataTable id ="tablaDocumentos" var="documento" value="#{responderCuestionarioBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}">
+												<p:column headerText="Fichero">
+											        <h:outputText value="#{documento.nombre}" />
+											    </p:column>
+											</p:dataTable>         
 										</p:outputPanel>
 											
 										<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}"
@@ -62,7 +70,7 @@
 									                <h:outputText value="#{column.header}" />
 									            </f:facet>
 									            <p:inputText id="tabla" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario" 
-									            	required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
+									            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar el campo" converter="#{trimConverter}"/>
 									        	<p:messages for="tabla" autoUpdate="true"  closable="true"/>
 									        	
 									        </p:columns>
@@ -83,8 +91,9 @@
 									            <f:facet name="header">
 									                <h:outputText value="#{column.header}" />
 									            </f:facet>
-									            <p:inputText value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"
-									            	required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
+									            <p:inputText id="matriz" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"
+									            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar el campo" converter="#{trimConverter}"/>
+									            <p:messages for="matriz" autoUpdate="true"  closable="true"/>
 									        </p:columns>
 						    			</p:dataTable>
 									</div>
