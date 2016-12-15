@@ -40,7 +40,8 @@
 					 <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.listaAlertas}" 
 					id="tablaAlertas"
 					paginator="true" 
-					paginatorTemplate="{Anterior} {Pagina} {Posterior}" >
+					paginatorTemplate="{Anterior} {Pagina} {Posterior}" 
+					emptyMessage="Ninguna">
                 	<f:facet name="{Anterior}">
 						<h:commandLink title="Anterior(es)" action="#{AlertasNotificacionesUsuarioBean.previousAlerta}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono"  />
 					</f:facet>   
@@ -107,7 +108,8 @@
 			
 			id="tablaNotificaciones"
 			paginator="true"
-			paginatorTemplate="{Anterior} {Pagina} {Posterior}" >
+			paginatorTemplate="{Anterior} {Pagina} {Posterior}" 
+			emptyMessage="Ninguna">
                 <f:facet name="{Anterior}">
 					<h:commandLink title="Anterior(es)" action="#{AlertasNotificacionesUsuarioBean.previousNotificacion}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono"   />
 				</f:facet>   

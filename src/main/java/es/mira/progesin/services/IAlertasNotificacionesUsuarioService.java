@@ -2,6 +2,9 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -28,5 +31,13 @@ public interface IAlertasNotificacionesUsuarioService {
 	void grabarMensajeRol(Object entidad, List<RoleEnum> roles);
 	
 	void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion);
+	
+	List<Notificacion> findNotificaciones(List<AlertasNotificacionesUsuario> lista);
+	
+	List<Alerta> findAlertas(List<AlertasNotificacionesUsuario> lista);
+	
+	Page<AlertasNotificacionesUsuario>  findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo, PageRequest request);
+	
+	
 	
 }

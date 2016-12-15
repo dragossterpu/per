@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Alerta;
@@ -275,6 +277,31 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 		men.setTipo(TipoMensajeEnum.NOTIFICACION);
 		return men;
 	}
+
+	@Override
+	public List<Notificacion> findNotificaciones(List<AlertasNotificacionesUsuario> lista) {
+		List<Notificacion> listaNotificaciones=new ArrayList<Notificacion>();
+		for(AlertasNotificacionesUsuario men:lista){
+			listaNotificaciones.add(notificacionService.findOne(men.getIdMensaje()));
+		}
+		return listaNotificaciones;
+	}
+
+	public List<Alerta> findAlertas(List<AlertasNotificacionesUsuario> lista) {
+		List<Alerta> listaAlertas=new ArrayList<Alerta>();
+		for(AlertasNotificacionesUsuario men:lista){
+			listaAlertas.add(alertaService.findOne(men.getIdMensaje()));
+		}
+		return listaAlertas;
+	}
+	
+	@Override
+	public Page<AlertasNotificacionesUsuario> findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo,
+			PageRequest request) {
+		return mensajeRepo.findByUsuarioAndTipo(usuario, tipo, request);
+	}
+
+	
 
 	
 
