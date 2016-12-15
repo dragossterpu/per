@@ -20,18 +20,14 @@ insert into PUESTOSTRABAJO values(11, 'Jefe Sección');
 insert into PUESTOSTRABAJO values(12, 'Secretario Técnico');
 insert into PUESTOSTRABAJO values(13, 'Subdirector General');
  
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión  Inspección Área Prevención de Riesgos Laborales.');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Generales.');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones de Seguimiento.');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Incidentales.');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Prevención de Riesgos Laborales.');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Inspecciones Temáticas (CIES).');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Gestión Servicio de Calidad y Quejas');
-insert into TIPO_EQUIPO (ID, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'Otros');
-
- 
-
-
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IAPRL', 'Inspecciones Área Prevención de Riesgos Laborales');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IG', 'Inspecciones Generales');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IS', 'Inspecciones de Seguimiento');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'II', 'Inspecciones Incidentales');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IPRL', 'Inspecciones Prevención de Riesgos Laborales');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'CIES', 'Inspecciones Temáticas (CIES).');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'SCQ', 'Servicio de Calidad y Quejas');
+insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'SO', 'Secretaria Y Otros');
 
 insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
   nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,

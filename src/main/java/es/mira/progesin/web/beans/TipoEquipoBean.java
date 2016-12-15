@@ -27,11 +27,9 @@ public class TipoEquipoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private TipoEquipo tipoEquipo;
+	private TipoEquipo tipoEquipoNuevo;
 
 	private List<TipoEquipo> listaTipoEquipo;
-
-	private String tipoNuevo;
 
 	@Autowired
 	transient ITipoEquipoService tipoEquipoService;
@@ -57,11 +55,14 @@ public class TipoEquipoBean implements Serializable {
 
 	}
 
+	public String getFormNuevoTipoEquipo() {
+		tipoEquipoNuevo = new TipoEquipo();
+		return "/equipos/altaTipoEquipo";
+	}
+
 	public void altaTipo() {
-		TipoEquipo equipo = new TipoEquipo();
-		equipo.setDescripcion(tipoNuevo);
 		try {
-			if (tipoEquipoService.save(equipo) != null) {
+			if (tipoEquipoService.save(tipoEquipoNuevo) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"El tipo de equipo ha sido creado con éxito");
 			}

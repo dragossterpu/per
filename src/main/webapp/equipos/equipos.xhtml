@@ -111,10 +111,16 @@
 					<p:column headerText="Nombre equipo" sortBy="#{equipo.nombreEquipo}" width="70" visible="#{equiposBean.list[1]}" exportable="#{equiposBean.list[1]}">
 						<h:outputText value="#{equipo.nombreEquipo}" />
 					</p:column>
-					<p:column headerText="Usuario jefe de equipo" sortBy="#{equipo.jefeEquipo}"  width="90" visible="#{equiposBean.list[2]}" exportable="#{equiposBean.list[2]}">
+					
+					<p:column headerText="tipo equipo" sortBy="#{equipo.tipoEquipo.codigo}" width="70" visible="#{equiposBean.list[2]}" exportable="#{equiposBean.list[2]}">
+						<h:outputText value="#{equipo.tipoEquipo.codigo}" />
+					</p:column>
+					
+					<p:column headerText="Usuario jefe de equipo" sortBy="#{equipo.jefeEquipo}"  width="90" visible="#{equiposBean.list[3]}" exportable="#{equiposBean.list[3]}">
 						<h:outputText value="#{equipo.jefeEquipo}" />
 					</p:column>
-					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" visible="#{equiposBean.list[3]}" exportable="#{equiposBean.list[2]}">
+					
+					<p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}"  width="90" visible="#{equiposBean.list[4]}" exportable="#{equiposBean.list[4]}">
 						<h:outputText value="#{equipo.nombreJefe}" />
 					</p:column>
 		
@@ -124,9 +130,11 @@
 							<p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
+					
 					<p:column width="20" exportable="false"> 
 						<p:commandButton title="Modificar Equipo" icon="fa fa-fw fa-edit" action="#{equiposBean.getFormModificarEquipo(equipo)}" />
 					</p:column> 
+					
 				<f:facet name="footer">
        				 Resultado de la búsqueda: #{fn:length(equiposBean.equipoBusqueda.listaEquipos)} equipos.
     			</f:facet>

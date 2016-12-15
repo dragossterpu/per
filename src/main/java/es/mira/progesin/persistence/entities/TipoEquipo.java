@@ -40,6 +40,9 @@ public class TipoEquipo implements Serializable {
 	@Column(name = "ID")
 	private Long id;
 
+	@Column(name = "CODIGO", length = 5)
+	private String codigo;
+
 	@Column(name = "DESCRIPCION", length = 100)
 	private String descripcion;
 
