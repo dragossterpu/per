@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 
-public interface AlertasNotificacionesUsuarioRepository extends CrudRepository<AlertasNotificacionesUsuario, Long> {
+public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<AlertasNotificacionesUsuario, Long> {
 	
 	List<AlertasNotificacionesUsuario> findByUsuario(String usuario);
 	
