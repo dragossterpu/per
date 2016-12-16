@@ -70,7 +70,7 @@ public class NotificacionService implements INotificacionService {
 			notificacion.setNombreSeccion(seccion);
 			notificacion.setFechaAlta(new Date());
 			notificacion.setDescripcion(descripcion);
-			registroActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), seccion);
+			registroActividadService.altaRegActividad("Se crea la notificación: " +descripcion, EstadoRegActividadEnum.ALTA.name(), seccion);
 			return notificacionRepository.save(notificacion);
 		} catch (Exception e) {
 			registroActividadService.altaRegActividadError(seccion, e);
