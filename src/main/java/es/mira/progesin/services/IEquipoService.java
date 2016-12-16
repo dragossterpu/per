@@ -24,4 +24,6 @@ public interface IEquipoService {
 
 	List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda);
 
+	void delete(Miembros miembro);
+
 }

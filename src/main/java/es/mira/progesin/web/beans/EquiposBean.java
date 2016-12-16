@@ -63,7 +63,7 @@ public class EquiposBean implements Serializable {
 
 	private List<User> miembrosSeleccionados;
 
-	private List<User> colaboradoresSelecionados;
+	private List<User> colaboradoresSeleccionados;
 
 	private List<Boolean> list;
 
@@ -252,14 +252,14 @@ public class EquiposBean implements Serializable {
 			if (equipoService.save(equipo) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 						"El equipo ha sido modificado con éxito");
+				String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
+						+ equipo.getNombreJefe();
+				// Guardamos la actividad en bbdd
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+				// Guardamos la notificacion en bbdd
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
-			String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
-					+ equipo.getNombreJefe();
-			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-					NOMBRESECCION);
-			// Guardamos la notificacion en bbdd
-			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
 		catch (Exception e) {
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
@@ -267,8 +267,21 @@ public class EquiposBean implements Serializable {
 
 	}
 
-	public String borrarMiembro(Equipo equipo) {
-		return VISTAEQUIPOS;
+	public String eliminarMiembro(Miembros miembro) {
+		try {
+			equipoService.delete(miembro);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
+					"El equipo ha sido modificado con éxito");
+			String descripcion = "Se ha eliminado un componente del equipo inspecciones. Nombre jefe equipo "
+					+ equipo.getNombreJefe();
+			// Guardamos la actividad en bbdd
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+		}
+		catch (Exception e) {
+			// TODO: mensaje pantalla
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		return "/equipos/modificarEquipo";
 	}
 
 	public String aniadirColaborador() {
@@ -276,10 +289,10 @@ public class EquiposBean implements Serializable {
 		return "/equipos/anadirColaboradorEquipo";
 	}
 
-	public String borrarMiembro() {
-		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
-		return "/equipos/anadirColaboradorEquipo";
-	}
+	// public String borrarMiembro() {
+	// listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
+	// return "/equipos/anadirColaboradorEquipo";
+	// }
 
 	public String aniadirMiembro() {
 		this.miembrosSeleccionados = null;
@@ -289,7 +302,7 @@ public class EquiposBean implements Serializable {
 
 	public String guardarColaborador() {
 
-		for (User user : colaboradoresSelecionados) {
+		for (User user : colaboradoresSeleccionados) {
 			Miembros miembro = new Miembros();
 			miembro.setEquipo(equipo);
 			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());

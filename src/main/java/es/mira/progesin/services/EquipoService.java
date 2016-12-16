@@ -123,4 +123,10 @@ public class EquipoService implements IEquipoService {
 		return listEquipos;
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(Miembros miembro) {
+		miembrosRepository.delete(miembro);
+	}
+
 }

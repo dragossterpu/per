@@ -10,129 +10,163 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<h3>Nuevo equipo de inspecciones</h3>
+			<h3>Nuevo equipo de inspecciones</h3>
 
-		
+
 			<div class="bloqueFormulario">
 				<h:form id="formAlta">
-               
-  <p:growl id="growl" sticky="true" showDetail="true"/> 
-    <p:wizard flowListener="#{equiposBean.onFlowProcess}"  nextLabel="Siguiente" backLabel="Atr&aacute;s">
-        <div class="bloqueFormulario">
-        <p:tab id="general" title="Nombre y tipo">
-             <br></br>
-            <p:panel header="Nombre y tipo equipo inspecciones">
-            <br></br>
-                <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
-                    
-                    <h:outputLabel for="nombreEquipo" value="Nombre equipo de inspecciones (*):" />
-                    <p:inputText id="nombreEquipo" value="#{equiposBean.equipo.nombreEquipo}" required="true" requiredMessage="Es obligatorio un nombre de equipo" label="Nombre equipo de inspecciones: *"/>
-                    
-                    <h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección (*):" />			       			        
-			        <p:selectOneMenu id="tipoEquipo" value="#{equiposBean.tipoEquipo}" effect="fold" width="50" 
-			        required="true" requiredMessage="Seleccione un tipo de equipo de inspecciones"
-					converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
-						<f:selectItems value="#{equiposBean.tiposEquipo}" var="tipoEquipo"
-							itemLabel="#{tipoEquipo.descripcion}" itemValue="#{tipoEquipo}" />
-			        </p:selectOneMenu>
-			                            
-                </h:panelGrid>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="jefeEquipo" title="Jefe equipo">
-            <br></br> 
-            <p:panel header="Elegir el jefe de equipo">
-           
-                <p:messages />
-               <div class="botonesFormulario">
-					 <p:dataTable id="equipoJefes" var="jefeInspector" value="#{equiposBean.listadoJefes}" paginator="true" rows="20" selection="#{equiposBean.jefeSelecionado}" rowKey="#{jefeInspector.username}">
-				        <f:facet name="header">
-				            Jefe de inspeción
-				        </f:facet>
-				        <p:column selectionMode="single" style="width:16px;text-align:center"  required="true" requiredMessage="Seleccione un jefe de equipo"/>
-				        <p:column headerText="Nombre" sortBy="#{jefeInspector.nombre}" filterBy="#{jefeInspector.nombre}">
-				            <h:outputText value="#{jefeInspector.nombre}" />
-				        </p:column>
-				        <p:column headerText="Primer Apellido" sortBy="#{jefeInspector.apellido1}" filterBy="#{jefeInspector.apellido1}">
-				            <h:outputText value="#{jefeInspector.apellido1}" />
-				        </p:column>
-				        <p:column headerText="Segundo Apellido" sortBy="#{jefeInspector.apellido2}" filterBy="#{jefeInspector.apellido2}">
-				            <h:outputText value="#{jefeInspector.apellido2}" />
-				        </p:column>	
-				       		      
-				    </p:dataTable>
-				      <h:panelGrid columns="2" columnClasses="label, value">
-				     	<h:outputText value="Confirmar: " />
-                   		 <h:selectBooleanCheckbox value="#{equiposBean.skip}" />
-                   	</h:panelGrid>	
-				</div>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="miembros" title="Componentes">
-            <br></br>
-            <p:panel header="Componentes">
-            <br></br>
-                <p:messages />
-                   <p:dataTable id="equipoMiembros" var="inspector"  value="#{equiposBean.listadoMiembros}" paginator="true" rows="20" selection="#{equiposBean.miembrosSeleccionados}" rowKey="#{inspector.username}"
-                    >
-				        <f:facet name="header">
-				            Inspectores
-				        </f:facet>
-				        <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
-				        <p:column headerText="Nombre" sortBy="#{inspector.nombre}"  filterBy="#{inspector.nombre}">
-				            <h:outputText value="#{inspector.nombre}" />
-				        </p:column>
-				        <p:column headerText="Primer Apellido" sortBy="#{inspector.apellido1}" filterBy="#{inspector.apellido2}">
-				            <h:outputText value="#{inspector.apellido1}" />
-				        </p:column>
-				        <p:column headerText="Segundo Apellido" sortBy="#{inspector.apellido2}" filterBy="#{inspector.apellido2}">
-				            <h:outputText value="#{inspector.apellido2}" />
-				        </p:column>
-				    </p:dataTable>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="confirm" title="Confirmar">
-             <br></br>
-            <p:panel header="Confirmar">
-            <br></br>
-                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Nombre equipo: " />
-                        <h:outputText value="#{equiposBean.equipo.nombreEquipo}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Tipo equipo: " />
-                        <h:outputText value="#{equiposBean.tipoEquipo.descripcion}" styleClass="outputLabel"/>
 
-                    </h:panelGrid>
+					<p:growl id="growl" sticky="true" showDetail="true" />
+					<p:wizard flowListener="#{equiposBean.onFlowProcess}"
+						nextLabel="Siguiente" backLabel="Atr&aacute;s">
+						<div class="bloqueFormulario">
+							<p:tab id="general" title="Nombre y tipo">
+								<br></br>
+								<p:panel header="Nombre y tipo equipo inspecciones">
+									<br></br>
+									<p:messages />
+									<h:panelGrid columns="2" columnClasses="label, value">
 
-                </h:panelGrid>
- 								<div class="botonesFormulario">
-				<p:commandButton actionListener="#{equiposBean.altaEquipo}" value="Crear equipo" />
+										<h:outputLabel for="nombreEquipo"
+											value="Nombre equipo de inspecciones (*):" />
+										<p:inputText id="nombreEquipo"
+											value="#{equiposBean.equipo.nombreEquipo}" required="true"
+											requiredMessage="Es obligatorio un nombre de equipo"
+											label="Nombre equipo de inspecciones: *" />
 
-				<p:button outcome="/equipos/equipos" value="Cancelar"/>
-				</div>
-				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-				<p:ajax event="close" listener="#{facesUtilities.redirect('/equipos/equipos')}" />
-				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/equipos/equipos')}" />
-				</div>
-			</p:dialog>
-            </p:panel>
-        </p:tab>
-        </div>
-    </p:wizard>
- 
-</h:form>
-		
-				</div>
-			
-		
+										<h:outputLabel for="tipoEquipo"
+											value="Tipo equipo de inspección (*):" />
+										<p:selectOneMenu id="tipoEquipo"
+											value="#{equiposBean.tipoEquipo}" effect="fold" width="50"
+											required="true"
+											requiredMessage="Seleccione un tipo de equipo de inspecciones"
+											converter="#{selectConverter}">
+											<f:selectItem itemLabel="Seleccione uno" itemValue="" />
+											<f:selectItems value="#{equiposBean.tiposEquipo}"
+												var="tipoEquipo" itemLabel="#{tipoEquipo.descripcion}"
+												itemValue="#{tipoEquipo}" />
+										</p:selectOneMenu>
+
+									</h:panelGrid>
+								</p:panel>
+							</p:tab>
+
+							<p:tab id="jefeEquipo" title="Jefe equipo">
+								<br></br>
+								<p:panel header="Elegir el jefe de equipo">
+
+									<p:messages />
+									<div class="botonesFormulario">
+										<p:dataTable id="equipoJefes" var="jefeInspector"
+											value="#{equiposBean.listadoJefes}" paginator="true"
+											rows="20" selection="#{equiposBean.jefeSelecionado}"
+											rowKey="#{jefeInspector.username}">
+											<f:facet name="header">
+								            Jefe de inspeción
+								        </f:facet>
+											<p:column selectionMode="single"
+												style="width:16px;text-align:center" required="true"
+												requiredMessage="Seleccione un jefe de equipo" />
+											<p:column headerText="Nombre"
+												sortBy="#{jefeInspector.nombre}"
+												filterBy="#{jefeInspector.nombre}">
+												<h:outputText value="#{jefeInspector.nombre}" />
+											</p:column>
+											<p:column headerText="Primer Apellido"
+												sortBy="#{jefeInspector.apellido1}"
+												filterBy="#{jefeInspector.apellido1}">
+												<h:outputText value="#{jefeInspector.apellido1}" />
+											</p:column>
+											<p:column headerText="Segundo Apellido"
+												sortBy="#{jefeInspector.apellido2}"
+												filterBy="#{jefeInspector.apellido2}">
+												<h:outputText value="#{jefeInspector.apellido2}" />
+											</p:column>
+
+										</p:dataTable>
+										<h:panelGrid columns="2" columnClasses="label, value">
+											<h:outputText value="Confirmar: " />
+											<h:selectBooleanCheckbox value="#{equiposBean.skip}" />
+										</h:panelGrid>
+									</div>
+								</p:panel>
+							</p:tab>
+
+							<p:tab id="miembros" title="Componentes">
+								<br></br>
+								<p:panel header="Componentes">
+									<br></br>
+									<p:messages />
+									<p:dataTable id="equipoMiembros" var="inspector"
+										value="#{equiposBean.listadoMiembros}" paginator="true"
+										rows="20" selection="#{equiposBean.miembrosSeleccionados}"
+										rowKey="#{inspector.username}">
+										<f:facet name="header">
+								            Inspectores
+								        </f:facet>
+										<p:column selectionMode="multiple"
+											style="width:16px;text-align:center" />
+										<p:column headerText="Nombre" sortBy="#{inspector.nombre}"
+											filterBy="#{inspector.nombre}">
+											<h:outputText value="#{inspector.nombre}" />
+										</p:column>
+										<p:column headerText="Primer Apellido"
+											sortBy="#{inspector.apellido1}"
+											filterBy="#{inspector.apellido2}">
+											<h:outputText value="#{inspector.apellido1}" />
+										</p:column>
+										<p:column headerText="Segundo Apellido"
+											sortBy="#{inspector.apellido2}"
+											filterBy="#{inspector.apellido2}">
+											<h:outputText value="#{inspector.apellido2}" />
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</p:tab>
+
+							<p:tab id="confirm" title="Confirmar">
+								<br></br>
+								<p:panel header="Confirmar">
+									<br></br>
+									<h:panelGrid id="confirmation" columns="3"
+										columnClasses="grid,grid,grid">
+										<h:panelGrid columns="2" columnClasses="label, value">
+											<h:outputText value="Nombre equipo: " />
+											<h:outputText value="#{equiposBean.equipo.nombreEquipo}"
+												styleClass="outputLabel" />
+
+											<h:outputText value="Tipo equipo: " />
+											<h:outputText value="#{equiposBean.tipoEquipo.descripcion}"
+												styleClass="outputLabel" />
+
+										</h:panelGrid>
+
+									</h:panelGrid>
+									<div class="botonesFormulario">
+										<p:commandButton actionListener="#{equiposBean.altaEquipo}"
+											value="Crear equipo" />
+										<p:button outcome="/equipos/equipos" value="Cancelar" />
+									</div>
+									<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+										<p:ajax event="close"
+											listener="#{facesUtilities.redirect('/equipos/equipos')}" />
+										<p:messages for="dialogMessage" autoUpdate="true"
+											showDetail="true" showSummary="true" />
+										<div class="centrarBotonesDialog">
+											<p:commandButton value="Cerrar"
+												actionListener="#{facesUtilities.redirect('/equipos/equipos')}" />
+										</div>
+									</p:dialog>
+								</p:panel>
+							</p:tab>
+						</div>
+					</p:wizard>
+
+				</h:form>
+
+			</div>
+
+
 		</ui:define>
 	</ui:composition>
 </f:view>

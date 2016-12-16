@@ -7,57 +7,78 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:pe="http://primefaces.org/ui/extensions" >
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-		<p:outputPanel rendered="#{ empty equiposBean.equipo.fechaBaja}">
-		<h3>Modificar equipo</h3>
-		</p:outputPanel>
-		<p:outputPanel rendered="#{ not empty equiposBean.equipo.fechaBaja}">
-		<h3>Ver equipo</h3>
-		</p:outputPanel>
-		<br></br>
-		<h:form id="modificarEquipo" >
-		<div id="listadoEquipos">
+			<p:outputPanel rendered="#{ empty equiposBean.equipo.fechaBaja}">
+				<h3>Modificar equipo</h3>
+			</p:outputPanel>
+			<p:outputPanel rendered="#{ not empty equiposBean.equipo.fechaBaja}">
+				<h3>Ver equipo</h3>
+			</p:outputPanel>
+			<br></br>
+			<h:form id="modificarEquipo">
+				<div id="listadoMiembros">
 
-				<h4>  Equipo : </h4>
-				
-				  <p:dataTable id="equipo" var="miembro" value="#{equiposBean.listMiembros}" 
-				   paginator="true" rows="20" selection="#{equiposBean.miembrosSeleccionados}" rowKey="#{miembro.username}"
-				   style="white-space:pre-line;">
-				        <f:facet name="header">
+					<h4>Equipo :</h4>
+
+					<p:dataTable id="tablaMiembros" var="miembro"
+						value="#{equiposBean.listMiembros}" paginator="true" rows="20"
+						selection="#{equiposBean.miembrosSeleccionados}"
+						rowKey="#{miembro.username}">
+						<f:facet name="header">
 				             Componentes 
 				        </f:facet>
 
-					    <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
-					    <p:column headerText="Nombre" sortBy="#{miembro.nombreCompleto}">
-					        <h:outputText value="#{miembro.nombreCompleto}" />
-					    </p:column>
-					     <p:column headerText="Posición" sortBy="#{miembro.posicion}">
-					        <h:outputText value="#{miembro.posicion.descripcion}" />
-					    </p:column>
-					  <f:facet name="footer">
+						<p:column headerText="Nombre completo" sortBy="#{miembro.nombreCompleto}">
+							<h:outputText value="#{miembro.nombreCompleto}" />
+						</p:column>
+
+						<p:column headerText="Posición" sortBy="#{miembro.posicion}" width="100">
+							<h:outputText value="#{miembro.posicion.descripcion}" />
+						</p:column>
+
+						<p:column width="20" exportable="false"
+							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
+							<p:commandButton title="Eliminar" icon="fa fa-trash"
+								actionListener="#{equiposBean.eliminarMiembro(miembro)}"
+								update="tablaMiembros">
+								<p:confirm header="Eliminar componente del equipo"
+									message="¿Está seguro que desea eliminar este componente del equipo?"
+									icon="fa fa-warning-sign" />
+							</p:commandButton>
+						</p:column>
+
+						<f:facet name="footer">
        					 Componentes del equipo: #{fn:length(equiposBean.listMiembros)}.
     				 </f:facet>
-				</p:dataTable>
-		</div>
-			<p:outputPanel rendered="#{empty equiposBean.equipo.fechaBaja}">
-			<div class="botonesFormulario">
-			<p:button  outcome="/equipos/anadirMiembroEquipo"  value="Añadir componente"  icon="fa fa-fw fa-user-plus" />
-				<p:button  outcome="/equipos/anadirColaboradorEquipo" action="#{equiposBean.aniadirColaborador}" value="Añadir colaborador"  icon="fa fa-fw fa-user-plus" />
-			</div>
-			</p:outputPanel>	
+    				 <p:messages autoUpdate="true" closable="true"/>
+					</p:dataTable>
+				</div>
+				<p:outputPanel>
+					<div class="botonesFormulario">
+						<p:button outcome="/equipos/anadirMiembroEquipo"
+							value="Añadir componente" icon="fa fa-fw fa-user-plus" 
+							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+						<p:button outcome="/equipos/anadirColaboradorEquipo"
+							action="#{equiposBean.aniadirColaborador}"
+							value="Añadir colaborador" icon="fa fa-fw fa-user-plus" 
+							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
+						<p:button outcome="/equipos/equipos" value="Volver"
+							icon="fa fa-fw fa-undo" />
+					</div>
+				</p:outputPanel>
 			</h:form>
 
 			<p:confirmDialog global="true">
-                   <div class="centrarBotonesDialog">
-                        <p:commandButton value="Aceptar" type="button"
-                         styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-                       <p:commandButton value="Cancelar" type="button"
-                        styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
-                   </div>
-            </p:confirmDialog>
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Aceptar" type="button"
+						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="Cancelar" type="button"
+						styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+				</div>
+			</p:confirmDialog>
 
 		</ui:define>
 		<script>
