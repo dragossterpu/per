@@ -17,9 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -28,8 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
-@Table(name="SUGERENCIA")
-
+@Table(name = "SUGERENCIA")
 
 public class Sugerencia implements Serializable {
 
@@ -54,9 +51,8 @@ public class Sugerencia implements Serializable {
 
 	@Column(name = "FECHA_BAJA")
 	private Date fechaBaja;
-	
+
 	@Column(name = "USUARIO_BAJA", length = 50)
 	private String usuarioBaja;
 
-	
 }

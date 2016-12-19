@@ -19,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Entidad DocumentacionPrevia. Tipo de documentación relacionada con una solicitud de documentación previa en concreto.
@@ -30,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
  * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
  * @see es.mira.progesin.web.beans.ProvisionalSolicitudBean
  */
-@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
