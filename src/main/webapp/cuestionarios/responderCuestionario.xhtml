@@ -33,7 +33,9 @@
 										
 										<p:inputTextarea id="textarea" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 										   				rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"
+														counter="contador" counterTemplate="Quedan {0} caractares."
 										   				required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
+										<p:outputLabel id="contador"/>
 										<p:messages for="textarea" autoUpdate="true"  closable="true"/>
 										 				
 										<p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" 
