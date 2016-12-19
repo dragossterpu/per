@@ -1,6 +1,12 @@
 package es.mira.progesin.persistence.repositories;
 
 import java.util.List;
+/******************
+ * Repositorio de alertas y notificaciones
+ * 
+ * @author Ezentis
+ * 
+ * *****************/
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
