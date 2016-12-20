@@ -518,8 +518,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String asunto = "Solicitud de documentación previa para la inspección "
 							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
 					String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
-							+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
-							+ password
+							+ "aplicación es "
+							+ applicationBean.getMapaParametros().get("URLPROGESIN")
+									.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name())
+							+ ", su usuario de acceso es su correo electrónico y la contraseña es " + password
 							+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n"
 							+ "Muchas gracias y un saludo.";
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
@@ -615,7 +617,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
 				String textoAutomatico = "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:"
 						+ "\r\n \r\n" + motivosNoConforme
-						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
+						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es "
+						+ applicationBean.getMapaParametros().get("URLPROGESIN")
+								.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name())
+						+ ", su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
 						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
 						+ "\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n"
 						+ "Muchas gracias y un saludo.";
