@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.mail.MessagingException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,7 @@ import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.ISugerenciaService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.SendSimpleMail;
+import es.mira.progesin.util.CorreoElectronico;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,6 +47,9 @@ public class SugerenciasBean implements Serializable {
 	private Sugerencia sugerencia;
 
 	private List<Sugerencia> sugerenciasListado;
+	
+	@Autowired
+	CorreoElectronico correo;
 
 	@Autowired
 	ISugerenciaService sugerenciaService;
@@ -105,16 +110,14 @@ public class SugerenciasBean implements Serializable {
 		return "/principal/contestarSugerencia";
 	}
 
-	public String contestar(Integer idSugerencia, String contestacion) throws MessagingException {
+	public String contestar(Integer idSugerencia, String contestacion) throws MessagingException, MailException, FileNotFoundException {
 		sugerencia = sugerenciaService.findOne(idSugerencia);
 		user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String asunto = "Respuesta a su sugerencia";
 		String usuarioContestacion = sugerencia.getUsuario();
 		user = userService.findOne(usuarioContestacion);
-		String correoEnvio = user.getCorreo();
-		String nombre = user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
-		// SendMailwithAttachment.sendMailWithAttachment( );
-		SendSimpleMail.sendMail(asunto, correoEnvio, nombre, contestacion);
+		correo.setDatos(user.getCorreo(), asunto, contestacion);
+		correo.envioCorreo();
 		return "/principal/sugerenciasListado";
 	}
 
