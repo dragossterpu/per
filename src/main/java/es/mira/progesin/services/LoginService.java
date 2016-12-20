@@ -45,7 +45,6 @@ public class LoginService implements UserDetailsService {
 			role = user.getRole();
 			correo = user.getCorreo();
 			docIndentidad = user.getDocIndentidad();
-			envioNotificacion = user.getEnvioNotificacion();
 			estado = user.getEstado();
 			telefono = user.getTelefono();
 			fechaAlta = user.getFechaAlta();

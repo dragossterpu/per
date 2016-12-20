@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -127,16 +128,20 @@ public class UserService implements IUserService {
 					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
 		}
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
+			String parametro = Normalizer.normalize(userBusqueda.getNombre(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			criteria.add(Restrictions.ilike("nombre", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-			criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
+			String parametro = Normalizer.normalize(userBusqueda.getApellido1(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			criteria.add(Restrictions.ilike("apellido1", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-			criteria.add(Restrictions.ilike("apellido2", userBusqueda.getApellido2(), MatchMode.ANYWHERE));
+			String parametro = Normalizer.normalize(userBusqueda.getApellido2(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			criteria.add(Restrictions.ilike("apellido2", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-			criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
+			String parametro = Normalizer.normalize(userBusqueda.getUsername(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			criteria.add(Restrictions.ilike("username", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
 			criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
