@@ -35,6 +35,8 @@ public class UserService implements IUserService {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
+
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(String id) {
@@ -127,20 +129,21 @@ public class UserService implements IUserService {
 			criteria.add(Restrictions
 					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
 		}
+		String parametro;
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-			String parametro = Normalizer.normalize(userBusqueda.getNombre(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			parametro = Normalizer.normalize(userBusqueda.getNombre(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("nombre", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-			String parametro = Normalizer.normalize(userBusqueda.getApellido1(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			parametro = Normalizer.normalize(userBusqueda.getApellido1(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("apellido1", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-			String parametro = Normalizer.normalize(userBusqueda.getApellido2(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			parametro = Normalizer.normalize(userBusqueda.getApellido2(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("apellido2", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-			String parametro = Normalizer.normalize(userBusqueda.getUsername(), Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			parametro = Normalizer.normalize(userBusqueda.getUsername(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("username", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {

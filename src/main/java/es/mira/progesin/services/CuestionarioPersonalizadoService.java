@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqued
 
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {
+
+	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
 	@Autowired
 	ICuestionarioPersonalizadoRepository cuestionarioPersRep;
@@ -108,9 +111,11 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 			criteria.add(Restrictions.sqlRestriction(
 					"TRUNC(this_.fecha_creacion) <= '" + sdf.format(cuestionarioBusqueda.getFechaHasta())));
 		}
+		String parametro;
 		if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
-			criteria.add(
-					Restrictions.ilike("usernameCreacion", cuestionarioBusqueda.getUsername(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(cuestionarioBusqueda.getUsername(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("usernameCreacion", parametro, MatchMode.ANYWHERE));
 		}
 		if (cuestionarioBusqueda.getModeloCuestionarioSeleccionado() != null) {
 			criteria.add(
@@ -118,8 +123,9 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 		}
 		if (cuestionarioBusqueda.getNombreCuestionario() != null
 				&& !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
-			criteria.add(Restrictions.ilike("nombreCuestionario", cuestionarioBusqueda.getNombreCuestionario(),
-					MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(cuestionarioBusqueda.getNombreCuestionario(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("nombreCuestionario", parametro, MatchMode.ANYWHERE));
 		}
 
 		criteria.addOrder(Order.desc(FECHA_CREACION));

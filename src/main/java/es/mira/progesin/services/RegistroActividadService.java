@@ -1,5 +1,7 @@
 package es.mira.progesin.services;
 
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +24,10 @@ import es.mira.progesin.web.beans.RegActividadBusqueda;
 
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
+
+	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Autowired
 	IRegActividadRepository regActividadRepository;
@@ -72,19 +78,32 @@ public class RegistroActividadService implements IRegistroActividadService {
 		Criteria criteria = session.createCriteria(RegistroActividad.class);
 
 		if (regActividadBusqueda.getFechaDesde() != null) {
-			criteria.add(Restrictions.ge("fechaAlta", regActividadBusqueda.getFechaDesde()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			criteria.add(Restrictions
+					.sqlRestriction("TRUNC(fecha_alta) <= '" + sdf.format(regActividadBusqueda.getFechaDesde()) + "'"));
 		}
 		if (regActividadBusqueda.getFechaHasta() != null) {
-			criteria.add(Restrictions.lt("fechaAlta", regActividadBusqueda.getFechaHasta()));
+			/**
+			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+			 * compara con 0:00:00
+			 */
+			criteria.add(Restrictions
+					.sqlRestriction("TRUNC(fecha_alta) <= '" + sdf.format(regActividadBusqueda.getFechaHasta()) + "'"));
 		}
+		String parametro;
 		if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
-			criteria.add(
-					Restrictions.ilike("nombreSeccion", regActividadBusqueda.getNombreSeccion(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(regActividadBusqueda.getNombreSeccion(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("nombreSeccion", parametro, MatchMode.ANYWHERE));
 		}
 		if (regActividadBusqueda.getTipoRegActividad() != null
 				&& !regActividadBusqueda.getTipoRegActividad().isEmpty()) {
-			criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(),
-					MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(regActividadBusqueda.getTipoRegActividad(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("tipoRegActividad", parametro, MatchMode.ANYWHERE));
 		}
 		if (regActividadBusqueda.getUsernameRegActividad() != null
 				&& !regActividadBusqueda.getUsernameRegActividad().isEmpty()) {
@@ -92,7 +111,6 @@ public class RegistroActividadService implements IRegistroActividadService {
 					MatchMode.ANYWHERE));
 		}
 
-		
 		criteria.addOrder(Order.desc("fechaAlta"));
 
 		@SuppressWarnings("unchecked")
@@ -125,15 +143,15 @@ public class RegistroActividadService implements IRegistroActividadService {
 		regActividadRepository.save(registroActividad);
 
 	}
-	
+
 	@Override
 	public List<String> buscarPorNombreSeccion(String infoSeccion) {
-		return regActividadRepository.buscarPorNombreSeccion("%"+infoSeccion+"%");
+		return regActividadRepository.buscarPorNombreSeccion("%" + infoSeccion + "%");
 	}
-	
+
 	@Override
-	public List<String> buscarPorUsuarioRegistro(String infoUsuario){
-		return regActividadRepository.buscarPorUsuarioRegistro("%"+infoUsuario+"%");
+	public List<String> buscarPorUsuarioRegistro(String infoUsuario) {
+		return regActividadRepository.buscarPorUsuarioRegistro("%" + infoUsuario + "%");
 	}
 
 }

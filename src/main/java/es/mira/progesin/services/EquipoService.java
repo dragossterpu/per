@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class EquipoService implements IEquipoService {
 
 	private static final String FECHABAJA = "fechaBaja";
 
+	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
+
 	@Autowired
 	IEquipoRepository equipoRepository;
 
@@ -43,12 +46,6 @@ public class EquipoService implements IEquipoService {
 	public Iterable<Equipo> findAll() {
 		return equipoRepository.findAll();
 	}
-
-	// @Override
-	// @Transactional(readOnly = true)
-	// public Iterable<Equipo> save(Iterable<Equipo> entities) {
-	// return equipoRepository.save(entities);
-	// }
 
 	@Override
 	public Equipo save(Equipo entity) {
@@ -92,11 +89,16 @@ public class EquipoService implements IEquipoService {
 			criteria.add(Restrictions
 					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(equipoBusqueda.getFechaHasta()) + "'"));
 		}
+		String parametro;
 		if (equipoBusqueda.getNombreJefe() != null && !equipoBusqueda.getNombreJefe().isEmpty()) {
-			criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(equipoBusqueda.getNombreJefe(), Normalizer.Form.NFKD).replaceAll(ACENTOS,
+					"");
+			criteria.add(Restrictions.ilike("nombreJefe", parametro, MatchMode.ANYWHERE));
 		}
 		if (equipoBusqueda.getNombreEquipo() != null && !equipoBusqueda.getNombreEquipo().isEmpty()) {
-			criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(equipoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD).replaceAll(ACENTOS,
+					"");
+			criteria.add(Restrictions.ilike("nombreEquipo", parametro, MatchMode.ANYWHERE));
 		}
 		criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
 		if (equipoBusqueda.getTipoEquipo() != null) {
@@ -104,8 +106,9 @@ public class EquipoService implements IEquipoService {
 		}
 		if (equipoBusqueda.getNombreMiembro() != null && !equipoBusqueda.getNombreMiembro().isEmpty()) {
 			DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-			subquery.add(Restrictions.ilike("miembro.nombreCompleto", equipoBusqueda.getNombreMiembro(),
-					MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(equipoBusqueda.getNombreMiembro(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			subquery.add(Restrictions.ilike("miembro.nombreCompleto", parametro, MatchMode.ANYWHERE));
 			subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
 			subquery.setProjection(Projections.property("miembro.equipo"));
 			criteria.add(Property.forName("equipo.id").in(subquery));
@@ -116,10 +119,8 @@ public class EquipoService implements IEquipoService {
 		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.INACTIVO.name())) {
 			criteria.add(Restrictions.isNotNull(FECHABAJA));
 			criteria.addOrder(Order.desc(FECHABAJA));
-
 		}
 		else {
-
 			criteria.addOrder(Order.desc("fechaAlta"));
 		}
 		@SuppressWarnings("unchecked")
