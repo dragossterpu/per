@@ -15,9 +15,9 @@
 			<h3>Modificar equipo</h3>
 			<br></br>
 			<h:form id="modificarEquipo">
-				<div id="listadoEquipos">
+				<div id="listadoPotencialesMiembros">
 
-					<h4>Añadir componentes :</h4>
+					<h4>Añadir componentes o colaboradores:</h4>
 
 				</div>
 
@@ -26,9 +26,9 @@
 						value="#{equiposBean.listaUsuarios}" paginator="true" rows="20"
 						selection="#{equiposBean.miembrosSeleccionados}"
 						rowKey="#{miembro.username}" draggableColumns="true"
-						resizableColumns="true" style="">
+						resizableColumns="true" emptyMessage="No hay usuarios disponibles.">
 						<f:facet name="header">
-				            Componentes
+				            Usuarios
 				        </f:facet>
 						<p:column selectionMode="multiple"
 							style="width:16px;text-align:center" />
@@ -48,22 +48,23 @@
 
 				</div>
 				<div class="botonesFormulario">
-					<h:commandLink title="Guardar componente/s"
-						action="#{equiposBean.guardarMiembro}"
-						styleClass="ui-state-default ui-corner-all fa fa-save ui-CommandLink ui-CommandLink-icono-texto">
-						<span class="ui-CommandLink-texto">Guardar componente/s</span>
-					</h:commandLink>
+					<p:importEnum var="posicion"
+						type="es.mira.progesin.persistence.entities.enums.RolEquipoEnum"/>
+					<p:commandButton actionListener="#{equiposBean.guardarMiembros(posicion.MIEMBRO)}"
+						value="Guardar como componente/s" icon="fa fa-save" />
+					<p:commandButton actionListener="#{equiposBean.guardarMiembros(posicion.COLABORADOR)}"
+						value="Guardar como colaborador/es" icon="fa fa-save" />
 					<p:button outcome="/equipos/modificarEquipo" value="Volver" icon="fa fa-fw fa-undo"/>
 				</div>
 
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 					<p:ajax event="close"
-						listener="#{facesUtilities.redirect('/principal/index')}" />
+						listener="#{facesUtilities.redirect('/equipos/modificarEquipo')}" />
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true"
 						showSummary="true" />
 					<div class="centrarBotonesDialog">
 						<p:commandButton value="Cerrar"
-							actionListener="#{facesUtilities.redirect('/equipos/equipos')}" />
+							actionListener="#{facesUtilities.redirect('/equipos/modificarEquipo')}" />
 					</div>
 				</p:dialog>
 

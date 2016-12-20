@@ -89,7 +89,7 @@
 					styleClass="separator ui-state-disabled" />
 				<div class="botonesFormulario">
 					<h:commandLink title="Nuevo equipo"
-						action="#{equiposBean.nuevoEquipo}"
+						action="#{equiposBean.getFormAltaEquipo}"
 						rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
 						styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
 						<span class="ui-CommandLink-texto">Nuevo equipo</span>
@@ -122,15 +122,14 @@
 						value="#{equiposBean.equipoBusqueda.listaEquipos}" rows="20"
 						id="tablaEquipos" draggableColumns="true" paginator="true"
 						resizableColumns="true"
-						rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}"
-						style="">
+						rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
 						<f:facet name="header">
 							Equipos
 	
 						</f:facet>
 						<p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}"
-							width="70" visible="#{equiposBean.list[0]}"
-							exportable="#{equiposBean.list[0]}">
+							width="70" visible="#{equiposBean.columnasVisibles[0]}"
+							exportable="#{equiposBean.columnasVisibles[0]}">
 							<h:outputText value="#{equipo.fechaAlta}">
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
 							</h:outputText>
@@ -138,29 +137,29 @@
 
 						<p:column headerText="Nombre equipo"
 							sortBy="#{equipo.nombreEquipo}" width="70"
-							visible="#{equiposBean.list[1]}"
-							exportable="#{equiposBean.list[1]}">
+							visible="#{equiposBean.columnasVisibles[1]}"
+							exportable="#{equiposBean.columnasVisibles[1]}">
 							<h:outputText value="#{equipo.nombreEquipo}" />
 						</p:column>
 
 						<p:column headerText="tipo equipo"
 							sortBy="#{equipo.tipoEquipo.codigo}" width="70"
-							visible="#{equiposBean.list[2]}"
-							exportable="#{equiposBean.list[2]}">
+							visible="#{equiposBean.columnasVisibles[2]}"
+							exportable="#{equiposBean.columnasVisibles[2]}">
 							<h:outputText value="#{equipo.tipoEquipo.codigo}" />
 						</p:column>
 
 						<p:column headerText="Usuario jefe de equipo"
 							sortBy="#{equipo.jefeEquipo}" width="90"
-							visible="#{equiposBean.list[3]}"
-							exportable="#{equiposBean.list[3]}">
+							visible="#{equiposBean.columnasVisibles[3]}"
+							exportable="#{equiposBean.columnasVisibles[3]}">
 							<h:outputText value="#{equipo.jefeEquipo}" />
 						</p:column>
 
 						<p:column headerText="Nombre jefe de equipo"
 							sortBy="#{equipo.nombreJefe}" width="90"
-							visible="#{equiposBean.list[4]}"
-							exportable="#{equiposBean.list[4]}">
+							visible="#{equiposBean.columnasVisibles[4]}"
+							exportable="#{equiposBean.columnasVisibles[4]}">
 							<h:outputText value="#{equipo.nombreJefe}" />
 						</p:column>
 

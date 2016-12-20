@@ -9,9 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
@@ -20,7 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -43,58 +41,7 @@ import lombok.Setter;
 public class EquiposBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Equipo equipo;
-
-	private Date fechaDesde;
-
-	private Date fechaHasta;
-
-	private String nombreJefe;
-
-	private String username;
-
-	private String nombreMiembro;
-
-	private transient List<Miembros> listMiembros;
-
-	private String nombreEquipo;
-
-	private User jefeSelecionado;
-
-	private List<User> miembrosSeleccionados;
-
-	private List<User> colaboradoresSeleccionados;
-
-	private List<Boolean> list;
-
-	private List<User> miembros;
-
-	private List<Equipo> listaEquipos;
-
-	private String estado = null;
-
-	private Miembros miembro = new Miembros();
-
-	private List<User> listadoJefes = new ArrayList<>();
-
-	private List<User> listadoMiembros = new ArrayList<>();
-
-	private List<User> listadoColaboradores;
-
-	private int numeroColumnasListadoEquipos = 5;
-
-	private EquipoBusqueda equipoBusqueda;
-
-	private boolean skip;
-
-	private TipoEquipo tipoEquipo;
-
-	@Autowired
-	transient ITipoEquipoService tipoEquipoService;
-
-	private transient Iterable<TipoEquipo> tiposEquipo;
-
-	private List<User> listaUsuarios;
+	private static final String VISTAMODIFICAREQUIPO = "/equipos/modificarEquipo";
 
 	private static final String NOMBRESECCION = "Equipos de inspecciones";
 
@@ -104,7 +51,40 @@ public class EquiposBean implements Serializable {
 
 	private static final String MIEMBROS = "miembros";
 
+	private static final String ERROR = "Error";
+
 	private String vieneDe;
+
+	private Equipo equipo;
+
+	private transient List<Miembro> miembrosEquipo;
+
+	private User jefeSeleccionado;
+
+	private List<User> miembrosSeleccionados;
+
+	private List<Boolean> columnasVisibles;
+
+	private String estado = null;
+
+	private List<User> listaUsuarios;
+
+	private List<User> listadoPotencialesJefes = new ArrayList<>();
+
+	private List<User> listadoPotencialesMiembros = new ArrayList<>();
+
+	private int numeroColumnasListadoEquipos = 5;
+
+	private EquipoBusqueda equipoBusqueda;
+
+	private boolean skip;
+
+	private TipoEquipo tipoEquipo;
+
+	private transient Iterable<TipoEquipo> tiposEquipo;
+
+	@Autowired
+	transient ITipoEquipoService tipoEquipoService;
 
 	@Autowired
 	transient IEquipoService equipoService;
@@ -119,48 +99,54 @@ public class EquiposBean implements Serializable {
 	transient INotificacionService notificacionService;
 
 	/**
-	 * Método que nos lleva al formulario de alta de nuevos equipos, inicializando todo lo necesario para mostrar
-	 * correctamente la página. Se llama desde la página de búsqueda de equipos.
-	 * @return
+	 * Muestra formulario de alta de nuevos equipos, inicializando lo necesario para mostrar correctamente la página. Se
+	 * llama desde la página de búsqueda de equipos.
+	 * 
+	 * @author EZENTIS
+	 * @return vista altaEquipo
 	 */
-	public String nuevoEquipo() {
-		this.jefeSelecionado = null;
+	public String getFormAltaEquipo() {
+		this.jefeSeleccionado = null;
 		this.miembrosSeleccionados = null;
-		this.listadoMiembros = null;
+		this.listadoPotencialesMiembros = null;
 		this.equipo = null;
 		this.tipoEquipo = null;
 		equipo = new Equipo();
-		jefeSelecionado = new User();
+		jefeSeleccionado = new User();
 		miembrosSeleccionados = new ArrayList<>();
-		equipo.setFechaAlta(new Date());
-		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
-		listadoJefes = listaUsuarios;
+		listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(null);
+		listadoPotencialesJefes = listaUsuarios;
 		return "/equipos/altaEquipo";
 	}
 
 	/**
-	 * Método que recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
-	 * @return
+	 * Recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
+	 * 
+	 * @author EZENTIS
+	 * @return vista equipos
 	 */
 	public String altaEquipo() {
 
-		equipo.setJefeEquipo(jefeSelecionado.getUsername());
-		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
-				+ jefeSelecionado.getApellido2());
+		equipo.setJefeEquipo(jefeSeleccionado.getUsername());
+		equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
+				+ jefeSeleccionado.getApellido2());
 		equipo.setTipoEquipo(tipoEquipo);
+
+		List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
+		Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
+		miembrosNuevoEquipo.add(jefe);
+		List<String> nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
+		equipo.setMiembros(miembrosNuevoEquipo);
+
 		try {
 			if (equipoService.save(equipo) != null) {
-				RequestContext context = RequestContext.getCurrentInstance();
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"El equipo ha sido creado con éxito");
-				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-				context.execute("PF('dialogMessage').show()");
 			}
-			// alta en la tabla miembros de un equipo
-			altaJefeEquipo();
-			altaMiembrosEquipo();
-			String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSelecionado.getNombre()
-					+ " " + jefeSelecionado.getApellido1() + " " + jefeSelecionado.getApellido2();
+			// String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSeleccionado.getNombre()
+			// + " " + jefeSeleccionado.getApellido1() + " " + jefeSeleccionado.getApellido2();
+			String descripcion = "Alta nuevo equipo inspecciones. Nombre de sus integrantes: "
+					+ String.join(", ", nombresCompletos);
 			// Guardamos la actividad en bbdd
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
@@ -174,6 +160,13 @@ public class EquiposBean implements Serializable {
 		return VISTAEQUIPOS;
 	}
 
+	/**
+	 * Devuelve al formulario de búsqueda de equipos a su estado inicial y borra los resultados de búsquedas anteriores
+	 * si se navega desde el menú u otra sección.
+	 * 
+	 * @author EZENTIS
+	 * @return vista equipos
+	 */
 	public void getFormularioBusquedaEquipos() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
 			limpiarBusqueda();
@@ -188,13 +181,15 @@ public class EquiposBean implements Serializable {
 		this.estado = null;
 	}
 
+	/**
+	 * Busca equipos en base a los campos rellenados en el formulario tanto de equipo como de sus miembros.
+	 * 
+	 * @author EZENTIS
+	 * @return vista equipos
+	 */
 	public String buscarEquipo() {
 
 		List<Equipo> listaEquipos = equipoService.buscarEquipoCriteria(equipoBusqueda);
-		for (Equipo equipo : listaEquipos) {
-			User user = userService.findOne(equipo.getJefeEquipo());
-			equipo.setNombreJefe(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-		}
 		equipoBusqueda.setListaEquipos(listaEquipos);
 		return VISTAEQUIPOS;
 	}
@@ -205,12 +200,20 @@ public class EquiposBean implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Elimina un equipo. Se invoca desde la lista de resultados del buscador.
+	 * 
+	 * @author EZENTIS
+	 * @param equipo recuperado del formulario de búsqueda de equipos
+	 * @return vista equipos
+	 */
 	public String eliminarEquipo(Equipo equipo) {
 		equipo.setFechaBaja(new Date());
 		equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
 			equipoService.save(equipo);
-			equipoBusqueda.getListaEquipos().remove(equipo);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Baja",
+					"Se ha dado de baja con éxito un equipo de inspecciones");
 			String descripcion = "Se ha eliminado el equipo inspecciones. Nombre jefe equipo " + equipo.getNombreJefe();
 			// Guardamos la actividad en bbdd
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
@@ -227,27 +230,24 @@ public class EquiposBean implements Serializable {
 	/**
 	 * Pasa los datos del equipo que queremos modificar al formulario de modificación para que cambien los valores que
 	 * quieran
+	 * 
+	 * @author EZENTIS
 	 * @param equipo recuperado del formulario de búsqueda de equipos
-	 * @return
+	 * @return vista modificarEquipo
 	 */
 	public String getFormModificarEquipo(Equipo equipo) {
 		this.miembrosSeleccionados = null;
-		this.listadoColaboradores = null;
-		listMiembros = new ArrayList<>();
-		jefeSelecionado = userService.findOne(equipo.getJefeEquipo());
-		listMiembros = equipoService.findByEquipo(equipo);
-		equipo.setJefeEquipo(jefeSelecionado.getUsername());
-		equipo.setNombreJefe(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
-				+ jefeSelecionado.getApellido2());
+		miembrosEquipo = new ArrayList<>();
+		miembrosEquipo = equipoService.findByEquipo(equipo);
+		equipo.setMiembros(miembrosEquipo);
 		this.equipo = equipo;
-		return "/equipos/modificarEquipo";
+		return VISTAMODIFICAREQUIPO;
 	}
 
 	/**
 	 * Modifica los datos de un equipo en función de los valores recuperados del formulario
 	 */
 	public void modificarEquipo() {
-		this.listadoColaboradores = null;
 		try {
 			if (equipoService.save(equipo) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
@@ -267,9 +267,16 @@ public class EquiposBean implements Serializable {
 
 	}
 
-	public String eliminarMiembro(Miembros miembro) {
+	/**
+	 * Elimina un miembro de un equipo, ya sea componente o colaborador
+	 * @author EZENTIS
+	 * @param miembro
+	 * @return vista modificarEquipo
+	 */
+	public String eliminarMiembro(Miembro miembro) {
 		try {
-			equipoService.delete(miembro);
+			miembrosEquipo.remove(miembro);
+			equipoService.save(equipo);
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
 					"El equipo ha sido modificado con éxito");
 			String descripcion = "Se ha eliminado un componente del equipo inspecciones. Nombre jefe equipo "
@@ -278,118 +285,98 @@ public class EquiposBean implements Serializable {
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
-			// TODO: mensaje pantalla
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al eliminar un componente o colaborador del equipo de inspecciones, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
-		return "/equipos/modificarEquipo";
+		return VISTAMODIFICAREQUIPO;
 	}
 
-	public String aniadirColaborador() {
-		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
-		return "/equipos/anadirColaboradorEquipo";
-	}
-
-	// public String borrarMiembro() {
-	// listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
-	// return "/equipos/anadirColaboradorEquipo";
-	// }
-
-	public String aniadirMiembro() {
+	/**
+	 * Carga el formulario para añadir un miembro a un equipo.
+	 * 
+	 * @author EZENTIS
+	 * @param miembro
+	 * @return vista anadirMiembroEquipo
+	 */
+	public String getFormAniadirMiembroEquipo() {
 		this.miembrosSeleccionados = null;
-		listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
+		miembrosSeleccionados = new ArrayList<>();
+		listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(equipo);
 		return "/equipos/anadirMiembroEquipo";
 	}
 
-	public String guardarColaborador() {
+	/**
+	 * Añade los usuarios seleccionados en el formulario aniadirMiembroEquipo al equipo que está siendo modificado.
+	 * 
+	 * @author EZENTIS
+	 * @param posicion rol que ocupa en el equipo (componente o colaborador)
+	 * @return vista anadirMiembroEquipo
+	 */
+	public String guardarMiembros(RolEquipoEnum posicion) {
 
-		for (User user : colaboradoresSeleccionados) {
-			Miembros miembro = new Miembros();
-			miembro.setEquipo(equipo);
-			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-			miembro.setUsername(user.getUsername());
-			miembro.setPosicion(RolEquipoEnum.COLABORADOR);
-			try {
-				equipoService.save(miembro);
-				String descripcion = "Se ha añadido un nuevo colaborador al equipo inspecciones. Nombre colaborador "
-						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
+		try {
+			List<Miembro> listaMiembros = equipo.getMiembros();
+			List<String> nombresCompletos = aniadirMiembrosEquipo(posicion, listaMiembros);
+			equipo.setMiembros(listaMiembros);
+			if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+						"componente/s o colaborador/es añadido/s con éxito");
+				String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones. Nombres de componentes "
+						+ String.join(", ", nombresCompletos);
 				// Guardamos la actividad en bbdd
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
-			catch (Exception e) {
-				regActividadService.altaRegActividadError(NOMBRESECCION, e);
-			}
-
 		}
-		RequestContext context = RequestContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta",
-				"Colaborador/es añadido/s con éxito");
-		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-		context.execute("PF('dialogMessage').show()");
-		return VISTAEQUIPOS;
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al añadir nuevos componentes o colaboradores al equipo, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		return VISTAMODIFICAREQUIPO;
 	}
 
-	public String guardarMiembro() {
+	/**
+	 * Crear un miembro a partir de los datos de un usuario
+	 * 
+	 * @author EZENTIS
+	 * @param posicion
+	 * @param user
+	 * @return miembro nuevo
+	 */
+	private Miembro crearMiembro(RolEquipoEnum posicion, User user) {
+		Miembro miembroNuevo;
+		miembroNuevo = new Miembro();
+		miembroNuevo.setEquipo(equipo);
+		miembroNuevo.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
+		miembroNuevo.setUsername(user.getUsername());
+		miembroNuevo.setPosicion(posicion);
+		return miembroNuevo;
+	}
 
+	/**
+	 * Añadir miembros con un rol específico a una lista a partir de los usuarios seleccionados en un formulario
+	 * 
+	 * @author EZENTIS
+	 * @param posicion rol que ocupará en el equipo (componente o colaborador)
+	 * @param miembros lista de miembros donde se van a instertar
+	 * @return nombresCompletos nombre de los nuenvos usuarios para generar un registro de actividad
+	 */
+	private List<String> aniadirMiembrosEquipo(RolEquipoEnum posicion, List<Miembro> miembros) {
+		List<String> nombresCompletos = new ArrayList<>();
 		for (User user : miembrosSeleccionados) {
-			Miembros miembro = new Miembros();
-			miembro.setEquipo(equipo);
-			miembro.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-			miembro.setUsername(user.getUsername());
-			miembro.setPosicion(RolEquipoEnum.MIEMBRO);
-			try {
-				equipoService.save(miembro);
-				String descripcion = "Se ha añadido un nuevo componente al equipo inspecciones. Nombre componente "
-						+ user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2();
-				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
-				// Guardamos la notificacion en bbdd
-				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
-			}
-			catch (Exception e) {
-				regActividadService.altaRegActividadError(NOMBRESECCION, e);
-			}
-
+			Miembro miembroNuevo = crearMiembro(posicion, user);
+			miembros.add(miembroNuevo);
+			nombresCompletos.add(miembroNuevo.getNombreCompleto());
 		}
-		RequestContext context = RequestContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alta", "componente/s añadido/s con éxito");
-		FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-		context.execute("PF('dialogMessage').show()");
-		return VISTAEQUIPOS;
+		return nombresCompletos;
 	}
 
 	public void onToggle(ToggleEvent e) {
-		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-	}
-
-	/**
-	 * 
-	 */
-	private void altaJefeEquipo() {
-		Miembros miembro = new Miembros();
-		miembro.setEquipo(equipo);
-		miembro.setNombreCompleto(jefeSelecionado.getNombre() + " " + jefeSelecionado.getApellido1() + " "
-				+ jefeSelecionado.getApellido2());
-		miembro.setUsername(jefeSelecionado.getUsername());
-		miembro.setPosicion(RolEquipoEnum.JEFE_EQUIPO);
-		equipoService.save(miembro);
-	}
-
-	/**
-	 * 
-	 */
-	private void altaMiembrosEquipo() {
-		for (User user : miembrosSeleccionados) {
-			Miembros miembro2 = new Miembros();
-			miembro2.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-			miembro2.setEquipo(equipo);
-			miembro2.setUsername(user.getUsername());
-			miembro2.setPosicion(RolEquipoEnum.MIEMBRO);
-			equipoService.save(miembro2);
-		}
+		columnasVisibles.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
 
 	public String onFlowProcess(FlowEvent event) {
@@ -408,29 +395,24 @@ public class EquiposBean implements Serializable {
 	 */
 	private void cleanParam(FlowEvent event) {
 		if (JEFEEQUIPO.equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
-			User jefe = jefeSelecionado;
-			listadoJefes.remove(jefe);
-			listadoMiembros = listadoJefes;
+			User jefe = jefeSeleccionado;
+			listadoPotencialesJefes.remove(jefe);
+			listadoPotencialesMiembros = listadoPotencialesJefes;
 		}
 		if ("confirm".equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
 			this.miembrosSeleccionados = null;
-			listadoJefes = listaUsuarios;
+			listadoPotencialesJefes = listaUsuarios;
 		}
 		if (MIEMBROS.equals(event.getOldStep()) && JEFEEQUIPO.equals(event.getNewStep())) {
-			listadoJefes.add(jefeSelecionado);
-			this.jefeSelecionado = null;
+			listadoPotencialesJefes.add(jefeSeleccionado);
+			this.jefeSeleccionado = null;
 		}
 		if (JEFEEQUIPO.equals(event.getOldStep()) && "general".equals(event.getNewStep())) {
 			this.equipo.setNombreEquipo("");
 			this.tipoEquipo = null;
-			this.jefeSelecionado = null;
+			this.jefeSeleccionado = null;
 			this.miembrosSeleccionados = null;
 		}
-	}
-
-	public void save() {
-		FacesMessage msg = new FacesMessage("Successful", "Welcome :" + equipo.getId());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	@PostConstruct
@@ -440,18 +422,10 @@ public class EquiposBean implements Serializable {
 		this.equipo = null;
 		equipoBusqueda = new EquipoBusqueda();
 		equipoBusqueda.resetValues();
-		list = new ArrayList<>();
+		columnasVisibles = new ArrayList<>();
 		for (int i = 0; i <= numeroColumnasListadoEquipos; i++) {
-			list.add(Boolean.TRUE);
+			columnasVisibles.add(Boolean.TRUE);
 		}
-	}
-
-	public boolean isSkip() {
-		return skip;
-	}
-
-	public void setSkip(boolean skip) {
-		this.skip = skip;
 	}
 
 }

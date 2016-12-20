@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
@@ -44,25 +44,30 @@ public class EquipoService implements IEquipoService {
 		return equipoRepository.findAll();
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public Iterable<Equipo> save(Iterable<Equipo> entities) {
-		return equipoRepository.save(entities);
-	}
+	// @Override
+	// @Transactional(readOnly = true)
+	// public Iterable<Equipo> save(Iterable<Equipo> entities) {
+	// return equipoRepository.save(entities);
+	// }
 
 	@Override
-
 	public Equipo save(Equipo entity) {
 		return equipoRepository.save(entity);
 	}
 
 	@Override
-	public Miembros save(Miembros miembro) {
+	public Miembro save(Miembro miembro) {
 		return miembrosRepository.save(miembro);
 	}
 
 	@Override
-	public List<Miembros> findByEquipo(Equipo equipo) {
+	@Transactional(readOnly = true)
+	public List<Miembro> save(List<Miembro> listaMiembros) {
+		return (List<Miembro>) miembrosRepository.save(listaMiembros);
+	}
+
+	@Override
+	public List<Miembro> findByEquipo(Equipo equipo) {
 		return miembrosRepository.findByEquipo(equipo);
 	}
 
@@ -98,7 +103,7 @@ public class EquipoService implements IEquipoService {
 			criteria.add(Restrictions.eq("tipoEquipo.id", equipoBusqueda.getTipoEquipo().getId()));
 		}
 		if (equipoBusqueda.getNombreMiembro() != null && !equipoBusqueda.getNombreMiembro().isEmpty()) {
-			DetachedCriteria subquery = DetachedCriteria.forClass(Miembros.class, "miembro");
+			DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
 			subquery.add(Restrictions.ilike("miembro.nombreCompleto", equipoBusqueda.getNombreMiembro(),
 					MatchMode.ANYWHERE));
 			subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
@@ -117,6 +122,7 @@ public class EquipoService implements IEquipoService {
 
 			criteria.addOrder(Order.desc("fechaAlta"));
 		}
+		@SuppressWarnings("unchecked")
 		List<Equipo> listEquipos = criteria.list();
 		session.close();
 
@@ -125,7 +131,7 @@ public class EquipoService implements IEquipoService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void delete(Miembros miembro) {
+	public void delete(Miembro miembro) {
 		miembrosRepository.delete(miembro);
 	}
 

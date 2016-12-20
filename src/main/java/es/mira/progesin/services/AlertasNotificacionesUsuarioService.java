@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -193,7 +193,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 ***************************/
 	@Override
 	public void grabarMensajeRol(Object entidad, RoleEnum rol) {
-		List<User> usuariosRol= userService.findByRole(rol);
+		List<User> usuariosRol= userService.findByfechaBajaIsNullAndRole(rol);
 		for(User user:usuariosRol){
 			grabarMensajeUsuario(entidad,user.getUsername());	
 		}
@@ -231,9 +231,9 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 ***************************/
 	@Override
 	public void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion) {
-		List<Miembros> miembrosEquipo= inspeccion.getEquipo().getMiembros();
+		List<Miembro> miembrosEquipo= inspeccion.getEquipo().getMiembros();
 		
-		for(Miembros miembro:miembrosEquipo){
+		for(Miembro miembro:miembrosEquipo){
 			grabarMensajeUsuario(entidad,miembro.getUsername());
 		}
 		

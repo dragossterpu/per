@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -178,8 +179,13 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public List<User> findByRole(RoleEnum rol) {
-		return userRepository.findByRole(rol);
+	public List<User> findByfechaBajaIsNullAndRole(RoleEnum rol) {
+		return userRepository.findByfechaBajaIsNullAndRole(rol);
+	}
+
+	@Override
+	public List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo) {
+		return userRepository.buscarNoJefeNoMiembroEquipo(equipo);
 	}
 
 }
