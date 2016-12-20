@@ -1,11 +1,12 @@
 package es.mira.progesin.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Alerta;
@@ -159,6 +160,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 		default:	
 		}
 		men.setUsuario(user);
+		men.setFechaAlta(new Date());
 		mensajeRepo.save(men);
 		return null;
 	}
@@ -297,7 +299,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	
 	@Override
 	public Page<AlertasNotificacionesUsuario> findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo,
-			PageRequest request) {
+			Pageable request) {
 		return mensajeRepo.findByUsuarioAndTipo(usuario, tipo, request);
 	}
 

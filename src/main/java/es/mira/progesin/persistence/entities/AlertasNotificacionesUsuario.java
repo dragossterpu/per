@@ -1,6 +1,7 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,6 +59,8 @@ public class AlertasNotificacionesUsuario implements Serializable{
 	@Column(name = "NOMBRE_SECCION", length = 50)
 	private String nombreSeccion;
 
+	@Column(name = "FECHA_ALTA")
+	private Date fechaAlta;
 }
 
 
