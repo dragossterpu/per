@@ -22,6 +22,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
+import es.mira.progesin.persistence.entities.DocumentoBlob;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -228,8 +229,9 @@ public class DocumentoService implements IDocumentoService {
 	 *************************************/
 	@Override
 	public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
-		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
-		InputStream stream = entity.getFichero().getBinaryStream();
+		Documento docu = documentoRepository.findById(entity.getId());
+		DocumentoBlob doc= docu.getFichero();
+		InputStream stream = doc.getFichero().getBinaryStream();
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 	}
 
@@ -249,7 +251,7 @@ public class DocumentoService implements IDocumentoService {
 		Documento entity = findOne(id);
 
 		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
-		InputStream stream = entity.getFichero().getBinaryStream();
+		InputStream stream = entity.getFichero().getFichero().getBinaryStream();
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 
 	}
@@ -289,7 +291,10 @@ public class DocumentoService implements IDocumentoService {
 		Documento docu = new Documento();
 		docu.setNombre(file.getFileName());
 		Blob fileBlob=new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
-		docu.setFichero(fileBlob);
+		DocumentoBlob blob=new DocumentoBlob();
+		blob.setFichero(fileBlob);
+		//blob.setId(docu.getId());
+		docu.setFichero(blob);
 		docu.setTipoContenido(file.getContentType());
 		return docu;
 	}
