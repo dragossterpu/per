@@ -43,7 +43,7 @@
 							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
 							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{equiposBean.eliminarMiembro(miembro)}"
-								update="modificarEquipo">
+								update="modificarEquipo" disabled="#{miembro.posicion eq 'JEFE_EQUIPO'}">
 								<p:confirm header="Eliminar componente del equipo"
 									message="¿Está seguro que desea eliminar este componente del equipo?"
 									icon="fa fa-warning-sign" />
@@ -58,6 +58,12 @@
    				<p:messages autoUpdate="true" closable="true" showDetail="true"/>
 				<p:outputPanel>
 					<div class="botonesFormulario">
+						<h:commandLink title="Cambiar jefe del equipo"
+							action="#{equiposBean.getFormCambiarJefeEquipo}" 
+							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
+							styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">Cambiar jefe del equipo</span>
+						</h:commandLink>
 						<h:commandLink title="Añadir componente/s o colaborador/es"
 							action="#{equiposBean.getFormAniadirMiembroEquipo}" 
 							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"

@@ -293,6 +293,59 @@ public class EquiposBean implements Serializable {
 	}
 
 	/**
+	 * Carga el formulario para cambiar el jefe de un equipo.
+	 * 
+	 * @author EZENTIS
+	 * @return vista cambiarJefeEquipo
+	 */
+	public String getFormCambiarJefeEquipo() {
+		this.jefeSeleccionado = null;
+		listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(equipo);
+		return "/equipos/cambiarJefeEquipo";
+	}
+
+	/**
+	 * Añade los usuarios seleccionados en el formulario aniadirMiembroEquipo al equipo que está siendo modificado.
+	 * 
+	 * @author EZENTIS
+	 * @param posicion rol que ocupa en el equipo (componente o colaborador)
+	 * @return vista anadirMiembroEquipo
+	 */
+	public String cambiarJefeEquipo() {
+
+		try {
+
+			List<Miembro> listaMiembros = equipo.getMiembros();
+			listaMiembros.removeIf(m -> RolEquipoEnum.JEFE_EQUIPO.equals(m.getPosicion()));
+
+			equipo.setJefeEquipo(jefeSeleccionado.getUsername());
+			equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
+					+ jefeSeleccionado.getApellido2());
+			Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
+			listaMiembros.add(jefe);
+
+			equipo.setMiembros(listaMiembros);
+			if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+						"jefe cambiado con éxito");
+				String descripcion = "Se ha cambiado el jefe del equipo inspecciones. Nombres del nuevo jefe: "
+						+ equipo.getNombreJefe();
+				// Guardamos la actividad en bbdd
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+				// Guardamos la notificacion en bbdd
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al cambiar el jefe del equipo, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		return VISTAMODIFICAREQUIPO;
+	}
+
+	/**
 	 * Carga el formulario para añadir un miembro a un equipo.
 	 * 
 	 * @author EZENTIS
