@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,12 +23,10 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
-import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
-import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -52,6 +51,9 @@ public class ProvisionalSolicitudBean implements Serializable {
 	private static final String ERROR = "Error";
 
 	@Autowired
+	transient ApplicationBean applicationBean;
+
+	@Autowired
 	transient IRegistroActividadService regActividadService;
 
 	@Autowired
@@ -73,14 +75,11 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
-	private List<Parametro> parametrosPlantillasAmbito;
+	private List<Entry<String, String>> listaPlantillasAmbito;
 
 	private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
 	transient StreamedContent file;
-
-	@Autowired
-	transient IParametrosRepository parametrosRepository;
 
 	private Map<String, String> extensiones;
 
@@ -164,11 +163,11 @@ public class ProvisionalSolicitudBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		listadoDocumentosPrevios = new ArrayList<>();
 		listadoDocumentosCargados = new ArrayList<>();
-		List<Parametro> parametrosExtensiones = parametrosRepository.findParamByParamSeccion("extensiones");
+		Map<String, String> parametrosExtensiones = applicationBean.getMapaParametros().get("extensiones");
 		extensiones = new HashMap<>();
-		for (Parametro p : parametrosExtensiones) {
+		for (Entry<String, String> p : parametrosExtensiones.entrySet()) {
 			// Invierto orden para buscar por contentType y obtener extension
-			extensiones.put(p.getParam().getValor(), p.getParam().getClave());
+			extensiones.put(p.getValue(), p.getKey());
 		}
 	}
 
@@ -219,16 +218,14 @@ public class ProvisionalSolicitudBean implements Serializable {
 			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
 			if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 						"Solicitud de documentación cumplimentada con éxito. Su sesión ha finalizado.");
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
 				// Guardamos la actividad en bbdd
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
-
 				// Guardamos la notificacion en bbdd
-				// TODO usar NotificacionEnum
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 
@@ -268,12 +265,14 @@ public class ProvisionalSolicitudBean implements Serializable {
 			if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
 				String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
 				if ("GC".equals(ambito) || "PN".equals(ambito)) {
-					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillas" + ambito);
+					listaPlantillasAmbito = new ArrayList<>(
+							applicationBean.getMapaParametros().get("plantillas" + ambito).entrySet());
 				}
 				else {
 					// OTROS se muestran todas las de GC y PN
-					parametrosPlantillasAmbito = parametrosRepository.findParamByParamSeccion("plantillasGC");
-					parametrosPlantillasAmbito.addAll(parametrosRepository.findParamByParamSeccion("plantillasPN"));
+					listaPlantillasAmbito = new ArrayList<>(
+							applicationBean.getMapaParametros().get("plantillasGC").entrySet());
+					listaPlantillasAmbito.addAll(applicationBean.getMapaParametros().get("plantillasPN").entrySet());
 				}
 			}
 		}

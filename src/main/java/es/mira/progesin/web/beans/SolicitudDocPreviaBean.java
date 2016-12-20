@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
@@ -31,7 +29,6 @@ import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
@@ -117,9 +114,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	transient IDocumentoService documentoService;
 
-	@Autowired
-	transient IParametrosRepository parametrosRepository;
-
 	private Map<String, String> datosApoyo;
 
 	@Autowired
@@ -127,6 +121,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	@Autowired
 	private transient ICorreoElectronico correoElectronico;
+
+	@Autowired
+	transient ApplicationBean applicationBean;
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -337,11 +334,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocPreviaBusqueda.resetValues();
 		listadoDocumentosCargados = new ArrayList<>();
 		listaSolicitudesPrevia = new ArrayList<>();
-		List<Parametro> parametrosDatosApoyo = parametrosRepository.findParamByParamSeccion("datosApoyo");
-		datosApoyo = new HashMap<>();
-		for (Parametro p : parametrosDatosApoyo) {
-			datosApoyo.put(p.getParam().getClave(), p.getParam().getValor());
-		}
+		datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
 	}
 
 	/**
