@@ -268,7 +268,7 @@ public class EquiposBean implements Serializable {
 	}
 
 	/**
-	 * Elimina un miembro de un equipo, ya sea componente o colaborador
+	 * Elimina un miembro de un equipo, ya sea componente o colaborador del equipo que está siendo modificado
 	 * @author EZENTIS
 	 * @param miembro
 	 * @return vista modificarEquipo
@@ -293,7 +293,7 @@ public class EquiposBean implements Serializable {
 	}
 
 	/**
-	 * Carga el formulario para cambiar el jefe de un equipo.
+	 * Carga el formulario para cambiar el jefe del equipo que está siendo modificado.
 	 * 
 	 * @author EZENTIS
 	 * @return vista cambiarJefeEquipo
@@ -305,11 +305,11 @@ public class EquiposBean implements Serializable {
 	}
 
 	/**
-	 * Añade los usuarios seleccionados en el formulario aniadirMiembroEquipo al equipo que está siendo modificado.
+	 * Elimina el jefe anterior y agrega el nuevo seleccionado en el formulario cambiarJefeEquipo al equipo que está
+	 * siendo modificado.
 	 * 
 	 * @author EZENTIS
-	 * @param posicion rol que ocupa en el equipo (componente o colaborador)
-	 * @return vista anadirMiembroEquipo
+	 * @return vista modificarEquipo
 	 */
 	public String cambiarJefeEquipo() {
 
@@ -346,7 +346,7 @@ public class EquiposBean implements Serializable {
 	}
 
 	/**
-	 * Carga el formulario para añadir un miembro a un equipo.
+	 * Carga el formulario para añadir un miembro al equipo que está siendo modificado.
 	 * 
 	 * @author EZENTIS
 	 * @param miembro
@@ -416,7 +416,7 @@ public class EquiposBean implements Serializable {
 	 * @author EZENTIS
 	 * @param posicion rol que ocupará en el equipo (componente o colaborador)
 	 * @param miembros lista de miembros donde se van a instertar
-	 * @return nombresCompletos nombre de los nuenvos usuarios para generar un registro de actividad
+	 * @return nombresCompletos nombre de los nuevos usuarios para generar un registro de actividad
 	 */
 	private List<String> aniadirMiembrosEquipo(RolEquipoEnum posicion, List<Miembro> miembros) {
 		List<String> nombresCompletos = new ArrayList<>();
