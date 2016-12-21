@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -42,7 +43,9 @@ public interface IUserService {
 	List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv);
 
 	void cambiarEstado(String usuarioProv, EstadoEnum estado);
-	
-	List<User> findByRole(RoleEnum rol);
+
+	List<User> findByfechaBajaIsNullAndRole(RoleEnum rol);
+
+	List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo);
 
 }

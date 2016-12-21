@@ -22,18 +22,18 @@
 		<div id="listadoPlantillas">
 		<h:form id="form">
 					<div class="bloqueDocumentos" >		
-							<p:dataTable id="plantillas" var="parametro" value="#{provisionalSolicitudBean.parametrosPlantillasAmbito}"  >
+							<p:dataTable id="plantillas" var="plantilla" value="#{provisionalSolicitudBean.listaPlantillasAmbito}" sortBy="#{plantilla.key}">
 		
-								<p:column headerText="Nombre">
-											<h:outputText value="#{parametro.param.clave}" />
+								<p:column headerText="Nombre" sortBy="#{plantilla.key}">
+										<h:outputText value="#{plantilla.key}" />
 						       </p:column>
 								<p:column styleClass="botonTabla">
-									<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(parametro.param.valor)}" title="Descargar documento">
+									<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(plantilla.value)}" title="Descargar documento">
 										<p:fileDownload value="#{provisionalSolicitudBean.file}" />
 									</p:commandButton>
 								</p:column>
 								<f:facet name="footer">
-					      				 Hay: #{fn:length(provisionalSolicitudBean.parametrosPlantillasAmbito)} documentos.
+					      				 Hay: #{fn:length(provisionalSolicitudBean.listaPlantillasAmbito)} documentos.
 					   			</f:facet>
 							</p:dataTable>	
 					</div>

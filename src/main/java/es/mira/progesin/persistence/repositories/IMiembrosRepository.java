@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 
-public interface IMiembrosRepository extends CrudRepository<Miembros, Long> {
+public interface IMiembrosRepository extends CrudRepository<Miembro, Long> {
 
-	List<Miembros> findByEquipo(Equipo equipo);
+	List<Miembro> findByEquipo(Equipo equipo);
 
 }

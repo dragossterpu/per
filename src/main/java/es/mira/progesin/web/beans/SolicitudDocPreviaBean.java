@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
@@ -31,7 +29,6 @@ import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.persistence.repositories.IParametrosRepository;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
@@ -117,9 +114,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	@Autowired
 	transient IDocumentoService documentoService;
 
-	@Autowired
-	transient IParametrosRepository parametrosRepository;
-
 	private Map<String, String> datosApoyo;
 
 	@Autowired
@@ -127,6 +121,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	@Autowired
 	private transient ICorreoElectronico correoElectronico;
+
+	@Autowired
+	transient ApplicationBean applicationBean;
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -337,11 +334,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocPreviaBusqueda.resetValues();
 		listadoDocumentosCargados = new ArrayList<>();
 		listaSolicitudesPrevia = new ArrayList<>();
-		List<Parametro> parametrosDatosApoyo = parametrosRepository.findParamByParamSeccion("datosApoyo");
-		datosApoyo = new HashMap<>();
-		for (Parametro p : parametrosDatosApoyo) {
-			datosApoyo.put(p.getParam().getClave(), p.getParam().getValor());
-		}
+		datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
 	}
 
 	/**
@@ -525,8 +518,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 					String asunto = "Solicitud de documentación previa para la inspección "
 							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
 					String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
-							+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
-							+ password
+							+ "aplicación es "
+							+ applicationBean.getMapaParametros().get("URLPROGESIN")
+									.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name())
+							+ ", su usuario de acceso es su correo electrónico y la contraseña es " + password
 							+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n"
 							+ "Muchas gracias y un saludo.";
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
@@ -622,7 +617,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
 				String textoAutomatico = "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:"
 						+ "\r\n \r\n" + motivosNoConforme
-						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
+						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es "
+						+ applicationBean.getMapaParametros().get("URLPROGESIN")
+								.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name())
+						+ ", su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
 						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
 						+ "\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n"
 						+ "Muchas gracias y un saludo.";

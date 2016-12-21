@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -23,6 +24,8 @@ import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 @Service
 public class SolicitudDocumentacionService implements ISolicitudDocumentacionService {
+
+	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -130,18 +133,20 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			criteria.add(
 					Restrictions.eq("usernameAlta", solicitudDocPreviaBusqueda.getUsuarioCreacion().getUsername()));
 		}
-
 		criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
 		criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
+		String parametro;
 		if (solicitudDocPreviaBusqueda.getNombreUnidad() != null
 				&& !solicitudDocPreviaBusqueda.getNombreUnidad().isEmpty()) {
-			criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", solicitudDocPreviaBusqueda.getNombreUnidad(),
-					MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
 		}
 		if (solicitudDocPreviaBusqueda.getNumeroInspeccion() != null
 				&& !solicitudDocPreviaBusqueda.getNumeroInspeccion().isEmpty()) {
-			criteria.add(Restrictions.ilike("inspeccion.numero", solicitudDocPreviaBusqueda.getNumeroInspeccion(),
-					MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNumeroInspeccion(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("inspeccion.numero", parametro, MatchMode.ANYWHERE));
 		}
 		if (solicitudDocPreviaBusqueda.getAmbitoInspeccion() != null) {
 			criteria.add(Restrictions.eq("inspeccion.ambito", solicitudDocPreviaBusqueda.getAmbitoInspeccion()));

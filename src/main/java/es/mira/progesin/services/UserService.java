@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -32,6 +34,8 @@ public class UserService implements IUserService {
 	private static final String FECHA_ALTA = "fechaAlta";
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
 	@Override
 	@Transactional(readOnly = false)
@@ -125,17 +129,22 @@ public class UserService implements IUserService {
 			criteria.add(Restrictions
 					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
 		}
+		String parametro;
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-			criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(userBusqueda.getNombre(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("nombre", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-			criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(userBusqueda.getApellido1(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("apellido1", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-			criteria.add(Restrictions.ilike("apellido2", userBusqueda.getApellido2(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(userBusqueda.getApellido2(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("apellido2", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-			criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
+			parametro = Normalizer.normalize(userBusqueda.getUsername(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("username", parametro, MatchMode.ANYWHERE));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
 			criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
@@ -178,8 +187,13 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public List<User> findByRole(RoleEnum rol) {
-		return userRepository.findByRole(rol);
+	public List<User> findByfechaBajaIsNullAndRole(RoleEnum rol) {
+		return userRepository.findByfechaBajaIsNullAndRole(rol);
+	}
+
+	@Override
+	public List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo) {
+		return userRepository.buscarNoJefeNoMiembroEquipo(equipo);
 	}
 
 }

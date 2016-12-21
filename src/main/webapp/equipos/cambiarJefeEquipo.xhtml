@@ -15,48 +15,56 @@
 			<h3>Modificar equipo</h3>
 			<br></br>
 			<h:form id="modificarEquipo">
-				<div id="listadoPotencialesMiembros">
+				<div id="listadoPotencialesJefes">
 
-					<h4>Añadir componentes o colaboradores:</h4>
+					<h4>Cambiar jefe de equipo:</h4>
 
 				</div>
 
 				<div class="botonesFormulario">
-					<p:dataTable id="miembro" var="miembro"
+					<p:dataTable id="miembro" var="usuario"
 						value="#{equiposBean.listaUsuarios}" paginator="true" rows="20"
-						selection="#{equiposBean.miembrosSeleccionados}"
-						rowKey="#{miembro.username}" draggableColumns="true"
+						selection="#{equiposBean.jefeSeleccionado}"
+						rowKey="#{usuario.username}" draggableColumns="true"
 						resizableColumns="true" emptyMessage="No hay usuarios disponibles.">
 						<f:facet name="header">
 				            Usuarios
 				        </f:facet>
-						<p:column selectionMode="multiple"
+						<p:column selectionMode="single"
 							style="width:16px;text-align:center" />
-						<p:column headerText="Nombre" sortBy="#{miembro.nombre}"
-							filterBy="#{miembro.nombre}">
-							<h:outputText value="#{miembro.nombre}" />
+						<p:column headerText="Nombre" sortBy="#{usuario.nombre}"
+							filterBy="#{usuario.nombre}">
+							<h:outputText value="#{usuario.nombre}" />
 						</p:column>
 						<p:column headerText="Primer Apellido"
-							sortBy="#{miembro.apellido1}" filterBy="#{miembro.apellido2}">
-							<h:outputText value="#{miembro.apellido1}" />
+							sortBy="#{usuario.apellido1}" filterBy="#{usuario.apellido2}">
+							<h:outputText value="#{usuario.apellido1}" />
 						</p:column>
 						<p:column headerText="Segundo Apellido"
-							sortBy="#{miembro.apellido2}" filterBy="#{miembro.apellido2}">
-							<h:outputText value="#{miembro.apellido2}" />
+							sortBy="#{usuario.apellido2}" filterBy="#{usuario.apellido2}">
+							<h:outputText value="#{usuario.apellido2}" />
 						</p:column>
 					</p:dataTable>
 
 				</div>
 				<div class="botonesFormulario">
-					<p:importEnum var="posicion"
-						type="es.mira.progesin.persistence.entities.enums.RolEquipoEnum"/>
-					<p:commandButton actionListener="#{equiposBean.guardarMiembros(posicion.MIEMBRO)}"
-						value="Guardar como componente/s" icon="fa fa-save" />
-					<p:commandButton actionListener="#{equiposBean.guardarMiembros(posicion.COLABORADOR)}"
-						value="Guardar como colaborador/es" icon="fa fa-save" />
+					<p:commandButton actionListener="#{equiposBean.cambiarJefeEquipo}"
+						value="Cambiar jefe" icon="fa fa-save">
+						<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+							message="Al cambiar de jefe eliminará al anterior del equipo"/>
+					</p:commandButton>
 					<p:button outcome="/equipos/modificarEquipo" value="Volver" icon="fa fa-fw fa-undo"/>
 				</div>
-
+				
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+					</div>
+				</p:confirmDialog>
+			
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
 					<p:ajax event="close"
 						listener="#{facesUtilities.redirect('/equipos/modificarEquipo')}" />

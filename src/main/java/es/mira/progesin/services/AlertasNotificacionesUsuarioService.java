@@ -1,17 +1,18 @@
 package es.mira.progesin.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -159,6 +160,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 		default:	
 		}
 		men.setUsuario(user);
+		men.setFechaAlta(new Date());
 		mensajeRepo.save(men);
 		return null;
 	}
@@ -193,7 +195,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 ***************************/
 	@Override
 	public void grabarMensajeRol(Object entidad, RoleEnum rol) {
-		List<User> usuariosRol= userService.findByRole(rol);
+		List<User> usuariosRol= userService.findByfechaBajaIsNullAndRole(rol);
 		for(User user:usuariosRol){
 			grabarMensajeUsuario(entidad,user.getUsername());	
 		}
@@ -231,9 +233,9 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 ***************************/
 	@Override
 	public void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion) {
-		List<Miembros> miembrosEquipo= inspeccion.getEquipo().getMiembros();
+		List<Miembro> miembrosEquipo= inspeccion.getEquipo().getMiembros();
 		
-		for(Miembros miembro:miembrosEquipo){
+		for(Miembro miembro:miembrosEquipo){
 			grabarMensajeUsuario(entidad,miembro.getUsername());
 		}
 		
@@ -297,7 +299,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	
 	@Override
 	public Page<AlertasNotificacionesUsuario> findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo,
-			PageRequest request) {
+			Pageable request) {
 		return mensajeRepo.findByUsuarioAndTipo(usuario, tipo, request);
 	}
 

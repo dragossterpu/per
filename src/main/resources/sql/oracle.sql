@@ -6,19 +6,19 @@ insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_
 insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(6, 'Correos y Telégrafos', 'system', current_date, null, null,null,null);
  
  
-insert into PUESTOSTRABAJO values(1, 'Teniente');
-insert into PUESTOSTRABAJO values(2, 'Comandante');
-insert into PUESTOSTRABAJO values(3, 'Jefe de Apoyo');
-insert into PUESTOSTRABAJO values(4, 'Personal de Apoyo');
-insert into PUESTOSTRABAJO values(5, 'Secretaria de N30');
-insert into PUESTOSTRABAJO values(6, 'Jefe de Equipo Inspecciones');
-insert into PUESTOSTRABAJO values(7, 'Inspector-Auditor');
-insert into PUESTOSTRABAJO values(8, 'Jefe de Negociado');
-insert into PUESTOSTRABAJO values(9, 'Fuera de Catálogo (Conductores)');
-insert into PUESTOSTRABAJO values(10, 'Responsable Estudios y Programas');
-insert into PUESTOSTRABAJO values(11, 'Jefe Sección');
-insert into PUESTOSTRABAJO values(12, 'Secretario Técnico');
-insert into PUESTOSTRABAJO values(13, 'Subdirector General');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Subdirector General', 30, 'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretario Técnico',29,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Servicios de Inspección',29,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Responsable Estudios y Programas',29,'RPT-FC');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Equipo Inspecciones',28,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Inspector-Auditor',27,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Apoyo',21,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Sección',20,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Personal de Apoyo',18,'FCSE');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Negociado',18,'RPT');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Fuera de Catálogo (Conductores)',17,'FCSE-FC');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Negociado',16,'RPT');
+insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretaria de N30',15,'RPT');
  
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IAPRL', 'Inspecciones Área Prevención de Riesgos Laborales');
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IG', 'Inspecciones Generales');
@@ -29,295 +29,57 @@ insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextva
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'SCQ', 'Servicio de Calidad y Quejas');
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'SO', 'Secretaria Y Otros');
 
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'system', 'system', 'system', 'correo@correo.es', '111111111', 'NO', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'System',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/09/2016', 1, 2, 20);
-  
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'silpe', 'apellido1', 'apellido2', 'correo@correo.es', '111111111', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'Silvia',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/09/2016', 1, 2, 20);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'pedro', 'CARRETERO', 'LIAU', 'correo@correo.es', '111111111', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'PEDRO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '10323', 'user_alta', null, null, '05/06/2000', 2, 2, 18);
-   
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'jmanuel', 'SIERRA', 'EXOJO', 'correo@correo.es', 'n10704', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'JOSE MANUEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2016', 3, 2, 20);
-  	
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values	( 'alopez', 'LOPEZ', 'BETRIAN', 'correo@correo.es', 'n10971', 'SI', 'ACTIVO', '12/11/2007', NULL, NULL, NULL, 'ANTONIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/04/2014', 5, 3, 15);
-    
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values	( 'fvilchews', 'VILCHES', 'RENTERO', 'correo@correo.es', 'n11718', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'FRANCISCO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '17/04/2015', 6, 1, 28);
-     
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values	 ( 'ajangulo', 'ANGULO', 'BALLARIN', 'correo@correo.es', 'n13453', 'SI', 'ACTIVO', '02/2/2007', NULL, NULL, NULL, 'ANTONIO JAVIER',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '12/01/2009', 7, 2, 27);
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values     ( 'jencuentra', 'ENCUENTRA', 'BAGUES', 'correo@correo.es', 'n13545', 'SI', 'ACTIVO', '05/09/1999', NULL, NULL, NULL, 'JESUS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '25/09/2010', 7, 1, 27);
-      
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'egomez', 'GOMEZ', 'ALMERO', 'correo@correo.es', 'n13575', 'SI', 'ACTIVO', '01/10/2011', NULL, NULL, NULL, 'ENRIQUE',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/07/2012', 8, 3, 16);
-  
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'jcarranz', 'ARRANZ', 'APAOLAZA', 'correo@correo.es', 'n14189', 'SI', 'ACTIVO', '10/08/2000', NULL, NULL, NULL, 'JUAN CARLOS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/05/2016', 7, 2, 27);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'faconde', 'CONDE', 'FALCON', 'correo@correo.es', 'n14975', 'SI', 'ACTIVO', '01/09/2000', NULL, NULL, NULL, 'FRANCISCO ANDRES',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/04/2010', 7, 2, 27);
-  
-      
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'jbarnils', 'BARNILS', 'COSTA', 'correo@correo.es', 'n15416', 'SI', 'ACTIVO', '01/09/2013', NULL, NULL, NULL, 'JUAN',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2015', 7, 2, 27);
-  
-insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'jmarquez', 'MARQUES', 'BERDEJO', 'correo@correo.es', 'N15432', 'SI', 'ACTIVO', '01/09/2007', NULL, NULL, NULL, 'JAVIER',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '11/08/2010', 7, 1, 27);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'cgonzalez', 'GONZÁLEZ', 'CASTILLO', 'correo@correo.es', 'n15967', 'SI', 'ACTIVO', '01/04/2014', NULL, NULL, NULL, 'CARLOS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2015', 7, 1, 27);
-   
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'sfcarrasco', 'CARRASCO', 'JIMENEZ', 'correo@correo.es', 'n16115', 'SI', 'ACTIVO', '10/07/2000', NULL, NULL, NULL, 'SALVADOR FRANCISCO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2011', 7, 1, 27);
-        
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'slaguia', 'LAGUIA', 'FERNANDEZ', 'correo@correo.es', 'n16490', 'SI', 'ACTIVO', '01/06/2006', NULL, NULL, NULL, 'SEGUNDO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/03/2010', 7, 4, 27);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'parribas', 'ARRIBAS', 'MARTINEZ', 'correo@correo.es', 'n16603', 'SI', 'ACTIVO', '01/02/2003', NULL, NULL, NULL, 'PEDRO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/08/2008', 7, 4, 27);
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'acabrero', 'CABRERO', 'GARCIA', 'correo@correo.es', 'n16716', 'SI', 'ACTIVO', '01/09/2000', NULL, NULL, NULL, 'ANDRES',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2004', 6, 2, 28);
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'msoria', 'SORIA', 'TORRALBA', 'correo@correo.es', 'n17620', 'SI', 'ACTIVO', '01/09/2000', NULL, NULL, NULL, 'MIGUEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2002', 6, 1, 28);
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'amateos', 'MATEOS', 'CHICO', 'correo@correo.es', 'n17702', 'SI', 'ACTIVO', '01/09/2000', NULL, NULL, NULL, 'AMADEO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2005', 6, 2, 28);
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'emartinez', 'MARTINEZ', 'ALLER', 'correo@correo.es', 'n18342', 'SI', 'ACTIVO', '01/09/2009', NULL, NULL, NULL, 'ELIAS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2013', 6, 1, 28);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'japeruyero', 'PERUYERO', 'MARTINEZ', 'correo@correo.es', 'n18440', 'SI', 'ACTIVO', '20/03/2008', NULL, NULL, NULL, 'JOSE ANTONIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '11/08/2012', 6, 2, 28);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'jaesteban', 'ESTEBAN', 'GOMEZ', 'correo@correo.es', 'n19570', 'SI', 'ACTIVO', '01/09/2010', NULL, NULL, NULL, 'JOSE ANTONIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2012', 6, 2, 28);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'jrosas', 'ROSAS', 'MARTIN', 'correo@correo.es', 'n19662', 'SI', 'ACTIVO', '01/09/2013', NULL, NULL, NULL, 'JOSE',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2015', 4, 2, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'mnavarro', 'NAVARRO', 'GRAELLS', 'correo@correo.es', 'n19959', 'SI', 'ACTIVO', '01/09/2011', NULL, NULL, NULL, 'MONTSERRAT',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2012', 4, 2, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'maserrano', 'SERRANO', 'ARGUELLO', 'correo@correo.es', 'n20645', 'SI', 'ACTIVO', '01/07/2007', NULL, NULL, NULL, 'MIGUEL ANGEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2011', 4, 1, 18);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values   ( 'cjsancha', 'SANCHA', 'HERRERA', 'correo@correo.es', 'n21129', 'SI', 'ACTIVO', '01/09/2012', NULL, NULL, NULL, 'CARLOS JAIME',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2013', 4, 2, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'fmartcasabas', 'MARTINEZ', 'CASBAS', 'correo@correo.es', 'n21694', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'FRANCISCO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2016', 4, 2, 18);
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'ciibarguren', 'IBARGUREN', 'LEON', 'correo@correo.es', 'n21953', 'SI', 'ACTIVO', '01/10/2010', NULL, NULL, NULL, 'CARLOS IGNACIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/07/2013', 8, 3, 16);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'egomezcorino', 'CARRILES', 'CORINO', 'correo@correo.es', 'n21991', 'SI', 'ACTIVO', '23/11/2004', NULL, NULL, NULL, 'JOSE PEDRO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/08/2008', 8, 2, 16);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jatristan', 'TRISTAN', 'OSTA', 'correo@correo.es', 'n21999', 'SI', 'ACTIVO', '01/10/2009', NULL, NULL, NULL, 'JESUS ANGEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/07/2011', 8, 4, 16);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'jmcervantes', 'CERVANTES', 'PARDO', 'correo@correo.es', 'n22046', 'SI', 'ACTIVO', '27/09/2011', NULL, NULL, NULL, 'JOSE MARIA',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2013', 7, 1, 27);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'fdonday', 'DONDAY', 'GALVEZ', 'correo@correo.es', 'n22149', 'SI', 'ACTIVO', '24/01/2004', NULL, NULL, NULL, 'FRANCISCO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '23/11/2009', 7, 2, 27);
-  
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'alopezc', 'LOPEZ', 'CONTRERAS', 'correo@correo.es', 'n22162', 'SI', 'ACTIVO', '01/04/2011', NULL, NULL, NULL, 'ANTONIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2012', 7, 4, 27);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'fsempre', 'SEMPERE', 'PEÑA', 'correo@correo.es', 'n22252', 'SI', 'ACTIVO', '01/04/2011', NULL, NULL, NULL, 'FERNANDO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/06/2013', 7, 1, 27);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jcgonzalez', 'GONZÁLEZ', 'VALENCIA', 'correo@correo.es', 'n22465', 'SI', 'ACTIVO', '01/04/2000', NULL, NULL, NULL, 'JESUS CARLOS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/12/2012', 7, 4, 27);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jmalberich', 'ALBERICH', 'LANDABURU', 'correo@correo.es', 'n22468', 'SI', 'ACTIVO', '01/04/2010', NULL, NULL, NULL, 'JUAN MANUEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '18/11/2013', 7, 2, 27);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'fjoliva', 'OLIVA', 'GARCIA', 'correo@correo.es', 'n22664', 'SI', 'ACTIVO', '11/06/2002', NULL, NULL, NULL, 'FRANCISCO JAVIER',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2007', 4, 1, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'mfgonzalez', 'GONZALEZ', 'FERNANDEZ', 'correo@correo.es', 'n22962', 'SI', 'ACTIVO', '01/09/2011', NULL, NULL, NULL, 'MARCELO FRANCISCO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2012', 4, 2, 18);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jmartinez', 'MARTINEZ', 'GANDIA BANCES', 'correo@correo.es', 'n23093', 'SI', 'ACTIVO', '01/06/2006', NULL, NULL, NULL, 'JAVIER',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/12/2009', 4, 4, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'cperez', 'PEREZ', 'FERNANDEZ', 'correo@correo.es', 'n23958', 'SI', 'ACTIVO', '01/07/2007', NULL, NULL, NULL, 'CONSUELO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2011', 4, 2, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jsastre', 'SASTRE', 'SANCHEZ', 'correo@correo.es', 'n24286', 'SI', 'ACTIVO', '01/09/2010', NULL, NULL, NULL, 'JOSE',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2011', 4, 4, 18);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values  ( 'amora', 'MORA', 'GALAN', 'correo@correo.es', 'n24388', 'SI', 'ACTIVO', '01/09/2006', NULL, NULL, NULL, 'ALBERTO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '01/09/2000', 4, 1, 18);
-     
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'ajgarcia', 'GARCIA', 'ABASCAL', 'correo@correo.es', 'n24519', 'SI', 'ACTIVO', '01/02/2007', NULL, NULL, NULL, 'ANGEL JESUS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2009', 3, 2, 21);
-  
- insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'mafan', 'AFAN', 'FAJARDO', 'correo@correo.es', 'n24639', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'MIGUEL',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'SERVICIO_APOYO', '665566544', 'user_alta', null, null, '22/06/2016', 3, 1, 21);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'parbona', 'ARBONA', 'CAMPOMAR', 'correo@correo.es', 'n25044', 'NO', 'ACTIVO', '01/02/2003', NULL, NULL, NULL, 'PEDRO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'SERVICIO_APOYO', '665566544', 'user_alta', null, null, '12/08/2007', 9, 2, 21);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jicerezo', 'CEREZO', 'HERNANDEZ', 'correo@correo.es', 'N25342', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'JOSE IGNACIO',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2016', 9, 1, 21);
-     
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values( 'jlcalonge', 'CALONGE', 'DELSO', 'correo@correo.es', 'n25583', 'SI', 'ACTIVO', '01/02/2007', NULL, NULL, NULL, 'JOSE LUIS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2009', 9, 2, 21);
-  
-  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
-  nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
-  fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values ( 'jcgalan', 'GALAN', 'VIVAR', 'correo@correo.es', 'n25655', 'SI', 'ACTIVO', '11/04/2001', NULL, NULL, NULL, 'JOSE CARLOS',
-  '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'SERVICIO_APOYO', '665566544', 'user_alta', null, null, '22/04/2013', 9, 1, 21);
+
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('acabrero','CABRERO','GARCIA','correo@correo.es','n16716',null,null,'ACTIVO',to_timestamp('01/09/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 04:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','ANDRES','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('ajangulo','ANGULO','BALLARIN','correo@correo.es','n13453',null,null,'ACTIVO',to_timestamp('02/02/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('12/01/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','ANTONIO JAVIER','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('ajgarcia','GARCIA','ABASCAL','correo@correo.es','n24519',null,null,'ACTIVO',to_timestamp('01/02/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('22/06/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'21','ANGEL JESUS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'3');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('alopez','LOPEZ','BETRIAN','correo@correo.es','n10971',null,null,'ACTIVO',to_timestamp('12/11/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/04/20 14:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'15','ANTONIO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'3',null,null,'5');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('alopezc','LOPEZ','CONTRERAS','correo@correo.es','n22162',null,null,'ACTIVO',to_timestamp('01/04/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','ANTONIO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('amateos','MATEOS','CHICO','correo@correo.es','n17702',null,null,'ACTIVO',to_timestamp('01/09/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 05:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','AMADEO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('amora','MORA','GALAN','correo@correo.es','n24388',null,null,'ACTIVO',to_timestamp('01/09/20 06:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','ALBERTO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('cgonzalez','GONZÁLEZ','CASTILLO','correo@correo.es','n15967',null,null,'ACTIVO',to_timestamp('01/04/20 14:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 15:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','CARLOS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('ciibarguren','IBARGUREN','LEON','correo@correo.es','n21953',null,null,'ACTIVO',to_timestamp('01/10/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/07/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'16','CARLOS IGNACIO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'3',null,null,'8');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('cjsancha','SANCHA','HERRERA','correo@correo.es','n21129',null,null,'ACTIVO',to_timestamp('01/09/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','CARLOS JAIME','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('cperez','PEREZ','FERNANDEZ','correo@correo.es','n23958',null,null,'ACTIVO',to_timestamp('01/07/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','CONSUELO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('egomez','GOMEZ','ALMERO','correo@correo.es','n13575',null,null,'ACTIVO',to_timestamp('01/10/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/07/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'16','ENRIQUE','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'3',null,null,'8');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('egomezcorino','CARRILES','CORINO','correo@correo.es','n21991',null,null,'ACTIVO',to_timestamp('23/11/20 04:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/08/20 08:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'16','JOSE PEDRO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'8');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('emartinez','MARTINEZ','ALLER','correo@correo.es','n18342',null,null,'ACTIVO',to_timestamp('01/09/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','ELIAS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('faconde','CONDE','FALCON','correo@correo.es','n14975',null,null,'ACTIVO',to_timestamp('01/09/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/04/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','FRANCISCO ANDRES','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('fdonday','DONDAY','GALVEZ','correo@correo.es','n22149',null,null,'ACTIVO',to_timestamp('24/01/20 04:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('23/11/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','FRANCISCO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('fjoliva','OLIVA','GARCIA','correo@correo.es','n22664',null,null,'ACTIVO',to_timestamp('11/06/20 02:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','FRANCISCO JAVIER','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('fmartcasabas','MARTINEZ','CASBAS','correo@correo.es','n21694',null,null,'ACTIVO',to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','FRANCISCO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('fsempre','SEMPERE','PEÑA','correo@correo.es','n22252',null,null,'ACTIVO',to_timestamp('01/04/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/06/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','FERNANDO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('fvilchews','VILCHES','RENTERO','correo@correo.es','n11718',null,null,'ACTIVO',to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('17/04/20 15:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','FRANCISCO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jaesteban','ESTEBAN','GOMEZ','correo@correo.es','n19570',null,null,'ACTIVO',to_timestamp('01/09/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','JOSE ANTONIO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('japeruyero','PERUYERO','MARTINEZ','correo@correo.es','n18440',null,null,'ACTIVO',to_timestamp('20/03/20 08:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('11/08/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','JOSE ANTONIO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jatristan','TRISTAN','OSTA','correo@correo.es','n21999',null,null,'ACTIVO',to_timestamp('01/10/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/07/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'16','JESUS ANGEL','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'8');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jbarnils','BARNILS','COSTA','correo@correo.es','n15416',null,null,'ACTIVO',to_timestamp('01/09/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 15:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JUAN','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jcarranz','ARRANZ','APAOLAZA','correo@correo.es','n14189',null,null,'ACTIVO',to_timestamp('10/08/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/05/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JUAN CARLOS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jcgalan','GALAN','VIVAR','correo@correo.es','n25655',null,null,'ACTIVO',to_timestamp('11/04/20 01:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('22/04/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'21','JOSE CARLOS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','SERVICIO_APOYO','665566544',null,null,'user_alta',null,null,'1',null,null,'9');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jcgonzalez','GONZÁLEZ','VALENCIA','correo@correo.es','n22465',null,null,'ACTIVO',to_timestamp('01/04/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/12/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JESUS CARLOS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jencuentra','ENCUENTRA','BAGUES','correo@correo.es','n13545',null,null,'ACTIVO',to_timestamp('05/09/99 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('25/09/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JESUS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jicerezo','CEREZO','HERNANDEZ','correo@correo.es','N25342',null,null,'ACTIVO',to_timestamp('01/01/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('22/06/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'21','JOSE IGNACIO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'9');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jlcalonge','CALONGE','DELSO','correo@correo.es','n25583',null,null,'ACTIVO',to_timestamp('01/02/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('22/06/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'21','JOSE LUIS','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'9');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jmalberich','ALBERICH','LANDABURU','correo@correo.es','n22468',null,null,'ACTIVO',to_timestamp('01/04/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('18/11/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JUAN MANUEL','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jmanuel','SIERRA','EXOJO','correo@correo.es','n10704',null,null,'ACTIVO',to_timestamp('01/01/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('22/06/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'20','JOSE MANUEL','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'3');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jmarquez','MARQUES','BERDEJO','correo@correo.es','N15432',null,null,'ACTIVO',to_timestamp('01/09/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('11/08/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JAVIER','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jmartinez','MARTINEZ','GANDIA BANCES','correo@correo.es','n23093',null,null,'ACTIVO',to_timestamp('01/06/20 06:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/12/20 09:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','JAVIER','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jmcervantes','CERVANTES','PARDO','correo@correo.es','n22046',null,null,'ACTIVO',to_timestamp('27/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','JOSE MARIA','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jrosas','ROSAS','MARTIN','correo@correo.es','n19662',null,null,'ACTIVO',to_timestamp('01/09/20 13:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 15:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','JOSE','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('jsastre','SASTRE','SANCHEZ','correo@correo.es','n24286',null,null,'ACTIVO',to_timestamp('01/09/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','JOSE','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('mafan','AFAN','FAJARDO','correo@correo.es','n24639',null,null,'ACTIVO',to_timestamp('01/01/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('22/06/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'21','MIGUEL','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','SERVICIO_APOYO','665566544',null,null,'user_alta',null,null,'1',null,null,'3');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('maserrano','SERRANO','ARGUELLO','correo@correo.es','n20645',null,null,'ACTIVO',to_timestamp('01/07/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','MIGUEL ANGEL','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('mfgonzalez','GONZALEZ','FERNANDEZ','correo@correo.es','n22962',null,null,'ACTIVO',to_timestamp('01/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','MARCELO FRANCISCO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('mnavarro','NAVARRO','GRAELLS','correo@correo.es','n19959',null,null,'ACTIVO',to_timestamp('01/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 12:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','MONTSERRAT','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'2',null,null,'4');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('msoria','SORIA','TORRALBA','correo@correo.es','n17620',null,null,'ACTIVO',to_timestamp('01/09/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 02:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','MIGUEL','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'6');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('parbona','ARBONA','CAMPOMAR','correo@correo.es','n25044',null,null,'ACTIVO',to_timestamp('01/02/20 03:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('12/08/20 07:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'21','PEDRO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','SERVICIO_APOYO','665566544',null,null,'user_alta',null,null,'2',null,null,'9');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('parribas','ARRIBAS','MARTINEZ','correo@correo.es','n16603',null,null,'ACTIVO',to_timestamp('01/02/20 03:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/08/20 08:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','PEDRO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('pedro','CARRETERO','LIAU','correo@correo.es','111111111',null,null,'ACTIVO',to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('05/06/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'18','PEDRO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','10323',null,null,'user_alta',null,null,'2',null,null,'2');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('sfcarrasco','CARRASCO','JIMENEZ','correo@correo.es','n16115',null,null,'ACTIVO',to_timestamp('10/07/20 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 11:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','SALVADOR FRANCISCO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'1',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('silpe','apellido1','apellido2','correo@correo.es','111111111',null,null,'ACTIVO',to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'20','Silvia','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ADMIN','665566544',null,null,'user_alta',null,null,'2',null,null,'1');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('slaguia','LAGUIA','FERNANDEZ','correo@correo.es','n16490',null,null,'ACTIVO',to_timestamp('01/06/20 06:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/03/20 10:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'27','SEGUNDO','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','EQUIPO_INSPECCIONES','665566544',null,null,'user_alta',null,null,'4',null,null,'7');
+Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,NUM_IDENTIFICACION,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO) values ('system','system','system','correo@correo.es','111111111',null,null,'ACTIVO',to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'20','System','2222222222','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ADMIN','665566544',null,null,'user_alta',null,null,'2',null,null,'1');
+
   
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
   values (1, 'cuestionario modificado', '01/09/2016', 'cuestionarios 1', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
@@ -378,20 +140,6 @@ Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Va
 Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (11, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
 Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (12, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
 
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'), 'application/msword','CUESTIONARIO.CIES.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A.- Cuestionario  JEFATURA SUPERIOR .docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B - GC - Cuestionario Comandancia GENERICO.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B.- Cuestionario COMISARIA PROVINCIAL.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'),'application/msword','CUESTIONARIO PRLCNP.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'),'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'),'application/msword','CUESTIONARIOPRLGC.doc');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
-
--- Ñapa para alta de nuevos documentos
---select setval('documentos_id_seq', 12) from documentos;
 
   ------------- áreas cuestionario
   
@@ -706,11 +454,6 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','GC', 'url d
 -- EN PRODUCCIÓN ELIMINAR ezentis.com COMO DOMINIO PERMITIDO
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('dominiosCorreo','dominiosCorreo', 'ezentis.com|interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
 
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla común.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 1.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 2.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 1.docx');
-insert into documentos (id, fichero, tipo_contenido, nombre) values (seq_documentos.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 2.docx');
 
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'silpe', 'Equipo A', 'Silvia apellido1 apellido2', 1, 'silpe');
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'CARLOS GONZÁLEZ CASTILLO', 2, 'silpe');
@@ -733,3 +476,90 @@ INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '4/2017', 'I.T_CIE','silpe', 'Granada', 'GC', 'SEGUNDO', 2017, 2);
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '5/2017', 'I.G.S.','silpe', 'Lérida', 'PN', 'PRIMERO', 2017, 1);
 INSERT INTO  inspecciones(id, fecha_creacion, numero, tipo_inspeccion, username_creacion, nombre_unidad, ambito, cuatrimestre, anio, id_equipo) VALUES (seq_inspeccion.nextval, '01/11/2016', '6/2017', 'I.E_PUNT','silpe', 'Granada', 'OTROS', 'CUARTO', 2016, 3);
+
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Subdirección General de Inspección y Servicios');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Secretaría Técnica');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Jefatura de Inspecciones');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Equipos de Inspecciones Generales');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Equipo de Inspecciones Temáticas y PRL');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Gabinete de Estudios y Análisis');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Servicio de Calidad y Quejas');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Servicio de Apoyo');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Secretaría');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Asesores');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Conductores');
+
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Teniente General','Tte. Gral.' );
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'General de División','Gral. Div.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'General de Brigada','Gral. Bri.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Coronel','Col.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Teniente Coronel','TCol.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Comandante','Comte.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Capitán','Ctan.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Teniente','Tte.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Alférez','Alfz.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Suboficial Mayor','Subof. May.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Subteniente','Subte.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Brigada','Bgda.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Sargento Primero','Sgto.1');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Sargento','Sgto.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Cabo Mayor','Cab.1');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Cabo','Cab.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 2,'Gua.Civ.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Comisario Principal','Com. Pral');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Comisario','Com.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Inspector Jefe','Insp.J.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Inspector','Insp.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Facultativo','Facul.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Subinspector','Subins.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Oficial de Policía','Ofi.Pol.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Policía','Pol.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'General de Brigada','Gral. Brig.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Coronel','Col.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Teniente Coronel','TCol.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Comandante','Comte.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Capitán','Ctan.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Teniente','Tte.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Técnico de la Administración Central','TecAdmCent.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Técnico Superior de Sistemas','TecSupSis.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Facultativo','Facul.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Secretaría','Secre.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Administrativo','Adminis.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Auxiliar Administrativo','AuxAdminis.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,5, 'Técnico','Tec.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,5, 'Administrativo','Adminis.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,6, 'ID_CUERPO Ejecutivo Post. Y de Telecomunicaciones','CEPyT.');
+
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\A.- Cuestionario  JEFATURA SUPERIOR .docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\B - GC - Cuestionario Comandancia GENERICO.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\B.- Cuestionario COMISARIA PROVINCIAL.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
+
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 1, 'application/msword','CUESTIONARIO.CIES.doc');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 2,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A - GC - Cuestionario Zona GENERICO.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 3,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','A.- Cuestionario  JEFATURA SUPERIOR .docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 4,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B - GC - Cuestionario Comandancia GENERICO.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','B.- Cuestionario COMISARIA PROVINCIAL.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 6,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 7,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 8,'application/msword','CUESTIONARIO PRLCNP.doc');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  9,'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  10,'application/msword','CUESTIONARIOPRLGC.doc');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  11,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 12,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla común.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 13,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 1.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 14,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 2.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 15,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 1.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 16,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 2.docx');

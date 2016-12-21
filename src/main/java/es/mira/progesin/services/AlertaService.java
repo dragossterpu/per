@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -111,7 +111,7 @@ public class AlertaService implements IAlertaService {
 	@Override
 	public void crearAlertaRol(String seccion, String descripcion, RoleEnum rol) {
 		try {
-			List<User> usuariosRol= userService.findByRole(rol);
+			List<User> usuariosRol= userService.findByfechaBajaIsNullAndRole(rol);
 			for(User usuario:usuariosRol){
 				crearAlertaUsuario(seccion, descripcion,usuario.getUsername());
 			}
@@ -131,8 +131,8 @@ public class AlertaService implements IAlertaService {
 	@Override
 	public void crearAlertaEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
 		try {
-			List<Miembros> miembrosEquipo= inspeccion.getEquipo().getMiembros();
-			for(Miembros miembro:miembrosEquipo){
+			List<Miembro> miembrosEquipo= inspeccion.getEquipo().getMiembros();
+			for(Miembro miembro:miembrosEquipo){
 				crearAlertaUsuario(seccion, descripcion,miembro.getUsername());
 			}
 

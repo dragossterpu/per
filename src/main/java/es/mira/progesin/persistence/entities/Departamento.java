@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,25 +28,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name="PUESTOSTRABAJO")
-public class PuestoTrabajo implements Serializable {
-	
+@Table(name="DEPARTAMENTO")
+@NamedQuery(name = "Departamento.findAll", query = "SELECT t FROM Departamento t")
+public class Departamento implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PUESTO_TRABAJO")
-    @SequenceGenerator(name="SEQ_PUESTO_TRABAJO", sequenceName="SEQ_PUESTO_TRABAJO", allocationSize=1) 
-	@Column(name = "ID", length = 2)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEPARTAMENTO")
+    @SequenceGenerator(name="SEQ_DEPARTAMENTO", sequenceName="SEQ_DEPARTAMENTO", allocationSize=1) 
+	@Column(name = "SEQ_DEPARTAMENTO", length = 5)
 	private Long id;
 	
-	
-	@Column(name = "DESCRIPCION", length = 100)
+	@Column(name="descripcion", length=100)
 	private String descripcion;
-	
 
-	@Column(name ="nivel")
-	private int nivel;
-	
-	@Column(name="clase", length=20)
-	private String clase;
 }

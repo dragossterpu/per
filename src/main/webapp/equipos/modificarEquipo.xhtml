@@ -19,12 +19,12 @@
 			</p:outputPanel>
 			<br></br>
 			<h:form id="modificarEquipo">
-				<div id="listadoMiembros">
+				<div id="miembrosEquipo">
 
 					<h4>Equipo :</h4>
 
 					<p:dataTable id="tablaMiembros" var="miembro"
-						value="#{equiposBean.listMiembros}" paginator="true" rows="20"
+						value="#{equiposBean.miembrosEquipo}" paginator="true" rows="20"
 						selection="#{equiposBean.miembrosSeleccionados}"
 						rowKey="#{miembro.username}">
 						<f:facet name="header">
@@ -43,7 +43,7 @@
 							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
 							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{equiposBean.eliminarMiembro(miembro)}"
-								update="tablaMiembros">
+								update="modificarEquipo" disabled="#{miembro.posicion eq 'JEFE_EQUIPO'}">
 								<p:confirm header="Eliminar componente del equipo"
 									message="¿Está seguro que desea eliminar este componente del equipo?"
 									icon="fa fa-warning-sign" />
@@ -51,20 +51,25 @@
 						</p:column>
 
 						<f:facet name="footer">
-       					 Componentes del equipo: #{fn:length(equiposBean.listMiembros)}.
+       					 Componentes del equipo: #{fn:length(equiposBean.miembrosEquipo)}.
     				 </f:facet>
-    				 <p:messages autoUpdate="true" closable="true"/>
 					</p:dataTable>
 				</div>
+   				<p:messages autoUpdate="true" closable="true" showDetail="true"/>
 				<p:outputPanel>
 					<div class="botonesFormulario">
-						<p:button outcome="/equipos/anadirMiembroEquipo"
-							value="Añadir componente" icon="fa fa-fw fa-user-plus" 
-							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
-						<p:button outcome="/equipos/anadirColaboradorEquipo"
-							action="#{equiposBean.aniadirColaborador}"
-							value="Añadir colaborador" icon="fa fa-fw fa-user-plus" 
-							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
+						<h:commandLink title="Cambiar jefe del equipo"
+							action="#{equiposBean.getFormCambiarJefeEquipo}" 
+							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
+							styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">Cambiar jefe del equipo</span>
+						</h:commandLink>
+						<h:commandLink title="Añadir componente/s o colaborador/es"
+							action="#{equiposBean.getFormAniadirMiembroEquipo}" 
+							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
+							styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+							<span class="ui-CommandLink-texto">Añadir componente/s o colaborador/es</span>
+						</h:commandLink>
 						<p:button outcome="/equipos/equipos" value="Volver"
 							icon="fa fa-fw fa-undo" />
 					</div>
@@ -80,6 +85,7 @@
 				</div>
 			</p:confirmDialog>
 
+			
 		</ui:define>
 		<script>
 			function reset() {

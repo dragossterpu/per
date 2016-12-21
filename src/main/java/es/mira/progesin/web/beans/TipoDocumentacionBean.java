@@ -3,6 +3,7 @@ package es.mira.progesin.web.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,10 +16,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.persistence.repositories.IParametrosRepository;
+import es.mira.progesin.services.INotificacionService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -39,12 +42,11 @@ public class TipoDocumentacionBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String NOMBRESECCION = "Tipos documentación previa";
+
 	private List<TipoDocumentacion> listaTipoDocumentacion;
 
-	@Autowired
-	transient IParametrosRepository parametrosRepository;
-
-	private List<String> listaExtensionesPosibles = new ArrayList<>();
+	private List<String> listaExtensionesPosibles;
 
 	private String descripcionNuevo;
 
@@ -55,10 +57,19 @@ public class TipoDocumentacionBean implements Serializable {
 	private AmbitoInspeccionEnum ambitoNuevo;
 
 	@Autowired
+	transient ApplicationBean applicationBean;
+
+	@Autowired
 	transient ITipoDocumentacionService tipoDocumentacionService;
 
+	@Autowired
+	transient IRegistroActividadService regActividadService;
+
+	@Autowired
+	transient INotificacionService notificacionService;
+
 	/**
-	 * Método que nos lleva al listado de la documentacion. Se llama desde el menu lateral
+	 * Muestra el listado de tipos de documentación disponibles. Se llama desde el menu lateral
 	 * 
 	 * @author EZENTIS
 	 * @return vista documentacionPrevia
@@ -69,7 +80,7 @@ public class TipoDocumentacionBean implements Serializable {
 	}
 
 	/**
-	 * Método que elimina un tipo de documentación. Elimina el tipo de documentación y actualiza la lista de la vista
+	 * Elimina un tipo de documentación. Elimina el tipo de documentación y actualiza la lista de la vista
 	 * documentacionPrevia
 	 * 
 	 * @author EZENTIS
@@ -84,16 +95,13 @@ public class TipoDocumentacionBean implements Serializable {
 	@PostConstruct
 	public void init() throws MessagingException {
 		listaTipoDocumentacion = tipoDocumentacionService.findAll();
-		List<Parametro> parametrosExtensiones = parametrosRepository.findParamByParamSeccion("extensiones");
-		for (Parametro p : parametrosExtensiones) {
-			listaExtensionesPosibles.add(p.getParam().getClave());
-		}
-
+		Map<String, String> mapaExtensiones = applicationBean.getMapaParametros().get("extensiones");
+		listaExtensionesPosibles = new ArrayList<>(mapaExtensiones.keySet());
 	}
 
 	/**
-	 * Método que da de alta un nuevo tipo de documentación. Recupera del formulario altaTipoDocumentacion los campos
-	 * descripción, nombre y extensión, y muestra una ventana flotante con el mensaje resultado de la operación.
+	 * Da de alta un nuevo tipo de documentación. Recupera del formulario altaTipoDocumentacion los campos descripción,
+	 * nombre y extensión, y muestra una ventana flotante con el mensaje resultado de la operación.
 	 * 
 	 * @author EZENTIS
 	 */
@@ -106,21 +114,25 @@ public class TipoDocumentacionBean implements Serializable {
 		try {
 			if (tipoDocumentacionService.save(documentacion) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-						"La documentación ha sido creado con éxito");
+						"El tipo de documentación ha sido creado con éxito");
+				String descripcion = "Se ha dado de alta un nuevo tipo de documentación. Nombre: "
+						+ documentacion.getNombre();
+				// Guardamos la actividad en bbdd
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+				// Guardamos la notificacion en bbdd
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
 					"Se ha producido un error al dar de alta la documentación, inténtelo de nuevo más tarde");
-			// TODO log de errores
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		listaTipoDocumentacion = tipoDocumentacionService.findAll();
-		// TODO generar alerta / notificación
 	}
 
 	/**
-	 * Método que guarda las modificaciones realizadas en caliente a un registro de la lista y cambia su estado a no
-	 * editable
+	 * Guarda las modificaciones realizadas en caliente a un registro de la lista y cambia su estado a no editable
 	 * 
 	 * @author EZENTIS
 	 * @param event evento disparado al pulsar el botón modificar edición
@@ -133,7 +145,7 @@ public class TipoDocumentacionBean implements Serializable {
 	}
 
 	/**
-	 * Método que cancela el estado de edición en caliente de un registro de la lista
+	 * Cancela el estado de edición en caliente de un registro de la lista
 	 * 
 	 * @author EZENTIS
 	 * @param event evento disparado al pulsar el botón cancelar edición

@@ -3,7 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembros;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 public interface IEquipoService {
@@ -14,16 +14,18 @@ public interface IEquipoService {
 
 	// Equipo findOne(Integer id);
 
-	Iterable<Equipo> save(Iterable<Equipo> entities);
+	// Iterable<Equipo> save(Iterable<Equipo> entities);
 
-	Miembros save(Miembros miembro);
+	Miembro save(Miembro miembro);
 
-	List<Miembros> findByEquipo(Equipo equipo);
+	List<Miembro> save(List<Miembro> listaMiembros);
+
+	List<Miembro> findByEquipo(Equipo equipo);
 
 	Equipo save(Equipo entity);
 
 	List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda);
 
-	void delete(Miembros miembro);
+	void delete(Miembro miembro);
 
 }

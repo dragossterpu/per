@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +41,6 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 	@Autowired
 	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
 	
-	@Autowired
-	IAlertasNotificacionesUsuarioRepository mensajeRepo;
 	
 	@Autowired
 	IRegistroActividadService regActividad;
@@ -55,10 +54,10 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 	
 	
 	private void initList() {
-		pageAlertas=(Page<AlertasNotificacionesUsuario>) mensajeRepo.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, new PageRequest(0,20));
+		pageAlertas=(Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, new PageRequest(0,20,Direction.DESC, "fechaAlta"));
 		listaAlertas=alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
 		
-		pageNotificaciones=(Page<AlertasNotificacionesUsuario>) mensajeRepo.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, new PageRequest(0,20));
+		pageNotificaciones=(Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, new PageRequest(0,20,Direction.DESC, "fechaAlta"));
 		listaNotificaciones=alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
 		
 	}
@@ -98,7 +97,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 	
 	public String nextNotificacion(){
 		if(pageNotificaciones.hasNext()){
-			pageNotificaciones = (Page<AlertasNotificacionesUsuario>) mensajeRepo.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, pageNotificaciones.nextPageable());
+			pageNotificaciones = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, pageNotificaciones.nextPageable());
 			listaNotificaciones = alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
 		}
 		return "";
@@ -106,7 +105,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 
 	public String previousNotificacion(){
 		if(pageNotificaciones.hasPrevious()){
-			pageNotificaciones = (Page<AlertasNotificacionesUsuario>) mensajeRepo.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, pageNotificaciones.previousPageable());
+			pageNotificaciones = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, pageNotificaciones.previousPageable());
 			listaNotificaciones = alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
 		}
 		return "";
@@ -114,7 +113,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 	
 	public String nextAlerta(){
 		if(pageAlertas.hasNext()){
-			pageAlertas = (Page<AlertasNotificacionesUsuario>) mensajeRepo.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, pageAlertas.nextPageable());
+			pageAlertas = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, pageAlertas.nextPageable());
 			listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
 		}
 		return "";
@@ -122,7 +121,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 
 	public String previousAlerta(){
 		if(pageAlertas.hasPrevious()){
-			pageAlertas = (Page<AlertasNotificacionesUsuario>) mensajeRepo.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, pageAlertas.previousPageable());
+			pageAlertas = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, pageAlertas.previousPageable());
 			listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
 		}
 		return "";

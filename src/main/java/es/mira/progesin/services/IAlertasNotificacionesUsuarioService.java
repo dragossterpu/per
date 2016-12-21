@@ -3,7 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
@@ -36,7 +36,7 @@ public interface IAlertasNotificacionesUsuarioService {
 	
 	List<Alerta> findAlertas(List<AlertasNotificacionesUsuario> lista);
 	
-	Page<AlertasNotificacionesUsuario>  findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo, PageRequest request);
+	Page<AlertasNotificacionesUsuario>  findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo, Pageable request);
 	
 	
 	

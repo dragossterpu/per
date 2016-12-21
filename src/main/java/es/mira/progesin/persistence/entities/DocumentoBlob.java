@@ -1,12 +1,14 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,25 +28,18 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name="PUESTOSTRABAJO")
-public class PuestoTrabajo implements Serializable {
-	
+@Table(name = "documentosBlob")
+public class DocumentoBlob implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PUESTO_TRABAJO")
-    @SequenceGenerator(name="SEQ_PUESTO_TRABAJO", sequenceName="SEQ_PUESTO_TRABAJO", allocationSize=1) 
-	@Column(name = "ID", length = 2)
+	@SequenceGenerator(name = "seq_documentosBlob", sequenceName = "seq_documentosBlob", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosBlob")
+	@Column(name = "id", nullable = false)
 	private Long id;
-	
-	
-	@Column(name = "DESCRIPCION", length = 100)
-	private String descripcion;
-	
 
-	@Column(name ="nivel")
-	private int nivel;
-	
-	@Column(name="clase", length=20)
-	private String clase;
+	@Column(name = "fichero")
+	@Lob
+	private Blob fichero;
+
 }
