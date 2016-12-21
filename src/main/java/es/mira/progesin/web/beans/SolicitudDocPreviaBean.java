@@ -129,6 +129,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private String motivosNoConforme;
 
+	private Map<String, String> parametrosVistaSolicitud;
+
 	/**
 	 * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
 	 * 
@@ -233,7 +235,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		try {
-
+			// parametrosVistaSolicitud = applicationBean.getMapaParametros()
+			// .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
 			listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
 			listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
 			solicitudDocumentacionPrevia = solicitud;

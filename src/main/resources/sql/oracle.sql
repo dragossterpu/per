@@ -454,6 +454,11 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','GC', 'url d
 -- EN PRODUCCIÓN ELIMINAR ezentis.com COMO DOMINIO PERMITIDO
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('dominiosCorreo','dominiosCorreo', 'ezentis.com|interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
 
+-- textos vista solicitud según ámbito
+-- insert into parametros(seccion, clave, valor) values ('vistaSolicitudGC', 'bloque1', 'Lorem Ipsum');
+-- insert into parametros(seccion, clave, valor) values ('vistaSolicitudPN', 'bloque1', 'Lorem Ipsum');
+-- insert into parametros(seccion, clave, valor) values ('vistaSolicitudOTROS', 'bloque1', 'Lorem Ipsum');
+
 
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'silpe', 'Equipo A', 'Silvia apellido1 apellido2', 1, 'silpe');
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'CARLOS GONZÁLEZ CASTILLO', 2, 'silpe');
