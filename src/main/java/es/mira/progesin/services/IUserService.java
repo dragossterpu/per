@@ -48,4 +48,5 @@ public interface IUserService {
 
 	List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo);
 
+	List<User> crearUsuariosProvisionalesCuestionario(String correoPrincipal, String rawPassword);
 }

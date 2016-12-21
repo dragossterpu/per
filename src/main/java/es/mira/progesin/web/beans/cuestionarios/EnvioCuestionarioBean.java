@@ -13,7 +13,6 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -22,6 +21,7 @@ import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
+import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,6 +62,9 @@ public class EnvioCuestionarioBean implements Serializable {
 
 	@Autowired
 	private transient ICorreoElectronico envioCorreo;
+
+	@Autowired
+	private ApplicationBean applicationBean;
 
 	/**
 	 * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasado como parámetro. Se
@@ -120,17 +123,12 @@ public class EnvioCuestionarioBean implements Serializable {
 				if (cuestionario == null) {
 					String password = Utilities.getPassword();
 					System.out.println(password);
-					User user = new User(cuestionarioEnvio.getCorreoEnvio(), passwordEncoder.encode(password),
-							RoleEnum.PROV_CUESTIONARIO);
-					cuestionarioEnvioService.enviarCuestionarioService(user, cuestionarioEnvio);
+					List<User> listaUsuariosProvisionales = userService
+							.crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
+					cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
 					// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
 					String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-					String textoAutomatico = "\r\n \r\nPara responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
-							+ "aplicación es xxxxxxx, su usuario de acceso es su correo electrónico y la contraseña es "
-							+ password
-							+ ". \r\n \r\nUna vez enviado el cuestionario su usuario quedará inativo. \r\n \r\n"
-							+ "Muchas gracias y un saludo.";
-					String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico);
+					String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
 					envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
 					envioCorreo.envioCorreo();
 					// TODO crear notificación
@@ -164,5 +162,29 @@ public class EnvioCuestionarioBean implements Serializable {
 		String mensaje = "No se puede enviar el cuestionario ya que no existe documentación previa finalizada para la inspección. "
 				+ "Debe finalizar la solicitud de documentación previa antes de poder enviar el cuestionario.";
 		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, ETIQUETA_ERROR);
+	}
+
+	private String getCuerpoCorreo(String password, List<User> usuarios) {
+		String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")
+				.get(cuestionarioEnvio.getInspeccion().getAmbito().name());
+
+		StringBuilder textoAutomatico = new StringBuilder();
+		textoAutomatico
+				.append("\r\n \r\nPara responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es '")
+				.append(urlAcceso).append("'.\r\nLos usuarios de acceso a la aplicación son: \r\n\r\n");
+
+		StringBuilder usuariosProvisionales = new StringBuilder();
+		for (User usuario : usuarios) {
+			usuariosProvisionales.append(usuario.getUsername()).append("\r\n");
+		}
+		textoAutomatico.append(usuariosProvisionales);
+		textoAutomatico.append("\r\nLa contraseña de acceso para todos los usuarios es: ").append(password)
+				.append(".\r\n Sólo el usuario principal (").append(cuestionarioEnvio.getCorreoEnvio())
+				.append(") podrá enviar el cuestionario, el resto de ")
+				.append("usuarios solamente podrá guardar el cuestionario como borrador.")
+				.append("\r\n \r\nUna vez enviado el cuestionario todos los usuarios quedarán inactivos. \r\n \r\n")
+				.append("Muchas gracias y un saludo.");
+
+		return cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico.toString());
 	}
 }

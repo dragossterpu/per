@@ -10,14 +10,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembros;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.web.beans.EquipoBusqueda;
 
 /**
  * @author Ezentis
@@ -112,7 +110,8 @@ public class EquiposBeanTest {
 
 	/**
 	 * Test method for
-	 * {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(es.mira.progesin.persistence.entities.Equipo)}.
+	 * {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(es.mira.progesin.persistence.entities.Equipo)}
+	 * .
 	 */
 	@Test
 	public final void testGetFormModificarEquipo() {

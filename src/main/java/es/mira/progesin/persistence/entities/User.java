@@ -72,17 +72,17 @@ public class User implements Serializable {
 
 	@Column(name = "tfno_movil_oficial", length = 12)
 	protected String telefonoMovilOficial;
-	
+
 	@Column(name = "tfno_movil_particular", length = 12)
 	protected String telefonoMovilParticular;
-	
+
 	@Column(name = "correo", length = 50, nullable = false)
 	protected String correo;
 
 	@Column(name = "role", length = 20, nullable = false)
 	protected RoleEnum role;
-	
-	@Column(name="despacho", length = 20)
+
+	@Column(name = "despacho", length = 20)
 	protected String despacho;
 
 	@Column(name = "num_identificacion", length = 15, nullable = false)
@@ -91,25 +91,24 @@ public class User implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_CUERPO")
 	private CuerpoEstado cuerpoEstado;
-	
+
 	@ManyToOne
-	@JoinColumn(name="ID_EMPLEO")
+	@JoinColumn(name = "ID_EMPLEO")
 	protected Empleo empleo;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_PUESTO")
 	private PuestoTrabajo puestoTrabajo;
-	
+
 	@ManyToOne
-	@JoinColumn(name="ID_DEPARTAMENTO")
+	@JoinColumn(name = "ID_DEPARTAMENTO")
 	protected Departamento departamento;
 
 	@Column(name = "nivel")
 	private Integer nivel;
-	
-	@Column(name="categoria", length = 20)
+
+	@Column(name = "categoria", length = 20)
 	protected String categoria;
-	
 
 	@CreatedDate
 	@Column(name = "fecha_alta", nullable = false)
@@ -117,7 +116,7 @@ public class User implements Serializable {
 
 	@Column(name = "fecha_destino_ipss")
 	protected Date fechaDestinoIPSS;
-	
+
 	@Column(name = "fecha_ingreso")
 	protected Date fechaIngreso;
 
@@ -142,7 +141,6 @@ public class User implements Serializable {
 	@Column(name = "username_baja")
 	protected String usernameBaja;
 
-
 	public User(String username, String password, RoleEnum role) {
 		this.setUsername(username);
 		this.setPassword(password);
@@ -152,6 +150,21 @@ public class User implements Serializable {
 		this.setApellido1(PROVISIONAL);
 		this.setDocIndentidad(PROVISIONAL);
 		this.setCorreo(username);
+		this.setNumIdentificacion(PROVISIONAL);
+		this.setFechaDestinoIPSS(new Date());
+		this.setNivel(0);
+		this.setFechaAlta(new Date());
+	}
+
+	public User(String username, String password, RoleEnum role, String correoPrincipal) {
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setRole(role);
+		this.setEstado(EstadoEnum.ACTIVO);
+		this.setNombre(PROVISIONAL);
+		this.setApellido1(PROVISIONAL);
+		this.setDocIndentidad(PROVISIONAL);
+		this.setCorreo(correoPrincipal);
 		this.setNumIdentificacion(PROVISIONAL);
 		this.setFechaDestinoIPSS(new Date());
 		this.setNivel(0);

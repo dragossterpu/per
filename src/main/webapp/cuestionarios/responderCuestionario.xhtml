@@ -62,6 +62,15 @@
 												<p:column headerText="Fichero">
 											        <h:outputText value="#{documento.nombre}" />
 											    </p:column>
+											    <p:column style="width:30px">
+													<p:commandButton title="Eliminar" icon="fa fa-trash"
+														actionListener="#{responderCuestionarioBean.eliminarDocumento(preguntaArea, documento)}"
+														update="tablaDocumentos" >
+														<p:confirm header="Eliminar documento"
+															message="¿Está seguro que desea eliminar este documento?"
+															icon="fa fa-warning-sign" />
+													</p:commandButton>
+												</p:column>
 											</p:dataTable>         
 										</p:outputPanel>
 											
@@ -126,6 +135,15 @@
 						<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"/>
 					</div>
 				</p:dialog>
+				
+				<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+						</div>
+					</p:confirmDialog>
 
 				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 			</h:form>

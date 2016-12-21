@@ -32,7 +32,6 @@ import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 
 public class DocumentoService implements IDocumentoService {
 
-
 	@Autowired
 	INotificacionService notificacionService;
 
@@ -41,7 +40,6 @@ public class DocumentoService implements IDocumentoService {
 
 	@Autowired
 	IDocumentoRepository documentoRepository;
-
 
 	/***************************************
 	 * 
@@ -230,7 +228,7 @@ public class DocumentoService implements IDocumentoService {
 	@Override
 	public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
 		Documento docu = documentoRepository.findById(entity.getId());
-		DocumentoBlob doc= docu.getFichero();
+		DocumentoBlob doc = docu.getFichero();
 		InputStream stream = doc.getFichero().getBinaryStream();
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 	}
@@ -266,12 +264,12 @@ public class DocumentoService implements IDocumentoService {
 	 * @author Ezentis
 	 * @param UploadedFile
 	 * @return Documento
-	 * @throws Exception 
+	 * @throws Exception
 	 * 
 	 *************************************/
 
 	@Override
-	public Documento cargaDocumento(UploadedFile file) throws SerialException, SQLException, IOException{
+	public Documento cargaDocumento(UploadedFile file) throws SerialException, SQLException, IOException {
 		try {
 			notificacionService.crearNotificacionRol("Carga fichero", SeccionesEnum.GESTOR.getDescripcion(),
 					RoleEnum.ADMIN);
@@ -290,10 +288,10 @@ public class DocumentoService implements IDocumentoService {
 	public Documento crearDocumento(UploadedFile file) throws SerialException, SQLException, IOException {
 		Documento docu = new Documento();
 		docu.setNombre(file.getFileName());
-		Blob fileBlob=new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
-		DocumentoBlob blob=new DocumentoBlob();
+		Blob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
+		DocumentoBlob blob = new DocumentoBlob();
 		blob.setFichero(fileBlob);
-		//blob.setId(docu.getId());
+		// blob.setId(docu.getId());
 		docu.setFichero(blob);
 		docu.setTipoContenido(file.getContentType());
 		return docu;

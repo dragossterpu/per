@@ -26,10 +26,18 @@ import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
+
+/**
+ * Bean que contiene los métodos necesarios para que los usuarios puedan responder las preguntas contenidas en los
+ * cuestionarios
+ * @author EZENTIS
+ *
+ */
 
 @Setter
 @Getter
@@ -37,8 +45,6 @@ import lombok.Setter;
 @Scope("session")
 public class ResponderCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private static final String ETIQUETA_ERROR = "mensajeerror";
 
 	@Autowired
 	private VisualizarCuestionario visualizarCuestionario;
@@ -52,11 +58,17 @@ public class ResponderCuestionarioBean implements Serializable {
 	private transient IRespuestaCuestionarioRepository respuestaRepository;
 
 	@Autowired
+	private transient IRespuestaCuestionarioService respuestaService;
+
+	@Autowired
 	private transient IDatosTablaGenericaRepository datosTablaRepository;
 
 	@Autowired
 	private transient IDocumentoService documentoService;
 
+	/**
+	 * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos
+	 */
 	public void guardarBorrador() {
 		try {
 			guardarRespuestasTipoTexto();
@@ -66,13 +78,14 @@ public class ResponderCuestionarioBean implements Serializable {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-					"Se ha producido un error al guardar las respuestas", e.getMessage(), "mensajeerror");
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+					"Se ha producido un error al guardar las respuestas. ", e.getMessage());
 			// TODO registro actividad
 		}
 	}
 
 	/**
+	 * Guarda las respuestas de las preguntas que no son de tipo TABLA o MATRIZ
 	 * @see guardarRespuestas
 	 *
 	 */
@@ -80,28 +93,19 @@ public class ResponderCuestionarioBean implements Serializable {
 		List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
 		Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
 		mapaRespuestas.forEach((pregunta, respuesta) -> {
-			System.err.println("pregunta.getTipoRespuesta(): " + pregunta.getTipoRespuesta());
-			if (respuesta != null) {
-				System.err.println(
-						"pregunta: " + pregunta.getId() + " - " + pregunta.getPregunta() + ", respuesta: " + respuesta);
+			if (respuesta != null && respuesta.isEmpty() == Boolean.FALSE) {
 				RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
 				RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
 				idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
 				idRespuesta.setPregunta(pregunta);
 				respuestaCuestionario.setRespuestaId(idRespuesta);
 				respuestaCuestionario.setRespuestaTexto(respuesta);
-				if ("ADJUNTO".equals(pregunta.getTipoRespuesta())
-						&& visualizarCuestionario.getMapaDocumentos().get(pregunta) != null) {
-					respuestaCuestionario.setDocumentos(visualizarCuestionario.getMapaDocumentos().get(pregunta));
-				}
 				listaRespuestas.add(respuestaCuestionario);
 			}
 		});
 		if (listaRespuestas.isEmpty() == Boolean.FALSE) {
 			respuestaRepository.save(listaRespuestas);
-			// // para que los documentos tengan id y sepa que no es un insert
-			// listaRespuestas.forEach(respuesta -> visualizarCuestionario.getMapaDocumentos()
-			// .put(respuesta.getRespuestaId().getPregunta(), respuesta.getDocumentos()));
+			respuestaRepository.flush();
 		}
 	}
 
@@ -138,6 +142,8 @@ public class ResponderCuestionarioBean implements Serializable {
 				listaDatosTablaSave.addAll(listaDatosTabla);
 			}
 		});
+
+		// TODO meter en una transaccion
 		respuestaRepository.save(listaRespuestas);
 		datosTablaRepository.save(listaDatosTablaSave);
 	}
@@ -160,6 +166,12 @@ public class ResponderCuestionarioBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Se crea un objeto Documento a partir del fichero que sube el usuario y se añade al mapa de documentos que se
+	 * visualiza en pantalla
+	 * 
+	 * @param event Evento que contiene el fichero que sube el usuario
+	 */
 	public void subirFichero(FileUploadEvent event) {
 		Documento documentoSubido;
 		List<Documento> listaDocumentos;
@@ -168,35 +180,75 @@ public class ResponderCuestionarioBean implements Serializable {
 			try {
 				PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
 						.get("pregunta");
-				documentoSubido = documentoService.crearDocumento(event.getFile());
+				documentoSubido = documentoService.cargaDocumento(event.getFile());
+
+				// Grabamos la respuesta con el documento subido
+				RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
+				RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
+				idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
+				idRespuesta.setPregunta(pregunta);
+				respuestaCuestionario.setRespuestaId(idRespuesta);
+				respuestaCuestionario.setRespuestaTexto(visualizarCuestionario.getMapaRespuestas().get(pregunta));
+
 				Map<PreguntasCuestionario, List<Documento>> mapaDocumentos = visualizarCuestionario.getMapaDocumentos();
 				listaDocumentos = mapaDocumentos.get(pregunta) != null ? mapaDocumentos.get(pregunta)
 						: new ArrayList<>();
-				listaDocumentos.add(documentoSubido);
+
+				Documento docAux = new Documento();
+				docAux.setId(documentoSubido.getId());
+				docAux.setNombre(documentoSubido.getNombre());
+				listaDocumentos.add(docAux);
+
+				respuestaCuestionario.setDocumentos(listaDocumentos);
+				respuestaRepository.save(respuestaCuestionario);
+				respuestaRepository.flush();
+
 				mapaDocumentos.put(pregunta, listaDocumentos);
 				visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
+
+				// TODO meter en una transacción la carga del documento y el save de la respuesta
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-						"Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.", e.getMessage(),
-						ETIQUETA_ERROR);
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+						"Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.", e.getMessage());
 				// TODO reg actividad
 			}
 		}
 		else {
-			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-					"La extensión del documento no corresponde con el documento subido", "", ETIQUETA_ERROR);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+					"La extensión del documento no corresponde con el documento subido", "");
 		}
 	}
 
+	public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
+		// documentoService.delete(documento);
+
+		RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
+		RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
+		idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
+		idRespuesta.setPregunta(pregunta);
+		respuestaCuestionario.setRespuestaId(idRespuesta);
+		List<Documento> listaDocumentos = visualizarCuestionario.getMapaDocumentos().get(pregunta);
+		listaDocumentos.remove(documento);
+		respuestaCuestionario.setDocumentos(listaDocumentos);
+		respuestaRepository.save(respuestaCuestionario);
+		respuestaRepository.flush();
+		documentoService.delete(documento);
+
+		visualizarCuestionario.getMapaDocumentos().put(pregunta, listaDocumentos);
+	}
+
+	/**
+	 * Obtiene el cuestionario a mostrar en función del usuario que se loguea
+	 */
 	@PostConstruct
 	public void init() {
 		System.out.println("********************* INICIALIZANDO RESPUESTA **************************");
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (RoleEnum.PROV_CUESTIONARIO.equals(user.getRole())) {
 			cuestionarioEnviado = cuestionarioEnvioService
-					.findByCorreoEnvioAndFechaFinalizacionIsNull(user.getUsername());
+					.findByCorreoEnvioAndFechaFinalizacionIsNull(user.getCorreo());
 			visualizarCuestionario.visualizarRespuestasCuestionario(cuestionarioEnviado);
 		}
 	}

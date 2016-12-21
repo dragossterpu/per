@@ -1,5 +1,7 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +35,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void enviarCuestionarioService(User user, CuestionarioEnvio cuestionarioEnvio) {
-		userRepository.save(user);
+	public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales,
+			CuestionarioEnvio cuestionarioEnvio) {
+		userRepository.save(listadoUsuariosProvisionales);
 		cuestionarioEnvioRepository.save(cuestionarioEnvio);
 		regActividadService.altaRegActividad(
 				"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",

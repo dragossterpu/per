@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -11,6 +12,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	// Obligado por sonar
 	private static final String FECHA_ALTA = "fechaAlta";
@@ -196,4 +201,21 @@ public class UserService implements IUserService {
 		return userRepository.buscarNoJefeNoMiembroEquipo(equipo);
 	}
 
+	@Override
+	public List<User> crearUsuariosProvisionalesCuestionario(String correoPrincipal, String password) {
+		List<User> listaUsuarios = new ArrayList<>();
+		// Usuario principal
+		String passwordEncoded = passwordEncoder.encode(password);
+		User user = new User(correoPrincipal, passwordEncoded, RoleEnum.PROV_CUESTIONARIO);
+		listaUsuarios.add(user);
+		String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
+		String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
+		// Todos los usuarios creados a partir del principal tendrán la misma contraseña que el principal
+		for (int i = 1; i < 10; i++) {
+			listaUsuarios.add(new User(cuerpoCorreo + i + restoCorreo, passwordEncoded, RoleEnum.PROV_CUESTIONARIO,
+					correoPrincipal));
+		}
+		System.out.println(listaUsuarios);
+		return listaUsuarios;
+	}
 }
