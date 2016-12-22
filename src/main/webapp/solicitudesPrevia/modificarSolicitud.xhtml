@@ -65,7 +65,6 @@
 						<h:outputLabel for="correoDestinatario" value="Correo destinatario (*):" />
 						<p:inputText id="correoDestinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" converter="#{trimConverter}"
 							disabled="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}">
-							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 							<f:validator binding="#{correoDestinatarioValidator}" />
 						</p:inputText>
 						<p:messages for="correoDestinatario" autoUpdate="true" closable="true"/>

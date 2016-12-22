@@ -57,7 +57,7 @@
 					<p:column headerText="NOMBRE" width="70">
 						<h:outputText value="#{documentoPrevio.nombre}" />
 					</p:column>
-					<p:column headerText="EXTENSIONES" width="70">
+					<p:column headerText="EXTENSIONES" width="100">
 						<h:outputText value="#{documentoPrevio.extensiones}" converter="#{listaExtensionesConverter}" />
 					</p:column>	
 				</p:dataTable>	
@@ -128,11 +128,10 @@
 					</div>					
 				</div>	
 			</h:form>	
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-				<p:ajax event="close"  listener="#{facesUtilities.redirect('/index')}" />
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/index')}" />
+					<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"/>
 				</div>
 			</p:dialog>		
 		</ui:define>

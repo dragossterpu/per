@@ -218,7 +218,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
 			if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentacion",
 						"Solicitud de documentación cumplimentada con éxito. Su sesión ha finalizado.");
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
