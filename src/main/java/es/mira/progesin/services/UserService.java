@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,6 @@ public class UserService implements IUserService {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
 	@Override
 	@Transactional(readOnly = false)
@@ -134,22 +132,18 @@ public class UserService implements IUserService {
 			criteria.add(Restrictions
 					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
 		}
-		String parametro;
+	
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-			parametro = Normalizer.normalize(userBusqueda.getNombre(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("nombre", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(nombre, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getNombre()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-			parametro = Normalizer.normalize(userBusqueda.getApellido1(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("apellido1", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(PRIM_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getApellido1()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-			parametro = Normalizer.normalize(userBusqueda.getApellido2(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("apellido2", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(SEGUNDO_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getApellido2()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-			parametro = Normalizer.normalize(userBusqueda.getUsername(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("username", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(USERNAME, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getUsername()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
 			criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));

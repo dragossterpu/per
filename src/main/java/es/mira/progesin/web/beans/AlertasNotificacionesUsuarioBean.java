@@ -20,7 +20,6 @@ import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;

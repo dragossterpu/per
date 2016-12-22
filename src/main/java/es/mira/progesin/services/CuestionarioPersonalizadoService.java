@@ -1,13 +1,11 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqued
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {
 
-	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
+	
 
 	@Autowired
 	ICuestionarioPersonalizadoRepository cuestionarioPersRep;
@@ -111,11 +109,9 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 			criteria.add(Restrictions.sqlRestriction(
 					"TRUNC(this_.fecha_creacion) <= '" + sdf.format(cuestionarioBusqueda.getFechaHasta())));
 		}
-		String parametro;
+		
 		if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
-			parametro = Normalizer.normalize(cuestionarioBusqueda.getUsername(), Normalizer.Form.NFKD)
-					.replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("usernameCreacion", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(USERNAME_CREACION, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + cuestionarioBusqueda.getUsername()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (cuestionarioBusqueda.getModeloCuestionarioSeleccionado() != null) {
 			criteria.add(
@@ -123,9 +119,8 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
 		}
 		if (cuestionarioBusqueda.getNombreCuestionario() != null
 				&& !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
-			parametro = Normalizer.normalize(cuestionarioBusqueda.getNombreCuestionario(), Normalizer.Form.NFKD)
-					.replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("nombreCuestionario", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(NOMBRE_CUESTIONARIO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + cuestionarioBusqueda.getNombreCuestionario()+"', ' ', '') || '%', 'US7ASCII'))"));
+
 		}
 
 		criteria.addOrder(Order.desc(FECHA_CREACION));

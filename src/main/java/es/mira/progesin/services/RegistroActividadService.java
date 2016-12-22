@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +24,7 @@ import es.mira.progesin.web.beans.RegActividadBusqueda;
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
 
-	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
+	
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -93,17 +92,12 @@ public class RegistroActividadService implements IRegistroActividadService {
 			criteria.add(Restrictions
 					.sqlRestriction("TRUNC(fecha_alta) <= '" + sdf.format(regActividadBusqueda.getFechaHasta()) + "'"));
 		}
-		String parametro;
 		if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
-			parametro = Normalizer.normalize(regActividadBusqueda.getNombreSeccion(), Normalizer.Form.NFKD)
-					.replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("nombreSeccion", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(nombreSeccion, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + regActividadBusqueda.getNombreSeccion()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (regActividadBusqueda.getTipoRegActividad() != null
 				&& !regActividadBusqueda.getTipoRegActividad().isEmpty()) {
-			parametro = Normalizer.normalize(regActividadBusqueda.getTipoRegActividad(), Normalizer.Form.NFKD)
-					.replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("tipoRegActividad", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(), MatchMode.ANYWHERE));
 		}
 		if (regActividadBusqueda.getUsernameRegActividad() != null
 				&& !regActividadBusqueda.getUsernameRegActividad().isEmpty()) {

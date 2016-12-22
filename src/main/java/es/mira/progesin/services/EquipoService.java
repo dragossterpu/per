@@ -31,6 +31,7 @@ public class EquipoService implements IEquipoService {
 
 	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
+
 	@Autowired
 	IEquipoRepository equipoRepository;
 
@@ -91,14 +92,10 @@ public class EquipoService implements IEquipoService {
 		}
 		String parametro;
 		if (equipoBusqueda.getNombreJefe() != null && !equipoBusqueda.getNombreJefe().isEmpty()) {
-			parametro = Normalizer.normalize(equipoBusqueda.getNombreJefe(), Normalizer.Form.NFKD).replaceAll(ACENTOS,
-					"");
-			criteria.add(Restrictions.ilike("nombreJefe", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(NOMBRE_JEFE, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + equipoBusqueda.getNombreJefe() +"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (equipoBusqueda.getNombreEquipo() != null && !equipoBusqueda.getNombreEquipo().isEmpty()) {
-			parametro = Normalizer.normalize(equipoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD).replaceAll(ACENTOS,
-					"");
-			criteria.add(Restrictions.ilike("nombreEquipo", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(NOMBRE_EQUIPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + equipoBusqueda.getNombreEquipo()+"', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
 		if (equipoBusqueda.getTipoEquipo() != null) {
@@ -106,12 +103,15 @@ public class EquipoService implements IEquipoService {
 		}
 		if (equipoBusqueda.getNombreMiembro() != null && !equipoBusqueda.getNombreMiembro().isEmpty()) {
 			DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
+			
+			//TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
 			parametro = Normalizer.normalize(equipoBusqueda.getNombreMiembro(), Normalizer.Form.NFKD)
 					.replaceAll(ACENTOS, "");
 			subquery.add(Restrictions.ilike("miembro.nombreCompleto", parametro, MatchMode.ANYWHERE));
 			subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
 			subquery.setProjection(Projections.property("miembro.equipo"));
 			criteria.add(Property.forName("equipo.id").in(subquery));
+			
 		}
 		if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.ACTIVO.name())) {
 			criteria.add(Restrictions.isNull(FECHABAJA));
