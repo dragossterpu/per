@@ -129,7 +129,7 @@
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 							itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
-							 <p:ajax partialSubmit="false"
+							 <p:ajax partialSubmit="true"
 					                listener="#{userBean.buscarEmpleo()}"
 					                update=":formAlta:empleoSelect"/>
 					</p:selectOneMenu>
