@@ -53,10 +53,6 @@ public class Documento implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-//	@Column(name = "fichero")
-//	@Lob
-//	private Blob fichero;
-
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval= true)
 	@JoinColumn(name="ID_FICHERO")
 	private DocumentoBlob fichero;

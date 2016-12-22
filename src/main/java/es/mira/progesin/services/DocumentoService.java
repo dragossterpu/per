@@ -8,10 +8,11 @@ import java.sql.SQLException;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
-import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
+import org.apache.tika.parser.microsoft.ooxml.OOXMLParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.DocumentoBlob;
@@ -313,20 +313,27 @@ public class DocumentoService implements IDocumentoService {
 	@Override
 	public boolean extensionCorrecta(UploadedFile file) {
 
-		ContentHandler contenthandler = new BodyContentHandler();
+		String tipo;
+		ContentHandler handler = new BodyContentHandler();
 		Metadata metadata = new Metadata();
-		metadata.set(Metadata.RESOURCE_NAME_KEY, file.getFileName());
-		Parser x = new AutoDetectParser();
+		ParseContext pcontext = new ParseContext();
+		Parser parser;
+		
+		if (file.getContentType().contains("openxmlformats")){
+			parser= new OOXMLParser ();
+		}else{
+			parser= new AutoDetectParser();
+		}
+		
 		try {
-			x.parse(file.getInputstream(), contenthandler, metadata, null);
+			parser.parse(file.getInputstream(), handler, metadata,pcontext);
+			tipo= metadata.get("Content-Type");
+		} catch (Exception e) {
+			tipo="error";
 		}
-		catch (IOException | SAXException | TikaException e) {
-			registroActividadService.altaRegActividadError("DocumentoService", e);
-		}
-
-		String tipo = metadata.get("Content-Type");
-
+		
 		return tipo.equalsIgnoreCase(file.getContentType());
 	}
 
+	
 }
