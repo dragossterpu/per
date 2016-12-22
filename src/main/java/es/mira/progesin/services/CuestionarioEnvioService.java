@@ -19,13 +19,13 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	ICuestionarioEnvioRepository cuestionarioEnvioRepository;
+	private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
 
 	@Autowired
-	IUserRepository userRepository;
+	private transient IUserRepository userRepository;
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	private transient IRegistroActividadService regActividadService;
 
 	@Override
 	public CuestionarioEnvio findByInspeccion(Inspeccion inspeccion) {

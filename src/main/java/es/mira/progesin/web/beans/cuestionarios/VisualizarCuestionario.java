@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -108,11 +107,6 @@ public class VisualizarCuestionario implements Serializable {
 			}
 		});
 
-		// mapaRespuestasTablaAux = new HashMap<>();
-		// listaRespuestas = respuestaRepository.findRespuestasTablaMatrizByCuestionarioEnviado(cuestionarioEnviado);
-		// listaRespuestas.forEach(respuesta -> mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
-		// respuesta.getRespuestaTablaMatriz()));
-
 		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(), true);
 	}
 
@@ -211,10 +205,6 @@ public class VisualizarCuestionario implements Serializable {
 			dataTableView.crearFilaVacia();
 			mapaRespuestasTabla.put(pregunta, dataTableView);
 		}
-	}
-
-	public void handleFileUpload(FileUploadEvent event) {
-		System.out.println("upload file");
 	}
 
 }
