@@ -68,6 +68,12 @@ public class CuestionarioEnvio implements Serializable {
 	private Date fechaLimiteCuestionario;
 
 	@Column
+	private Date fechaCumplimentacion;
+
+	@Column
+	private Date fechaNoConforme;
+
+	@Column
 	private Date fechaFinalizacion;
 
 	@CreatedDate
@@ -75,6 +81,12 @@ public class CuestionarioEnvio implements Serializable {
 
 	@CreatedBy
 	private String usernameEnvio;
+
+	@Column
+	private Date fechaAnulacion;
+
+	@Column
+	private String usernameAnulacion;
 
 	@Override
 	public int hashCode() {

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+
+<f:metadata>
+    <f:viewParam name="vieneDe" value="#{cuestionarioEnviadoBean.vieneDe}" />
+</f:metadata>
+
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<h3>Búsqueda de cuestionarios enviados</h3>
+			
+			<h:form>
+			    <p:remoteCommand name="onload" action="#{cuestionarioEnviadoBean.getFormBusquedaCuestionarios}" update="busquedaCuestionario" autoRun="true" />
+			</h:form>
+
+			<h:form id="busquedaCuestionario" >
+		
+			<div class="bloqueFormulario">
+					<div class="columnaIzdaFormulario">
+																							
+						<h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
+						<p:inputText id="nombreUnidad" 
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
+						
+						<h:outputLabel for="numeroInspeccion" value="Número de la Inspección:" />
+						<p:inputText id="numeroInspeccion" 
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.numeroInspeccion}" converter="#{trimConverter}"/>
+						
+						<h:outputLabel for="ambitoInspeccion" value="Ámbito de la Inspección:" />
+						<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+							var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.ambitoInspeccion}"
+							id="ambitoInspeccion">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+								var="ambitoInspeccionCuestionarioEnviado"
+								itemLabel="#{ambitoInspeccionCuestionarioEnviado.descripcion}"
+								itemValue="#{ambitoInspeccionCuestionarioEnviado}" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel for="tipoInspeccionSelect"
+							value="Tipo de Inspección" />
+						<p:selectOneMenu
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.tipoInspeccion}"
+							id="tipoInspeccionSelect" converter="#{selectConverter}">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.listaTiposInspeccion}"
+								var="tipo"
+								itemLabel="#{tipo.descripcion}"
+								itemValue="#{tipo}" />
+						</p:selectOneMenu>
+					
+						<h:outputLabel for="nombreUsuarioEnvio" value="Usuario envío:" />
+						<p:inputText id="nombreUsuarioEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUsuarioEnvio}" />
+						
+					</div>
+	
+					<div class="columnaDchaFormulario">
+													
+						<h:outputLabel for="nombreCuestionario" value="Nombre del cuestionario:" />
+						<p:inputText id="nombreCuestionario" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreCuestionario}" />
+						
+						<h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
+						<p:selectOneMenu value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" 
+							converter="#{selectConverter}">
+							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+							<f:selectItems value="#{modelosCuestionarioBean.listadoCuestionarios}" var="modeloCuestionario"
+								itemLabel="#{modeloCuestionario.descripcion}" itemValue="#{modeloCuestionario}" />
+						</p:selectOneMenu> 
+										
+						<h:outputLabel for="estado" value="Estado del cuestionario:" />
+						<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.CuestionarioEnviadoEnum"
+							var="estados" allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.estado}"
+							id="estado">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{estados.ALL_ENUM_VALUES}"
+								var="estadoCuestionarioEnviado"
+								itemLabel="#{estadoCuestionarioEnviado.descripcion}"
+								itemValue="#{estadoCuestionarioEnviado}" />
+						</p:selectOneMenu>
+					
+						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+						<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+	
+						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+						<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" />
+					
+						<h:outputLabel for="fechaLimiteRespuesta" value="Fecha límite respuesta:" />
+						<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaLimiteRespuesta}" id="fechaLimiteRespuesta" pattern="dd/MM/yyyy" locale="es" navigator="true" />
+					
+					</div>
+			</div>
+		
+			<div class="botonesFormulario">
+				<p:commandButton actionListener="#{cuestionarioEnviadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" />
+	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioEnviadoBean.limpiar}" update="busquedaCuestionario" icon="fa fa-fw fa-eraser" />
+				<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Enviar cuestionario" icon="fa fa-fw fa-user-plus"/>
+			</div>
+ 			
+ 			<p:outputPanel layout="block" id="panelCuestionarios">
+ 				<p:outputPanel rendered="#{not empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
+	 				<h:commandLink>
+		               <p:graphicImage  value="/images/xls.png" />
+		               <p:dataExporter type="xls" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/pdf.png" />
+		               <p:dataExporter type="pdf" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/csv.png" />
+		               <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		            	<p:graphicImage  value="/images/imprimir.jpg" />
+		            	<p:printer target="tablaCuestionarios" />
+		            </h:commandLink>
+	            </p:outputPanel>
+	 			<p:dataTable  var="cuestionario" value="#{cuestionarioEnviadoBean.listaCuestionarioEnvio}"  rows="20" id="tablaCuestionarios"
+	                         paginator="true" 
+	                         resizableColumns="true"
+	                         rendered="#{not empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
+			 		<f:facet name="header">
+						Cuestionarios enviados
+					</f:facet>
+					<p:column headerText="Número Inspección"
+						sortBy="#{cuestionario.inspeccion.numero}" width="60">
+						<h:outputText value="#{cuestionario.inspeccion.numero}" />
+					</p:column>
+					<p:column headerText="Ámbito Inspección"
+						sortBy="#{cuestionario.inspeccion.ambito}" width="60">
+						<h:outputText value="#{cuestionario.inspeccion.ambito}" />
+					</p:column>
+					<p:column headerText="Tipo Inspección"
+						sortBy="#{cuestionario.inspeccion.tipoInspeccion}" width="100">
+						<h:outputText value="#{cuestionario.inspeccion.tipoInspeccion.descripcion}" />
+					</p:column>
+					<p:column headerText="Unidad"
+						sortBy="#{cuestionario.inspeccion.nombreUnidad}" width="100">
+						<h:outputText value="#{cuestionario.inspeccion.nombreUnidad}" />
+					</p:column>
+					<p:column headerText="Usuario envío" sortBy="#{cuestionario.nombreUsuarioEnvio}" width="100">
+						<h:outputText value="#{cuestionario.nombreUsuarioEnvio}" />
+					</p:column>
+					<p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" width="100">
+						<h:outputText value="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" />
+					</p:column>
+					<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" width="100">
+						<h:outputText value="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
+					</p:column>
+					<p:column headerText="Fecha envío" sortBy="#{cuestionario.fechaEnvio}" width="70" >
+						<h:outputText value="#{cuestionario.fechaEnvio}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Cumplimentado"
+						sortBy="#{cuestionario.fechaCumplimentacion}" width="90">
+						<h:outputText value="#{cuestionario.fechaCumplimentacion}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="No conforme"
+						sortBy="#{cuestionario.fechaNoConforme}" width="90">
+						<h:outputText value="#{cuestionario.fechaNoConforme}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Finalizado"
+						sortBy="#{cuestionario.fechaFinalizacion}" width="70">
+						<h:outputText value="#{cuestionario.fechaFinalizacion}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+						</h:outputText>
+					</p:column>
+					<p:column width="30" exportable="false">
+						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
+					</p:column>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
+							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
+						</p:commandButton>
+					</p:column>
+					
+					<f:facet name="footer">
+	       				 Resultado de la búsqueda: #{fn:length(cuestionarioEnviadoBean.listaCuestionarioEnvio)} cuestionarios.
+	    			</f:facet>
+				</p:dataTable>
+			</p:outputPanel>
+</h:form>
+
+		<p:confirmDialog global="true">
+			<div class="centrarBotonesDialog">
+				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+			</div>
+		</p:confirmDialog>
+			
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>
