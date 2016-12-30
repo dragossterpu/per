@@ -78,11 +78,9 @@
 					</div>
 			
 				
-		<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
+				<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
 
 					<h4>Datos interlocutor </h4>
-
-					<h:form id="busquedaInterlocutor" >
 	
 					<div class="bloqueInterlocutor">
 					<br></br>
@@ -91,10 +89,11 @@
 						<p>Cargo: 	#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cargoInterlocutor}</p>	
 						<p>Telefono: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.telefonoInterlocutor}</p>
 						<p>Correo corporativo: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}</p>	
-					</div>						
-					</h:form>	
-					
+					</div>	
+										
+				</p:outputPanel>
 				
+				<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
 
 					<div class="bloqueDocumentos" >
 						<h:form id="form">			
@@ -114,7 +113,7 @@
 							</p:dataTable>	
 						</h:form>
 					</div>
-	</p:outputPanel>
+				</p:outputPanel>
 
 										
 					<p:confirmDialog global="true">
