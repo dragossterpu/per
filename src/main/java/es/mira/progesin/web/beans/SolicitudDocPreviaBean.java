@@ -683,13 +683,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return result booleano
 	 */
 	public boolean esJefeEquipoInspeccion() {
-		boolean esJefe = false;
-		User usuarioActual = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
-		if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-			String jefeEquipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getEquipo().getJefeEquipo();
-			esJefe = usuarioActual.getUsername().equals(jefeEquipoInspeccion);
-		}
-		return esJefe || RoleEnum.ADMIN.equals(usuarioActual.getRole());
+		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+		String jefeEquipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getEquipo().getJefeEquipo();
+		return usuarioActual.equals(jefeEquipoInspeccion);
 	}
 
 	/**

@@ -212,7 +212,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 		return null;
 	}
 
-	public String enviarDocumentacionPrevia() {
+	public void enviarDocumentacionPrevia() {
 		try {
 			solicitudDocumentacionPrevia.setFechaCumplimentacion(new Date());
 			String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
@@ -228,14 +228,12 @@ public class ProvisionalSolicitudBean implements Serializable {
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
-
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
-		return "/login/logout";
 
 	}
 
@@ -279,6 +277,6 @@ public class ProvisionalSolicitudBean implements Serializable {
 		catch (Exception e) {
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
-
 	}
+
 }

@@ -121,7 +121,7 @@
 					<p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true"  closable="true"/>
 					</p:inputText>
 							
-					<div class="botonesFormulario">				        						
+					<div class="botonesFormulario">
 						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
 						<p:commandButton actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
 						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
@@ -131,7 +131,10 @@
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"/>
+					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/index')}"
+						rendered="#{empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}"/>
+					<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
+						rendered="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}"/>
 				</div>
 			</p:dialog>		
 		</ui:define>
