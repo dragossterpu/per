@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+			<ui:param name="esJefeEquipoInspeccion" value="#{cuestionarioEnviadoBean.visualizarCuestionario.esJefeEquipoInspeccion() or p:ifGranted('ADMIN')}"/>
+			<div class="tituloCuestionario">
+				<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
+			</div>
+			
+			<h:form id="form">
+				<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario"> 
+					<p:accordionPanel>
+					
+						<p:tab title="#{areaCuestionario.area}">
+							<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
+								
+								<div class="prevPregCuest">
+									<h:outputText value="#{preguntaArea.pregunta}"/>
+									<div class="respuestaCuestionario">
+										<p:inputText id="input" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
+													 rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" 
+													 size="10" readonly="true"/>
+											
+										<p:inputTextarea id="textarea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
+										   				rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}"
+										   				readonly="true"/>
+										 				
+										<p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" 
+													value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
+													readonly="true">
+											<f:selectItems value="#{cuestionarioEnviadoBean.visualizarCuestionario.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
+												var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
+										</p:selectOneRadio>
+										
+										<p:outputPanel id="panelAdjuntos" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
+											<p:inputText id="adjunto" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
+													 size="10" readonly="true"/>   
+											
+											<p:dataTable id ="tablaDocumentos" var="documento" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}" emptyMessage="No hay documentos">
+												<p:column headerText="Documentos">
+											        <h:outputText value="#{documento.nombre}" />
+											    </p:column>
+											</p:dataTable>         
+										</p:outputPanel>
+											
+										<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}"
+													id="tablaPregunta" var="registroTabla" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
+									        <p:columns value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+									            <f:facet name="header">
+									                <h:outputText value="#{column.header}" />
+									            </f:facet>
+									            <p:inputText id="tabla" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario" readonly="true"/>
+									        </p:columns>
+						    			</p:dataTable>
+										
+						    			<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}"
+													id="matrizPregunta" var="registroTabla" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
+									        
+									        <p:column headerText="" styleClass="ui-widget-header">
+									        	<h:outputText value="#{registroTabla.nombreFila}"/>
+									        </p:column>
+									        <p:columns value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+									            <f:facet name="header">
+									                <h:outputText value="#{column.header}" />
+									            </f:facet>
+									            <p:inputText id="matriz" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario" readonly="true"/>
+									        </p:columns>
+						    			</p:dataTable>
+										
+										<p:outputPanel id="panelValidacion" rendered="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}">
+											<h:outputLabel for="validarRespuesta" value="Validar respuesta:"/>
+											<p:selectBooleanCheckbox id="validarRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}"/>
+						    			</p:outputPanel>
+									</div>
+								</div>
+							</ui:repeat>
+						</p:tab>
+					</p:accordionPanel>
+				</ui:repeat>
+
+				<p:outputPanel>
+					<div class="botonesFormulario">
+						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Validar respuestas" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}"/>
+						<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo"
+							rendered="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado}" />
+						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"
+							rendered="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado}" />
+					</div>
+				</p:outputPanel>
+
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true"	showSummary="true" />
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/busquedaCuestionarios')}" />
+					</div>
+				</p:dialog>
+				
+				<p:confirmDialog global="true">
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Aceptar" type="button"
+								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+							<p:commandButton value="Cancelar" type="button"
+								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+						</div>
+					</p:confirmDialog>
+
+				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

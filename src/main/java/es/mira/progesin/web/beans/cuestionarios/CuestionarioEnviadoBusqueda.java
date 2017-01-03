@@ -42,6 +42,8 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
 
 	private AmbitoInspeccionEnum ambitoInspeccion;
 
+	private String nombreEquipo;
+
 	private String nombreUnidad;
 
 	private String nombreCuestionario;
@@ -68,6 +70,7 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
 		this.numeroInspeccion = null;
 		this.tipoInspeccion = null;
 		this.ambitoInspeccion = null;
+		this.nombreEquipo = null;
 		this.nombreUnidad = null;
 		this.nombreCuestionario = null;
 		this.modeloCuestionarioSeleccionado = null;

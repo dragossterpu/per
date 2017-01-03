@@ -4,16 +4,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +37,13 @@ public class CuestionarioEnviadoBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
+	private transient IRespuestaCuestionarioRepository respuestaRepository;
+
+	@Autowired
 	private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda;
+
+	@Autowired
+	private VisualizarCuestionario visualizarCuestionario;
 
 	private List<CuestionarioEnvio> listaCuestionarioEnvio;
 
@@ -90,23 +102,45 @@ public class CuestionarioEnviadoBean implements Serializable {
 		cuestionarioEnvioService.save(cuestionario);
 	}
 
-	/**
-	 * mostrarFormularioEnvio
-	 *
-	 * Muestra la pantalla de envío del cuestionario
-	 *
-	 * @param cuestionario Cuestionario a enviar
-	 * @return Nombre de la vista del formulario de envío
-	 */
-	public String mostrarFormularioEnvio(CuestionarioEnvio cuestionario) {
-		envioCuestionarioBean.setCuestionarioEnvio(cuestionario);
-		return "/cuestionarios/enviarCuestionario";
-	}
-
 	@PostConstruct
 	public void init() {
 		cuestionarioEnviadoBusqueda.limpiar();
 		listaCuestionarioEnvio = new ArrayList<>();
+	}
+
+	/**
+	 * Guarda fecha validación de las respuestas de las preguntas
+	 * @see guardarRespuestas
+	 *
+	 */
+	public void validarRespuestas() {
+		try {
+			Date fechaValidacion = new Date();
+			List<RespuestaCuestionario> listaRespuestasValidadas = new ArrayList<>();
+			Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas = visualizarCuestionario
+					.getMapaValidacionRespuestas();
+			for (RespuestaCuestionario respuesta : visualizarCuestionario.getListaRespuestas()) {
+				if (mapaValidacionRespuestas.get(respuesta.getRespuestaId().getPregunta())) {
+
+					respuesta.setFechaValidacion(fechaValidacion);
+					listaRespuestasValidadas.add(respuesta);
+				}
+			}
+			if (listaRespuestasValidadas.isEmpty() == Boolean.FALSE) {
+				respuestaRepository.save(listaRespuestasValidadas);
+				respuestaRepository.flush();
+			}
+
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
+					"Se ha validado con éxito las respuestas");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+					"Se ha producido un error al validar las respuestas. ", e.getMessage());
+			// TODO registro actividad
+		}
+
 	}
 
 }

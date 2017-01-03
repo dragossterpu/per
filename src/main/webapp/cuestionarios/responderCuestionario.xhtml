@@ -58,8 +58,8 @@
 										         <f:attribute name="pregunta" value="#{preguntaArea}" />
 											</p:fileUpload>    
 											
-											<p:dataTable id ="tablaDocumentos" var="documento" value="#{responderCuestionarioBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}">
-												<p:column headerText="Fichero">
+											<p:dataTable id ="tablaDocumentos" var="documento" value="#{responderCuestionarioBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}" emptyMessage="No hay documentos">
+												<p:column headerText="Documentos">
 											        <h:outputText value="#{documento.nombre}" />
 											    </p:column>
 											    <p:column style="width:30px">
@@ -117,7 +117,7 @@
 			 	<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> 
 					<div class="botonesFormulario">
 						<p:commandButton action="#{responderCuestionarioBean.guardarBorrador}" value="Guardar borrador" icon="fa fa-fw fa-save" id="borrador"/>
-						<h:commandLink id="enviar" title="Enviar cuestionario" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+						<h:commandLink id="enviar" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">Responder</span>
 						</h:commandLink>
 					</div>

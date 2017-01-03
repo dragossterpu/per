@@ -26,11 +26,7 @@
 		
 			<div class="bloqueFormulario">
 					<div class="columnaIzdaFormulario">
-																							
-						<h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
-						<p:inputText id="nombreUnidad" 
-							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
-						
+					
 						<h:outputLabel for="numeroInspeccion" value="Número de la Inspección:" />
 						<p:inputText id="numeroInspeccion" 
 							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.numeroInspeccion}" converter="#{trimConverter}"/>
@@ -60,6 +56,15 @@
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />
 						</p:selectOneMenu>
+																							
+						<h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
+						<p:inputText id="nombreEquipo" 
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreEquipo}" converter="#{trimConverter}"/>
+						
+																							
+						<h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
+						<p:inputText id="nombreUnidad" 
+							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
 					
 						<h:outputLabel for="nombreUsuarioEnvio" value="Usuario envío:" />
 						<p:inputText id="nombreUsuarioEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUsuarioEnvio}" />
@@ -153,9 +158,6 @@
 						sortBy="#{cuestionario.inspeccion.nombreUnidad}" width="100">
 						<h:outputText value="#{cuestionario.inspeccion.nombreUnidad}" />
 					</p:column>
-					<p:column headerText="Usuario envío" sortBy="#{cuestionario.nombreUsuarioEnvio}" width="100">
-						<h:outputText value="#{cuestionario.nombreUsuarioEnvio}" />
-					</p:column>
 					<p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" width="100">
 						<h:outputText value="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" />
 					</p:column>
@@ -186,10 +188,10 @@
 						</h:outputText>
 					</p:column>
 					<p:column width="30" exportable="false">
-						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
+						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
 					</p:column>
 					<p:column width="30" exportable="false">
-						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" disabled="#{not empty cuestionario.fechaAnulacion}">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>

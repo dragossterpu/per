@@ -72,4 +72,7 @@ public class RespuestaCuestionario implements Serializable {
 	@LastModifiedDate
 	private Date fechaModificacion;
 
+	@Column
+	private Date fechaValidacion;
+
 }

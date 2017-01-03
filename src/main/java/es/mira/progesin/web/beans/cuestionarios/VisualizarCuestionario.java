@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
@@ -49,11 +50,16 @@ public class VisualizarCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// para la visualización
+	private CuestionarioEnvio cuestionarioEnviado;
+
+	// para la visualización
 	private CuestionarioPersonalizado cuestionarioPersonalizado;
 
 	private Map<AreasCuestionario, List<PreguntasCuestionario>> mapaAreaPreguntas;
 
 	private List<AreasCuestionario> areas;
+
+	private Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas;
 
 	private Map<PreguntasCuestionario, String> mapaRespuestas;
 
@@ -63,6 +69,8 @@ public class VisualizarCuestionario implements Serializable {
 
 	private Map<PreguntasCuestionario, List<Documento>> mapaDocumentos;
 
+	private List<RespuestaCuestionario> listaRespuestas;
+
 	/**
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
 	 * texto, adjuntos, tablas...)
@@ -71,9 +79,11 @@ public class VisualizarCuestionario implements Serializable {
 	 * @return Nombre de la vista a mostrar
 	 */
 	public String visualizarVacio(CuestionarioPersonalizado cuestionario) {
+		cuestionarioEnviado = null;
 		mapaRespuestasTabla = new HashMap<>();
 		mapaRespuestas = new HashMap<>();
 		mapaDocumentos = new HashMap<>();
+		mapaValidacionRespuestas = new HashMap<>();
 		return visualizar(cuestionario, false);
 	}
 
@@ -86,14 +96,17 @@ public class VisualizarCuestionario implements Serializable {
 	 * @return
 	 */
 	public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
+		this.setCuestionarioEnviado(cuestionarioEnviado);
 		mapaRespuestas = new HashMap<>();
 		mapaRespuestasTabla = new HashMap<>();
 		mapaDocumentos = new HashMap<>();
 		mapaRespuestasTablaAux = new HashMap<>();
-		List<RespuestaCuestionario> listaRespuestas = respuestaRepository
-				.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+		mapaValidacionRespuestas = new HashMap<>();
+		listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
 		listaRespuestas.forEach(respuesta -> {
 			String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
+			mapaValidacionRespuestas.put(respuesta.getRespuestaId().getPregunta(),
+					respuesta.getFechaValidacion() != null);
 			if ((tipoRespuesta.startsWith("TABLA") || tipoRespuesta.startsWith("MATRIZ"))
 					&& respuesta.getRespuestaTablaMatriz() != null) {
 				mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
@@ -144,7 +157,12 @@ public class VisualizarCuestionario implements Serializable {
 		// Ordeno las áreas por su id para que aparezcan en el mismo orden que en el modelo
 		Collections.sort(areas, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
 
-		return "/cuestionarios/responderCuestionario";
+		if (cuestionarioEnviado == null) {
+			return "/cuestionarios/responderCuestionario";
+		}
+		else {
+			return "/cuestionarios/validarCuestionario";
+		}
 	}
 
 	/**
@@ -205,6 +223,18 @@ public class VisualizarCuestionario implements Serializable {
 			dataTableView.crearFilaVacia();
 			mapaRespuestasTabla.put(pregunta, dataTableView);
 		}
+	}
+
+	/**
+	 * Comprueba si el usuario logueado es el jefe del equipo encargado de la inspeccion.
+	 * 
+	 * @author EZENTIS
+	 * @return result booleano
+	 */
+	public boolean esJefeEquipoInspeccion() {
+		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+		String jefeEquipoInspeccion = cuestionarioEnviado.getInspeccion().getEquipo().getJefeEquipo();
+		return usuarioActual.equals(jefeEquipoInspeccion);
 	}
 
 }

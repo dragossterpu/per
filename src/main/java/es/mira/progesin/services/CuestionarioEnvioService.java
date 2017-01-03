@@ -70,6 +70,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	// PREGUNTAS.
 	// @EntityGraph(value = "CuestionarioPersonalizado.preguntasElegidas", type = EntityGraph.EntityGraphType.LOAD)
 	// AHORA MUESTRA UN RESULTADO POR RESPUESTA DEL CUESTIONARIO PERSONALIZADO DE CADA CUESTIONARIO ENVIADO
+	// APAÑADO CON UN DISTINCT
 	public List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(
 			CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
 		Session session = sessionFactory.openSession();
@@ -100,6 +101,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 			// case ENVIADO:
 			default:
 				criteria.add(Restrictions.isNull("fechaCumplimentacion"));
+				criteria.add(Restrictions.isNull("fechaAnulacion"));
 				break;
 			}
 		}
@@ -127,6 +129,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 			criteria.add(Restrictions.sqlRestriction("TRUNC(FECHA_LIMITE_CUESTIONARIO) <= '"
 					+ sdf.format(cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta()) + "'"));
 		}
+
 		String parametro;
 		if (cuestionarioEnviadoBusqueda.getNombreUsuarioEnvio() != null
 				&& !cuestionarioEnviadoBusqueda.getNombreUsuarioEnvio().isEmpty()) {
@@ -135,8 +138,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 					.replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("nombreUsuarioEnvio", parametro, MatchMode.ANYWHERE));
 		}
+
 		criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join
-		criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
 		if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null
 				&& !cuestionarioEnviadoBusqueda.getNombreUnidad().isEmpty()) {
 			// TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
@@ -154,12 +157,23 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 		if (cuestionarioEnviadoBusqueda.getAmbitoInspeccion() != null) {
 			criteria.add(Restrictions.eq("inspeccion.ambito", cuestionarioEnviadoBusqueda.getAmbitoInspeccion()));
 		}
+
+		criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
 		if (cuestionarioEnviadoBusqueda.getTipoInspeccion() != null) {
 			criteria.add(Restrictions.eq("tipoInspeccion.codigo",
 					cuestionarioEnviadoBusqueda.getTipoInspeccion().getCodigo()));
 		}
+
+		criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
+		if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null
+				&& !cuestionarioEnviadoBusqueda.getNombreEquipo().isEmpty()) {
+			// TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
+			parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD)
+					.replaceAll(ACENTOS, "");
+			criteria.add(Restrictions.ilike("equipo.nombreEquipo", parametro, MatchMode.ANYWHERE));
+		}
+
 		criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
-		criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join
 		if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null
 				&& !cuestionarioEnviadoBusqueda.getNombreCuestionario().isEmpty()) {
 			// TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
@@ -168,14 +182,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 			criteria.add(
 					Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario", parametro, MatchMode.ANYWHERE));
 		}
+
+		criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join
 		if (cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado() != null) {
 			criteria.add(Restrictions.eq("modeloCuestionario.id",
 					cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
 		}
 
-		criteria.add(Restrictions.isNull("fechaAnulacion"));
-
 		criteria.addOrder(Order.desc("fechaEnvio"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		@SuppressWarnings("unchecked")
 		List<CuestionarioEnvio> listaCuestionarioEnvio = criteria.list();
 		session.close();

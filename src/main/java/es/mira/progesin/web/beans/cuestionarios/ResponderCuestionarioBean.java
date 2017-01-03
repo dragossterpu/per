@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,29 @@ public class ResponderCuestionarioBean implements Serializable {
 			e.printStackTrace();
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
 					"Se ha producido un error al guardar las respuestas. ", e.getMessage());
+			// TODO registro actividad
+		}
+	}
+
+	/**
+	 * Guarda la fecha de cumplimentación y las respuestas introducidas por el usuario en BBDD, incluidos los documentos
+	 * subidos
+	 * 
+	 * @author EZENTIS
+	 */
+	public void enviarCuestionario() {
+		try {
+			guardarRespuestasTipoTexto();
+			guardarRespuestasTipoTablaMatriz();
+			cuestionarioEnviado.setFechaCumplimentacion(new Date());
+			cuestionarioEnvioService.save(cuestionarioEnviado);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
+					"Cuestionario cumplimentado y enviado con éxito");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+					"Se ha producido un error al enviar el cuestionario cumplimentado. ", e.getMessage());
 			// TODO registro actividad
 		}
 	}
