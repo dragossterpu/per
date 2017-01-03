@@ -16,7 +16,7 @@
 
 		<div id="listadoDocumentacion">
 	<h:form id="form">
-			<p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" 
+			<p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" rows="20" paginator="true" resizableColumns="true"
 			value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}"
 							update=":form:msgs" />
