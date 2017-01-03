@@ -99,6 +99,8 @@ public class ResponderCuestionarioBean implements Serializable {
 			cuestionarioEnvioService.save(cuestionarioEnviado);
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
 					"Cuestionario cumplimentado y enviado con éxito");
+
+			// TODO Inactivar usuarios provisionales
 		}
 		catch (Exception e) {
 			e.printStackTrace();

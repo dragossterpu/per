@@ -116,10 +116,12 @@ public class CuestionarioEnviadoBean implements Serializable {
 	public void validarRespuestas() {
 		try {
 			Date fechaValidacion = new Date();
+			CuestionarioEnvio cuestionario = visualizarCuestionario.getCuestionarioEnviado();
+			List<RespuestaCuestionario> listaRespuestasTotales = visualizarCuestionario.getListaRespuestas();
 			List<RespuestaCuestionario> listaRespuestasValidadas = new ArrayList<>();
 			Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas = visualizarCuestionario
 					.getMapaValidacionRespuestas();
-			for (RespuestaCuestionario respuesta : visualizarCuestionario.getListaRespuestas()) {
+			for (RespuestaCuestionario respuesta : listaRespuestasTotales) {
 				if (mapaValidacionRespuestas.get(respuesta.getRespuestaId().getPregunta())) {
 
 					respuesta.setFechaValidacion(fechaValidacion);
@@ -133,6 +135,13 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
 					"Se ha validado con éxito las respuestas");
+			if (listaRespuestasValidadas.size() == listaRespuestasTotales.size()) {
+				cuestionario.setFechaFinalizacion(new Date());
+				cuestionarioEnvioService.save(cuestionario);
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
+						"Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
+				// TODO Eliminar usuarios provisionales
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

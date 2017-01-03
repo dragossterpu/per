@@ -88,7 +88,7 @@
 
 				<p:outputPanel>
 					<div class="botonesFormulario">
-						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Validar respuestas" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}"/>
+						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Validar respuestas" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion and empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaFinalizacion}"/>
 						<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo"
 							rendered="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado}" />
 						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"
