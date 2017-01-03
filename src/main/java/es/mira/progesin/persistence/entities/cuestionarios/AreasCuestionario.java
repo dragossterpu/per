@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -28,6 +30,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "areascuestionario")
+@NamedEntityGraph(name = "AreasCuestionario.preguntas", attributeNodes = @NamedAttributeNode("preguntas"))
 public class AreasCuestionario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -37,12 +40,12 @@ public class AreasCuestionario implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "area", nullable = false)
+	@Column(name = "nombre_area", nullable = false)
 	private String area;
 
 	private Integer idCuestionario;
 
-	@OneToMany(mappedBy = "area", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
 	private List<PreguntasCuestionario> preguntas;
 
 	@Override

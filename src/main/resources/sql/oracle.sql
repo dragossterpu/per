@@ -143,21 +143,33 @@ Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Va
 
   ------------- áreas cuestionario
   
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS', '1');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', '2');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES', '3');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'LIBROS OFICIALES', '4');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DIRECCIÓN', '5');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'JUNTA DE COORDINACIÓN', '6');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'UNIDAD DE SEGURIDAD', '7');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'ADMINISTRACIÓN', '8');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'SECRETARÍA', '9');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'SERVICIO DE ASISTENCIA SANITARIA', '10');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'SERVICIOS DE ASISTENCIA SOCIAL, JURÍDICA Y CULTURAL', '11');
-Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'RELACIONES Y COORDINACIÓN', '12');
-  
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS', '1');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', '2');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES', '3');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'LIBROS OFICIALES', '4');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'DIRECCIÓN', '5');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'JUNTA DE COORDINACIÓN', '6');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'UNIDAD DE SEGURIDAD', '7');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'ADMINISTRACIÓN', '8');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'SECRETARÍA', '9');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'SERVICIO DE ASISTENCIA SANITARIA', '10');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'SERVICIOS DE ASISTENCIA SOCIAL, JURÍDICA Y CULTURAL', '11');
+--Insert into  Areascuestionario (id_cuestionario,Area,id) Values (1, 'RELACIONES Y COORDINACIÓN', '12');
+--  
+
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS', '1');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', '2');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES', '3');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'LIBROS OFICIALES', '4');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'DIRECCIÓN', '5');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'JUNTA DE COORDINACIÓN', '6');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'UNIDAD DE SEGURIDAD', '7');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'ADMINISTRACIÓN', '8');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'SECRETARÍA', '9');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'SERVICIO DE ASISTENCIA SANITARIA', '10');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'SERVICIOS DE ASISTENCIA SOCIAL, JURÍDICA Y CULTURAL', '11');
+Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'RELACIONES Y COORDINACIÓN', '12');
   ------------- preguntas cuestionario
-  
   
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (1, 'Situación y estado del centro', 1,'TEXTAREA');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (2, 'Fecha de creación', 1,'CALENDAR');

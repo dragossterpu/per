@@ -29,7 +29,6 @@ import lombok.Setter;
 @Component("edicionCuestionarioBean")
 @RequestScoped
 public class EdicionCuestionarioBean {
-	// String nombreCuestionario;
 
 	ModeloCuestionario modeloCuestionario;
 
@@ -51,7 +50,7 @@ public class EdicionCuestionarioBean {
 	public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
 		this.modeloCuestionario = modeloCuestionario;
 		preguntasSelecciondas = new HashMap<>();
-		listaAreasCuestionario = areaCuestionarioRepository.findByIdCuestionario(modeloCuestionario.getId());
+		listaAreasCuestionario = areaCuestionarioRepository.findDistinctByIdCuestionario(modeloCuestionario.getId());
 		return "/cuestionarios/editarCuestionario";
 	}
 

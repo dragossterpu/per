@@ -25,6 +25,6 @@ public interface IAreaCuestionarioService {
 
 	AreasCuestionario save(AreasCuestionario entity);
 
-	List<AreasCuestionario> findByIdCuestionario(Integer idCuestionario);
+	List<AreasCuestionario> findDistinctByIdCuestionario(Integer idCuestionario);
 
 }
