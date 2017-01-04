@@ -2,6 +2,7 @@ package es.mira.progesin.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -35,9 +36,13 @@ public class PdfGenerator {
 
 	public static final String NOMBRE_FICHERO_SOLICITUD = "Solicitud_Documentacion.pdf";
 
+	public static final String LOGO_MININISTERIO_INTERIOR_IPSS = "src/main/resources/static/images/header_sol_doc_pag_1.png";
+
 	public static final String LOGO_MININISTERIO_INTERIOR = "src/main/resources/static/images/ministerior_interior_logo.png";
 
 	public static final String LOGO_IPSS = "src/main/resources/static/images/logo_ipss.png";
+
+	public static final String LOGO_CALIDAD = "src/main/resources/static/images/footer_solicitud_1.png";
 
 	private static final String CONTENT_TYPE_PDF = "application/pdf";
 
@@ -49,7 +54,7 @@ public class PdfGenerator {
 	 * @throws Exception
 	 */
 	public StreamedContent imprimirSolicitudDocumentacionPrevia(SolicitudDocumentacionPrevia solDocPrevia,
-			List<DocumentacionPrevia> listadoDocumentosPrevios) throws Exception {
+			List<DocumentacionPrevia> listadoDocumentosPrevios) throws IOException {
 		File file = File.createTempFile(NOMBRE_FICHERO_SOLICITUD, ".pdf");
 
 		// Initialize PDF writer
@@ -60,17 +65,9 @@ public class PdfGenerator {
 
 		// Initialize document
 		Document document = new Document(pdf, PageSize.A4);
+		document.setMargins(100, 36, 70, 36);
 
-		Image logoMinisterioInterior = new Image(ImageDataFactory.create(LOGO_MININISTERIO_INTERIOR));
-		logoMinisterioInterior.scaleAbsolute((float) (logoMinisterioInterior.getImageWidth() * 0.6),
-				(float) (logoMinisterioInterior.getImageHeight() * 0.6));
-
-		Image ipssLogo = new Image(ImageDataFactory.create(LOGO_IPSS));
-		ipssLogo.scaleAbsolute((float) (ipssLogo.getImageWidth() * 0.6), (float) (ipssLogo.getImageHeight() * 0.6));
-
-		HeaderFooterPdf handler = new HeaderFooterPdf(document, logoMinisterioInterior, ipssLogo);
-		pdf.addEventHandler(PdfDocumentEvent.END_PAGE, handler);
-		document.setMargins(100, 36, 36, 36);
+		crearCabeceraDocumento(pdf, document);
 
 		Paragraph p1 = new Paragraph("Nº INSPECCIÓN: " + solDocPrevia.getInspeccion().getNumero());
 		p1.setMarginTop(30);
@@ -85,6 +82,8 @@ public class PdfGenerator {
 		document.add(p2);
 		document.add(p3);
 		document.add(p4);
+
+		// TODO: añadir el resto de textos
 
 		document.add(crearTablaTipoDocumentacion(listadoDocumentosPrevios));
 
@@ -105,6 +104,34 @@ public class PdfGenerator {
 
 		InputStream inputStream = new FileInputStream(file);
 		return new DefaultStreamedContent(inputStream, CONTENT_TYPE_PDF, NOMBRE_FICHERO_SOLICITUD);
+	}
+
+	/**
+	 * Crea la cabecera de la solicitud
+	 * @param pdf
+	 * @param document
+	 * @throws IOException
+	 */
+	private void crearCabeceraDocumento(PdfDocument pdf, Document document) throws IOException {
+		Image logoMinisterioInterior = new Image(ImageDataFactory.create(LOGO_MININISTERIO_INTERIOR));
+		logoMinisterioInterior.scaleAbsolute((float) (logoMinisterioInterior.getImageWidth() * 0.6),
+				(float) (logoMinisterioInterior.getImageHeight() * 0.6));
+
+		Image ipssLogo = new Image(ImageDataFactory.create(LOGO_IPSS));
+		ipssLogo.scaleAbsolute((float) (ipssLogo.getImageWidth() * 0.6), (float) (ipssLogo.getImageHeight() * 0.6));
+
+		Image headerRepetido = new Image(ImageDataFactory.create(LOGO_MININISTERIO_INTERIOR_IPSS));
+		headerRepetido.scaleAbsolute((float) (headerRepetido.getImageWidth() * 0.6),
+				(float) (headerRepetido.getImageHeight() * 0.6));
+
+		// Footer
+		Image footerCalidad = new Image(ImageDataFactory.create(LOGO_CALIDAD));
+		footerCalidad.scaleAbsolute((float) (footerCalidad.getImageWidth() * 0.6),
+				(float) (footerCalidad.getImageHeight() * 0.6));
+
+		HeaderFooterPdf handler = new HeaderFooterPdf(document, logoMinisterioInterior, ipssLogo, headerRepetido,
+				footerCalidad);
+		pdf.addEventHandler(PdfDocumentEvent.END_PAGE, handler);
 	}
 
 	/**
