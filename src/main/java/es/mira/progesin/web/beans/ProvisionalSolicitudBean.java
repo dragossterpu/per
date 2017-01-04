@@ -34,6 +34,7 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.PdfGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,7 +42,6 @@ import lombok.Setter;
 @Getter
 @Component("provisionalSolicitudBean")
 @SessionScoped
-
 public class ProvisionalSolicitudBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -84,6 +84,11 @@ public class ProvisionalSolicitudBean implements Serializable {
 	private Map<String, String> extensiones;
 
 	private String vieneDe;
+
+	@Autowired
+	private PdfGenerator pdfGenerator;
+
+	private StreamedContent pdfFile;
 
 	public void visualizarSolicitud() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -279,4 +284,20 @@ public class ProvisionalSolicitudBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Imprime la vista en formato PDF
+	 * 
+	 * @author EZENTIS
+	 */
+	public void imprimirPdf() {
+		try {
+			setPdfFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
+					listadoDocumentosPrevios));
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error en la generación del PDF");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+	}
 }

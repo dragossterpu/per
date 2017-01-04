@@ -11,11 +11,17 @@
 		
 		<ui:define name="content">
 
-		<div class="bloqueVistaTitulo">	
-			<h3>Solicitud documentación previa cuestionario</h3>
-		</div>
 		
 		<h:form id="formAlta">
+		
+					<div class="bloqueVistaTitulo">	
+						<h3>Solicitud documentación previa cuestionario
+							<h:commandLink style="float: right;" actionListener="#{solicitudDocPreviaBean.imprimirPdf()}">
+				               <p:graphicImage value="/images/pdf.png" style="padding: 0"/>
+				               <p:fileDownload value="#{solicitudDocPreviaBean.pdfFile}" />
+				            </h:commandLink>
+			            </h3>
+					</div>
 			
 					<div class="bloqueVistaTitulo">
 						<p>Nº Inspección: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero}</p>	

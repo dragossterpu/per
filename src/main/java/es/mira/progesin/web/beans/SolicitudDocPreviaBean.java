@@ -39,6 +39,7 @@ import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
+import es.mira.progesin.util.PdfGenerator;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -130,6 +131,11 @@ public class SolicitudDocPreviaBean implements Serializable {
 	private String motivosNoConforme;
 
 	private Map<String, String> parametrosVistaSolicitud;
+
+	@Autowired
+	private PdfGenerator pdfGenerator;
+
+	private StreamedContent pdfFile;
 
 	/**
 	 * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -701,4 +707,20 @@ public class SolicitudDocPreviaBean implements Serializable {
 				.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada("%" + infoInspeccion + "%");
 	}
 
+	/**
+	 * Imprime la vista en formato PDF
+	 * 
+	 * @author EZENTIS
+	 */
+	public void imprimirPdf() {
+		try {
+			setPdfFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
+					listadoDocumentosPrevios));
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error en la generación del PDF");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+	}
 }

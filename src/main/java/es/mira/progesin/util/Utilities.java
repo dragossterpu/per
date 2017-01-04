@@ -1,5 +1,6 @@
 package es.mira.progesin.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -76,4 +77,8 @@ public class Utilities {
 
 	// ************* Descripcion message error Progesin END********************
 
+	public static String getFechaFormateada(Date date, String pattern) {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		return sdf.format(date);
+	}
 }

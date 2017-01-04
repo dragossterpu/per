@@ -144,7 +144,34 @@
 		    <version>1.14</version>
 		</dependency>
 				
-		
+	<!-- To print pdf init-->
+ 	<dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>kernel</artifactId>
+        <version>7.0.1</version>
+    </dependency>
+	
+	 <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>io</artifactId>
+        <version>7.0.1</version>
+    </dependency>
+    
+     <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>layout</artifactId>
+        <version>7.0.1</version>
+    </dependency> 
+    
+    <!-- To print pdf end -->
+    
+    <!-- librería vieja de itext para pruebas, borrar pq no hará falta al usar la nueva, pero la dejo de momento... -->
+     <dependency>
+		<groupId>com.itextpdf</groupId>
+		<artifactId>itextpdf</artifactId>
+		<version>5.5.9</version>
+	</dependency> 
+	
 	</dependencies>
 	<repositories>
 		<repository>
