@@ -172,7 +172,7 @@ Insert into  Areascuestionario (id_cuestionario,nombre_area,id) Values (1, 'RELA
   ------------- preguntas cuestionario
   
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (1, 'Situación y estado del centro', 1,'TEXTAREA');
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (2, 'Fecha de creación', 1,'CALENDAR');
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (2, 'Fecha de creación', 1,'INPUT');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (3, 'Instalaciones. Descripción de las mismas', 1,'TEXTAREA');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (4, 'Disponibilidad de accesos para personas con movilidad reducida', 1,'CHECKBOXSINO');
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta) Values (5, 'Capacidad, diferenciando por sexos.', 1,'TEXTAREA');

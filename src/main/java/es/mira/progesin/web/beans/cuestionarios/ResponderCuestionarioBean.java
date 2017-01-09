@@ -72,8 +72,13 @@ public class ResponderCuestionarioBean implements Serializable {
 	 */
 	public void guardarBorrador() {
 		try {
-			guardarRespuestasTipoTexto();
-			guardarRespuestasTipoTablaMatriz();
+			List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+			guardarRespuestasTipoTexto(listaRespuestas);
+			List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
+			guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
+
+			cuestionarioEnvioService.saveAll(cuestionarioEnviado, listaRespuestas, listaDatosTablaSave);
+
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
 					"El borrador se ha guardado con éxito");
 		}
@@ -93,10 +98,15 @@ public class ResponderCuestionarioBean implements Serializable {
 	 */
 	public void enviarCuestionario() {
 		try {
-			guardarRespuestasTipoTexto();
-			guardarRespuestasTipoTablaMatriz();
+			List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+			guardarRespuestasTipoTexto(listaRespuestas);
+			List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
+			guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
+
 			cuestionarioEnviado.setFechaCumplimentacion(new Date());
-			cuestionarioEnvioService.save(cuestionarioEnviado);
+			cuestionarioEnvioService.transaccSaveInactivaUsuariosProv(cuestionarioEnviado, listaRespuestas,
+					listaDatosTablaSave);
+
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
 					"Cuestionario cumplimentado y enviado con éxito");
 
@@ -115,8 +125,7 @@ public class ResponderCuestionarioBean implements Serializable {
 	 * @see guardarRespuestas
 	 *
 	 */
-	private void guardarRespuestasTipoTexto() {
-		List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+	private void guardarRespuestasTipoTexto(List<RespuestaCuestionario> listaRespuestas) {
 		Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
 		mapaRespuestas.forEach((pregunta, respuesta) -> {
 			if (respuesta != null && respuesta.isEmpty() == Boolean.FALSE) {
@@ -129,21 +138,17 @@ public class ResponderCuestionarioBean implements Serializable {
 				listaRespuestas.add(respuestaCuestionario);
 			}
 		});
-		if (listaRespuestas.isEmpty() == Boolean.FALSE) {
-			respuestaRepository.save(listaRespuestas);
-			respuestaRepository.flush();
-		}
 	}
 
 	/**
 	 * Guarda en BBDD las respuestas de tipo TABLA o MATRIZ
+	 * @param listaRespuestas
 	 * @see guardarRespuestas
 	 * 
 	 */
-	private void guardarRespuestasTipoTablaMatriz() {
-		List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+	private void guardarRespuestasTipoTablaMatriz(List<RespuestaCuestionario> listaRespuestas,
+			List<DatosTablaGenerica> listaDatosTablaSave) {
 		Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla = visualizarCuestionario.getMapaRespuestasTabla();
-		List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
 
 		mapaRespuestasTabla.forEach((pregunta, respuesta) -> {
 			if (respuesta != null) {
@@ -168,10 +173,6 @@ public class ResponderCuestionarioBean implements Serializable {
 				listaDatosTablaSave.addAll(listaDatosTabla);
 			}
 		});
-
-		// TODO meter en una transaccion
-		respuestaRepository.save(listaRespuestas);
-		datosTablaRepository.save(listaDatosTablaSave);
 	}
 
 	/**

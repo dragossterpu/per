@@ -59,6 +59,8 @@ public class VisualizarCuestionario implements Serializable {
 
 	private List<AreasCuestionario> areas;
 
+	private Map<AreasCuestionario, Boolean> mapaValidacionAreas;
+
 	private Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas;
 
 	private Map<PreguntasCuestionario, String> mapaRespuestas;
@@ -83,7 +85,6 @@ public class VisualizarCuestionario implements Serializable {
 		mapaRespuestasTabla = new HashMap<>();
 		mapaRespuestas = new HashMap<>();
 		mapaDocumentos = new HashMap<>();
-		mapaValidacionRespuestas = new HashMap<>();
 		return visualizar(cuestionario, false);
 	}
 
@@ -101,12 +102,11 @@ public class VisualizarCuestionario implements Serializable {
 		mapaRespuestasTabla = new HashMap<>();
 		mapaDocumentos = new HashMap<>();
 		mapaRespuestasTablaAux = new HashMap<>();
+		mapaValidacionAreas = new HashMap<>();
 		mapaValidacionRespuestas = new HashMap<>();
 		listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
 		listaRespuestas.forEach(respuesta -> {
 			String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
-			mapaValidacionRespuestas.put(respuesta.getRespuestaId().getPregunta(),
-					respuesta.getFechaValidacion() != null);
 			if ((tipoRespuesta.startsWith("TABLA") || tipoRespuesta.startsWith("MATRIZ"))
 					&& respuesta.getRespuestaTablaMatriz() != null) {
 				mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
@@ -117,6 +117,12 @@ public class VisualizarCuestionario implements Serializable {
 				if (respuesta.getDocumentos() != null && respuesta.getDocumentos().isEmpty() == Boolean.FALSE) {
 					mapaDocumentos.put(respuesta.getRespuestaId().getPregunta(), respuesta.getDocumentos());
 				}
+			}
+			mapaValidacionAreas.putIfAbsent(respuesta.getRespuestaId().getPregunta().getArea(), true);
+			mapaValidacionRespuestas.put(respuesta.getRespuestaId().getPregunta(),
+					respuesta.getFechaValidacion() != null);
+			if (respuesta.getFechaValidacion() == null) {
+				mapaValidacionAreas.replace(respuesta.getRespuestaId().getPregunta().getArea(), false);
 			}
 		});
 

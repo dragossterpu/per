@@ -6,10 +6,18 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:my="http://java.sun.com/jsf/composite/composites">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
+		<h:outputScript>
+			$(document).ready(function(){
+				$('.area').children('.ui-chkbox-box').click(function() {
+	    			$(this).parent('.area').parent().find('input:checkbox:enabled').attr('checked', valor);
+				});
+			});
+		</h:outputScript>
 			<ui:param name="esJefeEquipoInspeccion" value="#{cuestionarioEnviadoBean.visualizarCuestionario.esJefeEquipoInspeccion() or p:ifGranted('ADMIN')}"/>
 			<div class="tituloCuestionario">
 				<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
@@ -18,13 +26,14 @@
 			<h:form id="form">
 				<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario"> 
 					<p:accordionPanel>
-					
 						<p:tab title="#{areaCuestionario.area}">
+							<p:selectBooleanCheckbox id="validarArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" disabled="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion and (not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario])}"/>
+							
 							<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
 								
 								<div class="prevPregCuest">
-									<h:outputText value="#{preguntaArea.pregunta}"/>
-									<div class="respuestaCuestionario">
+										<p:selectBooleanCheckbox id="validarRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" itemLabel="#{preguntaArea.pregunta}" disabled="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion and (not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea])}"/>
+										<div class="respuestaCuestionario">
 										<p:inputText id="input" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 													 rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" 
 													 size="10" readonly="true"/>
@@ -74,11 +83,7 @@
 									            <p:inputText id="matriz" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario" readonly="true"/>
 									        </p:columns>
 						    			</p:dataTable>
-										
-										<p:outputPanel id="panelValidacion" rendered="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}">
-											<h:outputLabel for="validarRespuesta" value="Validar respuesta:"/>
-											<p:selectBooleanCheckbox id="validarRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}"/>
-						    			</p:outputPanel>
+
 									</div>
 								</div>
 							</ui:repeat>
@@ -89,10 +94,7 @@
 				<p:outputPanel>
 					<div class="botonesFormulario">
 						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Validar respuestas" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion and empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaFinalizacion}"/>
-						<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo"
-							rendered="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado}" />
-						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"
-							rendered="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado}" />
+						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 				</p:outputPanel>
 

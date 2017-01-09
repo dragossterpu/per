@@ -137,10 +137,9 @@ public class CuestionarioEnviadoBean implements Serializable {
 					"Se ha validado con éxito las respuestas");
 			if (listaRespuestasValidadas.size() == listaRespuestasTotales.size()) {
 				cuestionario.setFechaFinalizacion(new Date());
-				cuestionarioEnvioService.save(cuestionario);
+				cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
 						"Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
-				// TODO Eliminar usuarios provisionales
 			}
 		}
 		catch (Exception e) {

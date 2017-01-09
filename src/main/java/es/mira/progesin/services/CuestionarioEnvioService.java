@@ -14,11 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
+import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
+import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
@@ -36,7 +41,16 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
 
 	@Autowired
+	private transient IRespuestaCuestionarioRepository respuestaRepository;
+
+	@Autowired
+	private transient IDatosTablaGenericaRepository datosTablaRepository;
+
+	@Autowired
 	private transient IUserRepository userRepository;
+
+	@Autowired
+	private transient IUserService userService;
 
 	@Autowired
 	private transient IRegistroActividadService regActividadService;
@@ -202,6 +216,60 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	@Transactional(readOnly = false)
 	public void save(CuestionarioEnvio cuestionario) {
 		cuestionarioEnvioRepository.save(cuestionario);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void saveAll(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
+			List<DatosTablaGenerica> listaDatosTablaSave) {
+		respuestaRepository.save(listaRespuestas);
+		datosTablaRepository.save(listaDatosTablaSave);
+		cuestionarioEnvioRepository.save(cuestionario);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario) {
+		cuestionarioEnvioRepository.save(cuestionario);
+		String correoPrincipal = cuestionario.getCorreoEnvio();
+		String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
+		String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
+		userService.delete(correoPrincipal);
+		for (int i = 1; i < 10; i++) {
+			userService.delete(cuerpoCorreo + i + restoCorreo);
+		}
+		return true;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveInactivaUsuariosProv(CuestionarioEnvio cuestionario,
+			List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave) {
+		respuestaRepository.save(listaRespuestas);
+		datosTablaRepository.save(listaDatosTablaSave);
+		cuestionarioEnvioRepository.save(cuestionario);
+		String correoPrincipal = cuestionario.getCorreoEnvio();
+		String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
+		String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
+		userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
+		for (int i = 1; i < 10; i++) {
+			userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.INACTIVO);
+		}
+		return true;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario) {
+		cuestionarioEnvioRepository.save(cuestionario);
+		String correoPrincipal = cuestionario.getCorreoEnvio();
+		String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
+		String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
+		userService.cambiarEstado(correoPrincipal, EstadoEnum.ACTIVO);
+		for (int i = 1; i < 10; i++) {
+			userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.ACTIVO);
+		}
+		return true;
 	}
 
 }
