@@ -108,9 +108,8 @@ public class ResponderCuestionarioBean implements Serializable {
 					listaDatosTablaSave);
 
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
-					"Cuestionario cumplimentado y enviado con éxito");
+					"Cuestionario cumplimentado y enviado con éxito. Su sesión ha finalizado.");
 
-			// TODO Inactivar usuarios provisionales
 		}
 		catch (Exception e) {
 			e.printStackTrace();

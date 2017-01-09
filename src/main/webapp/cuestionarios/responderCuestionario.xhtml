@@ -128,13 +128,16 @@
 						<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
 					</div>
 				</p:outputPanel>
-
-				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true"	showSummary="true" />
+				
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"/>
+						<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"
+							rendered="#{empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion or p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
+						<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
+							rendered="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion and p:ifGranted('PROV_CUESTIONARIO')}"/>
 					</div>
-				</p:dialog>
+				</p:dialog>	
 				
 				<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
