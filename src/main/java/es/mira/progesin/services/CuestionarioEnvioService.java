@@ -204,7 +204,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 		}
 
 		criteria.addOrder(Order.desc("fechaEnvio"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		@SuppressWarnings("unchecked")
 		List<CuestionarioEnvio> listaCuestionarioEnvio = criteria.list();
 		session.close();
