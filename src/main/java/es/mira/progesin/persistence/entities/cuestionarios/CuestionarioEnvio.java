@@ -74,7 +74,13 @@ public class CuestionarioEnvio implements Serializable {
 	private Date fechaNoConforme;
 
 	@Column
+	private String usernameNoConforme;
+
+	@Column
 	private Date fechaFinalizacion;
+
+	@Column
+	private String usernameFinalizacion;
 
 	@CreatedDate
 	private Date fechaEnvio;

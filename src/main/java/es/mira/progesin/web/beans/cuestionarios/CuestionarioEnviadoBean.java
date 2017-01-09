@@ -16,10 +16,16 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.services.INotificacionService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
+import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +41,10 @@ import lombok.Setter;
 public class CuestionarioEnviadoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String NOMBRESECCION = "Gestión de cuestionario enviado";
+
+	private static final String ERROR = "Error";
 
 	@Autowired
 	private transient IRespuestaCuestionarioRepository respuestaRepository;
@@ -59,6 +69,18 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 	@Autowired
 	private EnvioCuestionarioBean envioCuestionarioBean;
+
+	@Autowired
+	private transient ICorreoElectronico correoElectronico;
+
+	@Autowired
+	transient IRegistroActividadService regActividadService;
+
+	@Autowired
+	transient INotificacionService notificacionService;
+
+	@Autowired
+	transient ApplicationBean applicationBean;
 
 	public void buscarCuestionario() {
 		listaCuestionarioEnvio = cuestionarioEnvioService
@@ -137,6 +159,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 					"Se ha validado con éxito las respuestas");
 			if (listaRespuestasValidadas.size() == listaRespuestasTotales.size()) {
 				cuestionario.setFechaFinalizacion(new Date());
+				String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+				cuestionario.setUsernameFinalizacion(usuarioActual);
 				cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
 						"Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
@@ -149,6 +173,68 @@ public class CuestionarioEnviadoBean implements Serializable {
 			// TODO registro actividad
 		}
 
+	}
+
+	/**
+	 * Carga el formulario para declarar no conforme un cuestionario enviado ya cumplimentado.
+	 * 
+	 * @author EZENTIS
+	 * @return vista noConformeCuestionario
+	 */
+	public String getFormNoConformeCuestionario() {
+		motivosNoConforme = null;
+		return "/cuestionarios/noConformeCuestionario";
+	}
+
+	/**
+	 * Permite al jefe de equipo declarar no conforme un cuestionario enviado ya cumplimentada, después de revisar las
+	 * respuestas y la documentación adjuntada por la unidad que se va a inspeccionar. Para ello se elimina la fecha de
+	 * cumplimentación y reenvia el cuestionario al destinatario de la unidad con el motivo de dicha no conformidad.
+	 * Adicionalmente reactiva los usuarios provisinales que se usaron para llevarlo a cabo.
+	 * 
+	 * @author EZENTIS
+	 * @return vista validarCuestionario
+	 */
+	public String noConformeCuestionario() {
+		try {
+			CuestionarioEnvio cuestionario = visualizarCuestionario.getCuestionarioEnviado();
+			cuestionario.setFechaCumplimentacion(null);
+			cuestionario.setFechaNoConforme(new Date());
+			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+			cuestionario.setUsernameNoConforme(usuarioActual);
+			if (cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario)) {
+
+				String asunto = "Cuestionario para la inspección " + cuestionario.getInspeccion().getNumero();
+				String textoAutomatico = "\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:"
+						+ "\r\n \r\n" + motivosNoConforme
+						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es "
+						+ applicationBean.getMapaParametros().get("URLPROGESIN")
+								.get(cuestionario.getInspeccion().getAmbito().name())
+						+ ", el usuario de acceso principal es su correo electrónico. El nombre del resto de usuarios y la contraseña para todos ellos constan en la primera comunicación que se le envió."
+						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
+						+ "\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n"
+						+ "Muchas gracias y un saludo.";
+				String cuerpo = "Asunto: " + cuestionario.getMotivoCuestionario() + textoAutomatico;
+				correoElectronico.setDatos(cuestionario.getCorreoEnvio(), asunto, cuerpo);
+				correoElectronico.envioCorreo();
+
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
+						"Declarado no conforme con éxito el cuestionario. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
+
+				String descripcion = asunto + ". Usuario no conforme : " + cuestionario.getUsernameNoConforme();
+
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al declarar no conforme el cuestionario, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		return "/cuestionarios/noConformeCuestionario";
 	}
 
 }
