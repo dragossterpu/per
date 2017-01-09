@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
+import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
@@ -46,6 +47,9 @@ public class VisualizarCuestionario implements Serializable {
 
 	@Autowired
 	private transient IDatosTablaGenericaRepository datosTablaRepository;
+
+	@Autowired
+	private transient IPreguntaCuestionarioRepository preguntasRepository;
 
 	private static final long serialVersionUID = 1L;
 
@@ -132,7 +136,9 @@ public class VisualizarCuestionario implements Serializable {
 	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas) {
 		setMapaAreaPreguntas(new HashMap<>());
 		this.setCuestionarioPersonalizado(cuestionario);
-		List<PreguntasCuestionario> preguntas = cuestionario.getPreguntasElegidas();
+
+		List<PreguntasCuestionario> preguntas = preguntasRepository
+				.findPreguntasElegidasCuestionarioPersonalizado(cuestionario.getId());
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
 		List<PreguntasCuestionario> listaPreguntas;
 

@@ -179,7 +179,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		}
 		textoAutomatico.append(usuariosProvisionales);
 		textoAutomatico.append("\r\nLa contraseña de acceso para todos los usuarios es: ").append(password)
-				.append(".\r\n Sólo el usuario principal (").append(cuestionarioEnvio.getCorreoEnvio())
+				.append(".\r\nSólo el usuario principal (").append(cuestionarioEnvio.getCorreoEnvio())
 				.append(") podrá enviar el cuestionario, el resto de ")
 				.append("usuarios solamente podrá guardar el cuestionario como borrador.")
 				.append("\r\n \r\nUna vez enviado el cuestionario todos los usuarios quedarán inactivos. \r\n \r\n")

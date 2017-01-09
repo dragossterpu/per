@@ -68,7 +68,7 @@ public class CuestionarioPersonalizado implements Serializable {
 	@JoinColumn(name = "id_modelo_cuestionario", nullable = false)
 	private ModeloCuestionario modeloCuestionario;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "cuest_per_preguntas", joinColumns = @JoinColumn(name = "id_cuest_pers"), inverseJoinColumns = @JoinColumn(name = "id_preg_elegida"))
 	private List<PreguntasCuestionario> preguntasElegidas;
 }

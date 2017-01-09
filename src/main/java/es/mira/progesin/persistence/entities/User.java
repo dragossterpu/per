@@ -18,6 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -154,6 +155,7 @@ public class User implements Serializable {
 		this.setFechaDestinoIPSS(new Date());
 		this.setNivel(0);
 		this.setFechaAlta(new Date());
+		this.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	public User(String username, String password, RoleEnum role, String correoPrincipal) {
@@ -169,5 +171,6 @@ public class User implements Serializable {
 		this.setFechaDestinoIPSS(new Date());
 		this.setNivel(0);
 		this.setFechaAlta(new Date());
+		this.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 }

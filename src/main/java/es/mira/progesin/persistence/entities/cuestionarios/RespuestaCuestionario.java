@@ -26,7 +26,6 @@ import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +33,6 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = { "fechaModificacion", "usernameModificacion", "fechaCreacion", "usernameCreacion" })
 @Builder
 @ToString
 @Getter
@@ -74,5 +72,31 @@ public class RespuestaCuestionario implements Serializable {
 
 	@Column
 	private Date fechaValidacion;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((respuestaId == null) ? 0 : respuestaId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RespuestaCuestionario other = (RespuestaCuestionario) obj;
+		if (respuestaId == null) {
+			if (other.respuestaId != null)
+				return false;
+		}
+		else if (!respuestaId.equals(other.respuestaId))
+			return false;
+		return true;
+	}
 
 }

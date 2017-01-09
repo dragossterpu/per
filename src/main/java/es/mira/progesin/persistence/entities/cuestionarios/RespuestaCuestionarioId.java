@@ -8,13 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode()
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,4 +29,38 @@ public class RespuestaCuestionarioId implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "id_pregunta")
 	private PreguntasCuestionario pregunta;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cuestionarioEnviado == null) ? 0 : cuestionarioEnviado.hashCode());
+		result = prime * result + ((pregunta == null) ? 0 : pregunta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RespuestaCuestionarioId other = (RespuestaCuestionarioId) obj;
+		if (cuestionarioEnviado == null) {
+			if (other.cuestionarioEnviado != null)
+				return false;
+		}
+		else if (!cuestionarioEnviado.getId().equals(other.cuestionarioEnviado.getId()))
+			return false;
+		if (pregunta == null) {
+			if (other.pregunta != null)
+				return false;
+		}
+		else if (!pregunta.getId().equals(other.pregunta.getId()))
+			return false;
+		return true;
+	}
+
 }
