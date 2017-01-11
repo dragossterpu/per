@@ -15,7 +15,7 @@
 
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-
+			
 			<h3>Búsqueda de cuestionarios enviados</h3>
 			
 			<h:form>
@@ -187,10 +187,13 @@
 						</h:outputText>
 					</p:column>
 					<p:column width="30" exportable="false">
-						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
+						<h:commandLink title="Ver" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
 					</p:column>
 					<p:column width="30" exportable="false">
-						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" disabled="#{not empty cuestionario.fechaAnulacion}">
+						<p:commandLink title="Modificar datos envio" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.getFormModificarCuestionario(cuestionario)}"/>
+					</p:column>
+					<p:column width="30" exportable="false">
+						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" disabled="#{not empty cuestionario.fechaFinalizacion}">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>

@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,14 +62,20 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 	private String motivosNoConforme;
 
+	private CuestionarioEnvio cuestionarioSeleccionado;
+
+	private Date backupFechaLimiteCuestionario;
+
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
 	@Autowired
 	private transient ICuestionarioEnvioService cuestionarioEnvioService;
 
 	@Autowired
 	private transient IAreaCuestionarioService areaService;
 
-	@Autowired
-	private EnvioCuestionarioBean envioCuestionarioBean;
+	// @Autowired
+	// private EnvioCuestionarioBean envioCuestionarioBean;
 
 	@Autowired
 	private transient ICorreoElectronico correoElectronico;
@@ -215,7 +222,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 								.append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
 								.append("\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n")
 								.append("Muchas gracias y un saludo.");
-				StringBuilder cuerpo = new StringBuilder("Asunto: ").append(cuestionario.getMotivoCuestionario())
+				StringBuilder cuerpo = new StringBuilder("Motivo: ").append(cuestionario.getMotivoCuestionario())
 						.append(textoAutomatico);
 				correoElectronico.setDatos(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
 				correoElectronico.envioCorreo();
@@ -237,6 +244,77 @@ public class CuestionarioEnviadoBean implements Serializable {
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return "/cuestionarios/noConformeCuestionario";
+	}
+
+	/**
+	 * Pasa los datos del cuestionario que queremos modificar al formulario de modificación para que cambien los valores
+	 * que quieran. En este caso sólo la fecha de finalización.
+	 * 
+	 * @author EZENTIS
+	 * @param cuestionario recuperado del formulario
+	 * @return vista modificarCuestionario
+	 */
+	public String getFormModificarCuestionario(CuestionarioEnvio cuestionario) {
+		cuestionarioSeleccionado = cuestionario;
+		backupFechaLimiteCuestionario = cuestionario.getFechaLimiteCuestionario();
+		return "/cuestionarios/modificarCuestionario";
+	}
+
+	/**
+	 * Modifica los datos de un cuestionario
+	 * 
+	 * @author EZENTIS
+	 */
+	public String modificarCuestionario() {
+		try {
+			cuestionarioEnvioService.save(cuestionarioSeleccionado);
+			String mensajeCorreoEnviado = "";
+			// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
+			if (cuestionarioSeleccionado.getFechaEnvio() != null
+					&& !backupFechaLimiteCuestionario.equals(cuestionarioSeleccionado.getFechaLimiteCuestionario())) {
+				StringBuilder asunto = new StringBuilder("Cuestionario para la inspección ")
+						.append(cuestionarioSeleccionado.getInspeccion().getNumero());
+				StringBuilder textoAutomatico = new StringBuilder(
+						"\r\n \r\nEl plazo del que disponía para enviar el cuestionario conectándose a la aplicación PROGESIN ha sido modificado.")
+								.append("\r\n \r\nFecha límite de envío anterior: ")
+								.append(sdf.format(backupFechaLimiteCuestionario))
+								.append("\r\nFecha límite de envío nueva: ")
+								.append(sdf.format(cuestionarioSeleccionado.getFechaLimiteCuestionario()))
+								.append("\r\n \r\nMuchas gracias y un saludo.");
+				String cuerpo = "Motivo: " + cuestionarioSeleccionado.getMotivoCuestionario() + textoAutomatico;
+				correoElectronico.setDatos(cuestionarioSeleccionado.getCorreoEnvio(), asunto.toString(), cuerpo);
+				correoElectronico.envioCorreo();
+				mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
+			}
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+					"El cuestionario ha sido modificado con éxito" + mensajeCorreoEnviado);
+
+			String descripcion = "Cuestionario. Usuario modificación : "
+					+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					NOMBRESECCION);
+
+			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		return "/cuestionarios/modificarCuestionario";
+	}
+
+	/**
+	 * Comprueba si el usuario logueado es el jefe del equipo encargado de la inspeccion.
+	 * 
+	 * @author EZENTIS
+	 * @return result booleano
+	 */
+	public boolean esJefeEquipoInspeccion() {
+		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+		String jefeEquipoInspeccion = cuestionarioSeleccionado.getInspeccion().getEquipo().getJefeEquipo();
+		return usuarioActual.equals(jefeEquipoInspeccion);
 	}
 
 }

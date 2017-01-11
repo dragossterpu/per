@@ -452,15 +452,18 @@ public class SolicitudDocPreviaBean implements Serializable {
 				// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
 				if (solicitudDocumentacionPrevia.getFechaEnvio() != null
 						&& !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
-					String asunto = "Solicitud de documentación previa para la inspección "
-							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-					String textoAutomatico = "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado."
-							+ "\r\n \r\nFecha límite de envío anterior: " + sdf.format(backupFechaLimiteEnvio)
-							+ "\r\nFecha límite de envío nueva :"
-							+ sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio())
-							+ "\r\n \r\nMuchas gracias y un saludo.";
+					StringBuilder asunto = new StringBuilder("Solicitud de documentación previa para la inspección ")
+							.append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
+					StringBuilder textoAutomatico = new StringBuilder(
+							"\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado.")
+									.append("\r\n \r\nFecha límite de envío anterior: ")
+									.append(sdf.format(backupFechaLimiteEnvio))
+									.append("\r\nFecha límite de envío nueva: ")
+									.append(sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio()))
+									.append("\r\n \r\nMuchas gracias y un saludo.");
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+							cuerpo);
 					correoElectronico.envioCorreo();
 					mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
 				}
@@ -514,18 +517,19 @@ public class SolicitudDocPreviaBean implements Serializable {
 				if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia,
 						usuarioProv)) {
 					System.out.println("Password usuario provisional  : " + password);
-
-					String asunto = "Solicitud de documentación previa para la inspección "
-							+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-					String textoAutomatico = "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la "
-							+ "aplicación es "
-							+ applicationBean.getMapaParametros().get("URLPROGESIN")
-									.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name())
-							+ ", su usuario de acceso es su correo electrónico y la contraseña es " + password
-							+ ". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n"
-							+ "Muchas gracias y un saludo.";
+					StringBuilder asunto = new StringBuilder("Solicitud de documentación previa para la inspección ")
+							.append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
+					StringBuilder textoAutomatico = new StringBuilder(
+							"\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
+									.append(applicationBean.getMapaParametros().get("URLPROGESIN")
+											.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
+									.append(", su usuario de acceso es su correo electrónico y la contraseña es ")
+									.append(password)
+									.append(". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n")
+									.append("Muchas gracias y un saludo.");
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+							cuerpo);
 					correoElectronico.envioCorreo();
 
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
@@ -613,19 +617,20 @@ public class SolicitudDocPreviaBean implements Serializable {
 			if (solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
 
-				String asunto = "Solicitud de documentación previa para la inspección "
-						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-				String textoAutomatico = "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:"
-						+ "\r\n \r\n" + motivosNoConforme
-						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es "
-						+ applicationBean.getMapaParametros().get("URLPROGESIN")
-								.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name())
-						+ ", su usuario de acceso es su correo electrónico y la contraseña es la que consta en la primera comunicación que se le envió."
-						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
-						+ "\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n"
-						+ "Muchas gracias y un saludo.";
+				StringBuilder asunto = new StringBuilder("Solicitud de documentación previa para la inspección ")
+						.append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
+				StringBuilder textoAutomatico = new StringBuilder(
+						"\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:")
+								.append("\r\n \r\n").append(motivosNoConforme)
+								.append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
+								.append(applicationBean.getMapaParametros().get("URLPROGESIN")
+										.get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
+								.append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
+								.append("\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n")
+								.append("Muchas gracias y un saludo.");
 				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, cuerpo);
+				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+						cuerpo);
 				correoElectronico.envioCorreo();
 
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",

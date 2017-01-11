@@ -18,7 +18,7 @@
 				});
 			});
 		</h:outputScript>
-			<ui:param name="esJefeEquipoInspeccion" value="#{cuestionarioEnviadoBean.visualizarCuestionario.esJefeEquipoInspeccion() or p:ifGranted('ADMIN')}"/>
+			<ui:param name="esJefeEquipoInspeccion" value="#{cuestionarioEnviadoBean.visualizarCuestionario.esJefeEquipoInspeccion() or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 			<div class="tituloCuestionario">
 				<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
 			</div>
