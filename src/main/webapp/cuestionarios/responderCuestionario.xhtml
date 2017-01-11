@@ -38,7 +38,7 @@
 										<p:outputLabel id="contador"/>
 										<p:messages for="textarea" autoUpdate="true"  closable="true"/>
 										 				
-										<p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" 
+										<p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'RADIO')}" 
 													value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
 													required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío">
 											<f:selectItems value="#{responderCuestionarioBean.visualizarCuestionario.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
@@ -62,6 +62,11 @@
 												<p:column headerText="Documentos">
 											        <h:outputText value="#{documento.nombre}" />
 											    </p:column>
+												<p:column styleClass="botonTabla">
+													<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{responderCuestionarioBean.visualizarCuestionario.descargarFichero(documento)}" title="Descargar documento">
+														<p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
+													</p:commandButton>
+												</p:column>
 											    <p:column style="width:30px">
 													<p:commandButton title="Eliminar" icon="fa fa-trash"
 														actionListener="#{responderCuestionarioBean.eliminarDocumento(preguntaArea, documento)}"
@@ -117,7 +122,8 @@
 			 	<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> 
 					<div class="botonesFormulario">
 						<p:commandButton action="#{responderCuestionarioBean.guardarBorrador}" value="Guardar borrador" icon="fa fa-fw fa-save" id="borrador"/>
-						<h:commandLink id="enviar" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+						<h:commandLink id="enviar" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
+							rendered="#{request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}">
 							<span class="ui-CommandLink-texto">Responder</span>
 						</h:commandLink>
 					</div>

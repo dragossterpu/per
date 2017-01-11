@@ -7,20 +7,25 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
@@ -69,9 +74,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 			CuestionarioEnvio cuestionarioEnvio) {
 		userRepository.save(listadoUsuariosProvisionales);
 		cuestionarioEnvioRepository.save(cuestionarioEnvio);
-		regActividadService.altaRegActividad(
-				"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
-				EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
 	}
 
 	@Override
@@ -80,11 +82,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	}
 
 	@Override
-	// NECESITO LO INVERSO O CAMBIAR MAPPING EN LA ENTIDAD A LAZY Y AÑADIR LOAD AL RESTO DE MÉTODOS QUE GESTIONEN
-	// PREGUNTAS.
-	// @EntityGraph(value = "CuestionarioPersonalizado.preguntasElegidas", type = EntityGraph.EntityGraphType.LOAD)
-	// AHORA MUESTRA UN RESULTADO POR RESPUESTA DEL CUESTIONARIO PERSONALIZADO DE CADA CUESTIONARIO ENVIADO
-	// APAÑADO CON UN DISTINCT
 	public List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(
 			CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
 		Session session = sessionFactory.openSession();
@@ -187,6 +184,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 			criteria.add(Restrictions.ilike("equipo.nombreEquipo", parametro, MatchMode.ANYWHERE));
 		}
 
+		User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+			DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
+			subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
+			subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
+			subquery.setProjection(Projections.property("miembro.equipo"));
+			criteria.add(Property.forName("equipo.id").in(subquery));
+		}
+
 		criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
 		if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null
 				&& !cuestionarioEnviadoBusqueda.getNombreCuestionario().isEmpty()) {
@@ -219,11 +225,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void saveAll(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
+	public void transaccSaveConRespuestas(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
 			List<DatosTablaGenerica> listaDatosTablaSave) {
-		respuestaRepository.save(listaRespuestas);
-		datosTablaRepository.save(listaDatosTablaSave);
 		cuestionarioEnvioRepository.save(cuestionario);
+		respuestaRepository.save(listaRespuestas);
+		respuestaRepository.flush();
+		datosTablaRepository.save(listaDatosTablaSave);
 	}
 
 	@Override
@@ -242,11 +249,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public boolean transaccSaveInactivaUsuariosProv(CuestionarioEnvio cuestionario,
+	public boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
 			List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave) {
-		respuestaRepository.save(listaRespuestas);
-		datosTablaRepository.save(listaDatosTablaSave);
 		cuestionarioEnvioRepository.save(cuestionario);
+		respuestaRepository.save(listaRespuestas);
+		respuestaRepository.flush();
+		datosTablaRepository.save(listaDatosTablaSave);
 		String correoPrincipal = cuestionario.getCorreoEnvio();
 		String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
 		String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));

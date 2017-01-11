@@ -21,12 +21,12 @@ public interface ICuestionarioEnvioService extends Serializable {
 
 	void save(CuestionarioEnvio cuestionario);
 
-	void saveAll(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
+	void transaccSaveConRespuestas(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
 			List<DatosTablaGenerica> listaDatosTablaSave);
 
 	boolean transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario);
 
-	boolean transaccSaveInactivaUsuariosProv(CuestionarioEnvio cuestionario,
+	boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
 			List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave);
 
 	boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario);

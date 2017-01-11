@@ -172,9 +172,9 @@ Insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (1
   ------------- preguntas cuestionario
   
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Situación y estado del centro', 1,'TEXTAREA',1);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Fecha de creación', 1,'CALENDAR',2);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Fecha de creación', 1,'INPUT',2);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Instalaciones. Descripción de las mismas', 1,'TEXTAREA',3);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Disponibilidad de accesos para personas con movilidad reducida', 1,'CHECKBOXSINO',4);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Disponibilidad de accesos para personas con movilidad reducida', 1,'RADIOSINO',4);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Capacidad, diferenciando por sexos.', 1,'TEXTAREA',5);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Numero de módulos destinados al alojamiento de hombres', 1,'INPUT',6);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de módulos destinados al alojamiento de mujeres', 1,'INPUT',7);
@@ -197,11 +197,11 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Baja Tensión. Cuadros eléctricos', 1,'INPUT',24);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Grupos electrógenos', 1,'INPUT',25);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Sistema de Alimentación Ininterrumpida (S.A.I.)/Baterías de acumuladores', 1,'INPUT',26);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Calderas de calefacción y ACS', 1,'CHECKBOXSINO',27);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Aire acondicionado y/o ventilación forzada', 1,'CHECKBOXSINO',28);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Aparatos a presión (compresores)', 1,'CHECKBOXSINO',29);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Depósitos de  Combustibles gaseosos.', 1,'CHECKBOXSINO',30);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Combustibles gaseosos.', 1,'CHECKBOXSINO',31);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Calderas de calefacción y ACS', 1,'RADIOSINO',27);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Aire acondicionado y/o ventilación forzada', 1,'RADIOSINO',28);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Aparatos a presión (compresores)', 1,'RADIOSINO',29);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Depósitos de  Combustibles gaseosos.', 1,'RADIOSINO',30);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Combustibles gaseosos.', 1,'RADIOSINO',31);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Prevención/control Legionelosis', 1,'TEXTAREA',32);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Libro del edificio', 1,'ADJUNTO',33);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Libros de mantenimiento de cada una de las instalaciones, con sus informes, actas, etc. correspondientes a las operaciones de mantenimiento, revisiones e inspecciones.', 1,'ADJUNTO',34);
@@ -240,7 +240,7 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Medidas a imponer a los internos que incumplan las normas', 5,'TEXTAREA',67);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de reconocimientos médicos ordenados por causas de salud colectiva', 5,'TEXTAREA',68);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Cómo se efectúa el control sobre la custodia y cumplimentación de los libros', 5,'TEXTAREA',69);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de reuniones de seguimiento de la gestión entre Comisaria General de extranjería y Fronteras, con directores e instituciones. Remitir actas.', 5,'TEXTAREA+ADJUNTO',70);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de reuniones de seguimiento de la gestión entre Comisaria General de extranjería y Fronteras, con directores e instituciones. Remitir actas.', 5,'ADJUNTO',70);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de visitas del Juez competente, especificando los motivos.  ', 5,'TEXTAREA ',71);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de inspecciones, con inclusión de fechas, distinguiendo las llevadas a cabo por la autoridad judicial, el CNP, u otros organismos. ', 5,'TEXTAREA ',72);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Datos anuales publicados por la Comisaría General de Extranjería y Fronteras.', 5,'ADJUNTO',73);
@@ -322,10 +322,10 @@ Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Información sobre derechos y obligaciones del nuevo interno. Boletín Informativo.', 9,'ADJUNTO',149);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Médico de la administración, responsable del servicio de Asistencia sanitaria.', 10,'INPUT',150);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de ATS/Diplomado/Graduado Universitario.', 10,'INPUT',151);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Alimentación.', 10,'INPUT+ADJUNTO',152);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Aseo de los internos, sus ropas y pertenencias.', 10,'INPUT+ADJUNTO',153);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Higiene, calefacción, iluminación, y ventilación de las dependencias.', 10,'INPUT+ADJUNTO',154);
-Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Controles periódicos de salubridad.', 10,'INPUT+ADJUNTO',155);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Alimentación.', 10,'ADJUNTO',152);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Aseo de los internos, sus ropas y pertenencias.', 10,'ADJUNTO',153);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Higiene, calefacción, iluminación, y ventilación de las dependencias.', 10,'ADJUNTO',154);
+Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Controles periódicos de salubridad.', 10,'ADJUNTO',155);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Prevención de epidemias y medidas de aislamiento de pacientes infecto-contagiosos', 10,'TEXTAREA',156);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Entrega de elementos de aseo y abrigo', 10,'TEXTAREA',157);
 Insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (seq_preguntascuestionario.nextval, 'Número de actos médicos.', 10,'TEXTAREA',158);
@@ -401,8 +401,8 @@ Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES,AMBITO) 
 Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES,AMBITO) Values (seq_tipodocumentacionprevia.nextval, 'Relación de municipios que configuran la demarcación de la compañía', 'RMD', 'DOC, DOCX', 'GC');
 Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES,AMBITO) Values (seq_tipodocumentacionprevia.nextval, 'Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico', 'RM', 'DOC, DOCX', 'PN');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('CHECKBOXSINO', 'NO', 'NO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('CHECKBOXSINO', 'SI', 'SI');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'NO');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'SI');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'campo1', 'SEXO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'campo2', 'MESES');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINGRESOS', 'campo3', 'PERIODOS');

@@ -8,22 +8,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Documento;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
+import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +44,8 @@ import lombok.Setter;
 @Component("visualizarCuestionario")
 public class VisualizarCuestionario implements Serializable {
 
+	private static final String NOMBRESECCION = "Visualizar cuestionario";
+
 	@Autowired
 	private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
 
@@ -50,6 +57,12 @@ public class VisualizarCuestionario implements Serializable {
 
 	@Autowired
 	private transient IPreguntaCuestionarioRepository preguntasRepository;
+
+	@Autowired
+	transient IRegistroActividadService regActividadService;
+
+	@Autowired
+	transient IDocumentoService documentoService;
 
 	private static final long serialVersionUID = 1L;
 
@@ -77,6 +90,8 @@ public class VisualizarCuestionario implements Serializable {
 
 	private List<RespuestaCuestionario> listaRespuestas;
 
+	private transient StreamedContent file;
+
 	/**
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
 	 * texto, adjuntos, tablas...)
@@ -89,7 +104,7 @@ public class VisualizarCuestionario implements Serializable {
 		mapaRespuestasTabla = new HashMap<>();
 		mapaRespuestas = new HashMap<>();
 		mapaDocumentos = new HashMap<>();
-		return visualizar(cuestionario, false);
+		return visualizar(cuestionario, false, false);
 	}
 
 	/**
@@ -108,7 +123,19 @@ public class VisualizarCuestionario implements Serializable {
 		mapaRespuestasTablaAux = new HashMap<>();
 		mapaValidacionAreas = new HashMap<>();
 		mapaValidacionRespuestas = new HashMap<>();
-		listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+
+		// Para inspectores se recuperan todas las respuestas
+		// Para usuarios provisionales sólo las no validadas
+		User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		boolean esProvisional = RoleEnum.PROV_CUESTIONARIO.equals(usuarioActual.getRole());
+		if (esProvisional) {
+			listaRespuestas = respuestaRepository
+					.findByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(cuestionarioEnviado);
+		}
+		else {
+			listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+		}
+
 		listaRespuestas.forEach(respuesta -> {
 			String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
 			if ((tipoRespuesta.startsWith("TABLA") || tipoRespuesta.startsWith("MATRIZ"))
@@ -130,10 +157,13 @@ public class VisualizarCuestionario implements Serializable {
 			}
 		});
 
-		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(), true);
+		return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(),
+				listaRespuestas.isEmpty() == Boolean.FALSE,
+				esProvisional && cuestionarioEnviado.getFechaNoConforme() != null);
 	}
 
-	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas) {
+	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas,
+			boolean soloNoValidadas) {
 		setMapaAreaPreguntas(new HashMap<>());
 		this.setCuestionarioPersonalizado(cuestionario);
 
@@ -143,15 +173,19 @@ public class VisualizarCuestionario implements Serializable {
 		List<PreguntasCuestionario> listaPreguntas;
 
 		for (PreguntasCuestionario pregunta : preguntas) {
-			listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
-			if (listaPreguntas == null) {
-				listaPreguntas = new ArrayList<>();
-			}
-			listaPreguntas.add(pregunta);
-			mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-			if (pregunta.getTipoRespuesta() != null && (pregunta.getTipoRespuesta().startsWith("TABLA")
-					|| pregunta.getTipoRespuesta().startsWith("MATRIZ"))) {
-				construirTipoRespuestaTablaMatrizVacia(pregunta);
+			// Si es user provisional y existe no conformidad, pintar sólo aquellas que no tengan respuesta ya validada
+			// (las recuperadas de la BDD en listaRespuestas y presentes en el mapa de validaciones)
+			if (soloNoValidadas == Boolean.FALSE || soloNoValidadas && mapaValidacionRespuestas.containsKey(pregunta)) {
+				listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
+				if (listaPreguntas == null) {
+					listaPreguntas = new ArrayList<>();
+				}
+				listaPreguntas.add(pregunta);
+				mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
+				if (pregunta.getTipoRespuesta() != null && (pregunta.getTipoRespuesta().startsWith("TABLA")
+						|| pregunta.getTipoRespuesta().startsWith("MATRIZ"))) {
+					construirTipoRespuestaTablaMatrizVacia(pregunta);
+				}
 			}
 		}
 
@@ -180,7 +214,7 @@ public class VisualizarCuestionario implements Serializable {
 	/**
 	 * getValoresTipoRespuesta
 	 * 
-	 * Obtiene los valores asociados a un tipo de respuesta CHECKBOX o similar. Se usa dentro del xhtml para obtener los
+	 * Obtiene los valores asociados a un tipo de respuesta RADIO o similar. Se usa dentro del xhtml para obtener los
 	 * valores a visualizar en pantalla.
 	 * 
 	 * @param tipo Tipo de respuesta de la pregunta
@@ -247,6 +281,15 @@ public class VisualizarCuestionario implements Serializable {
 		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
 		String jefeEquipoInspeccion = cuestionarioEnviado.getInspeccion().getEquipo().getJefeEquipo();
 		return usuarioActual.equals(jefeEquipoInspeccion);
+	}
+
+	public void descargarFichero(Documento documento) {
+		try {
+			file = documentoService.descargaDocumento(documento);
+		}
+		catch (Exception e) {
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
 	}
 
 }

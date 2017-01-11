@@ -117,11 +117,10 @@ public class CuestionarioEnviadoBean implements Serializable {
 	 * @param cuestionario Cuestionario a eliminar
 	 */
 	public void eliminarCuestionario(CuestionarioEnvio cuestionario) {
-		// TODO comprobar que no se ha usado para el envío antes de borrar
 		cuestionario.setUsernameAnulacion(SecurityContextHolder.getContext().getAuthentication().getName());
 		cuestionario.setFechaAnulacion(new Date());
 		cuestionario.setFechaFinalizacion(cuestionario.getFechaAnulacion());
-		cuestionarioEnvioService.save(cuestionario);
+		cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
 	}
 
 	@PostConstruct
@@ -204,18 +203,21 @@ public class CuestionarioEnviadoBean implements Serializable {
 			cuestionario.setUsernameNoConforme(usuarioActual);
 			if (cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario)) {
 
-				String asunto = "Cuestionario para la inspección " + cuestionario.getInspeccion().getNumero();
-				String textoAutomatico = "\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:"
-						+ "\r\n \r\n" + motivosNoConforme
-						+ "\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es "
-						+ applicationBean.getMapaParametros().get("URLPROGESIN")
-								.get(cuestionario.getInspeccion().getAmbito().name())
-						+ ", el usuario de acceso principal es su correo electrónico. El nombre del resto de usuarios y la contraseña para todos ellos constan en la primera comunicación que se le envió."
-						+ "\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña."
-						+ "\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n"
-						+ "Muchas gracias y un saludo.";
-				String cuerpo = "Asunto: " + cuestionario.getMotivoCuestionario() + textoAutomatico;
-				correoElectronico.setDatos(cuestionario.getCorreoEnvio(), asunto, cuerpo);
+				StringBuilder asunto = new StringBuilder("Cuestionario para la inspección ")
+						.append(cuestionario.getInspeccion().getNumero());
+				StringBuilder textoAutomatico = new StringBuilder(
+						"\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:")
+								.append("\r\n \r\n").append(motivosNoConforme)
+								.append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
+								.append(applicationBean.getMapaParametros().get("URLPROGESIN")
+										.get(cuestionario.getInspeccion().getAmbito().name()))
+								.append(", el usuario de acceso principal es su correo electrónico. El nombre del resto de usuarios y la contraseña para todos ellos constan en la primera comunicación que se le envió.")
+								.append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
+								.append("\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n")
+								.append("Muchas gracias y un saludo.");
+				StringBuilder cuerpo = new StringBuilder("Asunto: ").append(cuestionario.getMotivoCuestionario())
+						.append(textoAutomatico);
+				correoElectronico.setDatos(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
 				correoElectronico.envioCorreo();
 
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",

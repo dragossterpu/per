@@ -77,7 +77,8 @@ public class ResponderCuestionarioBean implements Serializable {
 			List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
 			guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
 
-			cuestionarioEnvioService.saveAll(cuestionarioEnviado, listaRespuestas, listaDatosTablaSave);
+			cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnviado, listaRespuestas,
+					listaDatosTablaSave);
 
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
 					"El borrador se ha guardado con éxito");
@@ -104,7 +105,7 @@ public class ResponderCuestionarioBean implements Serializable {
 			guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
 
 			cuestionarioEnviado.setFechaCumplimentacion(new Date());
-			cuestionarioEnvioService.transaccSaveInactivaUsuariosProv(cuestionarioEnviado, listaRespuestas,
+			cuestionarioEnvioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionarioEnviado, listaRespuestas,
 					listaDatosTablaSave);
 
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
@@ -134,6 +135,9 @@ public class ResponderCuestionarioBean implements Serializable {
 				idRespuesta.setPregunta(pregunta);
 				respuestaCuestionario.setRespuestaId(idRespuesta);
 				respuestaCuestionario.setRespuestaTexto(respuesta);
+				if ("ADJUNTO".equals(pregunta.getTipoRespuesta())) {
+					respuestaCuestionario.setDocumentos(visualizarCuestionario.getMapaDocumentos().get(pregunta));
+				}
 				listaRespuestas.add(respuestaCuestionario);
 			}
 		});

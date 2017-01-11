@@ -25,4 +25,8 @@ public interface IRespuestaCuestionarioRepository
 	@EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
 	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
 
+	@EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
+	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(
+			CuestionarioEnvio cuestionarioEnviado);
+
 }

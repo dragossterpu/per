@@ -13,6 +13,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -126,6 +127,9 @@ public class EnvioCuestionarioBean implements Serializable {
 					List<User> listaUsuariosProvisionales = userService
 							.crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
 					cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
+					regActividadService.altaRegActividad(
+							"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
+							EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
 					// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
 					String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
 					String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);

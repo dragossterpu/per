@@ -32,7 +32,7 @@
 										<div style="width: 30%">
 											<p:calendar rendered="#{preguntaArea.tipoRespuesta eq 'CALENDAR'}" pattern="dd/MM/yyyy" locale="es" navigator="true" showOn="both" />
 										</div>
-										<p:selectOneRadio rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'CHECKBOX')}" value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}">
+										<p:selectOneRadio rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'RADIO')}" value="#{cuestionarioPersonalizadoBean.mapaRespuestas[preguntaArea]}">
 											<f:selectItems value="#{cuestionarioPersonalizadoBean.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
 												var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
 										</p:selectOneRadio>
