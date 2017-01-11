@@ -246,9 +246,8 @@ public class DocumentoService implements IDocumentoService {
 	 *************************************/
 	@Override
 	public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
-		Documento entity = findOne(id);
+		Documento entity = documentoRepository.findById(id);
 
-		// InputStream stream = new ByteArrayInputStream(entity.getFichero());
 		InputStream stream = entity.getFichero().getFichero().getBinaryStream();
 		return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
 
@@ -271,8 +270,6 @@ public class DocumentoService implements IDocumentoService {
 	@Override
 	public Documento cargaDocumento(UploadedFile file) throws SerialException, SQLException, IOException {
 		try {
-			notificacionService.crearNotificacionRol("Carga fichero", SeccionesEnum.GESTOR.getDescripcion(),
-					RoleEnum.ADMIN);
 			registroActividadService.altaRegActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(),
 					SeccionesEnum.GESTOR.getDescripcion());
 
@@ -291,7 +288,6 @@ public class DocumentoService implements IDocumentoService {
 		Blob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
 		DocumentoBlob blob = new DocumentoBlob();
 		blob.setFichero(fileBlob);
-		// blob.setId(docu.getId());
 		docu.setFichero(blob);
 		docu.setTipoContenido(file.getContentType());
 		return docu;

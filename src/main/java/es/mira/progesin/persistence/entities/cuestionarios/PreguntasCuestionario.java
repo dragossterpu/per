@@ -43,6 +43,9 @@ public class PreguntasCuestionario implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_area")
 	private AreasCuestionario area;
+	
+	@Column(name = "orden")
+	private Integer orden;
 
 	@Column(name = "tipo_respuesta", nullable = true, length = 100)
 	private String tipoRespuesta;

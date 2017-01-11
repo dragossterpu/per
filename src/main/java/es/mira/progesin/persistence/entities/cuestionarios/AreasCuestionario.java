@@ -3,12 +3,14 @@ package es.mira.progesin.persistence.entities.cuestionarios;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
@@ -17,12 +19,14 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode()
 @Builder
 @Getter
 @Setter
@@ -42,15 +46,20 @@ public class AreasCuestionario implements Serializable {
 	private String area;
 
 	private Integer idCuestionario;
+	
+	@Column(name = "orden")
+	private Integer orden;
 
-	@OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+	@JoinColumn(name="area")
 	private List<PreguntasCuestionario> preguntas;
+
 
 	@Override
 	public String toString() {
 		return "AreasCuestionario [id=" + id + ", area=" + area + ", cuestionario=" + idCuestionario + "]";
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
