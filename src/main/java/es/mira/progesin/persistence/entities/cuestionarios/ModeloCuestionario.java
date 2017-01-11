@@ -3,11 +3,13 @@ package es.mira.progesin.persistence.entities.cuestionarios;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -49,7 +51,8 @@ public class ModeloCuestionario implements Serializable {
 	@Column(name = "id_documento", nullable = false)
 	private Long idDocumento;
 
-	@OneToMany(mappedBy = "idCuestionario")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "idCuestionario")
 	private List<AreasCuestionario> areas;
 
 }
