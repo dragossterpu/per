@@ -169,6 +169,9 @@ public class VisualizarCuestionario implements Serializable {
 
 		List<PreguntasCuestionario> preguntas = preguntasRepository
 				.findPreguntasElegidasCuestionarioPersonalizado(cuestionario.getId());
+
+		Collections.sort(preguntas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
+
 		// Agrupo las preguntas por areas para poder pintarlas agrupadas
 		List<PreguntasCuestionario> listaPreguntas;
 
@@ -201,7 +204,7 @@ public class VisualizarCuestionario implements Serializable {
 		setAreas(new ArrayList<>(areasSet));
 
 		// Ordeno las áreas por su id para que aparezcan en el mismo orden que en el modelo
-		Collections.sort(areas, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+		Collections.sort(areas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
 
 		if (cuestionarioEnviado == null) {
 			return "/cuestionarios/responderCuestionario";
