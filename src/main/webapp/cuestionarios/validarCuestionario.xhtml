@@ -19,11 +19,16 @@
 			});
 		</h:outputScript>
 			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
-			<div class="tituloCuestionario">
-				<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
-			</div>
 			
 			<h:form id="form">
+				<div class="tituloCuestionario">
+					<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
+					<h:commandLink  actionListener="#{cuestionarioEnviadoBean.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}">
+		               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg" />
+		               <p:fileDownload value="#{cuestionarioEnviadoBean.pdfFile}" />
+		            </h:commandLink>
+				</div>
+				
 				<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario"> 
 					<p:accordionPanel>
 						<p:tab title="#{areaCuestionario.area}">
