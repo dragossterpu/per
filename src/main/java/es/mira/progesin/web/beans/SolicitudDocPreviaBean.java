@@ -688,18 +688,6 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Comprueba si el usuario logueado es el jefe del equipo encargado de la solicitud de inspeccion.
-	 * 
-	 * @author EZENTIS
-	 * @return result booleano
-	 */
-	public boolean esJefeEquipoInspeccion() {
-		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-		String jefeEquipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getEquipo().getJefeEquipo();
-		return usuarioActual.equals(jefeEquipoInspeccion);
-	}
-
-	/**
 	 * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
 	 * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
 	 * 

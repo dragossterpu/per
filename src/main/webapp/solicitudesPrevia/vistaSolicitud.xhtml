@@ -10,7 +10,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		
 		<ui:define name="content">
-
+		<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.equipo.jefeEquipo or p:ifGranted('ADMIN')}"/>
 		
 		<h:form id="formAlta">
 		
@@ -137,7 +137,7 @@
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea validar esta solicitud?"/>
 						</p:commandButton>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidJefeEquipo and (solicitudDocPreviaBean.esJefeEquipoInspeccion() or p:ifAnyGranted('ADMIN')) and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.validacionJefeEquipo}" value="Validación Jefe Equipo" icon="fa fa-fw fa-user-plus">
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidJefeEquipo and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo }" actionListener="#{solicitudDocPreviaBean.validacionJefeEquipo}" value="Validación Jefe Equipo" icon="fa fa-fw fa-user-plus">
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea validar esta solicitud?"/>
 						</p:commandButton>
@@ -145,11 +145,11 @@
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea enviar esta solicitud?"/>
 						</p:commandButton>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and (solicitudDocPreviaBean.esJefeEquipoInspeccion() or p:ifAnyGranted('ADMIN')) and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check">
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check">
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea finalizar esta solicitud?"/>
 						</p:commandButton>
-						<h:commandLink rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and (solicitudDocPreviaBean.esJefeEquipoInspeccion() or p:ifAnyGranted('ADMIN')) and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" action="#{solicitudDocPreviaBean.getFormNoConformeSolicitud}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+						<h:commandLink rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" action="#{solicitudDocPreviaBean.getFormNoConformeSolicitud}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">No conforme</span>
 						</h:commandLink>
 						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>

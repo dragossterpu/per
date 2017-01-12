@@ -274,18 +274,6 @@ public class VisualizarCuestionario implements Serializable {
 		}
 	}
 
-	/**
-	 * Comprueba si el usuario logueado es el jefe del equipo encargado de la inspeccion.
-	 * 
-	 * @author EZENTIS
-	 * @return result booleano
-	 */
-	public boolean esJefeEquipoInspeccion() {
-		String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-		String jefeEquipoInspeccion = cuestionarioEnviado.getInspeccion().getEquipo().getJefeEquipo();
-		return usuarioActual.equals(jefeEquipoInspeccion);
-	}
-
 	public void descargarFichero(Documento documento) {
 		try {
 			file = documentoService.descargaDocumento(documento);
