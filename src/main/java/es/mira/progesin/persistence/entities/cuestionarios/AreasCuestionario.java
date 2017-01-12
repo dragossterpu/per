@@ -19,14 +19,12 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode()
 @Builder
 @Getter
 @Setter
@@ -46,20 +44,19 @@ public class AreasCuestionario implements Serializable {
 	private String area;
 
 	private Integer idCuestionario;
-	
+
 	@Column(name = "orden")
 	private Integer orden;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
-	@JoinColumn(name="id_area")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_area")
 	private List<PreguntasCuestionario> preguntas;
-
 
 	@Override
 	public String toString() {
 		return "AreasCuestionario [id=" + id + ", area=" + area + ", cuestionario=" + idCuestionario + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

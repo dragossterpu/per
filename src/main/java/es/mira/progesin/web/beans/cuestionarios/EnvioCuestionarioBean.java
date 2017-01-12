@@ -127,14 +127,22 @@ public class EnvioCuestionarioBean implements Serializable {
 					List<User> listaUsuariosProvisionales = userService
 							.crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
 					cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
-					regActividadService.altaRegActividad(
-							"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
+					regActividadService.altaRegActividad("Cuestionario para la inspección "
+							+ cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
 							EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
 					// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
 					String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
 					String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
 					envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
-					envioCorreo.envioCorreo();
+					try {
+						envioCorreo.envioCorreo();
+					}
+					catch (Exception e) {
+						FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+								"Se ha produdico un error en el envio del correo electrónico.", e.getMessage(),
+								ETIQUETA_ERROR);
+						regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+					}
 					// TODO crear notificación
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 							"El cuestionario se ha enviado con éxito");

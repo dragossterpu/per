@@ -34,12 +34,12 @@ import lombok.ToString;
 public class RegistroActividad implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REGISTRO")
-    @SequenceGenerator(name="SEQ_REGISTRO", sequenceName="SEQ_REGISTRO", allocationSize=1) 
+	@SequenceGenerator(name = "SEQ_REGISTRO", sequenceName = "SEQ_REGISTRO", allocationSize = 1)
 	@Column(name = "REG_ACTIVIDAD", length = 5)
-	private long idRegActividad;
+	private Long idRegActividad;
 
 	@Column(name = "NOMBRE_SECCION", length = 50)
 	private String nombreSeccion;

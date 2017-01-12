@@ -19,9 +19,11 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISugerenciaService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.CorreoElectronico;
+import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +31,6 @@ import lombok.Setter;
 @Getter
 @Component("sugerenciasBean")
 @RequestScoped
-// @Scope(FacesViewScope.NAME)
 public class SugerenciasBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -47,7 +48,7 @@ public class SugerenciasBean implements Serializable {
 	private Sugerencia sugerencia;
 
 	private List<Sugerencia> sugerenciasListado;
-	
+
 	@Autowired
 	CorreoElectronico correo;
 
@@ -56,6 +57,9 @@ public class SugerenciasBean implements Serializable {
 
 	@Autowired
 	IUserService userService;
+
+	@Autowired
+	private IRegistroActividadService regActividadService;
 
 	public String guardarSugerencia() {
 		if (modulo.equals("")) {
@@ -78,8 +82,6 @@ public class SugerenciasBean implements Serializable {
 			sugerencia.setFechaBaja(null);
 			sugerencia.setUsuario(user.getUsername());
 			sugerenciaService.save(sugerencia);
-			System.out.println("modulo" + modulo);
-			System.out.println("descripcion" + descripcion);
 			return "/index";
 		}
 	}
@@ -110,14 +112,22 @@ public class SugerenciasBean implements Serializable {
 		return "/principal/contestarSugerencia";
 	}
 
-	public String contestar(Integer idSugerencia, String contestacion) throws MessagingException, MailException, FileNotFoundException {
+	public String contestar(Integer idSugerencia, String contestacion)
+			throws MessagingException, MailException, FileNotFoundException {
 		sugerencia = sugerenciaService.findOne(idSugerencia);
 		user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String asunto = "Respuesta a su sugerencia";
 		String usuarioContestacion = sugerencia.getUsuario();
 		user = userService.findOne(usuarioContestacion);
 		correo.setDatos(user.getCorreo(), asunto, contestacion);
-		correo.envioCorreo();
+		try {
+			correo.envioCorreo();
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+					"Se ha producido un error al enviar el correo electrónico. Error: ", e.getMessage());
+			regActividadService.altaRegActividadError("SUGERENCIA DE MEJORA", e);
+		}
 		return "/principal/sugerenciasListado";
 	}
 

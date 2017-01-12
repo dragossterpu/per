@@ -27,7 +27,6 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "SUGERENCIA")
-
 public class Sugerencia implements Serializable {
 
 	private static final long serialVersionUID = 1L;

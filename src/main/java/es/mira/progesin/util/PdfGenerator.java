@@ -6,7 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -24,6 +29,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.text.DocumentException;
@@ -38,6 +44,7 @@ import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -68,10 +75,6 @@ public class PdfGenerator {
 	private static final String NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_OR = "Cuestionario_OR.pdf";
 
 	private static final String NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_DEST = "Cuestionario.pdf";
-
-	private static final String DEST = "E:\\pruebas_pdf\\cuestionario_dest.pdf";
-
-	private static final String ORIG = "E:\\pruebas_pdf\\cuestionario_or.pdf";
 
 	@Autowired
 	IRespuestaCuestionarioRepository respuestaCuestionarioRepository;
@@ -258,19 +261,78 @@ public class PdfGenerator {
 
 		crearCabeceraFooter(pdf, document, false);
 
-		Paragraph p = new Paragraph(cuestionarioEnviado.getCuestionarioPersonalizado().getNombreCuestionario());
+		Paragraph p = new Paragraph(
+				cuestionarioEnviado.getCuestionarioPersonalizado().getNombreCuestionario().toUpperCase());
+		p.setBold();
+		p.setTextAlignment(TextAlignment.CENTER);
+		p.setPadding(20);
 		document.add(p);
 
-		p = new Paragraph("INSPECCIÓN: " + cuestionarioEnviado.getInspeccion().getTipoInspeccion().getCodigo() + " "
+		p = new Paragraph();
+		Text text = new Text("INSPECCIÓN:  ").setBold();
+		p.add(text);
+		p.add(cuestionarioEnviado.getInspeccion().getTipoInspeccion().getCodigo() + " "
 				+ cuestionarioEnviado.getInspeccion().getNumero());
+		p.setPaddingBottom(10);
 		document.add(p);
 
 		List<RespuestaCuestionario> listaRespuestas = respuestaCuestionarioRepository
 				.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
 
+		// Ordena la lista de respuestas por el orden del area para tenerlas ya ordenadas en el mapa
+		Collections.sort(listaRespuestas,
+				(o1, o2) -> Long.compare(o1.getRespuestaId().getPregunta().getArea().getOrden(),
+						o2.getRespuestaId().getPregunta().getArea().getOrden()));
+
+		// Construyo un mapa con las respuestas asociadas a cada área
+		Map<AreasCuestionario, List<RespuestaCuestionario>> mapaAreaRespuesta = new LinkedHashMap<>();
+		AreasCuestionario area;
+		List<RespuestaCuestionario> listaRtasArea;
+		for (RespuestaCuestionario rta : listaRespuestas) {
+			area = rta.getRespuestaId().getPregunta().getArea();
+			if (mapaAreaRespuesta.get(area) == null) {
+				listaRtasArea = new ArrayList<>();
+			}
+			else {
+				listaRtasArea = mapaAreaRespuesta.get(area);
+			}
+			listaRtasArea.add(rta);
+
+			mapaAreaRespuesta.put(area, listaRtasArea);
+		}
+
+		Iterator<AreasCuestionario> areasSet = mapaAreaRespuesta.keySet().iterator();
+		while (areasSet.hasNext()) {
+			area = areasSet.next();
+			List<RespuestaCuestionario> listaRespuestasArea = mapaAreaRespuesta.get(area);
+			Paragraph pa = new Paragraph(area.getArea());
+			pa.setBackgroundColor(Color.LIGHT_GRAY);
+			pa.setTextAlignment(TextAlignment.CENTER);
+			pa.setBold();
+			document.add(pa);
+
+			// Ordeno las preguntas por su orden
+			Collections.sort(listaRespuestasArea, (o1, o2) -> Long.compare(o1.getRespuestaId().getPregunta().getOrden(),
+					o2.getRespuestaId().getPregunta().getOrden()));
+
+			crearRespuestasPorArea(listaRespuestasArea, document);
+		}
+
+		// Close document
+		document.close();
+
+		File fileDest = File.createTempFile(NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_DEST, ".pdf");
+		insertarNumeroPagina(fileOr.getAbsolutePath(), fileDest.getAbsolutePath(), document);
+
+		InputStream inputStream = new FileInputStream(fileDest);
+		return new DefaultStreamedContent(inputStream, CONTENT_TYPE_PDF, NOMBRE_FICHERO_SOLICITUD);
+	}
+
+	private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document)
+			throws Exception {
 		for (RespuestaCuestionario respuesta : listaRespuestas) {
 			PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
-			p = new Paragraph(pregunta.getPregunta());
+			Paragraph p = new Paragraph(pregunta.getPregunta());
 			p.setBold();
 			document.add(p);
 
@@ -286,16 +348,6 @@ public class PdfGenerator {
 				}
 			}
 		}
-
-		// Close document
-		document.close();
-
-		File fileDest = File.createTempFile(NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_DEST, ".pdf");
-		System.out.println("*************** " + fileDest.getAbsolutePath());
-		insertarNumeroPagina(fileOr.getAbsolutePath(), fileDest.getAbsolutePath(), document);
-
-		InputStream inputStream = new FileInputStream(fileDest);
-		return new DefaultStreamedContent(inputStream, CONTENT_TYPE_PDF, NOMBRE_FICHERO_SOLICITUD);
 	}
 
 	private Table crearRespuestaTipoTablaMatriz(RespuestaCuestionario respuesta) throws Exception {
@@ -306,6 +358,8 @@ public class PdfGenerator {
 
 		Table tabla = new Table(valoresColumnas.size());
 		tabla.setWidthPercent(100);
+		tabla.setPaddingBottom(30);
+		tabla.setPaddingTop(30);
 
 		if (tipoRespuesta.startsWith("MATRIZ")) {
 			tabla = new Table(valoresColumnas.size() + 1);
@@ -345,6 +399,8 @@ public class PdfGenerator {
 	private Table crearTablaDocumentos(RespuestaCuestionario respuesta) throws Exception {
 		Table tabla = new Table(1);
 		tabla.setWidthPercent(100);
+		tabla.setPaddingBottom(10);
+		tabla.setPaddingTop(10);
 
 		tabla.addHeaderCell("DOCUMENTOS ADJUNTADOS");
 		tabla.getHeader().setBackgroundColor(Color.LIGHT_GRAY);
@@ -371,8 +427,6 @@ public class PdfGenerator {
 							- (pagecontent.getPdfDocument().getPageSize().getLeft() + doc.getLeftMargin())) / 2
 							+ doc.getLeftMargin(),
 					pagecontent.getPdfDocument().getPageSize().getBottom() + 20, 0);
-			// ColumnText.showTextAligned(pagecontent, Element.ALIGN_RIGHT,
-			// new Phrase(String.format("page %s of %s", i, nTotalPaginas)), 559, 806, 0);
 		}
 		stamper.close();
 		reader.close();

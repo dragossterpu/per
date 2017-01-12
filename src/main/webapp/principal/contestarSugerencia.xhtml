@@ -10,7 +10,7 @@
 <f:view>
     <ui:composition template="../layouts/layoutInterior.xhtml">
         <ui:define name="content">
-         	<h3>CONTESTACIÓN SUGERENCIA </h3>  
+         	<h3>Contestación Sugerencia </h3>  
          	<br></br><br></br>
 
          	
@@ -32,12 +32,27 @@
 						<h:inputHidden value="#{sugerenciasBean.sugerencia.idSugerencia}" />	
 				</div>
 				</div>	
- <h3>Contestar a la sugerencia</h3>
-   					<p:inputTextarea rows="8" cols="50" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="false" value="#{contestacion}"/>
+				
+				<div>
+ 					<h:outputLabel for="respuesta" value="Respuesta:" />
+   					<p:inputTextarea id="respuesta" rows="8" cols="50" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="false" value="#{contestacion}"/>
     				<h:outputText id="display" value="#{contestacion}" />
+    			</div>
+    			
+				<div class="botonesFormulario">
+				<p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}" value="Contestar" icon="fa fa-fw fa-save"/>
+				<p:button outcome="/principal/sugerenciasListado" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				
+				</div>
 				
-						<h:commandLink title="Guardar" styleClass="fa fa-fw fa-save ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}" />
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+					<p:ajax event="close" listener="#{facesUtilities.redirect('/principal/sugerenciasListado')}" />
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+						<div class="centrarBotonesDialog">
+							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/principal/sugerenciasListado')}" />
+						</div>
+				</p:dialog>
+			
 			</h:form>
         </ui:define>
     </ui:composition>
