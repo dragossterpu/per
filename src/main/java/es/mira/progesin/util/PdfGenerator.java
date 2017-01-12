@@ -2,12 +2,15 @@ package es.mira.progesin.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.List;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.io.image.ImageDataFactory;
@@ -22,9 +25,25 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
+import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
+import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 
 /**
  * Clase para la generación de documentos PDF de la aplicación
@@ -45,6 +64,20 @@ public class PdfGenerator {
 	public static final String LOGO_CALIDAD = "src/main/resources/static/images/footer_solicitud_1.png";
 
 	private static final String CONTENT_TYPE_PDF = "application/pdf";
+
+	private static final String NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_OR = "Cuestionario_OR.pdf";
+
+	private static final String NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_DEST = "Cuestionario.pdf";
+
+	private static final String DEST = "E:\\pruebas_pdf\\cuestionario_dest.pdf";
+
+	private static final String ORIG = "E:\\pruebas_pdf\\cuestionario_or.pdf";
+
+	@Autowired
+	IRespuestaCuestionarioRepository respuestaCuestionarioRepository;
+
+	@Autowired
+	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
 
 	/**
 	 * 
@@ -67,7 +100,7 @@ public class PdfGenerator {
 		Document document = new Document(pdf, PageSize.A4);
 		document.setMargins(100, 36, 70, 36);
 
-		crearCabeceraDocumento(pdf, document);
+		crearCabeceraFooter(pdf, document, true);
 
 		Paragraph p1 = new Paragraph("Nº INSPECCIÓN: " + solDocPrevia.getInspeccion().getNumero());
 		p1.setMarginTop(30);
@@ -107,12 +140,13 @@ public class PdfGenerator {
 	}
 
 	/**
-	 * Crea la cabecera de la solicitud
+	 * Crea la cabecera y el footer del documento
 	 * @param pdf
 	 * @param document
+	 * @param insertarFooter Indica si hay que poner un footer al documento o sólo se inserta una cabecera
 	 * @throws IOException
 	 */
-	private void crearCabeceraDocumento(PdfDocument pdf, Document document) throws IOException {
+	private void crearCabeceraFooter(PdfDocument pdf, Document document, boolean insertarFooter) throws IOException {
 		Image logoMinisterioInterior = new Image(ImageDataFactory.create(LOGO_MININISTERIO_INTERIOR));
 		logoMinisterioInterior.scaleAbsolute((float) (logoMinisterioInterior.getImageWidth() * 0.6),
 				(float) (logoMinisterioInterior.getImageHeight() * 0.6));
@@ -125,12 +159,14 @@ public class PdfGenerator {
 				(float) (headerRepetido.getImageHeight() * 0.6));
 
 		// Footer
-		Image footerCalidad = new Image(ImageDataFactory.create(LOGO_CALIDAD));
-		footerCalidad.scaleAbsolute((float) (footerCalidad.getImageWidth() * 0.6),
-				(float) (footerCalidad.getImageHeight() * 0.6));
+		Image footer = null;
+		if (insertarFooter) {
+			footer = new Image(ImageDataFactory.create(LOGO_CALIDAD));
+			footer.scaleAbsolute((float) (footer.getImageWidth() * 0.6), (float) (footer.getImageHeight() * 0.6));
+		}
 
 		HeaderFooterPdf handler = new HeaderFooterPdf(document, logoMinisterioInterior, ipssLogo, headerRepetido,
-				footerCalidad);
+				footer);
 		pdf.addEventHandler(PdfDocumentEvent.END_PAGE, handler);
 	}
 
@@ -145,7 +181,7 @@ public class PdfGenerator {
 		Table tabla = new Table(columnWidths);
 		tabla.setWidthPercent(100);
 
-		tabla.addHeaderCell(new Cell().add("DOCUMENTO").setBackgroundColor(Color.LIGHT_GRAY));
+		tabla.addHeaderCell("DOCUMENTO");
 		tabla.addHeaderCell("NOMBRE");
 		tabla.addHeaderCell("TIPO DE ARCHIVO");
 
@@ -200,4 +236,145 @@ public class PdfGenerator {
 		return tabla;
 	}
 
+	/**
+	 * Genera un documento PDF con las preguntas y respuestas de un cuestionario enviado
+	 * 
+	 * @param cuestionarioEnviado
+	 * @return
+	 * @throws Exception
+	 */
+	public StreamedContent crearCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) throws Exception {
+		File fileOr = File.createTempFile(NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_OR, ".pdf");
+
+		// Initialize PDF writer
+		PdfWriter writer = new PdfWriter(fileOr.getAbsolutePath());
+
+		// Initialize PDF document
+		PdfDocument pdf = new PdfDocument(writer);
+
+		// Initialize document
+		Document document = new Document(pdf, PageSize.A4);
+		document.setMargins(100, 36, 70, 36);
+
+		crearCabeceraFooter(pdf, document, false);
+
+		Paragraph p = new Paragraph(cuestionarioEnviado.getCuestionarioPersonalizado().getNombreCuestionario());
+		document.add(p);
+
+		p = new Paragraph("INSPECCIÓN: " + cuestionarioEnviado.getInspeccion().getTipoInspeccion().getCodigo() + " "
+				+ cuestionarioEnviado.getInspeccion().getNumero());
+		document.add(p);
+
+		List<RespuestaCuestionario> listaRespuestas = respuestaCuestionarioRepository
+				.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+
+		for (RespuestaCuestionario respuesta : listaRespuestas) {
+			PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
+			p = new Paragraph(pregunta.getPregunta());
+			p.setBold();
+			document.add(p);
+
+			if (pregunta.getTipoRespuesta().startsWith("TABLA") || pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
+				document.add(crearRespuestaTipoTablaMatriz(respuesta));
+			}
+			else {
+				p = new Paragraph(respuesta.getRespuestaTexto());
+				document.add(p);
+				if ("ADJUNTO".equals(pregunta.getTipoRespuesta())
+						&& respuesta.getDocumentos().isEmpty() == Boolean.FALSE) {
+					document.add(crearTablaDocumentos(respuesta));
+				}
+			}
+		}
+
+		// Close document
+		document.close();
+
+		File fileDest = File.createTempFile(NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_DEST, ".pdf");
+		System.out.println("*************** " + fileDest.getAbsolutePath());
+		insertarNumeroPagina(fileOr.getAbsolutePath(), fileDest.getAbsolutePath(), document);
+
+		InputStream inputStream = new FileInputStream(fileDest);
+		return new DefaultStreamedContent(inputStream, CONTENT_TYPE_PDF, NOMBRE_FICHERO_SOLICITUD);
+	}
+
+	private Table crearRespuestaTipoTablaMatriz(RespuestaCuestionario respuesta) throws Exception {
+		List<DatosTablaGenerica> listaDatosTabla = respuesta.getRespuestaTablaMatriz();
+		String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
+		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
+				.findColumnasBySeccion(tipoRespuesta);
+
+		Table tabla = new Table(valoresColumnas.size());
+		tabla.setWidthPercent(100);
+
+		if (tipoRespuesta.startsWith("MATRIZ")) {
+			tabla = new Table(valoresColumnas.size() + 1);
+			// Añado la primera columna de la cabecera vacía
+			tabla.addHeaderCell("");
+		}
+
+		tabla.setWidthPercent(100);
+
+		for (ConfiguracionRespuestasCuestionario columna : valoresColumnas) {
+			Cell cell = new Cell();
+			cell.add(columna.getConfig().getValor());
+			cell.setTextAlignment(TextAlignment.CENTER);
+			tabla.addHeaderCell(cell);
+		}
+		tabla.getHeader().setBackgroundColor(Color.LIGHT_GRAY);
+		tabla.getHeader().setPaddingTop(20);
+
+		for (DatosTablaGenerica datosTabla : listaDatosTabla) {
+			if (tipoRespuesta.startsWith("MATRIZ")) {
+				Cell cell = new Cell();
+				cell.add(datosTabla.getNombreFila());
+				cell.setBackgroundColor(Color.LIGHT_GRAY);
+				cell.setTextAlignment(TextAlignment.LEFT);
+				tabla.addCell(cell);
+			}
+			for (ConfiguracionRespuestasCuestionario columna : valoresColumnas) {
+				Field field = DatosTablaGenerica.class.getDeclaredField(columna.getConfig().getClave());
+				field.setAccessible(true);
+				tabla.addCell((String) field.get(datosTabla));
+			}
+		}
+
+		return tabla;
+	}
+
+	private Table crearTablaDocumentos(RespuestaCuestionario respuesta) throws Exception {
+		Table tabla = new Table(1);
+		tabla.setWidthPercent(100);
+
+		tabla.addHeaderCell("DOCUMENTOS ADJUNTADOS");
+		tabla.getHeader().setBackgroundColor(Color.LIGHT_GRAY);
+		tabla.getHeader().setTextAlignment(TextAlignment.CENTER);
+
+		List<Documento> listaDocumentos = respuesta.getDocumentos();
+		for (Documento documento : listaDocumentos) {
+			tabla.addCell(documento.getNombre());
+		}
+
+		return tabla;
+	}
+
+	public void insertarNumeroPagina(String src, String dest, Document doc) throws IOException, DocumentException {
+		PdfReader reader = new PdfReader(src);
+		int nTotalPaginas = reader.getNumberOfPages();
+		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
+		PdfContentByte pagecontent;
+		for (int i = 0; i < nTotalPaginas;) {
+			pagecontent = stamper.getOverContent(++i);
+			ColumnText.showTextAligned(pagecontent, Element.ALIGN_CENTER,
+					new Phrase(String.format("Página %s de %s", i, nTotalPaginas)),
+					(pagecontent.getPdfDocument().getPageSize().getRight() - doc.getRightMargin()
+							- (pagecontent.getPdfDocument().getPageSize().getLeft() + doc.getLeftMargin())) / 2
+							+ doc.getLeftMargin(),
+					pagecontent.getPdfDocument().getPageSize().getBottom() + 20, 0);
+			// ColumnText.showTextAligned(pagecontent, Element.ALIGN_RIGHT,
+			// new Phrase(String.format("page %s of %s", i, nTotalPaginas)), 559, 806, 0);
+		}
+		stamper.close();
+		reader.close();
+	}
 }

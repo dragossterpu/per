@@ -31,4 +31,6 @@ public interface ICuestionarioEnvioService extends Serializable {
 
 	boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario);
 
+	CuestionarioEnvio findById(Long idCuestionarioEnviado);
+
 }

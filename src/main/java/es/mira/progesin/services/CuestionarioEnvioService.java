@@ -279,4 +279,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 		return true;
 	}
 
+	@Override
+	public CuestionarioEnvio findById(Long idCuestionarioEnviado) {
+		return cuestionarioEnvioRepository.findOne(idCuestionarioEnviado);
+	}
+
 }

@@ -15,15 +15,12 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 public interface IRespuestaCuestionarioRepository
 		extends JpaRepository<RespuestaCuestionario, RespuestaCuestionarioId> {
 
-	// List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviadoAndRespuestaTextoNotNull(
-	// CuestionarioEnvio cuestionarioEnviado);
-
 	@Query("select r from RespuestaCuestionario r where r.respuestaId.cuestionarioEnviado = :cuestionarioEnviado and (r.respuestaId.pregunta.tipoRespuesta like 'TABLA%' or r.respuestaId.pregunta.tipoRespuesta like 'MATRIZ%')")
 	List<RespuestaCuestionario> findRespuestasTablaMatrizByCuestionarioEnviado(
 			@Param("cuestionarioEnviado") CuestionarioEnvio cuestionarioEnviado);
 
 	@EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
-	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
+	List<RespuestaCuestionario> findDistinctByRespuestaIdCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
 
 	@EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
 	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(

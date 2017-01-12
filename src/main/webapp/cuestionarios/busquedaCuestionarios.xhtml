@@ -203,6 +203,11 @@
 	    			</f:facet>
 				</p:dataTable>
 			</p:outputPanel>
+			
+			<h:commandLink style="float: right;" actionListener="#{cuestionarioEnviadoBean.crearPdfCuestionarioEnviado()}">
+		               <p:graphicImage value="/images/pdf.png" style="padding: 0"/>
+		               <p:fileDownload value="#{cuestionarioEnviadoBean.pdfFile}" />
+		            </h:commandLink>
 </h:form>
 
 		<p:confirmDialog global="true">

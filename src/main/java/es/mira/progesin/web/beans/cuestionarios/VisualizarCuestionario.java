@@ -133,7 +133,7 @@ public class VisualizarCuestionario implements Serializable {
 					.findByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(cuestionarioEnviado);
 		}
 		else {
-			listaRespuestas = respuestaRepository.findByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+			listaRespuestas = respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
 		}
 
 		listaRespuestas.forEach(respuesta -> {

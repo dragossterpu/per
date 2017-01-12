@@ -37,7 +37,9 @@ public class HeaderFooterPdf implements IEventHandler {
 	@Override
 	public void handleEvent(Event event) {
 		createHeaderSolicitudDocumentacion(event);
-		createFoterSolicitudDocumentacion(event);
+		if (this.footer1 != null) {
+			createFoterSolicitudDocumentacion(event);
+		}
 	}
 
 	private void createHeaderSolicitudDocumentacion(Event event) {
@@ -86,4 +88,5 @@ public class HeaderFooterPdf implements IEventHandler {
 				pdfDoc.getDefaultPageSize().getBottom(), 523, footer1.getImageHeight());
 		new Canvas(canvas, pdfDoc, rectFooter).add(footer1);
 	}
+
 }
