@@ -65,12 +65,12 @@ public class Utilities {
 	 * @return
 	 */
 	public static String messageError(Exception e) {
-		String message = null;
-		if (e.getMessage().length() > 4000) {
-			message = Arrays.toString(e.getStackTrace()).substring(4000);
+		String message = Arrays.toString(e.getStackTrace());
+		if (message.length() > 2000) {
+			message = message.substring(2000);
 		}
 		else {
-			message = Arrays.toString(e.getStackTrace());
+			message = message;
 		}
 		return message;
 	}
