@@ -130,7 +130,7 @@ public class VisualizarCuestionario implements Serializable {
 		boolean esProvisional = RoleEnum.PROV_CUESTIONARIO.equals(usuarioActual.getRole());
 		if (esProvisional) {
 			listaRespuestas = respuestaRepository
-					.findByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(cuestionarioEnviado);
+					.findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(cuestionarioEnviado);
 		}
 		else {
 			listaRespuestas = respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);

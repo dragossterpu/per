@@ -23,7 +23,7 @@ public interface IRespuestaCuestionarioRepository
 	List<RespuestaCuestionario> findDistinctByRespuestaIdCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
 
 	@EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
-	List<RespuestaCuestionario> findByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(
+	List<RespuestaCuestionario> findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(
 			CuestionarioEnvio cuestionarioEnviado);
 
 }
