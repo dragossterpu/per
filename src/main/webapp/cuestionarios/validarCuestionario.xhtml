@@ -13,26 +13,43 @@
 		<ui:define name="content">
 		<h:outputScript>
 			$(document).ready(function(){
-				$(document).on("click", ".checkArea .ui-chkbox-box, .checkArea input", function() {
-				    validarRespuestas($(this));
+				$(document).on("click", ".checkArea input", function() {
+					validarRespuestas($(this).closest('.checkArea'));
+				});
+				
+				$(document).on("click", ".checkRespuesta input", function() {
+					validarArea($(this).closest('.checkRespuesta'));
 				});
 				
 				function validarRespuestas(validarArea) {
-				    var checked = validarArea.checked; 
+					var widgetArea = PrimeFaces.getWidgetById(validarArea.attr('id'));
+				    var checkedArea = widgetArea.input.prop("checked");
 				
-				    //to change the checked attribute                
-				    $(':checkbox[id*="validarRespuesta"]').attr('checked', checked);
-				
-				    if (checked) {
-				        $('div[id*="validarRespuesta"] > div').each(function() {
-				            $(this).addClass('ui-state-active');
-				            $(this).children('span').addClass('ui-icon ui-icon-check');
+				    if (checkedArea) {
+   				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
+   				        	PrimeFaces.getWidgetById($(this).attr('id')).check();
 				        });
 				    } else {
-				        $('div[id*="validarRespuesta"] > div').each(function() {
-				            $(this).removeClass('ui-state-active');
-				            $(this).children('span').removeClass('ui-icon ui-icon-check');
+   				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
+   				        	PrimeFaces.getWidgetById($(this).attr('id')).uncheck();
 				        });
+				    }
+				}
+								
+				function validarArea(validarRespuesta) {
+					var widgetRespuesta = PrimeFaces.getWidgetById(validarRespuesta.attr('id'));
+				    var checkedRespuesta = widgetRespuesta.input.prop("checked");
+				    var validarArea = validarRespuesta.closest('.prevPregCuest').siblings('.checkArea');
+				    var widgetArea = PrimeFaces.getWidgetById(validarArea.attr('id'));
+				
+				    if (checkedRespuesta) {
+				    	var checkedArea = true;
+   				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
+   				        	checkedArea = checkedArea == PrimeFaces.getWidgetById($(this).attr('id')).input.prop("checked");
+				        });
+   				        if(checkedArea) { widgetArea.check(); }
+				    } else {
+   				        widgetArea.uncheck();
 				    }
 				}
 			});
@@ -53,12 +70,12 @@
 				
 					<p:tab title="#{areaCuestionario.area}">
 					
-						<p:selectBooleanCheckbox id="validarArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" style="font-weight:bold;" disabled="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}"/>
+						<p:selectBooleanCheckbox id="validarArea" styleClass="checkArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" style="font-weight:bold;" disabled="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}"/>
 						
 						<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
 							
 							<div class="prevPregCuest">
-									<p:selectBooleanCheckbox id="validarRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
+									<p:selectBooleanCheckbox id="validarRespuesta" styleClass="checkRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
 									<h:outputText value="#{preguntaArea.pregunta}" style="font-weight:bold;"/>
 									<div class="respuestaCuestionario">
 									<p:inputText id="input" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
