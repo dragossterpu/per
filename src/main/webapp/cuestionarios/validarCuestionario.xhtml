@@ -45,7 +45,7 @@
 				    if (checkedRespuesta) {
 				    	var checkedArea = true;
    				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
-   				        	checkedArea = checkedArea == PrimeFaces.getWidgetById($(this).attr('id')).input.prop("checked");
+   				        	checkedArea = checkedArea &amp;&amp; PrimeFaces.getWidgetById($(this).attr('id')).input.prop("checked");
 				        });
    				        if(checkedArea) { widgetArea.check(); }
 				    } else {
