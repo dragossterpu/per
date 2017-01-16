@@ -20,6 +20,9 @@ public interface IConfiguracionRespuestasCuestionarioRepository
 	@Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave <> 'nombreFila')")
 	List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(@Param("seccion") String seccion);
 
+	@Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave = 'nombreFila')")
+	List<ConfiguracionRespuestasCuestionario> findFilasBySeccion(@Param("seccion") String seccion);
+
 	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionIn(List<String> seccion);
 
 }

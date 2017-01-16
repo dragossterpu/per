@@ -64,12 +64,12 @@ public class SugerenciasBean implements Serializable {
 	public String guardarSugerencia() {
 		if (modulo.equals("")) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Es obligatorio elegir un modulo", ""));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Es obligatorio elegir un módulo", ""));
 			return null;
 		}
 		else if (descripcion == null || descripcion.length() < 10) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "La descrición debe ser mayor de 10 caracteres", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La descripción debe tener más de 10 caracteres", ""));
 			return null;
 		}
 		else {

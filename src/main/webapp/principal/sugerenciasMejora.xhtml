@@ -9,30 +9,30 @@
 <f:view>
     <ui:composition template="../layouts/layoutInterior.xhtml">
         <ui:define name="content">
-         	<h3>SUGERENCIAS DE MEJORA</h3>  
+         	<h3>Sugerencias de mejora</h3>  
          	<br></br><br></br>
-         	<h5>Este apartado permite registrar sugerencias de mejora para <strong>POSIBLES</strong> nuevas versiones</h5>
-         	<br></br><br></br>
-         	<h5>Propuesta de Mejora (Indica detallamente el módulo donde se propone incluir la mejora, cantidad, campos, etc.):</h5>
+         	<p>Este apartado permite registrar sugerencias de mejora para <strong>POSIBLES</strong> nuevas versiones.</p>
+         	<br></br>
+         	<p>Propuesta de Mejora (Indica detallamente el módulo donde se propone incluir la mejora, cantidad, campos, etc.):</p>
          	<br></br><br></br>
          	<h:form id="sugerenciaForm">
    			 <p:panel id="panel"  >
-			   <p:outputLabel for="modulo" value="Modulo: " />
-			        <p:selectOneMenu id="modulo" value="#{sugerenciasBean.modulo}" effect="fold" >
-			            <f:selectItem itemLabel="Seleccione uno: " itemValue="" />
-			             <f:selectItem itemLabel="Módulo de GuÍas" itemValue="GUIA" />
-			            <f:selectItem itemLabel="Módulo de Informes" itemValue="INFORME" />
-			            <f:selectItem itemLabel="Módulo de Inspecciones" itemValue="INSPECCIONES" />
-			            <f:selectItem itemLabel="Módulo de Cuestionario" itemValue="CUESTIONARIO" />
-			            <f:selectItem itemLabel="Gestor documental" itemValue="DOCUMENTAL" />
-			            <f:selectItem itemLabel="Generic" itemValue="GENERIC" />
-			            <f:selectItem itemLabel="Herramientas" itemValue="HERRAMIENTAS" />
-			        </p:selectOneMenu>
+			   <p:outputLabel for="modulo" value="Módulo: " />
+		        <p:selectOneMenu id="modulo" value="#{sugerenciasBean.modulo}" effect="fold" >
+		            <f:selectItem itemLabel="Seleccione uno: " itemValue="" />
+		             <f:selectItem itemLabel="Módulo de GuÍas" itemValue="GUIA" />
+		            <f:selectItem itemLabel="Módulo de Informes" itemValue="INFORME" />
+		            <f:selectItem itemLabel="Módulo de Inspecciones" itemValue="INSPECCIONES" />
+		            <f:selectItem itemLabel="Módulo de Cuestionario" itemValue="CUESTIONARIO" />
+		            <f:selectItem itemLabel="Gestor documental" itemValue="DOCUMENTAL" />
+		            <f:selectItem itemLabel="Generic" itemValue="GENERIC" />
+		            <f:selectItem itemLabel="Herramientas" itemValue="HERRAMIENTAS" />
+		        </p:selectOneMenu>
 
 			       <br></br><br></br>
-			       <h3>Descripción</h3>
-				   <br></br><br></br> 
-				    <p:inputTextarea rows="8" cols="25" counter="display" maxlength="400" counterTemplate="Quedan {0} caractares." autoResize="true"  value="#{sugerenciasBean.descripcion}"/>
+			       <p:outputLabel for="descripcion" value="Descripción: " />
+				    <p:inputTextarea id="descripcion" rows="8" cols="25" counter="display" maxlength="400" 
+				    	counterTemplate="Quedan {0} caractares." autoResize="true"  value="#{sugerenciasBean.descripcion}"/>
 				    <h:outputText id="display" value="#{sugerenciasBean.descripcion}" />
 			   <br></br><br></br>
 			    </p:panel>

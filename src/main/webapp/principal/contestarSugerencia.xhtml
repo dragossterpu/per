@@ -35,7 +35,9 @@
 				
 				<div>
  					<h:outputLabel for="respuesta" value="Respuesta:" />
-   					<p:inputTextarea id="respuesta" rows="8" cols="50" counter="display" maxlength="400" counterTemplate="{0} characters remaining." autoResize="false" value="#{contestacion}"/>
+   					<p:inputTextarea id="respuesta" rows="8" cols="50" counter="display" maxlength="400" counterTemplate="Quedan {0} caracteres" autoResize="false" value="#{contestacion}"
+    					required="true" requiredMessage="Debe introducir un texto en la descripción"/>
+    					<p:messages for="respuesta" autoUpdate="true"  closable="true"/>
     				<h:outputText id="display" value="#{contestacion}" />
     			</div>
     			

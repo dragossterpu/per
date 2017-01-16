@@ -34,11 +34,11 @@
 
 				<p:dialog id="nombreCuestionario" widgetVar="cuestionarioDialog" header="Guardar cuestionario personalizado" position="center">
 						<h:outputLabel for="inputNombre" value="Nombre (*):" />
-						<p:inputText id="inputNombre" value="#{edicionCuestionarioBean.nombreCuestionario}" 
+						<p:inputText id="inputNombre" binding="#{nombreCuestionario}" 
 							required="true" requiredMessage="Introduzca un nombre para el cuestionario"/>
 						<p:messages for="inputNombre" autoUpdate="true"  closable="true"/>
 						<div class="centrarBotonesDialog">
-							<p:commandButton value="Guardar" actionListener="#{edicionCuestionarioBean.guardarFormulario}"/>
+							<p:commandButton value="Guardar" actionListener="#{edicionCuestionarioBean.guardarFormulario(nombreCuestionario.value)}"/>
 							<p:commandButton value="Cerrar" onclick="PF('cuestionarioDialog').hide()"/>
 						</div>
 				</p:dialog>

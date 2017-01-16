@@ -49,6 +49,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 
@@ -69,8 +70,6 @@ public class PdfGenerator {
 	public static final String LOGO_IPSS = "src/main/resources/static/images/logo_ipss.png";
 
 	public static final String LOGO_CALIDAD = "src/main/resources/static/images/footer_solicitud_1.png";
-
-	private static final String CONTENT_TYPE_PDF = "application/pdf";
 
 	private static final String NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_OR = "Cuestionario_OR.pdf";
 
@@ -139,7 +138,7 @@ public class PdfGenerator {
 		document.close();
 
 		InputStream inputStream = new FileInputStream(file);
-		return new DefaultStreamedContent(inputStream, CONTENT_TYPE_PDF, NOMBRE_FICHERO_SOLICITUD);
+		return new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(), NOMBRE_FICHERO_SOLICITUD);
 	}
 
 	/**
@@ -325,7 +324,7 @@ public class PdfGenerator {
 		insertarNumeroPagina(fileOr.getAbsolutePath(), fileDest.getAbsolutePath(), document);
 
 		InputStream inputStream = new FileInputStream(fileDest);
-		return new DefaultStreamedContent(inputStream, CONTENT_TYPE_PDF, NOMBRE_FICHERO_SOLICITUD);
+		return new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(), NOMBRE_FICHERO_SOLICITUD);
 	}
 
 	private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document)

@@ -312,7 +312,6 @@ public class CuestionarioEnviadoBean implements Serializable {
 			setPdfFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
 		}
 		catch (Exception e) {
-			// TODO borrar el print
 			e.printStackTrace();
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
 					"Se ha producido un error en la generación del PDF");
@@ -320,18 +319,4 @@ public class CuestionarioEnviadoBean implements Serializable {
 		}
 	}
 
-	// TODO: sólo para probar, después usar el de arriba
-	public void crearPdfCuestionarioEnviado() {
-		CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioService.findById(1L);
-		try {
-			setPdfFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
-		}
-		catch (Exception e) {
-			// TODO borrar el print
-			e.printStackTrace();
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Se ha producido un error en la generación del PDF");
-			regActividadService.altaRegActividadError(NOMBRESECCION, e);
-		}
-	}
 }

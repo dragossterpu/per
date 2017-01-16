@@ -36,8 +36,6 @@ public class EdicionCuestionarioBean {
 
 	private Map<AreasCuestionario, PreguntasCuestionario[]> preguntasSelecciondas;
 
-	private String nombreCuestionario = "";
-
 	@Autowired
 	private IAreaCuestionarioRepository areaCuestionarioRepository;
 
@@ -77,7 +75,7 @@ public class EdicionCuestionarioBean {
 		return page;
 	}
 
-	public void guardarFormulario() {
+	public void guardarFormulario(String nombreCuestionario) {
 		try {
 			RequestContext.getCurrentInstance().execute("PF('cuestionarioDialog').hide()");
 			CuestionarioPersonalizado cp = new CuestionarioPersonalizado();

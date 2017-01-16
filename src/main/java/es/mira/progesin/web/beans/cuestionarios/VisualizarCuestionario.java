@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.application.FacesMessage;
+
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +32,8 @@ import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepositor
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
+import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -91,6 +95,11 @@ public class VisualizarCuestionario implements Serializable {
 	private List<RespuestaCuestionario> listaRespuestas;
 
 	private transient StreamedContent file;
+
+	private StreamedContent wordFile;
+
+	@Autowired
+	private WordGenerator wordGenerator;
 
 	/**
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -279,6 +288,18 @@ public class VisualizarCuestionario implements Serializable {
 			file = documentoService.descargaDocumento(documento);
 		}
 		catch (Exception e) {
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+	}
+
+	public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado) {
+		try {
+			setWordFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+					"Se ha producido un error en la generación del documento Word");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}

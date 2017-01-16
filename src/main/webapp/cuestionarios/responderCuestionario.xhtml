@@ -11,11 +11,16 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-			<div class="tituloCuestionario">
-				<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
-			</div>
-			
 			<h:form id="form">
+			
+				<div class="tituloCuestionario">
+					<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
+					<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado)}">
+			               <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
+			               <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.wordFile}" />
+			            </h:commandLink>
+				</div>
+				<div style="clear:both;"/>
 				<ui:repeat value="#{responderCuestionarioBean.visualizarCuestionario.areas}" var="areaCuestionario"> 
 					<p:accordionPanel>
 					
