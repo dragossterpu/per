@@ -11,51 +11,12 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-		<h:outputScript>
-			$(document).ready(function(){
-				$(document).on("click", ".checkArea input", function() {
-					validarRespuestas($(this).closest('.checkArea'));
-				});
-				
-				$(document).on("click", ".checkRespuesta input", function() {
-					validarArea($(this).closest('.checkRespuesta'));
-				});
-				
-				function validarRespuestas(validarArea) {
-					var widgetArea = PrimeFaces.getWidgetById(validarArea.attr('id'));
-				    var checkedArea = widgetArea.input.prop("checked");
-				
-				    if (checkedArea) {
-   				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
-   				        	PrimeFaces.getWidgetById($(this).attr('id')).check();
-				        });
-				    } else {
-   				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
-   				        	PrimeFaces.getWidgetById($(this).attr('id')).uncheck();
-				        });
-				    }
-				}
-								
-				function validarArea(validarRespuesta) {
-					var widgetRespuesta = PrimeFaces.getWidgetById(validarRespuesta.attr('id'));
-				    var checkedRespuesta = widgetRespuesta.input.prop("checked");
-				    var validarArea = validarRespuesta.closest('.prevPregCuest').siblings('.checkArea');
-				    var widgetArea = PrimeFaces.getWidgetById(validarArea.attr('id'));
-				
-				    if (checkedRespuesta) {
-				    	var checkedArea = true;
-   				        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function(i) {
-   				        	checkedArea = checkedArea &amp;&amp; PrimeFaces.getWidgetById($(this).attr('id')).input.prop("checked");
-				        });
-   				        if(checkedArea) { widgetArea.check(); }
-				    } else {
-   				        widgetArea.uncheck();
-				    }
-				}
-			});
-		</h:outputScript>
-			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		
+			<script src="#{request.contextPath}/js/selectCheckboxesValidarCuestionario.js"/>
 			
+			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+			<ui:param name="noCumplimentado" value="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}"/>
+
 			<h:form id="form">
 				<div class="tituloCuestionario">
 					<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
@@ -66,18 +27,22 @@
 				</div>
 			<div style="clear:both;"/>
 			
-				<p:accordionPanel multiple="true" activeIndex="-1"  value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario">
+				<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario">
+				<p:accordionPanel activeIndex="-1">
 				
 					<p:tab title="#{areaCuestionario.area}">
 					
-						<p:selectBooleanCheckbox id="validarArea" styleClass="checkArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" style="font-weight:bold;" disabled="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}"/>
+						<p:selectBooleanCheckbox id="validarArea" styleClass="checkArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" style="font-weight:bold;" disabled="#{noCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}"/>
 						
 						<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
 							
 							<div class="prevPregCuest">
-									<p:selectBooleanCheckbox id="validarRespuesta" styleClass="checkRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
-									<h:outputText value="#{preguntaArea.pregunta}" style="font-weight:bold;"/>
-									<div class="respuestaCuestionario">
+							
+								<p:selectBooleanCheckbox id="validarRespuesta" styleClass="checkRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{noCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
+								<h:outputText value="#{preguntaArea.pregunta}" style="font-weight:bold;"/>
+								
+								<div class="respuestaCuestionario">
+								
 									<p:inputText id="input" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 												 rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" 
 												 size="10" readonly="true"/>
@@ -138,6 +103,7 @@
 						</ui:repeat>
 					</p:tab>
 				</p:accordionPanel>
+				</ui:repeat>
 
 				<p:outputPanel>
 					<div class="botonesFormulario">

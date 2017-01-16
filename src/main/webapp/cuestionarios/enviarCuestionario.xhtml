@@ -12,6 +12,8 @@
 		<ui:define name="content">
 		
 			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+			<ui:param name="yaEnviado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
+			<ui:param name="menuOrigen" value="#{(yaEnviado) ? '/cuestionarios/busquedaCuestionarios' : '/cuestionarios/busquedaModelosCuestionarios'}"/>
 
 			<h3>
 				<h:outputText rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}" value="Envío cuestionario"/>				
@@ -31,7 +33,7 @@
                         required="true" requiredMessage="Introduzca la unidad o el número de la inspección" 
                         emptyMessage="No se encuentraron resultados coincidentes"
                         onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000"
-                        disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}">
+                        disabled="#{yaEnviado}">
                         <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
                     </p:autoComplete>
 					<p:messages for="infoInspeccion" autoUpdate="true"  closable="true"/>
@@ -40,18 +42,18 @@
 					<p:inputText id="nombre" value="#{envioCuestionarioBean.cuestionarioEnvio.nombreUsuarioEnvio}" maxlength="500"
 						required="true" requiredMessage="Introduzca el nombre de la persona a la que va dirigido el cuestionario"
 						converter="#{trimConverter}"
-                        disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
+                        disabled="#{yaEnviado}"/>
 					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="cargo" value="Cargo:" />
 					<p:inputText id="cargo" value="#{envioCuestionarioBean.cuestionarioEnvio.cargo}" maxlength="500" converter="#{trimConverter}"
-						disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
+						disabled="#{yaEnviado}"/>
 					
 					<h:outputLabel for="correo" value="Correo electrónico (*):" />
 					<p:inputText id="correo" value="#{envioCuestionarioBean.cuestionarioEnvio.correoEnvio}" maxlength="500"
 						required="true" requiredMessage="Introduzca el correo electrónico" converter="#{trimConverter}"
 						validatorMessage="El formato del correo no es correcto o el dominio introducido no es válido"
-                        disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}">
+                        disabled="#{yaEnviado}">
 							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 					</p:inputText>
 					<p:messages for="correo" autoUpdate="true"  closable="true"/>
@@ -63,13 +65,13 @@
 						mindate="#{utilities.getCurrentDate()}"
 						navigator="true" required="true"
 						requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario"
-						disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion and esJefeEquipoInspeccion}"/>
+						disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion or not esJefeEquipoInspeccion}"/>
 					
 					<h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
 					<p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000"
 						counter="contador" counterTemplate="Quedan {0} caractares."
 						required="true" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}"
-                        disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
+                        disabled="#{yaEnviado}"/>
 					<p:outputLabel id="contador"/>
 					<p:messages for="motivo" autoUpdate="true"  closable="true"/>
 					
@@ -77,11 +79,11 @@
 				</div>
 			
 				<div class="botonesFormulario">
-				<p:outputPanel rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}">
+				<p:outputPanel rendered="#{not yaEnviado}">
 					<p:commandButton actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>
 					<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</p:outputPanel>
-				<p:outputPanel rendered="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}">
+				<p:outputPanel rendered="#{yaEnviado}">
 					<p:commandButton actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion and esJefeEquipoInspeccion}"/>
 					<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</p:outputPanel>
@@ -90,8 +92,7 @@
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/busquedaModelosCuestionarios')}" rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
-						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/cuestionarios/busquedaCuestionarios')}" rendered="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
+						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect(menuOrigen)}"/>
 					</div>
 				</p:dialog>
 			</h:form>
