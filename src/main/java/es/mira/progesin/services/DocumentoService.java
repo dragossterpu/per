@@ -24,7 +24,6 @@ import org.xml.sax.ContentHandler;
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.DocumentoBlob;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 
@@ -268,7 +267,7 @@ public class DocumentoService implements IDocumentoService {
 	 *************************************/
 
 	@Override
-	public Documento cargaDocumento(UploadedFile file) throws SerialException, SQLException, IOException {
+	public Documento cargaDocumento(UploadedFile file) throws SQLException, IOException {
 		try {
 			registroActividadService.altaRegActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(),
 					SeccionesEnum.GESTOR.getDescripcion());
@@ -282,7 +281,7 @@ public class DocumentoService implements IDocumentoService {
 	}
 
 	@Override
-	public Documento crearDocumento(UploadedFile file) throws SerialException, SQLException, IOException {
+	public Documento crearDocumento(UploadedFile file) throws SQLException, IOException {
 		Documento docu = new Documento();
 		docu.setNombre(file.getFileName());
 		Blob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
