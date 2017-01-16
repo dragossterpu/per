@@ -210,7 +210,6 @@ public class ResponderCuestionarioBean implements Serializable {
 			try {
 				PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
 						.get("pregunta");
-				documentoSubido = documentoService.cargaDocumento(event.getFile());
 
 				// Grabamos la respuesta con el documento subido
 				RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
@@ -224,19 +223,11 @@ public class ResponderCuestionarioBean implements Serializable {
 				listaDocumentos = mapaDocumentos.get(pregunta) != null ? mapaDocumentos.get(pregunta)
 						: new ArrayList<>();
 
-				Documento docAux = new Documento();
-				docAux.setId(documentoSubido.getId());
-				docAux.setNombre(documentoSubido.getNombre());
-				listaDocumentos.add(docAux);
-
-				respuestaCuestionario.setDocumentos(listaDocumentos);
-				respuestaRepository.save(respuestaCuestionario);
-				respuestaRepository.flush();
+				respuestaService.saveConDocumento(respuestaCuestionario, event.getFile(), listaDocumentos);
 
 				mapaDocumentos.put(pregunta, listaDocumentos);
 				visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
 
-				// TODO meter en una transacción la carga del documento y el save de la respuesta
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -252,7 +243,6 @@ public class ResponderCuestionarioBean implements Serializable {
 	}
 
 	public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
-		// documentoService.delete(documento);
 
 		RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
 		RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();

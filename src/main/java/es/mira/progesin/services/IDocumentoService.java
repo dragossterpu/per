@@ -3,8 +3,6 @@ package es.mira.progesin.services;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.sql.rowset.serial.SerialException;
-
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -35,9 +33,9 @@ public interface IDocumentoService {
 
 	DefaultStreamedContent descargaDocumento(Long id) throws Exception;
 
-	Documento cargaDocumento(UploadedFile file) throws SerialException, SQLException, IOException;
+	Documento cargaDocumento(UploadedFile file) throws SQLException, IOException;
 
-	Documento crearDocumento(UploadedFile file) throws SerialException, SQLException, IOException;
+	Documento crearDocumento(UploadedFile file) throws SQLException, IOException;
 
 	Iterable<Documento> findByFechaBajaIsNull();
 
