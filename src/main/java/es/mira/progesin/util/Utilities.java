@@ -69,9 +69,6 @@ public class Utilities {
 		if (message.length() > 2000) {
 			message = message.substring(2000);
 		}
-		else {
-			message = message;
-		}
 		return message;
 	}
 

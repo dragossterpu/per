@@ -146,27 +146,36 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String crearSolicitud() {
 
 		try {
-			String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
 			if (solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndCorreoDestinatario(correoDestinatario) != null) {
+					.findByFechaFinalizacionIsNullAndInspeccion(solicitudDocumentacionPrevia.getInspeccion()) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
-						"No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
+						"No se puede crear una solicitud para la inspección "
+								+ solicitudDocumentacionPrevia.getInspeccion().getNumero()
 								+ ", ya existe otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
 			}
 			else {
-				if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-							"La solicitud de documentación ha sido creada con éxito");
+				String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
+				if (solicitudDocumentacionService
+						.findByFechaFinalizacionIsNullAndCorreoDestinatario(correoDestinatario) != null) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
+							"No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
+									+ ", ya existe otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
+				}
+				else {
+					if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
+						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+								"La solicitud de documentación ha sido creada con éxito");
 
-					altaDocumentos();
-					String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
-							+ SecurityContextHolder.getContext().getAuthentication().getName();
-					// Guardamos la actividad en bbdd
-					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
-							NOMBRESECCION);
+						altaDocumentos();
+						String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
+								+ SecurityContextHolder.getContext().getAuthentication().getName();
+						// Guardamos la actividad en bbdd
+						regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
+								NOMBRESECCION);
 
-					// Guardamos la notificacion en bbdd
-					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+						// Guardamos la notificacion en bbdd
+						notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+					}
 				}
 			}
 		}

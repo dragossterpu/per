@@ -138,14 +138,14 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		String parametro;
 		if (solicitudDocPreviaBusqueda.getNombreUnidad() != null
 				&& !solicitudDocPreviaBusqueda.getNombreUnidad().isEmpty()) {
-			//TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
+			// TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
 			parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
 					.replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
 		}
 		if (solicitudDocPreviaBusqueda.getNumeroInspeccion() != null
 				&& !solicitudDocPreviaBusqueda.getNumeroInspeccion().isEmpty()) {
-			//TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
+			// TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
 			parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNumeroInspeccion(), Normalizer.Form.NFKD)
 					.replaceAll(ACENTOS, "");
 			criteria.add(Restrictions.ilike("inspeccion.numero", parametro, MatchMode.ANYWHERE));
@@ -218,6 +218,11 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		documentacionPreviaRepository.deleteByIdSolicitud(idSolicitud);
 		solicitudDocumentacionPreviaRepository.delete(idSolicitud);
 
+	}
+
+	@Override
+	public List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion) {
+		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNullAndInspeccion(inspeccion);
 	}
 
 }
