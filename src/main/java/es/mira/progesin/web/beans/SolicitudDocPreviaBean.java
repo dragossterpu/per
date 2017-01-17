@@ -146,8 +146,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 	public String crearSolicitud() {
 
 		try {
-			if (solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndInspeccion(solicitudDocumentacionPrevia.getInspeccion()) != null) {
+			List<SolicitudDocumentacionPrevia> listaSolicitudes = solicitudDocumentacionService
+					.findByFechaFinalizacionIsNullAndInspeccion(solicitudDocumentacionPrevia.getInspeccion());
+			if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
 						"No se puede crear una solicitud para la inspección "
 								+ solicitudDocumentacionPrevia.getInspeccion().getNumero()

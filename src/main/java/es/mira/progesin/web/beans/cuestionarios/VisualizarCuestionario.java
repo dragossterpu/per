@@ -212,7 +212,7 @@ public class VisualizarCuestionario implements Serializable {
 		// JSF ui:repeat no funciona con Set
 		setAreas(new ArrayList<>(areasSet));
 
-		// Ordeno las áreas por su id para que aparezcan en el mismo orden que en el modelo
+		// Ordeno las áreas por su campo orden
 		Collections.sort(areas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
 
 		if (cuestionarioEnviado == null) {

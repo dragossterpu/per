@@ -62,7 +62,7 @@ public class SolicitudDocumentacionPrevia implements Serializable {
 	private String asunto;
 
 	@ManyToOne
-	@JoinColumn(name = "id_inspeccion")
+	@JoinColumn(name = "id_inspeccion", nullable = false)
 	private Inspeccion inspeccion;
 
 	@Column(name = "destinatario")
