@@ -42,6 +42,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
+	@Transactional(readOnly = false)
 	public SolicitudDocumentacionPrevia save(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
 		return solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
 	}
