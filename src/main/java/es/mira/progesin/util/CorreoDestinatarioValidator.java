@@ -7,6 +7,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.services.ISolicitudDocumentacionService;
@@ -17,6 +18,8 @@ import es.mira.progesin.web.beans.SolicitudDocPreviaBean;
  * @author EZENTIS
  */
 @Component("correoDestinatarioValidator")
+// TODO: quitar este escope cuando Ramón pueda quitar la propiedad solicitudDocPreviaBean y hacerlo de otra manera
+@Scope("session")
 public class CorreoDestinatarioValidator implements Validator {
 
 	@Autowired
