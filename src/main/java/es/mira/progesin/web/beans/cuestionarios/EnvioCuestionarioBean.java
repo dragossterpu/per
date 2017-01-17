@@ -21,7 +21,6 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.CorreoElectronico;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.ApplicationBean;
@@ -105,7 +104,7 @@ public class EnvioCuestionarioBean implements Serializable {
 			}
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+			// regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 		}
 		return enviar;
 	}
@@ -136,18 +135,16 @@ public class EnvioCuestionarioBean implements Serializable {
 				// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
 				String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
 				String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
-				CorreoElectronico envioCorreo = new CorreoElectronico();
-				envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
-				System.out.println("correo: " + envioCorreo.getDestino().get(0));
-				try {
-					envioCorreo.envioCorreo();
-				}
-				catch (Exception e) {
-					FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-							"Se ha produdico un error en el envio del correo electrónico.", e.getMessage(),
-							ETIQUETA_ERROR);
-					regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
-				}
+				// CorreoElectronico envioCorreo = new CorreoElectronico();
+				// envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+				// envioCorreo.envioCorreo();
+				// }
+				// catch (Exception e) {
+				// FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+				// "Se ha produdico un error en el envio del correo electrónico.", e.getMessage(),
+				// ETIQUETA_ERROR);
+				// // regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+				// }
 				// TODO crear notificación
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 						"El cuestionario se ha enviado con éxito");
@@ -163,7 +160,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Se ha produdico un error en el envio del cuestionario", e.getMessage(), ETIQUETA_ERROR);
-			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+			// regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 		}
 	}
 
