@@ -21,8 +21,8 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.CorreoElectronico;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
@@ -61,9 +61,6 @@ public class EnvioCuestionarioBean implements Serializable {
 
 	@Autowired
 	private ICuestionarioEnvioService cuestionarioEnvioService;
-
-	@Autowired
-	private transient ICorreoElectronico envioCorreo;
 
 	@Autowired
 	private ApplicationBean applicationBean;
@@ -139,7 +136,9 @@ public class EnvioCuestionarioBean implements Serializable {
 				// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
 				String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
 				String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
+				CorreoElectronico envioCorreo = new CorreoElectronico();
 				envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+				System.out.println("correo: " + envioCorreo.getDestino().get(0));
 				try {
 					envioCorreo.envioCorreo();
 				}
