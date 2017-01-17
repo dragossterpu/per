@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.services.ITipoEquipoService;
@@ -21,8 +21,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("tipoEquipoBean")
-@RequestScoped
+@Controller("tipoEquipoBean")
+@Scope("session")
 public class TipoEquipoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -16,9 +16,10 @@ import javax.persistence.TypedQuery;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
@@ -40,18 +41,18 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("userBean")
-
+@Controller("userBean")
+@Scope("session")
 public class UserBean {
 
 	private User user;
-	
+
 	private List<Empleo> listaEmpleos;
-	
+
 	private Empleo empleoSeleccionado;
-	
+
 	private List<Departamento> listaDepartamentos;
-	
+
 	private Departamento departamentoSeleccionado;
 
 	private List<CuerpoEstado> cuerposEstado;
@@ -71,7 +72,7 @@ public class UserBean {
 	private String estadoUsuario = null;
 
 	private String vieneDe;
-	
+
 	@PersistenceContext
 	private transient EntityManager em;
 
@@ -92,7 +93,7 @@ public class UserBean {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	CorreoElectronico correo;
 
@@ -133,15 +134,16 @@ public class UserBean {
 			FacesContext.getCurrentInstance().addMessage("username", message);
 		}
 		else {
-			
+
 			try {
 				user.setCuerpoEstado(getCuerpoEstadoSeleccionado());
 				user.setPuestoTrabajo(getPuestoTrabajoSeleccionado());
 				user.setEmpleo(getEmpleoSeleccionado());
 				user.setDepartamento(getDepartamentoSeleccionado());
 				String password = Utilities.getPassword();
-				correo.setDatos(user.getCorreo(), "Alta en la herramienta Progesin", "Ha sido dado de alta en la herramienta PROGESIN con usuario/clave " + 
-					user.getUsername() +"/" + password);
+				correo.setDatos(user.getCorreo(), "Alta en la herramienta Progesin",
+						"Ha sido dado de alta en la herramienta PROGESIN con usuario/clave " + user.getUsername() + "/"
+								+ password);
 				user.setPassword(passwordEncoder.encode(password));
 				correo.envioCorreo();
 				if (userService.save(user) != null) {
@@ -149,7 +151,8 @@ public class UserBean {
 							"El usuario ha sido creado con éxito");
 					String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
 							+ user.getApellido2();
-					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
+							NOMBRESECCION);
 					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 				}
 			}
@@ -198,7 +201,7 @@ public class UserBean {
 	 * @param user El usuario seleccionado de la tabla del resultado de la búsqueda
 	 */
 	public void eliminarUsuario(User user) {
-		
+
 		user.setFechaBaja(new Date());
 		user.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
@@ -227,7 +230,7 @@ public class UserBean {
 	public String getFormModificarUsuario(User user) {
 		estadoUsuario = user.getEstado().name();
 		this.user = user;
-		
+
 		auditoriaVisualizacion(user);
 		return "/users/modificarUsuario";
 	}
@@ -246,8 +249,9 @@ public class UserBean {
 				if (estadoUsuario != user.getEstado().name()) {
 					// Generamos la alerta
 				}
-				
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(), NOMBRESECCION);
+
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}
 		}
@@ -291,70 +295,56 @@ public class UserBean {
 		userBusqueda = new UserBusqueda();
 		this.cuerposEstado = (List<CuerpoEstado>) cuerposEstadoService.findAll();
 		this.puestosTrabajo = applicationBean.getListaPuestosTrabajo();
-		
+
 		TypedQuery<Departamento> queryDepartamento = em.createNamedQuery("Departamento.findAll", Departamento.class);
 		listaDepartamentos = queryDepartamento.getResultList();
-		
+
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
 		this.puestoTrabajoSeleccionado = null;
 		this.cuerpoEstadoSeleccionado = null;
-		this.empleoSeleccionado=null;
-		this.departamentoSeleccionado=null;
+		this.empleoSeleccionado = null;
+		this.departamentoSeleccionado = null;
 		list = new ArrayList<>();
 		for (int i = 0; i <= numeroColumnasListadoUsarios; i++) {
 			list.add(Boolean.TRUE);
 		}
 	}
-	
-	public void buscarEmpleo(){
+
+	public void buscarEmpleo() {
 		TypedQuery<Empleo> queryEmpleo = em.createNamedQuery("EmpleoCuerpo.find", Empleo.class);
-		CuerpoEstado cuerpo=this.cuerpoEstadoSeleccionado!=null?this.cuerpoEstadoSeleccionado:this.user.getCuerpoEstado();
+		CuerpoEstado cuerpo = this.cuerpoEstadoSeleccionado != null ? this.cuerpoEstadoSeleccionado
+				: this.user.getCuerpoEstado();
 		queryEmpleo.setParameter("cuerpoSeleccionado", cuerpo);
 		listaEmpleos = queryEmpleo.getResultList();
 	}
 
-	private void auditoriaBusqueda(UserBusqueda usuario){
-		
-		String puesto=usuario.getPuestoTrabajo()!=null?usuario.getPuestoTrabajo().getDescripcion():"";
-		String estado=usuario.getEstado()!=null?usuario.getEstado().name():"";
-	
-		
+	private void auditoriaBusqueda(UserBusqueda usuario) {
+
+		String puesto = usuario.getPuestoTrabajo() != null ? usuario.getPuestoTrabajo().getDescripcion() : "";
+		String estado = usuario.getEstado() != null ? usuario.getEstado().name() : "";
+
 		DateFormat fecha = new SimpleDateFormat("dd-MM-yyyy");
-		
-		String fechaDesde=usuario.getFechaDesde()!=null?fecha.format(usuario.getFechaDesde()):"";
-		String fechaHasta=usuario.getFechaHasta()!=null?fecha.format(usuario.getFechaHasta()):"";
-		String rol=usuario.getRole()!=null?usuario.getRole().name():"";
-		String cuerpo=usuario.getCuerpoEstado()!=null?usuario.getCuerpoEstado().getDescripcion():"";
-		
-		
-		
-		String descripcion="El usuario " + SecurityContextHolder.getContext().getAuthentication().getName() + " ha realizado una consulta de usuarios." 
-				+ "\nLa consulta realizada ha sido la siguiente: " 
-				+ "\n Nombre de usuario: " + usuario.getUsername()
-				+ "\n Nombre: " + usuario.getNombre()
-				+ "\n Primer apellido: " + usuario.getApellido1()
-				+ "\n Segundo apellido: " + usuario.getApellido2()
-				+ "\n Puesto de trabajo: " + puesto
-				+ "\n Estado: " + estado
-				+ "\n Fecha alta desde: " + fechaDesde
-				+ "\n Fecha alta desde: " + fechaHasta
-				+ "\n Rol: " +  rol
-				+ "\n Cuerpo del estado: " + cuerpo;
-		
-		
-	
+
+		String fechaDesde = usuario.getFechaDesde() != null ? fecha.format(usuario.getFechaDesde()) : "";
+		String fechaHasta = usuario.getFechaHasta() != null ? fecha.format(usuario.getFechaHasta()) : "";
+		String rol = usuario.getRole() != null ? usuario.getRole().name() : "";
+		String cuerpo = usuario.getCuerpoEstado() != null ? usuario.getCuerpoEstado().getDescripcion() : "";
+
+		String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()
+				+ " ha realizado una consulta de usuarios." + "\nLa consulta realizada ha sido la siguiente: "
+				+ "\n Nombre de usuario: " + usuario.getUsername() + "\n Nombre: " + usuario.getNombre()
+				+ "\n Primer apellido: " + usuario.getApellido1() + "\n Segundo apellido: " + usuario.getApellido2()
+				+ "\n Puesto de trabajo: " + puesto + "\n Estado: " + estado + "\n Fecha alta desde: " + fechaDesde
+				+ "\n Fecha alta desde: " + fechaHasta + "\n Rol: " + rol + "\n Cuerpo del estado: " + cuerpo;
+
 		regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.AUDITORIA.name(), NOMBRESECCION);
-		
+
 	}
-	
-	private void auditoriaVisualizacion(User usuario){
-		String descripcion="El usuario " + SecurityContextHolder.getContext().getAuthentication().getName() + " ha realizado ha visualizado un usuario." 
-				+ "El usuario consultado es: " + usuario.getUsername();
-	
+
+	private void auditoriaVisualizacion(User usuario) {
+		String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()
+				+ " ha realizado ha visualizado un usuario." + "El usuario consultado es: " + usuario.getUsername();
+
 		regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.AUDITORIA.name(), NOMBRESECCION);
 	}
 }
-
-
-
-	

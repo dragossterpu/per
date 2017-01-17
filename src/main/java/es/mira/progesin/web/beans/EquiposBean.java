@@ -7,15 +7,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
@@ -35,9 +34,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("equiposBean")
-@RequestScoped
-@ViewScoped
+@Controller("equiposBean")
+@Scope("session")
 public class EquiposBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

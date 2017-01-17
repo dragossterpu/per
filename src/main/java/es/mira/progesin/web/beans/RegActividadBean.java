@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
 
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
@@ -20,8 +20,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("regActividadBean")
-@RequestScoped
+@Controller("regActividadBean")
+@Scope("session")
 public class RegActividadBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,12 +37,11 @@ public class RegActividadBean implements Serializable {
 	private Integer numColListRegActividad = 5;
 
 	private RegActividadBusqueda regActividadBusqueda;
-	
+
 	private String vieneDe;
-	
+
 	@Autowired
 	IRegActividadRepository regActividadRepository;
-
 
 	@Autowired
 	IRegistroActividadService regActividadService;
@@ -51,7 +50,8 @@ public class RegActividadBean implements Serializable {
 	ApplicationBean applicationBean;
 
 	public void buscarRegActividad() {
-		List<RegistroActividad> listaRegActividad = regActividadService.buscarRegActividadCriteria(regActividadBusqueda);
+		List<RegistroActividad> listaRegActividad = regActividadService
+				.buscarRegActividadCriteria(regActividadBusqueda);
 		regActividadBusqueda.setListaRegActividad(listaRegActividad);
 	}
 
@@ -59,13 +59,12 @@ public class RegActividadBean implements Serializable {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
 
-	
 	public void getFormularioRegActividad() {
-		if ("menu".equalsIgnoreCase(this.vieneDe)) { 
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
 			regActividadBusqueda.resetValues();
-			this.vieneDe=null;
-			}
-		
+			this.vieneDe = null;
+		}
+
 	}
 
 	@PostConstruct
@@ -76,14 +75,13 @@ public class RegActividadBean implements Serializable {
 			list.add(Boolean.TRUE);
 		}
 	}
-	
-	
+
 	public List<String> autocompletarSeccion(String infoSeccion) {
-		return regActividadService.buscarPorNombreSeccion("%"+infoSeccion+"%");
+		return regActividadService.buscarPorNombreSeccion("%" + infoSeccion + "%");
 	}
-	
-	public List<String> autocompletarUsuario(String infoUsuario){
-		return regActividadService.buscarPorUsuarioRegistro("%"+infoUsuario+"%");
+
+	public List<String> autocompletarUsuario(String infoUsuario) {
+		return regActividadService.buscarPorUsuarioRegistro("%" + infoUsuario + "%");
 	}
 
 }

@@ -7,15 +7,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
@@ -29,8 +29,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("sugerenciasBean")
-@RequestScoped
+@Controller("sugerenciasBean")
+@Scope("session")
 public class SugerenciasBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

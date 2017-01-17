@@ -9,16 +9,16 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -54,8 +54,8 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("solicitudDocPreviaBean")
-@SessionScoped
+@Controller("solicitudDocPreviaBean")
+@Scope("session")
 public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

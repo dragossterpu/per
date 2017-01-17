@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
@@ -21,8 +21,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("cuestionarioEnviadoBusqueda")
-@SessionScoped
+@Controller("cuestionarioEnviadoBusqueda")
+@Scope("session")
 public class CuestionarioEnviadoBusqueda implements Serializable {
 	private static final long serialVersionUID = 1L;
 

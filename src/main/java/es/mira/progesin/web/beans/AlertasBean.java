@@ -12,7 +12,7 @@ import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
@@ -29,16 +29,14 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("alertasBean")
+@Controller("alertasBean")
 @Scope(FacesViewScope.NAME)
 public class AlertasBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-
-	
 	@Autowired
 	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
-	
+
 	@Autowired
 	IRegistroActividadService regActividad;
 
@@ -50,7 +48,6 @@ public class AlertasBean implements Serializable {
 
 	private int numColListAlert = 5;
 
-
 	/**
 	 * @comment Realiza una eliminación lógico de la alerta (le pone fecha de baja)
 	 * @comment La alerta seleccionada de la tabla de alertass
@@ -61,12 +58,13 @@ public class AlertasBean implements Serializable {
 		alerta.setFechaBaja(new Date());
 		alerta.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
-			//alertasService.save(alerta);
-			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
+			// alertasService.save(alerta);
+			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
+					alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			// Guardamos la actividad en bbdd
-			
+
 			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
@@ -77,9 +75,10 @@ public class AlertasBean implements Serializable {
 	}
 
 	private void initList() {
-		//listaAlertas = alertasService.findByFechaBajaIsNull();
-		listaAlertas=alertasNotificacionesUsuarioService.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
-		//listaAlertas=alertasService.buscarAlertasUsuario(SecurityContextHolder.getContext().getAuthentication().getName());
+		// listaAlertas = alertasService.findByFechaBajaIsNull();
+		listaAlertas = alertasNotificacionesUsuarioService
+				.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
+		// listaAlertas=alertasService.buscarAlertasUsuario(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	public void onToggle(ToggleEvent e) {
@@ -95,6 +94,5 @@ public class AlertasBean implements Serializable {
 			list.add(Boolean.TRUE);
 		}
 	}
-
 
 }

@@ -12,7 +12,7 @@ import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
@@ -30,7 +30,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("cuerposEstadoBean")
+@Controller("cuerposEstadoBean")
 @Scope(FacesViewScope.NAME)
 public class CuerposEstadoBean implements Serializable {
 	private static final long serialVersionUID = 1L;

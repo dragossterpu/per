@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.tika.exception.TikaException;
@@ -15,7 +14,8 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
@@ -30,10 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Setter
 @Getter
-@Component("gestorDocumentalBean")
-@SessionScoped
+@Controller("gestorDocumentalBean")
+@Scope("session")
 @Slf4j
-
 public class GestorDocumentalBean {
 
 	List<Documento> listadoDocumentos = new ArrayList<>();
@@ -45,15 +44,13 @@ public class GestorDocumentalBean {
 
 	@Autowired
 	IAlertaService alertaService;
-	
+
 	@Autowired
 	INotificacionService notificacionService;
-	
+
 	@Autowired
 	IRegistroActividadService registroActividadService;
-	
-	
-	
+
 	@PostConstruct
 	public void init() {
 		recargaLista();
@@ -73,26 +70,30 @@ public class GestorDocumentalBean {
 	}
 
 	public void cargaFichero(FileUploadEvent event) throws SQLException, IOException, TikaException, SAXException {
-		try{
-			
-			if (documentoService.extensionCorrecta(event.getFile())){
+		try {
+
+			if (documentoService.extensionCorrecta(event.getFile())) {
 				documentoService.cargaDocumento(event.getFile());
-				
-			}else{
+
+			}
+			else {
 				RequestContext context = RequestContext.getCurrentInstance();
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
-						"La extensión del fichero '"+ event.getFile().getFileName()+"' no corresponde a su tipo real");
+						"La extensión del fichero '" + event.getFile().getFileName()
+								+ "' no corresponde a su tipo real");
 				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 				context.execute("PF('dialogMessage').show()");
-				registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",EstadoRegActividadEnum.ERROR.name(), "Gestor documental");
-			
+				registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",
+						EstadoRegActividadEnum.ERROR.name(), "Gestor documental");
+
 			}
-			
+
 			recargaLista();
-		}catch(SQLException ex){
+		}
+		catch (SQLException ex) {
 			registroActividadService.altaRegActividadError("Gestor documental", ex);
 			throw ex;
-		}	
+		}
 	}
 
 	public void eliminarDocumento(Documento documento) {

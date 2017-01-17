@@ -1,23 +1,21 @@
 package es.mira.progesin.web.beans;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
 
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.ModeloGuia;
 import es.mira.progesin.services.IModeloGuiaService;
@@ -26,8 +24,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("modelosGuiaBean")
-@SessionScoped
+@Controller("modelosGuiaBean")
+@Scope("session")
 public class ModelosGuiaBean {
 
 	List<ModeloGuia> listadoGuias;
@@ -44,7 +42,7 @@ public class ModelosGuiaBean {
 
 	@PostConstruct
 	public void init() {
-	//insertar();
+		// insertar();
 		listadoGuias = (List<ModeloGuia>) modeloGuiaService.findAll();
 	}
 
@@ -84,14 +82,12 @@ public class ModelosGuiaBean {
 				byte[] data = Files.readAllBytes(fichero.toPath());
 				ModeloGuia guia = new ModeloGuia();
 				guia.setCodigo("codigo");
-				guia.setDescripcion(
-						fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
+				guia.setDescripcion(fichero.getName().substring(0, fichero.getName().lastIndexOf('.')).toUpperCase());
 				guia.setNombreFichero(fichero.getName());
 				System.out.println(fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1));
-				guia.setExtension(
-						fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
+				guia.setExtension(fichero.getName().substring(fichero.getName().lastIndexOf('.') + 1).toLowerCase());
 				Blob fichero2 = Hibernate.getLobCreator(sessionFactory.openSession()).createBlob(data);
-				//guia.setFichero(data);
+				// guia.setFichero(data);
 				guia.setFichero(fichero2);
 				modeloGuiaService.save(guia);
 			}

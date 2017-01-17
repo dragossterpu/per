@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
@@ -32,45 +32,47 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("AlertasNotificacionesUsuarioBean")
+@Controller("AlertasNotificacionesUsuarioBean")
 @Scope(FacesViewScope.NAME)
 public class AlertasNotificacionesUsuarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
-	
-	
+
 	@Autowired
 	IRegistroActividadService regActividad;
-	
+
 	private List<Alerta> listaAlertas = new ArrayList<Alerta>();
+
 	private Page<AlertasNotificacionesUsuario> pageAlertas;
-				
-	
+
 	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
+
 	private Page<AlertasNotificacionesUsuario> pageNotificaciones;
-	
-	
+
 	private void initList() {
-		pageAlertas=(Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, new PageRequest(0,20,Direction.DESC, "fechaAlta"));
-		listaAlertas=alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
-		
-		pageNotificaciones=(Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, new PageRequest(0,20,Direction.DESC, "fechaAlta"));
-		listaNotificaciones=alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
-		
+		pageAlertas = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
+				SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.ALERTA,
+				new PageRequest(0, 20, Direction.DESC, "fechaAlta"));
+		listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
+
+		pageNotificaciones = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
+				SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.NOTIFICACION,
+				new PageRequest(0, 20, Direction.DESC, "fechaAlta"));
+		listaNotificaciones = alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
+
 	}
 
-	
 	@PostConstruct
 	public void init() {
 		initList();
 	}
-	
-	
+
 	public void eliminarAlertas(Alerta alerta) {
 		try {
-			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
+			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
+					alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), "Alertas");
@@ -80,10 +82,11 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 		}
 
 	}
-	
+
 	public void eliminarNotificacion(Notificacion notificacion) {
 		try {
-			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(), notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
+			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
+					notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación :" + notificacion.getDescripcion();
 			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), "Notificaciones");
@@ -93,34 +96,44 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 		}
 
 	}
-	
-	public String nextNotificacion(){
-		if(pageNotificaciones.hasNext()){
-			pageNotificaciones = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, pageNotificaciones.nextPageable());
-			listaNotificaciones = alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
+
+	public String nextNotificacion() {
+		if (pageNotificaciones.hasNext()) {
+			pageNotificaciones = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
+					SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.NOTIFICACION,
+					pageNotificaciones.nextPageable());
+			listaNotificaciones = alertasNotificacionesUsuarioService
+					.findNotificaciones(pageNotificaciones.getContent());
 		}
 		return "";
 	}
 
-	public String previousNotificacion(){
-		if(pageNotificaciones.hasPrevious()){
-			pageNotificaciones = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.NOTIFICACION, pageNotificaciones.previousPageable());
-			listaNotificaciones = alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
+	public String previousNotificacion() {
+		if (pageNotificaciones.hasPrevious()) {
+			pageNotificaciones = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
+					SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.NOTIFICACION,
+					pageNotificaciones.previousPageable());
+			listaNotificaciones = alertasNotificacionesUsuarioService
+					.findNotificaciones(pageNotificaciones.getContent());
 		}
 		return "";
 	}
-	
-	public String nextAlerta(){
-		if(pageAlertas.hasNext()){
-			pageAlertas = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, pageAlertas.nextPageable());
+
+	public String nextAlerta() {
+		if (pageAlertas.hasNext()) {
+			pageAlertas = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
+					SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.ALERTA,
+					pageAlertas.nextPageable());
 			listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
 		}
 		return "";
 	}
 
-	public String previousAlerta(){
-		if(pageAlertas.hasPrevious()){
-			pageAlertas = (Page<AlertasNotificacionesUsuario>) alertasNotificacionesUsuarioService.findByUsuarioAndTipo(SecurityContextHolder.getContext().getAuthentication().getName(),TipoMensajeEnum.ALERTA, pageAlertas.previousPageable());
+	public String previousAlerta() {
+		if (pageAlertas.hasPrevious()) {
+			pageAlertas = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
+					SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.ALERTA,
+					pageAlertas.previousPageable());
 			listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
 		}
 		return "";

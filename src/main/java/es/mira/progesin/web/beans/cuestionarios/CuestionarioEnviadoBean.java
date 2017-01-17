@@ -12,8 +12,9 @@ import javax.faces.application.FacesMessage;
 
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -39,7 +40,8 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("cuestionarioEnviadoBean")
+@Controller("cuestionarioEnviadoBean")
+@Scope("session")
 public class CuestionarioEnviadoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

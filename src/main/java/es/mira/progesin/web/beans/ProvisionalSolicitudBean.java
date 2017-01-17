@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
@@ -18,8 +17,9 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
@@ -40,8 +40,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("provisionalSolicitudBean")
-@SessionScoped
+@Controller("provisionalSolicitudBean")
+@Scope("session")
 public class ProvisionalSolicitudBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
