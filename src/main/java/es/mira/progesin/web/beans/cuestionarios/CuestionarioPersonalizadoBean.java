@@ -6,7 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -24,7 +25,8 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("cuestionarioPersonalizadoBean")
+@Controller("cuestionarioPersonalizadoBean")
+@Scope("session")
 public class CuestionarioPersonalizadoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

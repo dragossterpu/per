@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
@@ -26,8 +26,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("edicionCuestionarioBean")
-@RequestScoped
+@Controller("edicionCuestionarioBean")
+@Scope("session")
 public class EdicionCuestionarioBean {
 
 	ModeloCuestionario modeloCuestionario;

@@ -14,7 +14,7 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Documento;
@@ -43,7 +43,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("responderCuestionarioBean")
+@Controller("responderCuestionarioBean")
 @Scope("session")
 public class ResponderCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
