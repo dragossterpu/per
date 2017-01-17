@@ -126,11 +126,9 @@
 						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
 						<f:facet name="header">
 							Solicitudes documentación
-						 	<p:commandButton id="toggler" type="button" value="Columnas"
-								style="float:right" icon="ui-icon-calculator" />
+						 	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
 							<p:columnToggler datasource="tablaSolicitudes" trigger="toggler">
-								<p:ajax event="toggle"
-									listener="#{solicitudDocPreviaBean.onToggle}" />
+								<p:ajax event="toggle" listener="#{solicitudDocPreviaBean.onToggle}" />
 							</p:columnToggler>
 						</f:facet>
 						<p:column headerText="Número Inspección"
@@ -193,13 +191,13 @@
 						</p:column>
 
 
-						<p:column width="30" exportable="false">
+						<p:column width="30" exportable="false" toggleable="false">
 							<h:commandLink title="Ver solicitud" styleClass="fa fa-eye ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}"/>
 						</p:column>
-						<p:column width="30" exportable="false">
+						<p:column width="30" exportable="false" toggleable="false">
 							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>	
 						</p:column>
-						<p:column style="width:30px">
+						<p:column width="30" exportable="false" toggleable="false">
 							<p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se dará de baja y se mantendrá en el registro." icon="ui-icon-trash"
 								actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}"
 								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes" disabled="#{not empty solicitud.fechaFinalizacion}">

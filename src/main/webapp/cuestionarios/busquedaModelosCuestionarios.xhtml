@@ -78,9 +78,8 @@
 	            </p:outputPanel>
 	 			<p:dataTable  var="cuestionario" value="#{cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"  rows="20" id="tablaCuestionarios"
 	                         paginator="true" 
-	                         resizableColumns="true"
-	                         rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"
-	             >
+	                         resizableColumns="true" draggableColumns="true"
+	                         rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
 					 <f:facet name="header">
 						Cuestionarios personalizados
 					</f:facet>
