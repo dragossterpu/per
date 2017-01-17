@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -203,9 +204,9 @@ public class ResponderCuestionarioBean implements Serializable {
 	 * @param event Evento que contiene el fichero que sube el usuario
 	 */
 	public void subirFichero(FileUploadEvent event) {
-		Documento documentoSubido;
+		UploadedFile archivoSubido = event.getFile();
 		List<Documento> listaDocumentos;
-		if (documentoService.extensionCorrecta(event.getFile())) {
+		if (documentoService.extensionCorrecta(archivoSubido)) {
 
 			try {
 				PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
@@ -223,7 +224,7 @@ public class ResponderCuestionarioBean implements Serializable {
 				listaDocumentos = mapaDocumentos.get(pregunta) != null ? mapaDocumentos.get(pregunta)
 						: new ArrayList<>();
 
-				respuestaService.saveConDocumento(respuestaCuestionario, event.getFile(), listaDocumentos);
+				respuestaService.saveConDocumento(respuestaCuestionario, archivoSubido, listaDocumentos);
 
 				mapaDocumentos.put(pregunta, listaDocumentos);
 				visualizarCuestionario.setMapaDocumentos(mapaDocumentos);

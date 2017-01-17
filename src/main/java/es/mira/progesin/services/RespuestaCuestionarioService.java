@@ -35,11 +35,13 @@ public class RespuestaCuestionarioService implements IRespuestaCuestionarioServi
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile archivoSubido,
 			List<Documento> listaDocumentos) throws SQLException, IOException {
 		Documento documentoSubido = documentoService.cargaDocumento(archivoSubido);
 		listaDocumentos.add(documentoSubido);
 		respuestaCuestionario.setDocumentos(listaDocumentos);
+		respuestaRepository.save(respuestaCuestionario);
 		respuestaRepository.flush();
 	}
 
