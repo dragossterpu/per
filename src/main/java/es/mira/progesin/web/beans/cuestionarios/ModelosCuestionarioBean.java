@@ -7,7 +7,8 @@ import javax.faces.application.FacesMessage;
 
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.services.IDocumentoService;
@@ -19,7 +20,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("modelosCuestionarioBean")
+@Controller("modelosCuestionarioBean")
+@Scope("session")
 public class ModelosCuestionarioBean {
 
 	private List<ModeloCuestionario> listadoCuestionarios;

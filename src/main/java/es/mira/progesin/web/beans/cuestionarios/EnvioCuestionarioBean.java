@@ -6,8 +6,9 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -33,7 +34,8 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("envioCuestionarioBean")
+@Controller("envioCuestionarioBean")
+@Scope("session")
 public class EnvioCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

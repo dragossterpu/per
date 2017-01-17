@@ -13,7 +13,7 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Documento;
@@ -45,7 +45,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Component("visualizarCuestionario")
+@Controller("visualizarCuestionario")
 public class VisualizarCuestionario implements Serializable {
 
 	private static final String NOMBRESECCION = "Visualizar cuestionario";

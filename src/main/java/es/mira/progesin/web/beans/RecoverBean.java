@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.RegistroActividad;
@@ -28,7 +28,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Component("recoverBean")
+@Controller("recoverBean")
 @Scope(FacesViewScope.NAME)
 public class RecoverBean implements Serializable {
 	private static final long serialVersionUID = 1L;
