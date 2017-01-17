@@ -12,6 +12,7 @@ import javax.faces.application.FacesMessage;
 
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -46,6 +47,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("visualizarCuestionario")
+@Scope("session")
 public class VisualizarCuestionario implements Serializable {
 
 	private static final String NOMBRESECCION = "Visualizar cuestionario";

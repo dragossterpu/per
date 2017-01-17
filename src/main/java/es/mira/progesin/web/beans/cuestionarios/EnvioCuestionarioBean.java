@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
@@ -42,8 +43,6 @@ public class EnvioCuestionarioBean implements Serializable {
 	private static final String ETIQUETA_ERROR = "mensajeerror";
 
 	private CuestionarioEnvio cuestionarioEnvio;
-
-	boolean enviar = false;
 
 	@Autowired
 	private transient IInspeccionesService inspeccionService;
@@ -84,7 +83,8 @@ public class EnvioCuestionarioBean implements Serializable {
 	 * Completa los datos del formulario (correo, nombre, cargo, fecha límite) si el tipo de inspección asociada es de
 	 * tipo General Periódica y tiene una solicitud de documentación previa finalizada.
 	 */
-	public void completarDatosSolicitudPrevia() {
+	public boolean completarDatosSolicitudPrevia() {
+		boolean enviar = false;
 		try {
 			if ("I.G.P.".equals(cuestionarioEnvio.getInspeccion().getTipoInspeccion().getCodigo())) {
 				List<SolicitudDocumentacionPrevia> listaSolicitudes = solDocService
@@ -110,6 +110,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		catch (Exception e) {
 			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 		}
+		return enviar;
 	}
 
 	/**
@@ -119,45 +120,44 @@ public class EnvioCuestionarioBean implements Serializable {
 	 */
 	public void enviarCuestionario() {
 		try {
-			if (enviar) {
-				// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
-				CuestionarioEnvio cuestionario = cuestionarioEnvioService
-						.findByCorreoEnvioAndFechaFinalizacionIsNull(cuestionarioEnvio.getCorreoEnvio());
-				if (cuestionario == null) {
-					String password = Utilities.getPassword();
-					System.out.println(password);
-					List<User> listaUsuariosProvisionales = userService
-							.crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
-					cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
-					regActividadService.altaRegActividad("Cuestionario para la inspección "
-							+ cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
-							EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
-					// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
-					String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-					String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
-					envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
-					try {
-						envioCorreo.envioCorreo();
-					}
-					catch (Exception e) {
-						FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-								"Se ha produdico un error en el envio del correo electrónico.", e.getMessage(),
-								ETIQUETA_ERROR);
-						regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
-					}
-					// TODO crear notificación
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
-							"El cuestionario se ha enviado con éxito");
+			System.out.println(
+					"************************ " + SecurityContextHolder.getContext().getAuthentication().getName());
+			System.out.println(
+					"****************** inspección: " + this.getCuestionarioEnvio().getInspeccion().getNumero());
+			// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
+			CuestionarioEnvio cuestionario = cuestionarioEnvioService
+					.findByCorreoEnvioAndFechaFinalizacionIsNull(cuestionarioEnvio.getCorreoEnvio());
+			if (cuestionario == null) {
+				String password = Utilities.getPassword();
+				System.out.println(password);
+				List<User> listaUsuariosProvisionales = userService
+						.crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
+				cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
+				regActividadService.altaRegActividad(
+						"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
+						EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
+				// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
+				String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
+				String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
+				envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+				try {
+					envioCorreo.envioCorreo();
 				}
-				else {
+				catch (Exception e) {
 					FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-							"El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
-									+ " ya tiene otro cuestionario abierto. Finalícelo antes de enviar otro cuestionario.",
-							"", ETIQUETA_ERROR);
+							"Se ha produdico un error en el envio del correo electrónico.", e.getMessage(),
+							ETIQUETA_ERROR);
+					regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 				}
+				// TODO crear notificación
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
+						"El cuestionario se ha enviado con éxito");
 			}
 			else {
-				mostrarMensajeNoDocumentacionPrevia();
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+						"El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
+								+ " ya tiene otro cuestionario abierto. Finalícelo antes de enviar otro cuestionario.",
+						"", ETIQUETA_ERROR);
 			}
 			// TODO crear registro actividad
 		}
