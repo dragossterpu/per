@@ -102,6 +102,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		}
 		catch (Exception e) {
 			// regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+			enviar = false;
 		}
 		return enviar;
 	}

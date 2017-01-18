@@ -32,10 +32,6 @@
 			               <p:graphicImage  value="/images/csv.png" />
 			               <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas"/>
 			            </h:commandLink>
-	 					<h:commandLink>
-			            	<p:graphicImage  value="/images/imprimir.jpg" />
-			            	<p:printer target="busquedaAlertas" />
-			            </h:commandLink>
 		            </p:outputPanel>
 					 <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.listaAlertas}" 
 					id="tablaAlertas"
@@ -98,10 +94,6 @@
 		            <h:commandLink>
 		               <p:graphicImage  value="/images/csv.png" />
 		               <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones"/>
-		            </h:commandLink>
- 					<h:commandLink>
-		            	<p:graphicImage  value="/images/imprimir.jpg" />
-		            	<p:printer target="busquedaNotificaciones" />
 		            </h:commandLink>
 	            </p:outputPanel>
 			<p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.listaNotificaciones}" 

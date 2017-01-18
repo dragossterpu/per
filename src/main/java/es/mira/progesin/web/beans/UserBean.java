@@ -97,7 +97,7 @@ public class UserBean {
 	@Autowired
 	CorreoElectronico correo;
 
-	private final String NOMBRESECCION = "Usuarios";
+	private static final String NOMBRESECCION = "Usuarios";
 
 	public String getUserPerfil() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -157,7 +157,7 @@ public class UserBean {
 				}
 			}
 			catch (Exception e) {
-				regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
+				regActividadService.altaRegActividadError(NOMBRESECCION, e);
 			}
 
 		}
@@ -216,7 +216,7 @@ public class UserBean {
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 	}
@@ -259,7 +259,7 @@ public class UserBean {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
 					"Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 	}
@@ -282,7 +282,7 @@ public class UserBean {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
 					"Se ha producido un error en la regeneración o envío de la contraseña");
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActividadError(getNOMBRESECCION(), e);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}
 

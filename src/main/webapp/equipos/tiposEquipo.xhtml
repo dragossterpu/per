@@ -29,7 +29,7 @@
 						<p:ajax event="rowEditCancel"
 							listener="#{tipoEquipoBean.onRowCancel}" update=":form:msgs" />
 
-						<p:column headerText="Código del tipo">
+						<p:column headerText="Código del tipo" width="90">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{tipoEquipo.codigo}" />
