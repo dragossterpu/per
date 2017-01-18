@@ -80,7 +80,7 @@ public class EnvioCuestionarioBean implements Serializable {
 	 * tipo General Periódica y tiene una solicitud de documentación previa finalizada.
 	 */
 	public boolean completarDatosSolicitudPrevia() {
-		boolean enviar = false;
+		boolean enviar = true;
 		try {
 			if ("I.G.P.".equals(cuestionarioEnvio.getInspeccion().getTipoInspeccion().getCodigo())) {
 				List<SolicitudDocumentacionPrevia> listaSolicitudes = solDocService
@@ -93,14 +93,11 @@ public class EnvioCuestionarioBean implements Serializable {
 					this.cuestionarioEnvio.setNombreUsuarioEnvio(solDocPrevia.getNombreCompletoInterlocutor());
 					this.cuestionarioEnvio.setCargo(solDocPrevia.getCargoInterlocutor());
 					this.cuestionarioEnvio.setFechaLimiteCuestionario(solDocPrevia.getFechaLimiteCumplimentar());
-					enviar = true;
 				}
 				else {
 					mostrarMensajeNoDocumentacionPrevia();
+					enviar = false;
 				}
-			}
-			else {
-				enviar = true;
 			}
 		}
 		catch (Exception e) {
