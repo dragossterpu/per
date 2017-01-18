@@ -105,10 +105,6 @@
 		               <p:graphicImage  value="/images/csv.png" />
 		               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios"/>
 		            </h:commandLink>
-		            <h:commandLink>
-		            	<p:graphicImage  value="/images/imprimir.jpg" />
-		            	<p:printer target="busquedaUsers" />
-		            </h:commandLink>
 	            </p:outputPanel>
 	 			<p:dataTable  var="user" value="#{userBean.userBusqueda.listaUsuarios}"  rows="20" id="tablaUsuarios"
 	                         draggableColumns="true"

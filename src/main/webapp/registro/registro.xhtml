@@ -71,10 +71,6 @@
 		               <p:graphicImage  value="/images/csv.png" />
 		               <p:dataExporter type="csv" target="tablaRegActividad" fileName="listaRegActividad"/>
 		            </h:commandLink>
-		            <h:commandLink>
-		            	<p:graphicImage  value="/images/imprimir.jpg" />
-		            	<p:printer target="busquedalistaRegActividad" />
-		            </h:commandLink>
 	            </p:outputPanel>
 
 	 			<p:dataTable  var="regActividad" value="#{regActividadBean.regActividadBusqueda.listaRegActividad}"  rows="20" id="tablaRegActividad"

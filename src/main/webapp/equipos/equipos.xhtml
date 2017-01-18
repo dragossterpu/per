@@ -113,10 +113,6 @@
 							<p:dataExporter type="csv" target="tablaEquipos"
 								fileName="listaEquipos" pageOnly="true" />
 						</h:commandLink>
-						<h:commandLink>
-							<p:graphicImage value="/images/imprimir.jpg" />
-							<p:printer target="busquedaEquipos" />
-						</h:commandLink>
 					</p:outputPanel>
 					<p:dataTable var="equipo"
 						value="#{equiposBean.equipoBusqueda.listaEquipos}" rows="20"
