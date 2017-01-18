@@ -7,26 +7,19 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.web.beans.ApplicationBean;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBean;
 
 /**
  * @author EZENTIS
  */
 @Component("correoDestinatarioValidator")
-// TODO: quitar este escope cuando Ramón pueda quitar la propiedad solicitudDocPreviaBean y hacerlo de otra manera
-@Scope("session")
 public class CorreoDestinatarioValidator implements Validator {
 
 	@Autowired
 	ISolicitudDocumentacionService solicitudDocumentacionService;
-
-	@Autowired
-	SolicitudDocPreviaBean solicitudDocPreviaBean;
 
 	@Autowired
 	ApplicationBean applicationBean;
@@ -36,16 +29,17 @@ public class CorreoDestinatarioValidator implements Validator {
 
 		String nuevoCorreoDestinatario = value.toString();
 
-		String actualCorreoDestinatario = solicitudDocPreviaBean.getSolicitudDocumentacionPrevia()
-				.getCorreoDestinatario();
+		String actualCorreoDestinatario = (String) component.getAttributes().get("actualCorreo");
+
 		String regex = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@(" + applicationBean.getDominiosValidos() + ")$";
 		if (!nuevoCorreoDestinatario.matches(regex)) {
 			FacesMessage facesMsg = new FacesMessage("Formato de correo incorrecto o dominio no válido.");
 			facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(facesMsg);
 		}
-		else if (!nuevoCorreoDestinatario.equals(actualCorreoDestinatario) && solicitudDocumentacionService
-				.findByFechaFinalizacionIsNullAndCorreoDestinatario(nuevoCorreoDestinatario) != null) {
+		else if (nuevoCorreoDestinatario.equals(actualCorreoDestinatario) == Boolean.FALSE
+				&& solicitudDocumentacionService
+						.findByFechaFinalizacionIsNullAndCorreoDestinatario(nuevoCorreoDestinatario) != null) {
 			FacesMessage facesMsg = new FacesMessage(
 					"Este correo ya existe para otra solicitud en curso. Debe finalizarla o eliminarla antes de proseguir.");
 			facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);

@@ -72,6 +72,7 @@
 										required="true"
 										requiredMessage="Es obligatorio un correo del destinatario"
 										converter="#{trimConverter}">
+										<f:attribute name="actualCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" />
 										<f:validator binding="#{correoDestinatarioValidator}" />
 									</p:inputText>
 
