@@ -59,8 +59,10 @@ public class HeaderFooterPdf implements IEventHandler {
 					pageSize.getTop() - doc.getTopMargin() + 10);
 			header2.setFixedPosition(pageSize.getRight() - doc.getRightMargin() - header2.getImageScaledWidth(),
 					pageSize.getTop() - doc.getTopMargin() + 10);
-			new Canvas(canvas, pdfDoc, rect).add(header1);
-			new Canvas(canvas, pdfDoc, rect).add(header2);
+			Canvas c = new Canvas(canvas, pdfDoc, rect);
+			c.add(header1);
+			c.add(header2);
+			c.close();
 		}
 		else {
 			Rectangle rect = new Rectangle(pdfDoc.getDefaultPageSize().getX() + doc.getLeftMargin(),
@@ -68,7 +70,9 @@ public class HeaderFooterPdf implements IEventHandler {
 			headerRepetido.setFixedPosition(
 					pageSize.getRight() - doc.getRightMargin() - headerRepetido.getImageScaledWidth(),
 					pageSize.getTop() - doc.getTopMargin() + 30);
-			new Canvas(canvas, pdfDoc, rect).add(headerRepetido);
+			Canvas c = new Canvas(canvas, pdfDoc, rect);
+			c.add(headerRepetido);
+			c.close();
 		}
 	}
 
@@ -86,7 +90,9 @@ public class HeaderFooterPdf implements IEventHandler {
 		PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
 		Rectangle rectFooter = new Rectangle(pdfDoc.getDefaultPageSize().getX() + doc.getLeftMargin(),
 				pdfDoc.getDefaultPageSize().getBottom(), 523, footer1.getImageHeight());
-		new Canvas(canvas, pdfDoc, rectFooter).add(footer1);
+		Canvas c = new Canvas(canvas, pdfDoc, rectFooter);
+		c.add(footer1);
+		c.close();
 	}
 
 }

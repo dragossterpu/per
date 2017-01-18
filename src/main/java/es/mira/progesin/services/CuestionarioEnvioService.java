@@ -57,9 +57,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	@Autowired
 	private transient IUserService userService;
 
-	@Autowired
-	private transient IRegistroActividadService regActividadService;
-
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override

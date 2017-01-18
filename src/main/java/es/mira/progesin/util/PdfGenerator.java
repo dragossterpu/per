@@ -324,7 +324,8 @@ public class PdfGenerator {
 		insertarNumeroPagina(fileOr.getAbsolutePath(), fileDest.getAbsolutePath(), document);
 
 		InputStream inputStream = new FileInputStream(fileDest);
-		return new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(), NOMBRE_FICHERO_SOLICITUD);
+		return new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
+				NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_DEST);
 	}
 
 	private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document)

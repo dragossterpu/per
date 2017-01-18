@@ -6,7 +6,6 @@ import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -313,22 +312,23 @@ public class DocumentoService implements IDocumentoService {
 		Metadata metadata = new Metadata();
 		ParseContext pcontext = new ParseContext();
 		Parser parser;
-		
-		if (file.getContentType().contains("openxmlformats")){
-			parser= new OOXMLParser ();
-		}else{
-			parser= new AutoDetectParser();
+
+		if (file.getContentType().contains("openxmlformats")) {
+			parser = new OOXMLParser();
 		}
-		
+		else {
+			parser = new AutoDetectParser();
+		}
+
 		try {
-			parser.parse(file.getInputstream(), handler, metadata,pcontext);
-			tipo= metadata.get("Content-Type");
-		} catch (Exception e) {
-			tipo="error";
+			parser.parse(file.getInputstream(), handler, metadata, pcontext);
+			tipo = metadata.get("Content-Type");
 		}
-		
+		catch (Exception e) {
+			tipo = "error";
+		}
+
 		return tipo.equalsIgnoreCase(file.getContentType());
 	}
 
-	
 }

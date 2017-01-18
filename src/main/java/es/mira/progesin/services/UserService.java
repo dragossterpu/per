@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,6 @@ public class UserService implements IUserService {
 	private static final String FECHA_ALTA = "fechaAlta";
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
 
 	@Override
 	@Transactional(readOnly = false)
@@ -132,18 +130,26 @@ public class UserService implements IUserService {
 			criteria.add(Restrictions
 					.sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
 		}
-	
+
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(nombre, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getNombre()+"', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions.sqlRestriction(
+					"upper(convert(replace(nombre, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+							+ userBusqueda.getNombre() + "', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(PRIM_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getApellido1()+"', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions.sqlRestriction(
+					"upper(convert(replace(PRIM_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+							+ userBusqueda.getApellido1() + "', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(SEGUNDO_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getApellido2()+"', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions.sqlRestriction(
+					"upper(convert(replace(SEGUNDO_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+							+ userBusqueda.getApellido2() + "', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(USERNAME, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + userBusqueda.getUsername()+"', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions.sqlRestriction(
+					"upper(convert(replace(USERNAME, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+							+ userBusqueda.getUsername() + "', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
 			criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
