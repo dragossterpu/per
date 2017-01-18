@@ -36,6 +36,10 @@ public class UserService implements IUserService {
 	// Obligado por sonar
 	private static final String FECHA_ALTA = "fechaAlta";
 
+	// "upper(convert(replace(CAMPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"+ VALOR + "', ' ', '')
+	// || '%', 'US7ASCII'))"
+	private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
+
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
@@ -132,24 +136,20 @@ public class UserService implements IUserService {
 		}
 
 		if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction(
-					"upper(convert(replace(nombre, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-							+ userBusqueda.getNombre() + "', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions
+					.sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre", userBusqueda.getNombre())));
 		}
 		if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction(
-					"upper(convert(replace(PRIM_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-							+ userBusqueda.getApellido1() + "', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions
+					.sqlRestriction(String.format(COMPARADORSINACENTOS, "PRIM_APELLIDO", userBusqueda.getApellido1())));
 		}
 		if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
 			criteria.add(Restrictions.sqlRestriction(
-					"upper(convert(replace(SEGUNDO_APELLIDO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-							+ userBusqueda.getApellido2() + "', ' ', '') || '%', 'US7ASCII'))"));
+					String.format(COMPARADORSINACENTOS, "SEGUNDO_APELLIDO", userBusqueda.getApellido2())));
 		}
 		if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction(
-					"upper(convert(replace(USERNAME, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-							+ userBusqueda.getUsername() + "', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions
+					.sqlRestriction(String.format(COMPARADORSINACENTOS, "USERNAME", userBusqueda.getUsername())));
 		}
 		if (userBusqueda.getCuerpoEstado() != null) {
 			criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));

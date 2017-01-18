@@ -37,6 +37,10 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String FECHAFINALIZACION = "fechaFinalizacion";
+
+	private static final String FECHAANULACION = "fechaAnulacion";
+
 	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
 	@Autowired
@@ -89,27 +93,27 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 			case CUMPLIMENTADO:
 				// campoFecha = "this_.fecha_cumplimentacion";
 				criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
-				criteria.add(Restrictions.isNull("fechaFinalizacion"));
+				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
 				break;
 			// Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
 			case NO_CONFORME:
 				// campoFecha = "this_.fecha_no_conforme";
 				criteria.add(Restrictions.isNotNull("fechaNoConforme"));
-				criteria.add(Restrictions.isNull("fechaFinalizacion"));
+				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
 				break;
 			case FINALIZADO:
 				// campoFecha = "this_.fecha_finalizacion";
-				criteria.add(Restrictions.isNotNull("fechaFinalizacion"));
-				criteria.add(Restrictions.isNull("fechaAnulacion"));
+				criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
+				criteria.add(Restrictions.isNull(FECHAANULACION));
 				break;
 			case ANULADO:
 				// campoFecha = "this_.fecha_anulacion";
-				criteria.add(Restrictions.isNotNull("fechaAnulacion"));
+				criteria.add(Restrictions.isNotNull(FECHAANULACION));
 				break;
 			// case ENVIADO:
 			default:
 				criteria.add(Restrictions.isNull("fechaCumplimentacion"));
-				criteria.add(Restrictions.isNull("fechaAnulacion"));
+				criteria.add(Restrictions.isNull(FECHAANULACION));
 				break;
 			}
 		}

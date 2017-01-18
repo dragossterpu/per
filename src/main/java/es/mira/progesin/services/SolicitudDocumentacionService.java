@@ -27,6 +27,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 
 	private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
 
+	private static final String FECHAFINALIZACION = "fechaFinalizacion";
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -96,17 +98,17 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			case CUMPLIMENTADA:
 				// campoFecha = "this_.fecha_cumplimentacion";
 				criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
-				criteria.add(Restrictions.isNull("fechaFinalizacion"));
+				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
 				break;
 			// Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
 			case NO_CONFORME:
 				// campoFecha = "this_.fecha_no_conforme";
 				criteria.add(Restrictions.isNotNull("fechaNoConforme"));
-				criteria.add(Restrictions.isNull("fechaFinalizacion"));
+				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
 				break;
 			case FINALIZADA:
 				// campoFecha = "this_.fecha_finalizacion";
-				criteria.add(Restrictions.isNotNull("fechaFinalizacion"));
+				criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
 				break;
 			// case CREADA:
 			default:
