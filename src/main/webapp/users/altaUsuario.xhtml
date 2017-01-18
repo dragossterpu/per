@@ -74,7 +74,7 @@
 						<h:outputLabel for="correo" value="Correo electrónico (*): " />
 						<p:inputText id="correo" value="#{userBean.user.correo}"  required="true" 
 							requiredMessage="Introduzca el correo electrónico"
-							validatorMessage="Formato de correo incorrecto" converter="#{trimConverter}">
+							validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
 							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 						</p:inputText>
 						<p:messages for="correo" autoUpdate="true"  closable="true"/>

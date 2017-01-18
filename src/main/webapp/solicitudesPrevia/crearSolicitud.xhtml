@@ -167,7 +167,7 @@
 									<h:outputLabel for="apoyoCorreo" value=" Correo persona apoyo (*):" />
 									<p:inputText id="apoyoCorreo"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"
-										validatorMessage="Formato de correo incorrecto"
+										validatorMessage="Formato de correo incorrecto o dominio no válido."
 										converter="#{trimConverter}"
 										required="true"
 										requiredMessage="Es obligatorio un correo persona apoyo">
