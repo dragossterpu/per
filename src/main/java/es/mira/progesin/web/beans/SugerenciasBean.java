@@ -119,9 +119,8 @@ public class SugerenciasBean implements Serializable {
 		String asunto = "Respuesta a su sugerencia";
 		String usuarioContestacion = sugerencia.getUsuario();
 		user = userService.findOne(usuarioContestacion);
-		correo.setDatos(user.getCorreo(), asunto, contestacion);
 		try {
-			correo.envioCorreo();
+			correo.envioCorreo(user.getCorreo(), asunto, contestacion);
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,

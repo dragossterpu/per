@@ -141,11 +141,11 @@ public class UserBean {
 				user.setEmpleo(getEmpleoSeleccionado());
 				user.setDepartamento(getDepartamentoSeleccionado());
 				String password = Utilities.getPassword();
-				correo.setDatos(user.getCorreo(), "Alta en la herramienta Progesin",
+				
+				user.setPassword(passwordEncoder.encode(password));
+				correo.envioCorreo(user.getCorreo(), "Alta en la herramienta Progesin",
 						"Ha sido dado de alta en la herramienta PROGESIN con usuario/clave " + user.getUsername() + "/"
 								+ password);
-				user.setPassword(passwordEncoder.encode(password));
-				correo.envioCorreo();
 				if (userService.save(user) != null) {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 							"El usuario ha sido creado con éxito");
@@ -273,8 +273,7 @@ public class UserBean {
 			this.user.setPassword(passwordEncoder.encode(password));
 			String cuerpoCorreo = "Su nueva contraseña es: " + password;
 			userService.save(user);
-			correo.setDatos(user.getCorreo(), "Restauración de la contraseña", cuerpoCorreo);
-			correo.envioCorreo();
+			correo.envioCorreo(user.getCorreo(), "Restauración de la contraseña", cuerpoCorreo);
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
 					"Se ha enviado un correo al usuario con la nueva contraseña");
 		}

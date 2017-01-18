@@ -116,25 +116,33 @@ public class RegistroActividadService implements IRegistroActividadService {
 
 	@Override
 	public void altaRegActividadError(String nombreSeccion, Exception e) {
-		RegistroActividad registroActividad = new RegistroActividad();
-		String message = Utilities.messageError(e);
-		registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-		registroActividad.setFechaAlta(new Date());
-		registroActividad.setNombreSeccion(nombreSeccion);
-		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		registroActividad.setDescripcion(message);
-		regActividadRepository.save(registroActividad);
+		try {
+			RegistroActividad registroActividad = new RegistroActividad();
+			String message = Utilities.messageError(e);
+			registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
+			registroActividad.setFechaAlta(new Date());
+			registroActividad.setNombreSeccion(nombreSeccion);
+			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
+			registroActividad.setDescripcion(message);
+			regActividadRepository.save(registroActividad);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
 	public void altaRegActividad(String descripcion, String tipoReg, String seccion) {
-		RegistroActividad registroActividad = new RegistroActividad();
-		registroActividad.setTipoRegActividad(tipoReg);
-		registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-		registroActividad.setFechaAlta(new Date());
-		registroActividad.setNombreSeccion(seccion);
-		registroActividad.setDescripcion(descripcion);
-		regActividadRepository.save(registroActividad);
+		try {
+			RegistroActividad registroActividad = new RegistroActividad();
+			registroActividad.setTipoRegActividad(tipoReg);
+			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
+			registroActividad.setFechaAlta(new Date());
+			registroActividad.setNombreSeccion(seccion);
+			registroActividad.setDescripcion(descripcion);
+			regActividadRepository.save(registroActividad);
+		} catch (Exception e) {
+			altaRegActividadError(seccion,e);
+		}
 
 	}
 

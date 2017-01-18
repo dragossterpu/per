@@ -227,8 +227,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 								.append("Muchas gracias y un saludo.");
 				StringBuilder cuerpo = new StringBuilder("Motivo: ").append(cuestionario.getMotivoCuestionario())
 						.append(textoAutomatico);
-				correoElectronico.setDatos(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
-				correoElectronico.envioCorreo();
+				correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
 
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
 						"Declarado no conforme con éxito el cuestionario. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
@@ -286,8 +285,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 								.append(sdf.format(cuestionario.getFechaLimiteCuestionario()))
 								.append("\r\n \r\nMuchas gracias y un saludo.");
 				String cuerpo = "Motivo: " + cuestionario.getMotivoCuestionario() + textoAutomatico;
-				correoElectronico.setDatos(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo);
-				correoElectronico.envioCorreo();
+				correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo);
 				mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
 			}
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",

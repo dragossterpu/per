@@ -472,9 +472,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 									.append(sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio()))
 									.append("\r\n \r\nMuchas gracias y un saludo.");
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+					
+					correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
 							cuerpo);
-					correoElectronico.envioCorreo();
 					mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
 				}
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
@@ -538,9 +538,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 									.append(". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n")
 									.append("Muchas gracias y un saludo.");
 					String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-					correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+					correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
 							cuerpo);
-					correoElectronico.envioCorreo();
 
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
 							"Se ha enviado con éxito la solicitud de documentación");
@@ -639,9 +638,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 								.append("\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n")
 								.append("Muchas gracias y un saludo.");
 				String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-				correoElectronico.setDatos(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+			
+				correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
 						cuerpo);
-				correoElectronico.envioCorreo();
 
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
 						"Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");

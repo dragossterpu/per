@@ -29,199 +29,47 @@ public class CorreoElectronico implements ICorreoElectronico {
 	@Autowired
 	ApplicationBean applicationBean;
 
-	List<String> destino;
-
-	List<String> conCopia;
-
-	String asunto;
-
-	String cuerpo;
-
-	List<File> adjunto;
-
-	SimpleMailMessage msg;
-
-	/***************************************
-	 * 
-	 * unSetDatos
-	 * 
-	 * Incicializa a null los parámetros.
-	 * 
-	 * @author Ezentis
-	 *
-	 *************************************/
-
-	private void unSetDatos() {
-		this.destino = null;
-		this.conCopia = null;
-		this.asunto = null;
-		this.cuerpo = null;
-		this.adjunto = null;
-
-	};
-
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios
-	 * @param List<String> Destinatarios en copia
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 * @param List<File> Adjuntos
-	 *
-	 *************************************/
-
 	@Override
-	public void setDatos(List<String> paramDestino, List<String> paramCC, String paramAsunto, String paramCuerpo,
-			List<File> paramAdjunto) {
-		this.destino = paramDestino;
-		this.conCopia = paramCC;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
-		this.adjunto = paramAdjunto;
+	public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) {
+		envioCorreoSinAdjuntos(paramDestino, null, paramAsunto, paramCuerpo);
 	}
 
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 * @param List<File> Adjuntos
-	 *
-	 *************************************/
 
 	@Override
-	public void setDatos(List<String> paramDestino, List<String> paramCC, String paramAsunto, String paramCuerpo) {
-		this.destino = paramDestino;
-		this.conCopia = paramCC;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
+	public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) throws MailException, FileNotFoundException, MessagingException {
+		envioCorreoAdjuntos(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto);
 	}
 
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 *
-	 *************************************/
 
 	@Override
-	public void setDatos(List<String> paramDestino, String paramAsunto, String paramCuerpo) {
-		this.destino = paramDestino;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
-	}
-
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 * @param List<File> Adjuntos
-	 *
-	 *************************************/
-
-	@Override
-	public void setDatos(List<String> paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) {
-		this.destino = paramDestino;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
-		this.adjunto = paramAdjunto;
-	}
-
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param String Destinatario único
-	 * @param String Destinatario en copia
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 * @param List<File> Adjuntos
-	 *
-	 *************************************/
-
-	@Override
-	public void setDatos(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo,
-			List<File> paramAdjunto) {
+	public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) throws MailException, FileNotFoundException, MessagingException {
 		List<String> lista = new ArrayList<String>();
 		lista.add(paramDestino);
-		this.destino = lista;
+		
 		List<String> cc = new ArrayList<String>();
 		lista.add(paramCC);
-		this.conCopia = cc;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
-		this.adjunto = paramAdjunto;
+		
+		envioCorreoAdjuntos(lista, cc, paramAsunto, paramCuerpo, paramAdjunto);
 	}
 
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param String Destinatario único
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 * @param List<File> Adjuntos
-	 *
-	 *************************************/
 
 	@Override
-	public void setDatos(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) {
+	public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) throws MailException, FileNotFoundException, MessagingException {
 		List<String> lista = new ArrayList<String>();
 		lista.add(paramDestino);
-		this.destino = lista;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
-		this.adjunto = paramAdjunto;
+		
+		
+		envioCorreoAdjuntos(lista, null, paramAsunto, paramCuerpo, paramAdjunto);
 	}
 
-	/***************************************
-	 * 
-	 * setDatos
-	 * 
-	 * Inicializa los datos de envío.
-	 * 
-	 * @author Ezentis
-	 * @param String Destinatario único
-	 * @param String Asunto
-	 * @param String Cuerpo
-	 *
-	 *************************************/
 
 	@Override
-	public void setDatos(String paramDestino, String paramAsunto, String paramCuerpo) {
+	public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) {
 		List<String> lista = new ArrayList<String>();
 		lista.add(paramDestino);
-		this.destino = lista;
-		this.asunto = paramAsunto;
-		this.cuerpo = paramCuerpo;
+		
+		
+		envioCorreoSinAdjuntos(lista, null, paramAsunto, paramCuerpo);
 
 	}
 
@@ -256,28 +104,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 		return mailSender;
 	}
 
-	/***************************************
-	 * 
-	 * envioCorreo
-	 * 
-	 * Realiza el envío de correo electrónico.
-	 * 
-	 * @author Ezentis
-	 * @throws FileNotFoundException
-	 *
-	 *************************************/
-
-	@Override
-	public void envioCorreo() throws MailException, MessagingException, FileNotFoundException {
-		if (this.adjunto != null) {
-			envioCorreoAdjuntos();
-		}
-		else {
-			envioCorreoSinAdjuntos();
-		}
-		unSetDatos();
-	}
-
+	
 	/***************************************
 	 * 
 	 * envioCorreoSinAdjuntos
@@ -291,20 +118,20 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 *
 	 *************************************/
 
-	private void envioCorreoSinAdjuntos() throws MailException {
+	private void envioCorreoSinAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo) throws MailException {
 
 		JavaMailSenderImpl mailSender = conexionServidor();
-		msg = new SimpleMailMessage();
+		SimpleMailMessage msg = new SimpleMailMessage();
 
-		String[] arrDestino = this.destino.toArray(new String[this.destino.size()]);
+		String[] arrDestino = destino.toArray(new String[destino.size()]);
 		msg.setTo(arrDestino);
 
-		if (this.conCopia != null) {
-			String[] arrCopia = this.conCopia.toArray(new String[this.conCopia.size()]);
+		if (conCopia != null) {
+			String[] arrCopia = conCopia.toArray(new String[conCopia.size()]);
 			msg.setCc(arrCopia);
 		}
-		msg.setSubject(this.asunto);
-		msg.setText(this.cuerpo);
+		msg.setSubject(asunto);
+		msg.setText(cuerpo);
 
 		mailSender.send(msg);
 
@@ -326,25 +153,25 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 *
 	 *************************************/
 
-	private void envioCorreoAdjuntos() throws MailException, MessagingException, FileNotFoundException {
+	private void envioCorreoAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo, List<File> adjunto) throws MailException, MessagingException, FileNotFoundException {
 		JavaMailSenderImpl mailSender = conexionServidor();
 		MimeMessage message = mailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-		String[] arrDestino = this.destino.toArray(new String[this.destino.size()]);
+		String[] arrDestino = destino.toArray(new String[destino.size()]);
 
 		helper.setTo(arrDestino);
 
-		if (this.conCopia != null) {
-			String[] arrCopia = this.conCopia.toArray(new String[this.conCopia.size()]);
+		if (conCopia != null) {
+			String[] arrCopia = conCopia.toArray(new String[conCopia.size()]);
 			helper.setCc(arrCopia);
 		}
 
-		helper.setSubject(this.asunto);
-		helper.setText(this.cuerpo);
+		helper.setSubject(asunto);
+		helper.setText(cuerpo);
 
-		for (File adj : this.adjunto) {
+		for (File adj : adjunto) {
 			helper.addAttachment(adj.getName(), adj);
 		}
 

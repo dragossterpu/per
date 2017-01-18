@@ -10,13 +10,11 @@ import org.springframework.mail.MailException;
 
 public interface ICorreoElectronico { 
 	
-	public void envioCorreo () throws  MailException, MessagingException, FileNotFoundException;
-	public void setDatos(List<String> paramDestino,  List<String> paramCC, String paramAsunto,String paramCuerpo, List<File> paramAdjunto);
-	public void setDatos(String paramDestino,  String paramCC, String paramAsunto,String paramCuerpo, List<File> paramAdjunto);
-	public void setDatos(List<String> paramDestino, List<String> paramCC, String paramAsunto,String paramCuerpo);
-	public void setDatos(List<String> paramDestino,  String paramAsunto,String paramCuerpo);
-	public void setDatos(List<String> paramDestino,  String paramAsunto,String paramCuerpo, List<File> paramAdjunto);
-	public void setDatos(String paramDestino,  String paramAsunto,String paramCuerpo, List<File> paramAdjunto);
-	public void setDatos(String paramDestino,  String paramAsunto,String paramCuerpo);
+	
+	public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) throws MailException, FileNotFoundException, MessagingException;
+	public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) throws MailException, FileNotFoundException, MessagingException;
+	void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) throws MailException, FileNotFoundException, MessagingException;
+	void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) throws MailException, FileNotFoundException, MessagingException;
+	void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo);	
 	
 }

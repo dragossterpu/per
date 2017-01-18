@@ -67,7 +67,7 @@ public class Utilities {
 	public static String messageError(Exception e) {
 		String message = Arrays.toString(e.getStackTrace());
 		if (message.length() > 2000) {
-			message = message.substring(2000);
+			message = message.substring(message.length()-2000);
 		}
 		return message;
 	}
