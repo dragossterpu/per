@@ -14,6 +14,7 @@
 			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 			<ui:param name="yaEnviado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
 			<ui:param name="menuOrigen" value="#{(yaEnviado) ? '/cuestionarios/busquedaCuestionarios' : '/cuestionarios/busquedaModelosCuestionarios'}"/>
+			<ui:param name="yaFinalizado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion}"/>
 
 			<h3>
 				<h:outputText rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}" value="Envío cuestionario"/>				
@@ -34,7 +35,7 @@
                         emptyMessage="No se encuentraron resultados coincidentes"
                         onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000"
                         disabled="#{yaEnviado}">
-                        <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
+                        <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario btnEnviar btnGuardar"/>
                     </p:autoComplete>
 					<p:messages for="infoInspeccion" autoUpdate="true"  closable="true"/>
 					
@@ -65,7 +66,7 @@
 						mindate="#{utilities.getCurrentDate()}"
 						navigator="true" required="true"
 						requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario"
-						disabled="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion or not esJefeEquipoInspeccion}"/>
+						disabled="#{yaFinalizado or (yaEnviado and not esJefeEquipoInspeccion)}"/>
 					
 					<h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
 					<p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000"
@@ -79,14 +80,9 @@
 				</div>
 			
 				<div class="botonesFormulario">
-				<p:outputPanel rendered="#{not yaEnviado}">
-					<p:commandButton actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>
-					<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
-				</p:outputPanel>
-				<p:outputPanel rendered="#{yaEnviado}">
-					<p:commandButton actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion and esJefeEquipoInspeccion}"/>
-					<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
-				</p:outputPanel>
+					<p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and esJefeEquipoInspeccion}"/>
+					<p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and esJefeEquipoInspeccion}"/>
+					<p:button outcome="#{menuOrigen}" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
 				
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
