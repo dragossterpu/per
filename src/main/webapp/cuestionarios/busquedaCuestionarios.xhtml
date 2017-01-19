@@ -51,7 +51,7 @@
 							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
-							<f:selectItems value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.listaTiposInspeccion}"
+							<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
 								var="tipo"
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />

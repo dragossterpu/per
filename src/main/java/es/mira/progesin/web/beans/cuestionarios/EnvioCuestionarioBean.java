@@ -44,7 +44,7 @@ public class EnvioCuestionarioBean implements Serializable {
 
 	private static final String ETIQUETA_ERROR = "mensajeerror";
 
-	private static final String SECCION_ENVIO_CUESTIONARIO = "ENVIO CUESTIONARIO";
+	private static final String SECCION_ENVIAR_CUESTIONARIO = "ENVIAR CUESTIONARIO";
 
 	private CuestionarioEnvio cuestionarioEnvio;
 
@@ -110,7 +110,7 @@ public class EnvioCuestionarioBean implements Serializable {
 			}
 		}
 		catch (Exception e) {
-			regActividadService.altaRegActividadError(SECCION_ENVIO_CUESTIONARIO, e);
+			regActividadService.altaRegActividadError(SECCION_ENVIAR_CUESTIONARIO, e);
 		}
 	}
 
@@ -121,7 +121,6 @@ public class EnvioCuestionarioBean implements Serializable {
 	 */
 	public void enviarCuestionario() {
 		try {
-			// RequestContext.getCurrentInstance().execute("PF('statusDialog').show()");
 			System.out.println(
 					"************************ " + SecurityContextHolder.getContext().getAuthentication().getName());
 			System.out.println(
@@ -142,7 +141,6 @@ public class EnvioCuestionarioBean implements Serializable {
 				enviarCorreoCuestionario(password, listaUsuariosProvisionales);
 				// Notificaciones y registro de actividad
 				crearNotificacionesYResgistro(cuestionarioEnvio.getInspeccion());
-				// RequestContext.getCurrentInstance().execute("PF('statusDialog').hide()");
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 						"El cuestionario se ha enviado con éxito");
 			}
@@ -164,9 +162,8 @@ public class EnvioCuestionarioBean implements Serializable {
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Se ha produdico un error en el envio del cuestionario", e.getMessage(), ETIQUETA_ERROR);
-			regActividadService.altaRegActividadError(SECCION_ENVIO_CUESTIONARIO, e);
+			regActividadService.altaRegActividadError(SECCION_ENVIAR_CUESTIONARIO, e);
 		}
-		// RequestContext.getCurrentInstance().execute("PF('statusDialog').hide()");
 	}
 
 	/**
@@ -179,6 +176,11 @@ public class EnvioCuestionarioBean implements Serializable {
 		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, ETIQUETA_ERROR);
 	}
 
+	/**
+	 * Construye y envía el correo
+	 * @param password Password de entrada a la aplicación para los usuarios provisionales
+	 * @param usuarios Lista de usuarios provisionales
+	 */
 	private void enviarCorreoCuestionario(String password, List<User> usuarios) {
 		String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")
 				.get(cuestionarioEnvio.getInspeccion().getAmbito().name());
@@ -218,11 +220,11 @@ public class EnvioCuestionarioBean implements Serializable {
 	 */
 	private void crearNotificacionesYResgistro(Inspeccion inspeccion) {
 		String textoNotificaciones = "Enviado cuestionario para la inspección ".concat(inspeccion.getNumero());
-		notificacionService.crearNotificacionRol(textoNotificaciones, SECCION_ENVIO_CUESTIONARIO,
+		notificacionService.crearNotificacionRol(textoNotificaciones, SECCION_ENVIAR_CUESTIONARIO,
 				RoleEnum.JEFE_INSPECCIONES);
-		notificacionService.crearNotificacionEquipo(textoNotificaciones, SECCION_ENVIO_CUESTIONARIO,
+		notificacionService.crearNotificacionEquipo(textoNotificaciones, SECCION_ENVIAR_CUESTIONARIO,
 				cuestionarioEnvio.getInspeccion());
 		regActividadService.altaRegActividad(textoNotificaciones, EstadoRegActividadEnum.ALTA.name(),
-				SECCION_ENVIO_CUESTIONARIO);
+				SECCION_ENVIAR_CUESTIONARIO);
 	}
 }

@@ -51,7 +51,6 @@ public class CuestionarioEnviadoBean implements Serializable {
 	@Autowired
 	private transient IRespuestaCuestionarioRepository respuestaRepository;
 
-	@Autowired
 	private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda;
 
 	@Autowired
@@ -97,22 +96,18 @@ public class CuestionarioEnviadoBean implements Serializable {
 	 * @author EZENTIS
 	 */
 	public void getFormBusquedaCuestionarios() {
-
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
 			limpiar();
 			this.vieneDe = null;
 		}
-
 	}
 
 	/**
 	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
 	 */
 	public void limpiar() {
-
 		cuestionarioEnviadoBusqueda.limpiar();
 		listaCuestionarioEnvio = null;
-
 	}
 
 	/**
@@ -128,7 +123,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		cuestionarioEnviadoBusqueda.limpiar();
+		cuestionarioEnviadoBusqueda = new CuestionarioEnviadoBusqueda();
 		listaCuestionarioEnvio = new ArrayList<>();
 	}
 

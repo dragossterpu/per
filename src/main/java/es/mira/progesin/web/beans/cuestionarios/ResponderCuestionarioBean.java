@@ -23,11 +23,13 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
+import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.util.DataTableView;
@@ -50,7 +52,7 @@ public class ResponderCuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String NOMBRESECCION = "Responder cuestionario enviado";
+	private static final String NOMBRESECCION = "RESPONDER CUESTIONARIO";
 
 	private static final String ERROR = "Error";
 
@@ -76,6 +78,9 @@ public class ResponderCuestionarioBean implements Serializable {
 
 	@Autowired
 	transient IRegistroActividadService regActividadService;
+
+	@Autowired
+	private transient INotificacionService notificacionService;
 
 	/**
 	 * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos
@@ -121,6 +126,11 @@ public class ResponderCuestionarioBean implements Serializable {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
 					"Cuestionario cumplimentado y enviado con éxito.");
 
+			String textoNotReg = "Cuestionario para la inspección " + cuestionarioEnviado.getInspeccion().getNumero()
+					+ " respondido";
+			notificacionService.crearNotificacionEquipo(textoNotReg, NOMBRESECCION,
+					cuestionarioEnviado.getInspeccion());
+			regActividadService.altaRegActividad(textoNotReg, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
