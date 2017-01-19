@@ -28,6 +28,7 @@ import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IDocumentoService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
@@ -46,7 +47,12 @@ import lombok.Setter;
 @Controller("responderCuestionarioBean")
 @Scope("session")
 public class ResponderCuestionarioBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
+	private static final String NOMBRESECCION = "Responder cuestionario enviado";
+
+	private static final String ERROR = "Error";
 
 	@Autowired
 	private VisualizarCuestionario visualizarCuestionario;
@@ -68,6 +74,9 @@ public class ResponderCuestionarioBean implements Serializable {
 	@Autowired
 	private transient IDocumentoService documentoService;
 
+	@Autowired
+	transient IRegistroActividadService regActividadService;
+
 	/**
 	 * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos
 	 */
@@ -86,9 +95,9 @@ public class ResponderCuestionarioBean implements Serializable {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-					"Se ha producido un error al guardar las respuestas. ", e.getMessage());
-			// TODO registro actividad
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al guardar las respuestas. ");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}
 
@@ -110,14 +119,14 @@ public class ResponderCuestionarioBean implements Serializable {
 					listaDatosTablaSave);
 
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
-					"Cuestionario cumplimentado y enviado con éxito. Su sesión ha finalizado.");
+					"Cuestionario cumplimentado y enviado con éxito.");
 
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-					"Se ha producido un error al enviar el cuestionario cumplimentado. ", e.getMessage());
-			// TODO registro actividad
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al enviar el cuestionario cumplimentado. ");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}
 
@@ -232,14 +241,14 @@ public class ResponderCuestionarioBean implements Serializable {
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-						"Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.", e.getMessage());
-				// TODO reg actividad
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+						"Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.");
+				regActividadService.altaRegActividadError(NOMBRESECCION, e);
 			}
 		}
 		else {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-					"La extensión del documento no corresponde con el documento subido", "");
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"La extensión del documento no corresponde con el documento subido");
 		}
 	}
 
@@ -273,4 +282,5 @@ public class ResponderCuestionarioBean implements Serializable {
 			visualizarCuestionario.visualizarRespuestasCuestionario(cuestionarioEnviado);
 		}
 	}
+
 }

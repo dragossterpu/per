@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +26,6 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
-import es.mira.progesin.util.PdfGenerator;
 import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
@@ -86,11 +84,6 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 	@Autowired
 	transient ApplicationBean applicationBean;
-
-	@Autowired
-	private transient PdfGenerator pdfGenerator;
-
-	private StreamedContent pdfFile;
 
 	public void buscarCuestionario() {
 		listaCuestionarioEnvio = cuestionarioEnvioService
@@ -305,18 +298,6 @@ public class CuestionarioEnviadoBean implements Serializable {
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return "/cuestionarios/modificarCuestionario";
-	}
-
-	public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
-		try {
-			setPdfFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Se ha producido un error en la generación del PDF");
-			regActividadService.altaRegActividadError(NOMBRESECCION, e);
-		}
 	}
 
 }

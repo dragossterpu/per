@@ -34,6 +34,7 @@ import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.PdfGenerator;
 import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -98,10 +99,11 @@ public class VisualizarCuestionario implements Serializable {
 
 	private transient StreamedContent file;
 
-	private StreamedContent wordFile;
+	@Autowired
+	private transient WordGenerator wordGenerator;
 
 	@Autowired
-	private WordGenerator wordGenerator;
+	private transient PdfGenerator pdfGenerator;
 
 	/**
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -296,12 +298,24 @@ public class VisualizarCuestionario implements Serializable {
 
 	public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado) {
 		try {
-			setWordFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado));
+			setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
 					"Se ha producido un error en la generación del documento Word");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+	}
+
+	public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
+		try {
+			setFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+					"Se ha producido un error en la generación del PDF");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}

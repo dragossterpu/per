@@ -21,9 +21,9 @@
 			<h:form id="form">
 				<div class="tituloCuestionario">
 					<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
-					<h:commandLink  actionListener="#{cuestionarioEnviadoBean.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" rendered="#{yaFinalizado}">
+					<h:commandLink  actionListener="#{cuestionarioEnviadoBean.visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" rendered="#{yaCumplimentado}">
 		               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg" />
-		               <p:fileDownload value="#{cuestionarioEnviadoBean.pdfFile}" />
+		               <p:fileDownload value="#{cuestionarioEnviadoBean.visualizarCuestionario.file}" />
 		            </h:commandLink>
 				</div>
 			<div style="clear:both;"/>
@@ -124,13 +124,13 @@
 				</p:dialog>
 				
 				<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
-						</div>
-					</p:confirmDialog>
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+					</div>
+				</p:confirmDialog>
 
 				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 			</h:form>

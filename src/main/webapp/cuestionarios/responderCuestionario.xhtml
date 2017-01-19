@@ -10,6 +10,8 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
+		
+			<ui:param name="yaCumplimentado" value="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion}" />
 			
 			<h:form id="form">
 			
@@ -18,8 +20,12 @@
 					<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado)}"
 						rendered="#{empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}">
 					   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
-					   <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.wordFile}" />
+					   <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
 					</h:commandLink>
+					<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" rendered="#{yaCumplimentado}">
+		               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg" />
+		               <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
+		            </h:commandLink>
 				</div>
 				<div style="clear:both;"/>				
 							
@@ -131,9 +137,9 @@
 				
 			 	<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> 
 					<div class="botonesFormulario">
-						<p:commandButton action="#{responderCuestionarioBean.guardarBorrador}" value="Guardar borrador" icon="fa fa-fw fa-save" id="borrador"/>
+						<p:commandButton id="borrador" value="Guardar borrador" action="#{responderCuestionarioBean.guardarBorrador}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}"/>
 						<h:commandLink id="enviar" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
-							rendered="#{request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}">
+							rendered="#{not yaCumplimentado and request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}">
 							<span class="ui-CommandLink-texto">Responder</span>
 						</h:commandLink>
 					</div>
@@ -148,21 +154,18 @@
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"
-							rendered="#{empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion or p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
-						<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
-							rendered="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion and p:ifGranted('PROV_CUESTIONARIO')}"/>
+						<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"/>
 					</div>
 				</p:dialog>	
 				
 				<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
-						</div>
-					</p:confirmDialog>
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+					</div>
+				</p:confirmDialog>
 
 				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 			</h:form>
