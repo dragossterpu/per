@@ -412,8 +412,9 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla 
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 1', 16);
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 2', 17);
 
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','PN', 'url de pn');
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','GC', 'url de gc');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','PN', 'http://172.16.41.9:8080/progesin');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','GC', 'http://172.16.41.9:8080/progesin');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','OTROS', 'http://172.16.41.9:8080/progesin');
 
 -- EN PRODUCCIÓN ELIMINAR ezentis.com COMO DOMINIO PERMITIDO
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('dominiosCorreo','dominiosCorreo', 'ezentis.com|interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
