@@ -18,6 +18,7 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository;
+import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
 /********************
  * 
@@ -43,13 +44,13 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	INotificacionService notificacionService;
 	
 	@Autowired
-	IRegistroActividadService registroActividadService;
-	
-	@Autowired
 	IEquipoService equipoService;
 	
 	@Autowired
 	IInspeccionesService inspeccionService;
+	
+	@Autowired
+	IMiembrosRepository miembrosRepository;
 
 
 	/***************************
@@ -233,7 +234,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 ***************************/
 	@Override
 	public void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion) {
-		List<Miembro> miembrosEquipo= inspeccion.getEquipo().getMiembros();
+		List<Miembro> miembrosEquipo= miembrosRepository.findByEquipo(inspeccion.getEquipo());
 		
 		for(Miembro miembro:miembrosEquipo){
 			grabarMensajeUsuario(entidad,miembro.getUsername());
