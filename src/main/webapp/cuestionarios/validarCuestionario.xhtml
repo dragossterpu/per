@@ -15,12 +15,13 @@
 			<script src="#{request.contextPath}/js/selectCheckboxesValidarCuestionario.js"/>
 			
 			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
-			<ui:param name="noCumplimentado" value="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}"/>
+			<ui:param name="yaCumplimentado" value="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}"/>
+			<ui:param name="yaFinalizado" value="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaFinalizacion}"/>
 
 			<h:form id="form">
 				<div class="tituloCuestionario">
 					<h:outputText value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
-					<h:commandLink  actionListener="#{cuestionarioEnviadoBean.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}">
+					<h:commandLink  actionListener="#{cuestionarioEnviadoBean.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" rendered="#{yaFinalizado}">
 		               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg" />
 		               <p:fileDownload value="#{cuestionarioEnviadoBean.pdfFile}" />
 		            </h:commandLink>
@@ -32,13 +33,13 @@
 				
 					<p:tab title="#{areaCuestionario.area}">
 					
-						<p:selectBooleanCheckbox id="validarArea" styleClass="checkArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" style="font-weight:bold;" disabled="#{noCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}"/>
+						<p:selectBooleanCheckbox id="validarArea" styleClass="checkArea" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}" itemLabel="Seleccionar todos" style="font-weight:bold;" disabled="#{not yaCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionAreas[areaCuestionario]}"/>
 						
 						<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
 							
 							<div class="prevPregCuest">
 							
-								<p:selectBooleanCheckbox id="validarRespuesta" styleClass="checkRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{noCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
+								<p:selectBooleanCheckbox id="validarRespuesta" styleClass="checkRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{not yaCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
 								<h:outputText value="#{preguntaArea.pregunta}" style="font-weight:bold;"/>
 								
 								<div class="respuestaCuestionario">
@@ -107,8 +108,8 @@
 
 				<p:outputPanel>
 					<div class="botonesFormulario">
-						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Guardar validaciones" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion and empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaFinalizacion}"/>
-						<h:commandLink rendered="#{empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaFinalizacion and esJefeEquipoInspeccion and not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion }" action="#{cuestionarioEnviadoBean.getFormNoConformeCuestionario}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Guardar validaciones" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}"/>
+						<h:commandLink action="#{cuestionarioEnviadoBean.getFormNoConformeCuestionario}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}">
 							<span class="ui-CommandLink-texto">No conforme</span>
 						</h:commandLink>
 						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
