@@ -10,6 +10,8 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
+		<ui:param name="noEsAdmin" value="#{not p:ifGranted('ADMIN')}"/>
+		
 		<h3>Modificar Usuario</h3>
 		<div class="aclaraciones">
 			Los campos marcados con (*) son obligatorios
@@ -20,22 +22,22 @@
 					<h4>Datos Personales</h4>
 					<div class="columnaIzdaFormulario">
 						<h:outputLabel for="nombre" value="Nombre (*):" />
-						<p:inputText id="nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="Introduzca el nombre" converter="#{trimConverter}"/>
+						<p:inputText id="nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="Introduzca el nombre" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 						<p:messages for="nombre" autoUpdate="true"  closable="true"/>
 	
 						<h:outputLabel for="apellido1" value="Primer apellido (*):" converter="#{trimConverter}"/>
-						<p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="true" requiredMessage="Introduzca el primer apellido"/>
+						<p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="true" requiredMessage="Introduzca el primer apellido" disabled="#{not esAdmin}"/>
 						<p:messages for="apellido1" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="apellido2" value="Segundo apellido:" />
-						<p:inputText id="apellido2" value="#{userBean.user.apellido2}"  converter="#{trimConverter}"/>
+						<p:inputText id="apellido2" value="#{userBean.user.apellido2}"  converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 						
 						<h:outputLabel for="docIndentidad" value="NIF (*): " />
-						<p:inputText id="docIndentidad" value="#{userBean.user.docIndentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}"/>
+						<p:inputText id="docIndentidad" value="#{userBean.user.docIndentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 						<p:messages for="docIndentidad" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="numIdentificacion" value="Número de identificación (*):" />
-						<p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}" required="true" requiredMessage="Introduzca el número de identificación" maxlength="15" converter="#{trimConverter}"/>
+						<p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}" required="true" requiredMessage="Introduzca el número de identificación" maxlength="15" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 						<p:messages for="numIdentificacion" autoUpdate="true"  closable="true"/>
 						
 					</div>
@@ -48,11 +50,11 @@
 	
 						<h:outputLabel for="fechaDestino" value="Fecha destino IPSS (*):" />
 						<p:calendar value="#{userBean.user.fechaDestinoIPSS}" id="fechaDestino" pattern="dd/MM/yyyy" locale="es" navigator="true"
-								required="true" requiredMessage="Introduzca la fecha de destino a la IPSS"/>
+								required="true" requiredMessage="Introduzca la fecha de destino a la IPSS" disabled="#{noEsAdmin}"/>
 						<p:messages for="fechaDestino" autoUpdate="true"  closable="true"/>
 	
 						<h:outputLabel for="fechaIngreso" value="Fecha de ingreso en el cuerpo:" />
-						<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" disabled="#{noEsAdmin}"/>
 						
 	
 						
@@ -62,27 +64,27 @@
 				<h4>Datos de contacto</h4>
 				<div class="columnaIzdaFormulario">
 					<h:outputLabel for="telefono" value="Teléfono:" />
-					<p:inputNumber id="telefono" value="#{userBean.user.telefono}"  maxValue="999999999" decimalPlaces="0" thousandSeparator=""/>
+					<p:inputNumber id="telefono" value="#{userBean.user.telefono}"  maxValue="999999999" decimalPlaces="0" thousandSeparator="" disabled="#{noEsAdmin}"/>
 					
 					<h:outputLabel for="telefonoMovilOficial" value="Teléfono móvil oficial:" />
-					<p:inputNumber id="telefonoMovilOficial" value="#{userBean.user.telefonoMovilOficial}"  maxValue="999999999" decimalPlaces="0" thousandSeparator=""/>
+					<p:inputNumber id="telefonoMovilOficial" value="#{userBean.user.telefonoMovilOficial}"  maxValue="999999999" decimalPlaces="0" thousandSeparator="" disabled="#{noEsAdmin}"/>
 					
 					<h:outputLabel for="telefonoMovilParticular" value="Teléfono móvil particular:" />
-					<p:inputNumber id="telefonoMovilParticular" value="#{userBean.user.telefonoMovilParticular}"  maxValue="999999999" decimalPlaces="0" thousandSeparator=""/>
+					<p:inputNumber id="telefonoMovilParticular" value="#{userBean.user.telefonoMovilParticular}"  maxValue="999999999" decimalPlaces="0" thousandSeparator="" disabled="#{noEsAdmin}"/>
 				
 				</div>
 				
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="correo" value="Correo electrónico (*): " />
 					<p:inputText id="correo" value="#{userBean.user.correo}"  required="true" 
-						requiredMessage="Introduzca el correo electrónico"
+						requiredMessage="Introduzca el correo electrónico" disabled="#{noEsAdmin}"
 						validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 					</p:inputText>
 					<p:messages for="correo" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="numDespacho" value="Número de despacho: " />
-					<p:inputText id="numDespacho" value="#{userBean.user.despacho}" converter="#{trimConverter}"/>
+					<p:inputText id="numDespacho" value="#{userBean.user.despacho}" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 				</div>
 			</div>
 			<div class="bloqueFormulario">
@@ -95,7 +97,7 @@
 					<h:outputLabel for="estado" value="Estado:" />
 					<p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados"
 						allSuffix="ALL_ENUM_VALUES" />
-					<p:selectOneMenu value="#{userBean.user.estado}" id="estado"
+					<p:selectOneMenu value="#{userBean.user.estado}" id="estado" disabled="#{noEsAdmin}"
 							required="true" requiredMessage="Seleccione un estado para el usuario">
 						<f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoUser"
 							itemLabel="#{estadoUser}" itemValue="#{estadoUser}" />
@@ -105,7 +107,7 @@
 					 <h:outputLabel for="role" value="Rol: (*)" />
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
 						allSuffix="ALL_ENUM_VALUES" />
-					<p:selectOneMenu value="#{userBean.user.role}" id="role"
+					<p:selectOneMenu value="#{userBean.user.role}" id="role" disabled="#{noEsAdmin}"
 							required="true" requiredMessage="Seleccione un rol para el usuario" >
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
@@ -117,15 +119,14 @@
 					<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
 					<p:selectOneMenu value="#{userBean.user.puestoTrabajo}" id="puestoTrabajoSelect" 
 							required="true" requiredMessage="Seleccione un puesto de trabajo"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}">
 						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
 							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
 					</p:selectOneMenu>
 					<p:messages for="puestoTrabajoSelect" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="nivel" value="Nivel (*):" />
-					<p:inputNumber id="nivel" value="#{userBean.user.nivel}"  decimalPlaces="0" required="true" requiredMessage="Introduzca el nivel del usuario" maxValue="99" converter="#{trimConverter}"/>
-				
+					<p:inputNumber id="nivel" value="#{userBean.user.nivel}"  decimalPlaces="0" required="true" requiredMessage="Introduzca el nivel del usuario" maxValue="99" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 					<p:messages for="nivel" autoUpdate="true"  closable="true"/>
 				</div>
 				
@@ -135,7 +136,7 @@
 					<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado (*):" />
 					<p:selectOneMenu value="#{userBean.user.cuerpoEstado}" id="cuerpoEstadoSelect"
 							required="true" requiredMessage="Seleccione un cuerpo del estado"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}">
 						<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 							itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
 							<p:ajax partialSubmit="false"
@@ -147,7 +148,7 @@
 					<h:outputLabel for="empleoSelect" value="Empleo (*):" />
 					<p:selectOneMenu value="#{userBean.empleoSeleccionado}" id="empleoSelect"
 							required="true" requiredMessage="Seleccione un empleo"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.listaEmpleos}" var="empleo"
 							itemLabel="#{empleo.descripcion}" itemValue="#{empleo}" />
@@ -157,7 +158,7 @@
 				   <h:outputLabel for="departamentoSelect" value="Departamento (*):" />
 					<p:selectOneMenu value="#{userBean.departamentoSeleccionado}" id="departamentoSelect"
 							required="true" requiredMessage="Seleccione un departamento"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.listaDepartamentos}" var="departamento"
 							itemLabel="#{departamento.descripcion}" itemValue="#{departamento}" />
@@ -167,7 +168,7 @@
 					<h:outputLabel for="categoria" value="Categoria: (*)" />
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.CategoriaEnum" var="categoria"
 						allSuffix="ALL_ENUM_VALUES" />
-					<p:selectOneMenu value="#{userBean.user.categoria}" id="categoria"
+					<p:selectOneMenu value="#{userBean.user.categoria}" id="categoria" disabled="#{noEsAdmin}"
 							required="true" requiredMessage="Seleccione una categoria para el usuario" panelStyleClass="hideDisabled">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{categoria.ALL_ENUM_VALUES}" var="catUser"
@@ -178,9 +179,9 @@
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.modificarUsuario}" value="Guardar cambios" icon="fa fa-fw fa-save"/>
+				<p:commandButton actionListener="#{userBean.modificarUsuario}" value="Guardar cambios" icon="fa fa-fw fa-save" rendered="#{not noEsAdmin}"/>
 				<p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
-				<p:commandButton actionListener="#{userBean.restaurarClave}" value="Restaurar clave" />
+				<p:commandButton actionListener="#{userBean.restaurarClave}" value="Restaurar clave" rendered="#{not noEsAdmin}"/>
 			</div>
 			
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
