@@ -11,5 +11,5 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 public interface IAreaCuestionarioRepository extends CrudRepository<AreasCuestionario, Long> {
 
 	@EntityGraph(value = "AreasCuestionario.preguntas", type = EntityGraphType.LOAD)
-	List<AreasCuestionario> findDistinctByIdCuestionario(Integer idCuestionario);
+	List<AreasCuestionario> findDistinctByIdCuestionarioOrderByOrdenAsc(Integer idCuestionario);
 }

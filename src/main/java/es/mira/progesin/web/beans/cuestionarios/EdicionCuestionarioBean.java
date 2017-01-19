@@ -48,7 +48,7 @@ public class EdicionCuestionarioBean {
 	public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
 		this.modeloCuestionario = modeloCuestionario;
 		preguntasSelecciondas = new HashMap<>();
-		listaAreasCuestionario = areaCuestionarioRepository.findDistinctByIdCuestionario(modeloCuestionario.getId());
+		listaAreasCuestionario = areaCuestionarioRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
 		return "/cuestionarios/editarCuestionario";
 	}
 

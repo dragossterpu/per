@@ -215,7 +215,6 @@ public class UserService implements IUserService {
 			listaUsuarios.add(new User(cuerpoCorreo + i + restoCorreo, passwordEncoded, RoleEnum.PROV_CUESTIONARIO,
 					correoPrincipal));
 		}
-		System.out.println(listaUsuarios);
 		return listaUsuarios;
 	}
 }

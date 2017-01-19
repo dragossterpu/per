@@ -33,4 +33,6 @@ public interface ICuestionarioEnvioService extends Serializable {
 
 	CuestionarioEnvio findById(Long idCuestionarioEnviado);
 
+	CuestionarioEnvio findByInspeccionAndFechaFinalizacionIsNull(Inspeccion inspeccion);
+
 }

@@ -73,7 +73,7 @@ public class AreaCuestionarioService implements IAreaCuestionarioService {
 
 	@Override
 	public List<AreasCuestionario> findDistinctByIdCuestionario(Integer idCuestionario) {
-		return areaRepository.findDistinctByIdCuestionario(idCuestionario);
+		return areaRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(idCuestionario);
 	}
 
 }

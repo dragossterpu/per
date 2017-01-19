@@ -12,4 +12,6 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
 	CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNull(String correo);
 
 	CuestionarioEnvio findDistinctById(Long idCuestionarioEnviado);
+
+	CuestionarioEnvio findByInspeccionAndFechaFinalizacionIsNull(Inspeccion inspeccion);
 }

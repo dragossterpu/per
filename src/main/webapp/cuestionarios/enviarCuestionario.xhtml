@@ -80,10 +80,14 @@
 				</div>
 			
 				<div class="botonesFormulario">
-					<p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and esJefeEquipoInspeccion}"/>
+					<p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and esJefeEquipoInspeccion}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 					<p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and esJefeEquipoInspeccion}"/>
 					<p:button outcome="#{menuOrigen}" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
+				
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				    <p:graphicImage value="/images/loading.gif" />
+				</p:dialog>
 				
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
@@ -91,6 +95,7 @@
 						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect(menuOrigen)}"/>
 					</div>
 				</p:dialog>
+				
 			</h:form>
 			
 		</ui:define>

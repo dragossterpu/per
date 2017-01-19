@@ -16,12 +16,15 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IInspeccionesService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
@@ -40,6 +43,8 @@ public class EnvioCuestionarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String ETIQUETA_ERROR = "mensajeerror";
+
+	private static final String SECCION_ENVIO_CUESTIONARIO = "ENVIO CUESTIONARIO";
 
 	private CuestionarioEnvio cuestionarioEnvio;
 
@@ -64,11 +69,18 @@ public class EnvioCuestionarioBean implements Serializable {
 	@Autowired
 	private ApplicationBean applicationBean;
 
+	@Autowired
+	private transient ICorreoElectronico correoElectronico;
+
+	@Autowired
+	private transient INotificacionService notificacionService;
+
 	/**
-	 * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasado como parámetro. Se
+	 * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasados como parámetro. Se
 	 * usa en el formulario de envío para el autocompletado.
 	 * 
-	 * @param numeroInspeccion Número de inspección que teclea el usuario en el formulario de envío
+	 * @param numeroInspeccion Número de inspección que teclea el usuario en el formulario de envío o nombre de la
+	 * unidad de la inspección
 	 * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el número introducido
 	 */
 	public List<Inspeccion> autocompletarInspeccion(String nombreUnidad) {
@@ -79,14 +91,12 @@ public class EnvioCuestionarioBean implements Serializable {
 	 * Completa los datos del formulario (correo, nombre, cargo, fecha límite) si el tipo de inspección asociada es de
 	 * tipo General Periódica y tiene una solicitud de documentación previa finalizada.
 	 */
-	public boolean completarDatosSolicitudPrevia() {
-		boolean enviar = true;
+	public void completarDatosSolicitudPrevia() {
 		try {
 			if ("I.G.P.".equals(cuestionarioEnvio.getInspeccion().getTipoInspeccion().getCodigo())) {
 				List<SolicitudDocumentacionPrevia> listaSolicitudes = solDocService
 						.findSolicitudDocumentacionFinalizadaPorInspeccion(this.cuestionarioEnvio.getInspeccion());
-				if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE
-						&& listaSolicitudes.get(0) != null) {
+				if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE) {
 					// Como está ordenado en orden descendente por fecha finalización, recupero la más reciente
 					SolicitudDocumentacionPrevia solDocPrevia = listaSolicitudes.get(0);
 					this.cuestionarioEnvio.setCorreoEnvio(solDocPrevia.getCorreoCorporativoInterlocutor());
@@ -96,15 +106,12 @@ public class EnvioCuestionarioBean implements Serializable {
 				}
 				else {
 					mostrarMensajeNoDocumentacionPrevia();
-					enviar = false;
 				}
 			}
 		}
 		catch (Exception e) {
-			// regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
-			enviar = false;
+			regActividadService.altaRegActividadError(SECCION_ENVIO_CUESTIONARIO, e);
 		}
-		return enviar;
 	}
 
 	/**
@@ -114,6 +121,7 @@ public class EnvioCuestionarioBean implements Serializable {
 	 */
 	public void enviarCuestionario() {
 		try {
+			// RequestContext.getCurrentInstance().execute("PF('statusDialog').show()");
 			System.out.println(
 					"************************ " + SecurityContextHolder.getContext().getAuthentication().getName());
 			System.out.println(
@@ -121,45 +129,44 @@ public class EnvioCuestionarioBean implements Serializable {
 			// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
 			CuestionarioEnvio cuestionario = cuestionarioEnvioService
 					.findByCorreoEnvioAndFechaFinalizacionIsNull(cuestionarioEnvio.getCorreoEnvio());
-			if (cuestionario == null) {
+			// Comprobar que no existe un cuestionario enviado sin finalizar para esa inspección
+			CuestionarioEnvio cuestionarioInspeccion = cuestionarioEnvioService
+					.findByInspeccionAndFechaFinalizacionIsNull(cuestionarioEnvio.getInspeccion());
+
+			if (cuestionario == null && cuestionarioInspeccion == null) {
 				String password = Utilities.getPassword();
 				System.out.println(password);
 				List<User> listaUsuariosProvisionales = userService
 						.crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
 				cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
-				regActividadService.altaRegActividad(
-						"Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero() + " enviado",
-						EstadoRegActividadEnum.ALTA.name(), "CUESTIONARIOS");
-				// TODO ESTUDIAR SI METER EL ENVÍO DE CORREO EN LA TRANSACCIÓN
-				String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-				String cuerpo = getCuerpoCorreo(password, listaUsuariosProvisionales);
-				// CorreoElectronico envioCorreo = new CorreoElectronico();
-				// envioCorreo.setDatos(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
-				// envioCorreo.envioCorreo();
-				// }
-				// catch (Exception e) {
-				// FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-				// "Se ha produdico un error en el envio del correo electrónico.", e.getMessage(),
-				// ETIQUETA_ERROR);
-				// // regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
-				// }
-				// TODO crear notificación
+				enviarCorreoCuestionario(password, listaUsuariosProvisionales);
+				// Notificaciones y registro de actividad
+				crearNotificacionesYResgistro(cuestionarioEnvio.getInspeccion());
+				// RequestContext.getCurrentInstance().execute("PF('statusDialog').hide()");
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 						"El cuestionario se ha enviado con éxito");
 			}
 			else {
-				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-						"El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
-								+ " ya tiene otro cuestionario abierto. Finalícelo antes de enviar otro cuestionario.",
-						"", ETIQUETA_ERROR);
+				String textoError;
+				if (cuestionario != null) {
+					textoError = "El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
+							+ " ya tiene otro cuestionario abierto. Finalícelo antes de enviar otro cuestionario.";
+
+				}
+				else {
+					textoError = "Existe un cuestionario enviado para la inspección "
+							+ cuestionarioEnvio.getInspeccion().getNumero()
+							+ " sin finalizar. Debe finalizarlo primero antes de poder enviar otro cuestionario para la misma inspección";
+				}
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, "", ETIQUETA_ERROR);
 			}
-			// TODO crear registro actividad
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Se ha produdico un error en el envio del cuestionario", e.getMessage(), ETIQUETA_ERROR);
-			// regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+			regActividadService.altaRegActividadError(SECCION_ENVIO_CUESTIONARIO, e);
 		}
+		// RequestContext.getCurrentInstance().execute("PF('statusDialog').hide()");
 	}
 
 	/**
@@ -172,7 +179,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, ETIQUETA_ERROR);
 	}
 
-	private String getCuerpoCorreo(String password, List<User> usuarios) {
+	private void enviarCorreoCuestionario(String password, List<User> usuarios) {
 		String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")
 				.get(cuestionarioEnvio.getInspeccion().getAmbito().name());
 
@@ -193,6 +200,29 @@ public class EnvioCuestionarioBean implements Serializable {
 				.append("\r\n \r\nUna vez enviado el cuestionario todos los usuarios quedarán inactivos. \r\n \r\n")
 				.append("Muchas gracias y un saludo.");
 
-		return cuestionarioEnvio.getMotivoCuestionario().concat(textoAutomatico.toString());
+		String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat("\r\n").concat(textoAutomatico.toString());
+		String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
+		try {
+			correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+					"Se ha produdico un error en el envio del correo electrónico", e.getMessage(), ETIQUETA_ERROR);
+			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
+		}
+	}
+
+	/**
+	 * Crea una notificación para el Jefe de Inspecciones y para el equipo de la inspección y registro de actividad
+	 * @param inspeccion
+	 */
+	private void crearNotificacionesYResgistro(Inspeccion inspeccion) {
+		String textoNotificaciones = "Enviado cuestionario para la inspección ".concat(inspeccion.getNumero());
+		notificacionService.crearNotificacionRol(textoNotificaciones, SECCION_ENVIO_CUESTIONARIO,
+				RoleEnum.JEFE_INSPECCIONES);
+		notificacionService.crearNotificacionEquipo(textoNotificaciones, SECCION_ENVIO_CUESTIONARIO,
+				cuestionarioEnvio.getInspeccion());
+		regActividadService.altaRegActividad(textoNotificaciones, EstadoRegActividadEnum.ALTA.name(),
+				SECCION_ENVIO_CUESTIONARIO);
 	}
 }

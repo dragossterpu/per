@@ -20,11 +20,11 @@ import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
-
-	
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -93,11 +93,14 @@ public class RegistroActividadService implements IRegistroActividadService {
 					.sqlRestriction("TRUNC(fecha_alta) <= '" + sdf.format(regActividadBusqueda.getFechaHasta()) + "'"));
 		}
 		if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(nombreSeccion, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + regActividadBusqueda.getNombreSeccion()+"', ' ', '') || '%', 'US7ASCII'))"));
+			criteria.add(Restrictions.sqlRestriction(
+					"upper(convert(replace(nombreSeccion, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+							+ regActividadBusqueda.getNombreSeccion() + "', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (regActividadBusqueda.getTipoRegActividad() != null
 				&& !regActividadBusqueda.getTipoRegActividad().isEmpty()) {
-			criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(), MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(),
+					MatchMode.ANYWHERE));
 		}
 		if (regActividadBusqueda.getUsernameRegActividad() != null
 				&& !regActividadBusqueda.getUsernameRegActividad().isEmpty()) {
@@ -125,8 +128,9 @@ public class RegistroActividadService implements IRegistroActividadService {
 			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
 			registroActividad.setDescripcion(message);
 			regActividadRepository.save(registroActividad);
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		}
+		catch (Exception e1) {
+			log.error(e1.getMessage());
 		}
 	}
 
@@ -140,8 +144,9 @@ public class RegistroActividadService implements IRegistroActividadService {
 			registroActividad.setNombreSeccion(seccion);
 			registroActividad.setDescripcion(descripcion);
 			regActividadRepository.save(registroActividad);
-		} catch (Exception e) {
-			altaRegActividadError(seccion,e);
+		}
+		catch (Exception e) {
+			altaRegActividadError(seccion, e);
 		}
 
 	}
