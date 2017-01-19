@@ -100,7 +100,7 @@ public class AlertaService implements IAlertaService {
 			User usu=userService.findOne(usuario);	
 			alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario);
 			correo.envioCorreo(usu.getCorreo(), "Nueva alerta PROGESIN", "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
-			registroActividadService.altaRegActividad("Se crea la alerta: " + descripcion, EstadoRegActividadEnum.ALTA.name(), seccion);
+			
 		} catch (MailException | FileNotFoundException | MessagingException e) {
 			registroActividadService.altaRegActividadError(seccion, e);
 		}
