@@ -308,10 +308,11 @@ public class DocumentoService implements IDocumentoService {
 	public boolean extensionCorrecta(UploadedFile file) {
 
 		String tipo;
-		ContentHandler handler = new BodyContentHandler();
+		ContentHandler handler = new BodyContentHandler(-1);
 		Metadata metadata = new Metadata();
 		ParseContext pcontext = new ParseContext();
 		Parser parser;
+		
 
 		if (file.getContentType().contains("openxmlformats")) {
 			parser = new OOXMLParser();
@@ -325,6 +326,7 @@ public class DocumentoService implements IDocumentoService {
 			tipo = metadata.get("Content-Type");
 		}
 		catch (Exception e) {
+			registroActividadService.altaRegActividadError("Carga documento", e);
 			tipo = "error";
 		}
 
