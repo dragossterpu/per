@@ -50,19 +50,19 @@ public class SugerenciasBean implements Serializable {
 	private List<Sugerencia> sugerenciasListado;
 
 	@Autowired
-	CorreoElectronico correo;
+	private transient CorreoElectronico correo;
 
 	@Autowired
-	ISugerenciaService sugerenciaService;
+	private transient ISugerenciaService sugerenciaService;
 
 	@Autowired
-	IUserService userService;
+	private transient IUserService userService;
 
 	@Autowired
-	private IRegistroActividadService regActividadService;
+	private transient IRegistroActividadService regActividadService;
 
 	public String guardarSugerencia() {
-		if (modulo.equals("")) {
+		if ("".equals(modulo)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Es obligatorio elegir un módulo", ""));
 			return null;
@@ -121,13 +121,15 @@ public class SugerenciasBean implements Serializable {
 		user = userService.findOne(usuarioContestacion);
 		try {
 			correo.envioCorreo(user.getCorreo(), asunto, contestacion);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Constestación",
+					"Mensaje de respuesta enviado correctamente.");
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
 					"Se ha producido un error al enviar el correo electrónico. Error: ", e.getMessage());
 			regActividadService.altaRegActividadError("SUGERENCIA DE MEJORA", e);
 		}
-		return "/principal/sugerenciasListado";
+		return "/principal/contestarSugerencia";
 	}
 
 	public void resetFail() {
