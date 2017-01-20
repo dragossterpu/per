@@ -12,10 +12,10 @@
         <ui:define name="content">
          	<h3>Sugerencias de mejora </h3> 
          	<h:form>
-			    <p:remoteCommand name="onload" action="#{sugerenciasBean.sugerenciasListado}" autoRun="true" />
+			    <p:remoteCommand name="onload" action="#{sugerenciasBean.sugerenciasListado}" autoRun="true" update="form" />
 			</h:form> 
          	<br></br><br></br>
-         	<h:form>
+         	<h:form id="form">
 			    <div id="alertas">
 						<p:dataTable id="sugerencias" var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" paginator="true" rows="20">
 							<f:facet name="header">
