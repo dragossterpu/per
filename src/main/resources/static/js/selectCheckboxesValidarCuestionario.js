@@ -16,12 +16,12 @@ $(document).ready(function(){
 	    var checkedArea = widgetArea.input.prop("checked");
 	
 	    if (checkedArea) {
-	        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function() {
-	        	PrimeFaces.getWidgetById($(this).attr('id')).check();
+	        validarArea.siblings('.prevPregCuest').find('.checkRespuesta input:enabled').each(function() {
+	        	PrimeFaces.getWidgetById($(this).closest('.checkRespuesta').attr('id')).check();
 	        });
 	    } else {
-	        validarArea.siblings('.prevPregCuest').find('.checkRespuesta').each(function() {
-	        	PrimeFaces.getWidgetById($(this).attr('id')).uncheck();
+	        validarArea.siblings('.prevPregCuest').find('.checkRespuesta input:enabled').each(function() {
+	        	PrimeFaces.getWidgetById($(this).closest('.checkRespuesta').attr('id')).uncheck();
 	        });
 	    }
 	}
