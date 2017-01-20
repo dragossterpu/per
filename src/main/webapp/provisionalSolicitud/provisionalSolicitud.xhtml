@@ -16,6 +16,8 @@
 		
 		<ui:define name="content">
 
+		<ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
+
 		<h:form>
 		    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.visualizarSolicitud}" update="form" autoRun="true" />
 		</h:form>
@@ -26,7 +28,7 @@
 				<h3>Solicitud documentación previa cuestionario
 					<h:commandLink style="float: right;" actionListener="#{provisionalSolicitudBean.imprimirPdf()}">
 		               <p:graphicImage value="/images/pdf.png" style="padding: 0"/>
-		               <p:fileDownload value="#{provisionalSolicitudBean.pdfFile}" />
+		               <p:fileDownload value="#{provisionalSolicitudBean.file}" />
 		            </h:commandLink>
 		        </h3>
 			</div>
@@ -128,18 +130,15 @@
 							
 					<div class="botonesFormulario">
 						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
-						<p:commandButton actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save"/>
-						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o"/>		
+						<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
+						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" />		
 					</div>					
 				</div>	
 			</h:form>	
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/index')}"
-						rendered="#{empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}"/>
-					<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
-						rendered="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}"/>
+					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/provisionalSolicitud/provisionalSolicitud')}"/>
 				</div>
 			</p:dialog>		
 		</ui:define>

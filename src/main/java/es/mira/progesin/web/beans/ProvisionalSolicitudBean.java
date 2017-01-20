@@ -51,27 +51,27 @@ public class ProvisionalSolicitudBean implements Serializable {
 	private static final String ERROR = "Error";
 
 	@Autowired
-	transient ApplicationBean applicationBean;
+	private transient ApplicationBean applicationBean;
 
 	@Autowired
-	transient IRegistroActividadService regActividadService;
+	private transient IRegistroActividadService regActividadService;
 
 	@Autowired
-	transient ISolicitudDocumentacionService solicitudDocumentacionService;
+	private transient ISolicitudDocumentacionService solicitudDocumentacionService;
 
 	@Autowired
-	transient INotificacionService notificacionService;
+	private transient INotificacionService notificacionService;
 
 	@Autowired
-	transient ITipoDocumentacionService tipoDocumentacionService;
+	private transient ITipoDocumentacionService tipoDocumentacionService;
 
 	@Autowired
-	transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
+	private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
 
 	@Autowired
-	transient IDocumentoService documentoService;
+	private transient IDocumentoService documentoService;
 
-	transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
+	private transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
 
 	private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 
-	transient StreamedContent file;
+	private transient StreamedContent file;
 
 	private Map<String, String> extensiones;
 
@@ -87,8 +87,6 @@ public class ProvisionalSolicitudBean implements Serializable {
 
 	@Autowired
 	private PdfGenerator pdfGenerator;
-
-	private StreamedContent pdfFile;
 
 	public void visualizarSolicitud() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -224,7 +222,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
 					usuarioProv)) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentacion",
-						"Solicitud de documentación cumplimentada con éxito. Su sesión ha finalizado.");
+						"Solicitud de documentación cumplimentada con éxito.");
 				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
 						+ SecurityContextHolder.getContext().getAuthentication().getName();
 				// Guardamos la actividad en bbdd
@@ -291,7 +289,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 	 */
 	public void imprimirPdf() {
 		try {
-			setPdfFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
+			setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
 					listadoDocumentosPrevios));
 		}
 		catch (Exception e) {
