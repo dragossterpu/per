@@ -12,6 +12,8 @@
 
 		<ui:param name="noEsAdmin" value="#{not p:ifGranted('ADMIN')}"/>
 		
+		
+		
 		<h3>Modificar Usuario</h3>
 		<div class="aclaraciones">
 			Los campos marcados con (*) son obligatorios
@@ -98,7 +100,8 @@
 					<p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados"
 						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.estado}" id="estado" disabled="#{noEsAdmin}"
-							required="true" requiredMessage="Seleccione un estado para el usuario">
+							required="true" requiredMessage="Seleccione un estado para el usuario"
+							style="width:100%;">
 						<f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoUser"
 							itemLabel="#{estadoUser}" itemValue="#{estadoUser}" />
 					</p:selectOneMenu>
@@ -108,7 +111,8 @@
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
 						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.role}" id="role" disabled="#{noEsAdmin}"
-							required="true" requiredMessage="Seleccione un rol para el usuario" >
+							required="true" requiredMessage="Seleccione un rol para el usuario"
+							style="width:100%;" >
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
 							itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
@@ -119,7 +123,8 @@
 					<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
 					<p:selectOneMenu value="#{userBean.user.puestoTrabajo}" id="puestoTrabajoSelect" 
 							required="true" requiredMessage="Seleccione un puesto de trabajo"
-							converter="#{selectConverter}" disabled="#{noEsAdmin}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}"
+							style="width:100%;">
 						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
 							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
 					</p:selectOneMenu>

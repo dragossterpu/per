@@ -109,7 +109,7 @@
 						<h:outputText value="#{regActividad.usernameRegActividad}" />
 					</p:column>
 					<p:column headerText="Descripción" sortBy="#{regActividad.descripcion}" width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
-						<h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,100)}"></h:outputText>
+						<h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,40)}..."></h:outputText>
 						<p:tooltip id="toolTipError" for="descripcionError" value="Hacer click para ampliar información" position="top"/>
 					</p:column>					
 					<p:column headerText="Tipo notificación" sortBy="#{regActividad.tipoRegActividad}" width="100" visible="#{regActividadBean.list[4]}" exportable="#{regActividadBean.list[4]}">

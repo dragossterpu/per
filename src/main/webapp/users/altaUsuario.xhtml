@@ -99,7 +99,8 @@
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
 						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.role}" id="role"
-							required="true" requiredMessage="Seleccione un rol para el usuario" panelStyleClass="hideDisabled">
+							required="true" requiredMessage="Seleccione un rol para el usuario" panelStyleClass="hideDisabled"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
 							itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" itemDisabled="#{roleUser.prov}" />
@@ -108,7 +109,8 @@
 					
 					<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
 					<p:selectOneMenu value="#{userBean.puestoTrabajoSeleccionado}" id="puestoTrabajoSelect" 
-							converter="#{selectConverter}">
+							converter="#{selectConverter}"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
 							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
@@ -125,7 +127,8 @@
 					<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado (*):" />
 					<p:selectOneMenu value="#{userBean.cuerpoEstadoSeleccionado}" id="cuerpoEstadoSelect"
 							required="true" requiredMessage="Seleccione un cuerpo del estado"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 							itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
@@ -138,7 +141,8 @@
 					<h:outputLabel for="empleoSelect" value="Empleo (*):" />
 					<p:selectOneMenu value="#{userBean.empleoSeleccionado}" id="empleoSelect"
 							required="true" requiredMessage="Seleccione un empleo"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.listaEmpleos}" var="empleo"
 							itemLabel="#{empleo.descripcion}" itemValue="#{empleo}" />
@@ -148,7 +152,8 @@
 				   <h:outputLabel for="departamentoSelect" value="Departamento (*):" />
 					<p:selectOneMenu value="#{userBean.departamentoSeleccionado}" id="departamentoSelect"
 							required="true" requiredMessage="Seleccione un departamento"
-							converter="#{selectConverter}">
+							converter="#{selectConverter}"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.listaDepartamentos}" var="departamento"
 							itemLabel="#{departamento.descripcion}" itemValue="#{departamento}" />
@@ -159,7 +164,8 @@
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.CategoriaEnum" var="categoria"
 						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.categoria}" id="categoria"
-							required="true" requiredMessage="Seleccione una categoria para el usuario" panelStyleClass="hideDisabled">
+							required="true" requiredMessage="Seleccione una categoria para el usuario" panelStyleClass="hideDisabled"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{categoria.ALL_ENUM_VALUES}" var="catUser"
 							itemLabel="#{catUser.descripcion}" itemValue="#{catUser}"  />
