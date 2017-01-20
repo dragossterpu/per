@@ -123,12 +123,10 @@ public class RegistroActividadService implements IRegistroActividadService {
 	public void altaRegActividadError(String nombreSeccion, Exception e) {
 		try {
 			RegistroActividad registroActividad = new RegistroActividad();
-			//String message = Utilities.messageError(e);
 			registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
 			registroActividad.setFechaAlta(new Date());
 			registroActividad.setNombreSeccion(nombreSeccion);
 			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-			//registroActividad.setDescripcion(message);
 			registroActividad.setDescripcion(Arrays.toString(e.getStackTrace()));
 			regActividadRepository.save(registroActividad);
 		}

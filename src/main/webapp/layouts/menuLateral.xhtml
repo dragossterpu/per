@@ -8,7 +8,9 @@
 		<p:submenu label="Administración" rendered="#{p:ifGranted('ADMIN')}">
 			<p:menuitem value="Cuerpos del estado" outcome="/cuerpos/cuerpos" />
 			<p:menuitem value="Tipos de equipo" outcome="/equipos/tiposEquipo"  />
-			<p:menuitem value="Registro de actividad" outcome="/registro/registro" />
+			<p:menuitem value="Registro de actividad" outcome="/registro/registro">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>	
 			<p:menuitem value="Sugerencias de mejora" outcome="/principal/sugerenciasListado"  />
 			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
 		</p:submenu>

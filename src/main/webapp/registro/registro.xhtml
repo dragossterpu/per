@@ -8,6 +8,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
+
+
+
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
@@ -78,7 +81,12 @@
 	                         paginator="true" 
 	                         resizableColumns="true"
 	                         rendered="#{not empty regActividadBean.regActividadBusqueda.listaRegActividad}"
-	                         style="">
+	                         style=""
+	                         selectionMode="single"
+	                         selection="#{regActividadBean.error}"
+	                         rowKey="#{regActividad.idRegActividad}"
+	                         >
+	                       
 					 <f:facet name="header">
 						Registros de actividad
 						 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
@@ -86,6 +94,9 @@
 	        			 	  <p:ajax event="toggle" listener="#{regActividadBean.onToggle}" />
 	        			 </p:columnToggler>
 					</f:facet>
+					
+					<p:ajax event="rowSelect" listener="#{regActividadBean.onRowSelect}" update=":busquedalistaRegActividad:dialog"/> 
+					
 					<p:column headerText="Fecha " sortBy="#{regActividad.fechaAlta}" width="80" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
 						<h:outputText value="#{regActividad.fechaAlta}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
@@ -98,7 +109,8 @@
 						<h:outputText value="#{regActividad.usernameRegActividad}" />
 					</p:column>
 					<p:column headerText="Descripción" sortBy="#{regActividad.descripcion}" width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
-						<h:outputText value="#{regActividad.descripcion}" />
+						<h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,100)}"></h:outputText>
+						<p:tooltip id="toolTipError" for="descripcionError" value="Hacer click para ampliar información" position="top"/>
 					</p:column>					
 					<p:column headerText="Tipo notificación" sortBy="#{regActividad.tipoRegActividad}" width="100" visible="#{regActividadBean.list[4]}" exportable="#{regActividadBean.list[4]}">
 						<h:outputText value="#{regActividad.tipoRegActividad}" />
@@ -108,6 +120,9 @@
 	       				 Resultado de la búsqueda: #{fn:length(regActividadBean.regActividadBusqueda.listaRegActividad)} registros.
 	    			</f:facet>
 				</p:dataTable>
+				<p:dialog id="dialog" header="Descripción de la actividad" widgetVar="dlg" modal="true" height="500" width="800">
+				    <h:outputText  id="textoError" value="#{regActividadBean.error.descripcion}"/>
+				</p:dialog> 
 			</p:outputPanel>
 </h:form>
 		<p:confirmDialog global="true">

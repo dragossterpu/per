@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,7 @@ public class RegActividadBean implements Serializable {
 	private List<Boolean> list;
 
 	private RegistroActividad regActividad;
+	private RegistroActividad error;
 
 	private Integer numColListRegActividad = 5;
 
@@ -84,4 +89,18 @@ public class RegActividadBean implements Serializable {
 		return regActividadService.buscarPorUsuarioRegistro("%" + infoUsuario + "%");
 	}
 
+	
+	public void setSelected(RegistroActividad selected) {
+        this.regActividad = selected;
+    }
+	
+	public void onRowSelect(SelectEvent event){
+		error=new RegistroActividad();
+		error= (RegistroActividad) event.getObject();
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.update("textoError");
+		context.execute("PF('dlg').show();");
+
+		
+	}
 }
