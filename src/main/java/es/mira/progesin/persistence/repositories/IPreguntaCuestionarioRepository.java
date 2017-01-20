@@ -13,8 +13,12 @@ public interface IPreguntaCuestionarioRepository extends CrudRepository<Pregunta
 
 	// List<PreguntasCuestionario> findByIdArea(Long idArea);
 	List<PreguntasCuestionario> findByArea(AreasCuestionario idArea);
-
+	
+	List<PreguntasCuestionario> findAll();
+	
+	
 	@Query("select c.preguntasElegidas from CuestionarioPersonalizado c where c.id = :idCuestionarioPersonalizado")
 	List<PreguntasCuestionario> findPreguntasElegidasCuestionarioPersonalizado(
 			@Param("idCuestionarioPersonalizado") Long idCuestionarioPersonalizado);
+
 }

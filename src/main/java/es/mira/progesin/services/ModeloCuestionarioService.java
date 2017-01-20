@@ -14,8 +14,8 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void save(ModeloCuestionario modeloCuestionario) {
-		modeloCuestionarioRepository.save(modeloCuestionario);
+	public ModeloCuestionario save(ModeloCuestionario modeloCuestionario) {
+		return modeloCuestionarioRepository.save(modeloCuestionario);
 	}
 
 	@Override
@@ -28,4 +28,8 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
 		return modeloCuestionarioRepository.findOne(id);
 	}
 
+
+
+	
+	
 }

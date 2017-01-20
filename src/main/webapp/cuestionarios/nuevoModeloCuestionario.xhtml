@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<h3>Nuevo modelo de cuestionario</h3>
+			
+			
+			<h:form id="form">
+				
+				<p:wizard flowListener="#{nuevoModeloCuestionarioBean.onFlowProcess}"
+					nextLabel="Siguiente" backLabel='Atr&aacute;s'>
+					<div class="bloqueFormulario">
+						<p:tab id="nombre" title="Nombre">
+							<p:panel header="Nombre">
+								<h:panelGrid columns="2" columnClasses="label, value">
+									<h:outputLabel for="nombreModelo" value="Nombre del modelo:" />
+										<p:inputText id="nombreModelo"
+											value="#{nuevoModeloCuestionarioBean.nombreCuestionario}"
+											converter="#{trimConverter}"
+											required="true"
+											requiredMessage="No se ha introducido un nombre para el nuevo modelo"
+											maxlength="255"/>
+								</h:panelGrid>
+							</p:panel>
+						</p:tab>
+						<p:tab id="areas" title="Áreas">
+							<p:panel header="Areas">
+								<p:messages autoUpdate="true" closable="true"/>
+								
+									<p:orderList id="orderListAreas" value="#{nuevoModeloCuestionarioBean.listadoAreasString}" var="area" itemValue="#{area}" converter="#{selectConverter}" controlsLocation="left" responsive="true">		 
+								     	<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectArea}" update="nuevoArea"
+								     	style="width:50%"/>
+								        <f:facet name="caption">Areas</f:facet> 
+								         <p:column>
+								            <h:outputText value="#{area}" />
+								        </p:column>
+								    </p:orderList>
+								    <p:panel>
+									    <p:inputText  id="nuevoArea" binding="#{nuevoModeloCuestionarioBean.nuevaArea}"  converter="#{trimConverter}" maxlength="255"/>
+									    <p:commandButton actionListener="#{nuevoModeloCuestionarioBean.aniadeArea}" update="orderListAreas" 
+									    	value="Añadir área" icon="fa fa-fw fa-plus">
+									    </p:commandButton>
+									    <p:commandButton actionListener="#{nuevoModeloCuestionarioBean.borraArea}" update="orderListAreas" 
+									    	value="Eliminar área" icon="fa fa-fw fa-minus"/>
+									    </p:panel>
+								    	
+							</p:panel>    
+						</p:tab>	
+						<p:tab id="tipoRespuestas" title="Tipos de respuesta">
+							<p:panel header="Tipo de respuestas">
+								<p:pickList id="pickList" value="#{nuevoModeloCuestionarioBean.listaTipoPreguntas}" 
+								 	var="listaPreguntas" 
+								 	itemLabel="#{listaPreguntas}" 
+								 	itemValue="#{listaPreguntas}" >
+ 								</p:pickList>
+							</p:panel>
+							<p:panel >
+								<h:outputLabel for="tipoPregunta" value="Tipo a personalizar" />
+								<p:selectOneMenu value="#{nuevoModeloCuestionarioBean.tipoPersonalizado}" id="tipoPregunta" converter="#{selectConverter}" >
+									<f:selectItem itemLabel="Seleccione uno" itemValue="" />
+									<f:selectItems value="#{nuevoModeloCuestionarioBean.listaTiposPersonalizables}" var="respuestas"
+										itemLabel="#{respuestas}" itemValue="#{respuestas}" />
+										<p:ajax update="personalizar"  />
+								</p:selectOneMenu>
+								<p:panel id="personalizar">
+									<p:panel rendered="#{nuevoModeloCuestionarioBean.tipoPersonalizado eq 'RADIO'}">
+										<p:orderList id="orderListValoresRadio" value="#{nuevoModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
+										itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
+										<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectValorRadio}" update="nuevoTipoRespuestaRadio"/>	 
+											<f:facet name="caption">Valores</f:facet> 
+											 <p:column>
+												<h:outputText value="#{valor}" />
+											</p:column>
+											</p:orderList>
+											
+											<p:inputText id="nuevoTipoRespuestaRadio" binding="#{nuevoModeloCuestionarioBean.nuevoValorRadio}" converter="#{trimConverter}" />
+											<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.aniadeValorRadio}" update="orderListValoresRadio" value="Añadir valor" icon="fa fa-fw fa-plus"/>
+											<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.borraValorRadio}" update="orderListValoresRadio" value="Eliminar valor" icon="fa fa-fw fa-minus"/>
+											<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.guardaTipoRespuesta}" value="Añadir tipo de respuesta" update="pickList"/>
+									</p:panel>
+									<p:panel rendered="#{nuevoModeloCuestionarioBean.tipoPersonalizado eq 'TABLA'}">
+										<p:orderList id="orderListColumnasTabla" value="#{nuevoModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
+											itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
+											<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectValorTabla}" update="nuevoTipoRespuestaTabla"/>	 
+												<f:facet name="caption">Columnas</f:facet> 
+												 <p:column>
+													<h:outputText value="#{valor}" />
+												</p:column>
+												</p:orderList>
+												
+												<p:inputText id="nuevoTipoRespuestaTabla" binding="#{nuevoModeloCuestionarioBean.nuevoValorTabla}" converter="#{trimConverter}" />
+												<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.aniadeValorTabla}" update="orderListColumnasTabla" value="Añadir columna" icon="fa fa-fw fa-plus"/>
+												<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.borraValorTabla}" update="orderListColumnasTabla" value="Eliminar columna" icon="fa fa-fw fa-minus"/>
+												<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.guardaTipoRespuesta}" value="Añadir tipo de respuesta" />
+									</p:panel>
+									<p:panel rendered="#{nuevoModeloCuestionarioBean.tipoPersonalizado eq 'MATRIZ'}">
+										<p:orderList id="orderListColumnasMatriz" value="#{nuevoModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
+										itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
+										<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaColumna"/>	 
+										<f:facet name="caption">Columnas</f:facet> 
+										 <p:column>
+											<h:outputText value="#{valor}" />
+										</p:column>
+										</p:orderList>
+										
+										<p:inputText id="nuevoTipoRespuestaColumna" binding="#{nuevoModeloCuestionarioBean.nuevoValor}" converter="#{trimConverter}" />
+										<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.aniadeValor}" update="orderListColumnasMatriz" value="Añadir columna" icon="fa fa-fw fa-plus"/>
+										<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.borraValor}" update="orderListColumnasMatriz" value="Eliminar columna" icon="fa fa-fw fa-minus"/>
+										<p:separator />
+										<p:orderList id="orderListFilasMatriz" value="#{nuevoModeloCuestionarioBean.listadoValoresFila}" var="valor" 
+										itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
+										<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectValorFila}" update="nuevoTipoRespuestaFila"/>	 
+										<f:facet name="caption">Filas</f:facet> 
+										 <p:column>
+											<h:outputText value="#{valor}" />
+										</p:column>
+										</p:orderList>
+										
+										<p:inputText id="nuevoTipoRespuestaFila" binding="#{nuevoModeloCuestionarioBean.nuevoValorFila}" converter="#{trimConverter}" />
+										<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.aniadeValorFila}" update="orderListFilasMatriz" value="Añadir fila" icon="fa fa-fw fa-plus"/>
+										<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.borraValorFila}" update="orderListFilasMatriz" value="Eliminar fila" icon="fa fa-fw fa-minus"/>
+										<p:separator />
+										<p:commandButton actionListener="#{nuevoModeloCuestionarioBean.guardaTipoRespuesta}" value="Añadir tipo de respuesta" />
+									</p:panel>
+								</p:panel>
+								
+									 
+							</p:panel>
+						</p:tab>
+						<p:tab id="preguntas" title="Preguntas">
+							<p:repeat value="#{nuevoModeloCuestionarioBean.listadoAreas}" var="area">
+								<p:accordionPanel id="acordeon">
+						        	<p:tab title="#{area.area}">
+								       <h:panelGrid columns="3" cellpadding="5">
+											<p:orderList id="tablaPregunta"
+												value="#{nuevoModeloCuestionarioBean.mapaPreguntas[area.area]}" var="listaPregunta"
+												itemValue="#{listaPregunta}" converter="#{selectConverter}" controlsLocation="left" >
+												<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectPregunta}" update="preg"/>
+												<p:ajax event="reorder" listener="#{nuevoModeloCuestionarioBean.onReorderPregunta}" />
+												<p:column headerText="Pregunta" >
+													<h:outputText value="#{listaPregunta.pregunta}"/>
+												</p:column>
+												<p:column headerText="Tipo de Pregunta"> 
+													<h:outputText value="#{listaPregunta.tipoRespuesta}"/>
+												</p:column>
+											</p:orderList> 
+											<p:panel id="preg">
+												<h:outputLabel for="nuevaPregunta" value="Pregunta:" />
+												<p:inputText id="nuevaPregunta" binding="#{nuevoModeloCuestionarioBean.preguntaNueva}"/>
+												<h:outputLabel for="nuevoTipoPregunta" value="Tipo de pregunta" />
+												<p:selectOneMenu binding="#{nuevoModeloCuestionarioBean.nuevaRespuesta}" id="nuevoTipoPregunta"
+													converter="#{selectConverter}">
+													<f:selectItem itemLabel="Seleccione uno" itemValue="" />
+													<f:selectItems value="#{nuevoModeloCuestionarioBean.listaTipoPreguntas.getTarget()}" var="tipo"
+														itemLabel="#{tipo}" itemValue="#{tipo}" />
+												</p:selectOneMenu>
+												<p:commandButton id="aniadePregunta" value="Añadir" 
+													actionListener="#{nuevoModeloCuestionarioBean.aniadePregunta(area)}" 
+													update="tablaPregunta"/>
+											</p:panel>		
+											 
+										</h:panelGrid>
+						        	</p:tab>
+						    	</p:accordionPanel>
+							</p:repeat>						
+							
+							
+							
+						</p:tab>
+						<p:tab id="finalizar" title="Finalizar">
+							<p:panel header="Finalizar">
+								 <p:commandButton id="guardar" value="Guardar formulario"  action="#{nuevoModeloCuestionarioBean.guardaCuestionario}" />	
+							</p:panel>
+						</p:tab>
+					</div>			
+				</p:wizard>				 
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>
