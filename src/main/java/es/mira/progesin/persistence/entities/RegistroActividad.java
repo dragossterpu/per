@@ -1,6 +1,7 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
+import java.sql.Clob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -44,7 +46,8 @@ public class RegistroActividad implements Serializable {
 	@Column(name = "NOMBRE_SECCION", length = 50)
 	private String nombreSeccion;
 
-	@Column(name = "DESCRIPCION", length = 4000)
+	@Lob
+	@Column(name = "DESCRIPCION")
 	private String descripcion;
 
 	@CreatedDate
