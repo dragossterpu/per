@@ -136,7 +136,8 @@
 					<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado (*):" />
 					<p:selectOneMenu value="#{userBean.user.cuerpoEstado}" id="cuerpoEstadoSelect"
 							required="true" requiredMessage="Seleccione un cuerpo del estado"
-							converter="#{selectConverter}" disabled="#{noEsAdmin}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}"
+							style="width:100%;">
 						<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 							itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
 							<p:ajax partialSubmit="false"
@@ -148,7 +149,8 @@
 					<h:outputLabel for="empleoSelect" value="Empleo (*):" />
 					<p:selectOneMenu value="#{userBean.empleoSeleccionado}" id="empleoSelect"
 							required="true" requiredMessage="Seleccione un empleo"
-							converter="#{selectConverter}" disabled="#{noEsAdmin}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.listaEmpleos}" var="empleo"
 							itemLabel="#{empleo.descripcion}" itemValue="#{empleo}" />
@@ -158,7 +160,8 @@
 				   <h:outputLabel for="departamentoSelect" value="Departamento (*):" />
 					<p:selectOneMenu value="#{userBean.departamentoSeleccionado}" id="departamentoSelect"
 							required="true" requiredMessage="Seleccione un departamento"
-							converter="#{selectConverter}" disabled="#{noEsAdmin}">
+							converter="#{selectConverter}" disabled="#{noEsAdmin}"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.listaDepartamentos}" var="departamento"
 							itemLabel="#{departamento.descripcion}" itemValue="#{departamento}" />
@@ -169,7 +172,8 @@
 			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.CategoriaEnum" var="categoria"
 						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.categoria}" id="categoria" disabled="#{noEsAdmin}"
-							required="true" requiredMessage="Seleccione una categoria para el usuario" panelStyleClass="hideDisabled">
+							required="true" requiredMessage="Seleccione una categoria para el usuario" panelStyleClass="hideDisabled"
+							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{categoria.ALL_ENUM_VALUES}" var="catUser"
 							itemLabel="#{catUser.descripcion}" itemValue="#{catUser}"  />

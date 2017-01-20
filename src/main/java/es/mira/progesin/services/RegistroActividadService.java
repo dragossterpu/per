@@ -1,6 +1,8 @@
 package es.mira.progesin.services;
 
+import java.sql.Clob;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -121,12 +123,13 @@ public class RegistroActividadService implements IRegistroActividadService {
 	public void altaRegActividadError(String nombreSeccion, Exception e) {
 		try {
 			RegistroActividad registroActividad = new RegistroActividad();
-			String message = Utilities.messageError(e);
+			//String message = Utilities.messageError(e);
 			registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
 			registroActividad.setFechaAlta(new Date());
 			registroActividad.setNombreSeccion(nombreSeccion);
 			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-			registroActividad.setDescripcion(message);
+			//registroActividad.setDescripcion(message);
+			registroActividad.setDescripcion(Arrays.toString(e.getStackTrace()));
 			regActividadRepository.save(registroActividad);
 		}
 		catch (Exception e1) {

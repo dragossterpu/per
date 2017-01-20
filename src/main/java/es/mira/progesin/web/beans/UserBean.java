@@ -232,6 +232,7 @@ public class UserBean {
 		this.user = user;
 
 		auditoriaVisualizacion(user);
+		buscarEmpleo();
 		return "/users/modificarUsuario";
 	}
 
