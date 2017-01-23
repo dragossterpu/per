@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -13,7 +14,10 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.services.IAreaCuestionarioService;
+import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
+import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +35,10 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String NOMBRESECCION = "Gestión de cuestionario personalizado";
+
+	private static final String ERROR = "Error";
+
 	private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
 
 	private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
@@ -41,10 +49,16 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	private transient ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
 
 	@Autowired
+	private transient ICuestionarioEnvioService cuestionarioEnvioService;
+
+	@Autowired
 	private transient IAreaCuestionarioService areaService;
 
 	@Autowired
 	private EnvioCuestionarioBean envioCuestionarioBean;
+
+	@Autowired
+	transient IRegistroActividadService regActividadService;
 
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
@@ -81,9 +95,22 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	 * @param cuestionario Cuestionario a eliminar
 	 */
 	public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
-		// TODO comprobar que no se ha usado para el envío antes de borrar
-		cuestionarioPersonalizadoService.delete(cuestionario);
-		listaCuestionarioPersonalizado.remove(cuestionario);
+		try {
+			if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
+						"No se puede eliminar este cuestionario personalizado, existen cuestionarios enviados asociados a él");
+			}
+			else {
+				cuestionarioPersonalizadoService.delete(cuestionario);
+				listaCuestionarioPersonalizado.remove(cuestionario);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al eliminar el cuestionario personalizado, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+
 	}
 
 	/**

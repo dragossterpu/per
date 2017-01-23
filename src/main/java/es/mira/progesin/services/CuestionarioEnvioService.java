@@ -23,6 +23,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -288,6 +289,11 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	@Override
 	public CuestionarioEnvio findByInspeccionAndFechaFinalizacionIsNull(Inspeccion inspeccion) {
 		return cuestionarioEnvioRepository.findByInspeccionAndFechaFinalizacionIsNull(inspeccion);
+	}
+
+	@Override
+	public CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
+		return cuestionarioEnvioRepository.findByCuestionarioPersonalizado(cuestionario);
 	}
 
 }

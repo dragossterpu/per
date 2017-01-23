@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 
 public interface ICuestionarioEnvioRepository extends CrudRepository<CuestionarioEnvio, Long> {
 
@@ -14,4 +15,6 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
 	CuestionarioEnvio findDistinctById(Long idCuestionarioEnviado);
 
 	CuestionarioEnvio findByInspeccionAndFechaFinalizacionIsNull(Inspeccion inspeccion);
+
+	CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
 }
