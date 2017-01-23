@@ -20,9 +20,9 @@
 			</p:menuitem>
 		</p:submenu>
 		<p:submenu label="Solicitudes previas cuestionario">
-			<p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" />
-			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" />
-			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" rendered="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE,JEFE_INSPECCIONES,ADMIN')}">
+			<p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" rendered="#{p:ifAnyGranted('SERVICIO_APOYO,ADMIN')}" />
+			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" rendered="#{p:ifAnyGranted('SERVICIO_APOYO,ADMIN')}" />
+			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" >
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>
 		</p:submenu>
@@ -32,7 +32,7 @@
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>
 			<p:menuitem value="Nuevo modelo de cuestionario" outcome="/cuestionarios/nuevoModeloCuestionario" />
-			<p:menuitem value="Búsqueda cuest. enviados"  outcome="/enConstruccion" >
+			<p:menuitem value="Búsqueda cuest. enviados" outcome="/cuestionarios/busquedaCuestionarios" >
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>
 		</p:submenu>
