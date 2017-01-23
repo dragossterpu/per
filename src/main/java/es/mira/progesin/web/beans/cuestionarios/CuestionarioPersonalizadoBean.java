@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +9,7 @@ import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -97,13 +99,16 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
 		try {
 			if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
-						"No se puede eliminar este cuestionario personalizado, existen cuestionarios enviados asociados a él");
+				cuestionario.setFechaBaja(new Date());
+				cuestionario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+				cuestionarioPersonalizadoService.save(cuestionario);
 			}
 			else {
 				cuestionarioPersonalizadoService.delete(cuestionario);
-				listaCuestionarioPersonalizado.remove(cuestionario);
 			}
+			listaCuestionarioPersonalizado.remove(cuestionario);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
+					"Cuestionario personalizado eliminado con éxito");
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,

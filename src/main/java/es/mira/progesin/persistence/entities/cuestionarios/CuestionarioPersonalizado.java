@@ -61,8 +61,11 @@ public class CuestionarioPersonalizado implements Serializable {
 	@Column(name = "username_creacion", length = 15, nullable = false)
 	private String usernameCreacion;
 
-	// @Column(name = "id_modelo_cuestionario", nullable = false)
-	// private Integer idModeloCuestionario;
+	@Column(name = "fecha_baja")
+	private Date fechaBaja;
+
+	@Column(name = "username_baja", length = 15)
+	private String usernameBaja;
 
 	@ManyToOne
 	@JoinColumn(name = "id_modelo_cuestionario", nullable = false)
