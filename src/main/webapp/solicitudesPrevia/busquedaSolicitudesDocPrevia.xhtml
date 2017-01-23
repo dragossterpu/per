@@ -189,6 +189,12 @@
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:column>
+						<p:column headerText="Anulada"
+							sortBy="#{solicitud.fechaBaja}" width="70">
+							<h:outputText value="#{solicitud.fechaBaja}">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+							</h:outputText>
+						</p:column>
 
 
 						<p:column width="30" exportable="false" toggleable="false">
@@ -198,7 +204,7 @@
 							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>	
 						</p:column>
 						<p:column width="30" exportable="false" toggleable="false">
-							<p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se dará de baja y se mantendrá en el registro." icon="ui-icon-trash"
+							<p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="ui-icon-trash"
 								actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}"
 								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes" disabled="#{not empty solicitud.fechaFinalizacion}">
 								<p:confirm header="Eliminar" icon="ui-icon-alert"

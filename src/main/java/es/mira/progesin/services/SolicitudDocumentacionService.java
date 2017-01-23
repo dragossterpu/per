@@ -35,6 +35,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 
 	private static final String FECHAFINALIZACION = "fechaFinalizacion";
 
+	private static final String FECHABAJA = "fechaBaja";
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -100,21 +102,29 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 				// campoFecha = "this_.fecha_envio";
 				criteria.add(Restrictions.isNotNull("fechaEnvio"));
 				criteria.add(Restrictions.isNull("fechaCumplimentacion"));
+				criteria.add(Restrictions.isNull(FECHABAJA));
 				break;
 			case CUMPLIMENTADA:
 				// campoFecha = "this_.fecha_cumplimentacion";
 				criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
 				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
+				criteria.add(Restrictions.isNull(FECHABAJA));
 				break;
 			// Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
 			case NO_CONFORME:
 				// campoFecha = "this_.fecha_no_conforme";
 				criteria.add(Restrictions.isNotNull("fechaNoConforme"));
 				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
+				criteria.add(Restrictions.isNull(FECHABAJA));
 				break;
 			case FINALIZADA:
 				// campoFecha = "this_.fecha_finalizacion";
 				criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
+				criteria.add(Restrictions.isNull(FECHABAJA));
+				break;
+			case ANULADA:
+				// campoFecha = "this_.fecha_baja";
+				criteria.add(Restrictions.isNotNull(FECHABAJA));
 				break;
 			// case CREADA:
 			default:
@@ -176,8 +186,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 			subquery.setProjection(Projections.property("miembro.equipo"));
 			criteria.add(Property.forName("equipo.id").in(subquery));
 		}
-
-		criteria.add(Restrictions.isNull("fechaBaja"));
 
 		criteria.addOrder(Order.desc("fechaAlta"));
 		@SuppressWarnings("unchecked")

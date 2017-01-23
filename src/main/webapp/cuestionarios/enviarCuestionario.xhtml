@@ -11,7 +11,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 		
-			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,ADMIN')}"/>
+			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 			<ui:param name="yaEnviado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
 			<ui:param name="menuOrigen" value="#{(yaEnviado) ? '/cuestionarios/busquedaCuestionarios' : '/cuestionarios/busquedaModelosCuestionarios'}"/>
 			<ui:param name="yaFinalizado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion}"/>
