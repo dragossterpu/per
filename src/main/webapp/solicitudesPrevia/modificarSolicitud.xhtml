@@ -10,7 +10,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-		<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,ADMIN')}"/>
 		<ui:param name="yaValidado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}"/>
 		
 		<h3>Modificar solicitud de documentación</h3>
