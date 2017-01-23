@@ -115,10 +115,30 @@ public class CuestionarioEnviadoBean implements Serializable {
 	 * @param cuestionario Cuestionario a eliminar
 	 */
 	public void eliminarCuestionario(CuestionarioEnvio cuestionario) {
-		cuestionario.setUsernameAnulacion(SecurityContextHolder.getContext().getAuthentication().getName());
-		cuestionario.setFechaAnulacion(new Date());
-		cuestionario.setFechaFinalizacion(cuestionario.getFechaAnulacion());
-		cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
+		try {
+			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+			cuestionario.setUsernameAnulacion(usuarioActual);
+			cuestionario.setFechaAnulacion(new Date());
+			cuestionario.setFechaFinalizacion(cuestionario.getFechaAnulacion());
+			if (cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario)) {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
+						"Se ha eliminado con éxito el cuestionario");
+
+				String descripcion = "Cuestionario. Usuario eliminación : " + usuarioActual;
+
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+			}
+			listaCuestionarioEnvio = null;
+			listaCuestionarioEnvio = cuestionarioEnvioService
+					.buscarCuestionarioEnviadoCriteria(cuestionarioEnviadoBusqueda);
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al eliminar el cuestionario, inténtelo de nuevo más tarde");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
 	}
 
 	@PostConstruct
@@ -134,6 +154,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 	 */
 	public void validarRespuestas() {
 		try {
+			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
 			Date fechaValidacion = new Date();
 			CuestionarioEnvio cuestionario = visualizarCuestionario.getCuestionarioEnviado();
 			List<RespuestaCuestionario> listaRespuestasTotales = visualizarCuestionario.getListaRespuestas();
@@ -154,20 +175,30 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
 					"Se ha validado con éxito las respuestas");
+
 			if (listaRespuestasValidadas.size() == listaRespuestasTotales.size()) {
 				cuestionario.setFechaFinalizacion(new Date());
-				String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
 				cuestionario.setUsernameFinalizacion(usuarioActual);
 				cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
 						"Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
+
+				String descripcion = "Cuestionario. Usuario finalización : " + usuarioActual;
+				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+						NOMBRESECCION);
+
+				List<RoleEnum> rolesANotificar = new ArrayList<>();
+				rolesANotificar.add(RoleEnum.ADMIN);
+				rolesANotificar.add(RoleEnum.JEFE_INSPECCIONES);
+				// TODO ¿rol entero o sólo los del equipo de la inspección?
+				rolesANotificar.add(RoleEnum.EQUIPO_INSPECCIONES);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, rolesANotificar);
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-					"Se ha producido un error al validar las respuestas. ", e.getMessage());
-			// TODO registro actividad
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al validar las respuestas, inténtelo de nuevo más tarde.");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
 	}
@@ -289,7 +320,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
+					"Se ha producido un error al modificar el cuestionario, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return "/cuestionarios/modificarCuestionario";

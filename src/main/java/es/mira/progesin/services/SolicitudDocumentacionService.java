@@ -98,6 +98,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 				criteria.add(Restrictions.isNotNull("fechaValidJefeEquipo"));
 				criteria.add(Restrictions.isNull("fechaEnvio"));
 				break;
+			// No se comprueba anulaciones (fecha_baja o fecha_finalizacion) en estados antes de envío porque hay
+			// eliminación física
 			case ENVIADA:
 				// campoFecha = "this_.fecha_envio";
 				criteria.add(Restrictions.isNotNull("fechaEnvio"));
@@ -108,14 +110,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 				// campoFecha = "this_.fecha_cumplimentacion";
 				criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
 				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-				criteria.add(Restrictions.isNull(FECHABAJA));
 				break;
 			// Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
 			case NO_CONFORME:
 				// campoFecha = "this_.fecha_no_conforme";
 				criteria.add(Restrictions.isNotNull("fechaNoConforme"));
 				criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-				criteria.add(Restrictions.isNull(FECHABAJA));
 				break;
 			case FINALIZADA:
 				// campoFecha = "this_.fecha_finalizacion";
