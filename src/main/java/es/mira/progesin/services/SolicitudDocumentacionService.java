@@ -7,17 +7,23 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
@@ -159,6 +165,16 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		if (solicitudDocPreviaBusqueda.getTipoInspeccion() != null) {
 			criteria.add(Restrictions.eq("tipoInspeccion.codigo",
 					solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo()));
+		}
+
+		criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
+		User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+			DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
+			subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
+			subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
+			subquery.setProjection(Projections.property("miembro.equipo"));
+			criteria.add(Property.forName("equipo.id").in(subquery));
 		}
 
 		criteria.add(Restrictions.isNull("fechaBaja"));

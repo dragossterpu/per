@@ -25,7 +25,7 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
 
 	private CuestionarioEnviadoEnum estado;
 
-	private String nombreUsuarioEnvio;
+	private String usernameEnvio;
 
 	private String numeroInspeccion;
 
@@ -46,7 +46,7 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
 		this.fechaHasta = null;
 		this.fechaLimiteRespuesta = null;
 		this.estado = null;
-		this.nombreUsuarioEnvio = null;
+		this.usernameEnvio = null;
 		this.numeroInspeccion = null;
 		this.tipoInspeccion = null;
 		this.ambitoInspeccion = null;

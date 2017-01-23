@@ -143,12 +143,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 		}
 
 		String parametro;
-		if (cuestionarioEnviadoBusqueda.getNombreUsuarioEnvio() != null
-				&& !cuestionarioEnviadoBusqueda.getNombreUsuarioEnvio().isEmpty()) {
+		if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null
+				&& !cuestionarioEnviadoBusqueda.getUsernameEnvio().isEmpty()) {
 			// TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-			parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreUsuarioEnvio(), Normalizer.Form.NFKD)
+			parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getUsernameEnvio(), Normalizer.Form.NFKD)
 					.replaceAll(ACENTOS, "");
-			criteria.add(Restrictions.ilike("nombreUsuarioEnvio", parametro, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("usernameEnvio", parametro, MatchMode.ANYWHERE));
 		}
 
 		criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join

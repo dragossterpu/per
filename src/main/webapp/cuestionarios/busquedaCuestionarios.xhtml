@@ -65,8 +65,8 @@
 						<p:inputText id="nombreUnidad" 
 							value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
 					
-						<h:outputLabel for="nombreUsuarioEnvio" value="Usuario envío:" />
-						<p:inputText id="nombreUsuarioEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUsuarioEnvio}" />
+						<h:outputLabel for="usernameEnvio" value="Usuario creación:" />
+						<p:inputText id="usernameEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.usernameEnvio}" />
 						
 					</div>
 	
@@ -189,7 +189,7 @@
 						<h:commandLink title="Modificar datos envio" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.getFormModificarCuestionario(cuestionario)}"/>
 					</p:column>
 					<p:column width="30" exportable="false">
-						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" disabled="#{not empty cuestionario.fechaFinalizacion}">
+						<p:commandButton title="Eliminar: se dará de baja y se mantendrá en el registro." icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" disabled="#{not empty cuestionario.fechaFinalizacion}">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
