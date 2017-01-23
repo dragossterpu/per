@@ -152,7 +152,7 @@
 					<p:messages for="cuerpoEstadoSelect" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="empleoSelect" value="Empleo (*):" />
-					<p:selectOneMenu value="#{userBean.empleoSeleccionado}" id="empleoSelect"
+					<p:selectOneMenu value="#{userBean.user.empleo}" id="empleoSelect"
 							required="true" requiredMessage="Seleccione un empleo"
 							converter="#{selectConverter}" disabled="#{noEsAdmin}"
 							style="width:100%;">
@@ -163,7 +163,7 @@
 					<p:messages for="empleoSelect" autoUpdate="true"  closable="true"/>
 				   
 				   <h:outputLabel for="departamentoSelect" value="Departamento (*):" />
-					<p:selectOneMenu value="#{userBean.departamentoSeleccionado}" id="departamentoSelect"
+					<p:selectOneMenu value="#{userBean.user.departamento}" id="departamentoSelect"
 							required="true" requiredMessage="Seleccione un departamento"
 							converter="#{selectConverter}" disabled="#{noEsAdmin}"
 							style="width:100%;">
