@@ -188,11 +188,10 @@ public class CuestionarioEnviadoBean implements Serializable {
 						NOMBRESECCION);
 
 				List<RoleEnum> rolesANotificar = new ArrayList<>();
-				rolesANotificar.add(RoleEnum.ADMIN);
+				rolesANotificar.add(RoleEnum.SERVICIO_APOYO);
 				rolesANotificar.add(RoleEnum.JEFE_INSPECCIONES);
-				// TODO ¿rol entero o sólo los del equipo de la inspección?
-				rolesANotificar.add(RoleEnum.EQUIPO_INSPECCIONES);
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, rolesANotificar);
+				notificacionService.crearNotificacionEquipo(descripcion, NOMBRESECCION, cuestionario.getInspeccion());
 			}
 		}
 		catch (Exception e) {
@@ -256,7 +255,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
-				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.SERVICIO_APOYO);
+				notificacionService.crearNotificacionEquipo(descripcion, NOMBRESECCION, cuestionario.getInspeccion());
 			}
 		}
 		catch (Exception e) {
