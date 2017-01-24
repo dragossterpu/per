@@ -70,7 +70,7 @@
 					
 					<h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
 					<p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000"
-						counter="contador" counterTemplate="Quedan {0} caractares."
+						counter="contador" counterTemplate="Quedan {0} caracteres."
 						required="true" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}"
                         disabled="#{yaEnviado}"/>
 					<p:outputLabel id="contador"/>

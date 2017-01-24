@@ -19,7 +19,7 @@
 			<div class="bloqueFormulario">																		
 				<h:outputLabel for="motivosNoConforme" value="Motivos de la no conformidad (*):" />
 				<p:inputTextarea id="motivosNoConforme" value="#{solicitudDocPreviaBean.motivosNoConforme}" required="true" requiredMessage="Es obligatorio motivar la no conformidad para que la unidad pueda solventarlo." converter="#{trimConverter}"
-				 	maxlength="2000" counter="contador" counterTemplate="Quedan {0} caractares."/>
+				 	maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres."/>
 				<p:outputLabel id="contador"/>
 				<p:messages for="motivosNoConforme" autoUpdate="true" closable="true"/>
 			</div>
