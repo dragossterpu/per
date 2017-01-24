@@ -93,13 +93,13 @@
 					<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.nombreCuestionario}">
 						<h:outputText value="#{cuestionario.modeloCuestionario.descripcion}" />
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarVacio(cuestionario)}" />
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Enviar" action="#{cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario)}" styleClass="fa fa-fw fa-envelope-o ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" />
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false">
 						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>

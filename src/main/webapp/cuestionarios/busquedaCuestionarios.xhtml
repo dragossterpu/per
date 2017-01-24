@@ -181,13 +181,13 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Ver" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Modificar datos envio" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.getFormModificarCuestionario(cuestionario)}"/>
 					</p:column>
-					<p:column width="30" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false">
 						<p:commandButton title="Eliminar: se dará de baja y se mantendrá en el registro." icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" disabled="#{not empty cuestionario.fechaFinalizacion}">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>

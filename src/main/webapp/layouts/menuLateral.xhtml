@@ -20,7 +20,7 @@
 			</p:menuitem>
 		</p:submenu>
 		<p:submenu label="Solicitudes previas cuestionario">
-			<p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" rendered="#{p:ifAnyGranted('SERVICIO_APOYO,ADMIN')}" />
+			<p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" rendered="#{p:ifAnyGranted('SERVICIO_APOYO,GABINETE,ADMIN')}" />
 			<p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" rendered="#{p:ifAnyGranted('SERVICIO_APOYO,ADMIN')}" />
 			<p:menuitem value="Búsqueda de solicitudes" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" >
 				<f:param name="vieneDe" value="menu" />

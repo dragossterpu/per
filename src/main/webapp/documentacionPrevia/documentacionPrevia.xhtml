@@ -11,13 +11,15 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
+		<ui:param name="esJefeInspeccionesApoyo" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}"/>
+		
 		<h3>Tipos de documentación previa</h3>
 		<br></br><br></br>
 
 		<div id="listadoDocumentacion">
 	<h:form id="form">
 			<p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" rows="20" paginator="true" resizableColumns="true"
-			value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+			value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}"  onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}"
 							update=":form:msgs" />
 						<p:ajax event="rowEditCancel" listener="#{tipoDocumentacionBean.onRowCancel}"
@@ -88,10 +90,10 @@
 								</f:facet>
 							</p:cellEditor> 
 				       </p:column>
-				       <p:column style="width:30px">
+				       <p:column styleClass="botonTabla" rendered="#{esJefeInspeccionesApoyo}">
 							<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>
 						</p:column>
-						<p:column style="width:30px">
+						<p:column styleClass="botonTabla" rendered="#{esJefeInspeccionesApoyo}">
 							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{tipoDocumentacionBean.eliminarDocumentacion(tipoDocumentacion)}"
 								update="tablaDocumentacion">
@@ -117,7 +119,7 @@
 				</h:form>
 			</div>
 			<div class="botonesFormulario">
-				<p:button value="Nueva Documentacion" outcome="/documentacionPrevia/altaTipoDocumentacion" icon="fa fa-fw fa-user-plus"/>
+				<p:button value="Nueva Documentacion" outcome="/documentacionPrevia/altaTipoDocumentacion" icon="fa fa-fw fa-user-plus" rendered="#{esJefeInspeccionesApoyo}"/>
 			</div>
 		</ui:define>
 	</ui:composition>
