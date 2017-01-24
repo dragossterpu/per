@@ -236,7 +236,7 @@ select {
 }
 
 .prevPregCuest {
-	padding: 5px;
+	padding: 10px;
 	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
 }
 
@@ -246,7 +246,11 @@ select {
 
 .ui-CommandLink-icono {
 	padding: 0.4em 0.5em;
-	width: 1.226em;
+	width: 1.226em;	
+}
+
+.preguntaCuestionario {
+	font-weight: bold;
 	
 }
 

@@ -18,12 +18,13 @@
 				<div class="tituloCuestionario">
 					<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
 					<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado)}"
-						rendered="#{empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}">
+						rendered="#{empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}" title="Descargar documento word del cuestionario">
 					   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
 					   <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
 					</h:commandLink>
-					<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" rendered="#{yaCumplimentado}">
-		               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg" />
+					<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" 
+						rendered="#{yaCumplimentado}" title="Descargar documento PDF del cuestionario cumplimentado">
+		               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg"/>
 		               <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
 		            </h:commandLink>
 				</div>
@@ -37,7 +38,7 @@
 							
 							<div class="prevPregCuest">
 							
-								<h:outputText value="#{preguntaArea.pregunta}"/>
+								<h:outputText value="#{preguntaArea.pregunta}" styleClass="preguntaCuestionario"/>
 								
 								<div class="respuestaCuestionario">
 								

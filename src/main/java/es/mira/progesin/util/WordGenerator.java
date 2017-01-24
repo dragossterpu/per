@@ -256,6 +256,7 @@ public class WordGenerator {
 			}
 			parrafo.setSpacingAfterLines(200);
 			parrafo.setSpacingBeforeLines(200);
+			parrafo.setAlignment(ParagraphAlignment.BOTH);
 			parrafo.addRun(texto);
 
 			if (pregunta.getTipoRespuesta().startsWith(TIPO_RESPUESTA_TABLA)

@@ -1,22 +1,29 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
+import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
@@ -44,7 +51,7 @@ public class EnvioCuestionarioBean implements Serializable {
 
 	private static final String ETIQUETA_ERROR = "mensajeerror";
 
-	private static final String SECCION_ENVIAR_CUESTIONARIO = "ENVIAR CUESTIONARIO";
+	private static final String SECCION_ENVIAR_CUESTIONARIO = "ENVIO CUESTIONARIO";
 
 	private CuestionarioEnvio cuestionarioEnvio;
 
@@ -74,6 +81,12 @@ public class EnvioCuestionarioBean implements Serializable {
 
 	@Autowired
 	private transient INotificacionService notificacionService;
+
+	@Autowired
+	private transient IPreguntaCuestionarioRepository preguntasRepository;
+
+	@Autowired
+	private transient IConfiguracionRespuestasCuestionarioRepository configRespuestas;
 
 	/**
 	 * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasados como parámetro. Se
@@ -115,16 +128,12 @@ public class EnvioCuestionarioBean implements Serializable {
 	}
 
 	/**
-	 * Guarda los datos introducidos en el formulario de envío en BBDD.Además crea un usuario provisional para el
-	 * destinatario del correo 1 y le envía un correo electrónico informando de la URL de acceso a la aplicación y su
-	 * contraseña.
+	 * Guarda los datos introducidos en el formulario de envío en BBDD. Además crea 10 usuarios provisionales para el
+	 * destinatario del correo. Se envía un correo electrónico informando de la URL de acceso a la aplicación y la
+	 * contraseña de los 10 usuarios provisionales.
 	 */
 	public void enviarCuestionario() {
 		try {
-			System.out.println(
-					"************************ " + SecurityContextHolder.getContext().getAuthentication().getName());
-			System.out.println(
-					"****************** inspección: " + this.getCuestionarioEnvio().getInspeccion().getNumero());
 			// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
 			CuestionarioEnvio cuestionario = cuestionarioEnvioService
 					.findByCorreoEnvioAndFechaFinalizacionIsNull(cuestionarioEnvio.getCorreoEnvio());
@@ -143,6 +152,9 @@ public class EnvioCuestionarioBean implements Serializable {
 				crearNotificacionesYResgistro(cuestionarioEnvio.getInspeccion());
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
 						"El cuestionario se ha enviado con éxito");
+				// Crear respuestas tipo tabla (ñapa para que cuando inician sesíón varios usuarios a la vez por primera
+				// vez, al grabar borrador no se repitan los datos de las tablas/matriz por cada usuario)
+				crearResgistrosRespuestaTipoTablaMatriz(cuestionarioEnvio);
 			}
 			else {
 				String textoError;
@@ -226,5 +238,52 @@ public class EnvioCuestionarioBean implements Serializable {
 				cuestionarioEnvio.getInspeccion());
 		regActividadService.altaRegActividad(textoNotificaciones, EstadoRegActividadEnum.ALTA.name(),
 				SECCION_ENVIAR_CUESTIONARIO);
+	}
+
+	private void crearResgistrosRespuestaTipoTablaMatriz(CuestionarioEnvio cuestionarioEnvio) {
+		try {
+			List<PreguntasCuestionario> listaPreguntasTablaMatriz = preguntasRepository
+					.findPreguntasElegidasTablaMatrizCuestionarioPersonalizado(
+							cuestionarioEnvio.getCuestionarioPersonalizado().getId());
+			List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+			List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
+
+			for (PreguntasCuestionario pregunta : listaPreguntasTablaMatriz) {
+				List<DatosTablaGenerica> listaDatosTabla = new ArrayList<>();
+				RespuestaCuestionario rtaCuestionario = new RespuestaCuestionario();
+				RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
+				idRespuesta.setCuestionarioEnviado(cuestionarioEnvio);
+				idRespuesta.setPregunta(pregunta);
+				rtaCuestionario.setRespuestaId(idRespuesta);
+				if (pregunta.getTipoRespuesta().startsWith("TABLA")) {
+					DatosTablaGenerica dtg = new DatosTablaGenerica();
+					dtg.setRespuesta(rtaCuestionario);
+					listaDatosTabla.add(dtg);
+				}
+				else {
+					crearRespuestaMatriz(pregunta, listaDatosTabla, rtaCuestionario);
+				}
+
+				rtaCuestionario.setRespuestaTablaMatriz(listaDatosTabla);
+				listaRespuestas.add(rtaCuestionario);
+				listaDatosTablaSave.addAll(listaDatosTabla);
+			}
+			cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnvio, listaRespuestas, listaDatosTablaSave);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void crearRespuestaMatriz(PreguntasCuestionario pregunta, List<DatosTablaGenerica> listaDatosTabla,
+			RespuestaCuestionario rtaCuestionario) {
+		List<ConfiguracionRespuestasCuestionario> listaFilas = configRespuestas
+				.findFilasBySeccion(pregunta.getTipoRespuesta());
+		for (ConfiguracionRespuestasCuestionario c : listaFilas) {
+			DatosTablaGenerica dtg = new DatosTablaGenerica();
+			dtg.setNombreFila(c.getConfig().getValor());
+			dtg.setRespuesta(rtaCuestionario);
+			listaDatosTabla.add(dtg);
+		}
 	}
 }

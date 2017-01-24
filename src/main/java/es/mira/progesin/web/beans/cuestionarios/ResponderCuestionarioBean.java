@@ -262,6 +262,11 @@ public class ResponderCuestionarioBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Elimina el documento pasado como parámetro de la pregunta
+	 * @param pregunta
+	 * @param documento
+	 */
 	public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
 
 		RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
@@ -284,7 +289,6 @@ public class ResponderCuestionarioBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		System.out.println("********************* INICIALIZANDO RESPUESTA **************************");
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (RoleEnum.PROV_CUESTIONARIO.equals(user.getRole())) {
 			cuestionarioEnviado = cuestionarioEnvioService
