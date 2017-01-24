@@ -293,3 +293,14 @@ select {
 	padding-bottom: 10px;
 	padding-top: 0px !important; /* para eliminar el estilo de bootstrap*/
 }
+
+.preguntasModelo .ui-datalist-data {
+	padding: 0;
+}
+.preguntasModelo .ui-datalist-item {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.preguntasModelo .ui-datalist-content {
+	border:none;
+}

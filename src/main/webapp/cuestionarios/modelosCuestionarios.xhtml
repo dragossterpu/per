@@ -10,6 +10,8 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
+		<ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		
 			<h3>Modelos de cuestionario</h3>
 
 			<div class="bloqueFormulario" >
@@ -25,7 +27,8 @@
 						</p:column>
 						
 						<p:column styleClass="botonTabla">
-							<h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}" />
+							<h:commandLink title="Ver preguntas del modelo" styleClass="fa fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  rendered="#{not esJefeInspecciones}"/>
+							<h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  rendered="#{esJefeInspecciones}"/>
 						</p:column> 
 						
 					</p:dataTable>
