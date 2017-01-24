@@ -42,7 +42,7 @@
     			</div>
     			
 				<div class="botonesFormulario">
-				<p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}" value="Contestar" icon="fa fa-fw fa-save"/>
+				<p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}" value="Contestar" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 				<p:button outcome="/principal/sugerenciasListado" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				
 				</div>
@@ -54,7 +54,11 @@
 							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/principal/sugerenciasListado')}" />
 						</div>
 				</p:dialog>
-			
+				
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				    <p:graphicImage value="/images/loading.gif" />
+				</p:dialog>
+				
 			</h:form>
         </ui:define>
     </ui:composition>
