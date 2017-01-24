@@ -17,7 +17,7 @@
          	<br></br><br></br>
          	<h:form id="form">
 			    <div id="alertas">
-						<p:dataTable id="sugerencias" var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" paginator="true" rows="20">
+						<p:dataTable id="sugerencias" var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" paginator="true" rows="20" emptyMessage="No hay ninguna sugerencia">
 							<f:facet name="header">
 								Sugerencias
 							<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
