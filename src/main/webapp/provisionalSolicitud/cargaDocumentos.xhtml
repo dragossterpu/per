@@ -23,7 +23,7 @@
 			</div>
 			
 			<div class="bloqueVista">
-				<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" emptyMessage="No hay documentos">
+				<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}">
 					<p:column headerText="DOCUMENTO" width="450">
 						<h:outputText value="#{documentoPrevio.descripcion}" />
 					</p:column>
@@ -52,7 +52,7 @@
 					<p:outputPanel id="panelAdjuntos">
 						<p:dataTable id="tablaDocumentos" var="documento"
 							value="#{provisionalSolicitudBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }"
-							emptyMessage="No hay documentos">
+							emptyMessage="No hay documentos cargados">
 							<p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}"
 								update=":formAlta:msgs" />
 							<p:ajax event="rowEditCancel" listener="#{provisionalSolicitudBean.onRowCancel}"

@@ -57,7 +57,7 @@
 				en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 			</div>
 			<div class="bloqueVista">
-				<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" >
+				<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
 					<p:column headerText="DOCUMENTO" width="450">
 						<h:outputText value="#{documentoPrevio.descripcion}" />
 					</p:column>
@@ -129,7 +129,7 @@
 					</p:inputText>
 							
 					<div class="botonesFormulario">
-						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus"/>
+						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios}"/>
 						<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
 						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" />		
 					</div>					

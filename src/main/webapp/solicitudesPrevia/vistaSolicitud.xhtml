@@ -47,7 +47,7 @@
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
-					<p:dataTable  var="documentoPrevio" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" >
+					<p:dataTable  var="documentoPrevio" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
 							<p:column headerText="DOCUMENTO" width="450">
 								<h:outputText value="#{documentoPrevio.descripcion}" />
 							</p:column>
@@ -164,9 +164,6 @@
 						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 					</div>
 					</p:dialog>	
-					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados}">
-					
-					</p:outputPanel>	
 		
 				</h:form>
 		</ui:define>
