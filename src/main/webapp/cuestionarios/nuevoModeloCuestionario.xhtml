@@ -34,11 +34,10 @@
 						</p:tab>
 						<p:tab id="areas" title="Áreas">
 							<p:panel header="Areas">
-								<p:messages autoUpdate="true" closable="true"/>
 								
-									<p:orderList id="orderListAreas" value="#{nuevoModeloCuestionarioBean.listadoAreasString}" var="area" itemValue="#{area}" converter="#{selectConverter}" controlsLocation="left" responsive="true">		 
-								     	<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectArea}" update="nuevoArea"
-								     	style="width:50%"/>
+								
+									<p:orderList id="orderListAreas" value="#{nuevoModeloCuestionarioBean.listadoAreas}" var="area" itemValue="#{area}" converter="#{selectConverter}" controlsLocation="left" responsive="true">		 
+								     	<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectArea}" update="nuevoArea"/>
 								        <f:facet name="caption">Areas</f:facet> 
 								         <p:column>
 								            <h:outputText value="#{area}" />
@@ -54,13 +53,14 @@
 									    </p:panel>
 								    	
 							</p:panel>    
-						</p:tab>	
+						</p:tab>
 						<p:tab id="tipoRespuestas" title="Tipos de respuesta">
 							<p:panel header="Tipo de respuestas">
 								<p:pickList id="pickList" value="#{nuevoModeloCuestionarioBean.listaTipoPreguntas}" 
 								 	var="listaPreguntas" 
 								 	itemLabel="#{listaPreguntas}" 
-								 	itemValue="#{listaPreguntas}" >
+								 	itemValue="#{listaPreguntas}" 
+								 	style="width:100%">
  								</p:pickList>
 							</p:panel>
 							<p:panel >
@@ -135,17 +135,17 @@
 								
 									 
 							</p:panel>
-						</p:tab>
+						</p:tab>	
 						<p:tab id="preguntas" title="Preguntas">
 							<p:repeat value="#{nuevoModeloCuestionarioBean.listadoAreas}" var="area">
 								<p:accordionPanel id="acordeon">
-						        	<p:tab title="#{area.area}">
-								       <h:panelGrid columns="3" cellpadding="5">
+						        	<p:tab title="#{area}">
+								       <h:panelGrid columns="2" cellpadding="5">
 											<p:orderList id="tablaPregunta"
-												value="#{nuevoModeloCuestionarioBean.mapaPreguntas[area.area]}" var="listaPregunta"
+												value="#{nuevoModeloCuestionarioBean.mapaPreguntas[area]}" var="listaPregunta"
 												itemValue="#{listaPregunta}" converter="#{selectConverter}" controlsLocation="left" >
 												<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectPregunta}" update="preg"/>
-												<p:ajax event="reorder" listener="#{nuevoModeloCuestionarioBean.onReorderPregunta}" />
+												
 												<p:column headerText="Pregunta" >
 													<h:outputText value="#{listaPregunta.pregunta}"/>
 												</p:column>
@@ -158,7 +158,7 @@
 												<p:inputText id="nuevaPregunta" binding="#{nuevoModeloCuestionarioBean.preguntaNueva}"/>
 												<h:outputLabel for="nuevoTipoPregunta" value="Tipo de pregunta" />
 												<p:selectOneMenu binding="#{nuevoModeloCuestionarioBean.nuevaRespuesta}" id="nuevoTipoPregunta"
-													converter="#{selectConverter}">
+													converter="#{selectConverter}" style="width:90%;">
 													<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 													<f:selectItems value="#{nuevoModeloCuestionarioBean.listaTipoPreguntas.getTarget()}" var="tipo"
 														itemLabel="#{tipo}" itemValue="#{tipo}" />

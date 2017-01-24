@@ -10,15 +10,12 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.component.UIInput;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DualListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import com.google.common.collect.Lists;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -31,7 +28,6 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
-import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -49,8 +45,10 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	ModeloCuestionario modelo;
 	
 	String nombreCuestionario;
-	private List<AreasCuestionario> listadoAreas;
-	private List<String> listadoAreasString;
+	private List<String> listadoAreas;
+	
+	
+	private String error;
 	
 	private boolean skip;
 	
@@ -67,9 +65,8 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	
 	
 	//Nueva pregunta
-	private PreguntasCuestionario nuevaPregunta;
 	private Map<String,List<PreguntasCuestionario>> mapaPreguntas;
-	private List<PreguntasCuestionario> listaPreguntas;
+	private Map<String,List<PreguntasCuestionario>> mapaPreguntasAux;
 	
 	//Inputs
 	private UIInput nuevaArea;
@@ -96,10 +93,19 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		//nuevaArea= new UIInput();
 		modelo=new ModeloCuestionario();
-		nuevaPregunta =new PreguntasCuestionario();
-		listaPreguntas= new ArrayList<PreguntasCuestionario>();
+		listadoAreas=new ArrayList<String>();
+		
+		listaTipoPreguntasInicial= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuesta();
+		listaTipoPreguntasFinal=new ArrayList<String>();
+		
+		listaTipoPreguntas = new DualListModel<String>(listaTipoPreguntasInicial, listaTipoPreguntasFinal);
+		listaTiposPersonalizables= Arrays.asList(TiposRespuestasPersonalizables.values());
+		listadoValoresNuevaRespuesta=new ArrayList<String>();
+		listadoValoresFila=new ArrayList<String>();
+		
+		mapaPreguntas=new HashMap<String, List<PreguntasCuestionario>>();
+		mapaPreguntasAux=new HashMap<String, List<PreguntasCuestionario>>();
 		}	
 		
 	public String onFlowProcess(FlowEvent event) {
@@ -112,29 +118,16 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 			else {
 				if ("areas".equals(event.getNewStep())) {
 					modelo.setDescripcion(nombreCuestionario);
-					nombreCuestionario= "";
-					listadoAreas= Lists.newArrayList();
-					listadoAreasString= Lists.newArrayList();
 					}
 				if ("tipoRespuestas".equals(event.getNewStep())) {
 					guardaAreas();
-					listaTipoPreguntasInicial= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuesta();
-					listaTipoPreguntasFinal=new ArrayList<String>();
 					
-					listaTipoPreguntas = new DualListModel<String>(listaTipoPreguntasInicial, listaTipoPreguntasFinal);
-					listaTiposPersonalizables= Arrays.asList(TiposRespuestasPersonalizables.values());
-					listadoValoresNuevaRespuesta=new ArrayList<String>();
-					listadoValoresFila=new ArrayList<String>();
 				}
 				if ("preguntas".equals(event.getNewStep())) {
-					mapaPreguntas=new HashMap<String, List<PreguntasCuestionario>>();
-					
-					for(AreasCuestionario area : listadoAreas ){
-						mapaPreguntas.put(area.getArea(), new ArrayList<PreguntasCuestionario>());
-					}
-					
-					
-					
+						
+				}
+				if("finalizar".equals(event.getNewStep())) {
+					guardaPreguntas();
 				}
 				
 				}
@@ -142,50 +135,54 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 			}
 	
 	public void aniadeArea(){
-		listadoAreasString.add(nuevaArea.getLocalValue().toString());
+		listadoAreas.add(nuevaArea.getLocalValue().toString());
 		nuevaArea.setValue(""); 
 	}
 	
 	public void borraArea(String nueva){
-		listadoAreasString.remove(nuevaArea.getLocalValue().toString());
+		listadoAreas.remove(nuevaArea.getLocalValue().toString());
 	}
 	
 	public void onSelectArea(SelectEvent event) {
 		String nuevo= event.getObject().toString();    
 		nuevaArea.setValue(nuevo);	
     }
-	
+    	
 	 public void guardaAreas(){
-		 	
-	    	for (int i=0; i<listadoAreasString.size(); i++){
+		 	List<AreasCuestionario> areas=new ArrayList<AreasCuestionario>();
+		 			 	
+	    	for (int i=0; i<listadoAreas.size(); i++){
 	    		AreasCuestionario nueva=new AreasCuestionario();
-	    		nueva.setArea(listadoAreasString.get(i));
+	    		nueva.setArea(listadoAreas.get(i));
 	    		
 	    		nueva.setOrden(i);
 	    		nueva.setPreguntas(new ArrayList<PreguntasCuestionario>());
-	    		listadoAreas.add(nueva);
+	    		areas.add(nueva);
 	    	}
-	    	modelo.setAreas(listadoAreas);
+	    	modelo.setAreas(areas);
+	    	
+	    	for(String area : listadoAreas ){
+				mapaPreguntas.put(area, new ArrayList<PreguntasCuestionario>());
+				mapaPreguntasAux.put(area, new ArrayList<PreguntasCuestionario>());
+			}
 	    }
-	 
-	 
-	 
-	public void aniadeValor(){
+    	
+	 public void aniadeValor(){
 	    	listadoValoresNuevaRespuesta.add(nuevoValor.getLocalValue().toString());
 	    }
 	
 	public void borraValor(){
-    	listadoValoresNuevaRespuesta.remove(nuevoValor.getLocalValue().toString());
-    }
+ 	listadoValoresNuevaRespuesta.remove(nuevoValor.getLocalValue().toString());
+ }
 	
 	public void onSelectValor(SelectEvent event) {
 		String nuevo= event.getObject().toString();    
 		nuevoValor.setValue(nuevo);	
-    }
+ }
 	    
 	public void aniadeValorRadio(){
-    	listadoValoresNuevaRespuesta.add(nuevoValorRadio.getLocalValue().toString());
-    }
+ 	listadoValoresNuevaRespuesta.add(nuevoValorRadio.getLocalValue().toString());
+ }
 
 	public void borraValorRadio(){
 		listadoValoresNuevaRespuesta.remove(nuevoValorRadio.getLocalValue().toString());
@@ -208,24 +205,23 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	nuevoValorTabla.setValue(nuevo);	
 	}
 	
-    public void aniadeValorFila(){
-    	listadoValoresFila.add(nuevoValorFila.getLocalValue().toString());
-    }
-    
-    public void borraValorFila(){
-    	listadoValoresFila.remove(nuevoValorFila.getLocalValue().toString());
-    }
-    
-    public void onSelectValorFila(SelectEvent event) {
-		String nuevo= event.getObject().toString();    
-		nuevoValorFila.setValue(nuevo);	
-    }
-    
-    public void guardaTipoRespuesta(){
-    	List<String> nuevoListado=listaTipoPreguntas.getSource();
+	 public void aniadeValorFila(){
+	 	listadoValoresFila.add(nuevoValorFila.getLocalValue().toString());
+	 }
+	 
+	 public void borraValorFila(){
+	 	listadoValoresFila.remove(nuevoValorFila.getLocalValue().toString());
+	 }
+	 
+	 public void onSelectValorFila(SelectEvent event) {
+			String nuevo= event.getObject().toString();    
+			nuevoValorFila.setValue(nuevo);	
+	 }
+ 
+ public void guardaTipoRespuesta(){
+ 	
 		String seccion=tipoPersonalizado.concat(listadoValoresNuevaRespuesta.toString());
 		
-		//Valores RADIO y TABLA, nombres de Campo para MAtrices
 		
 		for(int i=0; i< listadoValoresNuevaRespuesta.size(); i++){
 			String valor=listadoValoresNuevaRespuesta.get(i);
@@ -265,115 +261,73 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 		}
 		
 		//Actualizar lista
-		nuevoListado.add(seccion);
+		List<String> nuevoListado= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuesta();
+		
 		listaTipoPreguntas.setSource(nuevoListado);	
 		
 		listadoValoresNuevaRespuesta=new ArrayList<String>();
 		listadoValoresFila=new ArrayList<String>();
-    }
-    
-    public void grabaArea(AreasCuestionario area){
-    	nuevaPregunta =new PreguntasCuestionario();
-    	nuevaPregunta.setArea(area);
-    }
-    
-    public void aniadePregunta(AreasCuestionario areaSelec){
-    	mapaPreguntas=new HashMap<String, List<PreguntasCuestionario>>();
-    	grabaArea(areaSelec);
-    	
-    	String pregunta=preguntaNueva.getLocalValue().toString();
-    	String tipo=nuevaRespuesta.getLocalValue().toString();		
-    	
-    	cargaEnLista(pregunta, tipo);
-		List<PreguntasCuestionario> listaPreguntasArea= new ArrayList<PreguntasCuestionario>();
-		for (PreguntasCuestionario preg : listaPreguntas) {
-			AreasCuestionario area = preg.getArea();
-			
-			if (mapaPreguntas.get(area.getArea()) == null) {
-				listaPreguntasArea = new ArrayList<>();
-			}
-			else {
-				listaPreguntasArea = mapaPreguntas.get(area.getArea());
-			}
-			listaPreguntasArea.add(preg);
-			mapaPreguntas.put(area.getArea(), listaPreguntasArea);
-		}
-		
-       	}
-    
-    public void onSelectPregunta(SelectEvent event) {
-    	PreguntasCuestionario nuevo= (PreguntasCuestionario) event.getObject();    
+ }
+ 
+ public void aniadePregunta(String areaSelec){
+ 	
+	PreguntasCuestionario nuevaPregunta =new PreguntasCuestionario();
+ 	String pregunta=preguntaNueva.getLocalValue().toString();
+ 	String tipo=nuevaRespuesta.getLocalValue().toString();	
+ 	
+ 	nuevaPregunta.setPregunta(pregunta);
+ 	nuevaPregunta.setTipoRespuesta(tipo);
+ 	
+ 	if (!pregunta.isEmpty() && !tipo.isEmpty()){
+	 	List<PreguntasCuestionario> listado=new ArrayList<PreguntasCuestionario>();
+	 	listado= mapaPreguntasAux.get(areaSelec);
+	 	listado.add(nuevaPregunta);
+	 	mapaPreguntas.replace(areaSelec, listado);
+		mapaPreguntasAux.replace(areaSelec, listado);
+ 	}
+ 	guardaPreguntas();
+  }
+ 
+ public void onSelectPregunta(SelectEvent event) {
+ 	PreguntasCuestionario nuevo= (PreguntasCuestionario) event.getObject();    
 		preguntaNueva.setValue(nuevo.getPregunta());
 		nuevaRespuesta.setValue(nuevo.getTipoRespuesta());
-    }
-    
-    public void onReorderPregunta(){
-    	for(int i=0; i < listaPreguntas.size(); i++){
-    		PreguntasCuestionario preg= listaPreguntas.get(i);
-    		if(preg.getPregunta().equals(preguntaNueva)){
-    			preg.setOrden(i);
-    		}
-    	}
-    }
-    
-    public void cargaEnLista(String pregunta, String tipo){
-    	
-    	AreasCuestionario areaSelec= nuevaPregunta.getArea();
-    	
-    	nuevaPregunta.setArea(areaSelec);
-    	nuevaPregunta.setPregunta(pregunta);
-    	nuevaPregunta.setTipoRespuesta(tipo);
-    	nuevaPregunta.setOrden(listaPreguntas.size());
-    	
-    	
-    	listaPreguntas.add(nuevaPregunta);
-    	
+ }
+ 
+	
 
-    }
-    	
-    
-  
-    public void onReorderPreguntas(){
-    	
-    }
-    
-    public String guardaCuestionario(){
-    	
-    	
-    	modelo.setCodigo("sin codigo");
-    	modelo.setNombreFichero(modelo.getDescripcion());
-    	modelo.setIdDocumento((long) 0);
-    		
-
-    	Map<String,List<PreguntasCuestionario>> mapa= new HashMap();
-    	List<PreguntasCuestionario> listaPreguntasArea= new ArrayList<PreguntasCuestionario>();
-    	for (PreguntasCuestionario preg : listaPreguntas) {
-			AreasCuestionario area = preg.getArea();
-			
-			if (mapa.get(area.getArea()) == null) {
-				listaPreguntasArea = new ArrayList<>();
-			}
-			else {
-				listaPreguntasArea = mapa.get(area.getArea());
-			}
-			listaPreguntasArea.add(preg);
-			mapa.put(area.getArea(), listaPreguntasArea);
+public void guardaPreguntas(){
+	for (String areaString: listadoAreas){
+		List<PreguntasCuestionario> listado= mapaPreguntasAux.get(areaString);
+		List<PreguntasCuestionario> listadoAux=new ArrayList<PreguntasCuestionario>();
+		
+		for (int i=0; i< listado.size() ; i++){
+			PreguntasCuestionario preg=listado.get(i);
+			preg.setOrden(i);
+			listadoAux.add(preg);
 		}
-    	
-    	for (int i=0;i < listadoAreasString.size();i++){
-		List<PreguntasCuestionario> listaPregunt= mapa.get(listadoAreasString.get(i));
-		modelo.getAreas().get(i).setPreguntas(listaPregunt);
+		for (AreasCuestionario area: modelo.getAreas()){
+			if (area.getArea().equals(areaString)){
+				area.setPreguntas(listadoAux);
+			}
+		}
 	}
-    	
-    	modelo= modeloCuestionarioService.save(modelo);
-    	
-    	notificacionesService.crearNotificacionRol("Se crea nuevo modelo", SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
-    	registroActividadService.altaRegActividad("Se crea nuevo modelo", EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
-   	
-    	return "cuestionarios/modelosCuestionarios";
-    	
-    	
-    }
-    	
-    	
+}
+ 
+ public String guardaCuestionario(){
+ 	
+ 	
+	modelo.setCodigo("sin codigo");
+ 	modelo.setNombreFichero(modelo.getDescripcion());
+ 	modelo.setIdDocumento((long) 0);
+ 	
+ 	modelo= modeloCuestionarioService.save(modelo);
+	
+	notificacionesService.crearNotificacionRol("Se crea nuevo modelo:".concat(modelo.getDescripcion()), SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
+	registroActividadService.altaRegActividad("Se crea nuevo modelo:".concat(modelo.getDescripcion()), EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
+	
+ 	return "cuestionarios/modelosCuestionarios";
+ 	
+ 	
+ }
 }
