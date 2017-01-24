@@ -11,17 +11,19 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-			<p:outputPanel rendered="#{ empty equiposBean.equipo.fechaBaja}">
+		
+		<ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		<ui:param name="yaAnulado" value="#{not empty equiposBean.equipo.fechaBaja}"/>
+		
+			<p:outputPanel rendered="#{not yaAnulado and esJefeInspecciones}">
 				<h3>Modificar equipo</h3>
 			</p:outputPanel>
-			<p:outputPanel rendered="#{ not empty equiposBean.equipo.fechaBaja}">
+			<p:outputPanel rendered="#{yaAnulado or not esJefeInspecciones}">
 				<h3>Ver equipo</h3>
 			</p:outputPanel>
 			<br></br>
 			<h:form id="modificarEquipo">
 				<div id="miembrosEquipo">
-
-					<h4>Equipo :</h4>
 
 					<p:dataTable id="tablaMiembros" var="miembro"
 						value="#{equiposBean.miembrosEquipo}" paginator="true" rows="20"
@@ -40,7 +42,7 @@
 						</p:column>
 
 						<p:column width="20" exportable="false"
-							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
+							rendered="#{not yaAnulado and esJefeInspecciones}">
 							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{equiposBean.eliminarMiembro(miembro)}"
 								update="modificarEquipo" disabled="#{miembro.posicion eq 'JEFE_EQUIPO'}">
@@ -60,13 +62,13 @@
 					<div class="botonesFormulario">
 						<h:commandLink title="Cambiar jefe del equipo"
 							action="#{equiposBean.getFormCambiarJefeEquipo}" 
-							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
+							rendered="#{not yaAnulado and esJefeInspecciones}"
 							styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">Cambiar jefe del equipo</span>
 						</h:commandLink>
 						<h:commandLink title="Añadir componente/s o colaborador/es"
 							action="#{equiposBean.getFormAniadirMiembroEquipo}" 
-							rendered="#{empty equiposBean.equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
+							rendered="#{not yaAnulado and esJefeInspecciones}"
 							styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">Añadir componente/s o colaborador/es</span>
 						</h:commandLink>

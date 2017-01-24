@@ -223,8 +223,8 @@ public class ProvisionalSolicitudBean implements Serializable {
 					usuarioProv)) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentacion",
 						"Solicitud de documentación cumplimentada con éxito.");
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				String descripcion = "Solicitud documentación previa cuestionario para la inspección "
+						+ solicitudDocumentacionPrevia.getInspeccion().getNumero() + " cumplimentada";
 				// Guardamos la actividad en bbdd
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -245,8 +245,8 @@ public class ProvisionalSolicitudBean implements Serializable {
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
 						"El borrador se ha guardado con éxito");
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario cumplimentación : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				String descripcion = "Solicitud documentación previa cuestionario para la inspección "
+						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}

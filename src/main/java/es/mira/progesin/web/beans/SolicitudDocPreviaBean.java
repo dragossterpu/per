@@ -65,6 +65,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 
 	private static final String NOMBRESECCION = "Generación de solicitud documentación";
 
+	private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
+
 	private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
 
 	private static final String ERROR = "Error";
@@ -168,8 +170,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 								"La solicitud de documentación ha sido creada con éxito");
 
 						altaDocumentos();
-						String descripcion = "Solicitud documentación previa cuestionario. Usuario creación : "
-								+ SecurityContextHolder.getContext().getAuthentication().getName();
+						String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
 						// Guardamos la actividad en bbdd
 						regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
 								NOMBRESECCION);
@@ -279,8 +280,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 			if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
 						"Se ha validado con éxito la solicitud de documentación");
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario validación jefe equipo : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+
+				String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+						+ " validada por apoyo";
 
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -290,7 +292,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Se ha producido un error al validar jefe equipo la solicitud, inténtelo de nuevo más tarde");
+					"Se ha producido un error al validar apoyo la solicitud, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 
@@ -312,8 +314,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
 						"Se ha validado con éxito la solicitud de documentación");
 
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario validación jefe equipo : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+						+ " validada por jefe equipo";
 
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -323,7 +325,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Se ha producido un error al validar jefe equipo la solicitud, inténtelo de nuevo más tarde");
+					"Se ha producido un error al validar el jefe del equipo la solicitud, inténtelo de nuevo más tarde");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		return VISTASOLICITUD;
@@ -414,31 +416,42 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 */
 	public void eliminarSolicitud(SolicitudDocumentacionPrevia solicitud) {
 		try {
-			// Si no ha sido enviada se trata como un borrador y se hace eliminación física
-			if (solicitud.getFechaEnvio() == null) {
-				solicitudDocumentacionService.transaccDeleteElimDocPrevia(solicitud.getId());
+			User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<RoleEnum> rolesAdmitidos = new ArrayList<>();
+			rolesAdmitidos.add(RoleEnum.JEFE_INSPECCIONES);
+			rolesAdmitidos.add(RoleEnum.SERVICIO_APOYO);
+			rolesAdmitidos.add(RoleEnum.ADMIN);
+			if (solicitud.getFechaFinalizacion() == null && rolesAdmitidos.contains(usuarioActual.getRole())) {
 
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
-						"Se ha eliminado con éxito la solicitud de documentación");
+				// Si no ha sido enviada se trata como un borrador y se hace eliminación física
+				if (solicitud.getFechaEnvio() == null) {
+					solicitudDocumentacionService.transaccDeleteElimDocPrevia(solicitud.getId());
+
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
+							"Se ha eliminado con éxito la solicitud de documentación");
+				}
+				else {
+					// Enviada pero no finalizada, existe usuario provisional
+					solicitud.setFechaBaja(new Date());
+					solicitud.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+					solicitud.setFechaFinalizacion(new Date());
+					String usuarioProv = solicitud.getCorreoDestinatario();
+					if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv)) {
+						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Baja",
+								"Se ha dado de baja con éxito la solicitud de documentación");
+
+						String descripcion = DESCRIPCION + solicitud.getInspeccion().getNumero();
+
+						regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
+								NOMBRESECCION);
+
+						notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+					}
+				}
 			}
 			else {
-				// Enviada pero no finalizada, existe usuario provisional
-				solicitud.setFechaBaja(new Date());
-				solicitud.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-				solicitud.setFechaFinalizacion(new Date());
-				String usuarioProv = solicitud.getCorreoDestinatario();
-				if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv)) {
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Baja",
-							"Se ha dado de baja con éxito la solicitud de documentación");
-
-					String descripcion = "Solicitud documentación previa cuestionario. Usuario baja : "
-							+ SecurityContextHolder.getContext().getAuthentication().getName();
-
-					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
-							NOMBRESECCION);
-
-					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
-				}
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
+						"Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción");
 			}
 		}
 		catch (Exception e) {
@@ -483,8 +496,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 				listadoDocumentosCargados = gestDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario modificación : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
 
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -545,8 +557,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
 							"Se ha enviado con éxito la solicitud de documentación");
 
-					String descripcion = "Solicitud documentación previa cuestionario. Usuario envío : "
-							+ SecurityContextHolder.getContext().getAuthentication().getName();
+					String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+							+ " enviada";
 
 					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 							NOMBRESECCION);
@@ -581,8 +593,9 @@ public class SolicitudDocPreviaBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
 						"Se ha finalizado con éxito la solicitud de documentación");
 
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario finalización : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+						+ "finalizada";
+
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
@@ -646,8 +659,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
 						"Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
 
-				String descripcion = "Solicitud documentación previa cuestionario. Usuario no conforme : "
-						+ SecurityContextHolder.getContext().getAuthentication().getName();
+				String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+						+ " declarada no conforme";
 
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);

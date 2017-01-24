@@ -12,11 +12,11 @@
 <f:metadata>
     <f:viewParam name="vieneDe" value="#{solicitudDocPreviaBean.vieneDe}" />
 </f:metadata>
-
+	
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-
-			<h3>Búsqueda solicitudes de documentación</h3>
+				
+		<h3>Búsqueda solicitudes de documentación</h3>
 
 		<h:form>
 		    <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormBusquedaSolicitudes}" update="busquedaSolicitudDocPrevia" autoRun="true" />
@@ -197,16 +197,16 @@
 						</p:column>
 
 
-						<p:column width="30" exportable="false" toggleable="false">
+						<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 							<h:commandLink title="Ver solicitud" styleClass="fa fa-eye ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}"/>
 						</p:column>
-						<p:column width="30" exportable="false" toggleable="false">
+						<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 							<h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes"/>	
 						</p:column>
-						<p:column width="30" exportable="false" toggleable="false">
+						<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 							<p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="ui-icon-trash"
 								actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}"
-								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes" disabled="#{not empty solicitud.fechaFinalizacion}">
+								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes">
 								<p:confirm header="Eliminar" icon="ui-icon-alert"
 									message="¿Está seguro de que desea eliminar esta solicitud?"/>
 							</p:commandButton>
@@ -217,16 +217,12 @@
 					</p:dataTable>
 					<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							<p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</div>
 					</p:confirmDialog>
 
-
-					<p:messages id="msgs" autoUpdate="true" closable="true"
-						showDetail="true" />
+					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
 
 				</p:outputPanel>
 			</h:form>

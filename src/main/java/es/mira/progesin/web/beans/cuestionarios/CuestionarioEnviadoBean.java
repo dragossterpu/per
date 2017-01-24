@@ -46,6 +46,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 
 	private static final String NOMBRESECCION = "Gestión de cuestionario enviado";
 
+	private static final String DESCRIPCION = "Cuestionario para la inspección ";
+
 	private static final String ERROR = "Error";
 
 	@Autowired
@@ -124,7 +126,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
 						"Se ha eliminado con éxito el cuestionario");
 
-				String descripcion = "Cuestionario. Usuario eliminación : " + usuarioActual;
+				String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
 
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 
@@ -183,7 +185,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
 						"Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
 
-				String descripcion = "Cuestionario. Usuario finalización : " + usuarioActual;
+				String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero() + " finalizado";
+
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 
@@ -231,8 +234,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 			cuestionario.setUsernameNoConforme(usuarioActual);
 			if (cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario)) {
 
-				StringBuilder asunto = new StringBuilder("Cuestionario para la inspección ")
-						.append(cuestionario.getInspeccion().getNumero());
+				StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
 				StringBuilder textoAutomatico = new StringBuilder(
 						"\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:")
 								.append("\r\n \r\n").append(motivosNoConforme)
@@ -250,7 +252,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
 						"Declarado no conforme con éxito el cuestionario. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
 
-				String descripcion = asunto + ". Usuario no conforme : " + cuestionario.getUsernameNoConforme();
+				String descripcion = asunto.toString() + " declarado no conforme";
 
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -294,8 +296,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 			// Avisar al destinatario si la fecha limite para la solicitud ha cambiado
 			if (cuestionario.getFechaEnvio() != null
 					&& !backupFechaLimiteCuestionario.equals(cuestionario.getFechaLimiteCuestionario())) {
-				StringBuilder asunto = new StringBuilder("Cuestionario para la inspección ")
-						.append(cuestionario.getInspeccion().getNumero());
+				StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
 				StringBuilder textoAutomatico = new StringBuilder(
 						"\r\n \r\nEl plazo del que disponía para enviar el cuestionario conectándose a la aplicación PROGESIN ha sido modificado.")
 								.append("\r\n \r\nFecha límite de envío anterior: ")
@@ -310,8 +311,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 					"El cuestionario ha sido modificado con éxito" + mensajeCorreoEnviado);
 
-			String descripcion = "Cuestionario. Usuario modificación : "
-					+ SecurityContextHolder.getContext().getAuthentication().getName();
+			String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
 
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 					NOMBRESECCION);
