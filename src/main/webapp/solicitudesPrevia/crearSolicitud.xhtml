@@ -82,13 +82,15 @@
 										pattern="dd/MM/yyyy" locale="es"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
-										requiredMessage="Es obligatorio una fecha limite envío documentación" />
-
+										requiredMessage="Es obligatorio una fecha limite envío documentación">
+										<p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" />
+									</p:calendar>
+									
 									<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):"/>
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
 										pattern="dd/MM/yyyy" locale="es" 
-										mindate="#{utilities.getCurrentDate()}"
+										mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"/>
 										

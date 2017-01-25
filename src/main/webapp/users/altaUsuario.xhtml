@@ -47,12 +47,12 @@
 						</p:inputText>
 						
 						<h:outputLabel for="fechaDestino" value="Fecha destino IPSS (*):" />
-						<p:calendar value="#{userBean.user.fechaDestinoIPSS}" id="fechaDestino" pattern="dd/MM/yyyy" locale="es" navigator="true"
+						<p:calendar value="#{userBean.user.fechaDestinoIPSS}" id="fechaDestino" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" yearRange="c-100:c"
 								required="true" requiredMessage="Introduzca la fecha de destino a la IPSS"/>
 						<p:messages for="fechaDestino" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="fechaIngreso" value="Fecha de ingreso en el cuerpo:" />
-						<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" yearRange="c-100:c"/>
 						
 					</div>
 			</div>
@@ -176,7 +176,7 @@
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.altaUsuario}" value="Crear usuario" icon="fa fa-fw fa-save"/>
+				<p:commandButton actionListener="#{userBean.altaUsuario}" value="Crear usuario" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 				<p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			</div>
 			
@@ -186,6 +186,10 @@
 				<div class="centrarBotonesDialog">
 					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/users/usuarios')}" />
 				</div>
+			</p:dialog>
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage value="/images/loading.gif" />
 			</p:dialog>
 			
 		</h:form>

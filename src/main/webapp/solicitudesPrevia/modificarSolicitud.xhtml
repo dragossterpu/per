@@ -76,12 +76,14 @@
 				
 						<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
 						<p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación"
-							disabled="#{yaAnulado or not esJefeInspeccionesApoyo}"/>
+							disabled="#{yaAnulado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
+							<p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')"/>
+						</p:calendar>
 						<p:messages for="fechaLimiteEnvio" autoUpdate="true" closable="true"/>
 											
 						<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):" />
 						<p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"
-							disabled="#{yaValidado or not esJefeInspeccionesApoyo}"/>
+							disabled="#{yaValidado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"/>
 						<p:messages for="fechaLimiteCumplimentar" autoUpdate="true" closable="true"/>
 
 						<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />

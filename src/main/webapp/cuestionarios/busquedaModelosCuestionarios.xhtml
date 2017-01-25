@@ -44,10 +44,10 @@
 	
 					<div class="columnaDchaFormulario">
 						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 	
 						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 					</div>
 			</div>
 		

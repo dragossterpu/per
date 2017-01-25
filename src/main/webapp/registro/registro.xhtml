@@ -37,9 +37,9 @@
 	
 					<div class="columnaDchaFormulario">
 						<h:outputLabel for="fechaDesde" value="Fecha desde:" />
-						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 						<h:outputLabel for="fechaHasta" value="Fecha hasta:" />
-						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 						
 						
 						<h:outputLabel for="tipo" value="Tipo de notificación" />
