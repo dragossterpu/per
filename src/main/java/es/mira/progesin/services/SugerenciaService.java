@@ -20,7 +20,7 @@ public class SugerenciaService implements ISugerenciaService {
 
 	@Override
 	public Iterable<Sugerencia> findAll() {
-		return sugerenciaRepository.findByFechaBajaIsNull();
+		return sugerenciaRepository.findAll();
 	}
 
 	@Override
