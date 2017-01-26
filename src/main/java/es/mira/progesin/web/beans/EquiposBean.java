@@ -110,10 +110,9 @@ public class EquiposBean implements Serializable {
 		this.equipo = null;
 		this.tipoEquipo = null;
 		equipo = new Equipo();
-		jefeSeleccionado = new User();
-		miembrosSeleccionados = new ArrayList<>();
 		listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(null);
 		listadoPotencialesJefes = listaUsuarios;
+		skip = false;
 		return "/equipos/altaEquipo";
 	}
 
@@ -133,7 +132,7 @@ public class EquiposBean implements Serializable {
 		List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
 		Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
 		miembrosNuevoEquipo.add(jefe);
-		List<String> nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
+		String nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
 		equipo.setMiembros(miembrosNuevoEquipo);
 
 		try {
@@ -141,10 +140,9 @@ public class EquiposBean implements Serializable {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"El equipo ha sido creado con éxito");
 			}
-			// String descripcion = "Alta nuevo equipo inspecciones. Nombre jefe equipo " + jefeSeleccionado.getNombre()
-			// + " " + jefeSeleccionado.getApellido1() + " " + jefeSeleccionado.getApellido2();
-			String descripcion = "Alta nuevo equipo inspecciones. Nombre de sus integrantes: "
-					+ String.join(", ", nombresCompletos);
+			String descripcion = "Alta nuevo equipo inspecciones '" + equipo.getNombreEquipo()
+					+ "'. Nombre jefe del equipo: " + equipo.getNombreJefe() + ". Nombre de sus componentes: "
+					+ nombresCompletos;
 			// Guardamos la actividad en bbdd
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
@@ -212,7 +210,7 @@ public class EquiposBean implements Serializable {
 			equipoService.save(equipo);
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Baja",
 					"Se ha dado de baja con éxito un equipo de inspecciones");
-			String descripcion = "Se ha eliminado el equipo inspecciones. Nombre jefe equipo " + equipo.getNombreJefe();
+			String descripcion = "Se ha eliminado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
 			// Guardamos la actividad en bbdd
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
@@ -250,8 +248,7 @@ public class EquiposBean implements Serializable {
 			if (equipoService.save(equipo) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 						"El equipo ha sido modificado con éxito");
-				String descripcion = "Se ha modificado el equipo inspecciones. Nombre jefe equipo "
-						+ equipo.getNombreJefe();
+				String descripcion = "Se ha modificado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
 				// Guardamos la actividad en bbdd
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -277,8 +274,8 @@ public class EquiposBean implements Serializable {
 			equipoService.save(equipo);
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
 					"El equipo ha sido modificado con éxito");
-			String descripcion = "Se ha eliminado un componente del equipo inspecciones. Nombre jefe equipo "
-					+ equipo.getNombreJefe();
+			String descripcion = "Se ha eliminado un componente del equipo inspecciones '" + equipo.getNombreEquipo()
+					+ "'. Nombre del componente del equipo: " + miembro.getNombreCompleto();
 			// Guardamos la actividad en bbdd
 			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
 		}
@@ -326,8 +323,8 @@ public class EquiposBean implements Serializable {
 			if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
 						"jefe cambiado con éxito");
-				String descripcion = "Se ha cambiado el jefe del equipo inspecciones. Nombres del nuevo jefe: "
-						+ equipo.getNombreJefe();
+				String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
+						+ "'. Nombres del nuevo jefe: " + equipo.getNombreJefe();
 				// Guardamos la actividad en bbdd
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -368,13 +365,13 @@ public class EquiposBean implements Serializable {
 
 		try {
 			List<Miembro> listaMiembros = equipo.getMiembros();
-			List<String> nombresCompletos = aniadirMiembrosEquipo(posicion, listaMiembros);
+			String nombresCompletos = aniadirMiembrosEquipo(posicion, listaMiembros);
 			equipo.setMiembros(listaMiembros);
 			if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"componente/s o colaborador/es añadido/s con éxito");
-				String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones. Nombres de componentes "
-						+ String.join(", ", nombresCompletos);
+				String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones '"
+						+ equipo.getNombreEquipo() + "'. Nombres de componentes " + nombresCompletos;
 				// Guardamos la actividad en bbdd
 				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
 						NOMBRESECCION);
@@ -416,39 +413,45 @@ public class EquiposBean implements Serializable {
 	 * @param miembros lista de miembros donde se van a instertar
 	 * @return nombresCompletos nombre de los nuevos usuarios para generar un registro de actividad
 	 */
-	private List<String> aniadirMiembrosEquipo(RolEquipoEnum posicion, List<Miembro> miembros) {
+	private String aniadirMiembrosEquipo(RolEquipoEnum posicion, List<Miembro> miembros) {
 		List<String> nombresCompletos = new ArrayList<>();
 		for (User user : miembrosSeleccionados) {
 			Miembro miembroNuevo = crearMiembro(posicion, user);
 			miembros.add(miembroNuevo);
 			nombresCompletos.add(miembroNuevo.getNombreCompleto());
 		}
-		return nombresCompletos;
+		return String.join(", ", nombresCompletos);
 	}
 
 	public void onToggle(ToggleEvent e) {
 		columnasVisibles.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
 
-	public String onFlowProcess(FlowEvent event) {
-		cleanParam(event);
-		if (skip) {
-			skip = false; // reset in case user goes back
-			return "confirm";
-		}
-		else {
-			return event.getNewStep();
-		}
-	}
-
 	/**
 	 * @param event
 	 */
-	private void cleanParam(FlowEvent event) {
+	public String onFlowProcess(FlowEvent event) {
 		if (JEFEEQUIPO.equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
-			User jefe = jefeSeleccionado;
-			listadoPotencialesJefes.remove(jefe);
-			listadoPotencialesMiembros = listadoPotencialesJefes;
+			if (jefeSeleccionado != null) {
+				listadoPotencialesJefes.remove(jefeSeleccionado);
+				listadoPotencialesMiembros = listadoPotencialesJefes;
+			}
+			else {
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Debe elegir un jefe de equipo", "",
+						"");
+				return event.getOldStep();
+			}
+		}
+		if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep())) {
+			if (skip) {
+				miembrosSeleccionados = null;
+				skip = false;
+			}
+			else if (miembrosSeleccionados == null || miembrosSeleccionados.isEmpty()) {
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+						"Debe elegir uno o más componentes o confirmar que no desea ninguno aparte del jefe", "", "");
+				return event.getOldStep();
+			}
 		}
 		if ("confirm".equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
 			this.miembrosSeleccionados = null;
@@ -464,6 +467,7 @@ public class EquiposBean implements Serializable {
 			this.jefeSeleccionado = null;
 			this.miembrosSeleccionados = null;
 		}
+		return event.getNewStep();
 	}
 
 	@PostConstruct

@@ -29,7 +29,6 @@
 							<br></br>
 							<p:panel header="Contenido">
 								<br></br>
-								<p:messages autoUpdate="true" closable="true"/>
 								<h:panelGrid columns="2" columnClasses="label, value">
 								
 									<h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
@@ -82,55 +81,55 @@
 										pattern="dd/MM/yyyy" locale="es"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
-										requiredMessage="Es obligatorio una fecha limite envío documentación">
-										<p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" />
-									</p:calendar>
-									
+										requiredMessage="Es obligatorio una fecha limite envío documentación" />
+
 									<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):"/>
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
 										pattern="dd/MM/yyyy" locale="es" 
-										mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"
+										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"/>
 										
 									<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
 									<p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
 								</h:panelGrid>
+								<p:messages autoUpdate="true" closable="true"/>
 							</p:panel>
 						</p:tab>
 						<p:tab id="documentacion" title="Documentación">
 							<br></br>
 							<p:panel header="documentacion">
 								<br></br>
-								<p:messages autoUpdate="true" closable="true"/>
+								
+								<p:dataTable id="documentosSolicitud" var="documento"
+									value="#{solicitudDocPreviaBean.listadoDocumentos}"
+									paginator="true" rows="20"
+									selection="#{solicitudDocPreviaBean.documentosSeleccionados}"
+									rowKey="#{documento.id}">
+									<f:facet name="header">
+							            Tipos de documentación previa
+							        </f:facet>
+									<p:column selectionMode="multiple"
+										style="width:16px;text-align:center" />
+									<p:column headerText="Descripcion"
+										sortBy="#{documento.descripcion}"
+										filterBy="#{documento.descripcion}">
+										<h:outputText value="#{documento.descripcion}" />
+									</p:column>
+									<p:column headerText="Ambito" width="50"
+										sortBy="#{documento.ambito}"
+										filterBy="#{documento.ambito}">
+										<h:outputText value="#{documento.ambito}" />
+									</p:column>									
+								</p:dataTable>
+								
 								<h:panelGrid columns="2" columnClasses="label, value">
-									<p:dataTable id="documentosSolicitud" var="documento"
-										value="#{solicitudDocPreviaBean.listadoDocumentos}"
-										paginator="true" rows="20"
-										selection="#{solicitudDocPreviaBean.documentosSeleccionados}"
-										rowKey="#{documento.id}">
-										<f:facet name="header">
-								            Tipos de documentación previa
-								        </f:facet>
-										<p:column selectionMode="multiple"
-											style="width:16px;text-align:center" />
-
-										<p:column headerText="Descripcion"
-											sortBy="#{documento.descripcion}"
-											filterBy="#{documento.descripcion}">
-											<h:outputText value="#{documento.descripcion}" />
-										</p:column>
-										
-										<p:column headerText="Ambito" width="50"
-											sortBy="#{documento.ambito}"
-											filterBy="#{documento.ambito}">
-											<h:outputText value="#{documento.ambito}" />
-										</p:column>
-										
-									</p:dataTable>
-
+									<h:outputLabel for="chkSkip" value="Confirmar: Solicitud sin documentación" />
+									<h:selectBooleanCheckbox id="chkSkip" value="#{solicitudDocPreviaBean.skip}" />
 								</h:panelGrid>
+								
+								<p:messages autoUpdate="true" closable="true"/>
 							</p:panel>
 						</p:tab>
 
@@ -138,7 +137,6 @@
 							<br></br>
 							<p:panel header="Apoyo">
 								<br></br>
-								<p:messages autoUpdate="true" closable="true"/>
 								
 								<div class="aclaraciones">
 									Datos de la persona de apoyo por defecto.
@@ -179,6 +177,8 @@
 									</p:inputText>
 
 								</h:panelGrid>
+								
+								<p:messages autoUpdate="true" closable="true"/>
 							</p:panel>
 						</p:tab>
 						<p:tab id="confirm" title="Confirmar">

@@ -24,7 +24,6 @@
 								<br></br>
 								<p:panel header="Nombre y tipo equipo inspecciones">
 									<br></br>
-									<p:messages />
 									<h:panelGrid columns="2" columnClasses="label, value">
 
 										<h:outputLabel for="nombreEquipo"
@@ -48,6 +47,7 @@
 										</p:selectOneMenu>
 
 									</h:panelGrid>
+									<p:messages autoUpdate="true" closable="true" />
 								</p:panel>
 							</p:tab>
 
@@ -55,7 +55,6 @@
 								<br></br>
 								<p:panel header="Elegir el jefe de equipo">
 
-									<p:messages />
 									<div class="botonesFormulario">
 										<p:dataTable id="equipoJefes" var="usuario"
 											value="#{equiposBean.listadoPotencialesJefes}" paginator="true"
@@ -82,12 +81,8 @@
 												filterBy="#{usuario.apellido2}">
 												<h:outputText value="#{usuario.apellido2}" />
 											</p:column>
-
 										</p:dataTable>
-										<h:panelGrid columns="2" columnClasses="label, value">
-											<h:outputText value="Confirmar: " />
-											<h:selectBooleanCheckbox value="#{equiposBean.skip}" />
-										</h:panelGrid>
+										<p:messages autoUpdate="true" closable="true" />
 									</div>
 								</p:panel>
 							</p:tab>
@@ -96,7 +91,6 @@
 								<br></br>
 								<p:panel header="Componentes">
 									<br></br>
-									<p:messages />
 									<p:dataTable id="equipoMiembros" var="usuario"
 										value="#{equiposBean.listadoPotencialesMiembros}" paginator="true"
 										rows="20" selection="#{equiposBean.miembrosSeleccionados}"
@@ -121,6 +115,11 @@
 											<h:outputText value="#{usuario.apellido2}" />
 										</p:column>
 									</p:dataTable>
+									<h:panelGrid columns="2" columnClasses="label, value">
+										<h:outputLabel for="chkSkip" value="Confirmar: Equipo sin componentes" />
+										<h:selectBooleanCheckbox id="chkSkip" value="#{equiposBean.skip}" />
+									</h:panelGrid>
+									<p:messages autoUpdate="true" closable="true" />
 								</p:panel>
 							</p:tab>
 
