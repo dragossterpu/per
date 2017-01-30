@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
@@ -31,6 +33,8 @@ import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestio
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.DataTableView;
+import es.mira.progesin.web.beans.cuestionarios.VisualizarCuestionario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,7 +66,9 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	private List<String> listadoValoresNuevaRespuesta;
 	private List<String> listadoValoresFila;
 	
+	private Map<String, DataTableView> mapaRespuestasTabla;
 	
+	private DataTableView datosTabla;
 	
 	//Nueva pregunta
 	private Map<String,List<PreguntasCuestionario>> mapaPreguntas;
@@ -78,6 +84,9 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	private UIInput nuevaRespuesta;
 	
 	
+	private String tipoSeleccionado;
+	
+	
 	@Autowired
 	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestasCuestionarioRepository;
 	
@@ -90,13 +99,16 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 	@Autowired
 	IRegistroActividadService registroActividadService;
 	
+	@Autowired
+	private VisualizarCuestionario visualizarCuestionario;
+	
 	
 	@PostConstruct
 	public void init() {
 		modelo=new ModeloCuestionario();
 		listadoAreas=new ArrayList<String>();
 		
-		listaTipoPreguntasInicial= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuesta();
+		listaTipoPreguntasInicial= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
 		listaTipoPreguntasFinal=new ArrayList<String>();
 		
 		listaTipoPreguntas = new DualListModel<String>(listaTipoPreguntasInicial, listaTipoPreguntasFinal);
@@ -106,6 +118,8 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 		
 		mapaPreguntas=new HashMap<String, List<PreguntasCuestionario>>();
 		mapaPreguntasAux=new HashMap<String, List<PreguntasCuestionario>>();
+		
+		
 		}	
 		
 	public String onFlowProcess(FlowEvent event) {
@@ -167,6 +181,31 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 			}
 	    }
     	
+	 
+	 public void onSelectTipo(SelectEvent event) {
+
+	        tipoSeleccionado= event.getObject().toString();
+	        if (tipoSeleccionado.startsWith("TABLA") || tipoSeleccionado.startsWith("MATRIZ")){
+	        	datosTabla=new DataTableView();
+	        	construirTipoRespuestaTablaMatrizVacia(tipoSeleccionado);
+	        }
+	    }
+	 
+	 private void construirTipoRespuestaTablaMatrizVacia(String tipo) {
+			List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestasCuestionarioRepository.findByConfigSeccionOrderByConfigClaveAsc(tipo);
+			if (tipo != null && tipo.startsWith("TABLA")) {
+				datosTabla.crearTabla(valoresColumnas);
+			}
+			else {
+				datosTabla.crearMatriz(valoresColumnas);
+			}
+			//mapaRespuestasTabla.put(tipo, dataTableView); 
+		}
+	 
+	 public List<String> getValoresTipoRespuesta(String tipo) {
+			return configuracionRespuestasCuestionarioRepository.findValoresPorSeccion(tipo);
+		}
+	 
 	 public void aniadeValor(){
 	    	listadoValoresNuevaRespuesta.add(nuevoValor.getLocalValue().toString());
 	    }
@@ -261,7 +300,7 @@ public class nuevoModeloCuestionarioBean implements Serializable {
 		}
 		
 		//Actualizar lista
-		List<String> nuevoListado= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuesta();
+		List<String> nuevoListado= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
 		
 		listaTipoPreguntas.setSource(nuevoListado);	
 		
@@ -330,4 +369,6 @@ public void guardaPreguntas(){
  	
  	
  }
+ 
+ 
 }

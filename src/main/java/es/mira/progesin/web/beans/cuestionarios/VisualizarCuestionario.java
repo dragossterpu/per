@@ -259,6 +259,8 @@ public class VisualizarCuestionario implements Serializable {
 		}
 		mapaRespuestasTabla.put(pregunta, dataTableView);
 	}
+	
+	
 
 	/**
 	 * Construye la tabla o matriz que se usará del cuestionario con las respuestas cumplimentadas

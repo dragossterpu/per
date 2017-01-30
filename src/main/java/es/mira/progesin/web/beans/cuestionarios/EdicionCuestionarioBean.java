@@ -52,6 +52,9 @@ public class EdicionCuestionarioBean {
 		return "/cuestionarios/editarCuestionario";
 	}
 
+	public String nuevoModeloCuestionario(){
+		return "/cuestionarios/nuevoModeloCuestionario";
+	}
 	public String previsualizarFormulario() {
 		boolean hayPreguntasSeleccionadas = false;
 		String page;
