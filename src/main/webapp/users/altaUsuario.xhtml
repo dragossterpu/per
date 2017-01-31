@@ -90,7 +90,7 @@
 				<div class="columnaIzdaFormulario">
 					<h:outputLabel for="username" value="Nombre usuario (*):" />
 					<p:inputText id="username" value="#{userBean.user.username}" required="true" requiredMessage="Introduzca el nombre de usuario" converter="#{trimConverter}"/>
-					<p:messages for="username" autoUpdate="true"  closable="true" showDetail="true"/>
+					<p:messages for="username" autoUpdate="true"  closable="true"/>
 						
 					<h:outputLabel for="estado" value="Estado:" />
 					<p:inputText id="estado" value="#{userBean.user.estado}" readonly="true" />
@@ -105,20 +105,27 @@
 						<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
 							itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" itemDisabled="#{roleUser.prov}" />
 					</p:selectOneMenu>
-					 <p:messages for="role" autoUpdate="true"  closable="true"/>
+					<p:messages for="role" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
 					<p:selectOneMenu value="#{userBean.puestoTrabajoSeleccionado}" id="puestoTrabajoSelect" 
-							converter="#{selectConverter}"
+							converter="#{selectConverter}" required="true" requiredMessage="Seleccione un puesto de trabajo para el usuario"
 							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
 							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
 					</p:selectOneMenu>
+					<p:messages for="puestoTrabajoSelect" autoUpdate="true"  closable="true"/>
 					
 					
 					<h:outputLabel for="nivel" value="Nivel (*):" />
-					<p:inputNumber id="nivel" value="#{userBean.user.nivel}"  decimalPlaces="0" required="true" requiredMessage="Introduzca el nivel del usuario" maxValue="99" converter="#{trimConverter}"/>
+					<p:selectOneMenu id="nivel" value="#{userBean.user.nivel}"
+							required="true" requiredMessage="Seleccione un nivel para el usuario"
+							style="width:100%;">
+						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+						<f:selectItems value="#{userBean.nivelesSelect}" var="nivelSeleccionado"
+							itemLabel="#{nivelSeleccionado}" itemValue="#{nivelSeleccionado}" />
+					</p:selectOneMenu>
 					<p:messages for="nivel" autoUpdate="true"  closable="true"/>
 					
 				</div>
@@ -132,9 +139,9 @@
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 						<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 							itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
-							 <p:ajax partialSubmit="true"
-					                listener="#{userBean.buscarEmpleo()}"
-					                update=":formAlta:empleoSelect"/>
+						<p:ajax partialSubmit="true"
+							listener="#{userBean.buscarEmpleo()}"
+							update=":formAlta:empleoSelect"/>
 					</p:selectOneMenu>
 					<p:messages for="cuerpoEstadoSelect" autoUpdate="true"  closable="true"/>
 					
