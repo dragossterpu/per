@@ -5,6 +5,7 @@ import java.util.Collections;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.primefaces.util.Constants;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,13 +43,15 @@ public class ProgesinApplication {
 
 		@Override
 		public void onStartup(ServletContext servletContext) throws ServletException {
-
 			servletContext.setInitParameter("javax.faces.DEFAULT_SUFFIX", ".xhtml");
 			servletContext.setInitParameter("javax.faces.PARTIAL_STATE_SAVING_METHOD", "true");
 			servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
 			servletContext.setInitParameter("facelets.DEVELOPMENT", "true");
 			servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "1");
-
+			servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
+			servletContext.setInitParameter("primefaces.THEME", "bluesky");
+			servletContext.setInitParameter("encoding", "UTF-8");
+			servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
 		}
 	}
 
@@ -64,7 +67,10 @@ public class ProgesinApplication {
 			servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Production");
 			servletContext.setInitParameter("facelets.DEVELOPMENT", "false");
 			servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "-1");
-
+			servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
+			servletContext.setInitParameter("primefaces.THEME", "bluesky");
+			servletContext.setInitParameter("encoding", "UTF-8");
+			servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
 		}
 	}
 
