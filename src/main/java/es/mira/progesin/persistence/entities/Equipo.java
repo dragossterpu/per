@@ -66,10 +66,10 @@ public class Equipo implements Serializable {
 	private Date fechaBaja;
 
 	@CreatedBy
-	@Column(name = "username_alta", length = 12, nullable = false)
+	@Column(name = "username_alta", nullable = false)
 	private String usernameAlta;
 
-	@Column(name = "username_baja", length = 12)
+	@Column(name = "username_baja")
 	private String usernameBaja;
 
 	@Column(name = "nombreJefe", length = 150)

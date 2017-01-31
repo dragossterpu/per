@@ -52,14 +52,14 @@ public class Sugerencia implements Serializable {
 	@CreatedDate
 	private Date fechaRegistro;
 
-	@Column(name = "USUARIO_REGISTRO", length = 50)
+	@Column(name = "USUARIO_REGISTRO")
 	@CreatedBy
 	private String usuarioRegistro;
 
 	@Column(name = "FECHA_CONTESTACION")
 	private Date fechaContestacion;
 
-	@Column(name = "USUARIO_CONTESTACION", length = 50)
+	@Column(name = "USUARIO_CONTESTACION")
 	private String usuarioContestacion;
 
 }

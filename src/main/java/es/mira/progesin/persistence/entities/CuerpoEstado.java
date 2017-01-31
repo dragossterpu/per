@@ -58,7 +58,7 @@ public class CuerpoEstado implements Serializable {
 	private Date fechaAlta;
 
 	@CreatedBy
-	@Column(name = "username_alta", length = 12, nullable = false)
+	@Column(name = "username_alta", nullable = false)
 	private String usernameAlta;
 
 	@LastModifiedDate
@@ -66,7 +66,7 @@ public class CuerpoEstado implements Serializable {
 	private Date fechaModif;
 
 	@LastModifiedBy
-	@Column(name = "username_modif", length = 12)
+	@Column(name = "username_modif")
 	private String usernameModif;
 
 	@Column(name = "fecha_baja")

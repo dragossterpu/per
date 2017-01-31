@@ -55,10 +55,10 @@ public class RegistroActividad implements Serializable {
 	private Date fechaAlta;
 
 	@CreatedBy
-	@Column(name = "USUARIO_REGISTRO", length = 50)
+	@Column(name = "USUARIO_REGISTRO")
 	private String usernameRegActividad;
 
-	@Column(name = "TIPO_REG_ACTIVIDAD", length = 50)
+	@Column(name = "TIPO_REG_ACTIVIDAD")
 	private String tipoRegActividad;
 
 }
