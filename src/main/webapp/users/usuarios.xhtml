@@ -59,18 +59,18 @@
 	
 					<div class="columnaDchaFormulario">
 						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-						<p:calendar value="#{userBean.userBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{userBean.userBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 	
 						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-						<p:calendar value="#{userBean.userBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{userBean.userBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 						
 						<h:outputLabel for="role" value="Rol:" />
 				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles"
 							allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role" >
+						<p:selectOneMenu value="#{userBean.userBusqueda.role}" id="role" panelStyleClass="hideDisabled">
 							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
 							<f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser"
-								itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" />
+								itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" itemDisabled="#{roleUser.prov and not esAdmin}" />
 						</p:selectOneMenu> 
 						
 						<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo del estado" />
@@ -83,7 +83,7 @@
 					</div>
 			</div>
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" />
+				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" oncomplete="$('[id*=panelUsuarios]').css('opacity', 100)" />
 				<h:commandLink title="Limpiar" action="#{userBean.limpiarBusqueda}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 					<span class="ui-CommandLink-texto">Limpiar</span>
 				</h:commandLink>
@@ -93,7 +93,10 @@
 
 			</div>
 			
- 			<p:outputPanel layout="block" id="panelUsuarios" >
+ 			<p:outputPanel layout="block" id="panelUsuarios" style="opacity: 0">
+				<p:outputPanel rendered="#{empty userBean.userBusqueda.listaUsuarios}">
+					<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+				</p:outputPanel>
  				<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
@@ -141,10 +144,13 @@
 					<p:column headerText="Estado" sortBy="#{user.estado}"  width="80" visible="#{userBean.list[5]}" exportable="#{userBean.list[5]}">
 						<h:outputText value="#{user.estado}" />
 					</p:column>
-					<p:column headerText="Cuerpo estado" sortBy="#{user.cuerpoEstado.descripcion}" width="110" visible="#{userBean.list[6]}" exportable="#{userBean.list[6]}">
+					<p:column headerText="Rol" sortBy="#{user.role.descripcion}" width="110" visible="#{userBean.list[6]}" exportable="#{userBean.list[6]}">
+						<h:outputText value="#{user.role.descripcion}" />
+					</p:column>
+					<p:column headerText="Cuerpo estado" sortBy="#{user.cuerpoEstado.descripcion}" width="110" visible="#{userBean.list[7]}" exportable="#{userBean.list[7]}">
 						<h:outputText value="#{user.cuerpoEstado.descripcion}" />
 					</p:column>
-					<p:column headerText="Puesto trabajo" sortBy="#{user.puestoTrabajo.descripcion}" width="110" visible="#{userBean.list[7]}" exportable="#{userBean.list[7]}">
+					<p:column headerText="Puesto trabajo" sortBy="#{user.puestoTrabajo.descripcion}" width="110" visible="#{userBean.list[8]}" exportable="#{userBean.list[8]}">
 						<h:outputText value="#{user.puestoTrabajo.descripcion}" />
 					</p:column>
 					<p:column styleClass="botonTabla" exportable="false" toggleable="false">
@@ -168,7 +174,7 @@
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
 				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 			</div>
 		</p:confirmDialog>
 

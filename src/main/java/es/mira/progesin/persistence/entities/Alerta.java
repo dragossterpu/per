@@ -55,7 +55,7 @@ public class Alerta implements Serializable {
 	private Date fechaAlta;
 
 	@CreatedBy
-	@Column(name = "USUARIO_REGISTRO", length = 50)
+	@Column(name = "USUARIO_REGISTRO")
 	private String usernameAlerta;
 
 	@Column(name = "TIPO_ALERTA", length = 20)
@@ -64,7 +64,7 @@ public class Alerta implements Serializable {
 	@Column(name = "FECHA_BAJA")
 	private Date fechaBaja;
 
-	@Column(name = "USUARIO_BAJA", length = 50)
+	@Column(name = "USUARIO_BAJA")
 	private String usernameBaja;
 	
 

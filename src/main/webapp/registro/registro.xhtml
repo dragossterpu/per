@@ -37,9 +37,9 @@
 	
 					<div class="columnaDchaFormulario">
 						<h:outputLabel for="fechaDesde" value="Fecha desde:" />
-						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 						<h:outputLabel for="fechaHasta" value="Fecha hasta:" />
-						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 						
 						
 						<h:outputLabel for="tipo" value="Tipo de notificación" />
@@ -56,11 +56,14 @@
 			</div>
 			
 			<div class="botonesFormulario">
-			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" />
+			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('[id*=panelRegActividad]').css('opacity', 100)" />
 			<p:commandButton actionListener="#{regActividadBean.getFormularioRegActividad()}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-search" />
 
 			</div>
-			<p:outputPanel layout="block" id="panelRegActividad" >
+			<p:outputPanel layout="block" id="panelRegActividad" style="opacity: 0">
+				<p:outputPanel rendered="#{empty regActividadBean.regActividadBusqueda.listaRegActividad}">
+					<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+				</p:outputPanel>
  				<p:outputPanel rendered="#{not empty regActividadBean.regActividadBusqueda.listaRegActividad}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
@@ -128,7 +131,7 @@
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
 				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 			</div>
 		</p:confirmDialog>
 

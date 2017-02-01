@@ -107,19 +107,31 @@
 					</div>
 				</div>
 				<div class="botonesFormulario">
-					<p:commandButton
-						actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}"
-						value="Buscar" update="panelSolicitudes" icon="ui-icon-search" />
+					<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="ui-icon-search" oncomplete="$('[id*=panelSolicitudes]').css('opacity', 100)"/>
 					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.limpiarBusqueda}">
 		            	<span class="ui-CommandLink-texto">Limpiar</span>
 		            </h:commandLink>	
 						
 				</div>
 
-				<p:outputPanel layout="block" id="panelSolicitudes">
-					<p:outputPanel
-						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+				<p:outputPanel layout="block" id="panelSolicitudes" style="opacity: 0">
+					<p:outputPanel rendered="#{empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+						<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
 					</p:outputPanel>
+					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+	 				<h:commandLink>
+		               <p:graphicImage  value="/images/xls.png" />
+		               <p:dataExporter type="xls" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/pdf.png" />
+		               <p:dataExporter type="pdf" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/csv.png" />
+		               <p:dataExporter type="csv" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas"/>
+		            </h:commandLink>
+	            </p:outputPanel>
 					<p:dataTable var="solicitud"
 						value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}" rows="20"
 						id="tablaSolicitudes" draggableColumns="true" paginator="true" resizableColumns="true" scrollable="true"

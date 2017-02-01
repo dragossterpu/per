@@ -23,26 +23,28 @@
 					</div>
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="fechaAlta" value="Fecha de la sugerencia:" />
-					<p:inputText id="fechaAlta" value="#{sugerenciasBean.sugerencia.fechaAlta}" disabled="true">
+					<p:inputText id="fechaAlta" value="#{sugerenciasBean.sugerencia.fechaRegistro}" disabled="true">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</p:inputText>
 					<h:outputLabel for="usuario" value="Usuario de la sugerencia:" />
-					<p:inputText id="usuario" value="#{sugerenciasBean.sugerencia.usuario}"
-						disabled="true" />
-						<h:inputHidden value="#{sugerenciasBean.sugerencia.idSugerencia}" />	
+					<p:inputText id="usuario" value="#{sugerenciasBean.sugerencia.usuarioRegistro}"
+						disabled="true" />	
 				</div>
 				</div>	
 				
 				<div>
- 					<h:outputLabel for="respuesta" value="Respuesta:" />
-   					<p:inputTextarea id="respuesta" rows="8" cols="50" counter="display" maxlength="400" counterTemplate="Quedan {0} caracteres" autoResize="false" value="#{contestacion}"
-    					required="true" requiredMessage="Debe introducir un texto en la descripción"/>
-    					<p:messages for="respuesta" autoUpdate="true"  closable="true"/>
-    				<h:outputText id="display" value="#{contestacion}" />
+ 					<h:outputLabel for="respuesta" value="Respuesta (*):" />
+   					<p:inputTextarea id="respuesta" rows="8" cols="50" counter="contador" maxlength="400" counterTemplate="Quedan {0} caracteres" autoResize="false" value="#{contestacion}"
+    					required="true" requiredMessage="Debe introducir un texto en la respuesta." converter="#{trimConverter}"
+				    	validatorMessage="La respuesta debe tener más de 10 caracteres.">
+						<f:validateLength minimum="10"/>
+			    	</p:inputTextarea>
+   					<p:messages for="respuesta" autoUpdate="true"  closable="true"/>
+    				<h:outputLabel id="contador" />
     			</div>
     			
 				<div class="botonesFormulario">
-				<p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia.idSugerencia,contestacion)}" value="Contestar" icon="fa fa-fw fa-save"/>
+				<p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia, contestacion)}" value="Contestar" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 				<p:button outcome="/principal/sugerenciasListado" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				
 				</div>
@@ -54,7 +56,11 @@
 							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/principal/sugerenciasListado')}" />
 						</div>
 				</p:dialog>
-			
+				
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				    <p:graphicImage value="/images/loading.gif" />
+				</p:dialog>
+				
 			</h:form>
         </ui:define>
     </ui:composition>

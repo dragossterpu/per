@@ -342,6 +342,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
 		datosApoyo();
+		skip = false;
 		return "/solicitudesPrevia/crearSolicitud";
 	}
 
@@ -382,24 +383,27 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return
 	 */
 	public String onFlowProcess(FlowEvent event) {
-		// cleanParam(event);
-		if (skip) {
-			// reset in case user goes back
-			skip = false;
-			return "confirm";
-		}
-		else {
-			if ("documentacion".equals(event.getNewStep())) {
-				AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
-				if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
-					listadoDocumentos = tipoDocumentacionService.findAll();
-				}
-				else {
-					listadoDocumentos = tipoDocumentacionService.findByAmbito(ambito);
-				}
+
+		if ("general".equals(event.getOldStep()) && "documentacion".equals(event.getNewStep())) {
+			AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
+			if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
+				listadoDocumentos = tipoDocumentacionService.findAll();
 			}
-			return event.getNewStep();
+			else {
+				listadoDocumentos = tipoDocumentacionService.findByAmbito(ambito);
+			}
 		}
+		if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())) {
+			if (skip) {
+				documentosSeleccionados = null;
+			}
+			else if (documentosSeleccionados == null || documentosSeleccionados.isEmpty()) {
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+						"Debe elegir uno o más documentos o confirmar que no desea ninguno", "", "");
+				return event.getOldStep();
+			}
+		}
+		return event.getNewStep();
 	}
 
 	public void onToggle(ToggleEvent e) {

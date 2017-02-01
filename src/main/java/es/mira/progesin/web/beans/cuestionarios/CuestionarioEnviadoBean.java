@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
@@ -118,23 +119,34 @@ public class CuestionarioEnviadoBean implements Serializable {
 	 */
 	public void eliminarCuestionario(CuestionarioEnvio cuestionario) {
 		try {
-			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-			cuestionario.setUsernameAnulacion(usuarioActual);
-			cuestionario.setFechaAnulacion(new Date());
-			cuestionario.setFechaFinalizacion(cuestionario.getFechaAnulacion());
-			if (cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario)) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
-						"Se ha eliminado con éxito el cuestionario");
+			User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			List<RoleEnum> rolesAdmitidos = new ArrayList<>();
+			rolesAdmitidos.add(RoleEnum.JEFE_INSPECCIONES);
+			rolesAdmitidos.add(RoleEnum.ADMIN);
+			if (cuestionario.getFechaFinalizacion() == null && (rolesAdmitidos.contains(usuarioActual.getRole())
+					|| usuarioActual.getUsername().equals(cuestionario.getInspeccion().getEquipo().getJefeEquipo()))) {
+				cuestionario.setUsernameAnulacion(usuarioActual.getUsername());
+				cuestionario.setFechaAnulacion(new Date());
+				cuestionario.setFechaFinalizacion(cuestionario.getFechaAnulacion());
+				if (cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario)) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
+							"Se ha eliminado con éxito el cuestionario");
 
-				String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
+					String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
 
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
+							NOMBRESECCION);
 
-				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+				}
+				listaCuestionarioEnvio = null;
+				listaCuestionarioEnvio = cuestionarioEnvioService
+						.buscarCuestionarioEnviadoCriteria(cuestionarioEnviadoBusqueda);
 			}
-			listaCuestionarioEnvio = null;
-			listaCuestionarioEnvio = cuestionarioEnvioService
-					.buscarCuestionarioEnviadoCriteria(cuestionarioEnviadoBusqueda);
+			else {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
+						"Ya ha sido anulado con anterioridad o no tiene permisos para realizar esta acción");
+			}
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,

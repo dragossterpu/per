@@ -47,7 +47,7 @@
 					en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
 					</div>
 					<div class="bloqueVista">
-					<p:dataTable  var="documentoPrevio" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" >
+					<p:dataTable  var="documentoPrevio" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
 							<p:column headerText="DOCUMENTO" width="450">
 								<h:outputText value="#{documentoPrevio.descripcion}" />
 							</p:column>
@@ -127,7 +127,7 @@
 							<p:commandButton value="Aceptar" type="button"
 								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
 							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 						</div>
 					</p:confirmDialog>
 					
@@ -141,7 +141,7 @@
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea validar esta solicitud?"/>
 						</p:commandButton>
-						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidJefeEquipo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-envelope-o">
+						<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaEnvio and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidJefeEquipo }" actionListener="#{solicitudDocPreviaBean.enviarSolicitud}" value="Enviar solicitud" icon="fa fa-fw fa-envelope-o" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea enviar esta solicitud?"/>
 						</p:commandButton>
@@ -149,7 +149,8 @@
 							<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 								message="¿Está seguro que desea finalizar esta solicitud?"/>
 						</p:commandButton>
-						<h:commandLink rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" action="#{solicitudDocPreviaBean.getFormNoConformeSolicitud}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+						<h:commandLink rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" 
+							action="#{solicitudDocPreviaBean.getFormNoConformeSolicitud}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
 							<span class="ui-CommandLink-texto">No conforme</span>
 						</h:commandLink>
 						<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
@@ -164,10 +165,11 @@
 						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
 					</div>
 					</p:dialog>	
-					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados}">
 					
-					</p:outputPanel>	
-		
+					<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+					    <p:graphicImage value="/images/loading.gif" />
+					</p:dialog>
+					
 				</h:form>
 		</ui:define>
 	</ui:composition>

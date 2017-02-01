@@ -11,12 +11,15 @@
 	<ui:composition template="layouts/layoutInterior.xhtml">
 		<ui:define name="title">Progesin</ui:define>
 		<ui:define name="content">
+		
+		<ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
+		
         <div class="textoDerecha">
 			<h:form>
-				<h:link outcome="/principal/sugerenciasMejora" value="Sugerencias de mejora" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
+				<h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora" rendered="#{rolPermitido}"/>
 			</h:form>
 		</div>
-		<h:form id="busquedaAlertas" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
+		<h:form id="busquedaAlertas" rendered="#{rolPermitido}">
 		<div id="alertas">
 				<p:outputPanel layout="block" id="panelAlertas">
 					 <p:outputPanel rendered="#{not empty AlertasNotificacionesUsuarioBean.listaAlertas}">
@@ -79,7 +82,7 @@
 			</h:form>
 	
 			
-		<h:form id="busquedaNotificaciones" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">	
+		<h:form id="busquedaNotificaciones" rendered="#{rolPermitido}">	
 		<div id="notificaciones">
 		<p:outputPanel layout="block" id="panelNotificaciones" autoUpdate="true">
  				<p:outputPanel rendered="#{not empty AlertasNotificacionesUsuarioBean.listaNotificaciones}">
@@ -143,7 +146,7 @@
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
 				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 			</div>
 		</p:confirmDialog>
 		</ui:define>

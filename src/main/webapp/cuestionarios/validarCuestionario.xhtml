@@ -109,7 +109,7 @@
 				<p:outputPanel>
 					<div class="botonesFormulario">
 						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Guardar validaciones" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}"/>
-						<h:commandLink action="#{cuestionarioEnviadoBean.getFormNoConformeCuestionario}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}">
+						<h:commandLink action="#{cuestionarioEnviadoBean.getFormNoConformeCuestionario}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
 							<span class="ui-CommandLink-texto">No conforme</span>
 						</h:commandLink>
 						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
@@ -128,10 +128,14 @@
 						<p:commandButton value="Aceptar" type="button"
 							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
 						<p:commandButton value="Cancelar" type="button"
-							styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 					</div>
 				</p:confirmDialog>
-
+							
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				    <p:graphicImage value="/images/loading.gif" />
+				</p:dialog>
+				
 				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 			</h:form>
 

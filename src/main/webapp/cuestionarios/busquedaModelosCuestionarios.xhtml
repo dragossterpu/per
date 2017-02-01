@@ -44,20 +44,23 @@
 	
 					<div class="columnaDchaFormulario">
 						<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 	
 						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"/>
+						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
 					</div>
 			</div>
 		
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" />
+				<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" oncomplete="$('[id*=panelCuestionarios]').css('opacity', 100)" />
 	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioPersonalizadoBean.limpiar}" update="busquedaCuestionario" icon="fa fa-fw fa-eraser" />
 				<p:button outcome="/cuestionarios/modelosCuestionarios" value="Nuevo cuestionario" icon="fa fa-fw fa-user-plus"/>
 			</div>
  			
- 			<p:outputPanel layout="block" id="panelCuestionarios">
+ 			<p:outputPanel layout="block" id="panelCuestionarios" style="opacity: 0">
+				<p:outputPanel rendered="#{empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
+					<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+				</p:outputPanel>
  				<p:outputPanel rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
@@ -118,7 +121,7 @@
 		<p:confirmDialog global="true">
 			<div class="centrarBotonesDialog">
 				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-icon-remove" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 			</div>
 		</p:confirmDialog>
 			

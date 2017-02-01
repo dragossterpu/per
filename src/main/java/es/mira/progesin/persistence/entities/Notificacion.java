@@ -43,7 +43,7 @@ public class Notificacion {
 	@Column(name = "FECHA_NOTIFICACION", nullable = false)
 	private Date fechaAlta;
 
-	@Column(name = "USUARIO_REGISTRO", length = 50)
+	@Column(name = "USUARIO_REGISTRO")
 	private String usernameNotificacion;
 
 	@Column(name = "TIPO_NOTIFICACION", length = 20)
@@ -55,7 +55,7 @@ public class Notificacion {
 	@Column(name = "FECHA_BAJA")
 	private Date fechaBaja;
 
-	@Column(name = "USUARIO_BAJA", length = 50)
+	@Column(name = "USUARIO_BAJA")
 	private String usernameBaja;
 	
 }

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -73,8 +74,10 @@ public class UserBean {
 
 	private String vieneDe;
 
+	private int[] nivelesSelect = IntStream.rangeClosed(1, 30).toArray();
+
 	@PersistenceContext
-	private transient EntityManager em;
+	private EntityManager em;
 
 	@Autowired
 	ApplicationBean applicationBean;
@@ -141,7 +144,7 @@ public class UserBean {
 				user.setEmpleo(getEmpleoSeleccionado());
 				user.setDepartamento(getDepartamentoSeleccionado());
 				String password = Utilities.getPassword();
-				
+
 				user.setPassword(passwordEncoder.encode(password));
 				correo.envioCorreo(user.getCorreo(), "Alta en la herramienta Progesin",
 						"Ha sido dado de alta en la herramienta PROGESIN con usuario/clave " + user.getUsername() + "/"

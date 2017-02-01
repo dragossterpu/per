@@ -1,16 +1,13 @@
 package es.mira.progesin.web.beans;
 
-import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.mail.MessagingException;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.mail.MailException;
@@ -35,19 +32,15 @@ public class SugerenciasBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	static Logger LOG = Logger.getLogger(SugerenciasBean.class);
+	private static final String NOMBRESECCION = "Sugerencias de mejora";
 
-	private User user;
-
-	private String modulo;
-
-	private String descripcion;
-
-	private String contestacion;
+	private static final String ERROR = "Error";
 
 	private Sugerencia sugerencia;
 
 	private List<Sugerencia> sugerenciasListado;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Autowired
 	private transient CorreoElectronico correo;
@@ -61,29 +54,22 @@ public class SugerenciasBean implements Serializable {
 	@Autowired
 	private transient IRegistroActividadService regActividadService;
 
-	public String guardarSugerencia() {
-		if ("".equals(modulo)) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Es obligatorio elegir un módulo", ""));
-			return null;
+	public String guardarSugerencia(String modulo, String descripcion) {
+		try {
+			Sugerencia sugerenciaNueva = new Sugerencia();
+			sugerenciaNueva.setModulo(modulo);
+			sugerenciaNueva.setDescripcion(descripcion);
+			sugerenciaService.save(sugerenciaNueva);
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+					"Sugerencia guardada con éxito, cuando sea atendida recibirá un correo electrónico con la contestación.");
 		}
-		else if (descripcion == null || descripcion.length() < 10) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"La descripción debe tener más de 10 caracteres", ""));
-			return null;
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al guardar la sugerencia. Inténtelo de nuevo más tarde.");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
-		else {
-			Date fecha = new Date();
-			Sugerencia sugerencia = new Sugerencia();
-			user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			sugerencia.setModulo(modulo);
-			sugerencia.setDescripcion(descripcion);
-			sugerencia.setFechaAlta(fecha);
-			sugerencia.setFechaBaja(null);
-			sugerencia.setUsuario(user.getUsername());
-			sugerenciaService.save(sugerencia);
-			return "/index";
-		}
+		return "/principal/crearSugerencia";
+
 	}
 
 	/**
@@ -91,58 +77,65 @@ public class SugerenciasBean implements Serializable {
 	 * @return
 	 */
 	public void sugerenciasListado() {
-
+		sugerencia = null;
 		sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
 	}
 
-	public void eliminarSugerencia(Integer idSugerencia) {
-		Sugerencia sugerencia = sugerenciaService.findOne(idSugerencia);
-		user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Date fecha = new Date();
-		sugerencia.setFechaBaja(fecha);
-		sugerencia.setUsuarioBaja(user.getUsername());
-		sugerenciaService.save(sugerencia);
-		this.sugerenciasListado = null;
-		sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
-	}
-
-	public String contestarSugerencia(Integer idSugerencia) throws MessagingException {
-		sugerencia = sugerenciaService.findOne(idSugerencia);
-		user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return "/principal/contestarSugerencia";
-	}
-
-	public String contestar(Integer idSugerencia, String contestacion)
-			throws MessagingException, MailException, FileNotFoundException {
-		sugerencia = sugerenciaService.findOne(idSugerencia);
-		user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String asunto = "Respuesta a su sugerencia";
-		String usuarioContestacion = sugerencia.getUsuario();
-		user = userService.findOne(usuarioContestacion);
+	public void eliminarSugerencia(Sugerencia sugerenciaSeleccionada) {
 		try {
-			correo.envioCorreo(user.getCorreo(), asunto, contestacion);
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Constestación",
-					"Mensaje de respuesta enviado correctamente.");
+			sugerenciaService.delete(sugerenciaSeleccionada.getIdSugerencia());
+			sugerenciasListado.remove(sugerenciaSeleccionada);
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
+					"Se ha eliminado con éxito la sugerencia.", "msgs");
 		}
 		catch (Exception e) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-					"Se ha producido un error al enviar el correo electrónico. Error: ", e.getMessage());
-			regActividadService.altaRegActividadError("SUGERENCIA DE MEJORA", e);
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al eliminar la sugerencia. Inténtelo de nuevo más tarde.", "msgs");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
+	}
+
+	public String contestarSugerencia(Sugerencia sugerenciaSeleccionada) {
+		sugerencia = sugerenciaSeleccionada;
 		return "/principal/contestarSugerencia";
 	}
 
-	public void resetFail() {
-		this.modulo = null;
-		this.descripcion = null;
+	public String contestar(Sugerencia sugerenciaSeleccionada, String contestacion) {
+		try {
+			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+			Date fecha = new Date();
+			sugerenciaSeleccionada.setFechaContestacion(fecha);
+			sugerenciaSeleccionada.setUsuarioContestacion(usuarioActual);
+			if (sugerenciaService.save(sugerenciaSeleccionada) != null) {
+				String asunto = "Respuesta a su sugerencia sobre PROGESIN";
+				String usuarioContestacion = sugerenciaSeleccionada.getUsuarioRegistro();
+				User user = userService.findOne(usuarioContestacion);
+				String fechaRegistro = sdf.format(sugerenciaSeleccionada.getFechaRegistro());
+				StringBuilder mensaje = new StringBuilder("Sugerencia realizada el ").append(fechaRegistro)
+						.append(" sobre el módulo ").append(sugerencia.getModulo()).append("\r\n \"")
+						.append(sugerencia.getDescripcion()).append("\" \r\n \r\n").append(contestacion);
+				correo.envioCorreo(user.getCorreo(), asunto, mensaje.toString());
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Contestación",
+						"Mensaje de respuesta enviado correctamente.");
+			}
+		}
+		catch (MailException e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al enviar el correo electrónico.");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Se ha producido un error al contestar la sugerencia. Inténtelo de nuevo más tarde.");
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
+		return "/principal/contestarSugerencia";
 	}
 
 	@PostConstruct
-	public void init() throws MessagingException {
+	public void init() {
 
 		sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
-
-		// contestarSugerencia( 1);
 
 	}
 

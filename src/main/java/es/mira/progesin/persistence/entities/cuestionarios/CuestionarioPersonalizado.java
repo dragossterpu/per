@@ -58,13 +58,13 @@ public class CuestionarioPersonalizado implements Serializable {
 	private Date fechaCreacion;
 
 	@CreatedBy
-	@Column(name = "username_creacion", length = 15, nullable = false)
+	@Column(name = "username_creacion", nullable = false)
 	private String usernameCreacion;
 
 	@Column(name = "fecha_baja")
 	private Date fechaBaja;
 
-	@Column(name = "username_baja", length = 15)
+	@Column(name = "username_baja")
 	private String usernameBaja;
 
 	@ManyToOne

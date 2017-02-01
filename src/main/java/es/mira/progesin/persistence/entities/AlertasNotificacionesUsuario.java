@@ -48,7 +48,7 @@ public class AlertasNotificacionesUsuario implements Serializable{
 	private TipoMensajeEnum tipo;
 	
 	@Id
-	@Column(name = "USUARIO", length = 50)
+	@Column(name = "USUARIO")
 	private String usuario;
 	
 	@Id
