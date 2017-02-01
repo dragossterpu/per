@@ -39,9 +39,7 @@
 						<p:inputText id="docIndentidad" value="#{userBean.user.docIndentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
 						<p:messages for="docIndentidad" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="numIdentificacion" value="Número de identificación (*):" />
-						<p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}" required="true" requiredMessage="Introduzca el número de identificación" maxlength="15" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
-						<p:messages for="numIdentificacion" autoUpdate="true"  closable="true"/>
+						
 						
 					</div>
 	
@@ -60,7 +58,9 @@
 						<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" yearRange="c-100:c"
 								disabled="#{noEsAdmin}"/>
 						
-	
+						<h:outputLabel for="numIdentificacion" value="Número de identificación (*):" />
+						<p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}" required="true" requiredMessage="Introduzca el número de identificación" maxlength="15" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
+						<p:messages for="numIdentificacion" autoUpdate="true"  closable="true"/>
 						
 					</div>
 			</div>
@@ -193,6 +193,18 @@
 							itemLabel="#{catUser.descripcion}" itemValue="#{catUser}"  />
 					</p:selectOneMenu>
 					 <p:messages for="categoria" autoUpdate="true"  closable="true"/>
+					 
+					  <h:outputLabel for="clase" value="Clase: (*)" />
+			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.ClaseUsuarioEnum" var="clases"
+						allSuffix="ALL_ENUM_VALUES" />
+					<p:selectOneMenu value="#{userBean.user.claseUsuario}" id="clase"
+							required="true" requiredMessage="Seleccione una clase para el usuario" panelStyleClass="hideDisabled"
+							style="width:100%;">
+						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+						<f:selectItems value="#{clases.ALL_ENUM_VALUES}" var="claseUser"
+							itemLabel="#{claseUser.descripcion}" itemValue="#{claseUser}" />
+					</p:selectOneMenu>
+					<p:messages for="clase" autoUpdate="true"  closable="true"/>
 				</div>
 			</div>
 			</p:outputPanel>

@@ -17,7 +17,6 @@ insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJ
 insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Personal de Apoyo',18,'FCSE');
 insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Negociado',18,'RPT');
 insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Fuera de Catálogo (Conductores)',17,'FCSE-FC');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Negociado',16,'RPT');
 insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretaria de N30',15,'RPT');
  
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IAPRL', 'Inspecciones Área Prevención de Riesgos Laborales');
@@ -436,7 +435,7 @@ insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nex
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Sargento','Sgto.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Cabo Mayor','Cab.1');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Cabo','Cab.');
-insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 2,'Gua.Civ.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Guardia Civil','Gua.Civ.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Comisario Principal','Com. Pral');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Comisario','Com.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,1, 'Inspector Jefe','Insp.J.');
@@ -451,6 +450,7 @@ insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nex
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Comandante','Comte.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Capitán','Ctan.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Teniente','Tte.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,4, 'Alférez','Alf.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Técnico de la Administración Central','TecAdmCent.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Técnico Superior de Sistemas','TecSupSis.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Facultativo','Facul.');
@@ -459,7 +459,7 @@ insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nex
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,3, 'Auxiliar Administrativo','AuxAdminis.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,5, 'Técnico','Tec.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,5, 'Administrativo','Adminis.');
-insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,6, 'ID_CUERPO Ejecutivo Post. Y de Telecomunicaciones','CEPyT.');
+insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,6, 'Ejecutivo Post. Y de Telecomunicaciones','CEPyT.');
 
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES.doc'));
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\A - GC - Cuestionario Zona GENERICO.docx'));
