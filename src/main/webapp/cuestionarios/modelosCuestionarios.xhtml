@@ -37,7 +37,7 @@
 					<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 					
 					<div class="botonesFormulario">
-						<h:commandLink value="Crear nuevo modelo de cuestionario" title="Crear nuevo modelo de cuestionario" styleClass="fa fa-user-plus ui-state-default ui-CommandLink ui-CommandLink-icono-texto" action="#{edicionCuestionarioBean.nuevoModeloCuestionario}"  rendered="#{esJefeInspecciones}"/>
+						<p:button value="Crear nuevo modelo de cuestionario" icon="fa fa-fw fa-user-plus" outcome="/cuestionarios/nuevoModeloCuestionario"  rendered="#{esJefeInspecciones}"/>
 					</div>
 				</h:form>
 			</div>
