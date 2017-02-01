@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.sql.Clob;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
-import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 import lombok.extern.slf4j.Slf4j;
 
@@ -96,7 +94,7 @@ public class RegistroActividadService implements IRegistroActividadService {
 		}
 		if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
 			criteria.add(Restrictions.sqlRestriction(
-					"upper(convert(replace(nombreSeccion, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+					"upper(convert(replace(nombre_seccion, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
 							+ regActividadBusqueda.getNombreSeccion() + "', ' ', '') || '%', 'US7ASCII'))"));
 		}
 		if (regActividadBusqueda.getTipoRegActividad() != null

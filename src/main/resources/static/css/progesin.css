@@ -56,6 +56,13 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 	opacity: 0.35 !important;
 }
 
+.ui-autocomplete {
+	width: 100% !important;
+}
+
+.ui-selectonemenu {
+	width: 96%;
+}
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {

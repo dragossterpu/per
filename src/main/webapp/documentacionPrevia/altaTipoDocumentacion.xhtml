@@ -14,7 +14,7 @@
 
 			<div class="bloqueFormulario">
 				<h:form id="form">
-					<h:outputLabel for="descripcion" value="Descripcion (*):" />
+					<h:outputLabel for="descripcion" value="Descripción (*):" />
 					<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
 					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 					
