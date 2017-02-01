@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -162,6 +163,12 @@ public class UserService implements IUserService {
 		}
 		if (userBusqueda.getEstado() != null) {
 			criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
+		}
+
+		User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (RoleEnum.ADMIN.equals(usuarioActual.getRole()) == Boolean.FALSE) {
+			criteria.add(Restrictions.not(
+					Restrictions.in("role", new RoleEnum[] { RoleEnum.PROV_SOLICITUD, RoleEnum.PROV_CUESTIONARIO })));
 		}
 
 		criteria.add(Restrictions.isNull("fechaBaja"));
