@@ -111,6 +111,10 @@ input[type="submit"],input[type="button"] {
 	font-size: .9em;
 }
 
+button{
+	margin: 20px 0;
+}
+
 input[type="submit"]:hover,input[type="button"]:hover {
 	background: url(../images/boton_gris.png) no-repeat bottom;
 }
@@ -126,6 +130,9 @@ h1, h2 {
 a:link, a:visited {
     color: #0c0c0c;
     padding: 35px;
+}
+a.ui-messages-close {
+	padding: 0 !important; /* evitar que se aplique a enlaces de primefaces */
 }
 
 .error {

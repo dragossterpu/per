@@ -74,7 +74,7 @@ public class UserBean {
 
 	private String vieneDe;
 
-	private int[] nivelesSelect = IntStream.rangeClosed(1, 30).toArray();
+	private int[] nivelesSelect = IntStream.rangeClosed(12, 30).toArray();
 
 	@PersistenceContext
 	private EntityManager em;

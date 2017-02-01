@@ -2,26 +2,21 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
-import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.CorreoElectronico;
+import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,74 +24,73 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("recoverBean")
-@Scope(FacesViewScope.NAME)
+@Scope("request")
 public class RecoverBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
+	private static final String NOMBRESECCION = "Clave olvidada";
+
+	private static final String ERROR = "Error";
+
+	private static final String MENSAJES = "msgs";
 
 	private String correo;
 
 	private String nif;
 
 	@Autowired
-	IUserService userService;
+	private transient IUserService userService;
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	private transient IRegistroActividadService regActividadService;
 
-	private List<User> listaUsers = new ArrayList<User>();
+	@Autowired
+	private transient CorreoElectronico correoElectronico;
+
+	@Autowired
+	private transient PasswordEncoder passwordEncoder;
+
+	private List<User> listaUsers = new ArrayList<>();
 
 	public String claveOlvidada() {
 
-		if (nif.equals("") && correo.equals("")) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Introduzca un parametro para recuperar la contraseña o el usuario", ""));
+		if ("".equals(nif) && "".equals(correo)) {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+					"Introduzca un parametro para recuperar la contraseña o el usuario", MENSAJES);
 			return null;
 		}
 		else {
 			User user = userService.findByParams(correo, nif);
-			RegistroActividad regActividad = new RegistroActividad();
 			if (user != null) {
-				// Generating new Password
-				String newPassword = Utilities.getPassword();
-				PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-				String codePassword = passwordEncoder.encode(newPassword);
-				user.setPassword(codePassword);
-				// Send mail
-				// Utilities.sendMail(user);
-				// Update new Password
 				try {
+					String password = Utilities.getPassword();
+					user.setPassword(passwordEncoder.encode(password));
+					correoElectronico.envioCorreo(user.getCorreo(), "Reestablecido acceso a la herramienta PROGESIN",
+							"Se le ha asignado una nueva contraseña, sus credenciales son " + user.getUsername() + " / "
+									+ password);
 					userService.save(user);
-					regActividad.setTipoRegActividad(EstadoRegActividadEnum.MODIFICACION.name());
-					regActividad.setDescripcion("Contraseña y/o usuario olvidado");
-					regActividad
-							.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-					regActividad.setFechaAlta(new Date());
-					regActividadService.save(regActividad);
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
+							"Se ha reestablecido su acceso al sistema, se le han enviado sus nuevos credenciales por correo electrónico");
+					String descripcion = "Reestablecida clave del usuario " + user.getUsername();
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+							NOMBRESECCION);
 				}
 				catch (Exception e) {
-					regActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
-					String message = Utilities.messageError(e);
-					regActividad.setFechaAlta(new Date());
-					regActividad
-							.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-					regActividad.setDescripcion(message);
-					regActividadService.save(regActividad);
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+							"Se ha producido un error en la regeneración o envío de la contraseña");
+					regActividadService.altaRegActividadError(NOMBRESECCION, e);
 				}
 
-				return "login";
+				return "/acceso/recuperarPassword";
 			}
 			else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"No existe el usuario en el sistema. Contacte con el administrador", ""));
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+						"No existe el usuario en el sistema. Contacte con el administrador", MENSAJES);
 				return null;
 			}
 
 		}
-	}
-
-	@PostConstruct
-	public void init() {
-
 	}
 
 }
