@@ -24,6 +24,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
 
 	List<User> findByfechaBajaIsNullAndRole(RoleEnum rol);
 
+	//Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo
 	@Query("SELECT u FROM User u WHERE u.role='EQUIPO_INSPECCIONES' AND NOT EXISTS (SELECT m FROM Miembro m WHERE m.username=u.username AND (m.posicion='JEFE_EQUIPO' OR m.equipo = :equipo)) ")
 	List<User> buscarNoJefeNoMiembroEquipo(@Param("equipo") Equipo equipo);
 
