@@ -16,6 +16,13 @@
 		<h3>Modificar Usuario</h3>
 			
 		<h:form id="formAlta">
+		
+			<p:outputPanel rendered="#{esProvisional}">
+				<div class="aclaraciones">
+					Los datos de un usuario provisional no se pueden modificar, sólo se puede restaurar su clave.
+				</div>
+			</p:outputPanel>
+			
 			<p:outputPanel rendered="#{not esProvisional}">
 			<div class="aclaraciones">
 				Los campos marcados con (*) son obligatorios
