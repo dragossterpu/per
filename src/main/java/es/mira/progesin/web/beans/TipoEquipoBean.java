@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -27,12 +28,17 @@ public class TipoEquipoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String NOMBRESECCION = "Tipos de Equipo";
+
 	private TipoEquipo tipoEquipoNuevo;
 
 	private List<TipoEquipo> listaTipoEquipo;
 
 	@Autowired
-	transient ITipoEquipoService tipoEquipoService;
+	private transient ITipoEquipoService tipoEquipoService;
+	
+	@Autowired
+	private transient IRegistroActividadService regActividadService;
 
 	/**
 	 * Método que nos lleva al listado de los tipos de equipos. Se llama en la carga de la página
@@ -77,16 +83,25 @@ public class TipoEquipoBean implements Serializable {
 	}
 
 	public void onRowEdit(RowEditEvent event) {
-		TipoEquipo equipo = (TipoEquipo) event.getObject();
-		tipoEquipoService.save(equipo);
-		FacesMessage msg = new FacesMessage("Tipo de equipos  modificado", equipo.getDescripcion());
-		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+		try {
+			TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
+			if (tipoEquipoService.save(tipoEquipo) != null) {
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
+						"Tipo de equipo modificado con éxito", null);
+			}
+		} catch (Exception e) {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
+					"Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
 	}
 
 	public void onRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Modificación cancelada",
-				((TipoEquipo) event.getObject()).getDescripcion());
+		TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
+		FacesMessage msg = new FacesMessage("Modificación cancelada", tipoEquipo.getCodigo() + " - " + tipoEquipo.getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
+		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación cancelada",
+				"", null);
 	}
 
 }

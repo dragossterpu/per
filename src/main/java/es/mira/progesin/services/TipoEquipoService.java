@@ -10,22 +10,27 @@ import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 @Service
 public class TipoEquipoService implements ITipoEquipoService {
 	@Autowired
-	ITipoEquiposRepository tipoEquipoaRepository;
+	ITipoEquiposRepository tipoEquiposRepository;
 
 	@Override
 	public Iterable<TipoEquipo> findAll() {
-		return tipoEquipoaRepository.findAll();
+		return tipoEquiposRepository.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
-		tipoEquipoaRepository.delete(id);
+		tipoEquiposRepository.delete(id);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public TipoEquipo save(TipoEquipo entity) {
-		return tipoEquipoaRepository.save(entity);
+		return tipoEquiposRepository.save(entity);
+	}
+
+	@Override
+	public TipoEquipo findByCodigo(String codigo) {
+		return tipoEquiposRepository.findByCodigoIgnoreCase(codigo);
 	}
 }

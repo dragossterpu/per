@@ -15,7 +15,9 @@
 			<div class="bloqueFormulario">
 				<h:form id="form">
 					<h:outputLabel for="codigo" value="Código del tipo de equipo (*):" />
-					<p:inputText id="codigo" value="#{tipoEquipoBean.tipoEquipoNuevo.codigo}" required="true" requiredMessage="Introduzca el código del tipo de equipo" maxlength="5" converter="#{trimConverter}"/>
+					<p:inputText id="codigo" value="#{tipoEquipoBean.tipoEquipoNuevo.codigo}" required="true" requiredMessage="Introduzca el código del tipo de equipo" maxlength="5" converter="#{trimConverter}">
+						<f:validator binding="#{codigoTipoEquipoValidator}"/>
+					</p:inputText>
 					<p:messages for="codigo" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="descripcion" value="Descripción del tipo de equipo (*):" />

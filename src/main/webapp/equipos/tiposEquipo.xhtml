@@ -24,23 +24,25 @@
 					<p:dataTable id="tablaTiposEquipo" var="tipoEquipo"
 						value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"
 						onkeypress="if (event.keyCode == 13) {return false; }">
-						<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}"
-							update=":form:msgs" />
-						<p:ajax event="rowEditCancel"
-							listener="#{tipoEquipoBean.onRowCancel}" update=":form:msgs" />
+						<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}" />
+						<p:ajax event="rowEditCancel" listener="#{tipoEquipoBean.onRowCancel}" />
 
 						<p:column headerText="Código del tipo" width="90">
-							<p:cellEditor>
+							<h:outputText value="#{tipoEquipo.codigo}" />
+						<!-- <p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{tipoEquipo.codigo}" />
 								</f:facet>
 								<f:facet name="input">
 									<p:inputText id="codigoInput" value="#{tipoEquipo.codigo}"
 										converter="#{trimConverter}" required="true" maxlength="5"
-										requiredMessage="El código del tipo de equipo no puede estar vacío" />
+										requiredMessage="El código del tipo de equipo no puede estar vacío">
+										<f:attribute name="idTipoEquipo" value="#{tipoEquipo.id}"/>
+										<f:validator binding="#{codigoTipoEquipoValidator}"/>	
+									</p:inputText>
 									<p:messages for="codigoInput" autoUpdate="true" closable="true" />
 								</f:facet>
-							</p:cellEditor>
+							</p:cellEditor> -->
 						</p:column>
 
 						<p:column headerText="Descripción del tipo">
@@ -87,7 +89,7 @@
 						</div>
 					</p:confirmDialog>
 
-					<p:messages id="msgs" autoUpdate="true" closable="true"
+					<p:messages globalOnly="true" autoUpdate="true" closable="true"
 						showDetail="true" />
 				</div>
 				<div class="botonesFormulario">

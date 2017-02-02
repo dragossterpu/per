@@ -10,4 +10,6 @@ public interface ITipoEquipoService {
 
 	TipoEquipo save(TipoEquipo entity);
 
+	TipoEquipo findByCodigo(String codigo);
+
 }
