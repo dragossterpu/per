@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.util.FacesUtilities;
@@ -36,6 +37,9 @@ public class TipoEquipoBean implements Serializable {
 
 	@Autowired
 	private transient ITipoEquipoService tipoEquipoService;
+
+	@Autowired
+	private transient IEquipoService equipoService;
 	
 	@Autowired
 	private transient IRegistroActividadService regActividadService;
@@ -49,9 +53,19 @@ public class TipoEquipoBean implements Serializable {
 	}
 
 	public void eliminarTipo(TipoEquipo tipo) {
-		tipoEquipoService.delete(tipo.getId());
-		this.listaTipoEquipo = null;
-		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
+		try {
+			if (equipoService.existsByTipoEquipo(tipo)) {
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Eliminación abortada",
+						"No se puede eliminar, existen equipos de este tipo", null);				
+			} else {
+				tipoEquipoService.delete(tipo.getId());
+				listaTipoEquipo.remove(tipo);
+			} 
+		} catch (Exception e) {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
+					"Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+		}
 	}
 
 	@PostConstruct
@@ -76,7 +90,7 @@ public class TipoEquipoBean implements Serializable {
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
 					"Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
-			// TODO log de errores
+			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 		listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
 		// TODO generar alerta / notificación

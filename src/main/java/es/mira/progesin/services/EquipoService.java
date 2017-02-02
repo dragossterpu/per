@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
+import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
@@ -134,6 +135,11 @@ public class EquipoService implements IEquipoService {
 	@Transactional(readOnly = false)
 	public void delete(Miembro miembro) {
 		miembrosRepository.delete(miembro);
+	}
+
+	@Override
+	public boolean existsByTipoEquipo(TipoEquipo tipo) {
+		return equipoRepository.existsByTipoEquipo(tipo);
 	}
 
 }
