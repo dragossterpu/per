@@ -33,8 +33,6 @@ public class RecoverBean implements Serializable {
 
 	private static final String ERROR = "Error";
 
-	private static final String MENSAJES = "msgs";
-
 	private String correo;
 
 	private String nif;
@@ -57,7 +55,7 @@ public class RecoverBean implements Serializable {
 
 		if ("".equals(nif) && "".equals(correo)) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Introduzca un parametro para recuperar la contraseña o el usuario", MENSAJES);
+					"Debe proporcionar su correo electrónico o NIF para identificar su usuario", null);
 			return null;
 		}
 		else {
@@ -86,7 +84,7 @@ public class RecoverBean implements Serializable {
 			}
 			else {
 				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
-						"No existe el usuario en el sistema. Contacte con el administrador", MENSAJES);
+						"No existe el usuario en el sistema. Contacte con el administrador", null);
 				return null;
 			}
 
