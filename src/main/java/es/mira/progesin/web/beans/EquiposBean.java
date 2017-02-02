@@ -204,6 +204,7 @@ public class EquiposBean implements Serializable {
 	 * @return vista equipos
 	 */
 	public String eliminarEquipo(Equipo equipo) {
+		//TODO ¿comprobar si hay inspecciones sin finalizar?
 		equipo.setFechaBaja(new Date());
 		equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
@@ -270,6 +271,7 @@ public class EquiposBean implements Serializable {
 	 */
 	public String eliminarMiembro(Miembro miembro) {
 		try {
+			//TODO historico de miembros
 			miembrosEquipo.remove(miembro);
 			equipoService.save(equipo);
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
@@ -309,27 +311,32 @@ public class EquiposBean implements Serializable {
 	public String cambiarJefeEquipo() {
 
 		try {
-
-			List<Miembro> listaMiembros = equipo.getMiembros();
-			listaMiembros.removeIf(m -> RolEquipoEnum.JEFE_EQUIPO.equals(m.getPosicion()));
-
-			equipo.setJefeEquipo(jefeSeleccionado.getUsername());
-			equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
-					+ jefeSeleccionado.getApellido2());
-			Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
-			listaMiembros.add(jefe);
-
-			equipo.setMiembros(listaMiembros);
-			if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-						"jefe cambiado con éxito");
-				String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
-						+ "'. Nombres del nuevo jefe: " + equipo.getNombreJefe();
-				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-						NOMBRESECCION);
-				// Guardamos la notificacion en bbdd
-				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+			if(jefeSeleccionado == null) {
+				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Modificación",
+						"Debe seleccionar un nuevo jefe de equipo", null);				
+				return null;
+			} else {			
+				List<Miembro> listaMiembros = equipo.getMiembros();
+				listaMiembros.removeIf(m -> RolEquipoEnum.JEFE_EQUIPO.equals(m.getPosicion()));
+	
+				equipo.setJefeEquipo(jefeSeleccionado.getUsername());
+				equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
+						+ jefeSeleccionado.getApellido2());
+				Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
+				listaMiembros.add(jefe);
+	
+				equipo.setMiembros(listaMiembros);
+				if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+							"jefe cambiado con éxito");
+					String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
+							+ "'. Nombre del nuevo jefe: " + equipo.getNombreJefe();
+					// Guardamos la actividad en bbdd
+					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+							NOMBRESECCION);
+					// Guardamos la notificacion en bbdd
+					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+				}
 			}
 		}
 		catch (Exception e) {

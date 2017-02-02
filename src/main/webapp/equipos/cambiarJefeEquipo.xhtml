@@ -6,8 +6,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
@@ -45,13 +44,16 @@
 							<h:outputText value="#{usuario.apellido2}" />
 						</p:column>
 					</p:dataTable>
+					
+					<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true"/>
 
 				</div>
+								
 				<div class="botonesFormulario">
 					<p:commandButton actionListener="#{equiposBean.cambiarJefeEquipo}"
 						value="Cambiar jefe" icon="fa fa-save">
 						<p:confirm header="Confirmación" icon="fa fa-warning-sign"
-							message="Al cambiar de jefe eliminará al anterior del equipo"/>
+							message="¿Está seguro de que desea cambiar el jefe de este equipo?"/>
 					</p:commandButton>
 					<p:button outcome="/equipos/modificarEquipo" value="Volver" icon="fa fa-fw fa-undo"/>
 				</div>
