@@ -98,7 +98,6 @@ public class RegActividadBean implements Serializable {
 		error=new RegistroActividad();
 		error= (RegistroActividad) event.getObject();
 		RequestContext context = RequestContext.getCurrentInstance();
-		context.update("textoError");
 		context.execute("PF('dlg').show();");
 
 		
