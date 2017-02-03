@@ -108,7 +108,8 @@ public class User implements Serializable {
 	@Column(name = "nivel")
 	private Integer nivel;
 	
-	@Column(name = "clase_usuario")
+	@ManyToOne
+	@JoinColumn(name = "ID_ClASE")
 	protected ClaseUsuario claseUsuario;
 
 	@Column(name = "categoria", length = 20)
