@@ -81,14 +81,14 @@ label {
 	margin: 5px 0 5px 0;
 }
 
-input,select {
+input, select, button {
 	border: #ccc solid 1px;
 	display: block;
 	margin: 0 0 15px 0;
 	width: 150px;
 }
 
-input:focus {
+input:focus, button:focus {
 	border: #6e80b3 solid 1px;
 }
 
@@ -99,23 +99,21 @@ body {
 }
 
 
-input[type="submit"],input[type="button"] {
-	display: block;
-	text-align: center;
-	border: none;
-	background: url(../images/boton_gris.png) no-repeat top;
-	width: 100px;
-	height: 29px;
-	padding: 0 0 5px 0;
-	margin: 20px 0;
-	font-size: .9em;
+input[type="submit"], input[type="button"], button {
+	display: block !important;
+	text-align: center !important;
+	border: none !important;
+	background: url(../images/boton_gris.png) no-repeat top !important;
+	width: 100px !important;
+	height: 29px !important;
+	padding: 0 0 5px 0 !important;
+	margin: 20px 0 !important;
+	font-size: .9em !important;
+	font-weight: normal !important;
+	font-family: Arial,Verdana,sans-serif !important;
 }
 
-button{
-	margin: 20px 0;
-}
-
-input[type="submit"]:hover,input[type="button"]:hover {
+input[type="submit"]:hover,input[type="button"]:hover, button:hover {
 	background: url(../images/boton_gris.png) no-repeat bottom;
 }
 
