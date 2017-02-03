@@ -39,13 +39,6 @@
 						<h:outputLabel for="apellido2" value="Segundo apellido:" />
 						<p:inputText id="apellido2" value="#{userBean.userBusqueda.apellido2}"/>
 						
-						<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo:" />
-						<p:selectOneMenu value="#{userBean.userBusqueda.puestoTrabajo}" id="puestoTrabajoSelect" 
-							converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
-							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
-						</p:selectOneMenu> 
 						
 						<h:outputLabel for="estado" value="Estado:" />
 				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados"
@@ -80,6 +73,14 @@
 							<f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado"
 								itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
 						</p:selectOneMenu>
+						
+						<h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo:" />
+						<p:selectOneMenu value="#{userBean.userBusqueda.puestoTrabajo}" id="puestoTrabajoSelect" 
+							converter="#{selectConverter}">
+						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+						<f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo"
+							itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
+						</p:selectOneMenu> 
 					</div>
 			</div>
 			<div class="botonesFormulario">

@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.persistence.entities.ClaseUsuario;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Empleo;
@@ -51,6 +52,8 @@ public class UserBean {
 	private List<Empleo> listaEmpleos;
 
 	private Empleo empleoSeleccionado;
+	
+	private List<ClaseUsuario> listadoClases;
 
 	private List<Departamento> listaDepartamentos;
 
@@ -99,6 +102,8 @@ public class UserBean {
 
 	@Autowired
 	CorreoElectronico correo;
+	
+	
 
 	private static final String NOMBRESECCION = "Usuarios";
 
@@ -301,6 +306,9 @@ public class UserBean {
 
 		TypedQuery<Departamento> queryDepartamento = em.createNamedQuery("Departamento.findAll", Departamento.class);
 		listaDepartamentos = queryDepartamento.getResultList();
+		
+		TypedQuery<ClaseUsuario> queryClase= em.createNamedQuery("ClaseUsuario.findAll",ClaseUsuario.class);
+		listadoClases= queryClase.getResultList();
 
 		// para que en el select cargue por defecto la opción "Seleccine uno..."
 		this.puestoTrabajoSeleccionado = null;

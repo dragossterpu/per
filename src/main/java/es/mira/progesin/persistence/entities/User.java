@@ -20,7 +20,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import es.mira.progesin.persistence.entities.enums.ClaseUsuarioEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.AllArgsConstructor;
@@ -110,7 +109,7 @@ public class User implements Serializable {
 	private Integer nivel;
 	
 	@Column(name = "clase_usuario")
-	protected ClaseUsuarioEnum claseUsuario;
+	protected ClaseUsuario claseUsuario;
 
 	@Column(name = "categoria", length = 20)
 	protected String categoria;

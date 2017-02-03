@@ -181,14 +181,13 @@
 					 <p:messages for="categoria" autoUpdate="true"  closable="true"/>	
 				
 					 <h:outputLabel for="clase" value="Clase: (*)" />
-			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.ClaseUsuarioEnum" var="clases"
-						allSuffix="ALL_ENUM_VALUES" />
 					<p:selectOneMenu value="#{userBean.user.claseUsuario}" id="clase"
 							required="true" requiredMessage="Seleccione una clase para el usuario" panelStyleClass="hideDisabled"
+							converter="#{selectConverter}"
 							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-						<f:selectItems value="#{clases.ALL_ENUM_VALUES}" var="claseUser"
-							itemLabel="#{claseUser.descripcion}" itemValue="#{claseUser}" />
+						<f:selectItems value="#{userBean.listadoClases}" var="claseUser"
+							itemLabel="#{claseUser.clase}" itemValue="#{claseUser}" />
 					</p:selectOneMenu>
 					<p:messages for="clase" autoUpdate="true"  closable="true"/>
 				</div>
