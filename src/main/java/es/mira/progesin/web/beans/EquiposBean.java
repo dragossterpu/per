@@ -105,7 +105,7 @@ public class EquiposBean implements Serializable {
 	 */
 	public String getFormAltaEquipo() {
 		this.jefeSeleccionado = null;
-		this.miembrosSeleccionados = null;
+		this.miembrosSeleccionados = new ArrayList<>();
 		this.listadoPotencialesMiembros = null;
 		this.equipo = null;
 		this.tipoEquipo = null;
@@ -190,12 +190,6 @@ public class EquiposBean implements Serializable {
 		return VISTAEQUIPOS;
 	}
 
-	public String limpiarValores() {
-		// limpiamos los datos del formulario
-		this.miembrosSeleccionados = null;
-		return null;
-	}
-
 	/**
 	 * Elimina un equipo. Se invoca desde la lista de resultados del buscador.
 	 * 
@@ -233,7 +227,7 @@ public class EquiposBean implements Serializable {
 	 * @return vista modificarEquipo
 	 */
 	public String getFormModificarEquipo(Equipo equipo) {
-		this.miembrosSeleccionados = null;
+		this.miembrosSeleccionados = new ArrayList<>();;
 		miembrosEquipo = new ArrayList<>();
 		miembrosEquipo = equipoService.findByEquipo(equipo);
 		equipo.setMiembros(miembrosEquipo);
@@ -355,8 +349,7 @@ public class EquiposBean implements Serializable {
 	 * @return vista anadirMiembroEquipo
 	 */
 	public String getFormAniadirMiembroEquipo() {
-		this.miembrosSeleccionados = null;
-		miembrosSeleccionados = new ArrayList<>();
+		this.miembrosSeleccionados = new ArrayList<>();
 		listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(equipo);
 		return "/equipos/anadirMiembroEquipo";
 	}
@@ -449,12 +442,11 @@ public class EquiposBean implements Serializable {
 				return event.getOldStep();
 			}
 		}
-		if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep())) {
+		if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep()) && miembrosSeleccionados.isEmpty()) {
 			if (skip) {
-				miembrosSeleccionados = null;
 				skip = false;
 			}
-			else if (miembrosSeleccionados == null || miembrosSeleccionados.isEmpty()) {
+			else {
 				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 						"Debe elegir uno o más componentes o confirmar que no desea ninguno aparte del jefe", "", "");
 				return event.getOldStep();

@@ -338,7 +338,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 	 * @return vista crearSolicitud
 	 */
 	public String getFormularioCrearSolicitud() {
-		documentosSeleccionados = null;
+		documentosSeleccionados = new ArrayList<>();
 		solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
 		solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
 		datosApoyo();
@@ -393,15 +393,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 				listadoDocumentos = tipoDocumentacionService.findByAmbito(ambito);
 			}
 		}
-		if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())) {
-			if (skip) {
-				documentosSeleccionados = null;
-			}
-			else if (documentosSeleccionados == null || documentosSeleccionados.isEmpty()) {
-				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-						"Debe elegir uno o más documentos o confirmar que no desea ninguno", "", "");
-				return event.getOldStep();
-			}
+		if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep()) && documentosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+					"Debe elegir uno o más documentos o confirmar que no desea ninguno", "", "");
+			return event.getOldStep();
 		}
 		return event.getNewStep();
 	}
