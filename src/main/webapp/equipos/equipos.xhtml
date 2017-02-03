@@ -6,8 +6,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
 
 	<f:metadata>
@@ -160,11 +159,11 @@
 						</p:column>
 
 						<p:column width="20" exportable="false">
-							<p:commandButton title="Modificar Equipo" icon="fa fa-fw fa-edit"
-								action="#{equiposBean.getFormModificarEquipo(equipo)}"
-								rendered="#{empty equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
-							<p:commandButton title="Ver Equipo" icon="fa fa-fw fa-eye"
-								action="#{equiposBean.getFormModificarEquipo(equipo)}"
+							<h:commandLink title="Modificar Equipo" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"
+						 		action="#{equiposBean.getFormModificarEquipo(equipo)}" 
+						 		rendered="#{empty equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+							<h:commandLink title="Ver Equipo Link" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"
+						 		action="#{equiposBean.getFormModificarEquipo(equipo)}" 
 								rendered="#{not empty equipo.fechaBaja or p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
 						</p:column>
 
@@ -186,15 +185,16 @@
 
 					</p:dataTable>
 				</p:outputPanel>
+				
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Sí" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+					</div>
+				</p:confirmDialog>
 			</h:form>
-			<p:confirmDialog global="true">
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Sí" type="button"
-						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="No" type="button"
-						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-				</div>
-			</p:confirmDialog>
 
 		</ui:define>
 

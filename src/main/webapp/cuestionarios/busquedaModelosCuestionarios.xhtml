@@ -16,13 +16,13 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-			<h3>Búsqueda de modelos de cuestionarios personalizados</h3>
-			
-			<h:form>
-			    <p:remoteCommand name="onload" action="#{cuestionarioPersonalizadoBean.getFormBusquedaModelosCuestionario}" update="busquedaCuestionario" autoRun="true" />
-			</h:form>
+		<h3>Búsqueda de modelos de cuestionarios personalizados</h3>
+		
+		<h:form>
+		    <p:remoteCommand name="onload" action="#{cuestionarioPersonalizadoBean.getFormBusquedaModelosCuestionario}" update="busquedaCuestionario" autoRun="true" />
+		</h:form>
 
-			<h:form id="busquedaCuestionario" >
+		<h:form id="busquedaCuestionario" >
 		
 			<div class="bloqueFormulario">
 					<div class="columnaIzdaFormulario">
@@ -116,14 +116,15 @@
 				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
 				
 			</p:outputPanel>
-</h:form>
-
-		<p:confirmDialog global="true">
-			<div class="centrarBotonesDialog">
-				<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-			</div>
-		</p:confirmDialog>
+			
+			<p:confirmDialog global="true">
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+				</div>
+			</p:confirmDialog>
+			
+		</h:form>
 			
 		</ui:define>
 	</ui:composition>
