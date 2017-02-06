@@ -77,16 +77,17 @@
 							icon="fa fa-fw fa-undo" />
 					</div>
 				</p:outputPanel>
+				
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+					</div>
+				</p:confirmDialog>
+				
 			</h:form>
-
-			<p:confirmDialog global="true">
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Aceptar" type="button"
-						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="Cancelar" type="button"
-						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-				</div>
-			</p:confirmDialog>
 
 		</ui:define>
 		
