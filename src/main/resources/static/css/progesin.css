@@ -311,3 +311,9 @@ select {
 .preguntasModelo .ui-datalist-content {
 	border:none;
 }
+.mensajeSinResultados {
+	font-weight: bold;
+	color: red;
+	text-align: center;
+	opacity: 0;
+}

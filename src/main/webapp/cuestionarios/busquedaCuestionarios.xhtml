@@ -110,13 +110,13 @@
 			</div>
 		
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{cuestionarioEnviadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" oncomplete="$('[id*=panelCuestionarios]').css('opacity', 100)" />
+				<p:commandButton actionListener="#{cuestionarioEnviadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioEnviadoBean.limpiar}" update="busquedaCuestionario" icon="fa fa-fw fa-eraser" />
 			</div>
  			
- 			<p:outputPanel layout="block" id="panelCuestionarios" style="opacity: 0">
-				<p:outputPanel rendered="#{empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
-					<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+ 			<p:outputPanel layout="block" id="panelCuestionarios">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
+					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
  				<p:outputPanel rendered="#{not empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
 	 				<h:commandLink>

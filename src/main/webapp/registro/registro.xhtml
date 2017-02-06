@@ -56,13 +56,13 @@
 			</div>
 			
 			<div class="botonesFormulario">
-			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('[id*=panelRegActividad]').css('opacity', 100)" />
+			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 			<p:commandButton actionListener="#{regActividadBean.getFormularioRegActividad()}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-search" />
 
 			</div>
-			<p:outputPanel layout="block" id="panelRegActividad" style="opacity: 0">
-				<p:outputPanel rendered="#{empty regActividadBean.regActividadBusqueda.listaRegActividad}">
-					<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+			<p:outputPanel layout="block" id="panelRegActividad">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty regActividadBean.regActividadBusqueda.listaRegActividad}">
+					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
  				<p:outputPanel rendered="#{not empty regActividadBean.regActividadBusqueda.listaRegActividad}">
 	 				<h:commandLink>

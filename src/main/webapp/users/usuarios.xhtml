@@ -84,7 +84,7 @@
 					</div>
 			</div>
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" oncomplete="$('[id*=panelUsuarios]').css('opacity', 100)" />
+				<p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 				<h:commandLink title="Limpiar" action="#{userBean.limpiarBusqueda}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 					<span class="ui-CommandLink-texto">Limpiar</span>
 				</h:commandLink>
@@ -94,9 +94,9 @@
 
 			</div>
 			
- 			<p:outputPanel layout="block" id="panelUsuarios" style="opacity: 0">
-				<p:outputPanel rendered="#{empty userBean.userBusqueda.listaUsuarios}">
-					<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+ 			<p:outputPanel layout="block" id="panelUsuarios">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty userBean.userBusqueda.listaUsuarios}">
+					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
  				<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
 	 				<h:commandLink>

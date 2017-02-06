@@ -77,7 +77,7 @@
 				</div>
 				<div class="botonesFormularioEquipos">
 					<p:commandButton actionListener="#{equiposBean.buscarEquipo}"
-						value="Buscar" update="panelEquipos" icon="fa fa-search" />
+						value="Buscar" update="panelEquipos" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 					<h:commandLink title="Limpiar"
 						action="#{equiposBean.limpiarBusqueda}" update="busquedaEquipos"
 						styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
@@ -95,6 +95,9 @@
 					</h:commandLink>
 				</div>
 				<p:outputPanel layout="block" id="panelEquipos">
+					<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty equiposBean.equipoBusqueda.listaEquipos}">
+						No existe ningún resultado que cumpla los parámetros de su búsqueda.
+					</p:outputPanel>
 					<p:outputPanel
 						rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
 						<h:commandLink>

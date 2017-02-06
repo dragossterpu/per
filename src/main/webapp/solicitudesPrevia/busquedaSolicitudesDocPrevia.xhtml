@@ -107,16 +107,16 @@
 					</div>
 				</div>
 				<div class="botonesFormulario">
-					<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="ui-icon-search" oncomplete="$('[id*=panelSolicitudes]').css('opacity', 100)"/>
+					<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="ui-icon-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)"/>
 					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.limpiarBusqueda}">
 		            	<span class="ui-CommandLink-texto">Limpiar</span>
 		            </h:commandLink>	
 						
 				</div>
 
-				<p:outputPanel layout="block" id="panelSolicitudes" style="opacity: 0">
-					<p:outputPanel rendered="#{empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
-						<h4>No existe ningún resultado que cumpla los parámetros de su búsqueda.</h4>
+				<p:outputPanel layout="block" id="panelSolicitudes">
+					<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+						No existe ningún resultado que cumpla los parámetros de su búsqueda.
 					</p:outputPanel>
 					<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
 	 				<h:commandLink>
