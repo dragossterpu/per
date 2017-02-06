@@ -162,7 +162,10 @@ public class CuestionarioEnviadoBean implements Serializable {
 	}
 
 	/**
-	 * Guarda fecha validación de las respuestas de las preguntas
+	 * Guarda fecha validación de las respuestas de las preguntas marcadas por el usuario.
+	 * En caso de haberse completado la validación de todas las respuestas se da por finalizado el cuestionario.
+	 * 
+	 * @author EZENTIS
 	 * @see guardarRespuestas
 	 *
 	 */
@@ -296,7 +299,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 	}
 
 	/**
-	 * Modifica los datos de envio de un cuestionario
+	 * Modifica los datos de envio de un cuestionario.
+	 * En caso de que la fecha límite de envío por parte de la unidad sea alterada, se notifica por correo electrónico dicho cambio.
 	 * 
 	 * @author EZENTIS
 	 */

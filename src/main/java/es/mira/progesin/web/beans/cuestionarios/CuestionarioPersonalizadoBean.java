@@ -62,6 +62,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	@Autowired
 	transient IRegistroActividadService regActividadService;
 
+	/**
+	 * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
+	 * 
+	 * @author EZENTIS
+	 */
 	public void buscarCuestionario() {
 		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
 				.buscarCuestionarioPersonalizadoCriteria(cuestionarioBusqueda);
@@ -84,6 +89,8 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 
 	/**
 	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
+	 * 
+	 * @author EZENTIS
 	 */
 	public void limpiar() {
 
@@ -93,7 +100,9 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	}
 
 	/**
-	 * Elimina un cuestionario
+	 * Elimina un cuestionario. Si ya ha sido enviado alguna vez se realiza baja lógica en caso contrario, eliminación física.
+	 * 
+	 * @author EZENTIS
 	 * @param cuestionario Cuestionario a eliminar
 	 */
 	public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
@@ -119,10 +128,9 @@ public class CuestionarioPersonalizadoBean implements Serializable {
 	}
 
 	/**
-	 * mostrarFormularioEnvio
-	 *
 	 * Muestra la pantalla de envío del cuestionario
 	 *
+	 * @author EZENTIS
 	 * @param cuestionario Cuestionario a enviar
 	 * @return Nombre de la vista del formulario de envío
 	 */
