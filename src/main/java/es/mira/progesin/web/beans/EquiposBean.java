@@ -422,13 +422,25 @@ public class EquiposBean implements Serializable {
 		}
 		return String.join(", ", nombresCompletos);
 	}
-
+	
+	/**
+	 * Controla las columnas visibles en la lista de resultados del buscador
+	 * 
+	 * @author EZENTIS
+	 * @param e checkbox de la columna seleccionada
+	 */
 	public void onToggle(ToggleEvent e) {
 		columnasVisibles.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
-
+	
 	/**
-	 * @param event
+	 * Gestiona la transición entre pestañas en el formulario de alta de equipos. 
+	 * Devuelve al estado inicial cada pestaña del formulario en caso de volver a un paso anterior.
+	 * Se obliga a elegir un jefe de equipo y controla que se escoja al menos un miembro o se cornfirme que no se desea ninguno para este equipo antes de pasar a una pestaña posterior.
+	 * 
+	 * @author EZENTIS
+	 * @param event info de la pestaña actual y la siguente que se solicita
+	 * @return nombre de la siguente pestaña a mostrar
 	 */
 	public String onFlowProcess(FlowEvent event) {
 		if (JEFEEQUIPO.equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {

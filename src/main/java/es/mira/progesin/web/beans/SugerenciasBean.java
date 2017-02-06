@@ -53,7 +53,15 @@ public class SugerenciasBean implements Serializable {
 
 	@Autowired
 	private transient IRegistroActividadService regActividadService;
-
+	
+	/**
+	 * Guarda una nueva sugerencia con los datos del formulario
+	 * 
+	 * @author EZENTIS
+	 * @param String módulo o sección del sistema al que hace referencia
+	 * @param String descripción de la sugerencia
+	 * @return vista crearSugerencia
+	 */
 	public String guardarSugerencia(String modulo, String descripcion) {
 		try {
 			Sugerencia sugerenciaNueva = new Sugerencia();
@@ -94,12 +102,27 @@ public class SugerenciasBean implements Serializable {
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
 		}
 	}
-
+	
+	/**
+	 * Muestra el formulario para redactar y enviar la respuesta a una sugerencia
+	 * 
+	 * @author EZENTIS
+	 * @param Sugerencia sugerencia seleccionada
+	 * @return vista contestarSugerencia
+	 */
 	public String contestarSugerencia(Sugerencia sugerenciaSeleccionada) {
 		sugerencia = sugerenciaSeleccionada;
 		return "/principal/contestarSugerencia";
 	}
-
+	
+	/**
+	 * Envía al correo electrónico de quien hizo la sugerencia el mensaje de respuesta
+	 * 
+	 * @author EZENTIS
+	 * @param Sugerencia sugerencia seleccionada
+	 * @param contestacion mensaje a enviar
+	 * @return vista contestarSugerencia
+	 */
 	public String contestar(Sugerencia sugerenciaSeleccionada, String contestacion) {
 		try {
 			String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();

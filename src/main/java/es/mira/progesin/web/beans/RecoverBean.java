@@ -50,7 +50,13 @@ public class RecoverBean implements Serializable {
 	private transient PasswordEncoder passwordEncoder;
 
 	private List<User> listaUsers = new ArrayList<>();
-
+	
+	/**
+	 * Busca un usuario en base a su dirección de correo o al NIF, y en caso de hayarlo genera una nueva contraseña y envía ésta junto al username al correo asociado a la cuenta
+	 * 
+	 * @author EZENTIS
+	 * @return vista recuperarPassword
+	 */
 	public String claveOlvidada() {
 
 		if ("".equals(nif) && "".equals(correo)) {

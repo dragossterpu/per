@@ -376,11 +376,13 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Permite el webFlow
+	 * Gestiona la transición entre pestañas en el formulario de creación de solicitudes. 
+	 * En caso de pasar a la pestaña de documentación se carga aquella que vaya asociada al ámbito seleccionado en la pestaña anterior, 
+	 * y se controla que se escoja al menos un documento o se cornfirme que no se desea ninguno para esta solicitud antes de pasar a una pestaña posterior.
 	 * 
 	 * @author EZENTIS
-	 * @param event
-	 * @return
+	 * @param event info de la pestaña actual y la siguente que se solicita
+	 * @return nombre de la siguente pestaña a mostrar
 	 */
 	public String onFlowProcess(FlowEvent event) {
 
@@ -464,7 +466,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Modifica los datos de la solicitud de documentación previa
+	 * Modifica los datos de la solicitud de documentación previa. 
+	 * En caso de que la fecha límite de envío por parte de la unidad sea alterada, se notifica por correo electrónico dicho cambio.
 	 * 
 	 * @author EZENTIS
 	 */
