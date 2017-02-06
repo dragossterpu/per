@@ -109,6 +109,7 @@ public class VisualizarCuestionario implements Serializable {
 	 * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
 	 * texto, adjuntos, tablas...)
 	 * 
+	 * @author EZENTIS
 	 * @param cuestionario que se desea visualizar
 	 * @return Nombre de la vista a mostrar
 	 */
@@ -121,12 +122,11 @@ public class VisualizarCuestionario implements Serializable {
 	}
 
 	/**
-	 * visualizarRespuestasCuestionario
-	 * 
 	 * Muestra en pantalla el cuestionario con las respuestas de la unidad inspeccionada
 	 * 
+	 * @author EZENTIS
 	 * @param cuestionarioEnviado
-	 * @return
+	 * @return vista desde la que ha sido llamada responderCuestionario o validarCuestionario
 	 */
 	public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
 		this.setCuestionarioEnviado(cuestionarioEnviado);
@@ -174,7 +174,16 @@ public class VisualizarCuestionario implements Serializable {
 				listaRespuestas.isEmpty() == Boolean.FALSE,
 				esProvisional && cuestionarioEnviado.getFechaNoConforme() != null);
 	}
-
+	
+	/**
+	 * Carga las preguntas de un cuestionario en base a su modelo personalizado y construye la estructura de aquellas que precisen una tabla o matriz para representar su respuesta
+	 * 
+	 * @author EZENTIS
+	 * @param cuestionario seleccionado
+	 * @param visualizarRespuestas indica si se llama para mostrar un cuestionario vacío o ya respondido
+	 * @param soloNoValidadas indica si hay que mostrar todas las preguntas/respuestas o sólo aquellas que aún no han sido validadas
+	 * @return vista desde la que ha sido llamada en base a si ya ha sido enviado, responder/validarCuestionario
+	 */
 	private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas,
 			boolean soloNoValidadas) {
 		setMapaAreaPreguntas(new HashMap<>());
@@ -228,11 +237,10 @@ public class VisualizarCuestionario implements Serializable {
 	}
 
 	/**
-	 * getValoresTipoRespuesta
-	 * 
 	 * Obtiene los valores asociados a un tipo de respuesta RADIO o similar. Se usa dentro del xhtml para obtener los
 	 * valores a visualizar en pantalla.
 	 * 
+	 * @author EZENTIS
 	 * @param tipo Tipo de respuesta de la pregunta
 	 * @return Lista de valores asociados al tipo de respuesta
 	 */
@@ -244,6 +252,7 @@ public class VisualizarCuestionario implements Serializable {
 	 * Construye la tabla o matriz que se usará en el formulario para responder las preguntas cuyo tipo de respuesta
 	 * empieza por TABLA o MATRIZ
 	 * 
+	 * @author EZENTIS
 	 * @see visualizar
 	 * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
 	 */
@@ -259,12 +268,11 @@ public class VisualizarCuestionario implements Serializable {
 		}
 		mapaRespuestasTabla.put(pregunta, dataTableView);
 	}
-	
-	
 
 	/**
 	 * Construye la tabla o matriz que se usará del cuestionario con las respuestas cumplimentadas
 	 * 
+	 * @author EZENTIS
 	 * @see visualizar
 	 * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
 	 */
@@ -279,6 +287,8 @@ public class VisualizarCuestionario implements Serializable {
 	/**
 	 * Añade una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
 	 * empezar por TABLA
+	 * 
+	 * @author EZENTIS
 	 * @param pregunta Pregunta de un cuestionario
 	 */
 	public void aniadirFilaRespuestaTabla(PreguntasCuestionario pregunta) {
@@ -303,7 +313,6 @@ public class VisualizarCuestionario implements Serializable {
 			setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado));
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
 					"Se ha producido un error en la generación del documento Word");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
@@ -315,7 +324,6 @@ public class VisualizarCuestionario implements Serializable {
 			setFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
 					"Se ha producido un error en la generación del PDF");
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
