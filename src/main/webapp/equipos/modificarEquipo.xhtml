@@ -56,7 +56,9 @@
     				 </f:facet>
 					</p:dataTable>
 				</div>
+				
    				<p:messages autoUpdate="true" closable="true" showDetail="true"/>
+   				
 				<p:outputPanel>
 					<div class="botonesFormulario">
 						<h:commandLink title="Cambiar jefe del equipo"
@@ -86,14 +88,8 @@
 				</div>
 			</p:confirmDialog>
 
-			
 		</ui:define>
-		<script>
-			function reset() {
-				alert("reset");
-				calendarWidget.setDate(null);
-			}
-		</script>
+		
 	</ui:composition>
 </f:view>
 </html>
