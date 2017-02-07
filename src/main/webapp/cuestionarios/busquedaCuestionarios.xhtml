@@ -113,6 +113,8 @@
 				<p:commandButton actionListener="#{cuestionarioEnviadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioEnviadoBean.limpiar}" update="busquedaCuestionario" icon="fa fa-fw fa-eraser" />
 			</div>
+			
+			<p:separator styleClass="separator ui-state-disabled" />
  			
  			<p:outputPanel layout="block" id="panelCuestionarios">
 				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">

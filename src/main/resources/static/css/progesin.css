@@ -1,7 +1,6 @@
 @CHARSET "UTF-8";
 
 /* sobreescritura de los estilos propios de primefaces */
-
 .ui-menu {
     width: auto;
 }
@@ -36,7 +35,7 @@
 }
 
 .ui-accordion {
-	    background: #bed6f8 url(/progesin/javax.faces.resource/images/header.png.xhtml?ln=primefaces-bluesky) repeat-x;
+	background: #bed6f8 url(/progesin/javax.faces.resource/images/header.png.xhtml?ln=primefaces-bluesky) repeat-x;
 }
 
 .ui-dialog.ui-widget-content .ui-dialog-title {
@@ -60,13 +59,11 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 	width: 100% !important;
 }
 
-.ui-selectonemenu {
-	width: 96%;
-}
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {
 	overflow: visible;
+	margin: 0;
 }
 
 h1, h2, h3 {
@@ -84,13 +81,14 @@ h1, h2, h3 {
 }
 
 #contenido {
-	width: 70%;
+	width: 75%;
 	float:left;
 	height: auto;
-	padding: 10px;
+	padding: 10px 0 10px 10px;
+	box-sizing: border-box;
 }
 #contenidoProv {
-	 padding: 10px 0 0 50px;
+	padding: 10px 0 0 50px;
 	width: 80%;
 	float:left;
 	height: auto;
@@ -98,6 +96,7 @@ h1, h2, h3 {
 }
 .menu {
     background: url(../images/menu.jpg) no-repeat;
+    background-size: 100%;
     height: 32px;
     padding-top: 0.5em;
     font-size: 14px;
@@ -105,8 +104,7 @@ h1, h2, h3 {
 
 .menu-lista li {
     display: inline;
-    background: url(../images/menu_separator.gif) no-repeat scroll left
- center transparent;
+    background: url(../images/menu_separator.gif) no-repeat scroll left center transparent;
     float: right;
 }
 
@@ -150,7 +148,7 @@ h1, h2, h3 {
     float:left; vertical-align: middle;
     text-align: center;
     border: 1px solid #000000;
-    }
+}
 
 .tablaApoyo{
 	width: 100%;
@@ -168,20 +166,27 @@ h1, h2, h3 {
 	height: auto;
 	display: table;
 	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
-padding: 20px 20px 20px 0px;
+	padding: 20px 20px 20px 0px;
 }
 .columnaIzdaFormulario {
-	width: 40%;
+	width: 50%;
 	float: left;
+	padding: 0 2% 0 1%;
+	box-sizing: border-box;
 }
 
 .columnaDchaFormulario {
-	width: 40%;
+	width: 50%;
 	float: right;
+	padding: 0 2% 0 1%;
+	box-sizing: border-box;
 }
 
-input, textarea, .uneditable-input {
-   width: 100%; /* para que no coja el tamaño de bootstrap */
+input, textarea, .uneditable-input, .ui-selectonemenu {
+	min-height: 30px !important;
+	width: 100%; /* para que no coja el tamaño de bootstrap */
+    box-sizing: border-box;
+    margin-bottom: 10px;
 }
 
 .clear {
@@ -205,12 +210,7 @@ input, textarea, .uneditable-input {
 }
 
 .botonesFormulario {
-	padding: 30px;
-	text-align: center;
-}
-
-.botonesFormularioEquipos {
-	padding: 5px;
+	padding: 10px;
 	text-align: center;
 }
 
@@ -248,7 +248,7 @@ select {
 }
 
 .prevPregCuest {
-	padding: 10px;
+	padding-bottom: 10px;
 	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
 }
 
@@ -321,4 +321,12 @@ select {
 	color: red;
 	text-align: center;
 	opacity: 0;
+}
+/* panelGrid value*/
+.value {
+	width:100%;
+}
+
+.ui-selectoneradio label {
+	padding: 4px;
 }

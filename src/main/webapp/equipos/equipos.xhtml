@@ -75,7 +75,7 @@
 						</p:selectOneMenu>
 					</div>
 				</div>
-				<div class="botonesFormularioEquipos">
+				<div class="botonesFormulario">
 					<p:commandButton actionListener="#{equiposBean.buscarEquipo}"
 						value="Buscar" update="panelEquipos" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 					<h:commandLink title="Limpiar"
@@ -83,10 +83,6 @@
 						styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
 						<span class="ui-CommandLink-texto">Limpiar</span>
 					</h:commandLink>
-				</div>
-				<p:separator title="Alta nuevo equipo"
-					styleClass="separator ui-state-disabled" />
-				<div class="botonesFormulario">
 					<h:commandLink title="Nuevo equipo"
 						action="#{equiposBean.getFormAltaEquipo}"
 						rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
@@ -94,6 +90,9 @@
 						<span class="ui-CommandLink-texto">Nuevo equipo</span>
 					</h:commandLink>
 				</div>
+				
+				<p:separator styleClass="separator ui-state-disabled" />
+
 				<p:outputPanel layout="block" id="panelEquipos">
 					<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty equiposBean.equipoBusqueda.listaEquipos}">
 						No existe ningún resultado que cumpla los parámetros de su búsqueda.

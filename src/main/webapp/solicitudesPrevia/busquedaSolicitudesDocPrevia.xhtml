@@ -111,8 +111,9 @@
 					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.limpiarBusqueda}">
 		            	<span class="ui-CommandLink-texto">Limpiar</span>
 		            </h:commandLink>	
-						
 				</div>
+				
+				<p:separator styleClass="separator ui-state-disabled" />
 
 				<p:outputPanel layout="block" id="panelSolicitudes">
 					<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
