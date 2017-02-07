@@ -26,25 +26,23 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name="PUESTOSTRABAJO")
+@Table(name = "PUESTOSTRABAJO")
 public class PuestoTrabajo implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PUESTO_TRABAJO")
-    @SequenceGenerator(name="SEQ_PUESTO_TRABAJO", sequenceName="SEQ_PUESTO_TRABAJO", allocationSize=1) 
+	@SequenceGenerator(name = "SEQ_PUESTO_TRABAJO", sequenceName = "SEQ_PUESTO_TRABAJO", allocationSize = 1, initialValue = 1)
 	@Column(name = "ID", length = 2)
 	private Long id;
-	
-	
+
 	@Column(name = "DESCRIPCION", length = 100)
 	private String descripcion;
-	
 
-	@Column(name ="nivel")
+	@Column(name = "nivel")
 	private int nivel;
-	
-	@Column(name="clase", length=20)
+
+	@Column(name = "clase", length = 20)
 	private String clase;
 }

@@ -37,6 +37,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -56,9 +57,9 @@ import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository
 @Component("wordGenerator")
 public class WordGenerator {
 
-	public static final String LOGO_MININISTERIO_INTERIOR = "src/main/resources/static/images/ministerior_interior_logo.png";
+	public static final String LOGO_MININISTERIO_INTERIOR = "static/images/ministerior_interior_logo.png";
 
-	public static final String LOGO_IPSS = "src/main/resources/static/images/logo_ipss.png";
+	public static final String LOGO_IPSS = "static/images/logo_ipss.png";
 
 	public static final String BACKGROUND_COLOR_AREA_HEXADECIMAL = "cfd6d4";
 
@@ -184,7 +185,8 @@ public class WordGenerator {
 
 		XWPFRun run = paragraph.createRun();
 
-		XWPFPicture picture = run.addPicture(new FileInputStream(imagen1), XWPFDocument.PICTURE_TYPE_PNG, imagen1,
+		ClassPathResource logo = new ClassPathResource(LOGO_MININISTERIO_INTERIOR);
+		XWPFPicture picture = run.addPicture(logo.getInputStream(), XWPFDocument.PICTURE_TYPE_PNG, logo.getPath(),
 				Units.toEMU(177 * 0.6), Units.toEMU(90 * 0.6));
 
 		String blipID = "";
@@ -199,7 +201,8 @@ public class WordGenerator {
 		setTabStop(paragraph, STTabJc.Enum.forString("right"), pos2);
 
 		run.addTab();
-		XWPFPicture picture2 = run.addPicture(new FileInputStream(imagen2), XWPFDocument.PICTURE_TYPE_PNG, imagen2,
+		logo = new ClassPathResource(LOGO_IPSS);
+		XWPFPicture picture2 = run.addPicture(logo.getInputStream(), XWPFDocument.PICTURE_TYPE_PNG, logo.getPath(),
 				Units.toEMU(264 * 0.6), Units.toEMU(85 * 0.6));
 		blipID = "";
 		for (XWPFPictureData picturedata : header.getAllPackagePictures()) {

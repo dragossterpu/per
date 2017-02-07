@@ -16,6 +16,7 @@ import java.util.Map;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.io.image.ImageDataFactory;
@@ -63,13 +64,13 @@ public class PdfGenerator {
 
 	public static final String NOMBRE_FICHERO_SOLICITUD = "Solicitud_Documentacion.pdf";
 
-	public static final String LOGO_MININISTERIO_INTERIOR_IPSS = "src/main/resources/static/images/header_sol_doc_pag_1.png";
+	public static final String LOGO_MININISTERIO_INTERIOR_IPSS = "static/images/header_sol_doc_pag_1.png";
 
-	public static final String LOGO_MININISTERIO_INTERIOR = "src/main/resources/static/images/ministerior_interior_logo.png";
+	public static final String LOGO_MININISTERIO_INTERIOR = "static/images/ministerior_interior_logo.png";
 
-	public static final String LOGO_IPSS = "src/main/resources/static/images/logo_ipss.png";
+	public static final String LOGO_IPSS = "static/images/logo_ipss.png";
 
-	public static final String LOGO_CALIDAD = "src/main/resources/static/images/footer_solicitud_1.png";
+	public static final String LOGO_CALIDAD = "static/images/footer_solicitud_1.png";
 
 	private static final String NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_OR = "Cuestionario_OR.pdf";
 
@@ -149,21 +150,25 @@ public class PdfGenerator {
 	 * @throws IOException
 	 */
 	private void crearCabeceraFooter(PdfDocument pdf, Document document, boolean insertarFooter) throws IOException {
-		Image logoMinisterioInterior = new Image(ImageDataFactory.create(LOGO_MININISTERIO_INTERIOR));
+		File file = new ClassPathResource(LOGO_MININISTERIO_INTERIOR).getFile();
+		Image logoMinisterioInterior = new Image(ImageDataFactory.create(file.getPath()));
 		logoMinisterioInterior.scaleAbsolute((float) (logoMinisterioInterior.getImageWidth() * 0.6),
 				(float) (logoMinisterioInterior.getImageHeight() * 0.6));
 
-		Image ipssLogo = new Image(ImageDataFactory.create(LOGO_IPSS));
+		file = new ClassPathResource(LOGO_IPSS).getFile();
+		Image ipssLogo = new Image(ImageDataFactory.create(file.getPath()));
 		ipssLogo.scaleAbsolute((float) (ipssLogo.getImageWidth() * 0.6), (float) (ipssLogo.getImageHeight() * 0.6));
 
-		Image headerRepetido = new Image(ImageDataFactory.create(LOGO_MININISTERIO_INTERIOR_IPSS));
+		file = new ClassPathResource(LOGO_MININISTERIO_INTERIOR_IPSS).getFile();
+		Image headerRepetido = new Image(ImageDataFactory.create(file.getPath()));
 		headerRepetido.scaleAbsolute((float) (headerRepetido.getImageWidth() * 0.6),
 				(float) (headerRepetido.getImageHeight() * 0.6));
 
 		// Footer
 		Image footer = null;
 		if (insertarFooter) {
-			footer = new Image(ImageDataFactory.create(LOGO_CALIDAD));
+			file = new ClassPathResource(LOGO_CALIDAD).getFile();
+			footer = new Image(ImageDataFactory.create(file.getPath()));
 			footer.scaleAbsolute((float) (footer.getImageWidth() * 0.6), (float) (footer.getImageHeight() * 0.6));
 		}
 
