@@ -65,7 +65,7 @@ public class User implements Serializable {
 	@Column(name = "segundo_apellido", length = 50)
 	protected String apellido2;
 
-	@Column(name = "doc_identidad", length = 12, nullable = false)
+	@Column(name = "doc_identidad", length = 10, nullable = false)
 	protected String docIndentidad;
 
 	@Column(name = "telefono", length = 12)
@@ -107,7 +107,7 @@ public class User implements Serializable {
 
 	@Column(name = "nivel")
 	private Integer nivel;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ID_ClASE")
 	protected ClaseUsuario claseUsuario;

@@ -31,7 +31,7 @@
 						<p:inputText id="apellido2" value="#{userBean.user.apellido2}"  converter="#{trimConverter}"/>
 						
 						<h:outputLabel for="docIndentidad" value="NIF(*): " />
-						<p:inputText id="docIndentidad" value="#{userBean.user.docIndentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}"/>
+						<p:inputText id="docIndentidad" value="#{userBean.user.docIndentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}" maxlength="10"/>
 						<p:messages for="docIndentidad" autoUpdate="true"  closable="true"/>
 						
 						

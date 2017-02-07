@@ -327,6 +327,10 @@ select {
 	width:100%;
 }
 
+.label {
+	padding-right: 20px;
+}
+
 .ui-selectoneradio label {
 	padding: 4px;
 }
