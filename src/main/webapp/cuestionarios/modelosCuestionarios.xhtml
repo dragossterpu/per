@@ -13,6 +13,9 @@
 		<ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 		
 			<h3>Modelos de cuestionario</h3>
+			<h:form>
+			    <p:remoteCommand name="onload" action="#{modelosCuestionarioBean.list}" update=":form:tablaCuestionarios" autoRun="true" />
+			</h:form>
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
@@ -37,7 +40,7 @@
 					<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 					
 					<div class="botonesFormulario">
-						<p:button value="Crear nuevo modelo de cuestionario" icon="fa fa-fw fa-user-plus" outcome="/cuestionarios/nuevoModeloCuestionario"  rendered="#{esJefeInspecciones}"/>
+						<p:commandButton value="Crear nuevo modelo de cuestionario" icon="fa fa-fw fa-user-plus" action="#{modificarModeloCuestionarioBean.nuevoModelo}"   rendered="#{esJefeInspecciones}"/>
 					</div>
 				</h:form>
 			</div>

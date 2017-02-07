@@ -231,6 +231,11 @@ select {
 	text-align: center;
 }
 
+.centrarTextoDialog{
+	display: block;
+	text-align: center;
+}
+
 .botonTabla{
 	width:30px
 }

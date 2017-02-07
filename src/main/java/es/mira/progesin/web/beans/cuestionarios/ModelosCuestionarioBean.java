@@ -41,6 +41,10 @@ public class ModelosCuestionarioBean {
 	public void init() {
 		setListadoCuestionarios((List<ModeloCuestionario>) modeloCuestionarioService.findAll());
 	}
+	
+	public void list(){
+		setListadoCuestionarios((List<ModeloCuestionario>) modeloCuestionarioService.findAll());
+	}
 
 	/**
 	 * descargarFichero

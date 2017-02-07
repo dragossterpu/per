@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.component.UIInput;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DualListModel;
@@ -38,6 +39,7 @@ public class ModificarModeloCuestionarioBean {
 	ModeloCuestionario modeloCuestionario;
 	
 	List<AreasCuestionario> listaAreasCuestionario;
+	List<AreasCuestionario> listaAreasCuestionarioAux;
 	
 	List<String> listaTipoPreguntas;
 	
@@ -78,6 +80,8 @@ public class ModificarModeloCuestionarioBean {
 	private UIInput preguntaNueva;
 	private UIInput nuevaRespuesta;
 	
+	private UIInput nombreTipoPregunta;
+	
 	@Autowired
 	private IAreaCuestionarioRepository areaCuestionarioRepository;
 	
@@ -86,7 +90,7 @@ public class ModificarModeloCuestionarioBean {
 		this.modeloCuestionario = modeloCuestionario;
 		listaAreasCuestionario = areaCuestionarioRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
 		listaTipoPreguntas= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
-		
+		listaAreasCuestionarioAux= areaCuestionarioRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
 		
 		
 		listaTipoPreguntasFinal=new ArrayList<String>();
@@ -102,24 +106,27 @@ public class ModificarModeloCuestionarioBean {
 	
 	public String nuevoModelo() {
 		this.modeloCuestionario = new ModeloCuestionario();
+		
+		modeloCuestionario.setCodigo("");
 		listaAreasCuestionario = new ArrayList<AreasCuestionario>();
 		listaTipoPreguntas= configuracionRespuestasCuestionarioRepository.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
-		
+		listaAreasCuestionarioAux= new ArrayList<AreasCuestionario>();
 		
 		
 		listaTipoPreguntasFinal=new ArrayList<String>();
 		
 		listaTipoPreguntasPick = new DualListModel<String>(listaTipoPreguntas, listaTipoPreguntasFinal);
 	
-		return "/cuestionarios/modificarModeloCuestionario";
+		return "/cuestionarios/nuevoModeloCuestionario";
 	}
 
 	public void aniadeArea(){
 		AreasCuestionario areaAux=new AreasCuestionario();
 		areaAux.setArea(nombreArea.getLocalValue().toString()); 
+		areaAux.setIdCuestionario(modeloCuestionario.getId());
 		areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
 		listaAreasCuestionario.add(areaAux);
-		
+		listaAreasCuestionarioAux.add(areaAux);
 	}
 	
 	public void onSelectArea(SelectEvent event) {
@@ -130,7 +137,7 @@ public class ModificarModeloCuestionarioBean {
 	public void borraArea(){
 		String prueba=areaSelec.getArea();
 		areaSelec.setArea(prueba);
-		
+		listaAreasCuestionarioAux.remove(areaSelec);
 		listaAreasCuestionario.remove(areaSelec);
 	}
 	
@@ -153,6 +160,7 @@ public class ModificarModeloCuestionarioBean {
 	public void borraPregunta(AreasCuestionario area){
 		List<PreguntasCuestionario> listado= area.getPreguntas();
 		listado.remove(preguntaSelec);
+		area.setPreguntas(listado);
 	}
 	
 	public String onFlowProcess(FlowEvent event) {
@@ -160,7 +168,7 @@ public class ModificarModeloCuestionarioBean {
 			
 		}
 		if ("preguntas".equals(event.getNewStep())) {
-			listaAreasCuestionario=ordenarAreas(listaAreasCuestionario);
+			listaAreasCuestionario=ordenarAreas(listaAreasCuestionarioAux);
 			modeloCuestionario.setAreas(listaAreasCuestionario);
 		}
 		if("finalizar".equals(event.getNewStep())) {
@@ -233,8 +241,9 @@ nuevoValorTabla.setValue(nuevo);
 
 public void guardaTipoRespuesta(){
 	
-	String seccion=tipoPersonalizado.concat(listadoValoresNuevaRespuesta.toString());
+	//String seccion=tipoPersonalizado.concat(listadoValoresNuevaRespuesta.toString());
 	
+	String seccion=tipoPersonalizado.concat(nombreTipoPregunta.getLocalValue().toString());
 	
 	for(int i=0; i< listadoValoresNuevaRespuesta.size(); i++){
 		String valor=listadoValoresNuevaRespuesta.get(i);
@@ -283,20 +292,43 @@ public void guardaTipoRespuesta(){
 }
 
 
-	public String guardaCuestionario(){ 	
+	public void guardaCuestionario(){ 	
 		
 		
-		if (modeloCuestionario.getCodigo()==null){modeloCuestionario.setCodigo("");}
-		if (modeloCuestionario.getNombreFichero()==null){modeloCuestionario.setNombreFichero("");}
-		if (modeloCuestionario.getIdDocumento()==null){modeloCuestionario.setIdDocumento((long) 0);}
-		//modeloCuestionario.setAreas(listaAreasCuestionario);
-		modeloCuestionario= modeloCuestionarioService.save(modeloCuestionario);
 		
-		notificacionesService.crearNotificacionRol("Se modifica el modelo de cuestionario ".concat(modeloCuestionario.getDescripcion()), SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
-		registroActividadService.altaRegActividad("Se modifica el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion()), EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
+		modeloCuestionario.setNombreFichero("");
+		modeloCuestionario.setIdDocumento((long) 0);
 		
-	 	return "cuestionarios/modelosCuestionarios";
+		try {
+			if (modeloCuestionarioService.save(modeloCuestionario)!=null){
+				notificacionesService.crearNotificacionRol("Se modifica el modelo de cuestionario ".concat(modeloCuestionario.getDescripcion()), SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
+				registroActividadService.altaRegActividad("Se modifica el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion()), EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('dialogCierre').show();");
+				
+			}
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
+		}
 	 }
+	
+	
+public void guardaNuevoCuestionario(){ 	
+		modeloCuestionario.setNombreFichero("");
+		modeloCuestionario.setIdDocumento((long) 0);
+		try {
+			if (modeloCuestionarioService.save(modeloCuestionario)!=null){
+				notificacionesService.crearNotificacionRol("Se crea el modelo de cuestionario ".concat(modeloCuestionario.getDescripcion()), SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
+				registroActividadService.altaRegActividad("Se crea el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion()), EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('dialogCierre').show();");
+			}
+		} catch (Exception e) {
+			registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
+		}
+	 }
+	
+	
 	
 	public List<AreasCuestionario> ordenarAreas(List<AreasCuestionario> listado){
 		List<AreasCuestionario> listaNueva= new ArrayList<AreasCuestionario>();

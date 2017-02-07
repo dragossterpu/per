@@ -45,10 +45,10 @@ public class ModeloCuestionario implements Serializable {
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
-	@Column(name = "nombre", nullable = false)
+	@Column(name = "nombre")
 	private String nombreFichero;
 
-	@Column(name = "id_documento", nullable = false)
+	@Column(name = "id_documento")
 	private Long idDocumento;
 
 	@OneToMany(cascade = CascadeType.ALL)
