@@ -79,8 +79,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	}
 
 	@Override
-	public CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNull(String correo) {
-		return cuestionarioEnvioRepository.findByCorreoEnvioAndFechaFinalizacionIsNull(correo);
+	public CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(String correo) {
+		return cuestionarioEnvioRepository.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(correo);
 	}
 
 	@Override

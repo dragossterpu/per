@@ -136,7 +136,8 @@ public class EnvioCuestionarioBean implements Serializable {
 		try {
 			// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
 			CuestionarioEnvio cuestionario = cuestionarioEnvioService
-					.findByCorreoEnvioAndFechaFinalizacionIsNull(cuestionarioEnvio.getCorreoEnvio());
+					.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(
+							cuestionarioEnvio.getCorreoEnvio());
 			// Comprobar que no existe un cuestionario enviado sin finalizar para esa inspección
 			CuestionarioEnvio cuestionarioInspeccion = cuestionarioEnvioService
 					.findByInspeccionAndFechaFinalizacionIsNull(cuestionarioEnvio.getInspeccion());

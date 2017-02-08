@@ -47,7 +47,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("responderCuestionarioBean")
-@Scope("session")
+@Scope("request")
 public class ResponderCuestionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -292,7 +292,7 @@ public class ResponderCuestionarioBean implements Serializable {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (RoleEnum.PROV_CUESTIONARIO.equals(user.getRole())) {
 			cuestionarioEnviado = cuestionarioEnvioService
-					.findByCorreoEnvioAndFechaFinalizacionIsNull(user.getCorreo());
+					.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(user.getCorreo());
 			visualizarCuestionario.visualizarRespuestasCuestionario(cuestionarioEnviado);
 		}
 	}
