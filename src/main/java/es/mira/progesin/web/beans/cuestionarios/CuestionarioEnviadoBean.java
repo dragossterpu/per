@@ -162,8 +162,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 	}
 
 	/**
-	 * Guarda fecha validación de las respuestas de las preguntas marcadas por el usuario.
-	 * En caso de haberse completado la validación de todas las respuestas se da por finalizado el cuestionario.
+	 * Guarda fecha validación de las respuestas de las preguntas marcadas por el usuario. En caso de haberse completado
+	 * la validación de todas las respuestas se da por finalizado el cuestionario.
 	 * 
 	 * @author EZENTIS
 	 * @see guardarRespuestas
@@ -250,7 +250,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 			if (cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario)) {
 
 				StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
-				StringBuilder textoAutomatico = new StringBuilder(
+				StringBuilder cuerpo = new StringBuilder(
 						"\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:")
 								.append("\r\n \r\n").append(motivosNoConforme)
 								.append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
@@ -260,8 +260,7 @@ public class CuestionarioEnviadoBean implements Serializable {
 								.append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
 								.append("\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n")
 								.append("Muchas gracias y un saludo.");
-				StringBuilder cuerpo = new StringBuilder("Motivo: ").append(cuestionario.getMotivoCuestionario())
-						.append(textoAutomatico);
+
 				correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
 
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
@@ -299,8 +298,8 @@ public class CuestionarioEnviadoBean implements Serializable {
 	}
 
 	/**
-	 * Modifica los datos de envio de un cuestionario.
-	 * En caso de que la fecha límite de envío por parte de la unidad sea alterada, se notifica por correo electrónico dicho cambio.
+	 * Modifica los datos de envio de un cuestionario. En caso de que la fecha límite de envío por parte de la unidad
+	 * sea alterada, se notifica por correo electrónico dicho cambio.
 	 * 
 	 * @author EZENTIS
 	 */
