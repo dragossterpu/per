@@ -296,4 +296,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 		return cuestionarioEnvioRepository.findByCuestionarioPersonalizado(cuestionario);
 	}
 
+	@Override
+	public List<CuestionarioEnvio> findAll() {
+		return cuestionarioEnvioRepository.findAll();
+	}
+
 }
