@@ -390,8 +390,8 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('dominiosCorreo','dominios
 -- insert into parametros(seccion, clave, valor) values ('vistaSolicitudOTROS', 'bloque1', 'Lorem Ipsum');
 
 --Parametros tareas
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('tareasActivas','tareas','S');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDias','tareas','3');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas','3');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas','3');
 
 
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'silpe', 'Equipo A', 'Silvia apellido1 apellido2', 1, 'silpe');

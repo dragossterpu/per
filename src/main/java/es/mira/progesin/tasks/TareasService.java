@@ -77,7 +77,7 @@ public class TareasService implements ITareasService {
 				long milis = cuestionario.getFechaLimiteCuestionario().getTime() - hoy.getTime();
 				int dias = (int) (milis / 86400000);
 
-				if (dias < Integer.parseInt(tareasProperties.getProperty("plazoDias"))) {
+				if (dias < Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"))) {
 					StringBuilder cuerpo = new StringBuilder().append("Faltan ").append(dias)
 							.append(" dia/s para la fecha límite de envío del cuestionario de la inspección ")
 							.append(cuestionario.getInspeccion().getNumero())
@@ -104,7 +104,7 @@ public class TareasService implements ITareasService {
 				SolicitudDocumentacionPrevia solicitud = lista.get(i);
 				long milis = solicitud.getFechaLimiteCumplimentar().getTime() - hoy.getTime();
 				int dias = (int) (milis / 86400000);
-				if (dias < Integer.parseInt(tareasProperties.getProperty("plazoDias"))) {
+				if (dias < Integer.parseInt(tareasProperties.getProperty("plazoDiasDocumentacion"))) {
 
 					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
 							.append("Faltan ").append(dias)
