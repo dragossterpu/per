@@ -129,7 +129,7 @@
 					</p:inputText>
 							
 					<div class="botonesFormulario">
-						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios}"/>
+						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}"/>
 						<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
 						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" />		
 					</div>					
