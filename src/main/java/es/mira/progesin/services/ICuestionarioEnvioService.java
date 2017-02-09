@@ -38,6 +38,6 @@ public interface ICuestionarioEnvioService extends Serializable {
 
 	CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
 
-	List<CuestionarioEnvio> findAll();
+	List<CuestionarioEnvio> findFechaFinalizacionIsNullAndFechaAnulacionIsNullAndfechaCumplimentacionIsNull();
 
 }

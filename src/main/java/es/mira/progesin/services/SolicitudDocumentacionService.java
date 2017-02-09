@@ -253,4 +253,10 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNullAndInspeccion(inspeccion);
 	}
 
+	@Override
+	public List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNull() {
+		return solicitudDocumentacionPreviaRepository
+				.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaBajaIsNull();
+	}
+
 }

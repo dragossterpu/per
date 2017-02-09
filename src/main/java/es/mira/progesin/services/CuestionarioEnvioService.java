@@ -297,8 +297,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
 	}
 
 	@Override
-	public List<CuestionarioEnvio> findAll() {
-		return cuestionarioEnvioRepository.findAll();
+	public List<CuestionarioEnvio> findFechaFinalizacionIsNullAndFechaAnulacionIsNullAndfechaCumplimentacionIsNull() {
+		return cuestionarioEnvioRepository.findByFechaFinalizacionIsNullAndFechaAnulacionIsNull();
 	}
 
 }
