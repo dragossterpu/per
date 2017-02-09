@@ -1,7 +1,6 @@
 package es.mira.progesin.services;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.base.Throwables;
 
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -120,12 +121,13 @@ public class RegistroActividadService implements IRegistroActividadService {
 	@Override
 	public void altaRegActividadError(String nombreSeccion, Exception e) {
 		try {
+
 			RegistroActividad registroActividad = new RegistroActividad();
 			registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
 			registroActividad.setFechaAlta(new Date());
 			registroActividad.setNombreSeccion(nombreSeccion);
 			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-			registroActividad.setDescripcion(Arrays.toString(e.getStackTrace()));
+			registroActividad.setDescripcion(Throwables.getStackTraceAsString(e));
 			regActividadRepository.save(registroActividad);
 		}
 		catch (Exception e1) {
