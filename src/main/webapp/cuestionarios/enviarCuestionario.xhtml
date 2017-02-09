@@ -55,7 +55,7 @@
 						required="true" requiredMessage="Introduzca el correo electrónico" converter="#{trimConverter}"
 						validatorMessage="El formato del correo no es correcto o el dominio introducido no es válido"
                         disabled="#{yaEnviado}">
-							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+							<f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 					</p:inputText>
 					<p:messages for="correo" autoUpdate="true"  closable="true"/>
 					
@@ -92,7 +92,7 @@
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect(menuOrigen)}"/>
+						<p:button value="Cerrar" outcome="#{menuOrigen}" />
 					</div>
 				</p:dialog>
 				

@@ -39,7 +39,7 @@
 										<p:outputPanel rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
 										    <p:fileUpload fileUploadListener="#{cuestionarioPersonalizadoBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
 										    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar"
-										                  multiple="true" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" invalidFileMessage="El tipo del documento seleccionado no es válido"/>
+										                  multiple="true" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" invalidFileMessage="El tipo del documento seleccionado no es válido"/>
 										</p:outputPanel>
 											
 										<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}"

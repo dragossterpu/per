@@ -370,12 +370,12 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PUB','appli
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PDF','application/pdf');
 
 -- seccion (plantillasGC/PN), clave (nombre archivo), valor (idDocumento) 
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla común', 13);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 1', 14);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 2', 15);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla común', 13);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 1', 16);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 2', 17);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla común', 12);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 1', 13);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 2', 14);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla común', 12);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 1', 15);
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 2', 16);
 
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','PN', 'http://194.224.253.45:8080/progesin');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','GC', 'http://194.224.253.45:8080/progesin');
@@ -473,9 +473,9 @@ insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, ut
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\C - GC - Cuestionario Compania GENERICO.docx'));
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx'));
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO PRLCNP.doc'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval,  utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\CUESTIONARIOPRLGC.doc'));
+insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\D.- Cuestionario COMISARIA DISTRITO V0.docx'));
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
 insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
@@ -490,9 +490,9 @@ insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_docu
 insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 6,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C - GC - Cuestionario Compania GENERICO.docx');
 insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 7,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','C.- Cuestionario  COMISARIA LOCAL TIPO V0.docx');
 insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 8,'application/msword','CUESTIONARIO PRLCNP.doc');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  9,'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  10,'application/msword','CUESTIONARIOPRLGC.doc');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval,  11,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 9,'application/msword','CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 10,'application/msword','CUESTIONARIOPRLGC.doc');
+insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 11,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','D.- Cuestionario COMISARIA DISTRITO V0.docx');
 insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 12,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla común.docx');
 insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 13,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 1.docx');
 insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 14,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 2.docx');

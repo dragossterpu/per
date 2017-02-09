@@ -88,6 +88,11 @@ public class UserService implements IUserService {
 	}
 
 	@Override
+	public User findByUsernameIgnoreCase(String id) {
+		return userRepository.findByUsernameIgnoreCase(id);
+	}
+
+	@Override
 	@Transactional(readOnly = false)
 	public Iterable<User> save(Iterable<User> entities) {
 		return userRepository.save(entities);
@@ -100,13 +105,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User findByParams(String correo, String nif) {
-		return userRepository.findByCorreoIgnoringCaseOrDocIndentidadIgnoringCase(correo, nif);
-	}
-
-	@Override
-	public User findByCorreoOrDocIndentidad(String correo, String nif) {
-		return userRepository.findByCorreoOrDocIndentidad(correo, nif);
+	public User findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(String correo, String nif) {
+		return userRepository.findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(correo, nif);
 	}
 
 	@Override

@@ -31,8 +31,6 @@ public class TipoEquipoBean implements Serializable {
 
 	private static final String NOMBRESECCION = "Tipos de Equipo";
 
-	private TipoEquipo tipoEquipoNuevo;
-
 	private List<TipoEquipo> listaTipoEquipo;
 
 	@Autowired
@@ -40,7 +38,7 @@ public class TipoEquipoBean implements Serializable {
 
 	@Autowired
 	private transient IEquipoService equipoService;
-	
+
 	@Autowired
 	private transient IRegistroActividadService regActividadService;
 
@@ -56,12 +54,14 @@ public class TipoEquipoBean implements Serializable {
 		try {
 			if (equipoService.existsByTipoEquipo(tipo)) {
 				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Eliminación abortada",
-						"No se puede eliminar, existen equipos de este tipo", null);				
-			} else {
+						"No se puede eliminar, existen equipos de este tipo", null);
+			}
+			else {
 				tipoEquipoService.delete(tipo.getId());
 				listaTipoEquipo.remove(tipo);
-			} 
-		} catch (Exception e) {
+			}
+		}
+		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
 					"Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
@@ -76,12 +76,12 @@ public class TipoEquipoBean implements Serializable {
 	}
 
 	public String getFormNuevoTipoEquipo() {
-		tipoEquipoNuevo = new TipoEquipo();
 		return "/equipos/altaTipoEquipo";
 	}
 
-	public void altaTipo() {
+	public void altaTipo(String codigo, String descripcion) {
 		try {
+			TipoEquipo tipoEquipoNuevo = new TipoEquipo(null, codigo, descripcion);
 			if (tipoEquipoService.save(tipoEquipoNuevo) != null) {
 				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
 						"El tipo de equipo ha sido creado con éxito");
@@ -103,7 +103,8 @@ public class TipoEquipoBean implements Serializable {
 				FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
 						"Tipo de equipo modificado con éxito", null);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
 					"Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
@@ -112,10 +113,10 @@ public class TipoEquipoBean implements Serializable {
 
 	public void onRowCancel(RowEditEvent event) {
 		TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
-		FacesMessage msg = new FacesMessage("Modificación cancelada", tipoEquipo.getCodigo() + " - " + tipoEquipo.getDescripcion());
+		FacesMessage msg = new FacesMessage("Modificación cancelada",
+				tipoEquipo.getCodigo() + " - " + tipoEquipo.getDescripcion());
 		FacesContext.getCurrentInstance().addMessage("msgs", msg);
-		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación cancelada",
-				"", null);
+		FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación cancelada", "", null);
 	}
 
 }

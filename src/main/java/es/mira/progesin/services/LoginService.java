@@ -22,7 +22,7 @@ public class LoginService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findOne(username);
+		User user = userService.findByUsernameIgnoreCase(username);
 		if (null == user) {
 			throw new UsernameNotFoundException("El usuario " + username + " no existe.");
 		}

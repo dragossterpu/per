@@ -9,9 +9,9 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 
 public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<SolicitudDocumentacionPrevia, Long> {
 
-	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo);
+	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(String correo);
 
-	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(
+	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
 			String correo);
 
 	List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(

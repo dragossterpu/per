@@ -67,14 +67,11 @@
 					</div>
 				</p:confirmDialog>
 			
-				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-					<p:ajax event="close"
-						listener="#{facesUtilities.redirect('/equipos/modificarEquipo')}" />
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true"
 						showSummary="true" />
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Cerrar"
-							actionListener="#{facesUtilities.redirect('/equipos/modificarEquipo')}" />
+						<p:button value="Cerrar" outcome="/equipos/modificarEquipo" />
 					</div>
 				</p:dialog>
 

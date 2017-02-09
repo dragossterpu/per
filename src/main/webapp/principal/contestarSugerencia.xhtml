@@ -50,10 +50,9 @@
 				</div>
 				
 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-					<p:ajax event="close" listener="#{facesUtilities.redirect('/principal/sugerenciasListado')}" />
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 						<div class="centrarBotonesDialog">
-							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/principal/sugerenciasListado')}" />
+							<p:button value="Cerrar" outcome="/principal/sugerenciasListado" />
 						</div>
 				</p:dialog>
 				

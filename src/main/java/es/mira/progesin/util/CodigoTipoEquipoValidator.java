@@ -27,13 +27,12 @@ public class CodigoTipoEquipoValidator implements Validator {
 		String codigoNuevo = value.toString();
 		Long idTipoEquipo = (Long) component.getAttributes().get("idTipoEquipo");
 
-		TipoEquipo tipoEquipoBDD = tipoEquipoService.findByCodigo(codigoNuevo);
-		if(tipoEquipoBDD != null && tipoEquipoBDD.getId().equals(idTipoEquipo) == Boolean.FALSE) {
+		TipoEquipo tipoEquipoBDD = tipoEquipoService.findByCodigoIgnoreCase(codigoNuevo);
+		if (tipoEquipoBDD != null && tipoEquipoBDD.getId().equals(idTipoEquipo) == Boolean.FALSE) {
 			FacesMessage facesMsg = new FacesMessage("Ya existe un tipo de equipo con ese código");
 			facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(facesMsg);
 		}
-
 
 	}
 

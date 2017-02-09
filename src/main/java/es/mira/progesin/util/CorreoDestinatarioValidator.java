@@ -31,15 +31,15 @@ public class CorreoDestinatarioValidator implements Validator {
 
 		String actualCorreoDestinatario = (String) component.getAttributes().get("actualCorreo");
 
-		String regex = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@(" + applicationBean.getDominiosValidos() + ")$";
+		String regex = "(?i)^[_a-z0-9-+]+(.[_a-z0-9-]+)*@(" + applicationBean.getDominiosValidos() + ")$";
 		if (!nuevoCorreoDestinatario.matches(regex)) {
 			FacesMessage facesMsg = new FacesMessage("Formato de correo incorrecto o dominio no válido.");
 			facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(facesMsg);
 		}
 		else if (nuevoCorreoDestinatario.equals(actualCorreoDestinatario) == Boolean.FALSE
-				&& solicitudDocumentacionService
-						.findByFechaFinalizacionIsNullAndCorreoDestinatario(nuevoCorreoDestinatario) != null) {
+				&& solicitudDocumentacionService.findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(
+						nuevoCorreoDestinatario) != null) {
 			FacesMessage facesMsg = new FacesMessage(
 					"Este correo ya existe para otra solicitud en curso. Debe finalizarla o eliminarla antes de proseguir.");
 			facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);

@@ -12,7 +12,7 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
 
 	List<Inspeccion> findByNumeroLike(String numeroInspeccion);
 
-	List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad);
+	List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad);
 
 	@Query("SELECT i FROM Inspeccion i WHERE NOT EXISTS (SELECT s FROM SolicitudDocumentacionPrevia s WHERE s.inspeccion = i.id AND s.fechaFinalizacion IS NULL) "
 			+ "AND i.fechaFinalizacion IS NULL "

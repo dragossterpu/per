@@ -63,15 +63,16 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	}
 
 	@Override
-	public SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatario(String correo) {
-		return solicitudDocumentacionPreviaRepository.findByFechaFinalizacionIsNullAndCorreoDestinatario(correo);
+	public SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(String correo) {
+		return solicitudDocumentacionPreviaRepository
+				.findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(correo);
 	}
 
 	@Override
-	public SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(
+	public SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
 			String correo) {
 		return solicitudDocumentacionPreviaRepository
-				.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(correo);
+				.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(correo);
 	}
 
 	@Override

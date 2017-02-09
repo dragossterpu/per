@@ -30,7 +30,7 @@ public class TipoEquipoService implements ITipoEquipoService {
 	}
 
 	@Override
-	public TipoEquipo findByCodigo(String codigo) {
+	public TipoEquipo findByCodigoIgnoreCase(String codigo) {
 		return tipoEquiposRepository.findByCodigoIgnoreCase(codigo);
 	}
 }

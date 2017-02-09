@@ -15,25 +15,22 @@
 			<div class="bloqueFormulario">
 				<h:form id="form">
 					<h:outputLabel for="codigo" value="Código del tipo de equipo (*):" />
-					<p:inputText id="codigo" value="#{tipoEquipoBean.tipoEquipoNuevo.codigo}" required="true" requiredMessage="Introduzca el código del tipo de equipo" maxlength="5" converter="#{trimConverter}">
-						<f:validator binding="#{codigoTipoEquipoValidator}"/>
-					</p:inputText>
+					<p:inputText id="codigo" value="#{codigo}" required="true" requiredMessage="Introduzca el código del tipo de equipo" maxlength="5" converter="#{trimConverter}" validator="#{codigoTipoEquipoValidator.validate}"/>
 					<p:messages for="codigo" autoUpdate="true"  closable="true"/>
 					
 					<h:outputLabel for="descripcion" value="Descripción del tipo de equipo (*):" />
-					<p:inputText id="descripcion" value="#{tipoEquipoBean.tipoEquipoNuevo.descripcion}" required="true" requiredMessage="Introduzca la descripción del tipo de equipo" maxlength="100" converter="#{trimConverter}"/>
+					<p:inputText id="descripcion" value="#{descripcion}" required="true" requiredMessage="Introduzca la descripción del tipo de equipo" maxlength="100" converter="#{trimConverter}"/>
 					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 					
 					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{tipoEquipoBean.altaTipo}" value="Crear tipo de equipo" icon="fa fa-fw fa-save"/>
+						<p:commandButton actionListener="#{tipoEquipoBean.altaTipo(codigo, descripcion)}" value="Crear tipo de equipo" icon="fa fa-fw fa-save"/>
 						<p:button outcome="/equipos/tiposEquipo" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					</div>
 			
-					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-						<p:ajax event="close" listener="#{facesUtilities.redirect('/equipos/tiposEquipo')}" />
+					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 						<div class="centrarBotonesDialog">
-							<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/equipos/tiposEquipo')}" />
+							<p:button value="Cerrar" outcome="/equipos/tiposEquipo" />
 						</div>
 					</p:dialog>
 					

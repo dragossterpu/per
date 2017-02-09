@@ -153,7 +153,7 @@ public class User implements Serializable {
 		this.setEstado(EstadoEnum.ACTIVO);
 		this.setNombre(PROVISIONAL);
 		this.setApellido1(PROVISIONAL);
-		this.setDocIndentidad(PROVISIONAL);
+		this.setDocIndentidad("000000000T");
 		this.setCorreo(username);
 		this.setNumIdentificacion(PROVISIONAL);
 		this.setFechaDestinoIPSS(new Date());
@@ -169,7 +169,7 @@ public class User implements Serializable {
 		this.setEstado(EstadoEnum.ACTIVO);
 		this.setNombre(PROVISIONAL);
 		this.setApellido1(PROVISIONAL);
-		this.setDocIndentidad(PROVISIONAL);
+		this.setDocIndentidad("000000000T");
 		this.setCorreo(correoPrincipal);
 		this.setNumIdentificacion(PROVISIONAL);
 		this.setFechaDestinoIPSS(new Date());

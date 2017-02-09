@@ -56,7 +56,7 @@ public class InspeccionesService implements IInspeccionesService {
 	}
 
 	@Override
-	public List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad) {
-		return inspeccionesRepository.findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(nombreUnidad);
+	public List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad) {
+		return inspeccionesRepository.findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(nombreUnidad);
 	}
 }

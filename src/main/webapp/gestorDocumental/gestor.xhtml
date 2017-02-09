@@ -17,11 +17,10 @@
 			<h:form>
 		    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.recargaLista}" autoRun="true" />
 			</h:form>
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="Error">
-				<p:ajax event="close" listener="#{facesUtilities.redirect('/gestorDocumental/gestor')}" />
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/gestorDocumental/gestor')}" />
+					<p:button value="Cerrar" outcome="/gestorDocumental/gestor" />
 				</div>
 			</p:dialog>
 				<h:form id="formAlta">
@@ -29,7 +28,7 @@
 			
 					 
 					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
-			         	multiple="true" update=":formAlta:panelDocumentos tablaDocumentos"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" />			 			   					   		 
+			         	multiple="true" update=":formAlta:panelDocumentos tablaDocumentos"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" />			 			   					   		 
 			   		
 					
 					<p:outputPanel id="panelDocumentos">

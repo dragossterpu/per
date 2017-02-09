@@ -159,7 +159,7 @@ public class SolicitudDocPreviaBean implements Serializable {
 			else {
 				String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
 				if (solicitudDocumentacionService
-						.findByFechaFinalizacionIsNullAndCorreoDestinatario(correoDestinatario) != null) {
+						.findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(correoDestinatario) != null) {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
 							"No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
 									+ ", ya existe otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
@@ -376,9 +376,10 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Gestiona la transición entre pestañas en el formulario de creación de solicitudes. 
-	 * En caso de pasar a la pestaña de documentación se carga aquella que vaya asociada al ámbito seleccionado en la pestaña anterior, 
-	 * y se controla que se escoja al menos un documento o se cornfirme que no se desea ninguno para esta solicitud antes de pasar a una pestaña posterior.
+	 * Gestiona la transición entre pestañas en el formulario de creación de solicitudes. En caso de pasar a la pestaña
+	 * de documentación se carga aquella que vaya asociada al ámbito seleccionado en la pestaña anterior, y se controla
+	 * que se escoja al menos un documento o se cornfirme que no se desea ninguno para esta solicitud antes de pasar a
+	 * una pestaña posterior.
 	 * 
 	 * @author EZENTIS
 	 * @param event info de la pestaña actual y la siguente que se solicita
@@ -395,7 +396,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 				listadoDocumentos = tipoDocumentacionService.findByAmbito(ambito);
 			}
 		}
-		if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep()) && documentosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
+		if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())
+				&& documentosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
 					"Debe elegir uno o más documentos o confirmar que no desea ninguno", "", "");
 			return event.getOldStep();
@@ -466,8 +468,8 @@ public class SolicitudDocPreviaBean implements Serializable {
 	}
 
 	/**
-	 * Modifica los datos de la solicitud de documentación previa. 
-	 * En caso de que la fecha límite de envío por parte de la unidad sea alterada, se notifica por correo electrónico dicho cambio.
+	 * Modifica los datos de la solicitud de documentación previa. En caso de que la fecha límite de envío por parte de
+	 * la unidad sea alterada, se notifica por correo electrónico dicho cambio.
 	 * 
 	 * @author EZENTIS
 	 */

@@ -86,7 +86,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 	private String vieneDe;
 
 	@Autowired
-	private PdfGenerator pdfGenerator;
+	private transient PdfGenerator pdfGenerator;
 
 	public void visualizarSolicitud() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -95,7 +95,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			// ñapa
 			try {
 				solicitudDocumentacionPrevia = solicitudDocumentacionService
-						.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(correo);
+						.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(correo);
 				listadoDocumentosPrevios = tipoDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 				listadoDocumentosCargados = gestDocumentacionService
@@ -111,9 +111,9 @@ public class ProvisionalSolicitudBean implements Serializable {
 		String nombreArchivo = archivo.getFileName();
 		String extensionArchivo = extensiones.get(archivo.getContentType());
 		for (DocumentacionPrevia dp : listadoDocumentosPrevios) {
-			if (nombreArchivo.startsWith(dp.getNombre()))
+			if (nombreArchivo.toLowerCase().startsWith(dp.getNombre()))
 				for (String ext : dp.getExtensiones()) {
-					if (extensionArchivo.equals(ext))
+					if (extensionArchivo.equalsIgnoreCase(ext))
 						return true;
 				}
 		}
@@ -262,7 +262,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 		try {
 			solicitudDocumentacionPrevia = solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatario(correo);
+					.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(correo);
 			if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
 				String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
 				if ("GC".equals(ambito) || "PN".equals(ambito)) {

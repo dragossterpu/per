@@ -81,13 +81,15 @@
 										pattern="dd/MM/yyyy" locale="es"
 										mindate="#{utilities.getCurrentDate()}"
 										navigator="true" required="true"
-										requiredMessage="Es obligatorio una fecha limite envío documentación" />
+										requiredMessage="Es obligatorio una fecha limite envío documentación">
+										<p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')"/>
+									</p:calendar>
 
 									<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):"/>
 									<p:calendar id="fechaLimiteCumplimentar"
 										value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"
 										pattern="dd/MM/yyyy" locale="es" 
-										mindate="#{utilities.getCurrentDate()}"
+										mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"
 										navigator="true" required="true"
 										requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"/>
 										
@@ -201,14 +203,11 @@
 									<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia"
 										value="Cancelar" icon="fa fa-fw fa-undo" />
 								</div>
-								<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-									<p:ajax event="close"
-										listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia', 'vieneDe=menu')}" />
+								<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 									<p:messages for="dialogMessage" autoUpdate="true"
 										showDetail="true" showSummary="true" />
 									<div class="centrarBotonesDialog">
-										<p:commandButton value="Cerrar"
-											actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia', 'vieneDe=menu')}" />	
+										<p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia?vieneDe=menu" />
 									</div>
 								</p:dialog>
 							</p:panel>

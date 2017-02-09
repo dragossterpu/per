@@ -25,6 +25,6 @@ public interface IInspeccionesService {
 
 	List<Inspeccion> findByNumeroLike(String numeroInspeccion);
 
-	List<Inspeccion> findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(String nombreUnidad);
+	List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad);
 
 }

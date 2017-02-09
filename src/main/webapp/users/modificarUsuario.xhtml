@@ -90,7 +90,7 @@
 					<p:inputText id="correo" value="#{userBean.user.correo}"  required="true" 
 						requiredMessage="Introduzca el correo electrónico" disabled="#{noEsAdmin}"
 						validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
-						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+						<f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 					</p:inputText>
 					<p:messages for="correo" autoUpdate="true"  closable="true"/>
 					
@@ -221,11 +221,10 @@
 				<p:commandButton actionListener="#{userBean.restaurarClave}" value="Restaurar clave" rendered="#{not noEsAdmin}"/>
 			</div>
 			
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-				<p:ajax event="close" listener="#{facesUtilities.redirect('/users/usuarios')}" />
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/users/usuarios')}" />
+					<p:button value="Cerrar" outcome="/users/usuarios" />
 				</div>
 			</p:dialog>
 			

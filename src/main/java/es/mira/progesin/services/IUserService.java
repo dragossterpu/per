@@ -26,15 +26,15 @@ public interface IUserService {
 
 	User findOne(String id);
 
+	User findByUsernameIgnoreCase(String id);
+
 	Iterable<User> save(Iterable<User> entities);
 
 	User save(User entity);
 
-	User findByParams(String nif, String correo);
+	User findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(String nif, String correo);
 
 	User findByCorreo(String correo);
-
-	User findByCorreoOrDocIndentidad(String nif, String correo);
 
 	List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda);
 

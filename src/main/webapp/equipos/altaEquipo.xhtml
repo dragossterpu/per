@@ -146,14 +146,11 @@
 											value="Crear equipo" />
 										<p:button outcome="/equipos/equipos" value="Cancelar" />
 									</div>
-									<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-										<p:ajax event="close"
-											listener="#{facesUtilities.redirect('/equipos/equipos', 'vieneDe=menu')}" />
+									<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 										<p:messages for="dialogMessage" autoUpdate="true"
 											showDetail="true" showSummary="true" />
 										<div class="centrarBotonesDialog">
-											<p:commandButton value="Cerrar"
-												actionListener="#{facesUtilities.redirect('/equipos/equipos', 'vieneDe=menu')}" />
+											<p:button value="Cerrar" outcome="/equipos/equipos?vieneDe=menu" />
 										</div>
 									</p:dialog>
 								</p:panel>

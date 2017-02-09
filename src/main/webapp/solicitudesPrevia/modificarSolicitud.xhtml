@@ -119,7 +119,7 @@
 							disabled="#{yaValidado or not esJefeInspeccionesApoyo}"
 							validatorMessage="Formato de correo incorrecto o dominio no válido.">
 							<f:validateRegex
-								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+								pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 						</p:inputText>
 						<p:messages for="apoyoCorreo" autoUpdate="true" closable="true"/>
 																			
@@ -132,11 +132,10 @@
 				<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			</div>
 			
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-				<p:ajax event="close" listener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/solicitudesPrevia/busquedaSolicitudesDocPrevia')}" />
+					<p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" />
 				</div>
 			</p:dialog>
 			
