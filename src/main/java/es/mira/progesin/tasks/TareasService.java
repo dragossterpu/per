@@ -70,7 +70,8 @@ public class TareasService implements ITareasService {
 
 	public void recordatorioEnvioCuestionario() {
 		try {
-			List<CuestionarioEnvio> lista = cuestionarioEnvioService.findAll();
+			List<CuestionarioEnvio> lista = cuestionarioEnvioService
+					.findFechaFinalizacionIsNullAndFechaAnulacionIsNullAndfechaCumplimentacionIsNull();
 
 			for (int i = 0; i < lista.size(); i++) {
 				CuestionarioEnvio cuestionario = lista.get(i);
@@ -95,9 +96,11 @@ public class TareasService implements ITareasService {
 
 	@Override
 	@Scheduled(cron = "0 0 8 * * MON-FRI")
+
 	public void recordatorioEnvioDocumentacion() {
 		try {
-			List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findAll();
+			List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService
+					.findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNull();
 
 			for (int i = 0; i < lista.size(); i++) {
 
