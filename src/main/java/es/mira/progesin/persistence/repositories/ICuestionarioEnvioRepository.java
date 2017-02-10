@@ -20,5 +20,5 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
 
 	CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
 
-	List<CuestionarioEnvio> findByFechaFinalizacionIsNullAndFechaAnulacionIsNull();
+	List<CuestionarioEnvio> findByFechaFinalizacionIsNullAndFechaAnulacionIsNullAndFechaCumplimentacionIsNull();
 }

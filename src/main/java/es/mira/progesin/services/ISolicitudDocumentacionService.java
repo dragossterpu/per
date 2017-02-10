@@ -39,6 +39,6 @@ public interface ISolicitudDocumentacionService {
 
 	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
 
-	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNull();
+	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNullAndFechaCumplimentacionIsNull();
 
 }

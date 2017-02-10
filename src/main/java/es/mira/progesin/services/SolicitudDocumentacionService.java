@@ -254,9 +254,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
 	}
 
 	@Override
-	public List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNull() {
+	public List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNullAndFechaCumplimentacionIsNull() {
 		return solicitudDocumentacionPreviaRepository
-				.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaBajaIsNull();
+				.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaBajaIsNullAndFechaCumplimentacionIsNull();
 	}
 
 }
