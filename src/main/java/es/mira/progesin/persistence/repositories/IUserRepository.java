@@ -12,11 +12,11 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 public interface IUserRepository extends CrudRepository<User, String> {
-	User findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(String correo, String docIndentidad);
+	User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String docIdentidad);
 
 	User findByCorreo(String correo);
 
-	User findByCorreoOrDocIndentidad(String correo, String docIndentidad);
+	User findByCorreoOrDocIdentidad(String correo, String docIdentidad);
 
 	List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
 

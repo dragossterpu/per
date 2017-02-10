@@ -105,8 +105,8 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(String correo, String nif) {
-		return userRepository.findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(correo, nif);
+	public User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String nif) {
+		return userRepository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
 	}
 
 	@Override

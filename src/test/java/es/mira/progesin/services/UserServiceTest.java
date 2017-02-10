@@ -135,10 +135,10 @@ public class UserServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link es.mira.progesin.services.UserService#findByCorreoOrDocIndentidad(java.lang.String, java.lang.String)}.
+	 * {@link es.mira.progesin.services.UserService#findByCorreoOrDocIdentidad(java.lang.String, java.lang.String)}.
 	 */
 	@Test
-	public final void testFindByCorreoOrDocIndentidad() {
+	public final void testFindByCorreoOrDocIdentidad() {
 		
 	}
 

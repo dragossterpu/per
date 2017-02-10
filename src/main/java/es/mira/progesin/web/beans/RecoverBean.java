@@ -66,7 +66,7 @@ public class RecoverBean implements Serializable {
 			return null;
 		}
 		else {
-			User user = userService.findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(correo, nif);
+			User user = userService.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
 			if (user != null) {
 				try {
 					String password = Utilities.getPassword();

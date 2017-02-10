@@ -32,7 +32,7 @@ public interface IUserService {
 
 	User save(User entity);
 
-	User findByCorreoIgnoreCaseOrDocIndentidadIgnoreCase(String nif, String correo);
+	User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String nif, String correo);
 
 	User findByCorreo(String correo);
 
