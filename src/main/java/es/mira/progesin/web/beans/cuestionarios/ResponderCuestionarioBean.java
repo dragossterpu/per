@@ -292,7 +292,7 @@ public class ResponderCuestionarioBean implements Serializable {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (RoleEnum.PROV_CUESTIONARIO.equals(user.getRole())) {
 			cuestionarioEnviado = cuestionarioEnvioService
-					.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(user.getCorreo());
+					.findNoFinalizadoPorCorreoEnvio(user.getCorreo());
 			visualizarCuestionario.visualizarRespuestasCuestionario(cuestionarioEnviado);
 		}
 	}

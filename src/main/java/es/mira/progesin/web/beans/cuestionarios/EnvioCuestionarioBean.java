@@ -136,11 +136,11 @@ public class EnvioCuestionarioBean implements Serializable {
 		try {
 			// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
 			CuestionarioEnvio cuestionario = cuestionarioEnvioService
-					.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(
+					.findNoFinalizadoPorCorreoEnvio(
 							cuestionarioEnvio.getCorreoEnvio());
 			// Comprobar que no existe un cuestionario enviado sin finalizar para esa inspección
 			CuestionarioEnvio cuestionarioInspeccion = cuestionarioEnvioService
-					.findByInspeccionAndFechaFinalizacionIsNull(cuestionarioEnvio.getInspeccion());
+					.findNoFinalizadoPorInspeccion(cuestionarioEnvio.getInspeccion());
 
 			if (cuestionario == null && cuestionarioInspeccion == null) {
 				String password = Utilities.getPassword();

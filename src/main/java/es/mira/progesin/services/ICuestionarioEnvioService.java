@@ -16,7 +16,7 @@ public interface ICuestionarioEnvioService extends Serializable {
 
 	void enviarCuestionarioService(List<User> user, CuestionarioEnvio cuestionarioEnvio);
 
-	CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(String correo);
+	CuestionarioEnvio findNoFinalizadoPorCorreoEnvio(String correo);
 
 	List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
 
@@ -34,10 +34,10 @@ public interface ICuestionarioEnvioService extends Serializable {
 
 	CuestionarioEnvio findById(Long idCuestionarioEnviado);
 
-	CuestionarioEnvio findByInspeccionAndFechaFinalizacionIsNull(Inspeccion inspeccion);
+	CuestionarioEnvio findNoFinalizadoPorInspeccion(Inspeccion inspeccion);
 
 	CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
 
-	List<CuestionarioEnvio> findByFechaFinalizacionIsNullAndFechaAnulacionIsNullAndfechaCumplimentacionIsNull();
+	List<CuestionarioEnvio> findNoCumplimentados();
 
 }
