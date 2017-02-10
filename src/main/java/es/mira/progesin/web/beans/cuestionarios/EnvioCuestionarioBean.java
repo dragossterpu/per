@@ -108,7 +108,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		try {
 			if ("I.G.P.".equals(cuestionarioEnvio.getInspeccion().getTipoInspeccion().getCodigo())) {
 				List<SolicitudDocumentacionPrevia> listaSolicitudes = solDocService
-						.findSolicitudDocumentacionFinalizadaPorInspeccion(this.cuestionarioEnvio.getInspeccion());
+						.findFinalizadasPorInspeccion(this.cuestionarioEnvio.getInspeccion());
 				if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE) {
 					// Como está ordenado en orden descendente por fecha finalización, recupero la más reciente
 					SolicitudDocumentacionPrevia solDocPrevia = listaSolicitudes.get(0);

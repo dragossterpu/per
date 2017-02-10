@@ -135,7 +135,7 @@ public class SolicitudDocumentacionServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link es.mira.progesin.services.SolicitudDocumentacionService#findSolicitudDocumentacionFinalizadaPorInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
+	 * {@link es.mira.progesin.services.SolicitudDocumentacionService#findFinalizadasPorInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
 	 */
 	@Test
 	public final void testFindSolicitudDocumentacionFinalizadaPorInspeccion() {

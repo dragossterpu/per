@@ -100,7 +100,7 @@ public class TareasService implements ITareasService {
 	public void recordatorioEnvioDocumentacion() {
 		try {
 			List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNullAndFechaCumplimentacionIsNull();
+					.findEnviadasNoCumplimentadas();
 
 			for (int i = 0; i < lista.size(); i++) {
 

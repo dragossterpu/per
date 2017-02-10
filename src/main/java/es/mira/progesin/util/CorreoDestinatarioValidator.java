@@ -38,7 +38,7 @@ public class CorreoDestinatarioValidator implements Validator {
 			throw new ValidatorException(facesMsg);
 		}
 		else if (nuevoCorreoDestinatario.equals(actualCorreoDestinatario) == Boolean.FALSE
-				&& solicitudDocumentacionService.findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(
+				&& solicitudDocumentacionService.findNoFinalizadaPorCorreoDestinatario(
 						nuevoCorreoDestinatario) != null) {
 			FacesMessage facesMsg = new FacesMessage(
 					"Este correo ya existe para otra solicitud en curso. Debe finalizarla o eliminarla antes de proseguir.");

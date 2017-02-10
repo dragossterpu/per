@@ -95,7 +95,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 			// ñapa
 			try {
 				solicitudDocumentacionPrevia = solicitudDocumentacionService
-						.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(correo);
+						.findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
 				listadoDocumentosPrevios = tipoDocumentacionService
 						.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
 				listadoDocumentosCargados = gestDocumentacionService
@@ -262,7 +262,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 		String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 		try {
 			solicitudDocumentacionPrevia = solicitudDocumentacionService
-					.findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(correo);
+					.findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
 			if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
 				String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
 				if ("GC".equals(ambito) || "PN".equals(ambito)) {

@@ -106,10 +106,10 @@ public class InspeccionesServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link es.mira.progesin.services.InspeccionesService#findByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull(java.lang.String)}.
+	 * {@link es.mira.progesin.services.InspeccionesService#findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(java.lang.String)}.
 	 */
 	@Test
-	public final void testFindByNombreUnidadLikeIgnoringCaseAndFechaFinalizacionNull() {
+	public final void testFindByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull() {
 
 	}
 

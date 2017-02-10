@@ -13,9 +13,9 @@ public interface ISolicitudDocumentacionService {
 
 	List<SolicitudDocumentacionPrevia> findAll();
 
-	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(String correo);
+	SolicitudDocumentacionPrevia findNoFinalizadaPorCorreoDestinatario(String correo);
 
-	SolicitudDocumentacionPrevia findByFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
+	SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(
 			String correo);
 
 	void delete(Long id);
@@ -33,12 +33,12 @@ public interface ISolicitudDocumentacionService {
 	boolean transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
 			String usuarioProv);
 
-	List<SolicitudDocumentacionPrevia> findSolicitudDocumentacionFinalizadaPorInspeccion(Inspeccion inspeccion);
+	List<SolicitudDocumentacionPrevia> findFinalizadasPorInspeccion(Inspeccion inspeccion);
 
 	void transaccDeleteElimDocPrevia(Long idSolicitud);
 
-	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
+	List<SolicitudDocumentacionPrevia> findNoFinalizadasPorInspeccion(Inspeccion inspeccion);
 
-	List<SolicitudDocumentacionPrevia> findByFechaFinalizacionIsNullAndFechaEnvioIsNullAndyFechaBajaIsNullAndFechaCumplimentacionIsNull();
+	List<SolicitudDocumentacionPrevia> findEnviadasNoCumplimentadas();
 
 }
