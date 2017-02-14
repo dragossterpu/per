@@ -86,9 +86,6 @@ public class User implements Serializable {
     @Column(name = "despacho", length = 20)
     protected String despacho;
     
-    @Column(name = "num_identificacion", length = 15, nullable = false)
-    protected String numIdentificacion;
-    
     @ManyToOne
     @JoinColumn(name = "ID_CUERPO")
     private CuerpoEstado cuerpoEstado;
@@ -155,7 +152,6 @@ public class User implements Serializable {
         this.setApellido1(PROVISIONAL);
         this.setDocIdentidad("000000000T");
         this.setCorreo(username);
-        this.setNumIdentificacion(PROVISIONAL);
         this.setFechaDestinoIPSS(new Date());
         this.setNivel(0);
         this.setFechaAlta(new Date());
@@ -171,7 +167,6 @@ public class User implements Serializable {
         this.setApellido1(PROVISIONAL);
         this.setDocIdentidad("000000000T");
         this.setCorreo(correoPrincipal);
-        this.setNumIdentificacion(PROVISIONAL);
         this.setFechaDestinoIPSS(new Date());
         this.setNivel(0);
         this.setFechaAlta(new Date());

@@ -17,74 +17,72 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 
 @Service
 public class LoginService implements UserDetailsService {
-	@Autowired
-	private IUserService userService;
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findByUsernameIgnoreCase(username);
-		if (null == user) {
-			throw new UsernameNotFoundException("El usuario " + username + " no existe.");
-		}
-		else {
-			return new UserRepositoryUserDetails(user);
-		}
-	}
-
-	private static final class UserRepositoryUserDetails extends User implements UserDetails {
-
-		private static final long serialVersionUID = 1L;
-
-		private UserRepositoryUserDetails(User user) {
-			super();
-			username = user.getUsername();
-			password = user.getPassword();
-			nombre = user.getNombre();
-			apellido1 = user.getApellido1();
-			apellido2 = user.getApellido2();
-			role = user.getRole();
-			correo = user.getCorreo();
-			docIdentidad = user.getDocIdentidad();
-			estado = user.getEstado();
-			telefono = user.getTelefono();
-			fechaAlta = user.getFechaAlta();
-			fechaBaja = user.getFechaBaja();
-			numIdentificacion = user.getNumIdentificacion();
-		}
-
-		@Override
-		public Collection<? extends GrantedAuthority> getAuthorities() {
-			Set<GrantedAuthority> authorities = new HashSet<>();
-			authorities.add(new SimpleGrantedAuthority(role.name()));
-			return authorities;
-		}
-
-		@Override
-		public boolean isAccountNonExpired() {
-			if (fechaBaja != null) {
-				return false;
-			}
-			return true;
-		}
-
-		@Override
-		public boolean isAccountNonLocked() {
-			if (EstadoEnum.ACTIVO.equals(estado)) {
-				return true;
-			}
-			return false;
-		}
-
-		@Override
-		public boolean isCredentialsNonExpired() {
-			return true;
-		}
-
-		@Override
-		public boolean isEnabled() {
-			return true;
-		}
-
-	}
-
+    @Autowired
+    private IUserService userService;
+    
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userService.findByUsernameIgnoreCase(username);
+        if (null == user) {
+            throw new UsernameNotFoundException("El usuario " + username + " no existe.");
+        } else {
+            return new UserRepositoryUserDetails(user);
+        }
+    }
+    
+    private static final class UserRepositoryUserDetails extends User implements UserDetails {
+        
+        private static final long serialVersionUID = 1L;
+        
+        private UserRepositoryUserDetails(User user) {
+            super();
+            username = user.getUsername();
+            password = user.getPassword();
+            nombre = user.getNombre();
+            apellido1 = user.getApellido1();
+            apellido2 = user.getApellido2();
+            role = user.getRole();
+            correo = user.getCorreo();
+            docIdentidad = user.getDocIdentidad();
+            estado = user.getEstado();
+            telefono = user.getTelefono();
+            fechaAlta = user.getFechaAlta();
+            fechaBaja = user.getFechaBaja();
+        }
+        
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            Set<GrantedAuthority> authorities = new HashSet<>();
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+            return authorities;
+        }
+        
+        @Override
+        public boolean isAccountNonExpired() {
+            if (fechaBaja != null) {
+                return false;
+            }
+            return true;
+        }
+        
+        @Override
+        public boolean isAccountNonLocked() {
+            if (EstadoEnum.ACTIVO.equals(estado)) {
+                return true;
+            }
+            return false;
+        }
+        
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+        
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+        
+    }
+    
 }
