@@ -56,18 +56,17 @@ insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextva
   insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
   values (13, 'cuestionario modificado', '01/09/2016', 'cuestionarios 13', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
 
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo1', 'CUESTIONARIO.CIES', 1, 'CUESTIONARIO.CIES.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo2', 'A - GC - Cuestionario Zona GENERICO', 2, 'A - GC - Cuestionario Zona GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ', 3, 'A.- Cuestionario  JEFATURA SUPERIOR .docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO', 4, 'B - GC - Cuestionario Comandancia GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL', 5, 'B.- Cuestionario COMISARIA PROVINCIAL.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo6', 'C - GC - Cuestionario Compañia GENERICO', 6, 'C - GC - Cuestionario Compañía GENERICO.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0', 7, 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0.docx');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo8', 'CUESTIONARIO PRLCNP', 8, 'CUESTIONARIO PRLCNP.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA', 10, 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo11', 'CUESTIONARIOPRLGC', 11, 'CUESTIONARIOPRLGC.doc');
-Insert into  modeloscuestionarios (id,codigo,descripcion,id_documento,nombre) Values (seq_modeloscuestionarios.nextval, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0', 12, 'D.- Cuestionario COMISARÍA DISTRITO V0.docx');
-
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo1', 'CUESTIONARIO.CIES');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo2', 'A - GC - Cuestionario Zona GENERICO');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo3', 'A.- Cuestionario  JEFATURA SUPERIOR ');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo4', 'B - GC - Cuestionario Comandancia GENERICO');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo5', 'B.- Cuestionario COMISARIA PROVINCIAL');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo6', 'C - GC - Cuestionario Compañia GENERICO');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo7', 'C.- Cuestionario  COMISARÍA LOCAL TIPO V0');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo8', 'CUESTIONARIO PRLCNP');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo10', 'CUESTIONARIO.CIES UNIDAD DE VIGILANCIA');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo11', 'CUESTIONARIOPRLGC');
+Insert into  modeloscuestionarios (id,codigo,descripcion) Values (seq_modeloscuestionarios.nextval, 'codigo12', 'D.- Cuestionario COMISARÍA DISTRITO V0');
 
   ------------- áreas cuestionario
 

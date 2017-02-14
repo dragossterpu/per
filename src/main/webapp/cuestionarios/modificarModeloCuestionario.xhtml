@@ -14,7 +14,7 @@
 		
 		
 		
-		<h:form >
+		<h:form id="form">
 			<div class="tituloCuestionario">
 				<h:outputText value="#{modificarModeloCuestionarioBean.modeloCuestionario.descripcion}"/> 
 			</div>
@@ -41,7 +41,7 @@
 					</p:panel>
 				</p:tab>	
 				<p:tab id="areas" title="Áreas">
-					<p:orderList id="orderListAreas"  value="#{modificarModeloCuestionarioBean.listaAreasCuestionario}" var="area" itemValue="#{area}" converter="#{selectConverter}" controlsLocation="left" responsive="true">		 
+					<p:orderList id="orderListAreas"  value="#{modificarModeloCuestionarioBean.listaAreasCuestionario}" var="area" itemValue="#{area}" converter="#{areasConverter}" controlsLocation="left" responsive="true">		 
 				        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}" update="nombreArea"/>
 				        <f:facet name="caption">Areas</f:facet> 
 				         <p:column>
@@ -137,7 +137,7 @@
 											<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
 										</p:panel>
 										
-									<p:dialog header="Modal Dialog" widgetVar="dialog" modal="true">
+									<p:dialog header="Introduce nombre" widgetVar="dialog" modal="true">
 										<p:panel>
 											<h:outputLabel for="nombreTipoPregunta" value="Nombre" />
 											<p:inputText id="nombreTipoPregunta" binding="#{modificarModeloCuestionarioBean.nombreTipoPregunta}"></p:inputText>
@@ -155,7 +155,7 @@
 					<p:repeat value="#{modificarModeloCuestionarioBean.modeloCuestionario.areas}" var="area">
 						<p:accordionPanel activeIndex="-1">
 							<p:tab title="#{area.area}">
-								<p:orderList id="orderListPreguntas" value="#{area.preguntas}" var="pregunta" itemValue="#{pregunta}" converter="#{selectConverter}" controlsLocation="left" responsive="true">		 
+								<p:orderList id="orderListPreguntas" value="#{area.preguntas}" var="pregunta" itemValue="#{pregunta}" converter="#{preguntasConverter}" controlsLocation="left" responsive="true">		 
 							        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectPregunta}" update="editarPregunta"/>
 							        <f:facet name="caption">Preguntas</f:facet> 
 							         <p:column>
@@ -193,7 +193,7 @@
 			
 			
 			<p:dialog  widgetVar="dialogCierre" modal="true">
-				<h:outputText class="centrarBotonesDialog" value="El formulario ha sido modificado con éxito"></h:outputText>
+				<h:outputText class="centrarBotonesDialog" value="la operación se ha realizado con éxito"></h:outputText>
 				<div class="centrarBotonesDialog">
 				    <p:commandButton outcome="/cuestionarios/modelosCuestionarios" value="Aceptar" oncomplete="PF('dialogCierre').hide();"/>
 			    </div>

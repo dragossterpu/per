@@ -35,13 +35,12 @@ import lombok.Setter;
 @Getter
 @Controller("modificarModeloCuestionarioBean")
 @Scope("session")
+
 public class ModificarModeloCuestionarioBean {
 
 	ModeloCuestionario modeloCuestionario;
 
 	List<AreasCuestionario> listaAreasCuestionario;
-
-	List<AreasCuestionario> listaAreasCuestionarioAux;
 
 	List<String> listaTipoPreguntas;
 
@@ -105,8 +104,6 @@ public class ModificarModeloCuestionarioBean {
 				.findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
 		listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
 				.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
-		listaAreasCuestionarioAux = areaCuestionarioRepository
-				.findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
 
 		listaTipoPreguntasFinal = new ArrayList<String>();
 
@@ -122,35 +119,27 @@ public class ModificarModeloCuestionarioBean {
 	public String nuevoModelo() {
 		this.modeloCuestionario = new ModeloCuestionario();
 
-		modeloCuestionario.setCodigo("");
 		listaAreasCuestionario = new ArrayList<AreasCuestionario>();
 		listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
 				.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
-		listaAreasCuestionarioAux = new ArrayList<AreasCuestionario>();
 
+		listaTiposPersonalizables = Arrays.asList(TiposRespuestasPersonalizables.values());
 		listaTipoPreguntasFinal = new ArrayList<String>();
 
 		listaTipoPreguntasPick = new DualListModel<String>(listaTipoPreguntas, listaTipoPreguntasFinal);
 
-		return "/cuestionarios/nuevoModeloCuestionario";
+		listadoValoresNuevaRespuesta = new ArrayList<String>();
+		listadoValoresFila = new ArrayList<String>();
+
+		return "/cuestionarios/modificarModeloCuestionario";
 	}
 
-	// public void aniadeArea() {
-	// AreasCuestionario areaAux = new AreasCuestionario();
-	// areaAux.setArea(nombreArea.getLocalValue().toString());
-	// areaAux.setIdCuestionario(modeloCuestionario.getId());
-	// areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
-	// listaAreasCuestionario.add(areaAux);
-	// listaAreasCuestionarioAux.add(areaAux);
-	// }
-
-	public void aniadeArea(String nombreArea) {
+	public void aniadeArea() {
 		AreasCuestionario areaAux = new AreasCuestionario();
-		areaAux.setArea(nombreArea);
+		areaAux.setArea(nombreArea.getLocalValue().toString());
 		areaAux.setIdCuestionario(modeloCuestionario.getId());
 		areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
 		listaAreasCuestionario.add(areaAux);
-		listaAreasCuestionarioAux.add(areaAux);
 	}
 
 	public void onSelectArea(SelectEvent event) {
@@ -159,9 +148,6 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public void borraArea() {
-		String prueba = areaSelec.getArea();
-		areaSelec.setArea(prueba);
-		listaAreasCuestionarioAux.remove(areaSelec);
 		listaAreasCuestionario.remove(areaSelec);
 	}
 
@@ -192,7 +178,7 @@ public class ModificarModeloCuestionarioBean {
 
 		}
 		if ("preguntas".equals(event.getNewStep())) {
-			listaAreasCuestionario = ordenarAreas(listaAreasCuestionarioAux);
+			listaAreasCuestionario = ordenarAreas(listaAreasCuestionario);
 			modeloCuestionario.setAreas(listaAreasCuestionario);
 		}
 		if ("finalizar".equals(event.getNewStep())) {
@@ -265,8 +251,6 @@ public class ModificarModeloCuestionarioBean {
 
 	public void guardaTipoRespuesta() {
 
-		// String seccion=tipoPersonalizado.concat(listadoValoresNuevaRespuesta.toString());
-
 		String seccion = tipoPersonalizado.concat(nombreTipoPregunta.getLocalValue().toString());
 
 		for (int i = 0; i < listadoValoresNuevaRespuesta.size(); i++) {
@@ -318,9 +302,6 @@ public class ModificarModeloCuestionarioBean {
 
 	public void guardaCuestionario() {
 
-		modeloCuestionario.setNombreFichero("");
-		modeloCuestionario.setIdDocumento((long) 0);
-
 		try {
 			if (modeloCuestionarioService.save(modeloCuestionario) != null) {
 				notificacionesService.crearNotificacionRol(
@@ -340,8 +321,7 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public void guardaNuevoCuestionario() {
-		modeloCuestionario.setNombreFichero("");
-		modeloCuestionario.setIdDocumento((long) 0);
+
 		try {
 			if (modeloCuestionarioService.save(modeloCuestionario) != null) {
 				notificacionesService.crearNotificacionRol(
@@ -378,4 +358,5 @@ public class ModificarModeloCuestionarioBean {
 		}
 		return listaNueva;
 	}
+
 }
