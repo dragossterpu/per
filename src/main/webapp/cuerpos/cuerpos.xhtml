@@ -10,7 +10,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-			<h3>Cuerpos de estado</h3>
+			<h3>Cuerpos</h3>
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
@@ -43,8 +43,8 @@
 							<p:commandButton title="Eliminar" icon="fa fa-trash"
 								actionListener="#{cuerposEstadoBean.eliminarCuerpo(cuerpo)}"
 								update="tablaCuerpos">
-								<p:confirm header="Eliminar cuerpo del estado"
-									message="¿Está seguro que desea eliminar este cuerpo del estado?"
+								<p:confirm header="Eliminar cuerpo"
+									message="¿Está seguro que desea eliminar este cuerpo?"
 									icon="fa fa-warning-sign" />
 							</p:commandButton>
 						</p:column>

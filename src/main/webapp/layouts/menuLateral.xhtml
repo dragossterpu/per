@@ -6,8 +6,8 @@
 <h:form>
 	<p:menu rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
 		<p:submenu label="Administración" rendered="#{p:ifGranted('ADMIN')}">
-			<p:menuitem value="Cuerpos del estado" outcome="/cuerpos/cuerpos" />
-			<p:menuitem value="Tipos de equipo" outcome="/equipos/tiposEquipo"  />
+			<p:menuitem value="Cuerpos" outcome="/cuerpos/cuerpos" />
+			<p:menuitem value="Tipos de equipo" outcome="/equipos/tiposEquipo" />
 			<p:menuitem value="Registro de actividad" outcome="/registro/registro">
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>	

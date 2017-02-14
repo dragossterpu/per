@@ -65,10 +65,6 @@
 						<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" yearRange="c-100:c"
 								disabled="#{noEsAdmin}"/>
 						
-						<h:outputLabel for="numIdentificacion" value="Número de identificación (*):" />
-						<p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}" required="true" requiredMessage="Introduzca el número de identificación" maxlength="15" converter="#{trimConverter}" disabled="#{noEsAdmin}"/>
-						<p:messages for="numIdentificacion" autoUpdate="true"  closable="true"/>
-						
 					</div>
 			</div>
 			<div class="bloqueFormulario">
