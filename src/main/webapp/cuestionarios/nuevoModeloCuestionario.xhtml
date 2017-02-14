@@ -25,13 +25,13 @@
 					<p:panel header="Nombre">
 						<h:panelGrid columns="2" columnClasses="label, value">
 							<h:outputLabel for="nombreModelo" value="Nombre del modelo:" />
-								<p:inputText 
+								<p:inputText id="nombreModelo"
 									value="#{modificarModeloCuestionarioBean.modeloCuestionario.descripcion}"
 									converter="#{trimConverter}"
 									required="true"
 									maxlength="255"/>
 							<h:outputLabel for="codigoModelo" value="Código del modelo:" />
-								<p:inputText 
+								<p:inputText id="codigoModelo"
 									value="#{modificarModeloCuestionarioBean.modeloCuestionario.codigo}"
 									converter="#{trimConverter}"
 									required="true"
@@ -42,15 +42,17 @@
 				</p:tab>	
 				<p:tab id="areas" title="Áreas">
 					<p:orderList  id="orderListAreas2"  value="#{modificarModeloCuestionarioBean.listaAreasCuestionario}" var="area" itemValue="#{area}" converter="#{selectConverter}" controlsLocation="left" responsive="true">		 
-				        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}" update="nombreArea"/>
+				        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}" update="inputArea"/>
 				        <f:facet name="caption">Areas</f:facet> 
 				         <p:column>
 				            <h:outputText value="#{area.area}" />
 				        </p:column>
 				    </p:orderList>
 				    <p:panel>    
-				    	<p:inputText  id="nombreArea" binding="#{modificarModeloCuestionarioBean.nombreArea}"  converter="#{trimConverter}" maxlength="255"/>
-					    <p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeArea}" update="orderListAreas2" 
+				    	<!-- <p:inputText  id="nombreArea" binding="#{modificarModeloCuestionarioBean.nombreArea}"  converter="#{trimConverter}" maxlength="255"/> -->
+				    	<p:inputText id="inputArea" binding="#{nombreArea}" 
+							required="true" requiredMessage="Introduzca un nombre para el cuestionario"/>
+					    <p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeArea(nombreArea.value)}" update="orderListAreas2" 
 					    	value="Añadir area" icon="fa fa-fw fa-plus">
 					    </p:commandButton>
 					    <p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraArea}" update="orderListAreas2" 
