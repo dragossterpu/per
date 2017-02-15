@@ -14,8 +14,7 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-				
-				
+		
 					<p:dataTable id="tablaCuerpos" var="cuerpo" rowIndexVar="rowIndex" 
 						value="#{cuerposEstadoBean.listaCuerposEstado}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
 						<p:ajax event="rowEdit" listener="#{cuerposEstadoBean.onRowEdit}"
@@ -28,6 +27,7 @@
 								<f:facet name="output">
 									<h:outputText value="#{cuerpo.descripcion}" />
 								</f:facet>
+								
 								<f:facet name="input">
 									<p:inputText id="cuerpoInput" value="#{cuerpo.descripcion}" converter="#{trimConverter}" required="true"
 										requiredMessage="El nombre del cuerpo no puede estar vacío" />
@@ -35,6 +35,20 @@
 								</f:facet>
 							</p:cellEditor> 
 				       </p:column>
+				       
+				       <p:column headerText="Nombre corto">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cuerpo.nombreCorto}" />
+								</f:facet>
+								
+								<f:facet name="input">
+									<p:inputText id="nombreCortoInput" value="#{cuerpo.nombreCorto}" converter="#{trimConverter}" required="true"
+										requiredMessage="El nombre del cuerpo no puede estar vacío" />
+										<p:messages for="nombreCortoInput" autoUpdate="true"  closable="true"/>
+								</f:facet>
+							</p:cellEditor> 
+				      </p:column>
 
 						<p:column styleClass="botonTabla">
 							<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>

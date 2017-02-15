@@ -59,6 +59,14 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 	width: 100% !important;
 }
 
+.ui-paginator-rpp-options {
+ 	width: 50px !important;
+  	background-color: #fff !important;
+  	height: 20px !important;
+  	margin-top: 9px !important;
+  	font-size: 10px !important;
+}
+  	
 /* sobreescritura de los estilos propios de primefaces fin */
 
 body {

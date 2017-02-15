@@ -21,72 +21,103 @@
 					<h:outputLabel for="apellido1" value="Primer apellido:" />
 					<p:inputText id="apellido1" value="#{userBean.user.apellido1}"
 						disabled="true" />
-
-					<h:outputLabel for="correo" value="Correo electrónico: " />
-					<p:inputText id="correo" value="#{userBean.user.correo}" disabled="true" />
-					
-					<h:outputLabel for="fechaDestino" value="Fecha destino IPSS:" />
-					<p:inputText id="fechaDestino" value="#{userBean.user.fechaDestinoIPSS}" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
-					</p:inputText>
-				</div>
-
+						
+					<h:outputLabel for="apellido2" value="Segundo apellido:" />
+						<p:inputText id="apellido2" value="#{userBean.user.apellido2}"
+						disabled="true" />
+						
+					<h:outputLabel for="docIdentidad" value="NIF: " />
+					<p:inputText id="docIdentidad" value="#{userBean.user.docIdentidad}" disabled="true" />
+				
+				</div>	
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="fechaAlta" value="Fecha alta:" />
 					<p:inputText id="fechaAlta" value="#{userBean.user.fechaAlta}" disabled="true">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</p:inputText>
-
-					<h:outputLabel for="apellido2" value="Segundo apellido:" />
-					<p:inputText id="apellido2" value="#{userBean.user.apellido2}" disabled="true" />
-
-					<h:outputLabel for="telefono" value="Teléfono:" />
-					<p:inputText id="telefono" value="#{userBean.user.telefono}" disabled="true" />
-
-					<h:outputLabel for="docIdentidad" value="NIF: " />
-					<p:inputText id="docIdentidad" value="#{userBean.user.docIdentidad}" disabled="true" />
 					
-					<h:outputLabel for="categoria" value="Categoria: " />
-					<p:inputText id="categoria" value="#{userBean.user.categoria}" disabled="true" />
-				</div>
+					<h:outputLabel for="fechaDestino" value="Fecha destino IPSS:" />
+					<p:inputText id="fechaDestino" value="#{userBean.user.fechaDestinoIPSS}" disabled="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+					</p:inputText>
+					
+					<h:outputLabel for="fechaIngreso" value="Fecha de ingreso en el cuerpo:" />
+					<p:inputText id="fechaIngreso" value="#{userBean.user.fechaIngreso}" disabled="true" >
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+					</p:inputText>
+				</div>		
 		</div>
 
 		<div class="bloqueFormulario">
-			<h3>Perfil</h3>
+			<h3>Datos de contacto</h3>
 
 			<div class="columnaIzdaFormulario">
-				<h:outputLabel for="username" value="Nombre usuario:" />
-				<p:inputText id="username" value="#{userBean.user.username}"
-					disabled="true" />
-					
-				<h:outputLabel for="estado" value="Estado:" />
-				<p:inputText id="estado" value="#{userBean.user.estado}" disabled="true" />
-									
-				<h:outputLabel for="role" value="Rol:" />
-				<p:inputText id="role" value="#{userBean.user.role}" disabled="true" />
-
-				<h:outputLabel for="puestoTrabajo" value="Puesto de trabajo:" />
-				<p:inputText id="puestoTrabajo" value="#{userBean.user.puestoTrabajo.descripcion}" disabled="true" />
+			
+				<h:outputLabel for="telefono" value="Teléfono:" />
+				<p:inputText id="telefono" value="#{userBean.user.telefono}" disabled="true" />
+				
+				<h:outputLabel for="telefonoMovilOficial" value="Teléfono móvil oficial:" />
+				<p:inputText id="telefonoMovilOficial" value="#{userBean.user.telefonoMovilOficial}" disabled="true" />
+				
+				<h:outputLabel for="telefonoMovilParticular" value="Teléfono particular:" />
+				<p:inputText id="telefonoMovilParticular" value="#{userBean.user.telefonoMovilParticular}" disabled="true" />
+				
 			</div>
 			
 			<div class="columnaDchaFormulario">
-				<h:outputLabel for="cuerpoEstado" value="Cuerpo del estado:" />
-				<p:inputText id="cuerpoEstado" value="#{userBean.user.cuerpoEstado.descripcion}" disabled="true" />
+				<h:outputLabel for="correo" value="Correo electrónico:" />
+				<p:inputText id="correo" value="#{userBean.user.telefono}" disabled="true" />
 
-				<h:outputLabel for="nivel" value="Nivel:" />
-				<p:inputText id="nivel" value="#{userBean.user.nivel}" disabled="true" />
-				
 				<h:outputLabel for="despacho" value="Despacho:" />
 				<p:inputText id="despacho" value="#{userBean.user.despacho}" disabled="true" />
 				
 			</div>
-		</div>
 		
+		</div>
+		<div class="bloqueFormulario">
+			<h3>Perfil</h3>
+		
+			<div class="columnaIzdaFormulario">
+				<h:outputLabel for="username" value="Nombre usuario:" />
+				<p:inputText id="username" value="#{userBean.user.username}" disabled="true" />
+						
+				<h:outputLabel for="estado" value="Estado:" />
+				<p:inputText id="estado" value="#{userBean.user.estado}" disabled="true" />
+										
+				<h:outputLabel for="role" value="Rol:" />
+				<p:inputText id="role" value="#{userBean.user.role}" disabled="true" />
+	
+				<h:outputLabel for="puestoTrabajo" value="Puesto de trabajo:" />
+				<p:inputText id="puestoTrabajo" value="#{userBean.user.puestoTrabajo.descripcion}" disabled="true" />
+				
+				<h:outputLabel for="nivel" value="Nivel:" />
+				<p:inputText id="nivel" value="#{userBean.user.nivel}" disabled="true" />
+			</div>
+		
+			<div class="columnaDchaFormulario">
+				<h:outputLabel for="cuerpoEstado" value="Cuerpo del estado:" />
+				<p:inputText id="cuerpoEstado" value="#{userBean.user.cuerpoEstado.descripcion}" disabled="true" />
+				
+				<h:outputLabel for="empleo" value="Empleo:" />
+				<p:inputText id="empleo" value="#{userBean.user.empleo.descripcion}" disabled="true" />
+				
+				<h:outputLabel for="departamento" value="Departamento:" />
+				<p:inputText id="departamento" value="#{userBean.user.departamento.descripcion}" disabled="true" />
+				
+				<h:outputLabel for="categoria" value="Categoria:" />
+				<p:inputText id="categoria" value="#{userBean.user.categoria}" disabled="true" />
+				
+				<h:outputLabel for="clase" value="Clase:" />
+				<p:inputText id="clase" value="#{userBean.user.claseUsuario.clase}" disabled="true" />
+				
+			</div>
+		</div>
+					
 		<h3>Contraseña</h3>
 		
 		<div class="bloqueFormulario">
 			<div class="columnaIzdaFormulario">
-				<h:form id="passwordForm">
+			<h:form id="passwordForm">
 					<h:outputLabel for="claveActual" value="Contraseña actual:" />
 					<p:password value="#{miPerfilBean.claveActual}" required="true"
 						id="claveActual" requiredMessage="Introduzca la contraseña actual" />

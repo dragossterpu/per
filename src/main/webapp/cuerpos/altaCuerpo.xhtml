@@ -19,6 +19,11 @@
 					<p:inputText id="descripcion" value="#{cuerposEstadoBean.cuerpoNuevo}" required="true" requiredMessage="Introduzca el nombre del cuerpo" converter="#{trimConverter}"/>
 					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 					
+					<h:outputLabel for="nombre_corto" value="Nombre corto del cuerpo (*):" />
+					<p:inputText id="nombre_corto" value="#{cuerposEstadoBean.nombreCortoNuevo}" required="true" requiredMessage="Introduzca el nombre corto del cuerpo" converter="#{trimConverter}"/>
+					<p:messages for="nombre_corto" autoUpdate="true"  closable="true"/>
+					
+					
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{cuerposEstadoBean.altaCuerpo}" value="Crear cuerpo" icon="fa fa-fw fa-save"/>
 						<p:button outcome="/cuerpos/cuerpos" value="Cancelar" icon="fa fa-fw fa-undo"/>

@@ -1,9 +1,9 @@
-insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(1, 'Policía Nacional', 'system', current_date, null, null,null,null);
-insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(2, 'Guardia Civil', 'system', current_date, null, null,null,null);
-insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(3, 'Cuerpo General de la Administración', 'system', current_date, null, null,null,null);
-insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(4, 'Cuerpos Comunes de la Defensa', 'system', current_date, null, null,null,null);
-insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(5, 'Contratados', 'system', current_date, null, null,null,null);
-insert into CUERPOSESTADO (id, descripcion, username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(6, 'Correos y Telégrafos', 'system', current_date, null, null,null,null);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(1, 'Policía Nacional', 'PN','system', current_date, null, null,null,null);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(2, 'Guardia Civil','GC', 'system', current_date, null, null,null,null);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(3, 'Cuerpo General de la Administración','CGA', 'system', current_date, null, null,null,null);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(4, 'Cuerpos Comunes de la Defensa','CCD','system', current_date, null, null,null,null);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(5, 'Contratados','CONTR', 'system', current_date, null, null,null,null);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(6, 'Correos y Telégrafos','CT', 'system', current_date, null, null,null,null);
  
  
 insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Subdirector General', 30, 'FCSE');
