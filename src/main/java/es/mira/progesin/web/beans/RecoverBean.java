@@ -33,10 +33,6 @@ public class RecoverBean implements Serializable {
 
 	private static final String ERROR = "Error";
 
-	private String correo;
-
-	private String nif;
-
 	@Autowired
 	private transient IUserService userService;
 
@@ -58,7 +54,7 @@ public class RecoverBean implements Serializable {
 	 * @author EZENTIS
 	 * @return vista recuperarPassword
 	 */
-	public String claveOlvidada() {
+	public String claveOlvidada(String correo, String nif) {
 
 		if ("".equals(nif) && "".equals(correo)) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,

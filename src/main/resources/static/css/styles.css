@@ -137,3 +137,7 @@ a.ui-messages-close {
 	color: red;
 	padding-top: 10px;
 }
+
+.centrarBotonesDialog{
+	text-align: center;
+}
