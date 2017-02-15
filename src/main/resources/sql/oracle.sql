@@ -152,7 +152,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (40, 'Instalaciones/aparatos sujetos a mantenimiento / revisión e inspección. 
 * OCA (Organismo de Control Autorizado)
 *En caso negativo indicar el año de fabricación
-**En el caso de que no requiera ninguna de estas operaciones debe indicarse que NO PROCEDE. Igualmente, durante el proceso inspector se acreditarán los últimos mantenimientos, revisiones e inspecciones realizadas.', 1, 'MATRIZINSTALACIONESMANTENIMIENTO', 40);
+**En el caso de que no requiera ninguna de estas operaciones debe indicarse que NO PROCEDE. Igualmente, durante el proceso inspector se acreditarán los últimos mantenimientos, revisiones e inspecciones realizadas.', 1, 'MATRIZINSTALACIONES', 40);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (41, 'Prevención control legionela (analíticas realizadas). Fecha de las últimas operaciones efectuadas y empresa que las ha llevado a cabo.', 1, 'TEXTAREA', 41);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (42, 'Otras estancias, instalaciones y/o equipos de riesgo (especificar).', 1, 'INPUT', 42);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (43, 'En el caso de que existan contratos de mantenimiento de las anteriores instalaciones y equipamientos, ya sean de tipo preventivo, correctivo y/o técnico legal, se remitirá copia del pliego de prescripciones técnicas o de las condiciones de prestación de dicho servicio.', 1, 'ADJUNTO', 43);
