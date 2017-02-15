@@ -194,13 +194,13 @@
 				<p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			</div>
 			
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO">
-				<p:ajax event="close" listener="#{facesUtilities.redirect('/users/usuarios')}" />
-				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" actionListener="#{facesUtilities.redirect('/users/usuarios')}" />
-				</div>
-			</p:dialog>
+			
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+						<div class="centrarBotonesDialog">
+							<p:button value="Cerrar" outcome="/users/usuarios" />
+						</div>
+					</p:dialog>
 			
 			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
 			    <p:graphicImage value="/images/loading.gif" />
