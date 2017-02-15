@@ -45,12 +45,6 @@ public class ModeloCuestionario implements Serializable {
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
-	@Column(name = "nombre")
-	private String nombreFichero;
-
-	@Column(name = "id_documento")
-	private Long idDocumento;
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idCuestionario")
 	private List<AreasCuestionario> areas;
