@@ -24,8 +24,8 @@ public interface IConfiguracionRespuestasCuestionarioRepository
 	List<ConfiguracionRespuestasCuestionario> findFilasBySeccion(@Param("seccion") String seccion);
 
 	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionIn(List<String> seccion);
-	
-	@Query("select distinct(c.config.seccion) from ConfiguracionRespuestasCuestionario c")
+
+	@Query("select distinct(c.config.seccion) from ConfiguracionRespuestasCuestionario c order by c.config.seccion")
 	List<String> findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
 
 }

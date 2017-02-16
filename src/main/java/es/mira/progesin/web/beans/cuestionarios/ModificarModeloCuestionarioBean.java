@@ -25,6 +25,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
 import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
+import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -93,10 +94,11 @@ public class ModificarModeloCuestionarioBean {
 
 	private UIInput nuevaRespuesta;
 
-	private UIInput nombreTipoPregunta;
-
 	@Autowired
 	private IAreaCuestionarioRepository areaCuestionarioRepository;
+
+	@Autowired
+	private IPreguntaCuestionarioRepository preguntasCuestionarioRepository;
 
 	public String editarModelo(ModeloCuestionario modeloCuestionario) {
 		this.modeloCuestionario = modeloCuestionario;
@@ -140,6 +142,7 @@ public class ModificarModeloCuestionarioBean {
 		areaAux.setIdCuestionario(modeloCuestionario.getId());
 		areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
 		listaAreasCuestionario.add(areaAux);
+		nombreArea.setValue("");
 	}
 
 	public void onSelectArea(SelectEvent event) {
@@ -174,23 +177,41 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public String onFlowProcess(FlowEvent event) {
+		boolean correcto = true;
 		if ("areas".equals(event.getNewStep())) {
-
+			limpiarCuestionario();
+		}
+		if ("tipoRespuestas".equals(event.getNewStep())) {
+			if (listaAreasCuestionario.isEmpty()) {
+				correcto = false;
+			}
+			limpiarCuestionario();
 		}
 		if ("preguntas".equals(event.getNewStep())) {
 			listaAreasCuestionario = ordenarAreas(listaAreasCuestionario);
 			modeloCuestionario.setAreas(listaAreasCuestionario);
+			limpiarCuestionario();
 		}
 		if ("finalizar".equals(event.getNewStep())) {
 			for (AreasCuestionario area : listaAreasCuestionario) {
-				List<PreguntasCuestionario> lista = new ArrayList<PreguntasCuestionario>();
-				lista = ordenarPreguntas(area.getPreguntas());
-				area.setPreguntas(lista);
+				List<PreguntasCuestionario> lista = area.getPreguntas();
+				if (lista.isEmpty()) {
+					correcto = false;
+				}
+				else {
+					lista = ordenarPreguntas(area.getPreguntas());
+					area.setPreguntas(lista);
+				}
 			}
-
+			limpiarCuestionario();
 		}
 
-		return event.getNewStep();
+		if (correcto) {
+			return event.getNewStep();
+		}
+		else {
+			return event.getOldStep();
+		}
 	}
 
 	public List<String> getValoresTipoRespuesta(String tipo) {
@@ -198,7 +219,9 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public void aniadeValor() {
-		listadoValoresNuevaRespuesta.add(nuevoValor.getLocalValue().toString());
+		if (listadoValoresNuevaRespuesta.size() < 9) {
+			listadoValoresNuevaRespuesta.add(nuevoValor.getLocalValue().toString());
+		}
 	}
 
 	public void borraValor() {
@@ -224,7 +247,9 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public void aniadeValorTabla() {
-		listadoValoresNuevaRespuesta.add(nuevoValorTabla.getLocalValue().toString());
+		if (listadoValoresNuevaRespuesta.size() < 9) {
+			listadoValoresNuevaRespuesta.add(nuevoValorTabla.getLocalValue().toString());
+		}
 	}
 
 	public void borraValorTabla() {
@@ -249,9 +274,9 @@ public class ModificarModeloCuestionarioBean {
 		nuevoValorFila.setValue(nuevo);
 	}
 
-	public void guardaTipoRespuesta() {
+	public void guardaTipoRespuesta(String nombreTipoPregunta) {
 
-		String seccion = tipoPersonalizado.concat(nombreTipoPregunta.getLocalValue().toString());
+		String seccion = tipoPersonalizado.concat(nombreTipoPregunta);
 
 		for (int i = 0; i < listadoValoresNuevaRespuesta.size(); i++) {
 			String valor = listadoValoresNuevaRespuesta.get(i);
@@ -284,7 +309,7 @@ public class ModificarModeloCuestionarioBean {
 				ConfiguracionRespuestasCuestionarioId datos = new ConfiguracionRespuestasCuestionarioId();
 				datos.setSeccion(seccion);
 				datos.setValor(valor);
-				datos.setClave("nombreFila");
+				datos.setClave("nombreFila" + (i + 1));
 				nuevoValor.setConfig(datos);
 				configuracionRespuestasCuestionarioRepository.save(nuevoValor);
 			}
@@ -357,6 +382,21 @@ public class ModificarModeloCuestionarioBean {
 			listaNueva.add(pregunta);
 		}
 		return listaNueva;
+	}
+
+	public List<PreguntasCuestionario> obtienePreguntas(AreasCuestionario area) {
+		return preguntasCuestionarioRepository.findByArea(area);
+	}
+
+	public void limpiarCuestionario() {
+		nombreArea.resetValue();
+		textoPregunta.resetValue();
+		nuevoTipoPregunta.resetValue();
+		nuevoValor.resetValue();
+		nuevoValorRadio.resetValue();
+		nuevoValorTabla.resetValue();
+		nuevoValorFila.resetValue();
+
 	}
 
 }
