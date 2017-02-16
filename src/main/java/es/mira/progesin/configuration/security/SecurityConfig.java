@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.userDetailsService(userDetailsServiceBean());
+		// http.userDetailsService(userDetailsServiceBean());
 		// http.headers().frameOptions().sameOrigin();
 		http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
 				.permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
