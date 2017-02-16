@@ -28,34 +28,6 @@ insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextva
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'SCQ', 'Servicio de Calidad y Quejas');
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'SO', 'Secretaria Y Otros');
 
-  
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (1, 'cuestionario modificado', '01/09/2016', 'cuestionarios 1', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (2, 'cuestionario modificado', '01/09/2016', 'cuestionarios 2', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (3, 'cuestionario modificado', '01/09/2016', 'cuestionarios 3', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (4, 'cuestionario modificado', '01/09/2016', 'cuestionarios 4', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (5, 'cuestionario modificado', '01/09/2016', 'cuestionarios 5', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (6, 'cuestionario modificado', '01/09/2016', 'cuestionarios 6', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (7, 'cuestionario modificado', '01/09/2016', 'cuestionarios 7', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (8, 'cuestionario modificado', '01/09/2016', 'cuestionarios 8', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (9, 'cuestionario modificado', '01/09/2016', 'cuestionarios 9', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (10, 'cuestionario modificado', '01/09/2016', 'cuestionarios 10', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (11, 'cuestionario modificado', '01/09/2016', 'cuestionarios 11', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (12, 'cuestionario modificado', '01/09/2016', 'cuestionarios 12', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-  insert into alertas (id_alerta, descripcion, fecha_registro, nombre_seccion, tipo_alerta, usuario_registro)
-  values (13, 'cuestionario modificado', '01/09/2016', 'cuestionarios 13', 'EQUIPO_INSPECCIONES', 'userAltaAlerta');
-
   ------------- tipos documentacion previa
 
 Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES,AMBITO) Values (seq_tipodocumentacionprevia.nextval, 'Actas de las Comisiones Provinciales de Seguridad Privada de los años 2014 y 2015', 'ACPSP', 'PDF', 'GC');
@@ -95,7 +67,7 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TEXTAR
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('INPUT', '1', '1');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTO', '1', '1');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'No');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'SI');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'Sí');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'BUENO', 'Bueno');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'ACEPTABLE', 'Aceptable');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'DEFICIENTE', 'Deficiente');

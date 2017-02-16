@@ -9,8 +9,12 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
-
-			<h3>Cuerpos</h3>
+        
+<!--             <h:form>
+                <p:remoteCommand name="onload" action="#{navegacionBean.recomenzar($('#titulo').text(), request.requestURL)}" update="caminoMigas" autoRun="true" />
+            </h:form> -->
+            
+			<h3 id="titulo">Cuerpos</h3>
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">

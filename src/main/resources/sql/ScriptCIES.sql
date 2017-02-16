@@ -5,30 +5,30 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZ
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'campo3', 'A');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'campo4', 'D');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'campo5', 'MD');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila', 'Paramentos exteriores (fachadas)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila', 'Cubierta');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila', 'Cornisas, terrazas, etc.');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila', 'Canalones y bajantes');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila', 'Paramentos interiores (paredes, suelos y techos)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila', 'Otros');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila1', 'Paramentos exteriores (fachadas)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila2', 'Cubierta');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila3', 'Cornisas, terrazas, etc.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila4', 'Canalones y bajantes');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila5', 'Paramentos interiores (paredes, suelos y techos)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZCONSERVACION', 'nombreFila6', 'Otros');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'campo1', 'Mantenimiento');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila', 'Nombre de la empresa');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila', 'Fecha de entrada en vigor del contrato, así como la prevista para su finalización');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila', 'Calidad del servicio ofrecido por la empresa (buena, mala, regular)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila', 'Técnicos de la empresa dedicados a esta tarea, indicando el horario de trabajo en la dependencia');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila1', 'Nombre de la empresa');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila2', 'Fecha de entrada en vigor del contrato, así como la prevista para su finalización');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila3', 'Calidad del servicio ofrecido por la empresa (buena, mala, regular)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMANTENIMIENTO', 'nombreFila4', 'Técnicos de la empresa dedicados a esta tarea, indicando el horario de trabajo en la dependencia');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'campo1', 'Limpieza');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila', 'Nombre de la empresa');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila', 'Periodicidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila', 'Horarios');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila', 'Número de empleados');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila', 'Grado de satisfacción (muy buena, buena, mala)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila1', 'Nombre de la empresa');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila2', 'Periodicidad');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila3', 'Horarios');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila4', 'Número de empleados');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZLIMPIEZA', 'nombreFila5', 'Grado de satisfacción (muy buena, buena, mala)');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'campo1', 'Desinfección/desinsectación/desratización');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'nombreFila', 'Nombre de la empresa');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'nombreFila', 'Periodicidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'nombreFila', 'Fecha de la última operación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'nombreFila1', 'Nombre de la empresa');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'nombreFila2', 'Periodicidad');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZDESINFECCION', 'nombreFila3', 'Fecha de la última operación');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'campo1', 'Marcar si existe');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'campo2', 'Número y localización');
@@ -36,50 +36,50 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZ
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'campo4', 'Fecha última revisión / inspección (si lo requiere). Indicando si la inspección ha sido realizado mediante OCA*');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'campo5', 'Marcado CE o declaración de conformidad (caso negativo, año de fabricación)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'campo5', 'Libro o instrucciones de uso y mantenimiento redactadas en castellano');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Centro de transformación energía eléctrica');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Instalación eléctrica de baja tensión');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Grupo electrógeno (motor)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Calderas de calefacción y agua caliente sanitaria');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Torres de refrigeración');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Aire acondic. y/o ventilación forzada (aparatos industriales)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Aparatos individuales de aire acondicionado');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Ascensores');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Montacargas (Añadir capacidad peso de carga en columna #2)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Depósito combustible líquidos (gasóleo) (Añadir capacidad y características técnicas en columna #2)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Deposito combustible gaseoso (butano, propano)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Baterías-acumuladores (SAI,s)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Servidores informáticos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Pararrayos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila', 'Sistemas detección CO2 y extracción de humos y gases en parkings cerrados.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila01', 'Centro de transformación energía eléctrica');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila02', 'Instalación eléctrica de baja tensión');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila03', 'Grupo electrógeno (motor)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila04', 'Calderas de calefacción y agua caliente sanitaria');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila05', 'Torres de refrigeración');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila06', 'Aire acondic. y/o ventilación forzada (aparatos industriales)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila07', 'Aparatos individuales de aire acondicionado');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila08', 'Ascensores');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila09', 'Montacargas (Añadir capacidad peso de carga en columna #2)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila10', 'Depósito combustible líquidos (gasóleo) (Añadir capacidad y características técnicas en columna #2)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila11', 'Deposito combustible gaseoso (butano, propano)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila12', 'Baterías-acumuladores (SAI,s)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila13', 'Servidores informáticos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila14', 'Pararrayos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZINSTALACIONES', 'nombreFila15', 'Sistemas detección CO2 y extracción de humos y gases en parkings cerrados.');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'campo1', 'Número de equipos y ubicación');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'campo2', 'Empresa mantenedora');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'campo3', 'Fecha última revisión/inspección');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores portátiles - Agua');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores portátiles - Agua/Espuma');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores portátiles - Polvo ABC');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores portátiles - Polvo BC');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores portátiles - CO2');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores portátiles - Otro');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Extintores de carro');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Bocas de Incendio Equipadas (BIE) - 25 mm');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Bocas de Incendio Equipadas (BIE) - 45 mm');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Instalación automática por rociadores');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Instalación automática por gases');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Sistema abastecimiento de agua BIEs (especificar red general o deposito agua)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Depósito de reserva de agua');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Hidrantes exteriores');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Columna seca');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Detectores de humos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Central de alarma incendios');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Pulsadores manuales de alarma');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Alumbrado de emergencia');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Señalización de evacuación y de los equipos contra incendios');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Sirenas de alarma');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Megafonía');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Radioteléfonos, interfonos, etc.');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Otras instalaciones de protección contra incendios, detección y alarma');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila', 'Botiquín de primeros auxilios');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila01', 'Extintores portátiles - Agua');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila02', 'Extintores portátiles - Agua/Espuma');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila03', 'Extintores portátiles - Polvo ABC');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila04', 'Extintores portátiles - Polvo BC');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila05', 'Extintores portátiles - CO2');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila06', 'Extintores portátiles - Otro');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila07', 'Extintores de carro');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila08', 'Bocas de Incendio Equipadas (BIE) - 25 mm');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila09', 'Bocas de Incendio Equipadas (BIE) - 45 mm');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila10', 'Instalación automática por rociadores');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila11', 'Instalación automática por gases');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila12', 'Sistema abastecimiento de agua BIEs (especificar red general o deposito agua)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila13', 'Depósito de reserva de agua');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila14', 'Hidrantes exteriores');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila15', 'Columna seca');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila16', 'Detectores de humos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila17', 'Central de alarma incendios');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila18', 'Pulsadores manuales de alarma');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila19', 'Alumbrado de emergencia');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila20', 'Señalización de evacuación y de los equipos contra incendios');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila21', 'Sirenas de alarma');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila22', 'Megafonía');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila23', 'Radioteléfonos, interfonos, etc.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila24', 'Otras instalaciones de protección contra incendios, detección y alarma');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZPROTECCIONINCENDIOS', 'nombreFila25', 'Botiquín de primeros auxilios');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPERSONALPOLICIA', 'campo1', 'PUESTO DE TRABAJO/ACTIVIDAD');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPERSONALPOLICIA', 'campo2', 'ESC/CAT/GRUPO');
@@ -100,14 +100,14 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAA
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'campo1', 'Año anterior');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'campo2', 'Año actual');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'INSPECTORES JEFES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'INSPECTORES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'SUBINSPECTORES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'OFICIALES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'POLICÍAS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'SUMAN');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'OTROS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila', 'TOTAL');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila1', 'INSPECTORES JEFES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila2', 'INSPECTORES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila3', 'SUBINSPECTORES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila4', 'OFICIALES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila5', 'POLICÍAS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila6', 'SUMAN');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila7', 'OTROS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRELACIONPERSONAL', 'nombreFila8', 'TOTAL');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'campo1', 'E1');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'campo2', 'E2');
@@ -116,17 +116,17 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZ
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'campo5', 'PL');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'campo6', 'OTROS');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'campo7', 'TOTAL');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'nombreFila', 'Altas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'nombreFila', 'Bajas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'nombreFila1', 'Altas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZMOVIMIENTOPERSONAL', 'nombreFila2', 'Bajas');
 
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'campo1', 'Nº TOTAL ACCIDENTES');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'campo2', 'Nº TOTAL ACCIDENTADOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila', 'FALLECIDOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila', 'MUY GRAVES Y GRAVES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila', 'MÁS DE CUATRO FUNCIONARIOS CON LESIONES CARÁCTER LEVE (en el mismo accidente)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila', 'LEVES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila', 'TOTAL');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila1', 'FALLECIDOS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila2', 'MUY GRAVES Y GRAVES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila3', 'MÁS DE CUATRO FUNCIONARIOS CON LESIONES CARÁCTER LEVE (en el mismo accidente)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila4', 'LEVES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZACCIDENTES', 'nombreFila5', 'TOTAL');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo1', 'DE Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo2', 'HASTA Fecha');
@@ -134,8 +134,8 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAS
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRESERVAPLAZAS', 'campo1', 'NÚMERO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRESERVAPLAZAS', 'campo2', 'MOTIVO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRESERVAPLAZAS', 'nombreFila', 'Aceptadas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRESERVAPLAZAS', 'nombreFila', 'Denegadas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRESERVAPLAZAS', 'nombreFila1', 'Aceptadas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('MATRIZRESERVAPLAZAS', 'nombreFila2', 'Denegadas');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAVISITASFUERAHORARIO', 'campo1', 'NÚMERO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAVISITASFUERAHORARIO', 'campo2', 'MOTIVO');
@@ -156,10 +156,10 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3','MATRIZTIRO','2º trimestre');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3','MATRIZTIRO','3º trimestre');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3','MATRIZTIRO','4º trimestre');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTIRO','Ejecutiva');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTIRO','Subinspección');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTIRO','Básica');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTIRO','T O T A L');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila1','MATRIZTIRO','Ejecutiva');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila2','MATRIZTIRO','Subinspección');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila3','MATRIZTIRO','Básica');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila4','MATRIZTIRO','T O T A L');
 
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1','MATRIZAUTOMOCION','ITV SI');
@@ -167,40 +167,40 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3','MATRIZAUTOMOCION','BUEN ESTADO');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo4','MATRIZAUTOMOCION','ESTADO REGULAR');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo5','MATRIZAUTOMOCION','MAL ESTADO');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','VEHÍCULOS "Z"');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','VEHÍCULOS "K"');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','FURGONETAS');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','MOTOCICLETAS SCOOTER "Z"');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','MOTOCICLETAS SCOOTER "K"');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','MOTOCICLETAS OTRAS "Z"');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','MOTOCICLETAS OTRAS "K"');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZAUTOMOCION','T O T A L');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila1','MATRIZAUTOMOCION','VEHÍCULOS "Z"');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila2','MATRIZAUTOMOCION','VEHÍCULOS "K"');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila3','MATRIZAUTOMOCION','FURGONETAS');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila4','MATRIZAUTOMOCION','MOTOCICLETAS SCOOTER "Z"');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila5','MATRIZAUTOMOCION','MOTOCICLETAS SCOOTER "K"');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila6','MATRIZAUTOMOCION','MOTOCICLETAS OTRAS "Z"');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila7','MATRIZAUTOMOCION','MOTOCICLETAS OTRAS "K"');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila8','MATRIZAUTOMOCION','T O T A L');
 
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1','MATRIZINFORMATICA','EXISTENCIAS');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2','MATRIZINFORMATICA','NECESIDADES');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Servidores');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Impresoras de red');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Impresoras personales');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Ordenadores sobremesa');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Ordenadores portátiles');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Scanner');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZINFORMATICA','Otros (especificar)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila1','MATRIZINFORMATICA','Servidores');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila2','MATRIZINFORMATICA','Impresoras de red');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila3','MATRIZINFORMATICA','Impresoras personales');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila4','MATRIZINFORMATICA','Ordenadores sobremesa');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila5','MATRIZINFORMATICA','Ordenadores portátiles');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila6','MATRIZINFORMATICA','Scanner');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila7','MATRIZINFORMATICA','Otros (especificar)');
 
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1','MATRIZTELECOMUNICACIONES','TOTAL');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2','MATRIZTELECOMUNICACIONES','BUEN ESTADO');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3','MATRIZTELECOMUNICACIONES','ESTADO REGULAR');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo4','MATRIZTELECOMUNICACIONES','MAL ESTADO');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','FAX');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','EMISORAS BASE');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','EMISORAS MÓVILES');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','PORTÁTILES');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','INHIBIDOR FREC. FIJO');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','INHIBIDOR FREC. MOVIL');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','TELF. MÓVILES');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','OTROS (especif.)');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZTELECOMUNICACIONES','TOTAL');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila1','MATRIZTELECOMUNICACIONES','FAX');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila2','MATRIZTELECOMUNICACIONES','EMISORAS BASE');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila3','MATRIZTELECOMUNICACIONES','EMISORAS MÓVILES');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila4','MATRIZTELECOMUNICACIONES','PORTÁTILES');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila5','MATRIZTELECOMUNICACIONES','INHIBIDOR FREC. FIJO');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila6','MATRIZTELECOMUNICACIONES','INHIBIDOR FREC. MOVIL');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila7','MATRIZTELECOMUNICACIONES','TELF. MÓVILES');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila8','MATRIZTELECOMUNICACIONES','OTROS (especif.)');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila9','MATRIZTELECOMUNICACIONES','TOTAL');
 
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1','TABLAQUEJAS','ORGANISMOS');
@@ -226,15 +226,15 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2','MATRIZCURSOS','ESCALA SUBINSPECCION');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3','MATRIZCURSOS','ESCALA BASICA');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo4','MATRIZCURSOS','PERSONAL FUNCIONARIO/LABORAL');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Derechos Humanos');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Extranjería');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Seguridad y Prevención');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Género y violencia contra las mujeres');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Rayos X');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Defensa personal y técnica de inmovilización ');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Emergencia, evacuación y primeros auxilios');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Prevención de riesgos laborales');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila','MATRIZCURSOS','Otros específicos relacionados con la actividad en el CIE');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila1','MATRIZCURSOS','Derechos Humanos');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila2','MATRIZCURSOS','Extranjería');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila3','MATRIZCURSOS','Seguridad y Prevención');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila4','MATRIZCURSOS','Género y violencia contra las mujeres');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila5','MATRIZCURSOS','Rayos X');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila6','MATRIZCURSOS','Defensa personal y técnica de inmovilización ');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila7','MATRIZCURSOS','Emergencia, evacuación y primeros auxilios');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila8','MATRIZCURSOS','Prevención de riesgos laborales');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila9','MATRIZCURSOS','Otros específicos relacionados con la actividad en el CIE');
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1','TABLALIBROS','LIBRO');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2','TABLALIBROS','SI/NO');
