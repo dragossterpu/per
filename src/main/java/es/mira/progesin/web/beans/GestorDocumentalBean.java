@@ -1,7 +1,5 @@
 package es.mira.progesin.web.beans;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +7,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.apache.tika.exception.TikaException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.xml.sax.SAXException;
 
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
@@ -69,11 +66,12 @@ public class GestorDocumentalBean {
 		}
 	}
 
-	public void cargaFichero(FileUploadEvent event) throws SQLException, IOException, TikaException, SAXException {
+	public void cargaFichero(FileUploadEvent event) throws Exception {
 		try {
 
-			if (documentoService.extensionCorrecta(event.getFile())) {
-				documentoService.cargaDocumento(event.getFile());
+			UploadedFile uFile = event.getFile();
+			if (documentoService.extensionCorrecta(uFile)) {
+				documentoService.cargaDocumento(uFile);
 
 			}
 			else {
@@ -90,7 +88,7 @@ public class GestorDocumentalBean {
 
 			recargaLista();
 		}
-		catch (SQLException ex) {
+		catch (Exception ex) {
 			registroActividadService.altaRegActividadError("Gestor documental", ex);
 			throw ex;
 		}

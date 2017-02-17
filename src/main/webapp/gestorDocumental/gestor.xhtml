@@ -23,12 +23,12 @@
 					<p:button value="Cerrar" outcome="/gestorDocumental/gestor" />
 				</div>
 			</p:dialog>
-				<h:form id="formAlta">
+				<h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
 				
 			
 					 
 					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
-			         	multiple="true" update=":formAlta:panelDocumentos tablaDocumentos"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" />			 			   					   		 
+			         	sizelimit="20971520" multiple="true" update=":formAlta:panelDocumentos tablaDocumentos"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" />			 			   					   		 
 			   		
 					
 					<p:outputPanel id="panelDocumentos">
