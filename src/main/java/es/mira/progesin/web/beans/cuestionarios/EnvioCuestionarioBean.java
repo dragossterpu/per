@@ -136,8 +136,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		try {
 			// Comprobar que el usuario no tenga más de un cuestionario sin finalizar
 			CuestionarioEnvio cuestionario = cuestionarioEnvioService
-					.findNoFinalizadoPorCorreoEnvio(
-							cuestionarioEnvio.getCorreoEnvio());
+					.findNoFinalizadoPorCorreoEnvio(cuestionarioEnvio.getCorreoEnvio());
 			// Comprobar que no existe un cuestionario enviado sin finalizar para esa inspección
 			CuestionarioEnvio cuestionarioInspeccion = cuestionarioEnvioService
 					.findNoFinalizadoPorInspeccion(cuestionarioEnvio.getInspeccion());
@@ -222,7 +221,7 @@ public class EnvioCuestionarioBean implements Serializable {
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-					"Se ha produdico un error en el envio del correo electrónico", e.getMessage(), ETIQUETA_ERROR);
+					"Se ha producido un error en el envio del correo electrónico", e.getMessage(), ETIQUETA_ERROR);
 			regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
 		}
 	}
