@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="/layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+        
+        <p:outputPanel styleClass="bloqueVistaTitulo">
+		      <h3>No encontrado</h3>
+        </p:outputPanel>
+        
+        <p:outputPanel>
+            <div class="ui-messages ui-widget" aria-live="polite">
+                <div class="ui-messages-error ui-corner-all">
+                    <span class="ui-messages-error-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-error-summary">El recurso solicitado no ha sido encontrado.</span>
+                        </li>
+                        <li>
+                            <span class="ui-messages-error-detail" style="font-family:courier">&nbsp;#{request.requestURL} (AUN NO TENGO LA URL ORIGINAL)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </p:outputPanel>
+		
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

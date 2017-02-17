@@ -13,7 +13,11 @@
 		<ui:define name="content">
 		
 		<ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
-		
+		        
+<!--         <h:form>
+            <p:remoteCommand name="onload" action="#{navegacionBean.iniciarCamino()}" update="caminoMigas" autoRun="true" />
+        </h:form> -->
+            
         <div class="textoDerecha">
 			<h:form>
 				<h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora" rendered="#{rolPermitido}"/>

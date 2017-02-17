@@ -39,7 +39,7 @@ public class NavegacionBean implements Serializable {
     public void iniciarCamino() {
         caminoMigas = new DefaultMenuModel();
         DefaultMenuItem inicio = new DefaultMenuItem();
-        inicio.setUrl("");
+        inicio.setUrl("/index.xhtml");
         inicio.setIcon("ui-icon-home");
         inicio.setTitle("Menú Principal");
         caminoMigas.addElement(inicio);
