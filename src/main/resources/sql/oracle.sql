@@ -6,18 +6,19 @@ insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_al
 insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta, username_modif, fecha_modif, username_baja, fecha_baja) values(6, 'Correos y Telégrafos','CT', 'system', current_date, null, null,null,null);
  
  
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Subdirector General', 30, 'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretario Técnico',29,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Servicios de Inspección',29,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Responsable Estudios y Programas',29,'RPT-FC');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Equipo Inspecciones',28,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Inspector-Auditor',27,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Apoyo',21,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Sección',20,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Personal de Apoyo',18,'FCSE');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Negociado',18,'RPT');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Fuera de Catálogo (Conductores)',17,'FCSE-FC');
-insert into PUESTOSTRABAJO (id,descripcion,nivel,clase) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretaria de N30',15,'RPT');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Subdirector General', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretario Técnico', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Servicios de Inspección', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Responsable Estudios y Programas', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Equipo Inspecciones', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Inspector-Auditor', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Apoyo', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Sección', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Personal de Apoyo', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Jefe de Negociado', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Fuera de Catálogo (Conductores)', Sysdate, 'System');
+insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretaria de N30', Sysdate, 'System');
+ 
  
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IAPRL', 'Inspecciones Área Prevención de Riesgos Laborales');
 insert into TIPO_EQUIPO (ID, CODIGO, DESCRIPCION) Values (seq_tipo_equipo.nextval, 'IG', 'Inspecciones Generales');
