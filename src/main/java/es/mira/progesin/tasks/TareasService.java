@@ -1,5 +1,6 @@
 package es.mira.progesin.tasks;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,8 @@ public class TareasService implements ITareasService {
 
 	Date hoy;
 
+	String correoApoyo = "apoyo_ipss@interior.es";
+
 	@PostConstruct
 	private void init() {
 		parametrosTareas = applicationBean.getMapaParametros().get("tareas");
@@ -70,15 +73,14 @@ public class TareasService implements ITareasService {
 
 	public void recordatorioEnvioCuestionario() {
 		try {
-			List<CuestionarioEnvio> lista = cuestionarioEnvioService
-					.findNoCumplimentados();
+			List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
 
 			for (int i = 0; i < lista.size(); i++) {
 				CuestionarioEnvio cuestionario = lista.get(i);
 				long milis = cuestionario.getFechaLimiteCuestionario().getTime() - hoy.getTime();
 				int dias = (int) (milis / 86400000);
 
-				if (dias < Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"))) {
+				if (dias == Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"))) {
 					StringBuilder cuerpo = new StringBuilder().append("Faltan ").append(dias)
 							.append(" dia/s para la fecha límite de envío del cuestionario de la inspección ")
 							.append(cuestionario.getInspeccion().getNumero())
@@ -86,6 +88,20 @@ public class TareasService implements ITareasService {
 
 					correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), "Recordatorio envío cuestionario",
 							cuerpo.toString());
+				}
+
+				if (dias == 0) {
+					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
+							.append("Hoy finaliza el plazo para el envío del cuestionario de la inspección número ")
+							.append(cuestionario.getInspeccion().getNumero())
+							.append("\n\nEste es un recordatorio automático.\nNo responda a este correo.");
+
+					List<String> listaDestinos = new ArrayList<String>();
+					listaDestinos.add(cuestionario.getCorreoEnvio());
+					listaDestinos.add(correoApoyo);
+
+					correoElectronico.envioCorreo(listaDestinos,
+							"Recordatorio Fin de plazo para el envío del cuestionario", cuerpo.toString());
 				}
 			}
 		}
@@ -99,15 +115,14 @@ public class TareasService implements ITareasService {
 
 	public void recordatorioEnvioDocumentacion() {
 		try {
-			List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService
-					.findEnviadasNoCumplimentadas();
+			List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
 
 			for (int i = 0; i < lista.size(); i++) {
 
 				SolicitudDocumentacionPrevia solicitud = lista.get(i);
 				long milis = solicitud.getFechaLimiteCumplimentar().getTime() - hoy.getTime();
 				int dias = (int) (milis / 86400000);
-				if (dias < Integer.parseInt(tareasProperties.getProperty("plazoDiasDocumentacion"))) {
+				if (dias == Integer.parseInt(tareasProperties.getProperty("plazoDiasDocumentacion"))) {
 
 					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
 							.append("Faltan ").append(dias)
@@ -117,6 +132,20 @@ public class TareasService implements ITareasService {
 
 					correoElectronico.envioCorreo(solicitud.getCorreoDestinatario(),
 							"Recordatorio envío de documentación previa", cuerpo.toString());
+				}
+
+				if (dias == 0) {
+					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
+							.append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
+							.append(solicitud.getInspeccion().getNumero())
+							.append("\n\nEste es un recordatorio automático.\nNo responda a este correo.");
+
+					List<String> listaDestinos = new ArrayList<String>();
+					listaDestinos.add(solicitud.getCorreoDestinatario());
+					listaDestinos.add(correoApoyo);
+
+					correoElectronico.envioCorreo(listaDestinos,
+							"Recordatorio Fin de plazo para el envío de documentación previa", cuerpo.toString());
 				}
 			}
 		}
