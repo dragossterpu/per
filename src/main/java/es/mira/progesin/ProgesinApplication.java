@@ -46,12 +46,14 @@ public class ProgesinApplication {
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         
         return (container -> {
-            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401.xhtml");
+            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/login");
+            ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/index.xhtml");
             ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.xhtml");
             // TODO DESCOMENTAR EN PRODUCCION
-            // ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500.xhtml");
+            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/5xx.xhtml");
+            ErrorPage error502Page = new ErrorPage(HttpStatus.BAD_GATEWAY, "/error/5xx.xhtml");
             
-            container.addErrorPages(error401Page, error404Page/* , error500Page */);
+            container.addErrorPages(error401Page, error403Page, error404Page, error500Page, error502Page);
         });
     }
     

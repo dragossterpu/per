@@ -7,11 +7,11 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <f:view>
-	<ui:composition template="/layouts/layoutInterior.xhtml">
+	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
         
         <p:outputPanel styleClass="bloqueVistaTitulo">
-		      <h3>No encontrado</h3>
+		      <h3>Error interno</h3>
         </p:outputPanel>
         
         <p:outputPanel>
@@ -20,13 +20,13 @@
                     <span class="ui-messages-error-icon"></span>
                     <ul>
                         <li>
-                            <span class="ui-messages-error-summary">El recurso solicitado no ha sido encontrado.</span>
+                            <span class="ui-messages-error-summary">Se ha producido un error interno en el servidor. Inténtelo de nuevo más tarde o póngase en contacto con el administrador del sistema.</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </p:outputPanel>
-		
+        
 		</ui:define>
 	</ui:composition>
 </f:view>
