@@ -109,7 +109,7 @@
 													<f:facet name="header">
 														<h:outputText value="#{column.header}" />
 													</f:facet>
-													<p:inputText id="tabla" value="" styleClass="inputsCuestionario"/>
+													<p:inputText id="tabla" value=""/>
 												</p:columns>
 											</p:dataTable>
 							                <p:dataTable rendered="#{fn:startsWith(nuevoModeloCuestionarioBean.tipoSeleccionado, 'MATRIZ')}"
@@ -121,7 +121,7 @@
 												<f:facet name="header">
 													<h:outputText value="#{column.header}" />
 												</f:facet>
-												<p:inputText id="matriz" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario"/>
+												<p:inputText id="matriz" value="#{registroTabla[column.property]}"/>
 												
 											</p:columns>
 										</p:dataTable>
