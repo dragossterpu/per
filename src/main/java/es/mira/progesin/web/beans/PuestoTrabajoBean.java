@@ -54,7 +54,7 @@ public class PuestoTrabajoBean implements Serializable {
     
     /**
      * Eliminación lógica (se pone fecha de baja) de un puesto
-     * @param puesto cuerpo del estado a eliminar
+     * @param puesto de trabajo a eliminar
      */
     public void eliminarPuesto(PuestoTrabajo puesto) {
         if (existenUsuariosCuerpo(puesto)) {

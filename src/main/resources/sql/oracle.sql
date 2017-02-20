@@ -149,17 +149,17 @@ insert into miembros(id, id_equipo, nombre_completo, posicion, username) values 
 
 
 
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Subdirección General de Inspección y Servicios');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Secretaría Técnica');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Jefatura de Inspecciones');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Equipos de Inspecciones Generales');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Equipo de Inspecciones Temáticas y PRL');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Gabinete de Estudios y Análisis');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Servicio de Calidad y Quejas');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Servicio de Apoyo');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Secretaría');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Asesores');
-Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION) values (SEQ_DEPARTAMENTO.nextval,'Conductores');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Subdirección General de Inspección y Servicios', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Secretaría Técnica', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Jefatura de Inspecciones', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Equipos de Inspecciones Generales', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Equipo de Inspecciones Temáticas y PRL', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Gabinete de Estudios y Análisis', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Servicio de Calidad y Quejas', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Servicio de Apoyo', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Secretaría', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Asesores', Sysdate, 'system');
+Insert into DEPARTAMENTO (SEQ_DEPARTAMENTO,DESCRIPCION, fecha_alta, username_alta) values (SEQ_DEPARTAMENTO.nextval,'Conductores', Sysdate, 'system');
 
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'Teniente General','Tte. Gral.' );
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,2, 'General de División','Gral. Div.');

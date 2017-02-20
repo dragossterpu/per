@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+			<h3>Alta departamento</h3>
+
+			<div class="bloqueFormulario" style="width: 50%">
+				<h:form id="form">
+				
+					<h:outputLabel for="descripcion" value="Nombre del departamento (*):" />
+					<p:inputText id="descripcion" value="#{departamentosBean.departamentoNuevo}" required="true" requiredMessage="Introduzca el nombre del departamento" converter="#{trimConverter}"/>
+					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
+					
+					<div class="botonesFormulario">
+						<p:commandButton actionListener="#{departamentosBean.altaDepartamento}" value="Crear departamento" icon="fa fa-fw fa-save"/>
+						<p:button outcome="/departamentos/departamentos" value="Cancelar" icon="fa fa-fw fa-undo"/>
+					</div>
+			
+					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+						<div class="centrarBotonesDialog">
+							<p:button value="Cerrar" outcome="/departamentos/departamentos" />
+						</div>
+					</p:dialog>
+					
+				</h:form>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

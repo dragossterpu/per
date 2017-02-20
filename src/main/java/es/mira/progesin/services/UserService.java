@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
@@ -229,6 +230,11 @@ public class UserService implements IUserService {
     @Override
     public List<User> findByPuestoTrabajo(PuestoTrabajo puesto) {
         return userRepository.findByPuestoTrabajo(puesto);
+    }
+    
+    @Override
+    public List<User> findByDepartamento(Departamento departamento) {
+        return userRepository.findByDepartamento(departamento);
     }
     
 }

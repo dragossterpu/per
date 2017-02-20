@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
@@ -52,4 +53,7 @@ public interface IUserService {
     List<User> crearUsuariosProvisionalesCuestionario(String correoPrincipal, String rawPassword);
     
     List<User> findByPuestoTrabajo(PuestoTrabajo puesto);
+    
+    List<User> findByDepartamento(Departamento departamento);
+    
 }

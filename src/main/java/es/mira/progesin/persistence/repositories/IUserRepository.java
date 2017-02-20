@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
@@ -32,4 +33,6 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByUsernameIgnoreCase(String id);
     
     List<User> findByPuestoTrabajo(PuestoTrabajo puesto);
+    
+    List<User> findByDepartamento(Departamento departamento);
 }
