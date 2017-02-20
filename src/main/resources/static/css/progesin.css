@@ -60,7 +60,7 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
 }
 
 .ui-paginator-rpp-options {
- 	width: 6% !important;
+ 	width: 8% !important;
   	background-color: #fff !important;
   	height: 20% !important;
   	margin-top: 0.5% !important;
