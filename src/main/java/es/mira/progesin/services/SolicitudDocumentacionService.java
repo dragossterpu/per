@@ -69,10 +69,10 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     }
     
     @Override
-    public SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(
-            String correo) {
+    public SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(String correo) {
         return solicitudDocumentacionPreviaRepository
-                .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(correo);
+                .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
+                        correo);
     }
     
     @Override
@@ -90,43 +90,36 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         if (solicitudDocPreviaBusqueda.getEstado() != null) {
             switch (solicitudDocPreviaBusqueda.getEstado()) {
                 case VALIDADA_APOYO:
-                    // campoFecha = "this_.fecha_valid_apoyo";
                     criteria.add(Restrictions.isNotNull("fechaValidApoyo"));
                     criteria.add(Restrictions.isNull("fechaValidJefeEquipo"));
                     break;
                 case VALIDADA_JEFE_EQUIPO:
-                    // campoFecha = "this_.fecha_valid_jefe_equipo";
                     criteria.add(Restrictions.isNotNull("fechaValidJefeEquipo"));
                     criteria.add(Restrictions.isNull("fechaEnvio"));
                     break;
                 // No se comprueba anulaciones (fecha_baja o fecha_finalizacion) en estados antes de envío porque hay
                 // eliminación física
                 case ENVIADA:
-                    // campoFecha = "this_.fecha_envio";
                     criteria.add(Restrictions.isNotNull("fechaEnvio"));
                     criteria.add(Restrictions.isNull("fechaCumplimentacion"));
                     criteria.add(Restrictions.isNull(FECHABAJA));
                     break;
                 case CUMPLIMENTADA:
-                    // campoFecha = "this_.fecha_cumplimentacion";
                     criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
                     criteria.add(Restrictions.isNull(FECHAFINALIZACION));
                     criteria.add(Restrictions.isNull(FECHABAJA));
                     break;
                 // Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
                 case NO_CONFORME:
-                    // campoFecha = "this_.fecha_no_conforme";
                     criteria.add(Restrictions.isNotNull("fechaNoConforme"));
                     criteria.add(Restrictions.isNull(FECHAFINALIZACION));
                     criteria.add(Restrictions.isNull(FECHABAJA));
                     break;
                 case FINALIZADA:
-                    // campoFecha = "this_.fecha_finalizacion";
                     criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
                     criteria.add(Restrictions.isNull(FECHABAJA));
                     break;
                 case ANULADA:
-                    // campoFecha = "this_.fecha_baja";
                     criteria.add(Restrictions.isNotNull(FECHABAJA));
                     break;
                 // case CREADA:
@@ -134,6 +127,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                     criteria.add(Restrictions.isNull("fechaValidApoyo"));
                     break;
             }
+        } else {
+            criteria.add(Restrictions.isNull(FECHABAJA));
         }
         if (solicitudDocPreviaBusqueda.getFechaDesde() != null) {
             /**

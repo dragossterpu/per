@@ -92,25 +92,21 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         if (cuestionarioEnviadoBusqueda.getEstado() != null) {
             switch (cuestionarioEnviadoBusqueda.getEstado()) {
                 case CUMPLIMENTADO:
-                    // campoFecha = "this_.fecha_cumplimentacion";
                     criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
                     criteria.add(Restrictions.isNull(FECHAFINALIZACION));
                     criteria.add(Restrictions.isNull(FECHAANULACION));
                     break;
                 // Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
                 case NO_CONFORME:
-                    // campoFecha = "this_.fecha_no_conforme";
                     criteria.add(Restrictions.isNotNull("fechaNoConforme"));
                     criteria.add(Restrictions.isNull(FECHAFINALIZACION));
                     criteria.add(Restrictions.isNull(FECHAANULACION));
                     break;
                 case FINALIZADO:
-                    // campoFecha = "this_.fecha_finalizacion";
                     criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
                     criteria.add(Restrictions.isNull(FECHAANULACION));
                     break;
                 case ANULADO:
-                    // campoFecha = "this_.fecha_anulacion";
                     criteria.add(Restrictions.isNotNull(FECHAANULACION));
                     break;
                 // case ENVIADO:
@@ -119,6 +115,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                     criteria.add(Restrictions.isNull(FECHAANULACION));
                     break;
             }
+        } else {
+            criteria.add(Restrictions.isNull(FECHAANULACION));
         }
         if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
             /**

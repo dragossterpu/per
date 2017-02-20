@@ -186,6 +186,12 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
+                    <p:column headerText="Anulado"
+                        sortBy="#{cuestionario.fechaAnulacion}" width="70">
+                        <h:outputText value="#{cuestionario.fechaAnulacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+                        </h:outputText>
+                    </p:column>
 					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Ver" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
 					</p:column>

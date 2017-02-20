@@ -98,6 +98,12 @@
 					<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.nombreCuestionario}">
 						<h:outputText value="#{cuestionario.modeloCuestionario.descripcion}" />
 					</p:column>
+                    <p:column headerText="Anulado"
+                        sortBy="#{cuestionario.fechaBaja}" width="70">
+                        <h:outputText value="#{cuestionario.fechaBaja}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+                        </h:outputText>
+                    </p:column>
 					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarVacio(cuestionario)}" />
 					</p:column>
