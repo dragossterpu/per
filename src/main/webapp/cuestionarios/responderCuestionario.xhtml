@@ -103,7 +103,7 @@
 								            <f:facet name="header">
 								                <h:outputText value="#{column.header}" />
 								            </f:facet>
-								            <p:inputTextarea id="tabla" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario" maxlength="1000"
+								            <p:inputTextarea id="tabla" value="#{registroTabla[column.property]}" maxlength="1000"
 								            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar el campo" converter="#{trimConverter}"/>
 								        	<p:messages for="tabla" autoUpdate="true"  closable="true"/>
 								        	
@@ -125,7 +125,7 @@
 								            <f:facet name="header">
 								                <h:outputText value="#{column.header}" />
 								            </f:facet>
-								            <p:inputTextarea id="matriz" value="#{registroTabla[column.property]}" styleClass="inputsCuestionario" maxlength="1000"
+								            <p:inputTextarea id="matriz" value="#{registroTabla[column.property]}" maxlength="1000"
 								            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar el campo" converter="#{trimConverter}"/>
 								            <p:messages for="matriz" autoUpdate="true"  closable="true"/>
 								        </p:columns>
