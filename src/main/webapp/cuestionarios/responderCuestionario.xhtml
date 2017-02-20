@@ -71,7 +71,7 @@
 									    
 									    <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" mode="advanced" dragDropSupport="false"
 									    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos"
-									    	sizelimit=20971520
+									    	sizelimit="20971520"
 									                  multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" invalidFileMessage="El tipo del documento seleccionado no es válido">
 									         <f:attribute name="pregunta" value="#{preguntaArea}" />
 										</p:fileUpload>    
