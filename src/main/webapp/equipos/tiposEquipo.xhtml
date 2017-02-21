@@ -93,11 +93,7 @@
 						showDetail="true" />
 				</div>
 				<div class="botonesFormulario">
-					<h:commandLink title="Nuevo equipo"
-						action="#{tipoEquipoBean.getFormNuevoTipoEquipo}"
-						styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
-						<span class="ui-CommandLink-texto">Nuevo tipo de equipo</span>
-					</h:commandLink>
+                    <p:button outcome="/equipos/altaTipoEquipo" value="Nuevo tipo de equipo" icon="fa fa-fw fa-user-plus"/>
 				</div>
 			</h:form>
 		</ui:define>
