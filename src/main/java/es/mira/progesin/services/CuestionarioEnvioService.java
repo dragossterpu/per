@@ -242,7 +242,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         String correoPrincipal = cuestionario.getCorreoEnvio();
         String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
         String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
-        userService.delete(correoPrincipal);
+        if (userService.exists(correoPrincipal)) {
+            userService.delete(correoPrincipal);
+        }
         for (int i = 1; i < 10; i++) {
             if (userService.exists(cuerpoCorreo + i + restoCorreo)) {
                 userService.delete(cuerpoCorreo + i + restoCorreo);
