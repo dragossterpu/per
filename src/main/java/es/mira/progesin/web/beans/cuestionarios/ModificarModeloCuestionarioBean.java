@@ -29,6 +29,7 @@ import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.DataTableView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,6 +41,10 @@ import lombok.Setter;
 public class ModificarModeloCuestionarioBean {
 
 	ModeloCuestionario modeloCuestionario;
+
+	private DataTableView datosTabla;
+
+	private String tipoSeleccionado;
 
 	List<AreasCuestionario> listaAreasCuestionario;
 
@@ -399,4 +404,24 @@ public class ModificarModeloCuestionarioBean {
 
 	}
 
+	public void onSelectTipo(SelectEvent event) {
+
+		tipoSeleccionado = event.getObject().toString();
+		if (tipoSeleccionado.startsWith("TABLA") || tipoSeleccionado.startsWith("MATRIZ")) {
+			datosTabla = new DataTableView();
+			construirTipoRespuestaTablaMatrizVacia(tipoSeleccionado);
+		}
+	}
+
+	private void construirTipoRespuestaTablaMatrizVacia(String tipo) {
+		List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestasCuestionarioRepository
+				.findByConfigSeccionOrderByConfigClaveAsc(tipo);
+		if (tipo != null && tipo.startsWith("TABLA")) {
+			datosTabla.crearTabla(valoresColumnas);
+		}
+		else {
+			datosTabla.crearMatriz(valoresColumnas);
+		}
+		// mapaRespuestasTabla.put(tipo, dataTableView);
+	}
 }

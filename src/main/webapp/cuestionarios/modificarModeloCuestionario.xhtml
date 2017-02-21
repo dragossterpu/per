@@ -72,7 +72,7 @@
 							 	var="preguntas" 
 							 	itemLabel="#{preguntas}" 
 							 	itemValue="#{preguntas}" >	
-							<p:ajax event="select" listener="#{nuevoModeloCuestionarioBean.onSelectTipo}" 
+							<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectTipo}" 
 									 oncomplete="PF('previsualiza').show('#{preguntas}')"
 									 update="previsualizaTipo" />
 							</p:pickList>
@@ -81,43 +81,43 @@
 							        <p:outputPanel id="previsualizaTipo" style="text-align:center;">
 							            <p:panelGrid  columns="1" >
 							                <f:facet name="header">
-							                    #{nuevoModeloCuestionarioBean.tipoSeleccionado}									
+							                    #{modificarModeloCuestionarioBean.tipoSeleccionado}									
 							                </f:facet>
 							               
 							 				 <p:inputText id="input"  
-												 rendered="#{(nuevoModeloCuestionarioBean.tipoSeleccionado eq 'INPUT')}" 
+												 rendered="#{(modificarModeloCuestionarioBean.tipoSeleccionado eq 'INPUT')}" 
 												 size="10" maxlength="1000"
 												 converter="#{trimConverter}"
 												 disabled="true"/>
 											<p:inputTextarea id="textarea" 
-								   				rendered="#{nuevoModeloCuestionarioBean.tipoSeleccionado eq 'TEXTAREA'}" 
+								   				rendered="#{modificarModeloCuestionarioBean.tipoSeleccionado eq 'TEXTAREA'}" 
 								   				converter="#{trimConverter}"
 								   				disabled="true"/>
-										 	<p:selectOneRadio id="radio" rendered="#{fn:startsWith(nuevoModeloCuestionarioBean.tipoSeleccionado, 'RADIO')}" disabled="true" >
-												<f:selectItems value="#{nuevoModeloCuestionarioBean.getValoresTipoRespuesta(nuevoModeloCuestionarioBean.tipoSeleccionado)}"
+										 	<p:selectOneRadio id="radio" rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'RADIO')}" disabled="true" >
+												<f:selectItems value="#{modificarModeloCuestionarioBean.getValoresTipoRespuesta(modificarModeloCuestionarioBean.tipoSeleccionado)}"
 													var="valor" itemLabel="#{valor}" itemValue="#{valor}"/>
 											</p:selectOneRadio>
-											<p:outputPanel rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
-											    <p:fileUpload fileUploadListener="#{cuestionarioPersonalizadoBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
+											<p:outputPanel rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'ADJUNTO')}">
+											    <p:fileUpload  fileUploadListener="#{cuestionarioPersonalizadoBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
 											    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar"
 											    	disabled="true"
 											        multiple="true"/>
 											</p:outputPanel>
-											<p:dataTable rendered="#{fn:startsWith(nuevoModeloCuestionarioBean.tipoSeleccionado, 'TABLA')}"
-														id="tablaPregunta" var="registroTabla" value="#{nuevoModeloCuestionarioBean.datosTabla.listaDatosTabla}" >                    
-												<p:columns value="#{nuevoModeloCuestionarioBean.datosTabla.columns}" var="column" columnIndexVar="colIndex">
+											<p:dataTable rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'TABLA')}"
+														id="tablaPregunta" var="registroTabla" value="#{modificarModeloCuestionarioBean.datosTabla.listaDatosTabla}" >                    
+												<p:columns value="#{modificarModeloCuestionarioBean.datosTabla.columns}" var="column" columnIndexVar="colIndex">
 													<f:facet name="header">
 														<h:outputText value="#{column.header}" />
 													</f:facet>
 													<p:inputText id="tabla" value=""/>
 												</p:columns>
 											</p:dataTable>
-							                <p:dataTable rendered="#{fn:startsWith(nuevoModeloCuestionarioBean.tipoSeleccionado, 'MATRIZ')}"
-													id="matrizPregunta" var="registroTabla" value="#{nuevoModeloCuestionarioBean.datosTabla.listaDatosTabla}" >                    
+							                <p:dataTable rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'MATRIZ')}"
+													id="matrizPregunta" var="registroTabla" value="#{modificarModeloCuestionarioBean.datosTabla.listaDatosTabla}" >                    
 											<p:column headerText="" styleClass="ui-widget-header">
 												<h:outputText value="#{registroTabla.nombreFila}"/>
 											</p:column>
-											<p:columns value="#{nuevoModeloCuestionarioBean.datosTabla.columns}" var="column" columnIndexVar="colIndex">
+											<p:columns value="#{modificarModeloCuestionarioBean.datosTabla.columns}" var="column" columnIndexVar="colIndex">
 												<f:facet name="header">
 													<h:outputText value="#{column.header}" />
 												</f:facet>
