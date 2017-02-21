@@ -59,10 +59,18 @@
 											var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
 									</p:selectOneRadio>
 									
-									<p:outputPanel id="panelAdjuntos" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
+									<p:outputPanel id="panelAdjuntos" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
 										<p:inputText id="adjunto" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
-												 size="10" readonly="true"/>   
+												 size="10" readonly="true"
+												 rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTOINPUT'}"/>   
 										
+										<p:selectOneRadio id="radioAdjunto" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTORADIOSINO'}" 
+												value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
+												disabled="true">
+												<f:selectItem itemLabel="Sí" itemValue="Sí"/>
+            									<f:selectItem itemLabel="No" itemValue="No" />
+										</p:selectOneRadio>
+
 										<p:dataTable id ="tablaDocumentos" var="documento" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}" emptyMessage="No hay documentos">
 											<p:column headerText="Documentos">
 										        <h:outputText value="#{documento.nombre}" />

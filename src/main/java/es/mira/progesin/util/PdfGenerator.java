@@ -347,7 +347,7 @@ public class PdfGenerator {
 			else {
 				p = new Paragraph(respuesta.getRespuestaTexto());
 				document.add(p);
-				if ("ADJUNTO".equals(pregunta.getTipoRespuesta())
+				if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("ADJUNTO")
 						&& respuesta.getDocumentos().isEmpty() == Boolean.FALSE) {
 					document.add(crearTablaDocumentos(respuesta));
 				}

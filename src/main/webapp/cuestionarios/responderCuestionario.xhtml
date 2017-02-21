@@ -63,16 +63,25 @@
 									</p:selectOneRadio>
 									<p:messages for="radio" autoUpdate="true"  closable="true"/>
 									
-									<p:outputPanel id="panelAdjuntos" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTO'}">
-										<p:inputText id="adjunto" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
+									<p:outputPanel id="panelAdjuntos" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
+										<p:inputText id="adjunto" 
+												 rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTOINPUT'}"
+												 value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 												 size="10" maxlength="1000"
 												 required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
 									    <p:messages for="adjunto" autoUpdate="true"  closable="true"/>
 									    
+									    <p:selectOneRadio id="radioAdjunto" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTORADIOSINO'}" 
+												value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
+												required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío">
+												<f:selectItem itemLabel="Sí" itemValue="Sí" />
+            									<f:selectItem itemLabel="No" itemValue="No" />
+										</p:selectOneRadio>
+									<p:messages for="radioAdjunto" autoUpdate="true"  closable="true"/>
+									    
 									    <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" mode="advanced" dragDropSupport="false"
 									    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos"
-									    	sizelimit="20971520"
-									                  multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" invalidFileMessage="El tipo del documento seleccionado no es válido">
+									    	sizelimit="20971520" multiple="true" >
 									         <f:attribute name="pregunta" value="#{preguntaArea}" />
 										</p:fileUpload>    
 										

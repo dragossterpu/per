@@ -66,7 +66,8 @@ Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES,AMBITO) 
 
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TEXTAREA', '1', '1');
 Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('INPUT', '1', '1');
-Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTO', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTOINPUT', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTORADIOSINO', '1', '1');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'No');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'Sí');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'BUENO', 'Bueno');

@@ -97,11 +97,11 @@
 												<f:selectItems value="#{nuevoModeloCuestionarioBean.getValoresTipoRespuesta(nuevoModeloCuestionarioBean.tipoSeleccionado)}"
 													var="valor" itemLabel="#{valor}" itemValue="#{valor}"/>
 											</p:selectOneRadio>
-											<p:outputPanel rendered="#{nuevoModeloCuestionarioBean.tipoSeleccionado eq 'ADJUNTO'}">
+											<p:outputPanel rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
 											    <p:fileUpload fileUploadListener="#{cuestionarioPersonalizadoBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
 											    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar"
 											    	disabled="true"
-											        multiple="true" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/" invalidFileMessage="El tipo del documento seleccionado no es válido"/>
+											        multiple="true"/>
 											</p:outputPanel>
 											<p:dataTable rendered="#{fn:startsWith(nuevoModeloCuestionarioBean.tipoSeleccionado, 'TABLA')}"
 														id="tablaPregunta" var="registroTabla" value="#{nuevoModeloCuestionarioBean.datosTabla.listaDatosTabla}" >                    
