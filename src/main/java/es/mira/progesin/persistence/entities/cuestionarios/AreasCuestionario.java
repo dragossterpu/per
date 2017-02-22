@@ -48,7 +48,7 @@ public class AreasCuestionario implements Serializable {
 	@Column(name = "orden")
 	private Integer orden;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_area")
 	private List<PreguntasCuestionario> preguntas;
 

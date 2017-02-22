@@ -19,9 +19,9 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionarioId;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
 import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
@@ -95,10 +95,6 @@ public class ModificarModeloCuestionarioBean {
 
 	private UIInput nuevoValorFila;
 
-	private UIInput preguntaNueva;
-
-	private UIInput nuevaRespuesta;
-
 	@Autowired
 	private IAreaCuestionarioRepository areaCuestionarioRepository;
 
@@ -112,13 +108,13 @@ public class ModificarModeloCuestionarioBean {
 		listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
 				.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
 
-		listaTipoPreguntasFinal = new ArrayList<String>();
+		listaTipoPreguntasFinal = new ArrayList<>();
 
-		listaTipoPreguntasPick = new DualListModel<String>(listaTipoPreguntas, listaTipoPreguntasFinal);
+		listaTipoPreguntasPick = new DualListModel<>(listaTipoPreguntas, listaTipoPreguntasFinal);
 
 		listaTiposPersonalizables = Arrays.asList(TiposRespuestasPersonalizables.values());
-		listadoValoresNuevaRespuesta = new ArrayList<String>();
-		listadoValoresFila = new ArrayList<String>();
+		listadoValoresNuevaRespuesta = new ArrayList<>();
+		listadoValoresFila = new ArrayList<>();
 
 		return "/cuestionarios/modificarModeloCuestionario";
 	}
@@ -126,17 +122,17 @@ public class ModificarModeloCuestionarioBean {
 	public String nuevoModelo() {
 		this.modeloCuestionario = new ModeloCuestionario();
 
-		listaAreasCuestionario = new ArrayList<AreasCuestionario>();
+		listaAreasCuestionario = new ArrayList<>();
 		listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
 				.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
 
 		listaTiposPersonalizables = Arrays.asList(TiposRespuestasPersonalizables.values());
-		listaTipoPreguntasFinal = new ArrayList<String>();
+		listaTipoPreguntasFinal = new ArrayList<>();
 
-		listaTipoPreguntasPick = new DualListModel<String>(listaTipoPreguntas, listaTipoPreguntasFinal);
+		listaTipoPreguntasPick = new DualListModel<>(listaTipoPreguntas, listaTipoPreguntasFinal);
 
-		listadoValoresNuevaRespuesta = new ArrayList<String>();
-		listadoValoresFila = new ArrayList<String>();
+		listadoValoresNuevaRespuesta = new ArrayList<>();
+		listadoValoresFila = new ArrayList<>();
 
 		return "/cuestionarios/modificarModeloCuestionario";
 	}
@@ -156,17 +152,34 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public void borraArea() {
-		listaAreasCuestionario.remove(areaSelec);
+		List<AreasCuestionario> aux = new ArrayList<>();
+
+		for (AreasCuestionario area : listaAreasCuestionario) {
+			if (area != areaSelec) {
+				aux.add(area);
+			}
+		}
+		listaAreasCuestionario = aux;
+
 	}
 
 	public void aniadePregunta(AreasCuestionario area) {
-		PreguntasCuestionario preguntaAux = new PreguntasCuestionario();
-		preguntaAux.setArea(area);
-		preguntaAux.setPregunta(textoPregunta.getLocalValue().toString());
-		preguntaAux.setTipoRespuesta(nuevoTipoPregunta.getLocalValue().toString());
-		List<PreguntasCuestionario> listado = area.getPreguntas();
-		listado.add(preguntaAux);
-		area.setPreguntas(listado);
+		String pregunta = textoPregunta.getLocalValue().toString();
+		String tipo = nuevoTipoPregunta.getLocalValue().toString();
+
+		if (!cadenaVacia(pregunta) && !cadenaVacia(tipo)) {
+			PreguntasCuestionario preguntaAux = new PreguntasCuestionario();
+			preguntaAux.setArea(area);
+			preguntaAux.setPregunta(pregunta);
+			preguntaAux.setTipoRespuesta(tipo);
+			List<PreguntasCuestionario> listado = area.getPreguntas();
+			listado.add(preguntaAux);
+			area.setPreguntas(listado);
+		}
+	}
+
+	public boolean cadenaVacia(String cadena) {
+		return "".equals(cadena) || cadena.isEmpty();
 	}
 
 	public void onSelectPregunta(SelectEvent event) {
@@ -280,54 +293,52 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public void guardaTipoRespuesta(String nombreTipoPregunta) {
+		if (!cadenaVacia(nombreTipoPregunta)) {
+			String seccion = tipoPersonalizado.concat(nombreTipoPregunta);
 
-		String seccion = tipoPersonalizado.concat(nombreTipoPregunta);
-
-		for (int i = 0; i < listadoValoresNuevaRespuesta.size(); i++) {
-			String valor = listadoValoresNuevaRespuesta.get(i);
-			ConfiguracionRespuestasCuestionario nuevoValor = new ConfiguracionRespuestasCuestionario();
-			ConfiguracionRespuestasCuestionarioId datos = new ConfiguracionRespuestasCuestionarioId();
-
-			switch (tipoPersonalizado) {
-			case "RADIO":
-				datos.setSeccion(seccion);
-				datos.setValor(valor);
-				datos.setClave(valor);
-				break;
-			default:
-				datos.setSeccion(seccion);
-				datos.setValor(valor);
-				datos.setClave("campo" + (i + 1));
-				break;
-			}
-			nuevoValor.setConfig(datos);
-			configuracionRespuestasCuestionarioRepository.save(nuevoValor);
-
-		}
-
-		// Valores de fila para Matriz
-
-		if (tipoPersonalizado.equals("MATRIZ")) {
-			for (int i = 0; i < listadoValoresFila.size(); i++) {
-				String valor = listadoValoresFila.get(i);
+			for (int i = 0; i < listadoValoresNuevaRespuesta.size(); i++) {
+				String valor = listadoValoresNuevaRespuesta.get(i);
 				ConfiguracionRespuestasCuestionario nuevoValor = new ConfiguracionRespuestasCuestionario();
 				ConfiguracionRespuestasCuestionarioId datos = new ConfiguracionRespuestasCuestionarioId();
-				datos.setSeccion(seccion);
-				datos.setValor(valor);
-				datos.setClave("nombreFila" + (i + 1));
+
+				if ("RADIO".equals(tipoPersonalizado)) {
+					datos.setSeccion(seccion);
+					datos.setValor(valor);
+					datos.setClave(valor);
+				}
+				else {
+					datos.setSeccion(seccion);
+					datos.setValor(valor);
+					datos.setClave("campo" + (i + 1));
+				}
 				nuevoValor.setConfig(datos);
 				configuracionRespuestasCuestionarioRepository.save(nuevoValor);
 			}
+
+			// Valores de fila para Matriz
+
+			if ("MATRIZ".equals(tipoPersonalizado)) {
+				for (int i = 0; i < listadoValoresFila.size(); i++) {
+					String valor = listadoValoresFila.get(i);
+					ConfiguracionRespuestasCuestionario nuevoValor = new ConfiguracionRespuestasCuestionario();
+					ConfiguracionRespuestasCuestionarioId datos = new ConfiguracionRespuestasCuestionarioId();
+					datos.setSeccion(seccion);
+					datos.setValor(valor);
+					datos.setClave("nombreFila" + (i + 1));
+					nuevoValor.setConfig(datos);
+					configuracionRespuestasCuestionarioRepository.save(nuevoValor);
+				}
+			}
+
+			// Actualizar lista
+			List<String> nuevoListado = configuracionRespuestasCuestionarioRepository
+					.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
+
+			listaTipoPreguntasPick.setSource(nuevoListado);
+
+			listadoValoresNuevaRespuesta = new ArrayList<>();
+			listadoValoresFila = new ArrayList<>();
 		}
-
-		// Actualizar lista
-		List<String> nuevoListado = configuracionRespuestasCuestionarioRepository
-				.findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
-
-		listaTipoPreguntasPick.setSource(nuevoListado);
-
-		listadoValoresNuevaRespuesta = new ArrayList<String>();
-		listadoValoresFila = new ArrayList<String>();
 	}
 
 	public void guardaCuestionario() {
@@ -370,7 +381,7 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public List<AreasCuestionario> ordenarAreas(List<AreasCuestionario> listado) {
-		List<AreasCuestionario> listaNueva = new ArrayList<AreasCuestionario>();
+		List<AreasCuestionario> listaNueva = new ArrayList();
 		for (int i = 0; i < listado.size(); i++) {
 			AreasCuestionario area = listado.get(i);
 			area.setOrden(i);
@@ -380,7 +391,7 @@ public class ModificarModeloCuestionarioBean {
 	}
 
 	public List<PreguntasCuestionario> ordenarPreguntas(List<PreguntasCuestionario> listado) {
-		List<PreguntasCuestionario> listaNueva = new ArrayList<PreguntasCuestionario>();
+		List<PreguntasCuestionario> listaNueva = new ArrayList<>();
 		for (int i = 0; i < listado.size(); i++) {
 			PreguntasCuestionario pregunta = listado.get(i);
 			pregunta.setOrden(i);
@@ -422,6 +433,6 @@ public class ModificarModeloCuestionarioBean {
 		else {
 			datosTabla.crearMatriz(valoresColumnas);
 		}
-		// mapaRespuestasTabla.put(tipo, dataTableView);
+
 	}
 }

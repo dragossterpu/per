@@ -45,7 +45,7 @@ public class ModeloCuestionario implements Serializable {
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "idCuestionario")
 	private List<AreasCuestionario> areas;
 

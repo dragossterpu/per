@@ -139,7 +139,9 @@
 											itemLabel="#{respuestas}" itemValue="#{respuestas}" />
 											<p:ajax update="personalizar"  />
 									</p:selectOneMenu>
+									<p:messages for="tipoPregunta" autoUpdate="true"  closable="true"/>	
 									<p:panel id="personalizar">
+										
 										<p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'RADIO'}">
 											<p:orderList id="orderListValoresRadio" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
 											itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
@@ -232,8 +234,7 @@
 									<p:inputText  id="textoPregunta" binding="#{modificarModeloCuestionarioBean.textoPregunta}"  converter="#{trimConverter}" maxlength="255"/>
 								    <h:outputLabel for="nuevoTipoPregunta" value="Tipo de pregunta" />
 									<p:selectOneMenu binding="#{modificarModeloCuestionarioBean.nuevoTipoPregunta}" id="nuevoTipoPregunta"
-										converter="#{selectConverter}" 
-										required="true">
+										converter="#{selectConverter}" >
 										<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 										<f:selectItems value="#{modificarModeloCuestionarioBean.listaTipoPreguntasPick.target}" var="tipo"
 											itemLabel="#{tipo}" itemValue="#{tipo}" />
