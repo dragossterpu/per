@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.INotificacionService;
@@ -118,7 +118,7 @@ public class TipoDocumentacionBean implements Serializable {
 				String descripcion = "Se ha dado de alta un nuevo tipo de documentación. Nombre: "
 						+ documentacion.getNombre();
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+				regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 			}

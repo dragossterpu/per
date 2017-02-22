@@ -19,8 +19,8 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.INotificacionService;
@@ -131,8 +131,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                     
                     String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
                     
-                    regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
-                            NOMBRESECCION);
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
                     
                     notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
                 }
@@ -196,8 +195,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero() + " finalizado";
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 List<RoleEnum> rolesANotificar = new ArrayList<>();
                 rolesANotificar.add(RoleEnum.SERVICIO_APOYO);
@@ -249,8 +247,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 
                 String descripcion = asunto.toString() + " declarado no conforme";
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.SERVICIO_APOYO);
                 notificacionService.crearNotificacionEquipo(descripcion, NOMBRESECCION, cuestionario.getInspeccion());
@@ -307,8 +304,7 @@ public class CuestionarioEnviadoBean implements Serializable {
             
             String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
             
-            regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                    NOMBRESECCION);
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
             
             notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
         } catch (Exception e) {

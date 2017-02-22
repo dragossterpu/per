@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -65,7 +65,7 @@ public class AlertasBean implements Serializable {
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			// Guardamos la actividad en bbdd
 
-			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+			regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd

@@ -23,7 +23,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
@@ -130,7 +130,7 @@ public class ResponderCuestionarioBean implements Serializable {
 					+ " respondido";
 			notificacionService.crearNotificacionEquipo(textoNotReg, NOMBRESECCION,
 					cuestionarioEnviado.getInspeccion());
-			regActividadService.altaRegActividad(textoNotReg, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(textoNotReg, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

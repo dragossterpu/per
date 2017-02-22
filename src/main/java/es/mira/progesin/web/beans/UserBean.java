@@ -29,8 +29,8 @@ import es.mira.progesin.persistence.entities.Empleo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.INotificacionService;
@@ -160,8 +160,7 @@ public class UserBean {
                             "El usuario ha sido creado con éxito");
                     String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
                             + user.getApellido2();
-                    regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
-                            NOMBRESECCION);
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
                     notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
                 }
             } catch (Exception e) {
@@ -218,7 +217,7 @@ public class UserBean {
             String descripcion = "Se ha eliminado el usuario " + user.getNombre() + " " + user.getApellido1() + " "
                     + user.getApellido2();
             // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
             // Guardamos la notificacion en bbdd
             notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
         } catch (Exception e) {
@@ -258,8 +257,7 @@ public class UserBean {
                     // Generamos la alerta
                 }
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }
         } catch (Exception e) {
@@ -344,7 +342,7 @@ public class UserBean {
                 + "\n Puesto de trabajo: " + puesto + "\n Estado: " + estado + "\n Fecha alta desde: " + fechaDesde
                 + "\n Fecha alta desde: " + fechaHasta + "\n Rol: " + rol + "\n Cuerpo del estado: " + cuerpo;
         
-        regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.AUDITORIA.name(), NOMBRESECCION);
+        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(), NOMBRESECCION);
         
     }
     
@@ -352,6 +350,6 @@ public class UserBean {
         String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()
                 + " ha realizado ha visualizado un usuario." + "El usuario consultado es: " + usuario.getUsername();
         
-        regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.AUDITORIA.name(), NOMBRESECCION);
+        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(), NOMBRESECCION);
     }
 }

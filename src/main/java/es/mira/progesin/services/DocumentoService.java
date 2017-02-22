@@ -22,7 +22,7 @@ import org.xml.sax.ContentHandler;
 
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.DocumentoBlob;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 
@@ -268,7 +268,7 @@ public class DocumentoService implements IDocumentoService {
 	@Override
 	public Documento cargaDocumento(UploadedFile file) throws SQLException, IOException {
 		try {
-			registroActividadService.altaRegActividad("cargaFichero", EstadoRegActividadEnum.ALTA.name(),
+			registroActividadService.altaRegActividad("cargaFichero", TipoRegistroEnum.ALTA.name(),
 					SeccionesEnum.GESTOR.getDescripcion());
 
 			return documentoRepository.save(crearDocumento(file));

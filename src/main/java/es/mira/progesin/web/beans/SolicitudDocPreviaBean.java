@@ -25,8 +25,8 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.IDocumentoService;
@@ -162,8 +162,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                         altaDocumentos();
                         String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
                         // Guardamos la actividad en bbdd
-                        regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(),
-                                NOMBRESECCION);
+                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
                         
                         // Guardamos la notificacion en bbdd
                         notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
@@ -269,8 +268,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + " validada por apoyo";
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }
@@ -298,8 +296,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + " validada por jefe equipo";
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }
@@ -418,8 +415,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                         
                         String descripcion = DESCRIPCION + solicitud.getInspeccion().getNumero();
                         
-                        regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(),
-                                NOMBRESECCION);
+                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
                         
                         notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
                     }
@@ -471,8 +467,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }
@@ -529,7 +524,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                     String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                             + " enviada";
                     
-                    regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                             NOMBRESECCION);
                     
                     notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
@@ -563,8 +558,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + "finalizada";
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }
@@ -615,8 +609,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + " declarada no conforme";
                 
-                regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
-                        NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
                 
                 notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }

@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.CorreoElectronico;
@@ -74,7 +74,7 @@ public class RecoverBean implements Serializable {
 					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
 							"Se ha reestablecido su acceso al sistema, se le han enviado sus nuevos credenciales por correo electrónico");
 					String descripcion = "Reestablecida clave del usuario " + user.getUsername();
-					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
 							NOMBRESECCION);
 				}
 				catch (Exception e) {

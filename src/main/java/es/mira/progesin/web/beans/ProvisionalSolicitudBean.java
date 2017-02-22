@@ -24,7 +24,7 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.services.IDocumentoService;
@@ -226,7 +226,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 				String descripcion = "Solicitud documentación previa cuestionario para la inspección "
 						+ solicitudDocumentacionPrevia.getInspeccion().getNumero() + " cumplimentada";
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
@@ -247,7 +247,7 @@ public class ProvisionalSolicitudBean implements Serializable {
 						"El borrador se ha guardado con éxito");
 				String descripcion = "Solicitud documentación previa cuestionario para la inspección "
 						+ solicitudDocumentacionPrevia.getInspeccion().getNumero();
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 			}
 		}

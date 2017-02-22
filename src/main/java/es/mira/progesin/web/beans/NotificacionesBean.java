@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.RegistroActividad;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
@@ -72,7 +72,7 @@ public class NotificacionesBean implements Serializable {
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);		
+			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);		
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd

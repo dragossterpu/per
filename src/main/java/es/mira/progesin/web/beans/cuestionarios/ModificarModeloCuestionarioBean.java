@@ -19,7 +19,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionarioId;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
@@ -339,7 +339,7 @@ public class ModificarModeloCuestionarioBean {
 						SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
 				registroActividadService.altaRegActividad(
 						"Se modifica el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion()),
-						EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
+						TipoRegistroEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
 				RequestContext context = RequestContext.getCurrentInstance();
 				context.execute("PF('dialogCierre').show();");
 
@@ -359,7 +359,7 @@ public class ModificarModeloCuestionarioBean {
 						SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ADMIN);
 				registroActividadService.altaRegActividad(
 						"Se crea el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion()),
-						EstadoRegActividadEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
+						TipoRegistroEnum.ALTA.name(), SeccionesEnum.CUESTIONARIO.getDescripcion());
 				RequestContext context = RequestContext.getCurrentInstance();
 				context.execute("PF('dialogCierre').show();");
 			}

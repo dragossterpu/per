@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.base.Throwables;
 
 import es.mira.progesin.persistence.entities.RegistroActividad;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 import lombok.extern.slf4j.Slf4j;
@@ -123,7 +123,7 @@ public class RegistroActividadService implements IRegistroActividadService {
 		try {
 
 			RegistroActividad registroActividad = new RegistroActividad();
-			registroActividad.setTipoRegActividad(EstadoRegActividadEnum.ERROR.name());
+			registroActividad.setTipoRegActividad(TipoRegistroEnum.ERROR.name());
 			registroActividad.setFechaAlta(new Date());
 			registroActividad.setNombreSeccion(nombreSeccion);
 			registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());

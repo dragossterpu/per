@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Documento;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
@@ -82,7 +82,7 @@ public class GestorDocumentalBean {
 				FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
 				context.execute("PF('dialogMessage').show()");
 				registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",
-						EstadoRegActividadEnum.ERROR.name(), "Gestor documental");
+						TipoRegistroEnum.ERROR.name(), "Gestor documental");
 
 			}
 

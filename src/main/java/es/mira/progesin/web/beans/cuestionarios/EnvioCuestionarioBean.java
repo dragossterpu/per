@@ -20,7 +20,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
@@ -236,7 +236,7 @@ public class EnvioCuestionarioBean implements Serializable {
 				RoleEnum.JEFE_INSPECCIONES);
 		notificacionService.crearNotificacionEquipo(textoNotificaciones, SECCION_ENVIAR_CUESTIONARIO,
 				cuestionarioEnvio.getInspeccion());
-		regActividadService.altaRegActividad(textoNotificaciones, EstadoRegActividadEnum.ALTA.name(),
+		regActividadService.altaRegActividad(textoNotificaciones, TipoRegistroEnum.ALTA.name(),
 				SECCION_ENVIAR_CUESTIONARIO);
 	}
 

@@ -8,18 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum SeccionesEnum {
-	ADMINISTRATIVAS("Herramientas Administrativas"),
-	DOCUMENTACION("Solicitud previa cuestionario"),
-	CUESTIONARIO("Cuestionario"),
-	GESTOR("Gestor Documental"),
-	GUIAS("Guías"),
-	INSPECCION("Inspección"),
-	INFORMES("Informe"),
-	ALERTAS("Alertas"),
-	NOTIFICACIONES("Notificaciones"),
-	MENSAJES("Mensajes");
-	
-	private String descripcion;
-	
-
+    ADMINISTRACION("ADMINISTRACIÓN"), DOCUMENTACION("SOLICITUD DOC. PREVIA"), CUESTIONARIO("CUESTIONARIOS"), GESTOR(
+            "GESTOR DOCUMENTAL"), GUIAS("GUÍAS"), INSPECCION("INSPECCIONES"), INFORMES("INFORMES");
+    
+    private String descripcion;
+    
 }

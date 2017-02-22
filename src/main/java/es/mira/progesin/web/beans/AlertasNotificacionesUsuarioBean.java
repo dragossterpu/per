@@ -18,7 +18,7 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -75,7 +75,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 					alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
-			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), "Alertas");
+			regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Alertas");
 		}
 		catch (Exception e) {
 			regActividad.altaRegActividadError("Alertas", e);
@@ -89,7 +89,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 					notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación :" + notificacion.getDescripcion();
-			regActividad.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), "Notificaciones");
+			regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Notificaciones");
 		}
 		catch (Exception e) {
 			regActividad.altaRegActividadError("Notificaciones", e);

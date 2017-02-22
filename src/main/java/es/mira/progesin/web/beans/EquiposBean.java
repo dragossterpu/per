@@ -20,7 +20,7 @@ import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -144,7 +144,7 @@ public class EquiposBean implements Serializable {
 					+ "'. Nombre jefe del equipo: " + equipo.getNombreJefe() + ". Nombre de sus componentes: "
 					+ nombresCompletos;
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.ALTA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -207,7 +207,7 @@ public class EquiposBean implements Serializable {
 					"Se ha dado de baja con éxito un equipo de inspecciones");
 			String descripcion = "Se ha eliminado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
 			// Guardamos la notificacion en bbdd
 			notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
 		}
@@ -245,7 +245,7 @@ public class EquiposBean implements Serializable {
 						"El equipo ha sido modificado con éxito");
 				String descripcion = "Se ha modificado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
@@ -273,7 +273,7 @@ public class EquiposBean implements Serializable {
 			String descripcion = "Se ha eliminado un componente del equipo inspecciones '" + equipo.getNombreEquipo()
 					+ "'. Nombre del componente del equipo: " + miembro.getNombreCompleto();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.BAJA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
@@ -326,7 +326,7 @@ public class EquiposBean implements Serializable {
 					String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
 							+ "'. Nombre del nuevo jefe: " + equipo.getNombreJefe();
 					// Guardamos la actividad en bbdd
-					regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+					regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
 							NOMBRESECCION);
 					// Guardamos la notificacion en bbdd
 					notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
@@ -373,7 +373,7 @@ public class EquiposBean implements Serializable {
 				String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones '"
 						+ equipo.getNombreEquipo() + "'. Nombres de componentes " + nombresCompletos;
 				// Guardamos la actividad en bbdd
-				regActividadService.altaRegActividad(descripcion, EstadoRegActividadEnum.MODIFICACION.name(),
+				regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
 						NOMBRESECCION);
 				// Guardamos la notificacion en bbdd
 				notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
