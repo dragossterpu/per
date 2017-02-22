@@ -18,14 +18,14 @@
 		<h:form id="form">
 			<div class="bloqueFormulario">																		
 				<h:outputLabel for="motivosNoConforme" value="Motivos de la no conformidad (*):" />
-				<p:inputTextarea id="motivosNoConforme" value="#{cuestionarioEnviadoBean.motivosNoConforme}" required="true" requiredMessage="Es obligatorio motivar la no conformidad para que la unidad pueda solventarlo." converter="#{trimConverter}"
+				<p:inputTextarea id="motivosNoConforme" value="#{motivosNoConforme}" required="true" requiredMessage="Es obligatorio motivar la no conformidad para que la unidad pueda solventarlo." converter="#{trimConverter}"
 				 	maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres."/>
 				<p:outputLabel id="contador"/>
 				<p:messages for="motivosNoConforme" autoUpdate="true" closable="true"/>
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{cuestionarioEnviadoBean.noConformeCuestionario}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
+				<p:commandButton actionListener="#{cuestionarioEnviadoBean.noConformeCuestionario(motivosNoConforme)}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
 					<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 						message="¿Está seguro que desea declara no conforme este cuestionario y reenviarlo?"/>
 				</p:commandButton>

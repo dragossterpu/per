@@ -112,7 +112,7 @@ public class UserBean {
     public String getUserPerfil() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         user = userService.findOne(username);
-        return "/principal/miPerfil";
+        return "/principal/miPerfil?faces-redirect=true";
     }
     
     /**
@@ -130,7 +130,7 @@ public class UserBean {
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         puestoTrabajoSeleccionado = null;
         cuerpoEstadoSeleccionado = null;
-        return "/users/altaUsuario";
+        return "/users/altaUsuario?faces-redirect=true";
     }
     
     /**
@@ -240,7 +240,7 @@ public class UserBean {
         
         auditoriaVisualizacion(user);
         buscarEmpleo();
-        return "/users/modificarUsuario";
+        return "/users/modificarUsuario?faces-redirect=true";
     }
     
     /**

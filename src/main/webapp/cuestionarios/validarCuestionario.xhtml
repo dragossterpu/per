@@ -117,10 +117,8 @@
 				<p:outputPanel>
 					<div class="botonesFormulario">
 						<p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Guardar validaciones" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}"/>
-						<h:commandLink action="#{cuestionarioEnviadoBean.getFormNoConformeCuestionario}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
-							<span class="ui-CommandLink-texto">No conforme</span>
-						</h:commandLink>
-						<p:button outcome="/cuestionarios/busquedaCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
+                        <p:button value="No conforme" icon="fa fa-fw fa-undo" outcome="/cuestionarios/noConformeCuestionario" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}"/>
+						<p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/cuestionarios/busquedaCuestionarios"/>
 					</div>
 				</p:outputPanel>
 

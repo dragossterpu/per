@@ -108,7 +108,7 @@
 						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarVacio(cuestionario)}" />
 					</p:column>
 					<p:column styleClass="botonTabla" exportable="false">
-						<h:commandLink title="Enviar" action="#{cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario)}" styleClass="fa fa-fw fa-envelope-o ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" />
+						<p:commandButton title="Enviar" action="#{cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario)}" icon="fa fa-envelope-o" />
 					</p:column>
 					<p:column styleClass="botonTabla" exportable="false">
 						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
@@ -121,7 +121,7 @@
 	    			</f:facet>
 				</p:dataTable>
 				
-				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+				<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 				
 			</p:outputPanel>
 			

@@ -63,8 +63,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     private String vieneDe;
     
-    private String motivosNoConforme;
-    
     private Date backupFechaLimiteCuestionario;
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -128,8 +126,8 @@ public class CuestionarioEnviadoBean implements Serializable {
                 cuestionario.setUsernameAnulacion(usuarioActual.getUsername());
                 cuestionario.setFechaAnulacion(new Date());
                 if (cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario)) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
-                            "Se ha eliminado con éxito el cuestionario");
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
+                            "Se ha eliminado con éxito el cuestionario", null);
                     
                     String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
                     
@@ -138,16 +136,14 @@ public class CuestionarioEnviadoBean implements Serializable {
                     
                     notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
                 }
-                listaCuestionarioEnvio = null;
-                listaCuestionarioEnvio = cuestionarioEnvioService
-                        .buscarCuestionarioEnviadoCriteria(cuestionarioEnviadoBusqueda);
+                listaCuestionarioEnvio.remove(cuestionario);
             } else {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
-                        "Ya ha sido anulado con anterioridad o no tiene permisos para realizar esta acción");
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
+                        "Ya ha sido anulado con anterioridad o no tiene permisos para realizar esta acción", null);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-                    "Se ha producido un error al eliminar el cuestionario, inténtelo de nuevo más tarde");
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+                    "Se ha producido un error al eliminar el cuestionario, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
     }
@@ -192,6 +188,7 @@ public class CuestionarioEnviadoBean implements Serializable {
             
             if (listaRespuestasValidadas.size() == listaRespuestasTotales.size()) {
                 cuestionario.setFechaFinalizacion(new Date());
+                cuestionario.setFechaNoConforme(null);
                 cuestionario.setUsernameFinalizacion(usuarioActual);
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
@@ -217,26 +214,14 @@ public class CuestionarioEnviadoBean implements Serializable {
     }
     
     /**
-     * Carga el formulario para declarar no conforme un cuestionario enviado ya cumplimentado.
-     * 
-     * @author EZENTIS
-     * @return vista noConformeCuestionario
-     */
-    public String getFormNoConformeCuestionario() {
-        motivosNoConforme = null;
-        return "/cuestionarios/noConformeCuestionario";
-    }
-    
-    /**
      * Permite al jefe de equipo declarar no conforme un cuestionario enviado ya cumplimentada, después de revisar las
      * respuestas y la documentación adjuntada por la unidad que se va a inspeccionar. Para ello se elimina la fecha de
      * cumplimentación y reenvia el cuestionario al destinatario de la unidad con el motivo de dicha no conformidad.
      * Adicionalmente reactiva los usuarios provisinales que se usaron para llevarlo a cabo.
      * 
      * @author EZENTIS
-     * @return vista validarCuestionario
      */
-    public String noConformeCuestionario() {
+    public void noConformeCuestionario(String motivosNoConforme) {
         try {
             CuestionarioEnvio cuestionario = visualizarCuestionario.getCuestionarioEnviado();
             cuestionario.setFechaCumplimentacion(null);
@@ -275,7 +260,6 @@ public class CuestionarioEnviadoBean implements Serializable {
                     "Se ha producido un error al declarar no conforme el cuestionario, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/cuestionarios/noConformeCuestionario";
     }
     
     /**
@@ -289,7 +273,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     public String getFormModificarCuestionario(CuestionarioEnvio cuestionario) {
         envioCuestionarioBean.setCuestionarioEnvio(cuestionario);
         backupFechaLimiteCuestionario = cuestionario.getFechaLimiteCuestionario();
-        return "/cuestionarios/enviarCuestionario";
+        return "/cuestionarios/enviarCuestionario?faces-redirect=true";
     }
     
     /**
@@ -298,7 +282,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      * 
      * @author EZENTIS
      */
-    public String modificarCuestionario() {
+    public void modificarCuestionario() {
         try {
             CuestionarioEnvio cuestionario = envioCuestionarioBean.getCuestionarioEnvio();
             cuestionarioEnvioService.save(cuestionario);
@@ -332,7 +316,6 @@ public class CuestionarioEnviadoBean implements Serializable {
                     "Se ha producido un error al modificar el cuestionario, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/cuestionarios/modificarCuestionario";
     }
     
 }

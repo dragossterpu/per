@@ -67,8 +67,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
     
-    private static final String VISTASOLICITUD = "/solicitudesPrevia/vistaSolicitud";
-    
     private static final String ERROR = "Error";
     
     private String vieneDe;
@@ -130,22 +128,17 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    private String motivosNoConforme;
-    
     private Map<String, String> parametrosVistaSolicitud;
     
     @Autowired
-    private PdfGenerator pdfGenerator;
-    
-    private StreamedContent pdfFile;
+    private transient PdfGenerator pdfGenerator;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
      * 
      * @author EZENTIS
-     * @return vista busquedaSolicitudesDocPrevia
      */
-    public String crearSolicitud() {
+    public void crearSolicitud() {
         
         try {
             List<SolicitudDocumentacionPrevia> listaSolicitudes = solicitudDocumentacionService
@@ -183,8 +176,6 @@ public class SolicitudDocPreviaBean implements Serializable {
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "solicitudesPrevia/crearSolicitud";
-        
     }
     
     /**
@@ -234,7 +225,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         solicitudDocumentacionPrevia = solicitud;
         backupFechaLimiteEnvio = solicitud.getFechaLimiteEnvio();
-        return "/solicitudesPrevia/modificarSolicitud";
+        return "/solicitudesPrevia/modificarSolicitud?faces-redirect=true";
     }
     
     /**
@@ -265,9 +256,8 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Permite al equipo de apoyo validar la solicitud de documentación
      * 
      * @author EZENTIS
-     * @return vista vistaSolicitud
      */
-    public String validacionApoyo() {
+    public void validacionApoyo() {
         try {
             solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
             solicitudDocumentacionPrevia
@@ -289,17 +279,14 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error al validar apoyo la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        
-        return VISTASOLICITUD;
     }
     
     /**
      * Permite al jefe del equipo de apoyo validar la solicitud de documentación
      * 
      * @author EZENTIS
-     * @return vista vistaSolicitud
      */
-    public String validacionJefeEquipo() {
+    public void validacionJefeEquipo() {
         try {
             solicitudDocumentacionPrevia.setFechaValidJefeEquipo(new Date());
             solicitudDocumentacionPrevia
@@ -321,22 +308,19 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error al validar el jefe del equipo la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return VISTASOLICITUD;
     }
     
     /**
      * Carga el formulario para crear una solicitud.
      * 
      * @author EZENTIS
-     * @return vista crearSolicitud
      */
-    public String getFormularioCrearSolicitud() {
+    public void getFormularioCrearSolicitud() {
         documentosSeleccionados = new ArrayList<>();
         solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
         solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
         datosApoyo();
         skip = false;
-        return "/solicitudesPrevia/crearSolicitud";
     }
     
     /**
@@ -421,16 +405,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                 if (solicitud.getFechaEnvio() == null) {
                     solicitudDocumentacionService.transaccDeleteElimDocPrevia(solicitud.getId());
                     
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
-                            "Se ha eliminado con éxito la solicitud de documentación");
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
+                            "Se ha eliminado con éxito la solicitud de documentación", null);
                 } else {
                     // Enviada pero no finalizada, existe usuario provisional
                     solicitud.setFechaBaja(new Date());
                     solicitud.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
                     String usuarioProv = solicitud.getCorreoDestinatario();
                     if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv)) {
-                        FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Baja",
-                                "Se ha dado de baja con éxito la solicitud de documentación");
+                        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
+                                "Se ha dado de baja con éxito la solicitud de documentación", null);
                         
                         String descripcion = DESCRIPCION + solicitud.getInspeccion().getNumero();
                         
@@ -440,18 +424,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                         notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
                     }
                 }
+                listaSolicitudesPrevia.remove(solicitud);
             } else {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
-                        "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción");
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
+                        "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción", null);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-                    "Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde");
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+                    "Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        listaSolicitudesPrevia = null;
-        listaSolicitudesPrevia = solicitudDocumentacionService
-                .buscarSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
     }
     
     /**
@@ -460,7 +442,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * 
      * @author EZENTIS
      */
-    public String modificarSolicitud() {
+    public void modificarSolicitud() {
         try {
             if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
                 String mensajeCorreoEnviado = "";
@@ -499,7 +481,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/solicitudesPrevia/modificarSolicitud";
     }
     
     /**
@@ -507,9 +488,8 @@ public class SolicitudDocPreviaBean implements Serializable {
      * usuario provisional para que algún miembro de la unidad a inspeccionar la cumplimente.
      * 
      * @author EZENTIS
-     * @return vista vistaSolicitud
      */
-    public String enviarSolicitud() {
+    public void enviarSolicitud() {
         try {
             String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
             if (userService.exists(correoDestinatario)) {
@@ -560,7 +540,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error al enviar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return VISTASOLICITUD;
     }
     
     /**
@@ -569,11 +548,11 @@ public class SolicitudDocPreviaBean implements Serializable {
      * se usó para llevarla a cabo puesto que ya no se va a usar más.
      * 
      * @author EZENTIS
-     * @return vista vistaSolicitud
      */
-    public String finalizarSolicitud() {
+    public void finalizarSolicitud() {
         try {
             solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
+            solicitudDocumentacionPrevia.setFechaNoConforme(null);
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             solicitudDocumentacionPrevia.setUsuarioFinalizacion(usuarioActual);
             String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
@@ -594,18 +573,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return VISTASOLICITUD;
-    }
-    
-    /**
-     * Carga el formulario para declarar no conforme una solicitud.
-     * 
-     * @author EZENTIS
-     * @return vista noConformeSolicitud
-     */
-    public String getFormNoConformeSolicitud() {
-        motivosNoConforme = null;
-        return "/solicitudesPrevia/noConformeSolicitud";
     }
     
     /**
@@ -615,9 +582,8 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Adicionalmente reactiva el usuario provisinal que se usó para llevarla a cabo.
      * 
      * @author EZENTIS
-     * @return vista vistaSolicitud
      */
-    public String noConformeSolicitud() {
+    public void noConformeSolicitud(String motivosNoConforme) {
         try {
             solicitudDocumentacionPrevia.setFechaCumplimentacion(null);
             solicitudDocumentacionPrevia.setFechaNoConforme(new Date());
@@ -659,7 +625,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/solicitudesPrevia/noConformeSolicitud";
     }
     
     /**
@@ -716,7 +681,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void imprimirPdf() {
         try {
-            setPdfFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
+            setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
                     listadoDocumentosPrevios));
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,

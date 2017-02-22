@@ -34,118 +34,129 @@ import lombok.Setter;
 @Controller("cuestionarioPersonalizadoBean")
 @Scope("session")
 public class CuestionarioPersonalizadoBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private static final String NOMBRESECCION = "Gestión de cuestionario personalizado";
-
-	private static final String ERROR = "Error";
-
-	private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
-
-	private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
-
-	private String vieneDe;
-
-	@Autowired
-	private transient ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
-
-	@Autowired
-	private transient ICuestionarioEnvioService cuestionarioEnvioService;
-
-	@Autowired
-	private transient IAreaCuestionarioService areaService;
-
-	@Autowired
-	private EnvioCuestionarioBean envioCuestionarioBean;
-
-	@Autowired
-	transient IRegistroActividadService regActividadService;
-
-	/**
-	 * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
-	 * 
-	 * @author EZENTIS
-	 */
-	public void buscarCuestionario() {
-		listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
-				.buscarCuestionarioPersonalizadoCriteria(cuestionarioBusqueda);
-	}
-
-	/**
-	 * Devuelve al formulario de búsqueda de modelos de cuestionario a su estado inicial y borra los resultados de
-	 * búsquedas anteriores si se navega desde el menú u otra sección.
-	 * 
-	 * @author EZENTIS
-	 */
-	public void getFormBusquedaModelosCuestionario() {
-
-		if ("menu".equalsIgnoreCase(this.vieneDe)) {
-			limpiar();
-			this.vieneDe = null;
-		}
-
-	}
-
-	/**
-	 * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
-	 * 
-	 * @author EZENTIS
-	 */
-	public void limpiar() {
-
-		cuestionarioBusqueda.limpiar();
-		listaCuestionarioPersonalizado = null;
-
-	}
-
-	/**
-	 * Elimina un cuestionario. Si ya ha sido enviado alguna vez se realiza baja lógica en caso contrario, eliminación física.
-	 * 
-	 * @author EZENTIS
-	 * @param cuestionario Cuestionario a eliminar
-	 */
-	public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
-		try {
-			if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {
-				cuestionario.setFechaBaja(new Date());
-				cuestionario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-				cuestionarioPersonalizadoService.save(cuestionario);
-			}
-			else {
-				cuestionarioPersonalizadoService.delete(cuestionario);
-			}
-			listaCuestionarioPersonalizado.remove(cuestionario);
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Eliminación",
-					"Cuestionario personalizado eliminado con éxito");
-		}
-		catch (Exception e) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-					"Se ha producido un error al eliminar el cuestionario personalizado, inténtelo de nuevo más tarde");
-			regActividadService.altaRegActividadError(NOMBRESECCION, e);
-		}
-
-	}
-
-	/**
-	 * Muestra la pantalla de envío del cuestionario
-	 *
-	 * @author EZENTIS
-	 * @param cuestionario Cuestionario a enviar
-	 * @return Nombre de la vista del formulario de envío
-	 */
-	public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
-		CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-		cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
-		Inspeccion inspeccion = new Inspeccion();
-		cuestionarioEnvio.setInspeccion(inspeccion);
-		envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-		return "/cuestionarios/enviarCuestionario";
-	}
-
-	@PostConstruct
-	public void init() {
-		cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
-	}
-
+    
+    private static final long serialVersionUID = 1L;
+    
+    private static final String NOMBRESECCION = "Gestión de cuestionario personalizado";
+    
+    private static final String ERROR = "Error";
+    
+    private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
+    
+    private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
+    
+    private String vieneDe;
+    
+    @Autowired
+    private transient ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
+    
+    @Autowired
+    private transient ICuestionarioEnvioService cuestionarioEnvioService;
+    
+    @Autowired
+    private transient IAreaCuestionarioService areaService;
+    
+    @Autowired
+    private EnvioCuestionarioBean envioCuestionarioBean;
+    
+    @Autowired
+    transient IRegistroActividadService regActividadService;
+    
+    /**
+     * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
+     * 
+     * @author EZENTIS
+     */
+    public void buscarCuestionario() {
+        listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
+                .buscarCuestionarioPersonalizadoCriteria(cuestionarioBusqueda);
+    }
+    
+    /**
+     * Devuelve al formulario de búsqueda de modelos de cuestionario a su estado inicial y borra los resultados de
+     * búsquedas anteriores si se navega desde el menú u otra sección.
+     * 
+     * @author EZENTIS
+     */
+    public void getFormBusquedaModelosCuestionario() {
+        
+        if ("menu".equalsIgnoreCase(this.vieneDe)) {
+            limpiar();
+            this.vieneDe = null;
+        }
+        
+    }
+    
+    /**
+     * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
+     * 
+     * @author EZENTIS
+     */
+    public void limpiar() {
+        
+        cuestionarioBusqueda.limpiar();
+        listaCuestionarioPersonalizado = null;
+        
+    }
+    
+    /**
+     * Elimina un cuestionario. Si ya ha sido enviado alguna vez se realiza baja lógica en caso contrario, eliminación
+     * física.
+     * 
+     * @author EZENTIS
+     * @param cuestionario Cuestionario a eliminar
+     */
+    public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
+        try {
+            if (cuestionario.getFechaBaja() == null) {
+                if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {
+                    cuestionario.setFechaBaja(new Date());
+                    cuestionario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+                    cuestionarioPersonalizadoService.save(cuestionario);
+                } else {
+                    cuestionarioPersonalizadoService.delete(cuestionario);
+                }
+                listaCuestionarioPersonalizado.remove(cuestionario);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
+                        "Cuestionario personalizado eliminado con éxito", null);
+            } else {
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
+                        "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción", null);
+            }
+        } catch (Exception e) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+                    "Se ha producido un error al eliminar el cuestionario personalizado, inténtelo de nuevo más tarde",
+                    null);
+            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+        }
+        
+    }
+    
+    /**
+     * Muestra la pantalla de envío del cuestionario
+     *
+     * @author EZENTIS
+     * @param cuestionario Cuestionario a enviar
+     * @return Nombre de la vista del formulario de envío
+     */
+    public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
+        if (cuestionario.getFechaBaja() == null) {
+            CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
+            cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
+            Inspeccion inspeccion = new Inspeccion();
+            cuestionarioEnvio.setInspeccion(inspeccion);
+            envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
+            return "/cuestionarios/enviarCuestionario?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Acción no permitida",
+                    "No puede enviar un nuevo cuestionario de un modelo personalizado anulado", null);
+            return null;
+        }
+    }
+    
+    @PostConstruct
+    public void init() {
+        cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
+    }
+    
 }

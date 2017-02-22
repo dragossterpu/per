@@ -18,7 +18,7 @@
 				<h3>Solicitud documentación previa cuestionario
 					<h:commandLink style="float: right;" actionListener="#{solicitudDocPreviaBean.imprimirPdf()}">
 		               <p:graphicImage value="/images/pdf.png" style="padding: 0"/>
-		               <p:fileDownload value="#{solicitudDocPreviaBean.pdfFile}" />
+		               <p:fileDownload value="#{solicitudDocPreviaBean.file}" />
 		            </h:commandLink>
 	            </h3>
 			</div>
@@ -146,11 +146,8 @@
 						<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 							message="¿Está seguro que desea finalizar esta solicitud?"/>
 					</p:commandButton>
-					<h:commandLink rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" 
-						action="#{solicitudDocPreviaBean.getFormNoConformeSolicitud}" styleClass="fa fa-undo ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
-						<span class="ui-CommandLink-texto">No conforme</span>
-					</h:commandLink>
-					<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Volver" icon="fa fa-fw fa-undo"/>
+                    <p:button value="No conforme" icon="fa fa-fw fa-undo" outcome="/solicitudesPrevia/noConformeSolicitud"/>
+					<p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia"/>
 				</div>
 			</p:outputPanel>
 

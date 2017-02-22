@@ -107,10 +107,8 @@
 					</div>
 				</div>
 				<div class="botonesFormulario">
-					<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="ui-icon-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)"/>
-					<h:commandLink title="Limpiar" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{solicitudDocPreviaBean.limpiarBusqueda}">
-		            	<span class="ui-CommandLink-texto">Limpiar</span>
-		            </h:commandLink>	
+					<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)"/>
+                    <p:commandButton actionListener="#{solicitudDocPreviaBean.limpiarBusqueda}" value="Limpiar" update="busquedaSolicitudDocPrevia" icon="fa fa-eraser"/>	
 				</div>
 				
 				<p:separator styleClass="separator ui-state-disabled" />
@@ -218,8 +216,7 @@
 						</p:column>
 						<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 							<p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="ui-icon-trash"
-								actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}"
-								update=":busquedaSolicitudDocPrevia:panelSolicitudes tablaSolicitudes">
+								actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}" update=":busquedaSolicitudDocPrevia:panelSolicitudes">
 								<p:confirm header="Eliminar" icon="ui-icon-alert"
 									message="¿Está seguro de que desea eliminar esta solicitud?"/>
 							</p:commandButton>
@@ -235,7 +232,7 @@
 						</div>
 					</p:confirmDialog>
 
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+					<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 
 				</p:outputPanel>
 			</h:form>
