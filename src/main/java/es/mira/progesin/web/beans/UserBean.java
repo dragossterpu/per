@@ -29,7 +29,7 @@ import es.mira.progesin.persistence.entities.Empleo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.services.ICuerpoEstadoService;
@@ -107,8 +107,6 @@ public class UserBean {
     @Autowired
     private IDepartamentoRepository departamentoRepository;
     
-    private static final String NOMBRESECCION = "Usuarios";
-    
     public String getUserPerfil() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         user = userService.findOne(username);
@@ -160,11 +158,11 @@ public class UserBean {
                             "El usuario ha sido creado con éxito");
                     String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
                             + user.getApellido2();
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
-                    notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                            SeccionesEnum.USUARIOS.name());
                 }
             } catch (Exception e) {
-                regActividadService.altaRegActividadError(NOMBRESECCION, e);
+                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
             }
             
         }
@@ -204,7 +202,7 @@ public class UserBean {
     }
     
     /**
-     * Realiza una eliminación lógico del usuario (le pone fecha de baja)
+     * Realiza una eliminación lógica del usuario (le pone fecha de baja)
      * @param user El usuario seleccionado de la tabla del resultado de la búsqueda
      */
     public void eliminarUsuario(User user) {
@@ -217,12 +215,11 @@ public class UserBean {
             String descripcion = "Se ha eliminado el usuario " + user.getNombre() + " " + user.getApellido1() + " "
                     + user.getApellido2();
             // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
-            // Guardamos la notificacion en bbdd
-            notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.USUARIOS.name());
         } catch (Exception e) {
-            // Guardamos loe posibles errores en bbdd
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            // Guardamos los posibles errores en bbdd
+            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
         }
         
     }
@@ -251,20 +248,26 @@ public class UserBean {
             if (userService.save(user) != null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                         "El usuario ha sido modificado con éxito");
+                
                 String descripcion = "Modificación del usuario :" + " " + user.getNombre() + " " + user.getApellido1()
                         + " " + user.getApellido2();
-                if (estadoUsuario != user.getEstado().name()) {
-                    // Generamos la alerta
-                }
                 
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                String descripcionEstado = "Modificación del estado del usuario :" + " " + user.getNombre() + " "
+                        + user.getApellido1() + " " + user.getApellido2();
+                
+                if (estadoUsuario != user.getEstado().name()) {
+                    regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
+                            SeccionesEnum.USUARIOS.name());
+                }
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.USUARIOS.name());
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
             // Guardamos loe posibles errores en bbdd
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
         }
         
     }
@@ -285,7 +288,7 @@ public class UserBean {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
                     "Se ha producido un error en la regeneración o envío de la contraseña");
             // Guardamos loe posibles errores en bbdd
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
         }
     }
     
@@ -342,7 +345,8 @@ public class UserBean {
                 + "\n Puesto de trabajo: " + puesto + "\n Estado: " + estado + "\n Fecha alta desde: " + fechaDesde
                 + "\n Fecha alta desde: " + fechaHasta + "\n Rol: " + rol + "\n Cuerpo del estado: " + cuerpo;
         
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(), NOMBRESECCION);
+        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(),
+                SeccionesEnum.USUARIOS.name());
         
     }
     
@@ -350,6 +354,7 @@ public class UserBean {
         String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()
                 + " ha realizado ha visualizado un usuario." + "El usuario consultado es: " + usuario.getUsername();
         
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(), NOMBRESECCION);
+        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(),
+                SeccionesEnum.USUARIOS.name());
     }
 }

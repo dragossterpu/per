@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
@@ -28,8 +30,6 @@ import lombok.Setter;
 public class TipoEquipoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
-    private static final String NOMBRESECCION = "Tipos de Equipo";
     
     private List<TipoEquipo> listaTipoEquipo;
     
@@ -58,11 +58,17 @@ public class TipoEquipoBean implements Serializable {
             } else {
                 tipoEquipoService.delete(tipo.getId());
                 listaTipoEquipo.remove(tipo);
+                String descripcion = "Se ha eliminado el tipo de equipo: " + tipo.getCodigo() + "("
+                        + tipo.getDescripcion() + ")";
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.ADMINISTRACION.name());
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            // Guardamos los posibles errores en bbdd
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
     }
     
@@ -79,11 +85,15 @@ public class TipoEquipoBean implements Serializable {
             if (tipoEquipoService.save(tipoEquipoNuevo) != null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "El tipo de equipo ha sido creado con éxito");
+                String descripcionTipo = "Se ha dado de alta el tipo de equipo: " + codigo + "(" + descripcion + ")";
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
+                        SeccionesEnum.ADMINISTRACION.name());
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
         listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
         // TODO generar alerta / notificación
@@ -95,11 +105,17 @@ public class TipoEquipoBean implements Serializable {
             if (tipoEquipoService.save(tipoEquipo) != null) {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
                         "Tipo de equipo modificado con éxito", null);
+                
+                String descripcionTipo = "Se ha modificado el tipo de equipo: " + tipoEquipo.getCodigo() + "("
+                        + tipoEquipo.getDescripcion() + ")";
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.ADMINISTRACION.name());
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
     }
     

@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum SeccionesEnum {
     ADMINISTRACION("ADMINISTRACIÓN"), DOCUMENTACION("SOLICITUD DOC. PREVIA"), CUESTIONARIO("CUESTIONARIOS"), GESTOR(
-            "GESTOR DOCUMENTAL"), GUIAS("GUÍAS"), INSPECCION("INSPECCIONES"), INFORMES("INFORMES"), LOGIN("LOGIN");
+            "GESTOR DOCUMENTAL"), GUIAS(
+                    "GUÍAS"), INSPECCION("INSPECCIONES"), INFORMES("INFORMES"), LOGIN("LOGIN"), USUARIOS("USUARIOS");
     
     private String descripcion;
     

@@ -21,7 +21,7 @@ import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
@@ -40,13 +40,9 @@ public class EquiposBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private static final String NOMBRESECCION = "Equipos de inspecciones";
-    
     private static final String JEFEEQUIPO = "jefeEquipo";
     
     private static final String MIEMBROS = "miembros";
-    
-    private static final String ERROR = "Error";
     
     private String vieneDe;
     
@@ -128,7 +124,6 @@ public class EquiposBean implements Serializable {
         List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
         Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
         miembrosNuevoEquipo.add(jefe);
-        String nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
         equipo.setMiembros(miembrosNuevoEquipo);
         
         try {
@@ -136,16 +131,10 @@ public class EquiposBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "El equipo ha sido creado con éxito");
             }
-            String descripcion = "Alta nuevo equipo inspecciones '" + equipo.getNombreEquipo()
-                    + "'. Nombre jefe del equipo: " + equipo.getNombreJefe() + ". Nombre de sus componentes: "
-                    + nombresCompletos;
-            // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
-            // Guardamos la notificacion en bbdd
-            notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+            
         } catch (Exception e) {
             // Guardamos loe posibles errores en bbdd
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
         
     }
@@ -199,13 +188,13 @@ public class EquiposBean implements Serializable {
                     "Se ha dado de baja con éxito un equipo de inspecciones", null);
             String descripcion = "Se ha eliminado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
             // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
-            // Guardamos la notificacion en bbdd
-            notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.INSPECCION.name());
+            
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el equipo, inténtelo de nuevo más tarde", null);
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
     }
     
@@ -237,12 +226,12 @@ public class EquiposBean implements Serializable {
                         "El equipo ha sido modificado con éxito");
                 String descripcion = "Se ha modificado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
                 // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
-                // Guardamos la notificacion en bbdd
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             }
         } catch (Exception e) {
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
         
     }
@@ -265,13 +254,15 @@ public class EquiposBean implements Serializable {
                         + equipo.getNombreEquipo() + "'. Nombre del componente o colaborador del equipo: "
                         + miembro.getNombreCompleto();
                 // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.INSPECCION.name());
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar un componente o colaborador del equipo de inspecciones, inténtelo de nuevo más tarde",
                     null);
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
     }
     
@@ -317,15 +308,14 @@ public class EquiposBean implements Serializable {
                             + "'. Nombre del nuevo jefe: " + equipo.getNombreJefe();
                     // Guardamos la actividad en bbdd
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                            NOMBRESECCION);
-                    // Guardamos la notificacion en bbdd
-                    notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                            SeccionesEnum.INSPECCION.name());
+                    notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
                 }
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al cambiar el jefe del equipo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
     }
     
@@ -360,14 +350,15 @@ public class EquiposBean implements Serializable {
                 String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones '"
                         + equipo.getNombreEquipo() + "'. Nombres de componentes " + nombresCompletos;
                 // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
-                // Guardamos la notificacion en bbdd
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
+                
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al añadir nuevos componentes o colaboradores al equipo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
     }
     
