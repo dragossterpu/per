@@ -13,123 +13,133 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {
-
-	
-
-	@Autowired
-	ICuestionarioPersonalizadoRepository cuestionarioPersRep;
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-	private static final String FECHA_CREACION = "fechaCreacion";
-
-	@Override
-	@Transactional(readOnly = false)
-	public void delete(Long id) {
-		cuestionarioPersRep.delete(id);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void delete(Iterable<CuestionarioPersonalizado> entities) {
-		cuestionarioPersRep.delete(entities);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void delete(CuestionarioPersonalizado entity) {
-		cuestionarioPersRep.delete(entity);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void deleteAll() {
-		cuestionarioPersRep.deleteAll();
-	}
-
-	@Override
-	public boolean exists(Long id) {
-		return cuestionarioPersRep.exists(id);
-	}
-
-	@Override
-	public Iterable<CuestionarioPersonalizado> findAll() {
-		return cuestionarioPersRep.findAll();
-	}
-
-	@Override
-	public Iterable<CuestionarioPersonalizado> findAll(Iterable<Long> ids) {
-		return cuestionarioPersRep.findAll(ids);
-	}
-
-	@Override
-	public CuestionarioPersonalizado findOne(Long id) {
-		return cuestionarioPersRep.findOne(id);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Iterable<CuestionarioPersonalizado> save(Iterable<CuestionarioPersonalizado> entities) {
-		return cuestionarioPersRep.save(entities);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public CuestionarioPersonalizado save(CuestionarioPersonalizado entity) {
-		return cuestionarioPersRep.save(entity);
-	}
-
-	@Override
-	public List<CuestionarioPersonalizado> buscarCuestionarioPersonalizadoCriteria(
-			CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
-		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
-
-		if (cuestionarioBusqueda.getFechaDesde() != null) {
-			/**
-			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-			 * compara con 0:00:00
-			 */
-			criteria.add(Restrictions.sqlRestriction(
-					"TRUNC(this_.fecha_creacion) >= '" + sdf.format(cuestionarioBusqueda.getFechaDesde())));
-		}
-		if (cuestionarioBusqueda.getFechaHasta() != null) {
-			/**
-			 * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-			 * compara con 0:00:00
-			 */
-			criteria.add(Restrictions.sqlRestriction(
-					"TRUNC(this_.fecha_creacion) <= '" + sdf.format(cuestionarioBusqueda.getFechaHasta())));
-		}
-		
-		if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(USERNAME_CREACION, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + cuestionarioBusqueda.getUsername()+"', ' ', '') || '%', 'US7ASCII'))"));
-		}
-		if (cuestionarioBusqueda.getModeloCuestionarioSeleccionado() != null) {
-			criteria.add(
-					Restrictions.eq("modeloCuestionario", cuestionarioBusqueda.getModeloCuestionarioSeleccionado()));
-		}
-		if (cuestionarioBusqueda.getNombreCuestionario() != null
-				&& !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
-			criteria.add(Restrictions.sqlRestriction("upper(convert(replace(NOMBRE_CUESTIONARIO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('" + cuestionarioBusqueda.getNombreCuestionario()+"', ' ', '') || '%', 'US7ASCII'))"));
-
-		}
-
-		criteria.addOrder(Order.desc(FECHA_CREACION));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		@SuppressWarnings("unchecked")
-		List<CuestionarioPersonalizado> listaCuestionarios = criteria.list();
-		session.close();
-
-		return listaCuestionarios;
-	}
-
+    
+    @Autowired
+    ICuestionarioPersonalizadoRepository cuestionarioPersRep;
+    
+    @Autowired
+    private SessionFactory sessionFactory;
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+    private static final String FECHA_CREACION = "fechaCreacion";
+    
+    private static final String FECHABAJA = "fechaBaja";
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(Long id) {
+        cuestionarioPersRep.delete(id);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(Iterable<CuestionarioPersonalizado> entities) {
+        cuestionarioPersRep.delete(entities);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(CuestionarioPersonalizado entity) {
+        cuestionarioPersRep.delete(entity);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteAll() {
+        cuestionarioPersRep.deleteAll();
+    }
+    
+    @Override
+    public boolean exists(Long id) {
+        return cuestionarioPersRep.exists(id);
+    }
+    
+    @Override
+    public Iterable<CuestionarioPersonalizado> findAll() {
+        return cuestionarioPersRep.findAll();
+    }
+    
+    @Override
+    public Iterable<CuestionarioPersonalizado> findAll(Iterable<Long> ids) {
+        return cuestionarioPersRep.findAll(ids);
+    }
+    
+    @Override
+    public CuestionarioPersonalizado findOne(Long id) {
+        return cuestionarioPersRep.findOne(id);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public Iterable<CuestionarioPersonalizado> save(Iterable<CuestionarioPersonalizado> entities) {
+        return cuestionarioPersRep.save(entities);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public CuestionarioPersonalizado save(CuestionarioPersonalizado entity) {
+        return cuestionarioPersRep.save(entity);
+    }
+    
+    @Override
+    public List<CuestionarioPersonalizado> buscarCuestionarioPersonalizadoCriteria(
+            CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
+        
+        if (cuestionarioBusqueda.getFechaDesde() != null) {
+            /**
+             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+             * compara con 0:00:00
+             */
+            criteria.add(Restrictions.sqlRestriction(
+                    "TRUNC(this_.fecha_creacion) >= '" + sdf.format(cuestionarioBusqueda.getFechaDesde())));
+        }
+        if (cuestionarioBusqueda.getFechaHasta() != null) {
+            /**
+             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+             * compara con 0:00:00
+             */
+            criteria.add(Restrictions.sqlRestriction(
+                    "TRUNC(this_.fecha_creacion) <= '" + sdf.format(cuestionarioBusqueda.getFechaHasta())));
+        }
+        
+        if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
+            criteria.add(Restrictions.sqlRestriction(
+                    "upper(convert(replace(USERNAME_CREACION, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+                            + cuestionarioBusqueda.getUsername() + "', ' ', '') || '%', 'US7ASCII'))"));
+        }
+        if (cuestionarioBusqueda.getModeloCuestionarioSeleccionado() != null) {
+            criteria.add(
+                    Restrictions.eq("modeloCuestionario", cuestionarioBusqueda.getModeloCuestionarioSeleccionado()));
+        }
+        if (cuestionarioBusqueda.getNombreCuestionario() != null
+                && !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
+            criteria.add(Restrictions.sqlRestriction(
+                    "upper(convert(replace(NOMBRE_CUESTIONARIO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
+                            + cuestionarioBusqueda.getNombreCuestionario() + "', ' ', '') || '%', 'US7ASCII'))"));
+            
+        }
+        if (cuestionarioBusqueda.getEstado() == null || cuestionarioBusqueda.getEstado().equals(EstadoEnum.ACTIVO)) {
+            criteria.add(Restrictions.isNull(FECHABAJA));
+            criteria.addOrder(Order.desc(FECHA_CREACION));
+        } else if (cuestionarioBusqueda.getEstado().equals(EstadoEnum.INACTIVO)) {
+            criteria.add(Restrictions.isNotNull(FECHABAJA));
+            criteria.addOrder(Order.desc(FECHABAJA));
+        }
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        @SuppressWarnings("unchecked")
+        List<CuestionarioPersonalizado> listaCuestionarios = criteria.list();
+        session.close();
+        
+        return listaCuestionarios;
+    }
+    
 }

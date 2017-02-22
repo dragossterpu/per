@@ -48,7 +48,19 @@
 	
 						<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
 						<p:calendar value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
-					</div>
+                        
+                        <h:outputLabel for="estado" value="Estado:" />
+                        <p:importEnum
+                            type="es.mira.progesin.persistence.entities.enums.EstadoEnum"
+                            var="estados" allSuffix="ALL_ENUM_VALUES" />
+                        <p:selectOneMenu value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.estado}"
+                            id="estado" effect="fold">
+                            <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                            <f:selectItems value="#{estados.ALL_ENUM_VALUES}"
+                                var="estadoCuestionario" itemLabel="#{estadoCuestionario}"
+                                itemValue="#{estadoCuestionario}" />
+                        </p:selectOneMenu>
+                    </div>
 			</div>
 		
 			<div class="botonesFormulario">
