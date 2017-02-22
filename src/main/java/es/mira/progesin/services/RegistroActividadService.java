@@ -83,7 +83,7 @@ public class RegistroActividadService implements IRegistroActividadService {
 			 * compara con 0:00:00
 			 */
 			criteria.add(Restrictions
-					.sqlRestriction("TRUNC(fecha_alta) <= '" + sdf.format(regActividadBusqueda.getFechaDesde()) + "'"));
+					.sqlRestriction("TRUNC(fecha_alta) >= '" + sdf.format(regActividadBusqueda.getFechaDesde()) + "'"));
 		}
 		if (regActividadBusqueda.getFechaHasta() != null) {
 			/**

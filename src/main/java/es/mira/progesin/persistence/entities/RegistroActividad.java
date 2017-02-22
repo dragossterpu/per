@@ -1,7 +1,6 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
-import java.sql.Clob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -51,7 +50,7 @@ public class RegistroActividad implements Serializable {
 	private String descripcion;
 
 	@CreatedDate
-	@Column(name = "FECHA_REGISTRO")
+	@Column(name = "FECHA_ALTA")
 	private Date fechaAlta;
 
 	@CreatedBy

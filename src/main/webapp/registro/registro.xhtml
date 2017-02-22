@@ -8,7 +8,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
-
+	
+	<f:metadata>
+	    <f:viewParam name="vieneDe" value="#{regActividadBean.vieneDe}" />
+	</f:metadata>
 
 
 	<ui:composition template="../layouts/layoutInterior.xhtml">
@@ -17,7 +20,7 @@
 		<h3>Búsqueda de registro de actividad</h3>
 		
 		<h:form>
-		    <p:remoteCommand name="onload" action="#{regActividadBean.getFormularioRegActividad}" autoRun="true" />
+		    <p:remoteCommand name="onload" action="#{regActividadBean.getFormularioRegActividad}" autoRun="true" update="busquedalistaRegActividad" />
 		</h:form>
 
 		<h:form id="busquedalistaRegActividad" >
@@ -43,7 +46,7 @@
 						
 						
 						<h:outputLabel for="tipo" value="Tipo de notificación" />
-				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoRegActividadEnum" var="tipos"
+				        <p:importEnum type="es.mira.progesin.persistence.entities.enums.TipoRegistroEnum" var="tipos"
 							allSuffix="ALL_ENUM_VALUES" />
 						<p:selectOneMenu value="#{regActividadBean.regActividadBusqueda.tipoRegActividad}" id="tipo">
 							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
@@ -57,7 +60,7 @@
 			
 			<div class="botonesFormulario">
 			<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-			<p:commandButton actionListener="#{regActividadBean.getFormularioRegActividad()}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-search" />
+			<p:commandButton actionListener="#{regActividadBean.limpiarBusqueda}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-eraser" />
 
 			</div>
 			<p:outputPanel layout="block" id="panelRegActividad">

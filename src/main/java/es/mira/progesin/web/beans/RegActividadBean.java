@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -37,6 +35,7 @@ public class RegActividadBean implements Serializable {
 	private List<Boolean> list;
 
 	private RegistroActividad regActividad;
+
 	private RegistroActividad error;
 
 	private Integer numColListRegActividad = 5;
@@ -66,10 +65,14 @@ public class RegActividadBean implements Serializable {
 
 	public void getFormularioRegActividad() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
-			regActividadBusqueda.resetValues();
+			limpiarBusqueda();
 			this.vieneDe = null;
 		}
 
+	}
+
+	public void limpiarBusqueda() {
+		regActividadBusqueda.resetValues();
 	}
 
 	@PostConstruct
@@ -89,17 +92,15 @@ public class RegActividadBean implements Serializable {
 		return regActividadService.buscarPorUsuarioRegistro("%" + infoUsuario + "%");
 	}
 
-	
 	public void setSelected(RegistroActividad selected) {
-        this.regActividad = selected;
-    }
-	
-	public void onRowSelect(SelectEvent event){
-		error=new RegistroActividad();
-		error= (RegistroActividad) event.getObject();
+		this.regActividad = selected;
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		error = new RegistroActividad();
+		error = (RegistroActividad) event.getObject();
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('dlg').show();");
 
-		
 	}
 }
