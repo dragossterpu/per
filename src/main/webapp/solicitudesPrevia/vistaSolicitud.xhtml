@@ -11,6 +11,8 @@
 		
 		<ui:define name="content">
 		<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.equipo.jefeEquipo or p:ifGranted('ADMIN')}"/>
+        <ui:param name="yaFinalizada" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion}"/>
+        <ui:param name="yaAnulada" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaBaja}"/>
 		
 		<h:form id="formAlta">
 		
@@ -142,11 +144,11 @@
 						<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 							message="¿Está seguro que desea enviar esta solicitud?"/>
 					</p:commandButton>
-					<p:commandButton rendered="#{empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check">
+					<p:commandButton rendered="#{not yaAnulada and not yaFinalizada and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" actionListener="#{solicitudDocPreviaBean.finalizarSolicitud}" value="Finalizar solicitud" icon="fa fa-fw fa-check">
 						<p:confirm header="Confirmación" icon="fa fa-warning-sign"
 							message="¿Está seguro que desea finalizar esta solicitud?"/>
 					</p:commandButton>
-                    <p:button value="No conforme" icon="fa fa-fw fa-undo" outcome="/solicitudesPrevia/noConformeSolicitud"/>
+                    <p:button value="No conforme" icon="fa fa-fw fa-undo" outcome="/solicitudesPrevia/noConformeSolicitud" rendered="#{not yaAnulada and not yaFinalizada and esJefeEquipoInspeccion and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion }" />
 					<p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia"/>
 				</div>
 			</p:outputPanel>
