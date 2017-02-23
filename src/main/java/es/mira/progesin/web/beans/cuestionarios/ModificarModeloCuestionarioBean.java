@@ -412,7 +412,7 @@ public class ModificarModeloCuestionarioBean {
 		nuevoValorRadio.resetValue();
 		nuevoValorTabla.resetValue();
 		nuevoValorFila.resetValue();
-
+		tipoPersonalizado = "";
 	}
 
 	public void onSelectTipo(SelectEvent event) {
