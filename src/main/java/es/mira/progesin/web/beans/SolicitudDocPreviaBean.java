@@ -26,9 +26,11 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
+import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
@@ -63,11 +65,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     @Autowired
     private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
-    private static final String NOMBRESECCION = "Generación de solicitud documentación";
-    
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
-    
-    private static final String ERROR = "Error";
     
     private String vieneDe;
     
@@ -76,6 +74,9 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     @Autowired
     transient INotificacionService notificacionService;
+    
+    @Autowired
+    transient IAlertaService alertaService;
     
     transient List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
     
@@ -162,18 +163,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                         altaDocumentos();
                         String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
                         // Guardamos la actividad en bbdd
-                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(), NOMBRESECCION);
-                        
-                        // Guardamos la notificacion en bbdd
-                        notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                                SeccionesEnum.DOCUMENTACION.name());
                     }
                 }
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al crear la solicitud, inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -245,7 +244,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             solicitudDocumentacionPrevia = solicitud;
             return "/solicitudesPrevia/vistaSolicitud";
         } catch (Exception e) {
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
             return null;
         }
         
@@ -267,15 +266,18 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + " validada por apoyo";
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
                 
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
+                alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+                        solicitudDocumentacionPrevia.getInspeccion());
                 
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar apoyo la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -296,14 +298,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + " validada por jefe equipo";
                 
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
                 
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+                        RoleEnum.JEFE_INSPECCIONES);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar el jefe del equipo la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -344,7 +348,7 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             file = documentoService.descargaDocumento(idDocumento);
         } catch (Exception e) {
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -415,9 +419,8 @@ public class SolicitudDocPreviaBean implements Serializable {
                         
                         String descripcion = DESCRIPCION + solicitud.getInspeccion().getNumero();
                         
-                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
-                        
-                        notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                                SeccionesEnum.DOCUMENTACION.name());
                     }
                 }
                 listaSolicitudesPrevia.remove(solicitud);
@@ -426,9 +429,9 @@ public class SolicitudDocPreviaBean implements Serializable {
                         "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción", null);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde", null);
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -467,14 +470,13 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
                 
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
-                
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -525,15 +527,19 @@ public class SolicitudDocPreviaBean implements Serializable {
                             + " enviada";
                     
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                            NOMBRESECCION);
+                            SeccionesEnum.DOCUMENTACION.name());
                     
-                    notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                    List<RoleEnum> listRoles = new ArrayList<>();
+                    listRoles.add(RoleEnum.SERVICIO_APOYO);
+                    listRoles.add(RoleEnum.EQUIPO_INSPECCIONES);
+                    notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
+                            listRoles);
                 }
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al enviar la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -558,14 +564,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + "finalizada";
                 
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
                 
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
+                        RoleEnum.ADMIN);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -609,14 +617,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
                         + " declarada no conforme";
                 
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(), NOMBRESECCION);
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
                 
-                notificacionService.crearNotificacionRol(descripcion, NOMBRESECCION, RoleEnum.ADMIN);
+                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
+                        RoleEnum.ADMIN);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -677,9 +687,9 @@ public class SolicitudDocPreviaBean implements Serializable {
             setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
                     listadoDocumentosPrevios));
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error en la generación del PDF");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
 }
