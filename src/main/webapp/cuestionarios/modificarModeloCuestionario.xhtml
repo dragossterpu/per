@@ -49,7 +49,7 @@
 						converter="#{areasConverter}" controlsLocation="left" responsive="true"
 						required="true"
 						requiredMessage="Debe introducir al menos un área">		 
-				        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}" update="nombreArea"/>
+				        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}"/>
 				        <f:facet name="caption">Areas</f:facet> 
 				         <p:column>
 				            <h:outputText value="#{area.area}" />
@@ -223,7 +223,7 @@
 							<p:tab title="#{area.area}">
 								<p:orderList id="orderListPreguntas" value="#{area.preguntas}" var="pregunta" itemValue="#{pregunta}" converter="#{preguntasConverter}" controlsLocation="left" responsive="true">	
 									<f:attribute name="collectionType" value="java.util.ArrayList" />	 
-							        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectPregunta}" update="editarPregunta"/>
+							        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectPregunta}" />
 							        <f:facet name="caption">Preguntas</f:facet> 
 							         <p:column>
 							            <h:outputText value="#{pregunta.pregunta}" />
