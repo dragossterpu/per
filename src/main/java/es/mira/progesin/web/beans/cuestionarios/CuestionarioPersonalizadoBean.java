@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
@@ -36,10 +39,6 @@ import lombok.Setter;
 public class CuestionarioPersonalizadoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
-    private static final String NOMBRESECCION = "Gestión de cuestionario personalizado";
-    
-    private static final String ERROR = "Error";
     
     private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
     
@@ -119,15 +118,24 @@ public class CuestionarioPersonalizadoBean implements Serializable {
                 listaCuestionarioPersonalizado.remove(cuestionario);
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                         "Cuestionario personalizado eliminado con éxito", null);
+                
+                String descripcion = "Se elimina el cuestionario :" + cuestionario.getNombreCuestionario();
+                
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.CUESTIONARIO.getDescripcion());
+                
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('dialogCierre').show();");
+                
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
                         "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción", null);
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el cuestionario personalizado, inténtelo de nuevo más tarde",
                     null);
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
         
     }

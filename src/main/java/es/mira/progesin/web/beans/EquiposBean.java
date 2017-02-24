@@ -133,7 +133,7 @@ public class EquiposBean implements Serializable {
             }
             
         } catch (Exception e) {
-            // Guardamos loe posibles errores en bbdd
+            // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
         
