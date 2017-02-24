@@ -40,6 +40,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.Guia;
+import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
@@ -47,6 +49,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
+import es.mira.progesin.services.IGuiaService;
 
 /**
  * Clase para la generación de documentos DOCX
@@ -72,6 +75,9 @@ public class WordGenerator {
 
 	@Autowired
 	private IPreguntaCuestionarioRepository preguntasRepository;
+
+	@Autowired
+	private IGuiaService guiaService;
 
 	@Autowired
 	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
@@ -160,6 +166,60 @@ public class WordGenerator {
 		InputStream inputStream = new FileInputStream(f);
 		return new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
 				"CuestionarioPersonalizado.docx");
+	}
+
+	/**
+	 * Genera un documento DOCX a partir de una guia
+	 * 
+	 * @param Guia
+	 * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+
+	public StreamedContent crearDocumentoGuia(Guia guia) throws InvalidFormatException, IOException {
+
+		// Creamos documento en blanco
+		XWPFDocument doc = new XWPFDocument();
+
+		crearCabeceraCuestionario(doc, LOGO_MININISTERIO_INTERIOR, LOGO_IPSS);
+
+		XWPFParagraph parrafo = doc.createParagraph();
+
+		// Nombre des cuestionario
+		XWPFRun texto = parrafo.createRun();
+		texto.setText(guia.getNombre());
+		texto.setBold(true);
+		texto.setCapitalized(true);
+		texto.setFontSize(16);
+		texto.setFontFamily(FONT_FAMILY);
+		parrafo.setSpacingAfterLines(200);
+		parrafo.setAlignment(ParagraphAlignment.CENTER);
+		parrafo.addRun(texto);
+
+		// Áreas del cuestionario
+		List<GuiaPasos> listaPasos = guiaService.listaPasos(guia);
+
+		for (GuiaPasos paso : listaPasos) {
+			parrafo = doc.createParagraph();
+			// Texto pregunta
+			texto = parrafo.createRun();
+			texto.setBold(true);
+			texto.setFontFamily(FONT_FAMILY);
+			texto.setText(paso.getPaso());
+			parrafo.setSpacingAfterLines(200);
+			parrafo.setSpacingBeforeLines(200);
+			parrafo.setAlignment(ParagraphAlignment.BOTH);
+			parrafo.addRun(texto);
+		}
+		File f = File.createTempFile("Guia", ".docx");
+
+		FileOutputStream fo = new FileOutputStream(f);
+		doc.write(fo);
+
+		InputStream inputStream = new FileInputStream(f);
+		return new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
+				getNombreFicheroDOCX(guia.getNombre()));
 	}
 
 	/**
@@ -357,5 +417,15 @@ public class WordGenerator {
 			valoresString = String.join(", ", valores);
 		}
 		return valoresString;
+	}
+
+	/**
+	 * Genera el nombre del fichero a partir de la cadena pasada
+	 * 
+	 * @param nombre
+	 * @return String con el nombre con la extensión docx
+	 */
+	private String getNombreFicheroDOCX(String nombre) {
+		return (nombre.substring(0, nombre.indexOf('.'))).concat(".docx");
 	}
 }

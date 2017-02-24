@@ -24,14 +24,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "guiaPreguntas")
-
-public class GuiaPreguntas implements Serializable {
+@Table(name = "guiaPasos")
+public class GuiaPasos implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "seq_preguntasguia", sequenceName = "seq_preguntasguia", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_preguntasguia")
+	@SequenceGenerator(name = "seq_pasosGuia", sequenceName = "seq_pasosGuia", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pasosGuia")
 	@Column(name = "id", nullable = false)
 	private Long id;
 
@@ -39,8 +38,8 @@ public class GuiaPreguntas implements Serializable {
 	@JoinColumn(name = "idGuia")
 	private Guia idGuia;
 
-	@Column(name = "pregunta", nullable = false, length = 2000)
-	private String pregunta;
+	@Column(name = "paso", nullable = false, length = 2000)
+	private String paso;
 
 	@Column(name = "orden", nullable = false)
 	private Integer orden;

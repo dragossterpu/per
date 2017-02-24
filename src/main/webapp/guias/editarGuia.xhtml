@@ -10,17 +10,66 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
-			<h3>Modelos de cuestionario</h3>
+			<div class="tituloCuestionario">
+				<h:outputText value="Editar cuestionario"/>
+			</div>
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					<ui:repeat var="area" value="#{modelosCuestionarioBean.areas}">
-						<p:outputLabel value="#{area}" />
-					</ui:repeat>
+					<h:outputLabel for="nombreGuia" value="Nombre de la guia(*):" />
+						<p:inputText id="nombreGuia"
+							value="#{guiaBean.guia.nombre}"
+							converter="#{trimConverter}"
+							required="true"
+							requiredMessage="Introduzca un nombre para la guía"
+							maxlength="255"/>
+					<p:messages for="nombreGuia" autoUpdate="true"  closable="true"/>	
+					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+					<p:selectOneMenu
+						value="#{guiaBean.guia.tipoInspeccion}"
+						id="tipoInspeccionSelect" converter="#{selectConverter}">
+						<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+							var="tipo"
+							itemLabel="#{tipo.descripcion}"
+							itemValue="#{tipo}" />
+					</p:selectOneMenu>
 					
-					<p:dataTable value="#{modelosCuestionarioBean.myHashMapEntryList}" var="myEntry">
-						in here reference as: #{myEntry.key} #{myEntry.value}
-					</p:dataTable>
+					<p:orderList id="orderListPasos"  value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" 
+						converter="#{guiasConverter}"	
+						controlsLocation="left" responsive="true"
+						required="true"
+						requiredMessage="Debe introducir al menos una paso">	
+						<p:ajax event="select" listener="#{guiaBean.onSelectPaso}"/>	 
+				        <f:facet name="caption">Pasos</f:facet> 
+				         <p:column>
+				            <h:outputText value="#{paso.paso}" />
+				        </p:column>
+				    </p:orderList>
+				    <p:messages for="orderListPasos" autoUpdate="true"  closable="true"/>	
+				    <p:panel>  
+				    	<p:inputTextarea id="nuevoPaso" binding="#{nuevoPaso}" maxlength="2000"
+						counter="contador" counterTemplate="Quedan {0} caracteres."
+						converter="#{trimConverter}"/>
+						<p:outputLabel id="contador"/>
+					    <p:commandButton actionListener="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="orderListPasos" 
+					    	value="Añadir paso" icon="fa fa-fw fa-plus">
+					    </p:commandButton>
+					    <p:commandButton actionListener="#{guiaBean.borraPaso}" update="orderListPasos" 
+					    	value="Eliminar paso" icon="fa fa-fw fa-minus"/>
+				    </p:panel>
+				    
+				    <div class="botonesFormulario">
+						<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
+						<p:commandButton id="guardar" value="Guardar"  action="#{guiaBean.guardaGuia}" />	
+					</div>
+				    
+				    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+						<div class="centrarBotonesDialog">
+							<p:button value="Cerrar" outcome="/guias/buscaGuias?faces-redirect=true" />
+						</div>
+					</p:dialog> 
+				
 			
 				</h:form>
 			</div>
