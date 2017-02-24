@@ -153,8 +153,8 @@ public class EnvioCuestionarioBean implements Serializable {
                 // vez, al grabar borrador no se repitan los datos de las tablas/matriz por cada usuario)
                 crearResgistrosRespuestaTipoTablaMatriz(cuestionarioEnvio);
                 
-                String descripcion = "Se ha envido el cuestionario: " + cuestionarioEnvio.getMotivoCuestionario()
-                        + " correctamente.";
+                String descripcion = "Se ha envido el cuestionario de la inspección: "
+                        + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.CUESTIONARIO.getDescripcion());
