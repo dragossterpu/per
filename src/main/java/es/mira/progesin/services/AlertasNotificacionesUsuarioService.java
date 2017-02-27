@@ -177,7 +177,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
      ***************************/
     @Override
     public AlertasNotificacionesUsuario grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion) {
-        return grabarMensajeUsuario(entidad, inspeccion.getEquipo().getNombreJefe());
+        return grabarMensajeUsuario(entidad, inspeccion.getEquipo().getJefeEquipo());
     }
     
     /***************************
