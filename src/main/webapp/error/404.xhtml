@@ -11,16 +11,20 @@
 		<ui:define name="content">
         
         <p:outputPanel styleClass="bloqueVistaTitulo">
-		      <h3>No encontrado</h3>
+		      <h3>Página no encontrada</h3>
         </p:outputPanel>
         
         <p:outputPanel>
             <div class="ui-messages ui-widget" aria-live="polite">
-                <div class="ui-messages-error ui-corner-all">
-                    <span class="ui-messages-error-icon"></span>
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon" style="background: url('../images/error-404.png') no-repeat 0/100%; width: 75px; height:75px;"></span>
                     <ul>
                         <li>
-                            <span class="ui-messages-error-summary">El recurso solicitado no ha sido encontrado.</span>
+                            <span class="ui-messages-info-summary">El recurso solicitado no ha sido encontrado, disculpen las molestias.</span>
+                        </li>
+                        <li>
+                            <span class="ui-messages-info-details">La página que ha solicitado no está disponible en <a href="#{request.contextPath}" >Progesin</a>.<br/>
+Puede que la página haya dejado de existir o que haya sido movida a otra localización.</span>
                         </li>
                     </ul>
                 </div>

@@ -128,6 +128,8 @@ public class UserBean {
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         puestoTrabajoSeleccionado = null;
         cuerpoEstadoSeleccionado = null;
+        empleoSeleccionado = null;
+        departamentoSeleccionado = null;
         return "/users/altaUsuario?faces-redirect=true";
     }
     
