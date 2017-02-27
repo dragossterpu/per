@@ -342,3 +342,9 @@ select {
 .ui-selectoneradio label {
 	padding: 4px;
 }
+.icono404 {
+	background: url('../images/error-404.png') no-repeat;
+	background-size: 100%; 
+	width: 75px; 
+	height:75px;
+}
