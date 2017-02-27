@@ -130,7 +130,7 @@
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo (*):" />
 					<p:selectOneMenu value="#{userBean.cuerpoEstadoSeleccionado}" id="cuerpoEstadoSelect"
-							required="true" requiredMessage="Seleccione un cuerpo"
+							 required="#{param['formAlta:crear']!=null}" requiredMessage="Seleccione un cuerpo"
 							converter="#{selectConverter}"
 							style="width:100%;">
 						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
@@ -190,7 +190,7 @@
 			</div>
 			
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{userBean.altaUsuario}" value="Crear usuario" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+				<p:commandButton actionListener="#{userBean.altaUsuario}" id="crear" value="Crear usuario" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 				<p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			</div>
 			

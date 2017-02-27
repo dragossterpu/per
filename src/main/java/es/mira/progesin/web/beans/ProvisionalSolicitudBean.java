@@ -225,10 +225,10 @@ public class ProvisionalSolicitudBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.DOCUMENTACION.name());
                 // Guardamos la alerta en bbdd
-                alertaService.crearAlertaJefeEquipo(SeccionesEnum.CUESTIONARIO.name(), descripcion,
+                alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
                         solicitudDocumentacionPrevia.getInspeccion());
                 
-                alertaService.crearAlertaRol(SeccionesEnum.CUESTIONARIO.name(), descripcion, RoleEnum.SERVICIO_APOYO);
+                alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion, RoleEnum.SERVICIO_APOYO);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),

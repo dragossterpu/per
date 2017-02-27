@@ -567,8 +567,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.DOCUMENTACION.name());
                 
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
-                        RoleEnum.ADMIN);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -620,8 +618,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.DOCUMENTACION.name());
                 
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
-                        RoleEnum.ADMIN);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
