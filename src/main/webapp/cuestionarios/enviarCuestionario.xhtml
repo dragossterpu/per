@@ -32,11 +32,11 @@
 					<h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
 					<p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}"
                         var="inspeccion" itemLabel="#{inspeccion.nombreUnidad} - #{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
-                        minQueryLength="2" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" 
+                        required="true" requiredMessage="Introduzca la unidad o el número de la inspección" 
                         emptyMessage="No se encuentraron resultados coincidentes"
                         onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000"
                         disabled="#{yaEnviado}">
-                        <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="btnEnviar btnGuardar"/>
+                        <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario"/>
                     </p:autoComplete>
 					<p:messages for="infoInspeccion" autoUpdate="true"  closable="true"/>
 					

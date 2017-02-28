@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAreaCuestionarioService;
@@ -107,7 +110,12 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      */
     public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
         try {
-            if (cuestionario.getFechaBaja() == null) {
+            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<RoleEnum> rolesAdmitidos = new ArrayList<>();
+            rolesAdmitidos.add(RoleEnum.JEFE_INSPECCIONES);
+            rolesAdmitidos.add(RoleEnum.ADMIN);
+            
+            if (cuestionario.getFechaBaja() == null && rolesAdmitidos.contains(usuarioActual.getRole())) {
                 if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {
                     cuestionario.setFechaBaja(new Date());
                     cuestionario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());

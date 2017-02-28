@@ -669,8 +669,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService
-                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada("%" + infoInspeccion + "%");
+        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(infoInspeccion);
     }
     
     /**

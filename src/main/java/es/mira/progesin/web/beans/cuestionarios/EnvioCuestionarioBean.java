@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
@@ -96,7 +97,16 @@ public class EnvioCuestionarioBean implements Serializable {
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el número introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String nombreUnidad) {
-        return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(nombreUnidad);
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+            return inspeccionService
+                    .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
+                            nombreUnidad, usuarioActual.getUsername());
+        } else {
+            return inspeccionService
+                    .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
+                            nombreUnidad);
+        }
     }
     
     /**

@@ -11,52 +11,62 @@ import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 
 @Service
 public class InspeccionesService implements IInspeccionesService {
-	@Autowired
-	IInspeccionesRepository inspeccionesRepository;
-
-	@Override
-	public Iterable<Inspeccion> findAll() {
-		return inspeccionesRepository.findAll();
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Inspeccion save(Inspeccion inspecciones) {
-		return inspeccionesRepository.save(inspecciones);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void delete(Inspeccion inspecciones) {
-		inspeccionesRepository.delete(inspecciones);
-	}
-
-	@Override
-	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(String infoInspeccion) {
-		return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(infoInspeccion);
-	}
-
-	@Override
-	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(String infoInspeccion) {
-		return inspeccionesRepository
-				.buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(infoInspeccion);
-	}
-
-	@Override
-	public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
-			String infoInspeccion) {
-		return inspeccionesRepository
-				.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
-						infoInspeccion);
-	}
-
-	@Override
-	public List<Inspeccion> findByNumeroLike(String numeroInspeccion) {
-		return inspeccionesRepository.findByNumeroLike("%" + numeroInspeccion + "%");
-	}
-
-	@Override
-	public List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad) {
-		return inspeccionesRepository.findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(nombreUnidad);
-	}
+    @Autowired
+    IInspeccionesRepository inspeccionesRepository;
+    
+    @Override
+    public Iterable<Inspeccion> findAll() {
+        return inspeccionesRepository.findAll();
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public Inspeccion save(Inspeccion inspecciones) {
+        return inspeccionesRepository.save(inspecciones);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(Inspeccion inspecciones) {
+        inspeccionesRepository.delete(inspecciones);
+    }
+    
+    @Override
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(String infoInspeccion) {
+        return inspeccionesRepository
+                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada("%" + infoInspeccion + "%");
+    }
+    
+    // @Override
+    // public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(String
+    // infoInspeccion) {
+    // return inspeccionesRepository
+    // .buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(infoInspeccion);
+    // }
+    
+    @Override
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
+            String infoInspeccion) {
+        return inspeccionesRepository
+                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
+                        "%" + infoInspeccion + "%");
+    }
+    
+    @Override
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
+            String infoInspeccion, String usernameJefeEquipo) {
+        return inspeccionesRepository
+                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
+                        "%" + infoInspeccion + "%", usernameJefeEquipo);
+    }
+    
+    @Override
+    public List<Inspeccion> findByNumeroLike(String numeroInspeccion) {
+        return inspeccionesRepository.findByNumeroLike("%" + numeroInspeccion + "%");
+    }
+    
+    @Override
+    public List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad) {
+        return inspeccionesRepository.findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(nombreUnidad);
+    }
 }

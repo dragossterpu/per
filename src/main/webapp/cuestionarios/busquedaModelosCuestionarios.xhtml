@@ -16,6 +16,9 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 
+        <ui:param name="esJefeInspeccion" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+        <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}"/>
+        
 		<h3>Búsqueda de modelos de cuestionarios personalizados</h3>
 		
 		<h:form>
@@ -66,7 +69,6 @@
 			<div class="botonesFormulario">
 				<p:commandButton actionListener="#{cuestionarioPersonalizadoBean.buscarCuestionario}" value="Buscar" update="panelCuestionarios" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 	            <p:commandButton value="Limpiar" actionListener="#{cuestionarioPersonalizadoBean.limpiar}" update="busquedaCuestionario" icon="fa fa-fw fa-eraser" />
-				<p:button outcome="/cuestionarios/modelosCuestionarios" value="Nuevo cuestionario" icon="fa fa-fw fa-user-plus"/>
 			</div>
 			
 			<p:separator styleClass="separator ui-state-disabled" />
@@ -119,10 +121,10 @@
 					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarVacio(cuestionario)}" />
 					</p:column>
-					<p:column styleClass="botonTabla" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false" rendered="#{esJefeInspeccion or esEquipo}">
 						<p:commandButton title="Enviar" action="#{cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario)}" icon="fa fa-envelope-o" />
 					</p:column>
-					<p:column styleClass="botonTabla" exportable="false">
+					<p:column styleClass="botonTabla" exportable="false" rendered="#{esJefeInspeccion}">
 						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
 							<p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign"/>
 						</p:commandButton>

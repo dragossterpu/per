@@ -11,6 +11,7 @@
 		<ui:define name="content">
 
 		<ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+        <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}"/>
 		
 			<h3>Modelos de cuestionario</h3>
 			<h:form>
@@ -30,11 +31,11 @@
 						</p:column>
 						
 						<p:column styleClass="botonTabla">
-							<h:commandLink title="Ver preguntas del modelo" styleClass="fa fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  rendered="#{not esJefeInspecciones}"/>
-							<h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  rendered="#{esJefeInspecciones}"/>
+							<h:commandLink title="Ver preguntas del modelo" styleClass="fa fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  rendered="#{not (esJefeInspecciones or esEquipo)}"/>
+							<h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  rendered="#{esJefeInspecciones or esEquipo}"/>
 						</p:column> 
-						<p:column styleClass="botonTabla">
-							<h:commandLink title="Modificar modelo cuestionario" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{modificarModeloCuestionarioBean.editarModelo(cuestionario)}"  rendered="#{esJefeInspecciones}" />
+						<p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
+							<h:commandLink title="Modificar modelo cuestionario" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{modificarModeloCuestionarioBean.editarModelo(cuestionario)}" />
 						</p:column>
 					</p:dataTable>
 					<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
