@@ -85,7 +85,7 @@
 				<p:inputText id="estado" value="#{userBean.user.estado}" disabled="true" />
 										
 				<h:outputLabel for="role" value="Rol:" />
-				<p:inputText id="role" value="#{userBean.user.role}" disabled="true" />
+				<p:inputText id="role" value="#{userBean.user.role.descripcion}" disabled="true" />
 	
 				<h:outputLabel for="puestoTrabajo" value="Puesto de trabajo:" />
 				<p:inputText id="puestoTrabajo" value="#{userBean.user.puestoTrabajo.descripcion}" disabled="true" />
@@ -117,7 +117,7 @@
 		
 		<div class="bloqueFormulario">
 			<div class="columnaIzdaFormulario">
-			<h:form id="passwordForm">
+            <h:form id="passwordForm">
 					<h:outputLabel for="claveActual" value="Contraseña actual:" />
 					<p:password value="#{miPerfilBean.claveActual}" required="true"
 						id="claveActual" requiredMessage="Introduzca la contraseña actual" />

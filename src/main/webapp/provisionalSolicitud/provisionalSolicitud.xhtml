@@ -131,7 +131,7 @@
 					<div class="botonesFormulario">
 						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}"/>
 						<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
-						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" />		
+						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />		
 					</div>					
 				</div>	
 			</h:form>	
@@ -140,7 +140,12 @@
 				<div class="centrarBotonesDialog">
 					<p:button value="Cerrar" outcome="/provisionalSolicitud/provisionalSolicitud" />
 				</div>
-			</p:dialog>		
+			</p:dialog>	
+                        
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage value="/images/loading.gif" />
+            </p:dialog>
+                    	
 		</ui:define>
 	</ui:composition>
 </f:view>
