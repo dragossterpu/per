@@ -60,7 +60,7 @@
 									</p:selectOneRadio>
 									
 									<p:outputPanel id="panelAdjuntos" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
-										<p:inputText id="adjunto" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
+										<p:inputTextarea id="adjunto" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 												 size="10" readonly="true"
 												 rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTOINPUT'}"/>   
 										
