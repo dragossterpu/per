@@ -219,7 +219,7 @@ public class WordGenerator {
 
 		InputStream inputStream = new FileInputStream(f);
 		return new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
-				getNombreFicheroDOCX(guia.getNombre()));
+				guia.getNombre().concat(".docx"));
 	}
 
 	/**
@@ -419,13 +419,4 @@ public class WordGenerator {
 		return valoresString;
 	}
 
-	/**
-	 * Genera el nombre del fichero a partir de la cadena pasada
-	 * 
-	 * @param nombre
-	 * @return String con el nombre con la extensión docx
-	 */
-	private String getNombreFicheroDOCX(String nombre) {
-		return (nombre.substring(0, nombre.indexOf('.'))).concat(".docx");
-	}
 }
