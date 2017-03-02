@@ -11,7 +11,7 @@
 		<ui:define name="content">
 
 			<div class="tituloCuestionario">
-				<h:outputText value="Editar cuestionario"/>
+				<h:outputText value="#{guiaBean.guia.nombre}"/>
 			</div>
 
 			<div class="bloqueFormulario" >
@@ -46,13 +46,14 @@
 				        </p:column>
 				    </p:orderList>
 				    <p:messages for="orderListPasos" autoUpdate="true"  closable="true"/>	
-				    <p:panel>  
-				    	<p:inputTextarea id="nuevoPaso" binding="#{nuevoPaso}" maxlength="2000"
+				    <p:panel id="panelPaso">  
+				    	<p:inputTextarea id="nuevoPaso"  binding="#{nuevoPaso}" maxlength="2000"
 						counter="contador" counterTemplate="Quedan {0} caracteres."
 						converter="#{trimConverter}"/>
 						<p:outputLabel id="contador"/>
-					    <p:commandButton actionListener="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="orderListPasos" 
-					    	value="Añadir paso" icon="fa fa-fw fa-plus">
+					    <p:commandButton action="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="form" 
+					    	value="Añadir paso" icon="fa fa-fw fa-plus" 
+					    	oncomplete="$('[id*=nuevoPaso]').val('')">
 					    </p:commandButton>
 					    <p:commandButton actionListener="#{guiaBean.borraPaso}" update="orderListPasos" 
 					    	value="Eliminar paso" icon="fa fa-fw fa-minus"/>

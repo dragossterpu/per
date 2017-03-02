@@ -90,6 +90,7 @@ public class GuiaBean {
 		nuevaPregunta.setPaso(pregunta);
 		nuevaPregunta.setIdGuia(guia);
 		listaPasos.add(nuevaPregunta);
+
 	}
 
 	public void borraPaso() {

@@ -22,8 +22,8 @@
 			   <p:fileDownload value="#{guiaBean.file}" />
 			</h:commandLink>
 				
-			<p:dataList var="paso" value="#{guiaBean.listaPasos}"  type="unordered" styleClass="preguntasModelo">
-		    	#{paso.paso}
+			<p:dataList  var="paso" value="#{guiaBean.listaPasos}"  type="unordered" styleClass="listaCebreada">
+		    	<h:outputText value="#{paso.paso}"/>
 		    </p:dataList>
 			
 			

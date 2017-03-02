@@ -1,5 +1,4 @@
 DROP SEQUENCE "SEQ_GUIAS";
-CREATE SEQUENCE  "PROGESIN_SES"."SEQ_GUIAS"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 13 CACHE 20 NOORDER  NOCYCLE  NOPARTITION ;
 
 --GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. ADMINISTRACIÓN.
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
@@ -676,6 +675,17 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 
 commit;
 
+-- Generacion de secuencia teniendo en cuenta el úmero de registros existentes
 
+CREATE SEQUENCE  "PROGESIN_SES"."SEQ_GUIAS"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 14 CACHE 20 NOORDER  NOCYCLE  NOPARTITION ;
+
+
+--declare
+--  maximo number;
+--begin
+--  select max(id) into maximo from guia_Pasos;
+--  EXECUTE IMMEDIATE 'CREATE SEQUENCE  "PROGESIN_SES"."SEQ_GUIAS"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH ' || maximo || ' CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
+
+--  end;
 
 

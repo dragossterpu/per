@@ -348,3 +348,28 @@ select {
 	width: 75px; 
 	height:75px;
 }
+
+.ui-orderlist ul li:nth-child(even) {
+    background-color: #f0f7ff; /*#eee*/
+}
+ 
+.ui-orderlist ul li:nth-child(odd) {
+    background-color: #fff;
+}
+
+
+.listaCebreada .ui-datalist-data {
+	padding: 0;
+}
+.listaCebreada .ui-datalist-item {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.listaCebreada .ui-datalist-content {
+	border:none;
+}
+
+.listaCebreada  ul li:nth-child(even) {
+    background-color: #f0f7ff; /*#eee*/
+}
+
