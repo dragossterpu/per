@@ -31,6 +31,8 @@ public class GuiaBean {
 
 	private Guia guia;
 
+	private String vieneDe;
+
 	private GuiaBusqueda busqueda;
 
 	private GuiaPasos pasoSeleccionada;
@@ -38,6 +40,8 @@ public class GuiaBean {
 	private List<Boolean> list;
 
 	private List<GuiaPasos> listaPasos;
+
+	private List<Guia> listaModelos;
 
 	private transient StreamedContent file;
 
@@ -69,6 +73,10 @@ public class GuiaBean {
 
 	public void limpiarBusqueda() {
 		busqueda.resetValues();
+	}
+
+	public void visualizaModelos() {
+		listaModelos = guiaService.findAll();
 	}
 
 	public String nuevaGuia() {
@@ -164,5 +172,13 @@ public class GuiaBean {
 			listaNueva.add(paso);
 		}
 		return listaNueva;
+	}
+
+	public void getFormularioBusqueda() {
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
+			limpiarBusqueda();
+			this.vieneDe = null;
+		}
+
 	}
 }

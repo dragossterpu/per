@@ -33,5 +33,6 @@ public class GuiaBusqueda implements Serializable {
 		this.usuarioCreacion = null;
 		this.nombre = null;
 		this.tipoInspeccion = null;
+		this.listaGuias = null;
 	}
 }

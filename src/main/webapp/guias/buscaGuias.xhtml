@@ -10,10 +10,18 @@
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
+			
+			<f:metadata>
+			    <f:viewParam name="vieneDe" value="#{guiaBean.vieneDe}" />
+			</f:metadata>
 
 			<ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}"/>
 			
 			<h3>Búsqueda de guías</h3>
+			
+			<h:form>
+			    <p:remoteCommand name="onload" action="#{guiaBean.getFormularioBusqueda}" autoRun="true" update="busquedaGuias" />
+			</h:form>
 			
 			<h:form id="busquedaGuias" >
 			<div class="bloqueFormulario">

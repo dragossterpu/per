@@ -13,4 +13,6 @@ public interface IGuiaService {
 	public List<GuiaPasos> listaPasos(Guia guia);
 
 	public Guia guardaGuia(Guia guia);
+
+	public List<Guia> findAll();
 }

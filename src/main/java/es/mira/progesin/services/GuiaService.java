@@ -45,7 +45,7 @@ public class GuiaService implements IGuiaService {
 			 * compara con 0:00:00
 			 */
 			criteria.add(Restrictions
-					.sqlRestriction("TRUNC(this_.fechaCreacion) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
+					.sqlRestriction("TRUNC(this_.fecha_creacion) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
 		}
 		if (busqueda.getFechaHasta() != null) {
 			/**
@@ -53,17 +53,17 @@ public class GuiaService implements IGuiaService {
 			 * compara con 0:00:00
 			 */
 			criteria.add(Restrictions
-					.sqlRestriction("TRUNC(this_.fechaCreacion) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
+					.sqlRestriction("TRUNC(this_.fecha_creacion) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
 		}
 
 		if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-			criteria.add(
-					Restrictions.sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre", busqueda.getNombre())));
+			criteria.add(Restrictions
+					.sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre_guia", busqueda.getNombre())));
 		}
 
 		if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
 			criteria.add(Restrictions.sqlRestriction(
-					String.format(COMPARADORSINACENTOS, "usuarioCreacion", busqueda.getUsuarioCreacion())));
+					String.format(COMPARADORSINACENTOS, "usuario_creacion", busqueda.getUsuarioCreacion())));
 		}
 
 		if (busqueda.getTipoInspeccion() != null) {
@@ -90,5 +90,10 @@ public class GuiaService implements IGuiaService {
 	public Guia guardaGuia(Guia guia) {
 		return guiaRepository.save(guia);
 
+	}
+
+	@Override
+	public List<Guia> findAll() {
+		return guiaRepository.findAll();
 	}
 }

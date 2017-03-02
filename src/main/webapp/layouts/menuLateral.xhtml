@@ -44,7 +44,9 @@
 		</p:submenu>
 		<p:submenu label="Guías">
 			<p:menuitem value="Guías" outcome="/guias/modelosGuias"/>
-			<p:menuitem value="Búsqueda modelos de guía" outcome="/guias/buscaGuias" />
+			<p:menuitem value="Búsqueda modelos de guía" outcome="/guias/buscaGuias">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>
 		</p:submenu>
 		<p:submenu label="Inspecciones">
 			<p:menuitem value="Administrar equipos" outcome="/equipos/equipos">
