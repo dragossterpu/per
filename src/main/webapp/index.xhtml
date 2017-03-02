@@ -71,9 +71,6 @@
 						<p:column headerText="Sección" sortBy="#{alerta.nombreSeccion}" width="70" visible="#{alertasBean.list[3]}" exportable="#{alertasBean.list[3]}">
 							<h:outputText value="#{alerta.nombreSeccion}" />
 						</p:column>
-						<p:column headerText="Tipo alerta" sortBy="#{alerta.tipoAlerta}" width="70" visible="#{alertasBean.list[4]}" exportable="#{alertasBean.list[4]}">
-							<h:outputText value="#{alerta.tipoAlerta}" />
-						</p:column>
 						<p:column width="20" exportable="false">
 							<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{AlertasNotificacionesUsuarioBean.eliminarAlertas(alerta)}" update="tablaAlertas">
 								<p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="fa fa-warning-sign"/>

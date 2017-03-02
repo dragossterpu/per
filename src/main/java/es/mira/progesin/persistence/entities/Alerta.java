@@ -40,7 +40,7 @@ public class Alerta implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ALERTA")
-    @SequenceGenerator(name="SEQ_ALERTA", sequenceName="SEQ_ALERTA", allocationSize=1) 
+	@SequenceGenerator(name = "SEQ_ALERTA", sequenceName = "SEQ_ALERTA", allocationSize = 1)
 	@Column(name = "ID_ALERTA", length = 5)
 	private Long idAlerta;
 
@@ -58,15 +58,10 @@ public class Alerta implements Serializable {
 	@Column(name = "USUARIO_REGISTRO")
 	private String usernameAlerta;
 
-	@Column(name = "TIPO_ALERTA", length = 20)
-	private String tipoAlerta;
-
 	@Column(name = "FECHA_BAJA")
 	private Date fechaBaja;
 
 	@Column(name = "USUARIO_BAJA")
 	private String usernameBaja;
-	
-
 
 }
