@@ -108,14 +108,14 @@
 										</p:dataTable>         
 									</p:outputPanel>
 										
-									<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}"
+									<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}" resizableColumns="true"
 												id="tablaPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
 								        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
 								            <f:facet name="header">
 								                <h:outputText value="#{column.header}" />
 								            </f:facet>
-								            <p:inputTextarea id="tabla" value="#{registroTabla[column.property]}" maxlength="1000"
-								            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar el campo" converter="#{trimConverter}"/>
+								            <p:inputTextarea id="tabla" value="#{registroTabla[column.property]}" maxlength="1000" style="min-width: 100px;"
+								            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"/>
 								        	<p:messages for="tabla" autoUpdate="true"  closable="true"/>
 								        	
 								        </p:columns>
@@ -126,18 +126,18 @@
 					    			</p:dataTable>
 					    			
 					    			
-					    			<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}"
+					    			<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}" resizableColumns="true"
 												id="matrizPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
 								        
-								        <p:column headerText="" styleClass="ui-widget-header">
+								        <p:column headerText="" styleClass="ui-widget-header" style="min-width:100px; width:100px; max-width:20%;">
 								        	<h:outputText value="#{registroTabla.nombreFila}"/>
 								        </p:column>
 								        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
 								            <f:facet name="header">
 								                <h:outputText value="#{column.header}" />
 								            </f:facet>
-								            <p:inputTextarea id="matriz" value="#{registroTabla[column.property]}" maxlength="1000"
-								            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar el campo" converter="#{trimConverter}"/>
+								            <p:inputTextarea id="matriz" value="#{registroTabla[column.property]}" maxlength="1000" style="min-width: 100px;"
+								            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"/>
 								            <p:messages for="matriz" autoUpdate="true"  closable="true"/>
 								        </p:columns>
 					    			</p:dataTable>

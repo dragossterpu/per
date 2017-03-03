@@ -150,6 +150,8 @@ public class ResponderCuestionarioBean implements Serializable {
      *
      */
     private void guardarRespuestasTipoTexto(List<RespuestaCuestionario> listaRespuestas) {
+        String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+        Date fechaActual = new Date();
         Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
         mapaRespuestas.forEach((pregunta, respuesta) -> {
             if (respuesta != null && respuesta.isEmpty() == Boolean.FALSE) {
@@ -159,6 +161,8 @@ public class ResponderCuestionarioBean implements Serializable {
                 idRespuesta.setPregunta(pregunta);
                 respuestaCuestionario.setRespuestaId(idRespuesta);
                 respuestaCuestionario.setRespuestaTexto(respuesta);
+                respuestaCuestionario.setUsernameCumplimentacion(usuarioActual);
+                respuestaCuestionario.setFechaCumplimentacion(fechaActual);
                 if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("ADJUNTO")) {
                     respuestaCuestionario.setDocumentos(visualizarCuestionario.getMapaDocumentos().get(pregunta));
                 }
@@ -175,8 +179,9 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     private void guardarRespuestasTipoTablaMatriz(List<RespuestaCuestionario> listaRespuestas,
             List<DatosTablaGenerica> listaDatosTablaSave) {
+        String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+        Date fechaActual = new Date();
         Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla = visualizarCuestionario.getMapaRespuestasTabla();
-        
         mapaRespuestasTabla.forEach((pregunta, respuesta) -> {
             if (respuesta != null) {
                 List<DatosTablaGenerica> listaDatosTabla = respuesta.getListaDatosTabla();
@@ -185,6 +190,8 @@ public class ResponderCuestionarioBean implements Serializable {
                 idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
                 idRespuesta.setPregunta(pregunta);
                 rtaCuestionario.setRespuestaId(idRespuesta);
+                rtaCuestionario.setUsernameCumplimentacion(usuarioActual);
+                rtaCuestionario.setFechaCumplimentacion(fechaActual);
                 for (int i = 0; i < listaDatosTabla.size(); i++) {
                     DatosTablaGenerica datosTablaGenerica = listaDatosTabla.get(i);
                     // Si no estaba ya en la respuesta

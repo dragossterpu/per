@@ -161,7 +161,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void validarRespuestas() {
         try {
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-            Date fechaValidacion = new Date();
+            Date fechaActual = new Date();
             CuestionarioEnvio cuestionario = visualizarCuestionario.getCuestionarioEnviado();
             List<RespuestaCuestionario> listaRespuestasTotales = visualizarCuestionario.getListaRespuestas();
             List<RespuestaCuestionario> listaRespuestasValidadas = new ArrayList<>();
@@ -171,7 +171,8 @@ public class CuestionarioEnviadoBean implements Serializable {
             for (RespuestaCuestionario respuesta : listaRespuestasTotales) {
                 if (mapaValidacionRespuestas.get(respuesta.getRespuestaId().getPregunta())) {
                     if (respuesta.getFechaValidacion() == null) {
-                        respuesta.setFechaValidacion(fechaValidacion);
+                        respuesta.setUsernameValidacion(usuarioActual);
+                        respuesta.setFechaValidacion(fechaActual);
                         listaRespuestasValidadas.add(respuesta);
                     } else {
                         listaRespuestasValidadasAnteriormente.add(respuesta);
@@ -190,9 +191,9 @@ public class CuestionarioEnviadoBean implements Serializable {
             
             if (listaRespuestasValidadas.size() + listaRespuestasValidadasAnteriormente.size() == listaRespuestasTotales
                     .size()) {
-                cuestionario.setFechaFinalizacion(new Date());
-                cuestionario.setFechaNoConforme(null);
                 cuestionario.setUsernameFinalizacion(usuarioActual);
+                cuestionario.setFechaFinalizacion(fechaActual);
+                cuestionario.setFechaNoConforme(null);
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
                         "Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
