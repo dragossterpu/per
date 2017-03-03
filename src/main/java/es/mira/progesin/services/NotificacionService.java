@@ -100,7 +100,7 @@ public class NotificacionService implements INotificacionService {
     }
     
     @Override
-    public void crearNotificacionRol(String seccion, String descripcion, List<RoleEnum> roles) {
+    public void crearNotificacionRol(String descripcion, String seccion, List<RoleEnum> roles) {
         try {
             Notificacion notificacion = crearNotificacion(descripcion, seccion);
             alertasNotificacionesUsuarioService.grabarMensajeRol(notificacion, roles);
