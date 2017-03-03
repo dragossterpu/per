@@ -155,8 +155,6 @@ public class EnvioCuestionarioBean implements Serializable {
                         .crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
                 cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
                 enviarCorreoCuestionario(password, listaUsuariosProvisionales);
-                // Notificaciones y registro de actividad
-                crearNotificacionesYResgistro(cuestionarioEnvio.getInspeccion());
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                         "El cuestionario se ha enviado con éxito");
                 // Crear respuestas tipo tabla (ñapa para que cuando inician sesíón varios usuarios a la vez por primera
@@ -172,8 +170,8 @@ public class EnvioCuestionarioBean implements Serializable {
                 notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                         RoleEnum.JEFE_INSPECCIONES);
                 
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        RoleEnum.EQUIPO_INSPECCIONES);
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                        cuestionarioEnvio.getInspeccion());
                 
             } else {
                 String textoError;
@@ -240,20 +238,6 @@ public class EnvioCuestionarioBean implements Serializable {
                     "Se ha producido un error en el envio del correo electrónico", e.getMessage(), ETIQUETA_ERROR);
             regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
         }
-    }
-    
-    /**
-     * Crea una notificación para el Jefe de Inspecciones y para el equipo de la inspección y registro de actividad
-     * @param inspeccion
-     */
-    private void crearNotificacionesYResgistro(Inspeccion inspeccion) {
-        String textoNotificaciones = "Enviado cuestionario para la inspección ".concat(inspeccion.getNumero());
-        notificacionService.crearNotificacionRol(textoNotificaciones, SeccionesEnum.CUESTIONARIO.name(),
-                RoleEnum.JEFE_INSPECCIONES);
-        notificacionService.crearNotificacionEquipo(textoNotificaciones, SeccionesEnum.CUESTIONARIO.name(),
-                cuestionarioEnvio.getInspeccion());
-        regActividadService.altaRegActividad(textoNotificaciones, TipoRegistroEnum.ALTA.name(),
-                SeccionesEnum.CUESTIONARIO.name());
     }
     
     private void crearResgistrosRespuestaTipoTablaMatriz(CuestionarioEnvio cuestionarioEnvio) {
