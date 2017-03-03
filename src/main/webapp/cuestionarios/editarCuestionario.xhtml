@@ -11,7 +11,7 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 		
-		<ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		<ui:param name="esJefeInspeccionesOEquipo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,ADMIN')}"/>
 
 			<div class="tituloCuestionario">
 				<h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}"/> 
@@ -22,23 +22,23 @@
 
 				<p:accordionPanel multiple="true" activeIndex="-1" value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
 					<p:tab title="#{areaCuestionario.area}">
-						<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspecciones}">
+						<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspeccionesOEquipo}">
 					        	<f:selectItems value="#{areaCuestionario.preguntas}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
 					        	itemValue="#{preguntaArea}"/>
 					    </my:selectManyCheckboxAll>
-					    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspecciones}" type="unordered" styleClass="preguntasModelo">
+					    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspeccionesOEquipo}" type="unordered" styleClass="preguntasModelo">
 					    	#{preguntaArea.pregunta}
 					    </p:dataList>				    
 					</p:tab>
 				</p:accordionPanel>
 				
 				<div class="botonesFormulario">
-					<h:commandLink title="Previsualizar formulario" update="message" styleClass="fa fa-search ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{edicionCuestionarioBean.previsualizarFormulario}" rendered="#{esJefeInspecciones}">
+					<h:commandLink title="Previsualizar formulario" update="message" styleClass="fa fa-search ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{edicionCuestionarioBean.previsualizarFormulario}" rendered="#{esJefeInspeccionesOEquipo}">
 		            	<span class="ui-CommandLink-texto">Previsualizar formulario</span>
 		            </h:commandLink>
 					
 					<p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
-					<p:commandButton value="Limpiar" update="form" process="@this" icon="fa fa-fw fa-eraser" rendered="#{esJefeInspecciones}">
+					<p:commandButton value="Limpiar" update="form" process="@this" icon="fa fa-fw fa-eraser" rendered="#{esJefeInspeccionesOEquipo}">
 						<p:resetInput target="form" />
 					</p:commandButton>
 				</div>

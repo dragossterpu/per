@@ -45,19 +45,19 @@
 									<p:inputText id="input" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 												 rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" 
 												 size="10" maxlength="1000"
-												 required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
+												 required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"/>
 									<p:messages for="input" autoUpdate="true"  closable="true"/>
 									
 									<p:inputTextarea id="textarea" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 									   				rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"
 													counter="contador" counterTemplate="Quedan {0} caracteres."
-									   				required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
+									   				required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"/>
 									<p:outputLabel id="contador"/>
 									<p:messages for="textarea" autoUpdate="true"  closable="true"/>
 									 				
 									<p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'RADIO')}" 
 												value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
-												required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío">
+												required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo">
 										<f:selectItems value="#{responderCuestionarioBean.visualizarCuestionario.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
 											var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
 									</p:selectOneRadio>
@@ -69,13 +69,13 @@
 												 value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
 												 size="10" maxlength="2000"
 												 counter="contadorAdjuntoInput" counterTemplate="Quedan {0} caracteres."
-												 required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío" converter="#{trimConverter}"/>
+												 required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"/>
 										<p:outputLabel id="contadorAdjuntoInput"/>		 
 									    <p:messages for="adjunto" autoUpdate="true"  closable="true"/>
 									    
 									    <p:selectOneRadio id="radioAdjunto" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTORADIOSINO'}" 
 												value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
-												required="#{param['form:enviar']!=null}" requiredMessage="El campo '#{preguntaArea.pregunta}' no puede estar vacío">
+												required="#{param['form:enviar']!=null}" requiredMessage="Este campo no puede estar vacío">
 												<f:selectItem itemLabel="Sí" itemValue="Sí" />
             									<f:selectItem itemLabel="No" itemValue="No" />
 										</p:selectOneRadio>

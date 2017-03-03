@@ -165,24 +165,31 @@ public class CuestionarioEnviadoBean implements Serializable {
             CuestionarioEnvio cuestionario = visualizarCuestionario.getCuestionarioEnviado();
             List<RespuestaCuestionario> listaRespuestasTotales = visualizarCuestionario.getListaRespuestas();
             List<RespuestaCuestionario> listaRespuestasValidadas = new ArrayList<>();
+            List<RespuestaCuestionario> listaRespuestasValidadasAnteriormente = new ArrayList<>();
             Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas = visualizarCuestionario
                     .getMapaValidacionRespuestas();
             for (RespuestaCuestionario respuesta : listaRespuestasTotales) {
                 if (mapaValidacionRespuestas.get(respuesta.getRespuestaId().getPregunta())) {
-                    
-                    respuesta.setFechaValidacion(fechaValidacion);
-                    listaRespuestasValidadas.add(respuesta);
+                    if (respuesta.getFechaValidacion() == null) {
+                        respuesta.setFechaValidacion(fechaValidacion);
+                        listaRespuestasValidadas.add(respuesta);
+                    } else {
+                        listaRespuestasValidadasAnteriormente.add(respuesta);
+                    }
                 }
             }
             if (listaRespuestasValidadas.isEmpty() == Boolean.FALSE) {
                 respuestaRepository.save(listaRespuestasValidadas);
                 respuestaRepository.flush();
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
+                        "Se ha validado con éxito las respuestas");
+            } else {
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Validación abortada",
+                        "Debe marcar al menos una respuesta", null);
             }
             
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
-                    "Se ha validado con éxito las respuestas");
-            
-            if (listaRespuestasValidadas.size() == listaRespuestasTotales.size()) {
+            if (listaRespuestasValidadas.size() + listaRespuestasValidadasAnteriormente.size() == listaRespuestasTotales
+                    .size()) {
                 cuestionario.setFechaFinalizacion(new Date());
                 cuestionario.setFechaNoConforme(null);
                 cuestionario.setUsernameFinalizacion(usuarioActual);

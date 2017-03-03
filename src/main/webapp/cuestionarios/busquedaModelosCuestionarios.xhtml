@@ -17,7 +17,7 @@
 		<ui:define name="content">
 
         <ui:param name="esJefeInspeccion" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
-        <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}"/>
+        <ui:param name="esEquipo" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,ADMIN')}"/>
         
 		<h3>Búsqueda de modelos de cuestionarios personalizados</h3>
 		
@@ -121,7 +121,7 @@
 					<p:column styleClass="botonTabla" exportable="false">
 						<h:commandLink title="Ver" styleClass="ui-button ui-state-default fa fa-fw fa-eye ui-CommandLink ui-CommandLink-icono" action="#{responderCuestionarioBean.visualizarCuestionario.visualizarVacio(cuestionario)}" />
 					</p:column>
-					<p:column styleClass="botonTabla" exportable="false" rendered="#{esJefeInspeccion or esEquipo}">
+					<p:column styleClass="botonTabla" exportable="false" rendered="#{esEquipo}">
 						<p:commandButton title="Enviar" action="#{cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario)}" icon="fa fa-envelope-o" />
 					</p:column>
 					<p:column styleClass="botonTabla" exportable="false" rendered="#{esJefeInspeccion}">

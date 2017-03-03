@@ -11,7 +11,8 @@
 	<ui:composition template="../layouts/layoutInterior.xhtml">
 		<ui:define name="content">
 		
-			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifGranted('ADMIN')}"/>
+            <ui:param name="esJefeInspecciones" value="#{p:ifGranted('JEFE_INSPECCIONES')}"/>
 			<ui:param name="yaEnviado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
 			<ui:param name="menuOrigen" value="#{yaEnviado ? '/cuestionarios/busquedaCuestionarios' : '/cuestionarios/busquedaModelosCuestionarios'}"/>
 			<ui:param name="yaFinalizado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion}"/>
@@ -67,7 +68,7 @@
 						mindate="#{utilities.getCurrentDate()}"
 						navigator="true" required="true"
 						requiredMessage="Es obligatorio una fecha limite de cumplimentación del cuestionario"
-						disabled="#{yaAnulado or yaFinalizado or (yaEnviado and not esJefeEquipoInspeccion)}"/>
+						disabled="#{yaAnulado or yaFinalizado or (yaEnviado and not (esJefeEquipoInspeccion or esJefeInspecciones))}"/>
 					
 					<h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
 					<p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000"
@@ -82,7 +83,7 @@
 			
 				<div class="botonesFormulario">
 					<p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and esJefeEquipoInspeccion}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-					<p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and not yaAnulado and esJefeEquipoInspeccion}"/>
+					<p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and not yaAnulado and (esJefeEquipoInspeccion or esJefeInspecciones)}"/>
 					<p:button outcome="#{menuOrigen}" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
 				

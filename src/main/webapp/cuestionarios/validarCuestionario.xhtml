@@ -14,7 +14,7 @@
 		
 			<script src="#{request.contextPath}/js/selectCheckboxesValidarCuestionario.js"/>
 			
-			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.equipo.jefeEquipo or p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.equipo.jefeEquipo or p:ifGranted('ADMIN')}"/>
 			<ui:param name="yaCumplimentado" value="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaCumplimentacion}"/>
 			<ui:param name="yaFinalizado" value="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.fechaFinalizacion}"/>
 
@@ -142,7 +142,7 @@
 				    <p:graphicImage value="/images/loading.gif" />
 				</p:dialog>
 				
-				<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
+				<p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true"/>
 			</h:form>
 
 		</ui:define>
