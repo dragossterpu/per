@@ -40,7 +40,7 @@
 							<div class="prevPregCuest">
 							
 								<p:selectBooleanCheckbox id="validarRespuesta" styleClass="checkRespuesta" value="#{cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" disabled="#{not yaCumplimentado or not esJefeEquipoInspeccion or cuestionarioEnviadoBean.visualizarCuestionario.mapaValidacionRespuestas[preguntaArea]}" style="float:left; margin-right:5px;"/>
-								<h:outputText value="#{preguntaArea.pregunta}" styleClass="preguntaCuestionario"/>
+								<h:outputText value="#{preguntaArea.pregunta}" styleClass="preguntaCuestionario" escape="false"/>
 								
 								<div class="respuestaCuestionario">
 								

@@ -22,12 +22,12 @@
 
 				<p:accordionPanel multiple="true" activeIndex="-1" value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
 					<p:tab title="#{areaCuestionario.area}">
-						<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspeccionesOEquipo}">
+						<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspeccionesOEquipo}" >
 					        	<f:selectItems value="#{areaCuestionario.preguntas}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
-					        	itemValue="#{preguntaArea}"/>
+					        	itemValue="#{preguntaArea}" itemLabelEscaped="false" />
 					    </my:selectManyCheckboxAll>
 					    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspeccionesOEquipo}" type="unordered" styleClass="preguntasModelo">
-					    	#{preguntaArea.pregunta}
+					    	<h:outputText value="#{preguntaArea.pregunta}" escape="false" />
 					    </p:dataList>				    
 					</p:tab>
 				</p:accordionPanel>
