@@ -41,7 +41,9 @@
 					<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
 					
 					<div class="botonesFormulario">
-						<p:commandButton value="Crear nuevo modelo de cuestionario" icon="fa fa-fw fa-user-plus" action="#{modificarModeloCuestionarioBean.nuevoModelo}"   rendered="#{esJefeInspecciones}"/>
+						<h:commandLink title="Crear nuevo modelo de cuestionario" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto" action="#{modificarModeloCuestionarioBean.nuevoModelo}" rendered="#{esJefeInspecciones}" > 
+							<span class="ui-CommandLink-texto">Crear nuevo modelo de cuestionario</span>
+						</h:commandLink>
 					</div>
 				</h:form>
 			</div>
