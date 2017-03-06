@@ -354,7 +354,7 @@ select {
 }
 
 .ui-orderlist ul li:nth-child(even) {
-    background-color: #f0f7ff; /*#eee*/
+    background-color:#eee ; /*#f0f7ff*/
 }
  
 .ui-orderlist ul li:nth-child(odd) {
@@ -374,6 +374,6 @@ select {
 }
 
 .listaCebreada  ul li:nth-child(even) {
-    background-color: #f0f7ff; /*#eee*/
+     background-color:#eee ; /*#f0f7ff*/
 }
 

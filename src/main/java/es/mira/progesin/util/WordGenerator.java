@@ -42,6 +42,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
@@ -49,6 +50,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
+import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IGuiaService;
 
 /**
@@ -78,6 +80,9 @@ public class WordGenerator {
 
 	@Autowired
 	private IGuiaService guiaService;
+
+	@Autowired
+	private IGuiaPersonalizadaService guiaPersonalizadaService;
 
 	@Autowired
 	IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
@@ -220,6 +225,60 @@ public class WordGenerator {
 		InputStream inputStream = new FileInputStream(f);
 		return new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
 				guia.getNombre().concat(".docx"));
+	}
+
+	/**
+	 * Genera un documento DOCX a partir de una guia personalizada
+	 * 
+	 * @param GuiaPersonalizada
+	 * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+
+	public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws InvalidFormatException, IOException {
+
+		// Creamos documento en blanco
+		XWPFDocument doc = new XWPFDocument();
+
+		crearCabeceraCuestionario(doc, LOGO_MININISTERIO_INTERIOR, LOGO_IPSS);
+
+		XWPFParagraph parrafo = doc.createParagraph();
+
+		// Nombre des cuestionario
+		XWPFRun texto = parrafo.createRun();
+		texto.setText(guia.getNombreGuia());
+		texto.setBold(true);
+		texto.setCapitalized(true);
+		texto.setFontSize(16);
+		texto.setFontFamily(FONT_FAMILY);
+		parrafo.setSpacingAfterLines(200);
+		parrafo.setAlignment(ParagraphAlignment.CENTER);
+		parrafo.addRun(texto);
+
+		// Áreas del cuestionario
+		List<GuiaPasos> listaPasos = guiaPersonalizadaService.listaPasos(guia);
+
+		for (GuiaPasos paso : listaPasos) {
+			parrafo = doc.createParagraph();
+			// Texto pregunta
+			texto = parrafo.createRun();
+			texto.setBold(true);
+			texto.setFontFamily(FONT_FAMILY);
+			texto.setText(paso.getPaso());
+			parrafo.setSpacingAfterLines(200);
+			parrafo.setSpacingBeforeLines(200);
+			parrafo.setAlignment(ParagraphAlignment.BOTH);
+			parrafo.addRun(texto);
+		}
+		File f = File.createTempFile("Guia", ".docx");
+
+		FileOutputStream fo = new FileOutputStream(f);
+		doc.write(fo);
+
+		InputStream inputStream = new FileInputStream(f);
+		return new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
+				guia.getNombreGuia().concat(".docx"));
 	}
 
 	/**

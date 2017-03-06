@@ -1,6 +1,7 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,5 +44,11 @@ public class GuiaPasos implements Serializable {
 
 	@Column(name = "orden", nullable = false)
 	private Integer orden;
+
+	@Column(name = "fecha_baja")
+	protected Date fechaBaja;
+
+	@Column(name = "username_baja")
+	protected String usernameBaja;
 
 }

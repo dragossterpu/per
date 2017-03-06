@@ -1,21 +1,26 @@
 package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IGuiaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
@@ -41,6 +46,8 @@ public class GuiaBean {
 
 	private List<GuiaPasos> listaPasos;
 
+	private List<GuiaPasos> listaPasosSeleccionados;
+
 	private List<Guia> listaModelos;
 
 	private transient StreamedContent file;
@@ -55,6 +62,9 @@ public class GuiaBean {
 
 	@Autowired
 	IRegistroActividadService regActividadService;
+
+	@Autowired
+	IGuiaPersonalizadaService guiaPersonalizadaService;
 
 	/**
 	 * Busca las guías según los filtros introducidos en el formulario de búsqueda
@@ -102,14 +112,28 @@ public class GuiaBean {
 	}
 
 	public void borraPaso() {
-		List<GuiaPasos> aux = new ArrayList<>();
+		// List<GuiaPasos> aux = new ArrayList<>();
+		//
+		// for (GuiaPasos paso : listaPasos) {
+		// if (paso != pasoSeleccionada) {
+		// aux.add(paso);
+		// }
+		// }
+		// listaPasos = aux;
 
-		for (GuiaPasos paso : listaPasos) {
-			if (paso != pasoSeleccionada) {
-				aux.add(paso);
+		if (pasoSeleccionada.getId() != null) {
+			// La pregunta existe en base de datos
+			if (guiaService.existePaso(pasoSeleccionada)) {
+				// baja lógica
+				pasoSeleccionada.setFechaBaja(new Date());
+				pasoSeleccionada.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+			}
+			else {// Baja física
+					// guiaService.borrarPaso(pasoSeleccionada);
+				listaPasos.remove(pasoSeleccionada);
 			}
 		}
-		listaPasos = aux;
+
 	}
 
 	public void onSelectPaso(SelectEvent event) {
@@ -139,6 +163,7 @@ public class GuiaBean {
 	public void guardaGuia() {
 
 		try {
+
 			guia.setPasos(ordenaPasos(listaPasos));
 			if (guiaService.guardaGuia(guia) != null) {
 				if (alta) {
@@ -180,5 +205,23 @@ public class GuiaBean {
 			this.vieneDe = null;
 		}
 
+	}
+
+	public String creaPersonalizada(Guia guia) {
+		alta = false;
+		this.guia = guia;
+		listaPasosSeleccionados = new ArrayList<>();
+		listaPasos = guiaService.listaPasos(guia);
+
+		return "/guias/personalizarGuia?faces-redirect=true";
+	}
+
+	public void guardarPersonalizada(String nombre) {
+		RequestContext.getCurrentInstance().execute("PF('guiaDialogo').hide()");
+		GuiaPersonalizada personalizada = new GuiaPersonalizada();
+		personalizada.setNombreGuia(nombre);
+		personalizada.setGuia(guia);
+		personalizada.setPasosElegidos(listaPasosSeleccionados);
+		guiaPersonalizadaService.save(personalizada);
 	}
 }

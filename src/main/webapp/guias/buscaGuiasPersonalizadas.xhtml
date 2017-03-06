@@ -12,25 +12,25 @@
 		<ui:define name="content">
 			
 			<f:metadata>
-			    <f:viewParam name="vieneDe" value="#{guiaBean.vieneDe}" />
+			    <f:viewParam name="vieneDe" value="#{guiaPersonalizadaBean.vieneDe}" />
 			</f:metadata>
 
 			<ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}"/>
 			
-			<h3>Búsqueda de guías</h3>
+			<h3>Búsqueda de guías personalizadas</h3>
 			
 			<h:form>
-			    <p:remoteCommand name="onload" action="#{guiaBean.getFormularioBusqueda}" autoRun="true" update="busquedaGuias" />
+			    <p:remoteCommand name="onload" action="#{guiaPersonalizadaBean.getFormularioBusqueda}" autoRun="true" update="busquedaGuias" />
 			</h:form>
 			
 			<h:form id="busquedaGuias" >
 			<div class="bloqueFormulario">
 				<div class="columnaIzdaFormulario">
 					<h:outputLabel for="nombreGuia" value="Nombre de la guia:" />
-					<p:inputText id="nombreGuia" value="#{guiaBean.busqueda.nombre}" />
+					<p:inputText id="nombreGuia" value="#{guiaPersonalizadaBean.busqueda.nombre}" />
 					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
 					<p:selectOneMenu
-						value="#{guiaBean.busqueda.tipoInspeccion}"
+						value="#{guiaPersonalizadaBean.busqueda.tipoInspeccion}"
 						id="tipoInspeccionSelect" converter="#{selectConverter}">
 						<f:selectItem itemLabel="Todos" itemValue="" />
 						<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
@@ -41,29 +41,25 @@
 				</div>
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="username" value="Nombre de usuario:" />
-					<p:inputText id="username" value="#{guiaBean.busqueda.usuarioCreacion}" />
+					<p:inputText id="username" value="#{guiaPersonalizadaBean.busqueda.usuarioCreacion}" />
 					<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-					<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaBean.busqueda.fechaDesde}"/>
+					<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaPersonalizadaBean.busqueda.fechaDesde}"/>
 	
 					<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-					<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaBean.busqueda.fechaHasta}"/>	
+					<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaPersonalizadaBean.busqueda.fechaHasta}"/>	
 				</div>	
 			</div>
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{guiaBean.buscarGuia}" update="panelGuias" value="Buscar"  icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-				<h:commandLink title="Limpiar" action="#{guiaBean.limpiarBusqueda}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+				<p:commandButton actionListener="#{guiaPersonalizadaBean.buscarGuia}" update="panelGuias" value="Buscar"  icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+				<h:commandLink title="Limpiar" action="#{guiaPersonalizadaBean.limpiarBusqueda}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 					<span class="ui-CommandLink-texto">Limpiar</span>
 				</h:commandLink>
-	            <h:commandLink title="Nueva guía" action="#{guiaBean.nuevaGuia}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" rendered="#{esAdmin}">
-	            	<span class="ui-CommandLink-texto">Nueva guía</span>
-	            </h:commandLink>
-
-			</div>	
+	      	</div>	
 			<p:outputPanel layout="block" id="panelGuias">
-				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty guiaBean.busqueda.listaGuias}">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty guiaPersonalizadaBean.busqueda.listaGuias}">
 					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
- 				<p:outputPanel rendered="#{not empty guiaBean.busqueda.listaGuias}">
+ 				<p:outputPanel rendered="#{not empty guiaPersonalizadaBean.busqueda.listaGuias}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
 		               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listaGuias"/>
@@ -77,11 +73,11 @@
 		               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listaGuias"/>
 		            </h:commandLink>
 	            </p:outputPanel>
-	 			<p:dataTable  var="guia" value="#{guiaBean.busqueda.listaGuias}"  rows="10" id="tablaUsuarios" 
+	 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.busqueda.listaGuias}"  rows="10" id="tablaUsuarios" 
 	 						draggableColumns="true"
 	                        paginator="true" 
 	                        resizableColumns="true"
-	                        rendered="#{not empty guiaBean.busqueda.listaGuias}" 
+	                        rendered="#{not empty guiaPersonalizadaBean.busqueda.listaGuias}" 
 	                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                       		rowsPerPageTemplate="5,10,15,20,25">
 	                        
@@ -89,35 +85,31 @@
 						Guias
 						 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
 	        			 <p:columnToggler datasource="tablaUsuarios" trigger="toggler">
-	        			 	  <p:ajax event="toggle" listener="#{guiaBean.onToggle}" />
+	        			 	  <p:ajax event="toggle" listener="#{guiaPersonalizadaBean.onToggle}" />
 	        			 </p:columnToggler>
 					</f:facet>
-					<p:column headerText="Fecha alta" sortBy="#{guia.fechaCreacion}" width="50" visible="#{guiaBean.list[0]}" exportable="#{guiaBean.list[0]}">
+					<p:column headerText="Fecha alta" sortBy="#{guia.fechaCreacion}" width="50" visible="#{guiaPersonalizadaBean.list[0]}" exportable="#{guiaPersonalizadaBean.list[0]}">
 						<h:outputText value="#{guia.fechaCreacion}">
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Usuario" sortBy="#{guia.usuarioCreacion}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
-						<h:outputText value="#{guia.usuarioCreacion}" />
+					<p:column headerText="Usuario" sortBy="#{guia.usernameCreacion}" width="50" visible="#{guiaPersonalizadaBean.list[1]}" exportable="#{guiaPersonalizadaBean.list[1]}">
+						<h:outputText value="#{guia.usernameCreacion}" />
 					</p:column>
-					<p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion}"  width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
-						<h:outputText value="#{guia.tipoInspeccion.descripcion}" />
+					<p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion}"  width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
+						<h:outputText value="#{guia.guia.tipoInspeccion.descripcion}" />
 					</p:column>
-					<p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
-						<h:outputText value="#{guia.nombre}" />
-					</p:column>
-					<p:column styleClass="botonTabla" exportable="false" toggleable="false">
-						<h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}"  rendered="#{esAdmin}"/>
-					</p:column>
-					<p:column styleClass="botonTabla" exportable="false" toggleable="false">
-						<h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" />
-					</p:column>
-					<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
-						<h:commandLink title="Modificar guía" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"  action="#{guiaBean.editaGuia(guia)}" rendered="#{esAdmin}" />
+					<p:column headerText="Nombre" sortBy="#{guia.nombreGuia}" width="180" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
+						<h:outputText value="#{guia.nombreGuia}" />
 					</p:column>
 					
+					<p:column styleClass="botonTabla" exportable="false" toggleable="false">
+						<h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaPersonalizadaBean.visualizaGuia(guia)}" />
+					</p:column>
+					
+					
 					<f:facet name="footer">
-	       				 Resultado de la búsqueda: #{fn:length(guiaBean.busqueda.listaGuias)} guías.
+	       				 Resultado de la búsqueda: #{fn:length(guiaPersonalizadaBean.busqueda.listaGuias)} guías.
 	    			</f:facet>
 				</p:dataTable>
 			</p:outputPanel>	

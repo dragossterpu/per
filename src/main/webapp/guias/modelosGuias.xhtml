@@ -11,27 +11,30 @@
 		<ui:define name="content">
 
 			<h3>Modelo de Guías</h3>
+			<h:form>
+			    <p:remoteCommand name="onload" action="#{guiaBean.visualizaModelos()}" update="form" autoRun="true" />
+			</h:form>
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					<p:dataTable id="tablaGuias" var="guia" value="#{modelosGuiaBean.listadoGuias}" >
+					<p:dataTable id="tablaGuias" var="guia" value="#{guiaBean.listaModelos}" >
 						
-						<p:column headerText="Código" style="width: 20%">
-							<h:outputText value="#{guia.codigo}"/>
+						<p:column headerText="Tipo" style="width: 30%">
+							<h:outputText value="#{guia.tipoInspeccion.codigo}"/>
 						</p:column>
 						
-						<p:column headerText="Descripción">
-							<h:outputText value="#{guia.descripcion}"/>
+						<p:column headerText="Nombre">
+							<h:outputText value="#{guia.nombre}"/>
 						</p:column>
 						
-						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{modelosGuiaBean.descargarFichero(guia)}" title="Descargar modelo">
-								<p:fileDownload value="#{modelosGuiaBean.file}" />
-							</p:commandButton>
-						</p:column>
+<!-- 						<p:column styleClass="botonTabla"> -->
+<!-- 							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{guiaBean.descargarFichero(guia)}" title="Descargar modelo"> -->
+<!-- 								<p:fileDownload value="#{guiaBean.file}" /> -->
+<!-- 							</p:commandButton> -->
+<!-- 						</p:column> -->
 						
 						<!-- <p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-edit" action="#{modelosGuiaBean.editarGuia(guia)}" title="Editar guía"/>
+							<p:commandButton icon="fa fa-fw fa-edit" action="#{guiaBean.editarGuia(guia)}" title="Editar guía"/>
 						</p:column> -->
 						
 					</p:dataTable>

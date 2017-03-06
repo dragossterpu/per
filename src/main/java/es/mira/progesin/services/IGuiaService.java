@@ -15,4 +15,8 @@ public interface IGuiaService {
 	public Guia guardaGuia(Guia guia);
 
 	public List<Guia> findAll();
+
+	public boolean existePaso(GuiaPasos paso);
+
+	public void borrarPaso(GuiaPasos paso);
 }

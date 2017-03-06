@@ -10,16 +10,15 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.GuiaPersonalizada;
+import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
-import es.mira.progesin.persistence.repositories.IGuiasRepository;
-import es.mira.progesin.web.beans.GuiaBusqueda;
+import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
 @Service
-public class GuiaService implements IGuiaService {
+public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 
 	private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
 
@@ -29,15 +28,26 @@ public class GuiaService implements IGuiaService {
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	IGuiasPasosRepository preguntasRepository;
+	IGuiaPersonalizadaRepository guiaPersonalizadaRepository;
 
 	@Autowired
-	IGuiasRepository guiaRepository;
+	IGuiasPasosRepository preguntasRepository;
 
 	@Override
-	public List<Guia> buscarGuiaPorCriteria(GuiaBusqueda busqueda) {
+	public void delete(GuiaPersonalizada guia) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public GuiaPersonalizada save(GuiaPersonalizada guia) {
+		return guiaPersonalizadaRepository.save(guia);
+	}
+
+	@Override
+	public List<GuiaPersonalizada> buscarGuiaPorCriteria(GuiaPersonalizadaBusqueda busqueda) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(Guia.class);
+		Criteria criteria = session.createCriteria(GuiaPersonalizada.class);
 
 		if (busqueda.getFechaDesde() != null) {
 			/**
@@ -73,49 +83,21 @@ public class GuiaService implements IGuiaService {
 		criteria.addOrder(Order.desc("fechaCreacion"));
 
 		@SuppressWarnings("unchecked")
-		List<Guia> listaGuias = criteria.list();
+		List<GuiaPersonalizada> listaGuias = criteria.list();
 		session.close();
 
 		return listaGuias;
 	}
 
 	@Override
-	public List<GuiaPasos> listaPasos(Guia guia) {
-		return preguntasRepository.findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(guia);
-
+	public List<GuiaPasos> listaPasos(GuiaPersonalizada guia) {
+		return preguntasRepository.findPasosElegidosGuiaPersonalizada(guia.getId());
 	}
 
 	@Override
-	@Transactional(readOnly = false)
-	public Guia guardaGuia(Guia guia) {
-		// TODO Tener en cuenta la eliminación de preguntas, si es lógica o física
-		Guia devuelve = new Guia();
-		try {
-			devuelve = guiaRepository.save(guia);
-		}
-		catch (Exception ex) {
-			return null;
-
-		}
-		return devuelve;
-
-	}
-
-	@Override
-	public List<Guia> findAll() {
-		return guiaRepository.findAll();
-	}
-
-	@Override
-	public boolean existePaso(GuiaPasos paso) {
-		return preguntasRepository.findPasoExistenteEnGuiasPersonalizadas(paso.getId()) != null;
-
-	}
-
-	@Override
-	public void borrarPaso(GuiaPasos paso) {
-		preguntasRepository.delete(paso);
-
+	public List<GuiaPersonalizada> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
