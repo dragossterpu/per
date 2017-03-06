@@ -29,79 +29,82 @@ import lombok.Setter;
 @Controller("edicionCuestionarioBean")
 @Scope("session")
 public class EdicionCuestionarioBean {
-
-	ModeloCuestionario modeloCuestionario;
-
-	List<AreasCuestionario> listaAreasCuestionario;
-
-	private Map<AreasCuestionario, PreguntasCuestionario[]> preguntasSelecciondas;
-
-	@Autowired
-	private IAreaCuestionarioRepository areaCuestionarioRepository;
-
-	@Autowired
-	private IPreguntaCuestionarioRepository pregunaCuestionarioRepository;
-
-	@Autowired
-	private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
-
-	public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
-		this.modeloCuestionario = modeloCuestionario;
-		preguntasSelecciondas = new HashMap<>();
-		listaAreasCuestionario = areaCuestionarioRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
-		return "/cuestionarios/editarCuestionario";
-	}
-
-	public String nuevoModeloCuestionario(){
-		return "/cuestionarios/nuevoModeloCuestionario";
-	}
-	public String previsualizarFormulario() {
-		boolean hayPreguntasSeleccionadas = false;
-		String page;
-		int cont = 0;
-		while (hayPreguntasSeleccionadas == Boolean.FALSE && cont < listaAreasCuestionario.size()) {
-			Object[] preg = preguntasSelecciondas.get(listaAreasCuestionario.get(cont));
-			if (preg.length > 0) {
-				hayPreguntasSeleccionadas = true;
-			}
-			cont++;
-		}
-		if (hayPreguntasSeleccionadas) {
-			page = "/cuestionarios/previsualizarCuestionario";
-		}
-		else {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Debe seleccionar al menos una pregunta", "");
-			FacesContext.getCurrentInstance().addMessage("message", message);
-			page = null;
-		}
-		return page;
-	}
-
-	public void guardarFormulario(String nombreCuestionario) {
-		try {
-			RequestContext.getCurrentInstance().execute("PF('cuestionarioDialog').hide()");
-			CuestionarioPersonalizado cp = new CuestionarioPersonalizado();
-			cp.setModeloCuestionario(modeloCuestionario);
-			cp.setNombreCuestionario(nombreCuestionario);
-			List<PreguntasCuestionario> preguntasElegidas = new ArrayList<>();
-			for (AreasCuestionario area : listaAreasCuestionario) {
-				Object[] preg = preguntasSelecciondas.get(area);
-				for (int i = 0; i < preg.length; i++) {
-					PreguntasCuestionario pc = (PreguntasCuestionario) preg[i];
-					preguntasElegidas.add(pc);
-				}
-			}
-			cp.setPreguntasElegidas(preguntasElegidas);
-			cuestionarioPersonalizadoService.save(cp);
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cuestionario",
-					"Se ha guardado su cuestionario con éxito");
-		}
-		catch (Exception e) {
-			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-					"Se ha producido un error al guardar el cuestionario");
-			e.printStackTrace();
-		}
-	}
-
+    
+    ModeloCuestionario modeloCuestionario;
+    
+    List<AreasCuestionario> listaAreasCuestionario;
+    
+    private Map<AreasCuestionario, PreguntasCuestionario[]> preguntasSelecciondas;
+    
+    @Autowired
+    private IAreaCuestionarioRepository areaCuestionarioRepository;
+    
+    @Autowired
+    private IPreguntaCuestionarioRepository pregunaCuestionarioRepository;
+    
+    @Autowired
+    private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
+    
+    public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
+        this.modeloCuestionario = modeloCuestionario;
+        preguntasSelecciondas = new HashMap<>();
+        listaAreasCuestionario = areaCuestionarioRepository
+                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
+        for (AreasCuestionario area : listaAreasCuestionario) {
+            area.setPreguntas(pregunaCuestionarioRepository.findByAreaAndFechaBajaIsNull(area));
+        }
+        return "/cuestionarios/editarCuestionario";
+    }
+    
+    public String nuevoModeloCuestionario() {
+        return "/cuestionarios/nuevoModeloCuestionario";
+    }
+    
+    public String previsualizarFormulario() {
+        boolean hayPreguntasSeleccionadas = false;
+        String page;
+        int cont = 0;
+        while (hayPreguntasSeleccionadas == Boolean.FALSE && cont < listaAreasCuestionario.size()) {
+            Object[] preg = preguntasSelecciondas.get(listaAreasCuestionario.get(cont));
+            if (preg.length > 0) {
+                hayPreguntasSeleccionadas = true;
+            }
+            cont++;
+        }
+        if (hayPreguntasSeleccionadas) {
+            page = "/cuestionarios/previsualizarCuestionario";
+        } else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Debe seleccionar al menos una pregunta", "");
+            FacesContext.getCurrentInstance().addMessage("message", message);
+            page = null;
+        }
+        return page;
+    }
+    
+    public void guardarFormulario(String nombreCuestionario) {
+        try {
+            RequestContext.getCurrentInstance().execute("PF('cuestionarioDialog').hide()");
+            CuestionarioPersonalizado cp = new CuestionarioPersonalizado();
+            cp.setModeloCuestionario(modeloCuestionario);
+            cp.setNombreCuestionario(nombreCuestionario);
+            List<PreguntasCuestionario> preguntasElegidas = new ArrayList<>();
+            for (AreasCuestionario area : listaAreasCuestionario) {
+                Object[] preg = preguntasSelecciondas.get(area);
+                for (int i = 0; i < preg.length; i++) {
+                    PreguntasCuestionario pc = (PreguntasCuestionario) preg[i];
+                    preguntasElegidas.add(pc);
+                }
+            }
+            cp.setPreguntasElegidas(preguntasElegidas);
+            cuestionarioPersonalizadoService.save(cp);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cuestionario",
+                    "Se ha guardado su cuestionario con éxito");
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+                    "Se ha producido un error al guardar el cuestionario");
+            e.printStackTrace();
+        }
+    }
+    
 }

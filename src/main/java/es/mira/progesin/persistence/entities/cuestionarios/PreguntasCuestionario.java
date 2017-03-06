@@ -1,6 +1,7 @@
 package es.mira.progesin.persistence.entities.cuestionarios;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,52 +29,55 @@ import lombok.ToString;
 @Entity
 @Table(name = "preguntascuestionario")
 public class PreguntasCuestionario implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_preguntascuestionario", sequenceName = "seq_preguntascuestionario", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_preguntascuestionario")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@Column(name = "pregunta", nullable = false, length = 2000)
-	private String pregunta;
-
-	@ManyToOne
-	@JoinColumn(name = "id_area")
-	private AreasCuestionario area;
-	
-	@Column(name = "orden")
-	private Integer orden;
-
-	@Column(name = "tipo_respuesta", nullable = true, length = 100)
-	private String tipoRespuesta;
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PreguntasCuestionario other = (PreguntasCuestionario) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		}
-		else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_preguntascuestionario", sequenceName = "seq_preguntascuestionario", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_preguntascuestionario")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @Column(name = "pregunta", nullable = false, length = 2000)
+    private String pregunta;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_area")
+    private AreasCuestionario area;
+    
+    @Column(name = "orden")
+    private Integer orden;
+    
+    @Column(name = "tipo_respuesta", nullable = true, length = 100)
+    private String tipoRespuesta;
+    
+    private Date fechaBaja;
+    
+    private String usernameBaja;
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PreguntasCuestionario other = (PreguntasCuestionario) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+    
 }

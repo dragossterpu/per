@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 
 public interface IModeloCuestionarioRepository extends CrudRepository<ModeloCuestionario, Integer> {
-
+    
 }
