@@ -14,13 +14,13 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 6, 'Catálogo de puestos de trabajo. Comprobación documental.',2);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 6, 'Número de quejas ante: Comprobar que se han entregado al interno copia sellada de la primera página. Comprobar en el registro, fecha y hora de la presentación, identificación de interesado y destinatario. Comprobar que se han aportado al interesado copias selladas de los documentos presentados, si lo han solicitado. Examinar el libro registro. Examinar copias de resoluciones (Plazos, recursos y órganos).
-(Órganos administrativos)
-(Órganos judiciales)
-(El Ministerio Fiscal)
-(El Defensor del Pueblo		
-(El Director del Centro)		
-(Otros organismos)', 3);
+(seq_pasosGuia.nextval, 6, 'Número de quejas ante: Comprobar que se han entregado al interno copia sellada de la primera página. Comprobar en el registro, fecha y hora de la presentación, identificación de interesado y destinatario. Comprobar que se han aportado al interesado copias selladas de los documentos presentados, si lo han solicitado. Examinar el libro registro. Examinar copias de resoluciones (Plazos, recursos y órganos).<br/>
+Órganos administrativos<br/>
+Órganos judiciales<br/>
+El Ministerio Fiscal<br/>
+El Defensor del Pueblo<br/>	
+El Director del Centro<br/>		
+Otros organismos)', 3);
 		
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 6, 'Número de solicitud de entrevistas personales con el director. Comprobar las que se han llevado a cabo y las que no y causas. Examinar recibos de presentación en sobres cerrado. (Ver Dirección)',4);
@@ -80,12 +80,12 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 8, 'Número de ATS/Diplomado/Graduado Universitario. Examinar nombramiento.', 1);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 8, 'Número de inspecciones, informes1 y propuestas sobre: Examinar
-(Alimentación.)
-(Aseo de los internos, sus ropas y pertenencias)
-(Higiene, calefacción, iluminación, y ventilación de las dependencias)
-(Controles periódicos de salubridad)
-(Prevención de epidemias y medidas de aislamiento de pacientes infecto-contagiosos).',2);
+(seq_pasosGuia.nextval, 8, 'Número de inspecciones, informes1 y propuestas sobre: Examinar.<br/>
+Alimentación.<br/>
+Aseo de los internos, sus ropas y pertenencias<br/>
+Higiene, calefacción, iluminación, y ventilación de las dependencias<br/>
+Controles periódicos de salubridad<br/>
+Prevención de epidemias y medidas de aislamiento de pacientes infecto-contagiosos.',2);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 8, 'Entrega de elementos de aseo y abrigo. Comprobar art. 32', 3);
@@ -315,35 +315,35 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 0, 'Ascensores y aparatos elevadores: 
-(Ascensores. Número de ellos y ubicación. Inspección)
-(Montacargas. Número de ellos y peso máximo. Inspección)', 19);
+Ascensores. Número de ellos y ubicación. Inspección.<br/>
+Montacargas. Número de ellos y peso máximo. Inspección.', 19);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 0, 'Instalaciones eléctrica (AT y BT) (RD 615/2001, disposiciones mínimas de protección contra riesgos eléctricos). Comprobar revisiones e inspecciones.
-(Alta Tensión. Centros de transformación, centrales eléctricas o subestaciones.)
-(Baja Tensión. Cuadros eléctricos.)
-(Grupos electrógenos)
-(Sistema de Alimentación Ininterrumpida (S.A.I.)/Baterías de acumuladores)', 20);
+(seq_pasosGuia.nextval, 0, 'Instalaciones eléctrica (AT y BT) (RD 615/2001, disposiciones mínimas de protección contra riesgos eléctricos). Comprobar revisiones e inspecciones.<br/>
+Alta Tensión. Centros de transformación, centrales eléctricas o subestaciones.<br/>
+Baja Tensión. Cuadros eléctricos.<br/>
+Grupos electrógenos<br/>
+Sistema de Alimentación Ininterrumpida (S.A.I.)/Baterías de acumuladores.', 20);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 0, 'Sistema de ventilación, climatización y ACS. Comprobar revisiones e inspecciones.
-(Calderas de calefacción y ACS)
-(Aire acondicionado y/o ventilación forzada)
-(Aparatos a presión (compresores))
-(Depósitos de combustibles. Comprobar revisiones e inspecciones)
-(Combustibles líquidos)
-(Combustibles gaseosos)', 21);
+(seq_pasosGuia.nextval, 0, 'Sistema de ventilación, climatización y ACS. Comprobar revisiones e inspecciones.<br/>
+Calderas de calefacción y ACS.<br/>
+Aire acondicionado y/o ventilación forzada.<br/>
+Aparatos a presión (compresores).<br/>
+Depósitos de combustibles. Comprobar revisiones e inspecciones.<br/>
+Combustibles líquidos.<br/>
+Combustibles gaseosos.<br/>', 21);
 	
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 0, 
-'Prevención/control Legionelosis.
-Mantenimiento de sistemas de ACS y agua fía de consumo humano. 
-Aspecto a revisar: General. Plazo de revisión: Anual
-Aspecto a revisar: Conservación y limpieza. Plazo de revisión: Trimestral
-Aspecto a revisar: Puntos de terminales de la red, duchas y grifos. Plazo de revisión: Mensual
-Mantenimiento de torres de refrigeración y dispositivos análogos. 
-Aspecto a revisar: Condensador y separador de gotas. Plazo de revisión: Anual
-Aspecto a revisar: Relleno. Plazo de revisión: Semestral
+'Prevención/control Legionelosis.<br/>
+Mantenimiento de sistemas de ACS y agua fía de consumo humano.<br/>
+Aspecto a revisar: General. Plazo de revisión: Anual.<br/>
+Aspecto a revisar: Conservación y limpieza. Plazo de revisión: Trimestral.<br/>
+Aspecto a revisar: Puntos de terminales de la red, duchas y grifos. Plazo de revisión: Mensual.<br/>
+Mantenimiento de torres de refrigeración y dispositivos análogos.<br/>
+Aspecto a revisar: Condensador y separador de gotas. Plazo de revisión: Anual.<br/>
+Aspecto a revisar: Relleno. Plazo de revisión: Semestral.<br/>
 Aspecto a revisar: Bandeja. Plazo de revisión: Mensual', 22);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -353,20 +353,20 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 0, 'Libros de mantenimiento de cada una de las instalaciones, con sus informes, actas, etc. correspondientes a las operaciones de mantenimiento, revisiones e inspecciones. Comprobación documental.', 24);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 0, 'Protección contra incendios. Empresas de mantenimientos y revisiones.
-(Central de alarmas: número, ubicación)
-(Sistemas automáticos de detección y alarma de incendios: número, ubicación)
-(Sistemas manuales (pulsadores) de alarma de incendio: número, ubicación)
-(Sirenas de alarma y megafonía: número, ubicación)
-(Señalización de equipos contra incendios (de BIE,s, extintores, dirección evacuación, etc.). Comprobar su colocación)
-(Extintores portátiles: Están redistribuidos y/o colocados los extintores portátiles en el sentido establecido en el RD  485/1977,  de 14 de abril, por el que se establecen las disposiciones mínimas en materia de señalización de seguridad y salud en el trabajo, y en el RD  314/2006, que aprueba el Documento Básico de Seguridad en caso de Incendio (DB-SI), del Código Técnico de Edificación (CTE)? ¿Existe un plano de distribución/colocación de los extintores portátiles? Solicitar.)
-(Bocas de Incendio Equipadas (BIE,s): número, ubicación)
-(Sistema fijo de extinción. Agua. Gás. Espuma. Número, ubicación)
-(Sistema de abastecimiento de agua: número, ubicación)
-(Hidrantes exteriores: número, ubicación)
-(Columnas secas: número, ubicación)
-(Alumbrado de emergencias: número, ubicación)
-(Otros)'
+(seq_pasosGuia.nextval, 0, 'Protección contra incendios. Empresas de mantenimientos y revisiones.<br/>
+Central de alarmas: número, ubicación.<br/>
+Sistemas automáticos de detección y alarma de incendios: número, ubicación.<br/>
+Sistemas manuales (pulsadores) de alarma de incendio: número, ubicación.<br/>
+Sirenas de alarma y megafonía: número, ubicación.<br/>
+Señalización de equipos contra incendios (de BIE,s, extintores, dirección evacuación, etc.). Comprobar su colocación.<br/>
+Extintores portátiles: Están redistribuidos y/o colocados los extintores portátiles en el sentido establecido en el RD  485/1977,  de 14 de abril, por el que se establecen las disposiciones mínimas en materia de señalización de seguridad y salud en el trabajo, y en el RD  314/2006, que aprueba el Documento Básico de Seguridad en caso de Incendio (DB-SI), del Código Técnico de Edificación (CTE)? ¿Existe un plano de distribución/colocación de los extintores portátiles? Solicitar.<br/>
+Bocas de Incendio Equipadas (BIE,s): número, ubicación.<br/>
+Sistema fijo de extinción. Agua. Gás. Espuma. Número, ubicación.<br/>
+Sistema de abastecimiento de agua: número, ubicación.<br/>
+Hidrantes exteriores: número, ubicación.<br/>
+Columnas secas: número, ubicación.<br/>
+Alumbrado de emergencias: número, ubicación.<br/>
+Otros.'
 , 25);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -399,11 +399,11 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 4, 'Remitir actas de reuniones ordinarias o extraordinarias. Examinar.', 2);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 4, 'Informes a consultas sobre: Examinar los informes.
-(Normas de régimen interior.)
-(Directrices e instrucciones sobre organización de los distintos servicios)
-(Criterios de actuación en cuestiones de alteración del orden, o incumplimiento de normas)
-(Sobre peticiones y quejas)', 3);
+(seq_pasosGuia.nextval, 4, 'Informes a consultas sobre: Examinar los informes.<br/>
+Normas de régimen interior.<br/>
+Directrices e instrucciones sobre organización de los distintos servicios.<br/>
+Criterios de actuación en cuestiones de alteración del orden, o incumplimiento de normas.<br/>
+Sobre peticiones y quejas.', 3);
 
 --GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. LIBROS OFICIALES.
 
@@ -411,14 +411,14 @@ insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usua
 (12, 'GUIA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. JUNTA DE COORDINACIÓN.', 'I.T_CIE', 12,trunc(sysdate), 'system');
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 12, 'Libros en poder del Centro y fecha de diligencia de cada uno de ellos1. Comprobar si están informatizados.
-(Libro Registro de entradas y salidas de internos. Comprobar los diferentes asientos, y si se han cumplimentado las fichas individuales de comunicación. Cotejar las salidas con las copias de resoluciones y diligencias de salida del centro (copias firmadas por el interno). Comprobar los reingresos y causas.)
-(Libro Registro de traslados y desplazamientos. Examinar los asientos, cotejándolos con comunicaciones al juez competente y la constancia en los expedientes de los internos.)
-(Libro Registro de visitas. Comprobar que se anotan las visitas de miembros de organizaciones para defensa de los inmigrantes y del resto de personas.)
-(Libro Registro de correspondencia. Comprobar que está anotada la paquetería. (Observar si anotan correspondencia). Comprobar las anotaciones de paquetería devuelta por denegación de su apertura.)
-(Libro Registro de peticiones y quejas.- Comprobar que en las anotaciones figuran fecha, hora identificación del interno y del destinatario. Comprobar que la numeración de los impresos es consecutiva2. Comprobar si se archivan copias de los recibos de solicitud de entrevistas personales con el director.)
-(Comprobar tratamiento de los datos de carácter personal y de salud art.17)
-(Ver plazos estancia art.21)', 0);
+(seq_pasosGuia.nextval, 12, 'Libros en poder del Centro y fecha de diligencia de cada uno de ellos1. Comprobar si están informatizados.<br/>
+Libro Registro de entradas y salidas de internos. Comprobar los diferentes asientos, y si se han cumplimentado las fichas individuales de comunicación. Cotejar las salidas con las copias de resoluciones y diligencias de salida del centro (copias firmadas por el interno). Comprobar los reingresos y causas.<br/>
+Libro Registro de traslados y desplazamientos. Examinar los asientos, cotejándolos con comunicaciones al juez competente y la constancia en los expedientes de los internos.<br/>
+Libro Registro de visitas. Comprobar que se anotan las visitas de miembros de organizaciones para defensa de los inmigrantes y del resto de personas.<br/>
+Libro Registro de correspondencia. Comprobar que está anotada la paquetería. (Observar si anotan correspondencia). Comprobar las anotaciones de paquetería devuelta por denegación de su apertura.<br/>
+Libro Registro de peticiones y quejas.- Comprobar que en las anotaciones figuran fecha, hora identificación del interno y del destinatario. Comprobar que la numeración de los impresos es consecutiva2. Comprobar si se archivan copias de los recibos de solicitud de entrevistas personales con el director.<br/>
+Comprobar tratamiento de los datos de carácter personal y de salud art.17.<br/>
+Ver plazos estancia art.21.', 0);
 
 --GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS.
 
@@ -509,10 +509,10 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 7, 'Número de salidas, diferenciadas por meses y periodo de permanencia de los internos, especificando los motivos. Cotejar con los libros y art 21', 7);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 7, 'Número de traslados: Examinar libro de traslados y desplazamientos.
-(A otros centros y de otros centros, especificando los motivos. Examinar acuerdo del juez o tribunal que autorizó el internamiento.)
-(Por comparecencias. Comprobar las constancias de fecha y hora de salida y regreso en el expediente y comunicación al juez o tribunal.)
-(Por cuestiones médicas. Comunicación inmediata al juez o tribunal. Comprobar los que se han realizado a instancia del director por ausencia del facultativo. Examinar copia de solicitud a la comisaria de la localidad las medidas tendentes a garantizar la seguridad del interno.)', 8);
+(seq_pasosGuia.nextval, 7, 'Número de traslados: Examinar libro de traslados y desplazamientos.<br/>
+A otros centros y de otros centros, especificando los motivos. Examinar acuerdo del juez o tribunal que autorizó el internamiento.<br/>
+Por comparecencias. Comprobar las constancias de fecha y hora de salida y regreso en el expediente y comunicación al juez o tribunal.<br/>
+Por cuestiones médicas. Comunicación inmediata al juez o tribunal. Comprobar los que se han realizado a instancia del director por ausencia del facultativo. Examinar copia de solicitud a la comisaria de la localidad las medidas tendentes a garantizar la seguridad del interno.', 8);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 7, 'Número de ceses de internamiento, especificando sus causas. Comprobar documentalmente. Libro de entrada y salida de internos. Examinar copia de comunicación a la autoridad judicial que acordó el internamiento. Copia de la diligencia de entrega a los funcionarios encargados de su traslado a la frontera. Resolución por la que se acuerda el cese del internamiento o copia de la orden de expulsión, devolución o regreso.', 9);
@@ -524,10 +524,10 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 7, 'Número de reingresos por no poderse llevar a cabo la expulsión, devolución o regreso. Examinar informe policial detallando las circunstancias, el parte de lesiones, en su caso, y la cuenta a la autoridad judicial. Libro registro de entradas y salidas.', 11);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 7, 'Tratamiento de los datos de carácter personal en los expedientes,. Comprobar art. 17', 12);
+(seq_pasosGuia.nextval, 7, 'Tratamiento de los datos de carácter personal en los expedientes. Comprobar art. 17.', 12);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 7, 'Información sobre derechos y obligaciones del nuevo interno. Boletín Informativo. Copia boletín examinar art. 29', 13);
+(seq_pasosGuia.nextval, 7, 'Información sobre derechos y obligaciones del nuevo interno. Boletín Informativo. Copia boletín examinar art. 29.', 13);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 7, 'Expedientes de los internos. Comprobar que están completos.',14);
@@ -568,7 +568,7 @@ insert into guia_Pasos (id, id_guia, paso, orden) values
 (seq_pasosGuia.nextval, 5, 'Relación de objetos no autorizados intervenidos a internos. Examinar documento de retirada y de entrega cuando el interno abandona el centro.', 8);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
-(seq_pasosGuia.nextval, 5, 'Custodia y depósito en caja fuerte de objetos de valor y dinero. Procedimiento. Comprobar actas art. 28', 9);
+(seq_pasosGuia.nextval, 5, 'Custodia y depósito en caja fuerte de objetos de valor y dinero. Procedimiento. Comprobar actas art. 28.', 9);
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (seq_pasosGuia.nextval, 5, 'Relación de objetos prohibidos intervenidos a visitantes. Examinar oficio de remisión a la autoridad competente.', 10);

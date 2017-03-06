@@ -23,7 +23,7 @@
 			</h:commandLink>
 				
 			<p:dataList  var="paso" value="#{guiaBean.listaPasos}"  type="unordered" styleClass="listaCebreada">
-		    	<h:outputText value="#{paso.paso}"/>
+		    	<h:outputText value="#{paso.paso}" escape="false"/>
 		    </p:dataList>
 			
 			

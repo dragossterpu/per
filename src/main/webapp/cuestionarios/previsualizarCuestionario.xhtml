@@ -18,9 +18,9 @@
 				<ui:repeat value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
 					<p:accordionPanel multiple="true">
 						<p:tab title="#{areaCuestionario.area}" rendered="#{not empty edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}">
-							<ui:repeat value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" var="preguntaArea">
+							<ui:repeat value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" var="preguntaArea" >
 								<div class="prevPregCuest">
-									<span class="fa fa-check-square-o" style="float:left;"/>&nbsp;<h:outputText value="#{preguntaArea.pregunta}"/>
+									<span class="fa fa-check-square-o" style="float:left;"/>&nbsp;<h:outputText value="#{preguntaArea.pregunta}" escape="false"/>
 								</div>
 							</ui:repeat>
 						</p:tab>
@@ -29,6 +29,7 @@
 
 				<div class="botonesFormulario">
 					<p:commandButton value="Guardar cuestionario" type="button" onclick="PF('cuestionarioDialog').show()" icon="fa fa-fw fa-save" />
+					
 					<p:button outcome="/cuestionarios/editarCuestionario" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
 
