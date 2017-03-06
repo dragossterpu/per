@@ -51,8 +51,6 @@ import lombok.Setter;
 public class EnvioCuestionarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private static final String ETIQUETA_ERROR = "mensajeerror";
-    
     private CuestionarioEnvio cuestionarioEnvio;
     
     @Autowired
@@ -141,14 +139,13 @@ public class EnvioCuestionarioBean implements Serializable {
      */
     public void enviarCuestionario() {
         try {
-            // Comprobar que el usuario no tenga más de un cuestionario sin finalizar
-            CuestionarioEnvio cuestionario = cuestionarioEnvioService
-                    .findNoFinalizadoPorCorreoEnvio(cuestionarioEnvio.getCorreoEnvio());
+            // Comprobar que el usuario no tenga otras operaciones en curso
+            boolean usuarioExiste = userService.exists(cuestionarioEnvio.getCorreoEnvio());
             // Comprobar que no existe un cuestionario enviado sin finalizar para esa inspección
             CuestionarioEnvio cuestionarioInspeccion = cuestionarioEnvioService
                     .findNoFinalizadoPorInspeccion(cuestionarioEnvio.getInspeccion());
             
-            if (cuestionario == null && cuestionarioInspeccion == null) {
+            if (usuarioExiste == Boolean.FALSE && cuestionarioInspeccion == null) {
                 String password = Utilities.getPassword();
                 System.out.println(password);
                 List<User> listaUsuariosProvisionales = userService
@@ -175,20 +172,20 @@ public class EnvioCuestionarioBean implements Serializable {
                 
             } else {
                 String textoError;
-                if (cuestionario != null) {
+                if (usuarioExiste) {
                     textoError = "El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
-                            + " ya tiene otro cuestionario abierto. Finalícelo antes de enviar otro cuestionario.";
+                            + " ya tiene otra solicitud o cuestionario en curso. Debe finalizar o anular dicha tarea antes de enviar este cuestionario.";
                     
                 } else {
                     textoError = "Existe un cuestionario enviado para la inspección "
                             + cuestionarioEnvio.getInspeccion().getNumero()
                             + " sin finalizar. Debe finalizarlo primero antes de poder enviar otro cuestionario para la misma inspección";
                 }
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, "", ETIQUETA_ERROR);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Envío abortado", textoError, null);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                    "Se ha produdico un error en el envio del cuestionario", e.getMessage(), ETIQUETA_ERROR);
+                    "Se ha produdico un error en el envio del cuestionario", e.getMessage(), null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
     }
@@ -200,7 +197,7 @@ public class EnvioCuestionarioBean implements Serializable {
     private void mostrarMensajeNoDocumentacionPrevia() {
         String mensaje = "No se puede enviar el cuestionario ya que no existe documentación previa finalizada para la inspección. "
                 + "Debe finalizar la solicitud de documentación previa antes de poder enviar el cuestionario.";
-        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "", mensaje, ETIQUETA_ERROR);
+        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
     }
     
     /**
@@ -235,7 +232,7 @@ public class EnvioCuestionarioBean implements Serializable {
             correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                    "Se ha producido un error en el envio del correo electrónico", e.getMessage(), ETIQUETA_ERROR);
+                    "Se ha producido un error en el envio del correo electrónico", e.getMessage(), null);
             regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
         }
     }

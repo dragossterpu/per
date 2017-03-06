@@ -490,9 +490,9 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
             if (userService.exists(correoDestinatario)) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Envío abortado",
-                        "No se puede crear un usuario provisional para el destinatario con correo " + correoDestinatario
-                                + ", ya existe para otra tarea en curso. Debe finalizarla o eliminarla antes de proseguir.");
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Envío abortado",
+                        "El usuario con correo " + correoDestinatario
+                                + " ya tiene otra solicitud o cuestionario en curso. Debe finalizar o anular dicha tarea antes de enviar esta solicitud.");
             } else {
                 String password = Utilities.getPassword();
                 

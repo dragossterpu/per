@@ -12,7 +12,7 @@
 		<ui:define name="content">
 		
 			<ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq envioCuestionarioBean.cuestionarioEnvio.inspeccion.equipo.jefeEquipo or p:ifGranted('ADMIN')}"/>
-            <ui:param name="esJefeInspecciones" value="#{p:ifGranted('JEFE_INSPECCIONES')}"/>
+            <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 			<ui:param name="yaEnviado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}"/>
 			<ui:param name="menuOrigen" value="#{yaEnviado ? '/cuestionarios/busquedaCuestionarios' : '/cuestionarios/busquedaModelosCuestionarios'}"/>
 			<ui:param name="yaFinalizado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion}"/>
@@ -78,11 +78,11 @@
 					<p:outputLabel id="contador"/>
 					<p:messages for="motivo" autoUpdate="true"  closable="true"/>
 					
-					<p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true"/>
 				</div>
 			
 				<div class="botonesFormulario">
-					<p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and esJefeEquipoInspeccion}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+					<p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and (esJefeEquipoInspeccion or esJefeInspecciones)}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 					<p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and not yaAnulado and (esJefeEquipoInspeccion or esJefeInspecciones)}"/>
 					<p:button outcome="#{menuOrigen}" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>

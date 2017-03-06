@@ -131,21 +131,21 @@
 					<div class="botonesFormulario">
 						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}"/>
 						<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
-						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />		
+						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="form"/>		
 					</div>					
-				</div>	
-			</h:form>	
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-				<div class="centrarBotonesDialog">
-					<p:button value="Cerrar" outcome="/provisionalSolicitud/provisionalSolicitud" />
-				</div>
-			</p:dialog>	
-                        
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <p:graphicImage value="/images/loading.gif" />
-            </p:dialog>
+				</div>		
+    			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+    				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+    				<div class="centrarBotonesDialog">
+    					<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button" />
+    				</div>
+    			</p:dialog>	
+                            
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage value="/images/loading.gif" />
+                </p:dialog>
                     	
+            </h:form>
 		</ui:define>
 	</ui:composition>
 </f:view>

@@ -151,10 +151,8 @@
 			 	<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> 
 					<div class="botonesFormulario">
 						<p:commandButton id="borrador" value="Guardar borrador" action="#{responderCuestionarioBean.guardarBorrador}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}"/>
-						<h:commandLink id="enviar" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"
-							rendered="#{not yaCumplimentado and request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}">
-							<span class="ui-CommandLink-texto">Responder</span>
-						</h:commandLink>
+                        <p:commandButton id="enviar" value="Responder" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" icon="fa fa-user-plus"
+                            rendered="#{not yaCumplimentado and request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}" update="form"/>
 					</div>
 				</p:outputPanel> 
 				
