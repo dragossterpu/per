@@ -42,7 +42,7 @@
 						<p:ajax event="select" listener="#{guiaBean.onSelectPaso}"/>	 
 				        <f:facet name="caption">Pasos</f:facet> 
 				         <p:column>
-				            <h:outputText value="#{paso.paso}" />
+				            <h:outputText value="#{paso.paso}" escape="false"/>
 				        </p:column>
 				    </p:orderList>
 				    <p:messages for="orderListPasos" autoUpdate="true"  closable="true"/>	
