@@ -110,7 +110,7 @@
 													<f:facet name="header">
 														<h:outputText value="#{column.header}" />
 													</f:facet>
-													<p:inputText id="tabla" value=""/>
+													<p:inputText id="tabla" value="#{registroTabla[column.property]}"/>
 												</p:columns>
 											</p:dataTable>
 							                <p:dataTable rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'MATRIZ')}"
@@ -146,59 +146,68 @@
 										<p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'RADIO'}">
 											<p:orderList id="orderListValoresRadio" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
 											itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
-											<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValorRadio}" update="nuevoTipoRespuestaRadio"/>	 
+											<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaRadio"/>	 
 												<f:facet name="caption">Valores</f:facet> 
 												 <p:column>
 													<h:outputText value="#{valor}" />
 												</p:column>
 												</p:orderList>
 												
-												<p:inputText id="nuevoTipoRespuestaRadio" binding="#{modificarModeloCuestionarioBean.nuevoValorRadio}" converter="#{trimConverter}" />
-												<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValorRadio}" update="orderListValoresRadio" value="Añadir valor" icon="fa fa-fw fa-plus"/>
-												<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValorRadio}" update="orderListValoresRadio" value="Eliminar valor" icon="fa fa-fw fa-minus"/>
+												<p:inputText id="nuevoTipoRespuestaRadio" binding="#{nuevoValorRadio}" converter="#{trimConverter}" />
+												<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValor(nuevoValorRadio.value, 'RADIO')}" update="orderListValoresRadio,nuevoTipoRespuestaRadio" value="Añadir valor" icon="fa fa-fw fa-plus">
+													<p:resetInput target="nuevoTipoRespuestaRadio"/>
+												</p:commandButton>
+												<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValor}" update="orderListValoresRadio" value="Eliminar valor" icon="fa fa-fw fa-minus">
+												</p:commandButton>
 												
 												<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
 										</p:panel>
 										<p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'TABLA'}">
 											<p:orderList id="orderListColumnasTabla" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
-												itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
-												<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValorTabla}" update="nuevoTipoRespuestaTabla"/>	 
+												itemValue="#{valor}" controlsLocation="left" responsive="true">	
+												<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaTabla"/>	 
 													<f:facet name="caption">Columnas</f:facet> 
 													 <p:column>
 														<h:outputText value="#{valor}" />
 													</p:column>
 													</p:orderList>
-													<h:outputText>El máximo numero de columnas permitidas es 9</h:outputText>
-													<p:inputText id="nuevoTipoRespuestaTabla" binding="#{modificarModeloCuestionarioBean.nuevoValorTabla}" converter="#{trimConverter}" />
-													<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValorTabla}" update="orderListColumnasTabla" value="Añadir columna" icon="fa fa-fw fa-plus"/>
-													<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValorTabla}" update="orderListColumnasTabla" value="Eliminar columna" icon="fa fa-fw fa-minus"/>
+													<p:outputLabel value="El máximo numero de columnas permitidas es 9"/>
+													<p:inputText id="nuevoTipoRespuestaTabla" binding="#{nuevoValorTabla}" converter="#{trimConverter}" />
+													<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValor(nuevoValorTabla.value, 'TABLA')}" update="orderListColumnasTabla,nuevoTipoRespuestaTabla" value="Añadir columna" icon="fa fa-fw fa-plus">
+														<p:resetInput target="nuevoTipoRespuestaTabla" />
+													</p:commandButton>
+													<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValor}" update="orderListColumnasTabla" value="Eliminar columna" icon="fa fa-fw fa-minus"/>
 													<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
 										</p:panel>
 										<p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'MATRIZ'}">
 											<p:orderList id="orderListColumnasMatriz" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
-											itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
+											itemValue="#{valor}" controlsLocation="left" responsive="true">	
 											<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaColumna"/>	 
 											<f:facet name="caption">Columnas</f:facet> 
 											 <p:column>
 												<h:outputText value="#{valor}" />
 											</p:column>
 											</p:orderList>
-											<h:outputText>El máximo numero de columnas permitidas es 9</h:outputText>
-											<p:inputText id="nuevoTipoRespuestaColumna" binding="#{modificarModeloCuestionarioBean.nuevoValor}" converter="#{trimConverter}" />
-											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValor}" update="orderListColumnasMatriz" value="Añadir columna" icon="fa fa-fw fa-plus"/>
+											<p:outputLabel value="El máximo numero de columnas permitidas es 9"/>
+											<p:inputText id="nuevoTipoRespuestaColumna" binding="#{valorColumna}" converter="#{trimConverter}" />
+											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValor(valorColumna.value, 'MATRIZ')}" update="orderListColumnasMatriz,nuevoTipoRespuestaColumna" value="Añadir columna" icon="fa fa-fw fa-plus">
+												<p:resetInput target="nuevoTipoRespuestaColumna"></p:resetInput>
+											</p:commandButton>
 											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValor}" update="orderListColumnasMatriz" value="Eliminar columna" icon="fa fa-fw fa-minus"/>
 											<p:separator />
 											<p:orderList id="orderListFilasMatriz" value="#{modificarModeloCuestionarioBean.listadoValoresFila}" var="valor" 
 											itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">	
-											<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValorFila}" update="nuevoTipoRespuestaFila"/>	 
+											<p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaFila"/>	 
 											<f:facet name="caption">Filas</f:facet> 
 											 <p:column>
 												<h:outputText value="#{valor}" />
 											</p:column>
 											</p:orderList>
 											
-											<p:inputText id="nuevoTipoRespuestaFila" binding="#{modificarModeloCuestionarioBean.nuevoValorFila}" converter="#{trimConverter}" />
-											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValorFila}" update="orderListFilasMatriz" value="Añadir fila" icon="fa fa-fw fa-plus"/>
+											<p:inputText id="nuevoTipoRespuestaFila" binding="#{nuevoValorFila}" converter="#{trimConverter}" />
+											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValorFila(nuevoValorFila.value)}" update="orderListFilasMatriz,nuevoTipoRespuestaFila" value="Añadir fila" icon="fa fa-fw fa-plus">
+												<p:resetInput target="nuevoTipoRespuestaFila"/>
+											</p:commandButton>
 											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValorFila}" update="orderListFilasMatriz" value="Eliminar fila" icon="fa fa-fw fa-minus"/>
 											<p:separator />
 											<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
@@ -208,8 +217,10 @@
 										<p:panel>
 											<h:outputLabel for="nombreTipoPregunta" value="Nombre (*)" />
 											<p:inputText id="nombreTipoPregunta" binding="#{nombreTipoPregunta}"/>
-											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta.value)}" value="Añadir tipo de respuesta" update="pickList"
-										    	oncomplete="PF('dialog').hide();"/>
+											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta.value)}" value="Añadir tipo de respuesta" update="pickList,personalizar,tipoPregunta,orderListValoresRadio,orderListColumnasTabla,orderListColumnasMatriz,orderListFilasMatriz"
+										    	oncomplete="PF('dialog').hide();">
+										    		<p:resetInput target="nombreTipoPregunta,tipoPregunta,orderListValoresRadio,orderListColumnasTabla,orderListColumnasMatriz,orderListFilasMatriz" />
+										    </p:commandButton>
 										</p:panel>    	
 									</p:dialog>	
 									</p:panel>
@@ -257,18 +268,19 @@
 				</p:tab>
 				<p:tab id="finalizar" title="Finalizar">
 					<p:panel header="Finalizar">
-						 <p:commandButton id="guardar" value="Guardar modelo"  action="#{modificarModeloCuestionarioBean.guardaCuestionario}" />	
+						 <p:commandButton id="guardar" value="Guardar modelo"  action="#{modificarModeloCuestionarioBean.guardaCuestionario}" rendered="#{not modificarModeloCuestionarioBean.esNuevoModelo}"/>	
+						 <p:commandButton id="guardarNuevo" value="Guardar nuevo modelo"  action="#{modificarModeloCuestionarioBean.guardaNuevoCuestionario}" rendered="#{modificarModeloCuestionarioBean.esNuevoModelo}"/>	
 					</p:panel>
 				</p:tab>
 				
 			</p:wizard>
 			
-				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+ 				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
 						<p:button value="Aceptar" outcome="/cuestionarios/modelosCuestionarios" />
 					</div>
-				</p:dialog>
+				</p:dialog> 
 			
 			
 					    

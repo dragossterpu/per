@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -36,7 +37,7 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
     }
     
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public void saveModeloCuestionarioModificado(ModeloCuestionario modeloCuestionario,
             List<AreasCuestionario> listaAreasCuestionario, List<AreasCuestionario> listaAreasEliminacionFisica) {
         modeloCuestionarioRepository.save(modeloCuestionario);
@@ -45,6 +46,7 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
         if (listaAreasEliminacionFisica.isEmpty() == Boolean.FALSE) {
             areaCuestionarioRepository.delete(listaAreasEliminacionFisica);
         }
+        
     }
     
 }
