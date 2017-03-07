@@ -60,13 +60,4 @@ public class InspeccionesService implements IInspeccionesService {
                         "%" + infoInspeccion + "%", usernameJefeEquipo);
     }
     
-    @Override
-    public List<Inspeccion> findByNumeroLike(String numeroInspeccion) {
-        return inspeccionesRepository.findByNumeroLike("%" + numeroInspeccion + "%");
-    }
-    
-    @Override
-    public List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad) {
-        return inspeccionesRepository.findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(nombreUnidad);
-    }
 }

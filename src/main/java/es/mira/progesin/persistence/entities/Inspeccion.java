@@ -41,55 +41,66 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "INSPECCIONES")
 public class Inspeccion implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_inspeccion", sequenceName = "seq_inspeccion", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inspeccion")
-	@Column(name = "ID")
-	private Long id;
-
-	@Column(name = "numero", length = 100, nullable = false)
-	private String numero;
-
-	@ManyToOne
-	@JoinColumn(name = "tipo_inspeccion")
-	private TipoInspeccion tipoInspeccion;
-
-	@ManyToOne
-	@JoinColumn(name = "id_equipo")
-	private Equipo equipo;
-
-	// @OneToOne(mappedBy = "inspeccion", fetch = FetchType.LAZY)
-	// private CuestionarioEnvio cuestionarioEnviado;
-
-	@Column(name = "nombre_unidad", length = 100)
-	private String nombreUnidad;
-
-	@Column(name = "ambito", length = 10)
-	@Enumerated(EnumType.STRING)
-	private AmbitoInspeccionEnum ambito;
-
-	@Column(name = "cuatrimestre")
-	@Enumerated(EnumType.STRING)
-	private CuatrimestreEnum cuatrimestre;
-
-	@Column(name = "anio")
-	private Integer anio;
-
-	@CreatedDate
-	@Column(name = "fechaCreacion", nullable = false)
-	private Date fechaCreacion;
-
-	@CreatedBy
-	@Column(name = "usernameCreacion", nullable = false)
-	private String usernameCreacion;
-
-	@Column(name = "fecha_finalizacion")
-	private Date fechaFinalizacion;
-
-	@Column(name = "username_finalizacion")
-	private String usernameFinalizacion;
-
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_inspeccion", sequenceName = "seq_inspeccion", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inspeccion")
+    @Column
+    private Long id;
+    
+    @Column(length = 100, nullable = false)
+    private String numero;
+    
+    @ManyToOne
+    @JoinColumn(name = "tipo_inspeccion")
+    private TipoInspeccion tipoInspeccion;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_equipo")
+    private Equipo equipo;
+    
+    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    // @JoinColumn(name = "inspeccion")
+    // private List<SolicitudDocumentacionPrevia> solicitudes;
+    //
+    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    // @JoinColumn(name = "inspeccion")
+    // private List<CuestionarioEnvio> cuestionarios;
+    
+    @Column(length = 100)
+    private String nombreUnidad;
+    
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private AmbitoInspeccionEnum ambito;
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    private CuatrimestreEnum cuatrimestre;
+    
+    @Column
+    private Integer anio;
+    
+    @CreatedDate
+    @Column(nullable = false)
+    private Date fechaAlta;
+    
+    @CreatedBy
+    @Column(nullable = false)
+    private String usernameAlta;
+    
+    @Column
+    private Date fechaBaja;
+    
+    @Column
+    private String usernameBaja;
+    
+    @Column
+    private Date fechaFinalizacion;
+    
+    @Column
+    private String usernameFinalizacion;
+    
 }

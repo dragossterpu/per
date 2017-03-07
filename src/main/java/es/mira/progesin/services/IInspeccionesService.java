@@ -27,8 +27,4 @@ public interface IInspeccionesService {
     public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
             String infoInspeccion, String usernameJefeEquipo);
     
-    List<Inspeccion> findByNumeroLike(String numeroInspeccion);
-    
-    List<Inspeccion> findByNombreUnidadLikeIgnoreCaseAndFechaFinalizacionNull(String nombreUnidad);
-    
 }
