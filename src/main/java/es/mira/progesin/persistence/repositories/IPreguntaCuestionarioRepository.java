@@ -11,7 +11,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 
 public interface IPreguntaCuestionarioRepository extends CrudRepository<PreguntasCuestionario, Long> {
     
-    List<PreguntasCuestionario> findByAreaAndFechaBajaIsNull(AreasCuestionario area);
+    List<PreguntasCuestionario> findByAreaAndFechaBajaIsNullOrderByOrdenAsc(AreasCuestionario area);
     
     @Query("select c.preguntasElegidas from CuestionarioPersonalizado c where c.id = :idCuestionarioPersonalizado")
     List<PreguntasCuestionario> findPreguntasElegidasCuestionarioPersonalizado(

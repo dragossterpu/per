@@ -51,7 +51,7 @@ public class EdicionCuestionarioBean {
         listaAreasCuestionario = areaCuestionarioRepository
                 .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
         for (AreasCuestionario area : listaAreasCuestionario) {
-            area.setPreguntas(pregunaCuestionarioRepository.findByAreaAndFechaBajaIsNull(area));
+            area.setPreguntas(pregunaCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
         }
         return "/cuestionarios/editarCuestionario";
     }
