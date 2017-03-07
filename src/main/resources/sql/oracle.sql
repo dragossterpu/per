@@ -108,14 +108,6 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','BMP','image
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PUB','application/x-mspublisher');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','PDF','application/pdf');
 
--- seccion (plantillasGC/PN), clave (nombre archivo), valor (idDocumento) 
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla común', 1);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 1', 2);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasGC','plantilla guardia civil 2', 3);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla común', 1);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 1', 4);
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('plantillasPN','plantilla policia nacional 2', 5);
-
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','PN', 'http://194.224.253.45:8080/progesin');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','GC', 'http://194.224.253.45:8080/progesin');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('URLPROGESIN','OTROS', 'http://194.224.253.45:8080/progesin');
@@ -203,18 +195,6 @@ insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nex
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,5, 'Técnico','Tec.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,5, 'Administrativo','Adminis.');
 insert into EMPLEO (id,ID_CUERPO,descripcion,NOMBRE_CORTO) values(SEQ_EMPLEO.nextval,6, 'Ejecutivo Post. Y de Telecomunicaciones','CEPyT.');
-
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
-insert into documentos_blob (id, fichero) values (seq_documentosBlob.nextval, utl_raw.cast_to_raw('C:\Program Files\PostgreSQL\9.5\data\01_PN_CIE_COMUNICACION_INS_Y_SOL.DOCUMENTACION.docx'));
-
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 1,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla común.docx');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 2,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 1.docx');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 3,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla guardia civil 2.docx');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 4,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 1.docx');
-insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','plantilla policia nacional 2.docx');
 
 insert into clase_usuario(id_clase,clase) values (seq_clase.nextval,'FCSE');
 insert into clase_usuario(id_clase,clase) values (seq_clase.nextval,'FCSE-FC');
