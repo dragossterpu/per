@@ -13,7 +13,7 @@
 		<h:form id="formGuias">		
 		
 			<div class="tituloCuestionario">
-				<h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuia}"/>
+				<h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}"/>
 			</div>
 			
 			<h:commandLink  actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}"
@@ -22,7 +22,7 @@
 			   <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
 			</h:commandLink>
 				
-			<p:dataList  var="paso" value="#{guiaPersonalizadaBean.listaPasos}"  type="ordered" styleClass="preguntasModelo">
+			<p:dataList  var="paso" value="#{guiaPersonalizadaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
 		    	<h:outputText value="#{paso.paso}"/>
 		    </p:dataList>
 			

@@ -16,14 +16,15 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
+					<p:messages autoUpdate="true"/>
 					<h:outputLabel for="nombreGuia" value="Nombre de la guia(*):" />
 						<p:inputText id="nombreGuia"
 							value="#{guiaBean.guia.nombre}"
 							converter="#{trimConverter}"
+							maxlength="255"
 							required="true"
-							requiredMessage="Introduzca un nombre para la guía"
-							maxlength="255"/>
-					<p:messages for="nombreGuia" autoUpdate="true"  closable="true"/>	
+							requiredMessage="Debe introducir un nombre"/>
+						
 					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
 					<p:selectOneMenu
 						value="#{guiaBean.guia.tipoInspeccion}"
@@ -34,29 +35,31 @@
 							itemValue="#{tipo}" />
 					</p:selectOneMenu>
 					
+					
 					<p:orderList id="orderListPasos"  value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" 
-						converter="#{guiasConverter}"	
+						converter="#{guiasConverter}"	moveBottomLabel="Último" moveTopLabel="Primero" moveDownLabel="Posterior" moveUpLabel="Anterior"
 						controlsLocation="left" responsive="true"
 						required="true"
-						requiredMessage="Debe introducir al menos una paso">	
+						requiredMessage="Debe meter">	
 						<p:ajax event="select" listener="#{guiaBean.onSelectPaso}"/>	 
 				        <f:facet name="caption">Pasos</f:facet> 
-				         <p:column>
+				         <p:column  rendered="#{empty paso.fechaBaja}">
 				            <h:outputText value="#{paso.paso}" escape="false"/>
 				        </p:column>
 				    </p:orderList>
-				    <p:messages for="orderListPasos" autoUpdate="true"  closable="true"/>	
+				   	 
 				    <p:panel id="panelPaso">  
 				    	<p:inputTextarea id="nuevoPaso"  binding="#{nuevoPaso}" maxlength="2000"
 						counter="contador" counterTemplate="Quedan {0} caracteres."
 						converter="#{trimConverter}"/>
 						<p:outputLabel id="contador"/>
-					    <p:commandButton action="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="form" 
-					    	value="Añadir paso" icon="fa fa-fw fa-plus" 
-					    	oncomplete="$('[id*=nuevoPaso]').val('')">
+					    <p:commandButton actionListener="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="orderListPasos, nuevoPaso" 
+					    	value="Añadir paso" icon="fa fa-fw fa-plus" >
+					    	<p:resetInput target="nuevoPaso"></p:resetInput>
 					    </p:commandButton>
 					    <p:commandButton actionListener="#{guiaBean.borraPaso}" update="orderListPasos" 
 					    	value="Eliminar paso" icon="fa fa-fw fa-minus"/>
+					    	
 				    </p:panel>
 				    
 				    <div class="botonesFormulario">

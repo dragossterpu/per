@@ -99,20 +99,32 @@
 					<p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion}"  width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
 						<h:outputText value="#{guia.guia.tipoInspeccion.descripcion}" />
 					</p:column>
-					<p:column headerText="Nombre" sortBy="#{guia.nombreGuia}" width="180" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
-						<h:outputText value="#{guia.nombreGuia}" />
+					<p:column headerText="Nombre" sortBy="#{guia.nombreGuiaPersonalizada}" width="180" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
+						<h:outputText value="#{guia.nombreGuiaPersonalizada}" />
 					</p:column>
 					
 					<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 						<h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaPersonalizadaBean.visualizaGuia(guia)}" />
 					</p:column>
-					
+					<p:column styleClass="botonTabla" exportable="false">
+						<p:commandButton title="Eliminar guía personalizada" icon="fa fa-trash" actionListener="#{guiaPersonalizadaBean.eliminar(guia)}" update="tablaUsuarios">
+							<p:confirm header="Eliminar uía personalizada" message="¿Está seguro que desea eliminar la guía?" icon="fa fa-warning-sign"/>
+						</p:commandButton>
+					</p:column>
 					
 					<f:facet name="footer">
 	       				 Resultado de la búsqueda: #{fn:length(guiaPersonalizadaBean.busqueda.listaGuias)} guías.
 	    			</f:facet>
 				</p:dataTable>
-			</p:outputPanel>	
+			</p:outputPanel>
+			
+			<p:confirmDialog global="true">
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+				</div>
+			</p:confirmDialog>
+				
 			</h:form>
 			
 		</ui:define>

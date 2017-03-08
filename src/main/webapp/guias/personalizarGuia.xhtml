@@ -18,15 +18,12 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					
+					<p:messages autoUpdate="true"/>
 					<my:selectManyCheckboxAll value="#{guiaBean.listaPasosSeleccionados}" >
 					        	<f:selectItems value="#{guiaBean.listaPasos}" var="paso" itemLabel="#{paso.paso}" 
 					        	itemValue="#{paso}"/>
 				    </my:selectManyCheckboxAll>
 				   
-					
-					
-				    
 				    <div class="botonesFormulario">
 						<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
 						<p:commandButton value="Guardar guia personalizada" type="button" onclick="PF('guiaDialogo').show()" icon="fa fa-fw fa-save" />	

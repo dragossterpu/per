@@ -365,18 +365,20 @@ select {
 }
 
 
-.listaCebreada .ui-datalist-data {
+.listaPaso .ui-datalist-data {
 	padding: 0;
 }
-.listaCebreada .ui-datalist-item {
+.listaPaso .ui-datalist-item {
     font-size: 14px;
     margin-bottom: 5px;
+    white-space:pre-line;
+    
 }
-.listaCebreada .ui-datalist-content {
+.listaPaso .ui-datalist-content {
 	border:none;
 }
 
-.listaCebreada  ul li:nth-child(even) {
+.listaPaso  ul li:nth-child(even) {
      background-color:#eee ; /*#f0f7ff*/
 }
 
