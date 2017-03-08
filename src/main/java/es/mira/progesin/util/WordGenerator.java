@@ -28,6 +28,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTabStop;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTabs;
@@ -191,8 +192,8 @@ public class WordGenerator {
 
 		XWPFParagraph parrafo = doc.createParagraph();
 
-		// Nombre des cuestionario
 		XWPFRun texto = parrafo.createRun();
+
 		texto.setText(guia.getNombre());
 		texto.setBold(true);
 		texto.setCapitalized(true);
@@ -211,7 +212,34 @@ public class WordGenerator {
 			texto = parrafo.createRun();
 			texto.setBold(true);
 			texto.setFontFamily(FONT_FAMILY);
-			texto.setText(paso.getPaso());
+			/* Comprobamos si hay saltos de línea */
+			String textoPaso = paso.getPaso();
+			if (textoPaso.contains("\n")) {
+				String[] nuevasLíneas = textoPaso.split("\n");
+
+				// Por cada línea hay que generar un nuevo XWPFRun insertándole el texto de la linea y un retorno de
+				// carro
+				for (int i = 0; i < nuevasLíneas.length; i++) {
+
+					String textoLinea = nuevasLíneas[i];
+					if (i == nuevasLíneas.length - 1) {
+						texto.setText(textoLinea, 0);
+						texto.addCarriageReturn();
+					}
+					else {
+						parrafo.insertNewRun(i);
+						XWPFRun newRun = parrafo.getRuns().get(i);
+						CTRPr rPr = newRun.getCTR().isSetRPr() ? newRun.getCTR().getRPr() : newRun.getCTR().addNewRPr();
+						rPr.set(texto.getCTR().getRPr());
+						newRun.setText(textoLinea);
+						newRun.addCarriageReturn();
+					}
+				}
+			}
+			else {
+				texto.setText(paso.getPaso());
+			}
+			/* Fin comprobaciones */
 			parrafo.setSpacingAfterLines(200);
 			parrafo.setSpacingBeforeLines(200);
 			parrafo.setAlignment(ParagraphAlignment.BOTH);
@@ -247,7 +275,7 @@ public class WordGenerator {
 
 		// Nombre des cuestionario
 		XWPFRun texto = parrafo.createRun();
-		texto.setText(guia.getNombreGuia());
+		texto.setText(guia.getNombreGuiaPersonalizada());
 		texto.setBold(true);
 		texto.setCapitalized(true);
 		texto.setFontSize(16);
@@ -265,7 +293,34 @@ public class WordGenerator {
 			texto = parrafo.createRun();
 			texto.setBold(true);
 			texto.setFontFamily(FONT_FAMILY);
-			texto.setText(paso.getPaso());
+			/* Comprobamos si hay saltos de línea */
+			String textoPaso = paso.getPaso();
+			if (textoPaso.contains("\n")) {
+				String[] nuevasLíneas = textoPaso.split("\n");
+
+				// Por cada línea hay que generar un nuevo XWPFRun insertándole el texto de la linea y un retorno de
+				// carro
+				for (int i = 0; i < nuevasLíneas.length; i++) {
+
+					String textoLinea = nuevasLíneas[i];
+					if (i == nuevasLíneas.length - 1) {
+						texto.setText(textoLinea, 0);
+						texto.addCarriageReturn();
+					}
+					else {
+						parrafo.insertNewRun(i);
+						XWPFRun newRun = parrafo.getRuns().get(i);
+						CTRPr rPr = newRun.getCTR().isSetRPr() ? newRun.getCTR().getRPr() : newRun.getCTR().addNewRPr();
+						rPr.set(texto.getCTR().getRPr());
+						newRun.setText(textoLinea);
+						newRun.addCarriageReturn();
+					}
+				}
+			}
+			else {
+				texto.setText(paso.getPaso());
+			}
+			/* Fin comprobaciones */
 			parrafo.setSpacingAfterLines(200);
 			parrafo.setSpacingBeforeLines(200);
 			parrafo.setAlignment(ParagraphAlignment.BOTH);
@@ -278,7 +333,7 @@ public class WordGenerator {
 
 		InputStream inputStream = new FileInputStream(f);
 		return new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
-				guia.getNombreGuia().concat(".docx"));
+				guia.getNombreGuiaPersonalizada().concat(".docx"));
 	}
 
 	/**
@@ -374,7 +429,35 @@ public class WordGenerator {
 				texto.setText(pregunta.getPregunta() + " (valores posibles: " + getValoresRadioButton(pregunta) + ")");
 			}
 			else {
-				texto.setText(pregunta.getPregunta());
+				/* Comprobamos si hay saltos de línea */
+				String textoPaso = pregunta.getPregunta();
+				if (textoPaso.contains("\n")) {
+					String[] nuevasLíneas = textoPaso.split("\n");
+
+					// Por cada línea hay que generar un nuevo XWPFRun insertándole el texto de la linea y un retorno de
+					// carro
+					for (int i = 0; i < nuevasLíneas.length; i++) {
+
+						String textoLinea = nuevasLíneas[i];
+						if (i == nuevasLíneas.length - 1) {
+							texto.setText(textoLinea, 0);
+							texto.addCarriageReturn();
+						}
+						else {
+							parrafo.insertNewRun(i);
+							XWPFRun newRun = parrafo.getRuns().get(i);
+							CTRPr rPr = newRun.getCTR().isSetRPr() ? newRun.getCTR().getRPr()
+									: newRun.getCTR().addNewRPr();
+							rPr.set(texto.getCTR().getRPr());
+							newRun.setText(textoLinea);
+							newRun.addCarriageReturn();
+						}
+					}
+				}
+				else {
+					texto.setText(pregunta.getPregunta());
+				}
+				/* Fin comprobaciones */
 			}
 			parrafo.setSpacingAfterLines(200);
 			parrafo.setSpacingBeforeLines(200);
