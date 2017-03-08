@@ -43,8 +43,8 @@ public class GuiaPersonalizada {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "nombre_guia", nullable = false, length = 100)
-	private String nombreGuia;
+	@Column(name = "nombre_guia_personalizada", nullable = false, length = 100)
+	private String nombreGuiaPersonalizada;
 
 	@CreatedDate
 	@Column(name = "fecha_creacion", nullable = false)

@@ -18,21 +18,29 @@ import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IGuiasRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
 
+/**********************************************************
+ * 
+ * Implementación de los métodos definidos en la interfaz IGuiaService
+ * 
+ * @author Ezentis
+ *
+ ***********************************************************/
+
 @Service
 public class GuiaService implements IGuiaService {
 
 	private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
 
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	IGuiasPasosRepository preguntasRepository;
+	private IGuiasPasosRepository pasosRepository;
 
 	@Autowired
-	IGuiasRepository guiaRepository;
+	private IGuiasRepository guiaRepository;
 
 	@Override
 	public List<Guia> buscarGuiaPorCriteria(GuiaBusqueda busqueda) {
@@ -81,7 +89,7 @@ public class GuiaService implements IGuiaService {
 
 	@Override
 	public List<GuiaPasos> listaPasos(Guia guia) {
-		return preguntasRepository.findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(guia);
+		return pasosRepository.findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(guia);
 
 	}
 
@@ -95,7 +103,6 @@ public class GuiaService implements IGuiaService {
 		}
 		catch (Exception ex) {
 			return null;
-
 		}
 		return devuelve;
 
@@ -108,13 +115,7 @@ public class GuiaService implements IGuiaService {
 
 	@Override
 	public boolean existePaso(GuiaPasos paso) {
-		return preguntasRepository.findPasoExistenteEnGuiasPersonalizadas(paso.getId()) != null;
-
-	}
-
-	@Override
-	public void borrarPaso(GuiaPasos paso) {
-		preguntasRepository.delete(paso);
+		return pasosRepository.findPasoExistenteEnGuiasPersonalizadas(paso.getId()) != null;
 
 	}
 

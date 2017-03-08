@@ -17,9 +17,11 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
  * 
  * Conversor para objetos orderList de PrimeFaces
  * 
+ * Convierte objetos de tipo GuiaPasos para su uso con el control orderList
  * 
+ * @author Ezentis
  * 
- */
+ *************************************/
 
 @Component("guiasConverter")
 public class GuiasConverter implements Converter {

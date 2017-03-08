@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -28,6 +29,13 @@ import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
+/*********************************************
+ * Bean de guías
+ * 
+ * @author Ezentis
+ * 
+ *******************************************/
+
 @Setter
 @Getter
 @Controller("guiaBean")
@@ -40,7 +48,7 @@ public class GuiaBean {
 
 	private GuiaBusqueda busqueda;
 
-	private GuiaPasos pasoSeleccionada;
+	private GuiaPasos pasoSeleccionado;
 
 	private List<Boolean> list;
 
@@ -58,22 +66,33 @@ public class GuiaBean {
 	private transient WordGenerator wordGenerator;
 
 	@Autowired
-	IGuiaService guiaService;
+	private IGuiaService guiaService;
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	private IRegistroActividadService regActividadService;
 
 	@Autowired
-	IGuiaPersonalizadaService guiaPersonalizadaService;
+	private IGuiaPersonalizadaService guiaPersonalizadaService;
 
-	/**
+	/*********************************************************
+	 * 
 	 * Busca las guías según los filtros introducidos en el formulario de búsqueda
-	 */
+	 * 
+	 *********************************************************/
 	public void buscarGuia() {
 
 		List<Guia> listaGuias = guiaService.buscarGuiaPorCriteria(busqueda);
 		busqueda.setListaGuias(listaGuias);
 	}
+
+	/*********************************************************
+	 * 
+	 * Visualiza la guía pasada como parámetro redirigiendo a la vista "visualizaGuía"
+	 * 
+	 * @param Guia
+	 * @return String
+	 * 
+	 *********************************************************/
 
 	public String visualizaGuia(Guia guia) {
 		this.guia = guia;
@@ -81,13 +100,23 @@ public class GuiaBean {
 		return "/guias/visualizaGuia?faces-redirect=true";
 	}
 
+	/*********************************************************
+	 * 
+	 * Limpia los valores del objeto de búsqueda
+	 * 
+	 *********************************************************/
+
 	public void limpiarBusqueda() {
 		busqueda.resetValues();
 	}
 
-	public void visualizaModelos() {
-		listaModelos = guiaService.findAll();
-	}
+	/*********************************************************
+	 * 
+	 * Inicia el proceso de creación de una nueva guía redirigiendo a la vista "editarGuia"
+	 * 
+	 * @return String
+	 * 
+	 *********************************************************/
 
 	public String nuevaGuia() {
 		alta = true;
@@ -96,12 +125,29 @@ public class GuiaBean {
 		return "/guias/editarGuia?faces-redirect=true";
 	}
 
+	/*********************************************************
+	 * 
+	 * Inicia el proceso de edición de una guía pasada como parámetro redirigiendo a la vista "editarGuia"
+	 * 
+	 * @param Guia
+	 * @return String
+	 * 
+	 *********************************************************/
+
 	public String editaGuia(Guia guia) {
 		alta = false;
 		this.guia = guia;
 		listaPasos = guiaService.listaPasos(guia);
 		return "/guias/editarGuia?faces-redirect=true";
 	}
+
+	/*********************************************************
+	 * 
+	 * Añade un nuevo paso a la guía
+	 * 
+	 * @param String
+	 * 
+	 *********************************************************/
 
 	public void aniadePaso(String pregunta) {
 		GuiaPasos nuevaPregunta = new GuiaPasos();
@@ -111,34 +157,62 @@ public class GuiaBean {
 
 	}
 
-	public void borraPaso() {
-		// List<GuiaPasos> aux = new ArrayList<>();
-		//
-		// for (GuiaPasos paso : listaPasos) {
-		// if (paso != pasoSeleccionada) {
-		// aux.add(paso);
-		// }
-		// }
-		// listaPasos = aux;
+	/*********************************************************
+	 * 
+	 * Elimina un paso de la guía.
+	 * 
+	 * En el caso de que el paso haya sido empleado en alguna guía personalizada la eliminación será lógica y se
+	 * introducirá una fecha de baja. Si no ha sido usada en ninguna guía se eliminara físicamente de la base de datos
+	 * 
+	 * 
+	 *********************************************************/
 
-		if (pasoSeleccionada.getId() != null) {
+	public void borraPaso() {
+
+		if (pasoSeleccionado.getId() != null) {
 			// La pregunta existe en base de datos
-			if (guiaService.existePaso(pasoSeleccionada)) {
+			if (guiaService.existePaso(pasoSeleccionado)) {
 				// baja lógica
-				pasoSeleccionada.setFechaBaja(new Date());
-				pasoSeleccionada.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+				int index = listaPasos.indexOf(pasoSeleccionado);
+				pasoSeleccionado.setFechaBaja(new Date());
+				pasoSeleccionado.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+				listaPasos.set(index, pasoSeleccionado);
+
 			}
 			else {// Baja física
-					// guiaService.borrarPaso(pasoSeleccionada);
-				listaPasos.remove(pasoSeleccionada);
+				listaPasos.remove(pasoSeleccionado);
 			}
+		}
+		else {
+			List<GuiaPasos> aux = new ArrayList<>();
+
+			for (GuiaPasos paso : listaPasos) {
+				if (paso != pasoSeleccionado) {
+					aux.add(paso);
+				}
+			}
+			listaPasos = aux;
 		}
 
 	}
 
+	/*********************************************************
+	 * 
+	 * Asigna a la variable "pasoSeleccionado" el valor seleccionado por el usuario en la vista
+	 * 
+	 * @param SelectEvent
+	 * 
+	 *********************************************************/
+
 	public void onSelectPaso(SelectEvent event) {
-		pasoSeleccionada = (GuiaPasos) event.getObject();
+		pasoSeleccionado = (GuiaPasos) event.getObject();
 	}
+
+	/*********************************************************
+	 * 
+	 * Inicializa el bean
+	 * 
+	 *********************************************************/
 
 	@PostConstruct
 	public void init() {
@@ -148,6 +222,14 @@ public class GuiaBean {
 			list.add(Boolean.TRUE);
 		}
 	}
+
+	/*********************************************************
+	 * 
+	 * Crea un documento Word a partir de una guía pasada como parámetro
+	 * 
+	 * @param Guia
+	 * 
+	 *********************************************************/
 
 	public void crearDocumentoWordGuia(Guia guia) {
 		try {
@@ -160,34 +242,54 @@ public class GuiaBean {
 		}
 	}
 
+	/*********************************************************
+	 * 
+	 * Almacena en base de datos la guía
+	 * 
+	 *********************************************************/
+
 	public void guardaGuia() {
-
+		boolean correcto = true; // TODO Arreglar esto o quitarlo
 		try {
+			if (correcto) {
+				guia.setPasos(ordenaPasos(listaPasos));
+				if (guiaService.guardaGuia(guia) != null) {
+					if (alta) {
+						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+								"La guía se ha creado con éxito ");
+						regActividadService.altaRegActividad(
+								"La guía '".concat(guia.getNombre().concat("' ha sido creada")),
+								TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
+					}
+					else {
+						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
+								"La guía ha sido modificada con éxito ");
+						regActividadService.altaRegActividad(
+								"La guía '".concat(guia.getNombre().concat("' ha sido modificada")),
+								TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
+					}
 
-			guia.setPasos(ordenaPasos(listaPasos));
-			if (guiaService.guardaGuia(guia) != null) {
-				if (alta) {
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-							"La guía se ha creado con éxito ");
-					regActividadService.altaRegActividad(
-							"La guía '".concat(guia.getNombre().concat("' ha sido creada")),
-							TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
 				}
-				else {
-					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
-							"La guía ha sido modificada con éxito ");
-					regActividadService.altaRegActividad(
-							"La guía '".concat(guia.getNombre().concat("' ha sido modificada")),
-							TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
-				}
-
 			}
-
+			else {
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Error",
+						"No puede dejarse en blanco nada ");
+			}
 		}
 		catch (Exception e) {
 			regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
 		}
 	}
+
+	/*********************************************************
+	 * 
+	 * Ordena los pasos de una lista pasada como parámetro almacenando el orden en los objetos GuiaPaso contenidos en la
+	 * misma
+	 *
+	 * @param List<GuiaPasos>
+	 * @return List<GuiaPasos>
+	 * 
+	 *********************************************************/
 
 	private List<GuiaPasos> ordenaPasos(List<GuiaPasos> lista) {
 		List<GuiaPasos> listaNueva = new ArrayList<>();
@@ -199,6 +301,12 @@ public class GuiaBean {
 		return listaNueva;
 	}
 
+	/*********************************************************
+	 * 
+	 * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral
+	 * 
+	 *********************************************************/
+
 	public void getFormularioBusqueda() {
 		if ("menu".equalsIgnoreCase(this.vieneDe)) {
 			limpiarBusqueda();
@@ -206,6 +314,15 @@ public class GuiaBean {
 		}
 
 	}
+
+	/*********************************************************
+	 * 
+	 * Inicia el proceso de creación de una guía personalizada y redirige a la vista de personalización
+	 *
+	 * @param Guia
+	 * @return String
+	 * 
+	 *********************************************************/
 
 	public String creaPersonalizada(Guia guia) {
 		alta = false;
@@ -216,12 +333,39 @@ public class GuiaBean {
 		return "/guias/personalizarGuia?faces-redirect=true";
 	}
 
+	/*********************************************************
+	 * 
+	 * Almacena en BDD la guía personalizada
+	 *
+	 * @param String
+	 * 
+	 *********************************************************/
+
 	public void guardarPersonalizada(String nombre) {
-		RequestContext.getCurrentInstance().execute("PF('guiaDialogo').hide()");
-		GuiaPersonalizada personalizada = new GuiaPersonalizada();
-		personalizada.setNombreGuia(nombre);
-		personalizada.setGuia(guia);
-		personalizada.setPasosElegidos(listaPasosSeleccionados);
-		guiaPersonalizadaService.save(personalizada);
+
+		try {
+			RequestContext.getCurrentInstance().execute("PF('guiaDialogo').hide()");
+			if (!listaPasosSeleccionados.isEmpty()) {
+				GuiaPersonalizada personalizada = new GuiaPersonalizada();
+				personalizada.setNombreGuiaPersonalizada(nombre);
+				personalizada.setGuia(guia);
+				personalizada.setPasosElegidos(listaPasosSeleccionados);
+				guiaPersonalizadaService.save(personalizada);
+				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
+						"Se ha guardado su guía personalizada con éxito");
+			}
+			else {
+
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"No se puede crear la guía personalizada. Al menos debe seleccionarse un paso", "");
+				FacesContext.getCurrentInstance().addMessage("message", message);
+			}
+		}
+		catch (Exception e) {
+			FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+					"Se ha producido un error al guardar la guía personalizada");
+			regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+		}
 	}
+
 }

@@ -17,6 +17,14 @@ import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
+/**********************************************************
+ * 
+ * Implementación de los métodos definidos en la interfaz IGuiaPersonalizadaService
+ * 
+ * @author Ezentis
+ *
+ ***********************************************************/
+
 @Service
 public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 
@@ -28,14 +36,14 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	IGuiaPersonalizadaRepository guiaPersonalizadaRepository;
+	private IGuiaPersonalizadaRepository guiaPersonalizadaRepository;
 
 	@Autowired
-	IGuiasPasosRepository preguntasRepository;
+	private IGuiasPasosRepository pasosRepository;
 
 	@Override
-	public void delete(GuiaPersonalizada guia) {
-		// TODO Auto-generated method stub
+	public void eliminar(GuiaPersonalizada guia) {
+		guiaPersonalizadaRepository.delete(guia);
 
 	}
 
@@ -47,7 +55,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 	@Override
 	public List<GuiaPersonalizada> buscarGuiaPorCriteria(GuiaPersonalizadaBusqueda busqueda) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(GuiaPersonalizada.class);
+		Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
 
 		if (busqueda.getFechaDesde() != null) {
 			/**
@@ -67,8 +75,8 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 		}
 
 		if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-			criteria.add(Restrictions
-					.sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre_guia", busqueda.getNombre())));
+			criteria.add(Restrictions.sqlRestriction(
+					String.format(COMPARADORSINACENTOS, "nombre_guia_personalizada", busqueda.getNombre())));
 		}
 
 		if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
@@ -77,7 +85,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 		}
 
 		if (busqueda.getTipoInspeccion() != null) {
-			criteria.add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
+			criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
 		}
 
 		criteria.addOrder(Order.desc("fechaCreacion"));
@@ -91,13 +99,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
 
 	@Override
 	public List<GuiaPasos> listaPasos(GuiaPersonalizada guia) {
-		return preguntasRepository.findPasosElegidosGuiaPersonalizada(guia.getId());
-	}
-
-	@Override
-	public List<GuiaPersonalizada> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return pasosRepository.findPasosElegidosGuiaPersonalizada(guia.getId());
 	}
 
 }
