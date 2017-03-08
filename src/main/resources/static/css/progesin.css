@@ -262,8 +262,6 @@ select {
 .prevPregCuest {
 	padding-bottom: 10px;
 	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
-	text-align: justify;
-	white-space: pre-line;
 }
 
 .respuestaCuestionario {
@@ -281,6 +279,8 @@ select {
 
 .preguntaCuestionario {
 	font-weight: bold;
+	text-align: justify;
+	white-space: pre-line;
 	
 }
 
