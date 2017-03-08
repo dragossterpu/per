@@ -262,6 +262,8 @@ select {
 .prevPregCuest {
 	padding-bottom: 10px;
 	font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
+	text-align: justify;
+	white-space: pre-line;
 }
 
 .respuestaCuestionario {
@@ -320,6 +322,7 @@ select {
 
 .preguntasModelo .ui-datalist-data {
 	padding: 0;
+	
 }
 .preguntasModelo .ui-datalist-item {
     font-size: 14px;
@@ -377,3 +380,6 @@ select {
      background-color:#eee ; /*#f0f7ff*/
 }
 
+.whitespace {
+	white-space: pre-line;
+}

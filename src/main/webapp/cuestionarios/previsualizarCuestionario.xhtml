@@ -20,7 +20,7 @@
 						<p:tab title="#{areaCuestionario.area}" rendered="#{not empty edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}">
 							<ui:repeat value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" var="preguntaArea" >
 								<div class="prevPregCuest">
-									<span class="fa fa-check-square-o" style="float:left;"/>&nbsp;<h:outputText value="#{preguntaArea.pregunta}" escape="false"/>
+									<span class="fa fa-check-square-o" style="float:left;"/>&nbsp;<h:outputText value="#{preguntaArea.pregunta}"/>
 								</div>
 							</ui:repeat>
 						</p:tab>
