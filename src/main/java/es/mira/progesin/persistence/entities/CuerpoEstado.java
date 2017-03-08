@@ -28,7 +28,7 @@ import lombok.ToString;
 
 /**
  * POJO para los Cuerpos del estado
- * @author sperezp
+ * @author Ezentis
  *
  */
 

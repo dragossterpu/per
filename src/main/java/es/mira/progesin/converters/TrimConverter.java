@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Clase para evitar los espacios en blanco en los formularios de entrada.
- * @author sperezp
+ * @author Ezentis
  *
  */
 @Component("trimConverter")

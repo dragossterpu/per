@@ -25,7 +25,7 @@ import lombok.Setter;
 
 /**
  * Bean para la administración de los cuerpos de estado
- * @author sperezp
+ * @author Ezentis
  *
  */
 @Setter

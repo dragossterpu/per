@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * @author sperezp
+ * @author Ezentis
  *
  */
 public class AlertaTest {

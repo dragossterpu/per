@@ -6,7 +6,7 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 
 /**
  * Declaración de los métodos que se usarán para la persistencia de los cuerpos de estado
- * @author sperezp
+ * @author Ezentis
  *
  */
 public interface ICuerpoEstadoService {
