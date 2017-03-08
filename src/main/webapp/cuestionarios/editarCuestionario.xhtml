@@ -35,9 +35,7 @@
 				</p:accordionPanel>
 				
 				<div class="botonesFormulario">
-					<h:commandLink title="Previsualizar formulario" update="message" styleClass="fa fa-search ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{edicionCuestionarioBean.previsualizarFormulario}" rendered="#{esJefeInspeccionesOEquipo}">
-		            	<span class="ui-CommandLink-texto">Previsualizar formulario</span>
-		            </h:commandLink>
+                    <p:commandButton value="Previsualizar formulario" update="message"  icon="fa fa-search" action="#{edicionCuestionarioBean.previsualizarFormulario}" rendered="#{esJefeInspeccionesOEquipo}"/>
 					
 					<p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
 					<p:commandButton value="Limpiar" update="form" process="@this" icon="fa fa-fw fa-eraser" rendered="#{esJefeInspeccionesOEquipo}">

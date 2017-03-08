@@ -242,7 +242,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
             listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
             solicitudDocumentacionPrevia = solicitud;
-            return "/solicitudesPrevia/vistaSolicitud";
+            return "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
             return null;

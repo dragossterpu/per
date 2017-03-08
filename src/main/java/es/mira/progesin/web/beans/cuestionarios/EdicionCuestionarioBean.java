@@ -53,7 +53,7 @@ public class EdicionCuestionarioBean {
         for (AreasCuestionario area : listaAreasCuestionario) {
             area.setPreguntas(pregunaCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
         }
-        return "/cuestionarios/editarCuestionario";
+        return "/cuestionarios/editarCuestionario?faces-redirect=true";
     }
     
     public String nuevoModeloCuestionario() {
@@ -72,7 +72,7 @@ public class EdicionCuestionarioBean {
             cont++;
         }
         if (hayPreguntasSeleccionadas) {
-            page = "/cuestionarios/previsualizarCuestionario";
+            page = "/cuestionarios/previsualizarCuestionario?faces-redirect=true";
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Debe seleccionar al menos una pregunta", "");

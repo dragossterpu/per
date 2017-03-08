@@ -115,7 +115,7 @@ public class ModificarModeloCuestionarioBean {
         listadoValoresNuevaRespuesta = new ArrayList<>();
         listadoValoresFila = new ArrayList<>();
         
-        return "/cuestionarios/modificarModeloCuestionario";
+        return "/cuestionarios/modificarModeloCuestionario?faces-redirect=true";
     }
     
     public String nuevoModelo() {
@@ -134,7 +134,7 @@ public class ModificarModeloCuestionarioBean {
         listadoValoresNuevaRespuesta = new ArrayList<>();
         listadoValoresFila = new ArrayList<>();
         
-        return "/cuestionarios/modificarModeloCuestionario";
+        return "/cuestionarios/modificarModeloCuestionario?faces-redirect=true";
     }
     
     public void aniadeArea(String nombreArea) {
