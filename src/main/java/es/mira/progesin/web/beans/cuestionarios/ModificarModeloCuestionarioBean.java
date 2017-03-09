@@ -98,13 +98,15 @@ public class ModificarModeloCuestionarioBean {
     public String editarModelo(ModeloCuestionario modeloCuestionario) {
         this.esNuevoModelo = false;
         this.modeloCuestionario = modeloCuestionario;
+        // listaAreasCuestionario = areaCuestionarioRepository
+        // .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
+        // for (AreasCuestionario area : listaAreasCuestionario) {
+        // area.setPreguntas(preguntasCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
+        // }
         listaAreasCuestionario = areaCuestionarioRepository
-                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
-        for (AreasCuestionario area : listaAreasCuestionario) {
-            area.setPreguntas(preguntasCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
-        }
+                .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
         listaAreasEliminacionFisica = new ArrayList<>();
-        listaAreasEliminacionFisica.addAll(listaAreasCuestionario);
+        // listaAreasEliminacionFisica.addAll(listaAreasCuestionario);
         listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
                 .findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
         listaTipoPreguntasFinal = new ArrayList<>();
@@ -114,8 +116,9 @@ public class ModificarModeloCuestionarioBean {
         listaTiposPersonalizables = Arrays.asList(TiposRespuestasPersonalizables.values());
         listadoValoresNuevaRespuesta = new ArrayList<>();
         listadoValoresFila = new ArrayList<>();
+        tipoPersonalizado = "";
         
-        return "/cuestionarios/modificarModeloCuestionario?faces-redirect=true";
+        return "/cuestionarios/modificarModeloCuestionario";
     }
     
     public String nuevoModelo() {
@@ -133,8 +136,9 @@ public class ModificarModeloCuestionarioBean {
         
         listadoValoresNuevaRespuesta = new ArrayList<>();
         listadoValoresFila = new ArrayList<>();
+        tipoPersonalizado = "";
         
-        return "/cuestionarios/modificarModeloCuestionario?faces-redirect=true";
+        return "/cuestionarios/modificarModeloCuestionario";
     }
     
     public void aniadeArea(String nombreArea) {
@@ -144,6 +148,7 @@ public class ModificarModeloCuestionarioBean {
             areaAux.setIdCuestionario(modeloCuestionario.getId());
             areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
             listaAreasCuestionario.add(areaAux);
+            modeloCuestionario.setAreas(listaAreasCuestionario);
         }
     }
     
@@ -154,6 +159,8 @@ public class ModificarModeloCuestionarioBean {
     public void borraArea() {
         if (areaSelec != null) {
             if (areaSelec.getId() != null) {
+                // Comprobamos si el área está siendo usada en algún
+                // cuestionario personalizado
                 AreasCuestionario areaUsada = areaCuestionarioRepository
                         .findAreaExistenteEnCuestionariosPersonalizados(areaSelec.getId());
                 if (areaUsada != null) {
@@ -164,19 +171,22 @@ public class ModificarModeloCuestionarioBean {
                     listaAreasCuestionario.set(index, areaSelec);
                 } else {
                     // baja física
+                    listaAreasEliminacionFisica.add(areaSelec);
                     listaAreasCuestionario.remove(areaSelec);
                 }
             } else {
                 // Es un area que acaba de añadir el usuario
                 borraAreaNueva(listaAreasCuestionario, areaSelec);
             }
+            modeloCuestionario.setAreas(listaAreasCuestionario);
         }
     }
     
     /**
-     * Borra del listado de preguntas la nueva pregunta introducida en el modelo
-     * @param listado
-     * @param pregunta
+     * Borra del listado de áreas la nueva área introducida en el modelo a través de la pantalla de edición
+     * 
+     * @param listado Listado de áreas actual
+     * @param area El área a eliminar del listado
      */
     private void borraAreaNueva(List<AreasCuestionario> listado, AreasCuestionario area) {
         boolean noEncontrada = true;
@@ -198,6 +208,9 @@ public class ModificarModeloCuestionarioBean {
             List<PreguntasCuestionario> listado = area.getPreguntas();
             listado.add(preguntaAux);
             area.setPreguntas(listado);
+        } else {
+            String textoError = "Debe escribir un texto para la pregunta y seleccionar un tipo de respuesta";
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, null, null);
         }
     }
     
@@ -234,9 +247,11 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Borra del listado de preguntas la nueva pregunta introducida en el modelo
-     * @param listado
-     * @param pregunta
+     * Borra del listado de preguntas la nueva pregunta introducida en el modelo a través de la pantalla de edición del
+     * modelo
+     * 
+     * @param listado Listado de preguntas actual
+     * @param pregunta Pregunta a eliminar del listado
      */
     private void borraPreguntaNueva(List<PreguntasCuestionario> listado, PreguntasCuestionario pregunta) {
         boolean noEncontrada = true;
@@ -251,35 +266,33 @@ public class ModificarModeloCuestionarioBean {
     
     public String onFlowProcess(FlowEvent event) {
         boolean correcto = true;
-        if ("areas".equals(event.getNewStep())) {
-            limpiarCuestionario();
+        String textoError = "";
+        if ("tipoRespuestas".equals(event.getNewStep()) && listaAreasCuestionario.isEmpty()) {
+            correcto = false;
+            textoError = "Debe añadir al menos un área para poder pasar de pantalla";
         }
-        if ("tipoRespuestas".equals(event.getNewStep())) {
-            if (listaAreasCuestionario.isEmpty()) {
-                correcto = false;
-            }
-            limpiarCuestionario();
-        }
+        
         if ("preguntas".equals(event.getNewStep())) {
             listaAreasCuestionario = ordenarAreas(listaAreasCuestionario);
-            limpiarCuestionario();
         }
+        
         if ("finalizar".equals(event.getNewStep())) {
             for (AreasCuestionario area : listaAreasCuestionario) {
                 List<PreguntasCuestionario> lista = area.getPreguntas();
                 if (lista.isEmpty()) {
                     correcto = false;
+                    textoError = "Debe asignar preguntas a todas las áreas para poder pasar a la siguiente pantalla";
                 } else {
                     lista = ordenarPreguntas(area.getPreguntas());
                     area.setPreguntas(lista);
                 }
             }
-            limpiarCuestionario();
         }
         
         if (correcto) {
             return event.getNewStep();
         } else {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, null, null);
             return event.getOldStep();
         }
     }
@@ -316,7 +329,15 @@ public class ModificarModeloCuestionarioBean {
     
     public void guardaTipoRespuesta(String nombreTipoPregunta) {
         try {
-            if (!nombreTipoPregunta.isEmpty()) {
+            String textoError = "";
+            if (nombreTipoPregunta.isEmpty()) {
+                textoError = "Introdzca el nombre de la respuesta";
+            } else if (listadoValoresNuevaRespuesta.isEmpty()) {
+                textoError = "Introduzca los valores del tipo de respuesta";
+            } else if (Constantes.TIPO_RESPUESTA_MATRIZ.equals(tipoPersonalizado) && listadoValoresFila.isEmpty()) {
+                textoError = "Introduzca los valores para las filas";
+            }
+            if (textoError.isEmpty()) {
                 String seccion = tipoPersonalizado.concat(nombreTipoPregunta);
                 List<ConfiguracionRespuestasCuestionario> tipoRespuestaNuevo = new ArrayList<>();
                 
@@ -353,7 +374,9 @@ public class ModificarModeloCuestionarioBean {
                 
                 listadoValoresNuevaRespuesta = new ArrayList<>();
                 listadoValoresFila = new ArrayList<>();
-                limpiarCuestionario();
+                tipoPersonalizado = "";
+            } else {
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, null, null);
             }
         } catch (Exception e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
@@ -365,17 +388,7 @@ public class ModificarModeloCuestionarioBean {
     public void guardaCuestionario() {
         
         try {
-            
-            // modeloCuestionarioService.saveModeloCuestionarioModificado(modeloCuestionario, listaAreasCuestionario,
-            // listaAreasEliminacionFisica);
-            // TODO: estudiar por qué dentro de la transacción no hace el delete
             modeloCuestionarioService.save(modeloCuestionario);
-            areaCuestionarioRepository.save(listaAreasCuestionario);
-            listaAreasEliminacionFisica.removeAll(listaAreasCuestionario);
-            if (listaAreasEliminacionFisica.isEmpty() == Boolean.FALSE) {
-                areaCuestionarioRepository.delete(listaAreasEliminacionFisica);
-            }
-            // fin TODO
             
             String descripcion = "Se modifica el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion());
             
@@ -426,10 +439,6 @@ public class ModificarModeloCuestionarioBean {
             listaNueva.add(pregunta);
         }
         return listaNueva;
-    }
-    
-    public void limpiarCuestionario() {
-        tipoPersonalizado = "";
     }
     
     public void onSelectTipo(SelectEvent event) {

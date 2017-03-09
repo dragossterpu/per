@@ -25,6 +25,14 @@ public interface IAreaCuestionarioService {
 
 	AreasCuestionario save(AreasCuestionario entity);
 
-	List<AreasCuestionario> findDistinctByIdCuestionario(Integer idCuestionario);
+	/**
+	 * Busca las áreas de un cuestionario ordenadas de manera ascendente por el
+	 * campo orden
+	 * 
+	 * @param idCuestionario
+	 *            Id del cuestionario del que se desea obtener las áreas
+	 * @return Lista de áreas
+	 */
+	List<AreasCuestionario> findAreasByIdCuestionarioByOrder(Integer idCuestionario);
 
 }

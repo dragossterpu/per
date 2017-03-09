@@ -382,6 +382,6 @@ select {
      background-color:#eee ; /*#f0f7ff*/
 }
 
-.whitespace {
+label {
 	white-space: pre-line;
 }

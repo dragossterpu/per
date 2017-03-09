@@ -6,7 +6,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:my="http://java.sun.com/jsf/composite/composites"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
 	<ui:composition template="../layouts/layoutInterior.xhtml">
@@ -45,19 +44,17 @@
 					</p:panel>
 				</p:tab>	
 				<p:tab id="areas" title="Áreas">
-					<p:orderList id="orderListAreas"  value="#{modificarModeloCuestionarioBean.listaAreasCuestionario}" var="area" itemValue="#{area}" 
-						converter="#{areasConverter}" controlsLocation="left" responsive="true"
-						required="true"
-						requiredMessage="Debe introducir al menos un área">		 
+					<p:orderList id="orderListAreas"  value="#{modificarModeloCuestionarioBean.listaAreasCuestionario}" var="area" itemValue="#{area}"
+						converter="#{areasConverter}" controlsLocation="left" responsive="true">		 
 				        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}"/>
 				        <f:facet name="caption">Areas</f:facet> 
-				         <p:column rendered="#{empty area.fechaBaja}">
+				         <p:column rendered="#{empty area.fechaBaja}">	
 				            <h:outputText value="#{area.area}" />
 				        </p:column>
 				    </p:orderList>
-				    <p:messages for="orderListAreas" autoUpdate="true"  closable="true"/>	
+				    
 				    <p:panel>    
-				    	<p:inputText id="idArea" binding="#{nombreArea}"  converter="#{trimConverter}" maxlength="255"/>
+				    	<p:inputText id="idArea" binding="#{nombreArea}"  converter="#{trimConverter}" maxlength="255" />
 					    <p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeArea(nombreArea.value)}" update="orderListAreas,idArea" 
 					    	value="Añadir área" icon="fa fa-fw fa-plus">
 					    	<p:resetInput target="idArea" />
@@ -134,7 +131,7 @@
 					</h:panelGrid>	
 					<p:panel  header="Nuevos tipos de respuesta">
 									<h:outputLabel for="tipoPregunta" value="Tipo a personalizar" />
-									<p:selectOneMenu value="#{modificarModeloCuestionarioBean.tipoPersonalizado}" id="tipoPregunta" converter="#{selectConverter}" >
+									<p:selectOneMenu value="#{modificarModeloCuestionarioBean.tipoPersonalizado}" id="tipoPregunta">
 										<f:selectItem itemLabel="Seleccione uno" itemValue="" />
 										<f:selectItems value="#{modificarModeloCuestionarioBean.listaTiposPersonalizables}" var="respuestas"
 											itemLabel="#{respuestas}" itemValue="#{respuestas}" />
@@ -160,7 +157,7 @@
 												<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValor}" update="orderListValoresRadio" value="Eliminar valor" icon="fa fa-fw fa-minus">
 												</p:commandButton>
 												
-												<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
+												<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialogTipoRespuesta').show();" />
 										</p:panel>
 										<p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'TABLA'}">
 											<p:orderList id="orderListColumnasTabla" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
@@ -177,7 +174,7 @@
 														<p:resetInput target="nuevoTipoRespuestaTabla" />
 													</p:commandButton>
 													<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValor}" update="orderListColumnasTabla" value="Eliminar columna" icon="fa fa-fw fa-minus"/>
-													<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
+													<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialogTipoRespuesta').show();" />
 										</p:panel>
 										<p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'MATRIZ'}">
 											<p:orderList id="orderListColumnasMatriz" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" 
@@ -210,25 +207,12 @@
 											</p:commandButton>
 											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValorFila}" update="orderListFilasMatriz" value="Eliminar fila" icon="fa fa-fw fa-minus"/>
 											<p:separator />
-											<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialog').show();" />
+											<p:commandButton value="Añadir tipo de respuesta" type="button" onclick="PF('dialogTipoRespuesta').show();" />
 										</p:panel>
-										
-									<p:dialog header="Tipo respuesta" widgetVar="dialog" modal="true">
-										<p:panel>
-											<h:outputLabel for="nombreTipoPregunta" value="Nombre (*)" />
-											<p:inputText id="nombreTipoPregunta" binding="#{nombreTipoPregunta}"/>
-											<p:commandButton actionListener="#{modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta.value)}" value="Añadir tipo de respuesta" update="pickList,personalizar,tipoPregunta,orderListValoresRadio,orderListColumnasTabla,orderListColumnasMatriz,orderListFilasMatriz"
-										    	oncomplete="PF('dialog').hide();">
-										    		<p:resetInput target="nombreTipoPregunta,tipoPregunta,orderListValoresRadio,orderListColumnasTabla,orderListColumnasMatriz,orderListFilasMatriz" />
-										    </p:commandButton>
-										</p:panel>    	
-									</p:dialog>	
 									</p:panel>
-									
-										 
 								</p:panel>			
-													
 				</p:tab>		
+				
 				<p:tab id="preguntas" title="Preguntas">
 					<p:repeat value="#{modificarModeloCuestionarioBean.listaAreasCuestionario}" var="area">
 						<p:accordionPanel activeIndex="-1" id="acordeonAreas">
@@ -238,7 +222,7 @@
 							        <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectPregunta}" />
 							        <f:facet name="caption">Preguntas</f:facet> 
 							         <p:column rendered="#{empty pregunta.fechaBaja}">
-							            <h:outputText value="#{pregunta.pregunta}" />
+							            <h:outputText value="#{pregunta.pregunta}" rendered="#{empty pregunta.fechaBaja}"/>
 							        </p:column>
 							    </p:orderList>
 								<h:panelGrid id="editarPregunta" columns="2" columnClasses="label, value"> 
@@ -273,6 +257,7 @@
 					</p:panel>
 				</p:tab>
 				
+				
 			</p:wizard>
 			
  				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
@@ -281,9 +266,19 @@
 						<p:button value="Aceptar" outcome="/cuestionarios/modelosCuestionarios" />
 					</div>
 				</p:dialog> 
-			
-			
-					    
+				
+				<p:dialog header="Guardar tipo de respuesta" widgetVar="dialogTipoRespuesta" modal="true">
+					<h:outputLabel for="nombreTipoPregunta" value="Nombre (*):" />
+					<p:inputText id="nombreTipoPregunta" binding="#{nombreTipoPregunta}" />
+					<div class="centrarBotonesDialog">
+						<p:commandButton id="botonGuardarTipoRespuesta" ajax="false" actionListener="#{modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta.value)}" 
+							value="Añadir tipo de respuesta" update="pickList,nombreTipoPregunta,personalizar,tipoPregunta,orderListValoresRadio,orderListColumnasTabla,orderListColumnasMatriz,orderListFilasMatriz">
+					    		<p:resetInput target="nombreTipoPregunta" />
+					    </p:commandButton>
+				    </div>
+				</p:dialog>
+				
+				<p:messages globalOnly="true" autoUpdate="true" showSummary="true" closable="true"/>    
 		</h:form>
 		</ui:define>
 	</ui:composition>
