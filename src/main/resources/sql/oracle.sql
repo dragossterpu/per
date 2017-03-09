@@ -123,6 +123,7 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('dominiosCorreo','dominios
 --Parametros tareas
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas','5');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas','5');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');
 
 
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, id_tipo_equipo, username_alta) values (seq_equipo.nextval, sysdate, 'silpe', 'Equipo A', 'Silvia apellido1 apellido2', 1, 'silpe');

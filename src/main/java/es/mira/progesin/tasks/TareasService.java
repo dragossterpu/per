@@ -16,46 +16,56 @@ import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
-import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
 
+/*****************************************************
+ * 
+ * Servicio para la programación de tareas automáticas
+ * 
+ * @author Ezentis
+ * 
+ ***************************************************/
+
 @Service("tareasService")
 
 public class TareasService implements ITareasService {
 
 	@Autowired
-	ICuestionarioEnvioService cuestionarioEnvioService;
+	private ICuestionarioEnvioService cuestionarioEnvioService;
 
 	@Autowired
-	ISolicitudDocumentacionService solicitudDocumentacionService;
+	private ISolicitudDocumentacionService solicitudDocumentacionService;
 
 	@Autowired
-	ICuestionarioEnvioRepository repositorio;
+	private ICorreoElectronico correoElectronico;
 
 	@Autowired
-	ICorreoElectronico correoElectronico;
+	private IRegistroActividadService registroActividad;
 
 	@Autowired
-	IRegistroActividadService registroActividad;
+	private ApplicationBean applicationBean;
 
-	@Autowired
-	ApplicationBean applicationBean;
+	private Properties tareasProperties = new Properties();
 
-	Map<String, String> parametrosTareas;
+	private Date hoy;
 
-	Properties tareasProperties = new Properties();
+	private static final String FINAL = "\n\nEste es un recordatorio automático.\nNo responda a este correo.";
 
-	Date hoy;
+	private static final String INICIO = "Se envía este correo como redordatorio\n";
 
-	String correoApoyo = "apoyo_ipss@interior.es";
+	/**********************************************
+	 * 
+	 * Se inicializa el bean. Se recuperan los parámetros de tareas y se guardan en un mapa
+	 * 
+	 ********************************************/
 
 	@PostConstruct
 	private void init() {
-		parametrosTareas = applicationBean.getMapaParametros().get("tareas");
+		Map<String, String> parametrosTareas = applicationBean.getMapaParametros().get("tareas");
 
 		Iterator<Entry<String, String>> it = parametrosTareas.entrySet().iterator();
 
@@ -67,6 +77,14 @@ public class TareasService implements ITareasService {
 		hoy = new Date();
 
 	}
+
+	/**********************************************
+	 * 
+	 * Se establece la tarea que enviará los recordatorios de cumplimentación de los cuestionarios
+	 * 
+	 * La tarea se programa para todos los días de lunes a viernes a las 8 de la mañana
+	 * 
+	 ********************************************/
 
 	@Override
 	@Scheduled(cron = "0 0 8 * * MON-FRI")
@@ -83,22 +101,20 @@ public class TareasService implements ITareasService {
 				if (dias == Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"))) {
 					StringBuilder cuerpo = new StringBuilder().append("Faltan ").append(dias)
 							.append(" dia/s para la fecha límite de envío del cuestionario de la inspección ")
-							.append(cuestionario.getInspeccion().getNumero())
-							.append("\n\nEste es un recordatorio automático.\nNo responda a este correo.");
+							.append(cuestionario.getInspeccion().getNumero()).append(FINAL);
 
 					correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), "Recordatorio envío cuestionario",
 							cuerpo.toString());
 				}
 
 				if (dias == 0) {
-					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
+					StringBuilder cuerpo = new StringBuilder().append(INICIO)
 							.append("Hoy finaliza el plazo para el envío del cuestionario de la inspección número ")
-							.append(cuestionario.getInspeccion().getNumero())
-							.append("\n\nEste es un recordatorio automático.\nNo responda a este correo.");
+							.append(cuestionario.getInspeccion().getNumero()).append(FINAL);
 
-					List<String> listaDestinos = new ArrayList<String>();
+					List<String> listaDestinos = new ArrayList<>();
 					listaDestinos.add(cuestionario.getCorreoEnvio());
-					listaDestinos.add(correoApoyo);
+					listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
 
 					correoElectronico.envioCorreo(listaDestinos,
 							"Recordatorio Fin de plazo para el envío del cuestionario", cuerpo.toString());
@@ -109,6 +125,14 @@ public class TareasService implements ITareasService {
 			registroActividad.altaRegActividadError("Batch envio recordatorio", e);
 		}
 	}
+
+	/**********************************************
+	 * 
+	 * Se establece la tarea que enviará los recordatorios del envío de documentación previa
+	 * 
+	 * La tarea se programa para todos los días de lunes a viernes a las 8 de la mañana
+	 * 
+	 ********************************************/
 
 	@Override
 	@Scheduled(cron = "0 0 8 * * MON-FRI")
@@ -124,25 +148,22 @@ public class TareasService implements ITareasService {
 				int dias = (int) (milis / 86400000);
 				if (dias == Integer.parseInt(tareasProperties.getProperty("plazoDiasDocumentacion"))) {
 
-					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
-							.append("Faltan ").append(dias)
+					StringBuilder cuerpo = new StringBuilder().append("INICIO").append("Faltan ").append(dias)
 							.append(" dia/s para la fecha límite de envío de la documentación para la inspección número ")
-							.append(solicitud.getInspeccion().getNumero())
-							.append("\n\nEste es un recordatorio automático.\nNo responda a este correo.");
+							.append(solicitud.getInspeccion().getNumero()).append(FINAL);
 
 					correoElectronico.envioCorreo(solicitud.getCorreoDestinatario(),
 							"Recordatorio envío de documentación previa", cuerpo.toString());
 				}
 
 				if (dias == 0) {
-					StringBuilder cuerpo = new StringBuilder().append("Se envía este correo como redordatorio\n")
+					StringBuilder cuerpo = new StringBuilder().append("INICIO")
 							.append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
-							.append(solicitud.getInspeccion().getNumero())
-							.append("\n\nEste es un recordatorio automático.\nNo responda a este correo.");
+							.append(solicitud.getInspeccion().getNumero()).append(FINAL);
 
-					List<String> listaDestinos = new ArrayList<String>();
+					List<String> listaDestinos = new ArrayList<>();
 					listaDestinos.add(solicitud.getCorreoDestinatario());
-					listaDestinos.add(correoApoyo);
+					listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
 
 					correoElectronico.envioCorreo(listaDestinos,
 							"Recordatorio Fin de plazo para el envío de documentación previa", cuerpo.toString());

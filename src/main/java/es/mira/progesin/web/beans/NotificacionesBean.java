@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.RegistroActividad;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -42,13 +42,9 @@ public class NotificacionesBean implements Serializable {
 	@Autowired
 	transient IRegistroActividadService regActividadService;
 
-	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
+	private List<Notificacion> listaNotificaciones = new ArrayList<>();
 
 	private int numColListNotif = 4;
-
-	private final String NOMBRESECCION = "Notificaciones";
-
-	private RegistroActividad regActividad = new RegistroActividad();
 
 	private void initList() {
 		listaNotificaciones = notificacionService.findByFechaBajaIsNull();
@@ -80,11 +76,12 @@ public class NotificacionesBean implements Serializable {
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
+			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+					SeccionesEnum.NOTIFICACIONES.getDescripcion());
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+			regActividadService.altaRegActividadError(SeccionesEnum.NOTIFICACIONES.getDescripcion(), e);
 
 		}
 
