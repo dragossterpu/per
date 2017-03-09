@@ -18,6 +18,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/*****************************************
+ * 
+ * Entity creada para almacenar las notificaciones
+ * 
+ * @author Ezentis
+ * 
+ ***************************************/
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,8 +38,8 @@ import lombok.ToString;
 public class Notificacion {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_NOTIFICACIONES")
-    @SequenceGenerator(name="SEQ_NOTIFICACIONES", sequenceName="SEQ_NOTIFICACIONES", allocationSize=1) 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_NOTIFICACIONES")
+	@SequenceGenerator(name = "SEQ_NOTIFICACIONES", sequenceName = "SEQ_NOTIFICACIONES", allocationSize = 1)
 
 	@Column(name = "ID_NOTIFICACION", length = 15)
 	private Long idNotificacion;
@@ -57,5 +64,5 @@ public class Notificacion {
 
 	@Column(name = "USUARIO_BAJA")
 	private String usernameBaja;
-	
+
 }

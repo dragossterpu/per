@@ -37,10 +37,10 @@ public class NotificacionesBean implements Serializable {
 	private List<Boolean> list;
 
 	@Autowired
-	INotificacionService notificacionService;
+	transient INotificacionService notificacionService;
 
 	@Autowired
-	IRegistroActividadService regActividadService;
+	transient IRegistroActividadService regActividadService;
 
 	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
 
@@ -54,6 +54,14 @@ public class NotificacionesBean implements Serializable {
 		listaNotificaciones = notificacionService.findByFechaBajaIsNull();
 
 	}
+
+	/**********************************************************************************
+	 * 
+	 * Controla las columnas visibles en la lista de resultados del buscador
+	 * 
+	 * @param ToggleEvent
+	 * 
+	 **********************************************************************************/
 
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
@@ -72,14 +80,21 @@ public class NotificacionesBean implements Serializable {
 			listaNotificaciones.remove(notificacion);
 			String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
 			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);		
+			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
 		}
 		catch (Exception e) {
 			// Guardamos loe posibles errores en bbdd
 			regActividadService.altaRegActividadError(NOMBRESECCION, e);
+
 		}
 
 	}
+
+	/*****************************************
+	 * 
+	 * Inicializa el bean
+	 * 
+	 ***************************************/
 
 	@PostConstruct
 	public void init() {
@@ -90,5 +105,4 @@ public class NotificacionesBean implements Serializable {
 		}
 	}
 
-	
 }

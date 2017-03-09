@@ -24,6 +24,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/*****************************************
+ * 
+ * Entity creada para almacenar las alertas
+ * 
+ * @author Ezentis
+ * 
+ ***************************************/
+
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()

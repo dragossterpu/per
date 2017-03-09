@@ -16,17 +16,20 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
+/*************************************************
+ * 
  * Bean para las alertas
+ * 
  * @author EZENTIS
- */
+ *************************************************/
 @Setter
 @Getter
 @Controller("alertasBean")
@@ -35,55 +38,73 @@ public class AlertasBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
+	transient IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
 
 	@Autowired
-	IRegistroActividadService regActividad;
+	transient IRegistroActividadService regActividad;
 
-	private List<Alerta> listaAlertas = new ArrayList<Alerta>();
-
-	private final String NOMBRESECCION = "Alertas";
+	private List<Alerta> listaAlertas = new ArrayList<>();
 
 	private List<Boolean> list;
 
 	private int numColListAlert = 5;
 
-	/**
-	 * @comment Realiza una eliminación lógico de la alerta (le pone fecha de baja)
-	 * @comment La alerta seleccionada de la tabla de alertass
+	/********************************************************************************
+	 * 
+	 * Realiza una eliminación lógico de la alerta (le pone fecha de baja)
+	 * 
 	 * @param alerta
+	 * 
 	 * @author EZENTIS
-	 */
+	 *********************************************************************************/
 	public void eliminarAlertas(Alerta alerta) {
 		alerta.setFechaBaja(new Date());
 		alerta.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
 		try {
-			// alertasService.save(alerta);
 			alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
 					alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
 			listaAlertas.remove(alerta);
 			String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
 			// Guardamos la actividad en bbdd
 
-			regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), NOMBRESECCION);
+			regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+					SeccionesEnum.ALERTAS.getDescripcion());
 		}
 		catch (Exception e) {
-			// Guardamos loe posibles errores en bbdd
-			regActividad.altaRegActividadError(NOMBRESECCION, e);
+			// Guardamos los posibles errores en bbdd
+			regActividad.altaRegActividadError(SeccionesEnum.ALERTAS.getDescripcion(), e);
 		}
 
 	}
 
+	/********************************************************************************
+	 * 
+	 * Inicializa el listado de alertas para el usuario logado
+	 * 
+	 *********************************************************************************/
+
 	private void initList() {
-		// listaAlertas = alertasService.findByFechaBajaIsNull();
 		listaAlertas = alertasNotificacionesUsuarioService
 				.findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
-		// listaAlertas=alertasService.buscarAlertasUsuario(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
+
+	/**********************************************************************************
+	 * 
+	 * Controla las columnas visibles en la lista de resultados del buscador
+	 * 
+	 * @param ToggleEvent
+	 * 
+	 **********************************************************************************/
 
 	public void onToggle(ToggleEvent e) {
 		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
 	}
+
+	/********************************************************************************
+	 * 
+	 * Inicializa el bean
+	 * 
+	 *********************************************************************************/
 
 	@PostConstruct
 	public void init() {

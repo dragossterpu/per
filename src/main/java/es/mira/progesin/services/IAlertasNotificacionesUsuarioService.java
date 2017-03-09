@@ -13,6 +13,14 @@ import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 
+/*************************************************************
+ * 
+ * Interfaz para el servicio de Alertas y Notificaciones de usuario
+ * 
+ * @author Ezentis
+ * 
+ * ***********************************************************/
+
 public interface IAlertasNotificacionesUsuarioService {
     
     void delete(String user, Long id, TipoMensajeEnum tipo);
