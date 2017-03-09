@@ -50,8 +50,6 @@ public class ModificarModeloCuestionarioBean {
     
     private List<PreguntasCuestionario> listaPreguntasBajaLogica;
     
-    private List<AreasCuestionario> listaAreasEliminacionFisica;
-    
     private List<AreasCuestionario> listaAreasCuestionario;
     
     private List<String> listaTipoPreguntas;
@@ -98,15 +96,8 @@ public class ModificarModeloCuestionarioBean {
     public String editarModelo(ModeloCuestionario modeloCuestionario) {
         this.esNuevoModelo = false;
         this.modeloCuestionario = modeloCuestionario;
-        // listaAreasCuestionario = areaCuestionarioRepository
-        // .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
-        // for (AreasCuestionario area : listaAreasCuestionario) {
-        // area.setPreguntas(preguntasCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
-        // }
         listaAreasCuestionario = areaCuestionarioRepository
                 .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
-        listaAreasEliminacionFisica = new ArrayList<>();
-        // listaAreasEliminacionFisica.addAll(listaAreasCuestionario);
         listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
                 .findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
         listaTipoPreguntasFinal = new ArrayList<>();
@@ -118,7 +109,7 @@ public class ModificarModeloCuestionarioBean {
         listadoValoresFila = new ArrayList<>();
         tipoPersonalizado = "";
         
-        return "/cuestionarios/modificarModeloCuestionario";
+        return "/cuestionarios/modificarModeloCuestionario?faces-redirect=true";
     }
     
     public String nuevoModelo() {
@@ -138,7 +129,7 @@ public class ModificarModeloCuestionarioBean {
         listadoValoresFila = new ArrayList<>();
         tipoPersonalizado = "";
         
-        return "/cuestionarios/modificarModeloCuestionario";
+        return "/cuestionarios/modificarModeloCuestionario?faces-redirect=true";
     }
     
     public void aniadeArea(String nombreArea) {
@@ -171,7 +162,6 @@ public class ModificarModeloCuestionarioBean {
                     listaAreasCuestionario.set(index, areaSelec);
                 } else {
                     // baja física
-                    listaAreasEliminacionFisica.add(areaSelec);
                     listaAreasCuestionario.remove(areaSelec);
                 }
             } else {
