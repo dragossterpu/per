@@ -80,12 +80,10 @@
 				</p:dataTable>
 			</p:outputPanel>
 				</div>
-			</h:form>
-	
-			
+			</h:form>			
 		<h:form id="busquedaNotificaciones" rendered="#{rolPermitido}">	
 		<div id="notificaciones">
-		<p:outputPanel layout="block" id="panelNotificaciones" autoUpdate="true">
+		<p:outputPanel layout="block" id="panelNotificaciones" >
  				<p:outputPanel rendered="#{not empty AlertasNotificacionesUsuarioBean.listaNotificaciones}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
