@@ -34,21 +34,60 @@ import lombok.Getter;
 public class CorreoElectronico implements ICorreoElectronico {
 
 	@Autowired
-	ApplicationBean applicationBean;
+	private ApplicationBean applicationBean;
 
 	@Autowired
-	IRegistroActividadService registroActividad;
+	private IRegistroActividadService registroActividad;
+
+	/**************************************************************
+	 * 
+	 * Envío de correos electrónico sin adjuntos. La lista de destinatarios, asunto y cuerpo del mensaje se reciben como
+	 * parámetros
+	 * 
+	 * @param List<String> Lista de destinatarios
+	 * @param String Asunto del correo
+	 * @param String Cuerpo del correo
+	 * @exception CorreoException
+	 * 
+	 ************************************************************/
 
 	@Override
 	public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) throws CorreoException {
 		envioCorreoSinAdjuntos(paramDestino, null, paramAsunto, paramCuerpo);
 	}
 
+	/**************************************************************
+	 * 
+	 * Envío de correos electrónicos a una lista de destinatarios pasada como parámetros. El asunto, cuerpo del mensaje
+	 * y los documentos adjuntos se reciben como parámetros
+	 * 
+	 * @param List<String> Lista de destinatarios
+	 * @param String Asunto del correo
+	 * @param String Cuerpo del correo
+	 * @param List<File> Lista de ficheros adjuntos
+	 * @exception CorreoException
+	 * 
+	 ************************************************************/
+
 	@Override
 	public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto)
 			throws CorreoException {
 		envioCorreoAdjuntos(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto);
 	}
+
+	/**************************************************************
+	 * 
+	 * Envío de correos electrónico. El destinatario, destinatario en copia, asunto, cuerpo del mensaje y los documentos
+	 * adjuntos se reciben como parámetros.
+	 * 
+	 * @param String Destinatario
+	 * @param String Destinatario en copia
+	 * @param String Asunto del correo
+	 * @param String Cuerpo del correo
+	 * @param List<File> Lista de ficheros adjuntos
+	 * @exception CorreoException
+	 * 
+	 ************************************************************/
 
 	@Override
 	public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo,
@@ -62,6 +101,19 @@ public class CorreoElectronico implements ICorreoElectronico {
 		envioCorreoAdjuntos(lista, cc, paramAsunto, paramCuerpo, paramAdjunto);
 	}
 
+	/**************************************************************
+	 * 
+	 * Envío de correos electrónico. El destinatario, asunto, cuerpo del mensaje y los documentos adjuntos se reciben
+	 * como parámetros
+	 * 
+	 * @param String Destinatario
+	 * @param String Asunto del correo
+	 * @param String Cuerpo del correo
+	 * @param List<File> Lista de ficheros adjuntos
+	 * @exception CorreoException
+	 * 
+	 ************************************************************/
+
 	@Override
 	public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto)
 			throws CorreoException {
@@ -70,6 +122,18 @@ public class CorreoElectronico implements ICorreoElectronico {
 
 		envioCorreoAdjuntos(lista, null, paramAsunto, paramCuerpo, paramAdjunto);
 	}
+
+	/**************************************************************
+	 * 
+	 * Envío de correos electrónico sin adjuntos. El destinatario, asunto y cuerpo del mensaje se reciben como
+	 * parámetros
+	 * 
+	 * @param String Destinatario
+	 * @param String Asunto del correo
+	 * @param String Cuerpo del correo
+	 * @exception CorreoException
+	 * 
+	 ************************************************************/
 
 	@Override
 	public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) throws CorreoException {
@@ -86,7 +150,6 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * Realiza la conexión con el servidor de correo. Emplea los parámetros de conexión guardados en BDD
 	 * 
-	 * @author Ezentis
 	 *
 	 *************************************/
 
@@ -115,7 +178,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * envioCorreoSinAdjuntos
 	 * 
-	 * Realiza el envío de correo electrónico asin adjuntos.
+	 * Realiza el envío de correo electrónico sin adjuntos.
 	 * 
 	 * @author Ezentis
 	 * @param List<String> Destinatarios de correo
