@@ -11,7 +11,7 @@ import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 
 /**
  * Implementación de los métodos definidos en la interfaz ICuerpoEstadoService
- * @author sperezp
+ * @author Ezentis
  *
  */
 @Service

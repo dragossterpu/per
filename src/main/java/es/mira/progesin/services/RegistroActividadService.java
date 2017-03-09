@@ -23,54 +23,48 @@ import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 import lombok.extern.slf4j.Slf4j;
 
+/****************************************************
+ * 
+ * Implementación del servicio de Registro de Actividad
+ * 
+ * @author Ezentis
+ *
+ ****************************************************/
+
 @Slf4j
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
 
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Autowired
-	IRegActividadRepository regActividadRepository;
+	private IRegActividadRepository regActividadRepository;
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Override
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		regActividadRepository.delete(id);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void deleteAll() {
-		regActividadRepository.deleteAll();
-	}
-
-	@Override
-	public boolean exists(Integer id) {
-		return regActividadRepository.exists(id);
-	}
-
-	@Override
-	public Iterable<RegistroActividad> findAll() {
-		return regActividadRepository.findAll();
-	}
-
-	public Iterable<RegistroActividad> findAll(Iterable<Integer> ids) {
-		return regActividadRepository.findAll(ids);
-	}
-
-	@Override
-	public RegistroActividad findOne(Integer id) {
-		return regActividadRepository.findOne(id);
-	}
+	/*********************************************
+	 * 
+	 * Guarda en base de datos el registro de actividad recibido como parámetro
+	 * 
+	 * @param RegistroActividad
+	 * 
+	 *********************************************/
 
 	@Override
 	@Transactional(readOnly = false)
 	public RegistroActividad save(RegistroActividad entity) {
 		return regActividadRepository.save(entity);
 	}
+
+	/*********************************************
+	 * 
+	 * Busca en base de datos según los criterios indicados en un objeto RegActividadBusqueda recibido como parámetro
+	 * 
+	 * @param RegActividadBusqueda
+	 * @return List<RegistroActividad>
+	 * 
+	 *********************************************/
 
 	@Override
 	public List<RegistroActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda) {
@@ -118,6 +112,16 @@ public class RegistroActividadService implements IRegistroActividadService {
 		return listaRegActividad;
 	}
 
+	/*********************************************
+	 * 
+	 * Graba en el registro de actividad un error del que se reciben como parámetro la sección y la excepción lanzada.
+	 * De la excepción posteriormente se grabará el stacktrace
+	 * 
+	 * @param String
+	 * @param Exception
+	 * 
+	 *********************************************/
+
 	@Override
 	public void altaRegActividadError(String nombreSeccion, Exception e) {
 		try {
@@ -132,9 +136,20 @@ public class RegistroActividadService implements IRegistroActividadService {
 		}
 		catch (Exception e1) {
 			log.error(e1.getMessage());
+
 		}
 	}
 
+	/*********************************************
+	 * 
+	 * Graba en el registro de actividad una acción de la que quiere guardarse traza. Se reciben como parámetro la
+	 * sección, el tipo de registro y la descripción.
+	 * 
+	 * @param String descripcion
+	 * @param String tipoReg
+	 * @param String seccion
+	 * 
+	 *********************************************/
 	@Override
 	public void altaRegActividad(String descripcion, String tipoReg, String seccion) {
 		try {
@@ -158,10 +173,28 @@ public class RegistroActividadService implements IRegistroActividadService {
 
 	}
 
+	/****************************************************
+	 * 
+	 * Devuelve una lista de nombre de seccion cuyo nombreSeccion incluya la cadena recibida como parámetro
+	 * 
+	 * @param info
+	 * @return List<String>
+	 * 
+	 ****************************************************/
+
 	@Override
 	public List<String> buscarPorNombreSeccion(String infoSeccion) {
 		return regActividadRepository.buscarPorNombreSeccion("%" + infoSeccion + "%");
 	}
+
+	/****************************************************
+	 * 
+	 * Devuelve una lista de nombres de usuario cuyo nombre incluya la cadena recibida como parámetro
+	 * 
+	 * @param info
+	 * @return List<String>
+	 * 
+	 ****************************************************/
 
 	@Override
 	public List<String> buscarPorUsuarioRegistro(String infoUsuario) {

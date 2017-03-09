@@ -20,94 +20,145 @@ import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Bean para la gestión del registro de actividad. Búsqueda de registro..
+/****************************************************************
+ * 
+ * Bean para la gestión del registro de actividad.
  * 
  * @author Ezentis
  *
- */
+ ****************************************************************/
 
 @Setter
 @Getter
 @Controller("regActividadBean")
 @Scope("session")
 public class RegActividadBean implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    
-    private List<RegistroActividad> listaRegActividad;
-    
-    private final String NOMBRESECCION = "Registros de actividad";
-    
-    private List<Boolean> list;
-    
-    private RegistroActividad regActividad;
-    
-    private RegistroActividad error;
-    
-    private Integer numColListRegActividad = 5;
-    
-    private RegActividadBusqueda regActividadBusqueda;
-    
-    private String vieneDe;
-    
-    @Autowired
-    IRegActividadRepository regActividadRepository;
-    
-    @Autowired
-    IRegistroActividadService regActividadService;
-    
-    @Autowired
-    ApplicationBean applicationBean;
-    
-    public void buscarRegActividad() {
-        List<RegistroActividad> listaRegActividad = regActividadService
-                .buscarRegActividadCriteria(regActividadBusqueda);
-        regActividadBusqueda.setListaRegActividad(listaRegActividad);
-    }
-    
-    public void onToggle(ToggleEvent e) {
-        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-    }
-    
-    public void getFormularioRegActividad() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-        }
-        
-    }
-    
-    public void limpiarBusqueda() {
-        regActividadBusqueda.resetValues();
-    }
-    
-    @PostConstruct
-    public void init() {
-        regActividadBusqueda = new RegActividadBusqueda();
-        list = new ArrayList<>();
-        for (int i = 0; i <= numColListRegActividad; i++) {
-            list.add(Boolean.TRUE);
-        }
-    }
-    
-    public List<String> autocompletarSeccion(String infoSeccion) {
-        return regActividadService.buscarPorNombreSeccion("%" + infoSeccion + "%");
-    }
-    
-    public List<String> autocompletarUsuario(String infoUsuario) {
-        return regActividadService.buscarPorUsuarioRegistro("%" + infoUsuario + "%");
-    }
-    
-    public void setSelected(RegistroActividad selected) {
-        this.regActividad = selected;
-    }
-    
-    public void onRowSelect(SelectEvent event) {
-        error = new RegistroActividad();
-        error = (RegistroActividad) event.getObject();
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('dlg').show();");
-        
-    }
+
+	private static final long serialVersionUID = 1L;
+
+	private List<Boolean> list;
+
+	private RegistroActividad error;
+
+	private Integer numColListRegActividad = 5;
+
+	private RegActividadBusqueda regActividadBusqueda;
+
+	private String vieneDe;
+
+	@Autowired
+	transient IRegActividadRepository regActividadRepository;
+
+	@Autowired
+	transient IRegistroActividadService regActividadService;
+
+	@Autowired
+	transient ApplicationBean applicationBean;
+
+	/**********************************************
+	 * 
+	 * Busca en el registro de actividad según los criterios elegidos por el usuario en la vista y carga los resultados
+	 * en una lista para su visualización
+	 * 
+	 ********************************************/
+
+	public void buscarRegActividad() {
+		List<RegistroActividad> listaRegActividad = regActividadService
+				.buscarRegActividadCriteria(regActividadBusqueda);
+		regActividadBusqueda.setListaRegActividad(listaRegActividad);
+	}
+
+	/**********************************************************************************
+	 * 
+	 * Controla las columnas visibles en la lista de resultados del buscador
+	 * 
+	 * @param ToggleEvent
+	 * 
+	 **********************************************************************************/
+
+	public void onToggle(ToggleEvent e) {
+		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+	}
+
+	/**********************************************************************************
+	 * 
+	 * Limpia los parámetros de búsqueda y resultado si se accede a la página desde el menú lateral
+	 * 
+	 * 
+	 **********************************************************************************/
+
+	public void getFormularioRegActividad() {
+		if ("menu".equalsIgnoreCase(this.vieneDe)) {
+			limpiarBusqueda();
+			this.vieneDe = null;
+		}
+
+	}
+
+	/**********************************************************************************
+	 * 
+	 * Limpia los parámetros de búsqueda y el resultado
+	 * 
+	 **********************************************************************************/
+
+	public void limpiarBusqueda() {
+		regActividadBusqueda.resetValues();
+	}
+
+	/**********************************************************************************
+	 * 
+	 * Inicializa el bean
+	 * 
+	 **********************************************************************************/
+	@PostConstruct
+	public void init() {
+		regActividadBusqueda = new RegActividadBusqueda();
+		list = new ArrayList<>();
+		for (int i = 0; i <= numColListRegActividad; i++) {
+			list.add(Boolean.TRUE);
+		}
+	}
+
+	/***********************************************************************************
+	 * 
+	 * Devuelve una lista con las secciones cuyo nombre contenga la cadena de texto que se recibe como parámetro
+	 * 
+	 * @param String
+	 * @return List<String>
+	 * 
+	 ***********************************************************************************/
+
+	public List<String> autocompletarSeccion(String infoSeccion) {
+		return regActividadService.buscarPorNombreSeccion("%" + infoSeccion + "%");
+	}
+
+	/***********************************************************************************
+	 * 
+	 * Devuelve una lista con las nombre de usuario que contengan la cadena de texto que se recibe como parámetro
+	 * 
+	 * @param String
+	 * @return List<String>
+	 * 
+	 ***********************************************************************************/
+
+	public List<String> autocompletarUsuario(String infoUsuario) {
+		return regActividadService.buscarPorUsuarioRegistro("%" + infoUsuario + "%");
+	}
+
+	/***********************************************************************************
+	 * 
+	 * Guarda el registro de actividad seleccionado por el usuario en la vista en una variable para que se muestre en un
+	 * dialog
+	 * 
+	 * @param SelectEvent
+	 * 
+	 ***********************************************************************************/
+
+	public void onRowSelect(SelectEvent event) {
+		error = new RegistroActividad();
+		error = (RegistroActividad) event.getObject();
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('dlg').show();");
+
+	}
 }

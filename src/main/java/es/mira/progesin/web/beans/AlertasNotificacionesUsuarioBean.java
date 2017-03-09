@@ -45,11 +45,11 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
 	@Autowired
 	private IRegistroActividadService regActividad;
 
-	private List<Alerta> listaAlertas = new ArrayList<Alerta>();
+	private List<Alerta> listaAlertas = new ArrayList<>();
 
 	private Page<AlertasNotificacionesUsuario> pageAlertas;
 
-	private List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
+	private List<Notificacion> listaNotificaciones = new ArrayList<>();
 
 	private Page<AlertasNotificacionesUsuario> pageNotificaciones;
 
