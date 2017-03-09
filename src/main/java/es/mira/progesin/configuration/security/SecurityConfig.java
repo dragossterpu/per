@@ -14,49 +14,56 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.mira.progesin.services.LoginService;
 
+/**
+ * Controlador de las operaciones relacionadas con el login del usuario. Login, invalid login, recuperar contraseña,
+ * envío de correo, acceso y logout.
+ * 
+ * @author EZENTIS
+ */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private LoginService loginService;
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsServiceBean());
-		auth.authenticationProvider(authenticationProvider());
-		// auth.inMemoryAuthentication()
-		// .withUser("user").password("password").roles("USER");
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsServiceBean());
-		authenticationProvider.setPasswordEncoder(passwordEncoder());
-		return authenticationProvider;
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// http.userDetailsService(userDetailsServiceBean());
-		// http.headers().frameOptions().sameOrigin();
-		http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
-				.permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
-				// .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
-				.antMatchers("/user*").hasAnyRole().anyRequest().authenticated().and().formLogin().loginPage("/login")
-				.loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml", true).failureUrl("/login").and()
-				.logout().logoutUrl("/logout").logoutSuccessUrl("/login");
-
-	}
-
-	@Override
-	public UserDetailsService userDetailsServiceBean() {
-		return loginService;
-	}
-
+    @Autowired
+    private LoginService loginService;
+    
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsServiceBean());
+        auth.authenticationProvider(authenticationProvider());
+        // auth.inMemoryAuthentication()
+        // .withUser("user").password("password").roles("USER");
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsServiceBean());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+    
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // http.userDetailsService(userDetailsServiceBean());
+        // http.headers().frameOptions().sameOrigin();
+        http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
+                .permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
+                // .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
+                .antMatchers("/user*").hasAnyRole().anyRequest().authenticated().and().formLogin().loginPage("/login")
+                .loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml", true).failureUrl("/login").and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+        
+    }
+    
+    @Override
+    public UserDetailsService userDetailsServiceBean() {
+        return loginService;
+    }
+    
 }

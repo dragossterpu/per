@@ -24,10 +24,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para la administración de los cuerpos de estado
+ * Bean para la administración de los cuerpos de estado. Nuevo cuerpo de estado, modificar cuerpo de estado, y eliminar
+ * cuerpo de estado.
+ * 
  * @author Ezentis
  *
  */
+
 @Setter
 @Getter
 @Controller("cuerposEstadoBean")

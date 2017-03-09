@@ -23,6 +23,14 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador para la gestión de los tipos de equipos de inspección. Alta de equipo, modificar equipo, eliminación de
+ * equipo y búsqueda de equipo.
+ * 
+ * @author Ezentis
+ *
+ */
+
 @Setter
 @Getter
 @Controller("tipoEquipoBean")

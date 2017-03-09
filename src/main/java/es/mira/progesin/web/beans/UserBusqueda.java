@@ -12,49 +12,54 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador de las operaciones relacionadas con la búsqueda de usuarios. Reseteo de valores de búsqueda.
+ * 
+ * @author EZENTIS
+ */
 @Setter
 @Getter
 public class UserBusqueda implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private Date fechaDesde;
-
-	private Date fechaHasta;
-
-	private String username;
-
-	private String nombre;
-
-	private String apellido1;
-
-	private String apellido2;
-
-	private RoleEnum role;
-
-	private EstadoEnum estado;
-
-	private CuerpoEstado cuerpoEstado;
-
-	private PuestoTrabajo puestoTrabajo;
-
-	private List<User> listaUsuarios;
-
-	/**
-	 * Resetea los valores del formulario de búsqueda de usuarios
-	 */
-	public void resetValues() {
-		this.fechaDesde = null;
-		this.fechaHasta = null;
-		this.username = null;
-		this.nombre = null;
-		this.apellido1 = null;
-		this.apellido2 = null;
-		this.role = null;
-		this.cuerpoEstado = null;
-		this.puestoTrabajo = null;
-		this.listaUsuarios = null;
-		this.estado = null;
-	}
-
+    
+    private static final long serialVersionUID = 1L;
+    
+    private Date fechaDesde;
+    
+    private Date fechaHasta;
+    
+    private String username;
+    
+    private String nombre;
+    
+    private String apellido1;
+    
+    private String apellido2;
+    
+    private RoleEnum role;
+    
+    private EstadoEnum estado;
+    
+    private CuerpoEstado cuerpoEstado;
+    
+    private PuestoTrabajo puestoTrabajo;
+    
+    private List<User> listaUsuarios;
+    
+    /**
+     * Resetea los valores del formulario de búsqueda de usuarios
+     */
+    public void resetValues() {
+        this.fechaDesde = null;
+        this.fechaHasta = null;
+        this.username = null;
+        this.nombre = null;
+        this.apellido1 = null;
+        this.apellido2 = null;
+        this.role = null;
+        this.cuerpoEstado = null;
+        this.puestoTrabajo = null;
+        this.listaUsuarios = null;
+        this.estado = null;
+    }
+    
 }

@@ -42,6 +42,13 @@ import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador de las operaciones relacionadas con la gestión de usuarios. Alta de usuario, modificación de usuario,
+ * eliminación de usuario, búsqueda de usuario, búsqueda de empleo y restaurar clave.
+ * 
+ * @author EZENTIS
+ */
+
 @Setter
 @Getter
 @Controller("userBean")

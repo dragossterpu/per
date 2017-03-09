@@ -29,7 +29,8 @@ import lombok.Setter;
 
 /**
  * Controlador de las operaciones relacionadas con los tipos de documentación necesarios para las solicitudes de
- * documentación previas al envio de cuestionarios.
+ * documentación previas al envio de cuestionarios. Nuevo tipo de documentación, modificar tipo de documentación,
+ * eliminar el tipo de documentación, búsqueda de tipo de documentación
  * 
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
