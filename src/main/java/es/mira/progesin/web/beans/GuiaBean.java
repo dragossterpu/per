@@ -54,16 +54,16 @@ public class GuiaBean {
 
 	private List<GuiaPasos> listaPasos;
 
+	private List<GuiaPasos> listaPasosGrabar;
+
 	private List<GuiaPasos> listaPasosSeleccionados;
 
-	private List<Guia> listaModelos;
-
-	private transient StreamedContent file;
+	private StreamedContent file;
 
 	boolean alta = false;
 
 	@Autowired
-	private transient WordGenerator wordGenerator;
+	private WordGenerator wordGenerator;
 
 	@Autowired
 	private IGuiaService guiaService;
@@ -122,6 +122,7 @@ public class GuiaBean {
 		alta = true;
 		this.guia = new Guia();
 		listaPasos = new ArrayList<>();
+		listaPasosGrabar = new ArrayList<>();
 		return "/guias/editarGuia?faces-redirect=true";
 	}
 
@@ -138,6 +139,7 @@ public class GuiaBean {
 		alta = false;
 		this.guia = guia;
 		listaPasos = guiaService.listaPasos(guia);
+		listaPasosGrabar = guiaService.listaPasos(guia);
 		return "/guias/editarGuia?faces-redirect=true";
 	}
 
@@ -154,7 +156,7 @@ public class GuiaBean {
 		nuevaPregunta.setPaso(pregunta);
 		nuevaPregunta.setIdGuia(guia);
 		listaPasos.add(nuevaPregunta);
-
+		listaPasosGrabar.add(nuevaPregunta);
 	}
 
 	/*********************************************************
@@ -176,11 +178,12 @@ public class GuiaBean {
 				int index = listaPasos.indexOf(pasoSeleccionado);
 				pasoSeleccionado.setFechaBaja(new Date());
 				pasoSeleccionado.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-				listaPasos.set(index, pasoSeleccionado);
-
+				listaPasosGrabar.set(index, pasoSeleccionado);
+				listaPasos.remove(pasoSeleccionado);
 			}
 			else {// Baja física
 				listaPasos.remove(pasoSeleccionado);
+				listaPasosGrabar.remove(pasoSeleccionado);
 			}
 		}
 		else {
@@ -192,6 +195,7 @@ public class GuiaBean {
 				}
 			}
 			listaPasos = aux;
+			listaPasosGrabar = aux;
 		}
 
 	}
@@ -244,37 +248,59 @@ public class GuiaBean {
 
 	/*********************************************************
 	 * 
-	 * Almacena en base de datos la guía
+	 * Comprueba que el formulario está relleno. En caso afirmativo se grabará la guía en base de datos. En caso
+	 * contrario se muestra un mensaje de error
 	 * 
 	 *********************************************************/
 
 	public void guardaGuia() {
-		boolean correcto = true; // TODO Arreglar esto o quitarlo
-		try {
-			if (correcto) {
-				guia.setPasos(ordenaPasos(listaPasos));
-				if (guiaService.guardaGuia(guia) != null) {
-					if (alta) {
-						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-								"La guía se ha creado con éxito ");
-						regActividadService.altaRegActividad(
-								"La guía '".concat(guia.getNombre().concat("' ha sido creada")),
-								TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
-					}
-					else {
-						FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
-								"La guía ha sido modificada con éxito ");
-						regActividadService.altaRegActividad(
-								"La guía '".concat(guia.getNombre().concat("' ha sido modificada")),
-								TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
-					}
+		boolean correcto = true;
+		String mensajeError = "";
+		if (guia.getNombre() == null || guia.getNombre().isEmpty()) {
+			mensajeError = mensajeError.concat("\nEl nombre no puede estar en blanco");
+			correcto = false;
+		}
+		if (listaPasos == null || listaPasos.isEmpty()) {
+			mensajeError = mensajeError.concat("\nSe debe incluir al menos un paso en la guía");
+			correcto = false;
+		}
+		if (correcto) {
+			grabaGuia();
+		}
+		else {
+			FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error", mensajeError, null);
 
+		}
+	}
+
+	/*********************************************************
+	 * 
+	 * Almacena en base de datos la guía
+	 * 
+	 *********************************************************/
+
+	private void grabaGuia() {
+
+		try {
+			guia.setPasos(ordenaPasos(listaPasosGrabar));
+			if (guiaService.guardaGuia(guia) != null) {
+				if (alta) {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+							"La guía se ha creado con éxito ");
+					regActividadService.altaRegActividad(
+							"La guía '".concat(guia.getNombre().concat("' ha sido creada")),
+							TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
 				}
+				else {
+					FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
+							"La guía ha sido modificada con éxito ");
+					regActividadService.altaRegActividad(
+							"La guía '".concat(guia.getNombre().concat("' ha sido modificada")),
+							TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
+				}
+
 			}
-			else {
-				FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Error",
-						"No puede dejarse en blanco nada ");
-			}
+
 		}
 		catch (Exception e) {
 			regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);

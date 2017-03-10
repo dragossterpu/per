@@ -16,14 +16,13 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					<p:messages autoUpdate="true"/>
+					<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
+					
 					<h:outputLabel for="nombreGuia" value="Nombre de la guia(*):" />
 						<p:inputText id="nombreGuia"
 							value="#{guiaBean.guia.nombre}"
 							converter="#{trimConverter}"
-							maxlength="255"
-							required="true"
-							requiredMessage="Debe introducir un nombre"/>
+							maxlength="255"/>
 						
 					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
 					<p:selectOneMenu
@@ -38,9 +37,7 @@
 					
 					<p:orderList id="orderListPasos"  value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" 
 						converter="#{guiasConverter}"	moveBottomLabel="Último" moveTopLabel="Primero" moveDownLabel="Posterior" moveUpLabel="Anterior"
-						controlsLocation="left" responsive="true"
-						required="true"
-						requiredMessage="Debe meter">	
+						controlsLocation="left" responsive="true">	
 						<p:ajax event="select" listener="#{guiaBean.onSelectPaso}"/>	 
 				        <f:facet name="caption">Pasos</f:facet> 
 				         <p:column  rendered="#{empty paso.fechaBaja}">

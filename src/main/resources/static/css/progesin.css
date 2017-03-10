@@ -385,3 +385,7 @@ select {
 label {
 	white-space: pre-line;
 }
+
+.ui-messages{
+	white-space: pre-line;
+}

@@ -39,7 +39,7 @@ public class GuiasConverter implements Converter {
 			Object list = ((OrderList) component).getValue();
 			if (list instanceof PersistentBag) {
 				PersistentBag bolsa = (PersistentBag) list;
-				Iterator iterador = bolsa.iterator();
+				Iterator<?> iterador = bolsa.iterator();
 				while (iterador.hasNext()) {
 					Object objeto = iterador.next();
 					String name = ((GuiaPasos) objeto).getPaso();
@@ -50,6 +50,7 @@ public class GuiasConverter implements Converter {
 				}
 			}
 			else {
+				@SuppressWarnings("unchecked")
 				ArrayList<GuiaPasos> lista = (ArrayList<GuiaPasos>) list;
 				for (Object objeto : lista) {
 					String name = ((GuiaPasos) objeto).getPaso();
