@@ -22,22 +22,27 @@ import org.xml.sax.ContentHandler;
 
 import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.DocumentoBlob;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
+
+/**
+ * 
+ * Implementación del servicio de documentos
+ * 
+ * @author Ezentis
+ *
+ */
 
 @Service("documentoService")
 
 public class DocumentoService implements IDocumentoService {
 
 	@Autowired
-	INotificacionService notificacionService;
+	private IRegistroActividadService registroActividadService;
 
 	@Autowired
-	IRegistroActividadService registroActividadService;
-
-	@Autowired
-	IDocumentoRepository documentoRepository;
+	private IDocumentoRepository documentoRepository;
 
 	/***************************************
 	 * 
@@ -62,7 +67,7 @@ public class DocumentoService implements IDocumentoService {
 	 * Elimina una serie de documentos de la base de datos. Los documentos se identifican por sus id
 	 * 
 	 * @author Ezentis
-	 * @param Iterable<Documento> entities Identificadores de los documentos a eliminar
+	 * @param entities Identificadores de los documentos a eliminar
 	 * 
 	 *************************************/
 	@Override
@@ -139,7 +144,7 @@ public class DocumentoService implements IDocumentoService {
 	 * id. Devuelve los documentos buscados
 	 * 
 	 * @author Ezentis
-	 * @param Iterable<Long> ids Identificadores de los documentos a buscar
+	 * @param ids Identificadores de los documentos a buscar
 	 * @return Iterable<Documento> Documentos seleccionados
 	 * 
 	 *************************************/
@@ -187,7 +192,7 @@ public class DocumentoService implements IDocumentoService {
 	 * documentos guardados.
 	 * 
 	 * @author Ezentis
-	 * @param Iterable<Documento> entities Documentos a salvar
+	 * @param entities Documentos a salvar
 	 * @return Iterable<Documento> Documentos salvado
 	 * 
 	 *************************************/
@@ -312,7 +317,6 @@ public class DocumentoService implements IDocumentoService {
 		Metadata metadata = new Metadata();
 		ParseContext pcontext = new ParseContext();
 		Parser parser;
-		
 
 		if (file.getContentType().contains("openxmlformats")) {
 			parser = new OOXMLParser();

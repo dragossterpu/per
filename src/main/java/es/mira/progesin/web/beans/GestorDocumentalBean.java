@@ -25,6 +25,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/**********************************************************
+ * Bean para el gestor documental
+ * 
+ * @author EZENTIS
+ * 
+ ********************************************************/
+
 @Setter
 @Getter
 @Controller("gestorDocumentalBean")
@@ -37,25 +44,43 @@ public class GestorDocumentalBean {
 	private StreamedContent file;
 
 	@Autowired
-	IDocumentoService documentoService;
+	private IDocumentoService documentoService;
 
 	@Autowired
-	IAlertaService alertaService;
+	private IAlertaService alertaService;
 
 	@Autowired
-	INotificacionService notificacionService;
+	private INotificacionService notificacionService;
 
 	@Autowired
-	IRegistroActividadService registroActividadService;
+	private IRegistroActividadService registroActividadService;
+
+	/**********************************************************
+	 * Inicializa el bean
+	 * 
+	 ********************************************************/
 
 	@PostConstruct
 	public void init() {
 		recargaLista();
 	}
 
+	/**********************************************************
+	 * Carga la lista de documentos
+	 * 
+	 ********************************************************/
+
 	public void recargaLista() {
 		listadoDocumentos = (List<Documento>) documentoService.findAll();
 	}
+
+	/**********************************************************
+	 * Descarga el fichero contenido en la base de datos
+	 * 
+	 * @param documento
+	 * 
+	 * 
+	 ********************************************************/
 
 	public void descargarFichero(Documento documento) {
 		try {
@@ -65,6 +90,14 @@ public class GestorDocumentalBean {
 			log.error("Error en la descarga de documentos: ", e);
 		}
 	}
+
+	/**********************************************************
+	 * Carga el fichero seleccionado en la base de datos
+	 * 
+	 * @param event event FileUploadEvent
+	 * @throws Exception
+	 * 
+	 ********************************************************/
 
 	public void cargaFichero(FileUploadEvent event) throws Exception {
 		try {
@@ -93,6 +126,13 @@ public class GestorDocumentalBean {
 			throw ex;
 		}
 	}
+
+	/**********************************************************
+	 * Elimina el fichero seleccionado de la base de datos
+	 * 
+	 * @param documento
+	 * 
+	 ********************************************************/
 
 	public void eliminarDocumento(Documento documento) {
 		documentoService.delete(documento);

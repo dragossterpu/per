@@ -20,6 +20,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 
+ * Entidad para el almacenamiento en base de datos de los documentos en formato blob
+ * 
+ * @author Ezentis
+ * @see es.mira.progesin.persistence.entities.Documento
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -31,7 +39,7 @@ import lombok.ToString;
 @Table(name = "documentosBlob")
 public class DocumentoBlob implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@SequenceGenerator(name = "seq_documentosBlob", sequenceName = "seq_documentosBlob", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosBlob")
@@ -40,6 +48,6 @@ public class DocumentoBlob implements Serializable {
 
 	@Column(name = "fichero")
 	@Lob
-	private Blob fichero;
+	private transient Blob fichero;
 
 }

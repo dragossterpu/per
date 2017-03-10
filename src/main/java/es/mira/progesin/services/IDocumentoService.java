@@ -1,5 +1,13 @@
 package es.mira.progesin.services;
 
+/**
+ *
+ * Intefaz para el servicio de documentos
+ * 
+ * @author Ezentis
+ * 
+ */
+
 import java.io.IOException;
 import java.sql.SQLException;
 
