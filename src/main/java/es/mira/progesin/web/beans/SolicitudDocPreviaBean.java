@@ -24,6 +24,7 @@ import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -31,6 +32,7 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.IAlertaService;
+import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
@@ -134,6 +136,9 @@ public class SolicitudDocPreviaBean implements Serializable {
     @Autowired
     private transient PdfGenerator pdfGenerator;
     
+    @Autowired
+    ICuestionarioEnvioService cuestionarioEnvioService;
+    
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
      * 
@@ -142,30 +147,19 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void crearSolicitud() {
         
         try {
-            List<SolicitudDocumentacionPrevia> listaSolicitudes = solicitudDocumentacionService
-                    .findNoFinalizadasPorInspeccion(solicitudDocumentacionPrevia.getInspeccion());
-            if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
-                        "No se puede crear una solicitud para la inspección "
-                                + solicitudDocumentacionPrevia.getInspeccion().getNumero()
-                                + ", ya existe otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
-            } else {
-                String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
-                if (solicitudDocumentacionService.findNoFinalizadaPorCorreoDestinatario(correoDestinatario) != null) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_WARN, "Alta abortada",
-                            "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
-                                    + ", ya existe otra en curso. Debe finalizarla o eliminarla antes de proseguir.");
-                } else {
-                    if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-                        FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                                "La solicitud de documentación ha sido creada con éxito");
-                        
-                        altaDocumentos();
-                        String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
-                        // Guardamos la actividad en bbdd
-                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                                SeccionesEnum.DOCUMENTACION.name());
-                    }
+            // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
+            if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
+                SolicitudDocumentacionPrevia solicitud = solicitudDocumentacionService
+                        .save(solicitudDocumentacionPrevia);
+                if (solicitud != null) {
+                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                            "La solicitud de documentación ha sido creada con éxito");
+                    
+                    altaDocumentos();
+                    String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
+                    // Guardamos la actividad en bbdd
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                            SeccionesEnum.DOCUMENTACION.name());
                 }
             }
         } catch (Exception e) {
@@ -365,6 +359,9 @@ public class SolicitudDocPreviaBean implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         
         if ("general".equals(event.getOldStep()) && "documentacion".equals(event.getNewStep())) {
+            if (inspeccionSinTareasPendientes() == Boolean.FALSE || usuarioSinTareasPendientes() == Boolean.FALSE) {
+                return event.getOldStep();
+            }
             AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
             if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
                 listadoDocumentos = tipoDocumentacionService.findAll();
@@ -491,8 +488,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
             if (userService.exists(correoDestinatario)) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Envío abortado",
-                        "El usuario con correo " + correoDestinatario
-                                + " ya tiene otra solicitud o cuestionario en curso. Debe finalizar o anular dicha tarea antes de enviar esta solicitud.");
+                        "El usuario con correo " + correoDestinatario + " ya existe en el sistema.");
             } else {
                 String password = Utilities.getPassword();
                 
@@ -669,7 +665,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(infoInspeccion);
+        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
     }
     
     /**
@@ -686,5 +682,67 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
+    }
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asociados a la inspeccion de esta solicitud.
+     * 
+     * @author EZENTIS
+     * @return boolean
+     */
+    public boolean inspeccionSinTareasPendientes() {
+        Inspeccion inspeccion = solicitudDocumentacionPrevia.getInspeccion();
+        boolean respuesta = true;
+        SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
+                .findNoFinalizadaPorInspeccion(inspeccion);
+        if (solicitudPendiente != null) {
+            String mensaje = "No se puede crear la solicitud ya que existe otra solicitud en curso para esta inspección. "
+                    + "Debe finalizarla o anularla antes de proseguir.";
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
+            respuesta = false;
+        }
+        CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion);
+        if (cuestionarioPendiente != null) {
+            String mensaje = "No se puede crear la solicitud ya que existe un cuestionario en curso para esta inspección. "
+                    + "Debe finalizarlo o anularlo antes de proseguir.";
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
+            respuesta = false;
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asignados al correo electrónico elegido para
+     * esta solicitud.
+     * 
+     * @author EZENTIS
+     * @return boolean
+     */
+    public boolean usuarioSinTareasPendientes() {
+        String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
+        boolean respuesta = true;
+        SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
+                .findNoFinalizadaPorCorreoDestinatario(correoDestinatario);
+        if (solicitudPendiente != null) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
+                            + ", ya existe otra solicitud en curso para la inspeccion "
+                            + solicitudPendiente.getInspeccion().getNumero()
+                            + ". Debe finalizarla o anularla antes de proseguir.",
+                    "", null);
+            respuesta = false;
+        }
+        CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService
+                .findNoFinalizadoPorCorreoEnvio(correoDestinatario);
+        if (cuestionarioPendiente != null) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
+                            + ", ya existe un cuestionario en curso para la inspeccion "
+                            + cuestionarioPendiente.getInspeccion().getNumero()
+                            + ". Debe finalizarlo o anularlo antes de proseguir.",
+                    "", null);
+            respuesta = false;
+        }
+        return respuesta;
     }
 }

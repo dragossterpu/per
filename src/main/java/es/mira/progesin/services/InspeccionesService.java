@@ -32,32 +32,15 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     @Override
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(String infoInspeccion) {
-        return inspeccionesRepository
-                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada("%" + infoInspeccion + "%");
-    }
-    
-    // @Override
-    // public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(String
-    // infoInspeccion) {
-    // return inspeccionesRepository
-    // .buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(infoInspeccion);
-    // }
-    
-    @Override
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
-            String infoInspeccion) {
-        return inspeccionesRepository
-                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
-                        "%" + infoInspeccion + "%");
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion) {
+        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
     }
     
     @Override
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
-            String infoInspeccion, String usernameJefeEquipo) {
-        return inspeccionesRepository
-                .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
-                        "%" + infoInspeccion + "%", usernameJefeEquipo);
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(String infoInspeccion,
+            String usernameJefeEquipo) {
+        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo("%" + infoInspeccion + "%",
+                usernameJefeEquipo);
     }
     
 }

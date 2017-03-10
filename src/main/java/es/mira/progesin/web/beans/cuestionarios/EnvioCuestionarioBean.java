@@ -97,13 +97,10 @@ public class EnvioCuestionarioBean implements Serializable {
     public List<Inspeccion> autocompletarInspeccion(String nombreUnidad) {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            return inspeccionService
-                    .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
-                            nombreUnidad, usuarioActual.getUsername());
+            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(nombreUnidad,
+                    usuarioActual.getUsername());
         } else {
-            return inspeccionService
-                    .buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
-                            nombreUnidad);
+            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(nombreUnidad);
         }
     }
     
@@ -124,7 +121,8 @@ public class EnvioCuestionarioBean implements Serializable {
                     this.cuestionarioEnvio.setCargo(solDocPrevia.getCargoInterlocutor());
                     this.cuestionarioEnvio.setFechaLimiteCuestionario(solDocPrevia.getFechaLimiteCumplimentar());
                 } else {
-                    mostrarMensajeNoDocumentacionPrevia();
+                    String mensaje = "No existe o no ha sido finalizada la solicitud de documentación previa para esta inspección general periódica. Debería tramitarla antes de enviar el cuestionario.";
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, mensaje, "", null);
                 }
             }
         } catch (Exception e) {
@@ -139,65 +137,45 @@ public class EnvioCuestionarioBean implements Serializable {
      */
     public void enviarCuestionario() {
         try {
-            // Comprobar que el usuario no tenga otras operaciones en curso
-            boolean usuarioExiste = userService.exists(cuestionarioEnvio.getCorreoEnvio());
-            // Comprobar que no existe un cuestionario enviado sin finalizar para esa inspección
-            CuestionarioEnvio cuestionarioInspeccion = cuestionarioEnvioService
-                    .findNoFinalizadoPorInspeccion(cuestionarioEnvio.getInspeccion());
-            
-            if (usuarioExiste == Boolean.FALSE && cuestionarioInspeccion == null) {
+            // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
+            if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
                 String password = Utilities.getPassword();
                 System.out.println(password);
-                List<User> listaUsuariosProvisionales = userService
-                        .crearUsuariosProvisionalesCuestionario(cuestionarioEnvio.getCorreoEnvio(), password);
-                cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
-                enviarCorreoCuestionario(password, listaUsuariosProvisionales);
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
-                        "El cuestionario se ha enviado con éxito");
-                // Crear respuestas tipo tabla (ñapa para que cuando inician sesíón varios usuarios a la vez por primera
-                // vez, al grabar borrador no se repitan los datos de las tablas/matriz por cada usuario)
-                crearResgistrosRespuestaTipoTablaMatriz(cuestionarioEnvio);
-                
-                String descripcion = "Se ha envido el cuestionario de la inspección: "
-                        + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.CUESTIONARIO.getDescripcion());
-                
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        RoleEnum.JEFE_INSPECCIONES);
-                
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        cuestionarioEnvio.getInspeccion());
-                
-            } else {
-                String textoError;
-                if (usuarioExiste) {
-                    textoError = "El usuario con correo " + cuestionarioEnvio.getCorreoEnvio()
-                            + " ya tiene otra solicitud o cuestionario en curso. Debe finalizar o anular dicha tarea antes de enviar este cuestionario.";
-                    
+                String correoEnvio = cuestionarioEnvio.getCorreoEnvio();
+                if (userService.exists(correoEnvio)) {
+                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Envío abortado",
+                            "El usuario con correo " + correoEnvio + " ya existe en el sistema.");
                 } else {
-                    textoError = "Existe un cuestionario enviado para la inspección "
-                            + cuestionarioEnvio.getInspeccion().getNumero()
-                            + " sin finalizar. Debe finalizarlo primero antes de poder enviar otro cuestionario para la misma inspección";
+                    List<User> listaUsuariosProvisionales = userService
+                            .crearUsuariosProvisionalesCuestionario(correoEnvio, password);
+                    cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
+                    enviarCorreoCuestionario(password, listaUsuariosProvisionales);
+                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
+                            "El cuestionario se ha enviado con éxito");
+                    // Crear respuestas tipo tabla (ñapa para que cuando inician sesíón varios usuarios a la vez por
+                    // primera
+                    // vez, al grabar borrador no se repitan los datos de las tablas/matriz por cada usuario)
+                    crearResgistrosRespuestaTipoTablaMatriz(cuestionarioEnvio);
+                    
+                    String descripcion = "Se ha envido el cuestionario de la inspección: "
+                            + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
+                    // Guardamos la actividad en bbdd
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                            SeccionesEnum.CUESTIONARIO.getDescripcion());
+                    
+                    notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                            RoleEnum.JEFE_INSPECCIONES);
+                    
+                    notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                            cuestionarioEnvio.getInspeccion());
+                    
                 }
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Envío abortado", textoError, null);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Se ha produdico un error en el envio del cuestionario", e.getMessage(), null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
-    }
-    
-    /**
-     * Muestra en el formulario un mensaje de error indiciando que no existe documentación previa finalizada para la
-     * inspección introducida
-     */
-    private void mostrarMensajeNoDocumentacionPrevia() {
-        String mensaje = "No se puede enviar el cuestionario ya que no existe documentación previa finalizada para la inspección. "
-                + "Debe finalizar la solicitud de documentación previa antes de poder enviar el cuestionario.";
-        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
     }
     
     /**
@@ -280,5 +258,65 @@ public class EnvioCuestionarioBean implements Serializable {
             dtg.setRespuesta(rtaCuestionario);
             listaDatosTabla.add(dtg);
         }
+    }
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asociados a la inspeccion de esta solicitud.
+     * 
+     * @author EZENTIS
+     * @return boolean
+     */
+    public boolean inspeccionSinTareasPendientes() {
+        Inspeccion inspeccion = cuestionarioEnvio.getInspeccion();
+        boolean respuesta = true;
+        SolicitudDocumentacionPrevia solicitudPendiente = solDocService.findNoFinalizadaPorInspeccion(inspeccion);
+        if (solicitudPendiente != null) {
+            String mensaje = "No se puede enviar el cuestionario ya que existe una solicitud en curso para esta inspección. "
+                    + "Debe finalizarla o anularla antes de proseguir.";
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
+            respuesta = false;
+        }
+        CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion);
+        if (cuestionarioPendiente != null) {
+            String mensaje = "No se puede enviar el cuestionario ya que existe otro cuestionario en curso para esta inspección. "
+                    + "Debe finalizarlo o anularlo antes de proseguir.";
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
+            respuesta = false;
+        }
+        return respuesta;
+    }
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asignados al correo electrónico elegido para
+     * esta solicitud.
+     * 
+     * @author EZENTIS
+     * @return boolean
+     */
+    public boolean usuarioSinTareasPendientes() {
+        String correoEnvio = cuestionarioEnvio.getCorreoEnvio();
+        boolean respuesta = true;
+        SolicitudDocumentacionPrevia solicitudPendiente = solDocService
+                .findNoFinalizadaPorCorreoDestinatario(correoEnvio);
+        if (solicitudPendiente != null) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
+                            + ", ya existe una solicitud en curso para la inspeccion "
+                            + solicitudPendiente.getInspeccion().getNumero()
+                            + ". Debe finalizarla o anularla antes de proseguir.",
+                    "", null);
+            respuesta = false;
+        }
+        CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio);
+        if (cuestionarioPendiente != null) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
+                            + ", ya existe otro cuestionario en curso para la inspeccion "
+                            + cuestionarioPendiente.getInspeccion().getNumero()
+                            + ". Debe finalizarlo o anularlo antes de proseguir.",
+                    "", null);
+            respuesta = false;
+        }
+        return respuesta;
     }
 }

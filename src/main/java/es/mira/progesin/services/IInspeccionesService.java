@@ -13,18 +13,15 @@ public interface IInspeccionesService {
     public void delete(Inspeccion inspecciones);
     
     /**
-     * Busca inspecciones no finalizadas por nombre de unidad o número que no tengan ya un cuestionario asociado sin
-     * finalizar
+     * Busca inspecciones no finalizadas por nombre de unidad o número.
      */
-    // public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinCuestionarioNoFinalizado(String
-    // infoInspeccion);
+    List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion);
     
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizada(String infoInspeccion);
-    
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizado(
-            String infoInspeccion);
-    
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroSinSolicitudNoFinalizadaCuestionarioNoFinalizadoYJefeEquipo(
-            String infoInspeccion, String usernameJefeEquipo);
+    /**
+     * Busca inspecciones no finalizadas por nombre de unidad o número en las que el usuario sea jefe del equipo
+     * asignado a ellas.
+     */
+    List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(String infoInspeccion,
+            String usernameJefeEquipo);
     
 }

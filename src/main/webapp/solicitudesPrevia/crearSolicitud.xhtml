@@ -71,8 +71,6 @@
 										required="true"
 										requiredMessage="Es obligatorio un correo del destinatario"
 										converter="#{trimConverter}">
-										<f:attribute name="actualCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" />
-										<f:validator binding="#{correoDestinatarioValidator}" />
 									</p:inputText>
 
 									<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):"/>
@@ -187,13 +185,10 @@
 							<br></br>
 							<p:panel header="Confirmar">
 								<br></br>
-								<h:panelGrid id="confirmation" columns="3"
-									columnClasses="grid,grid,grid">
-									<h:panelGrid columns="2" columnClasses="label,value">
+								<h:panelGrid id="confirmation" columns="2" columnClasses="label,value">
 
-										<h:outputText value="Creación solicitud documentación previa cuestionario: "/>
+									<h:outputText value="Creación solicitud documentación previa cuestionario: "/>
 
-									</h:panelGrid>
 								</h:panelGrid>
 								<div class="botonesFormulario">
 									<p:commandButton
@@ -210,6 +205,8 @@
 										<p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia?vieneDe=menu" />
 									</div>
 								</p:dialog>
+                                
+                                <p:messages globalOnly="true" autoUpdate="true" closable="true"/>
 							</p:panel>
 						</p:tab>
 					</div>

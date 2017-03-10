@@ -8,17 +8,18 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 
 public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<SolicitudDocumentacionPrevia, Long> {
-
-	SolicitudDocumentacionPrevia findByFechaBajaIsNullAndFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(String correo);
-
-	SolicitudDocumentacionPrevia findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
-			String correo);
-
-	List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(
-			Inspeccion inspeccion);
-
-	List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
-
-	List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
-
+    
+    SolicitudDocumentacionPrevia findByFechaBajaIsNullAndFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(
+            String correo);
+    
+    SolicitudDocumentacionPrevia findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
+            String correo);
+    
+    List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNotNullAndInspeccionOrderByFechaFinalizacionDesc(
+            Inspeccion inspeccion);
+    
+    SolicitudDocumentacionPrevia findByFechaBajaIsNullAndFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
+    
+    List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
+    
 }
