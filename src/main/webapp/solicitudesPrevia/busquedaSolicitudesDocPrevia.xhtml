@@ -133,8 +133,22 @@
 	            </p:outputPanel>
 					<p:dataTable var="solicitud"
 						value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}" rows="20"
-						id="tablaSolicitudes" draggableColumns="true" paginator="true" resizableColumns="true" scrollable="true"
+						id="tablaSolicitudes" paginatorTemplate="{Anterior} {Pagina} {Posterior}" paginator="true"
 						rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+						
+						<f:facet name="{Anterior}">
+							<h:commandLink title="Anterior(es)" actionListener="#{solicitudDocPreviaBean.previousSolicitud}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
+								<f:ajax execute="@form" render="@form" />
+							</h:commandLink>
+						</f:facet>   
+						<f:facet name="{Posterior}">
+							<h:commandLink title="Posterior(es)" actionListener="#{solicitudDocPreviaBean.nextSolicitud}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
+								<f:ajax execute="@form" render="@form" />
+							</h:commandLink>
+				   		</f:facet>
+						<f:facet name="{Pagina}">
+							<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{solicitudDocPreviaBean.actualPage} de #{solicitudDocPreviaBean.numPages}</span>	 
+						</f:facet>
 						<f:facet name="header">
 							Solicitudes documentación
 						 	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
@@ -222,7 +236,7 @@
 							</p:commandButton>
 						</p:column>
 						<f:facet name="footer">
-	       					Resultado de la búsqueda: #{fn:length(solicitudDocPreviaBean.listaSolicitudesPrevia)} solicitudes.
+	       					Resultado de la búsqueda: #{solicitudDocPreviaBean.numeroRegistros} solicitudes.
 	    				</f:facet>
 					</p:dataTable>
 					<p:confirmDialog global="true">

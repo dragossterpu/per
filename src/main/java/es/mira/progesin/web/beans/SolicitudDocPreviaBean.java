@@ -139,6 +139,18 @@ public class SolicitudDocPreviaBean implements Serializable {
     @Autowired
     ICuestionarioEnvioService cuestionarioEnvioService;
     
+    private static final int MAX_RESULTS_PAGE = 2;
+    
+    private static final int FIRST_PAGE = 1;
+    
+    private long numeroRegistros;
+    
+    private int primerRegistro;
+    
+    private long actualPage;
+    
+    private long numPages;
+    
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
      * 
@@ -652,8 +664,11 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @author EZENTIS
      */
     public void buscarSolicitudDocPrevia() {
-        listaSolicitudesPrevia = solicitudDocumentacionService
-                .buscarSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
+        primerRegistro = 0;
+        getCountPagesSolicitud();
+        actualPage = FIRST_PAGE;
+        listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(0, MAX_RESULTS_PAGE,
+                solicitudDocPreviaBusqueda);
     }
     
     /**
@@ -744,5 +759,42 @@ public class SolicitudDocPreviaBean implements Serializable {
             respuesta = false;
         }
         return respuesta;
+    }
+    
+    public void nextSolicitud() {
+        getCountPagesSolicitud();
+        
+        if (actualPage < numPages) {
+            
+            primerRegistro += MAX_RESULTS_PAGE;
+            actualPage++;
+            
+            listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
+                    MAX_RESULTS_PAGE, solicitudDocPreviaBusqueda);
+        }
+        
+    }
+    
+    public void previousSolicitud() {
+        getCountPagesSolicitud();
+        
+        if (actualPage > 1) {
+            
+            primerRegistro -= MAX_RESULTS_PAGE;
+            actualPage--;
+            
+            listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
+                    MAX_RESULTS_PAGE, solicitudDocPreviaBusqueda);
+        }
+    }
+    
+    public void getCountPagesSolicitud() {
+        numeroRegistros = solicitudDocumentacionService.getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
+        
+        if (numeroRegistros % MAX_RESULTS_PAGE == 0)
+            numPages = numeroRegistros / MAX_RESULTS_PAGE;
+        else
+            numPages = numeroRegistros / MAX_RESULTS_PAGE + 1;
+        
     }
 }
