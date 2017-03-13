@@ -64,6 +64,9 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
     @PersistenceContext
     private transient EntityManager em;
     
+    /**
+     * Carga datos necesarios para mostrar las opciones de los desplegables
+     */
     @PostConstruct
     public void init() {
         listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
@@ -71,6 +74,11 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
         listaTiposInspeccion = query.getResultList();
     }
     
+    /**
+     * Limpia valores seleccionados en anteriores búsquedas
+     * 
+     * @author EZENTIS
+     */
     public void resetValues() {
         this.fechaDesde = null;
         this.fechaHasta = null;

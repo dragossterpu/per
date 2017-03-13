@@ -8,6 +8,11 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * POJO con los parámetros de búsqueda de cuestionarios personalizados
+ * 
+ * @author EZENTIS
+ */
 @Setter
 @Getter
 public class CuestionarioPersonalizadoBusqueda implements Serializable {
@@ -25,6 +30,11 @@ public class CuestionarioPersonalizadoBusqueda implements Serializable {
     
     private EstadoEnum estado;
     
+    /**
+     * Limpia valores seleccionados en anteriores búsquedas
+     * 
+     * @author EZENTIS
+     */
     public void limpiar() {
         this.fechaDesde = null;
         this.fechaHasta = null;

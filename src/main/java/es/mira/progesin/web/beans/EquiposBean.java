@@ -32,6 +32,12 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador de las operaciones relacionadas con equipos de inspección. Búsqueda, creación, modificación (cambiar el
+ * jefe o añadir/quitar miembros) y eliminación de los mismos.
+ * 
+ * @author EZENTIS
+ */
 @Setter
 @Getter
 @Controller("equiposBean")
@@ -144,7 +150,6 @@ public class EquiposBean implements Serializable {
      * si se navega desde el menú u otra sección.
      * 
      * @author EZENTIS
-     * @return vista equipos
      */
     public void getFormularioBusquedaEquipos() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -155,6 +160,11 @@ public class EquiposBean implements Serializable {
         
     }
     
+    /**
+     * Devuelve al formulario de búsqueda de equipos a su estado inicial y borra los resultados de búsquedas anteriores.
+     * 
+     * @author EZENTIS
+     */
     public void limpiarBusqueda() {
         equipoBusqueda.resetValues();
         this.estado = null;
@@ -239,7 +249,7 @@ public class EquiposBean implements Serializable {
     /**
      * Elimina un miembro de un equipo, ya sea componente o colaborador del equipo que está siendo modificado
      * @author EZENTIS
-     * @param miembro
+     * @param miembro seleccionado en la tabla de integrantes de un equipo
      */
     public void eliminarMiembro(Miembro miembro) {
         try {
@@ -323,7 +333,6 @@ public class EquiposBean implements Serializable {
      * Carga el formulario para añadir un miembro al equipo que está siendo modificado.
      * 
      * @author EZENTIS
-     * @param miembro
      * @return vista anadirMiembroEquipo
      */
     public String getFormAniadirMiembroEquipo() {
@@ -456,6 +465,11 @@ public class EquiposBean implements Serializable {
         return event.getNewStep();
     }
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
     public void init() {
         // para que en el select cargue por defecto la opción "Seleccione uno..."
