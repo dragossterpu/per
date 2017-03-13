@@ -86,7 +86,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     @Autowired
     transient ApplicationBean applicationBean;
     
-    private static final int MAX_RESULTS_PAGE = 2;
+    private static final int MAX_RESULTS_PAGE = 20;
     
     private static final int FIRST_PAGE = 1;
     

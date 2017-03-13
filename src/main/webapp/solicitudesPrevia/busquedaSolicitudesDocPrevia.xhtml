@@ -29,18 +29,18 @@
 																		
 						<h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
 						<p:inputText id="nombreUnidad" 
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.nombreUnidad}" converter="#{trimConverter}"/>
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
 						
 						<h:outputLabel for="numeroInspeccion" value="Número de la Inspección:" />
 						<p:inputText id="numeroInspeccion" 
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.numeroInspeccion}" converter="#{trimConverter}"/>
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.numeroInspeccion}" converter="#{trimConverter}"/>
 						
 						<h:outputLabel for="ambitoInspeccion" value="Ámbito de la Inspección:" />
 						<p:importEnum
 							type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
 							var="ambitos" allSuffix="ALL_ENUM_VALUES" />
 						<p:selectOneMenu
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.ambitoInspeccion}"
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.ambitoInspeccion}"
 							id="ambitoInspeccion">
 							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
@@ -52,10 +52,10 @@
 						<h:outputLabel for="tipoInspeccionSelect"
 							value="Tipo de Inspección" />
 						<p:selectOneMenu
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.tipoInspeccion}"
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
-							<f:selectItems value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.listaTiposInspeccion}"
+							<f:selectItems value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaTiposInspeccion}"
 								var="tipo"
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />
@@ -68,11 +68,11 @@
 						<h:outputLabel for="usuarioCreacionSelect"
 							value="Usuario creación" />
 						<p:selectOneMenu
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.usuarioCreacion}"
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.usuarioCreacion}"
 							id="usuarioCreacionSelect" converter="#{selectConverter}"
 							filter="true" filterMatchMode="startsWith">
 							<f:selectItem itemLabel="Todos" itemValue="" />
-							<f:selectItems value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.listaUsuarios}"
+							<f:selectItems value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.listaUsuarios}"
 								var="usuario"
 								itemLabel="#{usuario.apellido1}, #{usuario.nombre}"
 								itemValue="#{usuario}" />
@@ -83,7 +83,7 @@
 							type="es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum"
 							var="estados" allSuffix="ALL_ENUM_VALUES" />
 						<p:selectOneMenu
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.estado}"
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.estado}"
 							id="estado">
 							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{estados.ALL_ENUM_VALUES}"
@@ -94,13 +94,13 @@
 						
 						<h:outputLabel for="fechaDesde" value="Fecha creación desde:" />
 						<p:calendar
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.fechaDesde}"
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaDesde}"
 							id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true"
 							maxdate="#{utilities.getCurrentDate()}" />
 
 						<h:outputLabel for="fechaHasta" value="Fecha creación hasta:" />
 						<p:calendar
-							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusquedaNueva.fechaHasta}"
+							value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaHasta}"
 							id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true"
 							maxdate="#{utilities.getCurrentDate()}" />
 							
