@@ -65,6 +65,8 @@ public class SolicitudDocPreviaBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Autowired
+    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusquedaNueva;
+    
     private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
@@ -139,7 +141,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     @Autowired
     ICuestionarioEnvioService cuestionarioEnvioService;
     
-    private static final int MAX_RESULTS_PAGE = 2;
+    private static final int MAX_RESULTS_PAGE = 20;
     
     private static final int FIRST_PAGE = 1;
     
@@ -337,7 +339,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        solicitudDocPreviaBusqueda.resetValues();
+        solicitudDocPreviaBusquedaNueva.resetValues();
         listadoDocumentosCargados = new ArrayList<>();
         listaSolicitudesPrevia = new ArrayList<>();
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
@@ -654,7 +656,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @author EZENTIS
      */
     public void limpiarBusqueda() {
-        solicitudDocPreviaBusqueda.resetValues();
+        solicitudDocPreviaBusquedaNueva.resetValues();
         listaSolicitudesPrevia = null;
     }
     
@@ -667,6 +669,7 @@ public class SolicitudDocPreviaBean implements Serializable {
         primerRegistro = 0;
         getCountPagesSolicitud();
         actualPage = FIRST_PAGE;
+        solicitudDocPreviaBusqueda = copiaSolicitudDocPreviaBusqueda(solicitudDocPreviaBusquedaNueva);
         listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(0, MAX_RESULTS_PAGE,
                 solicitudDocPreviaBusqueda);
     }
@@ -762,7 +765,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     public void nextSolicitud() {
-        getCountPagesSolicitud();
         
         if (actualPage < numPages) {
             
@@ -771,30 +773,46 @@ public class SolicitudDocPreviaBean implements Serializable {
             
             listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
                     MAX_RESULTS_PAGE, solicitudDocPreviaBusqueda);
+            
         }
         
     }
     
     public void previousSolicitud() {
-        getCountPagesSolicitud();
         
-        if (actualPage > 1) {
+        if (actualPage > FIRST_PAGE) {
             
             primerRegistro -= MAX_RESULTS_PAGE;
             actualPage--;
             
             listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
                     MAX_RESULTS_PAGE, solicitudDocPreviaBusqueda);
+            
         }
     }
     
     public void getCountPagesSolicitud() {
-        numeroRegistros = solicitudDocumentacionService.getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
+        numeroRegistros = solicitudDocumentacionService
+                .getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusquedaNueva);
         
         if (numeroRegistros % MAX_RESULTS_PAGE == 0)
             numPages = numeroRegistros / MAX_RESULTS_PAGE;
         else
             numPages = numeroRegistros / MAX_RESULTS_PAGE + 1;
         
+    }
+    
+    public SolicitudDocPreviaBusqueda copiaSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda solicitud) {
+        SolicitudDocPreviaBusqueda solicitudCopia = new SolicitudDocPreviaBusqueda();
+        solicitudCopia.setAmbitoInspeccion(solicitud.getAmbitoInspeccion());
+        solicitudCopia.setEstado(solicitud.getEstado());
+        solicitudCopia.setFechaDesde(solicitud.getFechaDesde());
+        solicitudCopia.setFechaHasta(solicitud.getFechaHasta());
+        solicitudCopia.setNombreUnidad(solicitud.getNombreUnidad());
+        solicitudCopia.setNumeroInspeccion(solicitud.getNumeroInspeccion());
+        solicitudCopia.setTipoInspeccion(solicitud.getTipoInspeccion());
+        solicitudCopia.setUsuarioCreacion(solicitud.getUsuarioCreacion());
+        
+        return solicitudCopia;
     }
 }
