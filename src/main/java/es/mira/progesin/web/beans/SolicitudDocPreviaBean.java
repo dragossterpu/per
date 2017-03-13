@@ -822,6 +822,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     /**
      * @return número de registros de la búsqueda
+     * @author EZENTIS
      */
     public long getCountRegistrosSolicitud() {
         return solicitudDocumentacionService.getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
@@ -832,6 +833,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * 
      * @param solicitudBusqueda objeto con los parámetros
      * @return copia del objeto
+     * @author EZENTIS
      */
     public SolicitudDocPreviaBusqueda copiaSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda solicitudBusqueda) {
         SolicitudDocPreviaBusqueda solicitudBusquedaCopia = new SolicitudDocPreviaBusqueda();

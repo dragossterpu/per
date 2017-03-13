@@ -406,6 +406,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     }
     
     /**
+     * Devuelve el número de páginas de la consulta.
+     * 
      * @param countRegistros
      * @return número de páginas.
      * @author EZENTIS
@@ -421,10 +423,9 @@ public class CuestionarioEnviadoBean implements Serializable {
     /**
      * Copia un objeto de tipo CuestionarioEnviadoBusqueda en otro para mantener los parámetros de búsqueda.
      * 
+     * @return cuestCopia. Copia del objeto. C
      * @param cuestionario. Objeto a copiar.
-     * @return cuestCopia. Copia del objeto.
      * @author EZENTIS
-     * 
      */
     public CuestionarioEnviadoBusqueda copiaCuestionarioEnviadoBusqueda(CuestionarioEnviadoBusqueda cuestionario) {
         CuestionarioEnviadoBusqueda cuestCopia = new CuestionarioEnviadoBusqueda();

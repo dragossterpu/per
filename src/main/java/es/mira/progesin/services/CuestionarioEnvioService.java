@@ -83,6 +83,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         return cuestionarioEnvioRepository.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(correo);
     }
     
+    /**
+     * Método que devuelve la lista de cuestionarios enviados en una consulta basada en criteria.
+     * 
+     * @param firstResult. Primer registro.
+     * @param maxResults. Máximo número de registros.
+     * @param cuestionarioEnviadoBusqueda.
+     * @return devuelve la lista de registros tipo CuestionarioEnviadoBusqueda.
+     * @author EZENTIS
+     */
     @Override
     public List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int firstResult, int maxResults,
             CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
@@ -220,6 +229,13 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         return listaCuestionarioEnvio;
     }
     
+    /**
+     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria
+     * 
+     * @param cuestionarioEnviadoBusqueda
+     * @return devuelve el número de registros de una consulta criteria.
+     * @author EZENTIS
+     */
     @Override
     public long getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         Session session = sessionFactory.openSession();

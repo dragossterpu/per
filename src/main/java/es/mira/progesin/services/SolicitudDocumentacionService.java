@@ -81,6 +81,13 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         solicitudDocumentacionPreviaRepository.delete(id);
     }
     
+    /**
+     * Método que devuelve la lista de solicitudes previas en una consulta basada en criteria.
+     * 
+     * @param solicitudDocPreviaBusqueda
+     * @return devuelve la lista de registros tipo SolicitudDocPreviaBusqueda.
+     * @author EZENTIS
+     */
     @Override
     public List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int firstResult, int maxResults,
             SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
@@ -196,6 +203,13 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         
     }
     
+    /**
+     * Método que devuelve el número de solicitudes previas en una consulta basada en criteria.
+     * 
+     * @param solicitudDocPreviaBusqueda
+     * @return devuelve la lista de registros tipo SolicitudDocPreviaBusqueda.
+     * @author EZENTIS
+     */
     @Override
     public long getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
         Session session = sessionFactory.openSession();
