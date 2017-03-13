@@ -136,8 +136,23 @@
 	            </p:outputPanel>
 	 			<p:dataTable  var="cuestionario" value="#{cuestionarioEnviadoBean.listaCuestionarioEnvio}"  rows="20" id="tablaCuestionarios"
 	                         paginator="true" 
-	                         resizableColumns="true"
+	                         paginatorTemplate="{Anterior} {Pagina} {Posterior}"
 	                         rendered="#{not empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
+	                         
+	                 <f:facet name="{Anterior}">
+						<h:commandLink title="Anterior(es)" actionListener="#{cuestionarioEnviadoBean.previousCuestionario}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+					</f:facet>   
+					<f:facet name="{Posterior}">
+						<h:commandLink title="Posterior(es)" actionListener="#{cuestionarioEnviadoBean.nextCuestionario}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+				   	</f:facet>
+					<f:facet name="{Pagina}">
+						<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{cuestionarioEnviadoBean.actualPage} de #{cuestionarioEnviadoBean.numPages}</span>	 
+					</f:facet>
+					
 			 		<f:facet name="header">
 						Cuestionarios enviados
 					</f:facet>
@@ -205,7 +220,7 @@
 					</p:column>
 					
 					<f:facet name="footer">
-	       				 Resultado de la búsqueda: #{fn:length(cuestionarioEnviadoBean.listaCuestionarioEnvio)} cuestionarios.
+	       				 Resultado de la búsqueda: #{cuestionarioEnviadoBean.numeroRegistros} cuestionarios.
 	    			</f:facet>
 				</p:dataTable>
 

@@ -55,6 +55,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda;
     
+    private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusquedaCopia;
+    
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
     
@@ -84,14 +86,32 @@ public class CuestionarioEnviadoBean implements Serializable {
     @Autowired
     transient ApplicationBean applicationBean;
     
+    private static final int MAX_RESULTS_PAGE = 2;
+    
+    private static final int FIRST_PAGE = 1;
+    
+    private long numeroRegistros;
+    
+    private int primerRegistro;
+    
+    private long actualPage;
+    
+    private long numPages;
+    
     /**
      * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario
      * 
      * @author EZENTIS
      */
     public void buscarCuestionario() {
-        listaCuestionarioEnvio = cuestionarioEnvioService
-                .buscarCuestionarioEnviadoCriteria(cuestionarioEnviadoBusqueda);
+        primerRegistro = 0;
+        actualPage = FIRST_PAGE;
+        numeroRegistros = getCountRegistrosCuestionario();
+        numPages = getCountPagesCuestionario(numeroRegistros);
+        
+        cuestionarioEnviadoBusquedaCopia = copiaCuestionarioEnviadoBusqueda(cuestionarioEnviadoBusqueda);
+        listaCuestionarioEnvio = cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(0, MAX_RESULTS_PAGE,
+                cuestionarioEnviadoBusquedaCopia);
     }
     
     /**
@@ -292,6 +312,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      * @author EZENTIS
      * @param cuestionario recuperado del formulario
      * @return vista enviarCuestionario
+     * 
      */
     public String getFormModificarCuestionario(CuestionarioEnvio cuestionario) {
         envioCuestionarioBean.setCuestionarioEnvio(cuestionario);
@@ -338,6 +359,89 @@ public class CuestionarioEnviadoBean implements Serializable {
                     "Se ha producido un error al modificar el cuestionario, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
+    }
+    
+    /**
+     * Cargar la página siguiente de resultados de la búsqueda
+     * 
+     * @author EZENTIS
+     */
+    public void nextCuestionario() {
+        
+        if (actualPage < numPages) {
+            
+            primerRegistro += MAX_RESULTS_PAGE;
+            actualPage++;
+            
+            listaCuestionarioEnvio = cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(primerRegistro,
+                    MAX_RESULTS_PAGE, cuestionarioEnviadoBusquedaCopia);
+        }
+        
+    }
+    
+    /**
+     * Cargar la página anterior de resultados de la búsqueda
+     * 
+     * @author EZENTIS
+     */
+    public void previousCuestionario() {
+        
+        if (actualPage > FIRST_PAGE) {
+            
+            primerRegistro -= MAX_RESULTS_PAGE;
+            actualPage--;
+            
+            listaCuestionarioEnvio = cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(primerRegistro,
+                    MAX_RESULTS_PAGE, cuestionarioEnviadoBusquedaCopia);
+        }
+    }
+    
+    /**
+     * @return devuelve el número de registros de la consulta criteria.
+     * @author EZENTIS
+     * 
+     */
+    public long getCountRegistrosCuestionario() {
+        return cuestionarioEnvioService.getCountCuestionarioCriteria(cuestionarioEnviadoBusqueda);
+    }
+    
+    /**
+     * @param countRegistros
+     * @return número de páginas.
+     * @author EZENTIS
+     */
+    public long getCountPagesCuestionario(long countRegistros) {
+        
+        if (countRegistros % MAX_RESULTS_PAGE == 0)
+            return countRegistros / MAX_RESULTS_PAGE;
+        else
+            return countRegistros / MAX_RESULTS_PAGE + 1;
+    }
+    
+    /**
+     * Copia un objeto de tipo CuestionarioEnviadoBusqueda en otro para mantener los parámetros de búsqueda.
+     * 
+     * @param cuestionario. Objeto a copiar.
+     * @return cuestCopia. Copia del objeto.
+     * @author EZENTIS
+     * 
+     */
+    public CuestionarioEnviadoBusqueda copiaCuestionarioEnviadoBusqueda(CuestionarioEnviadoBusqueda cuestionario) {
+        CuestionarioEnviadoBusqueda cuestCopia = new CuestionarioEnviadoBusqueda();
+        cuestCopia.setAmbitoInspeccion(cuestionario.getAmbitoInspeccion());
+        cuestCopia.setEstado(cuestionario.getEstado());
+        cuestCopia.setFechaDesde(cuestionario.getFechaDesde());
+        cuestCopia.setFechaHasta(cuestionario.getFechaHasta());
+        cuestCopia.setFechaLimiteRespuesta(cuestionario.getFechaLimiteRespuesta());
+        cuestCopia.setNombreUnidad(cuestionario.getNombreUnidad());
+        cuestCopia.setNumeroInspeccion(cuestionario.getNumeroInspeccion());
+        cuestCopia.setTipoInspeccion(cuestionario.getTipoInspeccion());
+        cuestCopia.setNombreEquipo(cuestionario.getNombreEquipo());
+        cuestCopia.setUsernameEnvio(cuestionario.getUsernameEnvio());
+        cuestCopia.setNombreCuestionario(cuestionario.getNombreCuestionario());
+        cuestCopia.setModeloCuestionarioSeleccionado(cuestionario.getModeloCuestionarioSeleccionado());
+        
+        return cuestCopia;
     }
     
 }

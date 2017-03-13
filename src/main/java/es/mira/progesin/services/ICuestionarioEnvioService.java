@@ -12,32 +12,35 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
 public interface ICuestionarioEnvioService extends Serializable {
-	CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
-
-	void enviarCuestionarioService(List<User> user, CuestionarioEnvio cuestionarioEnvio);
-
-	CuestionarioEnvio findNoFinalizadoPorCorreoEnvio(String correo);
-
-	List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
-
-	void save(CuestionarioEnvio cuestionario);
-
-	void transaccSaveConRespuestas(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
-			List<DatosTablaGenerica> listaDatosTablaSave);
-
-	boolean transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario);
-
-	boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
-			List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave);
-
-	boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario);
-
-	CuestionarioEnvio findById(Long idCuestionarioEnviado);
-
-	CuestionarioEnvio findNoFinalizadoPorInspeccion(Inspeccion inspeccion);
-
-	CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
-
-	List<CuestionarioEnvio> findNoCumplimentados();
-
+    CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
+    
+    void enviarCuestionarioService(List<User> user, CuestionarioEnvio cuestionarioEnvio);
+    
+    CuestionarioEnvio findNoFinalizadoPorCorreoEnvio(String correo);
+    
+    void save(CuestionarioEnvio cuestionario);
+    
+    void transaccSaveConRespuestas(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
+            List<DatosTablaGenerica> listaDatosTablaSave);
+    
+    boolean transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario);
+    
+    boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
+            List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave);
+    
+    boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario);
+    
+    CuestionarioEnvio findById(Long idCuestionarioEnviado);
+    
+    CuestionarioEnvio findNoFinalizadoPorInspeccion(Inspeccion inspeccion);
+    
+    CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
+    
+    List<CuestionarioEnvio> findNoCumplimentados();
+    
+    List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int firstResult, int maxResults,
+            CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
+    
+    long getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
+    
 }
