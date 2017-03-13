@@ -19,9 +19,6 @@ public interface ISolicitudDocumentacionService {
     
     void delete(Long id);
     
-    List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(
-            SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
-    
     boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, User usuarioProv);
     
     boolean transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, String usuarioProv);
@@ -39,5 +36,10 @@ public interface ISolicitudDocumentacionService {
     SolicitudDocumentacionPrevia findNoFinalizadaPorInspeccion(Inspeccion inspeccion);
     
     List<SolicitudDocumentacionPrevia> findEnviadasNoCumplimentadas();
+    
+    long getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
+    
+    List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int firstResult, int maxResults,
+            SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
     
 }
