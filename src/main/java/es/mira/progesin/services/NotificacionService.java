@@ -203,9 +203,9 @@ public class NotificacionService implements INotificacionService {
 	 * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un listado
 	 * de roles pasado como parámetro.
 	 * 
-	 * @param String Descripcion
-	 * @param String Seccion
-	 * @param List<RoleEnum> roles
+	 * @param Descripcion String
+	 * @param Seccion String
+	 * @param roles List<RoleEnum>
 	 * 
 	 *******************************************************/
 

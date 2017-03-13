@@ -51,12 +51,12 @@ public class GuiaPersonalizadaBean {
 
 	private List<GuiaPersonalizada> listaGuiasPersonalizadas;
 
-	private transient StreamedContent file;
+	private StreamedContent file;
 
 	boolean alta = false;
 
 	@Autowired
-	private transient WordGenerator wordGenerator;
+	private WordGenerator wordGenerator;
 
 	@Autowired
 	private IRegistroActividadService regActividadService;

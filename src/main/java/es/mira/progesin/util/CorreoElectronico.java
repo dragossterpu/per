@@ -44,9 +44,9 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * Envío de correos electrónico sin adjuntos. La lista de destinatarios, asunto y cuerpo del mensaje se reciben como
 	 * parámetros
 	 * 
-	 * @param List<String> Lista de destinatarios
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param paramDestino List<String> Lista de destinatarios
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -61,10 +61,10 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * Envío de correos electrónicos a una lista de destinatarios pasada como parámetros. El asunto, cuerpo del mensaje
 	 * y los documentos adjuntos se reciben como parámetros
 	 * 
-	 * @param List<String> Lista de destinatarios
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Lista de ficheros adjuntos
+	 * @param paramDestino List<String> Lista de destinatarios
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
+	 * @param paramAdjunto List<File> Lista de ficheros adjuntos
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -80,11 +80,11 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * Envío de correos electrónico. El destinatario, destinatario en copia, asunto, cuerpo del mensaje y los documentos
 	 * adjuntos se reciben como parámetros.
 	 * 
-	 * @param String Destinatario
-	 * @param String Destinatario en copia
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Lista de ficheros adjuntos
+	 * @param paramDestino String Destinatario
+	 * @param paramCC String Destinatario en copia
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
+	 * @param paramAdjunto List<File> Lista de ficheros adjuntos
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -92,10 +92,10 @@ public class CorreoElectronico implements ICorreoElectronico {
 	@Override
 	public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo,
 			List<File> paramAdjunto) throws CorreoException {
-		List<String> lista = new ArrayList<String>();
+		List<String> lista = new ArrayList<>();
 		lista.add(paramDestino);
 
-		List<String> cc = new ArrayList<String>();
+		List<String> cc = new ArrayList<>();
 		lista.add(paramCC);
 
 		envioCorreoAdjuntos(lista, cc, paramAsunto, paramCuerpo, paramAdjunto);
@@ -106,10 +106,10 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * Envío de correos electrónico. El destinatario, asunto, cuerpo del mensaje y los documentos adjuntos se reciben
 	 * como parámetros
 	 * 
-	 * @param String Destinatario
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Lista de ficheros adjuntos
+	 * @param paramDestino String Destinatario
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
+	 * @param paramAdjunto List<File> Lista de ficheros adjuntos
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -117,7 +117,7 @@ public class CorreoElectronico implements ICorreoElectronico {
 	@Override
 	public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto)
 			throws CorreoException {
-		List<String> lista = new ArrayList<String>();
+		List<String> lista = new ArrayList<>();
 		lista.add(paramDestino);
 
 		envioCorreoAdjuntos(lista, null, paramAsunto, paramCuerpo, paramAdjunto);
@@ -128,16 +128,16 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * Envío de correos electrónico sin adjuntos. El destinatario, asunto y cuerpo del mensaje se reciben como
 	 * parámetros
 	 * 
-	 * @param String Destinatario
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param paramDestino String Destinatario
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
 
 	@Override
 	public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) throws CorreoException {
-		List<String> lista = new ArrayList<String>();
+		List<String> lista = new ArrayList<>();
 		lista.add(paramDestino);
 
 		envioCorreoSinAdjuntos(lista, null, paramAsunto, paramCuerpo);
@@ -149,6 +149,8 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * conexionServidor
 	 * 
 	 * Realiza la conexión con el servidor de correo. Emplea los parámetros de conexión guardados en BDD
+	 * 
+	 * @return JavaMailSenderImpl
 	 * 
 	 *
 	 *************************************/
@@ -180,10 +182,10 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * Realiza el envío de correo electrónico sin adjuntos.
 	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios de correo
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param destino List<String> Destinatarios de correo
+	 * @param conCopia List<String> Destinatarios en copia
+	 * @param asunto String Asunto del correo
+	 * @param cuerpo String Cuerpo del correo
 	 * @throws CorreoException
 	 *
 	 *************************************/
@@ -220,11 +222,11 @@ public class CorreoElectronico implements ICorreoElectronico {
 	 * 
 	 * Realiza el envío de correo electrónico con fichero adjunto.
 	 * 
-	 * @author Ezentis
-	 * @param List<String> Destinatarios de correo
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Adjunto
+	 * @param destino List<String> Destinatarios de correo
+	 * @param conCopia List<String> Destinatarios en copia
+	 * @param asunto String Asunto del correo
+	 * @param cuerpo String Cuerpo del correo
+	 * @param adjunto List<File> Adjunto
 	 * @throws CorreoException
 	 *
 	 *

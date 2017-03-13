@@ -17,10 +17,10 @@ public interface ICorreoElectronico {
 	 * Envío de correos electrónicos a una lista de destinatarios pasada como parámetros. El asunto, cuerpo del mensaje
 	 * y los documentos adjuntos se reciben como parámetros
 	 * 
-	 * @param List<String> Lista de destinatarios
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Lista de ficheros adjuntos
+	 * @param paramDestino List<String> Lista de destinatarios
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
+	 * @param paramAdjunto List<File> Lista de ficheros adjuntos
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -33,11 +33,11 @@ public interface ICorreoElectronico {
 	 * Envío de correos electrónico. El destinatario, destinatario en copia, asunto, cuerpo del mensaje y los documentos
 	 * adjuntos se reciben como parámetros.
 	 * 
-	 * @param String Destinatario
-	 * @param String Destinatario en copia
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Lista de ficheros adjuntos
+	 * @param paramDestino String Destinatario
+	 * @param paramCC String Destinatario en copia
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
+	 * @param paramAdjunto List<File> Lista de ficheros adjuntos
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -50,10 +50,10 @@ public interface ICorreoElectronico {
 	 * Envío de correos electrónico. El destinatario, asunto, cuerpo del mensaje y los documentos adjuntos se reciben
 	 * como parámetros
 	 * 
-	 * @param String Destinatario
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
-	 * @param List<File> Lista de ficheros adjuntos
+	 * @param paramDestino String Destinatario
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
+	 * @param paramAdjunto List<File> Lista de ficheros adjuntos
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -65,9 +65,9 @@ public interface ICorreoElectronico {
 	 * Envío de correos electrónico sin adjuntos. El destinatario, asunto y cuerpo del mensaje se reciben como
 	 * parámetros
 	 * 
-	 * @param String Destinatario
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param paramDestino String Destinatario
+	 * @param paramAsunto String del correo
+	 * @param paramCuerpo String Cuerpo del correo
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
@@ -79,13 +79,13 @@ public interface ICorreoElectronico {
 	 * Envío de correos electrónico sin adjuntos. La lista de destinatarios, asunto y cuerpo del mensaje se reciben como
 	 * parámetros
 	 * 
-	 * @param List<String> Lista de destinatarios
-	 * @param String Asunto del correo
-	 * @param String Cuerpo del correo
+	 * @param paramDestino List<String> Lista de destinatarios
+	 * @param paramAsunto String Asunto del correo
+	 * @param paramCuerpo String Cuerpo del correo
 	 * @exception CorreoException
 	 * 
 	 ************************************************************/
 
-	void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) throws CorreoException;;
+	void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) throws CorreoException;
 
 }

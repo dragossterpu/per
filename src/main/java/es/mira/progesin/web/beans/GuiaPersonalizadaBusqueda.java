@@ -9,6 +9,13 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 
+ * Clase de objetos para el almacenaje de los parámetros de búsqueda de guías personalizadas
+ * 
+ * @author Ezentis
+ *
+ */
 @Setter
 @Getter
 public class GuiaPersonalizadaBusqueda implements Serializable {
@@ -27,6 +34,10 @@ public class GuiaPersonalizadaBusqueda implements Serializable {
 
 	private List<GuiaPersonalizada> listaGuias;
 
+	/**
+	 * Limpia los valores del objeto
+	 * 
+	 */
 	public void resetValues() {
 		this.fechaDesde = null;
 		this.fechaHasta = null;

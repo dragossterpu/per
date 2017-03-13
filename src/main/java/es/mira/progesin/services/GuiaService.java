@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IGuiasRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
@@ -41,6 +42,9 @@ public class GuiaService implements IGuiaService {
 
 	@Autowired
 	private IGuiasRepository guiaRepository;
+
+	@Autowired
+	private IRegistroActividadService registroService;
 
 	@Override
 	public List<Guia> buscarGuiaPorCriteria(GuiaBusqueda busqueda) {
@@ -96,13 +100,13 @@ public class GuiaService implements IGuiaService {
 	@Override
 	@Transactional(readOnly = false)
 	public Guia guardaGuia(Guia guia) {
-		// TODO Tener en cuenta la eliminación de preguntas, si es lógica o física
+
 		Guia devuelve = new Guia();
 		try {
 			devuelve = guiaRepository.save(guia);
 		}
 		catch (Exception ex) {
-			return null;
+			registroService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), ex);
 		}
 		return devuelve;
 

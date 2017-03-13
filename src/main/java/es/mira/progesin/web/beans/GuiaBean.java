@@ -89,7 +89,7 @@ public class GuiaBean {
 	 * 
 	 * Visualiza la guía pasada como parámetro redirigiendo a la vista "visualizaGuía"
 	 * 
-	 * @param Guia
+	 * @param guia Guia
 	 * @return String
 	 * 
 	 *********************************************************/
@@ -130,7 +130,7 @@ public class GuiaBean {
 	 * 
 	 * Inicia el proceso de edición de una guía pasada como parámetro redirigiendo a la vista "editarGuia"
 	 * 
-	 * @param Guia
+	 * @param guia Guia
 	 * @return String
 	 * 
 	 *********************************************************/
@@ -147,7 +147,7 @@ public class GuiaBean {
 	 * 
 	 * Añade un nuevo paso a la guía
 	 * 
-	 * @param String
+	 * @param pregunta String
 	 * 
 	 *********************************************************/
 
@@ -204,7 +204,7 @@ public class GuiaBean {
 	 * 
 	 * Asigna a la variable "pasoSeleccionado" el valor seleccionado por el usuario en la vista
 	 * 
-	 * @param SelectEvent
+	 * @param event SelectEvent
 	 * 
 	 *********************************************************/
 
@@ -231,7 +231,7 @@ public class GuiaBean {
 	 * 
 	 * Crea un documento Word a partir de una guía pasada como parámetro
 	 * 
-	 * @param Guia
+	 * @param guia Guia
 	 * 
 	 *********************************************************/
 
@@ -312,7 +312,7 @@ public class GuiaBean {
 	 * Ordena los pasos de una lista pasada como parámetro almacenando el orden en los objetos GuiaPaso contenidos en la
 	 * misma
 	 *
-	 * @param List<GuiaPasos>
+	 * @param lista List<GuiaPasos>
 	 * @return List<GuiaPasos>
 	 * 
 	 *********************************************************/
@@ -345,7 +345,7 @@ public class GuiaBean {
 	 * 
 	 * Inicia el proceso de creación de una guía personalizada y redirige a la vista de personalización
 	 *
-	 * @param Guia
+	 * @param guia Guia
 	 * @return String
 	 * 
 	 *********************************************************/
@@ -363,7 +363,7 @@ public class GuiaBean {
 	 * 
 	 * Almacena en BDD la guía personalizada
 	 *
-	 * @param String
+	 * @param nombre String
 	 * 
 	 *********************************************************/
 

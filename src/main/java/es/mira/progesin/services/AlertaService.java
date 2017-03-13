@@ -95,7 +95,8 @@ public class AlertaService implements IAlertaService {
 	 * 
 	 * Busca en base de datos las alertas cuyos id se recibe como parámetro
 	 * 
-	 * @param Iterable<Long>
+	 * @param ids Iterable<Long>
+	 * @return Iterable<Alerta>
 	 * 
 	 **********************************************************************************/
 
@@ -210,9 +211,9 @@ public class AlertaService implements IAlertaService {
 	 * Crea una alerta y se asigna a varios roles. Se crea a partir de la sección, la descripción y la lista de roles
 	 * que se reciben como parámetros
 	 * 
-	 * @param String seccion
-	 * @param String descripcion
-	 * @param List<RoleEnum> roles
+	 * @param seccion String
+	 * @param descripcion String
+	 * @param roles List<RoleEnum>
 	 * 
 	 **********************************************************************************/
 

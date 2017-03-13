@@ -44,12 +44,6 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	private INotificacionService notificacionService;
 
 	@Autowired
-	private IEquipoService equipoService;
-
-	@Autowired
-	private IInspeccionesService inspeccionService;
-
-	@Autowired
 	private IMiembrosRepository miembrosRepository;
 
 	/***************************
@@ -101,7 +95,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	public List<Alerta> findAlertasByUser(String user) {
 		List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipo(user,
 				TipoMensajeEnum.ALERTA);
-		List<Alerta> respuesta = new ArrayList<Alerta>();
+		List<Alerta> respuesta = new ArrayList<>();
 
 		for (AlertasNotificacionesUsuario alertasNotificacionesUsuario : mensajesAlerta) {
 			Alerta alerta = alertaService.findOne(alertasNotificacionesUsuario.getIdMensaje());
@@ -125,7 +119,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	public List<Notificacion> findNotificacionesByUser(String user) {
 		List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipo(user,
 				TipoMensajeEnum.NOTIFICACION);
-		List<Notificacion> respuesta = new ArrayList<Notificacion>();
+		List<Notificacion> respuesta = new ArrayList<>();
 
 		for (AlertasNotificacionesUsuario alertasNotificacionesUsuario : mensajesAlerta) {
 			Notificacion alerta = notificacionService.findOne(alertasNotificacionesUsuario.getIdMensaje());
@@ -205,8 +199,8 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 * 
 	 * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a una lista de roles
 	 * 
-	 * @param Object
-	 * @param List<RoleEnum>
+	 * @param entidad Object
+	 * @param roles List<RoleEnum>
 	 * 
 	 ***************************/
 
@@ -282,14 +276,14 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 * Recupera la lista de notificaciones en función de una lista contenida en una lista de
 	 * AlertasNotificacionesUsuario pasada como parámetro
 	 * 
-	 * @param List<AlertasNotificacionesUsuario>
+	 * @param lista List<AlertasNotificacionesUsuario>
 	 * @return List<Notificacion>
 	 * 
 	 ***************************/
 
 	@Override
 	public List<Notificacion> findNotificaciones(List<AlertasNotificacionesUsuario> lista) {
-		List<Notificacion> listaNotificaciones = new ArrayList<Notificacion>();
+		List<Notificacion> listaNotificaciones = new ArrayList<>();
 		for (AlertasNotificacionesUsuario men : lista) {
 			listaNotificaciones.add(notificacionService.findOne(men.getIdMensaje()));
 		}
@@ -301,14 +295,14 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
 	 * Recupera la lista de alertas en función de una lista contenida en una lista de AlertasNotificacionesUsuario
 	 * pasada como parámetro
 	 * 
-	 * @param List<AlertasNotificacionesUsuario>
+	 * @param lista List<AlertasNotificacionesUsuario>
 	 * @return List<Alerta>
 	 * 
 	 ***************************/
 
 	@Override
 	public List<Alerta> findAlertas(List<AlertasNotificacionesUsuario> lista) {
-		List<Alerta> listaAlertas = new ArrayList<Alerta>();
+		List<Alerta> listaAlertas = new ArrayList<>();
 		for (AlertasNotificacionesUsuario men : lista) {
 			listaAlertas.add(alertaService.findOne(men.getIdMensaje()));
 		}

@@ -23,7 +23,7 @@ public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
 	 * recupera los pasos que no tengan fecha de baja.
 	 * 
 	 * @return List<GuiaPasos>
-	 * @param Guía
+	 * @param idGuia
 	 * 
 	 *****************************************************************************/
 
@@ -34,7 +34,7 @@ public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
 	 * Recupera una lista de los pasos elegidos en una guía personalizada cuyo id se pasa como parámetro.
 	 * 
 	 * @return List<GuiaPasos>
-	 * @param Long
+	 * @param idGuiaPersonalizada
 	 * 
 	 *****************************************************************************/
 
@@ -46,7 +46,7 @@ public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
 	 * Verifica si el paso existe en alguna guía personalizada
 	 * 
 	 * @return GuiaPasos
-	 * @param Long
+	 * @param idPaso
 	 * 
 	 *****************************************************************************/
 

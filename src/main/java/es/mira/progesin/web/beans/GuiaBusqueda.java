@@ -9,6 +9,13 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 
+ * Objeto para almacenar los parámetros de búsqueda de Guías
+ * 
+ * @author Ezentis
+ *
+ */
 @Setter
 @Getter
 public class GuiaBusqueda implements Serializable {
@@ -27,6 +34,9 @@ public class GuiaBusqueda implements Serializable {
 
 	private List<Guia> listaGuias;
 
+	/**
+	 * Limpia los valores del objeto
+	 */
 	public void resetValues() {
 		this.fechaDesde = null;
 		this.fechaHasta = null;

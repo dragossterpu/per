@@ -21,7 +21,7 @@ public interface IGuiaService {
 	 * Devuelve una lista de guías en función de los criterios de búsqueda recibidos como parámetro
 	 * 
 	 * @return List<Guia>
-	 * @param GuiaBusqueda
+	 * @param busqueda
 	 * 
 	 *************************************/
 
@@ -32,7 +32,7 @@ public interface IGuiaService {
 	 * Devuelve la lista de pasos contenidos en una guía recibida como parámetro
 	 * 
 	 * @return List<GuiaPasos>
-	 * @param Guia
+	 * @param guia
 	 * 
 	 *************************************/
 
@@ -43,7 +43,7 @@ public interface IGuiaService {
 	 * Almacena en BDD una guía pasada como parámetro
 	 * 
 	 * @return Guia
-	 * @param Guia
+	 * @param guia
 	 * 
 	 *************************************/
 
@@ -64,7 +64,7 @@ public interface IGuiaService {
 	 * Conprueba la existencia de un paso recibido como parámetro en las guías personalizadas
 	 * 
 	 * @return boolean
-	 * @param GuiaPasos
+	 * @param paso
 	 * 
 	 *************************************/
 

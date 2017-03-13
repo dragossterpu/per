@@ -19,6 +19,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * Entidad para el almacenamiento de pasos de guía
+ * 
+ * @author Ezentis
+ *
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
