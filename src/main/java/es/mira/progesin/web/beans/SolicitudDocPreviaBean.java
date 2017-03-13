@@ -50,8 +50,8 @@ import lombok.Setter;
 
 /**
  * Controlador de las operaciones relacionadas con las solicitudes de documentación previas al envio de cuestionarios.
- * Carga de nuevos modelos de solicitud, creación de solicitudes, validación por parte de apoyo, envío a la unidad en
- * cuestión, cumplimentación por parte de ésta y finalización de las mismas.
+ * Creación de solicitudes, validación por parte de apoyo, envío a la unidad en cuestión, cumplimentación por parte de
+ * ésta y finalización de las mismas.
  * 
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
@@ -225,7 +225,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * que quieran.
      * 
      * @author EZENTIS
-     * @param solicitud recuperado del formulario
+     * @param solicitud recuperada del formulario
      * @return vista modificarSolicitud
      */
     public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
@@ -240,7 +240,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * validada por jefe equipo, enviada, cumplimentada, no conforme y finalizada
      * 
      * @author EZENTIS
-     * @param solicitud
+     * @param solicitud a mostrar
      * @return vista vistaSolicitud
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
@@ -350,7 +350,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * unidad al cumplimentar una solicitud.
      * 
      * @author EZENTIS
-     * @param idDocumento
+     * @param idDocumento clave del documento a descargar
      */
     public void descargarFichero(Long idDocumento) {
         try {
@@ -392,6 +392,10 @@ public class SolicitudDocPreviaBean implements Serializable {
         return event.getNewStep();
     }
     
+    /**
+     * Método para cambiar los campos que se muestran en la tabla de resultados del buscador
+     * @param e ToggleEvent evento que lanza el método
+     */
     public void onToggle(ToggleEvent e) {
         listaColumnToggler.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
@@ -402,7 +406,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * finalizadas no se pueden eliminar.
      * 
      * @author EZENTIS
-     * @param solicitudDocumentacionPrevia solicitud a eliminar
+     * @param solicitud a eliminar
      */
     public void eliminarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
@@ -592,6 +596,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Adicionalmente reactiva el usuario provisinal que se usó para llevarla a cabo.
      * 
      * @author EZENTIS
+     * @param motivosNoConforme texto introducido por el usuario
      */
     public void noConformeSolicitud(String motivosNoConforme) {
         try {
@@ -678,8 +683,8 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
      * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
      * 
-     * @param inspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en los
-     * formularios de creación y modificación
+     * @param infoInspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en
+     * los formularios de creación y modificación
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
@@ -764,6 +769,11 @@ public class SolicitudDocPreviaBean implements Serializable {
         return respuesta;
     }
     
+    /**
+     * Cargar la página siguiente de resultados de la búsqueda
+     * 
+     * @author EZENTIS
+     */
     public void nextSolicitud() {
         
         if (actualPage < numPages) {
@@ -773,11 +783,15 @@ public class SolicitudDocPreviaBean implements Serializable {
             
             listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
                     MAX_RESULTS_PAGE, solicitudDocPreviaBusqueda);
-            
         }
         
     }
     
+    /**
+     * Cargar la página anterior de resultados de la búsqueda
+     * 
+     * @author EZENTIS
+     */
     public void previousSolicitud() {
         
         if (actualPage > FIRST_PAGE) {
@@ -787,10 +801,14 @@ public class SolicitudDocPreviaBean implements Serializable {
             
             listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
                     MAX_RESULTS_PAGE, solicitudDocPreviaBusqueda);
-            
         }
     }
     
+    /**
+     * Recupera el número total de páginas de resultados de la búsqueda
+     * 
+     * @author EZENTIS
+     */
     public void getCountPagesSolicitud() {
         numeroRegistros = solicitudDocumentacionService
                 .getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusquedaNueva);
@@ -802,17 +820,23 @@ public class SolicitudDocPreviaBean implements Serializable {
         
     }
     
-    public SolicitudDocPreviaBusqueda copiaSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda solicitud) {
-        SolicitudDocPreviaBusqueda solicitudCopia = new SolicitudDocPreviaBusqueda();
-        solicitudCopia.setAmbitoInspeccion(solicitud.getAmbitoInspeccion());
-        solicitudCopia.setEstado(solicitud.getEstado());
-        solicitudCopia.setFechaDesde(solicitud.getFechaDesde());
-        solicitudCopia.setFechaHasta(solicitud.getFechaHasta());
-        solicitudCopia.setNombreUnidad(solicitud.getNombreUnidad());
-        solicitudCopia.setNumeroInspeccion(solicitud.getNumeroInspeccion());
-        solicitudCopia.setTipoInspeccion(solicitud.getTipoInspeccion());
-        solicitudCopia.setUsuarioCreacion(solicitud.getUsuarioCreacion());
+    /**
+     * Guarda una copia de los parámetros de búsqueda usados por el usuario
+     * 
+     * @param solicitudBusqueda objeto con los parámetros
+     * @return copia del objeto
+     */
+    public SolicitudDocPreviaBusqueda copiaSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda solicitudBusqueda) {
+        SolicitudDocPreviaBusqueda solicitudBusquedaCopia = new SolicitudDocPreviaBusqueda();
+        solicitudBusquedaCopia.setAmbitoInspeccion(solicitudBusqueda.getAmbitoInspeccion());
+        solicitudBusquedaCopia.setEstado(solicitudBusqueda.getEstado());
+        solicitudBusquedaCopia.setFechaDesde(solicitudBusqueda.getFechaDesde());
+        solicitudBusquedaCopia.setFechaHasta(solicitudBusqueda.getFechaHasta());
+        solicitudBusquedaCopia.setNombreUnidad(solicitudBusqueda.getNombreUnidad());
+        solicitudBusquedaCopia.setNumeroInspeccion(solicitudBusqueda.getNumeroInspeccion());
+        solicitudBusquedaCopia.setTipoInspeccion(solicitudBusqueda.getTipoInspeccion());
+        solicitudBusquedaCopia.setUsuarioCreacion(solicitudBusqueda.getUsuarioCreacion());
         
-        return solicitudCopia;
+        return solicitudBusquedaCopia;
     }
 }

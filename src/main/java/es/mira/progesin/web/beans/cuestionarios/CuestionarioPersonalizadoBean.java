@@ -30,10 +30,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 
- * @author EZENTIS Esta clase contiene todos los métodos necesarios para el tratamiento de los cuestionarios creados a
- * partir de un modelo
+ * Gestiona el buscador de cuestionarios personalizados. A través de él se puede ver las preguntas del mismo, acceder al
+ * formulario para enviarlo a una unidad en el marco de una inspección determinada o eliminarlo lógica o físicamente en
+ * caso de que no haya sido enviado aún.
  *
+ * @author EZENTIS
  */
 @Setter
 @Getter
@@ -149,7 +150,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     }
     
     /**
-     * Muestra la pantalla de envío del cuestionario
+     * Muestra la pantalla de envío del cuestionario personalizado
      *
      * @author EZENTIS
      * @param cuestionario Cuestionario a enviar
@@ -170,6 +171,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
         }
     }
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
     public void init() {
         cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();

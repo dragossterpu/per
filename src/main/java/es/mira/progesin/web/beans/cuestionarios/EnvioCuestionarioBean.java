@@ -40,9 +40,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean asociado a la pantalla de envío de cuestionarios
+ * Bean asociado a la pantalla de envío de cuestionarios. Genera un cuestionario enviado a partir de un cuestionario
+ * personalizado seleccionado por el usuario, da de alta los usuarios provisionales para que lo cumplimenten y les
+ * notifica sus credenciales por correo electrónico.
+ * 
  * @author EZENTIS
- *
  */
 @Setter
 @Getter
@@ -90,23 +92,26 @@ public class EnvioCuestionarioBean implements Serializable {
      * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasados como parámetro. Se
      * usa en el formulario de envío para el autocompletado.
      * 
-     * @param numeroInspeccion Número de inspección que teclea el usuario en el formulario de envío o nombre de la
-     * unidad de la inspección
-     * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el número introducido
+     * @author EZENTIS
+     * @param infoInspeccion Número de inspección que teclea el usuario en el formulario de envío o nombre de la unidad
+     * de la inspección
+     * @return lista de inspecciones que contienen algún caracter coincidente con el número introducido
      */
-    public List<Inspeccion> autocompletarInspeccion(String nombreUnidad) {
+    public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(nombreUnidad,
+            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
                     usuarioActual.getUsername());
         } else {
-            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(nombreUnidad);
+            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
         }
     }
     
     /**
      * Completa los datos del formulario (correo, nombre, cargo, fecha límite) si el tipo de inspección asociada es de
      * tipo General Periódica y tiene una solicitud de documentación previa finalizada.
+     * 
+     * @author EZENTIS
      */
     public void completarDatosSolicitudPrevia() {
         try {
@@ -134,6 +139,8 @@ public class EnvioCuestionarioBean implements Serializable {
      * Guarda los datos introducidos en el formulario de envío en BBDD. Además crea 10 usuarios provisionales para el
      * destinatario del correo. Se envía un correo electrónico informando de la URL de acceso a la aplicación y la
      * contraseña de los 10 usuarios provisionales.
+     * 
+     * @author EZENTIS
      */
     public void enviarCuestionario() {
         try {
@@ -180,7 +187,9 @@ public class EnvioCuestionarioBean implements Serializable {
     
     /**
      * Construye y envía el correo
-     * @param password Password de entrada a la aplicación para los usuarios provisionales
+     * 
+     * @author EZENTIS
+     * @param password de entrada a la aplicación para los usuarios provisionales
      * @param usuarios Lista de usuarios provisionales
      */
     private void enviarCorreoCuestionario(String password, List<User> usuarios) {
@@ -215,6 +224,11 @@ public class EnvioCuestionarioBean implements Serializable {
         }
     }
     
+    /**
+     * 
+     * @author EZENTIS
+     * @param cuestionarioEnvio
+     */
     private void crearResgistrosRespuestaTipoTablaMatriz(CuestionarioEnvio cuestionarioEnvio) {
         try {
             List<PreguntasCuestionario> listaPreguntasTablaMatriz = preguntasRepository
@@ -248,14 +262,21 @@ public class EnvioCuestionarioBean implements Serializable {
         }
     }
     
+    /**
+     * 
+     * @author EZENTIS
+     * @param pregunta
+     * @param listaDatosTabla
+     * @param respuestaCuestionario
+     */
     private void crearRespuestaMatriz(PreguntasCuestionario pregunta, List<DatosTablaGenerica> listaDatosTabla,
-            RespuestaCuestionario rtaCuestionario) {
+            RespuestaCuestionario respuestaCuestionario) {
         List<ConfiguracionRespuestasCuestionario> listaFilas = configRespuestas
                 .findFilasBySeccion(pregunta.getTipoRespuesta());
         for (ConfiguracionRespuestasCuestionario c : listaFilas) {
             DatosTablaGenerica dtg = new DatosTablaGenerica();
             dtg.setNombreFila(c.getConfig().getValor());
-            dtg.setRespuesta(rtaCuestionario);
+            dtg.setRespuesta(respuestaCuestionario);
             listaDatosTabla.add(dtg);
         }
     }

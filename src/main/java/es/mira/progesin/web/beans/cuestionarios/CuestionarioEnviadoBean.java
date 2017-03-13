@@ -33,10 +33,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * Controlador de las operaciones relacionadas con los cuestionarios enviados. Búsqueda de cuestionarios enviados,
+ * validación de sus respuestas por parte del equipo de inspecciones, re-envío a la unidad en cuestión en caso de no
+ * conformidad, finalización del cuestionario cuando todas las respuestas estén validadas y, eventualmente, anulación de
+ * cuestionarios.
  * 
- * @author EZENTIS Esta clase contiene todos los métodos necesarios para el tratamiento de los cuestionarios enviados a
- * partir de un cuestionario personalizado
- *
+ * @author EZENTIS
  */
 @Setter
 @Getter
@@ -82,6 +84,11 @@ public class CuestionarioEnviadoBean implements Serializable {
     @Autowired
     transient ApplicationBean applicationBean;
     
+    /**
+     * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario
+     * 
+     * @author EZENTIS
+     */
     public void buscarCuestionario() {
         listaCuestionarioEnvio = cuestionarioEnvioService
                 .buscarCuestionarioEnviadoCriteria(cuestionarioEnviadoBusqueda);
@@ -102,6 +109,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     /**
      * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
+     * 
+     * @author EZENTIS
      */
     public void limpiar() {
         cuestionarioEnviadoBusqueda.limpiar();
@@ -109,8 +118,10 @@ public class CuestionarioEnviadoBean implements Serializable {
     }
     
     /**
-     * Elimina un cuestionario
-     * @param cuestionario Cuestionario a eliminar
+     * Elimina un cuestionario seleccionado en los resultados de la búsqueda.
+     * 
+     * @param cuestionario a eliminar
+     * @author EZENTIS
      */
     public void eliminarCuestionario(CuestionarioEnvio cuestionario) {
         try {
@@ -144,6 +155,11 @@ public class CuestionarioEnviadoBean implements Serializable {
         }
     }
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
     public void init() {
         cuestionarioEnviadoBusqueda = new CuestionarioEnviadoBusqueda();
@@ -155,8 +171,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      * la validación de todas las respuestas se da por finalizado el cuestionario.
      * 
      * @author EZENTIS
-     * @see guardarRespuestas
-     *
      */
     public void validarRespuestas() {
         try {
@@ -226,6 +240,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      * Adicionalmente reactiva los usuarios provisinales que se usaron para llevarlo a cabo.
      * 
      * @author EZENTIS
+     * @param motivosNoConforme texto introducido por el usuario
      */
     public void noConformeCuestionario(String motivosNoConforme) {
         try {
