@@ -60,6 +60,8 @@ public class ModificarModeloCuestionarioBean {
     
     private List<AreasCuestionario> listaAreasCuestionario;
     
+    private List<AreasCuestionario> listaAreasCuestionarioGrabar;
+    
     private List<String> listaTipoPreguntas;
     
     private List<String> listaTipoPreguntasFinal;
@@ -112,6 +114,8 @@ public class ModificarModeloCuestionarioBean {
         this.modeloCuestionario = modeloCuestionario;
         listaAreasCuestionario = areaCuestionarioRepository
                 .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
+        listaAreasCuestionarioGrabar = areaCuestionarioRepository
+                .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
         listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
                 .findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
         listaTipoPreguntasFinal = new ArrayList<>();
@@ -137,6 +141,7 @@ public class ModificarModeloCuestionarioBean {
         this.modeloCuestionario = new ModeloCuestionario();
         
         listaAreasCuestionario = new ArrayList<>();
+        listaAreasCuestionarioGrabar = new ArrayList<>();
         listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
                 .findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
         
@@ -165,7 +170,8 @@ public class ModificarModeloCuestionarioBean {
             areaAux.setIdCuestionario(modeloCuestionario.getId());
             areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
             listaAreasCuestionario.add(areaAux);
-            modeloCuestionario.setAreas(listaAreasCuestionario);
+            listaAreasCuestionarioGrabar.add(areaAux);
+            modeloCuestionario.setAreas(listaAreasCuestionarioGrabar);
         }
     }
     
@@ -193,19 +199,22 @@ public class ModificarModeloCuestionarioBean {
                         .findAreaExistenteEnCuestionariosPersonalizados(areaSelec.getId());
                 if (areaUsada != null) {
                     // baja lógica
-                    int index = listaAreasCuestionario.indexOf(areaSelec);
+                    int index = listaAreasCuestionarioGrabar.indexOf(areaSelec);
                     areaSelec.setFechaBaja(new Date());
                     areaSelec.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                    listaAreasCuestionario.set(index, areaSelec);
+                    listaAreasCuestionarioGrabar.set(index, areaSelec);
+                    listaAreasCuestionario.remove(areaSelec);
                 } else {
                     // baja física
                     listaAreasCuestionario.remove(areaSelec);
+                    listaAreasCuestionarioGrabar.remove(areaSelec);
                 }
             } else {
                 // Es un area que acaba de añadir el usuario
                 borraAreaNueva(listaAreasCuestionario, areaSelec);
+                borraAreaNueva(listaAreasCuestionarioGrabar, areaSelec);
             }
-            modeloCuestionario.setAreas(listaAreasCuestionario);
+            modeloCuestionario.setAreas(listaAreasCuestionarioGrabar);
         }
     }
     
