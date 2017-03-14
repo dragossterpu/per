@@ -38,16 +38,16 @@ import lombok.ToString;
 @Entity
 @Table(name = "documentosBlob")
 public class DocumentoBlob implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_documentosBlob", sequenceName = "seq_documentosBlob", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosBlob")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@Column(name = "fichero")
-	@Lob
-	private transient Blob fichero;
-
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_documentosBlob", sequenceName = "seq_documentosBlob", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosBlob")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @Column(name = "fichero")
+    @Lob
+    private Blob fichero;
+    
 }
