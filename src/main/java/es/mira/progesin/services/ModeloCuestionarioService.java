@@ -42,11 +42,13 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
     @Override
     public void reemplazarAreaModelo(List<AreasCuestionario> listaAreas, AreasCuestionario area) {
         boolean noEncontrada = true;
-        for (int i = 0; i < listaAreas.size() && noEncontrada; i++) {
-            // El área es la misma pero la lista de preguntas que contienen no
-            if (listaAreas.get(i).equals(area)) {
-                listaAreas.set(i, area);
-                noEncontrada = false;
+        if (area.getId() != null) {
+            for (int i = 0; i < listaAreas.size() && noEncontrada; i++) {
+                // El área es la misma pero la lista de preguntas que contienen no
+                if (listaAreas.get(i).equals(area)) {
+                    listaAreas.set(i, area);
+                    noEncontrada = false;
+                }
             }
         }
     }
