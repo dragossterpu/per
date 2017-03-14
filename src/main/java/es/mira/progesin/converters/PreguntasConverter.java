@@ -11,7 +11,6 @@ import org.hibernate.collection.internal.PersistentBag;
 import org.primefaces.component.orderlist.OrderList;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 
 /***********************************
@@ -37,37 +36,29 @@ public class PreguntasConverter implements Converter {
 		if (component instanceof OrderList) {
 			Object list = ((OrderList) component).getValue();
 			if (list instanceof PersistentBag) {
-				ret = buscaEnBolsa(list, value);
+				PersistentBag bolsa = (PersistentBag) list;
+				Iterator<?> iterador = bolsa.iterator();
+				while (iterador.hasNext()) {
+					Object objeto = iterador.next();
+					String name = ((PreguntasCuestionario) objeto).getPregunta();
+					if (value.equals(name)) {
+						ret = objeto;
+						break;
+					}
+				}
 			}
 			else {
-				ret = buscaEnLista(list, value);
-
+				ArrayList<PreguntasCuestionario> lista = ((ArrayList<PreguntasCuestionario>) list);
+				for (Object objeto : lista) {
+					String name = ((PreguntasCuestionario) objeto).getPregunta();
+					if (value.equals(name)) {
+						ret = objeto;
+						break;
+					}
+				}
 			}
 		}
 		return ret;
 	}
 
-	private Object buscaEnBolsa(Object list, Object value) {
-		PersistentBag bolsa = (PersistentBag) list;
-		Iterator<?> iterador = bolsa.iterator();
-		while (iterador.hasNext()) {
-			Object objeto = iterador.next();
-			String name = ((GuiaPasos) objeto).getPaso();
-			if (value.equals(name)) {
-				return objeto;
-			}
-		}
-		return null;
-	}
-
-	private Object buscaEnLista(Object list, Object value) {
-		ArrayList<GuiaPasos> lista = (ArrayList<GuiaPasos>) list;
-		for (Object objeto : lista) {
-			String name = ((GuiaPasos) objeto).getPaso();
-			if (value.equals(name)) {
-				return objeto;
-			}
-		}
-		return null;
-	}
 }
