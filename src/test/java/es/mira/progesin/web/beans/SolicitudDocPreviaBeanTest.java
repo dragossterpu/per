@@ -3,622 +3,541 @@
  */
 package es.mira.progesin.web.beans;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.primefaces.event.FlowEvent;
+import org.primefaces.event.ToggleEvent;
+
+import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 
 /**
+ * 
+ * 
  * @author Ezentis
- *
  */
 public class SolicitudDocPreviaBeanTest {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#crearSolicitud()}.
-	 */
-	@Test
-	public final void testCrearSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormModificarSolicitud(es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia)}.
-	 */
-	@Test
-	public final void testGetFormModificarSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#visualizarSolicitud(es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia)}.
-	 */
-	@Test
-	public final void testVisualizarSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionApoyo()}.
-	 */
-	@Test
-	public final void testValidacionApoyo() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionJefeEquipo()}.
-	 */
-	@Test
-	public final void testValidacionJefeEquipo() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormularioCrearSolicitud()}.
-	 */
-	@Test
-	public final void testGetFormularioCrearSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(java.lang.Long)}.
-	 */
-	@Test
-	public final void testDescargarFichero() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(org.primefaces.event.FlowEvent)}.
-	 */
-	@Test
-	public final void testOnFlowProcess() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onToggle(org.primefaces.event.ToggleEvent)}.
-	 */
-	@Test
-	public final void testOnToggle() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia)}.
-	 */
-	@Test
-	public final void testEliminarSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#modificarSolicitud()}.
-	 */
-	@Test
-	public final void testModificarSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#enviarSolicitud()}.
-	 */
-	@Test
-	public final void testEnviarSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#finalizarSolicitud()}.
-	 */
-	@Test
-	public final void testFinalizarSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormNoConformeSolicitud()}.
-	 */
-	@Test
-	public final void testGetFormNoConformeSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#noConformeSolicitud()}.
-	 */
-	@Test
-	public final void testNoConformeSolicitud() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormBusquedaSolicitudes()}.
-	 */
-	@Test
-	public final void testGetFormBusquedaSolicitudes() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#limpiarBusqueda()}.
-	 */
-	@Test
-	public final void testLimpiarBusqueda() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#buscarSolicitudDocPrevia()}.
-	 */
-	@Test
-	public final void testBuscarSolicitudDocPrevia() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#esJefeEquipoInspeccion()}.
-	 */
-	@Test
-	public final void testEsJefeEquipoInspeccion() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#autocompletarInspeccion(java.lang.String)}.
-	 */
-	@Test
-	public final void testAutocompletarInspeccion() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda)}.
-	 */
-	@Test
-	public final void testSetSolicitudDocPreviaBusqueda() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setVieneDe(String)}.
-	 */
-	@Test
-	public final void testSetVieneDe() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setRegActividadService(IRegistroActividadService)}.
-	 */
-	@Test
-	public final void testSetRegActividadService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setNotificacionService(INotificacionService)}.
-	 */
-	@Test
-	public final void testSetNotificacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setListaSolicitudesPrevia(List)}.
-	 */
-	@Test
-	public final void testSetListaSolicitudesPrevia() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setListaColumnToggler(List)}.
-	 */
-	@Test
-	public final void testSetListaColumnToggler() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setSolicitudDocumentacionService(ISolicitudDocumentacionService)}.
-	 */
-	@Test
-	public final void testSetSolicitudDocumentacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setTipoDocumentacionService(ITipoDocumentacionService)}.
-	 */
-	@Test
-	public final void testSetTipoDocumentacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setInspeccionesService(IInspeccionesService)}.
-	 */
-	@Test
-	public final void testSetInspeccionesService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setSolicitudDocumentacionPrevia(SolicitudDocumentacionPrevia)}.
-	 */
-	@Test
-	public final void testSetSolicitudDocumentacionPrevia() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setBackupFechaLimiteEnvio(Date)}.
-	 */
-	@Test
-	public final void testSetBackupFechaLimiteEnvio() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setSkip(boolean)}.
-	 */
-	@Test
-	public final void testSetSkip() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setFile(StreamedContent)}.
-	 */
-	@Test
-	public final void testSetFile() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setListadoDocumentosPrevios(List)}.
-	 */
-	@Test
-	public final void testSetListadoDocumentosPrevios() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setListadoDocumentosCargados(List)}.
-	 */
-	@Test
-	public final void testSetListadoDocumentosCargados() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setDocumentosSeleccionados(List)}.
-	 */
-	@Test
-	public final void testSetDocumentosSeleccionados() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setListadoDocumentos(List)}.
-	 */
-	@Test
-	public final void testSetListadoDocumentos() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setGestDocumentacionService(IGestDocSolicitudDocumentacionService)}.
-	 */
-	@Test
-	public final void testSetGestDocumentacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setUserService(IUserService)}.
-	 */
-	@Test
-	public final void testSetUserService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setDocumentoService(IDocumentoService)}.
-	 */
-	@Test
-	public final void testSetDocumentoService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setParametrosRepository(IParametrosRepository)}.
-	 */
-	@Test
-	public final void testSetParametrosRepository() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setDatosApoyo(Map)}.
-	 */
-	@Test
-	public final void testSetDatosApoyo() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setPasswordEncoder(PasswordEncoder)}.
-	 */
-	@Test
-	public final void testSetPasswordEncoder() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setCorreoElectronico(ICorreoElectronico)}.
-	 */
-	@Test
-	public final void testSetCorreoElectronico() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setSdf(SimpleDateFormat)}.
-	 */
-	@Test
-	public final void testSetSdf() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#setMotivosNoConforme(String)}.
-	 */
-	@Test
-	public final void testSetMotivosNoConforme() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getSolicitudDocPreviaBusqueda()}.
-	 */
-	@Test
-	public final void testGetSolicitudDocPreviaBusqueda() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getVieneDe()}.
-	 */
-	@Test
-	public final void testGetVieneDe() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getRegActividadService()}.
-	 */
-	@Test
-	public final void testGetRegActividadService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getNotificacionService()}.
-	 */
-	@Test
-	public final void testGetNotificacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getListaSolicitudesPrevia()}.
-	 */
-	@Test
-	public final void testGetListaSolicitudesPrevia() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getListaColumnToggler()}.
-	 */
-	@Test
-	public final void testGetListaColumnToggler() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getSolicitudDocumentacionService()}.
-	 */
-	@Test
-	public final void testGetSolicitudDocumentacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getTipoDocumentacionService()}.
-	 */
-	@Test
-	public final void testGetTipoDocumentacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getInspeccionesService()}.
-	 */
-	@Test
-	public final void testGetInspeccionesService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getSolicitudDocumentacionPrevia()}.
-	 */
-	@Test
-	public final void testGetSolicitudDocumentacionPrevia() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getBackupFechaLimiteEnvio()}.
-	 */
-	@Test
-	public final void testGetBackupFechaLimiteEnvio() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#isSkip()}.
-	 */
-	@Test
-	public final void testIsSkip() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFile()}.
-	 */
-	@Test
-	public final void testGetFile() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getListadoDocumentosPrevios()}.
-	 */
-	@Test
-	public final void testGetListadoDocumentosPrevios() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getListadoDocumentosCargados()}.
-	 */
-	@Test
-	public final void testGetListadoDocumentosCargados() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getDocumentosSeleccionados()}.
-	 */
-	@Test
-	public final void testGetDocumentosSeleccionados() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getListadoDocumentos()}.
-	 */
-	@Test
-	public final void testGetListadoDocumentos() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getGestDocumentacionService()}.
-	 */
-	@Test
-	public final void testGetGestDocumentacionService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getUserService()}.
-	 */
-	@Test
-	public final void testGetUserService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getDocumentoService()}.
-	 */
-	@Test
-	public final void testGetDocumentoService() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getParametrosRepository()}.
-	 */
-	@Test
-	public final void testGetParametrosRepository() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getDatosApoyo()}.
-	 */
-	@Test
-	public final void testGetDatosApoyo() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getPasswordEncoder()}.
-	 */
-	@Test
-	public final void testGetPasswordEncoder() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getCorreoElectronico()}.
-	 */
-	@Test
-	public final void testGetCorreoElectronico() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getSdf()}.
-	 */
-	@Test
-	public final void testGetSdf() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getMotivosNoConforme()}.
-	 */
-	@Test
-	public final void testGetMotivosNoConforme() {
-		
-	}
-
+    
+    /**
+     * @throws java.lang.Exception ex
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
+    
+    /**
+     * @throws java.lang.Exception ex
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
+    
+    /**
+     * @throws java.lang.Exception ex
+     */
+    @Before
+    public void setUp() throws Exception {
+    }
+    
+    /**
+     * @throws java.lang.Exception ex
+     */
+    @After
+    public void tearDown() throws Exception {
+    }
+    
+    /**
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void type() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        assertThat(SolicitudDocPreviaBean.class, notNullValue());
+    }
+    
+    /**
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void instantiation() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        assertThat(target, notNullValue());
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#crearSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void crearSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.crearSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormModificarSolicitud(SolicitudDocumentacionPrevia)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void getFormModificarSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.getFormModificarSolicitud(solicitud);
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#visualizarSolicitud(SolicitudDocumentacionPrevia)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void visualizarSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.visualizarSolicitud(solicitud);
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionApoyo()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void validacionApoyo() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.validacionApoyo();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionJefeEquipo()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void validacionJefeEquipo() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.validacionJefeEquipo();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormularioCrearSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void getFormularioCrearSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.getFormularioCrearSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#init()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void init() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.init();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void descargarFichero() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        Long idDocumento = null;
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.descargarFichero(idDocumento);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(FlowEvent)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void onFlowProcess() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        FlowEvent event = mock(FlowEvent.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.onFlowProcess(event);
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onToggle(ToggleEvent)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void onToggle() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        ToggleEvent e = mock(ToggleEvent.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.onToggle(e);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void eliminarSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.eliminarSolicitud(solicitud);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#modificarSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void modificarSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.modificarSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#enviarSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void enviarSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.enviarSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#finalizarSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void finalizarSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.finalizarSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#noConformeSolicitud(String)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void noConformeSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        String motivosNoConforme = null;
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.noConformeSolicitud(motivosNoConforme);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormBusquedaSolicitudes()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void getFormBusquedaSolicitudes() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.getFormBusquedaSolicitudes();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#limpiarBusqueda()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void limpiarBusqueda() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.limpiarBusqueda();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#buscarSolicitudDocPrevia()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void buscarSolicitudDocPrevia() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.buscarSolicitudDocPrevia();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#autocompletarInspeccion(String)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void autocompletarInspeccion() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        String infoInspeccion = null;
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        List<Inspeccion> actual = target.autocompletarInspeccion(infoInspeccion);
+        // then
+        // e.g. : verify(mocked).called();
+        List<Inspeccion> expected = null;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#imprimirPdf()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void imprimirPdf() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.imprimirPdf();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#inspeccionSinTareasPendientes()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void inspeccionSinTareasPendientes() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        boolean actual = target.inspeccionSinTareasPendientes();
+        // then
+        // e.g. : verify(mocked).called();
+        boolean expected = false;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#usuarioSinTareasPendientes()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void usuarioSinTareasPendientes() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        boolean actual = target.usuarioSinTareasPendientes();
+        // then
+        // e.g. : verify(mocked).called();
+        boolean expected = false;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#nextSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void nextSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.nextSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#previousSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void previousSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.previousSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getCountPagesSolicitud(long)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void getCountPagesSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        long countRegistros = 0L;
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        long actual = target.getCountPagesSolicitud(countRegistros);
+        // then
+        // e.g. : verify(mocked).called();
+        long expected = 0L;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getCountRegistrosSolicitud()}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void getCountRegistrosSolicitud() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        long actual = target.getCountRegistrosSolicitud();
+        // then
+        // e.g. : verify(mocked).called();
+        long expected = 0L;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#copiaSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda)}.
+     * @throws java.lang.Exception ex
+     */
+    @Test
+    public void copiaSolicitudDocPreviaBusqueda() throws Exception {
+        // TODO auto-generated by JUnit Helper.
+        SolicitudDocPreviaBean target = new SolicitudDocPreviaBean();
+        // given
+        SolicitudDocPreviaBusqueda solicitudBusqueda = mock(SolicitudDocPreviaBusqueda.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        SolicitudDocPreviaBusqueda actual = target.copiaSolicitudDocPreviaBusqueda(solicitudBusqueda);
+        // then
+        // e.g. : verify(mocked).called();
+        SolicitudDocPreviaBusqueda expected = null;
+        assertThat(actual, is(equalTo(expected)));
+    }
+    
 }
