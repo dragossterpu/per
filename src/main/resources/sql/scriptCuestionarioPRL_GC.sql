@@ -52,48 +52,48 @@ insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden
 Coordinación con los Servicios de Asistencia Sanitaria y de Psicología y Psicotecnia. Actuaciones llevadas a acabo en relación a la protección de la guardia civil en situación de embarazo, parto reciente o en periodo de lactancia.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio.
- Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
+Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio.
 Relación de aquellos incidentes contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de 
 notificación e investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 12);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio.
- Indicar si los informes de investigación son recibidos por la Sección de Prevención de la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 13);
+Indicar si los informes de investigación son recibidos por la Sección de Prevención de la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 13);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio.
- Medidas preventivas de las propuestas en el informe de investigación INVAS23/13-SP adoptadas y, en su caso, situación en qué se encuentren las pendiente.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
+Medidas preventivas de las propuestas en el informe de investigación INVAS23/13-SP adoptadas y, en su caso, situación en qué se encuentren las pendiente.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio.
- Responsable de ejecutar las medidas preventivas propuestas en los informes de investigación cuando el puesto de trabajo es común a nivel nacional.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 15);
+Responsable de ejecutar las medidas preventivas propuestas en los informes de investigación cuando el puesto de trabajo es común a nivel nacional.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 15);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio.
- Relación de comunicaciones efectuadas a la Inspección de Trabajo de conformidad con lo establecido en la disposición adicional cuarta del RD 67/2010.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
+Relación de comunicaciones efectuadas a la Inspección de Trabajo de conformidad con lo establecido en la disposición adicional cuarta del RD 67/2010.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información en Materia de Prevención de Riesgos Laborales.
- Manuales, Campañas de Prevención, Trípticos y cualquier otro medio informativo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
+Manuales, Campañas de Prevención, Trípticos y cualquier otro medio informativo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información en Materia de Prevención de Riesgos Laborales.
- Procedimiento empleado para justificar la recepción por el personal.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
+Procedimiento empleado para justificar la recepción por el personal.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida y recibida.
- Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios. De cada una de las actividades se realizará una breve descripción que al menos contenga:
- Materia de Prevención de Riesgos laborales tratada (General, específica, Medidas de Emergencia…).
- Personal que la impartió.
- Personal que lo recibió.
- Número de alumnos.
- Duración.
- Método utilizado (Telemático, presencial, divulgativo,…)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
+Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios. De cada una de las actividades se realizará una breve descripción que al menos contenga:
+Materia de Prevención de Riesgos laborales tratada (General, específica, Medidas de Emergencia…).
+Personal que la impartió.
+Personal que lo recibió.
+Número de alumnos.
+Duración.
+Método utilizado (Telemático, presencial, divulgativo,…)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida y recibida.
- Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención. 
- De cada una de las actividades se realizará una breve descripción que al menos contenga:
- Materia de Prevención de Riesgos laborales tratada (General, específica, Medidas de Emergencia…),
- Personal que la impartió,
- Personal que lo recibió,
- Número de alumnos,
- Duración,
- Método utilizado (Telemático, presencial, divulgativo,…)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
+Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención. 
+De cada una de las actividades se realizará una breve descripción que al menos contenga:
+Materia de Prevención de Riesgos laborales tratada (General, específica, Medidas de Emergencia…),
+Personal que la impartió,
+Personal que lo recibió,
+Número de alumnos,
+Duración,
+Método utilizado (Telemático, presencial, divulgativo,…)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida y recibida.
 Por otro lado, a fecha de la visita se tendrá documentación acreditativa de los cursos impartidos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
@@ -105,26 +105,26 @@ insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden
 Medidas que se han adoptado para que las distintas Unidades de la Guardia Civil dispongan de la información y las instrucciones adecuadas a seguir en materia de coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 23);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales.
- ¿Se informa al Servicio de Prevención de los contratos de prestación de obras o servicios suscritos en el ámbito de la actividad de la Dirección General de la Guardia Civil?.  En caso afirmativo indicar número y tipo de actividad contratada. 
+¿Se informa al Servicio de Prevención de los contratos de prestación de obras o servicios suscritos en el ámbito de la actividad de la Dirección General de la Guardia Civil?.  En caso afirmativo indicar número y tipo de actividad contratada. 
 Número y tipos de actuaciones en esta materia llevadas a cabo por el Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 24);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales.
- Explicar brevemente si existe o se ejerce por el Servicio de Prevención algún tipo de control, vigilancia o seguimiento sobre las medidas previstas para la coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 25);
+Explicar brevemente si existe o se ejerce por el Servicio de Prevención algún tipo de control, vigilancia o seguimiento sobre las medidas previstas para la coordinación de actividades empresariales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 25);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Registro y Archivo de Documentación.
- Relación detallada de la documentación correspondiente a la actividad desplegada en el ámbito de la Dirección General de la Guardia Civil en materia de prevención de riesgos laborales, que se encuentra bajo la custodia y archivo de ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 26);
+Relación detallada de la documentación correspondiente a la actividad desplegada en el ámbito de la Dirección General de la Guardia Civil en materia de prevención de riesgos laborales, que se encuentra bajo la custodia y archivo de ese Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 26);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos e Instrucciones Operativas de Prevención de Riesgos Laborales.
- Relación de Procedimientos e Instrucciones Operativas aprobados, pendientes de aprobación o en fase de elaboración y estudio. En su caso, informando sobre su causa o justificación, relación de Procedimientos o de Instrucciones Operativas en vigor, que estén o hayan sido objeto de actualización o revisión.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 27);
+Relación de Procedimientos e Instrucciones Operativas aprobados, pendientes de aprobación o en fase de elaboración y estudio. En su caso, informando sobre su causa o justificación, relación de Procedimientos o de Instrucciones Operativas en vigor, que estén o hayan sido objeto de actualización o revisión.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 27);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Protocolo de actuación frente al acoso laboral.
- Papel desempeñado por el Servicio de Prevención en el Protocolo de Acoso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
+Papel desempeñado por el Servicio de Prevención en el Protocolo de Acoso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación de propuestas de mejora 
 y sugerencias en materia de prevención, recibidas en el Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Elaboración de la Memoria Anual.
- Las actividades preventivas que se documentan a través de una programación y memoria anual. Indicar si se contienen las prioridades fijadas y los objetivos alcanzados o en fase de elaboración a este respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 30);
+Las actividades preventivas que se documentan a través de una programación y memoria anual. Indicar si se contienen las prioridades fijadas y los objetivos alcanzados o en fase de elaboración a este respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 30);
 
 COMMIT;
 
