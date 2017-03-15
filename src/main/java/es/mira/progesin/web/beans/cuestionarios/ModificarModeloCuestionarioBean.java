@@ -278,6 +278,7 @@ public class ModificarModeloCuestionarioBean {
     public void borraPregunta(AreasCuestionario area) {
         if (preguntaSelec != null) {
             List<PreguntasCuestionario> listado = area.getPreguntas();
+            List<PreguntasCuestionario> listadoGrabar = area.getPreguntas();
             // Comprobar si la pregunta se ha usado en el cuestionario personalizado. Si se ha usado, baja lógica, si
             // no, baja física
             if (preguntaSelec.getId() != null) {
@@ -288,18 +289,21 @@ public class ModificarModeloCuestionarioBean {
                     int index = listado.indexOf(preguntaSelec);
                     preguntaSelec.setFechaBaja(new Date());
                     preguntaSelec.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                    listado.set(index, preguntaSelec);
+                    listado.remove(preguntaSelec);
+                    listadoGrabar.set(index, preguntaSelec);
                 } else {
                     // baja física
+                    listadoGrabar.remove(preguntaSelec);
                     listado.remove(preguntaSelec);
                 }
             } else {
                 // No existía la pregunta, es nueva, la han añadido al modelo, por lo tanto no tiene id y no se puede
                 // hacer un remove del objeto, ya que el equals es con el id
                 borraPreguntaNueva(listado, preguntaSelec);
+                borraPreguntaNueva(listadoGrabar, preguntaSelec);
             }
             
-            area.setPreguntas(listado);
+            area.setPreguntas(listadoGrabar);
             modeloCuestionarioService.reemplazarAreaModelo(listaAreasCuestionario, area);
             modeloCuestionario.setAreas(listaAreasCuestionario);
         }
