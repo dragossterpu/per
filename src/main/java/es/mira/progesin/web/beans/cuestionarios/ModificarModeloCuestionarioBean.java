@@ -60,7 +60,8 @@ public class ModificarModeloCuestionarioBean {
     
     private List<AreasCuestionario> listaAreasCuestionario;
     
-    private List<AreasCuestionario> listaAreasCuestionarioGrabar;
+    // Lista para mostrar en pantalla las áreas y que el cebreado se visualice correctamente
+    private List<AreasCuestionario> listaAreasCuestionarioVisualizar;
     
     private List<String> listaTipoPreguntas;
     
@@ -114,8 +115,11 @@ public class ModificarModeloCuestionarioBean {
         this.modeloCuestionario = modeloCuestionario;
         listaAreasCuestionario = areaCuestionarioRepository
                 .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
-        listaAreasCuestionarioGrabar = areaCuestionarioRepository
-                .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
+        listaAreasCuestionarioVisualizar = areaCuestionarioRepository
+                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
+        // Asigno las preguntas que no tengan fecha de baja a su área respectiva
+        listaAreasCuestionarioVisualizar.forEach(area -> area
+                .setPreguntas(preguntasCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area)));
         listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
                 .findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
         listaTipoPreguntasFinal = new ArrayList<>();
@@ -141,7 +145,7 @@ public class ModificarModeloCuestionarioBean {
         this.modeloCuestionario = new ModeloCuestionario();
         
         listaAreasCuestionario = new ArrayList<>();
-        listaAreasCuestionarioGrabar = new ArrayList<>();
+        listaAreasCuestionarioVisualizar = new ArrayList<>();
         listaTipoPreguntas = configuracionRespuestasCuestionarioRepository
                 .findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
         
@@ -170,8 +174,8 @@ public class ModificarModeloCuestionarioBean {
             areaAux.setIdCuestionario(modeloCuestionario.getId());
             areaAux.setPreguntas(new ArrayList<PreguntasCuestionario>());
             listaAreasCuestionario.add(areaAux);
-            listaAreasCuestionarioGrabar.add(areaAux);
-            modeloCuestionario.setAreas(listaAreasCuestionarioGrabar);
+            listaAreasCuestionarioVisualizar.add(areaAux);
+            modeloCuestionario.setAreas(listaAreasCuestionario);
         }
     }
     
@@ -199,39 +203,22 @@ public class ModificarModeloCuestionarioBean {
                         .findAreaExistenteEnCuestionariosPersonalizados(areaSelec.getId());
                 if (areaUsada != null) {
                     // baja lógica
-                    int index = listaAreasCuestionarioGrabar.indexOf(areaSelec);
-                    areaSelec.setFechaBaja(new Date());
-                    areaSelec.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                    listaAreasCuestionarioGrabar.set(index, areaSelec);
-                    listaAreasCuestionario.remove(areaSelec);
+                    AreasCuestionario areaGrabar = listaAreasCuestionario
+                            .get(listaAreasCuestionario.indexOf(areaSelec));
+                    areaGrabar.setFechaBaja(new Date());
+                    areaGrabar.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
                 } else {
                     // baja física
                     listaAreasCuestionario.remove(areaSelec);
-                    listaAreasCuestionarioGrabar.remove(areaSelec);
                 }
+                listaAreasCuestionarioVisualizar.remove(areaSelec);
             } else {
                 // Es un area que acaba de añadir el usuario
-                borraAreaNueva(listaAreasCuestionario, areaSelec);
-                borraAreaNueva(listaAreasCuestionarioGrabar, areaSelec);
+                listaAreasCuestionario.removeIf(a -> a.getArea().equals(areaSelec.getArea()));
+                listaAreasCuestionarioVisualizar.removeIf(a -> a.getArea().equals(areaSelec.getArea()));
+                
             }
-            modeloCuestionario.setAreas(listaAreasCuestionarioGrabar);
-        }
-    }
-    
-    /**
-     * Borra del listado de áreas la nueva área introducida en el modelo a través de la pantalla de edición
-     * 
-     * @param listado Listado de áreas actual
-     * @param area El área a eliminar del listado
-     */
-    private void borraAreaNueva(List<AreasCuestionario> listado, AreasCuestionario area) {
-        boolean noEncontrada = true;
-        for (int i = 0; i < listado.size() && noEncontrada; i++) {
-            AreasCuestionario a = listado.get(i);
-            if (a.getId() == null && a.getArea().equals(area.getArea())) {
-                listado.remove(i);
-                noEncontrada = false;
-            }
+            modeloCuestionario.setAreas(listaAreasCuestionario);
         }
     }
     
@@ -252,8 +239,9 @@ public class ModificarModeloCuestionarioBean {
             List<PreguntasCuestionario> listado = area.getPreguntas();
             listado.add(preguntaAux);
             area.setPreguntas(listado);
-            modeloCuestionarioService.reemplazarAreaModelo(listaAreasCuestionario, area);
-            modeloCuestionario.setAreas(listaAreasCuestionario);
+            if (area.getId() != null) {
+                listaAreasCuestionario.get(listaAreasCuestionario.indexOf(area)).getPreguntas().add(preguntaAux);
+            }
         } else {
             String textoError = "Debe escribir un texto para la pregunta y seleccionar un tipo de respuesta";
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, null, null);
@@ -277,8 +265,16 @@ public class ModificarModeloCuestionarioBean {
      */
     public void borraPregunta(AreasCuestionario area) {
         if (preguntaSelec != null) {
-            List<PreguntasCuestionario> listado = area.getPreguntas();
-            List<PreguntasCuestionario> listadoGrabar = area.getPreguntas();
+            List<PreguntasCuestionario> listado;
+            // Obtengo la lista de preguntas originales del área
+            if (area.getId() != null && listaAreasCuestionario.contains(area)) {
+                listado = listaAreasCuestionario.get(listaAreasCuestionario.indexOf(area)).getPreguntas();
+            } else {
+                listado = area.getPreguntas();
+            }
+            
+            List<PreguntasCuestionario> listadoPreguntasVisualizar = new ArrayList<>();
+            listadoPreguntasVisualizar.addAll(area.getPreguntas());
             // Comprobar si la pregunta se ha usado en el cuestionario personalizado. Si se ha usado, baja lógica, si
             // no, baja física
             if (preguntaSelec.getId() != null) {
@@ -289,41 +285,22 @@ public class ModificarModeloCuestionarioBean {
                     int index = listado.indexOf(preguntaSelec);
                     preguntaSelec.setFechaBaja(new Date());
                     preguntaSelec.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                    listado.remove(preguntaSelec);
-                    listadoGrabar.set(index, preguntaSelec);
+                    listado.set(index, preguntaSelec);
                 } else {
                     // baja física
-                    listadoGrabar.remove(preguntaSelec);
                     listado.remove(preguntaSelec);
                 }
+                listadoPreguntasVisualizar.remove(preguntaSelec);
             } else {
                 // No existía la pregunta, es nueva, la han añadido al modelo, por lo tanto no tiene id y no se puede
                 // hacer un remove del objeto, ya que el equals es con el id
-                borraPreguntaNueva(listado, preguntaSelec);
-                borraPreguntaNueva(listadoGrabar, preguntaSelec);
+                listado.removeIf(p -> p.getPregunta().equals(preguntaSelec.getPregunta()));
+                listadoPreguntasVisualizar.removeIf(p -> p.getPregunta().equals(preguntaSelec.getPregunta()));
             }
             
-            area.setPreguntas(listadoGrabar);
-            modeloCuestionarioService.reemplazarAreaModelo(listaAreasCuestionario, area);
-            modeloCuestionario.setAreas(listaAreasCuestionario);
-        }
-    }
-    
-    /**
-     * Borra del listado de preguntas la nueva pregunta introducida en el modelo a través de la pantalla de edición del
-     * modelo
-     * 
-     * @param listado Listado de preguntas actual
-     * @param pregunta Pregunta a eliminar del listado
-     */
-    private void borraPreguntaNueva(List<PreguntasCuestionario> listado, PreguntasCuestionario pregunta) {
-        boolean noEncontrada = true;
-        for (int i = 0; i < listado.size() && noEncontrada; i++) {
-            PreguntasCuestionario p = listado.get(i);
-            if (p.getId() == null && p.getPregunta().equals(pregunta.getPregunta())) {
-                listado.remove(i);
-                noEncontrada = false;
-            }
+            // Para cambiar las preguntas a visualizar en pantalla
+            area.setPreguntas(listadoPreguntasVisualizar);
+            
         }
     }
     
@@ -343,18 +320,20 @@ public class ModificarModeloCuestionarioBean {
         }
         
         if ("preguntas".equals(event.getNewStep())) {
-            listaAreasCuestionario = ordenarAreas(listaAreasCuestionario);
+            // listaAreasCuestionario = ordenarAreas(listaAreasCuestionario);
+            // modeloCuestionario.setAreas(listaAreasCuestionario);
+            listaAreasCuestionarioVisualizar = ordenarAreas(listaAreasCuestionarioVisualizar);
         }
         
         if ("finalizar".equals(event.getNewStep())) {
-            for (AreasCuestionario area : listaAreasCuestionario) {
+            for (AreasCuestionario area : listaAreasCuestionarioVisualizar) {
                 List<PreguntasCuestionario> lista = area.getPreguntas();
                 if (lista.isEmpty()) {
                     correcto = false;
                     textoError = "Debe asignar preguntas a todas las áreas para poder pasar a la siguiente pantalla";
                 } else {
-                    lista = ordenarPreguntas(area.getPreguntas());
-                    area.setPreguntas(lista);
+                    ordenarPreguntas(area);
+                    // area.setPreguntas(lista);
                 }
             }
         }
@@ -553,8 +532,24 @@ public class ModificarModeloCuestionarioBean {
             AreasCuestionario area = listado.get(i);
             area.setOrden(i);
             listaNueva.add(area);
+            
+            ordenarListaGrabar(area);
         }
         return listaNueva;
+    }
+    
+    private void ordenarListaGrabar(AreasCuestionario areaVisualizar) {
+        if (areaVisualizar.getId() != null) {
+            listaAreasCuestionario.get(listaAreasCuestionario.indexOf(areaVisualizar))
+                    .setOrden(areaVisualizar.getOrden());
+        } else {
+            // área nueva
+            for (AreasCuestionario areaGrabar : listaAreasCuestionario) {
+                if (areaGrabar.getArea().equals(areaVisualizar.getArea()) && areaGrabar.getFechaBaja() == null) {
+                    areaGrabar.setOrden(areaVisualizar.getOrden());
+                }
+            }
+        }
     }
     
     /**
@@ -563,14 +558,16 @@ public class ModificarModeloCuestionarioBean {
      * @param listado LList<PreguntasCuestionario>
      * @return List<PreguntasCuestionario>
      */
-    public List<PreguntasCuestionario> ordenarPreguntas(List<PreguntasCuestionario> listado) {
-        List<PreguntasCuestionario> listaNueva = new ArrayList<>();
+    public void ordenarPreguntas(AreasCuestionario area) {
+        List<PreguntasCuestionario> listado = area.getPreguntas();
         for (int i = 0; i < listado.size(); i++) {
             PreguntasCuestionario pregunta = listado.get(i);
             pregunta.setOrden(i);
-            listaNueva.add(pregunta);
         }
-        return listaNueva;
+    }
+    
+    private void ordenarPreguntasGrabar(AreasCuestionario area, PreguntasCuestionario pregunta) {
+        
     }
     
     /**
