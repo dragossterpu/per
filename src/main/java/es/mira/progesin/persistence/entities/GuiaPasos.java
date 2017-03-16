@@ -35,28 +35,53 @@ import lombok.Setter;
 @Entity
 @Table(name = "guiaPasos")
 public class GuiaPasos implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_pasosGuia", sequenceName = "seq_pasosGuia", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pasosGuia")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@ManyToOne
-	@JoinColumn(name = "idGuia")
-	private Guia idGuia;
-
-	@Column(name = "paso", nullable = false, length = 2000)
-	private String paso;
-
-	@Column(name = "orden", nullable = false)
-	private Integer orden;
-
-	@Column(name = "fecha_baja")
-	protected Date fechaBaja;
-
-	@Column(name = "username_baja")
-	protected String usernameBaja;
-
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_pasosGuia", sequenceName = "seq_pasosGuia", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pasosGuia")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @ManyToOne
+    @JoinColumn(name = "idGuia")
+    private Guia idGuia;
+    
+    @Column(name = "paso", nullable = false, length = 2000)
+    private String paso;
+    
+    @Column(name = "orden", nullable = false)
+    private Integer orden;
+    
+    @Column(name = "fecha_baja")
+    protected Date fechaBaja;
+    
+    @Column(name = "username_baja")
+    protected String usernameBaja;
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        GuiaPasos other = (GuiaPasos) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+    
 }

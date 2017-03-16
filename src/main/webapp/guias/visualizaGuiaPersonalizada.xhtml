@@ -16,6 +16,8 @@
 				<h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}"/>
 			</div>
 			
+			<p:messages autoUpdate="true" showSummary="true" closable="true"/> 
+			
 			<h:commandLink  actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}"
 				title="Descargar guía en formato Word">
 			   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
@@ -30,6 +32,8 @@
 			<div class="botonesFormulario">
 				<p:button outcome="/guias/buscaGuiasPersonalizadas?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
 			</div>
+			
+			
 	
 		</h:form>	
 		

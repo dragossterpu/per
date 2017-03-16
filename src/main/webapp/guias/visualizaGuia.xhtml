@@ -16,13 +16,15 @@
 				<h:outputText value="#{guiaBean.guia.nombre}"/>
 			</div>
 			
+			<p:messages autoUpdate="true" showSummary="true" closable="true"/> 
+			
 			<h:commandLink  actionListener="#{guiaBean.crearDocumentoWordGuia(guiaBean.guia)}"
 				title="Descargar guía en formato Word">
 			   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
 			   <p:fileDownload value="#{guiaBean.file}" />
 			</h:commandLink>
 				
-			<p:dataList  var="paso" value="#{guiaBean.listaPasos}"  type="unordered" styleClass="listaPaso">
+			<p:dataList  var="paso" value="#{guiaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
 		    	<h:outputText value="#{paso.paso}" escape="false"/>
 		    </p:dataList>
 			

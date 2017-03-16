@@ -62,18 +62,18 @@
  				<p:outputPanel rendered="#{not empty guiaPersonalizadaBean.busqueda.listaGuias}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
-		               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listaGuias"/>
+		               <p:dataExporter type="xls" target="tablaGuias" fileName="listaGuias"/>
 		            </h:commandLink>
 		            <h:commandLink>
 		               <p:graphicImage  value="/images/pdf.png" />
-		               <p:dataExporter type="pdf" target="tablaUsuarios" fileName="listaGuias"/>
+		               <p:dataExporter type="pdf" target="tablaGuias" fileName="listaGuias"/>
 		            </h:commandLink>
 		            <h:commandLink>
 		               <p:graphicImage  value="/images/csv.png" />
-		               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listaGuias"/>
+		               <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias"/>
 		            </h:commandLink>
 	            </p:outputPanel>
-	 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.busqueda.listaGuias}"  rows="10" id="tablaUsuarios" 
+	 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.busqueda.listaGuias}"  rows="10" id="tablaGuias" 
 	 						draggableColumns="true"
 	                        paginator="true" 
 	                        resizableColumns="true"
@@ -84,7 +84,7 @@
 					 <f:facet name="header">
 						Guias
 						 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
-	        			 <p:columnToggler datasource="tablaUsuarios" trigger="toggler">
+	        			 <p:columnToggler datasource="tablaGuias" trigger="toggler">
 	        			 	  <p:ajax event="toggle" listener="#{guiaPersonalizadaBean.onToggle}" />
 	        			 </p:columnToggler>
 					</f:facet>
@@ -96,10 +96,13 @@
 					<p:column headerText="Usuario" sortBy="#{guia.usernameCreacion}" width="50" visible="#{guiaPersonalizadaBean.list[1]}" exportable="#{guiaPersonalizadaBean.list[1]}">
 						<h:outputText value="#{guia.usernameCreacion}" />
 					</p:column>
-					<p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion}"  width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
+					<p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion.descripcion}"  width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
 						<h:outputText value="#{guia.guia.tipoInspeccion.descripcion}" />
 					</p:column>
-					<p:column headerText="Nombre" sortBy="#{guia.nombreGuiaPersonalizada}" width="180" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
+					<p:column headerText="Modelo" sortBy="#{guia.guia.nombre}"  width="100" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
+						<h:outputText value="#{guia.guia.nombre}" />
+					</p:column>
+					<p:column headerText="Nombre" sortBy="#{guia.nombreGuiaPersonalizada}" width="180" visible="#{guiaPersonalizadaBean.list[4]}" exportable="#{guiaPersonalizadaBean.list[4]}">
 						<h:outputText value="#{guia.nombreGuiaPersonalizada}" />
 					</p:column>
 					
@@ -107,11 +110,15 @@
 						<h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaPersonalizadaBean.visualizaGuia(guia)}" />
 					</p:column>
 					<p:column styleClass="botonTabla" exportable="false">
-						<p:commandButton title="Eliminar guía personalizada" icon="fa fa-trash" actionListener="#{guiaPersonalizadaBean.eliminar(guia)}" update="tablaUsuarios">
-							<p:confirm header="Eliminar uía personalizada" message="¿Está seguro que desea eliminar la guía?" icon="fa fa-warning-sign"/>
+						<p:commandButton title="Anular guía personalizada" icon="fa fa-trash-o" actionListener="#{guiaPersonalizadaBean.anular(guia)}" update="tablaGuias">
+							<p:confirm header="Anular guía personalizada" message="¿Está seguro que desea anular la guía?" icon="fa fa-warning-sign"/>
 						</p:commandButton>
 					</p:column>
-					
+					<p:column styleClass="botonTabla" exportable="false">
+						<p:commandButton title="Eliminar guía personalizada" icon="fa fa-trash" actionListener="#{guiaPersonalizadaBean.eliminar(guia)}" update="tablaGuias">
+							<p:confirm header="Eliminar guía personalizada" message="¿Está seguro que desea eliminar la guía?" icon="fa fa-warning-sign"/>
+						</p:commandButton>
+					</p:column>
 					<f:facet name="footer">
 	       				 Resultado de la búsqueda: #{fn:length(guiaPersonalizadaBean.busqueda.listaGuias)} guías.
 	    			</f:facet>

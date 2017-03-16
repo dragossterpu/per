@@ -16,42 +16,44 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
  * 
  *****************************************/
 public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
-
-	/*******************************************************************************
-	 * 
-	 * Recupera una lista de los pasos contenidos en una guía pasada como parámetro en orden ascendente. Únicamente
-	 * recupera los pasos que no tengan fecha de baja.
-	 * 
-	 * @return List<GuiaPasos>
-	 * @param idGuia
-	 * 
-	 *****************************************************************************/
-
-	List<GuiaPasos> findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(Guia idGuia);
-
-	/*******************************************************************************
-	 * 
-	 * Recupera una lista de los pasos elegidos en una guía personalizada cuyo id se pasa como parámetro.
-	 * 
-	 * @return List<GuiaPasos>
-	 * @param idGuiaPersonalizada
-	 * 
-	 *****************************************************************************/
-
-	@Query("select c.pasosElegidos from GuiaPersonalizada c where c.id = :idGuiaPersonalizada")
-	List<GuiaPasos> findPasosElegidosGuiaPersonalizada(@Param("idGuiaPersonalizada") Long idGuiaPersonalizada);
-
-	/*******************************************************************************
-	 * 
-	 * Verifica si el paso existe en alguna guía personalizada
-	 * 
-	 * @return GuiaPasos
-	 * @param idPaso
-	 * 
-	 *****************************************************************************/
-
-	@Query(value = "select distinct p.* from guia_Pasos p, guia_personalizada_pasos cpp, guia_Personalizada cp "
-			+ "where p.id = cpp.id_paso_elegido and cpp.id_guia_pers = cp.id and p.id = ?1", nativeQuery = true)
-	GuiaPasos findPasoExistenteEnGuiasPersonalizadas(Long idPaso);
-
+    
+    /*******************************************************************************
+     * 
+     * Recupera una lista de los pasos contenidos en una guía pasada como parámetro en orden ascendente. Únicamente
+     * recupera los pasos que no tengan fecha de baja.
+     * 
+     * @return List<GuiaPasos>
+     * @param idGuia
+     * 
+     *****************************************************************************/
+    
+    List<GuiaPasos> findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(Guia idGuia);
+    
+    List<GuiaPasos> findByIdGuiaOrderByOrdenAsc(Guia idGuia);
+    
+    /*******************************************************************************
+     * 
+     * Recupera una lista de los pasos elegidos en una guía personalizada cuyo id se pasa como parámetro.
+     * 
+     * @return List<GuiaPasos>
+     * @param idGuiaPersonalizada
+     * 
+     *****************************************************************************/
+    
+    @Query(value = "select gp.* from Guia_Personalizada_pasos gpp, guia_pasos gp where gpp.id_paso_elegido=gp.id and gpp.id_guia_pers=:idGuiaPersonalizada order by gp.orden", nativeQuery = true)
+    List<GuiaPasos> findPasosElegidosGuiaPersonalizada(@Param("idGuiaPersonalizada") Long idGuiaPersonalizada);
+    
+    /*******************************************************************************
+     * 
+     * Verifica si el paso existe en alguna guía personalizada
+     * 
+     * @return GuiaPasos
+     * @param idPaso
+     * 
+     *****************************************************************************/
+    
+    @Query(value = "select distinct p.* from guia_Pasos p, guia_personalizada_pasos cpp, guia_Personalizada cp "
+            + "where p.id = cpp.id_paso_elegido and cpp.id_guia_pers = cp.id and p.id = ?1", nativeQuery = true)
+    GuiaPasos findPasoExistenteEnGuiasPersonalizadas(Long idPaso);
+    
 }

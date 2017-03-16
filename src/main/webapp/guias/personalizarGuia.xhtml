@@ -18,7 +18,7 @@
 
 			<div class="bloqueFormulario" >
 				<h:form id="form">
-					<p:messages autoUpdate="true"/>
+					<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 					<my:selectManyCheckboxAll value="#{guiaBean.listaPasosSeleccionados}" >
 					        	<f:selectItems value="#{guiaBean.listaPasos}" var="paso" itemLabel="#{paso.paso}" 
 					        	itemValue="#{paso}"/>
