@@ -113,16 +113,7 @@
 					<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
 						<h:commandLink title="Modificar guía" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"  action="#{guiaBean.editaGuia(guia)}" rendered="#{esAdmin}" />
 					</p:column>
-					<p:column styleClass="botonTabla" exportable="false">
-						<p:commandButton title="Anular guía" icon="fa fa-trash-o" actionListener="#{guiaBean.anular(guia)}" update="tablaGuias">
-							<p:confirm header="Anular guía" message="¿Está seguro que desea anular la guía?" icon="fa fa-warning-sign"/>
-						</p:commandButton>
-					</p:column>
-					<p:column styleClass="botonTabla" exportable="false">
-						<p:commandButton title="Eliminar guía" icon="fa fa-trash" actionListener="#{guiaBean.eliminar(guia)}" update="tablaGuias">
-							<p:confirm header="Eliminar guía" message="¿Está seguro que desea eliminar la guía?" icon="fa fa-warning-sign"/>
-						</p:commandButton>
-					</p:column>
+					
 					
 					<f:facet name="footer">
 	       				 Resultado de la búsqueda: #{fn:length(guiaBean.busqueda.listaGuias)} guías.
