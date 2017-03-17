@@ -41,3 +41,5 @@ insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Con Autoridades Autonómicas: Seguridad de autoridades y vigilancia de edificios oficiales, normativa del juego, protección de menores….', 'ADJUNTOINPUT', 17);
 
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Con la Unidad Adscrita del Cuerpo Nacional de Policía a la CCAA: Actividades concurrentes, coordinación, apoyos.', 'ADJUNTOINPUT', 18);
+
+COMMIT;
