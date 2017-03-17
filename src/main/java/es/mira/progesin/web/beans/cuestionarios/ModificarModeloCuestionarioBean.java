@@ -333,9 +333,9 @@ public class ModificarModeloCuestionarioBean {
                     textoError = "Debe asignar preguntas a todas las áreas para poder pasar a la siguiente pantalla";
                 } else {
                     ordenarPreguntas(area);
-                    // area.setPreguntas(lista);
                 }
             }
+            modeloCuestionario.setAreas(listaAreasCuestionario);
         }
         
         if (correcto) {
@@ -555,19 +555,40 @@ public class ModificarModeloCuestionarioBean {
     /**
      * Se asigna un valor de orden a las preguntas según su posición dentro de la lista de preguntas de su área
      * 
-     * @param listado LList<PreguntasCuestionario>
-     * @return List<PreguntasCuestionario>
+     * @param area Área a la se le quieren ordenar las preguntas
+     * 
      */
     public void ordenarPreguntas(AreasCuestionario area) {
         List<PreguntasCuestionario> listado = area.getPreguntas();
         for (int i = 0; i < listado.size(); i++) {
             PreguntasCuestionario pregunta = listado.get(i);
             pregunta.setOrden(i);
+            ordenarPreguntasGrabar(area, pregunta);
         }
+        modeloCuestionario.setAreas(listaAreasCuestionario);
     }
     
+    /**
+     * Se asigna un valor de orden a las preguntas según su posición dentro de la lista de preguntas de su área
+     * 
+     * @param area Área a la se le quieren ordenar las preguntas
+     * @param pregunta Pregunta modificada con el nuevo orden que hay que actualizar en la lista de preguntas a grabar
+     */
     private void ordenarPreguntasGrabar(AreasCuestionario area, PreguntasCuestionario pregunta) {
+        int index = listaAreasCuestionario.indexOf(area);
+        AreasCuestionario areaGrabar = listaAreasCuestionario.get(index);
+        List<PreguntasCuestionario> listado = areaGrabar.getPreguntas();
         
+        for (PreguntasCuestionario preguntaGrabar : listado) {
+            if (pregunta.getId() != null && pregunta.equals(preguntaGrabar)) {
+                int i = pregunta.getOrden();
+                preguntaGrabar.setOrden(i);
+            } else if (preguntaGrabar.getPregunta().equals(pregunta.getPregunta()) && pregunta.getId() == null
+                    && pregunta.getFechaBaja() == null) {
+                int i = pregunta.getOrden();
+                preguntaGrabar.setOrden(i);
+            }
+        }
     }
     
     /**
