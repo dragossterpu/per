@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,7 +56,8 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     }
     
     @Override
-    public List<GuiaPersonalizada> buscarGuiaPorCriteria(GuiaPersonalizadaBusqueda busqueda) {
+    public List<GuiaPersonalizada> buscarGuiaPorCriteria(int firstResult, int maxResults,
+            GuiaPersonalizadaBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
@@ -89,7 +91,8 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         if (busqueda.getTipoInspeccion() != null) {
             criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
         }
-        criteria.add(Restrictions.isNull("fechaBaja"));
+        criteria.setFirstResult(firstResult);
+        criteria.setMaxResults(maxResults);
         criteria.addOrder(Order.desc("fechaCreacion"));
         
         @SuppressWarnings("unchecked")
@@ -97,6 +100,50 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         session.close();
         
         return listaGuias;
+    }
+    
+    @Override
+    public long getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
+        
+        if (busqueda.getFechaDesde() != null) {
+            /**
+             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+             * compara con 0:00:00
+             */
+            criteria.add(Restrictions
+                    .sqlRestriction("TRUNC(this_.fecha_creacion) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
+        }
+        if (busqueda.getFechaHasta() != null) {
+            /**
+             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
+             * compara con 0:00:00
+             */
+            criteria.add(Restrictions
+                    .sqlRestriction("TRUNC(this_.fecha_creacion) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
+        }
+        
+        if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(COMPARADORSINACENTOS, "nombre_guia_personalizada", busqueda.getNombre())));
+        }
+        
+        if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(COMPARADORSINACENTOS, "usuario_creacion", busqueda.getUsuarioCreacion())));
+        }
+        
+        if (busqueda.getTipoInspeccion() != null) {
+            criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
+        }
+        
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        
+        session.close();
+        
+        return cnt;
     }
     
     @Override

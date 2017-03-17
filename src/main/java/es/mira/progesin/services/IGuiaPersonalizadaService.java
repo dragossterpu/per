@@ -49,17 +49,6 @@ public interface IGuiaPersonalizadaService {
     
     /*********************************
      * 
-     * Devuelve una lista de guías personalizadas de la base de datos en función a unos criterios de búsqueda
-     * 
-     * @param busqueda
-     * @return List<GuiaPersonalizada>
-     * 
-     ****************************************/
-    
-    public List<GuiaPersonalizada> buscarGuiaPorCriteria(GuiaPersonalizadaBusqueda busqueda);
-    
-    /*********************************
-     * 
      * Devuelve una lista de pasos contenidos en una guía personalizada pasada como parámetro
      * 
      * @param guia
@@ -68,5 +57,9 @@ public interface IGuiaPersonalizadaService {
      ****************************************/
     
     public List<GuiaPasos> listaPasos(GuiaPersonalizada guia);
+    
+    long getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda);
+    
+    List<GuiaPersonalizada> buscarGuiaPorCriteria(int firstResult, int maxResults, GuiaPersonalizadaBusqueda busqueda);
     
 }

@@ -27,10 +27,10 @@
 			<div class="bloqueFormulario">
 				<div class="columnaIzdaFormulario">
 					<h:outputLabel for="nombreGuia" value="Nombre de la guia:" />
-					<p:inputText id="nombreGuia" value="#{guiaPersonalizadaBean.busqueda.nombre}" />
+					<p:inputText id="nombreGuia" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.nombre}" />
 					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
 					<p:selectOneMenu
-						value="#{guiaPersonalizadaBean.busqueda.tipoInspeccion}"
+						value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.tipoInspeccion}"
 						id="tipoInspeccionSelect" converter="#{selectConverter}">
 						<f:selectItem itemLabel="Todos" itemValue="" />
 						<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
@@ -41,12 +41,12 @@
 				</div>
 				<div class="columnaDchaFormulario">
 					<h:outputLabel for="username" value="Nombre de usuario:" />
-					<p:inputText id="username" value="#{guiaPersonalizadaBean.busqueda.usuarioCreacion}" />
+					<p:inputText id="username" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.usuarioCreacion}" />
 					<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-					<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaPersonalizadaBean.busqueda.fechaDesde}"/>
+					<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.fechaDesde}"/>
 	
 					<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-					<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaPersonalizadaBean.busqueda.fechaHasta}"/>	
+					<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.fechaHasta}"/>	
 				</div>	
 			</div>
 			<div class="botonesFormulario">
@@ -56,10 +56,10 @@
 				</h:commandLink>
 	      	</div>	
 			<p:outputPanel layout="block" id="panelGuias">
-				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty guiaPersonalizadaBean.busqueda.listaGuias}">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}">
 					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
- 				<p:outputPanel rendered="#{not empty guiaPersonalizadaBean.busqueda.listaGuias}">
+ 				<p:outputPanel rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}">
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
 		               <p:dataExporter type="xls" target="tablaGuias" fileName="listaGuias"/>
@@ -73,20 +73,33 @@
 		               <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias"/>
 		            </h:commandLink>
 	            </p:outputPanel>
-	 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.busqueda.listaGuias}"  rows="10" id="tablaGuias" 
-	 						draggableColumns="true"
-	                        paginator="true" 
+	 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}"  rows="20" id="tablaGuias" 
+	 						paginator="true" 
+  	                        paginatorTemplate="{Anterior} {Pagina} {Posterior} {RowsPerPageDropdown}" 
 	                        resizableColumns="true"
-	                        rendered="#{not empty guiaPersonalizadaBean.busqueda.listaGuias}" 
-	                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                      		rowsPerPageTemplate="5,10,15,20,25">
+	                        draggableColumns="true"
+	                  	    rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}" >
+	                  	    
+	                 <f:facet name="{Anterior}">
+						<h:commandLink title="Anterior(es)" actionListener="#{guiaPersonalizadaBean.previousGuia}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+					</f:facet>   
+					<f:facet name="{Posterior}">
+						<h:commandLink title="Posterior(es)" actionListener="#{guiaPersonalizadaBean.nextGuia}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+				   	</f:facet>
+					<f:facet name="{Pagina}">
+						<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{guiaPersonalizadaBean.actualPage} de #{guiaPersonalizadaBean.numPages}</span>	 
+					</f:facet>  
 	                        
 					 <f:facet name="header">
 						Guias
-						 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
-	        			 <p:columnToggler datasource="tablaGuias" trigger="toggler">
-	        			 	  <p:ajax event="toggle" listener="#{guiaPersonalizadaBean.onToggle}" />
-	        			 </p:columnToggler>
+<!-- 						 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/> -->
+<!-- 	        			 <p:columnToggler datasource="tablaGuias" trigger="toggler"> -->
+<!-- 	        			 	  <p:ajax event="toggle" listener="#{guiaPersonalizadaBean.onToggle}" /> -->
+<!-- 	        			 </p:columnToggler> -->
 					</f:facet>
 					<p:column headerText="Fecha alta" sortBy="#{guia.fechaCreacion}" width="50" visible="#{guiaPersonalizadaBean.list[0]}" exportable="#{guiaPersonalizadaBean.list[0]}">
 						<h:outputText value="#{guia.fechaCreacion}">
@@ -120,7 +133,7 @@
 						</p:commandButton>
 					</p:column>
 					<f:facet name="footer">
-	       				 Resultado de la búsqueda: #{fn:length(guiaPersonalizadaBean.busqueda.listaGuias)} guías.
+	       				 Resultado de la búsqueda: #{guiaPersonalizadaBean.numeroRegistros} guías.
 	    			</f:facet>
 				</p:dataTable>
 			</p:outputPanel>

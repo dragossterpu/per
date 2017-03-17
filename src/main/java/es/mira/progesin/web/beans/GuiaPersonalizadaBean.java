@@ -39,7 +39,9 @@ public class GuiaPersonalizadaBean {
     
     private String vieneDe;
     
-    private GuiaPersonalizadaBusqueda busqueda;
+    private GuiaPersonalizadaBusqueda guiaPersonalizadaBusqueda;
+    
+    private GuiaPersonalizadaBusqueda guiaPersonalizadaBusquedaCopia;
     
     private GuiaPasos pasoSeleccionada;
     
@@ -60,15 +62,32 @@ public class GuiaPersonalizadaBean {
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
+    private static final int MAX_RESULTS_PAGE = 2;
+    
+    private static final int FIRST_PAGE = 1;
+    
+    private long numeroRegistros;
+    
+    private int primerRegistro;
+    
+    private long actualPage;
+    
+    private long numPages;
+    
     /**************************************************************
      * 
      * Busca las guías según los filtros introducidos en el formulario de búsqueda
      * 
      **************************************************************/
     public void buscarGuia() {
-        
-        List<GuiaPersonalizada> listaGuias = guiaPersonalizadaService.buscarGuiaPorCriteria(busqueda);
-        busqueda.setListaGuias(listaGuias);
+        primerRegistro = 0;
+        actualPage = FIRST_PAGE;
+        numeroRegistros = getCountRegistrosGuia();
+        numPages = getCountPagesGuia(numeroRegistros);
+        guiaPersonalizadaBusquedaCopia = copiaGuiaBusqueda(guiaPersonalizadaBusqueda);
+        List<GuiaPersonalizada> listaGuias = guiaPersonalizadaService.buscarGuiaPorCriteria(0, MAX_RESULTS_PAGE,
+                guiaPersonalizadaBusquedaCopia);
+        guiaPersonalizadaBusqueda.setListaGuias(listaGuias);
     }
     
     /*********************************************************
@@ -93,7 +112,7 @@ public class GuiaPersonalizadaBean {
      *********************************************************/
     
     public void limpiarBusqueda() {
-        busqueda.resetValues();
+        guiaPersonalizadaBusqueda.resetValues();
     }
     
     /*********************************************************
@@ -128,7 +147,7 @@ public class GuiaPersonalizadaBean {
     
     @PostConstruct
     public void init() {
-        busqueda = new GuiaPersonalizadaBusqueda();
+        guiaPersonalizadaBusqueda = new GuiaPersonalizadaBusqueda();
         list = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {
             list.add(Boolean.TRUE);
@@ -169,6 +188,80 @@ public class GuiaPersonalizadaBean {
             this.vieneDe = null;
         }
         
+    }
+    
+    /**
+     * 
+     */
+    public void nextGuia() {
+        
+        if (actualPage < numPages) {
+            
+            primerRegistro += MAX_RESULTS_PAGE;
+            actualPage++;
+            
+            List<GuiaPersonalizada> listaGuias = guiaPersonalizadaService.buscarGuiaPorCriteria(primerRegistro,
+                    MAX_RESULTS_PAGE, guiaPersonalizadaBusquedaCopia);
+            guiaPersonalizadaBusqueda.setListaGuias(listaGuias);
+        }
+        
+    }
+    
+    /**
+     * Cargar la página anterior de resultados de la búsqueda
+     * 
+     * @author EZENTIS
+     */
+    public void previousGuia() {
+        
+        if (actualPage > FIRST_PAGE) {
+            
+            primerRegistro -= MAX_RESULTS_PAGE;
+            actualPage--;
+            
+            List<GuiaPersonalizada> listaGuias = guiaPersonalizadaService.buscarGuiaPorCriteria(primerRegistro,
+                    MAX_RESULTS_PAGE, guiaPersonalizadaBusquedaCopia);
+            guiaPersonalizadaBusqueda.setListaGuias(listaGuias);
+        }
+    }
+    
+    /**
+     * @return devuelve el número de registros de la consulta criteria.
+     * @author EZENTIS
+     * 
+     */
+    public long getCountRegistrosGuia() {
+        return guiaPersonalizadaService.getCountGuiaCriteria(guiaPersonalizadaBusqueda);
+    }
+    
+    /**
+     * Devuelve el número de páginas de la consulta.
+     * 
+     * @param countRegistros
+     * @return número de páginas.
+     * @author EZENTIS
+     */
+    public long getCountPagesGuia(long countRegistros) {
+        
+        if (countRegistros % MAX_RESULTS_PAGE == 0)
+            return countRegistros / MAX_RESULTS_PAGE;
+        else
+            return countRegistros / MAX_RESULTS_PAGE + 1;
+    }
+    
+    /**
+     * @param guia
+     * @return
+     */
+    public GuiaPersonalizadaBusqueda copiaGuiaBusqueda(GuiaPersonalizadaBusqueda guia) {
+        GuiaPersonalizadaBusqueda guiaBusquedaCopia = new GuiaPersonalizadaBusqueda();
+        guiaBusquedaCopia.setFechaDesde(guia.getFechaDesde());
+        guiaBusquedaCopia.setFechaHasta(guia.getFechaHasta());
+        guiaBusquedaCopia.setTipoInspeccion(guia.getTipoInspeccion());
+        guiaBusquedaCopia.setNombre(guia.getNombre());
+        guiaBusquedaCopia.setUsuarioCreacion(guia.getUsuarioCreacion());
+        
+        return guiaBusquedaCopia;
     }
     
 }
