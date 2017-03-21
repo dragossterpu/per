@@ -1,6 +1,6 @@
 --Creación del cuestionario de Relaciones y coordinación Ámbito Guardia Civil
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.nextval,'RC_GC','RELACIONES Y COORDINACIÓN ÁMBITO GUARDIA CIVIL');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.nextval,'RELCO_GC','RELACIONES Y COORDINACIÓN ÁMBITO GUARDIA CIVIL');
 
 
 --Creación de Áreas/preguntas
