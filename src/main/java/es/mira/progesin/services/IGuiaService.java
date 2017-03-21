@@ -59,17 +59,7 @@ public interface IGuiaService {
     
     /***************************************
      * 
-     * Devuelve una lista de todas las guías
-     * 
-     * @return List<Guia>
-     * 
-     *************************************/
-    
-    public List<Guia> findAll();
-    
-    /***************************************
-     * 
-     * Conprueba la existencia de un paso recibido como parámetro en las guías personalizadas
+     * Comprueba la existencia de un paso recibido como parámetro en las guías personalizadas
      * 
      * @return boolean
      * @param paso
@@ -77,5 +67,12 @@ public interface IGuiaService {
      *************************************/
     
     public boolean existePaso(GuiaPasos paso);
+    
+    /**
+     * Permite la eliminación de una guía de la base de datos
+     * 
+     * @param guia guía a eliminar
+     */
+    public void eliminar(Guia guia);
     
 }

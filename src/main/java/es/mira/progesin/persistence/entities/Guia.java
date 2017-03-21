@@ -28,12 +28,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@EqualsAndHashCode()
+/**
+ * Entity para almacenar las guías en BDD
+ * 
+ * @author Ezentis
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -87,6 +91,12 @@ public class Guia implements Serializable {
     
     @Column(name = "username_baja")
     private String usernameBaja;
+    
+    @Column(name = "fecha_anulacion")
+    private Date fechaAnulacion;
+    
+    @Column(name = "username_anulacion")
+    private String usernameAnulacion;
     
     @Override
     public int hashCode() {

@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +18,12 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IGuiaService;
+import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.WordGenerator;
@@ -73,6 +74,9 @@ public class GuiaBean {
     
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
+    
+    @Autowired
+    transient IInspeccionesService inspeccionesService;
     
     /*********************************************************
      * 
@@ -190,7 +194,7 @@ public class GuiaBean {
                 List<GuiaPasos> aux = new ArrayList<>();
                 
                 for (GuiaPasos paso : listaPasos) {
-                    if (paso != pasoSeleccionado) {
+                    if (!paso.equals(pasoSeleccionado)) {
                         aux.add(paso);
                     }
                 }
@@ -376,25 +380,37 @@ public class GuiaBean {
      * Almacena en BDD la guía personalizada
      *
      * @param nombre String
+     * @param inspeccion Inspección a la que se asigna la guía
      * 
      *********************************************************/
     
-    public void guardarPersonalizada(String nombre) {
-        
+    public void guardarPersonalizada(String nombre, Inspeccion inspeccion) {
+        boolean error = false;
+        String mensajeError = "No se puede crear su guía personalizada.";
         try {
-            RequestContext.getCurrentInstance().execute("PF('guiaDialogo').hide()");
-            if (!listaPasosSeleccionados.isEmpty()) {
+            if (nombre.isEmpty()) {
+                error = true;
+                mensajeError = mensajeError.concat("\nDebe introducirse un nombre para la guía.");
+            }
+            if (listaPasosSeleccionados.isEmpty()) {
+                error = true;
+                mensajeError = mensajeError.concat("\nAl menos debe seleccionarse un paso.");
+            }
+            
+            if (!error) {
                 GuiaPersonalizada personalizada = new GuiaPersonalizada();
                 personalizada.setNombreGuiaPersonalizada(nombre);
                 personalizada.setGuia(guia);
                 personalizada.setPasosElegidos(listaPasosSeleccionados);
-                guiaPersonalizadaService.save(personalizada);
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
-                        "Se ha guardado su guía personalizada con éxito");
+                personalizada.setInspeccion(inspeccion);
+                if (guiaPersonalizadaService.save(personalizada) != null) {
+                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
+                            "Se ha guardado su guía personalizada con éxito");
+                }
+                
             } else {
                 
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "No se puede crear la guía personalizada. Al menos debe seleccionarse un paso", "");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeError, null);
                 FacesContext.getCurrentInstance().addMessage("message", message);
             }
         } catch (Exception e) {
@@ -404,4 +420,106 @@ public class GuiaBean {
         }
     }
     
+    /**
+     * Devuelve una lista con las inspecciones cuyo nombre de unidad o número contienen alguno de los caracteres pasado
+     * como parámetro. Se usa en los formularios de creación y modificación para el autocompletado.
+     * 
+     * @param infoInspeccion texto con parte del nombre de unidad o el número de la inspección que teclea el usuario en
+     * los formularios de creación y modificación
+     * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
+     */
+    public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
+        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+    }
+    
+    /**
+     * 
+     * Permite la anulación de una guía. Una vez anulada no podrá ser usada aunque se mantendrá en la base de datos
+     * 
+     * @param guiaAnular La guía a anular
+     * 
+     */
+    public void anular(Guia guiaAnular) {
+        try {
+            guiaAnular.setFechaAnulacion(new Date());
+            guiaAnular.setUsernameAnulacion(SecurityContextHolder.getContext().getAuthentication().getName());
+            if (guiaService.guardaGuia(guiaAnular) != null) {
+                regActividadService.altaRegActividad(
+                        "La guía '".concat(guiaAnular.getNombre().concat("' ha sido anulada")),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+            }
+            buscarGuia();
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * Permite la baja lógica de la guía en la aplicación, entendiendo como baja lógica el consignar la fecha de baja de
+     * esta aunque no se elimina físicamente.
+     * 
+     * @param guiaBaja Guía que se desea dar de baja
+     */
+    public void bajaLogica(Guia guiaBaja) {
+        try {
+            guiaBaja.setFechaBaja(new Date());
+            guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+            if (guiaService.guardaGuia(guiaBaja) != null) {
+                regActividadService.altaRegActividad(
+                        "La guía '".concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
+                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+            }
+            buscarGuia();
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * 
+     * Cuando un usuario use la opción de eliminar una guía se procederá de forma diferente si la guía tiene guías
+     * personalizadas que depende de ella o no. En el primer caso se hará una anulación, en el caso segundo se eliminará
+     * realmente de la base de datos
+     * 
+     * @param guiaEliminar La guía a anular
+     * 
+     */
+    public void eliminar(Guia guiaEliminar) {
+        try {
+            if (guiaPersonalizadaService.buscarPorModeloGuia(guiaEliminar)) {
+                bajaLogica(guiaEliminar);
+            } else {
+                guiaService.eliminar(guiaEliminar);
+                regActividadService.altaRegActividad(
+                        "La guía '".concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
+                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+            }
+            buscarGuia();
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * 
+     * Elimina la fecha de baja de la guía para volver a ponerla activa
+     * 
+     * @param guiaActivar
+     */
+    public void activa(Guia guiaActivar) {
+        try {
+            guiaActivar.setFechaAnulacion(null);
+            guiaActivar.setUsernameAnulacion(null);
+            if (guiaService.guardaGuia(guiaActivar) != null) {
+                regActividadService.altaRegActividad(
+                        "La guía '".concat(guiaActivar.getNombre().concat("' ha sido activada")),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+            }
+            buscarGuia();
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
 }

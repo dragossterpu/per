@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
@@ -58,8 +59,36 @@ public interface IGuiaPersonalizadaService {
     
     public List<GuiaPasos> listaPasos(GuiaPersonalizada guia);
     
+    /**
+     * Devuelve el número de registros de la base de datos que cumplen con los criterio pasados como parámetro
+     * 
+     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * @return Número de registros que responden a los parámetros
+     * 
+     */
     long getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda);
     
+    /**
+     * Busca en base de datos los resultados que se ajustan a los parámetros recibidos en el objeto de tipo
+     * GuiaPersonalizadaBusqueda acotados por los parámetros firstResult (primer resultado) y maxresult (máximo de
+     * resultados de la búsqueda)
+     * 
+     * @param firstResult Primer elemento de la búsqueda
+     * @param maxResults Máximo número de resultados
+     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * @return Listado de guías que responden a los parámetros
+     * 
+     */
     List<GuiaPersonalizada> buscarGuiaPorCriteria(int firstResult, int maxResults, GuiaPersonalizadaBusqueda busqueda);
+    
+    /**
+     * Comprueba la existencia en base de datos de guías personalizadas cuya guía modelo corresponde a la recibida como
+     * parámetro
+     * 
+     * @param guia Guía de la que quiere confirmarse si existen guías personalizadas
+     * @return Booleano correspondiendo a la respuesta
+     * 
+     */
+    boolean buscarPorModeloGuia(Guia guia);
     
 }

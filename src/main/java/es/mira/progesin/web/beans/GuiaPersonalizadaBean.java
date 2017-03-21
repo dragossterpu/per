@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,9 +15,12 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
+import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,7 +66,7 @@ public class GuiaPersonalizadaBean {
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
-    private static final int MAX_RESULTS_PAGE = 2;
+    private static final int MAX_RESULTS_PAGE = 20;
     
     private static final int FIRST_PAGE = 1;
     
@@ -125,6 +129,7 @@ public class GuiaPersonalizadaBean {
     
     public void anular(GuiaPersonalizada guiaPersonalizada) {
         guiaPersonalizadaService.anular(guiaPersonalizada);
+        buscarGuia();
     }
     
     /*********************************************************
@@ -137,6 +142,7 @@ public class GuiaPersonalizadaBean {
     
     public void eliminar(GuiaPersonalizada guiaPersonalizada) {
         guiaPersonalizadaService.eliminar(guiaPersonalizada);
+        buscarGuia();
     }
     
     /*********************************************************
@@ -260,8 +266,49 @@ public class GuiaPersonalizadaBean {
         guiaBusquedaCopia.setTipoInspeccion(guia.getTipoInspeccion());
         guiaBusquedaCopia.setNombre(guia.getNombre());
         guiaBusquedaCopia.setUsuarioCreacion(guia.getUsuarioCreacion());
+        guiaBusquedaCopia.setEstado(guia.getEstado());
         
         return guiaBusquedaCopia;
+    }
+    
+    public void asignar(GuiaPersonalizada guia) {
+        guiaPersonalizada = guia;
+        RequestContext.getCurrentInstance().execute("PF('inspeccionDialogo').show()");
+    }
+    
+    public void asignarInspeccion(Inspeccion inspeccion) {
+        try {
+            RequestContext.getCurrentInstance().execute("PF('inspeccionDialogo').hide()");
+            guiaPersonalizada.setInspeccion(inspeccion);
+            guiaPersonalizadaService.save(guiaPersonalizada);
+            buscarGuia();
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+                    "Se ha producido un error al asignar una inspección a la guía personalizada");
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+        
+    }
+    
+    /**
+     * 
+     * Elimina la fecha de baja de la guía para volver a ponerla activa
+     * 
+     * @param guiaActivar
+     */
+    public void activa(GuiaPersonalizada guiaActivar) {
+        try {
+            guiaActivar.setFechaAnulacion(null);
+            guiaActivar.setUsernameAnulacion(null);
+            if (guiaPersonalizadaService.save(guiaActivar) != null) {
+                regActividadService.altaRegActividad(
+                        "La guía '".concat(guiaActivar.getNombreGuiaPersonalizada().concat("' ha sido activada")),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                buscarGuia();
+            }
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
     }
     
 }

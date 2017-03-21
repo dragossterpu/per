@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IGuiasRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
@@ -42,8 +43,14 @@ public class GuiaService implements IGuiaService {
     @Autowired
     private IGuiasRepository guiaRepository;
     
-    @Autowired
-    private IRegistroActividadService registroService;
+    /**
+     * Busca en la base de datos las guías que cumplan con los criterios contenidos en el objeto GuiaBusqueda que se
+     * recibe como parámetro
+     * 
+     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * @return Lista de guías que cumplen con los parámetros de búsqueda
+     * 
+     */
     
     @Override
     public List<Guia> buscarGuiaPorCriteria(GuiaBusqueda busqueda) {
@@ -81,6 +88,13 @@ public class GuiaService implements IGuiaService {
             criteria.add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
         }
         
+        if (busqueda.getEstado() != null && EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
+            criteria.add(Restrictions.isNotNull("fechaAnulacion"));
+        } else {
+            criteria.add(Restrictions.isNull("fechaAnulacion"));
+        }
+        
+        criteria.add(Restrictions.isNull("fechaBaja"));
         criteria.addOrder(Order.desc("fechaCreacion"));
         
         @SuppressWarnings("unchecked")
@@ -90,10 +104,25 @@ public class GuiaService implements IGuiaService {
         return listaGuias;
     }
     
+    /**
+     * Recupera el listado de pasos contenidos en una guía
+     * 
+     * @param guía Guía de la que se desean recuperar los pasos
+     * @return Lista de pasos de la guía
+     * 
+     */
     @Override
     public List<GuiaPasos> listaPasos(Guia guia) {
         return pasosRepository.findByIdGuiaOrderByOrdenAsc(guia);
     }
+    
+    /**
+     * Recupera el listado de pasos contenidos en una guía sin fecha de baja
+     * 
+     * @param guía Guía de la que se desean recuperar los pasos
+     * @return Lista de pasos de la guía
+     * 
+     */
     
     @Override
     public List<GuiaPasos> listaPasosNoNull(Guia guia) {
@@ -101,20 +130,37 @@ public class GuiaService implements IGuiaService {
         
     }
     
+    /**
+     * Almacena la guía recibida como parámetro en base de datos
+     * 
+     * @param guia La guía a guardar
+     * @return La guía guardada
+     */
     @Override
     @Transactional(readOnly = false)
     public Guia guardaGuia(Guia guia) {
         return guiaRepository.save(guia);
     }
     
-    @Override
-    public List<Guia> findAll() {
-        return guiaRepository.findAll();
-    }
+    /**
+     * Comprueba la existencia de un paso recibido como parámetro en las guías personalizadas
+     * 
+     * @param paso Paso del que se desea comprobar si existe en alguna guía personalizada
+     * @return True si se encuentra el paso en alguna guía personalizada, false en caso contrario
+     */
     
     @Override
     public boolean existePaso(GuiaPasos paso) {
         return pasosRepository.findPasoExistenteEnGuiasPersonalizadas(paso.getId()) != null;
+        
+    }
+    
+    /**
+     * Elimina de la base de datos una guía pasada como parámetro
+     */
+    @Override
+    public void eliminar(Guia guia) {
+        guiaRepository.delete(guia);
         
     }
     

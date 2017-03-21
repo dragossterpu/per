@@ -22,13 +22,20 @@ public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
      * Recupera una lista de los pasos contenidos en una guía pasada como parámetro en orden ascendente. Únicamente
      * recupera los pasos que no tengan fecha de baja.
      * 
-     * @return List<GuiaPasos>
-     * @param idGuia
+     * @param idGuia Guía de la que se desea obtener el listado de pasos
+     * @return List<GuiaPasos> Listado de pasos resultante
      * 
      *****************************************************************************/
     
     List<GuiaPasos> findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(Guia idGuia);
     
+    /**
+     * Recupera una lista de los pasos contenidos en una guía pasada como parámetro en orden ascendente
+     * 
+     * @param idGuia Guía de la que se desea obtener el listado de pasos
+     * @return List<GuiaPasos> Listado de pasos resultante
+     * 
+     */
     List<GuiaPasos> findByIdGuiaOrderByOrdenAsc(Guia idGuia);
     
     /*******************************************************************************

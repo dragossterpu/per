@@ -6,6 +6,7 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +35,8 @@ public class GuiaPersonalizadaBusqueda implements Serializable {
     
     private List<GuiaPersonalizada> listaGuias;
     
+    private EstadoEnum estado;
+    
     /**
      * Limpia los valores del objeto
      * 
@@ -45,5 +48,6 @@ public class GuiaPersonalizadaBusqueda implements Serializable {
         this.nombre = null;
         this.tipoInspeccion = null;
         this.listaGuias = null;
+        this.estado = null;
     }
 }

@@ -23,11 +23,18 @@
 			   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
 			   <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
 			</h:commandLink>
-				
-			<p:dataList  var="paso" value="#{guiaPersonalizadaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
-		    	<h:outputText value="#{paso.paso}"/>
-		    </p:dataList>
 			
+			<div class="bloqueVistaTitulo">
+				<h:outputText value="Inspección: #{guiaPersonalizadaBean.guiaPersonalizada.inspeccion.numero}" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}"/>
+			</div>
+			
+			
+			<div class="bloqueVistaTitulo">	
+				<h4>Pasos</h4>
+				<p:dataList  var="paso" value="#{guiaPersonalizadaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
+			    	<h:outputText value="#{paso.paso}"/>
+			    </p:dataList>
+			</div>
 			
 			<div class="botonesFormulario">
 				<p:button outcome="/guias/buscaGuiasPersonalizadas?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>

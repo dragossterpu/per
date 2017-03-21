@@ -27,6 +27,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * Entidad que se empleará para el almacenamiento y recuperación de objetos de tipo Guía personalizada en base de datos
+ * 
+ * @author Ezentis
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,35 +43,45 @@ import lombok.Setter;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "guiaPersonalizada")
 public class GuiaPersonalizada {
-
-	@Id
-	@SequenceGenerator(name = "seq_guiaPersonalizada", sequenceName = "seq_guiaPersonalizada", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_guiaPersonalizada")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@Column(name = "nombre_guia_personalizada", nullable = false, length = 100)
-	private String nombreGuiaPersonalizada;
-
-	@CreatedDate
-	@Column(name = "fecha_creacion", nullable = false)
-	private Date fechaCreacion;
-
-	@CreatedBy
-	@Column(name = "username_creacion", nullable = false)
-	private String usernameCreacion;
-
-	@Column(name = "fecha_baja")
-	private Date fechaBaja;
-
-	@Column(name = "username_baja")
-	private String usernameBaja;
-
-	@ManyToOne
-	@JoinColumn(name = "id_modelo_guia", nullable = false)
-	private Guia guia;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "guia_personalizada_pasos", joinColumns = @JoinColumn(name = "id_guia_pers"), inverseJoinColumns = @JoinColumn(name = "id_paso_elegido"))
-	private List<GuiaPasos> pasosElegidos;
+    
+    @Id
+    @SequenceGenerator(name = "seq_guiaPersonalizada", sequenceName = "seq_guiaPersonalizada", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_guiaPersonalizada")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @Column(name = "nombre_guia_personalizada", nullable = false, length = 100)
+    private String nombreGuiaPersonalizada;
+    
+    @CreatedDate
+    @Column(name = "fecha_creacion", nullable = false)
+    private Date fechaCreacion;
+    
+    @CreatedBy
+    @Column(name = "username_creacion", nullable = false)
+    private String usernameCreacion;
+    
+    @Column(name = "fecha_baja")
+    private Date fechaBaja;
+    
+    @Column(name = "username_baja")
+    private String usernameBaja;
+    
+    @Column(name = "fecha_anulacion")
+    private Date fechaAnulacion;
+    
+    @Column(name = "username_anulacion")
+    private String usernameAnulacion;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_modelo_guia", nullable = false)
+    private Guia guia;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "guia_personalizada_pasos", joinColumns = @JoinColumn(name = "id_guia_pers"), inverseJoinColumns = @JoinColumn(name = "id_paso_elegido"))
+    private List<GuiaPasos> pasosElegidos;
+    
+    @ManyToOne
+    @JoinColumn(name = "inspeccion")
+    private Inspeccion inspeccion;
 }

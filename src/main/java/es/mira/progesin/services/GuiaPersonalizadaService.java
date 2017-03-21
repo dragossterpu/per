@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
@@ -85,12 +87,19 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "usuario_creacion", busqueda.getUsuarioCreacion())));
+                    String.format(COMPARADORSINACENTOS, "USERNAME_CREACION", busqueda.getUsuarioCreacion())));
         }
         
         if (busqueda.getTipoInspeccion() != null) {
             criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
         }
+        if (busqueda.getEstado() != null && EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
+            criteria.add(Restrictions.isNotNull("fechaAnulacion"));
+        } else {
+            criteria.add(Restrictions.isNull("fechaAnulacion"));
+        }
+        
+        criteria.add(Restrictions.isNull("fechaBaja"));
         criteria.setFirstResult(firstResult);
         criteria.setMaxResults(maxResults);
         criteria.addOrder(Order.desc("fechaCreacion"));
@@ -131,13 +140,19 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "usuario_creacion", busqueda.getUsuarioCreacion())));
+                    String.format(COMPARADORSINACENTOS, "USERNAME_CREACION", busqueda.getUsuarioCreacion())));
         }
         
         if (busqueda.getTipoInspeccion() != null) {
             criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
         }
+        if (busqueda.getEstado() != null && EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
+            criteria.add(Restrictions.isNotNull("fechaAnulacion"));
+        } else {
+            criteria.add(Restrictions.isNull("fechaAnulacion"));
+        }
         
+        criteria.add(Restrictions.isNull("fechaBaja"));
         criteria.setProjection(Projections.rowCount());
         Long cnt = (Long) criteria.uniqueResult();
         
@@ -153,10 +168,15 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     
     @Override
     public void anular(GuiaPersonalizada guia) {
-        guia.setFechaBaja(new Date());
-        guia.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+        guia.setFechaAnulacion(new Date());
+        guia.setUsernameAnulacion(SecurityContextHolder.getContext().getAuthentication().getName());
         guiaPersonalizadaRepository.save(guia);
         
+    }
+    
+    @Override
+    public boolean buscarPorModeloGuia(Guia guia) {
+        return guiaPersonalizadaRepository.findByIdGuia(guia);
     }
     
 }
