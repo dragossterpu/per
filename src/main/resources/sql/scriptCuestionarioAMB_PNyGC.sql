@@ -88,3 +88,5 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Terrorismo: Grado de conflictividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOALTAMEDIABAJA', 23);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Terrorismo: Grupos o colectivos más activos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 24);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Terrorismo: Movilizaciones', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOVILIZACIONES', 25);
+
+commit;
