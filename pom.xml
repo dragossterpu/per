@@ -24,14 +24,9 @@
 		<java.version>1.8</java.version>
 		<primefaces.version>6.0</primefaces.version>
 		
-		<sonar.language>java</sonar.language>
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<!-- force sonar to reuse reports generated during build cycle -->
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<!-- set path for unit tests reports -->
-		<sonar.jacoco.reportPath>${project.basedir}/target/jacoco-unit.exec</sonar.jacoco.reportPath>
-		<!-- all modules have to use the same integration tests report file -->
-		<sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
 	</properties>
 
 	<dependencies>
@@ -223,11 +218,7 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<destfile>${sonar.jacoco.reportPath}</destfile>
-						</configuration>
 					</execution>
-					 
 					<execution>
 						<id>prepare-integration-tests</id>
 						<goals>
@@ -235,7 +226,6 @@
 						</goals>
 						<phase>pre-integration-test</phase>
 						<configuration>
-							<destfile>${sonar.jacoco.itReportPath}</destfile>
 							<propertyname>itCoverageAgent</propertyname>
 						</configuration>
 					</execution>
