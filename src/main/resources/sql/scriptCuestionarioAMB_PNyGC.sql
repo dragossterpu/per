@@ -10,7 +10,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('ALTA',
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('MEDIA', 'RADIOALTAMEDIABAJA', 'Media');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('BAJA', 'RADIOALTAMEDIABAJA', 'Baja');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1', 'TABLASERVICIOS', 'Ubicación - Distancia dependencias policiales');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2', 'TABLASERVICIOS', 'Carácter Internacional ( Sí - No)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2', 'TABLASERVICIOS', 'Carácter Internacional (Sí - No)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3', 'TABLASERVICIOS', 'Servicios policiales permanentes  - Tipo ');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo4', 'TABLASERVICIOS', 'Actividad principal desarrollada');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo5', 'TABLASERVICIOS', 'Volumen anual pasajeros');
@@ -47,8 +47,8 @@ insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Población extranjera.', 'INPUT', 8);
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Económicos.', 'MATRIZECONOMICOS', 9);
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Económicos.', 'TABLASERVICIOS', 10);
-insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Centros hospitalarios.Nº de centros públicos.', 'INPUT', 11);
-insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Centros hospitalarios.De ellos, número con Módulo para detenidos.', 'INPUT', 12);
+insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Centros hospitalarios. Nº de centros públicos.', 'INPUT', 11);
+insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Centros hospitalarios. De ellos, número con Módulo para detenidos.', 'INPUT', 12);
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Centros penitenciarios. Centros de Inserción Social. Centro de Menores', 'TABLAPENITENCIARIOS', 13);
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Órganos: (detalar su ubicación por sedes judiciales y quién custodia cada sede-cnp, guardia civil, empresas de seguridad).', 'TEXTAREA', 14);
 insert into  preguntascuestionario (id, id_area, pregunta, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, SEQ_AREASCUESTIONARIOS.CURRVAL, 'Problemática de interés policial. Delincuencial: AÑO 2016 (DELITOS GRAVES + DELITOS MENOS GRAVES + DELITOS LEVES). Zonas de mayor conflictividad, reseñando la problemática específica de cada una de ellas.', 'TEXTAREA', 15);
