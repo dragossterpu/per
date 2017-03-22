@@ -106,6 +106,13 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         
     }
     
+    /**
+     * Método que devuelve el número de solicitudes previas totales en una consulta basada en criteria.
+     * 
+     * @param solicitudDocPreviaBusqueda
+     * @return número de registros
+     * @author EZENTIS
+     */
     @Override
     public long getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
         Session session = sessionFactory.openSession();
@@ -113,7 +120,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         consultaCriteriaSolicitudesDoc(solicitudDocPreviaBusqueda, criteria);
         criteria.setProjection(Projections.rowCount());
         Long cnt = (Long) criteria.uniqueResult();
-        criteria.addOrder(Order.desc("fechaAlta"));
         
         session.close();
         
@@ -122,6 +128,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     }
     
     /**
+     * Construye la consulta criteria dependiendo de los valores de un bean de tipo SolicitudDocPreviaBusqueda.
+     * 
      * @param solicitudDocPreviaBusqueda
      * @param criteria
      */
@@ -226,14 +234,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             criteria.add(Property.forName("equipo.id").in(subquery));
         }
     }
-    
-    /**
-     * Método que devuelve el número de solicitudes previas en una consulta basada en criteria.
-     * 
-     * @param solicitudDocPreviaBusqueda
-     * @return devuelve la lista de registros tipo SolicitudDocPreviaBusqueda.
-     * @author EZENTIS
-     */
     
     @Override
     @Transactional(readOnly = false)
