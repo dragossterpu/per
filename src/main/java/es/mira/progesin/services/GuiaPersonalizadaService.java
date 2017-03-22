@@ -63,43 +63,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
-        if (busqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_creacion) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
-        }
-        if (busqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_creacion) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
-        }
-        
-        if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "nombre_guia_personalizada", busqueda.getNombre())));
-        }
-        
-        if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "USERNAME_CREACION", busqueda.getUsuarioCreacion())));
-        }
-        
-        if (busqueda.getTipoInspeccion() != null) {
-            criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
-        }
-        if (busqueda.getEstado() != null && EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
-            criteria.add(Restrictions.isNotNull("fechaAnulacion"));
-        } else {
-            criteria.add(Restrictions.isNull("fechaAnulacion"));
-        }
-        
-        criteria.add(Restrictions.isNull("fechaBaja"));
+        consultaCriteriaGuiasPersonalizadas(busqueda, criteria);
         criteria.setFirstResult(firstResult);
         criteria.setMaxResults(maxResults);
         criteria.addOrder(Order.desc("fechaCreacion"));
@@ -116,6 +80,20 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
+        consultaCriteriaGuiasPersonalizadas(busqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        
+        session.close();
+        
+        return cnt;
+    }
+    
+    /**
+     * @param busqueda
+     * @param criteria
+     */
+    private void consultaCriteriaGuiasPersonalizadas(GuiaPersonalizadaBusqueda busqueda, Criteria criteria) {
         if (busqueda.getFechaDesde() != null) {
             /**
              * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
@@ -153,12 +131,6 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
-        
-        session.close();
-        
-        return cnt;
     }
     
     @Override
