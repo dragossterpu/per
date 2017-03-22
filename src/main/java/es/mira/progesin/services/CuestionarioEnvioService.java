@@ -97,128 +97,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(CuestionarioEnvio.class, "cuestionario");
-        String campoFecha = "this_.fecha_envio";
-        if (cuestionarioEnviadoBusqueda.getEstado() != null) {
-            switch (cuestionarioEnviadoBusqueda.getEstado()) {
-                case CUMPLIMENTADO:
-                    criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
-                    criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
-                    break;
-                // Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
-                case NO_CONFORME:
-                    criteria.add(Restrictions.isNotNull("fechaNoConforme"));
-                    criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
-                    break;
-                case FINALIZADO:
-                    criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
-                    break;
-                case ANULADO:
-                    criteria.add(Restrictions.isNotNull(FECHAANULACION));
-                    break;
-                // case ENVIADO:
-                default:
-                    criteria.add(Restrictions.isNull("fechaCumplimentacion"));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
-                    break;
-            }
-        } else {
-            criteria.add(Restrictions.isNull(FECHAANULACION));
-        }
-        if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(" + campoFecha + ") >= '" + sdf.format(cuestionarioEnviadoBusqueda.getFechaDesde()) + "'"));
-        }
-        if (cuestionarioEnviadoBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(" + campoFecha + ") <= '" + sdf.format(cuestionarioEnviadoBusqueda.getFechaHasta()) + "'"));
-        }
-        if (cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction("TRUNC(FECHA_LIMITE_CUESTIONARIO) <= '"
-                    + sdf.format(cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta()) + "'"));
-        }
-        
-        String parametro;
-        if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null
-                && !cuestionarioEnviadoBusqueda.getUsernameEnvio().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getUsernameEnvio(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("usernameEnvio", parametro, MatchMode.ANYWHERE));
-        }
-        
-        criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null
-                && !cuestionarioEnviadoBusqueda.getNombreUnidad().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
-        }
-        if (cuestionarioEnviadoBusqueda.getNumeroInspeccion() != null
-                && !cuestionarioEnviadoBusqueda.getNumeroInspeccion().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNumeroInspeccion(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("inspeccion.numero", parametro, MatchMode.ANYWHERE));
-        }
-        if (cuestionarioEnviadoBusqueda.getAmbitoInspeccion() != null) {
-            criteria.add(Restrictions.eq("inspeccion.ambito", cuestionarioEnviadoBusqueda.getAmbitoInspeccion()));
-        }
-        
-        criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
-        if (cuestionarioEnviadoBusqueda.getTipoInspeccion() != null) {
-            criteria.add(Restrictions.eq("tipoInspeccion.codigo",
-                    cuestionarioEnviadoBusqueda.getTipoInspeccion().getCodigo()));
-        }
-        
-        criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null
-                && !cuestionarioEnviadoBusqueda.getNombreEquipo().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("equipo.nombreEquipo", parametro, MatchMode.ANYWHERE));
-        }
-        
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-            subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
-            subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
-            subquery.setProjection(Projections.property("miembro.equipo"));
-            criteria.add(Property.forName("equipo.id").in(subquery));
-        }
-        
-        criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null
-                && !cuestionarioEnviadoBusqueda.getNombreCuestionario().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreCuestionario(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(
-                    Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario", parametro, MatchMode.ANYWHERE));
-        }
-        
-        criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join
-        if (cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado() != null) {
-            criteria.add(Restrictions.eq("modeloCuestionario.id",
-                    cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
-        }
+        consultaCriteriaCuestionarioEnviado(cuestionarioEnviadoBusqueda, criteria);
         criteria.setFirstResult(firstResult);
         criteria.setMaxResults(maxResults);
         criteria.addOrder(Order.desc("fechaEnvio"));
@@ -229,17 +108,26 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         return listaCuestionarioEnvio;
     }
     
-    /**
-     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria
-     * 
-     * @param cuestionarioEnviadoBusqueda
-     * @return devuelve el número de registros de una consulta criteria.
-     * @author EZENTIS
-     */
     @Override
     public long getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(CuestionarioEnvio.class, "cuestionario");
+        consultaCriteriaCuestionarioEnviado(cuestionarioEnviadoBusqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        session.close();
+        
+        return cnt;
+    }
+    
+    /**
+     * Consulta de cuestionarios basada en criteria.
+     * 
+     * @param cuestionarioEnviadoBusqueda
+     * @param criteria
+     */
+    private void consultaCriteriaCuestionarioEnviado(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda,
+            Criteria criteria) {
         String campoFecha = "this_.fecha_envio";
         if (cuestionarioEnviadoBusqueda.getEstado() != null) {
             switch (cuestionarioEnviadoBusqueda.getEstado()) {
@@ -362,12 +250,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             criteria.add(Restrictions.eq("modeloCuestionario.id",
                     cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
         }
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
-        session.close();
-        
-        return cnt;
     }
+    
+    /**
+     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria
+     * 
+     * @param cuestionarioEnviadoBusqueda
+     * @return devuelve el número de registros de una consulta criteria.
+     * @author EZENTIS
+     */
     
     @Override
     @Transactional(readOnly = false)
