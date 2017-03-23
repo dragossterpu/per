@@ -382,10 +382,6 @@ select {
      background-color:#eee ; /*#f0f7ff*/
 }
 
-label {
-	white-space: pre-line;
-}
-
 .ui-messages{
 	white-space: pre-line;
 }
