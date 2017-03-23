@@ -35,6 +35,8 @@
 			     	<h:outputLabel value="* Usuario o contraseña incorrectos. Inténtelo de nuevo" 
  			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Bad credentials')}" styleClass="error"/>
  			     		
+ 			     	<h:outputLabel value="* Ya existe una sesión abierta para este usuario" 
+ 			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Maximum sessions')}" styleClass="error"/>
 		
 				</form>
 					

@@ -8,9 +8,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import es.mira.progesin.services.LoginService;
 
@@ -24,6 +27,9 @@ import es.mira.progesin.services.LoginService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    private static final int MAX_CONCURRENT_USER_SESSIONS = 1;
+    
     @Autowired
     private LoginService loginService;
     
@@ -35,11 +41,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // .withUser("user").password("password").roles("USER");
     }
     
+    /**
+     * Configuración de la codificación de la contraseña usando BCrypt
+     * @return PasswordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     
+    /**
+     * Configuración para la autenticación
+     * 
+     * @return DaoAuthenticationProvider
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -50,8 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // http.userDetailsService(userDetailsServiceBean());
-        // http.headers().frameOptions().sameOrigin();
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
                 .permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
                 // .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
@@ -59,6 +72,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml", true).failureUrl("/login").and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
         
+        // configuración para el manejo de las sessiones de los usuarios
+        http.sessionManagement().maximumSessions(MAX_CONCURRENT_USER_SESSIONS).maxSessionsPreventsLogin(true)
+                .sessionRegistry(sessionRegistry());
+        
+    }
+    
+    /**
+     * Usado por spring security para saber los usuarios (Principal) que han iniciado sesión
+     * 
+     * @return SessionRegistry
+     */
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+    
+    /**
+     * Trigger usado cuando un usuario cancela su sesión. Es necesario tenerlo definido para poder validar las sesiones
+     * que tiene abiertas un usuario
+     * 
+     * @return HttpSessionEventPublisher
+     */
+    @Bean
+    public static HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
     
     @Override
