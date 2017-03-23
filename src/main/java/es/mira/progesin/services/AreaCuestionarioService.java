@@ -141,4 +141,9 @@ public class AreaCuestionarioService implements IAreaCuestionarioService {
         return areaRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(idCuestionario);
     }
     
+    @Override
+    public List<AreasCuestionario> findByIdIn(List<Long> listaIdAreasElegidas) {
+        return areaRepository.findByIdIn(listaIdAreasElegidas);
+    }
+    
 }

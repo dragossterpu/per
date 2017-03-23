@@ -21,4 +21,6 @@ public interface IAreaCuestionarioRepository extends CrudRepository<AreasCuestio
             + "and a.id = ?1", nativeQuery = true)
     AreasCuestionario findAreaExistenteEnCuestionariosPersonalizados(Long idArea);
     
+    List<AreasCuestionario> findByIdIn(List<Long> listaIdAreasElegidas);
+    
 }

@@ -1,7 +1,6 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -12,15 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
-import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
-import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
-import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
-import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -159,10 +153,6 @@ public class EnvioCuestionarioBean implements Serializable {
                     enviarCorreoCuestionario(password, listaUsuariosProvisionales);
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                             "El cuestionario se ha enviado con éxito");
-                    // Crear respuestas tipo tabla (ñapa para que cuando inician sesíón varios usuarios a la vez por
-                    // primera
-                    // vez, al grabar borrador no se repitan los datos de las tablas/matriz por cada usuario)
-                    crearResgistrosRespuestaTipoTablaMatriz(cuestionarioEnvio);
                     
                     String descripcion = "Se ha envido el cuestionario de la inspección: "
                             + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
@@ -221,63 +211,6 @@ public class EnvioCuestionarioBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Se ha producido un error en el envio del correo electrónico", e.getMessage(), null);
             regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
-        }
-    }
-    
-    /**
-     * 
-     * @author EZENTIS
-     * @param cuestionarioEnvio
-     */
-    private void crearResgistrosRespuestaTipoTablaMatriz(CuestionarioEnvio cuestionarioEnvio) {
-        try {
-            List<PreguntasCuestionario> listaPreguntasTablaMatriz = preguntasRepository
-                    .findPreguntasElegidasTablaMatrizCuestionarioPersonalizado(
-                            cuestionarioEnvio.getCuestionarioPersonalizado().getId());
-            List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
-            List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
-            
-            for (PreguntasCuestionario pregunta : listaPreguntasTablaMatriz) {
-                List<DatosTablaGenerica> listaDatosTabla = new ArrayList<>();
-                RespuestaCuestionario rtaCuestionario = new RespuestaCuestionario();
-                RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
-                idRespuesta.setCuestionarioEnviado(cuestionarioEnvio);
-                idRespuesta.setPregunta(pregunta);
-                rtaCuestionario.setRespuestaId(idRespuesta);
-                if (pregunta.getTipoRespuesta().startsWith("TABLA")) {
-                    DatosTablaGenerica dtg = new DatosTablaGenerica();
-                    dtg.setRespuesta(rtaCuestionario);
-                    listaDatosTabla.add(dtg);
-                } else {
-                    crearRespuestaMatriz(pregunta, listaDatosTabla, rtaCuestionario);
-                }
-                
-                rtaCuestionario.setRespuestaTablaMatriz(listaDatosTabla);
-                listaRespuestas.add(rtaCuestionario);
-                listaDatosTablaSave.addAll(listaDatosTabla);
-            }
-            cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnvio, listaRespuestas, listaDatosTablaSave);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * 
-     * @author EZENTIS
-     * @param pregunta
-     * @param listaDatosTabla
-     * @param respuestaCuestionario
-     */
-    private void crearRespuestaMatriz(PreguntasCuestionario pregunta, List<DatosTablaGenerica> listaDatosTabla,
-            RespuestaCuestionario respuestaCuestionario) {
-        List<ConfiguracionRespuestasCuestionario> listaFilas = configRespuestas
-                .findFilasBySeccion(pregunta.getTipoRespuesta());
-        for (ConfiguracionRespuestasCuestionario c : listaFilas) {
-            DatosTablaGenerica dtg = new DatosTablaGenerica();
-            dtg.setNombreFila(c.getConfig().getValor());
-            dtg.setRespuesta(respuestaCuestionario);
-            listaDatosTabla.add(dtg);
         }
     }
     

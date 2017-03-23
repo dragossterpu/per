@@ -144,6 +144,13 @@ public class User implements Serializable {
     @Column(name = "username_baja")
     protected String usernameBaja;
     
+    /**
+     * Constructor de usuarios provisionales principales
+     * 
+     * @param username id del usuario
+     * @param password contraseña cifrada
+     * @param role rol del usuario en la aplicación
+     */
     public User(String username, String password, RoleEnum role) {
         this.setUsername(username);
         this.setPassword(password);
@@ -159,11 +166,20 @@ public class User implements Serializable {
         this.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
     }
     
+    /**
+     * Constructor de usuarios provisionales secundarios para la cumplimentación de cuestionarios (inicialmente
+     * inactivos hasta que se les asigne un area)
+     * 
+     * @param username id del usuario
+     * @param password contraseña cifrada
+     * @param role rol del usuario en la aplicación
+     * @param correoPrincipal correo de envío del cuestionario
+     */
     public User(String username, String password, RoleEnum role, String correoPrincipal) {
         this.setUsername(username);
         this.setPassword(password);
         this.setRole(role);
-        this.setEstado(EstadoEnum.ACTIVO);
+        this.setEstado(EstadoEnum.INACTIVO);
         this.setNombre(PROVISIONAL);
         this.setApellido1(PROVISIONAL);
         this.setDocIdentidad("000000000T");

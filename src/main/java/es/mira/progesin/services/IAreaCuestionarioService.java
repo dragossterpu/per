@@ -31,4 +31,10 @@ public interface IAreaCuestionarioService {
      */
     List<AreasCuestionario> findAreasByIdCuestionarioByOrder(Integer idCuestionario);
     
+    /**
+     * @param listaIdAreasElegidas
+     * @return lista de areas asociadas a los ids
+     */
+    List<AreasCuestionario> findByIdIn(List<Long> listaIdAreasElegidas);
+    
 }

@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -22,17 +23,27 @@ import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
+import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
+/**
+ * Servicio de cuestionarios enviados
+ * 
+ * @author EZENTIS
+ */
 @Service
 public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
@@ -62,6 +73,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Autowired
     private transient IUserService userService;
     
+    @Autowired
+    private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
+    
+    @Autowired
+    private transient IPreguntaCuestionarioRepository preguntasRepository;
+    
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     @Override
@@ -74,8 +91,29 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Transactional(readOnly = false)
     public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales,
             CuestionarioEnvio cuestionarioEnvio) {
-        userRepository.save(listadoUsuariosProvisionales);
-        cuestionarioEnvioRepository.save(cuestionarioEnvio);
+        listadoUsuariosProvisionales = (List<User>) userRepository.save(listadoUsuariosProvisionales);
+        cuestionarioEnvio = cuestionarioEnvioRepository.save(cuestionarioEnvio);
+        
+        List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnvio,
+                listadoUsuariosProvisionales.get(0));
+        areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
+    }
+    
+    private List<AreaUsuarioCuestEnv> asignarAreasUsuarioProvPrincipal(CuestionarioEnvio cuestionarioEnviado,
+            User usuarioProv) {
+        List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = new ArrayList<>();
+        List<PreguntasCuestionario> preguntasElegidas = preguntasRepository
+                .findPreguntasElegidasCuestionarioPersonalizado(
+                        cuestionarioEnviado.getCuestionarioPersonalizado().getId());
+        List<AreasCuestionario> areasElegidas = new ArrayList<>();
+        preguntasElegidas.forEach(pregunta -> {
+            if (areasElegidas.contains(pregunta.getArea()) == Boolean.FALSE) {
+                areasElegidas.add(pregunta.getArea());
+                areasUsuarioCuestEnv.add(new AreaUsuarioCuestEnv(cuestionarioEnviado.getId(),
+                        pregunta.getArea().getId(), usuarioProv.getUsername()));
+            }
+        });
+        return areasUsuarioCuestEnv;
     }
     
     @Override
@@ -86,9 +124,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     /**
      * Método que devuelve la lista de cuestionarios enviados en una consulta basada en criteria.
      * 
-     * @param firstResult. Primer registro.
-     * @param maxResults. Máximo número de registros.
-     * @param cuestionarioEnviadoBusqueda.
+     * @param firstResult Primer registro.
+     * @param maxResults Máximo número de registros.
+     * @param cuestionarioEnviadoBusqueda objeto con parámetros de búsqueda
      * @return devuelve la lista de registros tipo CuestionarioEnviadoBusqueda.
      * @author EZENTIS
      */
@@ -108,6 +146,13 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         return listaCuestionarioEnvio;
     }
     
+    /**
+     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria
+     * 
+     * @param cuestionarioEnviadoBusqueda objeto con parámetros de búsqueda
+     * @return devuelve el número de registros de una consulta criteria.
+     * @author EZENTIS
+     */
     @Override
     public long getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         Session session = sessionFactory.openSession();
@@ -251,14 +296,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                     cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
         }
     }
-    
-    /**
-     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria
-     * 
-     * @param cuestionarioEnviadoBusqueda
-     * @return devuelve el número de registros de una consulta criteria.
-     * @author EZENTIS
-     */
     
     @Override
     @Transactional(readOnly = false)

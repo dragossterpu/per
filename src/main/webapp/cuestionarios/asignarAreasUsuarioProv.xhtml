@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+		
+		<h3>Asignación de areas del cuestionario</h3>
+        	
+		<div class="aclaraciones">
+			Al asignar un area a un usuario determinado, ésta quedará bloqueada para el resto, incluido el usuario principal (usted), hasta que dicho usuario de por finalizada su cumplimentación.
+		</div>
+		
+		<h:form id="form">
+            <p:dataTable  var="areaUsuario" value="#{responderCuestionarioBean.listaAreasUsuarioCuestEnv}"  rows="20" id="tablaAreasUsuario" 
+                         rendered="#{not empty responderCuestionarioBean.listaAreasUsuarioCuestEnv}">
+                         
+            	<f:facet name="header">
+            		Asignación de areas del cuestionario
+            	</f:facet>
+            	<p:column headerText="Area"
+            		sortBy="#{responderCuestionarioBean.visualizarCuestionario.mapaAreasVisualizarUsuario[areaUsuario.idArea].area}">
+            		<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.mapaAreasVisualizarUsuario[areaUsuario.idArea].area}" />
+            	</p:column>
+            	<p:column headerText="Usuario"
+            		sortBy="#{areaUsuario.usernameProv}">
+                    <p:selectOneMenu id="usuarioProvSelect" layout="responsive" columns="4"
+                        value="#{areaUsuario.usernameProv}" converter="#{selectConverter}"
+                        disabled="#{areaUsuario.usernameProv ne request.remoteUser}">
+						<f:selectItems value="#{responderCuestionarioBean.usuariosProv}"
+							var="usuarioProv"
+							itemLabel="#{usuarioProv.username}"
+							itemValue="#{usuarioProv.username}"/>
+                    </p:selectOneMenu>
+            	</p:column>
+            </p:dataTable>
+			
+			<div class="botonesFormulario">
+				<p:commandButton action="#{responderCuestionarioBean.asignarAreas}" value="Guardar asignaciones" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
+					<p:confirm header="Confirmación" icon="fa fa-warning-sign"
+						message="¿Está seguro que desea guardar estas asignaciones?"/>
+				</p:commandButton>
+				<p:button outcome="/cuestionarios/responderCuestionario" value="Cancelar" icon="fa fa-fw fa-undo"/>
+			</div>
+			
+			
+			<p:confirmDialog global="true">
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Aceptar" type="button"
+						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="Cancelar" type="button"
+						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+				</div>
+			</p:confirmDialog>
+			
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+				<div class="centrarBotonesDialog">
+					<p:button value="Cerrar" outcome="/cuestionarios/responderCuestionario" />
+				</div>
+			</p:dialog>
+							
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage value="/images/loading.gif" />
+			</p:dialog>
+			
+		</h:form>
+		
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

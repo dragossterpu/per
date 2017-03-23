@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.primefaces.model.StreamedContent;
@@ -91,7 +92,7 @@ public class VisualizarCuestionario implements Serializable {
     
     private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
     
-    HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux;
+    private HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux;
     
     private Map<PreguntasCuestionario, List<Documento>> mapaDocumentos;
     
@@ -104,6 +105,14 @@ public class VisualizarCuestionario implements Serializable {
     
     @Autowired
     private transient PdfGenerator pdfGenerator;
+    
+    private User usuarioActual;
+    
+    private boolean esUsuarioProvisional;
+    
+    private List<AreasCuestionario> listaAreasVisualizarUsuario;
+    
+    private Map<Long, AreasCuestionario> mapaAreasVisualizarUsuario;
     
     /**
      * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -125,7 +134,7 @@ public class VisualizarCuestionario implements Serializable {
      * Muestra en pantalla el cuestionario con las respuestas de la unidad inspeccionada
      * 
      * @author EZENTIS
-     * @param cuestionarioEnviado
+     * @param cuestionarioEnviado seleccionado en los resultados de la búsqueda
      * @return vista desde la que ha sido llamada responderCuestionario o validarCuestionario
      */
     public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
@@ -138,48 +147,49 @@ public class VisualizarCuestionario implements Serializable {
         mapaValidacionRespuestas = new HashMap<>();
         
         // Para inspectores se recuperan todas las respuestas
-        // Para usuarios provisionales sólo las no validadas
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        boolean esProvisional = RoleEnum.PROV_CUESTIONARIO.equals(usuarioActual.getRole());
-        if (esProvisional) {
+        // Para usuarios provisionales sólo las no validadas, todas si es el principal y sólo las que tengan asignadas
+        // para el resto
+        if (esUsuarioProvisional) {
             listaRespuestas = respuestaRepository
-                    .findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(cuestionarioEnviado);
+                    .findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNullAndRespuestaIdPreguntaAreaIn(
+                            cuestionarioEnviado, listaAreasVisualizarUsuario);
         } else {
             listaRespuestas = respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
         }
         
         listaRespuestas.forEach(respuesta -> {
-            String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
+            PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
+            String tipoRespuesta = pregunta.getTipoRespuesta();
             if ((tipoRespuesta.startsWith("TABLA") || tipoRespuesta.startsWith("MATRIZ"))
                     && respuesta.getRespuestaTablaMatriz() != null) {
-                mapaRespuestasTablaAux.put(respuesta.getRespuestaId().getPregunta(),
-                        respuesta.getRespuestaTablaMatriz());
+                mapaRespuestasTablaAux.put(pregunta, respuesta.getRespuestaTablaMatriz());
             } else {
-                mapaRespuestas.put(respuesta.getRespuestaId().getPregunta(), respuesta.getRespuestaTexto());
+                mapaRespuestas.put(pregunta, respuesta.getRespuestaTexto());
                 if (respuesta.getDocumentos() != null && respuesta.getDocumentos().isEmpty() == Boolean.FALSE) {
-                    mapaDocumentos.put(respuesta.getRespuestaId().getPregunta(), respuesta.getDocumentos());
+                    mapaDocumentos.put(pregunta, respuesta.getDocumentos());
                 }
             }
-            mapaValidacionAreas.putIfAbsent(respuesta.getRespuestaId().getPregunta().getArea(), true);
-            mapaValidacionRespuestas.put(respuesta.getRespuestaId().getPregunta(),
-                    respuesta.getFechaValidacion() != null);
+            mapaValidacionAreas.putIfAbsent(pregunta.getArea(), true);
+            mapaValidacionRespuestas.put(pregunta, respuesta.getFechaValidacion() != null);
             if (respuesta.getFechaValidacion() == null) {
-                mapaValidacionAreas.replace(respuesta.getRespuestaId().getPregunta().getArea(), false);
+                mapaValidacionAreas.replace(pregunta.getArea(), false);
             }
         });
         
         return visualizar(cuestionarioEnviado.getCuestionarioPersonalizado(),
                 listaRespuestas.isEmpty() == Boolean.FALSE,
-                esProvisional && cuestionarioEnviado.getFechaNoConforme() != null);
+                esUsuarioProvisional && cuestionarioEnviado.getFechaNoConforme() != null);
     }
     
     /**
-	 * Carga las preguntas de un cuestionario en base a su modelo personalizado y construye la estructura de aquellas que precisen una tabla o matriz para representar su respuesta
+     * Carga las preguntas de un cuestionario en base a su modelo personalizado y construye la estructura de aquellas
+     * que precisen una tabla o matriz para representar su respuesta
      * 
      * @author EZENTIS
      * @param cuestionario seleccionado
      * @param visualizarRespuestas indica si se llama para mostrar un cuestionario vacío o ya respondido
-	 * @param soloNoValidadas indica si hay que mostrar todas las preguntas/respuestas o sólo aquellas que aún no han sido validadas
+     * @param soloNoValidadas indica si hay que mostrar todas las preguntas/respuestas o sólo aquellas que aún no han
+     * sido validadas
      * @return vista desde la que ha sido llamada en base a si ya ha sido enviado, responder/validarCuestionario
      */
     private String visualizar(CuestionarioPersonalizado cuestionario, boolean visualizarRespuestas,
@@ -187,8 +197,7 @@ public class VisualizarCuestionario implements Serializable {
         setMapaAreaPreguntas(new HashMap<>());
         this.setCuestionarioPersonalizado(cuestionario);
         
-        List<PreguntasCuestionario> preguntas = preguntasRepository
-                .findPreguntasElegidasCuestionarioPersonalizado(cuestionario.getId());
+        List<PreguntasCuestionario> preguntas = recuperarPreguntas(cuestionario);
         
         Collections.sort(preguntas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
         
@@ -231,6 +240,17 @@ public class VisualizarCuestionario implements Serializable {
         } else {
             return "/cuestionarios/validarCuestionario?faces-redirect=true";
         }
+    }
+    
+    private List<PreguntasCuestionario> recuperarPreguntas(CuestionarioPersonalizado cuestionario) {
+        List<PreguntasCuestionario> preguntas;
+        if (esUsuarioProvisional == Boolean.FALSE) {
+            preguntas = preguntasRepository.findPreguntasElegidasCuestionarioPersonalizado(cuestionario.getId());
+        } else {
+            preguntas = preguntasRepository.findPreguntasElegidasCuestionarioPersonalizadoAndAreaIn(
+                    cuestionario.getId(), new ArrayList<Long>(mapaAreasVisualizarUsuario.keySet()));
+        }
+        return preguntas;
     }
     
     /**
@@ -321,6 +341,27 @@ public class VisualizarCuestionario implements Serializable {
                     "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
+    }
+    
+    @PostConstruct
+    public void init() {
+        usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        esUsuarioProvisional = RoleEnum.PROV_CUESTIONARIO.equals(usuarioActual.getRole());
+    }
+    
+    /**
+     * Construye un mapa que relaciona el id con su objeto area de un cuestionario enviado para recuperar el nombre del
+     * area.
+     * 
+     * @author EZENTIS
+     */
+    public void generarMapaAreasVisualizarUsuario() {
+        mapaAreasVisualizarUsuario = new HashMap<>();
+        
+        listaAreasVisualizarUsuario.forEach(areaCuestionario -> {
+            mapaAreasVisualizarUsuario.put(areaCuestionario.getId(), areaCuestionario);
+        });
+        
     }
     
 }
