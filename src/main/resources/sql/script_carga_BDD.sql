@@ -9,6 +9,7 @@ prompt    Autor: Rubén Astudillo
 prompt
 prompt    Fecha creación: 01/03/2017
 prompt	  Actualización: 22/03/2017   Rubén 
+prompt	  Actualización: 24/03/2017   Raúl 
 
 prompt =========================================================================
 
@@ -96,6 +97,9 @@ BEGIN
 	EXECUTE IMMEDIATE 'DROP TABLE "TIPO_EQUIPO" CASCADE CONSTRAINTS';
 	EXECUTE IMMEDIATE 'DROP TABLE "TIPOS_INSPECCION" CASCADE CONSTRAINTS';
 	EXECUTE IMMEDIATE 'DROP TABLE "USERS" CASCADE CONSTRAINTS';
+	EXECUTE IMMEDIATE 'DROP TABLE "MUNICIPIOS" CASCADE CONSTRAINTS';
+	EXECUTE IMMEDIATE 'DROP TABLE "PROVINCIAS" CASCADE CONSTRAINTS';
+	
 EXCEPTION WHEN OTHERS THEN NULL;
 END;
 /	
@@ -757,9 +761,32 @@ prompt Ejecutando creación de USERS...
 	"ID_EMPLEO" NUMBER(19,0), 
 	"ID_PUESTO" NUMBER(19,0)
    ) ;
- COMMIT;  
+ COMMIT; 
+ 
+ prompt =========================================================================
+prompt + Tarea2_38
+prompt =========================================================================
+prompt Ejecutando creación de PROVINCIAS... 
 
+ CREATE TABLE "PROVINCIAS" 
+   (	"CODIGO" VARCHAR2(3 CHAR) NOT NULL ENABLE, 
+	"CODIGO_MN" VARCHAR2(10 CHAR), 
+	"PROVINCIA" VARCHAR2(100 CHAR), 
+	 PRIMARY KEY ("CODIGO")
+   ) ;
+   COMMIT;
 
+prompt =========================================================================
+prompt + Tarea2_39
+prompt =========================================================================
+prompt Ejecutando creación de MUNICIPIOS... 
+
+ CREATE TABLE "MUNICIPIOS" 
+   (	"ID" NUMBER(19,0) NOT NULL ENABLE, 
+	"NAME" VARCHAR2(100 CHAR), 
+	"CODE_PROVINCE" VARCHAR2(3 CHAR)
+	);
+  COMMIT;
 
 prompt =========================================================================
 prompt + Tarea3
@@ -1411,6 +1438,27 @@ prompt Ejecutando creación de Constraints para USERS...
 	  REFERENCES "CLASE_USUARIO" ("ID_CLASE") ENABLE;
   ALTER TABLE "USERS" ADD CONSTRAINT "FK_USER_PUESTO" FOREIGN KEY ("ID_PUESTO")
 	  REFERENCES "PUESTOSTRABAJO" ("ID") ENABLE;
+	  
+	  prompt =========================================================================
+prompt + Tarea3_50
+prompt =========================================================================
+prompt Ejecutando creación de Constraints para PROVINCIAS...
+
+ALTER TABLE "PROVINCIAS" ADD PRIMARY KEY ("CODIGO") USING INDEX  ENABLE;
+ALTER TABLE "PROVINCIAS" MODIFY ("CODIGO_MN" NOT NULL ENABLE);
+ALTER TABLE "PROVINCIAS" MODIFY ("PROVINCIA" NOT NULL ENABLE);
+COMMIT;
+
+prompt =========================================================================
+prompt + Tarea3_51
+prompt =========================================================================
+prompt Ejecutando creación de Constraints para MUNICIPIOS...
+
+ALTER TABLE "MUNICIPIOS" ADD PRIMARY KEY ("ID") USING INDEX  ENABLE;
+ALTER TABLE "MUNICIPIOS" MODIFY ("NAME" NOT NULL ENABLE);
+ALTER TABLE "MUNICIPIOS" MODIFY ("CODE_PROVINCE" NOT NULL ENABLE); 
+ALTER TABLE "MUNICIPIOS" ADD  CONSTRAINT "FK_PROVINCIA" FOREIGN KEY ("CODE_PROVINCE")
+	  REFERENCES "PROVINCIAS" ("CODIGO") ENABLE;
 
 
 

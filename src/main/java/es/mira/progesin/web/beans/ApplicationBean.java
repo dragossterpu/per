@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.Provincias;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.services.IParametroService;
@@ -24,32 +25,42 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ApplicationBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Autowired
-	private transient IPuestoTrabajoService puestosTrabajoService;
-
-	@Autowired
-	private transient IParametroService parametroService;
-
-	// Los cargo en la aplicación porque van a ser siempre los mismo y así agilizo la aplicación
-	private List<PuestoTrabajo> listaPuestosTrabajo;
-
-	private Map<String, Map<String, String>> mapaParametros;
-
-	private String dominiosValidos;
-
-	private List<TipoInspeccion> listaTiposInspeccion;
-
-	@PersistenceContext
-	private transient EntityManager em;
-
-	@PostConstruct
-	public void init() {
-		setListaPuestosTrabajo((List<PuestoTrabajo>) puestosTrabajoService.findAll());
-		setMapaParametros(parametroService.getMapaParametros());
-		setDominiosValidos(mapaParametros.get("dominiosCorreo").get("dominiosCorreo"));
-		setListaTiposInspeccion(em.createNamedQuery("TipoInspeccion.findAll", TipoInspeccion.class).getResultList());
-	}
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Autowired
+    private transient IPuestoTrabajoService puestosTrabajoService;
+    
+    @Autowired
+    private transient IParametroService parametroService;
+    
+    // Los cargo en la aplicación porque van a ser siempre los mismo y así agilizo la aplicación
+    private List<PuestoTrabajo> listaPuestosTrabajo;
+    
+    private Map<String, Map<String, String>> mapaParametros;
+    
+    private String dominiosValidos;
+    
+    private List<TipoInspeccion> listaTiposInspeccion;
+    
+    private List<Provincias> listaProvincias;
+    
+    @PersistenceContext
+    private transient EntityManager em;
+    
+    @PostConstruct
+    public void init() {
+        setListaPuestosTrabajo((List<PuestoTrabajo>) puestosTrabajoService.findAll());
+        setMapaParametros(parametroService.getMapaParametros());
+        setDominiosValidos(mapaParametros.get("dominiosCorreo").get("dominiosCorreo"));
+        setListaTiposInspeccion(em.createNamedQuery("TipoInspeccion.findAll", TipoInspeccion.class).getResultList());
+        
+        listaProvincias = em.createNamedQuery("Provincias.findAll", Provincias.class).getResultList();
+        Provincias provinciaDefecto = new Provincias();
+        provinciaDefecto.setCodigo("00");
+        provinciaDefecto.setCodigoMN("");
+        provinciaDefecto.setProvincia("Todos");
+        listaProvincias.add(0, provinciaDefecto);
+        
+    }
 }

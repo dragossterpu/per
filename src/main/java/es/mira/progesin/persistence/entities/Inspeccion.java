@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -39,7 +41,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "INSPECCIONES")
+@Table(name = "inspecciones")
 public class Inspeccion implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -47,18 +49,18 @@ public class Inspeccion implements Serializable {
     @Id
     @SequenceGenerator(name = "seq_inspeccion", sequenceName = "seq_inspeccion", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inspeccion")
-    @Column
+    @Column(name = "id")
     private Long id;
     
-    @Column(length = 100, nullable = false)
+    @Column(name = "numero", length = 100, nullable = false)
     private String numero;
     
     @ManyToOne
-    @JoinColumn(name = "tipo_inspeccion")
+    @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "FK_TIPO_INSPECCION"))
     private TipoInspeccion tipoInspeccion;
     
     @ManyToOne
-    @JoinColumn(name = "id_equipo")
+    @JoinColumn(name = "id_equipo", foreignKey = @ForeignKey(name = "FK_EQUIPO"), nullable = false)
     private Equipo equipo;
     
     // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -69,38 +71,46 @@ public class Inspeccion implements Serializable {
     // @JoinColumn(name = "inspeccion")
     // private List<CuestionarioEnvio> cuestionarios;
     
-    @Column(length = 100)
+    @Column(name = "nombre_unidad")
     private String nombreUnidad;
     
-    @Column(length = 10)
+    @Column(name = "tipo_unidad")
+    private String tipoUnidad;
+    
+    @Column(name = "ambito", length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
     private AmbitoInspeccionEnum ambito;
     
-    @Column
+    @Column(name = "cuatrimestre", length = 30)
     @Enumerated(EnumType.STRING)
     private CuatrimestreEnum cuatrimestre;
     
-    @Column
+    @Column(name = "estado_inspeccion", length = 30, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EstadoInspeccionEnum estadoInspeccion;
+    
+    @Column(name = "anio", nullable = false)
     private Integer anio;
     
     @CreatedDate
-    @Column(nullable = false)
+    @Column(name = "fecha_alta", nullable = false)
     private Date fechaAlta;
     
     @CreatedBy
-    @Column(nullable = false)
+    @Column(name = "username_alta", nullable = false)
     private String usernameAlta;
     
-    @Column
+    @Column(name = "fecha_baja")
     private Date fechaBaja;
     
-    @Column
+    @Column(name = "username_baja")
     private String usernameBaja;
     
-    @Column
+    @Column(name = "fecha_finalizacion")
     private Date fechaFinalizacion;
     
-    @Column
+    @CreatedBy
+    @Column(name = "username_finalizacion")
     private String usernameFinalizacion;
     
 }
