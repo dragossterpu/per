@@ -22,12 +22,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
-import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
+import es.mira.progesin.persistence.entities.gd.TipoDocumento;
+import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
@@ -68,6 +70,9 @@ public class ProvisionalSolicitudBean implements Serializable {
     
     @Autowired
     private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
+    
+    @Autowired
+    private transient ITipoDocumentoRepository tipoDocumentoRepository;
     
     @Autowired
     private transient IDocumentoService documentoService;
@@ -123,9 +128,11 @@ public class ProvisionalSolicitudBean implements Serializable {
     public String gestionarCargaDocumento(FileUploadEvent event) {
         try {
             UploadedFile archivo = event.getFile();
+            TipoDocumento tipo = tipoDocumentoRepository.findByNombre("DOCUMENTACIÓN SALIDA IPSS");
             if (documentoService.extensionCorrecta(archivo)) {
                 if (esDocumentacionPrevia(archivo)) {
-                    Documento documento = documentoService.cargaDocumento(archivo);
+                    Documento documento = documentoService.cargaDocumento(archivo, tipo,
+                            solicitudDocumentacionPrevia.getInspeccion());
                     if (documento != null) {
                         GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
                         gestDocumento.setFechaAlta(new Date());

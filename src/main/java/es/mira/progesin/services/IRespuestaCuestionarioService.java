@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.primefaces.model.UploadedFile;
 
-import es.mira.progesin.persistence.entities.Documento;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.gd.Documento;
 
 public interface IRespuestaCuestionarioService {
 

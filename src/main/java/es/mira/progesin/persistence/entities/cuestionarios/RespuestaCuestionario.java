@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.model.DatosTablaGenerica;
-import es.mira.progesin.persistence.entities.Documento;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

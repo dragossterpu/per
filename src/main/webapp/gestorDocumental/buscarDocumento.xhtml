@@ -5,17 +5,26 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<f:view >
 
-		<h2>Vaciar papelera</h2>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		
+		<ui:define name="content">
+			<h3>Búsqueda documentos</h3>
 		
 			
 			<h:form>
-		    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.recargaListaEliminados}" autoRun="true" update=":form:panelDocumentos"/>
+		    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.recargaLista}" autoRun="true" update=":form:panelDocumentos"/>
 			</h:form>
+			
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
+				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+				<div class="centrarBotonesDialog">
+					<p:button value="Cerrar" outcome="/gestorDocumental/gestor" />
+				</div>
+			</p:dialog>
 				<h:form id="form">
 				
 					<div class="bloqueFormulario">
@@ -56,6 +65,7 @@
 						<h:commandLink title="Limpiar" action="#{gestorDocumentalBean.limpiarBusqueda}" update="panelDocumentos" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 							<span class="ui-CommandLink-texto">Limpiar</span>
 						</h:commandLink>
+			            <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" />
 					</div>	
 					
 					<p:outputPanel id="panelDocumentos">
@@ -103,7 +113,7 @@
 							</p:column>
 							<p:column styleClass="botonTabla">
 								<p:commandButton title="Eliminar" icon="fa fa-trash"
-									actionListener="#{gestorDocumentalBean.borrarDocumento(documento)}"
+									actionListener="#{gestorDocumentalBean.eliminarDocumento(documento)}"
 									update="tablaDocumentos" >
 									<p:confirm header="Eliminar documento"
 										message="¿Está seguro que desea eliminar este documento? La eliminación no podrá deshacerse"
@@ -111,13 +121,17 @@
 								</p:commandButton>
 							</p:column>
 							<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
-								<p:commandButton title="Recuperar" icon="fa fa-fw fa-undo"  action="#{gestorDocumentalBean.recuperarDocumento(documento)}" update="tablaDocumentos" >
-									<p:confirm header="Recuperar documento"
-										message="¿Está seguro que desea sacar este documento de la papelera?"
+								<p:commandButton title="Editar" icon="fa fa-fw fa-edit"  action="#{gestorDocumentalBean.editarDocumento(documento)}">
+									<p:confirm header="Eliminar documento"
+										message="¿Está seguro que desea eliminar este documento? La eliminación no podrá deshacerse"
 										icon="fa fa-warning-sign" />
+								</p:commandButton>		
+							</p:column>
+							<p:column styleClass="botonTabla">
+								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{gestorDocumentalBean.descargarFichero(documento)}" title="Descargar documento">
+									<p:fileDownload value="#{gestorDocumentalBean.file}" />
 								</p:commandButton>
 							</p:column>
-							
 							
 							
 						</p:dataTable>
@@ -146,7 +160,7 @@
 
 					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
 			</h:form>
-		
+					
 		</ui:define>
 	</ui:composition>
 </f:view>

@@ -1,4 +1,4 @@
-package es.mira.progesin.persistence.entities;
+package es.mira.progesin.persistence.entities.gd;
 
 import java.io.Serializable;
 import java.sql.Blob;
@@ -25,7 +25,7 @@ import lombok.ToString;
  * Entidad para el almacenamiento en base de datos de los documentos en formato blob
  * 
  * @author Ezentis
- * @see es.mira.progesin.persistence.entities.Documento
+ * @see es.mira.progesin.persistence.entities.gd.Documento
  */
 
 @AllArgsConstructor
@@ -45,6 +45,9 @@ public class DocumentoBlob implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosBlob")
     @Column(name = "id", nullable = false)
     private Long id;
+    
+    @Column(name = "nombreFichero")
+    private String nombreFichero;
     
     @Column(name = "fichero")
     @Lob

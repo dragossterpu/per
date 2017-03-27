@@ -40,7 +40,7 @@
 		</p:submenu>
 		
 		<p:submenu label="Gestor Documental" >
-			<p:menuitem value="Búsqueda de documentos" outcome="/enConstruccion"/>
+			<p:menuitem value="Búsqueda de documentos" outcome="/gestorDocumental/buscarDocumento"/>
 		</p:submenu>
 		<p:submenu label="Guías">
 			<p:menuitem value="Modelos de guía" outcome="/guias/buscaGuias">
@@ -55,10 +55,8 @@
 			<p:menuitem value="Administrar equipos" outcome="/equipos/equipos">
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>
-			<p:menuitem value="Búsqueda de inspecciones" outcome="/inspecciones/inspecciones" >
-				<f:param name="vieneDe" value="menu" />
-			</p:menuitem>
-			
+			<p:menuitem value="Búsqueda de inspecciones" outcome="/enConstruccion" />
+			<p:menuitem value="Búsqueda modelos de inspección" outcome="/enConstruccion" />
 			<p:menuitem value="Estadísticas" outcome="/enConstruccion" />
 		</p:submenu>
 		
