@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 public interface IInspeccionesService {
     
@@ -23,5 +24,9 @@ public interface IInspeccionesService {
      */
     List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(String infoInspeccion,
             String usernameJefeEquipo);
+    
+    long getCountInspeccionCriteria(InspeccionBusqueda busqueda);
+    
+    List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda);
     
 }

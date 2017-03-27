@@ -113,4 +113,8 @@ public class Inspeccion implements Serializable {
     @Column(name = "username_finalizacion")
     private String usernameFinalizacion;
     
+    @ManyToOne
+    @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))
+    private Municipios municipio;
+    
 }

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+			
+			<f:metadata>
+			    <f:viewParam name="vieneDe" value="#{inspeccionBean.vieneDe}" />
+			</f:metadata>
+
+			<ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}"/>
+			
+			<h3>Búsqueda de inspecciones</h3>
+			
+			<h:form>
+			    <p:remoteCommand name="onload" action="#{inspeccionBean.getFormularioBusqueda}" autoRun="true" update="busquedaInspecciones" />
+			</h:form>
+			
+			<h:form id="busquedaInspecciones" >
+			<div class="bloqueFormulario" >
+				<div class="columnaIzdaFormulario" >
+				
+					<h:outputLabel for="numero" value="Número de la inspección" />
+					<p:inputText id="numero" value="#{inspeccionBean.inspeccionBusqueda.numero}" converter="#{trimConverter}"/>
+					
+					<h:outputLabel for="nombre" value="Nombre de unidad:" />
+					<p:inputText id="nombre" value="#{inspeccionBean.inspeccionBusqueda.nombreUnidad}" converter="#{trimConverter}"/>
+					
+					<h:outputLabel for="tipoUnidad" value="Tipo de unidad:" />
+					<p:inputText id="tipoUnidad" value="#{inspeccionBean.inspeccionBusqueda.tipoUnidad}" converter="#{trimConverter}"/>
+					
+					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+					<p:selectOneMenu
+						value="#{inspeccionBean.inspeccionBusqueda.tipoInspeccion}"
+						id="tipoInspeccionSelect" converter="#{selectConverter}">
+						<f:selectItem itemLabel="Todos" itemValue="" />
+						<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+							var="tipo"
+							itemLabel="#{tipo.descripcion}"
+							itemValue="#{tipo}" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección:" />
+					<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+							var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+					<p:selectOneMenu
+						value="#{inspeccionBean.inspeccionBusqueda.ambito}"
+						id="ambitoInspeccionSelect">
+						<f:selectItem itemLabel="Todos" itemValue="" />
+						<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+							var="ambito"
+							itemLabel="#{ambito.descripcion}"
+							itemValue="#{ambito}" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección:" />
+					<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
+							var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
+					<p:selectOneMenu
+						value="#{inspeccionBean.inspeccionBusqueda.cuatrimestre}"
+						id="cuatrimestreInspeccionSelect">
+						<f:selectItem itemLabel="Todos" itemValue="" />
+						<f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}"
+							var="cuatrimestre"
+							itemLabel="#{cuatrimestre.descripcion}"
+							itemValue="#{cuatrimestre}" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="estadoInspeccionSelect" value="Estado de la inspección:" />
+					<p:importEnum
+							type="es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum"
+							var="estados" allSuffix="ALL_ENUM_VALUES" />
+					<p:selectOneMenu
+						value="#{inspeccionBean.inspeccionBusqueda.estado}"
+						id="estadoInspeccionSelect">
+						<f:selectItem itemLabel="Todos" itemValue="" />
+						<f:selectItems value="#{estados.ALL_ENUM_VALUES}"
+							var="estado"
+							itemLabel="#{estado.descripcion}"
+							itemValue="#{estado}" />
+					</p:selectOneMenu>
+					
+				</div>
+				<div class="columnaDchaFormulario">
+				
+					<h:outputLabel for="equipoInspeccion" value="Equipo de inspeccion:" />
+					<p:inputText  id="equipoInspeccion" value="#{inspeccionBean.inspeccionBusqueda.nombreEquipo}" converter="#{trimConverter}"/>
+					
+					<h:outputLabel for="jefeEquipoInspeccion" value="Jefe del equipo:" />
+					<p:inputText  id="jefeEquipoInspeccion" value="#{inspeccionBean.inspeccionBusqueda.jefeEquipo}" converter="#{trimConverter}"/>
+				
+					<h:outputLabel for="anio" value="Año:" />
+					<p:inputText  id="anio" value="#{inspeccionBean.inspeccionBusqueda.anio}" converter="#{trimConverter}"/>
+						
+					<h:outputLabel for="username" value="Nombre de usuario:" />
+					<p:inputText id="username" value="#{inspeccionBean.inspeccionBusqueda.usuarioCreacion}" converter="#{trimConverter}"/>
+					
+					<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+					<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{inspeccionBean.inspeccionBusqueda.fechaDesde}"/>
+					
+					<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+					<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{inspeccionBean.inspeccionBusqueda.fechaHasta}"/>	
+					
+					<h:outputLabel for="provinciasSelect" value="Provincias:" />
+					<p:selectOneMenu
+						valueChangeListener="#{inspeccionBean.onChangeProvincia}" 
+						value="#{inspeccionBean.inspeccionBusqueda.provincia}"
+						id="provinciasSelect" 
+						filter="true" 
+						filterMatchMode="startsWith"
+						converter="#{selectConverter}">
+						
+						<f:selectItems value="#{applicationBean.listaProvincias}"
+							var="provincia"
+							itemLabel="#{provincia.provincia}"
+							itemValue="#{provincia}" />
+						<f:ajax event="change" execute="@form" render="municipiosSelect"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="municipiosSelect" value="Municipios:" />
+					<p:selectOneMenu
+						value="#{inspeccionBean.inspeccionBusqueda.municipio}"
+						id="municipiosSelect"
+						filter="true" 
+						filterMatchMode="startsWith" 
+						converter="#{selectConverter}">
+						<f:selectItem itemLabel="Todos" itemValue="" />
+						<f:selectItems value="#{inspeccionBean.listaMunicipios}"
+							var="municipio"
+							itemLabel="#{municipio.name}"
+							itemValue="#{municipio}" />
+					</p:selectOneMenu>
+					
+				</div>	
+			</div>
+			<div class="botonesFormulario">
+				<p:commandButton actionListener="#{inspeccionBean.buscarInspeccion}" update="panelInspecciones" value="Buscar"  icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+				<h:commandLink title="Limpiar" action="#{inspeccionBean.limpiarBusqueda}" update="busquedaInspecciones" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
+					<span class="ui-CommandLink-texto">Limpiar</span>
+				</h:commandLink>
+	      	</div>	
+			<p:outputPanel layout="block" id="panelInspecciones">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty inspeccionBean.inspeccionBusqueda.listaInspecciones}">
+					No existe ningún resultado que cumpla los parámetros de su búsqueda.
+				</p:outputPanel>
+ 				<p:outputPanel rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}">
+	 				<h:commandLink>
+		               <p:graphicImage  value="/images/xls.png" />
+		               <p:dataExporter type="xls" target="tablaInspecciones" fileName="listaInspecciones"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/pdf.png" />
+		               <p:dataExporter type="pdf" target="tablaInspecciones" fileName="listaInspecciones"/>
+		            </h:commandLink>
+		            <h:commandLink>
+		               <p:graphicImage  value="/images/csv.png" />
+		               <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones"/>
+		            </h:commandLink>
+	            </p:outputPanel>
+	 			<p:dataTable  var="inspeccion" value="#{inspeccionBean.inspeccionBusqueda.listaInspecciones}"  rows="20" id="tablaInspecciones" 
+	 						paginator="true" 
+  	                        paginatorTemplate="{Anterior} {Pagina} {Posterior} {RowsPerPageDropdown}" 
+	                        resizableColumns="true"
+	                        draggableColumns="true"
+	                  	    rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}" >
+	                  	    
+	                 <f:facet name="{Anterior}">
+						<h:commandLink title="Anterior(es)" actionListener="#{inspeccionBean.previousInspeccion}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+					</f:facet>   
+					<f:facet name="{Posterior}">
+						<h:commandLink title="Posterior(es)" actionListener="#{inspeccionBean.nextInspeccion}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+				   	</f:facet>
+					<f:facet name="{Pagina}">
+						<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{inspeccionBean.actualPage} de #{inspeccionBean.numPages}</span>	 
+					</f:facet>  
+	                        
+					<f:facet name="header">
+						Inspecciones	
+						<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
+	        			 <p:columnToggler datasource="tablaInspecciones" trigger="toggler">
+	        			 	  <p:ajax event="toggle" listener="#{inspeccionBean.onToggle}" />
+	        			 </p:columnToggler>				
+					</f:facet>
+					<p:column headerText="Número" sortBy="#{inspeccion.numero}" width="50" visible="#{inspeccionBean.list[0]}" exportable="#{inspeccionBean.list[0]}">
+						<h:outputText value="#{inspeccion.numero}" />
+					</p:column>
+					<p:column headerText="Nombre equipo" sortBy="#{inspeccion.equipo.nombreEquipo}" width="50" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}">
+						<h:outputText value="#{inspeccion.equipo.nombreEquipo}" />
+					</p:column>
+					<p:column headerText="Jefe equipo" sortBy="#{inspeccion.equipo.jefeEquipo}" width="50" visible="#{inspeccionBean.list[2]}" exportable="#{inspeccionBean.list[2]}">
+						<h:outputText value="#{inspeccion.equipo.jefeEquipo}" />
+					</p:column>
+					<p:column headerText="Cuatrimestre" sortBy="#{inspeccion.cuatrimestre.descripcion}" width="50" visible="#{inspeccionBean.list[3]}" exportable="#{inspeccionBean.list[3]}">
+						<h:outputText value="#{inspeccion.cuatrimestre.descripcion}" />
+					</p:column>
+					
+					<p:column headerText="Tipo inspección" sortBy="#{inspeccion.tipoInspeccion.descripcion}" width="100" visible="#{inspeccionBean.list[4]}" exportable="#{inspeccionBean.list[4]}">
+						<h:outputText value="#{inspeccion.tipoInspeccion.descripcion}" />
+					</p:column>
+					
+					<p:column headerText="Ámbito" sortBy="#{inspeccion.ambito.descripcion}" width="50" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}">
+						<h:outputText value="#{inspeccion.ambito.descripcion}" />
+					</p:column>
+					
+					<p:column headerText="Tipo unidad" sortBy="#{inspeccion.tipoUnidad}" width="50" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">
+						<h:outputText value="#{inspeccion.tipoUnidad}" />
+					</p:column>
+					
+					<p:column headerText="Nombre unidad" sortBy="#{inspeccion.nombreUnidad}" width="50" visible="#{inspeccionBean.list[7]}" exportable="#{inspeccionBean.list[7]}">
+						<h:outputText value="#{inspeccion.nombreUnidad}" />
+					</p:column>
+					
+					<p:column headerText="Provincia" sortBy="#{inspeccion.provincia.provincia}" width="50" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">
+						<h:outputText value="#{inspeccion.municipio.provincia.provincia}" />
+					</p:column>
+					
+					<p:column headerText="Municipio" sortBy="#{inspeccion.municipio.name}" width="50" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">
+						<h:outputText value="#{inspeccion.municipio.name}" />
+					</p:column>
+					
+					<p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion.descripcion}" width="50" visible="#{inspeccionBean.list[8]}" exportable="#{inspeccionBean.list[8]}">
+						<h:outputText value="#{inspeccion.estadoInspeccion.descripcion}" />
+					</p:column>
+					
+					<p:column headerText="Fecha alta" sortBy="#{inspeccion.fechaAlta}" width="50" visible="#{inspeccionBean.list[9]}" exportable="#{inspeccionBean.list[9]}">
+						<h:outputText value="#{inspeccion.fechaAlta}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Usuario" sortBy="#{inspeccion.usernameAlta}" width="50" visible="#{inspeccionBean.list[10]}" exportable="#{inspeccionBean.list[10]}">
+						<h:outputText value="#{inspeccion.usernameAlta}" />
+					</p:column>
+					
+<!-- 					<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
+<!-- 						<h:commandLink title="Ver inspección" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.visualizaInspeccion(inspeccion)}" /> -->
+<!-- 					</p:column> -->
+<!-- 					<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
+<!-- 						<p:commandButton title="Anular inspección" icon="fa fa-trash-o" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones"> -->
+<!-- 							<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección" icon="fa fa-warning-sign"/> -->
+<!-- 						</p:commandButton> -->
+<!-- 					</p:column> -->
+<!-- 					<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
+<!-- 						<p:commandButton title="Eliminar inspección" icon="fa fa-trash" actionListener="#{inspeccionBean.eliminar(inspeccion)}" update="tablaInspecciones"> -->
+<!-- 							<p:confirm header="Eliminar inspección" message="¿Está seguro que desea eliminar la inspección" icon="fa fa-warning-sign"/> -->
+<!-- 						</p:commandButton> -->
+<!-- 					</p:column> -->
+					<f:facet name="footer">
+	       				 Resultado de la búsqueda: #{inspeccionBean.numeroRegistros} inspecciones.
+	    			</f:facet>
+				</p:dataTable>
+			</p:outputPanel>
+			
+			<p:confirmDialog global="true">
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+				</div>
+			</p:confirmDialog>
+				
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

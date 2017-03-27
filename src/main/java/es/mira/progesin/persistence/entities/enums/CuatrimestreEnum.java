@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum CuatrimestreEnum {
-	PRIMERO("primer cuatrimestre"), SEGUNDO("segundo cuatrimestre"), TERCERO("tercer cuatrimestre"), CUARTO(
-			"cuarto cuatrimestre");
-
-	private String descripcion;
+    PRIMERO("Primer cuatrimestre"), SEGUNDO("Segundo cuatrimestre"), TERCERO("Tercer cuatrimestre"), CUARTO(
+            "Cuarto cuatrimestre");
+    
+    private String descripcion;
 }
