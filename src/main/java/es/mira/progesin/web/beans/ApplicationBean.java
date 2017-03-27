@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Provincias;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -45,8 +44,6 @@ public class ApplicationBean implements Serializable {
     private List<TipoInspeccion> listaTiposInspeccion;
     
     private List<Provincias> listaProvincias;
-    
-    private List<Equipo> listaEquipos;
     
     @PersistenceContext
     private transient EntityManager em;
