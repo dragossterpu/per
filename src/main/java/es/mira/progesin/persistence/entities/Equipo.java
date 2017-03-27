@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Equipo implements Serializable {
     private String nombreEquipo;
     
     @ManyToOne
-    @JoinColumn(name = "idTipoEquipo")
+    @JoinColumn(name = "idTipoEquipo", foreignKey = @ForeignKey(name = "fk_eq_TipoEquipo"))
     private TipoEquipo tipoEquipo;
     
     @Column(name = "jefeEquipo", length = 100, nullable = false)

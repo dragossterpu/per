@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,23 +34,23 @@ import lombok.ToString;
 // @NamedQuery(name = "Empleo.findAll", query = "SELECT t FROM Empleo t")
 @NamedQuery(name = "EmpleoCuerpo.find", query = "SELECT t FROM Empleo t where t.cuerpo = :cuerpoSeleccionado")
 public class Empleo implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EMPLEO")
-	@SequenceGenerator(name = "SEQ_EMPLEO", sequenceName = "SEQ_EMPLEO", allocationSize = 1, initialValue = 1)
-	@Column(name = "ID", length = 2)
-	private Long id;
-
-	@ManyToOne
-	@JoinColumn(name = "ID_CUERPO")
-	private CuerpoEstado cuerpo;
-
-	@Column(name = "DESCRIPCION", length = 100)
-	private String descripcion;
-
-	@Column(name = "NOMBRE_CORTO", length = 20)
-	private String nombreCorto;
-
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EMPLEO")
+    @SequenceGenerator(name = "SEQ_EMPLEO", sequenceName = "SEQ_EMPLEO", allocationSize = 1, initialValue = 1)
+    @Column(name = "ID", length = 2)
+    private Long id;
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_CUERPO", foreignKey = @ForeignKey(name = "FK_EM_CUERPO"))
+    private CuerpoEstado cuerpo;
+    
+    @Column(name = "DESCRIPCION", length = 100)
+    private String descripcion;
+    
+    @Column(name = "NOMBRE_CORTO", length = 20)
+    private String nombreCorto;
+    
 }

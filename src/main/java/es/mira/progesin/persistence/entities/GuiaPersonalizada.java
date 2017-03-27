@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,7 +75,7 @@ public class GuiaPersonalizada {
     private String usernameAnulacion;
     
     @ManyToOne
-    @JoinColumn(name = "id_modelo_guia", nullable = false)
+    @JoinColumn(name = "id_modelo_guia", foreignKey = @ForeignKey(name = "fk_gpr_modelo_guia"), nullable = false)
     private Guia guia;
     
     @ManyToMany(fetch = FetchType.LAZY)
@@ -82,6 +83,6 @@ public class GuiaPersonalizada {
     private List<GuiaPasos> pasosElegidos;
     
     @ManyToOne
-    @JoinColumn(name = "inspeccion")
+    @JoinColumn(name = "inspeccion", foreignKey = @ForeignKey(name = "fk_gpr_inspeccion"))
     private Inspeccion inspeccion;
 }

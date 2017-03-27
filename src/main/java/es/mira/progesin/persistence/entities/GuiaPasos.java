@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class GuiaPasos implements Serializable {
     private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "idGuia")
+    @JoinColumn(name = "idGuia", foreignKey = @ForeignKey(name = "fk_gp_Guia"))
     private Guia idGuia;
     
     @Column(name = "paso", nullable = false, length = 2000)

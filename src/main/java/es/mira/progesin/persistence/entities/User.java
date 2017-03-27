@@ -88,26 +88,26 @@ public class User implements Serializable {
     protected String despacho;
     
     @ManyToOne
-    @JoinColumn(name = "ID_CUERPO", foreignKey = @ForeignKey(name = "FK_CUERPO"))
+    @JoinColumn(name = "ID_CUERPO", foreignKey = @ForeignKey(name = "FK_U_CUERPO"))
     private CuerpoEstado cuerpoEstado;
     
     @ManyToOne
-    @JoinColumn(name = "ID_EMPLEO", foreignKey = @ForeignKey(name = "FK_EMPLEO"))
+    @JoinColumn(name = "ID_EMPLEO", foreignKey = @ForeignKey(name = "FK_U_EMPLEO"))
     protected Empleo empleo;
     
     @ManyToOne
-    @JoinColumn(name = "ID_PUESTO", foreignKey = @ForeignKey(name = "FK_PUESTO"))
+    @JoinColumn(name = "ID_PUESTO", foreignKey = @ForeignKey(name = "FK_U_PUESTO"))
     private PuestoTrabajo puestoTrabajo;
     
     @ManyToOne
-    @JoinColumn(name = "ID_DEPARTAMENTO", foreignKey = @ForeignKey(name = "FK_DEPARTAMENTO"))
+    @JoinColumn(name = "ID_DEPARTAMENTO", foreignKey = @ForeignKey(name = "FK_U_DEPARTAMENTO"))
     protected Departamento departamento;
     
     @Column(name = "nivel")
     private Integer nivel;
     
     @ManyToOne
-    @JoinColumn(name = "ID_ClASE", foreignKey = @ForeignKey(name = "FK_CLASE"))
+    @JoinColumn(name = "ID_CLASE", foreignKey = @ForeignKey(name = "FK_U_CLASE"))
     protected ClaseUsuario claseUsuario;
     
     @Column(name = "categoria", length = 20)

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,37 +42,37 @@ import lombok.ToString;
 @Entity
 @Table(name = "CUESTIONARIO_PERSONALIZADO")
 public class CuestionarioPersonalizado implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_cuestionariopersonalizado", sequenceName = "seq_cuestionariopersonalizado", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cuestionariopersonalizado")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@Column(name = "nombre_cuestionario", nullable = false, length = 100)
-	private String nombreCuestionario;
-
-	@CreatedDate
-	@Column(name = "fecha_creacion", nullable = false)
-	private Date fechaCreacion;
-
-	@CreatedBy
-	@Column(name = "username_creacion", nullable = false)
-	private String usernameCreacion;
-
-	@Column(name = "fecha_baja")
-	private Date fechaBaja;
-
-	@Column(name = "username_baja")
-	private String usernameBaja;
-
-	@ManyToOne
-	@JoinColumn(name = "id_modelo_cuestionario", nullable = false)
-	private ModeloCuestionario modeloCuestionario;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "cuest_per_preguntas", joinColumns = @JoinColumn(name = "id_cuest_pers"), inverseJoinColumns = @JoinColumn(name = "id_preg_elegida"))
-	private List<PreguntasCuestionario> preguntasElegidas;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_cuestionariopersonalizado", sequenceName = "seq_cuestionariopersonalizado", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cuestionariopersonalizado")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @Column(name = "nombre_cuestionario", nullable = false, length = 100)
+    private String nombreCuestionario;
+    
+    @CreatedDate
+    @Column(name = "fecha_creacion", nullable = false)
+    private Date fechaCreacion;
+    
+    @CreatedBy
+    @Column(name = "username_creacion", nullable = false)
+    private String usernameCreacion;
+    
+    @Column(name = "fecha_baja")
+    private Date fechaBaja;
+    
+    @Column(name = "username_baja")
+    private String usernameBaja;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_modelo_cuestionario", foreignKey = @ForeignKey(name = "fk_cp_modelo_cuestionario"), nullable = false)
+    private ModeloCuestionario modeloCuestionario;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "cuest_per_preguntas", joinColumns = @JoinColumn(name = "id_cuest_pers"), inverseJoinColumns = @JoinColumn(name = "id_preg_elegida"))
+    private List<PreguntasCuestionario> preguntasElegidas;
 }

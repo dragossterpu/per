@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,111 +50,111 @@ import lombok.ToString;
 @Entity
 @Table(name = "SOLICITUD_DOC_PREVIA")
 public class SolicitudDocumentacionPrevia implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_soldocprevia", sequenceName = "seq_soldocprevia", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_soldocprevia")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@Column(name = "asunto")
-	private String asunto;
-
-	@ManyToOne
-	@JoinColumn(name = "id_inspeccion", nullable = false)
-	private Inspeccion inspeccion;
-
-	@Column(name = "destinatario")
-	private String destinatario;
-
-	@Column(name = "correoDestinatario")
-	private String correoDestinatario;
-
-	@Column(name = "fechaLimiteEnvio")
-	private Date fechaLimiteEnvio;
-
-	@Column(name = "fechaLimiteCumplimentar")
-	private Date fechaLimiteCumplimentar;
-
-	@Column(name = "descargaPlantillas")
-	private String descargaPlantillas;
-
-	@Column(name = "apoyoPuesto")
-	private String apoyoPuesto;
-
-	@Column(name = "apoyoNombre")
-	private String apoyoNombre;
-
-	@Column(name = "apoyoTelefono")
-	private String apoyoTelefono;
-
-	@Column(name = "apoyoCorreo")
-	private String apoyoCorreo;
-
-	@CreatedDate
-	@Column(name = "fechaAlta")
-	private Date fechaAlta;
-
-	@CreatedBy
-	@Column(name = "username_alta", nullable = false)
-	private String usernameAlta;
-
-	@Column(name = "fechaValidApoyo")
-	private Date fechaValidApoyo;
-
-	@Column(name = "usernameValidApoyo")
-	private String usernameValidApoyo;
-
-	@Column(name = "fechaValidJefeEquipo")
-	private Date fechaValidJefeEquipo;
-
-	@Column(name = "usernameValidJefeEquipo")
-	private String usernameValidJefeEquipo;
-
-	@Column(name = "fecha_envio")
-	private Date fechaEnvio;
-
-	@Column(name = "usernameEnvio")
-	private String usernameEnvio;
-
-	@Column(name = "nombreCompletoInterlocutor")
-	private String nombreCompletoInterlocutor;
-
-	@Column(name = "categoriaInterlocutor")
-	private String categoriaInterlocutor;
-
-	@Column(name = "cargoInterlocutor")
-	private String cargoInterlocutor;
-
-	@Column(name = "correoCorporativoInter")
-	private String correoCorporativoInterlocutor;
-
-	@Column(name = "correoCorporativoInterCompl")
-	private String correoCorporativoInterlocutorCompl;
-
-	@Column(name = "telefonoInterlocutor")
-	private String telefonoInterlocutor;
-
-	@Column(name = "fechaFinalizacion")
-	private Date fechaFinalizacion;
-
-	@Column(name = "usuarioFinalizacion")
-	private String usuarioFinalizacion;
-
-	@Column(name = "fechaCumplimentacion")
-	private Date fechaCumplimentacion;
-
-	@Column(name = "fechaNoConforme")
-	private Date fechaNoConforme;
-
-	@Column(name = "usuarioNoConforme")
-	private String usuarioNoConforme;
-
-	@Column(name = "fechaBaja")
-	private Date fechaBaja;
-
-	@Column(name = "usernameBaja")
-	private String usernameBaja;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_soldocprevia", sequenceName = "seq_soldocprevia", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_soldocprevia")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @Column(name = "asunto")
+    private String asunto;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_inspeccion", foreignKey = @ForeignKey(name = "fk_sdp_inspeccion"), nullable = false)
+    private Inspeccion inspeccion;
+    
+    @Column(name = "destinatario")
+    private String destinatario;
+    
+    @Column(name = "correoDestinatario")
+    private String correoDestinatario;
+    
+    @Column(name = "fechaLimiteEnvio")
+    private Date fechaLimiteEnvio;
+    
+    @Column(name = "fechaLimiteCumplimentar")
+    private Date fechaLimiteCumplimentar;
+    
+    @Column(name = "descargaPlantillas")
+    private String descargaPlantillas;
+    
+    @Column(name = "apoyoPuesto")
+    private String apoyoPuesto;
+    
+    @Column(name = "apoyoNombre")
+    private String apoyoNombre;
+    
+    @Column(name = "apoyoTelefono")
+    private String apoyoTelefono;
+    
+    @Column(name = "apoyoCorreo")
+    private String apoyoCorreo;
+    
+    @CreatedDate
+    @Column(name = "fechaAlta")
+    private Date fechaAlta;
+    
+    @CreatedBy
+    @Column(name = "username_alta", nullable = false)
+    private String usernameAlta;
+    
+    @Column(name = "fechaValidApoyo")
+    private Date fechaValidApoyo;
+    
+    @Column(name = "usernameValidApoyo")
+    private String usernameValidApoyo;
+    
+    @Column(name = "fechaValidJefeEquipo")
+    private Date fechaValidJefeEquipo;
+    
+    @Column(name = "usernameValidJefeEquipo")
+    private String usernameValidJefeEquipo;
+    
+    @Column(name = "fecha_envio")
+    private Date fechaEnvio;
+    
+    @Column(name = "usernameEnvio")
+    private String usernameEnvio;
+    
+    @Column(name = "nombreCompletoInterlocutor")
+    private String nombreCompletoInterlocutor;
+    
+    @Column(name = "categoriaInterlocutor")
+    private String categoriaInterlocutor;
+    
+    @Column(name = "cargoInterlocutor")
+    private String cargoInterlocutor;
+    
+    @Column(name = "correoCorporativoInter")
+    private String correoCorporativoInterlocutor;
+    
+    @Column(name = "correoCorporativoInterCompl")
+    private String correoCorporativoInterlocutorCompl;
+    
+    @Column(name = "telefonoInterlocutor")
+    private String telefonoInterlocutor;
+    
+    @Column(name = "fechaFinalizacion")
+    private Date fechaFinalizacion;
+    
+    @Column(name = "usuarioFinalizacion")
+    private String usuarioFinalizacion;
+    
+    @Column(name = "fechaCumplimentacion")
+    private Date fechaCumplimentacion;
+    
+    @Column(name = "fechaNoConforme")
+    private Date fechaNoConforme;
+    
+    @Column(name = "usuarioNoConforme")
+    private String usuarioNoConforme;
+    
+    @Column(name = "fechaBaja")
+    private Date fechaBaja;
+    
+    @Column(name = "usernameBaja")
+    private String usernameBaja;
 }

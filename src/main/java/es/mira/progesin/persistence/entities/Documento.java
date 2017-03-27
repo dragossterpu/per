@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,28 +46,28 @@ import lombok.ToString;
 @Table(name = "documentos")
 @NamedEntityGraph(name = "Documento.fichero", attributeNodes = @NamedAttributeNode("fichero"))
 public class Documento implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@SequenceGenerator(name = "seq_documentos", sequenceName = "seq_documentos", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentos")
-	@Column(name = "id", nullable = false)
-	private Long id;
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval= true)
-	@JoinColumn(name="ID_FICHERO")
-	private DocumentoBlob fichero;
-	
-	@Column(name = "tipoContenido", nullable = false)
-	private String tipoContenido;
-
-	@Column(name = "nombre")
-	private String nombre;
-
-	@Column(name = "fecha_baja")
-	protected Date fechaBaja;
-
-	@Column(name = "username_baja")
-	protected String usernameBaja;
-
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @SequenceGenerator(name = "seq_documentos", sequenceName = "seq_documentos", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentos")
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ID_FICHERO", foreignKey = @ForeignKey(name = "FK_D_FICHERO"))
+    private DocumentoBlob fichero;
+    
+    @Column(name = "tipoContenido", nullable = false)
+    private String tipoContenido;
+    
+    @Column(name = "nombre")
+    private String nombre;
+    
+    @Column(name = "fecha_baja")
+    protected Date fechaBaja;
+    
+    @Column(name = "username_baja")
+    protected String usernameBaja;
+    
 }

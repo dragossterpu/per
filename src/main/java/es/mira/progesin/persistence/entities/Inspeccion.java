@@ -56,11 +56,11 @@ public class Inspeccion implements Serializable {
     private String numero;
     
     @ManyToOne
-    @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "FK_TIPO_INSPECCION"))
+    @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_i_tipo_inspeccion"))
     private TipoInspeccion tipoInspeccion;
     
     @ManyToOne
-    @JoinColumn(name = "id_equipo", foreignKey = @ForeignKey(name = "FK_EQUIPO"), nullable = false)
+    @JoinColumn(name = "id_equipo", foreignKey = @ForeignKey(name = "fk_i_equipo"), nullable = false)
     private Equipo equipo;
     
     // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

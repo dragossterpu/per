@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class PreguntasCuestionario implements Serializable {
     private String pregunta;
     
     @ManyToOne
-    @JoinColumn(name = "id_area")
+    @JoinColumn(name = "id_area", foreignKey = @ForeignKey(name = "fk_pc_area"))
     private AreasCuestionario area;
     
     @Column(name = "orden")
