@@ -8,8 +8,9 @@ prompt
 prompt    Autor: Rubén Astudillo
 prompt
 prompt    Fecha creación: 01/03/2017
-prompt	  Actualización: 22/03/2017   Rubén 
-prompt	  Actualización: 24/03/2017   Raúl 
+prompt	  Actualización:  22/03/2017   Rubén 
+prompt	  Actualización:  24/03/2017   Raúl 
+prompt	  Actualización:  27/03/2017   Ramón 
 
 prompt =========================================================================
 
@@ -1536,11 +1537,36 @@ prompt + Tarea4_5
 prompt =========================================================================
 prompt Ejecutando inserción de datos DOCUMENTOS_BLOB...
 
-Insert into DOCUMENTOS_BLOB (ID) values ('1');
-Insert into DOCUMENTOS_BLOB (ID) values ('2');
-Insert into DOCUMENTOS_BLOB (ID) values ('3');
-Insert into DOCUMENTOS_BLOB (ID) values ('4');
-Insert into DOCUMENTOS_BLOB (ID) values ('5');
+DECLARE
+	l_bfile  BFILE;
+	l_blob   BLOB;
+BEGIN
+
+	EXECUTE IMMEDIATE 'CREATE OR REPLACE DIRECTORY PLANTILLAS_PROGESIN AS "C:/Plantillas"';
+
+	INSERT INTO documentos_blob (id, fichero) VALUES ('1', empty_blob()) RETURN fichero INTO l_blob;
+		l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_C.xlsx');
+		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+		DBMS_LOB.CLOSE(l_bfile);
+		
+	INSERT INTO documentos_blob (id, fichero) VALUES ('2', empty_blob()) RETURN fichero INTO l_blob;
+		l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_CIA.xlsx');
+		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+		DBMS_LOB.CLOSE(l_bfile);
+		
+	INSERT INTO documentos_blob (id, fichero) VALUES (seq_documentosBlob.nextval, empty_blob()) RETURN fichero INTO l_blob;
+		l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_Z.xlsx');
+		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+		DBMS_LOB.CLOSE(l_bfile);
+
+	EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';
+	
+EXCEPTION WHEN OTHERS THEN NULL;
+END;
+/
 COMMIT;
 
 
@@ -1549,12 +1575,9 @@ prompt + Tarea4_6
 prompt =========================================================================
 prompt Ejecutando inserción de datos DOCUMENTOS...
 
-Insert into DOCUMENTOS (ID,FECHA_BAJA,NOMBRE,TIPO_CONTENIDO,USERNAME_BAJA,ID_FICHERO) values ('1',null,'plantilla común.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document',null,'1');
-Insert into DOCUMENTOS (ID,FECHA_BAJA,NOMBRE,TIPO_CONTENIDO,USERNAME_BAJA,ID_FICHERO) values ('2',null,'plantilla guardia civil 1.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document',null,'2');
-Insert into DOCUMENTOS (ID,FECHA_BAJA,NOMBRE,TIPO_CONTENIDO,USERNAME_BAJA,ID_FICHERO) values ('3',null,'plantilla guardia civil 2.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document',null,'3');
-Insert into DOCUMENTOS (ID,FECHA_BAJA,NOMBRE,TIPO_CONTENIDO,USERNAME_BAJA,ID_FICHERO) values ('4',null,'plantilla policia nacional 1.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document',null,'4');
-Insert into DOCUMENTOS (ID,FECHA_BAJA,NOMBRE,TIPO_CONTENIDO,USERNAME_BAJA,ID_FICHERO) values ('5',null,'plantilla policia nacional 2.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document',null,'5');
-
+Insert into documentos (id, id_fichero, tipo_contenido, nombre) values ('1', '1','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_C.xlsx');
+Insert into documentos (id, id_fichero, tipo_contenido, nombre) values ('2', '2','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_CIA.xlsx');
+Insert into documentos (id, id_fichero, tipo_contenido, nombre) values ('3', '3','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_Z.xlsx');
 COMMIT;
 
 
@@ -1706,12 +1729,9 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','58
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.ssl.trust','mail','smtp.gmail.com');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable','mail','true');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.user','mail','progesinipss@gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantilla común','plantillasGC','1');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantilla común','plantillasPN','1');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantilla guardia civil 1','plantillasGC','2');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantilla guardia civil 2','plantillasGC','3');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantilla policia nacional 1','plantillasPN','4');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantilla policia nacional 2','plantillasPN','5');
+insert into parametros(seccion, clave, valor) values ('plantillasGC','Comandancia', '1');
+insert into parametros(seccion, clave, valor) values ('plantillasGC','Compañía', '2');
+insert into parametros(seccion, clave, valor) values ('plantillasGC','Zona', '3');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas','5');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas','5');
 COMMIT;
