@@ -49,11 +49,11 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Población extranjera', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 6);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ámbito económico', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZECONOMICOS', 7);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Principales vías de comunicación terrestre', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Ferroviales', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 9);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Vías de comunicación ferroviaria', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 9);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Puertos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 10);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Aeropuertos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 11);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros hospitalarios. Nº de centros públicos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 12);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros hospitalarios con Módulo para detenidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 13);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros hospitalarios con módulo para detenidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 13);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros penitenciarios', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPENITENCIARIOS', 14);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros de Inserción Social', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPENITENCIARIOS', 15);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros de menores', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPENITENCIARIOS', 16);
@@ -66,7 +66,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Grupos o colectivos más activos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 23);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Movilizaciones. Indicar número.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOVILIZACIONES', 24);
 
-
+commit;
 
 --insert modelo ÁMBITO DE LA INSPECCIÓN DE LA GUARDIA CIVIL
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'AMBITO_GC','ÁMBITO DE LA INSPECCIÓN DE LA GUARDIA CIVIL');
@@ -86,11 +86,11 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Población extranjera', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 6);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ámbito económico', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZECONOMICOS', 7);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Principales vías de comunicación terrestre', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Ferroviales', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 9);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Vías de comunicación ferroviaria', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 9);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Puertos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 10);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicios: Aeropuertos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLASERVICIOS', 11);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros hospitalarios. Nº de centros públicos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 12);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros hospitalarios con Módulo para detenidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 13);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros hospitalarios con módulo para detenidos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 13);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros penitenciarios', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPENITENCIARIOS', 14);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros de Inserción Social', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPENITENCIARIOS', 15);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Centros de menores', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPENITENCIARIOS', 16);
@@ -101,7 +101,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial. Delincuencial: AÑO 2016 (DELITOS GRAVES + DELITOS MENOS GRAVES + DELITOS LEVES). Dias y franjas horarias con mayor número de delitos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 21);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Socio-laboral', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 22);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Terrorismo', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 23);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Socio-laboral. Grado de conflictividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOALTAMEDIABAJA', 24);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Grado de conflictividad', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOALTAMEDIABAJA', 24);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Grupos o colectivos más activos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 25);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Problemática de interés policial: Movilizaciones. Indicar número.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMOVILIZACIONES', 26);
 
