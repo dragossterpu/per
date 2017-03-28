@@ -1,3 +1,13 @@
+--Nueva tabla
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1', 'TABLAFORMACIONINPARTIDA', 'ACTIVIDAD');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2', 'TABLAFORMACIONINPARTIDA', 'MATERIA (General, específica, Medidas de Emergencia…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3', 'TABLAFORMACIONINPARTIDA', 'Personal que la impartió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo4', 'TABLAFORMACIONINPARTIDA', 'Personal que lo recibió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo5', 'TABLAFORMACIONINPARTIDA', 'Número de alumnos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo6', 'TABLAFORMACIONINPARTIDA', 'Duración.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo7', 'TABLAFORMACIONINPARTIDA', 'Método utilizado (Telemático, presencial, divulgativo,…)');
+
+
 --Insert modelo
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'PRL_PN','CUESTIONARIO DE PREVENCIÓN DE RIESGOS LABORALES DE LA POLICÍA NACIONAL');
 
@@ -26,7 +36,7 @@ insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden
 En el caso de haberse detectado deficiencias, ¿se han elevado propuestas de revisión y modificación del Plan de Prevención al objeto de adaptarlo a la situación real que permita llevar a cabo adecuadamente las actividades preventivas de las especialidades asumidas por el Servicio? En caso afirmativo acreditar las propuestas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Evaluaciones de Riesgos. 
-Relación de Evaluaciones de Riesgo realizadas en el periodo indicado con especificación de si son iniciales o reevaluaciones (por reformas estructurales, nuevos equipos de trabajo, haber transcurrido cuatro años y aquellas otras circunstancias que exijan una revisión y actualización). Si dichas evaluaciones de riesgos contemplan los correspondientes riesgos específicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+Relación de Evaluaciones de Riesgo realizadas en el periodo indicado con especificación de si son iniciales o reevaluaciones (por reformas estructurales, nuevos equipos de trabajo, haber transcurrido cuatro años y aquellas otras circunstancias que exijan una revisión y actualización). Si dichas evaluaciones de riesgos contemplan los correspondientes riesgos específicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 3);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Evaluaciones de Riesgos. 
 Relación de plantillas o unidades a las que se ha practicado revisiones de evaluación indicando las circunstancias y el Servicio de Prevención que las ha llevado a cabo. Previsiones o programación de las evaluaciones pendientes de realizar y el Servicio de Prevención que vaya a asumir su realización.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
@@ -59,40 +69,22 @@ insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden
 Procedimientos de actuación y mecanismos de coordinación entre el Servicio Sanitario y el Servicio de Prevención en materia de vigilancia y control de la salud de los empleados públicos en el ámbito de la Dirección General de la Policía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 13);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
+Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves. Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de accidentes de trabajo por provincias con indicación de mortales, graves y más de 4 leves.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 15);
+Relación de aquellos incidentes contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 15);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de aquellos incidentes contemplados en el documento “Criterio unificado sobre la valoración de la gravedad de los accidentes e incidentes en las Fuerzas y Cuerpos de Seguridad del Estado, a efectos de notificación e investigación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
-
-insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estudio y Análisis de los Accidentes Ocurridos en Actos de Servicio. 
-Relación de los informes de investigación realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 17);
+Relación de los informes de investigación realizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información en Materia de Prevención de Riesgos Laborales. 
 Fichas de información de carácter general, especifico o de cualquier otra naturaleza elaborados por el Servicio de Prevención, así como Manuales, Campañas de Prevención, Trípticos y cualquier otro medio informativo. Procedimiento empleado para justificar la recepción por el personal.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 
-insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida y recibida. 
-Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios.De cada una de las actividades contempladas se realizará una breve descripción que al menos contenga: 
-Materia de Prevención de Riesgos laborales tratada (General, específica, Medidas de Emergencia…) 
-Personal que la impartió. 
-Personal que lo recibió. 
-Número de alumnos. 
-Duración. 
-Método utilizado (Telemático, presencial, divulgativo)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida. 
+Relacionar las actividades formativas desplegadas en materia preventiva por ese Servicio de Prevención, así como aquellas otras realizadas en colaboración con otros órganos, unidades o servicios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONINPARTIDA', 19);
 
-insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida y recibida. 
-Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención. De cada una de las actividades contempladas se realizará una breve descripción que al menos contenga: 
-Materia de Prevención de Riesgos laborales tratada (General, específica, Medidas de Emergencia…) 
-Personal que la impartió. 
-Personal que lo recibió. 
-Número de alumnos. 
-Duración. 
-Método utilizado (Telemático, presencial, divulgativo)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
-
-insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida y recibida. 
-Por otro lado, a fecha de la visita se tendrá documentación acreditativa de los cursos impartidos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación impartida. 
+Cursos, conferencias y otras actividades formativas recibidas por el personal del Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONINPARTIDA', 20);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Asesoramiento e informes emitidos. 
 Breve descripción de las actividades de asesoramiento y de informes o dictámenes emitidos por el Servicio de Prevención relacionados con el sistema de gestión de la prevención de riesgos laborales en el ámbito de la Dirección General de la Policía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 22);
@@ -115,12 +107,23 @@ En referencia a lo dispuesto en el Art. 23 de la Ley de Prevención de Riesgos L
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Procedimientos e Instrucciones Operativas de Prevención de Riesgos Laborales. 
 Relación de Procedimientos e Instrucciones Operativas aprobados, pendientes de aprobación o en fase de elaboración y estudio. En su caso, informando sobre su causa o justificación, relación de Procedimientos o de Instrucciones Operativas en vigor que estén o hayan sido objeto de actualización o revisión.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
 
-insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Protocolo de actuación frente al acoso laboral. Informar brevemente, en su caso, sobre los siguientes aspectos: 
-Registros de Actuaciones por Acoso Laboral. 
-Relación de Acuerdos adoptados por Acoso laboral. 
-Número de Informes elaborados sobre situación previa de los riesgos psicosociales en la Unidad afectada. 
-Relación de las actuaciones de seguimiento respecto del cumplimiento de las medidas preventivas/correctoras propuestas en el marco de los riesgos laborales. 
-Número de denuncias falsas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
+Registros de Actuaciones por Acoso Laboral.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
+
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
+Relación de Acuerdos adoptados por Acoso laboral.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
+
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
+Número de Informes elaborados sobre situación previa de los riesgos psicosociales en la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 29);
+
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
+Número de Informes elaborados sobre situación previa de los riesgos psicosociales en la Unidad afectada.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
+
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
+Relación de las actuaciones de seguimiento respecto del cumplimiento de las medidas preventivas/correctoras propuestas en el marco de los riesgos laborales.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
+
+insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Acoso laboral.
+Número de denuncias falsas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 29);
 
 insert into  preguntascuestionario (id, pregunta, id_area, tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación de propuestas de mejora y sugerencias en materia de prevención recibidas en el Servicio de Prevención.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 30);
 
