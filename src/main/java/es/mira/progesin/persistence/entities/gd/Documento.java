@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,7 +63,7 @@ public class Documento implements Serializable {
     private Long id;
     
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ID_FICHERO")
+    @JoinColumn(name = "ID_FICHERO", foreignKey = @ForeignKey(name = "FK_D_FICHERO"))
     private DocumentoBlob fichero;
     
     @Column(name = "tipoContenido", nullable = false)
