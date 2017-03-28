@@ -191,15 +191,8 @@ public class GuiaBean {
                     
                 }
             } else {
-                List<GuiaPasos> aux = new ArrayList<>();
-                
-                for (GuiaPasos paso : listaPasos) {
-                    if (!paso.equals(pasoSeleccionado)) {
-                        aux.add(paso);
-                    }
-                }
-                listaPasos = aux;
-                listaPasosGrabar = aux;
+                listaPasos.removeIf(a -> a.getPaso().equals(pasoSeleccionado.getPaso()));
+                listaPasosGrabar.removeIf(a -> a.getPaso().equals(pasoSeleccionado.getPaso()));
             }
             
         }
