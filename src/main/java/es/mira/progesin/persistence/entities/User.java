@@ -81,6 +81,7 @@ public class User extends AbstractEntity implements Serializable {
     protected String correo;
     
     @Column(name = "role", length = 25, nullable = false)
+    @Enumerated(EnumType.STRING)
     protected RoleEnum role;
     
     @Column(name = "despacho", length = 20)
