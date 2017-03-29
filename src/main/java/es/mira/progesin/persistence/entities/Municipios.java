@@ -4,15 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +27,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "municipios")
 @NamedQuery(name = "Municipios.findByCode_province", query = "SELECT m FROM Municipios m where m.provincia=:provinciaSeleccionada")
 public class Municipios implements Serializable {

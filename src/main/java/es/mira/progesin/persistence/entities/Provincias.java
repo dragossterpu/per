@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +24,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "provincias")
 @NamedQuery(name = "Provincias.findAll", query = "SELECT p FROM Provincias p")
 public class Provincias implements Serializable {

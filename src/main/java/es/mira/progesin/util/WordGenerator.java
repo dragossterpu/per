@@ -219,7 +219,7 @@ public class WordGenerator {
         parrafo.setSpacingAfterLines(200);
         parrafo.setAlignment(ParagraphAlignment.CENTER);
         parrafo.addRun(texto);
-    };
+    }
     
     /**
      * 

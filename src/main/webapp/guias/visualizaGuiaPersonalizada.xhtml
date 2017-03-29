@@ -24,13 +24,13 @@
 			   <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
 			</h:commandLink>
 			
-			<div class="bloqueVistaTitulo">
+			<div class="tituloCuestionario">	
 				<h:outputText value="Inspección: #{guiaPersonalizadaBean.guiaPersonalizada.inspeccion.numero}" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}"/>
 			</div>
 			
 			
 			<div class="bloqueVistaTitulo">	
-				<h4>Pasos</h4>
+				<h3>Pasos</h3>
 				<p:dataList  var="paso" value="#{guiaPersonalizadaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
 			    	<h:outputText value="#{paso.paso}"/>
 			    </p:dataList>

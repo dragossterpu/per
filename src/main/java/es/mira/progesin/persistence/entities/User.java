@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
@@ -14,11 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -31,17 +25,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * @author EZENTIS
+ * 
+ * Entidad para un Usuario
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode()
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @ToString
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable {
+public class User extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private static final String PROVISIONAL = "provisional";
@@ -113,36 +112,14 @@ public class User implements Serializable {
     @Column(name = "categoria", length = 20)
     protected String categoria;
     
-    @CreatedDate
-    @Column(name = "fecha_alta", nullable = false)
-    protected Date fechaAlta;
-    
     @Column(name = "fecha_destino_ipss")
     protected Date fechaDestinoIPSS;
     
     @Column(name = "fecha_ingreso")
     protected Date fechaIngreso;
     
-    @Column(name = "fecha_baja")
-    protected Date fechaBaja;
-    
-    @LastModifiedDate
-    @Column(name = "fecha_modificacion")
-    protected Date fechaModificacion;
-    
     @Column(name = "fecha_inactivo")
     protected Date fechaInactivo;
-    
-    @CreatedBy
-    @Column(name = "username_alta", nullable = false)
-    protected String usernameAlta;
-    
-    @LastModifiedBy
-    @Column(name = "username_modif")
-    protected String usernameModif;
-    
-    @Column(name = "username_baja")
-    protected String usernameBaja;
     
     /**
      * Constructor de usuarios provisionales principales
