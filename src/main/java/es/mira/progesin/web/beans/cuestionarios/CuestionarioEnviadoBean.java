@@ -147,8 +147,8 @@ public class CuestionarioEnviadoBean implements Serializable {
         try {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
-            rolesAdmitidos.add(RoleEnum.JEFE_INSPECCIONES);
-            rolesAdmitidos.add(RoleEnum.ADMIN);
+            rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+            rolesAdmitidos.add(RoleEnum.ROLE_ADMIN);
             if (cuestionario.getFechaAnulacion() == null && (rolesAdmitidos.contains(usuarioActual.getRole())
                     || usuarioActual.getUsername().equals(cuestionario.getInspeccion().getEquipo().getJefeEquipo()))) {
                 cuestionario.setUsernameAnulacion(usuarioActual.getUsername());
@@ -238,8 +238,8 @@ public class CuestionarioEnviadoBean implements Serializable {
                         SeccionesEnum.CUESTIONARIO.name());
                 
                 List<RoleEnum> rolesANotificar = new ArrayList<>();
-                rolesANotificar.add(RoleEnum.SERVICIO_APOYO);
-                rolesANotificar.add(RoleEnum.JEFE_INSPECCIONES);
+                rolesANotificar.add(RoleEnum.ROLE_SERVICIO_APOYO);
+                rolesANotificar.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
                 notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                         rolesANotificar);
                 notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
@@ -294,7 +294,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                         SeccionesEnum.CUESTIONARIO.name());
                 
                 notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        RoleEnum.SERVICIO_APOYO);
+                        RoleEnum.ROLE_SERVICIO_APOYO);
                 notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                         cuestionario.getInspeccion());
             }

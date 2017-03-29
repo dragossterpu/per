@@ -338,7 +338,7 @@ public class ResponderCuestionarioBean implements Serializable {
     @PostConstruct
     public void init() {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (RoleEnum.PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
+        if (RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
             cuestionarioEnviado = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(usuarioActual.getCorreo());
             
             usuariosProv = userService.crearUsuariosProvisionalesCuestionario(cuestionarioEnviado.getCorreoEnvio(), "");

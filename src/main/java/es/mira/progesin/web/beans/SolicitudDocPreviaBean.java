@@ -310,7 +310,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                         SeccionesEnum.DOCUMENTACION.name());
                 
                 alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
-                        RoleEnum.JEFE_INSPECCIONES);
+                        RoleEnum.ROLE_JEFE_INSPECCIONES);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -412,9 +412,9 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
-            rolesAdmitidos.add(RoleEnum.JEFE_INSPECCIONES);
-            rolesAdmitidos.add(RoleEnum.SERVICIO_APOYO);
-            rolesAdmitidos.add(RoleEnum.ADMIN);
+            rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+            rolesAdmitidos.add(RoleEnum.ROLE_SERVICIO_APOYO);
+            rolesAdmitidos.add(RoleEnum.ROLE_ADMIN);
             if (solicitud.getFechaBaja() == null && rolesAdmitidos.contains(usuarioActual.getRole())) {
                 
                 // Si no ha sido enviada se trata como un borrador y se hace eliminación física
@@ -544,8 +544,8 @@ public class SolicitudDocPreviaBean implements Serializable {
                             SeccionesEnum.DOCUMENTACION.name());
                     
                     List<RoleEnum> listRoles = new ArrayList<>();
-                    listRoles.add(RoleEnum.SERVICIO_APOYO);
-                    listRoles.add(RoleEnum.EQUIPO_INSPECCIONES);
+                    listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
+                    listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
                     notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
                             listRoles);
                 }

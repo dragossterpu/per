@@ -113,8 +113,8 @@ public class CuestionarioPersonalizadoBean implements Serializable {
         try {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
-            rolesAdmitidos.add(RoleEnum.JEFE_INSPECCIONES);
-            rolesAdmitidos.add(RoleEnum.ADMIN);
+            rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+            rolesAdmitidos.add(RoleEnum.ROLE_ADMIN);
             
             if (cuestionario.getFechaBaja() == null && rolesAdmitidos.contains(usuarioActual.getRole())) {
                 if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {

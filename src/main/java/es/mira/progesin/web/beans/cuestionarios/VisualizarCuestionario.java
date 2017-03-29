@@ -346,7 +346,7 @@ public class VisualizarCuestionario implements Serializable {
     @PostConstruct
     public void init() {
         usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        esUsuarioProvisional = RoleEnum.PROV_CUESTIONARIO.equals(usuarioActual.getRole());
+        esUsuarioProvisional = RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole());
     }
     
     /**

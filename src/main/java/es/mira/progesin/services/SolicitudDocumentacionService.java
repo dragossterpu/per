@@ -226,7 +226,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (RoleEnum.EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
             subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
             subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));

@@ -168,9 +168,9 @@ public class UserService implements IUserService {
         }
         
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (RoleEnum.ADMIN.equals(usuarioActual.getRole()) == Boolean.FALSE) {
+        if (RoleEnum.ROLE_ADMIN.equals(usuarioActual.getRole()) == Boolean.FALSE) {
             criteria.add(Restrictions.not(
-                    Restrictions.in("role", new RoleEnum[] { RoleEnum.PROV_SOLICITUD, RoleEnum.PROV_CUESTIONARIO })));
+                    Restrictions.in("role", new RoleEnum[] { RoleEnum.PROV_SOLICITUD, RoleEnum.ROLE_PROV_CUESTIONARIO })));
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
@@ -215,13 +215,13 @@ public class UserService implements IUserService {
         List<User> listaUsuarios = new ArrayList<>();
         // Usuario principal
         String passwordEncoded = passwordEncoder.encode(password);
-        User user = new User(correoPrincipal, passwordEncoded, RoleEnum.PROV_CUESTIONARIO);
+        User user = new User(correoPrincipal, passwordEncoded, RoleEnum.ROLE_PROV_CUESTIONARIO);
         listaUsuarios.add(user);
         String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
         String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
         // Todos los usuarios creados a partir del principal tendrán la misma contraseña que el principal
         for (int i = 1; i < 10; i++) {
-            listaUsuarios.add(new User(cuerpoCorreo + i + restoCorreo, passwordEncoded, RoleEnum.PROV_CUESTIONARIO,
+            listaUsuarios.add(new User(cuerpoCorreo + i + restoCorreo, passwordEncoded, RoleEnum.ROLE_PROV_CUESTIONARIO,
                     correoPrincipal));
         }
         return listaUsuarios;
