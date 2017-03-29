@@ -35,4 +35,10 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
         return areaUsuarioCuestEnvRepository.findByIdCuestionarioEnviadoAndUsernameProv(idCuestionarioEnviado,
                 usernameProv);
     }
+    
+    @Override
+    public void deleteByIdCuestionarioEnviado(Long idCuestionarioEnviado) {
+        areaUsuarioCuestEnvRepository.deleteByIdCuestionarioEnviado(idCuestionarioEnviado);
+        
+    }
 }

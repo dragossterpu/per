@@ -81,6 +81,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    @Autowired
+    private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
+    
     @Override
     public CuestionarioEnvio findByInspeccion(Inspeccion inspeccion) {
         // TODO Auto-generated method stub
@@ -328,6 +331,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 userService.delete(cuerpoCorreo + i + restoCorreo);
             }
         }
+        areaUsuarioCuestEnvService.deleteByIdCuestionarioEnviado(cuestionario.getId());
         return true;
     }
     
@@ -340,12 +344,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         respuestaRepository.flush();
         datosTablaRepository.save(listaDatosTablaSave);
         String correoPrincipal = cuestionario.getCorreoEnvio();
-        String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
-        String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
+        // String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
+        // String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
         userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
-        for (int i = 1; i < 10; i++) {
-            userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.INACTIVO);
-        }
+        // for (int i = 1; i < 10; i++) {
+        // userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.INACTIVO);
+        // }
         return true;
     }
     
@@ -354,12 +358,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     public boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario) {
         cuestionarioEnvioRepository.save(cuestionario);
         String correoPrincipal = cuestionario.getCorreoEnvio();
-        String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
-        String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
+        // String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
+        // String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
         userService.cambiarEstado(correoPrincipal, EstadoEnum.ACTIVO);
-        for (int i = 1; i < 10; i++) {
-            userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.ACTIVO);
-        }
+        // for (int i = 1; i < 10; i++) {
+        // userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.ACTIVO);
+        // }
         return true;
     }
     

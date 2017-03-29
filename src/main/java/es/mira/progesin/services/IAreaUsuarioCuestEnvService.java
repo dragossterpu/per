@@ -25,4 +25,7 @@ public interface IAreaUsuarioCuestEnvService {
     
     List<AreaUsuarioCuestEnv> findByIdCuestionarioEnviadoAndUsuarioProv(Long id, String usernameUsuarioActual);
     
+    @Transactional(readOnly = false)
+    void deleteByIdCuestionarioEnviado(Long id);
+    
 }

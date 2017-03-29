@@ -26,4 +26,6 @@ public interface IAreaUsuarioCuestEnvRepository extends CrudRepository<AreaUsuar
     List<AreaUsuarioCuestEnv> findByIdCuestionarioEnviadoAndUsernameProv(Long idCuestionarioEnviado,
             String usernameProv);
     
+    void deleteByIdCuestionarioEnviado(Long idCuestionarioEnviado);
+    
 }
