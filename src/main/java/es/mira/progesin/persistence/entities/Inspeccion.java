@@ -93,6 +93,10 @@ public class Inspeccion implements Serializable {
     @Column(name = "anio", nullable = false)
     private Integer anio;
     
+    @ManyToOne
+    @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))
+    private Municipio municipio;
+    
     @CreatedDate
     @Column(name = "fecha_alta", nullable = false)
     private Date fechaAlta;
@@ -110,15 +114,18 @@ public class Inspeccion implements Serializable {
     @Column(name = "fecha_finalizacion")
     private Date fechaFinalizacion;
     
-    @Column(name = "fecha_prevista")
-    private Date fechaPrevista;
-    
     @CreatedBy
     @Column(name = "username_finalizacion")
     private String usernameFinalizacion;
     
-    @ManyToOne
-    @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))
-    private Municipio municipio;
+    @Column(name = "fecha_prevista")
+    private Date fechaPrevista;
+    
+    @Column(name = "fecha_modificacion")
+    private Date fechaModificación;
+    
+    @CreatedBy
+    @Column(name = "username_modificacion")
+    private String usernameModificacion;
     
 }
