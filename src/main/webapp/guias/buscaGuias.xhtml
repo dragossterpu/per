@@ -104,7 +104,7 @@
 				<p:column headerText="Usuario" sortBy="#{guia.usernameAlta}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
 					<h:outputText value="#{guia.usernameAlta}" />
 				</p:column>
-				<p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion}"  width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
+				<p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion.descripcion}"  width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
 					<h:outputText value="#{guia.tipoInspeccion.descripcion}" />
 				</p:column>
 				<p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
