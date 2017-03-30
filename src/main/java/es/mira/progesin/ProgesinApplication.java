@@ -9,8 +9,9 @@ import org.primefaces.util.Constants;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.servlet.ErrorPageRegistrar;
+import org.springframework.boot.web.servlet.ErrorPageRegistry;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,16 +44,20 @@ public class ProgesinApplication {
     }
     
     @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
+    public ErrorPageRegistrar errorPageRegistrar() {
+        return new RegistroPaginasError();
+    }
+    
+    static class RegistroPaginasError implements ErrorPageRegistrar {
         
-        return (container -> {
-            ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "redirect:/index.xhtml");
-            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.xhtml");
-            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/5xx.xhtml");
-            ErrorPage error502Page = new ErrorPage(HttpStatus.BAD_GATEWAY, "/error/5xx.xhtml");
-            
-            container.addErrorPages(error403Page, error404Page, error500Page, error502Page);
-        });
+        @Override
+        public void registerErrorPages(ErrorPageRegistry registry) {
+            registry.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "redirect:/index.xhtml"),
+                    new ErrorPage(HttpStatus.NOT_FOUND, "/error/404.xhtml"),
+                    new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/5xx.xhtml"),
+                    new ErrorPage(HttpStatus.BAD_GATEWAY, "/error/5xx.xhtml"));
+        }
+        
     }
     
     @Configuration
