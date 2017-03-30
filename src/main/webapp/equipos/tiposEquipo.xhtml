@@ -1,102 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:define name="content">
 
-			<h3>Tipos de equipo de inspección</h3>
-			<br></br>
-			<br></br>
-			<h:form>
-				<p:remoteCommand name="onload"
-					action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
-			</h:form>
+		<h3>Tipos de equipo de inspección</h3>
+		<br></br>
+		<br></br>
+		<h:form>
+			<p:remoteCommand name="onload"
+				action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
+		</h:form>
 
-			<h:form id="form">
-				<div id="listadoTiposEquipo">
-					<p:dataTable id="tablaTiposEquipo" var="tipoEquipo"
-						value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"
-						onkeypress="if (event.keyCode == 13) {return false; }">
-						<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}" />
-						<p:ajax event="rowEditCancel" listener="#{tipoEquipoBean.onRowCancel}" />
+		<h:form id="form">
+			<div id="listadoTiposEquipo">
+				<p:dataTable id="tablaTiposEquipo" var="tipoEquipo"
+					value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"
+					onkeypress="if (event.keyCode == 13) {return false; }">
+					<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}" />
+					<p:ajax event="rowEditCancel" listener="#{tipoEquipoBean.onRowCancel}" />
 
-						<p:column headerText="Código del tipo" width="90">
-							<h:outputText value="#{tipoEquipo.codigo}" />
-						<!-- <p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{tipoEquipo.codigo}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText id="codigoInput" value="#{tipoEquipo.codigo}"
-										converter="#{trimConverter}" required="true" maxlength="5"
-										requiredMessage="El código del tipo de equipo no puede estar vacío">
-										<f:attribute name="idTipoEquipo" value="#{tipoEquipo.id}"/>
-										<f:validator binding="#{codigoTipoEquipoValidator}"/>	
-									</p:inputText>
-									<p:messages for="codigoInput" autoUpdate="true" closable="true" />
-								</f:facet>
-							</p:cellEditor> -->
-						</p:column>
+					<p:column headerText="Código del tipo" width="90">
+						<h:outputText value="#{tipoEquipo.codigo}" />
+					<!-- <p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{tipoEquipo.codigo}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="codigoInput" value="#{tipoEquipo.codigo}"
+									converter="#{trimConverter}" required="true" maxlength="5"
+									requiredMessage="El código del tipo de equipo no puede estar vacío">
+									<f:attribute name="idTipoEquipo" value="#{tipoEquipo.id}"/>
+									<f:validator binding="#{codigoTipoEquipoValidator}"/>	
+								</p:inputText>
+								<p:messages for="codigoInput" autoUpdate="true" closable="true" />
+							</f:facet>
+						</p:cellEditor> -->
+					</p:column>
 
-						<p:column headerText="Descripción del tipo">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{tipoEquipo.descripcion}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText id="descripcionInput"
-										value="#{tipoEquipo.descripcion}" converter="#{trimConverter}"
-										required="true" maxlength="100"
-										requiredMessage="La descripción del tipo de equipo no puede estar vacío" />
-									<p:messages for="descripcionInput" autoUpdate="true"
-										closable="true" />
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
+					<p:column headerText="Descripción del tipo">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{tipoEquipo.descripcion}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="descripcionInput"
+									value="#{tipoEquipo.descripcion}" converter="#{trimConverter}"
+									required="true" maxlength="100"
+									requiredMessage="La descripción del tipo de equipo no puede estar vacío" />
+								<p:messages for="descripcionInput" autoUpdate="true"
+									closable="true" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-						<p:column styleClass="botonTabla">
-							<p:rowEditor editTitle="Editar" saveTitle="Guardar"
-								cancelTitle="Cancelar" />
-						</p:column>
+					<p:column styleClass="botonTabla">
+						<p:rowEditor editTitle="Editar" saveTitle="Guardar"
+							cancelTitle="Cancelar" />
+					</p:column>
 
-						<p:column styleClass="botonTabla">
-							<p:commandButton title="Eliminar" icon="fa fa-trash"
-								actionListener="#{tipoEquipoBean.eliminarTipo(tipoEquipo)}"
-								update="tablaTiposEquipo">
-								<p:confirm header="Eliminar tipo de equipo"
-									message="¿Está seguro que desea eliminar este tipo de equipo?"
-									icon="fa fa-warning-sign" />
-							</p:commandButton>
-						</p:column>
+					<p:column styleClass="botonTabla">
+						<p:commandButton title="Eliminar" icon="fa fa-trash"
+							actionListener="#{tipoEquipoBean.eliminarTipo(tipoEquipo)}"
+							update="tablaTiposEquipo">
+							<p:confirm header="Eliminar tipo de equipo"
+								message="¿Está seguro que desea eliminar este tipo de equipo?"
+								icon="fa fa-warning-sign" />
+						</p:commandButton>
+					</p:column>
 
-						<f:facet name="footer">
-       				 Hay: #{fn:length(tipoEquipoBean.listaTipoEquipo)} tipos de equipo.
-    			</f:facet>
-					</p:dataTable>
-					<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-						</div>
-					</p:confirmDialog>
+					<f:facet name="footer">
+   				 Hay: #{fn:length(tipoEquipoBean.listaTipoEquipo)} tipos de equipo.
+			</f:facet>
+				</p:dataTable>
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+					</div>
+				</p:confirmDialog>
 
-					<p:messages globalOnly="true" autoUpdate="true" closable="true"
-						showDetail="true" />
-				</div>
-				<div class="botonesFormulario">
-                    <p:button outcome="/equipos/altaTipoEquipo" value="Nuevo tipo de equipo" icon="fa fa-user-plus"/>
-				</div>
-			</h:form>
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+				<p:messages globalOnly="true" autoUpdate="true" closable="true"
+					showDetail="true" />
+			</div>
+			<div class="botonesFormulario">
+                <p:button outcome="/equipos/altaTipoEquipo" value="Nuevo tipo de equipo" icon="fa fa-user-plus"/>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

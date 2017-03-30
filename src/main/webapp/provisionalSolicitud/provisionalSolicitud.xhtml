@@ -1,152 +1,143 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-	<f:view >
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewParam name="vieneDe" value="#{provisionalSolicitudBean.vieneDe}" />
+    </f:metadata>
+	<ui:define name="content">
 
-	<f:metadata>
-	    <f:viewParam name="vieneDe" value="#{provisionalSolicitudBean.vieneDe}" />
-	</f:metadata>
+	<ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
 
-	<ui:composition template="../layouts/layoutInterior.xhtml">
+	<h:form>
+	    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.visualizarSolicitud}" update="form" autoRun="true" />
+	</h:form>
+	
+	<h:form id="form">
+	
+		<div class="bloqueVistaTitulo">	
+			<h3>Solicitud documentación previa cuestionario
+				<h:commandLink style="float: right;" actionListener="#{provisionalSolicitudBean.imprimirPdf()}">
+	               <p:graphicImage value="/images/pdf.png" style="padding: 0"/>
+	               <p:fileDownload value="#{provisionalSolicitudBean.file}" />
+	            </h:commandLink>
+	        </h3>
+		</div>
 		
-		<ui:define name="content">
-
-		<ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
-
-		<h:form>
-		    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.visualizarSolicitud}" update="form" autoRun="true" />
-		</h:form>
+		<div class="bloqueVistaTitulo">
+			<p>Nº Inspección: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.numero}</p>	
+			<p>FECHA: Madrid, <h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaAlta}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></p>
+			<p>ASUNTO: 	#{provisionalSolicitudBean.solicitudDocumentacionPrevia.asunto}</p>	
+			<p><strong>DESTINATARIO: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
+		</div>	
+		<div class="bloqueVista">	
+			<p>En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion} del año #{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.anio}</strong>, se va a realizar una  inspección de carácter
+			<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> en esa Comandancia de su mando.</p>		
+		</div>
+		<div class="bloqueVista">
+			<p>Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
+			se solicita se envíe por correo electrónico a la dirección <strong>apoyo_ipss@interior.es</strong>, lo siguiente:</p>
+		</div>	
+		<div class="bloqueVista">
+			<p>1.	A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de 
+			esa Unidad con indicación del nombre y apellidos, categoría y cargo, 
+			números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa, no cuenta personal).</p>
+		</div>
+		<div class="bloqueVista">
+			<p >2.	Antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>, con el nombre de fichero de se indica y 
+			en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
+		</div>
+		<div class="bloqueVista">
+			<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
+				<p:column headerText="DOCUMENTO" width="450">
+					<h:outputText value="#{documentoPrevio.descripcion}" />
+				</p:column>
+				<p:column headerText="NOMBRE" width="70">
+					<h:outputText value="#{documentoPrevio.nombre}" />
+				</p:column>
+				<p:column headerText="EXTENSIONES" width="100">
+					<h:outputText value="#{documentoPrevio.extensiones}" converter="#{listaExtensionesConverter}" />
+				</p:column>	
+			</p:dataTable>	
+		</div>
+		<div class="bloqueVistaTitulo">
+			<p>3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
+			deberá tener entrada en esta IPSS antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>.</p>
+		</div>
+		<div class="bloqueVista">
+			<p>Para cualquier aclaración, podrá dirigirse a:</p>
+		</div>
+		<div class="div_celda">
+			#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoPuesto}
+		</div>
+		<div class="div_celda">
+			#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoNombre}
+		</div>
+		<div class="div_celda">
+			#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoTelefono}
+		</div>
+		<div class="div_celda">
+			<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
+		</div>
+		<div class="bloqueVistaTitulo">
+			<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
+			se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.</p>
+		</div>			 
 		
-		<h:form id="form">
-		
-			<div class="bloqueVistaTitulo">	
-				<h3>Solicitud documentación previa cuestionario
-					<h:commandLink style="float: right;" actionListener="#{provisionalSolicitudBean.imprimirPdf()}">
-		               <p:graphicImage value="/images/pdf.png" style="padding: 0"/>
-		               <p:fileDownload value="#{provisionalSolicitudBean.file}" />
-		            </h:commandLink>
-		        </h3>
-			</div>
-			
-			<div class="bloqueVistaTitulo">
-				<p>Nº Inspección: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.numero}</p>	
-				<p>FECHA: Madrid, <h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaAlta}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></p>
-				<p>ASUNTO: 	#{provisionalSolicitudBean.solicitudDocumentacionPrevia.asunto}</p>	
-				<p><strong>DESTINATARIO: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.destinatario}</strong></p>	
-			</div>	
-			<div class="bloqueVista">	
-				<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion} del año #{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.anio}</strong>, se va a realizar una  inspección de carácter
-				<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> en esa Comandancia de su mando.</p>		
-			</div>
-			<div class="bloqueVista">
-				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, 
-				se solicita se envíe por correo electrónico a la dirección <strong>apoyo_ipss@interior.es</strong>, lo siguiente:</p>
-			</div>	
-			<div class="bloqueVista">
-				<p>1.	A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de 
-				esa Unidad con indicación del nombre y apellidos, categoría y cargo, 
-				números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa, no cuenta personal).</p>
-			</div>
-			<div class="bloqueVista">
-				<p >2.	Antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>, con el nombre de fichero de se indica y 
-				en uno de los tipos de archivo que se especifica, los siguientes documentos:</p>
-			</div>
-			<div class="bloqueVista">
-				<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
-					<p:column headerText="DOCUMENTO" width="450">
-						<h:outputText value="#{documentoPrevio.descripcion}" />
-					</p:column>
-					<p:column headerText="NOMBRE" width="70">
-						<h:outputText value="#{documentoPrevio.nombre}" />
-					</p:column>
-					<p:column headerText="EXTENSIONES" width="100">
-						<h:outputText value="#{documentoPrevio.extensiones}" converter="#{listaExtensionesConverter}" />
-					</p:column>	
-				</p:dataTable>	
-			</div>
-			<div class="bloqueVistaTitulo">
-				<p>3.	Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que 
-				deberá tener entrada en esta IPSS antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></strong>.</p>
-			</div>
-			<div class="bloqueVista">
-				<p>Para cualquier aclaración, podrá dirigirse a:</p>
-			</div>
-			<div class="div_celda">
-				#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoPuesto}
-			</div>
-			<div class="div_celda">
-				#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoNombre}
-			</div>
-			<div class="div_celda">
-				#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoTelefono}
-			</div>
-			<div class="div_celda">
-				<strong>#{provisionalSolicitudBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
-			</div>
-			<div class="bloqueVistaTitulo">
-				<p >El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, 
-				se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.</p>
-			</div>			 
-			
-			<div class="bloqueFormulario">
-					
-				<h4>Datos Interlocutor</h4>		
-												
-					<h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
-					<p:inputText id="nombreCompletoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el nombre completo del interlocutor " />
-					<p:messages for="nombreCompletoInterlocutor" autoUpdate="true"  closable="true"/>
-		
-					<h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
-					<p:inputText id="categoriaInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca la categoría del interlocutor " />	
-					<p:messages for="categoriaInterlocutor" autoUpdate="true"  closable="true"/>
-							
-					<h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
-					<p:inputText id="cargoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el cargo del interlocutor " />
-					<p:messages for="cargoInterlocutor" autoUpdate="true"  closable="true"/>
-		
+		<div class="bloqueFormulario">
 				
-					<h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
-					<p:inputText id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " />
-					<p:messages for="telefonoInterlocutor" autoUpdate="true"  closable="true"/>
-							
-					<h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
-					<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el correo corporativo del interlocutor " 
-					validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
-					<f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
-					<p:messages for="correoCorporativoInterlocutor" autoUpdate="true"  closable="true"/>
-					</p:inputText>
-							
-					<h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
-					<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
-					validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
-					<f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
-					<p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true"  closable="true"/>
-					</p:inputText>
-							
-					<div class="botonesFormulario">
-						<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}"/>
-						<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
-						<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="form"/>		
-					</div>					
-				</div>		
-    			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-    				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-    				<div class="centrarBotonesDialog">
-    					<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button" />
-    				</div>
-    			</p:dialog>	
-                            
-                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                    <p:graphicImage value="/images/loading.gif" />
-                </p:dialog>
-                    	
-            </h:form>
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+			<h4>Datos Interlocutor</h4>		
+											
+				<h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
+				<p:inputText id="nombreCompletoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el nombre completo del interlocutor " />
+				<p:messages for="nombreCompletoInterlocutor" autoUpdate="true"  closable="true"/>
+	
+				<h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
+				<p:inputText id="categoriaInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca la categoría del interlocutor " />	
+				<p:messages for="categoriaInterlocutor" autoUpdate="true"  closable="true"/>
+						
+				<h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
+				<p:inputText id="cargoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el cargo del interlocutor " />
+				<p:messages for="cargoInterlocutor" autoUpdate="true"  closable="true"/>
+	
+			
+				<h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
+				<p:inputText id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " />
+				<p:messages for="telefonoInterlocutor" autoUpdate="true"  closable="true"/>
+						
+				<h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
+				<p:inputText id="correoCorporativoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el correo corporativo del interlocutor " 
+				validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
+				<f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+				<p:messages for="correoCorporativoInterlocutor" autoUpdate="true"  closable="true"/>
+				</p:inputText>
+						
+				<h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
+				<p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" 
+				validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
+				<f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+				<p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true"  closable="true"/>
+				</p:inputText>
+						
+				<div class="botonesFormulario">
+					<p:button  outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}"/>
+					<p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
+					<p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="form"/>		
+				</div>					
+			</div>		
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button" />
+				</div>
+			</p:dialog>	
+                        
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage value="/images/loading.gif" />
+            </p:dialog>
+                	
+        </h:form>
+	</ui:define>
+</ui:composition>

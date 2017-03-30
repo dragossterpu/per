@@ -1,74 +1,68 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
 
-			<h3>Departamentos</h3>
+		<h3>Departamentos</h3>
 
-			<div class="bloqueFormulario" >
-				<h:form id="form">
-		
-					<p:dataTable id="tablaDepartamentos" var="departamento" rowIndexVar="rowIndex" 
-						value="#{departamentosBean.listaDepartamentos}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
-						<p:ajax event="rowEdit" listener="#{departamentosBean.onRowEdit}"
-							update=":form:msgs" />
-						<p:ajax event="rowEditCancel" listener="#{departamentosBean.onRowCancel}"
-							update=":form:msgs" />
+		<div class="bloqueFormulario" >
+			<h:form id="form">
+	
+				<p:dataTable id="tablaDepartamentos" var="departamento" rowIndexVar="rowIndex" 
+					value="#{departamentosBean.listaDepartamentos}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+					<p:ajax event="rowEdit" listener="#{departamentosBean.onRowEdit}"
+						update=":form:msgs" />
+					<p:ajax event="rowEditCancel" listener="#{departamentosBean.onRowCancel}"
+						update=":form:msgs" />
 
-						<p:column headerText="Departamentos">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{departamento.descripcion}" />
-								</f:facet>
-								
-								<f:facet name="input">
-									<p:inputText id="departamentoInput" value="#{departamento.descripcion}" converter="#{trimConverter}" required="true"
-										requiredMessage="El nombre del departamento no puede estar vacío" />
-										<p:messages for="departamentoInput" autoUpdate="true"  closable="true"/>
-								</f:facet>
-							</p:cellEditor> 
-				       </p:column>
+					<p:column headerText="Departamentos">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{departamento.descripcion}" />
+							</f:facet>
+							
+							<f:facet name="input">
+								<p:inputText id="departamentoInput" value="#{departamento.descripcion}" converter="#{trimConverter}" required="true"
+									requiredMessage="El nombre del departamento no puede estar vacío" />
+									<p:messages for="departamentoInput" autoUpdate="true"  closable="true"/>
+							</f:facet>
+						</p:cellEditor> 
+			       </p:column>
 
-						<p:column styleClass="botonTabla">
-							<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>
-						</p:column>
-						<p:column styleClass="botonTabla">
-							<p:commandButton title="Eliminar" icon="fa fa-trash"
-								actionListener="#{departamentosBean.eliminarDepartamento(departamento)}"
-								update="tablaDepartamentos">
-								<p:confirm header="Eliminar departamento"
-									message="¿Está seguro que desea eliminar este departamento?"
-									icon="fa fa-warning-sign" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-					
-					<div class="botonesFormulario">
-						<p:button value="Nuevo departamento" outcome="/departamentos/altaDepartamento" icon="fa fa-fw fa-user-plus"/>
+					<p:column styleClass="botonTabla">
+						<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>
+					</p:column>
+					<p:column styleClass="botonTabla">
+						<p:commandButton title="Eliminar" icon="fa fa-trash"
+							actionListener="#{departamentosBean.eliminarDepartamento(departamento)}"
+							update="tablaDepartamentos">
+							<p:confirm header="Eliminar departamento"
+								message="¿Está seguro que desea eliminar este departamento?"
+								icon="fa fa-warning-sign" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<div class="botonesFormulario">
+					<p:button value="Nuevo departamento" outcome="/departamentos/altaDepartamento" icon="fa fa-fw fa-user-plus"/>
+				</div>
+				
+				
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 					</div>
-					
-					
-					<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-						</div>
-					</p:confirmDialog>
-					
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
-				</h:form>
-			</div>
-			
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+				</p:confirmDialog>
+				
+				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+			</h:form>
+		</div>
+		
+	</ui:define>
+</ui:composition>

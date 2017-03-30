@@ -1,70 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
 
-			<h3>Alta de documentación</h3>
+		<h3>Alta de documentación</h3>
 
-			<div class="bloqueFormulario">
-				<h:form id="form">
-					<h:outputLabel for="descripcion" value="Descripción (*):" />
-					<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
-					<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
-					
-					<h:outputLabel for="nombre" value="Nombre (*):" />
-					<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" converter="#{trimConverter}"/>
-					<p:messages for="nombre" autoUpdate="true"  closable="true"/>
-					
-					<h:outputLabel for="extensiones" value="Extensiones (*):" />
-					<p:selectManyCheckbox id="extensiones" layout="responsive" columns="4"
-						value="#{tipoDocumentacionBean.extensionesNuevo}"
-						showCheckbox="true" effect="fold" required="true"
-						requiredMessage="Seleccione una o varias extensiones">
-						<f:selectItems value="#{tipoDocumentacionBean.listaExtensionesPosibles}"
-							var="extensionesTipoDocumentacion"
-							itemLabel="#{extensionesTipoDocumentacion}"
-							itemValue="#{extensionesTipoDocumentacion}" />
-					</p:selectManyCheckbox>
-					<p:messages for="extensiones" autoUpdate="true"  closable="true"/>
-					
-					<h:outputLabel for="ambito" value="Ámbito (*):" />
-					<p:importEnum
-						type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
-						var="ambitos" allSuffix="ALL_ENUM_VALUES" />
-					<p:selectOneMenu id="ambito"
-						value="#{tipoDocumentacionBean.ambitoNuevo}"
-						effect="fold" required="true"
-						requiredMessage="Seleccione un ámbito">
-						<f:selectItem itemLabel="Seleccione un ámbito" itemValue="" />
-						<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
-							var="ambitoTipoDocumentacion"
-							itemLabel="#{ambitoTipoDocumentacion.descripcion}"
-							itemValue="#{ambitoTipoDocumentacion}"/>
-					</p:selectOneMenu>
-					<p:messages for="ambito" autoUpdate="true"  closable="true"/>
-					
-					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save"/>
-						<p:button outcome="/documentacionPrevia/documentacionPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
+		<div class="bloqueFormulario">
+			<h:form id="form">
+				<h:outputLabel for="descripcion" value="Descripción (*):" />
+				<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
+				<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
+				
+				<h:outputLabel for="nombre" value="Nombre (*):" />
+				<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" converter="#{trimConverter}"/>
+				<p:messages for="nombre" autoUpdate="true"  closable="true"/>
+				
+				<h:outputLabel for="extensiones" value="Extensiones (*):" />
+				<p:selectManyCheckbox id="extensiones" layout="responsive" columns="4"
+					value="#{tipoDocumentacionBean.extensionesNuevo}"
+					showCheckbox="true" effect="fold" required="true"
+					requiredMessage="Seleccione una o varias extensiones">
+					<f:selectItems value="#{tipoDocumentacionBean.listaExtensionesPosibles}"
+						var="extensionesTipoDocumentacion"
+						itemLabel="#{extensionesTipoDocumentacion}"
+						itemValue="#{extensionesTipoDocumentacion}" />
+				</p:selectManyCheckbox>
+				<p:messages for="extensiones" autoUpdate="true"  closable="true"/>
+				
+				<h:outputLabel for="ambito" value="Ámbito (*):" />
+				<p:importEnum
+					type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+					var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+				<p:selectOneMenu id="ambito"
+					value="#{tipoDocumentacionBean.ambitoNuevo}"
+					effect="fold" required="true"
+					requiredMessage="Seleccione un ámbito">
+					<f:selectItem itemLabel="Seleccione un ámbito" itemValue="" />
+					<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+						var="ambitoTipoDocumentacion"
+						itemLabel="#{ambitoTipoDocumentacion.descripcion}"
+						itemValue="#{ambitoTipoDocumentacion}"/>
+				</p:selectOneMenu>
+				<p:messages for="ambito" autoUpdate="true"  closable="true"/>
+				
+				<div class="botonesFormulario">
+					<p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save"/>
+					<p:button outcome="/documentacionPrevia/documentacionPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
+				</div>
+		
+				<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<div class="centrarBotonesDialog">
+						<p:button value="Cerrar" outcome="/documentacionPrevia/documentacionPrevia" />
 					</div>
-			
-					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-						<div class="centrarBotonesDialog">
-							<p:button value="Cerrar" outcome="/documentacionPrevia/documentacionPrevia" />
-						</div>
-					</p:dialog>
-					
-				</h:form>
-			</div>
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+				</p:dialog>
+				
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

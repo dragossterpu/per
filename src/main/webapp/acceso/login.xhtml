@@ -1,47 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<ui:composition template="../layouts/layoutExterior.xhtml">
-		<ui:define name="content">
-			<div id="login_form">
+<ui:composition template="../layouts/layoutExterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<div id="login_form">
 
-				<h1>Acceso Usuarios Registrados</h1>
-                
-				<form action="login" id="acceso" method="post">
-					<fieldset>
-						<legend>Acceso</legend>
+			<h1>Acceso Usuarios Registrados</h1>
+            
+			<form action="login" id="acceso" method="post">
+				<fieldset>
+					<legend>Acceso</legend>
 
-						<h:outputLabel value="Usuario" />
-						<input type="text" name="username" />
-						<!-- <p:inputText id="username" required="true" /> -->
+					<h:outputLabel value="Usuario" />
+					<input type="text" name="username" />
+					<!-- <p:inputText id="username" required="true" /> -->
 
-						<h:outputLabel value="Contraseña" />
-						<input type="password" name="password" />
-						<!-- <p:inputText id="password" required="true" /> -->
-						<input type="submit" value="Continuar" />
-					</fieldset>
-					<br/>
-					<p:link outcome="/acceso/recuperarPassword" value="Usuario / Clave olvidada"/>	
-					
-			     	<h:outputLabel value="* Su cuenta está bloqueada. Póngase en contacto con el administrador de la aplicación" 
-			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('locked')}" styleClass="error"/>
-			     		
-			     	<h:outputLabel value="* Usuario o contraseña incorrectos. Inténtelo de nuevo" 
- 			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Bad credentials')}" styleClass="error"/>
- 			     		
- 			     	<h:outputLabel value="* Ya existe una sesión abierta para este usuario" 
- 			     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Maximum sessions')}" styleClass="error"/>
-		
-				</form>
-					
-			</div>
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+					<h:outputLabel value="Contraseña" />
+					<input type="password" name="password" />
+					<!-- <p:inputText id="password" required="true" /> -->
+					<input type="submit" value="Continuar" />
+				</fieldset>
+				<br/>
+				<p:link outcome="/acceso/recuperarPassword" value="Usuario / Clave olvidada"/>	
+				
+		     	<h:outputLabel value="* Su cuenta está bloqueada. Póngase en contacto con el administrador de la aplicación" 
+		     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('locked')}" styleClass="error"/>
+		     		
+		     	<h:outputLabel value="* Usuario o contraseña incorrectos. Inténtelo de nuevo" 
+		     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Bad credentials')}" styleClass="error"/>
+		     		
+		     	<h:outputLabel value="* Ya existe una sesión abierta para este usuario" 
+		     		rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message.contains('Maximum sessions')}" styleClass="error"/>
+	
+			</form>
+				
+		</div>
+	</ui:define>
+</ui:composition>

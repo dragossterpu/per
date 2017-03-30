@@ -1,80 +1,73 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-	<f:view >
-
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		
-		<ui:define name="content">
-			<h3>Repositorio documentos</h3>
-		
-			
-			<h:form>
-		    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.recargaLista}" autoRun="true" />
-			</h:form>
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
-				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-				<div class="centrarBotonesDialog">
-					<p:button value="Cerrar" outcome="/gestorDocumental/gestor" />
-				</div>
-			</p:dialog>
-				<h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
-				
-			
-					 
-					 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
-			         	sizelimit="20971520" multiple="true" update=":formAlta:panelDocumentos tablaDocumentos"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" />			 			   					   		 
-			   		
-					
-					<p:outputPanel id="panelDocumentos">
-						<p:dataTable id="tablaDocumentos" var="documento"
-							value="#{gestorDocumentalBean.listadoDocumentos}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
-							<p:column headerText="ID" style="width:30px">
-								#{documento.id}
-							</p:column>
-							<p:column headerText="Nombre">
-								#{documento.nombre}
-							</p:column>
-							<p:column headerText="Tipo">
-								#{documento.tipoContenido}
-							</p:column>
-							<p:column styleClass="botonTabla">
-								<p:commandButton title="Eliminar" icon="fa fa-trash"
-									actionListener="#{gestorDocumentalBean.eliminarDocumento(documento)}"
-									update=":formAlta:panelDocumentos tablaDocumentos" >
-									<p:confirm header="Eliminar documento"
-										message="¿Está seguro que desea eliminar este documento?"
-										icon="fa fa-warning-sign" />
-								</p:commandButton>
-							</p:column>
-							<p:column styleClass="botonTabla">
-								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{gestorDocumentalBean.descargarFichero(documento)}" title="Descargar documento">
-									<p:fileDownload value="#{gestorDocumentalBean.file}" />
-								</p:commandButton>
-							</p:column>
-							
-							
-						</p:dataTable>
-					</p:outputPanel>
-					<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-						</div>
-					</p:confirmDialog>
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
 	
+	<ui:define name="content">
+		<h3>Repositorio documentos</h3>
+	
+		
+		<h:form>
+	    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.recargaLista}" autoRun="true" />
+		</h:form>
+		<p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
+			<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+			<div class="centrarBotonesDialog">
+				<p:button value="Cerrar" outcome="/gestorDocumental/gestor" />
+			</div>
+		</p:dialog>
+			<h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
+			
+		
+				 
+				 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
+		         	sizelimit="20971520" multiple="true" update=":formAlta:panelDocumentos tablaDocumentos"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" />			 			   					   		 
+		   		
+				
+				<p:outputPanel id="panelDocumentos">
+					<p:dataTable id="tablaDocumentos" var="documento"
+						value="#{gestorDocumentalBean.listadoDocumentos}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
+						<p:column headerText="ID" style="width:30px">
+							#{documento.id}
+						</p:column>
+						<p:column headerText="Nombre">
+							#{documento.nombre}
+						</p:column>
+						<p:column headerText="Tipo">
+							#{documento.tipoContenido}
+						</p:column>
+						<p:column styleClass="botonTabla">
+							<p:commandButton title="Eliminar" icon="fa fa-trash"
+								actionListener="#{gestorDocumentalBean.eliminarDocumento(documento)}"
+								update=":formAlta:panelDocumentos tablaDocumentos" >
+								<p:confirm header="Eliminar documento"
+									message="¿Está seguro que desea eliminar este documento?"
+									icon="fa fa-warning-sign" />
+							</p:commandButton>
+						</p:column>
+						<p:column styleClass="botonTabla">
+							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{gestorDocumentalBean.descargarFichero(documento)}" title="Descargar documento">
+								<p:fileDownload value="#{gestorDocumentalBean.file}" />
+							</p:commandButton>
+						</p:column>
+						
+						
+					</p:dataTable>
+				</p:outputPanel>
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+					</div>
+				</p:confirmDialog>
 
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
-			</h:form>
-					
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+
+				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+		</h:form>
+				
+	</ui:define>
+</ui:composition>

@@ -1,55 +1,49 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions" >
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:define name="content">
 
-		<h:form>
-		    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.plantillasAmbitoSolicitud}" update="form" autoRun="true" />
-		</h:form>
-		
-		<div class="bloqueVistaTitulo">	
-			<h3>Plantillas de documentación previa</h3>
-		</div>
+	<h:form>
+	    <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.plantillasAmbitoSolicitud}" update="form" autoRun="true" />
+	</h:form>
+	
+	<div class="bloqueVistaTitulo">	
+		<h3>Plantillas de documentación previa</h3>
+	</div>
 
-		<div id="listadoPlantillas">
-		<h:form id="form">
-					<div class="bloqueDocumentos" >		
-							<p:dataTable id="plantillas" var="plantilla" value="#{provisionalSolicitudBean.listaPlantillasAmbito}" sortBy="#{plantilla.key}">
-		
-								<p:column headerText="Nombre" sortBy="#{plantilla.key}">
-										<h:outputText value="#{plantilla.key}" />
-						       </p:column>
-								<p:column styleClass="botonTabla">
-									<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(plantilla.value)}" title="Descargar documento">
-										<p:fileDownload value="#{provisionalSolicitudBean.file}" />
-									</p:commandButton>
-								</p:column>
-								<f:facet name="footer">
-					      				 Hay: #{fn:length(provisionalSolicitudBean.listaPlantillasAmbito)} documentos.
-					   			</f:facet>
-							</p:dataTable>	
+	<div id="listadoPlantillas">
+	<h:form id="form">
+				<div class="bloqueDocumentos" >		
+						<p:dataTable id="plantillas" var="plantilla" value="#{provisionalSolicitudBean.listaPlantillasAmbito}" sortBy="#{plantilla.key}">
+	
+							<p:column headerText="Nombre" sortBy="#{plantilla.key}">
+									<h:outputText value="#{plantilla.key}" />
+					       </p:column>
+							<p:column styleClass="botonTabla">
+								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(plantilla.value)}" title="Descargar documento">
+									<p:fileDownload value="#{provisionalSolicitudBean.file}" />
+								</p:commandButton>
+							</p:column>
+							<f:facet name="footer">
+				      				 Hay: #{fn:length(provisionalSolicitudBean.listaPlantillasAmbito)} documentos.
+				   			</f:facet>
+						</p:dataTable>	
+				</div>
+						<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 					</div>
-							<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-						</div>
-					</p:confirmDialog>
-					
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
-				</h:form>
-			</div>
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+				</p:confirmDialog>
+				
+				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

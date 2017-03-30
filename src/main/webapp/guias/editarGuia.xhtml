@@ -1,81 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
 
-			<div class="tituloCuestionario">
-				<h:outputText value="#{guiaBean.guia.nombre}"/>
-			</div>
+		<div class="tituloCuestionario">
+			<h:outputText value="#{guiaBean.guia.nombre}"/>
+		</div>
 
-			<div class="bloqueFormulario" >
-				<h:form id="form">
-					<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
-					
-					<h:outputLabel for="nombreGuia" value="Nombre de la guia(*):" />
-						<p:inputText id="nombreGuia"
-							value="#{guiaBean.guia.nombre}"
-							converter="#{trimConverter}"
-							maxlength="255"/>
-						
-					<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
-					<p:selectOneMenu
-						value="#{guiaBean.guia.tipoInspeccion}"
-						id="tipoInspeccionSelect" converter="#{selectConverter}">
-						<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
-							var="tipo"
-							itemLabel="#{tipo.descripcion}"
-							itemValue="#{tipo}" />
-					</p:selectOneMenu>
-					
-					
-					<p:orderList id="orderListPasos"  value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" 
-						converter="#{guiasConverter}"	moveBottomLabel="Último" moveTopLabel="Primero" moveDownLabel="Posterior" moveUpLabel="Anterior"
-						controlsLocation="left" responsive="true">	
-						<p:ajax event="select" listener="#{guiaBean.onSelectPaso}"/>	 
-				        <f:facet name="caption">Pasos</f:facet> 
-				         <p:column  rendered="#{empty paso.fechaBaja}">
-				            <h:outputText value="#{paso.paso}" escape="false"/>
-				        </p:column>
-				    </p:orderList>
-				   	 
-				    <p:panel id="panelPaso">  
-				    	<p:inputTextarea id="nuevoPaso"  binding="#{nuevoPaso}" maxlength="2000"
-						counter="contador" counterTemplate="Quedan {0} caracteres."
-						converter="#{trimConverter}"/>
-						<p:outputLabel id="contador"/>
-					    <p:commandButton actionListener="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="orderListPasos, nuevoPaso" 
-					    	value="Añadir paso" icon="fa fa-fw fa-plus" >
-					    	<p:resetInput target="nuevoPaso"></p:resetInput>
-					    </p:commandButton>
-					    <p:commandButton actionListener="#{guiaBean.borraPaso}" update="orderListPasos" 
-					    	value="Eliminar paso" icon="fa fa-fw fa-minus"/>
-					    	
-				    </p:panel>
-				    
-				    <div class="botonesFormulario">
-						<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-						<p:commandButton id="guardar" value="Guardar"  action="#{guiaBean.guardaGuia}" />	
-					</div>
-				    
-				    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-						<div class="centrarBotonesDialog">
-							<p:button value="Cerrar" outcome="/guias/buscaGuias?faces-redirect=true" />
-						</div>
-					</p:dialog> 
+		<div class="bloqueFormulario" >
+			<h:form id="form">
+				<p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 				
+				<h:outputLabel for="nombreGuia" value="Nombre de la guia(*):" />
+					<p:inputText id="nombreGuia"
+						value="#{guiaBean.guia.nombre}"
+						converter="#{trimConverter}"
+						maxlength="255"/>
+					
+				<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+				<p:selectOneMenu
+					value="#{guiaBean.guia.tipoInspeccion}"
+					id="tipoInspeccionSelect" converter="#{selectConverter}">
+					<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+						var="tipo"
+						itemLabel="#{tipo.descripcion}"
+						itemValue="#{tipo}" />
+				</p:selectOneMenu>
+				
+				
+				<p:orderList id="orderListPasos"  value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" 
+					converter="#{guiasConverter}"	moveBottomLabel="Último" moveTopLabel="Primero" moveDownLabel="Posterior" moveUpLabel="Anterior"
+					controlsLocation="left" responsive="true">	
+					<p:ajax event="select" listener="#{guiaBean.onSelectPaso}"/>	 
+			        <f:facet name="caption">Pasos</f:facet> 
+			         <p:column  rendered="#{empty paso.fechaBaja}">
+			            <h:outputText value="#{paso.paso}" escape="false"/>
+			        </p:column>
+			    </p:orderList>
+			   	 
+			    <p:panel id="panelPaso">  
+			    	<p:inputTextarea id="nuevoPaso"  binding="#{nuevoPaso}" maxlength="2000"
+					counter="contador" counterTemplate="Quedan {0} caracteres."
+					converter="#{trimConverter}"/>
+					<p:outputLabel id="contador"/>
+				    <p:commandButton actionListener="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="orderListPasos, nuevoPaso" 
+				    	value="Añadir paso" icon="fa fa-fw fa-plus" >
+				    	<p:resetInput target="nuevoPaso"></p:resetInput>
+				    </p:commandButton>
+				    <p:commandButton actionListener="#{guiaBean.borraPaso}" update="orderListPasos" 
+				    	value="Eliminar paso" icon="fa fa-fw fa-minus"/>
+				    	
+			    </p:panel>
+			    
+			    <div class="botonesFormulario">
+					<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
+					<p:commandButton id="guardar" value="Guardar"  action="#{guiaBean.guardaGuia}" />	
+				</div>
+			    
+			    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<div class="centrarBotonesDialog">
+						<p:button value="Cerrar" outcome="/guias/buscaGuias?faces-redirect=true" />
+					</div>
+				</p:dialog> 
 			
-				</h:form>
-			</div>
-			
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+		
+			</h:form>
+		</div>
+		
+	</ui:define>
+</ui:composition>

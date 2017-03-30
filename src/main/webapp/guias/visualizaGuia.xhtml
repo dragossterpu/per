@@ -1,41 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
-		
-		<h:form id="formGuias">		
-		
-			<div class="tituloCuestionario">
-				<h:outputText value="#{guiaBean.guia.nombre}"/>
-			</div>
-			
-			<p:messages autoUpdate="true" showSummary="true" closable="true"/> 
-			
-			<h:commandLink  actionListener="#{guiaBean.crearDocumentoWordGuia(guiaBean.guia)}"
-				title="Descargar guía en formato Word">
-			   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
-			   <p:fileDownload value="#{guiaBean.file}" />
-			</h:commandLink>
-				
-			<p:dataList  var="paso" value="#{guiaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
-		    	<h:outputText value="#{paso.paso}" escape="false"/>
-		    </p:dataList>
-			
-			
-			<div class="botonesFormulario">
-				<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-			</div>
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
 	
-		</h:form>	
+	<h:form id="formGuias">		
+	
+		<div class="tituloCuestionario">
+			<h:outputText value="#{guiaBean.guia.nombre}"/>
+		</div>
 		
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+		<p:messages autoUpdate="true" showSummary="true" closable="true"/> 
+		
+		<h:commandLink  actionListener="#{guiaBean.crearDocumentoWordGuia(guiaBean.guia)}"
+			title="Descargar guía en formato Word">
+		   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
+		   <p:fileDownload value="#{guiaBean.file}" />
+		</h:commandLink>
+			
+		<p:dataList  var="paso" value="#{guiaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
+	    	<h:outputText value="#{paso.paso}" escape="false"/>
+	    </p:dataList>
+		
+		
+		<div class="botonesFormulario">
+			<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
+		</div>
+
+	</h:form>	
+	
+	</ui:define>
+</ui:composition>

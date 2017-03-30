@@ -1,49 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:my="http://java.sun.com/jsf/composite/composites">
-<f:view>
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		<ui:define name="content">
-		
-		<ui:param name="esJefeInspeccionesOEquipo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,ADMIN')}"/>
-
-			<div class="tituloCuestionario">
-				<h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}"/> 
-			</div>
-			<h:form id="form">
-			
-				<p:growl id="message"/>
-
-				<p:accordionPanel multiple="true" activeIndex="-1" value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
-					<p:tab title="#{areaCuestionario.area}" >
-							<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspeccionesOEquipo}">
-						       <f:selectItems value="#{areaCuestionario.preguntas}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
-						        	itemValue="#{preguntaArea}"/>
-						    </my:selectManyCheckboxAll>
-						    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspeccionesOEquipo}" type="unordered" styleClass="preguntasModelo">
-						    	<h:outputText value="#{preguntaArea.pregunta}"/>
-						    </p:dataList>	
-					</p:tab>
-				</p:accordionPanel>
-				
-				<div class="botonesFormulario">
-                    <p:commandButton value="Previsualizar formulario" update="message"  icon="fa fa-search" action="#{edicionCuestionarioBean.previsualizarFormulario}" rendered="#{esJefeInspeccionesOEquipo}"/>
-					
-					<p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
-					<p:commandButton value="Limpiar" update="form" process="@this" icon="fa fa-fw fa-eraser" rendered="#{esJefeInspeccionesOEquipo}">
-						<p:resetInput target="form" />
-					</p:commandButton>
-				</div>
-
-			</h:form>
-		</ui:define>
-	</ui:composition>
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:my="http://java.sun.com/jsf/composite/composites">
+	<ui:define name="content">
 	
-</f:view>
-</html>
+	<ui:param name="esJefeInspeccionesOEquipo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,ADMIN')}"/>
+
+		<div class="tituloCuestionario">
+			<h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}"/> 
+		</div>
+		<h:form id="form">
+		
+			<p:growl id="message"/>
+
+			<p:accordionPanel multiple="true" activeIndex="-1" value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
+				<p:tab title="#{areaCuestionario.area}" >
+						<my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspeccionesOEquipo}">
+					       <f:selectItems value="#{areaCuestionario.preguntas}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" 
+					        	itemValue="#{preguntaArea}"/>
+					    </my:selectManyCheckboxAll>
+					    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspeccionesOEquipo}" type="unordered" styleClass="preguntasModelo">
+					    	<h:outputText value="#{preguntaArea.pregunta}"/>
+					    </p:dataList>	
+				</p:tab>
+			</p:accordionPanel>
+			
+			<div class="botonesFormulario">
+                <p:commandButton value="Previsualizar formulario" update="message"  icon="fa fa-search" action="#{edicionCuestionarioBean.previsualizarFormulario}" rendered="#{esJefeInspeccionesOEquipo}"/>
+				
+				<p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo"/>
+				<p:commandButton value="Limpiar" update="form" process="@this" icon="fa fa-fw fa-eraser" rendered="#{esJefeInspeccionesOEquipo}">
+					<p:resetInput target="form" />
+				</p:commandButton>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

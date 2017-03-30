@@ -1,95 +1,88 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-	<f:view >
-
-	<ui:composition template="../layouts/layoutInterior.xhtml">
-		
-		<ui:define name="content">
-			<h3>Añadir nuevo documento</h3>
-			<h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
-				<div class="bloqueFormulario">
-						<div class="columnaIzdaFormulario">
-							<h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
-							<p:inputText id="nombreDocumento" binding="#{nombreDocumento}" 
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="content">
+		<h3>Añadir nuevo documento</h3>
+		<h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
+			<div class="bloqueFormulario">
+					<div class="columnaIzdaFormulario">
+						<h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
+						<p:inputText id="nombreDocumento" binding="#{nombreDocumento}" 
+						required="true"
+						requiredMessage="Debe introducir un nombre para el documento"/>
+						<p:messages for="nombreDocumento" autoUpdate="true"  closable="true"/>
+						<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
+						<p:selectOneMenu
+							binding="#{tipoDocumentoSelect}"
+							id="tipoDocumentoSelect" converter="#{selectConverter}"
 							required="true"
-							requiredMessage="Debe introducir un nombre para el documento"/>
-							<p:messages for="nombreDocumento" autoUpdate="true"  closable="true"/>
-							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
-							<p:selectOneMenu
-								binding="#{tipoDocumentoSelect}"
-								id="tipoDocumentoSelect" converter="#{selectConverter}"
-								required="true"
-								requiredMessage="Debe seleccionar un tipo">
-								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-								<f:selectItems value="#{gestorDocumentalBean.listaTipos}" var="tipo"
-									itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
-							</p:selectOneMenu>
-							<p:messages for="tipoDocumentoSelect" autoUpdate="true"  closable="true"/>
-							<h:outputLabel for="infoInspeccion" value="Número Inspección (*):" />
-							<p:autoComplete id="infoInspeccion" value="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
-								var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-								onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
-							</p:autoComplete>
-							
-						</div>
-						<div class="columnaDchaFormulario">
-							<h:outputLabel for="descripcion" value="Descripcion:" />
-							<p:inputTextarea id="descripcion"  binding="#{descripcion}" maxlength="2000"
-								counter="contadorDescripcion" counterTemplate="Quedan {0} caracteres."
-								converter="#{trimConverter}"/>
-							<p:outputLabel id="contadorDescripcion"/>
-														
-							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							<p:inputTextarea id="materiaIndexada"  binding="#{materiaIndexada}" maxlength="2000"
-								counter="contador" counterTemplate="Quedan {0} caracteres."
-								converter="#{trimConverter}"/>
-							<p:outputLabel id="contador"/>
-						</div>
+							requiredMessage="Debe seleccionar un tipo">
+							<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+							<f:selectItems value="#{gestorDocumentalBean.listaTipos}" var="tipo"
+								itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
+						</p:selectOneMenu>
+						<p:messages for="tipoDocumentoSelect" autoUpdate="true"  closable="true"/>
+						<h:outputLabel for="infoInspeccion" value="Número Inspección (*):" />
+						<p:autoComplete id="infoInspeccion" value="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
+							var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+							onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
+						</p:autoComplete>
+						
 					</div>
+					<div class="columnaDchaFormulario">
+						<h:outputLabel for="descripcion" value="Descripcion:" />
+						<p:inputTextarea id="descripcion"  binding="#{descripcion}" maxlength="2000"
+							counter="contadorDescripcion" counterTemplate="Quedan {0} caracteres."
+							converter="#{trimConverter}"/>
+						<p:outputLabel id="contadorDescripcion"/>
+													
+						<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+						<p:inputTextarea id="materiaIndexada"  binding="#{materiaIndexada}" maxlength="2000"
+							counter="contador" counterTemplate="Quedan {0} caracteres."
+							converter="#{trimConverter}"/>
+						<p:outputLabel id="contador"/>
+					</div>
+				</div>
+			
+		   		
+		   		<p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
+		         	sizelimit="20971520" multiple="false"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i"  update="asociado" />
+			 
+			    <div>
+					<h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
+					<p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
+				</div>		   					   		 
+		   		
+		   		
 				
-			   		
-			   		<p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
-			         	sizelimit="20971520" multiple="false"  autofileLimit="30" allowTypes="/(\.|\/)(gif|jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i"  update="asociado" />
-				 
-				    <div>
-						<h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
-						<p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
-					</div>		   					   		 
-			   		
-			   		
-					
-					
-			   		
-				 <div class="botonesFormulario">
-				 	<p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-					<p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value, infoInspeccion.value)}"  value="Crear"  />
-				</div>	
-					
-				<p:confirmDialog global="true">
+				
+		   		
+			 <div class="botonesFormulario">
+			 	<p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
+				<p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value, infoInspeccion.value)}"  value="Crear"  />
+			</div>	
+				
+			<p:confirmDialog global="true">
+				<div class="centrarBotonesDialog">
+					<p:commandButton value="Aceptar" type="button"
+						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="Cancelar" type="button"
+						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+				</div>
+			</p:confirmDialog>
+
+
+				 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:commandButton value="Aceptar" type="button"
-							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-						<p:commandButton value="Cancelar" type="button"
-							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+						<p:button value="Cerrar" outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" />
 					</div>
-				</p:confirmDialog>
-	
-	
-					 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-						<div class="centrarBotonesDialog">
-							<p:button value="Cerrar" outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" />
-						</div>
-					</p:dialog> 
-			</h:form>
-					
-		</ui:define>
-	</ui:composition>
-</f:view>
-</html>
+				</p:dialog> 
+		</h:form>
+				
+	</ui:define>
+</ui:composition>
