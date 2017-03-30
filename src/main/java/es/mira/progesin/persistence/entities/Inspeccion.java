@@ -52,11 +52,11 @@ public class Inspeccion implements Serializable {
     @Column(name = "id")
     private Long id;
     
-    @Column(name = "numero", length = 100, nullable = false)
+    @Column(name = "numero", length = 100)
     private String numero;
     
     @ManyToOne
-    @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_i_tipo_inspeccion"))
+    @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_i_tipo_inspeccion"), nullable = false)
     private TipoInspeccion tipoInspeccion;
     
     @ManyToOne
@@ -74,8 +74,9 @@ public class Inspeccion implements Serializable {
     @Column(name = "nombre_unidad")
     private String nombreUnidad;
     
-    @Column(name = "tipo_unidad")
-    private String tipoUnidad;
+    @ManyToOne
+    @JoinColumn(name = "tipo_unidad", foreignKey = @ForeignKey(name = "FK_i_TIPOUNIDAD"))
+    private TipoUnidad tipoUnidad;
     
     @Column(name = "ambito", length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -85,7 +86,7 @@ public class Inspeccion implements Serializable {
     @Enumerated(EnumType.STRING)
     private CuatrimestreEnum cuatrimestre;
     
-    @Column(name = "estado_inspeccion", length = 30, nullable = false)
+    @Column(name = "estado_inspeccion", length = 30)
     @Enumerated(EnumType.STRING)
     private EstadoInspeccionEnum estadoInspeccion;
     
@@ -109,12 +110,15 @@ public class Inspeccion implements Serializable {
     @Column(name = "fecha_finalizacion")
     private Date fechaFinalizacion;
     
+    @Column(name = "fecha_prevista")
+    private Date fechaPrevista;
+    
     @CreatedBy
     @Column(name = "username_finalizacion")
     private String usernameFinalizacion;
     
     @ManyToOne
     @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))
-    private Municipios municipio;
+    private Municipio municipio;
     
 }
