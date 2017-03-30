@@ -9,7 +9,7 @@
 
 
   --GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. ADMINISTRACIÓN.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'ADMINISTRACIÓN.', 'I.T_CIE', 6,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -78,7 +78,7 @@
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS.SERVICIO DE ASISTENCIA SANITARIA.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'SERVICIODE ASISTENCIA SANITARIA.', 'I.T_CIE', 8,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -140,7 +140,7 @@
 
 		--SERVICIOS DE ASISTENCIA SOCIAL, JURÍDICA Y CULTURAL.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'SERVICIOS DE ASISTENCIA SOCIAL, JURÍDICA Y CULTURAL.', 'I.T_CIE', 9,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -208,7 +208,7 @@
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS.DIRECCIÓN.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'DIRECCIÓN.', 'I.T_CIE', 4,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -258,7 +258,7 @@
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS.', 'I.T_CIE', 1,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -394,7 +394,7 @@
 
 		--GUIA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. JUNTA DE COORDINACIÓN.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'JUNTA DE COORDINACIÓN.', 'I.T_CIE', 4,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -415,7 +415,7 @@
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. LIBROS OFICIALES.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'JUNTA DE COORDINACIÓN.', 'I.T_CIE', 12,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -430,7 +430,7 @@
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS.
 
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS.', 'I.T_CIE', 2,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -459,14 +459,14 @@
 
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS MATERIALES.', 'I.T_CIE', 1,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
 		(SEQ_PASOSGUIA.nextval, SEQ_GUIAS.CURRVAL, 'Inventario de recursos materiales, con expresión de fecha de adjudicación o reposición y estado de conservación. Comprobar la existencia de inventarios y examinarlos.', 0);
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. RELACIONES Y COORDINACIÓN.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'RELACIONES Y COORDINACIÓN.', 'I.T_CIE', 13, trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -489,7 +489,7 @@
 
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. SECRETARÍA.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'SECRETARÍA.', 'I.T_CIE', 7,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -545,7 +545,7 @@
 
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. UNIDAD DE SEGURIDAD.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'UNIDAD DE SEGURIDAD.', 'I.T_CIE', 5,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -637,7 +637,7 @@
 
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. FORMACIÓN.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'FORMACIÓN.', 'I.T_CIE', 10,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 
@@ -663,7 +663,7 @@
 
 
 		--GUÍA DEL CENTRO DE INTERNAMIENTO DE EXTRANJEROS. GUIA MECANISMOS CONTROL/ INSPECCIÓN.
-		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+		insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 		(SEQ_GUIAS.NEXTVAL, 'GUIA MECANISMOS CONTROL/ INSPECCIÓN.', 'I.T_CIE', 11,trunc(sysdate), 'system');
 
 		insert into guia_Pasos (id, id_guia, paso, orden) values 

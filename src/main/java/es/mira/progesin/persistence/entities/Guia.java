@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -20,12 +19,6 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,10 +38,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "guias")
 @NamedEntityGraph(name = "Guia.pasos", attributeNodes = @NamedAttributeNode("pasos"))
-public class Guia implements Serializable {
+public class Guia extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -67,31 +59,9 @@ public class Guia implements Serializable {
     @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_g_tipo_inspeccion"), nullable = false)
     private TipoInspeccion tipoInspeccion;
     
-    @CreatedDate
-    @Column(name = "fecha_creacion", nullable = false)
-    private Date fechaCreacion;
-    
-    @CreatedBy
-    @Column(name = "usuario_creacion", nullable = false)
-    private String usuarioCreacion;
-    
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idGuia")
     private List<GuiaPasos> pasos;
-    
-    @LastModifiedDate
-    @Column(name = "fecha_modificacion")
-    private Date fechaModificacion;
-    
-    @LastModifiedBy
-    @Column(name = "usuario_modificacion")
-    private String usuarioModificacion;
-    
-    @Column(name = "fecha_baja")
-    private Date fechaBaja;
-    
-    @Column(name = "username_baja")
-    private String usernameBaja;
     
     @Column(name = "fecha_anulacion")
     private Date fechaAnulacion;
@@ -99,28 +69,4 @@ public class Guia implements Serializable {
     @Column(name = "username_anulacion")
     private String usernameAnulacion;
     
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Guia other = (Guia) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
 }

@@ -96,13 +96,13 @@
         			 	  <p:ajax event="toggle" listener="#{guiaBean.onToggle}" />
         			 </p:columnToggler>
 				</f:facet>
-				<p:column headerText="Fecha alta" sortBy="#{guia.fechaCreacion}" width="70" visible="#{guiaBean.list[0]}" exportable="#{guiaBean.list[0]}">
-					<h:outputText value="#{guia.fechaCreacion}">
+				<p:column headerText="Fecha alta" sortBy="#{guia.fechaAlta}" width="70" visible="#{guiaBean.list[0]}" exportable="#{guiaBean.list[0]}">
+					<h:outputText value="#{guia.fechaAlta}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Usuario" sortBy="#{guia.usuarioCreacion}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
-					<h:outputText value="#{guia.usuarioCreacion}" />
+				<p:column headerText="Usuario" sortBy="#{guia.usernameAlta}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
+					<h:outputText value="#{guia.usernameAlta}" />
 				</p:column>
 				<p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion}"  width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
 					<h:outputText value="#{guia.tipoInspeccion.descripcion}" />

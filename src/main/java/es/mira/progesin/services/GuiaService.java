@@ -63,7 +63,7 @@ public class GuiaService implements IGuiaService {
              * compara con 0:00:00
              */
             criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_creacion) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
+                    .sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
         }
         if (busqueda.getFechaHasta() != null) {
             /**
@@ -71,7 +71,7 @@ public class GuiaService implements IGuiaService {
              * compara con 0:00:00
              */
             criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_creacion) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
+                    .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
         }
         
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
@@ -81,7 +81,7 @@ public class GuiaService implements IGuiaService {
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "usuario_creacion", busqueda.getUsuarioCreacion())));
+                    String.format(COMPARADORSINACENTOS, "username_alta", busqueda.getUsuarioCreacion())));
         }
         
         if (busqueda.getTipoInspeccion() != null) {
@@ -95,7 +95,7 @@ public class GuiaService implements IGuiaService {
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        criteria.addOrder(Order.desc("fechaCreacion"));
+        criteria.addOrder(Order.desc("fechaAlta"));
         
         @SuppressWarnings("unchecked")
         List<Guia> listaGuias = criteria.list();

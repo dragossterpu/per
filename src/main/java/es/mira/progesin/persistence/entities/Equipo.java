@@ -24,6 +24,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * @author EZENTIS
+ * 
+ * Entity para un equipo de inspecciones
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

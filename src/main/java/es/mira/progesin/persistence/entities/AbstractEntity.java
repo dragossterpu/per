@@ -16,11 +16,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author EZENTIS
+ * 
+ * Clase abstracta para evitar la duplicidad de código en el resto de las entities
+ *
+ */
 @Getter
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @CreatedBy
     @Column(name = "username_alta", nullable = false)

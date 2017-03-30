@@ -1,5 +1,5 @@
  --PREVENCIÓN DE RIESGOS LABORALES DE LA POLICIA NACIONAL.
-insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'PRL (Policía Nacional)', 'I.T_PRL', 15,trunc(sysdate), 'system');
 
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL, 'Relación documentada de las actividades preventivas encuadradas en las especialidades contempladas no asumidas por el Servicio de Prevención y para cuya utilización se ha recurrido a un Servicio de Prevención Ajeno.', 0);

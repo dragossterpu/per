@@ -1,5 +1,5 @@
  --PREVENCIÓN DE RIESGOS LABORALES DE LA GUARDIA CIVIL.
-insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_creacion, usuario_creacion) values 
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
 (SEQ_GUIAS.NEXTVAL, 'PRL (Guardia civil)', 'I.T_PRL', 16, trunc(sysdate), 'system');
 
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL, 'Organización, estructura, funciones y competencias del Servicio de Prevención.', 0);
