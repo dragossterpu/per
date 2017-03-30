@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Municipios;
-import es.mira.progesin.persistence.entities.Provincias;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
@@ -31,15 +33,15 @@ public class InspeccionBusqueda implements Serializable {
     
     private String anio;
     
-    private String nombreUnidad;
+    private Equipo equipo;
     
     private TipoInspeccion tipoInspeccion;
     
-    private String nombreEquipo;
+    private String nombreUnidad;
     
     private String jefeEquipo;
     
-    private String numero;
+    private String id;
     
     private AmbitoInspeccionEnum ambito;
     
@@ -49,11 +51,13 @@ public class InspeccionBusqueda implements Serializable {
     
     private List<Inspeccion> listaInspecciones;
     
-    private Provincias provincia;
+    private Provincia provincia;
     
-    private Municipios municipio;
+    private Municipio municipio;
     
-    private String tipoUnidad;
+    private TipoUnidad tipoUnidad;
+    
+    private long paginaActual;
     
     /**
      * Limpia los valores del objeto
@@ -65,15 +69,15 @@ public class InspeccionBusqueda implements Serializable {
         this.usuarioCreacion = null;
         this.anio = null;
         this.tipoInspeccion = null;
-        this.nombreEquipo = null;
-        this.numero = null;
+        this.nombreUnidad = null;
+        this.id = null;
         this.ambito = null;
         this.cuatrimestre = null;
         this.estado = null;
         this.provincia = null;
         this.municipio = null;
         this.tipoUnidad = null;
-        this.nombreUnidad = null;
+        this.equipo = null;
         this.jefeEquipo = null;
         this.listaInspecciones = null;
     }

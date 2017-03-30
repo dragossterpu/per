@@ -11,9 +11,9 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.mira.progesin.persistence.entities.Provincias;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.services.IParametroService;
 import es.mira.progesin.services.IPuestoTrabajoService;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class ApplicationBean implements Serializable {
     
     private List<TipoInspeccion> listaTiposInspeccion;
     
-    private List<Provincias> listaProvincias;
+    private List<TipoUnidad> listaTiposUnidad;
     
     @PersistenceContext
     private transient EntityManager em;
@@ -54,13 +54,7 @@ public class ApplicationBean implements Serializable {
         setMapaParametros(parametroService.getMapaParametros());
         setDominiosValidos(mapaParametros.get("dominiosCorreo").get("dominiosCorreo"));
         setListaTiposInspeccion(em.createNamedQuery("TipoInspeccion.findAll", TipoInspeccion.class).getResultList());
-        
-        listaProvincias = em.createNamedQuery("Provincias.findAll", Provincias.class).getResultList();
-        Provincias provinciaDefecto = new Provincias();
-        provinciaDefecto.setCodigo("00");
-        provinciaDefecto.setCodigoMN("");
-        provinciaDefecto.setProvincia("Todos");
-        listaProvincias.add(0, provinciaDefecto);
+        setListaTiposUnidad(em.createNamedQuery("TipoUnidad.findAll", TipoUnidad.class).getResultList());
         
     }
 }

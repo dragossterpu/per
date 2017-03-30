@@ -51,6 +51,7 @@ insert into provincias (codigo, provincia,codigo_mn) values (lpad('49',2,'0'), '
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('50',2,'0'), 'Zaragoza', 'Z');
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('51',2,'0'), 'Ceuta', 'CE');
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('52',2,'0'), 'Melilla', 'ML');
+commit;
 
 
 --insert municipios
@@ -1035,6 +1036,8 @@ insert into municipios (id, name,code_province) values ('975', 'MALLA', lpad('8'
 insert into municipios (id, name,code_province) values ('976', 'MANLLEU', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values ('977', 'MANRESA', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values ('978', 'MARGANELL', lpad('8', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('979', 'MARTORELL', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values ('980', 'MARTORELLES', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values ('981', 'MASIES DE RODA (LES)', lpad('8', 2, '0'));
@@ -2128,6 +2131,8 @@ insert into municipios (id, name,code_province) values ('2068', 'FERNÁN-NÚÑEZ
 insert into municipios (id, name,code_province) values ('2069', 'FUENTE LA LANCHA', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values ('2070', 'FUENTE OBEJUNA', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values ('2071', 'FUENTE PALMERA', lpad('14', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('2072', 'FUENTE-TÓJAR', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values ('2073', 'GRANJUELA (LA)', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values ('2074', 'GUADALCÁZAR', lpad('14', 2, '0'));
@@ -3074,6 +3079,8 @@ insert into municipios (id, name,code_province) values ('3014', 'PASTRANA', lpad
 insert into municipios (id, name,code_province) values ('3015', 'PEDREGAL (EL)', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values ('3016', 'PEÑALÉN', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values ('3017', 'PEÑALVER', lpad('19', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('3018', 'PERALEJOS DE LAS TRUCHAS', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values ('3019', 'PERALVECHE', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values ('3020', 'PINILLA DE JADRAQUE', lpad('19', 2, '0'));
@@ -4078,6 +4085,8 @@ insert into municipios (id, name,code_province) values ('4018', 'VALLS D''AGUILA
 insert into municipios (id, name,code_province) values ('4019', 'VALLS DE VALIRA (LES)', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values ('4020', 'VANSA I FÓRNOLS (LA)', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values ('4021', 'VERDÚ', lpad('25', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('4022', 'VIELHA E MIJARAN', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values ('4023', 'VILAGRASSA', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values ('4024', 'VILALLER', lpad('25', 2, '0'));
@@ -5093,6 +5102,8 @@ insert into municipios (id, name,code_province) values ('5033', 'TEVERGA', lpad(
 insert into municipios (id, name,code_province) values ('5034', 'TINEO', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values ('5035', 'VALDÉS', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values ('5036', 'VEGADEO', lpad('33', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('5037', 'VILLANUEVA DE OSCOS', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values ('5038', 'VILLAVICIOSA', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values ('5039', 'VILLAYÓN', lpad('33', 2, '0'));
@@ -6065,6 +6076,8 @@ insert into municipios (id, name,code_province) values ('6005', 'SAN ILDEFONSO',
 insert into municipios (id, name,code_province) values ('6006', 'SAN MARTÍN Y MUDRIÁN', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values ('6007', 'SAN MIGUEL DE BERNUY', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values ('6008', 'SAN PEDRO DE GAÍLLOS', lpad('40', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('6009', 'SANCHONUÑO', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values ('6010', 'SANGARCÍA', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values ('6011', 'SANTA MARÍA LA REAL DE NIEVA', lpad('40', 2, '0'));
@@ -7091,6 +7104,8 @@ insert into municipios (id, name,code_province) values ('7031', 'BENIRREDRÀ', l
 insert into municipios (id, name,code_province) values ('7032', 'BENISANÓ', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values ('7033', 'BENISSODA', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values ('7034', 'BENISUERA', lpad('46', 2, '0'));
+commit;
+
 insert into municipios (id, name,code_province) values ('7035', 'BÉTERA', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values ('7036', 'BICORP', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values ('7037', 'BOCAIRENT', lpad('46', 2, '0'));
@@ -8168,6 +8183,25 @@ insert into municipios (id, name,code_province) values ('8108', 'ZUERA', lpad('5
 insert into municipios (id, name,code_province) values ('8109', 'CEUTA', lpad('51', 2, '0'));
 insert into municipios (id, name,code_province) values ('8110', 'MELILLA', lpad('52', 2, '0'));
 commit;
+
+-- inserts tipo unidad
+insert into tipos_unidad (id, descripcion) values (1, 'Cª Distrito');
+insert into tipos_unidad (id, descripcion) values (2, 'Cª local');
+insert into tipos_unidad (id, descripcion) values (3, 'Cª Provincial');
+insert into tipos_unidad (id, descripcion) values (4, 'CIA');
+insert into tipos_unidad (id, descripcion) values (5, 'CIE');
+insert into tipos_unidad (id, descripcion) values (6, 'Cmdcia');
+insert into tipos_unidad (id, descripcion) values (7, 'JSP');
+insert into tipos_unidad (id, descripcion) values (8, 'Pto. Fronterizo');
+insert into tipos_unidad (id, descripcion) values (9, 'Serv. Central');
+insert into tipos_unidad (id, descripcion) values (10, 'U.E. y D.');
+insert into tipos_unidad (id, descripcion) values (11, 'Zona');
+commit;
+
+
+
+
+
 
 
 

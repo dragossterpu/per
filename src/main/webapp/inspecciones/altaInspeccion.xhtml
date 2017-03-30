@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<ui:composition template="../layouts/layoutInterior.xhtml">
+		<ui:define name="content">
+
+		<h3>Nueva Inspección</h3>
+		<div class="aclaraciones">
+			Los campos marcados con (*) son obligatorios
+		</div>
+		
+		<h:form id="formAlta">
+			<div class="bloqueFormulario">
+					<h4>Datos de la inspección</h4>
+						<div class="columnaIzdaFormulario" >
+						
+							<h:outputLabel for="equipoSelect" value="Equipo(*):" />
+							<p:selectOneMenu
+								value="#{inspeccionBean.nuevaInspeccion.equipo}"
+								id="equipoSelect" converter="#{selectConverter}">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{inspeccionBean.listaEquipos}"
+									var="equipo"
+									itemLabel="#{equipo.nombreEquipo}"
+									itemValue="#{equipo}" />
+							</p:selectOneMenu>
+						
+							<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección(*):" />
+							<p:importEnum
+									type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
+									var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+							<p:selectOneMenu
+								value="#{inspeccionBean.nuevaInspeccion.ambito}"
+								id="ambitoInspeccionSelect">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
+									var="ambito"
+									itemLabel="#{ambito.descripcion}"
+									itemValue="#{ambito}" />
+							</p:selectOneMenu>
+							
+							<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion(*):" />
+							<p:selectOneMenu
+								value="#{inspeccionBean.nuevaInspeccion.tipoInspeccion}"
+								id="tipoInspeccionSelect" converter="#{selectConverter}">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+									var="tipo"
+									itemLabel="#{tipo.descripcion}"
+									itemValue="#{tipo}" />
+							</p:selectOneMenu>
+							
+							<h:outputLabel for="anio" value="Año(*):" />
+							<p:inputText  id="anio" value="#{inspeccionBean.nuevaInspeccion.anio}" converter="#{trimConverter}"/>
+							
+						</div>
+						<div class="columnaDchaFormulario">
+							
+							<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección:" />
+							<p:importEnum
+									type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
+									var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
+							<p:selectOneMenu
+								value="#{inspeccionBean.nuevaInspeccion.cuatrimestre}"
+								id="cuatrimestreInspeccionSelect">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}"
+									var="cuatrimestre"
+									itemLabel="#{cuatrimestre.descripcion}"
+									itemValue="#{cuatrimestre}" />
+							</p:selectOneMenu>
+							
+							<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad:" />
+							<p:selectOneMenu
+								value="#{inspeccionBean.nuevaInspeccion.tipoUnidad}"
+								id="tipoUnidadSelect" converter="#{selectConverter}">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{applicationBean.listaTiposUnidad}"
+									var="tipo"
+									itemLabel="#{tipo.descripcion}"
+									itemValue="#{tipo}" />
+							</p:selectOneMenu>
+							
+							<h:outputLabel for="nombreUnidad" value="Nombre de unidad:" />
+							<p:inputText id="nombreUnidad" value="#{inspeccionBean.nuevaInspeccion.nombreUnidad}" converter="#{trimConverter}"/>	
+							
+						</div>	
+
+			</div>
+			
+			<div class="bloqueFormulario">
+					<h4>Localización</h4>
+						<div class="columnaIzdaFormulario" >
+						
+							<h:outputLabel for="provinciasSelect" value="Provincia:" />
+							<p:selectOneMenu
+								valueChangeListener="#{inspeccionBean.onChangeProvincia}" 
+								value="#{inspeccionBean.provinciSelec}"
+								id="provinciasSelect" 
+								filter="true" 
+								filterMatchMode="startsWith"
+								converter="#{selectConverter}">
+								
+								<f:selectItems value="#{inspeccionBean.listaProvincias}"
+									var="provincia"
+									itemLabel="#{provincia.provincia}"
+									itemValue="#{provincia}" />
+								<f:ajax event="change" execute="@form" render="municipiosSelect"/>
+							</p:selectOneMenu>
+							
+						</div>
+						<div class="columnaDchaFormulario">
+						
+							<h:outputLabel for="municipiosSelect" value="Municipio:" />
+							<p:selectOneMenu
+								value="#{inspeccionBean.nuevaInspeccion.municipio}"
+								id="municipiosSelect"
+								filter="true" 
+								filterMatchMode="startsWith" 
+								converter="#{selectConverter}">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{inspeccionBean.listaMunicipios}"
+									var="municipio"
+									itemLabel="#{municipio.name}"
+									itemValue="#{municipio}" />
+							</p:selectOneMenu>
+						</div>	
+
+			</div>
+			
+			<div class="botonesFormulario">
+				<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+				<p:button outcome="/inspecciones/inspecciones" value="Cancelar" icon="fa fa-fw fa-undo"/>
+			</div>
+			
+			
+			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+						<div class="centrarBotonesDialog">
+							<p:button value="Cerrar" outcome="/inspecciones/inspecciones" />
+						</div>
+					</p:dialog>
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage value="/images/loading.gif" />
+			</p:dialog>
+			
+		</h:form>
+		
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

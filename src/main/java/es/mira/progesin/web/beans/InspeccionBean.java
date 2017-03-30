@@ -1,26 +1,34 @@
 package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.primefaces.model.StreamedContent;
+import org.hibernate.criterion.Order;
+import org.primefaces.event.data.SortEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
-import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Municipios;
-import es.mira.progesin.persistence.entities.Provincias;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.util.WordGenerator;
+import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +38,7 @@ import lombok.Setter;
 @Scope("session")
 public class InspeccionBean {
     
-    private Inspeccion inspeccion;
+    private Inspeccion nuevaInspeccion;
     
     private String vieneDe;
     
@@ -38,22 +46,18 @@ public class InspeccionBean {
     
     private InspeccionBusqueda inspeccionBusquedaCopia;
     
-    private GuiaPasos pasoSeleccionada;
-    
     private List<Boolean> list;
     
-    private StreamedContent file;
-    
     boolean alta = false;
-    
-    @Autowired
-    private WordGenerator wordGenerator;
     
     @Autowired
     private IRegistroActividadService regActividadService;
     
     @Autowired
     private IInspeccionesService inspeccionesService;
+    
+    @Autowired
+    private IEquipoService equipoService;
     
     private static final int MAX_RESULTS_PAGE = 20;
     
@@ -70,7 +74,17 @@ public class InspeccionBean {
     @PersistenceContext
     private transient EntityManager em;
     
-    private List<Municipios> listaMunicipios;
+    private List<Municipio> listaMunicipios;
+    
+    private List<Equipo> listaEquipos;
+    
+    private Provincia provinciSelec;
+    
+    private List<Provincia> listaProvincias;
+    
+    private String sortBy;
+    
+    private boolean sortOrder;
     
     /**************************************************************
      * 
@@ -78,14 +92,25 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
+        sortBy = "fechaAlta";
+        buscarConOrden(Order.desc(sortBy));
+    }
+    
+    /**************************************************************
+     * 
+     * Busca las guías según los filtros introducidos en el formulario de búsqueda
+     * 
+     **************************************************************/
+    private void buscarConOrden(Order orden) {
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
         numeroRegistros = getCountRegistrosInspecciones();
         numPages = getCountPagesGuia(numeroRegistros);
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(0, MAX_RESULTS_PAGE,
-                inspeccionBusquedaCopia);
+                inspeccionBusquedaCopia, orden);
         inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+        inspeccionBusqueda.setPaginaActual(FIRST_PAGE);
     }
     
     /*********************************************************
@@ -111,6 +136,57 @@ public class InspeccionBean {
     
     public void limpiarBusqueda() {
         inspeccionBusqueda.resetValues();
+    }
+    
+    /**
+     * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para mostrar
+     * correctamente la página (cuerpos de estado, puestos de trabajo, usuario nuevo). Se llama desde la página de
+     * búsqueda de usuarios.
+     * @return
+     */
+    public String nuevaInspeccion() {
+        nuevaInspeccion = new Inspeccion();
+        nuevaInspeccion.setFechaAlta(new Date());
+        nuevaInspeccion.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+        nuevaInspeccion.setFechaBaja(null);
+        nuevaInspeccion.setFechaFinalizacion(null);
+        nuevaInspeccion.setUsernameFinalizacion(null);
+        nuevaInspeccion.setAnio(null);
+        nuevaInspeccion.setCuatrimestre(null);
+        nuevaInspeccion.setEstadoInspeccion(null);
+        nuevaInspeccion.setEquipo(null);
+        nuevaInspeccion.setAmbito(null);
+        nuevaInspeccion.setMunicipio(null);
+        nuevaInspeccion.setTipoUnidad(null);
+        nuevaInspeccion.setFechaPrevista(null);
+        nuevaInspeccion.setTipoInspeccion(null);
+        nuevaInspeccion.setTipoUnidad(null);
+        
+        return "/inspecciones/altaInspeccion?faces-redirect=true";
+    }
+    
+    public String altaInspeccion() {
+        try {
+            
+            Inspeccion inspeccionProvisional = null;
+            if ((inspeccionProvisional = inspeccionesService.save(nuevaInspeccion)) != null) {
+                
+                nuevaInspeccion.setId(inspeccionProvisional.getId());
+                nuevaInspeccion.setNumero(nuevaInspeccion.getId() + "/" + nuevaInspeccion.getAnio());
+                nuevaInspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_0);
+                
+                inspeccionesService.save(nuevaInspeccion);
+                
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                        "La inspección ha sido creada con éxito");
+                String descripcion = "Alta nueva inspección " + nuevaInspeccion.getNumero();
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                        SeccionesEnum.INSPECCION.name());
+            }
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+        }
+        return null;
     }
     
     /*********************************************************
@@ -146,9 +222,16 @@ public class InspeccionBean {
     @PostConstruct
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
+        listaProvincias = em.createNamedQuery("Provincia.findAll", Provincia.class).getResultList();
+        listaEquipos = (List<Equipo>) equipoService.findAll();
+        Provincia provinciaDefecto = new Provincia();
+        provinciaDefecto.setCodigo("00");
+        provinciaDefecto.setCodigoMN("");
+        provinciaDefecto.setProvincia("Todos");
+        listaProvincias.add(0, provinciaDefecto);
         listaMunicipios = new ArrayList<>();
         list = new ArrayList<>();
-        for (int i = 0; i <= 12; i++) {
+        for (int i = 0; i <= 14; i++) {
             list.add(Boolean.TRUE);
         }
     }
@@ -200,8 +283,10 @@ public class InspeccionBean {
             actualPage++;
             
             List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia);
+                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia,
+                    sortOrder == true ? Order.asc(sortBy) : Order.desc(sortBy));
             inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+            inspeccionBusqueda.setPaginaActual(actualPage);
         }
         
     }
@@ -219,8 +304,10 @@ public class InspeccionBean {
             actualPage--;
             
             List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia);
+                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia,
+                    sortOrder == true ? Order.asc(sortBy) : Order.desc(sortBy));
             inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+            // inspeccionBusqueda.setPaginaActual(actualPage);
         }
     }
     
@@ -241,11 +328,13 @@ public class InspeccionBean {
      * @author EZENTIS
      */
     public long getCountPagesGuia(long countRegistros) {
-        
+        long numPag;
         if (countRegistros % MAX_RESULTS_PAGE == 0)
-            return countRegistros / MAX_RESULTS_PAGE;
+            numPag = countRegistros / MAX_RESULTS_PAGE;
         else
-            return countRegistros / MAX_RESULTS_PAGE + 1;
+            numPag = countRegistros / MAX_RESULTS_PAGE + 1;
+        
+        return numPag;
     }
     
     /**
@@ -254,12 +343,12 @@ public class InspeccionBean {
      */
     public InspeccionBusqueda copiaInspeccionBusqueda(InspeccionBusqueda inspeccion) {
         InspeccionBusqueda inspeccionCopia = new InspeccionBusqueda();
-        inspeccionCopia.setNumero(inspeccion.getNumero());
-        inspeccionCopia.setNombreEquipo(inspeccion.getNombreEquipo());
+        inspeccionCopia.setId(inspeccion.getId());
+        inspeccionCopia.setNombreUnidad(inspeccion.getNombreUnidad());
         inspeccionCopia.setCuatrimestre(inspeccion.getCuatrimestre());
         inspeccionCopia.setTipoInspeccion(inspeccion.getTipoInspeccion());
         inspeccionCopia.setAmbito(inspeccion.getAmbito());
-        inspeccionCopia.setNombreUnidad(inspeccion.getNombreUnidad());
+        inspeccionCopia.setEquipo(inspeccion.getEquipo());
         inspeccionCopia.setEstado(inspeccion.getEstado());
         inspeccionCopia.setFechaDesde(inspeccion.getFechaDesde());
         inspeccionCopia.setFechaHasta(inspeccion.getFechaHasta());
@@ -274,10 +363,65 @@ public class InspeccionBean {
     }
     
     public void onChangeProvincia(ValueChangeEvent event) {
-        Provincias provinciaSeleccionada = (Provincias) event.getNewValue();
-        TypedQuery<Municipios> queryEmpleo = em.createNamedQuery("Municipios.findByCode_province", Municipios.class);
+        Provincia provinciaSeleccionada = (Provincia) event.getNewValue();
+        TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciaSeleccionada);
         listaMunicipios = queryEmpleo.getResultList();
+    }
+    
+    public void onSort(SortEvent event) {
+        String columna = event.getSortColumn().getHeaderText();
+        sortOrder = event.isAscending();
+        
+        if ("Id".equals(columna)) {
+            sortBy = "id";
+            
+        } else if ("Año".equals(columna)) {
+            sortBy = "anio";
+            
+        } else if ("Nombre equipo".equals(columna)) {
+            sortBy = "equipo.nombreEquipo";
+            
+        } else if ("Jefe equipo".equals(columna)) {
+            sortBy = "equipo.jefeEquipo";
+            
+        } else if ("Cuatrimestre".equals(columna)) {
+            sortBy = "cuatrimestre";
+            
+        } else if ("Tipo inspección".equals(columna)) {
+            sortBy = "tipoInspeccion";
+            
+        } else if ("Ámbito".equals(columna)) {
+            sortBy = "ambito";
+            
+        } else if ("Tipo unidad".equals(columna)) {
+            sortBy = "tipoUnidad";
+            
+        } else if ("Nombre unidad".equals(columna)) {
+            sortBy = "nombreUnidad";
+            
+        } else if ("Provincia".equals(columna)) {
+            sortBy = "provincia.provincia";
+            
+        } else if ("Municipio".equals(columna)) {
+            sortBy = "municipio.name";
+            
+        } else if ("Estado".equals(columna)) {
+            sortBy = "estadoInspeccion";
+            
+        } else if ("Fecha alta".equals(columna)) {
+            sortBy = "fechaAlta";
+            
+        } else if ("Fecha prevista".equals(columna)) {
+            sortBy = "fechaPrevista";
+            
+        } else if ("Usuario".equals(columna)) {
+            sortBy = "usernameFinalizacion";
+            
+        }
+        
+        buscarConOrden(sortOrder ? Order.asc(sortBy) : Order.desc(sortBy));
+        
     }
     
 }

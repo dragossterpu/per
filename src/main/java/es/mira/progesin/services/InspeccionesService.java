@@ -64,14 +64,15 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     @Override
-    public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda) {
+    public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
+            Order orden) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
         consultaCriteriaInspecciones(busqueda, criteria);
         
         criteria.setFirstResult(firstResult);
         criteria.setMaxResults(maxResults);
-        criteria.addOrder(Order.desc("fechaAlta"));
+        criteria.addOrder(orden);
         
         @SuppressWarnings("unchecked")
         List<Inspeccion> listaInspecciones = criteria.list();
@@ -117,12 +118,12 @@ public class InspeccionesService implements IInspeccionesService {
                     .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
         }
         
-        if (busqueda.getNumero() != null && !busqueda.getNumero().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            // parametro = Normalizer.normalize(busqueda.getNumero(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
-            // criteria.add(Restrictions.ilike("numero", parametro, MatchMode.ANYWHERE));
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "this_.numero", busqueda.getNumero())));
+        if (busqueda.getId() != null && !busqueda.getId().isEmpty()) {
+            criteria.add(Restrictions.eq("id", Long.parseLong(busqueda.getId())));
+        }
+        
+        if (busqueda.getAnio() != null && !busqueda.getAnio().isEmpty()) {
+            criteria.add(Restrictions.eq("anio", Integer.parseInt(busqueda.getAnio())));
         }
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
@@ -139,12 +140,8 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         if (busqueda.getNombreUnidad() != null && !busqueda.getNombreUnidad().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            // parametro = Normalizer.normalize(busqueda.getNombreUnidad(), Normalizer.Form.NFKD).replaceAll(ACENTOS,
-            // "");
-            // criteria.add(Restrictions.ilike("nombreUnidad", parametro, MatchMode.ANYWHERE));
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "this_.nombreUnidad", busqueda.getNombreUnidad())));
+                    String.format(COMPARADORSINACENTOS, "this_.nombre_unidad", busqueda.getNombreUnidad())));
         }
         
         if (busqueda.getCuatrimestre() != null) {
@@ -152,9 +149,8 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        if (busqueda.getNombreEquipo() != null && !busqueda.getNombreEquipo().isEmpty()) {
-            parametro = Normalizer.normalize(busqueda.getNombreEquipo(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("equipo.nombreEquipo", parametro, MatchMode.ANYWHERE));
+        if (busqueda.getEquipo() != null) {
+            criteria.add(Restrictions.eq("equipo", busqueda.getEquipo()));
         }
         
         if (busqueda.getJefeEquipo() != null && !busqueda.getJefeEquipo().isEmpty()) {
@@ -166,13 +162,13 @@ public class InspeccionesService implements IInspeccionesService {
             criteria.add(Restrictions.eq("estadoInspeccion", busqueda.getEstado()));
         }
         criteria.createAlias("inspeccion.municipio", "municipio"); // inner join
+        criteria.createAlias("municipio.provincia", "provincia"); // inner join
         if (busqueda.getProvincia() != null && !busqueda.getProvincia().getCodigo().equals("00")) {
-            criteria.add(Restrictions.eq("municipio.provincia", busqueda.getProvincia()));
+            criteria.add(Restrictions.eq("provincia", busqueda.getProvincia()));
         }
-        if (busqueda.getTipoUnidad() != null && !busqueda.getTipoUnidad().isEmpty()) {
-            // criteria.add(Restrictions.eq("tipoUnidad", busqueda.getTipoUnidad()));
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "this_.tipoUnidad", busqueda.getTipoUnidad())));
+        
+        if (busqueda.getTipoUnidad() != null) {
+            criteria.add(Restrictions.eq("tipoUnidad", busqueda.getTipoUnidad()));
         }
         
         if (busqueda.getMunicipio() != null) {

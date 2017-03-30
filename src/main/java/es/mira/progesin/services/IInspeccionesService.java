@@ -2,6 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.hibernate.criterion.Order;
+
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
@@ -27,6 +29,7 @@ public interface IInspeccionesService {
     
     long getCountInspeccionCriteria(InspeccionBusqueda busqueda);
     
-    List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda);
+    List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
+            Order orden);
     
 }
