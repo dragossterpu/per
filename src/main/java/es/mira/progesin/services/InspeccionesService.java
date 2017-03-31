@@ -176,4 +176,9 @@ public class InspeccionesService implements IInspeccionesService {
         }
     }
     
+    @Override
+    public Inspeccion findInspeccionById(Long id) {
+        return inspeccionesRepository.findOne(id);
+    }
+    
 }

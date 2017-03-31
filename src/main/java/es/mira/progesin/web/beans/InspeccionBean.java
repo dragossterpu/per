@@ -29,6 +29,7 @@ import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,6 +46,8 @@ public class InspeccionBean {
     private InspeccionBusqueda inspeccionBusqueda;
     
     private InspeccionBusqueda inspeccionBusquedaCopia;
+    
+    private Inspeccion inspeccion;
     
     private List<Boolean> list;
     
@@ -111,22 +114,22 @@ public class InspeccionBean {
                 inspeccionBusquedaCopia, orden);
         inspeccionBusqueda.setListaInspecciones(listaInspecciones);
         inspeccionBusqueda.setPaginaActual(FIRST_PAGE);
+        
     }
     
     /*********************************************************
      * 
-     * Visualiza la guía personalizada pasada como parámetro redirigiendo a la vista "visualizaGuíaPersonalizada"
+     * Visualiza la guía personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección"
      * 
      * @param inspeccion
      * @return String
      * 
      *********************************************************/
     
-    // public String visualizaInspeccion(Inspeccion inspeccion) {
-    // this.inspeccion = inspeccion;
-    // // listaPasos = guiaPersonalizadaService.listaPasos(guiaPersonalizada);
-    // return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
-    // }
+    public String visualizaInspeccion(Inspeccion inspeccion) {
+        this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
+        return "/inspecciones/visualizarInspeccion?faces-redirect=true";
+    }
     
     /*********************************************************
      * 
@@ -176,6 +179,8 @@ public class InspeccionBean {
                 nuevaInspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_0);
                 
                 inspeccionesService.save(nuevaInspeccion);
+                
+                inspeccion = inspeccionesService.findInspeccionById(nuevaInspeccion.getId());
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "La inspección ha sido creada con éxito");
@@ -422,6 +427,10 @@ public class InspeccionBean {
         
         buscarConOrden(sortOrder ? Order.asc(sortBy) : Order.desc(sortBy));
         
+    }
+    
+    public String formateaNumeroInspeccion() {
+        return Utilities.leadingZeros(inspeccion.getNumero(), 9);
     }
     
 }
