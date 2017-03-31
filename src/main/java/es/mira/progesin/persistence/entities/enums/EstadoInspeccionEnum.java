@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum EstadoInspeccionEnum {
-    ESTADO_0("Sin iniciar"), ESTADO_1("Fase previa"), ESTADO_2("Pendiente recibir cuestionario"), ESTADO_3(
-            "Pediente informe"), ESTADO_4("Finalizada"), ESTADO_5("Suspendida");
+    ESTADO_SIN_INICIAR("Sin iniciar"), ESTADO_FASE_PREVIA("Fase previa"), ESTADO_PENDIENTE_CUESTIONARIO(
+            "Pendiente recibir cuestionario"), ESTADO_PENDIENTE_INFORME(
+                    "Pediente informe"), ESTADO_FINALIZADA("Finalizada"), ESTADO_SUSPENDIDA("Suspendida");
     
     String descripcion;
 }

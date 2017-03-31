@@ -17,7 +17,7 @@
 					<div class="columnaIzdaFormulario" >
 					
 						<h:outputLabel for="equipoSelect" value="Equipo(*):" />
-						<p:selectOneMenu
+						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un equipo"
 							value="#{inspeccionBean.nuevaInspeccion.equipo}"
 							id="equipoSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -26,12 +26,14 @@
 								itemLabel="#{equipo.nombreEquipo}"
 								itemValue="#{equipo}" />
 						</p:selectOneMenu>
+						<p:messages for="equipoSelect" autoUpdate="true"  closable="true"/>
+						
 					
 						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección(*):" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
 								var="ambitos" allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu
+						<p:selectOneMenu  required="true" requiredMessage="Debe seleccionar un ámbito"
 							value="#{inspeccionBean.nuevaInspeccion.ambito}"
 							id="ambitoInspeccionSelect">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -40,9 +42,11 @@
 								itemLabel="#{ambito.descripcion}"
 								itemValue="#{ambito}" />
 						</p:selectOneMenu>
+						<p:messages for="ambitoInspeccionSelect" autoUpdate="true"  closable="true"/>
+						
 						
 						<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion(*):" />
-						<p:selectOneMenu
+						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un tipo de inspección"
 							value="#{inspeccionBean.nuevaInspeccion.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -51,9 +55,15 @@
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />
 						</p:selectOneMenu>
+						<p:messages for="tipoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="anio" value="Año(*):" />
-						<p:inputText  id="anio" value="#{inspeccionBean.nuevaInspeccion.anio}" converter="#{trimConverter}"/>
+						<p:inputText  id="anio" value="#{inspeccionBean.nuevaInspeccion.anio}" converter="#{trimConverter}" maxlength="4" 
+						validatorMessage="Escriba un año mayor al 2000" 
+						required="true" requiredMessage="El año no puede estar vacío">
+							<f:validateDoubleRange minimum="2000"/>
+						</p:inputText>
+						<p:messages for="anio" autoUpdate="true"  closable="true"/>
 						
 					</div>
 					<div class="columnaDchaFormulario">
@@ -71,6 +81,7 @@
 								itemLabel="#{cuatrimestre.descripcion}"
 								itemValue="#{cuatrimestre}" />
 						</p:selectOneMenu>
+						<p:messages for="cuatrimestreInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad:" />
 						<p:selectOneMenu
@@ -84,7 +95,7 @@
 						</p:selectOneMenu>
 						
 						<h:outputLabel for="nombreUnidad" value="Nombre de unidad:" />
-						<p:inputText id="nombreUnidad" value="#{inspeccionBean.nuevaInspeccion.nombreUnidad}" converter="#{trimConverter}"/>	
+						<p:inputText id="nombreUnidad" value="#{inspeccionBean.nuevaInspeccion.nombreUnidad}" converter="#{trimConverter}" maxlength="255"/>	
 						
 					</div>	
 

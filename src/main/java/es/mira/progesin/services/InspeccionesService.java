@@ -65,14 +65,16 @@ public class InspeccionesService implements IInspeccionesService {
     
     @Override
     public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
-            Order orden) {
+            List<Order> listaOrden) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
         consultaCriteriaInspecciones(busqueda, criteria);
         
         criteria.setFirstResult(firstResult);
         criteria.setMaxResults(maxResults);
-        criteria.addOrder(orden);
+        for (Order orden : listaOrden) {
+            criteria.addOrder(orden);
+        }
         
         @SuppressWarnings("unchecked")
         List<Inspeccion> listaInspecciones = criteria.list();

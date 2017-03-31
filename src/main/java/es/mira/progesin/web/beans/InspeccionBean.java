@@ -85,7 +85,7 @@ public class InspeccionBean {
     
     private List<Provincia> listaProvincias;
     
-    private String sortBy;
+    private List<Order> listaOrden;
     
     private boolean sortOrder;
     
@@ -95,8 +95,9 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
-        sortBy = "fechaAlta";
-        buscarConOrden(Order.desc(sortBy));
+        List<Order> listaOrden = new ArrayList<>();
+        listaOrden.add(Order.desc("fechaAlta"));
+        buscarConOrden(listaOrden);
     }
     
     /**************************************************************
@@ -104,16 +105,16 @@ public class InspeccionBean {
      * Busca las guías según los filtros introducidos en el formulario de búsqueda
      * 
      **************************************************************/
-    private void buscarConOrden(Order orden) {
+    private void buscarConOrden(List<Order> listaOrden) {
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
         numeroRegistros = getCountRegistrosInspecciones();
         numPages = getCountPagesGuia(numeroRegistros);
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(0, MAX_RESULTS_PAGE,
-                inspeccionBusquedaCopia, orden);
+                inspeccionBusquedaCopia, listaOrden);
         inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-        inspeccionBusqueda.setPaginaActual(FIRST_PAGE);
+        // inspeccionBusqueda.setPaginaActual(FIRST_PAGE);
         
     }
     
@@ -148,6 +149,7 @@ public class InspeccionBean {
      * @return
      */
     public String nuevaInspeccion() {
+        inicializarProvincias();
         nuevaInspeccion = new Inspeccion();
         nuevaInspeccion.setFechaAlta(new Date());
         nuevaInspeccion.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -176,7 +178,7 @@ public class InspeccionBean {
                 
                 nuevaInspeccion.setId(inspeccionProvisional.getId());
                 nuevaInspeccion.setNumero(nuevaInspeccion.getId() + "/" + nuevaInspeccion.getAnio());
-                nuevaInspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_0);
+                nuevaInspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
                 
                 inspeccionesService.save(nuevaInspeccion);
                 
@@ -227,41 +229,23 @@ public class InspeccionBean {
     @PostConstruct
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
-        listaProvincias = em.createNamedQuery("Provincia.findAll", Provincia.class).getResultList();
         listaEquipos = (List<Equipo>) equipoService.findAll();
+        inicializarProvincias();
+        listaMunicipios = new ArrayList<>();
+        list = new ArrayList<>();
+        for (int i = 0; i <= 8; i++) {
+            list.add(Boolean.TRUE);
+        }
+    }
+    
+    private void inicializarProvincias() {
+        listaProvincias = em.createNamedQuery("Provincia.findAll", Provincia.class).getResultList();
         Provincia provinciaDefecto = new Provincia();
         provinciaDefecto.setCodigo("00");
         provinciaDefecto.setCodigoMN("");
         provinciaDefecto.setProvincia("Todos");
         listaProvincias.add(0, provinciaDefecto);
-        listaMunicipios = new ArrayList<>();
-        list = new ArrayList<>();
-        for (int i = 0; i <= 14; i++) {
-            list.add(Boolean.TRUE);
-        }
     }
-    
-    /*********************************************************
-     * 
-     * Crea un documento Word a partir de una guía personalizada pasada como parámetro
-     * 
-     * @param inspeccion
-     * 
-     *********************************************************/
-    
-    // public void crearDocumentoWordInspecciones(Inspeccion inspeccion) {
-    // try {
-    // setFile(wordGenerator.crearDocumentoGuia(inspeccion));
-    // } catch (Exception e) {
-    // // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-    // // "Se ha producido un error en la generación del documento Word");
-    // regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
-    //
-    // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-    // "Se ha producido un error en la generación del documento Word", "");
-    // FacesContext.getCurrentInstance().addMessage("message", message);
-    // }
-    // }
     
     /*********************************************************
      * 
@@ -288,10 +272,9 @@ public class InspeccionBean {
             actualPage++;
             
             List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia,
-                    sortOrder == true ? Order.asc(sortBy) : Order.desc(sortBy));
+                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
             inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-            inspeccionBusqueda.setPaginaActual(actualPage);
+            // inspeccionBusqueda.setPaginaActual(actualPage);
         }
         
     }
@@ -309,8 +292,7 @@ public class InspeccionBean {
             actualPage--;
             
             List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia,
-                    sortOrder == true ? Order.asc(sortBy) : Order.desc(sortBy));
+                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
             inspeccionBusqueda.setListaInspecciones(listaInspecciones);
             // inspeccionBusqueda.setPaginaActual(actualPage);
         }
@@ -378,58 +360,72 @@ public class InspeccionBean {
         String columna = event.getSortColumn().getHeaderText();
         sortOrder = event.isAscending();
         
-        if ("Id".equals(columna)) {
-            sortBy = "id";
+        if ("Numero".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("id"));
+                listaOrden.add(Order.asc("anio"));
+            } else {
+                listaOrden.add(Order.desc("id"));
+                listaOrden.add(Order.desc("anio"));
+            }
             
-        } else if ("Año".equals(columna)) {
-            sortBy = "anio";
+        } else if ("Fecha prev.".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("fechaPrevista"));
+            } else {
+                listaOrden.add(Order.desc("fechaPrevista"));
+            }
             
-        } else if ("Nombre equipo".equals(columna)) {
-            sortBy = "equipo.nombreEquipo";
+        } else if ("Tipo".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("tipoInspeccion"));
+            } else {
+                listaOrden.add(Order.desc("tipoInspeccion"));
+            }
             
-        } else if ("Jefe equipo".equals(columna)) {
-            sortBy = "equipo.jefeEquipo";
+        } else if ("Equipo".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("equipo.nombreEquipo"));
+            } else {
+                listaOrden.add(Order.desc("equipo.nombreEquipo"));
+            }
             
         } else if ("Cuatrimestre".equals(columna)) {
-            sortBy = "cuatrimestre";
-            
-        } else if ("Tipo inspección".equals(columna)) {
-            sortBy = "tipoInspeccion";
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("cuatrimestre"));
+            } else {
+                listaOrden.add(Order.desc("cuatrimestre"));
+            }
             
         } else if ("Ámbito".equals(columna)) {
-            sortBy = "ambito";
-            
-        } else if ("Tipo unidad".equals(columna)) {
-            sortBy = "tipoUnidad";
-            
-        } else if ("Nombre unidad".equals(columna)) {
-            sortBy = "nombreUnidad";
-            
-        } else if ("Provincia".equals(columna)) {
-            sortBy = "provincia.provincia";
-            
-        } else if ("Municipio".equals(columna)) {
-            sortBy = "municipio.name";
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("ambito"));
+            } else {
+                listaOrden.add(Order.desc("ambito"));
+            }
             
         } else if ("Estado".equals(columna)) {
-            sortBy = "estadoInspeccion";
-            
-        } else if ("Fecha alta".equals(columna)) {
-            sortBy = "fechaAlta";
-            
-        } else if ("Fecha prevista".equals(columna)) {
-            sortBy = "fechaPrevista";
-            
-        } else if ("Usuario".equals(columna)) {
-            sortBy = "usernameFinalizacion";
-            
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("estadoInspeccion"));
+            } else {
+                listaOrden.add(Order.desc("estadoInspeccion"));
+            }
         }
-        
-        buscarConOrden(sortOrder ? Order.asc(sortBy) : Order.desc(sortBy));
-        
+        buscarConOrden(listaOrden);
     }
     
     public String formateaNumeroInspeccion() {
+        return Utilities.leadingZeros(inspeccion.getNumero(), 9);
+    }
+    
+    public String formateaNumeroInspeccion(Inspeccion inspeccion) {
         return Utilities.leadingZeros(inspeccion.getNumero(), 9);
     }
     
