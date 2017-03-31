@@ -28,9 +28,8 @@ public interface IPreguntaCuestionarioRepository extends CrudRepository<Pregunta
     PreguntasCuestionario findPreguntaExistenteEnCuestionariosPersonalizados(Long idPregunta);
     
     @Query(value = "select p.* from CUESTIONARIO_PERSONALIZADO c, CUEST_PER_PREGUNTAS cp, PREGUNTASCUESTIONARIO p "
-            + "where c.id = cp.ID_CUEST_PERS and cp.ID_PREG_ELEGIDA = p.id and p.id_area in :listaIdAreasCuestionario "
-            + "and c.id = :idCuestionarioPersonalizado", nativeQuery = true)
+            + "where c.id = cp.ID_CUEST_PERS and cp.ID_PREG_ELEGIDA = p.id and p.id_area in (?2) "
+            + "and c.id = ?1", nativeQuery = true)
     List<PreguntasCuestionario> findPreguntasElegidasCuestionarioPersonalizadoAndAreaIn(
-            @Param("idCuestionarioPersonalizado") Long id,
-            @Param("listaIdAreasCuestionario") List<Long> listaIdAreasCuestionario);
+            Long idCuestionarioPersonalizado, List<Long> listaIdAreasCuestionario);
 }
