@@ -29,7 +29,7 @@ public class GuiasConverter implements Converter {
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         
-        return ((GuiaPasos) value).getPaso().toString();
+        return ((GuiaPasos) value).getPaso();
     }
     
     @Override

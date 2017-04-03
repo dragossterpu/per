@@ -25,7 +25,7 @@ public class AreasConverter implements Converter {
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         
-        return ((AreasCuestionario) value).getArea().toString();
+        return ((AreasCuestionario) value).getArea();
         
     }
     

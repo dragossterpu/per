@@ -54,6 +54,10 @@ public class VisualizarCuestionario implements Serializable {
     
     private static final String NOMBRESECCION = "Visualizar cuestionario";
     
+    private static final String TABLA = "TABLA";
+    
+    private static final String MATRIZ = "MATRIZ";
+    
     @Autowired
     private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
     
@@ -160,7 +164,7 @@ public class VisualizarCuestionario implements Serializable {
         listaRespuestas.forEach(respuesta -> {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             String tipoRespuesta = pregunta.getTipoRespuesta();
-            if ((tipoRespuesta.startsWith("TABLA") || tipoRespuesta.startsWith("MATRIZ"))
+            if ((tipoRespuesta.startsWith(TABLA) || tipoRespuesta.startsWith(MATRIZ))
                     && respuesta.getRespuestaTablaMatriz() != null) {
                 mapaRespuestasTablaAux.put(pregunta, respuesta.getRespuestaTablaMatriz());
             } else {
@@ -214,8 +218,8 @@ public class VisualizarCuestionario implements Serializable {
                 }
                 listaPreguntas.add(pregunta);
                 mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-                if (pregunta.getTipoRespuesta() != null && (pregunta.getTipoRespuesta().startsWith("TABLA")
-                        || pregunta.getTipoRespuesta().startsWith("MATRIZ"))) {
+                if (pregunta.getTipoRespuesta() != null && (pregunta.getTipoRespuesta().startsWith(TABLA)
+                        || pregunta.getTipoRespuesta().startsWith(MATRIZ))) {
                     construirTipoRespuestaTablaMatrizVacia(pregunta);
                 }
             }
@@ -277,7 +281,7 @@ public class VisualizarCuestionario implements Serializable {
         DataTableView dataTableView = new DataTableView();
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
                 .findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
-        if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("TABLA")) {
+        if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith(TABLA)) {
             dataTableView.crearTabla(valoresColumnas);
         } else {
             dataTableView.crearMatriz(valoresColumnas);

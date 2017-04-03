@@ -27,7 +27,7 @@ public class PreguntasConverter implements Converter {
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         
-        return ((PreguntasCuestionario) value).getPregunta().toString();
+        return ((PreguntasCuestionario) value).getPregunta();
     }
     
     @Override

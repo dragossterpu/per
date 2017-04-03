@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 @Component("utilities")
 public class Utilities {
     
+    public static final String NUMBERS = "0123456789";
+    
+    public static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
     public Date getCurrentDate() {
         return new Date();
     }
@@ -21,16 +25,11 @@ public class Utilities {
      * @comment getPassword
      */
     public static String getPassword() {
-        String pswd = getPinLetters() + getPinNumber();
-        return pswd;
+        return getPinLetters() + getPinNumber();
     }
     
-    public static String NUMBARS = "0123456789";
-    
-    public static String LETTERS = "ABCDEFGHIJKLMNOPRSTUVXYZWQ";
-    
     public static String getPinNumber() {
-        return getRandomNumber(NUMBARS, 4);
+        return getRandomNumber(NUMBERS, 4);
     }
     
     public static String getPinLetters() {
