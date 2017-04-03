@@ -48,6 +48,7 @@ public class PreguntasConverter implements Converter {
                     }
                 }
             } else {
+                @SuppressWarnings("unchecked")
                 ArrayList<PreguntasCuestionario> lista = ((ArrayList<PreguntasCuestionario>) list);
                 for (Object objeto : lista) {
                     String nameSinSaltos = cadenaSinSaltos(((PreguntasCuestionario) objeto).getPregunta());

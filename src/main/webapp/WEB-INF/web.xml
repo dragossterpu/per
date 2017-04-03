@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <web-app xmlns:xsi="w3.org/2001/XMLSchema-instance" 
 		xmlns="xmlns.jcp.org/xml/ns/javaee" 
 		xsi:schemaLocation="xmlns.jcp.org/xml/ns/javaee xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
