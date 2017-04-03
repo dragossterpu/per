@@ -211,7 +211,7 @@ public class VisualizarCuestionario implements Serializable {
         for (PreguntasCuestionario pregunta : preguntas) {
             // Si es user provisional y existe no conformidad, pintar sólo aquellas que no tengan respuesta ya validada
             // (las recuperadas de la BDD en listaRespuestas y presentes en el mapa de validaciones)
-            if (soloNoValidadas == Boolean.FALSE || soloNoValidadas && mapaValidacionRespuestas.containsKey(pregunta)) {
+            if (soloNoValidadas == Boolean.FALSE || mapaValidacionRespuestas.containsKey(pregunta)) {
                 listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
                 if (listaPreguntas == null) {
                     listaPreguntas = new ArrayList<>();
