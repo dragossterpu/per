@@ -14,7 +14,7 @@
 	
 	<h:form id="form">
         <p:dataTable  var="areaUsuario" value="#{responderCuestionarioBean.listaAreasUsuarioCuestEnv}"  rows="20" id="tablaAreasUsuario" 
-                     rendered="#{not empty responderCuestionarioBean.listaAreasUsuarioCuestEnv}">
+                     rendered="#{not empty responderCuestionarioBean.listaAreasUsuarioCuestEnv}" sortBy="#{responderCuestionarioBean.visualizarCuestionario.mapaAreasVisualizarUsuario[areaUsuario.idArea].orden}">
                      
         	<f:facet name="header">
         		Asignación de areas del cuestionario

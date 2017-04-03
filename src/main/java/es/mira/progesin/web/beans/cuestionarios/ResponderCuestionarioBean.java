@@ -9,7 +9,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -378,9 +380,7 @@ public class ResponderCuestionarioBean implements Serializable {
                     usuariosAsignados.add(areaUsuario.getUsernameProv());
                 }
             });
-            usuariosAsignados.forEach(usuarioProv -> {
-                userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO);
-            });
+            usuariosAsignados.forEach(usuarioProv -> userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO));
             
             listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.save(listaAreasUsuarioCuestEnv);
             
@@ -424,8 +424,13 @@ public class ResponderCuestionarioBean implements Serializable {
             
             listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.save(listaAreasUsuarioCuestEnv);
             if (listaAreasUsuarioCuestEnv != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
+                // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
+                // "Guardado con éxito, su contribución al cuestionario ha finalizado.");
+                RequestContext context = RequestContext.getCurrentInstance();
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cumplimentación",
                         "Guardado con éxito, su contribución al cuestionario ha finalizado.");
+                FacesContext.getCurrentInstance().addMessage("dialogMessageReasignar", message);
+                context.execute("PF('dialogMessageReasignar').show()");
                 generarMapaAreaUsuarioCuestEnv();
             }
         } catch (Exception e) {
@@ -447,7 +452,7 @@ public class ResponderCuestionarioBean implements Serializable {
         mapaAreaUsuarioCuestEnv = new HashMap<>();
         
         listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
-            mapaAreaUsuarioCuestEnv.putIfAbsent(areaUsuario.getIdArea(), areaUsuario.getUsernameProv());
+            mapaAreaUsuarioCuestEnv.put(areaUsuario.getIdArea(), areaUsuario.getUsernameProv());
         });
         
     }

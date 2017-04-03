@@ -358,9 +358,8 @@ public class VisualizarCuestionario implements Serializable {
     public void generarMapaAreasVisualizarUsuario() {
         mapaAreasVisualizarUsuario = new HashMap<>();
         
-        listaAreasVisualizarUsuario.forEach(areaCuestionario -> {
-            mapaAreasVisualizarUsuario.put(areaCuestionario.getId(), areaCuestionario);
-        });
+        listaAreasVisualizarUsuario.forEach(
+                areaCuestionario -> mapaAreasVisualizarUsuario.put(areaCuestionario.getId(), areaCuestionario));
         
     }
     

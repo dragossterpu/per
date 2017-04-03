@@ -179,6 +179,13 @@
 					<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"/>
 				</div>
 			</p:dialog>	
+            
+            <p:dialog id="dialogReasignar" widgetVar="dialogMessageReasignar" header="INFO" closable="false">
+                <p:messages for="dialogMessageReasignar" autoUpdate="true" showDetail="true" showSummary="true"/>
+                <div class="centrarBotonesDialog"> 
+                	<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"/>
+                </div>
+            </p:dialog> 
 			
 			<p:confirmDialog global="true">
 				<div class="centrarBotonesDialog">
