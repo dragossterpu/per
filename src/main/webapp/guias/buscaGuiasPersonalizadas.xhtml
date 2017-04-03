@@ -11,7 +11,7 @@
 		    <f:viewParam name="vieneDe" value="#{guiaPersonalizadaBean.vieneDe}" />
 		</f:metadata>
 
-		<ui:param name="esAdmin" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		<ui:param name="esAdmin" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,JEFE_INSPECCIONES,ADMIN')}"/>
 		
 		<h3>Búsqueda de guías personalizadas</h3>
 		
