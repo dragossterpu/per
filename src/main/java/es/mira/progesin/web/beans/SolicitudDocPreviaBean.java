@@ -515,7 +515,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                         .setUsernameEnvio(SecurityContextHolder.getContext().getAuthentication().getName());
                 
                 User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
-                        passwordEncoder.encode(password), RoleEnum.PROV_SOLICITUD);
+                        passwordEncoder.encode(password), RoleEnum.ROLE_PROV_SOLICITUD);
                 
                 if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia,
                         usuarioProv)) {

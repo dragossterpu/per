@@ -170,7 +170,7 @@ public class UserService implements IUserService {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_ADMIN.equals(usuarioActual.getRole()) == Boolean.FALSE) {
             criteria.add(Restrictions.not(
-                    Restrictions.in("role", new RoleEnum[] { RoleEnum.PROV_SOLICITUD, RoleEnum.ROLE_PROV_CUESTIONARIO })));
+                    Restrictions.in("role", new RoleEnum[] { RoleEnum.ROLE_PROV_SOLICITUD, RoleEnum.ROLE_PROV_CUESTIONARIO })));
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
