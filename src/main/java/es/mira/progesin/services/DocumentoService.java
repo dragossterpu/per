@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -21,6 +23,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -34,10 +37,13 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.DocumentoBlob;
+import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
+import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
+import es.mira.progesin.persistence.repositories.gd.IGestDocSolicitudDocumentacionRepository;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
-import es.mira.progesin.web.beans.DocumentoBusquedaBean;
+import es.mira.progesin.web.beans.DocumentoBusqueda;
 
 /**
  * 
@@ -48,9 +54,7 @@ import es.mira.progesin.web.beans.DocumentoBusquedaBean;
  */
 
 @Service("documentoService")
-
 public class DocumentoService implements IDocumentoService {
-    
     @Autowired
     private SessionFactory sessionFactory;
     
@@ -61,7 +65,13 @@ public class DocumentoService implements IDocumentoService {
     private IDocumentoRepository documentoRepository;
     
     @Autowired
-    private transient ITipoDocumentoRepository tipoDocumentoRepository;
+    private IInspeccionesRepository iInspeccionRepository;
+    
+    @Autowired
+    private ITipoDocumentoRepository tipoDocumentoRepository;
+    
+    @Autowired
+    IGestDocSolicitudDocumentacionRepository gestDocSolicitudDocumentacionRepository;
     
     /***************************************
      * 
@@ -287,7 +297,6 @@ public class DocumentoService implements IDocumentoService {
         
         InputStream stream = entity.getFichero().getFichero().getBinaryStream();
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
-        
     }
     
     /***************************************
@@ -313,7 +322,19 @@ public class DocumentoService implements IDocumentoService {
             
             return documentoRepository.save(crearDocumento(file, tipo, inspeccion));
         } catch (Exception ex) {
-            registroActividadService.altaRegActividadError("Carga documento", ex);
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
+            throw ex;
+        }
+    }
+    
+    @Override
+    public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
+            throws SQLException, IOException {
+        try {
+            
+            return crearDocumento(file, tipo, inspeccion);
+        } catch (Exception ex) {
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
             throw ex;
         }
     }
@@ -324,7 +345,9 @@ public class DocumentoService implements IDocumentoService {
         Documento docu = new Documento();
         docu.setNombre(file.getFileName());
         docu.setTipoDocumento(tipo);
-        docu.setInspeccion(inspeccion);
+        List<Inspeccion> inspecciones = new ArrayList<>();
+        inspecciones.add(inspeccion);
+        docu.setInspeccion(inspecciones);
         Blob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
         DocumentoBlob blob = new DocumentoBlob();
         blob.setFichero(fileBlob);
@@ -350,33 +373,70 @@ public class DocumentoService implements IDocumentoService {
     @Override
     public boolean extensionCorrecta(UploadedFile file) {
         
-        String tipo;
-        ContentHandler handler = new BodyContentHandler(-1);
-        Metadata metadata = new Metadata();
-        ParseContext pcontext = new ParseContext();
-        Parser parser;
+        String extension = file.getFileName().substring(file.getFileName().lastIndexOf('.') + 1);
         
-        if (file.getContentType().contains("openxmlformats")) {
-            parser = new OOXMLParser();
-        } else {
-            parser = new AutoDetectParser();
+        List<String> extensionesNoVerificadas = Arrays.asList("mid", "7z", "zip", "csv", "wav", "htm", "html", "txt",
+                "wmv", "avi", "png", "bmp", "jpeg", "mp3", "msg", "jpg");
+        
+        boolean respuesta = extensionesNoVerificadas.contains(extension);
+        
+        if (!respuesta) {
+            String tipo;
+            ContentHandler handler = new BodyContentHandler(-1);
+            Metadata metadata = new Metadata();
+            ParseContext pcontext = new ParseContext();
+            Parser parser;
+            
+            if (file.getContentType().contains("openxmlformats")) {
+                parser = new OOXMLParser();
+            } else {
+                parser = new AutoDetectParser();
+            }
+            
+            try {
+                parser.parse(file.getInputstream(), handler, metadata, pcontext);
+                tipo = metadata.get("Content-Type");
+            } catch (Exception e) {
+                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+                tipo = "error";
+            }
+            
+            respuesta = tipo.equalsIgnoreCase(file.getContentType());
         }
-        
-        try {
-            parser.parse(file.getInputstream(), handler, metadata, pcontext);
-            tipo = metadata.get("Content-Type");
-        } catch (Exception e) {
-            registroActividadService.altaRegActividadError("Carga documento", e);
-            tipo = "error";
-        }
-        
-        return tipo.equalsIgnoreCase(file.getContentType());
+        return respuesta;
     }
     
     @Override
-    public List<Documento> buscarGuiaPorCriteria(DocumentoBusquedaBean busqueda) {
+    public long getCounCriteria(DocumentoBusqueda busqueda) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Documento.class);
+        Criteria criteria = session.createCriteria(Documento.class, "documento");
+        
+        creaCriteria(busqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        
+        session.close();
+        
+        return cnt;
+    }
+    
+    @Override
+    public List<Documento> buscarGuiaPorCriteria(int firstResult, int maxResults, DocumentoBusqueda busqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Documento.class, "documento");
+        
+        creaCriteria(busqueda, criteria);
+        criteria.setFirstResult(firstResult);
+        criteria.setMaxResults(maxResults);
+        
+        @SuppressWarnings("unchecked")
+        List<Documento> listado = criteria.list();
+        session.close();
+        
+        return listado;
+    }
+    
+    private void creaCriteria(DocumentoBusqueda busqueda, Criteria criteria) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
         
@@ -397,25 +457,26 @@ public class DocumentoService implements IDocumentoService {
                     .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
         }
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(
-                    Restrictions.sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre", busqueda.getNombre())));
+            criteria.add(Restrictions
+                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "this_.nombre", busqueda.getNombre())));
         }
         
         if (busqueda.getTipoDocumento() != null) {
-            criteria.add(Restrictions.eq("this.tipoDocumento", busqueda.getTipoDocumento()));
+            criteria.add(Restrictions.eq("tipoDocumento", busqueda.getTipoDocumento()));
         }
         
         if (busqueda.getMateriaIndexada() != null) {
             String[] claves = busqueda.getMateriaIndexada().split(",");
             Criterion[] clavesOr = new Criterion[claves.length];
             for (int i = 0; i < claves.length; i++) {
-                clavesOr[i] = Restrictions.ilike("this.materiaIndexada", claves[i].trim(), MatchMode.ANYWHERE);
+                clavesOr[i] = Restrictions.ilike("materiaIndexada", claves[i].trim(), MatchMode.ANYWHERE);
             }
             criteria.add(Restrictions.or(clavesOr));
         }
         
         if (busqueda.getInspeccion() != null) {
-            criteria.add(Restrictions.eq("this.inspeccion", busqueda.getInspeccion()));
+            criteria.createAlias("inspeccion", "inspecciones"); // inner join
+            criteria.add(Restrictions.eq("inspecciones.numero", busqueda.getInspeccion().getNumero()));
         }
         
         if (busqueda.isEliminado()) {
@@ -425,12 +486,6 @@ public class DocumentoService implements IDocumentoService {
         }
         
         criteria.addOrder(Order.desc("fechaAlta"));
-        
-        @SuppressWarnings("unchecked")
-        List<Documento> listado = criteria.list();
-        session.close();
-        
-        return listado;
     }
     
     @Override
@@ -450,12 +505,25 @@ public class DocumentoService implements IDocumentoService {
         documento.setFechaBaja(null);
         documento.setUsernameBaja(null);
         save(documento);
-        
     }
     
     @Override
     public void borrarDocumento(Documento documento) {
         delete(documento);
-        
+    }
+    
+    @Override
+    public List<Inspeccion> listaInspecciones(Documento documento) {
+        return iInspeccionRepository.cargaInspecciones(documento.getId());
+    }
+    
+    @Override
+    public List<Long> buscaDocumentoEnCuestionarios(Documento documento) {
+        return documentoRepository.buscaRespuestaDocumento(documento.getId());
+    }
+    
+    @Override
+    public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento) {
+        return gestDocSolicitudDocumentacionRepository.findByIdDocumento(documento.getId());
     }
 }

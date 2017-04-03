@@ -17,8 +17,9 @@ import org.primefaces.model.UploadedFile;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.gd.Documento;
+import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
-import es.mira.progesin.web.beans.DocumentoBusquedaBean;
+import es.mira.progesin.web.beans.DocumentoBusqueda;
 
 /**
  * Interfaz del servicio de Documentos
@@ -54,6 +55,9 @@ public interface IDocumentoService {
     Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException;
     
+    public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
+            throws SQLException, IOException;
+    
     Documento crearDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException;
     
@@ -63,7 +67,9 @@ public interface IDocumentoService {
     
     boolean extensionCorrecta(UploadedFile file);
     
-    List<Documento> buscarGuiaPorCriteria(DocumentoBusquedaBean busqueda);
+    public List<Documento> buscarGuiaPorCriteria(int firstResult, int maxResults, DocumentoBusqueda busqueda);
+    
+    public long getCounCriteria(DocumentoBusqueda busqueda);
     
     public String obtieneNombreFichero(Documento documento);
     
@@ -72,5 +78,11 @@ public interface IDocumentoService {
     public void recuperarDocumento(Documento documento);
     
     public void borrarDocumento(Documento documento);
+    
+    public List<Inspeccion> listaInspecciones(Documento documento);
+    
+    public List<Long> buscaDocumentoEnCuestionarios(Documento documento);
+    
+    public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento);
     
 }

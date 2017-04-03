@@ -3,6 +3,7 @@ package es.mira.progesin.persistence.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -37,5 +38,14 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
      */
     @EntityGraph(value = "Documento.fichero", type = EntityGraph.EntityGraphType.LOAD)
     Documento findById(Long id);
+    
+    /**
+     * Devuelve una lista con los id de los cuestionarios que tengan adjunto el documento recibido como parámetro
+     * 
+     * @param idDocumento Id del documento a buscar
+     * @return Lista de los id de los cuestionarios que tienen adjunto este documento
+     */
+    @Query(value = "select id_cuestionario_enviado from respuestas_cuest_docs where id_documento=?1", nativeQuery = true)
+    List<Long> buscaRespuestaDocumento(Long idDocumento);
     
 }

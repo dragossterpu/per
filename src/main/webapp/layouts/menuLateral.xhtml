@@ -12,7 +12,9 @@
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>	
 			<p:menuitem value="Sugerencias de mejora" outcome="/principal/sugerenciasListado"  />
-			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" />
+			<p:menuitem value="Vaciar papelera" outcome="/papelera/papelera" >
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>	
 			<p:menuitem value="Puestos de trabajo" outcome="/puestosTrabajo/puestosTrabajo" />
 			<p:menuitem value="Departamentos" outcome="/departamentos/departamentos" />
 		</p:submenu>
@@ -40,7 +42,9 @@
 		</p:submenu>
 		
 		<p:submenu label="Gestor Documental" >
-			<p:menuitem value="Búsqueda de documentos" outcome="/gestorDocumental/buscarDocumento"/>
+			<p:menuitem value="Búsqueda de documentos" outcome="/gestorDocumental/buscarDocumento">
+				<f:param name="vieneDe" value="menu" />
+			</p:menuitem>	
 		</p:submenu>
 		<p:submenu label="Guías">
 			<p:menuitem value="Modelos de guía" outcome="/guias/buscaGuias">

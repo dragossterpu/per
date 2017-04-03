@@ -385,3 +385,6 @@ select {
 .ui-messages{
 	white-space: pre-line;
 }
+
+.saltoLinea{white-space: pre-line;
+}

@@ -16,7 +16,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class DocumentoBusquedaBean implements Serializable {
+public class DocumentoBusqueda implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -33,6 +33,28 @@ public class DocumentoBusquedaBean implements Serializable {
     private Inspeccion inspeccion;
     
     private boolean eliminado = false;
+    
+    /**
+     * Crea un objeto de búsqueda a partir de otro
+     * 
+     * @param original el objeto a duplicar
+     */
+    public DocumentoBusqueda(DocumentoBusqueda original) {
+        this.setFechaDesde(original.getFechaDesde());
+        this.setFechaHasta(original.getFechaHasta());
+        this.setNombre(original.getNombre());
+        this.setTipoDocumento(original.getTipoDocumento());
+        this.setMateriaIndexada(original.getMateriaIndexada());
+        this.setInspeccion(original.getInspeccion());
+        this.setEliminado(original.isEliminado());
+    }
+    
+    /**
+     * Constructor vacío
+     */
+    public DocumentoBusqueda() {
+        
+    }
     
     /**
      * Limpia los valores del objeto

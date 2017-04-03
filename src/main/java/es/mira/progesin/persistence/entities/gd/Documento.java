@@ -2,6 +2,7 @@ package es.mira.progesin.persistence.entities.gd;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
@@ -96,8 +99,9 @@ public class Documento implements Serializable {
     @JoinColumn(name = "tipoDocumento")
     private TipoDocumento tipoDocumento;
     
-    @ManyToOne
-    @JoinColumn(name = "inspeccion")
-    private Inspeccion inspeccion;
+    @ManyToMany
+    @JoinTable(name = "documentos_inspeccion", joinColumns = {
+            @JoinColumn(name = "id_documento") }, inverseJoinColumns = { @JoinColumn(name = "id_inspeccion") })
+    private List<Inspeccion> inspeccion;
     
 }
