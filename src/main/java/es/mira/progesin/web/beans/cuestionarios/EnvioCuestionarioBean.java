@@ -157,7 +157,7 @@ public class EnvioCuestionarioBean implements Serializable {
                     String descripcion = "Se ha envido el cuestionario de la inspección: "
                             + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
                     // Guardamos la actividad en bbdd
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                             SeccionesEnum.CUESTIONARIO.getDescripcion());
                     
                     notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
