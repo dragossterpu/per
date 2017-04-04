@@ -64,12 +64,6 @@ public class RespuestaCuestionario implements Serializable {
     private List<Documento> documentos;
     
     @Column
-    private String usernameCumplimentacion;
-    
-    @Column
-    private Date fechaCumplimentacion;
-    
-    @Column
     private String usernameValidacion;
     
     @Column

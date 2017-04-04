@@ -3,7 +3,6 @@ package es.mira.progesin.services;
 import java.io.Serializable;
 import java.util.List;
 
-import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -22,13 +21,12 @@ public interface ICuestionarioEnvioService extends Serializable {
     
     void save(CuestionarioEnvio cuestionario);
     
-    List<RespuestaCuestionario> transaccSaveConRespuestas(CuestionarioEnvio cuestionario,
-            List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave);
+    List<RespuestaCuestionario> transaccSaveConRespuestas(List<RespuestaCuestionario> listaRespuestas);
     
     boolean transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario);
     
     boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
-            List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave);
+            List<RespuestaCuestionario> listaRespuestas);
     
     boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario);
     

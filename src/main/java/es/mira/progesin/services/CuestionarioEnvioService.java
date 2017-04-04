@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
@@ -319,8 +318,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     @Override
     @Transactional(readOnly = false)
-    public List<RespuestaCuestionario> transaccSaveConRespuestas(CuestionarioEnvio cuestionario,
-            List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave) {
+    public List<RespuestaCuestionario> transaccSaveConRespuestas(List<RespuestaCuestionario> listaRespuestas) {
         List<RespuestaCuestionario> listaRespuestasGuardadas = respuestaRepository.save(listaRespuestas);
         respuestaRepository.flush();
         datosTablaRepository.deleteRespuestasTablaHuerfanas();
@@ -349,11 +347,10 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Override
     @Transactional(readOnly = false)
     public boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
-            List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave) {
-        cuestionarioEnvioRepository.save(cuestionario);
+            List<RespuestaCuestionario> listaRespuestas) {
         respuestaRepository.save(listaRespuestas);
         respuestaRepository.flush();
-        datosTablaRepository.save(listaDatosTablaSave);
+        datosTablaRepository.deleteRespuestasTablaHuerfanas();
         String correoPrincipal = cuestionario.getCorreoEnvio();
         userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
         return true;

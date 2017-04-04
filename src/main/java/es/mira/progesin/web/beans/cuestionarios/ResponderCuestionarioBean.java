@@ -116,24 +116,13 @@ public class ResponderCuestionarioBean implements Serializable {
         try {
             List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
             guardarRespuestasTipoTexto(listaRespuestas);
-            List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
-            guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
+            guardarRespuestasTipoTablaMatriz(listaRespuestas);
             
-            listaRespuestas = cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnviado, listaRespuestas,
-                    listaDatosTablaSave);
+            listaRespuestas = cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
             
             // Para que cuando guardemos las respuestas tipo tabla/matriz tengan id, sino da problemas el mapeo con las
             // respuestas de tipo tabla, ya que no encuantra el id cuando añaden filas y siguen con la misma sesión
-            listaRespuestas.forEach(respuesta -> {
-                String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
-                if ((tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                        || tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))
-                        && respuesta.getRespuestaTablaMatriz() != null) {
-                    visualizarCuestionario.getMapaRespuestasTablaAux().put(respuesta.getRespuestaId().getPregunta(),
-                            respuesta.getRespuestaTablaMatriz());
-                }
-            });
-            visualizarCuestionario.construirTipoRespuestaTablaMatrizConDatos();
+            actualizarIdRespuestasTabla(listaRespuestas);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
                     "El borrador se ha guardado con éxito");
@@ -143,6 +132,24 @@ public class ResponderCuestionarioBean implements Serializable {
                     "Se ha producido un error al guardar las respuestas. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
+    }
+    
+    /**
+     * Actualiza el mapa de respuestas de tipo tabla/matriz con los id obtenidos al guardar en BBDD
+     * 
+     * @param listaRespuestas
+     */
+    private void actualizarIdRespuestasTabla(List<RespuestaCuestionario> listaRespuestas) {
+        listaRespuestas.forEach(respuesta -> {
+            String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
+            if ((tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
+                    || tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))
+                    && respuesta.getRespuestaTablaMatriz() != null) {
+                visualizarCuestionario.getMapaRespuestasTablaAux().put(respuesta.getRespuestaId().getPregunta(),
+                        respuesta.getRespuestaTablaMatriz());
+            }
+        });
+        visualizarCuestionario.construirTipoRespuestaTablaMatrizConDatos();
     }
     
     /**
@@ -157,12 +164,11 @@ public class ResponderCuestionarioBean implements Serializable {
             if (principalControlaTodasAreas) {
                 List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
                 guardarRespuestasTipoTexto(listaRespuestas);
-                List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
-                guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
+                guardarRespuestasTipoTablaMatriz(listaRespuestas);
                 
                 cuestionarioEnviado.setFechaCumplimentacion(new Date());
                 cuestionarioEnvioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionarioEnviado,
-                        listaRespuestas, listaDatosTablaSave);
+                        listaRespuestas);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
                         "Cuestionario cumplimentado y enviado con éxito.");
@@ -233,8 +239,7 @@ public class ResponderCuestionarioBean implements Serializable {
      * @see guardarRespuestas
      * 
      */
-    private void guardarRespuestasTipoTablaMatriz(List<RespuestaCuestionario> listaRespuestas,
-            List<DatosTablaGenerica> listaDatosTablaSave) {
+    private void guardarRespuestasTipoTablaMatriz(List<RespuestaCuestionario> listaRespuestas) {
         String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
         Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla = visualizarCuestionario.getMapaRespuestasTabla();
         
@@ -246,7 +251,6 @@ public class ResponderCuestionarioBean implements Serializable {
                 RespuestaCuestionario rtaCuestionario = crearRespuesta(pregunta);
                 rtaCuestionario.setRespuestaTablaMatriz(listaDatosTabla);
                 listaRespuestas.add(rtaCuestionario);
-                listaDatosTablaSave.addAll(listaDatosTabla);
             }
         });
     }
@@ -282,11 +286,7 @@ public class ResponderCuestionarioBean implements Serializable {
                         .get("pregunta");
                 
                 // Grabamos la respuesta con el documento subido
-                RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
-                RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
-                idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
-                idRespuesta.setPregunta(pregunta);
-                respuestaCuestionario.setRespuestaId(idRespuesta);
+                RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
                 respuestaCuestionario.setRespuestaTexto(visualizarCuestionario.getMapaRespuestas().get(pregunta));
                 
                 Map<PreguntasCuestionario, List<Documento>> mapaDocumentos = visualizarCuestionario.getMapaDocumentos();
@@ -317,11 +317,7 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
         
-        RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
-        RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
-        idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
-        idRespuesta.setPregunta(pregunta);
-        respuestaCuestionario.setRespuestaId(idRespuesta);
+        RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
         List<Documento> listaDocumentos = visualizarCuestionario.getMapaDocumentos().get(pregunta);
         listaDocumentos.remove(documento);
         respuestaCuestionario.setDocumentos(listaDocumentos);
@@ -341,7 +337,8 @@ public class ResponderCuestionarioBean implements Serializable {
         if (RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
             cuestionarioEnviado = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(usuarioActual.getCorreo());
             
-            usuariosProv = userService.crearUsuariosProvisionalesCuestionario(cuestionarioEnviado.getCorreoEnvio(), "");
+            setUsuariosProv(
+                    userService.crearUsuariosProvisionalesCuestionario(cuestionarioEnviado.getCorreoEnvio(), ""));
             
             // Dependiendo de si es el usuario principal o no recuperamos todas las asociaciones o sólo las del usuario
             // actual
@@ -405,11 +402,9 @@ public class ResponderCuestionarioBean implements Serializable {
         try {
             List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
             guardarRespuestasTipoTexto(listaRespuestas);
-            List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
-            guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
+            guardarRespuestasTipoTablaMatriz(listaRespuestas);
             
-            cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnviado, listaRespuestas,
-                    listaDatosTablaSave);
+            cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
             
             String nombreUsuarioActual = visualizarCuestionario.getUsuarioActual().getUsername();
             listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
