@@ -353,6 +353,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         datosTablaRepository.deleteRespuestasTablaHuerfanas();
         String correoPrincipal = cuestionario.getCorreoEnvio();
         userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
+        cuestionarioEnvioRepository.save(cuestionario);
         return true;
     }
     
