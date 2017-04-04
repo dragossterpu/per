@@ -47,10 +47,10 @@
 				<h:outputLabel for="username" value="Nombre de usuario:" />
 				<p:inputText id="username" value="#{guiaBean.busqueda.usuarioCreacion}" />
 				<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-				<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaBean.busqueda.fechaDesde}"/>
+				<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{guiaBean.busqueda.fechaDesde}"/>
 
 				<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-				<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{guiaBean.busqueda.fechaHasta}"/>	
+				<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{guiaBean.busqueda.fechaHasta}"/>	
 			</div>	
 		</div>
 		<div class="botonesFormulario">

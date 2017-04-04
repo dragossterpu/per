@@ -92,10 +92,10 @@
 					</p:selectOneMenu>
 				
 					<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-					<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
+					<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}"/>
 
 					<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-					<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}"/>
+					<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}"/>
 				
 					<h:outputLabel for="fechaLimiteRespuesta" value="Fecha límite respuesta:" />
 					<p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaLimiteRespuesta}" id="fechaLimiteRespuesta" pattern="dd/MM/yyyy" locale="es" navigator="true" />

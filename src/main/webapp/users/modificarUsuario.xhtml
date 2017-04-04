@@ -53,12 +53,12 @@
 					</p:inputText>
 
 					<h:outputLabel for="fechaDestino" value="Fecha destino IPSS (*):" />
-					<p:calendar value="#{userBean.user.fechaDestinoIPSS}" id="fechaDestino" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" yearRange="c-100:c"
+					<p:calendar value="#{userBean.user.fechaDestinoIPSS}" id="fechaDestino" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" yearRange="c-100:c"
 							required="true" requiredMessage="Introduzca la fecha de destino a la IPSS" disabled="#{noEsAdmin}"/>
 					<p:messages for="fechaDestino" autoUpdate="true"  closable="true"/>
 
 					<h:outputLabel for="fechaIngreso" value="Fecha de ingreso en el cuerpo:" />
-					<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" yearRange="c-100:c"
+					<p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" yearRange="c-100:c"
 							disabled="#{noEsAdmin}"/>
 					
 				</div>

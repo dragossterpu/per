@@ -11,10 +11,6 @@ import es.mira.progesin.constantes.Constantes;
 @Component("utilities")
 public class Utilities {
     
-    public Date getCurrentDate() {
-        return new Date();
-    }
-    
     // ************* Generating new password Progesin ********************//
     /**
      * @author EZENTIS STAD

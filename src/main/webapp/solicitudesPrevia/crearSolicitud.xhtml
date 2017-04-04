@@ -73,7 +73,7 @@
 								<p:calendar id="fechaLimiteEnvio"
 									value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"
 									pattern="dd/MM/yyyy" locale="es"
-									mindate="#{utilities.getCurrentDate()}"
+									mindate="#{currentDate}"
 									navigator="true" required="true"
 									requiredMessage="Es obligatorio una fecha limite envío documentación">
 									<p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')"/>
