@@ -28,6 +28,8 @@ public class DocumentoBusqueda implements Serializable {
     
     private TipoDocumento tipoDocumento;
     
+    private String descripcion;
+    
     private String materiaIndexada;
     
     private Inspeccion inspeccion;
@@ -47,6 +49,7 @@ public class DocumentoBusqueda implements Serializable {
         this.setMateriaIndexada(original.getMateriaIndexada());
         this.setInspeccion(original.getInspeccion());
         this.setEliminado(original.isEliminado());
+        this.setDescripcion(original.getDescripcion());
     }
     
     /**
@@ -66,6 +69,7 @@ public class DocumentoBusqueda implements Serializable {
         this.nombre = null;
         this.tipoDocumento = null;
         this.materiaIndexada = null;
+        this.descripcion = null;
         this.inspeccion = null;
     }
     

@@ -388,3 +388,7 @@ select {
 
 .saltoLinea{white-space: pre-line;
 }
+
+.tablaSinCabecera thead {
+    display: none;	
+}

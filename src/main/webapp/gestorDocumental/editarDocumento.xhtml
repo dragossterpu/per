@@ -13,42 +13,8 @@
 							<h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
 							<p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documento.nombre}" 
 							required="true"
-							requiredMessage="Debe introducir un nombre para el documento"/>
+							requiredMessage="Debe introducir un nombre para el documento" converter="#{trimConverter}"/>
 							<p:messages for="nombreDocumento" autoUpdate="true"  closable="true"/>
-							
-						
-							
-							<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />
-
-							<p:dataTable id="tablaInspecciones" value="#{gestorDocumentalBean.documento.inspeccion}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
-						        <f:facet name="cabecera">
-						        	Inspecciones
-						        </f:facet>
-						        <p:column>
-							        <h:outputText value=" #{inspeccion.numero}" />
-							    </p:column>
-							    <p:column styleClass="botonTabla">
-									<p:commandButton title="Desasociar" icon="fa fa-trash" 
-										 actionListener="#{gestorDocumentalBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
-										<p:confirm header="Desasociar inspección"
-											message="¿Está seguro que desea desasociar esta inspección?"
-											icon="fa fa-warning-sign" />
-									</p:commandButton>
-								</p:column>
-								<f:facet name="footer">
-									<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
-										var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-										onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
-									</p:autoComplete>
-									<p:commandButton value="Asociar inspección" actionListener="#{gestorDocumentalBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones">
-										<p:resetInput target="infoInspeccion" />
-									</p:commandButton>
-								</f:facet>
-								
-							    
-						    </p:dataTable>
-						</div>
-						<div class="columnaDchaFormulario">
 							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
 							<p:selectOneMenu
 								value="#{gestorDocumentalBean.documento.tipoDocumento}"
@@ -61,28 +27,42 @@
 							</p:selectOneMenu>
 							<p:messages for="tipoDocumentoSelect" autoUpdate="true"  closable="true"/>
 						
-						
-							
-														
+							<h:outputLabel for="descripcion" value="Descripción:" />
+							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documento.descripcion}" converter="#{trimConverter}"/>	
+						</div>
+						<div class="columnaDchaFormulario">
 							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+							<h:outputText value="Si desea introducir más de un término sepárelos por comas"/>
 							<p:inputText id="materiaIndexada" value="#{gestorDocumentalBean.documento.materiaIndexada}" converter="#{trimConverter}"/>
-							
+							<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />
+							<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera"  value="#{gestorDocumentalBean.documento.inspeccion}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+						        <p:column>
+							        <h:outputText value=" #{inspeccion.numero}" />
+							    </p:column>
+							    <p:column styleClass="botonTabla">
+									<p:commandButton title="Desasociar" icon="fa fa-trash" 
+										 actionListener="#{gestorDocumentalBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
+										<p:confirm header="Desasociar inspección"
+											message="¿Está seguro que desea desasociar esta inspección?"
+											icon="fa fa-warning-sign" />
+									</p:commandButton>
+								</p:column>
+						    </p:dataTable>
+						     <div class="centrarBotonesDialog">
+						     	<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
+										var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+										onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
+									</p:autoComplete>
+									<p:commandButton value="Asociar inspección" actionListener="#{gestorDocumentalBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion">
+										<p:resetInput target="infoInspeccion" />
+									</p:commandButton>
+						     </div>
 						</div>
 						<div class="clear">
-							<h:outputLabel for="descripcion" value="Descripción:" />
-							<p:inputTextarea id="descripcion"  value="#{gestorDocumentalBean.documento.descripcion}" maxlength="2000"
-								counter="contadorDescripcion" counterTemplate="Quedan {0} caracteres."
-								converter="#{trimConverter}"/>
-							<p:outputLabel id="contadorDescripcion"/>
 							<h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
 							<p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
 						</div>
 					</div>
-				
-			   		
-					
-					
-			   		
 				 <div class="botonesFormulario">
 				 	<p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
 					<p:commandButton actionListener="#{gestorDocumentalBean.modificaDocumento}"  value="Modificar" >
@@ -90,9 +70,7 @@
 										message="¿Está seguro que desea modificar este documento?"
 										icon="fa fa-warning-sign" />
 					</p:commandButton>
-					
 				</div>	
-					
 				<p:confirmDialog global="true">
 					<div class="centrarBotonesDialog">
 						<p:commandButton value="Aceptar" type="button"
@@ -101,14 +79,12 @@
 							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 					</div>
 				</p:confirmDialog>
-	
-	
-					 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-						<div class="centrarBotonesDialog">
-							<p:button value="Cerrar" outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" />
-						</div>
-					</p:dialog> 
+				 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+					<div class="centrarBotonesDialog">
+						<p:button value="Cerrar" outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" />
+					</div>
+				</p:dialog> 
 			</h:form>
 					
 		</ui:define>

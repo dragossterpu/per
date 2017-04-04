@@ -487,6 +487,11 @@ public class DocumentoService implements IDocumentoService {
             criteria.add(Restrictions.isNull("fechaBaja"));
         }
         
+        if (busqueda.getDescripcion() != null) {
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(COMPARADORSINACENTOS, "this_.descripcion", busqueda.getDescripcion())));
+        }
+        
         criteria.addOrder(Order.desc("fechaAlta"));
     }
     

@@ -97,10 +97,10 @@ public class GestorDocumentalBean {
     private IRegistroActividadService registroActividadService;
     
     @Autowired
-    transient IInspeccionesService inspeccionesService;
+    private IInspeccionesService inspeccionesService;
     
     @Autowired
-    private transient ITipoDocumentoRepository tipoDocumentoRepository;
+    private ITipoDocumentoRepository tipoDocumentoRepository;
     
     // Para el paginador
     
@@ -133,6 +133,7 @@ public class GestorDocumentalBean {
         for (int i = 0; i <= 5; i++) {
             list.add(Boolean.TRUE);
         }
+        
     }
     
     /**
@@ -456,7 +457,6 @@ public class GestorDocumentalBean {
                     listaInspecciones.add(inspeccion);
                     documento.setInspeccion(listaInspecciones);
                 }
-                RequestContext.getCurrentInstance().reset("formAlta:tablaInspecciones:infoInspeccion");
             } catch (Exception e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
                         "Se ha producido un error al asignar una inspección al documento");

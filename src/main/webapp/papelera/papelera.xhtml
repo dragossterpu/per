@@ -34,6 +34,8 @@
 								var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
 								onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
 							</p:autoComplete>
+							<h:outputLabel for="descripcion" value="Descripción:" />
+							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}"/>
 						</div>
 						<div class="columnaDchaFormulario">
 							<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
@@ -42,19 +44,15 @@
 							<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
 							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
 							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							Si desea buscar por más de un término sepárelos por comas
-							<p:inputTextarea id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" maxlength="2000"
-								counter="contador" counterTemplate="Quedan {0} caracteres."
-								converter="#{trimConverter}"/>
-							<p:outputLabel id="contador"/>
+							<h:outputText value="Si desea buscar por más de un término sepárelos por comas"/>
+							<p:inputText id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}"/>
+							
 						</div>	
 					</div>
 					 
 					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-						<h:commandLink title="Limpiar" action="#{gestorDocumentalBean.limpiarBusqueda}" update="panelDocumentos" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
-							<span class="ui-CommandLink-texto">Limpiar</span>
-						</h:commandLink>
+						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search" /> 			
+						<p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar"  icon="fa fa-eraser" />
 					</div>	
 					<p:outputPanel layout="block" >
 						
@@ -81,10 +79,11 @@
 							<p:dataTable id="tablaDocumentos" var="documento"
 								value="#{gestorDocumentalBean.listadoDocumentos}"
 								emptyMessage="No se han encontrado resultados"
-								paginator="true"
+								paginator="true" 
 								paginatorTemplate="{Anterior} {Pagina} {Posterior}">
 								 <f:facet name="header">
-									Documentos
+								 	<h:outputText value="Documentos"/>
+									
 									 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
 				        			 <p:columnToggler datasource="tablaDocumentos" trigger="toggler">
 				        			 	  <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
