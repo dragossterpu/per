@@ -17,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.model.DatosTablaGenerica;
@@ -32,11 +33,14 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
+import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
+import es.mira.progesin.util.CorreoException;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
 /**
@@ -77,6 +81,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
     @Autowired
+    private transient ICorreoElectronico correoElectronico;
+    
+    @Autowired
     private transient IPreguntaCuestionarioRepository preguntasRepository;
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -84,22 +91,26 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Autowired
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
+    @Autowired
+    private transient IConfiguracionRespuestasCuestionarioRepository configRespuestas;
+    
     @Override
     public CuestionarioEnvio findByInspeccion(Inspeccion inspeccion) {
-        // TODO Auto-generated method stub
-        return null;
+        return cuestionarioEnvioRepository.findByInspeccion(inspeccion);
     }
     
     @Override
-    @Transactional(readOnly = false)
-    public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales,
-            CuestionarioEnvio cuestionarioEnvio) {
-        listadoUsuariosProvisionales = (List<User>) userRepository.save(listadoUsuariosProvisionales);
-        cuestionarioEnvio = cuestionarioEnvioRepository.save(cuestionarioEnvio);
-        
-        List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnvio,
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
+            String cuerpoCorreo) throws CorreoException {
+        userRepository.save(listadoUsuariosProvisionales);
+        CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioRepository.save(cuestionarioEnvio);
+        List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnviado,
                 listadoUsuariosProvisionales.get(0));
         areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
+        String cuerpo = cuestionarioEnviado.getMotivoCuestionario().concat("\r\n").concat(cuerpoCorreo);
+        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
+        correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
     }
     
     private List<AreaUsuarioCuestEnv> asignarAreasUsuarioProvPrincipal(CuestionarioEnvio cuestionarioEnviado,
@@ -308,12 +319,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     @Override
     @Transactional(readOnly = false)
-    public void transaccSaveConRespuestas(CuestionarioEnvio cuestionario, List<RespuestaCuestionario> listaRespuestas,
-            List<DatosTablaGenerica> listaDatosTablaSave) {
-        cuestionarioEnvioRepository.save(cuestionario);
-        respuestaRepository.save(listaRespuestas);
+    public List<RespuestaCuestionario> transaccSaveConRespuestas(CuestionarioEnvio cuestionario,
+            List<RespuestaCuestionario> listaRespuestas, List<DatosTablaGenerica> listaDatosTablaSave) {
+        List<RespuestaCuestionario> listaRespuestasGuardadas = respuestaRepository.save(listaRespuestas);
         respuestaRepository.flush();
-        datosTablaRepository.save(listaDatosTablaSave);
+        datosTablaRepository.deleteRespuestasTablaHuerfanas();
+        return listaRespuestasGuardadas;
     }
     
     @Override
@@ -344,12 +355,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         respuestaRepository.flush();
         datosTablaRepository.save(listaDatosTablaSave);
         String correoPrincipal = cuestionario.getCorreoEnvio();
-        // String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
-        // String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
         userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
-        // for (int i = 1; i < 10; i++) {
-        // userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.INACTIVO);
-        // }
         return true;
     }
     
@@ -358,12 +364,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     public boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario) {
         cuestionarioEnvioRepository.save(cuestionario);
         String correoPrincipal = cuestionario.getCorreoEnvio();
-        // String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
-        // String restoCorreo = correoPrincipal.substring(correoPrincipal.lastIndexOf('@'));
         userService.cambiarEstado(correoPrincipal, EstadoEnum.ACTIVO);
-        // for (int i = 1; i < 10; i++) {
-        // userService.cambiarEstado(cuerpoCorreo + i + restoCorreo, EstadoEnum.ACTIVO);
-        // }
         return true;
     }
     

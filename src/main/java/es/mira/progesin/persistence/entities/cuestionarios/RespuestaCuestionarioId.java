@@ -5,17 +5,12 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,7 +18,7 @@ import lombok.ToString;
 public class RespuestaCuestionarioId implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_cuest_enviado", foreignKey = @ForeignKey(name = "fk_rc_cuest_enviado"))
     private CuestionarioEnvio cuestionarioEnviado;
     

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
@@ -118,8 +119,21 @@ public class ResponderCuestionarioBean implements Serializable {
             List<DatosTablaGenerica> listaDatosTablaSave = new ArrayList<>();
             guardarRespuestasTipoTablaMatriz(listaRespuestas, listaDatosTablaSave);
             
-            cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnviado, listaRespuestas,
+            listaRespuestas = cuestionarioEnvioService.transaccSaveConRespuestas(cuestionarioEnviado, listaRespuestas,
                     listaDatosTablaSave);
+            
+            // Para que cuando guardemos las respuestas tipo tabla/matriz tengan id, sino da problemas el mapeo con las
+            // respuestas de tipo tabla, ya que no encuantra el id cuando añaden filas y siguen con la misma sesión
+            listaRespuestas.forEach(respuesta -> {
+                String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
+                if ((tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
+                        || tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))
+                        && respuesta.getRespuestaTablaMatriz() != null) {
+                    visualizarCuestionario.getMapaRespuestasTablaAux().put(respuesta.getRespuestaId().getPregunta(),
+                            respuesta.getRespuestaTablaMatriz());
+                }
+            });
+            visualizarCuestionario.construirTipoRespuestaTablaMatrizConDatos();
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
                     "El borrador se ha guardado con éxito");
@@ -182,6 +196,15 @@ public class ResponderCuestionarioBean implements Serializable {
         });
     }
     
+    private RespuestaCuestionario crearRespuesta(PreguntasCuestionario pregunta) {
+        RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
+        RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
+        idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
+        idRespuesta.setPregunta(pregunta);
+        respuestaCuestionario.setRespuestaId(idRespuesta);
+        return respuestaCuestionario;
+    }
+    
     /**
      * Guarda las respuestas de las preguntas que no son de tipo TABLA o MATRIZ
      * @see guardarRespuestas
@@ -189,20 +212,13 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     private void guardarRespuestasTipoTexto(List<RespuestaCuestionario> listaRespuestas) {
         String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-        Date fechaActual = new Date();
         Map<PreguntasCuestionario, String> mapaRespuestas = visualizarCuestionario.getMapaRespuestas();
         mapaRespuestas.forEach((pregunta, respuesta) -> {
             // Guardar sólo las preguntas asignadas al usuario actual
             if (mapaAreaUsuarioCuestEnv.get(pregunta.getArea().getId()).equals(usuarioActual) && respuesta != null
                     && respuesta.isEmpty() == Boolean.FALSE) {
-                RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
-                RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
-                idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
-                idRespuesta.setPregunta(pregunta);
-                respuestaCuestionario.setRespuestaId(idRespuesta);
+                RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
                 respuestaCuestionario.setRespuestaTexto(respuesta);
-                respuestaCuestionario.setUsernameCumplimentacion(usuarioActual);
-                respuestaCuestionario.setFechaCumplimentacion(fechaActual);
                 if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith("ADJUNTO")) {
                     respuestaCuestionario.setDocumentos(visualizarCuestionario.getMapaDocumentos().get(pregunta));
                 }
@@ -220,29 +236,14 @@ public class ResponderCuestionarioBean implements Serializable {
     private void guardarRespuestasTipoTablaMatriz(List<RespuestaCuestionario> listaRespuestas,
             List<DatosTablaGenerica> listaDatosTablaSave) {
         String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-        Date fechaActual = new Date();
         Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla = visualizarCuestionario.getMapaRespuestasTabla();
-        mapaRespuestasTabla.forEach((pregunta, respuesta) -> {
+        
+        mapaRespuestasTabla.forEach((pregunta, dataTableView) -> {
             // Guardar sólo las preguntas asignadas al usuario actual
-            if (mapaAreaUsuarioCuestEnv.get(pregunta.getArea().getId()).equals(usuarioActual) && respuesta != null) {
-                List<DatosTablaGenerica> listaDatosTabla = respuesta.getListaDatosTabla();
-                RespuestaCuestionario rtaCuestionario = new RespuestaCuestionario();
-                RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
-                idRespuesta.setCuestionarioEnviado(cuestionarioEnviado);
-                idRespuesta.setPregunta(pregunta);
-                rtaCuestionario.setRespuestaId(idRespuesta);
-                rtaCuestionario.setUsernameCumplimentacion(usuarioActual);
-                rtaCuestionario.setFechaCumplimentacion(fechaActual);
-                for (int i = 0; i < listaDatosTabla.size(); i++) {
-                    DatosTablaGenerica datosTablaGenerica = listaDatosTabla.get(i);
-                    // Si no estaba ya en la respuesta
-                    if (datosTablaGenerica.getId() == null) {
-                        RespuestaCuestionario respuestaCuestionarioTabla = new RespuestaCuestionario();
-                        respuestaCuestionarioTabla.setRespuestaId(idRespuesta);
-                        datosTablaGenerica.setRespuesta(respuestaCuestionarioTabla);
-                        listaDatosTabla.set(i, datosTablaGenerica);
-                    }
-                }
+            if (mapaAreaUsuarioCuestEnv.get(pregunta.getArea().getId()).equals(usuarioActual)
+                    && dataTableView != null) {
+                List<DatosTablaGenerica> listaDatosTabla = dataTableView.getListaDatosTabla();
+                RespuestaCuestionario rtaCuestionario = crearRespuesta(pregunta);
                 rtaCuestionario.setRespuestaTablaMatriz(listaDatosTabla);
                 listaRespuestas.add(rtaCuestionario);
                 listaDatosTablaSave.addAll(listaDatosTabla);
@@ -259,10 +260,7 @@ public class ResponderCuestionarioBean implements Serializable {
         Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla = visualizarCuestionario.getMapaRespuestasTabla();
         if (mapaRespuestasTabla.get(pregunta) != null) {
             DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
-            DatosTablaGenerica datoTablaEliminar = dataTableView.eliminarFila();
-            if (datoTablaEliminar.getId() != null) {
-                datosTablaRepository.delete(datoTablaEliminar);
-            }
+            dataTableView.eliminarFila();
             mapaRespuestasTabla.put(pregunta, dataTableView);
             visualizarCuestionario.setMapaRespuestasTabla(mapaRespuestasTabla);
         }

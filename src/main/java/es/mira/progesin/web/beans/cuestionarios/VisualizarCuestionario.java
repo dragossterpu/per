@@ -296,7 +296,7 @@ public class VisualizarCuestionario implements Serializable {
      * @see visualizar
      * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
      */
-    private void construirTipoRespuestaTablaMatrizConDatos() {
+    public void construirTipoRespuestaTablaMatrizConDatos() {
         mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {
             DataTableView dataTableView = mapaRespuestasTabla.get(pregunta);
             dataTableView.crearTablaMatriConDatos(listaDatos);

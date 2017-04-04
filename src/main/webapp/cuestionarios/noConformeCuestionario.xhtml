@@ -23,7 +23,7 @@
 		<div class="botonesFormulario">
 			<p:commandButton actionListener="#{cuestionarioEnviadoBean.noConformeCuestionario(motivosNoConforme)}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
 				<p:confirm header="Confirmación" icon="fa fa-warning-sign"
-					message="¿Está seguro que desea declara no conforme este cuestionario y reenviarlo?"/>
+					message="¿Está seguro que desea declarar no conforme este cuestionario y reenviarlo?"/>
 			</p:commandButton>
 			<p:button outcome="/cuestionarios/validarCuestionario" value="Cancelar" icon="fa fa-fw fa-undo"/>
 		</div>

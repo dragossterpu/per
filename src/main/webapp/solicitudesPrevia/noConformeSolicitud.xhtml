@@ -23,7 +23,7 @@
 		<div class="botonesFormulario">
 			<p:commandButton actionListener="#{solicitudDocPreviaBean.noConformeSolicitud(motivosNoConforme)}" value="Confirmar y reenviar" icon="fa fa-fw fa-envelope-o" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
 				<p:confirm header="Confirmación" icon="fa fa-warning-sign"
-					message="¿Está seguro que desea declara no conforme esta solicitud y reenviarla?"/>
+					message="¿Está seguro que desea declarar no conforme esta solicitud y reenviarla?"/>
 			</p:commandButton>
 			<p:button outcome="/solicitudesPrevia/vistaSolicitud" value="Cancelar" icon="fa fa-fw fa-undo"/>
 		</div>

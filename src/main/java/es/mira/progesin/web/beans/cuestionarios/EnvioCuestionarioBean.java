@@ -26,6 +26,7 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.CorreoException;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
@@ -39,6 +40,7 @@ import lombok.Setter;
  * notifica sus credenciales por correo electrónico.
  * 
  * @author EZENTIS
+ *
  */
 @Setter
 @Getter
@@ -149,12 +151,13 @@ public class EnvioCuestionarioBean implements Serializable {
                 } else {
                     List<User> listaUsuariosProvisionales = userService
                             .crearUsuariosProvisionalesCuestionario(correoEnvio, password);
-                    cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio);
-                    enviarCorreoCuestionario(password, listaUsuariosProvisionales);
+                    cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio,
+                            getCuerpoCorreo(password, listaUsuariosProvisionales));
+                    
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                             "El cuestionario se ha enviado con éxito");
                     
-                    String descripcion = "Se ha envido el cuestionario de la inspección: "
+                    String descripcion = "Se ha enviado el cuestionario de la inspección: "
                             + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
                     // Guardamos la actividad en bbdd
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
@@ -176,13 +179,12 @@ public class EnvioCuestionarioBean implements Serializable {
     }
     
     /**
-     * Construye y envía el correo
-     * 
-     * @author EZENTIS
-     * @param password de entrada a la aplicación para los usuarios provisionales
+     * Construye el correo
+     * @param password Password de entrada a la aplicación para los usuarios provisionales
      * @param usuarios Lista de usuarios provisionales
+     * @throws CorreoException
      */
-    private void enviarCorreoCuestionario(String password, List<User> usuarios) {
+    private String getCuerpoCorreo(String password, List<User> usuarios) throws CorreoException {
         String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")
                 .get(cuestionarioEnvio.getInspeccion().getAmbito().name());
         
@@ -203,15 +205,7 @@ public class EnvioCuestionarioBean implements Serializable {
                 .append("\r\n \r\nUna vez enviado el cuestionario todos los usuarios quedarán inactivos. \r\n \r\n")
                 .append("Muchas gracias y un saludo.");
         
-        String cuerpo = cuestionarioEnvio.getMotivoCuestionario().concat("\r\n").concat(textoAutomatico.toString());
-        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-        try {
-            correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
-        } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                    "Se ha producido un error en el envio del correo electrónico", e.getMessage(), null);
-            regActividadService.altaRegActividadError("ENVIO CUESTIONARIO", e);
-        }
+        return textoAutomatico.toString();
     }
     
     /**

@@ -4,19 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -27,13 +27,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * @author EZENTIS
+ * 
+ * Entidad para la respuesta asociada a un cuestionario
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "respuestascuestionario")
 @NamedEntityGraph(name = "RespuestaCuestionario.documentos", attributeNodes = @NamedAttributeNode("documentos"))
@@ -43,7 +48,11 @@ public class RespuestaCuestionario implements Serializable {
     @EmbeddedId
     RespuestaCuestionarioId respuestaId;
     
-    @OneToMany(mappedBy = "respuesta", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE,
+            CascadeType.PERSIST }/* , orphanRemoval = true */)
+    @JoinColumns(value = { @JoinColumn(name = "RESPUESTA_ID_CUEST_ENVIADO"),
+            @JoinColumn(name = "RESPUESTA_ID_PREGUNTA") })
+    @OrderBy("id")
     private List<DatosTablaGenerica> respuestaTablaMatriz;
     
     @Column(name = "respuesta_texto", length = 2000)
@@ -76,18 +85,25 @@ public class RespuestaCuestionario implements Serializable {
     
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         RespuestaCuestionario other = (RespuestaCuestionario) obj;
         if (respuestaId == null) {
-            if (other.respuestaId != null)
+            if (other.respuestaId != null) {
                 return false;
-        } else if (!respuestaId.equals(other.respuestaId))
+            }
+        } else if (!respuestaId.getCuestionarioEnviado().getId()
+                .equals(other.respuestaId.getCuestionarioEnviado().getId())
+                && !respuestaId.getPregunta().getId().equals(other.respuestaId.getPregunta().getId())) {
             return false;
+        }
         return true;
     }
     
