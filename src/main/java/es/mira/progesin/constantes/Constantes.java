@@ -19,6 +19,10 @@ public final class Constantes {
     
     public static final String LOGO_IPSS = "static/images/logo_ipss.png";
     
+    public static final String NUMBERS = "0123456789";
+    
+    public static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
     private Constantes() {
     }
 }

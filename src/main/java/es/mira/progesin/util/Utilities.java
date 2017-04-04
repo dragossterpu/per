@@ -6,12 +6,10 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.constantes.Constantes;
+
 @Component("utilities")
 public class Utilities {
-    
-    public static final String NUMBERS = "0123456789";
-    
-    public static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
     public Date getCurrentDate() {
         return new Date();
@@ -29,11 +27,11 @@ public class Utilities {
     }
     
     public static String getPinNumber() {
-        return getRandomNumber(NUMBERS, 4);
+        return getRandomNumber(Constantes.NUMBERS, 4);
     }
     
     public static String getPinLetters() {
-        return getRandomLetters(LETTERS, 4);
+        return getRandomLetters(Constantes.LETTERS, 4);
     }
     
     public static String getRandomNumber(String key, int length) {

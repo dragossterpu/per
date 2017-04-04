@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -53,10 +54,6 @@ import lombok.Setter;
 public class VisualizarCuestionario implements Serializable {
     
     private static final String NOMBRESECCION = "Visualizar cuestionario";
-    
-    private static final String TABLA = "TABLA";
-    
-    private static final String MATRIZ = "MATRIZ";
     
     @Autowired
     private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
@@ -164,7 +161,8 @@ public class VisualizarCuestionario implements Serializable {
         listaRespuestas.forEach(respuesta -> {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             String tipoRespuesta = pregunta.getTipoRespuesta();
-            if ((tipoRespuesta.startsWith(TABLA) || tipoRespuesta.startsWith(MATRIZ))
+            if ((tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
+                    || tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))
                     && respuesta.getRespuestaTablaMatriz() != null) {
                 mapaRespuestasTablaAux.put(pregunta, respuesta.getRespuestaTablaMatriz());
             } else {
@@ -218,8 +216,9 @@ public class VisualizarCuestionario implements Serializable {
                 }
                 listaPreguntas.add(pregunta);
                 mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-                if (pregunta.getTipoRespuesta() != null && (pregunta.getTipoRespuesta().startsWith(TABLA)
-                        || pregunta.getTipoRespuesta().startsWith(MATRIZ))) {
+                if (pregunta.getTipoRespuesta() != null
+                        && (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)
+                                || pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))) {
                     construirTipoRespuestaTablaMatrizVacia(pregunta);
                 }
             }
@@ -281,7 +280,8 @@ public class VisualizarCuestionario implements Serializable {
         DataTableView dataTableView = new DataTableView();
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
                 .findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
-        if (pregunta.getTipoRespuesta() != null && pregunta.getTipoRespuesta().startsWith(TABLA)) {
+        if (pregunta.getTipoRespuesta() != null
+                && pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)) {
             dataTableView.crearTabla(valoresColumnas);
         } else {
             dataTableView.crearMatriz(valoresColumnas);
