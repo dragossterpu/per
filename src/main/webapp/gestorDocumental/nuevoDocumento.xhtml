@@ -15,17 +15,10 @@
 				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
 				<div class="bloqueFormulario">
 						<div class="columnaIzdaFormulario">
-							<h:outputLabel for="nombreDocumento" value="Nombre del documento(*):" />
+							<h:outputLabel for="nombreDocumento" value="Nombre del documento (*):" />
 							<p:inputText id="nombreDocumento" binding="#{nombreDocumento}"/>
 							
-							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento(*):" />
-							<p:selectOneMenu
-								binding="#{tipoDocumentoSelect}"
-								id="tipoDocumentoSelect" converter="#{selectConverter}">
-								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-								<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
-									itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
-							</p:selectOneMenu>
+							
 							
 							<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />
 
@@ -58,28 +51,38 @@
 						    </p:dataTable>
 						</div>
 						<div class="columnaDchaFormulario">
-							<h:outputLabel for="descripcion" value="Descripcion:" />
+							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento (*):" />
+							<p:selectOneMenu
+								binding="#{tipoDocumentoSelect}"
+								id="tipoDocumentoSelect" converter="#{selectConverter}">
+								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+								<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
+									itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
+							</p:selectOneMenu>
+														
+							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+							<p:inputText id="materiaIndexada"  binding="#{materiaIndexada}" 
+								converter="#{trimConverter}"/>
+							
+						</div>
+					</div>
+				
+					<div class="clear">
+						<h:outputLabel for="descripcion" value="Descripción:" />
 							<p:inputTextarea id="descripcion"  binding="#{descripcion}" maxlength="2000"
 								counter="contadorDescripcion" counterTemplate="Quedan {0} caracteres."
 								converter="#{trimConverter}"/>
 							<p:outputLabel id="contadorDescripcion"/>
-														
-							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							<p:inputTextarea id="materiaIndexada"  binding="#{materiaIndexada}" maxlength="2000"
-								counter="contador" counterTemplate="Quedan {0} caracteres."
-								converter="#{trimConverter}"/>
-							<p:outputLabel id="contador"/>
-						</div>
 					</div>
-				
-			   		<h:outputLabel for="uploader" value="Asociar fichero (*)"></h:outputLabel>
-			   		<p:fileUpload id="uploader" width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
-			         	sizelimit="20971520" multiple="false"  autofileLimit="30"   update="asociado"/> 
-				    <div>
-						<h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
-						<p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
-					</div>		   					   		 
-			   		
+					<div class="clear">
+				   		<h:outputLabel for="uploader" value="Asociar fichero (*)"></h:outputLabel>
+				   		<p:fileUpload id="uploader" width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTO"  fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true"
+				         	sizelimit="20971520" multiple="false"  autofileLimit="30"   update="asociado" fileLimit="1" fileLimitMessage="No puede asociarse más de un fichero"/> 
+					    <div>
+							<h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
+							<p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
+						</div>		   					   		 
+			   		</div>
 			   		
 					
 					

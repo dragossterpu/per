@@ -15,18 +15,9 @@
 							required="true"
 							requiredMessage="Debe introducir un nombre para el documento"/>
 							<p:messages for="nombreDocumento" autoUpdate="true"  closable="true"/>
-							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
+							
 						
-							<p:selectOneMenu
-								value="#{gestorDocumentalBean.documento.tipoDocumento}"
-								id="tipoDocumentoSelect" converter="#{selectConverter}"
-								required="true"
-								requiredMessage="Debe seleccionar un tipo">
-								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-									<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
-									itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
-							</p:selectOneMenu>
-							<p:messages for="tipoDocumentoSelect" autoUpdate="true"  closable="true"/>
+							
 							<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />
 
 							<p:dataTable id="tablaInspecciones" value="#{gestorDocumentalBean.documento.inspeccion}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
@@ -58,19 +49,31 @@
 						    </p:dataTable>
 						</div>
 						<div class="columnaDchaFormulario">
-							<h:outputLabel for="descripcion" value="Descripcion:" />
+							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
+							<p:selectOneMenu
+								value="#{gestorDocumentalBean.documento.tipoDocumento}"
+								id="tipoDocumentoSelect" converter="#{selectConverter}"
+								required="true"
+								requiredMessage="Debe seleccionar un tipo">
+								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+									<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
+									itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
+							</p:selectOneMenu>
+							<p:messages for="tipoDocumentoSelect" autoUpdate="true"  closable="true"/>
+						
+						
+							
+														
+							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+							<p:inputText id="materiaIndexada" value="#{gestorDocumentalBean.documento.materiaIndexada}" converter="#{trimConverter}"/>
+							
+						</div>
+						<div class="clear">
+							<h:outputLabel for="descripcion" value="Descripción:" />
 							<p:inputTextarea id="descripcion"  value="#{gestorDocumentalBean.documento.descripcion}" maxlength="2000"
 								counter="contadorDescripcion" counterTemplate="Quedan {0} caracteres."
 								converter="#{trimConverter}"/>
 							<p:outputLabel id="contadorDescripcion"/>
-														
-							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							<p:inputTextarea id="materiaIndexada" value="#{gestorDocumentalBean.documento.materiaIndexada}" maxlength="2000"
-								counter="contador" counterTemplate="Quedan {0} caracteres."
-								converter="#{trimConverter}"/>
-							<p:outputLabel id="contador"/>
-						</div>
-						<div class="clear">
 							<h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
 							<p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
 						</div>

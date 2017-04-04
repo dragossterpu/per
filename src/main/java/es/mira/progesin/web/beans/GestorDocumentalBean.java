@@ -80,6 +80,8 @@ public class GestorDocumentalBean {
      */
     public Map<Long, String> mapaInspecciones = new HashMap<>();
     
+    public Map<Long, Boolean> mapaEdicion = new HashMap<>();
+    
     private List<Boolean> list;
     
     @Autowired
@@ -536,6 +538,8 @@ public class GestorDocumentalBean {
             }
             mapaInspecciones.put(doc.getId(), cadenaInspecciones);
             
+            mapaEdicion.put(doc.getId(), documentoService.buscaDocumentoEnCuestionarios(doc).isEmpty()
+                    && documentoService.buscaDocumentoEnSolicitudes(doc).isEmpty());
         }
     }
     

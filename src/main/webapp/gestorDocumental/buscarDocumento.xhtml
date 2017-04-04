@@ -44,10 +44,10 @@
 						</div>
 						<div class="columnaDchaFormulario">
 							<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-							<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}"/>
+							<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}"/>
 			
 							<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
+							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
 							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
 							Si desea buscar por más de un término sepárelos por comas
 							<p:inputTextarea id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" maxlength="2000"
@@ -133,16 +133,17 @@
 							<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 								<p:commandButton title="Eliminar" icon="fa fa-trash"
 									actionListener="#{gestorDocumentalBean.eliminarDocumento(documento)}"
-									update="tablaDocumentos" >
+									update="tablaDocumentos" 
+									rendered="#{gestorDocumentalBean.mapaEdicion[documento.id]}">
 									<p:confirm header="Eliminar documento"
 										message="¿Está seguro que desea eliminar este documento?"
 										icon="fa fa-warning-sign" />
 								</p:commandButton>
 							</p:column>
-							<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
-								<p:commandButton title="Editar" icon="fa fa-fw fa-edit"  action="#{gestorDocumentalBean.editarDocumento(documento)}">
+							<p:column styleClass="botonTabla" exportable="false" toggleable="false"  >
+								<p:commandButton title="Editar" icon="fa fa-fw fa-edit"  action="#{gestorDocumentalBean.editarDocumento(documento)}" rendered="#{gestorDocumentalBean.mapaEdicion[documento.id]}"/>
 									
-								</p:commandButton>		
+									
 							</p:column>
 							<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{gestorDocumentalBean.descargarFichero(documento)}" title="Descargar documento">

@@ -345,9 +345,11 @@ public class DocumentoService implements IDocumentoService {
         Documento docu = new Documento();
         docu.setNombre(file.getFileName());
         docu.setTipoDocumento(tipo);
-        List<Inspeccion> inspecciones = new ArrayList<>();
-        inspecciones.add(inspeccion);
-        docu.setInspeccion(inspecciones);
+        if (inspeccion != null) {
+            List<Inspeccion> inspecciones = new ArrayList<>();
+            inspecciones.add(inspeccion);
+            docu.setInspeccion(inspecciones);
+        }
         Blob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
         DocumentoBlob blob = new DocumentoBlob();
         blob.setFichero(fileBlob);
