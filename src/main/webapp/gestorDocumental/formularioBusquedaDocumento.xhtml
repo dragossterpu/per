@@ -1,0 +1,51 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+		
+	
+			
+				
+				
+<!-- 				 Bloque buscdor -->
+					<div class="bloqueFormulario">
+						<div class="columnaIzdaFormulario">
+							<h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
+							<p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documentoBusqueda.nombre}" />
+							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
+							<p:selectOneMenu
+								value="#{gestorDocumentalBean.documentoBusqueda.tipoDocumento}"
+								id="tipoDocumentoSelect" converter="#{selectConverter}">
+								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+									<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
+										itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
+							</p:selectOneMenu>
+							<h:outputLabel for="autoInspeccion" value="Número Inspección:" />
+							<p:autoComplete id="autoInspeccion" value="#{gestorDocumentalBean.documentoBusqueda.inspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
+								var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+								onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
+							</p:autoComplete>
+							
+							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+							<h:outputText value="Para buscar por más de un término sepárelos por comas" styleClass="aclaraciones"/>
+							<p:inputText id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}"/>
+							
+						</div>
+						<div class="columnaDchaFormulario">
+							<h:outputLabel for="descripcion" value="Descripción:" />
+							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}"/>
+						
+							<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+							<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}"/>
+			
+							<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
+							
+						</div>	
+					</div>
+<!-- 				fin bloque buscador	  -->
+					
+	</ui:composition>

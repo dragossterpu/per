@@ -24,51 +24,20 @@
 			</p:dialog>
 				<h:form id="form">
 				
-					<div class="bloqueFormulario">
-						<div class="columnaIzdaFormulario">
-							<h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
-							<p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documentoBusqueda.nombre}" />
-							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
-							<p:selectOneMenu
-								value="#{gestorDocumentalBean.documentoBusqueda.tipoDocumento}"
-								id="tipoDocumentoSelect" converter="#{selectConverter}">
-								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-									<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
-										itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
-							</p:selectOneMenu>
-							<h:outputLabel for="autoInspeccion" value="Número Inspección:" />
-							<p:autoComplete id="autoInspeccion" value="#{gestorDocumentalBean.documentoBusqueda.inspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
-								var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-								onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
-							</p:autoComplete>
-							
-							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							<h:outputText value="Para buscar por más de un término sepárelos por comas" styleClass="aclaraciones"/>
-							<p:inputText id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}"/>
-							
-						</div>
-						<div class="columnaDchaFormulario">
-							<h:outputLabel for="descripcion" value="Descripción:" />
-							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}"/>
-						
-							<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-							<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}"/>
-			
-							<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
-							
-						</div>	
-					</div>
-					 
+
+					<ui:include src="/gestorDocumental/formularioBusquedaDocumento.xhtml"></ui:include>
+
 					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search"/>
+						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search"  oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 						<p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar"  icon="fa fa-eraser" />
 			            <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" icon="fa fa-upload"/>
 					</div>	
 					
-					<p:outputPanel id="panelDocumentos" >
-						
-						<p:outputPanel >
+					<p:outputPanel layout="block" id="panelDocumentos" >
+						<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty gestorDocumentalBean.listadoDocumentos}">
+							No existe ningún resultado que cumpla los parámetros de su búsqueda.
+						</p:outputPanel>
+						<p:outputPanel rendered="#{not empty gestorDocumentalBean.listadoDocumentos}">
 			 				<h:commandLink>
 				               <p:graphicImage  value="/images/xls.png" />
 				               <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos"/>
@@ -88,6 +57,7 @@
 				            
 			            </p:outputPanel>
 						<p:dataTable id="tablaDocumentos" var="documento"
+							rendered="#{not empty gestorDocumentalBean.listadoDocumentos}"
 							value="#{gestorDocumentalBean.listadoDocumentos}"
 							emptyMessage="No se han encontrado resultados"
 							paginator="true"
@@ -118,18 +88,16 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 								</h:outputText>
 							</p:column>
-							<p:column headerText="Inspeccion"  sortBy="#{gestorDocumentalBean.mapaInspecciones[documento.id]}"  width="100"  visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
-								<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
-
-							</p:column>
-							<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
+							
+							<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
 								<h:outputText value="#{documento.nombre}" />
 							</p:column>
-							<p:column headerText="Descripcion" sortBy="#{documento.descripcion}" visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
-								<h:outputText value="#{documento.descripcion}" />	
-							</p:column>
-							<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento.nombre}"  visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
+							<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento.nombre}"  visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
 								<h:outputText value="#{documento.tipoDocumento.nombre}" />	
+							</p:column>
+							<p:column headerText="Inspeccion"  sortBy="#{gestorDocumentalBean.mapaInspecciones[documento.id]}"  width="100"  visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
+								<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
+
 							</p:column>
 							<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 								<p:commandButton title="Eliminar" icon="fa fa-trash"
