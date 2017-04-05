@@ -392,3 +392,12 @@ select {
 .tablaSinCabecera thead {
     display: none;	
 }
+
+.infoInspeccionFechaLimite {
+	color:#3c82b4;
+	font-size: 1.2em;
+	font-weight:bold;
+	text-align:center;
+	display: inline-block;
+	width: 49%;
+}

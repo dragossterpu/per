@@ -342,8 +342,8 @@ public class CuestionarioEnviadoBean implements Serializable {
                                 .append("\r\nFecha límite de envío nueva: ")
                                 .append(sdf.format(cuestionario.getFechaLimiteCuestionario()))
                                 .append("\r\n \r\nMuchas gracias y un saludo.");
-                String cuerpo = "Motivo: " + cuestionario.getMotivoCuestionario() + textoAutomatico;
-                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo);
+                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(),
+                        textoAutomatico.toString());
                 mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",

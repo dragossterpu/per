@@ -7,6 +7,7 @@
     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="content">
 	
+        <ui:param name="yaEnviado" value="#{not empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}" />
 		<ui:param name="yaCumplimentado" value="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion}" />
         <ui:param name="esUserProvPrincipal" value="#{request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}" />
 		
@@ -15,7 +16,7 @@
 			<div class="tituloCuestionario">
 				<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
 				<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado)}"
-					rendered="#{empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}" title="Descargar documento word del cuestionario">
+					rendered="#{not yaEnviado}" title="Descargar documento word del cuestionario">
 				   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
 				   <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
 				</h:commandLink>
@@ -26,7 +27,14 @@
 	            </h:commandLink>
 			</div>
 			<div style="clear:both;"/>				
-						
+			
+            <p:outputPanel rendered="#{yaEnviado}">
+                <p>
+            	    <span class="infoInspeccionFechaLimite">Número de inspección: #{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.numero}</span>
+                    <span class="infoInspeccionFechaLimite">Fecha límite de respuesta: <h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.fechaLimiteCuestionario}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></span>
+                </p>
+            </p:outputPanel>
+            
 			<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario">
 			<p:accordionPanel activeIndex="-1">
 				
