@@ -33,7 +33,7 @@ import lombok.ToString;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @ToString
 @Getter
