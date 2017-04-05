@@ -88,10 +88,12 @@ public class GuiaService implements IGuiaService {
             criteria.add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
         }
         
-        if (busqueda.getEstado() != null && EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
-            criteria.add(Restrictions.isNotNull("fechaAnulacion"));
-        } else {
-            criteria.add(Restrictions.isNull("fechaAnulacion"));
+        if (busqueda.getEstado() != null) {
+            if (EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
+                criteria.add(Restrictions.isNotNull("fechaAnulacion"));
+            } else {
+                criteria.add(Restrictions.isNull("fechaAnulacion"));
+            }
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));

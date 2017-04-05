@@ -401,3 +401,7 @@ select {
 	display: inline-block;
 	width: 49%;
 }
+
+.anulado {
+color: #888;
+}

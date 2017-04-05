@@ -86,6 +86,7 @@
                         paginator="true" 
                         resizableColumns="true"
                         rendered="#{not empty guiaBean.busqueda.listaGuias}" 
+                        rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                   		rowsPerPageTemplate="5,10,15,20,25">
                         
@@ -110,18 +111,18 @@
 				<p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
 					<h:outputText value="#{guia.nombre}" />
 				</p:column>
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{empty guia.fechaAnulacion}">
-					<h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}"  rendered="#{esAdmin}" update="tablaGuias"/>
-					<h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{not esAdmin}" update="tablaGuias"/>
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
+					<h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}"  rendered="#{esAdmin and empty guia.fechaAnulacion}" update="tablaGuias"/>
+					<h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{not esAdmin and empty guia.fechaAnulacion}" update="tablaGuias"/>
 				</p:column>
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
 					<h:commandLink title="Modificar guía" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"  action="#{guiaBean.editaGuia(guia)}" rendered="#{empty guia.fechaAnulacion}" update="tablaGuias"/>
-					<h:commandLink title="Activar guía" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"  action="#{guiaBean.activa(guia)}" rendered="#{not empty guia.fechaAnulacion}" update="tablaGuias"/>
 				</p:column>
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin and empty guia.fechaAnulacion}">
-					<p:commandButton title="Anular guía" icon="fa fa-trash-o" actionListener="#{guiaBean.anular(guia)}" update="tablaGuias">
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
+					<p:commandButton title="Anular guía" icon="fa fa-toggle-on" actionListener="#{guiaBean.anular(guia)}" update="tablaGuias" rendered="#{esAdmin and empty guia.fechaAnulacion}">
 						<p:confirm header="Anular guía" message="¿Está seguro que desea anular la guía?" icon="fa fa-warning-sign"/>
 					</p:commandButton>
+					<p:commandButton title="Activar guía" icon="fa fa-toggle-off"  actionListener="#{guiaBean.activa(guia)}" rendered="#{esAdmin and not empty guia.fechaAnulacion}" update="tablaGuias"/>
 				</p:column>
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
 					<p:commandButton title="Eliminar guía" icon="fa fa-trash" actionListener="#{guiaBean.eliminar(guia)}" update="tablaGuias">
