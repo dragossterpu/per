@@ -54,7 +54,7 @@
 										var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
 										onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
 									</p:autoComplete>
-									<p:commandButton value="Asociar inspección" actionListener="#{gestorDocumentalBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion">
+									<p:commandButton value="Asociar inspección" actionListener="#{gestorDocumentalBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">
 										<p:resetInput target="infoInspeccion" />		
 									</p:commandButton>
 							</div>
@@ -71,7 +71,7 @@
 			   		</div>
 				 <div class="botonesFormulario">
 				 	<p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-					<p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value)}"  value="Crear"  />
+					<p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value)}"  value="Guardar"  icon="fa fa-save"/>
 				</div>	
 					
 				<p:confirmDialog global="true">

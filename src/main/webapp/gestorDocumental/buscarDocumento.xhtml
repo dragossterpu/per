@@ -36,24 +36,26 @@
 									<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
 										itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
 							</p:selectOneMenu>
-							<h:outputLabel for="autoInspeccion" value="Número Inspección (*):" />
+							<h:outputLabel for="autoInspeccion" value="Número Inspección:" />
 							<p:autoComplete id="autoInspeccion" value="#{gestorDocumentalBean.documentoBusqueda.inspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
 								var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
 								onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
 							</p:autoComplete>
-							<h:outputLabel for="descripcion" value="Descripción:" />
-							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}"/>
+							
+							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+							<h:outputText value="Para buscar por más de un término sepárelos por comas" styleClass="aclaraciones"/>
+							<p:inputText id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}"/>
+							
 						</div>
 						<div class="columnaDchaFormulario">
+							<h:outputLabel for="descripcion" value="Descripción:" />
+							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}"/>
+						
 							<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
 							<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}"/>
 			
 							<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
 							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
-							
-							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							<h:outputText value="Si desea buscar por más de un término sepárelos por comas"/>
-							<p:inputText id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}"/>
 							
 						</div>	
 					</div>
@@ -61,7 +63,7 @@
 					<div class="botonesFormulario">
 						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search"/>
 						<p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar"  icon="fa fa-eraser" />
-			            <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" />
+			            <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" icon="fa fa-upload"/>
 					</div>	
 					
 					<p:outputPanel id="panelDocumentos" >
