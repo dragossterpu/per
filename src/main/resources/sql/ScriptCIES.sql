@@ -1,3 +1,17 @@
+--Respuestas básicas
+
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TEXTAREA', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('INPUT', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTOINPUT', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTORADIOSINO', '1', '1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'Sí');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'No');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'BUENO', 'Bueno');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'ACEPTABLE', 'Aceptable');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOCALIDAD', 'DEFICIENTE', 'Deficiente');
+
+--Respuestas
+
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo1', 'DE Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo2', 'HASTA Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLASUSTITUCIONES', 'campo3', 'MOTIVO');
