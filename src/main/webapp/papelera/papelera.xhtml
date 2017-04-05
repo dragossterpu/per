@@ -93,14 +93,14 @@
 								<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 									<p:commandButton title="Eliminar" icon="fa fa-trash"
 										actionListener="#{gestorDocumentalBean.borrarDocumento(documento)}"
-										update="tablaDocumentos" >
+										update=":form:panelDocumentos" >
 										<p:confirm header="Eliminar documento"
 											message="¿Está seguro que desea eliminar este documento? La eliminación no podrá deshacerse"
 											icon="fa fa-warning-sign" />
 									</p:commandButton>
 								</p:column>
 								<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
-									<p:commandButton title="Recuperar" icon="fa fa-fw fa-undo"  action="#{gestorDocumentalBean.recuperarDocumento(documento)}" update="tablaDocumentos" >
+									<p:commandButton title="Recuperar" icon="fa fa-fw fa-undo"  action="#{gestorDocumentalBean.recuperarDocumento(documento)}" update=":form:panelDocumentos" >
 										<p:confirm header="Recuperar documento"
 											message="¿Está seguro que desea sacar este documento de la papelera?"
 											icon="fa fa-warning-sign" />

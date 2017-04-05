@@ -245,7 +245,7 @@ public class GestorDocumentalBean {
     public void eliminarDocumento(Documento documento) {
         documento.setFechaBaja(new Date());
         documentoService.save(documento);
-        recargaLista();
+        buscaDocumento();
     }
     
     /**
@@ -490,7 +490,7 @@ public class GestorDocumentalBean {
      */
     public void recuperarDocumento(Documento doc) {
         documentoService.recuperarDocumento(doc);
-        recargaListaEliminados();
+        buscaDocumento();
     }
     
     /**
@@ -514,13 +514,13 @@ public class GestorDocumentalBean {
                     documentoService.borrarDocumento(doc);
                 } else {
                     doc.setInspeccion(null);
-                    documentoService.save(doc);
+                    // documentoService.save(doc);
                     documentoService.borrarDocumento(doc);
                     registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
                             TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
                 }
                 
-                recargaListaEliminados();
+                buscaDocumento();
             } catch (Exception e) {
                 registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
             }
