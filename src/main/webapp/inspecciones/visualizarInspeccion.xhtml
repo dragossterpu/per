@@ -13,7 +13,7 @@
 
 		<ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}"/>
 		
-		<h3>Inspección #{inspeccionBean.formateaNumeroInspeccion()}</h3>
+		<h3>Inspección #{inspeccionBean.inspeccion.numero}</h3>
 		
 		<h:form id="viasualizarInspecciones" >
 		<div class="bloqueFormulario" >
@@ -26,7 +26,7 @@
 				<p:inputText  id="anio" value="#{inspeccionBean.inspeccion.anio}" converter="#{trimConverter}" disabled="true"/>
 				
 				<h:outputLabel for="numero" value="Número inspección:" />
-				<p:inputText  id="numero" value="#{inspeccionBean.formateaNumeroInspeccion()}" converter="#{trimConverter}" disabled="true"/>
+				<p:inputText  id="numero" value="#{inspeccionBean.inspeccion.numero}" converter="#{trimConverter}" disabled="true"/>
 				
 				<h:outputLabel for="tipoInspeccion" value="Tipo de inspeccion:" />
 				<p:inputText id="tipoInspeccion" value="#{inspeccionBean.inspeccion.tipoInspeccion.descripcion}" converter="#{trimConverter}" disabled="true"/>

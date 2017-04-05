@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -12,10 +13,13 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
@@ -34,6 +38,9 @@ public class InspeccionesService implements IInspeccionesService {
     @Autowired
     IInspeccionesRepository inspeccionesRepository;
     
+    @Autowired
+    private IRegistroActividadService regActividadService;
+    
     @Override
     public Iterable<Inspeccion> findAll() {
         return inspeccionesRepository.findAll();
@@ -41,14 +48,14 @@ public class InspeccionesService implements IInspeccionesService {
     
     @Override
     @Transactional(readOnly = false)
-    public Inspeccion save(Inspeccion inspecciones) {
-        return inspeccionesRepository.save(inspecciones);
+    public Inspeccion save(Inspeccion inspeccion) {
+        return inspeccionesRepository.save(inspeccion);
     }
     
     @Override
     @Transactional(readOnly = false)
-    public void delete(Inspeccion inspecciones) {
-        inspeccionesRepository.delete(inspecciones);
+    public void delete(Inspeccion inspeccion) {
+        inspeccionesRepository.delete(inspeccion);
     }
     
     @Override
@@ -61,6 +68,30 @@ public class InspeccionesService implements IInspeccionesService {
             String usernameJefeEquipo) {
         return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo("%" + infoInspeccion + "%",
                 usernameJefeEquipo);
+    }
+    
+    @Override
+    public Inspeccion findInspeccionById(Long id) {
+        return inspeccionesRepository.findOne(id);
+    }
+    
+    @Override
+    public void anular(Inspeccion inspeccion) {
+        inspeccion.setFechaBaja(new Date());
+        inspeccion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+        try {
+            if (inspeccionesRepository.save(inspeccion) != null) {
+                String descripcion = "Anulacion de la inspección " + inspeccion.getNumero() + " realizada corretamente";
+                
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+            }
+        } catch (Exception e) {
+            // Guardamos los posibles errores en bbdd
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+        }
+        
     }
     
     @Override
@@ -176,11 +207,18 @@ public class InspeccionesService implements IInspeccionesService {
         if (busqueda.getMunicipio() != null) {
             criteria.add(Restrictions.eq("municipio", busqueda.getMunicipio()));
         }
+        criteria.add(Restrictions.isNull("fechaBaja"));
     }
     
     @Override
-    public Inspeccion findInspeccionById(Long id) {
-        return inspeccionesRepository.findOne(id);
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(String infoInspeccion, Long paramLong) {
+        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto("%" + infoInspeccion + "%",
+                paramLong);
+    }
+    
+    @Override
+    public List<Inspeccion> listaInspecciones(Inspeccion inspeccion) {
+        return inspeccionesRepository.cargaInspeccionesAsociadas(inspeccion.getId());
     }
     
 }

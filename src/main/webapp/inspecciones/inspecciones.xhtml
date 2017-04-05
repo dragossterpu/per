@@ -120,25 +120,25 @@
 				<p:inputText id="username" value="#{inspeccionBean.inspeccionBusqueda.usuarioCreacion}" converter="#{trimConverter}"/>
 				
 				<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-				<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{inspeccionBean.inspeccionBusqueda.fechaDesde}"/>
+				<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{inspeccionBean.inspeccionBusqueda.fechaDesde}"/>
 				
 				<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-				<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{utilities.getCurrentDate()}" value="#{inspeccionBean.inspeccionBusqueda.fechaHasta}"/>	
+				<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{inspeccionBean.inspeccionBusqueda.fechaHasta}"/>	
 				
 				<h:outputLabel for="provinciasSelect" value="Provincia:" />
 				<p:selectOneMenu
-					valueChangeListener="#{inspeccionBean.onChangeProvincia}" 
-					value="#{inspeccionBean.inspeccionBusqueda.provincia}"
+					value="#{inspeccionBean.provinciSelec}"
 					id="provinciasSelect" 
 					filter="true" 
 					filterMatchMode="startsWith"
 					converter="#{selectConverter}">
-					
-					<f:selectItems value="#{inspeccionBean.listaProvincias}"
+					<f:selectItem itemLabel="Todos" itemValue="" />
+					<f:selectItems value="#{applicationBean.listaProvincias}"
 						var="provincia"
 						itemLabel="#{provincia.provincia}"
 						itemValue="#{provincia}" />
-					<f:ajax event="change" execute="@form" render="municipiosSelect"/>
+						<p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+
 				</p:selectOneMenu>
 				
 				<h:outputLabel for="municipiosSelect" value="Municipio:" />
@@ -191,16 +191,16 @@
                         draggableColumns="true" 
                   	    rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}" >
                  
-                 <p:ajax event="sort" listener="#{inspeccionBean.onSort}" update="tablaInspecciones" />
+                 <p:ajax event="sort" listener="#{inspeccionBean.onSort}" update="tablaInspecciones"/>
 
                  <f:facet name="{Anterior}">
 					<h:commandLink title="Anterior(es)" actionListener="#{inspeccionBean.previousInspeccion}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-<!-- 							<f:ajax execute="@form" render="@form"  /> -->
+							<f:ajax execute="@form" render="@form" />
 					</h:commandLink>
 				</f:facet>   
 				<f:facet name="{Posterior}">
 					<h:commandLink title="Posterior(es)" actionListener="#{inspeccionBean.nextInspeccion}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-<!-- 							<f:ajax execute="@form" render="@form" /> -->
+							<f:ajax execute="@form" render="@form" />
 					</h:commandLink>
 			   	</f:facet>
 				<f:facet name="{Pagina}">
@@ -215,7 +215,7 @@
         			 </p:columnToggler>				
 				</f:facet>
 				<p:column headerText="Numero" sortBy="#{inspeccion.id}" width="50" visible="#{inspeccionBean.list[0]}" exportable="#{inspeccionBean.list[0]}" >
-					<h:outputText value="#{inspeccionBean.formateaNumeroInspeccion(inspeccion)}" />
+					<h:outputText value="#{inspeccion.numero}" />
 				</p:column>
 				
 				<p:column headerText="Fecha prev." sortBy="#{inspeccion.fechaPrevista}" width="50" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}">
@@ -247,16 +247,16 @@
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false">
 					<h:commandLink title="Ver inspección" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.visualizaInspeccion(inspeccion)}" />
 				</p:column>
-<!-- 					<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
-<!-- 						<p:commandButton title="Anular inspección" icon="fa fa-trash-o" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones"> -->
-<!-- 							<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección" icon="fa fa-warning-sign"/> -->
-<!-- 						</p:commandButton> -->
-<!-- 					</p:column> -->
-<!-- 					<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
-<!-- 						<p:commandButton title="Eliminar inspección" icon="fa fa-trash" actionListener="#{inspeccionBean.eliminar(inspeccion)}" update="tablaInspecciones"> -->
-<!-- 							<p:confirm header="Eliminar inspección" message="¿Está seguro que desea eliminar la inspección" icon="fa fa-warning-sign"/> -->
-<!-- 						</p:commandButton> -->
-<!-- 					</p:column> -->
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false">
+					<h:commandLink title="Modificar inspección" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.getFormModificarInspeccion(inspeccion)}" 
+					update="tablaInspecciones" rendered="#{esAdmin}" />
+				</p:column>
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false">
+					<p:commandButton title="Anular inspección" icon="fa fa-trash-o" update="tablaInspecciones" actionListener="#{inspeccionBean.anular(inspeccion)}">
+						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección" icon="fa fa-warning-sign" />
+					</p:commandButton>
+				</p:column>
+				
 				<f:facet name="footer">
        				 Resultado de la búsqueda: #{inspeccionBean.numeroRegistros} inspecciones.
     			</f:facet>

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -29,7 +28,6 @@ import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,8 +36,6 @@ import lombok.Setter;
 @Controller("inspeccionBean")
 @Scope("session")
 public class InspeccionBean {
-    
-    private Inspeccion nuevaInspeccion;
     
     private String vieneDe;
     
@@ -77,13 +73,15 @@ public class InspeccionBean {
     @PersistenceContext
     private transient EntityManager em;
     
+    public List<Inspeccion> listaInspecciones;
+    
+    public List<Inspeccion> listaInspeccionesAsociadas;;
+    
     private List<Municipio> listaMunicipios;
     
     private List<Equipo> listaEquipos;
     
     private Provincia provinciSelec;
-    
-    private List<Provincia> listaProvincias;
     
     private List<Order> listaOrden;
     
@@ -95,7 +93,7 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
-        List<Order> listaOrden = new ArrayList<>();
+        listaOrden = new ArrayList<>();
         listaOrden.add(Order.desc("fechaAlta"));
         buscarConOrden(listaOrden);
     }
@@ -111,10 +109,10 @@ public class InspeccionBean {
         numeroRegistros = getCountRegistrosInspecciones();
         numPages = getCountPagesGuia(numeroRegistros);
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
-        List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(0, MAX_RESULTS_PAGE,
-                inspeccionBusquedaCopia, listaOrden);
+        List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
+                MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
+        // cargaInspeccionesAsociadas(listaInspecciones);
         inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-        // inspeccionBusqueda.setPaginaActual(FIRST_PAGE);
         
     }
     
@@ -129,6 +127,8 @@ public class InspeccionBean {
     
     public String visualizaInspeccion(Inspeccion inspeccion) {
         this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
+        List<Inspeccion> listaAsociadas = inspeccionesService.listaInspecciones(this.inspeccion);
+        this.inspeccion.setInspecciones(listaAsociadas);
         return "/inspecciones/visualizarInspeccion?faces-redirect=true";
     }
     
@@ -149,23 +149,28 @@ public class InspeccionBean {
      * @return
      */
     public String nuevaInspeccion() {
-        inicializarProvincias();
-        nuevaInspeccion = new Inspeccion();
-        nuevaInspeccion.setFechaAlta(new Date());
-        nuevaInspeccion.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-        nuevaInspeccion.setFechaBaja(null);
-        nuevaInspeccion.setFechaFinalizacion(null);
-        nuevaInspeccion.setUsernameFinalizacion(null);
-        nuevaInspeccion.setAnio(null);
-        nuevaInspeccion.setCuatrimestre(null);
-        nuevaInspeccion.setEstadoInspeccion(null);
-        nuevaInspeccion.setEquipo(null);
-        nuevaInspeccion.setAmbito(null);
-        nuevaInspeccion.setMunicipio(null);
-        nuevaInspeccion.setTipoUnidad(null);
-        nuevaInspeccion.setFechaPrevista(null);
-        nuevaInspeccion.setTipoInspeccion(null);
-        nuevaInspeccion.setTipoUnidad(null);
+        setProvinciSelec(null);
+        inspeccion = new Inspeccion();
+        inspeccion.setFechaAlta(new Date());
+        inspeccion.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
+        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
+        inspeccion.setFechaBaja(null);
+        inspeccion.setFechaFinalizacion(null);
+        inspeccion.setUsernameFinalizacion(null);
+        inspeccion.setAnio(null);
+        inspeccion.setCuatrimestre(null);
+        inspeccion.setEquipo(null);
+        inspeccion.setAmbito(null);
+        inspeccion.setMunicipio(null);
+        inspeccion.setTipoUnidad(null);
+        inspeccion.setFechaPrevista(null);
+        inspeccion.setTipoInspeccion(null);
+        inspeccion.setTipoUnidad(null);
+        inspeccion.setFechaModificación(null);
+        inspeccion.setUsernameModificacion(null);
+        inspeccion.setId(null);
+        listaInspeccionesAsociadas = new ArrayList<>();
+        inspeccion.setInspecciones(new ArrayList<>());
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
     }
@@ -174,19 +179,18 @@ public class InspeccionBean {
         try {
             
             Inspeccion inspeccionProvisional = null;
-            if ((inspeccionProvisional = inspeccionesService.save(nuevaInspeccion)) != null) {
+            if ((inspeccionProvisional = inspeccionesService.save(inspeccion)) != null) {
                 
-                nuevaInspeccion.setId(inspeccionProvisional.getId());
-                nuevaInspeccion.setNumero(nuevaInspeccion.getId() + "/" + nuevaInspeccion.getAnio());
-                nuevaInspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
-                
-                inspeccionesService.save(nuevaInspeccion);
-                
-                inspeccion = inspeccionesService.findInspeccionById(nuevaInspeccion.getId());
+                StringBuilder numero = new StringBuilder(String.valueOf(inspeccionProvisional.getId()));
+                numero.append("/");
+                numero.append(inspeccionProvisional.getAnio());
+                inspeccion.setNumero(numero.toString());
+                inspeccion.setInspecciones(listaInspeccionesAsociadas);
+                inspeccionesService.save(inspeccion);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "La inspección ha sido creada con éxito");
-                String descripcion = "Alta nueva inspección " + nuevaInspeccion.getNumero();
+                        "La inspección " + numero + " ha sido creada con éxito");
+                String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.INSPECCION.name());
             }
@@ -204,21 +208,62 @@ public class InspeccionBean {
      * 
      *********************************************************/
     
-    // public void anular(GuiaPersonalizada guiaPersonalizada) {
-    // inspeccionesService.anular(guiaPersonalizada);
-    // }
+    public void anular(Inspeccion inspeccion) {
+        this.inspeccion = inspeccion;
+        inspeccionesService.anular(inspeccion);
+        buscarConOrden(listaOrden);
+    }
     
-    /*********************************************************
-     * 
-     * Borra de base de datos una guía personalizada pasada como parámetro
-     * 
-     * @param guiaPersonalizada
-     * 
-     *********************************************************/
+    /**
+     * Pasa los datos del usuario que queremos modificar al formulario de modificación para que cambien los valores que
+     * quieran
+     * @param user usuario recuperado del formulario de búsqueda de usuarios
+     * @return
+     */
+    public String getFormModificarInspeccion(Inspeccion inspeccion) {
+        setProvinciSelec(inspeccion.getMunicipio().getProvincia());
+        TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
+        queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
+        listaMunicipios = queryEmpleo.getResultList();
+        inspeccion.setFechaModificación(new Date());
+        inspeccion.setUsernameModificacion(SecurityContextHolder.getContext().getAuthentication().getName());
+        this.inspeccion = inspeccion;
+        listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
+        this.inspeccion.setInspecciones(listaInspeccionesAsociadas);
+        
+        return "/inspecciones/modificarInspeccion?faces-redirect=true";
+    }
     
-    // public void eliminar(GuiaPersonalizada guiaPersonalizada) {
-    // inspeccionesService.eliminar(guiaPersonalizada);
-    // }
+    /**
+     * Modifica los datos del usuario en función de los valores recuperados del formulario
+     */
+    public void modificarInspeccion() {
+        try {
+            
+            StringBuilder numero = new StringBuilder(String.valueOf(inspeccion.getId()));
+            numero.append("/");
+            numero.append(inspeccion.getAnio());
+            inspeccion.setNumero(numero.toString());
+            // inspeccion.setInspecciones(listaInspeccionesAsociadas);
+            
+            if (inspeccionesService.save(inspeccion) != null) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                        "La inspección ha sido modificada con éxito");
+                
+                String descripcion = "Modificación de la inspección : " + inspeccion.getNumero();
+                
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+            }
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
+                    "Se ha producido un error al modificar la inspección. Inténtelo de nuevo más tarde");
+            // Guardamos los posibles errores en bbdd
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+        }
+        
+    }
     
     /*********************************************************
      * 
@@ -229,22 +274,13 @@ public class InspeccionBean {
     @PostConstruct
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
-        listaEquipos = (List<Equipo>) equipoService.findAll();
-        inicializarProvincias();
+        listaEquipos = (equipoService.findByFechaBajaIsNotNull());
+        setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
         list = new ArrayList<>();
         for (int i = 0; i <= 8; i++) {
             list.add(Boolean.TRUE);
         }
-    }
-    
-    private void inicializarProvincias() {
-        listaProvincias = em.createNamedQuery("Provincia.findAll", Provincia.class).getResultList();
-        Provincia provinciaDefecto = new Provincia();
-        provinciaDefecto.setCodigo("00");
-        provinciaDefecto.setCodigoMN("");
-        provinciaDefecto.setProvincia("Todos");
-        listaProvincias.add(0, provinciaDefecto);
     }
     
     /*********************************************************
@@ -255,6 +291,7 @@ public class InspeccionBean {
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
+            setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
         }
@@ -273,8 +310,8 @@ public class InspeccionBean {
             
             List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
                     MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
+            cargaInspeccionesAsociadas(listaInspecciones);
             inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-            // inspeccionBusqueda.setPaginaActual(actualPage);
         }
         
     }
@@ -293,8 +330,8 @@ public class InspeccionBean {
             
             List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
                     MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
+            cargaInspeccionesAsociadas(listaInspecciones);
             inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-            // inspeccionBusqueda.setPaginaActual(actualPage);
         }
     }
     
@@ -349,10 +386,11 @@ public class InspeccionBean {
         return inspeccionCopia;
     }
     
-    public void onChangeProvincia(ValueChangeEvent event) {
-        Provincia provinciaSeleccionada = (Provincia) event.getNewValue();
+    public void onChangeProvincia() {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
-        queryEmpleo.setParameter("provinciaSeleccionada", provinciaSeleccionada);
+        // Provincia provinciaSeleccionada = this.provinciSelec != null ? this.provinciSelec
+        // : this.inspeccion.getMunicipio().getProvincia();
+        queryEmpleo.setParameter("provinciaSeleccionada", this.provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
     }
     
@@ -419,14 +457,79 @@ public class InspeccionBean {
             }
         }
         buscarConOrden(listaOrden);
+        // RequestContext.getCurrentInstance().update("busquedaInspecciones:panelTabla");
     }
     
-    public String formateaNumeroInspeccion() {
-        return Utilities.leadingZeros(inspeccion.getNumero(), 9);
+    /**
+     * Añade una nueva inspección a la lista de inspecciones del documento. Se comprueba que la inspección existe y no
+     * está ya añadida.
+     * 
+     * @param inspeccion La inspección a añadir
+     */
+    public void asignarNuevaInspeccion(Inspeccion inspeccion) {
+        if (inspeccion != null && !contieneInspeccion(inspeccion.getInspecciones(), inspeccion)) {
+            try {
+                if (inspeccion.getInspecciones() == null || inspeccion.getInspecciones().isEmpty()) {
+                    inspeccion.setInspecciones(new ArrayList<>());
+                } else {
+                    listaInspecciones = new ArrayList<>(inspeccion.getInspecciones());
+                }
+                // if (!contieneInspeccion(listaInspecciones, inspeccion)) {
+                listaInspeccionesAsociadas.add(inspeccion);
+                inspeccion.setInspecciones(listaInspeccionesAsociadas);
+                // }
+            } catch (Exception e) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
+                        "Se ha producido un error al asignar una inspección");
+                regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
+            }
+        }
     }
     
-    public String formateaNumeroInspeccion(Inspeccion inspeccion) {
-        return Utilities.leadingZeros(inspeccion.getNumero(), 9);
+    private boolean contieneInspeccion(List<Inspeccion> lista, Inspeccion inspeccion) {
+        boolean respuesta = false;
+        
+        for (Inspeccion i : lista) {
+            if (i.getNumero().equals(inspeccion.getNumero())) {
+                respuesta = true;
+            }
+        }
+        
+        return respuesta;
+    }
+    
+    /**
+     * Elimina una inspección de la lista del documento
+     * 
+     * @param inspeccion Inspección a desasociar
+     */
+    public void desAsociarInspeccion(Inspeccion inspeccion) {
+        try {
+            List<Inspeccion> inspecciones = new ArrayList<>(inspeccion.getInspecciones());
+            inspecciones.remove(inspeccion);
+            inspeccion.setInspecciones(inspecciones);
+            listaInspeccionesAsociadas.remove(inspeccion);
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+                    "Se ha producido un error al desasociar una inspección");
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * Función para la implementación del autocompletado del input de inspecciones
+     * 
+     * @param infoInspeccion Cadena de búsqueda
+     * @return Resultados coincidentes con la cadena de búsqueda
+     */
+    public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
+        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(infoInspeccion, new Long(46));
+    }
+    
+    private void cargaInspeccionesAsociadas(List<Inspeccion> listaInsp) {
+        for (Inspeccion ins : listaInsp) {
+            ins.setInspecciones(inspeccionesService.listaInspecciones(ins));
+        }
     }
     
 }

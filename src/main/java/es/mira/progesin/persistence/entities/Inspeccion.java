@@ -2,6 +2,7 @@ package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -127,5 +130,11 @@ public class Inspeccion implements Serializable {
     @CreatedBy
     @Column(name = "username_modificacion")
     private String usernameModificacion;
+    
+    @ManyToMany
+    @JoinTable(name = "inspecciones_asociadas", joinColumns = {
+            @JoinColumn(name = "id_inspeccion") }, inverseJoinColumns = {
+                    @JoinColumn(name = "id_inspeccion_asociada") })
+    private List<Inspeccion> inspecciones;
     
 }

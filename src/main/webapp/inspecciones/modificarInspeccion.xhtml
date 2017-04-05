@@ -6,18 +6,22 @@
     xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
 
-	<h3>Nueva Inspección</h3>
+	<h3>Modificar Inspección</h3>
 	<div class="aclaraciones">
 		Los campos marcados con (*) son obligatorios
 	</div>
 	
 	<h:form id="formAlta">
 		<div class="bloqueFormulario">
+				<h4>Datos de la inspección</h4>
 					<div class="columnaIzdaFormulario" >
 					
+						<h:outputLabel for="numero" value="Número inspección:" />
+						<p:inputText  id="numero" value="#{inspeccionBean.inspeccion.numero}" converter="#{trimConverter}" disabled="true"/>
+						
 						<h:outputLabel for="anio" value="Año (*):" />
-						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  maxValue="9999" decimalPlaces="0" thousandSeparator="" maxlength="4" required="true" requiredMessage="Debe introducir un año"/>
-						<p:messages for="anio" autoUpdate="true"  closable="true"/>
+						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  maxValue="9999" decimalPlaces="0" thousandSeparator="" maxlength="4"/>						
+						<p:messages for="anio" autoUpdate="true"  closable="true" />
 						
 						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección (*):" />
 						<p:importEnum
@@ -46,12 +50,24 @@
 						</p:selectOneMenu>
 						<p:messages for="tipoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
-						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Debe seleccionar una fecha"
-						mindate="#{currentDate}" value="#{inspeccionBean.inspeccion.fechaPrevista}"/>
-						<p:messages for="fechaPrevista" autoUpdate="true"  closable="true"/>
+						<h:outputLabel for="estadoInspeccionSelect" value="Estado de la inspección:" />
+						<p:importEnum
+								type="es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum"
+								var="estados" allSuffix="ALL_ENUM_VALUES" />
+						<p:selectOneMenu
+							value="#{inspeccionBean.inspeccion.estadoInspeccion}"
+							id="estadoInspeccionSelect">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItems value="#{estados.ALL_ENUM_VALUES}"
+								var="estado"
+								itemLabel="#{estado.descripcion}"
+								itemValue="#{estado}" />
+						</p:selectOneMenu>
 						
-						<h:outputLabel for="equipoSelect" value="Equipo (*):" />
+						<h:outputLabel for="fechaPrevista" value="Fecha prevista:" />
+						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" mindate="#{currentDate}" value="#{inspeccionBean.inspeccion.fechaPrevista}"/>
+						
+						<h:outputLabel for="equipoSelect" value="Equipo(*):" />
 						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un equipo"
 							value="#{inspeccionBean.inspeccion.equipo}"
 							id="equipoSelect" converter="#{selectConverter}">
@@ -61,13 +77,13 @@
 								itemLabel="#{equipo.nombreEquipo}"
 								itemValue="#{equipo}" />
 						</p:selectOneMenu>
-						<p:messages for="equipoSelect" autoUpdate="true"  closable="true"/>	
+						<p:messages for="equipoSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección: (*)" />
+						<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección:" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
 								var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un cuatrimestre"
+						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.cuatrimestre}"
 							id="cuatrimestreInspeccionSelect">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -77,12 +93,17 @@
 								itemValue="#{cuatrimestre}" />
 						</p:selectOneMenu>
 						<p:messages for="cuatrimestreInspeccionSelect" autoUpdate="true"  closable="true"/>
-					</div>
+							
 					
+					</div>
 					<div class="columnaDchaFormulario">
+						<h:outputLabel for="fechaAlta" value="Fecha de alta:" />
+						<p:inputText id="fechaAlta" value="#{inspeccionBean.inspeccion.fechaAlta}" disabled="true">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+						</p:inputText>
 						
-						<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad: (*)" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un tipo de unidad"
+						<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad:" />
+						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.tipoUnidad}"
 							id="tipoUnidadSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -91,31 +112,28 @@
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />
 						</p:selectOneMenu>
-						<p:messages for="tipoUnidadSelect" autoUpdate="true"  closable="true"/>
 						
+						<h:outputLabel for="nombreUnidad" value="Nombre de unidad:" />
+						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" maxlength="255"/>	
 						
-						<h:outputLabel for="nombreUnidad" value="Nombre de unidad: (*)" />
-						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" maxlength="255" required="true" requiredMessage="Debe introducir un nombre"/>	
-						<p:messages for="nombreUnidad" autoUpdate="true"  closable="true"/>
-						
-						<h:outputLabel for="provinciasSelect" value="Provincia: (*)" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar una provincia"
+						<h:outputLabel for="provinciasSelect" value="Provincia:" />
+						<p:selectOneMenu
+							valueChangeListener="#{inspeccionBean.onChangeProvincia}" 
 							value="#{inspeccionBean.provinciSelec}"
 							id="provinciasSelect" 
 							filter="true" 
 							filterMatchMode="startsWith"
 							converter="#{selectConverter}">
-							<f:selectItem itemLabel="Todos" itemValue="" />
+							
 							<f:selectItems value="#{applicationBean.listaProvincias}"
 								var="provincia"
 								itemLabel="#{provincia.provincia}"
 								itemValue="#{provincia}" />
-								<p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+							<f:ajax event="change" execute="@form" render="municipiosSelect"/>
 						</p:selectOneMenu>
-						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="municipiosSelect" value="Municipio: (*)" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un municipio"
+						<h:outputLabel for="municipiosSelect" value="Municipio:" />
+						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
 							filter="true" 
@@ -127,9 +145,7 @@
 								itemLabel="#{municipio.name}"
 								itemValue="#{municipio}" />
 						</p:selectOneMenu>
-						<p:messages for="municipiosSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="tablaInspecciones" value="Inspecciones asignadas" />
 						<p:dataTable id="tablaInspecciones" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 						        <f:facet name="cabecera">
 						        	Inspecciones
@@ -153,7 +169,8 @@
 									<p:commandButton value="Asociar inspección" actionListener="#{inspeccionBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones">
 										<p:resetInput target="infoInspeccion" />
 									</p:commandButton>
-								</f:facet>   
+								</f:facet>
+								    
 						   </p:dataTable>
 						
 					</div>	
@@ -161,10 +178,9 @@
 		</div>
 		
 		<div class="botonesFormulario">
-			<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+			<p:commandButton actionListener="#{inspeccionBean.modificarInspeccion}" id="modificar" value="Guardar cambios" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 			<p:button outcome="/inspecciones/inspecciones" value="Cancelar" icon="fa fa-fw fa-undo"/>
 		</div>
-		
 		
 		<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
