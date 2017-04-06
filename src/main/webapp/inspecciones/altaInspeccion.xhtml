@@ -129,13 +129,13 @@
 						</p:selectOneMenu>
 						<p:messages for="municipiosSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="tablaInspecciones" value="Inspecciones asignadas" />
+						<h:outputLabel for="tablaInspecciones" value="Inspecciones asignadas:" />
 						<p:dataTable id="tablaInspecciones" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 						        <f:facet name="cabecera">
 						        	Inspecciones
 						        </f:facet>
 						        <p:column>
-							        <h:outputText value=" #{inspeccion.numero}" />
+							        <h:outputText value="#{inspeccion.numero}" />
 							    </p:column>
 							    <p:column styleClass="botonTabla">
 									<p:commandButton title="Desasociar" icon="fa fa-trash" 

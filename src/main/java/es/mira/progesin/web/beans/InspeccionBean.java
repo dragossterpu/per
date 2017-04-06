@@ -111,7 +111,6 @@ public class InspeccionBean {
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
                 MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
-        // cargaInspeccionesAsociadas(listaInspecciones);
         inspeccionBusqueda.setListaInspecciones(listaInspecciones);
         
     }
@@ -185,7 +184,7 @@ public class InspeccionBean {
                 numero.append("/");
                 numero.append(inspeccionProvisional.getAnio());
                 inspeccion.setNumero(numero.toString());
-                inspeccion.setInspecciones(listaInspeccionesAsociadas);
+                // inspeccion.setInspecciones(listaInspeccionesAsociadas);
                 inspeccionesService.save(inspeccion);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
@@ -228,7 +227,7 @@ public class InspeccionBean {
         inspeccion.setFechaModificación(new Date());
         inspeccion.setUsernameModificacion(SecurityContextHolder.getContext().getAuthentication().getName());
         this.inspeccion = inspeccion;
-        listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
+        // listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
         this.inspeccion.setInspecciones(listaInspeccionesAsociadas);
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
@@ -467,17 +466,17 @@ public class InspeccionBean {
      * @param inspeccion La inspección a añadir
      */
     public void asignarNuevaInspeccion(Inspeccion inspeccion) {
-        if (inspeccion != null && !contieneInspeccion(inspeccion.getInspecciones(), inspeccion)) {
+        if (inspeccion != null && !contieneInspeccion(listaInspeccionesAsociadas, inspeccion)) {
             try {
                 if (inspeccion.getInspecciones() == null || inspeccion.getInspecciones().isEmpty()) {
-                    inspeccion.setInspecciones(new ArrayList<>());
+                    listaInspeccionesAsociadas = new ArrayList<>();
                 } else {
-                    listaInspecciones = new ArrayList<>(inspeccion.getInspecciones());
+                    listaInspeccionesAsociadas = new ArrayList<>(inspeccion.getInspecciones());
                 }
-                // if (!contieneInspeccion(listaInspecciones, inspeccion)) {
-                listaInspeccionesAsociadas.add(inspeccion);
-                inspeccion.setInspecciones(listaInspeccionesAsociadas);
-                // }
+                if (!contieneInspeccion(listaInspeccionesAsociadas, inspeccion)) {
+                    listaInspeccionesAsociadas.add(inspeccion);
+                    inspeccion.setInspecciones(listaInspeccionesAsociadas);
+                }
             } catch (Exception e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
                         "Se ha producido un error al asignar una inspección");
@@ -509,6 +508,7 @@ public class InspeccionBean {
             inspecciones.remove(inspeccion);
             inspeccion.setInspecciones(inspecciones);
             listaInspeccionesAsociadas.remove(inspeccion);
+            inspeccion.setInspecciones(listaInspeccionesAsociadas);
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
                     "Se ha producido un error al desasociar una inspección");
