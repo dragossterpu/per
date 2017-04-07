@@ -63,7 +63,7 @@ public class GuiaBean {
     
     boolean alta = false;
     
-    final static String GUIA = "La guía '";
+    private static final String LAGUIA = "La guía '";
     
     @Autowired
     private WordGenerator wordGenerator;
@@ -78,7 +78,7 @@ public class GuiaBean {
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
     @Autowired
-    transient IInspeccionesService inspeccionesService;
+    private IInspeccionesService inspeccionesService;
     
     /*********************************************************
      * 
@@ -221,7 +221,7 @@ public class GuiaBean {
     @PostConstruct
     public void init() {
         busqueda = new GuiaBusqueda();
-        list = new ArrayList<>();
+        setList(new ArrayList<>());
         for (int i = 0; i <= 4; i++) {
             list.add(Boolean.TRUE);
         }
@@ -293,7 +293,7 @@ public class GuiaBean {
                 } else {
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
                             "La guía ha sido modificada con éxito ");
-                    regActividadService.altaRegActividad(GUIA.concat(guia.getNombre().concat("' ha sido modificada")),
+                    regActividadService.altaRegActividad(LAGUIA.concat(guia.getNombre().concat("' ha sido modificada")),
                             TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
                 }
                 
@@ -459,7 +459,7 @@ public class GuiaBean {
             guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             if (guiaService.guardaGuia(guiaBaja) != null) {
                 regActividadService.altaRegActividad(
-                        GUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
+                        LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
@@ -485,7 +485,7 @@ public class GuiaBean {
             } else {
                 guiaService.eliminar(guiaEliminar);
                 regActividadService.altaRegActividad(
-                        GUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
+                        LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
@@ -506,7 +506,8 @@ public class GuiaBean {
             guiaActivar.setFechaAnulacion(null);
             guiaActivar.setUsernameAnulacion(null);
             if (guiaService.guardaGuia(guiaActivar) != null) {
-                regActividadService.altaRegActividad(GUIA.concat(guiaActivar.getNombre().concat("' ha sido activada")),
+                regActividadService.altaRegActividad(
+                        LAGUIA.concat(guiaActivar.getNombre().concat("' ha sido activada")),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             buscarGuia();

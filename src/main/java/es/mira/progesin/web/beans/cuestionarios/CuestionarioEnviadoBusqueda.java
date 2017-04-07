@@ -15,45 +15,45 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class CuestionarioEnviadoBusqueda implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private Date fechaDesde;
-
-	private Date fechaHasta;
-
-	private Date fechaLimiteRespuesta;
-
-	private CuestionarioEnviadoEnum estado;
-
-	private String usernameEnvio;
-
-	private String numeroInspeccion;
-
-	private TipoInspeccion tipoInspeccion;
-
-	private AmbitoInspeccionEnum ambitoInspeccion;
-
-	private String nombreEquipo;
-
-	private String nombreUnidad;
-
-	private String nombreCuestionario;
-
-	private ModeloCuestionario modeloCuestionarioSeleccionado;
-
-	public void limpiar() {
-		this.fechaDesde = null;
-		this.fechaHasta = null;
-		this.fechaLimiteRespuesta = null;
-		this.estado = null;
-		this.usernameEnvio = null;
-		this.numeroInspeccion = null;
-		this.tipoInspeccion = null;
-		this.ambitoInspeccion = null;
-		this.nombreEquipo = null;
-		this.nombreUnidad = null;
-		this.nombreCuestionario = null;
-		this.modeloCuestionarioSeleccionado = null;
-	}
-
+    private static final long serialVersionUID = 1L;
+    
+    private Date fechaDesde;
+    
+    private Date fechaHasta;
+    
+    private Date fechaLimiteRespuesta;
+    
+    private CuestionarioEnviadoEnum estado;
+    
+    private String usernameEnvio;
+    
+    private String numeroInspeccion;
+    
+    private TipoInspeccion tipoInspeccion;
+    
+    private AmbitoInspeccionEnum ambitoInspeccion;
+    
+    private String nombreEquipo;
+    
+    private String nombreUnidad;
+    
+    private String nombreCuestionario;
+    
+    private ModeloCuestionario modeloCuestionarioSeleccionado;
+    
+    public void limpiar() {
+        setFechaDesde(null);
+        setFechaHasta(null);
+        setFechaLimiteRespuesta(null);
+        setEstado(null);
+        setUsernameEnvio(null);
+        setNumeroInspeccion(null);
+        setTipoInspeccion(null);
+        setAmbitoInspeccion(null);
+        setNombreEquipo(null);
+        setNombreUnidad(null);
+        setNombreCuestionario(null);
+        setModeloCuestionarioSeleccionado(null);
+    }
+    
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -81,7 +82,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     
     private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
     
-    private List<Entry<String, String>> listaPlantillasAmbito;
+    private transient List<Entry<String, String>> listaPlantillasAmbito;
     
     private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
     
@@ -203,7 +204,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     
     public void descargarFichero(Long idDocumento) {
         try {
-            file = documentoService.descargaDocumento(idDocumento);
+            setFile(documentoService.descargaDocumento(idDocumento));
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
@@ -235,7 +236,8 @@ public class ProvisionalSolicitudBean implements Serializable {
                 alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
                         solicitudDocumentacionPrevia.getInspeccion());
                 
-                alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion, RoleEnum.ROLE_SERVICIO_APOYO);
+                alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+                        RoleEnum.ROLE_SERVICIO_APOYO);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -270,13 +272,13 @@ public class ProvisionalSolicitudBean implements Serializable {
             if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
                 String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
                 if ("GC".equals(ambito) || "PN".equals(ambito)) {
-                    listaPlantillasAmbito = new ArrayList<>(
-                            applicationBean.getMapaParametros().get("plantillas" + ambito).entrySet());
+                    setListaPlantillasAmbito(
+                            new ArrayList<>(applicationBean.getMapaParametros().get("plantillas" + ambito).entrySet()));
                 } else {
                     // OTROS se muestran todas las de GC y PN
-                    listaPlantillasAmbito = new ArrayList<>(
-                            applicationBean.getMapaParametros().get("plantillasGC").entrySet());
-                    listaPlantillasAmbito.addAll(applicationBean.getMapaParametros().get("plantillasPN").entrySet());
+                    Set<Entry<String, String>> s = applicationBean.getMapaParametros().get("plantillasGC").entrySet();
+                    s.addAll(applicationBean.getMapaParametros().get("plantillasPN").entrySet());
+                    setListaPlantillasAmbito(new ArrayList<>(s));
                 }
             }
         } catch (Exception e) {

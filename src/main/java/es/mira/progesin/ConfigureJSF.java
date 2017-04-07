@@ -17,10 +17,7 @@ public class ConfigureJSF {
     
     @Bean
     public ServletRegistrationBean facesServletRegistration() {
-        
-        ServletRegistrationBean servletRegistrationBean = new JsfServletRegistrationBean();
-        
-        return servletRegistrationBean;
+        return new JsfServletRegistrationBean();
     }
     
     public class JsfServletRegistrationBean extends ServletRegistrationBean {
@@ -34,7 +31,7 @@ public class ConfigureJSF {
             
             FacesInitializer facesInitializer = new FacesInitializer();
             
-            Set<Class<?>> clazz = new HashSet<Class<?>>();
+            Set<Class<?>> clazz = new HashSet<>();
             clazz.add(ConfigureJSF.class);
             facesInitializer.onStartup(clazz, servletContext);
         }

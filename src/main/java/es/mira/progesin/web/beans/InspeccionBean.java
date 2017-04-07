@@ -71,11 +71,11 @@ public class InspeccionBean {
     private long numPages;
     
     @PersistenceContext
-    private transient EntityManager em;
+    private EntityManager em;
     
-    public List<Inspeccion> listaInspecciones;
+    private List<Inspeccion> listaInspecciones;
     
-    public List<Inspeccion> listaInspeccionesAsociadas;;
+    private List<Inspeccion> listaInspeccionesAsociadas;
     
     private List<Municipio> listaMunicipios;
     
@@ -106,7 +106,7 @@ public class InspeccionBean {
     private void buscarConOrden(List<Order> listaOrden) {
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
-        numeroRegistros = getCountRegistrosInspecciones();
+        setNumeroRegistros(getCountRegistrosInspecciones());
         numPages = getCountPagesGuia(numeroRegistros);
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
@@ -165,7 +165,7 @@ public class InspeccionBean {
         inspeccion.setFechaPrevista(null);
         inspeccion.setTipoInspeccion(null);
         inspeccion.setTipoUnidad(null);
-        inspeccion.setFechaModificación(null);
+        inspeccion.setFechaModificacion(null);
         inspeccion.setUsernameModificacion(null);
         inspeccion.setId(null);
         listaInspeccionesAsociadas = new ArrayList<>();
@@ -224,7 +224,7 @@ public class InspeccionBean {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
-        inspeccion.setFechaModificación(new Date());
+        inspeccion.setFechaModificacion(new Date());
         inspeccion.setUsernameModificacion(SecurityContextHolder.getContext().getAuthentication().getName());
         this.inspeccion = inspeccion;
         // listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
@@ -273,10 +273,10 @@ public class InspeccionBean {
     @PostConstruct
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
-        listaEquipos = (equipoService.findByFechaBajaIsNotNull());
+        setListaEquipos(equipoService.findByFechaBajaIsNotNull());
         setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
-        list = new ArrayList<>();
+        setList(new ArrayList<>());
         for (int i = 0; i <= 8; i++) {
             list.add(Boolean.TRUE);
         }
@@ -395,7 +395,7 @@ public class InspeccionBean {
     
     public void onSort(SortEvent event) {
         String columna = event.getSortColumn().getHeaderText();
-        sortOrder = event.isAscending();
+        setSortOrder(event.isAscending());
         
         if ("Numero".equals(columna)) {
             listaOrden = new ArrayList<>();
@@ -523,7 +523,8 @@ public class InspeccionBean {
      * @return Resultados coincidentes con la cadena de búsqueda
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(infoInspeccion, new Long(46));
+        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(infoInspeccion,
+                Long.parseLong("46"));
     }
     
     private void cargaInspeccionesAsociadas(List<Inspeccion> listaInsp) {

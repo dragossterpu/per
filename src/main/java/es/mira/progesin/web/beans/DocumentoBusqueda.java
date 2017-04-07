@@ -64,13 +64,13 @@ public class DocumentoBusqueda implements Serializable {
      * 
      */
     public void resetValues() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.nombre = null;
-        this.tipoDocumento = null;
-        this.materiaIndexada = null;
-        this.descripcion = null;
-        this.inspeccion = null;
+        this.setFechaDesde(null);
+        this.setFechaHasta(null);
+        this.setNombre(null);
+        this.setTipoDocumento(null);
+        this.setMateriaIndexada(null);
+        this.setDescripcion(null);
+        this.setInspeccion(null);
     }
     
 }

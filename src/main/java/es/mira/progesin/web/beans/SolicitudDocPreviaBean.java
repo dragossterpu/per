@@ -354,7 +354,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void descargarFichero(Long idDocumento) {
         try {
-            file = documentoService.descargaDocumento(idDocumento);
+            setFile(documentoService.descargaDocumento(idDocumento));
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
@@ -673,7 +673,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void buscarSolicitudDocPrevia() {
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
-        numeroRegistros = getCountRegistrosSolicitud();
+        setNumeroRegistros(getCountRegistrosSolicitud());
         numPages = getCountPagesSolicitud(numeroRegistros);
         solicitudDocPreviaBusquedaCopia = copiaSolicitudDocPreviaBusqueda(solicitudDocPreviaBusqueda);
         listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(0, MAX_RESULTS_PAGE,

@@ -36,12 +36,12 @@ public class CuestionarioPersonalizadoBusqueda implements Serializable {
      * @author EZENTIS
      */
     public void limpiar() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.username = null;
-        this.nombreCuestionario = null;
-        this.modeloCuestionarioSeleccionado = null;
-        this.estado = null;
+        setFechaDesde(null);
+        setFechaHasta(null);
+        setUsername(null);
+        setNombreCuestionario(null);
+        setModeloCuestionarioSeleccionado(null);
+        setEstado(null);
     }
     
 }

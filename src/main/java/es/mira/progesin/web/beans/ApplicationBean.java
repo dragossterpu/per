@@ -38,7 +38,7 @@ public class ApplicationBean implements Serializable {
     private transient IParametroService parametroService;
     
     @Autowired
-    private IDocumentoService documentoService;
+    private transient IDocumentoService documentoService;
     
     // Los cargo en la aplicación porque van a ser siempre los mismo y así agilizo la aplicación
     private List<PuestoTrabajo> listaPuestosTrabajo;

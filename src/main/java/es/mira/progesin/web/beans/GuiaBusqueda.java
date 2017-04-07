@@ -41,12 +41,12 @@ public class GuiaBusqueda implements Serializable {
      * Limpia los valores del objeto
      */
     public void resetValues() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.usuarioCreacion = null;
-        this.nombre = null;
-        this.tipoInspeccion = null;
-        this.listaGuias = null;
-        this.estado = null;
+        this.setFechaDesde(null);
+        this.setFechaHasta(null);
+        this.setUsuarioCreacion(null);
+        this.setNombre(null);
+        this.setTipoInspeccion(null);
+        this.setListaGuias(null);
+        this.setEstado(null);
     }
 }

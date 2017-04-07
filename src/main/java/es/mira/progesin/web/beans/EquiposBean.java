@@ -155,7 +155,7 @@ public class EquiposBean implements Serializable {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
             limpiarBusqueda();
             this.vieneDe = null;
-            tiposEquipo = tipoEquipoService.findAll();
+            setTiposEquipo(tipoEquipoService.findAll());
         }
         
     }
@@ -218,9 +218,7 @@ public class EquiposBean implements Serializable {
      */
     public String getFormModificarEquipo(Equipo equipo) {
         this.miembrosSeleccionados = new ArrayList<>();
-        ;
-        miembrosEquipo = new ArrayList<>();
-        miembrosEquipo = equipoService.findByEquipo(equipo);
+        setMiembrosEquipo(equipoService.findByEquipo(equipo));
         equipo.setMiembros(miembrosEquipo);
         this.equipo = equipo;
         return "/equipos/modificarEquipo?faces-redirect=true";

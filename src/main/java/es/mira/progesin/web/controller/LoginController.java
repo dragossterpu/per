@@ -21,7 +21,7 @@ public class LoginController {
     private static final String LOGIN = "login";
     
     @RequestMapping(method = RequestMethod.GET, value = "/login")
-    public String login2(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
             // JSF ajax request. Return special XML response which instructs JavaScript that it should in turn perform a
             // redirect.

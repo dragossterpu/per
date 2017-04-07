@@ -64,22 +64,22 @@ public class InspeccionBusqueda implements Serializable {
      * 
      */
     public void resetValues() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.usuarioCreacion = null;
-        this.anio = null;
-        this.tipoInspeccion = null;
-        this.nombreUnidad = null;
-        this.id = null;
-        this.ambito = null;
-        this.cuatrimestre = null;
-        this.estado = null;
-        this.provincia = null;
-        this.municipio = null;
-        this.tipoUnidad = null;
-        this.equipo = null;
-        this.jefeEquipo = null;
-        this.listaInspecciones = null;
+        this.setFechaDesde(null);
+        this.setFechaHasta(null);
+        this.setUsuarioCreacion(null);
+        this.setAnio(null);
+        this.setTipoInspeccion(null);
+        this.setNombreUnidad(null);
+        this.setId(null);
+        this.setAmbito(null);
+        this.setCuatrimestre(null);
+        this.setEstado(null);
+        this.setProvincia(null);
+        this.setMunicipio(null);
+        this.setTipoUnidad(null);
+        this.setEquipo(null);
+        this.setJefeEquipo(null);
+        this.setListaInspecciones(null);
     }
     
 }

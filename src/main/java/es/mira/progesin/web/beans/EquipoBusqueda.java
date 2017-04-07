@@ -50,17 +50,17 @@ public class EquipoBusqueda implements Serializable {
      * @author EZENTIS
      */
     public void resetValues() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.nombreEquipo = null;
-        this.tipoEquipo = null;
-        this.jefeEquipo = null;
-        this.miembros = null;
-        this.estado = null;
-        this.role = null;
-        this.nombreJefe = null;
-        this.nombreMiembro = null;
-        this.listaEquipos = null;
+        setFechaDesde(null);
+        setFechaHasta(null);
+        setNombreEquipo(null);
+        setTipoEquipo(null);
+        setJefeEquipo(null);
+        setMiembros(null);
+        setEstado(null);
+        setRole(null);
+        setNombreJefe(null);
+        setNombreMiembro(null);
+        setListaEquipos(null);
     }
     
 }

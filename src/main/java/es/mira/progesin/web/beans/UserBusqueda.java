@@ -49,17 +49,17 @@ public class UserBusqueda implements Serializable {
      * Resetea los valores del formulario de búsqueda de usuarios
      */
     public void resetValues() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.username = null;
-        this.nombre = null;
-        this.apellido1 = null;
-        this.apellido2 = null;
-        this.role = null;
-        this.cuerpoEstado = null;
-        this.puestoTrabajo = null;
-        this.listaUsuarios = null;
-        this.estado = null;
+        setFechaDesde(null);
+        setFechaHasta(null);
+        setUsername(null);
+        setNombre(null);
+        setApellido1(null);
+        setApellido2(null);
+        setRole(null);
+        setCuerpoEstado(null);
+        setPuestoTrabajo(null);
+        setListaUsuarios(null);
+        setEstado(null);
     }
     
 }

@@ -11,6 +11,10 @@ import es.mira.progesin.constantes.Constantes;
 @Component("utilities")
 public class Utilities {
     
+    private Utilities() {
+        throw new IllegalAccessError("Utility class");
+    }
+    
     // ************* Generating new password Progesin ********************//
     /**
      * @author EZENTIS STAD

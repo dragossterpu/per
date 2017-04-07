@@ -17,7 +17,7 @@ import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
     
     @Autowired
-    private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
+    private IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)

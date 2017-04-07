@@ -125,7 +125,7 @@ public class Inspeccion implements Serializable {
     private Date fechaPrevista;
     
     @Column(name = "fecha_modificacion")
-    private Date fechaModificación;
+    private Date fechaModificacion;
     
     @CreatedBy
     @Column(name = "username_modificacion")

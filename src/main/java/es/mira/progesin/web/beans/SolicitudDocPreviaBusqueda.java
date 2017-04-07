@@ -69,9 +69,9 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
      */
     @PostConstruct
     public void init() {
-        listaUsuarios = userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv());
+        setListaUsuarios(userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv()));
         TypedQuery<TipoInspeccion> query = em.createNamedQuery("TipoInspeccion.findAll", TipoInspeccion.class);
-        listaTiposInspeccion = query.getResultList();
+        setListaTiposInspeccion(query.getResultList());
     }
     
     /**
@@ -80,14 +80,14 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
      * @author EZENTIS
      */
     public void resetValues() {
-        this.fechaDesde = null;
-        this.fechaHasta = null;
-        this.estado = null;
-        this.usuarioCreacion = null;
-        this.numeroInspeccion = null;
-        this.tipoInspeccion = null;
-        this.ambitoInspeccion = null;
-        this.nombreUnidad = null;
+        setFechaDesde(null);
+        setFechaHasta(null);
+        setEstado(null);
+        setUsuarioCreacion(null);
+        setNumeroInspeccion(null);
+        setTipoInspeccion(null);
+        setAmbitoInspeccion(null);
+        setNombreUnidad(null);
     }
     
 }
