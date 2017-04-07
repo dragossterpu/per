@@ -30,25 +30,45 @@ public class DatosTablaGenerica implements Serializable {
     // Para cuando haya que dibujar matrices
     private String nombreFila;
     
-    private String campo1;
+    private String campo01;
     
-    private String campo2;
+    private String campo02;
     
-    private String campo3;
+    private String campo03;
     
-    private String campo4;
+    private String campo04;
     
-    private String campo5;
+    private String campo05;
     
-    private String campo6;
+    private String campo06;
     
-    private String campo7;
+    private String campo07;
     
-    private String campo8;
+    private String campo08;
     
-    private String campo9;
+    private String campo09;
     
     private String campo10;
+    
+    private String campo11;
+    
+    private String campo12;
+    
+    private String campo13;
+    
+    private String campo14;
+    
+    private String campo15;
+    
+    private String campo16;
+    
+    private String campo17;
+    
+    private String campo18;
+    
+    private String campo19;
+    
+    private String campo20;
     
     // @ManyToOne
     // @JoinColumns(value = { @JoinColumn(name = "RESPUESTA_ID_CUEST_ENVIADO"),
@@ -57,9 +77,12 @@ public class DatosTablaGenerica implements Serializable {
     
     @Override
     public String toString() {
-        return "DatosTablaGenerica [ID = " + id + ", nombreFila=" + nombreFila + ", campo1=" + campo1 + ", campo2="
-                + campo2 + ", campo3=" + campo3 + ", campo4=" + campo4 + ", campo5=" + campo5 + ", campo6=" + campo6
-                + ", campo7=" + campo7 + ", campo8=" + campo8 + ", campo9=" + campo9 + ", campo10=" + campo10 + "]";
+        return "DatosTablaGenerica [id=" + id + ", nombreFila=" + nombreFila + ", campo01=" + campo01 + ", campo02="
+                + campo02 + ", campo03=" + campo03 + ", campo04=" + campo04 + ", campo05=" + campo05 + ", campo06="
+                + campo06 + ", campo07=" + campo07 + ", campo08=" + campo08 + ", campo09=" + campo09 + ", campo10="
+                + campo10 + ", campo11=" + campo11 + ", campo12=" + campo12 + ", campo13=" + campo13 + ", campo14="
+                + campo14 + ", campo15=" + campo15 + ", campo16=" + campo16 + ", campo17=" + campo17 + ", campo18="
+                + campo18 + ", campo19=" + campo19 + ", campo20=" + campo20 + "]";
     }
     
     @Override
