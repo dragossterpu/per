@@ -71,7 +71,6 @@
 						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un equipo"
 							value="#{inspeccionBean.inspeccion.equipo}"
 							id="equipoSelect" converter="#{selectConverter}">
-							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{inspeccionBean.listaEquipos}"
 								var="equipo"
 								itemLabel="#{equipo.nombreEquipo}"

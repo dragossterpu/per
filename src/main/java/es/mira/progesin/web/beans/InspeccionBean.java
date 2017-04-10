@@ -1,7 +1,6 @@
 package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +13,6 @@ import org.hibernate.criterion.Order;
 import org.primefaces.event.data.SortEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Equipo;
@@ -150,24 +148,7 @@ public class InspeccionBean {
     public String nuevaInspeccion() {
         setProvinciSelec(null);
         inspeccion = new Inspeccion();
-        inspeccion.setFechaAlta(new Date());
-        inspeccion.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
-        inspeccion.setFechaBaja(null);
-        inspeccion.setFechaFinalizacion(null);
-        inspeccion.setUsernameFinalizacion(null);
-        inspeccion.setAnio(null);
-        inspeccion.setCuatrimestre(null);
-        inspeccion.setEquipo(null);
-        inspeccion.setAmbito(null);
-        inspeccion.setMunicipio(null);
-        inspeccion.setTipoUnidad(null);
-        inspeccion.setFechaPrevista(null);
-        inspeccion.setTipoInspeccion(null);
-        inspeccion.setTipoUnidad(null);
-        inspeccion.setFechaModificacion(null);
-        inspeccion.setUsernameModificacion(null);
-        inspeccion.setId(null);
         listaInspeccionesAsociadas = new ArrayList<>();
         inspeccion.setInspecciones(new ArrayList<>());
         
@@ -224,8 +205,6 @@ public class InspeccionBean {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
-        inspeccion.setFechaModificacion(new Date());
-        inspeccion.setUsernameModificacion(SecurityContextHolder.getContext().getAuthentication().getName());
         this.inspeccion = inspeccion;
         // listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
         this.inspeccion.setInspecciones(listaInspeccionesAsociadas);
@@ -290,7 +269,7 @@ public class InspeccionBean {
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            setProvinciSelec(null);
+            // setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
         }

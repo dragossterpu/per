@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
@@ -20,10 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
@@ -33,19 +28,22 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
+/**
+ * @author EZENTIS
+ * 
+ * Entidad para una inspección
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode()
+@EqualsAndHashCode(callSuper = false, of = "id")
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "inspecciones")
-public class Inspeccion implements Serializable {
+public class Inspeccion extends AbstractEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -100,36 +98,14 @@ public class Inspeccion implements Serializable {
     @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))
     private Municipio municipio;
     
-    @CreatedDate
-    @Column(name = "fecha_alta", nullable = false)
-    private Date fechaAlta;
-    
-    @CreatedBy
-    @Column(name = "username_alta", nullable = false)
-    private String usernameAlta;
-    
-    @Column(name = "fecha_baja")
-    private Date fechaBaja;
-    
-    @Column(name = "username_baja")
-    private String usernameBaja;
-    
     @Column(name = "fecha_finalizacion")
     private Date fechaFinalizacion;
     
-    @CreatedBy
     @Column(name = "username_finalizacion")
     private String usernameFinalizacion;
     
     @Column(name = "fecha_prevista")
     private Date fechaPrevista;
-    
-    @Column(name = "fecha_modificacion")
-    private Date fechaModificacion;
-    
-    @CreatedBy
-    @Column(name = "username_modificacion")
-    private String usernameModificacion;
     
     @ManyToMany
     @JoinTable(name = "inspecciones_asociadas", joinColumns = {
