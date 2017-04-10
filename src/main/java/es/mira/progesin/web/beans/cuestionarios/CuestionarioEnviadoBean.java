@@ -423,8 +423,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     /**
      * Copia un objeto de tipo CuestionarioEnviadoBusqueda en otro para mantener los parámetros de búsqueda.
      * 
-     * @return cuestCopia. Copia del objeto. C
-     * @param cuestionario. Objeto a copiar.
+     * @return cuestCopia Copia del objeto. C
+     * @param cuestionario Objeto a copiar.
      * @author EZENTIS
      */
     public CuestionarioEnviadoBusqueda copiaCuestionarioEnviadoBusqueda(CuestionarioEnviadoBusqueda cuestionario) {

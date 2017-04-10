@@ -69,36 +69,36 @@ public class RespuestaCuestionario implements Serializable {
     @Column
     private Date fechaValidacion;
     
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((respuestaId == null) ? 0 : respuestaId.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        RespuestaCuestionario other = (RespuestaCuestionario) obj;
-        if (respuestaId == null) {
-            if (other.respuestaId != null) {
-                return false;
-            }
-        } else if (!respuestaId.getCuestionarioEnviado().getId()
-                .equals(other.respuestaId.getCuestionarioEnviado().getId())
-                && !respuestaId.getPregunta().getId().equals(other.respuestaId.getPregunta().getId())) {
-            return false;
-        }
-        return true;
-    }
+    // @Override
+    // public int hashCode() {
+    // final int prime = 31;
+    // int result = 1;
+    // result = prime * result + ((respuestaId == null) ? 0 : respuestaId.hashCode());
+    // return result;
+    // }
+    //
+    // @Override
+    // public boolean equals(Object obj) {
+    // if (this == obj) {
+    // return true;
+    // }
+    // if (obj == null) {
+    // return false;
+    // }
+    // if (getClass() != obj.getClass()) {
+    // return false;
+    // }
+    // RespuestaCuestionario other = (RespuestaCuestionario) obj;
+    // if (respuestaId == null) {
+    // if (other.respuestaId != null) {
+    // return false;
+    // }
+    // } else if (!respuestaId.getCuestionarioEnviado().getId()
+    // .equals(other.respuestaId.getCuestionarioEnviado().getId())
+    // && !respuestaId.getPregunta().getId().equals(other.respuestaId.getPregunta().getId())) {
+    // return false;
+    // }
+    // return true;
+    // }
     
 }
