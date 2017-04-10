@@ -366,7 +366,7 @@ public class ModificarModeloCuestionarioBean {
      */
     public void aniadeValor(String valor, String tipoRespuesta) {
         if ((!valor.isEmpty() && Constantes.TIPO_RESPUESTA_RADIO.equals(tipoRespuesta))
-                || (!valor.isEmpty() && listadoValoresNuevaRespuesta.size() < 9)) {
+                || (!valor.isEmpty() && listadoValoresNuevaRespuesta.size() <= 20)) {
             listadoValoresNuevaRespuesta.add(valor);
         }
         
@@ -439,7 +439,7 @@ public class ModificarModeloCuestionarioBean {
                     
                     datos.setSeccion(seccion);
                     datos.setValor(valor);
-                    datos.setClave("campo" + (i + 1));
+                    datos.setClave("campo" + String.format("%02d", i + 1));
                     nuevoValor.setConfig(datos);
                     tipoRespuestaNuevo.add(nuevoValor);
                 }
@@ -451,7 +451,7 @@ public class ModificarModeloCuestionarioBean {
                     ConfiguracionRespuestasCuestionarioId datos = new ConfiguracionRespuestasCuestionarioId();
                     datos.setSeccion(seccion);
                     datos.setValor(valor);
-                    datos.setClave("nombreFila" + (i + 1));
+                    datos.setClave("nombreFila" + String.format("%02d", i + 1));
                     nuevoValor.setConfig(datos);
                     tipoRespuestaNuevo.add(nuevoValor);
                 }
