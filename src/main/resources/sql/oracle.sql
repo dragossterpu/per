@@ -346,7 +346,6 @@ insert into inspecciones (id, ambito, anio, cuatrimestre, fecha_alta, tipo_unida
 insert into inspecciones (id, ambito, anio, cuatrimestre, fecha_alta, tipo_unidad,nombre_unidad, numero,username_alta, id_equipo, tipo_inspeccion,estado_inspeccion,id_municipio ) values (seq_inspeccion.nextval, 'PN', 2017, 'TERCERO', trunc(sysdate), 3,'Valencia', LTRIM('0102/2017','0'), 'system', 2, 'I.G.S.', 'ESTADO_FASE_PREVIA',6826 );
 insert into inspecciones (id, ambito, anio, cuatrimestre, fecha_alta, tipo_unidad,nombre_unidad, numero,username_alta, id_equipo, tipo_inspeccion,estado_inspeccion,id_municipio ) values (seq_inspeccion.nextval, 'GC', 2017, 'TERCERO', trunc(sysdate), 3,'Valencia', LTRIM('0103/2017','0'), 'system', 2, 'I.G.S.', 'ESTADO_FASE_PREVIA',6826 );
 insert into inspecciones (id, ambito, anio, cuatrimestre, fecha_alta, tipo_unidad,nombre_unidad, numero,username_alta, id_equipo, tipo_inspeccion,estado_inspeccion,id_municipio ) values (seq_inspeccion.nextval, 'PN', 2017, 'TERCERO', trunc(sysdate), 3,'Tenerife', LTRIM('0104/2017','0'), 'system', 3, 'I.G.P.', 'ESTADO_FASE_PREVIA',6826 );
-commit;
 
 
 INSERT INTO TIPO_DOCUMENTO (ID,NOMBRE) VALUES (1,'ANEXOS AL INFORME');
@@ -372,3 +371,5 @@ INSERT INTO TIPO_DOCUMENTO (ID,NOMBRE) VALUES (20,'QUEJAS');
 INSERT INTO TIPO_DOCUMENTO (ID,NOMBRE) VALUES (21,'RECURSOS HUMANOS');
 INSERT INTO TIPO_DOCUMENTO (ID,NOMBRE) VALUES (22,'RECURSOS MATERIALES');
 INSERT INTO TIPO_DOCUMENTO (ID,NOMBRE) VALUES (23,'VIDEO');
+
+commit;

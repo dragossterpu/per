@@ -1,11 +1,11 @@
 --Nueva tabla
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo1', 'TABLAFORMACIONINPARTIDA', 'ACTIVIDAD');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo2', 'TABLAFORMACIONINPARTIDA', 'MATERIA (General, específica, Medidas de Emergencia…)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo3', 'TABLAFORMACIONINPARTIDA', 'Personal que la impartió');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo4', 'TABLAFORMACIONINPARTIDA', 'Personal que lo recibió');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo5', 'TABLAFORMACIONINPARTIDA', 'Número de alumnos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo6', 'TABLAFORMACIONINPARTIDA', 'Duración.');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo7', 'TABLAFORMACIONINPARTIDA', 'Método utilizado (Telemático, presencial, divulgativo,…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONINPARTIDA', 'ACTIVIDAD');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONINPARTIDA', 'MATERIA (General, específica, Medidas de Emergencia…)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONINPARTIDA', 'Personal que la impartió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONINPARTIDA', 'Personal que lo recibió');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONINPARTIDA', 'Número de alumnos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAFORMACIONINPARTIDA', 'Duración.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAFORMACIONINPARTIDA', 'Método utilizado (Telemático, presencial, divulgativo,…)');
 
 
 --Insert modelo
