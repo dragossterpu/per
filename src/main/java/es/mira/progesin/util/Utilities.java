@@ -4,11 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
 import es.mira.progesin.constantes.Constantes;
 
-@Component("utilities")
 public class Utilities {
     
     private Utilities() {
