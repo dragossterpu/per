@@ -3,14 +3,12 @@ package es.mira.progesin.configuration.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
@@ -33,12 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;
     
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceBean());
-        auth.authenticationProvider(authenticationProvider());
-        // auth.inMemoryAuthentication()
-        // .withUser("user").password("password").roles("USER");
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }
     
     /**
@@ -50,27 +45,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
     
-    /**
-     * Configuración para la autenticación
-     * 
-     * @return DaoAuthenticationProvider
-     */
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsServiceBean());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
                 .permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
                 // .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
-                .antMatchers("/user*").hasAnyRole().anyRequest().authenticated().and().formLogin().loginPage("/login")
-                .loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml", true).failureUrl("/login").and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+                .antMatchers("/user*").hasAnyRole().anyRequest().authenticated();
+        
+        http.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml", true)
+                .failureUrl("/login");
+        
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/login");
         
         // configuración para el manejo de las sessiones de los usuarios
         http.sessionManagement().maximumSessions(MAX_CONCURRENT_USER_SESSIONS).maxSessionsPreventsLogin(true)
@@ -97,11 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public static HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
-    }
-    
-    @Override
-    public UserDetailsService userDetailsServiceBean() {
-        return loginService;
     }
     
 }
