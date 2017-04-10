@@ -326,12 +326,12 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Videoconferencias realizadas (datos relativos a los dos últimos años naturales completos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 4);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: El responsable de Telecomunicaciones elaborará informe en el que se detallen los siguientes aspectos:
  - SIRDEE:  
-   o Grado del despliegue y  cobertura.  
-   o Personal que lo atiende. Material disponible (terminales y repetidores), estado y % de operatividad de los terminales.  
-   o Mantenimiento de equipos (quién lo realiza y grado de conformidad). 
-   o Protocolos de actuación con otras FF. y CC. de S., cumplimiento y resultados. 
-   o Estadística de averías y sus causas año 2015. Zonas de sombra. 
-   o Aspectos a mejorar.
+   • Grado del despliegue y  cobertura.  
+   • Personal que lo atiende. Material disponible (terminales y repetidores), estado y % de operatividad de los terminales.  
+   • Mantenimiento de equipos (quién lo realiza y grado de conformidad). 
+   • Protocolos de actuación con otras FF. y CC. de S., cumplimiento y resultados. 
+   • Estadística de averías y sus causas año 2015. Zonas de sombra. 
+   • Aspectos a mejorar.
  - Carencia de conexión a Intranet y/o Internet (señálese específicamente) y número de accesos disponibles. Problemáticas con las reparaciones, repuestos de tóner, herramientas, etc.  
  - Detalle de las conexiones con otros Cuerpos policiales.
  - Funcionamiento del 112 y otros (de existir).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
