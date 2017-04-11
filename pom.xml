@@ -182,6 +182,13 @@
 			<version>5.5.9</version>
 		</dependency>
 		
+		<!-- Para los test -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		
+		
 
 	</dependencies>
 	<repositories>
