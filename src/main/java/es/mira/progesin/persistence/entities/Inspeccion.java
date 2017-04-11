@@ -19,9 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
@@ -110,11 +107,9 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     @Column(name = "fecha_prevista")
     private Date fechaPrevista;
     
-    @LastModifiedBy
     @Column(name = "username_anulacion")
     protected String usernameAnulacion;
     
-    @LastModifiedDate
     @Column(name = "fecha_anulacion")
     protected Date fechaAnulacion;
     
