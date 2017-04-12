@@ -24,8 +24,18 @@ public class LoginService implements UserDetailsService {
     @Autowired
     private IRegistroActividadService registroActividadService;
     
+    /**
+     * Constructor para tests
+     * @param userServiceMock
+     * @param registroActividadServiceMock
+     */
+    public LoginService(IUserService userServiceMock, IRegistroActividadService registroActividadServiceMock) {
+        userService = userServiceMock;
+        registroActividadService = registroActividadServiceMock;
+    }
+    
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userService.findByUsernameIgnoreCase(username);
         if (null == user) {
             throw new UsernameNotFoundException("El usuario " + username + " no existe.");

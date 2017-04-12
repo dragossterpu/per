@@ -3,10 +3,7 @@
  */
 package es.mira.progesin.services;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class ParametroServiceTest {
     
     private IParametrosRepository paramRepository;
     
-    private ParametroService target;
+    private ParametroService parametroService;
     
     /**
      * Configurar test
@@ -43,7 +40,31 @@ public class ParametroServiceTest {
     @Before
     public void setUp() {
         paramRepository = Mockito.mock(IParametrosRepository.class);
-        target = new ParametroService(paramRepository);
+        parametroService = new ParametroService(paramRepository);
+    }
+    
+    /**
+     * Comprobación clase existe
+     */
+    @Test
+    public void type() {
+        assertThat(ParametroService.class).isNotNull();
+    }
+    
+    /**
+     * Comprobación clase no abstracta
+     */
+    @Test
+    public void instantiation() {
+        ParametroService target = new ParametroService(null);
+        assertThat(target).isNotNull();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.ParametroService#getMapaParametros()}.
+     */
+    @Test
+    public void getMapaParametros() {
         
         List<String> secciones = new ArrayList<>();
         secciones.add("extensiones");
@@ -54,32 +75,8 @@ public class ParametroServiceTest {
         
         when(paramRepository.findSecciones()).thenReturn(secciones);
         when(paramRepository.findParamByParamSeccion("extensiones")).thenReturn(parametros);
-    }
-    
-    /**
-     * Comprobación clase existe
-     */
-    @Test
-    public void type() {
-        assertThat(ParametroService.class, notNullValue());
-    }
-    
-    /**
-     * Comprobación clase no abstracta
-     */
-    @Test
-    public void instantiation() {
-        ParametroService target = new ParametroService(null);
-        assertThat(target, notNullValue());
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.ParametroService#getMapaParametros()}.
-     */
-    @Test
-    public void getMapaParametros() {
         
-        Map<String, Map<String, String>> actual = target.getMapaParametros();
+        Map<String, Map<String, String>> actual = parametroService.getMapaParametros();
         
         Map<String, String> paramsSeccion = new HashMap<>();
         paramsSeccion.put("DOC", "application/msword");
@@ -88,7 +85,7 @@ public class ParametroServiceTest {
         Map<String, Map<String, String>> expected = new HashMap<>();
         expected.put("extensiones", paramsSeccion);
         
-        assertThat(actual, is(equalTo(expected)));
+        assertThat(actual).isEqualTo(expected);
     }
     
 }
