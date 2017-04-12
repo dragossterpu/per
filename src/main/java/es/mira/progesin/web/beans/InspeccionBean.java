@@ -91,7 +91,7 @@ public class InspeccionBean {
     
     private boolean sortOrder;
     
-    int first = 1;
+    private boolean nuevo_o_editar;
     
     /**************************************************************
      * 
@@ -100,10 +100,13 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
+        setNuevo_o_editar(false);
+        inspeccionBusqueda.setProvincia(provinciSelec);
         listaOrden = new ArrayList<>();
         listaOrden.add(Order.desc("fechaAlta"));
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
+        inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         buscarConOrden(listaOrden, primerRegistro, actualPage);
     }
     
@@ -113,12 +116,10 @@ public class InspeccionBean {
      * 
      **************************************************************/
     private void buscarConOrden(List<Order> listaOrden, int primerResgistro, long actualPage) {
-        inspeccionBusqueda.setProvincia(provinciSelec);
-        primerRegistro = 0;
-        actualPage = FIRST_PAGE;
+        // primerRegistro = 0;
+        // actualPage = FIRST_PAGE;
         setNumeroRegistros(getCountRegistrosInspecciones());
         numPages = getCountPagesGuia(numeroRegistros);
-        inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
                 MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
         inspeccionBusqueda.setListaInspecciones(listaInspecciones);
@@ -158,6 +159,7 @@ public class InspeccionBean {
      * @return
      */
     public String nuevaInspeccion() {
+        setNuevo_o_editar(true);
         setProvinciSelec(null);
         setListaMunicipios(null);
         inspeccion = new Inspeccion();
@@ -200,6 +202,7 @@ public class InspeccionBean {
      * @return
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
+        setNuevo_o_editar(true);
         setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
@@ -271,6 +274,10 @@ public class InspeccionBean {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
+        } else if ("visualizar".equalsIgnoreCase(this.vieneDe) && nuevo_o_editar) {
+            setProvinciSelec(null);
+            limpiarBusqueda();
+            this.vieneDe = null;
         }
         
     }
@@ -285,10 +292,11 @@ public class InspeccionBean {
             primerRegistro += MAX_RESULTS_PAGE;
             actualPage++;
             
-            List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
-            cargaInspeccionesAsociadas(listaInspecciones);
-            inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+            // List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
+            // MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
+            // cargaInspeccionesAsociadas(listaInspecciones);
+            // inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+            buscarConOrden(listaOrden, primerRegistro, actualPage);
         }
         
     }
@@ -305,10 +313,11 @@ public class InspeccionBean {
             primerRegistro -= MAX_RESULTS_PAGE;
             actualPage--;
             
-            List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
-            cargaInspeccionesAsociadas(listaInspecciones);
-            inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+            // List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
+            // MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
+            // cargaInspeccionesAsociadas(listaInspecciones);
+            // inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+            buscarConOrden(listaOrden, primerRegistro, actualPage);
         }
     }
     
@@ -379,9 +388,9 @@ public class InspeccionBean {
     public void onSort(SortEvent event) {
         String columna = event.getSortColumn().getHeaderText();
         setSortOrder(event.isAscending());
+        setListaOrden(new ArrayList<>());
         
         if ("Numero".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("id"));
                 listaOrden.add(Order.asc("anio"));
@@ -391,7 +400,6 @@ public class InspeccionBean {
             }
             
         } else if ("Fecha".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("fechaAlta"));
             } else {
@@ -399,7 +407,6 @@ public class InspeccionBean {
             }
             
         } else if ("Originador".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("usernameAlta"));
             } else {
@@ -407,7 +414,6 @@ public class InspeccionBean {
             }
             
         } else if ("Tipo".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("tipoInspeccion"));
             } else {
@@ -415,7 +421,6 @@ public class InspeccionBean {
             }
             
         } else if ("Equipo".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("equipo.nombreEquipo"));
             } else {
@@ -423,7 +428,6 @@ public class InspeccionBean {
             }
             
         } else if ("Jefe".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("equipo.jefeEquipo"));
             } else {
@@ -431,7 +435,6 @@ public class InspeccionBean {
             }
             
         } else if ("Cuatrimestre".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("cuatrimestre"));
             } else {
@@ -439,7 +442,6 @@ public class InspeccionBean {
             }
             
         } else if ("Ámbito".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("ambito"));
             } else {
@@ -447,7 +449,6 @@ public class InspeccionBean {
             }
             
         } else if ("Tipo".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("tipoInspeccion"));
             } else {
@@ -455,7 +456,6 @@ public class InspeccionBean {
             }
             
         } else if ("Estado".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("estadoInspeccion"));
             } else {
@@ -463,7 +463,6 @@ public class InspeccionBean {
             }
             
         } else if ("Tipo unid.".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("tipoUnidad"));
             } else {
@@ -471,7 +470,6 @@ public class InspeccionBean {
             }
             
         } else if ("Nombre unid.".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("nombreUnidad"));
             } else {
@@ -479,7 +477,6 @@ public class InspeccionBean {
             }
             
         } else if ("Municipio".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("municipio"));
             } else {
@@ -487,7 +484,6 @@ public class InspeccionBean {
             }
             
         } else if ("Provincia".equals(columna)) {
-            listaOrden = new ArrayList<>();
             if (sortOrder) {
                 listaOrden.add(Order.asc("municipio.provincia"));
             } else {

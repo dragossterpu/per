@@ -276,11 +276,6 @@
 					<h:commandLink title="Modificar inspección" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.getFormModificarInspeccion(inspeccion)}" 
 					update="tablaInspecciones" rendered="#{esAdmin}" />
 				</p:column>
-<!-- 				<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
-<!-- 					<p:commandButton title="Anular inspección" icon="fa fa-trash-o" update="tablaInspecciones" actionListener="#{inspeccionBean.anular(inspeccion)}"> -->
-<!-- 						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección" icon="fa fa-warning-sign" /> -->
-<!-- 					</p:commandButton> -->
-<!-- 				</p:column> -->
 				
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
 					<p:commandButton title="Anular inspección" icon="fa fa-toggle-on" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones" rendered="#{esAdmin and empty inspeccion.fechaAnulacion}">
