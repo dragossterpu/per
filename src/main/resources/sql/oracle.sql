@@ -61,6 +61,20 @@ Insert into  tipodocumentacionprevia (ID,DESCRIPCION,NOMBRE,EXTENSIONES,AMBITO) 
 
  
 
+-- inserts tipo unidad
+insert into tipos_unidad (id, descripcion) values (1, 'Cª Distrito');
+insert into tipos_unidad (id, descripcion) values (2, 'Cª local');
+insert into tipos_unidad (id, descripcion) values (3, 'Cª Provincial');
+insert into tipos_unidad (id, descripcion) values (4, 'CIA');
+insert into tipos_unidad (id, descripcion) values (5, 'CIE');
+insert into tipos_unidad (id, descripcion) values (6, 'Cmdcia');
+insert into tipos_unidad (id, descripcion) values (7, 'JSP');
+insert into tipos_unidad (id, descripcion) values (8, 'Pto. Fronterizo');
+insert into tipos_unidad (id, descripcion) values (9, 'Serv. Central');
+insert into tipos_unidad (id, descripcion) values (10, 'U.E. y D.');
+insert into tipos_unidad (id, descripcion) values (11, 'Zona');
+commit;
+
 
 
 insert into tipos_inspeccion (codigo,descripcion) values ('I.G.P.','I.Gral.Periodica');
