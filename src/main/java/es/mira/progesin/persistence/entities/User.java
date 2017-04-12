@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.AllArgsConstructor;
@@ -138,8 +136,6 @@ public class User extends AbstractEntity implements Serializable {
         this.setCorreo(username);
         this.setFechaDestinoIPSS(new Date());
         this.setNivel(0);
-        this.setFechaAlta(new Date());
-        this.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
     }
     
     /**
@@ -162,7 +158,5 @@ public class User extends AbstractEntity implements Serializable {
         this.setCorreo(correoPrincipal);
         this.setFechaDestinoIPSS(new Date());
         this.setNivel(0);
-        this.setFechaAlta(new Date());
-        this.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

@@ -25,7 +25,15 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
+import lombok.NoArgsConstructor;
 
+/**
+ * @author EZENTIS
+ * 
+ * Sevicio para la clase Usuario
+ *
+ */
+@NoArgsConstructor
 @Service
 public class UserService implements IUserService {
     @Autowired
@@ -42,6 +50,16 @@ public class UserService implements IUserService {
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Constructor usado en el test UserServiceTest
+     * @param userRepository
+     * @param passwordEncoder
+     */
+    public UserService(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+    
     @Override
     @Transactional(readOnly = false)
     public void delete(String id) {
@@ -49,36 +67,8 @@ public class UserService implements IUserService {
     }
     
     @Override
-    @Transactional(readOnly = false)
-    public void delete(Iterable<User> entities) {
-        userRepository.delete(entities);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public void delete(User entity) {
-        userRepository.delete(entity);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public void deleteAll() {
-        userRepository.deleteAll();
-    }
-    
-    @Override
     public boolean exists(String id) {
         return userRepository.exists(id);
-    }
-    
-    @Override
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
-    }
-    
-    @Override
-    public Iterable<User> findAll(Iterable<String> ids) {
-        return userRepository.findAll(ids);
     }
     
     @Override
@@ -93,12 +83,6 @@ public class UserService implements IUserService {
     
     @Override
     @Transactional(readOnly = false)
-    public Iterable<User> save(Iterable<User> entities) {
-        return userRepository.save(entities);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
     public User save(User entity) {
         return userRepository.save(entity);
     }
@@ -106,11 +90,6 @@ public class UserService implements IUserService {
     @Override
     public User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String nif) {
         return userRepository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
-    }
-    
-    @Override
-    public User findByCorreo(String correo) {
-        return userRepository.findByCorreo(correo);
     }
     
     @Override

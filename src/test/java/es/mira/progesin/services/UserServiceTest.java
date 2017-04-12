@@ -1,197 +1,209 @@
-/**
- * 
- */
 package es.mira.progesin.services;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.Arrays;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Departamento;
+import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.PuestoTrabajo;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.repositories.IUserRepository;
 
 /**
- * @author Ezentis
+ * @author EZENTIS
+ * 
+ * Test para la clase UserService
  *
  */
+
+@RunWith(SpringRunner.class)
 public class UserServiceTest {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#delete(java.lang.String)}.
-	 */
-	@Test
-	public final void testDeleteString() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#delete(java.lang.Iterable)}.
-	 */
-	@Test
-	public final void testDeleteIterableOfUser() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#delete(es.mira.progesin.persistence.entities.User)}.
-	 */
-	@Test
-	public final void testDeleteUser() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#deleteAll()}.
-	 */
-	@Test
-	public final void testDeleteAll() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#exists(java.lang.String)}.
-	 */
-	@Test
-	public final void testExists() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#findAll()}.
-	 */
-	@Test
-	public final void testFindAll() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#findAll(java.lang.Iterable)}.
-	 */
-	@Test
-	public final void testFindAllIterableOfString() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#findOne(java.lang.String)}.
-	 */
-	@Test
-	public final void testFindOne() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#save(java.lang.Iterable)}.
-	 */
-	@Test
-	public final void testSaveIterableOfUser() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#save(es.mira.progesin.persistence.entities.User)}.
-	 */
-	@Test
-	public final void testSaveUser() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#findByParams(java.lang.String, java.lang.String)}.
-	 */
-	@Test
-	public final void testFindByParams() {
-		
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.services.UserService#findByCorreoOrDocIdentidad(java.lang.String, java.lang.String)}.
-	 */
-	@Test
-	public final void testFindByCorreoOrDocIdentidad() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#findByCorreo(java.lang.String)}.
-	 */
-	@Test
-	public final void testFindByCorreo() {
-		
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(es.mira.progesin.web.beans.UserBusqueda)}.
-	 */
-	@Test
-	public final void testBuscarUsuarioCriteria() {
-		
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.services.UserService#findByCuerpoEstado(es.mira.progesin.persistence.entities.CuerpoEstado)}.
-	 */
-	@Test
-	public final void testFindByCuerpoEstado() {
-		
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.services.UserService#findByfechaBajaIsNullAndRoleNotIn(java.util.List)}.
-	 */
-	@Test
-	public final void testFindByfechaBajaIsNullAndRoleNotIn() {
-		
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.services.UserService#cambiarEstado(java.lang.String, es.mira.progesin.persistence.entities.enums.EstadoEnum)}.
-	 */
-	@Test
-	public final void testCambiarEstado() {
-		
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.services.UserService#findByRole(es.mira.progesin.persistence.entities.enums.RoleEnum)}.
-	 */
-	@Test
-	public final void testFindByRole() {
-		
-	}
-
+    
+    private IUserService userService;
+    
+    private IUserRepository userRepositoryMock;
+    
+    private PasswordEncoder passwordEncoderMock;
+    
+    /**
+     * Configuración inicial del test
+     */
+    @Before
+    public void setUp() {
+        userRepositoryMock = Mockito.mock(IUserRepository.class);
+        passwordEncoderMock = Mockito.mock(PasswordEncoder.class);
+        userService = new UserService(userRepositoryMock, passwordEncoderMock);
+    }
+    
+    /**
+     * Comprueba que existe la clase
+     */
+    @Test
+    public void type() {
+        assertThat(UserService.class, notNullValue());
+    }
+    
+    /**
+     * Comprueba que no es una clase abstracta
+     */
+    @Test
+    public void instantiation() {
+        UserService target = new UserService();
+        assertThat(target, notNullValue());
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#delete(String)}.
+     */
+    @Test
+    public void deleteById() {
+        userService.delete("ezentis");
+        verify(userRepositoryMock, times(1)).delete("ezentis");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#exists(String)}.
+     */
+    @Test
+    public void exists() {
+        userService.exists("ezentis");
+        verify(userRepositoryMock, times(1)).exists("ezentis");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findOne(String)}.
+     */
+    @Test
+    public void findOne() {
+        User user = User.builder().username("ezentis").build();
+        when(userRepositoryMock.findOne("ezentis")).thenReturn(user);
+        User userFind = userService.findOne("ezentis");
+        assertThat(userFind.getUsername()).isEqualTo(user.getUsername());
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findByUsernameIgnoreCase(String)}.
+     */
+    @Test
+    public void findByUsernameIgnoreCase() {
+        userService.findByUsernameIgnoreCase("ezentis");
+        verify(userRepositoryMock, times(1)).findByUsernameIgnoreCase("ezentis");
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.UserService#findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String, String)}.
+     */
+    @Test
+    public void findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase() {
+        userService.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase("ezentis@ezentis.com", "");
+        verify(userRepositoryMock, times(1)).findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase("ezentis@ezentis.com", "");
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(es.mira.progesin.web.beans.UserBusqueda)}.
+     */
+    @Test
+    public void buscarUsuarioCriteria() {
+        
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findByCuerpoEstado(CuerpoEstado)}.
+     */
+    @Test
+    public void findByCuerpoEstado() {
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).build();
+        userService.findByCuerpoEstado(cuerpo);
+        verify(userRepositoryMock, times(1)).findByCuerpoEstado(cuerpo);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findByfechaBajaIsNullAndRoleNotIn(java.util.List)}.
+     */
+    @Test
+    public void findByfechaBajaIsNullAndRoleNotIn() {
+        userService.findByfechaBajaIsNullAndRoleNotIn(Arrays.asList(RoleEnum.ROLE_ADMIN));
+        verify(userRepositoryMock, times(1)).findByfechaBajaIsNullAndRoleNotIn(Arrays.asList(RoleEnum.ROLE_ADMIN));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#cambiarEstado(String, EstadoEnum)}.
+     */
+    @Test
+    public void cambiarEstado() {
+        User user = User.builder().username("provisional").estado(EstadoEnum.ACTIVO).build();
+        when(userRepositoryMock.findOne("provisional")).thenReturn(user);
+        userService.cambiarEstado("provisional", EstadoEnum.INACTIVO);
+        verify(userRepositoryMock, times(1)).save(user);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findByfechaBajaIsNullAndRole(RoleEnum)}.
+     */
+    
+    @Test
+    public void findByfechaBajaIsNullAndRole() {
+        userService.findByfechaBajaIsNullAndRole(RoleEnum.ROLE_ADMIN);
+        verify(userRepositoryMock, times(1)).findByfechaBajaIsNullAndRole(RoleEnum.ROLE_ADMIN);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#buscarNoJefeNoMiembroEquipo(Equipo)}.
+     */
+    @Test
+    public void buscarNoJefeNoMiembroEquipo() {
+        Equipo equipo = Equipo.builder().id(2L).build();
+        userService.buscarNoJefeNoMiembroEquipo(equipo);
+        verify(userRepositoryMock, times(1)).buscarNoJefeNoMiembroEquipo(equipo);
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.UserService#crearUsuariosProvisionalesCuestionario(String, String)}.
+     */
+    @Test
+    public void crearUsuariosProvisionalesCuestionario() {
+        when(passwordEncoderMock.encode("123")).thenReturn("sadafsdfsdf");
+        assertThat(userService.crearUsuariosProvisionalesCuestionario("provisional@ezentis.com", "123").size())
+                .isEqualTo(10);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findByPuestoTrabajo(PuestoTrabajo)}.
+     */
+    @Test
+    public void findByPuestoTrabajo() {
+        PuestoTrabajo puesto = PuestoTrabajo.builder().id(1L).build();
+        userService.findByPuestoTrabajo(puesto);
+        verify(userRepositoryMock, times(1)).findByPuestoTrabajo(puesto);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#findByDepartamento(Departamento)}.
+     */
+    @Test
+    public void findByDepartamento() {
+        Departamento departamento = Departamento.builder().id(1L).build();
+        userService.findByDepartamento(departamento);
+        verify(userRepositoryMock, times(1)).findByDepartamento(departamento);
+    }
+    
 }

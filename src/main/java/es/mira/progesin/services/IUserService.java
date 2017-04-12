@@ -11,49 +11,104 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.web.beans.UserBusqueda;
 
+/**
+ * @author EZENTIS
+ * 
+ * Interfaz para el servicio de usuarios
+ *
+ */
 public interface IUserService {
+    /**
+     * @param id Username
+     */
     void delete(String id);
     
-    void delete(Iterable<User> entities);
-    
-    void delete(User entity);
-    
-    void deleteAll();
-    
+    /**
+     * @param id
+     * @return boolean
+     */
     boolean exists(String id);
     
-    Iterable<User> findAll();
-    
-    Iterable<User> findAll(Iterable<String> ids);
-    
+    /**
+     * @param id
+     * @return User
+     */
     User findOne(String id);
     
+    /**
+     * @param id
+     * @return usuario
+     */
     User findByUsernameIgnoreCase(String id);
     
-    Iterable<User> save(Iterable<User> entities);
-    
+    /**
+     * @param entity
+     * @return usuario
+     */
     User save(User entity);
     
+    /**
+     * @param nif
+     * @param correo
+     * @return usuario
+     */
     User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String nif, String correo);
     
-    User findByCorreo(String correo);
-    
+    /**
+     * @param userBusqueda
+     * @return lista de usuarios
+     */
     List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda);
     
+    /**
+     * @param cuerpo
+     * @return lista de usuarios
+     */
     List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
     
+    /**
+     * @param rolesProv
+     * @return lista de usuarios
+     */
     List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv);
     
+    /**
+     * @param usuarioProv
+     * @param estado
+     */
     void cambiarEstado(String usuarioProv, EstadoEnum estado);
     
+    /**
+     * @param rol
+     * @return lista de usuarios
+     */
     List<User> findByfechaBajaIsNullAndRole(RoleEnum rol);
     
+    /**
+     * Busca todos aquellos usuarios que no son jefe de algún equipo o miembros del equipo pasado como parámetro
+     * 
+     * @param equipo
+     * @return lista de usuarios
+     */
     List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo);
     
+    /**
+     * @param correoPrincipal
+     * @param rawPassword
+     * @return lista de usuarios
+     */
     List<User> crearUsuariosProvisionalesCuestionario(String correoPrincipal, String rawPassword);
     
+    /**
+     * @param puesto
+     * @return lista de usuarios
+     */
     List<User> findByPuestoTrabajo(PuestoTrabajo puesto);
     
+    /**
+     * @param departamento
+     * @return lista de usuarios
+     */
     List<User> findByDepartamento(Departamento departamento);
     
 }
