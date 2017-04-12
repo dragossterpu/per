@@ -23,6 +23,18 @@ public final class Constantes {
     
     public static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
+    public static final String LOGIN = "login";
+    
+    public static final String RUTA_LOGIN = "/login";
+    
+    public static final String RUTA_LOGOUT = "/logout";
+    
+    // "upper(convert(replace(CAMPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"+ VALOR + "', ' ', '')
+    // || '%', 'US7ASCII'))"
+    public static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
+    
     private Constantes() {
+        throw new IllegalAccessError("Constantes class");
     }
+    
 }

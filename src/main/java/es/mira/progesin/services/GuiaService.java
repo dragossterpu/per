@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -29,8 +30,6 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
 
 @Service
 public class GuiaService implements IGuiaService {
-    
-    private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -75,13 +74,13 @@ public class GuiaService implements IGuiaService {
         }
         
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre_guia", busqueda.getNombre())));
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(Constantes.COMPARADORSINACENTOS, "nombre_guia", busqueda.getNombre())));
         }
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "username_alta", busqueda.getUsuarioCreacion())));
+                    String.format(Constantes.COMPARADORSINACENTOS, "username_alta", busqueda.getUsuarioCreacion())));
         }
         
         if (busqueda.getTipoInspeccion() != null) {

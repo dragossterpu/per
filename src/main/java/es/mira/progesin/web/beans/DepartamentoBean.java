@@ -41,10 +41,10 @@ public class DepartamentoBean implements Serializable {
     private String departamentoNuevo;
     
     @Autowired
-    IDepartamentoService departamentoService;
+    private transient IDepartamentoService departamentoService;
     
     @Autowired
-    IUserService userService;
+    private transient IUserService userService;
     
     /**
      * Eliminación lógica (se pone fecha de baja) de un departamento

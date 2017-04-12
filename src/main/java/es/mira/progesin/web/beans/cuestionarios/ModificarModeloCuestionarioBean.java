@@ -598,7 +598,7 @@ public class ModificarModeloCuestionarioBean {
      * @param event
      */
     public void onSelectTipo(SelectEvent event) {
-        tipoSeleccionado = event.getObject().toString();
+        setTipoSeleccionado(event.getObject().toString());
         if (tipoSeleccionado.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
                 || tipoSeleccionado.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
             datosTabla = new DataTableView();

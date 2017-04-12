@@ -90,7 +90,7 @@ public class WordGenerator {
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
     @Autowired
-    IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
+    private IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
     
     /**
      * Genera un documento DOCX a partir de un cuestionario personalizado, mostrando el texto de las preguntas y, en
@@ -239,7 +239,7 @@ public class WordGenerator {
         parrafo.setSpacingAfterLines(200);
         parrafo.setAlignment(ParagraphAlignment.CENTER);
         parrafo.addRun(texto);
-    };
+    }
     
     /**
      * 
@@ -251,8 +251,8 @@ public class WordGenerator {
      */
     
     private void creaCuerpoCuestionario(XWPFDocument doc, List<PreguntasCuestionario> listaPreguntas) {
-        XWPFParagraph parrafo = doc.createParagraph();
-        XWPFRun texto = parrafo.createRun();
+        XWPFParagraph parrafo;
+        XWPFRun texto;
         // Construyo un mapa con las preguntas asociadas a cada área
         Map<AreasCuestionario, List<PreguntasCuestionario>> mapaAreaPreguntas = new HashMap<>();
         List<PreguntasCuestionario> listaPreguntasArea;
@@ -292,7 +292,7 @@ public class WordGenerator {
             
             crearPreguntasPorArea(listaPreguntasArea, doc);
         }
-    };
+    }
     
     /**
      * 
@@ -303,8 +303,8 @@ public class WordGenerator {
      */
     
     private void creaCuerpoGuia(XWPFDocument doc, List<GuiaPasos> listaPasos) {
-        XWPFParagraph parrafo = doc.createParagraph();
-        XWPFRun texto = parrafo.createRun();
+        XWPFParagraph parrafo;
+        XWPFRun texto;
         for (GuiaPasos paso : listaPasos) {
             parrafo = doc.createParagraph();
             // Texto pregunta
@@ -314,11 +314,11 @@ public class WordGenerator {
             /* Comprobamos si hay saltos de línea */
             String textoPaso = paso.getPaso();
             if (textoPaso.contains("\n")) {
-                String[] nuevasLíneas = textoPaso.split("\n");
+                String[] nuevasLineas = textoPaso.split("\n");
                 
                 // Por cada línea hay que generar un nuevo XWPFRun insertándole el texto de la linea y un retorno de
                 // carro
-                textoConSalto(parrafo, texto, nuevasLíneas);
+                textoConSalto(parrafo, texto, nuevasLineas);
             } else {
                 texto.setText(paso.getPaso());
             }
@@ -337,11 +337,11 @@ public class WordGenerator {
      * @param texto Objeto de tipo XWPFRun donde se añade el texto
      * @param nuevasLíneas Array que contiene las líneas acabando con el carácter ('\n')
      */
-    private void textoConSalto(XWPFParagraph parrafo, XWPFRun texto, String[] nuevasLíneas) {
-        for (int i = 0; i < nuevasLíneas.length; i++) {
+    private void textoConSalto(XWPFParagraph parrafo, XWPFRun texto, String[] nuevasLineas) {
+        for (int i = 0; i < nuevasLineas.length; i++) {
             
-            String textoLinea = nuevasLíneas[i];
-            if (i == nuevasLíneas.length - 1) {
+            String textoLinea = nuevasLineas[i];
+            if (i == nuevasLineas.length - 1) {
                 texto.setText(textoLinea, 0);
                 texto.addCarriageReturn();
             } else {
@@ -353,7 +353,7 @@ public class WordGenerator {
                 newRun.addCarriageReturn();
             }
         }
-    };
+    }
     
     /**
      * 
@@ -424,9 +424,9 @@ public class WordGenerator {
                 /* Comprobamos si hay saltos de línea */
                 String textoPregunta = pregunta.getPregunta();
                 if (textoPregunta.contains("\n")) {
-                    String[] nuevasLíneas = textoPregunta.split("\n");
+                    String[] nuevasLineas = textoPregunta.split("\n");
                     
-                    textoConSalto(parrafo, texto, nuevasLíneas);
+                    textoConSalto(parrafo, texto, nuevasLineas);
                 } else {
                     texto.setText(pregunta.getPregunta());
                 }
@@ -438,7 +438,7 @@ public class WordGenerator {
             parrafo.addRun(texto);
             
             if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                    || pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
+                    || pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
                 crearRespuestaTablaMatriz(doc, pregunta);
             }
         }
@@ -483,7 +483,7 @@ public class WordGenerator {
             filaCabecera.getCell(col).setColor(COLOR_CELDA_TABLA);
         }
         
-        if (pregunta.getTipoRespuesta().startsWith("MATRIZ")) {
+        if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
             // Añado una fila por cada línea de la matriz
             List<ConfiguracionRespuestasCuestionario> valoresFilas = configuracionRespuestaRepository
                     .findFilasBySeccion(pregunta.getTipoRespuesta());

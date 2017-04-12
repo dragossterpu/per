@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.services.LoginService;
 
 /**
@@ -49,14 +50,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
-                .permitAll().antMatchers("/login/**").anonymous().antMatchers("/acceso/**").anonymous()
+                .permitAll().antMatchers(Constantes.RUTA_LOGIN + "/**").anonymous().antMatchers("/acceso/**")
+                .anonymous()
                 // .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
                 .antMatchers("/user*").hasAnyRole().anyRequest().authenticated();
         
-        http.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml", true)
-                .failureUrl("/login");
+        http.formLogin().loginPage(Constantes.RUTA_LOGIN).loginProcessingUrl(Constantes.RUTA_LOGIN)
+                .defaultSuccessUrl("/index.xhtml", true).failureUrl(Constantes.RUTA_LOGIN);
         
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+        http.logout().logoutUrl(Constantes.RUTA_LOGOUT).logoutSuccessUrl(Constantes.RUTA_LOGIN);
         
         // configuración para el manejo de las sessiones de los usuarios
         http.sessionManagement().maximumSessions(MAX_CONCURRENT_USER_SESSIONS).maxSessionsPreventsLogin(true)

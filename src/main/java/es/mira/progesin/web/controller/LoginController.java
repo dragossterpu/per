@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import es.mira.progesin.constantes.Constantes;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,27 +19,25 @@ import lombok.Setter;
 @Controller
 public class LoginController {
     
-    private static final String LOGIN = "login";
-    
-    @RequestMapping(method = RequestMethod.GET, value = "/login")
+    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTA_LOGIN)
     public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
             // JSF ajax request. Return special XML response which instructs JavaScript that it should in turn perform a
             // redirect.
             response.setContentType("text/xml");
             response.getWriter().append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                    .printf("<partial-response><redirect url=\"%s\"></redirect></partial-response>", LOGIN);
+                    .printf("<partial-response><redirect url=\"%s\"></redirect></partial-response>", Constantes.LOGIN);
             return null;
         } else {
             // Normal request. Perform redirect as usual.
-            return LOGIN;
+            return Constantes.LOGIN;
         }
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/logout")
+    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTA_LOGOUT)
     public String logout(HttpSession session) {
         session.invalidate();
-        return LOGIN;
+        return Constantes.LOGIN;
     }
     
 }

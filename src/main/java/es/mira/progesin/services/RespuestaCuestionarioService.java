@@ -19,13 +19,13 @@ import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 public class RespuestaCuestionarioService implements IRespuestaCuestionarioService {
     
     @Autowired
-    IRespuestaCuestionarioRepository respuestaRepository;
+    private IRespuestaCuestionarioRepository respuestaRepository;
     
     @Autowired
-    IDocumentoService documentoService;
+    private IDocumentoService documentoService;
     
     @Autowired
-    private transient ITipoDocumentoRepository tipoDocumentoRepository;
+    private ITipoDocumentoRepository tipoDocumentoRepository;
     
     @Override
     @Transactional(readOnly = false)

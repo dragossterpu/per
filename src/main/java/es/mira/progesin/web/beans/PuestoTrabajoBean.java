@@ -47,10 +47,10 @@ public class PuestoTrabajoBean implements Serializable {
     private String puestoNuevo;
     
     @Autowired
-    IPuestoTrabajoService puestoTrabajoService;
+    private transient IPuestoTrabajoService puestoTrabajoService;
     
     @Autowired
-    IUserService userService;
+    private transient IUserService userService;
     
     /**
      * Eliminación lógica (se pone fecha de baja) de un puesto

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
@@ -32,8 +33,6 @@ import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
 @Service
 public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
-    
-    private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -113,12 +112,12 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "nombre_guia_personalizada", busqueda.getNombre())));
+                    String.format(Constantes.COMPARADORSINACENTOS, "nombre_guia_personalizada", busqueda.getNombre())));
         }
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "USERNAME_CREACION", busqueda.getUsuarioCreacion())));
+            criteria.add(Restrictions.sqlRestriction(String.format(Constantes.COMPARADORSINACENTOS, "USERNAME_CREACION",
+                    busqueda.getUsuarioCreacion())));
         }
         
         if (busqueda.getTipoInspeccion() != null) {

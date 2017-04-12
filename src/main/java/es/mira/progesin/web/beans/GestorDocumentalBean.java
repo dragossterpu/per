@@ -52,17 +52,17 @@ public class GestorDocumentalBean {
     /**
      * Listado de los documentos que se mostrarán en la vista
      */
-    public List<Documento> listadoDocumentos = new ArrayList<>();
+    private List<Documento> listadoDocumentos = new ArrayList<>();
     
     /**
      * Objeto de tipo Documento para el alta de nuevos documentos
      */
-    public Documento documento;
+    private Documento documento;
     
     /**
      * Objeto que contiene los parámetros de búsqueda de documentos
      */
-    public DocumentoBusqueda documentoBusqueda;
+    private DocumentoBusqueda documentoBusqueda;
     
     private StreamedContent file;
     
@@ -73,14 +73,14 @@ public class GestorDocumentalBean {
     /**
      * Lista donde se almacenan las inspecciones que se van a asociar a un documento
      */
-    public List<Inspeccion> listaInspecciones = new ArrayList<>();
+    private List<Inspeccion> listaInspecciones = new ArrayList<>();
     
     /**
      * Mapa que relaciona los documentos y las inspecciones asociadas
      */
-    public Map<Long, String> mapaInspecciones = new HashMap<>();
+    private Map<Long, String> mapaInspecciones = new HashMap<>();
     
-    public Map<Long, Boolean> mapaEdicion = new HashMap<>();
+    private Map<Long, Boolean> mapaEdicion = new HashMap<>();
     
     private List<Boolean> list;
     
@@ -119,7 +119,7 @@ public class GestorDocumentalBean {
     /**
      * Copia del objeto de búsqueda
      */
-    public DocumentoBusqueda documentoBusquedaCopia;
+    private DocumentoBusqueda documentoBusquedaCopia;
     
     // paginador
     
@@ -199,7 +199,7 @@ public class GestorDocumentalBean {
      */
     public void descargarFichero(Documento documento) {
         try {
-            file = documentoService.descargaDocumento(documento);
+            setFile(documentoService.descargaDocumento(documento));
         } catch (Exception e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
@@ -265,7 +265,7 @@ public class GestorDocumentalBean {
         
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
-        numeroRegistros = getCountRegistros();
+        setNumeroRegistros(getCountRegistros());
         numPages = getCountPages(numeroRegistros);
         documentoBusquedaCopia = new DocumentoBusqueda(documentoBusqueda);
         listadoDocumentos = documentoService.buscarGuiaPorCriteria(0, MAX_RESULTS_PAGE, documentoBusquedaCopia);

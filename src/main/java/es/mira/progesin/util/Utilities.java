@@ -3,6 +3,7 @@ package es.mira.progesin.util;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 import es.mira.progesin.constantes.Constantes;
 
@@ -23,32 +24,43 @@ public class Utilities {
         return getPinLetters() + getPinNumber();
     }
     
+    /**
+     * Recupera una cadena de cuatro números al azar
+     * 
+     * @author EZENTIS
+     * @return números
+     */
     public static String getPinNumber() {
-        return getRandomNumber(Constantes.NUMBERS, 4);
+        return getRandomChars(Constantes.NUMBERS, 4);
     }
     
+    /**
+     * Recupera una cadena de cuatro letras al azar
+     * 
+     * @author EZENTIS
+     * @return letras
+     */
     public static String getPinLetters() {
-        return getRandomLetters(Constantes.LETTERS, 4);
+        return getRandomChars(Constantes.LETTERS, 4);
     }
     
-    public static String getRandomNumber(String key, int length) {
-        String pswd = "";
+    /**
+     * Recupera una cadena de caracteres aleatorios a partir de un conjunto de caracteres y una longitud determinada
+     * 
+     * @author EZENTIS
+     * @param key cadena de caracteres posibles
+     * @param length número de caracteres deseados
+     * @return cadena de caracteres elegidos
+     */
+    public static String getRandomChars(String key, int length) {
+        StringBuilder pswd = new StringBuilder();
+        Random r = new Random();
         
         for (int i = 0; i < length; i++) {
-            pswd += (key.charAt((int) (Math.random() * key.length())));
+            pswd.append(key.charAt(r.nextInt(key.length())));
         }
         
-        return pswd;
-    }
-    
-    public static String getRandomLetters(String key, int length) {
-        String pswd = "";
-        
-        for (int i = 0; i < length; i++) {
-            pswd += (key.charAt((int) (Math.random() * key.length())));
-        }
-        
-        return pswd;
+        return pswd.toString();
     }
     
     // ************* Generating new password Progesin END ********************//
@@ -73,22 +85,4 @@ public class Utilities {
         return sdf.format(date);
     }
     
-    // ************* Descripcion message error Progesin ********************
-    /**
-     * Añade ceros a la izquierda de un string
-     * 
-     * @param s
-     * @param length
-     * @return result
-     */
-    public static String leadingZeros(String s, int length) {
-        String result;
-        
-        if (s.length() >= length)
-            result = s;
-        else
-            result = String.format("%0" + (length - s.length()) + "d%s", 0, s);
-        
-        return result;
-    }
 }

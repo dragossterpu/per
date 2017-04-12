@@ -106,7 +106,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void buscarCuestionario() {
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
-        numeroRegistros = getCountRegistrosCuestionario();
+        setNumeroRegistros(getCountRegistrosCuestionario());
         numPages = getCountPagesCuestionario(numeroRegistros);
         
         cuestionarioEnviadoBusquedaCopia = copiaCuestionarioEnviadoBusqueda(cuestionarioEnviadoBusqueda);
@@ -202,7 +202,8 @@ public class CuestionarioEnviadoBean implements Serializable {
             List<RespuestaCuestionario> listaRespuestasValidadasAnteriormente = new ArrayList<>();
             Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas = visualizarCuestionario
                     .getMapaValidacionRespuestas();
-            for (RespuestaCuestionario respuesta : listaRespuestasTotales) {
+            
+            listaRespuestasTotales.forEach(respuesta -> {
                 if (mapaValidacionRespuestas.get(respuesta.getRespuestaId().getPregunta())) {
                     if (respuesta.getFechaValidacion() == null) {
                         respuesta.setUsernameValidacion(usuarioActual);
@@ -212,7 +213,8 @@ public class CuestionarioEnviadoBean implements Serializable {
                         listaRespuestasValidadasAnteriormente.add(respuesta);
                     }
                 }
-            }
+            });
+            
             if (listaRespuestasValidadas.isEmpty() == Boolean.FALSE) {
                 respuestaRepository.save(listaRespuestasValidadas);
                 respuestaRepository.flush();

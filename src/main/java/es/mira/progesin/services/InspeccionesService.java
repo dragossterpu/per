@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -25,8 +26,6 @@ import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 @Service
 public class InspeccionesService implements IInspeccionesService {
-    
-    private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
     
     private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
@@ -160,8 +159,8 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "this_.username_alta", busqueda.getUsuarioCreacion())));
+            criteria.add(Restrictions.sqlRestriction(String.format(Constantes.COMPARADORSINACENTOS,
+                    "this_.username_alta", busqueda.getUsuarioCreacion())));
         }
         
         if (busqueda.getTipoInspeccion() != null) {
@@ -174,7 +173,7 @@ public class InspeccionesService implements IInspeccionesService {
         
         if (busqueda.getNombreUnidad() != null && !busqueda.getNombreUnidad().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "this_.nombre_unidad", busqueda.getNombreUnidad())));
+                    String.format(Constantes.COMPARADORSINACENTOS, "this_.nombre_unidad", busqueda.getNombreUnidad())));
         }
         
         if (busqueda.getCuatrimestre() != null) {

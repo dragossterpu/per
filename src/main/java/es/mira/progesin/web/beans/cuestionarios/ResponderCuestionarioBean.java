@@ -196,10 +196,8 @@ public class ResponderCuestionarioBean implements Serializable {
     
     private void comprobarAsignaciones() {
         principalControlaTodasAreas = true;
-        listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
-            principalControlaTodasAreas = principalControlaTodasAreas
-                    && visualizarCuestionario.getUsuarioActual().getUsername().equals(areaUsuario.getUsernameProv());
-        });
+        listaAreasUsuarioCuestEnv.forEach(areaUsuario -> principalControlaTodasAreas = principalControlaTodasAreas
+                && visualizarCuestionario.getUsuarioActual().getUsername().equals(areaUsuario.getUsernameProv()));
     }
     
     private RespuestaCuestionario crearRespuesta(PreguntasCuestionario pregunta) {
@@ -417,8 +415,6 @@ public class ResponderCuestionarioBean implements Serializable {
             
             listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.save(listaAreasUsuarioCuestEnv);
             if (listaAreasUsuarioCuestEnv != null) {
-                // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
-                // "Guardado con éxito, su contribución al cuestionario ha finalizado.");
                 RequestContext context = RequestContext.getCurrentInstance();
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cumplimentación",
                         "Guardado con éxito, su contribución al cuestionario ha finalizado.");
@@ -444,9 +440,8 @@ public class ResponderCuestionarioBean implements Serializable {
     public void generarMapaAreaUsuarioCuestEnv() {
         mapaAreaUsuarioCuestEnv = new HashMap<>();
         
-        listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
-            mapaAreaUsuarioCuestEnv.put(areaUsuario.getIdArea(), areaUsuario.getUsernameProv());
-        });
+        listaAreasUsuarioCuestEnv.forEach(
+                areaUsuario -> mapaAreaUsuarioCuestEnv.put(areaUsuario.getIdArea(), areaUsuario.getUsernameProv()));
         
     }
 }

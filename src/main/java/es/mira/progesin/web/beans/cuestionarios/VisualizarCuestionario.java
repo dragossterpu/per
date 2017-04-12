@@ -140,22 +140,22 @@ public class VisualizarCuestionario implements Serializable {
      */
     public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
         this.setCuestionarioEnviado(cuestionarioEnviado);
-        mapaRespuestas = new HashMap<>();
-        mapaRespuestasTabla = new HashMap<>();
-        mapaDocumentos = new HashMap<>();
-        mapaRespuestasTablaAux = new HashMap<>();
-        mapaValidacionAreas = new HashMap<>();
-        mapaValidacionRespuestas = new HashMap<>();
+        setMapaRespuestas(new HashMap<>());
+        setMapaRespuestasTabla(new HashMap<>());
+        setMapaDocumentos(new HashMap<>());
+        setMapaRespuestasTablaAux(new HashMap<>());
+        setMapaValidacionAreas(new HashMap<>());
+        setMapaValidacionRespuestas(new HashMap<>());
         
         // Para inspectores se recuperan todas las respuestas
         // Para usuarios provisionales sólo las no validadas, todas si es el principal y sólo las que tengan asignadas
         // para el resto
         if (esUsuarioProvisional) {
-            listaRespuestas = respuestaRepository
+            setListaRespuestas(respuestaRepository
                     .findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNullAndRespuestaIdPreguntaAreaIn(
-                            cuestionarioEnviado, listaAreasVisualizarUsuario);
+                            cuestionarioEnviado, listaAreasVisualizarUsuario));
         } else {
-            listaRespuestas = respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+            setListaRespuestas(respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado));
         }
         
         listaRespuestas.forEach(respuesta -> {
@@ -321,7 +321,7 @@ public class VisualizarCuestionario implements Serializable {
     
     public void descargarFichero(Documento documento) {
         try {
-            file = documentoService.descargaDocumento(documento);
+            setFile(documentoService.descargaDocumento(documento));
         } catch (Exception e) {
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
@@ -349,7 +349,7 @@ public class VisualizarCuestionario implements Serializable {
     
     @PostConstruct
     public void init() {
-        usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        setUsuarioActual((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         esUsuarioProvisional = RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole());
     }
     

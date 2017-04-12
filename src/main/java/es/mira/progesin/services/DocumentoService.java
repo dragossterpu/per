@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.xml.sax.ContentHandler;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -440,7 +441,6 @@ public class DocumentoService implements IDocumentoService {
     
     private void creaCriteria(DocumentoBusqueda busqueda, Criteria criteria) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
         
         if (busqueda.getFechaDesde() != null) {
             /**
@@ -459,8 +459,8 @@ public class DocumentoService implements IDocumentoService {
                     .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
         }
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "this_.nombre", busqueda.getNombre())));
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(Constantes.COMPARADORSINACENTOS, "this_.nombre", busqueda.getNombre())));
         }
         
         if (busqueda.getTipoDocumento() != null) {
@@ -489,7 +489,7 @@ public class DocumentoService implements IDocumentoService {
         
         if (busqueda.getDescripcion() != null) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "this_.descripcion", busqueda.getDescripcion())));
+                    String.format(Constantes.COMPARADORSINACENTOS, "this_.descripcion", busqueda.getDescripcion())));
         }
         
         criteria.addOrder(Order.desc("fechaAlta"));

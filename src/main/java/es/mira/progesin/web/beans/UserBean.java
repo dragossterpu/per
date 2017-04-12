@@ -311,10 +311,10 @@ public class UserBean {
         this.cuerposEstado = (List<CuerpoEstado>) cuerposEstadoService.findAll();
         this.puestosTrabajo = applicationBean.getListaPuestosTrabajo();
         
-        listaDepartamentos = (List<Departamento>) departamentoRepository.findAll();
+        setListaDepartamentos((List<Departamento>) departamentoRepository.findAll());
         
         TypedQuery<ClaseUsuario> queryClase = em.createNamedQuery("ClaseUsuario.findAll", ClaseUsuario.class);
-        listadoClases = queryClase.getResultList();
+        setListadoClases(queryClase.getResultList());
         
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         this.puestoTrabajoSeleccionado = null;
@@ -332,7 +332,7 @@ public class UserBean {
         CuerpoEstado cuerpo = this.cuerpoEstadoSeleccionado != null ? this.cuerpoEstadoSeleccionado
                 : this.user.getCuerpoEstado();
         queryEmpleo.setParameter("cuerpoSeleccionado", cuerpo);
-        listaEmpleos = queryEmpleo.getResultList();
+        setListaEmpleos(queryEmpleo.getResultList());
     }
     
     private void auditoriaBusqueda(UserBusqueda usuario) {

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -38,10 +39,6 @@ public class UserService implements IUserService {
     
     // Obligado por sonar
     private static final String FECHA_ALTA = "fechaAlta";
-    
-    // "upper(convert(replace(CAMPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"+ VALOR + "', ' ', '')
-    // || '%', 'US7ASCII'))"
-    private static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -139,20 +136,20 @@ public class UserService implements IUserService {
         }
         
         if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "nombre", userBusqueda.getNombre())));
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(Constantes.COMPARADORSINACENTOS, "nombre", userBusqueda.getNombre())));
         }
         if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "PRIM_APELLIDO", userBusqueda.getApellido1())));
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(Constantes.COMPARADORSINACENTOS, "PRIM_APELLIDO", userBusqueda.getApellido1())));
         }
         if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
-                    String.format(COMPARADORSINACENTOS, "SEGUNDO_APELLIDO", userBusqueda.getApellido2())));
+                    String.format(Constantes.COMPARADORSINACENTOS, "SEGUNDO_APELLIDO", userBusqueda.getApellido2())));
         }
         if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-            criteria.add(Restrictions
-                    .sqlRestriction(String.format(COMPARADORSINACENTOS, "USERNAME", userBusqueda.getUsername())));
+            criteria.add(Restrictions.sqlRestriction(
+                    String.format(Constantes.COMPARADORSINACENTOS, "USERNAME", userBusqueda.getUsername())));
         }
         if (userBusqueda.getCuerpoEstado() != null) {
             criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
@@ -169,8 +166,8 @@ public class UserService implements IUserService {
         
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_ADMIN.equals(usuarioActual.getRole()) == Boolean.FALSE) {
-            criteria.add(Restrictions.not(
-                    Restrictions.in("role", new RoleEnum[] { RoleEnum.ROLE_PROV_SOLICITUD, RoleEnum.ROLE_PROV_CUESTIONARIO })));
+            criteria.add(Restrictions.not(Restrictions.in("role",
+                    new RoleEnum[] { RoleEnum.ROLE_PROV_SOLICITUD, RoleEnum.ROLE_PROV_CUESTIONARIO })));
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
