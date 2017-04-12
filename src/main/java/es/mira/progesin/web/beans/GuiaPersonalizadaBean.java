@@ -86,7 +86,7 @@ public class GuiaPersonalizadaBean {
     public void buscarGuia() {
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
-        numeroRegistros = getCountRegistrosGuia();
+        setNumeroRegistros(getCountRegistrosGuia());
         numPages = getCountPagesGuia(numeroRegistros);
         guiaPersonalizadaBusquedaCopia = copiaGuiaBusqueda(guiaPersonalizadaBusqueda);
         List<GuiaPersonalizada> listaGuias = guiaPersonalizadaService.buscarGuiaPorCriteria(0, MAX_RESULTS_PAGE,
@@ -105,7 +105,7 @@ public class GuiaPersonalizadaBean {
     
     public String visualizaGuia(GuiaPersonalizada guiaPersonalizada) {
         this.guiaPersonalizada = guiaPersonalizada;
-        listaPasos = guiaPersonalizadaService.listaPasos(guiaPersonalizada);
+        setListaPasos(guiaPersonalizadaService.listaPasos(guiaPersonalizada));
         return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
     }
     
@@ -154,10 +154,11 @@ public class GuiaPersonalizadaBean {
     @PostConstruct
     public void init() {
         guiaPersonalizadaBusqueda = new GuiaPersonalizadaBusqueda();
-        list = new ArrayList<>();
+        List<Boolean> lista = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {
-            list.add(Boolean.TRUE);
+            lista.add(Boolean.TRUE);
         }
+        setList(lista);
     }
     
     /*********************************************************

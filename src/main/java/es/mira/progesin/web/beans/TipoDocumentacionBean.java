@@ -100,7 +100,7 @@ public class TipoDocumentacionBean implements Serializable {
     public void init() throws MessagingException {
         listaTipoDocumentacion = tipoDocumentacionService.findAll();
         Map<String, String> mapaExtensiones = applicationBean.getMapaParametros().get("extensiones");
-        listaExtensionesPosibles = new ArrayList<>(mapaExtensiones.keySet());
+        setListaExtensionesPosibles(new ArrayList<>(mapaExtensiones.keySet()));
     }
     
     /**

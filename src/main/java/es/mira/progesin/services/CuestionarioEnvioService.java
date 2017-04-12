@@ -32,13 +32,11 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
-import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
-import es.mira.progesin.util.CorreoException;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
@@ -90,9 +88,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Autowired
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
-    @Autowired
-    private transient IConfiguracionRespuestasCuestionarioRepository configRespuestas;
-    
     @Override
     public CuestionarioEnvio findByInspeccion(Inspeccion inspeccion) {
         return cuestionarioEnvioRepository.findByInspeccion(inspeccion);
@@ -101,7 +96,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
-            String cuerpoCorreo) throws CorreoException {
+            String cuerpoCorreo) {
         userRepository.save(listadoUsuariosProvisionales);
         CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioRepository.save(cuestionarioEnvio);
         List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnviado,
