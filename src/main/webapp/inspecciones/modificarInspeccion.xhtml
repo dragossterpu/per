@@ -20,17 +20,18 @@
 						<p:inputText  id="numero" value="#{inspeccionBean.inspeccion.numero}" converter="#{trimConverter}" disabled="true"/>
 						
 						<h:outputLabel for="anio" value="Año (*):" />
-						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  maxValue="9999" decimalPlaces="0" thousandSeparator="" maxlength="4"/>						
+						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  
+							maxValue="9999" decimalPlaces="0" thousandSeparator="" maxlength="4" required="true" 
+							requiredMessage="Debe introducir un año"/>						
 						<p:messages for="anio" autoUpdate="true"  closable="true" />
 						
-						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección (*):" />
+						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección:" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
 								var="ambitos" allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu  required="true" requiredMessage="Debe seleccionar un ámbito"
+						<p:selectOneMenu 
 							value="#{inspeccionBean.inspeccion.ambito}"
 							id="ambitoInspeccionSelect">
-							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{ambitos.ALL_ENUM_VALUES}"
 								var="ambito"
 								itemLabel="#{ambito.descripcion}"
@@ -38,11 +39,10 @@
 						</p:selectOneMenu>
 						<p:messages for="ambitoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion (*):" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un tipo de inspección"
+						<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
-							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
 								var="tipo"
 								itemLabel="#{tipo.descripcion}"
@@ -57,15 +57,15 @@
 						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.estadoInspeccion}"
 							id="estadoInspeccionSelect">
-							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{estados.ALL_ENUM_VALUES}"
 								var="estado"
 								itemLabel="#{estado.descripcion}"
 								itemValue="#{estado}" />
 						</p:selectOneMenu>
 						
-						<h:outputLabel for="fechaPrevista" value="Fecha prevista:" />
-						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" mindate="#{currentDate}" value="#{inspeccionBean.inspeccion.fechaPrevista}"/>
+						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
+						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" mindate="#{currentDate}" 
+							value="#{inspeccionBean.inspeccion.fechaPrevista}" required="true" requiredMessage="Debe seleccionar una fecha"/>
 						
 						<h:outputLabel for="equipoSelect" value="Equipo(*):" />
 						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un equipo"
@@ -85,7 +85,6 @@
 						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.cuatrimestre}"
 							id="cuatrimestreInspeccionSelect">
-							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}"
 								var="cuatrimestre"
 								itemLabel="#{cuatrimestre.descripcion}"
@@ -105,15 +104,15 @@
 						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.tipoUnidad}"
 							id="tipoUnidadSelect" converter="#{selectConverter}">
-							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{applicationBean.listaTiposUnidad}"
 								var="tipo"
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />
 						</p:selectOneMenu>
 						
-						<h:outputLabel for="nombreUnidad" value="Nombre de unidad:" />
-						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" maxlength="255"/>	
+						<h:outputLabel for="nombreUnidad" value="Nombre de unidad (*):" />
+						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" 
+							maxlength="255" required="true" requiredMessage="Debe introducir un nombre"/>	
 						
 						<h:outputLabel for="provinciasSelect" value="Provincia:" />
 						<p:selectOneMenu
@@ -128,50 +127,22 @@
 								var="provincia"
 								itemLabel="#{provincia.provincia}"
 								itemValue="#{provincia}" />
-							<f:ajax event="change" execute="@form" render="municipiosSelect"/>
+							<p:ajax update=":formAlta:municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
 						</p:selectOneMenu>
 						
-						<h:outputLabel for="municipiosSelect" value="Municipio:" />
-						<p:selectOneMenu
+						<h:outputLabel for="municipiosSelect" value="Municipio (*):" />
+						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un municipio"
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
 							filter="true" 
 							filterMatchMode="startsWith" 
 							converter="#{selectConverter}">
-							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItem itemLabel="Todos" itemValue=""/>
 							<f:selectItems value="#{inspeccionBean.listaMunicipios}"
 								var="municipio"
 								itemLabel="#{municipio.name}"
 								itemValue="#{municipio}" />
-						</p:selectOneMenu>
-						
-						<p:dataTable id="tablaInspecciones" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
-						        <f:facet name="cabecera">
-						        	Inspecciones
-						        </f:facet>
-						        <p:column>
-							        <h:outputText value=" #{inspeccion.numero}" />
-							    </p:column>
-							    <p:column styleClass="botonTabla">
-									<p:commandButton title="Desasociar" icon="fa fa-trash" 
-										 actionListener="#{inspeccionBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
-										<p:confirm header="Desasociar inspección"
-											message="¿Está seguro que desea desasociar esta inspección?"
-											icon="fa fa-warning-sign" />
-									</p:commandButton>
-								</p:column>
-								<f:facet name="footer">
-									<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{inspeccionBean.autocompletarInspeccion}"
-										var="inspeccion" itemLabel="#{inspeccion.numero}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-										onfocus="if (this.value == ' - '){this.value = '';}" queryDelay="1000">
-									</p:autoComplete>
-									<p:commandButton value="Asociar inspección" actionListener="#{inspeccionBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones">
-										<p:resetInput target="infoInspeccion" />
-									</p:commandButton>
-								</f:facet>
-								    
-						   </p:dataTable>
-						
+						</p:selectOneMenu>	
 					</div>	
 
 		</div>

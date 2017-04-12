@@ -54,8 +54,6 @@ public class InspeccionBusqueda implements Serializable {
     
     private TipoUnidad tipoUnidad;
     
-    private long paginaActual;
-    
     /**
      * Limpia los valores del objeto
      * 

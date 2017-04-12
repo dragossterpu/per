@@ -2,25 +2,24 @@ package es.mira.progesin.services;
 
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
@@ -72,25 +71,6 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public Inspeccion findInspeccionById(Long id) {
         return inspeccionesRepository.findOne(id);
-    }
-    
-    @Override
-    public void anular(Inspeccion inspeccion) {
-        inspeccion.setFechaBaja(new Date());
-        inspeccion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-        try {
-            if (inspeccionesRepository.save(inspeccion) != null) {
-                String descripcion = "Anulacion de la inspección " + inspeccion.getNumero() + " realizada corretamente";
-                
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.INSPECCION.name());
-            }
-        } catch (Exception e) {
-            // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
-        }
-        
     }
     
     @Override
@@ -193,27 +173,31 @@ public class InspeccionesService implements IInspeccionesService {
         if (busqueda.getEstado() != null) {
             criteria.add(Restrictions.eq("estadoInspeccion", busqueda.getEstado()));
         }
+        
+        // criteria.createAlias("municipio.provincia", "provincia"); // inner join
         criteria.createAlias("inspeccion.municipio", "municipio"); // inner join
-        criteria.createAlias("municipio.provincia", "provincia"); // inner join
-        if (busqueda.getProvincia() != null && !busqueda.getProvincia().getCodigo().equals("00")) {
-            criteria.add(Restrictions.eq("provincia", busqueda.getProvincia()));
+        if (busqueda.getMunicipio() != null) {
+            criteria.add(Restrictions.eq("municipio", busqueda.getMunicipio()));
+        } else if (busqueda.getProvincia() != null) {
+            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
+            subquery.add(Restrictions.eq("munic.provincia", busqueda.getProvincia()));
+            subquery.setProjection(Projections.property("munic.id"));
+            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
         }
         
         if (busqueda.getTipoUnidad() != null) {
             criteria.add(Restrictions.eq("tipoUnidad", busqueda.getTipoUnidad()));
         }
         
-        if (busqueda.getMunicipio() != null) {
-            criteria.add(Restrictions.eq("municipio", busqueda.getMunicipio()));
-        }
         criteria.add(Restrictions.isNull("fechaBaja"));
     }
     
-    @Override
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(String infoInspeccion, Long paramLong) {
-        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto("%" + infoInspeccion + "%",
-                paramLong);
-    }
+    // @Override
+    // public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(String infoInspeccion, Long paramLong)
+    // {
+    // return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto("%" + infoInspeccion + "%",
+    // paramLong);
+    // }
     
     @Override
     public List<Inspeccion> listaInspecciones(Inspeccion inspeccion) {

@@ -116,8 +116,8 @@
 				<h:outputLabel for="jefeEquipoInspeccion" value="Jefe del equipo:" />
 				<p:inputText  id="jefeEquipoInspeccion" value="#{inspeccionBean.inspeccionBusqueda.jefeEquipo}" converter="#{trimConverter}"/>
 					
-				<h:outputLabel for="username" value="Nombre de usuario:" />
-				<p:inputText id="username" value="#{inspeccionBean.inspeccionBusqueda.usuarioCreacion}" converter="#{trimConverter}"/>
+				<h:outputLabel for="usernameAlta" value="Inspector originador:" />
+				<p:inputText id="usernameAlta" value="#{inspeccionBean.inspeccionBusqueda.usuarioCreacion}" converter="#{trimConverter}"/>
 				
 				<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
 				<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{inspeccionBean.inspeccionBusqueda.fechaDesde}"/>
@@ -189,10 +189,11 @@
                         paginatorTemplate="{Anterior} {Pagina} {Posterior} {RowsPerPageDropdown}" 
                         resizableColumns="true"
                         draggableColumns="true" 
-                  	    rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}" >
-                 
-                 <p:ajax event="sort" listener="#{inspeccionBean.onSort}" update="tablaInspecciones"/>
-
+                        rowStyleClass="#{not empty inspeccion.fechaAnulacion ? 'anulado' : null}"
+                  	    rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}">
+                 				                
+                 <p:ajax event="sort" listener="#{inspeccionBean.onSort}"  update="tablaInspecciones" skipChildren="true"/>
+							
                  <f:facet name="{Anterior}">
 					<h:commandLink title="Anterior(es)" actionListener="#{inspeccionBean.previousInspeccion}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
 							<f:ajax execute="@form" render="@form" />
@@ -218,30 +219,54 @@
 					<h:outputText value="#{inspeccion.numero}" />
 				</p:column>
 				
-				<p:column headerText="Fecha prev." sortBy="#{inspeccion.fechaPrevista}" width="50" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}">
-					<h:outputText value="#{inspeccion.fechaPrevista}">
+				<p:column headerText="Fecha" sortBy="#{inspeccion.fechaAlta}" width="50" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}">
+					<h:outputText value="#{inspeccion.fechaAlta}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</h:outputText>
 				</p:column>
 				
-				<p:column headerText="Tipo" sortBy="#{inspeccion.tipoInspeccion.codigo}" width="100" visible="#{inspeccionBean.list[2]}" exportable="#{inspeccionBean.list[2]}">
-					<h:outputText value="#{inspeccion.tipoInspeccion.codigo}" />
+				<p:column headerText="Originador" sortBy="#{inspeccion.usernameAlta}" width="50" visible="#{inspeccionBean.list[2]}" exportable="#{inspeccionBean.list[2]}" >
+					<h:outputText value="#{inspeccion.usernameAlta}" />
 				</p:column>
 				
-				<p:column headerText="Equipo" sortBy="#{inspeccion.equipo.nombreEquipo}" width="50" visible="#{inspeccionBean.list[3]}" exportable="#{inspeccionBean.list[3]}">
+				<p:column headerText="Equipo" sortBy="#{inspeccion.equipo.nombreEquipo}" width="50" visible="#{inspeccionBean.list[3]}" exportable="#{inspeccionBean.list[3]}" >
 					<h:outputText value="#{inspeccion.equipo.nombreEquipo}" />
 				</p:column>
 				
-				<p:column headerText="Cuatrimestre" sortBy="#{inspeccion.cuatrimestre}" width="50" visible="#{inspeccionBean.list[4]}" exportable="#{inspeccionBean.list[4]}">
+				<p:column headerText="Jefe" sortBy="#{inspeccion.equipo.jefeEquipo}" width="50" visible="#{inspeccionBean.list[4]}" exportable="#{inspeccionBean.list[4]}" >
+					<h:outputText value="#{inspeccion.equipo.jefeEquipo}" />
+				</p:column>
+				
+				<p:column headerText="Cuatrimestre" sortBy="#{inspeccion.cuatrimestre}" width="50" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}">
 					<h:outputText value="#{inspeccion.cuatrimestre}" />
 				</p:column>
 				
-				<p:column headerText="Ámbito" sortBy="#{inspeccion.ambito}" width="50" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}">
+				<p:column headerText="Ámbito" sortBy="#{inspeccion.ambito}" width="50" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">
 					<h:outputText value="#{inspeccion.ambito}" />
 				</p:column>
 				
-				<p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion.descripcion}" width="50" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">
+				<p:column headerText="Tipo" sortBy="#{inspeccion.tipoInspeccion.codigo}" width="100" visible="#{inspeccionBean.list[7]}" exportable="#{inspeccionBean.list[7]}">
+					<h:outputText value="#{inspeccion.tipoInspeccion.codigo}" />
+				</p:column>
+			
+				<p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion.descripcion}" width="50" visible="#{inspeccionBean.list[8]}" exportable="#{inspeccionBean.list[8]}">
 					<h:outputText value="#{inspeccion.estadoInspeccion.descripcion}" />
+				</p:column>
+				
+				<p:column headerText="Tipo unid." sortBy="#{inspeccion.tipoUnidad.descripcion}" width="50" visible="#{inspeccionBean.list[9]}" exportable="#{inspeccionBean.list[9]}">
+					<h:outputText value="#{inspeccion.tipoUnidad.descripcion}" />
+				</p:column>
+				
+				<p:column headerText="Nombre unid." sortBy="#{inspeccion.nombreUnidad}" width="50" visible="#{inspeccionBean.list[10]}" exportable="#{inspeccionBean.list[10]}">
+					<h:outputText value="#{inspeccion.nombreUnidad}" />
+				</p:column>
+				
+				<p:column headerText="Municipio" sortBy="#{inspeccion.municipio.name}" width="50" visible="#{inspeccionBean.list[11]}" exportable="#{inspeccionBean.list[11]}">
+					<h:outputText value="#{inspeccion.municipio.name}" />
+				</p:column>
+				
+				<p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia.provincia}" width="50" visible="#{inspeccionBean.list[12]}" exportable="#{inspeccionBean.list[12]}">
+					<h:outputText value="#{inspeccion.municipio.provincia.provincia}" />
 				</p:column>
 				
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false">
@@ -251,9 +276,21 @@
 					<h:commandLink title="Modificar inspección" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.getFormModificarInspeccion(inspeccion)}" 
 					update="tablaInspecciones" rendered="#{esAdmin}" />
 				</p:column>
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false">
-					<p:commandButton title="Anular inspección" icon="fa fa-trash-o" update="tablaInspecciones" actionListener="#{inspeccionBean.anular(inspeccion)}">
-						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección" icon="fa fa-warning-sign" />
+<!-- 				<p:column styleClass="botonTabla" exportable="false" toggleable="false"> -->
+<!-- 					<p:commandButton title="Anular inspección" icon="fa fa-trash-o" update="tablaInspecciones" actionListener="#{inspeccionBean.anular(inspeccion)}"> -->
+<!-- 						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección" icon="fa fa-warning-sign" /> -->
+<!-- 					</p:commandButton> -->
+<!-- 				</p:column> -->
+				
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
+					<p:commandButton title="Anular inspección" icon="fa fa-toggle-on" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones" rendered="#{esAdmin and empty inspeccion.fechaAnulacion}">
+						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección?" icon="fa fa-warning-sign"/>
+					</p:commandButton>
+					<p:commandButton title="Activar inspección" icon="fa fa-toggle-off"  actionListener="#{inspeccionBean.activa(inspeccion)}" rendered="#{esAdmin and not empty inspeccion.fechaAnulacion}" update="tablaInspecciones"/>
+				</p:column>
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
+					<p:commandButton title="Eliminar inspección" icon="fa fa-trash" actionListener="#{inspeccionBean.eliminar(inspeccion)}" update="tablaInspecciones">
+						<p:confirm header="Eliminar inspección" message="¿Está seguro que desea eliminar la inspección?" icon="fa fa-warning-sign"/>
 					</p:commandButton>
 				</p:column>
 				

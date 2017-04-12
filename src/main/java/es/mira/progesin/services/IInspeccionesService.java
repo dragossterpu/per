@@ -23,7 +23,7 @@ public interface IInspeccionesService {
     /**
      * Busca inspecciones no finalizadas por nombre de unidad o número no coincidente con el id parametrizado.
      */
-    List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(String infoInspeccion, Long paramLong);
+    // List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(String infoInspeccion, Long paramLong);
     
     /**
      * Busca inspecciones no finalizadas por nombre de unidad o número en las que el usuario sea jefe del equipo
@@ -38,8 +38,6 @@ public interface IInspeccionesService {
     
     public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
             List<Order> listaOrden);
-    
-    public void anular(Inspeccion inspeccion);
     
     public List<Inspeccion> listaInspecciones(Inspeccion inspeccion);
     

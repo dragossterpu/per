@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import org.hibernate.criterion.Order;
 import org.primefaces.event.data.SortEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Equipo;
@@ -29,6 +31,10 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author EZENTIS
+ *
+ */
 @Setter
 @Getter
 @Controller("inspeccionBean")
@@ -85,23 +91,29 @@ public class InspeccionBean {
     
     private boolean sortOrder;
     
+    int first = 1;
+    
     /**************************************************************
      * 
-     * Busca las guías según los filtros introducidos en el formulario de búsqueda
+     * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
+     * de la tabla y con el orden por defecto
      * 
      **************************************************************/
     public void buscarInspeccion() {
         listaOrden = new ArrayList<>();
         listaOrden.add(Order.desc("fechaAlta"));
-        buscarConOrden(listaOrden);
+        primerRegistro = 0;
+        actualPage = FIRST_PAGE;
+        buscarConOrden(listaOrden, primerRegistro, actualPage);
     }
     
     /**************************************************************
      * 
-     * Busca las guías según los filtros introducidos en el formulario de búsqueda
+     * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda
      * 
      **************************************************************/
-    private void buscarConOrden(List<Order> listaOrden) {
+    private void buscarConOrden(List<Order> listaOrden, int primerResgistro, long actualPage) {
+        inspeccionBusqueda.setProvincia(provinciSelec);
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
         setNumeroRegistros(getCountRegistrosInspecciones());
@@ -115,7 +127,7 @@ public class InspeccionBean {
     
     /*********************************************************
      * 
-     * Visualiza la guía personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección"
+     * Visualiza la inspeccion personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección"
      * 
      * @param inspeccion
      * @return String
@@ -137,16 +149,17 @@ public class InspeccionBean {
     
     public void limpiarBusqueda() {
         inspeccionBusqueda.resetValues();
+        setProvinciSelec(null);
     }
     
     /**
-     * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para mostrar
-     * correctamente la página (cuerpos de estado, puestos de trabajo, usuario nuevo). Se llama desde la página de
-     * búsqueda de usuarios.
+     * Método que nos lleva al formulario de alta de nueva inspección, inicializando todo lo necesario para mostrar
+     * correctamente la página. Se llama desde la página de búsqueda de inspecciones.
      * @return
      */
     public String nuevaInspeccion() {
         setProvinciSelec(null);
+        setListaMunicipios(null);
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         listaInspeccionesAsociadas = new ArrayList<>();
@@ -178,20 +191,6 @@ public class InspeccionBean {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
         return null;
-    }
-    
-    /*********************************************************
-     * 
-     * Anula una guía personalizada pasada como parámetro.
-     * 
-     * @param guiaPersonalizada
-     * 
-     *********************************************************/
-    
-    public void anular(Inspeccion inspeccion) {
-        this.inspeccion = inspeccion;
-        inspeccionesService.anular(inspeccion);
-        buscarConOrden(listaOrden);
     }
     
     /**
@@ -256,7 +255,7 @@ public class InspeccionBean {
         setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
         setList(new ArrayList<>());
-        for (int i = 0; i <= 8; i++) {
+        for (int i = 0; i <= 13; i++) {
             list.add(Boolean.TRUE);
         }
     }
@@ -269,7 +268,7 @@ public class InspeccionBean {
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            // setProvinciSelec(null);
+            setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
         }
@@ -364,14 +363,19 @@ public class InspeccionBean {
         return inspeccionCopia;
     }
     
+    /**
+     * 
+     */
     public void onChangeProvincia() {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
-        // Provincia provinciaSeleccionada = this.provinciSelec != null ? this.provinciSelec
-        // : this.inspeccion.getMunicipio().getProvincia();
         queryEmpleo.setParameter("provinciaSeleccionada", this.provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
+        
     }
     
+    /**
+     * @param event
+     */
     public void onSort(SortEvent event) {
         String columna = event.getSortColumn().getHeaderText();
         setSortOrder(event.isAscending());
@@ -386,12 +390,20 @@ public class InspeccionBean {
                 listaOrden.add(Order.desc("anio"));
             }
             
-        } else if ("Fecha prev.".equals(columna)) {
+        } else if ("Fecha".equals(columna)) {
             listaOrden = new ArrayList<>();
             if (sortOrder) {
-                listaOrden.add(Order.asc("fechaPrevista"));
+                listaOrden.add(Order.asc("fechaAlta"));
             } else {
-                listaOrden.add(Order.desc("fechaPrevista"));
+                listaOrden.add(Order.desc("fechaAlta"));
+            }
+            
+        } else if ("Originador".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("usernameAlta"));
+            } else {
+                listaOrden.add(Order.desc("usernameAlta"));
             }
             
         } else if ("Tipo".equals(columna)) {
@@ -410,6 +422,14 @@ public class InspeccionBean {
                 listaOrden.add(Order.desc("equipo.nombreEquipo"));
             }
             
+        } else if ("Jefe".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("equipo.jefeEquipo"));
+            } else {
+                listaOrden.add(Order.desc("equipo.jefeEquipo"));
+            }
+            
         } else if ("Cuatrimestre".equals(columna)) {
             listaOrden = new ArrayList<>();
             if (sortOrder) {
@@ -426,6 +446,14 @@ public class InspeccionBean {
                 listaOrden.add(Order.desc("ambito"));
             }
             
+        } else if ("Tipo".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("tipoInspeccion"));
+            } else {
+                listaOrden.add(Order.desc("tipoInspeccion"));
+            }
+            
         } else if ("Estado".equals(columna)) {
             listaOrden = new ArrayList<>();
             if (sortOrder) {
@@ -433,9 +461,43 @@ public class InspeccionBean {
             } else {
                 listaOrden.add(Order.desc("estadoInspeccion"));
             }
+            
+        } else if ("Tipo unid.".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("tipoUnidad"));
+            } else {
+                listaOrden.add(Order.desc("tipoUnidad"));
+            }
+            
+        } else if ("Nombre unid.".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("nombreUnidad"));
+            } else {
+                listaOrden.add(Order.desc("nombreUnidad"));
+            }
+            
+        } else if ("Municipio".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("municipio"));
+            } else {
+                listaOrden.add(Order.desc("municipio"));
+            }
+            
+        } else if ("Provincia".equals(columna)) {
+            listaOrden = new ArrayList<>();
+            if (sortOrder) {
+                listaOrden.add(Order.asc("municipio.provincia"));
+            } else {
+                listaOrden.add(Order.desc("municipio.provincia"));
+            }
         }
-        buscarConOrden(listaOrden);
-        // RequestContext.getCurrentInstance().update("busquedaInspecciones:panelTabla");
+        
+        primerRegistro = 0;
+        actualPage = FIRST_PAGE;
+        buscarConOrden(listaOrden, primerRegistro, actualPage);
     }
     
     /**
@@ -495,20 +557,93 @@ public class InspeccionBean {
         }
     }
     
-    /**
-     * Función para la implementación del autocompletado del input de inspecciones
-     * 
-     * @param infoInspeccion Cadena de búsqueda
-     * @return Resultados coincidentes con la cadena de búsqueda
-     */
-    public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(infoInspeccion,
-                Long.parseLong("46"));
-    }
-    
     private void cargaInspeccionesAsociadas(List<Inspeccion> listaInsp) {
         for (Inspeccion ins : listaInsp) {
             ins.setInspecciones(inspeccionesService.listaInspecciones(ins));
+        }
+    }
+    
+    /**
+     * 
+     * Elimina la fecha de baja de la inspeccion para volver a ponerla activa
+     * 
+     * @param inspeccion
+     */
+    public void activa(Inspeccion inspeccion) {
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        inspeccion.setFechaAnulacion(null);
+        inspeccion.setUsernameAnulacion(null);
+        try {
+            
+            if (inspeccionesService.save(inspeccion) != null) {
+                String descripcion = "El usuario " + user + " ha activado la inspección " + inspeccion.getNumero();
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+                
+                buscarConOrden(listaOrden, primerRegistro, actualPage);
+            }
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * 
+     * Permite la anulación de una inspeccion. Una vez anulada no podrá ser usada aunque se mantendrá en la base de
+     * datos
+     * 
+     * @param inspeccion La inspeccion a anular
+     * 
+     */
+    
+    public void anular(Inspeccion inspeccion) {
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        inspeccion.setFechaAnulacion(new Date());
+        inspeccion.setUsernameAnulacion(user);
+        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SUSPENDIDA);
+        try {
+            if (inspeccionesService.save(inspeccion) != null) {
+                String descripcion = "El usuario " + user + " ha anulado la inspección " + inspeccion.getNumero();
+                
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+                buscarConOrden(listaOrden, primerRegistro, actualPage);
+            }
+        } catch (Exception e) {
+            // Guardamos los posibles errores en bbdd
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+        }
+        
+    }
+    
+    /**
+     * 
+     * Cuando un usuario use la opción de eliminar una inspección se procederá se hará una elimianción lógica de la base
+     * de datos
+     * 
+     * @param inspeccionEliminar La inspección a anular
+     * 
+     */
+    public void eliminar(Inspeccion inspeccionEliminar) {
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        inspeccionEliminar.setFechaBaja(new Date());
+        inspeccionEliminar.setUsernameBaja(user);
+        
+        try {
+            if (inspeccionesService.save(inspeccionEliminar) != null) {
+                
+                String descripcion = "El usuario " + user + " ha eliminado la inspección " + inspeccion.getNumero();
+                
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.INSPECCION.name());
+                
+                primerRegistro = 0;
+                actualPage = FIRST_PAGE;
+                buscarConOrden(listaOrden, primerRegistro, actualPage);
+            }
+        } catch (Exception e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
     }
     
