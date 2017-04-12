@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,38 +12,35 @@ import es.mira.progesin.persistence.repositories.IParametrosRepository;
 
 @Service
 public class ParametroService implements IParametroService {
-	
-	
-	
-	@Autowired
-	IParametrosRepository parametrosRepo;
-	
-	
-	
-	@Override
-	public Map<String,Map<String, String>> getMapaParametros(){
-		List<String> secciones=parametrosRepo.findSecciones();
-		Map<String,Map<String, String>> mapa = new HashMap<String, Map<String, String>>();
-		
-		List<Parametro> listaParam=new ArrayList<Parametro>();
-		
-		for(String seccion:secciones){
-			listaParam=parametrosRepo.findParamByParamSeccion(seccion);
-			Map<String,String> mapaParametros=new HashMap<String, String>();
-			for(Parametro param:listaParam){
-				mapaParametros.put(param.getParam().getClave(), param.getParam().getValor());
-			}
-			mapa.put(seccion, mapaParametros);
-		}
-		
-		
-		return mapa;
-	}
-
-
-
-	
-
-	
-	
+    
+    @Autowired
+    IParametrosRepository parametrosRepo;
+    
+    /**
+     * Constructor para tests
+     * @param parametrosRepoMock
+     */
+    public ParametroService(IParametrosRepository parametrosRepoMock) {
+        parametrosRepo = parametrosRepoMock;
+    }
+    
+    @Override
+    public Map<String, Map<String, String>> getMapaParametros() {
+        List<String> secciones = parametrosRepo.findSecciones();
+        Map<String, Map<String, String>> mapa = new HashMap<>();
+        
+        List<Parametro> listaParam;
+        
+        for (String seccion : secciones) {
+            listaParam = parametrosRepo.findParamByParamSeccion(seccion);
+            Map<String, String> mapaParametros = new HashMap<>();
+            for (Parametro param : listaParam) {
+                mapaParametros.put(param.getParam().getClave(), param.getParam().getValor());
+            }
+            mapa.put(seccion, mapaParametros);
+        }
+        
+        return mapa;
+    }
+    
 }

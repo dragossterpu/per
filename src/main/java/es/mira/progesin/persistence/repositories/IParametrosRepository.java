@@ -10,56 +10,59 @@ import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.ParametroId;
 
 public interface IParametrosRepository extends CrudRepository<Parametro, ParametroId> {
-
-	/***************************************
-	 * 
-	 * findValueForKey
-	 * 
-	 * Devuelve el valor de una clave localizada en la tabla de Parámetros de BDD.
-	 * 
-	 * @author Ezentis
-	 * 
-	 * @return String valor
-	 * @param String clave
-	 * @param String seccion
-	 *
-	 *************************************/
-
-	@Query("select param.valor from Parametro c where c.param.clave = :clave and c.param.seccion= :seccion)")
-	String findValueForKey(@Param("clave") String clave, @Param("seccion") String seccion);
-
-	/***************************************
-	 * 
-	 * findValuesForSeccion
-	 * 
-	 * Devuelve los valores de una seccion localizada en la tabla de Parámetros de BDD.
-	 * 
-	 * @author Ezentis
-	 * 
-	 * @return List<String> valor
-	 * @param String seccion
-	 *
-	 *************************************/
-
-	@Query("select param.valor from Parametro c where c.param.seccion= :seccion)")
-	List<String> findValuesForSeccion(@Param("seccion") String seccion);
-
-	/***************************************
-	 * 
-	 * findParamByParamSeccion
-	 * 
-	 * Devuelve una lista de objetos Parametro de una seccion localizada en la tabla de Parámetros de BDD.
-	 * 
-	 * @author Ezentis
-	 * 
-	 * @return List<Parametro> Lista parámetros
-	 * @param String seccion
-	 *
-	 *************************************/
-
-	List<Parametro> findParamByParamSeccion(String seccion);
-	
-	
-	@Query("select distinct param.seccion from Parametro")
-	List<String> findSecciones();
+    
+    /***************************************
+     * 
+     * findValueForKey
+     * 
+     * Devuelve el valor de una clave localizada en la tabla de Parámetros de BDD.
+     * 
+     * @author Ezentis
+     * 
+     * @param clave
+     * @param seccion
+     * @return valor
+     *
+     *************************************/
+    
+    @Query("select param.valor from Parametro c where c.param.clave = :clave and c.param.seccion= :seccion)")
+    String findValueForKey(@Param("clave") String clave, @Param("seccion") String seccion);
+    
+    /***************************************
+     * 
+     * findValuesForSeccion
+     * 
+     * Devuelve los valores de una seccion localizada en la tabla de Parámetros de BDD.
+     * 
+     * @author Ezentis
+     * 
+     * @param seccion
+     * @return valor
+     *
+     *************************************/
+    
+    @Query("select param.valor from Parametro c where c.param.seccion= :seccion)")
+    List<String> findValuesForSeccion(@Param("seccion") String seccion);
+    
+    /***************************************
+     * 
+     * findParamByParamSeccion
+     * 
+     * Devuelve una lista de objetos Parametro de una seccion localizada en la tabla de Parámetros de BDD.
+     * 
+     * @author Ezentis
+     * 
+     * @param seccion
+     * @return Lista parámetros
+     *
+     *************************************/
+    
+    List<Parametro> findParamByParamSeccion(String seccion);
+    
+    /**
+     * Devuelve lista de secciones a las que pertenecen todos los parámetros
+     * @return secciones
+     */
+    @Query("select distinct param.seccion from Parametro")
+    List<String> findSecciones();
 }
