@@ -18,6 +18,7 @@ import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -156,14 +157,10 @@ public class GestorDocumentalBean {
      * indicar que sólo se van a buscar documentos eliminados
      */
     public void resetBusquedaEliminados() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            documentoBusqueda.resetValues();
-            listadoDocumentos.clear();
-            this.vieneDe = null;
-        }
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";
         documentoBusqueda.setEliminado(true);
+        buscaDocumento();
     }
     
     /**
@@ -244,6 +241,7 @@ public class GestorDocumentalBean {
      */
     public void eliminarDocumento(Documento documento) {
         documento.setFechaBaja(new Date());
+        documento.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
         documentoService.save(documento);
         buscaDocumento();
     }
@@ -514,7 +512,6 @@ public class GestorDocumentalBean {
                     documentoService.borrarDocumento(doc);
                 } else {
                     doc.setInspeccion(null);
-                    // documentoService.save(doc);
                     documentoService.borrarDocumento(doc);
                     registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
                             TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
@@ -543,4 +540,11 @@ public class GestorDocumentalBean {
         }
     }
     
+    /**
+     * Vacía la papelera de reciclaje
+     */
+    public void vaciarPapelera() {
+        documentoService.vaciarPapelera();
+        buscaDocumento();
+    }
 }

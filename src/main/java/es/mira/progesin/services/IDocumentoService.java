@@ -85,4 +85,6 @@ public interface IDocumentoService {
     
     public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento);
     
+    public void vaciarPapelera();
+    
 }

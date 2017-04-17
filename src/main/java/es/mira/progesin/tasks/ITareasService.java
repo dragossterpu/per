@@ -10,8 +10,10 @@ package es.mira.progesin.tasks;
  ***********************************/
 
 public interface ITareasService {
-
-	void recordatorioEnvioCuestionario();
-
-	void recordatorioEnvioDocumentacion();
+    
+    void recordatorioEnvioCuestionario();
+    
+    void recordatorioEnvioDocumentacion();
+    
+    void limpiarPapelera();
 }

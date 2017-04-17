@@ -533,4 +533,11 @@ public class DocumentoService implements IDocumentoService {
     public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento) {
         return gestDocSolicitudDocumentacionRepository.findByIdDocumento(documento.getId());
     }
+    
+    @Override
+    public void vaciarPapelera() {
+        documentoRepository.deleteByFechaBajaIsNotNull();
+        
+    }
+    
 }

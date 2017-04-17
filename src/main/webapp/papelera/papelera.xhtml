@@ -17,19 +17,11 @@
 			</h:form>
 				<h:form id="form">
 				
-					<ui:include src="/gestorDocumental/formularioBusquedaDocumento.xhtml"></ui:include>
-					 
-					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search"  oncomplete="$('.mensajeSinResultados').css('opacity', 1)" /> 			
-						<p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar"  icon="fa fa-eraser" />
-					</div>	
 					
 						
 						<p:outputPanel layout="block" id="panelDocumentos" >
-							<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty gestorDocumentalBean.listadoDocumentos}">
-								No existe ningún resultado que cumpla los parámetros de su búsqueda.
-							</p:outputPanel>
-							<p:outputPanel rendered="#{not empty gestorDocumentalBean.listadoDocumentos}">
+							
+							<p:outputPanel>
 				 				<h:commandLink>
 					               <p:graphicImage  value="/images/xls.png" />
 					               <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos"/>
@@ -50,7 +42,6 @@
 				            </p:outputPanel>
 							<p:dataTable id="tablaDocumentos" var="documento"
 								value="#{gestorDocumentalBean.listadoDocumentos}"
-								rendered="#{not empty gestorDocumentalBean.listadoDocumentos}"
 								emptyMessage="No se han encontrado resultados"
 								paginator="true" 
 								paginatorTemplate="{Anterior} {Pagina} {Posterior}">
@@ -75,18 +66,26 @@
 								<f:facet name="{Pagina}">
 									<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{gestorDocumentalBean.actualPage} de #{gestorDocumentalBean.numPages}</span>	 
 								</f:facet>
-								<p:column headerText="Fecha" sortBy="#{documento.fechaAlta}" style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
+								<p:column headerText="Fecha alta" sortBy="#{documento.fechaAlta}" style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
 									<h:outputText value="#{documento.fechaAlta}">
 										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 									</h:outputText>
 								</p:column>
-								<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
+								<p:column headerText="Fecha baja" sortBy="#{documento.fechaBaja}" style="width:70px" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
+									<h:outputText value="#{documento.fechaBaja}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Usuario baja" sortBy="#{documento.usernameBaja}" visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
+									<h:outputText value="#{documento.usernameBaja}" />
+								</p:column>
+								<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
 									<h:outputText value="#{documento.nombre}" />
 								</p:column>
-								<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento.nombre}"  visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
+								<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento.nombre}"  visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
 									<h:outputText value="#{documento.tipoDocumento.nombre}" />	
 								</p:column>
-								<p:column headerText="Inspeccion"  sortBy="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" width="100"  visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
+								<p:column headerText="Inspeccion"  sortBy="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" width="100"  visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
 									<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
 	
 								</p:column>
@@ -112,6 +111,14 @@
 							</p:dataTable>
 						</p:outputPanel>
 						
+					<div class="botonesFormulario">
+						<p:commandButton actionListener="#{gestorDocumentalBean.vaciarPapelera}" update=":form:panelDocumentos" value="Vaciar papelera"  icon="fa fa-eraser">
+							<p:confirm header="Vaciar papelera"
+							message="¿Está seguro que desea eliminar todos los docunmentos contenidos en la papelera? La eliminación no podrá deshacerse"
+							icon="fa fa-warning-sign" />
+						</p:commandButton> 			
+					</div>	
+					
 					<p:confirmDialog global="true">
 						<div class="centrarBotonesDialog">
 							<p:commandButton value="Aceptar" type="button"
