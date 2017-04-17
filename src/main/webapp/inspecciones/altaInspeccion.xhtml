@@ -5,6 +5,10 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
+	
+	<f:metadata>
+		<f:viewParam name="vieneDe" value="#{inspeccionBean.vieneDe}" />
+	</f:metadata>
 
 	<h3>Nueva Inspección</h3>
 	<div class="aclaraciones">
@@ -137,7 +141,9 @@
 		
 		<div class="botonesFormulario">
 			<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-			<p:button outcome="/inspecciones/inspecciones" value="Cancelar" icon="fa fa-fw fa-undo"/>
+			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo">
+				<f:param name="vieneDe" value="alta" />
+			</p:button>
 		</div>
 		
 		

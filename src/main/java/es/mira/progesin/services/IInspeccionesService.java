@@ -39,6 +39,6 @@ public interface IInspeccionesService {
     public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
             List<Order> listaOrden);
     
-    public List<Inspeccion> listaInspecciones(Inspeccion inspeccion);
+    public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion);
     
 }

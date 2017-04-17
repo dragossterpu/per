@@ -2,7 +2,10 @@ package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -51,7 +54,7 @@ public class InspeccionBean {
     
     private List<Boolean> list;
     
-    boolean alta = false;
+    // boolean alta = false;
     
     @Autowired
     private IRegistroActividadService regActividadService;
@@ -77,9 +80,7 @@ public class InspeccionBean {
     @PersistenceContext
     private EntityManager em;
     
-    private List<Inspeccion> listaInspecciones;
-    
-    private List<Inspeccion> listaInspeccionesAsociadas;
+    // private List<Inspeccion> listaInspecciones;
     
     private List<Municipio> listaMunicipios;
     
@@ -91,7 +92,17 @@ public class InspeccionBean {
     
     private boolean sortOrder;
     
-    private boolean nuevo_o_editar;
+    // private boolean editar;
+    
+    // private boolean nuevo;
+    
+    // private boolean asociarInspeccion;
+    
+    private Map<Inspeccion, Boolean> mapaAsociarInspecciones;
+    
+    private List<Inspeccion> listaInspeccionesAsociadas;
+    
+    private static final String FECHAALTA = "fechaAlta";
     
     /**************************************************************
      * 
@@ -100,14 +111,16 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
-        setNuevo_o_editar(false);
+        // setAsociarInspeccion(false);
+        // setEditar(false);
+        // setNuevo(false);
         inspeccionBusqueda.setProvincia(provinciSelec);
         listaOrden = new ArrayList<>();
-        listaOrden.add(Order.desc("fechaAlta"));
+        listaOrden.add(Order.desc(FECHAALTA));
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
-        buscarConOrden(listaOrden, primerRegistro, actualPage);
+        buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
     }
     
     /**************************************************************
@@ -115,14 +128,15 @@ public class InspeccionBean {
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda
      * 
      **************************************************************/
-    private void buscarConOrden(List<Order> listaOrden, int primerResgistro, long actualPage) {
+    private void buscarConOrden(List<Order> listaOrden, int primerResgistro, int numRegistros) {
         // primerRegistro = 0;
         // actualPage = FIRST_PAGE;
         setNumeroRegistros(getCountRegistrosInspecciones());
         numPages = getCountPagesGuia(numeroRegistros);
-        List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-                MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
-        inspeccionBusqueda.setListaInspecciones(listaInspecciones);
+        // List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerResgistro,
+        // numRegistros, inspeccionBusquedaCopia, listaOrden);
+        inspeccionBusqueda.setListaInspecciones(inspeccionesService.buscarInspeccionPorCriteria(primerResgistro,
+                numRegistros, inspeccionBusquedaCopia, listaOrden));
         
     }
     
@@ -136,10 +150,44 @@ public class InspeccionBean {
      *********************************************************/
     
     public String visualizaInspeccion(Inspeccion inspeccion) {
+        mapaAsociarInspecciones = new HashMap<>();
         this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
-        List<Inspeccion> listaAsociadas = inspeccionesService.listaInspecciones(this.inspeccion);
-        this.inspeccion.setInspecciones(listaAsociadas);
+        List<Inspeccion> listaAsociadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
+        // this.inspeccion.setInspecciones(listaAsociadas);
+        setListaInspeccionesAsociadas(listaAsociadas);
         return "/inspecciones/visualizarInspeccion?faces-redirect=true";
+    }
+    
+    public String getAsociarInspecciones() {
+        mapaAsociarInspecciones = new HashMap<>();
+        listaInspeccionesAsociadas = new ArrayList<>();
+        // List<Inspeccion> listaInspec = (List<Inspeccion>)
+        // inspeccionesService.buscarInspeccionPorCriteria(firstResult,
+        // maxResults, busqueda, listaOrden);
+        buscarInspeccion();
+        listaInspeccionesAsociadas = inspeccionesService.listaInspeccionesAsociadas(inspeccion);
+        for (Inspeccion insp : inspeccionBusqueda.getListaInspecciones()) {
+            if (!insp.equals(inspeccion)) {
+                if (listaInspeccionesAsociadas.contains(insp)) {
+                    mapaAsociarInspecciones.put(insp, true);
+                } else {
+                    mapaAsociarInspecciones.put(insp, false);
+                }
+            }
+        }
+        inspeccionBusqueda.setListaInspecciones(mapaAsociarInspecciones.keySet().stream().collect(Collectors.toList()));
+        return "/inspecciones/inspecciones?faces-redirect=true";
+    }
+    
+    public String asociarInspecciones() {
+        setListaInspeccionesAsociadas(new ArrayList<>());
+        for (Map.Entry<Inspeccion, Boolean> entry : mapaAsociarInspecciones.entrySet()) {
+            if (entry.getValue()) {
+                listaInspeccionesAsociadas.add(entry.getKey());
+            }
+        }
+        inspeccion.setInspecciones(listaInspeccionesAsociadas);
+        return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
     
     /*********************************************************
@@ -159,12 +207,12 @@ public class InspeccionBean {
      * @return
      */
     public String nuevaInspeccion() {
-        setNuevo_o_editar(true);
+        // setNuevo(true);
+        // setEditar(false);
         setProvinciSelec(null);
         setListaMunicipios(null);
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
-        listaInspeccionesAsociadas = new ArrayList<>();
         inspeccion.setInspecciones(new ArrayList<>());
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
@@ -202,14 +250,14 @@ public class InspeccionBean {
      * @return
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
-        setNuevo_o_editar(true);
+        // setEditar(true);
+        // setNuevo(false);
         setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
         this.inspeccion = inspeccion;
         // listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
-        this.inspeccion.setInspecciones(listaInspeccionesAsociadas);
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
@@ -258,7 +306,7 @@ public class InspeccionBean {
         setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
         setList(new ArrayList<>());
-        for (int i = 0; i <= 13; i++) {
+        for (int i = 0; i <= 14; i++) {
             list.add(Boolean.TRUE);
         }
     }
@@ -270,11 +318,7 @@ public class InspeccionBean {
      *********************************************************/
     
     public void getFormularioBusqueda() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            setProvinciSelec(null);
-            limpiarBusqueda();
-            this.vieneDe = null;
-        } else if ("visualizar".equalsIgnoreCase(this.vieneDe) && nuevo_o_editar) {
+        if ("menu".equalsIgnoreCase(this.vieneDe) || "visualizar".equalsIgnoreCase(this.vieneDe)) {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
@@ -296,7 +340,7 @@ public class InspeccionBean {
             // MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
             // cargaInspeccionesAsociadas(listaInspecciones);
             // inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-            buscarConOrden(listaOrden, primerRegistro, actualPage);
+            buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
         }
         
     }
@@ -317,7 +361,7 @@ public class InspeccionBean {
             // MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
             // cargaInspeccionesAsociadas(listaInspecciones);
             // inspeccionBusqueda.setListaInspecciones(listaInspecciones);
-            buscarConOrden(listaOrden, primerRegistro, actualPage);
+            buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
         }
     }
     
@@ -347,10 +391,6 @@ public class InspeccionBean {
         return numPag;
     }
     
-    /**
-     * @param inspeccion
-     * @return
-     */
     public InspeccionBusqueda copiaInspeccionBusqueda(InspeccionBusqueda inspeccion) {
         InspeccionBusqueda inspeccionCopia = new InspeccionBusqueda();
         inspeccionCopia.setId(inspeccion.getId());
@@ -401,9 +441,9 @@ public class InspeccionBean {
             
         } else if ("Fecha".equals(columna)) {
             if (sortOrder) {
-                listaOrden.add(Order.asc("fechaAlta"));
+                listaOrden.add(Order.asc(FECHAALTA));
             } else {
-                listaOrden.add(Order.desc("fechaAlta"));
+                listaOrden.add(Order.desc(FECHAALTA));
             }
             
         } else if ("Originador".equals(columna)) {
@@ -448,13 +488,6 @@ public class InspeccionBean {
                 listaOrden.add(Order.desc("ambito"));
             }
             
-        } else if ("Tipo".equals(columna)) {
-            if (sortOrder) {
-                listaOrden.add(Order.asc("tipoInspeccion"));
-            } else {
-                listaOrden.add(Order.desc("tipoInspeccion"));
-            }
-            
         } else if ("Estado".equals(columna)) {
             if (sortOrder) {
                 listaOrden.add(Order.asc("estadoInspeccion"));
@@ -493,70 +526,7 @@ public class InspeccionBean {
         
         primerRegistro = 0;
         actualPage = FIRST_PAGE;
-        buscarConOrden(listaOrden, primerRegistro, actualPage);
-    }
-    
-    /**
-     * Añade una nueva inspección a la lista de inspecciones del documento. Se comprueba que la inspección existe y no
-     * está ya añadida.
-     * 
-     * @param inspeccion La inspección a añadir
-     */
-    public void asignarNuevaInspeccion(Inspeccion inspeccion) {
-        if (inspeccion != null && !contieneInspeccion(listaInspeccionesAsociadas, inspeccion)) {
-            try {
-                if (inspeccion.getInspecciones() == null || inspeccion.getInspecciones().isEmpty()) {
-                    listaInspeccionesAsociadas = new ArrayList<>();
-                } else {
-                    listaInspeccionesAsociadas = new ArrayList<>(inspeccion.getInspecciones());
-                }
-                if (!contieneInspeccion(listaInspeccionesAsociadas, inspeccion)) {
-                    listaInspeccionesAsociadas.add(inspeccion);
-                    inspeccion.setInspecciones(listaInspeccionesAsociadas);
-                }
-            } catch (Exception e) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
-                        "Se ha producido un error al asignar una inspección");
-                regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
-            }
-        }
-    }
-    
-    private boolean contieneInspeccion(List<Inspeccion> lista, Inspeccion inspeccion) {
-        boolean respuesta = false;
-        
-        for (Inspeccion i : lista) {
-            if (i.getNumero().equals(inspeccion.getNumero())) {
-                respuesta = true;
-            }
-        }
-        
-        return respuesta;
-    }
-    
-    /**
-     * Elimina una inspección de la lista del documento
-     * 
-     * @param inspeccion Inspección a desasociar
-     */
-    public void desAsociarInspeccion(Inspeccion inspeccion) {
-        try {
-            List<Inspeccion> inspecciones = new ArrayList<>(inspeccion.getInspecciones());
-            inspecciones.remove(inspeccion);
-            inspeccion.setInspecciones(inspecciones);
-            listaInspeccionesAsociadas.remove(inspeccion);
-            inspeccion.setInspecciones(listaInspeccionesAsociadas);
-        } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-                    "Se ha producido un error al desasociar una inspección");
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
-        }
-    }
-    
-    private void cargaInspeccionesAsociadas(List<Inspeccion> listaInsp) {
-        for (Inspeccion ins : listaInsp) {
-            ins.setInspecciones(inspeccionesService.listaInspecciones(ins));
-        }
+        buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
     }
     
     /**
@@ -576,7 +546,7 @@ public class InspeccionBean {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.INSPECCION.name());
                 
-                buscarConOrden(listaOrden, primerRegistro, actualPage);
+                buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
             }
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
@@ -604,7 +574,7 @@ public class InspeccionBean {
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.INSPECCION.name());
-                buscarConOrden(listaOrden, primerRegistro, actualPage);
+                buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
             }
         } catch (Exception e) {
             // Guardamos los posibles errores en bbdd
@@ -636,7 +606,7 @@ public class InspeccionBean {
                 
                 primerRegistro = 0;
                 actualPage = FIRST_PAGE;
-                buscarConOrden(listaOrden, primerRegistro, actualPage);
+                buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
             }
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);

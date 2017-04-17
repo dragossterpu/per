@@ -200,7 +200,7 @@ public class InspeccionesService implements IInspeccionesService {
     // }
     
     @Override
-    public List<Inspeccion> listaInspecciones(Inspeccion inspeccion) {
+    public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion) {
         return inspeccionesRepository.cargaInspeccionesAsociadas(inspeccion.getId());
     }
     

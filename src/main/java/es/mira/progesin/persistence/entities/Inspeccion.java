@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -113,7 +115,7 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     @Column(name = "fecha_anulacion")
     protected Date fechaAnulacion;
     
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "inspecciones_asociadas", joinColumns = {
             @JoinColumn(name = "id_inspeccion") }, inverseJoinColumns = {
                     @JoinColumn(name = "id_inspeccion_asociada") })

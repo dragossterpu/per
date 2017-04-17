@@ -5,6 +5,10 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
+	
+	<f:metadata>
+		<f:viewParam name="vieneDe" value="#{inspeccionBean.vieneDe}" />
+	</f:metadata>
 
 	<h3>Modificar Inspección</h3>
 	<div class="aclaraciones">
@@ -142,22 +146,34 @@
 								var="municipio"
 								itemLabel="#{municipio.name}"
 								itemValue="#{municipio}" />
-						</p:selectOneMenu>	
+						</p:selectOneMenu>
+						
+						<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
+						<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+							<p:column>
+							 	<h:outputText value=" #{inspeccion.numero}" />
+							</p:column>    
+						</p:dataTable>	
 					</div>	
 
 		</div>
 		
 		<div class="botonesFormulario">
+			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Asociar inspección" icon="fa fa-fw fa-save">
+				<f:param name="vieneDe" value="asociar" />
+			</p:commandButton>
 			<p:commandButton actionListener="#{inspeccionBean.modificarInspeccion}" id="modificar" value="Guardar cambios" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-			<p:button outcome="/inspecciones/inspecciones" value="Cancelar" icon="fa fa-fw fa-undo"/>
+			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo">
+				<f:param name="vieneDe" value="editar" />
+			</p:button>
 		</div>
 		
 		<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-					<div class="centrarBotonesDialog">
-						<p:button value="Cerrar" outcome="/inspecciones/visualizarInspeccion" />
-					</div>
-				</p:dialog>
+			<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+			<div class="centrarBotonesDialog">
+				<p:button value="Cerrar" outcome="/inspecciones/visualizarInspeccion" />
+			</div>
+		</p:dialog>
 		
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
 		    <p:graphicImage value="/images/loading.gif" />
