@@ -36,6 +36,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Service
 public class UserService implements IUserService {
+    
     @Autowired
     private IUserRepository userRepository;
     
@@ -49,16 +50,6 @@ public class UserService implements IUserService {
     private static final String FECHA_ALTA = "fechaAlta";
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    /**
-     * Constructor usado en el test UserServiceTest
-     * @param userRepository
-     * @param passwordEncoder
-     */
-    public UserService(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
     
     @Override
     @Transactional(readOnly = false)

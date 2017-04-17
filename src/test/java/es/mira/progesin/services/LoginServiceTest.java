@@ -9,9 +9,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -21,23 +23,17 @@ import es.mira.progesin.persistence.entities.User;
  * @author Ezentis
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
     
+    @Mock
     private IUserService userService;
     
+    @Mock
     private IRegistroActividadService registroActividadService;
     
+    @InjectMocks
     private LoginService loginService;
-    
-    /**
-     * Configurar test
-     */
-    @Before
-    public void setUp() {
-        userService = Mockito.mock(IUserService.class);
-        registroActividadService = Mockito.mock(IRegistroActividadService.class);
-        loginService = new LoginService(userService, registroActividadService);
-    }
     
     /**
      * Comprobación clase existe
@@ -52,7 +48,7 @@ public class LoginServiceTest {
      */
     @Test
     public void instantiation() {
-        LoginService target = new LoginService(null, null);
+        LoginService target = new LoginService();
         assertThat(target).isNotNull();
     }
     

@@ -10,19 +10,17 @@ import org.springframework.stereotype.Service;
 import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
 
+/**
+ * @author EZENTIS
+ * 
+ * Sevicio para la clase Parametro
+ *
+ */
 @Service
 public class ParametroService implements IParametroService {
     
     @Autowired
-    IParametrosRepository parametrosRepo;
-    
-    /**
-     * Constructor para tests
-     * @param parametrosRepoMock
-     */
-    public ParametroService(IParametrosRepository parametrosRepoMock) {
-        parametrosRepo = parametrosRepoMock;
-    }
+    private IParametrosRepository parametrosRepo;
     
     @Override
     public Map<String, Map<String, String>> getMapaParametros() {

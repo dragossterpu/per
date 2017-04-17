@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.ParametroId;
@@ -27,21 +27,14 @@ import es.mira.progesin.persistence.repositories.IParametrosRepository;
  * Test del servicio Parametros
  *
  */
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ParametroServiceTest {
     
+    @Mock
     private IParametrosRepository paramRepository;
     
+    @InjectMocks
     private ParametroService parametroService;
-    
-    /**
-     * Configurar test
-     */
-    @Before
-    public void setUp() {
-        paramRepository = Mockito.mock(IParametrosRepository.class);
-        parametroService = new ParametroService(paramRepository);
-    }
     
     /**
      * Comprobación clase existe
@@ -56,7 +49,7 @@ public class ParametroServiceTest {
      */
     @Test
     public void instantiation() {
-        ParametroService target = new ParametroService(null);
+        ParametroService target = new ParametroService();
         assertThat(target).isNotNull();
     }
     

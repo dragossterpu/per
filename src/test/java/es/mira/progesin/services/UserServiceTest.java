@@ -1,20 +1,18 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
@@ -31,32 +29,24 @@ import es.mira.progesin.persistence.repositories.IUserRepository;
  * Test para la clase UserService
  *
  */
-
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
     
-    private IUserService userService;
-    
+    @Mock
     private IUserRepository userRepositoryMock;
     
+    @Mock
     private PasswordEncoder passwordEncoderMock;
     
-    /**
-     * Configuración inicial del test
-     */
-    @Before
-    public void setUp() {
-        userRepositoryMock = Mockito.mock(IUserRepository.class);
-        passwordEncoderMock = Mockito.mock(PasswordEncoder.class);
-        userService = new UserService(userRepositoryMock, passwordEncoderMock);
-    }
+    @InjectMocks
+    private UserService userService;
     
     /**
      * Comprueba que existe la clase
      */
     @Test
     public void type() {
-        assertThat(UserService.class, notNullValue());
+        assertThat(UserService.class).isNotNull();
     }
     
     /**
@@ -65,7 +55,7 @@ public class UserServiceTest {
     @Test
     public void instantiation() {
         UserService target = new UserService();
-        assertThat(target, notNullValue());
+        assertThat(target).isNotNull();
     }
     
     /**

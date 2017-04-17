@@ -35,7 +35,8 @@ public class IUserRepositoryTest {
     private IUserRepository repository;
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String, String)}.
      */
     @Test
     public final void testFindByCorreoIgnoreCaseOrDocIdentidadIgnoreCase() {
@@ -44,7 +45,7 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCorreo(String)}.
      */
     @Test
     public final void testFindByCorreo() {
@@ -53,7 +54,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCorreoOrDocIdentidad(String, String)}.
      */
     @Test
     public final void testFindByCorreoOrDocIdentidad() {
@@ -62,7 +64,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCuerpoEstado(CuerpoEstado)}.
      */
     @Test
     public final void testFindByCuerpoEstado() {
@@ -73,7 +76,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByfechaBajaIsNullAndRoleNotIn(List)}.
      */
     @Test
     public final void testFindByfechaBajaIsNullAndRoleNotIn() {
@@ -82,7 +86,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByfechaBajaIsNullAndRole(RoleEnum)}.
      */
     @Test
     public final void testFindByfechaBajaIsNullAndRole() {
@@ -91,7 +96,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#buscarNoJefeNoMiembroEquipo(Equipo)}.
      */
     @Test
     public final void testBuscarNoJefeNoMiembroEquipo() {
@@ -101,7 +107,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByUsernameIgnoreCase(String)}.
      */
     @Test
     public final void testFindByUsernameIgnoreCase() {
@@ -110,7 +117,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByPuestoTrabajo(PuestoTrabajo)}.
      */
     @Test
     public final void testFindByPuestoTrabajo() {
@@ -120,7 +128,8 @@ public class IUserRepositoryTest {
     }
     
     /**
-     * 
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByDepartamento(Departamento)}.
      */
     @Test
     public final void testFindByDepartamento() {

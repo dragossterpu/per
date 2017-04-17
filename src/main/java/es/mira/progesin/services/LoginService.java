@@ -24,16 +24,6 @@ public class LoginService implements UserDetailsService {
     @Autowired
     private IRegistroActividadService registroActividadService;
     
-    /**
-     * Constructor para tests
-     * @param userServiceMock
-     * @param registroActividadServiceMock
-     */
-    public LoginService(IUserService userServiceMock, IRegistroActividadService registroActividadServiceMock) {
-        userService = userServiceMock;
-        registroActividadService = registroActividadServiceMock;
-    }
-    
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userService.findByUsernameIgnoreCase(username);
