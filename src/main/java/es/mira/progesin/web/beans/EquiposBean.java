@@ -130,12 +130,19 @@ public class EquiposBean implements Serializable {
         List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
         Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
         miembrosNuevoEquipo.add(jefe);
+        String nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
         equipo.setMiembros(miembrosNuevoEquipo);
         
         try {
             if (equipoService.save(equipo) != null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "El equipo ha sido creado con éxito");
+                String descripcion = "Se ha creado un nuevo equipo de inspecciones '" + equipo.getNombreEquipo()
+                        + "'. Nombres de componentes " + nombresCompletos;
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                        SeccionesEnum.INSPECCION.name());
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             }
             
         } catch (Exception e) {
@@ -352,7 +359,7 @@ public class EquiposBean implements Serializable {
             String nombresCompletos = aniadirMiembrosEquipo(posicion, listaMiembros);
             equipo.setMiembros(listaMiembros);
             if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                         "componente/s o colaborador/es añadido/s con éxito");
                 String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones '"
                         + equipo.getNombreEquipo() + "'. Nombres de componentes " + nombresCompletos;
