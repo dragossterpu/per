@@ -15,8 +15,6 @@
 					value="#{departamentosBean.listaDepartamentos}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
 					<p:ajax event="rowEdit" listener="#{departamentosBean.onRowEdit}"
 						update=":form:msgs" />
-					<p:ajax event="rowEditCancel" listener="#{departamentosBean.onRowCancel}"
-						update=":form:msgs" />
 
 					<p:column headerText="Departamentos">
 						<p:cellEditor>

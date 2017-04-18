@@ -11,7 +11,6 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
@@ -182,14 +181,8 @@ public class ProvisionalSolicitudBean implements Serializable {
     public void onRowEdit(RowEditEvent event) {
         GestDocSolicitudDocumentacion document = (GestDocSolicitudDocumentacion) event.getObject();
         gestDocumentacionService.save(document);
-        FacesMessage msg = new FacesMessage("Nombre de documento modificado con exito", document.getNombreFichero());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-    }
-    
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                ((GestDocSolicitudDocumentacion) event.getObject()).getNombreFichero());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
+        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Nombre de documento modificado con exito",
+                document.getNombreFichero(), "msgs");
     }
     
     /**

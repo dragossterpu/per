@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.mail.MessagingException;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ import lombok.Setter;
  * @author Ezentis
  *
  */
-
 @Setter
 @Getter
 @Controller("tipoEquipoBean")
@@ -53,11 +50,18 @@ public class TipoEquipoBean implements Serializable {
     /**
      * Método que nos lleva al listado de los tipos de equipos. Se llama en la carga de la página
      * 
+     * @author Ezentis
      */
     public void tipoEquipoListado() {
         listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
     }
     
+    /**
+     * Elimina un tipo de equipo
+     * 
+     * @author Ezentis
+     * @param tipo objeto a eliminar
+     */
     public void eliminarTipo(TipoEquipo tipo) {
         try {
             if (equipoService.existsByTipoEquipo(tipo)) {
@@ -81,9 +85,9 @@ public class TipoEquipoBean implements Serializable {
     }
     
     @PostConstruct
-    public void init() throws MessagingException {
+    public void init() {
         
-        listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
+        tipoEquipoListado();
         
     }
     
@@ -125,14 +129,6 @@ public class TipoEquipoBean implements Serializable {
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
-    }
-    
-    public void onRowCancel(RowEditEvent event) {
-        TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                tipoEquipo.getCodigo() + " - " + tipoEquipo.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación cancelada", "", null);
     }
     
 }

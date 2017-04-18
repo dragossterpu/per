@@ -21,7 +21,6 @@
 					value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"
 					onkeypress="if (event.keyCode == 13) {return false; }">
 					<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}" />
-					<p:ajax event="rowEditCancel" listener="#{tipoEquipoBean.onRowCancel}" />
 
 					<p:column headerText="Código del tipo" width="90">
 						<h:outputText value="#{tipoEquipo.codigo}" />

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.StreamedContent;
@@ -403,9 +402,7 @@ public class GuiaBean {
                 }
                 
             } else {
-                
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeError, null);
-                FacesContext.getCurrentInstance().addMessage("message", message);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensajeError, "", "message");
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",

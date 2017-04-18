@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.primefaces.event.RowEditEvent;
@@ -142,25 +141,13 @@ public class TipoDocumentacionBean implements Serializable {
     public void onRowEdit(RowEditEvent event) {
         TipoDocumentacion tipoDoc = (TipoDocumentacion) event.getObject();
         tipoDocumentacionService.save(tipoDoc);
-        FacesMessage msg = new FacesMessage("Documentación modificada", tipoDoc.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
+        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Documentación modificada",
+                tipoDoc.getDescripcion(), "msgs");
         
         String descripcion = "Se ha modificado el tipo de documentación. Nombre: " + tipoDoc.getNombre();
         // Guardamos la actividad en bbdd
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                 SeccionesEnum.DOCUMENTACION.name());
-    }
-    
-    /**
-     * Cancela el estado de edición en caliente de un registro de la lista
-     * 
-     * @author EZENTIS
-     * @param event evento disparado al pulsar el botón cancelar edición
-     */
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                ((TipoDocumentacion) event.getObject()).getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
     }
     
 }

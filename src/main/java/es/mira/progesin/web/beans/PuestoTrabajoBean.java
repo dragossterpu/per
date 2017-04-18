@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,6 @@ public class PuestoTrabajoBean implements Serializable {
     
     private List<PuestoTrabajo> listaPuestosTrabajo;
     
-    private PuestoTrabajo puesto;
-    
     private String puestoNuevo;
     
     @Autowired
@@ -58,11 +55,11 @@ public class PuestoTrabajoBean implements Serializable {
      */
     public void eliminarPuesto(PuestoTrabajo puesto) {
         if (existenUsuariosCuerpo(puesto)) {
-            FacesContext.getCurrentInstance().addMessage("msgs",
-                    new FacesMessage(
+            FacesUtilities
+                    .setMensajeInformativo(
                             FacesMessage.SEVERITY_ERROR, "No se puede eliminar el puesto de trabajo '"
-                                    + puesto.getDescripcion() + "' al haber usuarios pertenecientes a dicho puesto",
-                            ""));
+                                    + puesto.getDescripcion() + "' al haber usuarios pertenecientes a dicho puesto.",
+                            "", "msgs");
         } else {
             puesto.setFechaBaja(new Date());
             puesto.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -86,6 +83,7 @@ public class PuestoTrabajoBean implements Serializable {
     public void altaPuesto() {
         PuestoTrabajo puesto = new PuestoTrabajo();
         puesto.setDescripcion(puestoNuevo);
+        // TODO comprobar si existe ese puesto
         try {
             if (puestoTrabajoService.save(puesto) != null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
@@ -106,18 +104,8 @@ public class PuestoTrabajoBean implements Serializable {
     public void onRowEdit(RowEditEvent event) {
         PuestoTrabajo puesto = (PuestoTrabajo) event.getObject();
         puestoTrabajoService.save(puesto);
-        FacesMessage msg = new FacesMessage("Puesto de trabajo modificado", puesto.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-    }
-    
-    /**
-     * Cancela la edición de un puesto de trabajo
-     * @param event
-     */
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                ((PuestoTrabajo) event.getObject()).getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
+        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Puesto de trabajo modificado",
+                puesto.getDescripcion(), "msgs");
     }
     
     /**

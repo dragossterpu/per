@@ -51,8 +51,6 @@
 						emptyMessage="No hay documentos cargados">
 						<p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}"
 							update=":formAlta:msgs" />
-						<p:ajax event="rowEditCancel" listener="#{provisionalSolicitudBean.onRowCancel}"
-							update=":formAlta:msgs" />
 
 						<p:column headerText="Documentos">
 							<p:cellEditor>

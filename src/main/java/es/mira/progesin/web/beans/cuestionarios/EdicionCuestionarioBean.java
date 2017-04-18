@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +73,8 @@ public class EdicionCuestionarioBean {
         if (hayPreguntasSeleccionadas) {
             page = "/cuestionarios/previsualizarCuestionario?faces-redirect=true";
         } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Debe seleccionar al menos una pregunta", "");
-            FacesContext.getCurrentInstance().addMessage("message", message);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Debe seleccionar al menos una pregunta",
+                    "", "message");
             page = null;
         }
         return page;

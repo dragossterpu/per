@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,6 @@ public class DepartamentoBean implements Serializable {
     
     private List<Departamento> listaDepartamentos;
     
-    private Departamento departamento;
-    
     private String departamentoNuevo;
     
     @Autowired
@@ -52,10 +49,10 @@ public class DepartamentoBean implements Serializable {
      */
     public void eliminarDepartamento(Departamento departamento) {
         if (existenUsuariosDepartamento(departamento)) {
-            FacesContext.getCurrentInstance().addMessage("msgs",
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el departamento '"
+            FacesUtilities.setMensajeInformativo(
+                    FacesMessage.SEVERITY_ERROR, "No se puede eliminar el departamento '"
                             + departamento.getDescripcion() + "' al haber usuarios pertenecientes a dicho departamento",
-                            ""));
+                    "", "msgs");
         } else {
             departamento.setFechaBaja(new Date());
             departamento.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -99,18 +96,8 @@ public class DepartamentoBean implements Serializable {
     public void onRowEdit(RowEditEvent event) {
         Departamento departamento = (Departamento) event.getObject();
         departamentoService.save(departamento);
-        FacesMessage msg = new FacesMessage("Departamento modificado", departamento.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-    }
-    
-    /**
-     * Cancela la edición de un departamento
-     * @param event
-     */
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                ((Departamento) event.getObject()).getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
+        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
+                departamento.getDescripcion(), "msgs");
     }
     
     /**
