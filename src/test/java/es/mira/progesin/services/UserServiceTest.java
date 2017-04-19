@@ -39,7 +39,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoderMock;
     
     @InjectMocks
-    private UserService userService;
+    private IUserService userService = new UserService();
     
     /**
      * Comprueba que existe la clase
@@ -94,6 +94,16 @@ public class UserServiceTest {
     public void findByUsernameIgnoreCase() {
         userService.findByUsernameIgnoreCase("ezentis");
         verify(userRepositoryMock, times(1)).findByUsernameIgnoreCase("ezentis");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#save(User)}.
+     */
+    @Test
+    public void save() {
+        User user = User.builder().username("ezentis").build();
+        userService.save(user);
+        verify(userRepositoryMock, times(1)).save(user);
     }
     
     /**

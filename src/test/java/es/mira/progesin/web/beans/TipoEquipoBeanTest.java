@@ -51,7 +51,7 @@ public class TipoEquipoBeanTest {
     private EquipoService equipoService;
     
     @Mock
-    private transient IRegistroActividadService regActividadService;
+    private IRegistroActividadService regActividadService;
     
     @InjectMocks
     private TipoEquipoBean tipoEquipoBean;
