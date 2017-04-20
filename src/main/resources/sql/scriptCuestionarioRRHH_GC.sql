@@ -127,10 +127,10 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZABSENTISMOGC', 'SINIESTRALIDAD (Días perdidos)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZABSENTISMOGC', 'PSÍQUICA (Núm. procesos)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZABSENTISMOGC', 'PSÍQUICA (Días perdidos)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZABSENTISMOPROCESOGC', 'Morbilidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZABSENTISMOPROCESOGC', 'Morbilidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZABSENTISMOPROCESOGC', 'Siniestralidad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZABSENTISMOPROCESOGC', 'Siniestralidad');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZABSENTISMOPROCESOGC', 'Morbilidad (Enfermedad común)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZABSENTISMOPROCESOGC', 'Morbilidad (Accidente no laboral)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZABSENTISMOPROCESOGC', 'Siniestralidad (Accidente laboral)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZABSENTISMOPROCESOGC', 'Siniestralidad (In itinere)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZABSENTISMOPROCESOGC', 'Enfermedad psíquica');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZABSENTISMOPROCESOGC', 'TOTAL');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZABSENTISMOPROCESOGC', '>3 meses (días perdidos)');
@@ -162,11 +162,11 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 
 --insert modelo RRHH DE LA GUARDIA CIVIL
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'RRHH_GC','DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'RRHH_GC','DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS (GC)');
 
 --insert área
 
-Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
+Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS (GC)', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
 
 											
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Plantilla y distribución (Señale fecha de cumplimentación)'	, SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPLANTILLAGC', 0);
@@ -176,33 +176,33 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal en comisión de servicio, con expresión de empleo, unidad de origen, unidad de destino, fecha de inicio (original), fecha de finalización y autoridad que ordenó la comisión. Confeccionar una lista de personal de otras Unidades en la Zona.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	4);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal en comisión de servicio, con expresión de empleo, unidad de origen, unidad de destino, fecha de inicio (original), fecha de finalización y autoridad que ordenó la comisión. Confeccionar una lista de personal dentro de Unidades de la propia Zona.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	5);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'RESPONSABLES DE UNIDADES (Desde la Jefatura hasta niveles de mando de la categoría de Oficial)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARESPONSABLESGC',	6);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio. Personal de Plana Mayor.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA',	7);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio. Personal de las distintas especialidades.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA',	8);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicio de Sanidad y Gabinete de Psicología. 
-La información que se solicita de ambos Servicios podrá presentarse de manera unitaria, solicitándose del órgano de personal de la Comandancia la aportación de aquellos datos que sean precisos. Determinados apartados podrá obviarse su cumplimentación siendo sustituidos en este caso por informes o memorias de actividad ya confeccionados. 
-Servicio de Sanidad: Por su responsable se elaborará informe expresivo sobre: 
-Catálogo y plantilla del Servicio (Médicos, ATS,..). Necesidades. 
-Ámbito de actuación. Unidades asignadas. 
-Actividades desarrolladas durante los dos años anteriores (asistencial, preventiva,…). 
-Actividades desarrolladas en el marco del Plan de Actuación para reforzar el control y seguimiento de las bajas médicas. Aportar los respectivos informes trimestrales elaborados.
-Actividades de control de las situaciones de incapacidad temporal. Propuesta de adopción de medidas cautelares.
-Seguimiento de procesos de personal de otras unidades y autorizados para residir en ámbito esta Comandancia. Número de efectivos existentes, duración situaciones.
-Efectivos que han pasado la Junta Médico Pericial, desglosado para los dos años anteriores.
-Efectivos pendientes de pasar Juntas Médicos Periciales.
-Desarrollo de funciones administrativas-burocráticas. Herramientas ofimáticas disponibles.
-Necesidades materiales o de infraestructuras.
-Otras cuestiones de interés.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicio de Sanidad y Gabinete de Psicología. Actividad.'	, SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTSANIDAD', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicio de Sanidad y Gabinete de Psicología.
-La información que se solicita de ambos Servicios podrá presentarse de manera unitaria, solicitándose del órgano de personal de la Comandancia la aportación de aquellos datos que sean precisos. Determinados apartados podrá obviarse su cumplimentación siendo sustituidos en este caso por informes o memorias de actividad ya confeccionados. 
-Servicio de Psicología y Psicotecnia: Por su responsable se elaborará informe expresivo sobre:
-Catálogo y plantilla del servicio. Necesidades.
-Ámbito de actuación. Unidades asignadas.
-Actividades desarrolladas en el último trienio. 
-Detalle del procedimiento seguido ante bajas médicas de base psíquica. Propuesta de adopción de medidas cautelares.
-Seguimiento de procesos de personal de otras unidades y autorizados para residir en ámbito esta Zona. Número de efectivos existentes, duración situaciones.
-Desarrollo de funciones administrativas-burocráticas. Herramientas ofimáticas disponibles.
-Necesidades materiales o de infraestructuras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio. Personal de Plana Mayor. La información solicitada se facilitará cumplimentado el cuadro que se adjunta como Anexo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	7);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio. Personal de las distintas especialidades. La información solicitada se facilitará cumplimentado el cuadro que se adjunta como Anexo.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	8);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicio de Sanidad.
+La información que se solicita podrá presentarse de manera unitaria, solicitándose del órgano de personal de la Comandancia la aportación de aquellos datos que sean precisos. Determinados apartados podrá obviarse su cumplimentación siendo sustituidos en este caso por informes o memorias de actividad ya confeccionados. 
+Por su responsable se elaborará informe expresivo sobre: 
+-Catálogo y plantilla del Servicio (Médicos, ATS,..). Necesidades. 
+-Ámbito de actuación. Unidades asignadas. 
+-Actividades desarrolladas durante los dos años anteriores (asistencial, preventiva,…). 
+-Actividades desarrolladas en el marco del Plan de Actuación para reforzar el control y seguimiento de las bajas médicas. Aportar los respectivos informes trimestrales elaborados.
+-Actividades de control de las situaciones de incapacidad temporal. Propuesta de adopción de medidas cautelares.
+-Seguimiento de procesos de personal de otras unidades y autorizados para residir en ámbito esta Comandancia. Número de efectivos existentes, duración situaciones.
+-Efectivos que han pasado la Junta Médico Pericial, desglosado para los dos años anteriores.
+-Efectivos pendientes de pasar Juntas Médicos Periciales.
+-Desarrollo de funciones administrativas-burocráticas. Herramientas ofimáticas disponibles.
+-Necesidades materiales o de infraestructuras.
+-Otras cuestiones de interés.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 9);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicio de Sanidad. Actividad.'	, SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTSANIDAD', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Gabinete de Psicología.
+La información que se solicita podrá presentarse de manera unitaria, solicitándose del órgano de personal de la Comandancia la aportación de aquellos datos que sean precisos. Determinados apartados podrá obviarse su cumplimentación siendo sustituidos en este caso por informes o memorias de actividad ya confeccionados. 
+Por su responsable se elaborará informe expresivo sobre:
+-Catálogo y plantilla del servicio. Necesidades.
+-Ámbito de actuación. Unidades asignadas.
+-Actividades desarrolladas en el último trienio. 
+-Detalle del procedimiento seguido ante bajas médicas de base psíquica. Propuesta de adopción de medidas cautelares.
+-Seguimiento de procesos de personal de otras unidades y autorizados para residir en ámbito esta Zona. Número de efectivos existentes, duración situaciones.
+-Desarrollo de funciones administrativas-burocráticas. Herramientas ofimáticas disponibles.
+-Necesidades materiales o de infraestructuras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 11);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El año anterior se  prestó tratamiento al personal que se indica.'	, SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTRATAMIENTOGC'	,	12);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Absentismo (año anterior)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZABSENTISMOGC',	13);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Absentismo (2 años antes)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZABSENTISMOGC',	14);
@@ -230,13 +230,13 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Coordinación de actividades empresariales: Procedimientos de comunicación, cooperación e información recíprocos establecidos en caso de concurrencia de actividades en un mismo centro de trabajo (artículo 24 de la Ley 31/1995, de Prevención de Riesgos Laborales y RD 171/ 2004 sobre coordinación de actividades empresariales).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	33);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Organización periférica del Servicio de Prevención de Riesgos Laborales (SPRL). Vigilancia de la salud: Actuaciones relacionadas con la vigilancia de la salud en los términos contemplados en la vigente normativa preventiva.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	34);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En relación a los recursos humanos se elaborará un informe en el que se detalle:
-Adecuación o no del Catálogo asignado, respecto a necesidades en: Negociados PLM de Zona, y Especialidades (Policía Judicial, SIGC., Intervención Armas, GEDEX, etc.). 
-En caso de necesitar aumento / disminución del Catálogo, se consignarán los efectivos en cada Unidad, Servicio o Especialidad, así como la justificación consiguiente. Adjuntar propuestas elevadas y no atendidas.
-Guardias Alumnos en prácticas. Estado numérico por Unidades. Detalle de los servicios y cometidos que realizan. Grado de preparación. Problemáticas que plantea este personal.
-Formación contínua. Detalle de ejecución en las Unidades. Programación y nivel de asistencia. Control de actividades. Sugerencias, problemáticas y necesidades.
-Personal destinado en Especialidades carentes del curso preceptivo o que, poseyéndolo, precise actualización (PJ, SIGC, etc.).
-Funcionarios. Distribución. Cometidos que realizan. Problemáticas.
-Otras casuísticas que considere  reseñar.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	35);
+-Adecuación o no del Catálogo asignado, respecto a necesidades en: Negociados PLM de Zona, y Especialidades (Policía Judicial, SIGC., Intervención Armas, GEDEX, etc.). 
+-En caso de necesitar aumento / disminución del Catálogo, se consignarán los efectivos en cada Unidad, Servicio o Especialidad, así como la justificación consiguiente. Adjuntar propuestas elevadas y no atendidas.
+-Guardias Alumnos en prácticas. Estado numérico por Unidades. Detalle de los servicios y cometidos que realizan. Grado de preparación. Problemáticas que plantea este personal.
+-Formación contínua. Detalle de ejecución en las Unidades. Programación y nivel de asistencia. Control de actividades. Sugerencias, problemáticas y necesidades.
+-Personal destinado en Especialidades carentes del curso preceptivo o que, poseyéndolo, precise actualización (PJ, SIGC, etc.).
+-Funcionarios. Distribución. Cometidos que realizan. Problemáticas.
+-Otras casuísticas que considere  reseñar.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',	35);
 
 commit;			
 						
