@@ -150,7 +150,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 
 
 --Insert modelo
-insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'GC_RRMM','CUESTIONARIO GC Genérico de Recursos Materiales');
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'GC_RRMM','CUESTIONARIO GENÉRICO (GUARDIA CIVIL) DE RECURSOS MATERIALES');
 
 --Insert area MATERIAL MÓVIL
 insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'MATERIAL MÓVIL', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
@@ -227,7 +227,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamientos informáticos: Motivar en  el caso de necesidad de material de nueva adjudicación o reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Dotación actual.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTELECOESTADOGC', 3);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Telecomunicaciones: Detallar distribución de los teléfonos móviles.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Fotocopiadoras, Trituradoras de papel, Encuadernadoras y otros (especificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSESTADOGC', 5);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Incluir los siguientes medios: Fotocopiadoras, Trituradoras de papel, Encuadernadoras y otros (especificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSESTADOGC', 5);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros medios materiales. Se deberán justificar las necesidades de nueva adjudicación y reposición.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
 
 
