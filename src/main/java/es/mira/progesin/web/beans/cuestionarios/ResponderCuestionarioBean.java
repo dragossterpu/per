@@ -179,8 +179,10 @@ public class ResponderCuestionarioBean implements Serializable {
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(textoNotReg, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.CUESTIONARIO.name());
-                // Notificamos a los miembros del equipo
-                notificacionService.crearNotificacionEquipo(textoNotReg, SeccionesEnum.CUESTIONARIO.name(),
+                // Creamos alertas a los miembros del equipo y al rol de Apoyo
+                alertaService.crearAlertaRol(SeccionesEnum.CUESTIONARIO.name(), textoNotReg,
+                        RoleEnum.ROLE_SERVICIO_APOYO);
+                alertaService.crearAlertaEquipo(SeccionesEnum.CUESTIONARIO.name(), textoNotReg,
                         cuestionarioEnviado.getInspeccion());
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Cumplimentación abortada",

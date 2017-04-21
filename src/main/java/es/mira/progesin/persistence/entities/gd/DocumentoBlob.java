@@ -41,8 +41,8 @@ public class DocumentoBlob implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name = "seq_documentosBlob", sequenceName = "seq_documentosBlob", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosBlob")
+    @SequenceGenerator(name = "seq_documentosblob", sequenceName = "seq_documentosblob", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentosblob")
     @Column(name = "id", nullable = false)
     private Long id;
     
