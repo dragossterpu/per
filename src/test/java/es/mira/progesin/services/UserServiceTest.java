@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -120,8 +121,11 @@ public class UserServiceTest {
      * Test method for
      * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(es.mira.progesin.web.beans.UserBusqueda)}.
      */
+    @Ignore
     @Test
     public void buscarUsuarioCriteria() {
+        // TODO test del buscador de usuarios
+        // userService.buscarUsuarioCriteria(userBusqueda);
         
     }
     

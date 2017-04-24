@@ -111,15 +111,9 @@ public class EquipoServiceTest {
     @Ignore
     @Test
     public void buscarEquipoCriteria() {
+        // TODO test del buscador de equipos
+        // List<Equipo> actual = equipoService.buscarEquipoCriteria(equipoBusqueda);
         
-        EquipoBusqueda equipoBusqueda = mock(EquipoBusqueda.class);
-        // e.g. : given(mocked.called()).willReturn(1);
-        // when
-        List<Equipo> actual = equipoService.buscarEquipoCriteria(equipoBusqueda);
-        // then
-        // e.g. : verify(mocked).called();
-        List<Equipo> expected = null;
-        assertThat(actual).isEqualTo(expected);
     }
     
     /**
