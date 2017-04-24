@@ -49,7 +49,7 @@
 				</p:inputText>
 				
 				<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
-				<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+				<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.inspeccionesAsignadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 					<p:column>
 						<h:outputText value=" #{inspeccion.numero}" />
 					</p:column>    

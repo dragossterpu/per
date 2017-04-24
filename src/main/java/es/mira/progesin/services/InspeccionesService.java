@@ -80,8 +80,10 @@ public class InspeccionesService implements IInspeccionesService {
         Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
         consultaCriteriaInspecciones(busqueda, criteria);
         
-        criteria.setFirstResult(firstResult);
-        criteria.setMaxResults(maxResults);
+        if (maxResults != -1) {
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(maxResults);
+        }
         for (Order orden : listaOrden) {
             criteria.addOrder(orden);
         }

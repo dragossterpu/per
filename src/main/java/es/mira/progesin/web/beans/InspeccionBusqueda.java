@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,10 @@ import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author EZENTIS
+ *
+ */
 @Getter
 @Setter
 public class InspeccionBusqueda implements Serializable {
@@ -46,7 +51,7 @@ public class InspeccionBusqueda implements Serializable {
     
     private EstadoInspeccionEnum estado;
     
-    private List<Inspeccion> listaInspecciones;
+    private List<Inspeccion> listaInspecciones = new ArrayList<>();
     
     private Provincia provincia;
     
@@ -74,7 +79,6 @@ public class InspeccionBusqueda implements Serializable {
         this.setTipoUnidad(null);
         this.setEquipo(null);
         this.setJefeEquipo(null);
-        this.setListaInspecciones(null);
     }
     
 }
