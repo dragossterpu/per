@@ -3,688 +3,371 @@
  */
 package es.mira.progesin.web.beans;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.primefaces.event.FlowEvent;
+import org.primefaces.event.ToggleEvent;
 
 import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.FacesUtilities;
 
 /**
- * @author Ezentis
+ * @author EZENTIS
+ * 
+ * Test del bean Equipos
  *
  */
+@RunWith(PowerMockRunner.class)
+// @PowerMockRunnerDelegate(SpringRunner.class)
+@PrepareForTest(FacesUtilities.class)
 public class EquiposBeanTest {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#nuevoEquipo()}.
-	 */
-	@Test
-	public final void testNuevoEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#altaEquipo()}.
-	 */
-	@Test
-	public final void testAltaEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormularioBusquedaEquipos()}.
-	 */
-	@Test
-	public final void testGetFormularioBusquedaEquipos() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#limpiarBusqueda()}.
-	 */
-	@Test
-	public final void testLimpiarBusqueda() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#buscarEquipo()}.
-	 */
-	@Test
-	public final void testBuscarEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#limpiarValores()}.
-	 */
-	@Test
-	public final void testLimpiarValores() {
-
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.web.beans.EquiposBean#eliminarEquipo(es.mira.progesin.persistence.entities.Equipo)}.
-	 */
-	@Test
-	public final void testEliminarEquipo() {
-
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(es.mira.progesin.persistence.entities.Equipo)}
-	 * .
-	 */
-	@Test
-	public final void testGetFormModificarEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#modificarEquipo()}.
-	 */
-	@Test
-	public final void testModificarEquipo() {
-
-	}
-
-	/**
-	 * Test method for
-	 * {@link es.mira.progesin.web.beans.EquiposBean#eliminarMiembro(es.mira.progesin.persistence.entities.Miembros)}.
-	 */
-	@Test
-	public final void testEliminarMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#aniadirColaborador()}.
-	 */
-	@Test
-	public final void testAniadirColaborador() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#aniadirMiembro()}.
-	 */
-	@Test
-	public final void testAniadirMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#guardarColaborador()}.
-	 */
-	@Test
-	public final void testGuardarColaborador() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#guardarMiembro()}.
-	 */
-	@Test
-	public final void testGuardarMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onToggle(org.primefaces.event.ToggleEvent)}.
-	 */
-	@Test
-	public final void testOnToggle() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onFlowProcess(org.primefaces.event.FlowEvent)}.
-	 */
-	@Test
-	public final void testOnFlowProcess() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#save()}.
-	 */
-	@Test
-	public final void testSave() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#isSkip()}.
-	 */
-	@Test
-	public final void testIsSkip() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setSkip(boolean)}.
-	 */
-	@Test
-	public final void testSetSkip() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setEquipo(Equipo)}.
-	 */
-	@Test
-	public final void testSetEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setFechaDesde(Date)}.
-	 */
-	@Test
-	public final void testSetFechaDesde() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setFechaHasta(Date)}.
-	 */
-	@Test
-	public final void testSetFechaHasta() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setNombreJefe(String)}.
-	 */
-	@Test
-	public final void testSetNombreJefe() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setUsername(String)}.
-	 */
-	@Test
-	public final void testSetUsername() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setNombreMiembro(String)}.
-	 */
-	@Test
-	public final void testSetNombreMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setListMiembros(List)}.
-	 */
-	@Test
-	public final void testSetListMiembros() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setNombreEquipo(String)}.
-	 */
-	@Test
-	public final void testSetNombreEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setJefeSelecionado(User)}.
-	 */
-	@Test
-	public final void testSetJefeSelecionado() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setMiembrosSeleccionados(List)}.
-	 */
-	@Test
-	public final void testSetMiembrosSeleccionados() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setColaboradoresSeleccionados(List)}.
-	 */
-	@Test
-	public final void testSetColaboradoresSeleccionados() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setList(List)}.
-	 */
-	@Test
-	public final void testSetList() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setMiembros(List)}.
-	 */
-	@Test
-	public final void testSetMiembros() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setListaEquipos(List)}.
-	 */
-	@Test
-	public final void testSetListaEquipos() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setEstado(String)}.
-	 */
-	@Test
-	public final void testSetEstado() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setMiembro(Miembros)}.
-	 */
-	@Test
-	public final void testSetMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setListadoJefes(List)}.
-	 */
-	@Test
-	public final void testSetListadoJefes() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setListadoMiembros(List)}.
-	 */
-	@Test
-	public final void testSetListadoMiembros() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setListadoColaboradores(List)}.
-	 */
-	@Test
-	public final void testSetListadoColaboradores() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setNumeroColumnasListadoEquipos(int)}.
-	 */
-	@Test
-	public final void testSetNumeroColumnasListadoEquipos() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setEquipoBusqueda(EquipoBusqueda)}.
-	 */
-	@Test
-	public final void testSetEquipoBusqueda() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setTipoEquipo(TipoEquipo)}.
-	 */
-	@Test
-	public final void testSetTipoEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setTipoEquipoService(ITipoEquipoService)}.
-	 */
-	@Test
-	public final void testSetTipoEquipoService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setTiposEquipo(Iterable)}.
-	 */
-	@Test
-	public final void testSetTiposEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setListaUsuarios(List)}.
-	 */
-	@Test
-	public final void testSetListaUsuarios() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setVieneDe(String)}.
-	 */
-	@Test
-	public final void testSetVieneDe() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setEquipoService(IEquipoService)}.
-	 */
-	@Test
-	public final void testSetEquipoService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setUserService(IUserService)}.
-	 */
-	@Test
-	public final void testSetUserService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setRegActividadService(IRegistroActividadService)}.
-	 */
-	@Test
-	public final void testSetRegActividadService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#setNotificacionService(INotificacionService)}.
-	 */
-	@Test
-	public final void testSetNotificacionService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getEquipo()}.
-	 */
-	@Test
-	public final void testGetEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFechaDesde()}.
-	 */
-	@Test
-	public final void testGetFechaDesde() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFechaHasta()}.
-	 */
-	@Test
-	public final void testGetFechaHasta() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getNombreJefe()}.
-	 */
-	@Test
-	public final void testGetNombreJefe() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getUsername()}.
-	 */
-	@Test
-	public final void testGetUsername() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getNombreMiembro()}.
-	 */
-	@Test
-	public final void testGetNombreMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getListMiembros()}.
-	 */
-	@Test
-	public final void testGetListMiembros() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getNombreEquipo()}.
-	 */
-	@Test
-	public final void testGetNombreEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getJefeSelecionado()}.
-	 */
-	@Test
-	public final void testGetJefeSelecionado() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getMiembrosSeleccionados()}.
-	 */
-	@Test
-	public final void testGetMiembrosSeleccionados() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getColaboradoresSeleccionados()}.
-	 */
-	@Test
-	public final void testGetColaboradoresSeleccionados() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getList()}.
-	 */
-	@Test
-	public final void testGetList() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getMiembros()}.
-	 */
-	@Test
-	public final void testGetMiembros() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getListaEquipos()}.
-	 */
-	@Test
-	public final void testGetListaEquipos() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getEstado()}.
-	 */
-	@Test
-	public final void testGetEstado() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getMiembro()}.
-	 */
-	@Test
-	public final void testGetMiembro() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getListadoJefes()}.
-	 */
-	@Test
-	public final void testGetListadoJefes() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getListadoMiembros()}.
-	 */
-	@Test
-	public final void testGetListadoMiembros() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getListadoColaboradores()}.
-	 */
-	@Test
-	public final void testGetListadoColaboradores() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getNumeroColumnasListadoEquipos()}.
-	 */
-	@Test
-	public final void testGetNumeroColumnasListadoEquipos() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getEquipoBusqueda()}.
-	 */
-	@Test
-	public final void testGetEquipoBusqueda() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getTipoEquipo()}.
-	 */
-	@Test
-	public final void testGetTipoEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getTipoEquipoService()}.
-	 */
-	@Test
-	public final void testGetTipoEquipoService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getTiposEquipo()}.
-	 */
-	@Test
-	public final void testGetTiposEquipo() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getListaUsuarios()}.
-	 */
-	@Test
-	public final void testGetListaUsuarios() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getVieneDe()}.
-	 */
-	@Test
-	public final void testGetVieneDe() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getEquipoService()}.
-	 */
-	@Test
-	public final void testGetEquipoService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getUserService()}.
-	 */
-	@Test
-	public final void testGetUserService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getRegActividadService()}.
-	 */
-	@Test
-	public final void testGetRegActividadService() {
-
-	}
-
-	/**
-	 * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getNotificacionService()}.
-	 */
-	@Test
-	public final void testGetNotificacionService() {
-
-	}
-
+    
+    @Mock
+    private ITipoEquipoService tipoEquipoService;
+    
+    @Mock
+    private IEquipoService equipoService;
+    
+    @Mock
+    private IUserService userService;
+    
+    @Mock
+    private IRegistroActividadService regActividadService;
+    
+    @Mock
+    private INotificacionService notificacionService;
+    
+    @Captor
+    ArgumentCaptor<Equipo> equipoCaptor;
+    
+    @InjectMocks
+    private EquiposBean equipoBean;
+    
+    /**
+     * Configuración inicial del test
+     */
+    @Before
+    public void setUp() {
+        PowerMockito.mockStatic(FacesUtilities.class);
+    }
+    
+    /**
+     * Comprobación clase existe
+     */
+    @Test
+    public void type() {
+        assertThat(EquiposBean.class).isNotNull();
+    }
+    
+    /**
+     * Comprobación clase no abstracta
+     */
+    @Test
+    public void instantiation() {
+        EquiposBean target = new EquiposBean();
+        assertThat(target).isNotNull();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormAltaEquipo()}.
+     */
+    @Test
+    public void getFormAltaEquipo() {
+        String rutaVista = equipoBean.getFormAltaEquipo();
+        assertThat(rutaVista).isEqualTo("/equipos/altaEquipo?faces-redirect=true");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#altaEquipo()}.
+     */
+    @Test
+    public void altaEquipo() {
+        equipoBean.setEquipo(Equipo.builder().nombreEquipo("nombreEquipo").build());
+        equipoBean.setJefeSeleccionado(User.builder().username("jefe").nombre("nombreJefe").apellido1("apellido1Jefe")
+                .apellido2("apellido2Jefe").build());
+        equipoBean.setTipoEquipo(TipoEquipo.builder().codigo("codigo").descripcion("descripcion").build());
+        List<User> miembrosSeleccionados = new ArrayList<>();
+        miembrosSeleccionados.add(User.builder().username("miembro1").nombre("nombreMiembro1")
+                .apellido1("apellido1Miembro1").apellido2("apellido2Miembro1").build());
+        equipoBean.setMiembrosSeleccionados(miembrosSeleccionados);
+        
+        equipoBean.altaEquipo();
+        
+        verify(equipoService, times(1)).save(equipoCaptor.capture());
+        assertThat(equipoCaptor.getValue().getNombreJefe()).isEqualTo("nombreJefe apellido1Jefe apellido2Jefe");
+        assertThat(equipoCaptor.getValue().getMiembros().size()).isEqualTo(2);
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
+                eq(SeccionesEnum.INSPECCION.name()));
+        verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
+                eq(SeccionesEnum.INSPECCION.name()), eq(equipoCaptor.getValue()));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormularioBusquedaEquipos()}.
+     */
+    @Ignore
+    @Test
+    public void getFormularioBusquedaEquipos() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.getFormularioBusquedaEquipos();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#limpiarBusqueda()}.
+     */
+    @Ignore
+    @Test
+    public void limpiarBusqueda() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.limpiarBusqueda();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#buscarEquipo()}.
+     */
+    @Ignore
+    @Test
+    public void buscarEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.buscarEquipo();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#eliminarEquipo(Equipo)}.
+     */
+    @Ignore
+    @Test
+    public void eliminarEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        Equipo equipo = mock(Equipo.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.eliminarEquipo(equipo);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(Equipo)}.
+     */
+    @Ignore
+    @Test
+    public void getFormModificarEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        Equipo equipo = mock(Equipo.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.getFormModificarEquipo(equipo);
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual).isEqualTo(expected);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#modificarEquipo()}.
+     */
+    @Ignore
+    @Test
+    public void modificarEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.modificarEquipo();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#eliminarEquipo(Equipo)}.
+     */
+    @Ignore
+    @Test
+    public void eliminarMiembro() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        Miembro miembro = mock(Miembro.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.eliminarMiembro(miembro);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormCambiarJefeEquipo()}.
+     */
+    @Ignore
+    @Test
+    public void getFormCambiarJefeEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.getFormCambiarJefeEquipo();
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual).isEqualTo(expected);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#cambiarJefeEquipo()}.
+     */
+    @Ignore
+    @Test
+    public void cambiarJefeEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.cambiarJefeEquipo();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormAniadirMiembroEquipo()}.
+     */
+    @Ignore
+    @Test
+    public void getFormAniadirMiembroEquipo() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.getFormAniadirMiembroEquipo();
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual).isEqualTo(expected);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#guardarMiembros(RolEquipoEnum)}.
+     */
+    @Ignore
+    @Test
+    public void guardarMiembros() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        RolEquipoEnum posicion = mock(RolEquipoEnum.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.guardarMiembros(posicion);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onToggle(ToggleEvent)}.
+     */
+    @Ignore
+    @Test
+    public void onToggle() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        ToggleEvent e = mock(ToggleEvent.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.onToggle(e);
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onFlowProcess(FlowEvent)}.
+     */
+    @Ignore
+    @Test
+    public void onFlowProcess() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        FlowEvent event = mock(FlowEvent.class);
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        String actual = target.onFlowProcess(event);
+        // then
+        // e.g. : verify(mocked).called();
+        String expected = null;
+        assertThat(actual).isEqualTo(expected);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#init()}.
+     */
+    @Ignore
+    @Test
+    public void init() {
+        // TODO auto-generated by JUnit Helper.
+        EquiposBean target = new EquiposBean();
+        // given
+        // e.g. : given(mocked.called()).willReturn(1);
+        // when
+        target.init();
+        // then
+        // e.g. : verify(mocked).called();
+    }
+    
 }
