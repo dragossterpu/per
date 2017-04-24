@@ -106,9 +106,8 @@ public class EquiposBean implements Serializable {
         this.jefeSeleccionado = null;
         this.miembrosSeleccionados = new ArrayList<>();
         this.listadoPotencialesMiembros = null;
-        this.equipo = null;
+        this.equipo = new Equipo();
         this.tipoEquipo = null;
-        equipo = new Equipo();
         listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(null);
         listadoPotencialesJefes = listaUsuarios;
         skip = false;
@@ -122,30 +121,32 @@ public class EquiposBean implements Serializable {
      */
     public void altaEquipo() {
         
-        equipo.setJefeEquipo(jefeSeleccionado.getUsername());
-        equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
-                + jefeSeleccionado.getApellido2());
-        equipo.setTipoEquipo(tipoEquipo);
-        
-        List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
-        Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
-        miembrosNuevoEquipo.add(jefe);
-        String nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
-        equipo.setMiembros(miembrosNuevoEquipo);
-        
         try {
-            if (equipoService.save(equipo) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El equipo ha sido creado con éxito");
-                String descripcion = "Se ha creado un nuevo equipo de inspecciones '" + equipo.getNombreEquipo()
-                        + "'. Nombres de componentes " + nombresCompletos;
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                        SeccionesEnum.INSPECCION.name());
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
-            }
+            equipo.setJefeEquipo(jefeSeleccionado.getUsername());
+            equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
+                    + jefeSeleccionado.getApellido2());
+            equipo.setTipoEquipo(tipoEquipo);
+            
+            List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
+            Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
+            miembrosNuevoEquipo.add(jefe);
+            String nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
+            equipo.setMiembros(miembrosNuevoEquipo);
+            
+            equipoService.save(equipo);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El equipo ha sido creado con éxito");
+            String descripcion = "Se ha creado un nuevo equipo de inspecciones '" + equipo.getNombreEquipo()
+                    + "'. Nombres de componentes " + nombresCompletos;
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.INSPECCION.name());
+            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             
         } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+                    "Se ha producido un error al dar de alta el equipo, inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
@@ -201,6 +202,7 @@ public class EquiposBean implements Serializable {
             equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             
             equipoService.save(equipo);
+            
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
                     "Se ha dado de baja con éxito un equipo de inspecciones", null);
             String descripcion = "Se ha eliminado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
