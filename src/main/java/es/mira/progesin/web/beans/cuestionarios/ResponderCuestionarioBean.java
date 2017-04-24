@@ -127,7 +127,6 @@ public class ResponderCuestionarioBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
                     "El borrador se ha guardado con éxito");
         } catch (Exception e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar las respuestas. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -189,7 +188,6 @@ public class ResponderCuestionarioBean implements Serializable {
                         "Aún hay areas asignadas a otros usuarios. ", null);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al enviar el cuestionario cumplimentado. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -299,7 +297,6 @@ public class ResponderCuestionarioBean implements Serializable {
                 visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
                 
             } catch (Exception e) {
-                e.printStackTrace();
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                         "Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.");
                 regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -385,7 +382,6 @@ public class ResponderCuestionarioBean implements Serializable {
                 generarMapaAreaUsuarioCuestEnv();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al asignar areas del cuestionario. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -425,7 +421,6 @@ public class ResponderCuestionarioBean implements Serializable {
                 generarMapaAreaUsuarioCuestEnv();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar su parte.");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
