@@ -9,8 +9,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
@@ -21,6 +23,7 @@ import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
  * Test del servicio de TipoEquipo
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class TipoEquipoServiceTest {
     
     @Mock
