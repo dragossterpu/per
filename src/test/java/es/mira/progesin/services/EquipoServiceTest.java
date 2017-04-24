@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -37,7 +38,7 @@ public class EquipoServiceTest {
     private IEquipoRepository equipoRepository;
     
     @InjectMocks
-    private EquipoService equipoService;
+    private IEquipoService equipoService = new EquipoService();
     
     /**
      * Comprobación clase existe
@@ -90,7 +91,8 @@ public class EquipoServiceTest {
      */
     @Test
     public void save_ListaMiembros() {
-        List<Miembro> listaMiembros = mock(List.class);
+        List<Miembro> listaMiembros = new ArrayList<Miembro>();
+        listaMiembros.add(mock(Miembro.class));
         equipoService.save(listaMiembros);
         verify(miembrosRepository, times(1)).save(listaMiembros);
     }

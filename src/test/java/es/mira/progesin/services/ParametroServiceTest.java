@@ -34,7 +34,7 @@ public class ParametroServiceTest {
     private IParametrosRepository paramRepository;
     
     @InjectMocks
-    private ParametroService parametroService;
+    private IParametroService parametroService = new ParametroService();
     
     /**
      * Comprobación clase existe

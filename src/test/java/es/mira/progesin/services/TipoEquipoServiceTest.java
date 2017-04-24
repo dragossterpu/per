@@ -30,7 +30,7 @@ public class TipoEquipoServiceTest {
     private ITipoEquiposRepository tipoEquipoRepository;
     
     @InjectMocks
-    private TipoEquipoService tipoEquipoService;
+    private ITipoEquipoService tipoEquipoService = new TipoEquipoService();
     
     /**
      * Comprobación clase existe
