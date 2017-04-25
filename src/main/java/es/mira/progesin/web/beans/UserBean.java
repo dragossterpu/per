@@ -119,6 +119,11 @@ public class UserBean {
         return "/principal/miPerfil?faces-redirect=true";
     }
     
+    public boolean esJefeEquipo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.esJefeEquipo(username);
+    }
+    
     /**
      * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para mostrar
      * correctamente la página (cuerpos de estado, puestos de trabajo, usuario nuevo). Se llama desde la página de
