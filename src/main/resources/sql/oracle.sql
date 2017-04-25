@@ -77,14 +77,14 @@ commit;
 
 
 
-insert into tipos_inspeccion (codigo,descripcion) values ('I.G.P.','I.Gral.Periodica');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.G.S.','I.Gral.Seguimiento');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.T_PRL','I.Temática PRL');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.T_CIE','I.Temática CIE');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.T_OT','I.Temática otros');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.E_INCD','I. Incidental extraordinaria');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.E_PRL','I.PRL extraordinaria');
-insert into tipos_inspeccion (codigo,descripcion) values ('I.E_PUNT','I.Puntual extraordinaria');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.G.P.','I.Gral.Periodica',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.G.S.','I.Gral.Seguimiento',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.T_PRL','I.Temática PRL',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.T_CIE','I.Temática CIE',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.T_OT','I.Temática otros',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_INCD','I. Incidental extraordinaria',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_PRL','I.PRL extraordinaria',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_PUNT','I.Puntual extraordinaria',trunc(sysdate),'system');
 
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.host','smtp.gmail.com');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.ssl.trust','smtp.gmail.com');
