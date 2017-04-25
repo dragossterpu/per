@@ -48,7 +48,7 @@ public class EdicionCuestionarioBean {
     private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
     
     @Autowired
-    private transient IRegistroActividadService regActividadService;
+    private IRegistroActividadService regActividadService;
     
     public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
         this.modeloCuestionario = modeloCuestionario;

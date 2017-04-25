@@ -9,6 +9,7 @@
 	<ui:define name="content">
 	
 	<ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
+    <ui:param name="rolSugerencias" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') or (p:ifGranted('EQUIPO_INSPECCIONES') and userBean.esJefeEquipo())}"/>
 	        
     <!-- <h:form>
         <p:remoteCommand name="onload" action="#{navegacionBean.iniciarCamino()}" update="caminoMigas" autoRun="true" />
@@ -16,7 +17,7 @@
         
     <div class="textoDerecha">
 		<h:form>
-			<h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora" rendered="#{rolPermitido}"/>
+			<h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora" rendered="#{rolSugerencias}"/>
 		</h:form>
 	</div>
 	<h:form id="busquedaAlertas" rendered="#{rolPermitido}">
