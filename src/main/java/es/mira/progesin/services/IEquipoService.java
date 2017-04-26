@@ -9,15 +9,9 @@ import es.mira.progesin.web.beans.EquipoBusqueda;
 
 public interface IEquipoService {
     
-    // boolean exists(Integer id);
-    
     Iterable<Equipo> findAll();
     
     List<Equipo> findByFechaBajaIsNotNull();
-    
-    // Equipo findOne(Integer id);
-    
-    // Iterable<Equipo> save(Iterable<Equipo> entities);
     
     Miembro save(Miembro miembro);
     
@@ -28,8 +22,6 @@ public interface IEquipoService {
     Equipo save(Equipo entity);
     
     List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda);
-    
-    void delete(Miembro miembro);
     
     boolean existsByTipoEquipo(TipoEquipo tipo);
     

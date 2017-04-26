@@ -119,16 +119,6 @@ public class EquipoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.EquipoService#delete(Miembro)}.
-     */
-    @Test
-    public void delete() {
-        Miembro miembro = mock(Miembro.class);
-        equipoService.delete(miembro);
-        verify(miembrosRepository, times(1)).delete(miembro);
-    }
-    
-    /**
      * Test method for {@link es.mira.progesin.services.EquipoService#existsByTipoEquipo(TipoEquipo)}.
      */
     @Test

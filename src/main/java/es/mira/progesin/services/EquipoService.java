@@ -140,12 +140,6 @@ public class EquipoService implements IEquipoService {
     }
     
     @Override
-    @Transactional(readOnly = false)
-    public void delete(Miembro miembro) {
-        miembrosRepository.delete(miembro);
-    }
-    
-    @Override
     public boolean existsByTipoEquipo(TipoEquipo tipo) {
         return equipoRepository.existsByTipoEquipo(tipo);
     }
