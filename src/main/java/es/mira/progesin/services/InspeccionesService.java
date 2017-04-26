@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
@@ -204,6 +205,11 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion) {
         return inspeccionesRepository.cargaInspeccionesAsociadas(inspeccion.getId());
+    }
+    
+    @Override
+    public boolean existeByTipoInspeccion(TipoInspeccion tipo) {
+        return inspeccionesRepository.existsByTipoInspeccion(tipo);
     }
     
 }
