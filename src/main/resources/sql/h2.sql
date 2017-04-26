@@ -108,14 +108,14 @@ insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) v
 insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values ('28','PN','Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico','DOC, DOCX','RM');
 
 
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.G.P.','I.Gral.Periodica');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.G.S.','I.Gral.Seguimiento');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.T_PRL','I.Temática PRL');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.T_CIE','I.Temática CIE');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.T_OT','I.Temática otros');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.E_INCD','I. Incidental extraordinaria');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.E_PRL','I.PRL extraordinaria');
-insert into TIPOS_INSPECCION (CODIGO,DESCRIPCION) values ('I.E_PUNT','I.Puntual extraordinaria');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.G.P.','I.Gral.Periodica',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.G.S.','I.Gral.Seguimiento',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.T_PRL','I.Temática PRL',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.T_CIE','I.Temática CIE',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.T_OT','I.Temática otros',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_INCD','I. Incidental extraordinaria',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_PRL','I.PRL extraordinaria',trunc(sysdate),'system');
+insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_PUNT','I.Puntual extraordinaria',trunc(sysdate),'system');
 
 
 insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','mmayo@interior.es');
