@@ -54,8 +54,6 @@ public class EquiposBean implements Serializable {
     
     private Equipo equipo;
     
-    private transient List<Miembro> miembrosEquipo;
-    
     private User jefeSeleccionado;
     
     private List<User> miembrosSeleccionados;
@@ -227,31 +225,32 @@ public class EquiposBean implements Serializable {
      */
     public String getFormModificarEquipo(Equipo equipo) {
         this.miembrosSeleccionados = new ArrayList<>();
-        setMiembrosEquipo(equipoService.findByEquipo(equipo));
+        List<Miembro> miembrosEquipo = equipoService.findByEquipo(equipo);
         equipo.setMiembros(miembrosEquipo);
         this.equipo = equipo;
         return "/equipos/modificarEquipo?faces-redirect=true";
     }
     
-    /**
-     * Modifica los datos de un equipo en función de los valores recuperados del formulario
-     */
-    public void modificarEquipo() {
-        try {
-            if (equipoService.save(equipo) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-                        "El equipo ha sido modificado con éxito");
-                String descripcion = "Se ha modificado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.INSPECCION.name());
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
-            }
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
-        }
-        
-    }
+    // /**
+    // * Modifica los datos de un equipo en función de los valores recuperados del formulario
+    // */
+    // public void modificarEquipo() {
+    // try {
+    // equipoService.save(equipo);
+    //
+    // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+    // "El equipo ha sido modificado con éxito");
+    // String descripcion = "Se ha modificado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
+    // // Guardamos la actividad en bbdd
+    // regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+    // SeccionesEnum.INSPECCION.name());
+    // notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
+    //
+    // } catch (Exception e) {
+    // regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+    // }
+    //
+    // }
     
     /**
      * Elimina un miembro de un equipo, ya sea componente o colaborador del equipo que está siendo modificado
@@ -264,9 +263,11 @@ public class EquiposBean implements Serializable {
             List<Miembro> listaMiembros = equipo.getMiembros();
             listaMiembros.remove(miembro);
             equipo.setMiembros(listaMiembros);
-            if (equipoService.save(equipo) != null) {
+            
+            equipoService.save(equipo);
+            
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
-                        "El equipo ha eliminado con éxito el componente o colaborador del equipo", null);
+                    "Se ha eliminado con éxito el componente o colaborador del equipo", null);
                 String descripcion = "Se ha eliminado un componente o colaborador del equipo inspecciones '"
                         + equipo.getNombreEquipo() + "'. Nombre del componente o colaborador del equipo: "
                         + miembro.getNombreCompleto();
@@ -274,7 +275,7 @@ public class EquiposBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.INSPECCION.name());
                 notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
-            }
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar un componente o colaborador del equipo de inspecciones, inténtelo de nuevo más tarde",
