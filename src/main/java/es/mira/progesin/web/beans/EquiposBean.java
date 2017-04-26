@@ -13,6 +13,8 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -197,7 +199,10 @@ public class EquiposBean implements Serializable {
         try {
             // TODO ¿comprobar si hay inspecciones sin finalizar?
             equipo.setFechaBaja(new Date());
-            equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+            
+            SecurityContext sec = SecurityContextHolder.getContext();
+            Authentication auth = sec.getAuthentication();
+            equipo.setUsernameBaja(auth.getName());
             
             equipoService.save(equipo);
             
@@ -266,15 +271,15 @@ public class EquiposBean implements Serializable {
             
             equipoService.save(equipo);
             
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                     "Se ha eliminado con éxito el componente o colaborador del equipo", null);
-                String descripcion = "Se ha eliminado un componente o colaborador del equipo inspecciones '"
-                        + equipo.getNombreEquipo() + "'. Nombre del componente o colaborador del equipo: "
-                        + miembro.getNombreCompleto();
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                        SeccionesEnum.INSPECCION.name());
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
+            String descripcion = "Se ha eliminado un componente o colaborador del equipo inspecciones '"
+                    + equipo.getNombreEquipo() + "'. Nombre del componente o colaborador del equipo: "
+                    + miembro.getNombreCompleto();
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.INSPECCION.name());
+            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -489,6 +494,7 @@ public class EquiposBean implements Serializable {
         for (int i = 0; i <= numeroColumnasListadoEquipos; i++) {
             columnasVisibles.add(Boolean.TRUE);
         }
+        
     }
     
 }
