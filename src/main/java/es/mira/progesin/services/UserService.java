@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
@@ -183,7 +184,7 @@ public class UserService implements IUserService {
     
     @Override
     public boolean esJefeEquipo(String username) {
-        return miembroRepository.existsByUsernameAndPosicion(username, "JEFE_EQUIPO");
+        return miembroRepository.existsByUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
     }
     
     @Override
