@@ -67,18 +67,12 @@ public class LoginService implements UserDetailsService {
         
         @Override
         public boolean isAccountNonExpired() {
-            if (fechaBaja != null) {
-                return false;
-            }
-            return true;
+            return fechaBaja == null;
         }
         
         @Override
         public boolean isAccountNonLocked() {
-            if (EstadoEnum.ACTIVO.equals(estado)) {
-                return true;
-            }
-            return false;
+            return EstadoEnum.ACTIVO.equals(estado);
         }
         
         @Override
