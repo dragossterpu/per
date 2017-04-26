@@ -183,7 +183,7 @@ public class UserService implements IUserService {
     
     @Override
     public boolean esJefeEquipo(String username) {
-        return miembroRepository.esJefeEquipo(username);
+        return miembroRepository.existsByUsernameAndPosicion(username, "JEFE_EQUIPO");
     }
     
     @Override
