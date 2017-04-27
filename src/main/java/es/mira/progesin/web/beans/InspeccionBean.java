@@ -2,18 +2,18 @@ package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.criterion.Order;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.event.data.SortEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -54,7 +54,9 @@ public class InspeccionBean {
     
     private List<Boolean> list;
     
-    // boolean alta = false;
+    private List<Inspeccion> inspeccionesAsignadas;
+    
+    private List<Inspeccion> inspeccionesSeleccionadas;
     
     @Autowired
     private IRegistroActividadService regActividadService;
@@ -66,6 +68,8 @@ public class InspeccionBean {
     private IEquipoService equipoService;
     
     private static final int MAX_RESULTS_PAGE = 20;
+    
+    private static final int TODOS_RESULTS_PAGE = -1;
     
     private static final int FIRST_PAGE = 1;
     
@@ -80,8 +84,6 @@ public class InspeccionBean {
     @PersistenceContext
     private EntityManager em;
     
-    // private List<Inspeccion> listaInspecciones;
-    
     private List<Municipio> listaMunicipios;
     
     private List<Equipo> listaEquipos;
@@ -92,17 +94,11 @@ public class InspeccionBean {
     
     private boolean sortOrder;
     
-    // private boolean editar;
-    
-    // private boolean nuevo;
-    
-    // private boolean asociarInspeccion;
-    
-    private Map<Inspeccion, Boolean> mapaAsociarInspecciones;
-    
-    private List<Inspeccion> listaInspeccionesAsociadas;
-    
     private static final String FECHAALTA = "fechaAlta";
+    
+    private boolean selectedAll;
+    
+    private boolean municipioEditable;
     
     /**************************************************************
      * 
@@ -111,9 +107,6 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
-        // setAsociarInspeccion(false);
-        // setEditar(false);
-        // setNuevo(false);
         inspeccionBusqueda.setProvincia(provinciSelec);
         listaOrden = new ArrayList<>();
         listaOrden.add(Order.desc(FECHAALTA));
@@ -121,6 +114,7 @@ public class InspeccionBean {
         actualPage = FIRST_PAGE;
         inspeccionBusquedaCopia = copiaInspeccionBusqueda(inspeccionBusqueda);
         buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
+        
     }
     
     /**************************************************************
@@ -129,14 +123,21 @@ public class InspeccionBean {
      * 
      **************************************************************/
     private void buscarConOrden(List<Order> listaOrden, int primerResgistro, int numRegistros) {
-        // primerRegistro = 0;
-        // actualPage = FIRST_PAGE;
+        
         setNumeroRegistros(getCountRegistrosInspecciones());
-        numPages = getCountPagesGuia(numeroRegistros);
-        // List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerResgistro,
-        // numRegistros, inspeccionBusquedaCopia, listaOrden);
+        numPages = getCountPages(numeroRegistros);
         inspeccionBusqueda.setListaInspecciones(inspeccionesService.buscarInspeccionPorCriteria(primerResgistro,
                 numRegistros, inspeccionBusquedaCopia, listaOrden));
+        
+        if ("asociarEditar".equals(vieneDe) || "asociarAlta".equals(vieneDe)) {
+            
+            if (inspeccion != null && inspeccionBusqueda.getListaInspecciones().remove(inspeccion)) {
+                numeroRegistros--;
+                setNumPages(getCountPages(numeroRegistros));
+            }
+            setInspeccionesSeleccionadas(inspeccionesAsignadas);
+            
+        }
         
     }
     
@@ -150,44 +151,41 @@ public class InspeccionBean {
      *********************************************************/
     
     public String visualizaInspeccion(Inspeccion inspeccion) {
-        mapaAsociarInspecciones = new HashMap<>();
         this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
         List<Inspeccion> listaAsociadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
-        // this.inspeccion.setInspecciones(listaAsociadas);
-        setListaInspeccionesAsociadas(listaAsociadas);
+        setInspeccionesAsignadas(listaAsociadas);
         return "/inspecciones/visualizarInspeccion?faces-redirect=true";
     }
     
     public String getAsociarInspecciones() {
-        mapaAsociarInspecciones = new HashMap<>();
-        listaInspeccionesAsociadas = new ArrayList<>();
-        // List<Inspeccion> listaInspec = (List<Inspeccion>)
-        // inspeccionesService.buscarInspeccionPorCriteria(firstResult,
-        // maxResults, busqueda, listaOrden);
+        inspeccionBusqueda.resetValues();
+        setProvinciSelec(null);
         buscarInspeccion();
-        listaInspeccionesAsociadas = inspeccionesService.listaInspeccionesAsociadas(inspeccion);
-        for (Inspeccion insp : inspeccionBusqueda.getListaInspecciones()) {
-            if (!insp.equals(inspeccion)) {
-                if (listaInspeccionesAsociadas.contains(insp)) {
-                    mapaAsociarInspecciones.put(insp, true);
-                } else {
-                    mapaAsociarInspecciones.put(insp, false);
-                }
-            }
-        }
-        inspeccionBusqueda.setListaInspecciones(mapaAsociarInspecciones.keySet().stream().collect(Collectors.toList()));
+        
         return "/inspecciones/inspecciones?faces-redirect=true";
     }
     
+    /**
+     * Después de asociar/desasociar inspeccines nos redirige a la vista de alta o de modificación dependiendo de si
+     * estamos haciendo un alta nueva o una modificación respectivamente.
+     * 
+     * @return
+     */
     public String asociarInspecciones() {
-        setListaInspeccionesAsociadas(new ArrayList<>());
-        for (Map.Entry<Inspeccion, Boolean> entry : mapaAsociarInspecciones.entrySet()) {
-            if (entry.getValue()) {
-                listaInspeccionesAsociadas.add(entry.getKey());
-            }
+        String rutaSiguiente = null;
+        String vaHacia = this.vieneDe;
+        if (inspeccion.getMunicipio() != null) {
+            setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         }
-        inspeccion.setInspecciones(listaInspeccionesAsociadas);
-        return "/inspecciones/modificarInspeccion?faces-redirect=true";
+        
+        if ("asociarAlta".equals(vaHacia)) {
+            rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
+            
+        } else if ("asociarEditar".equals(vaHacia)) {
+            rutaSiguiente = "/inspecciones/modificarInspeccion?faces-redirect=true";
+            
+        }
+        return rutaSiguiente;
     }
     
     /*********************************************************
@@ -207,10 +205,10 @@ public class InspeccionBean {
      * @return
      */
     public String nuevaInspeccion() {
-        // setNuevo(true);
-        // setEditar(false);
         setProvinciSelec(null);
         setListaMunicipios(null);
+        inspeccionesAsignadas = new ArrayList<>();
+        inspeccionesSeleccionadas = new ArrayList<>();
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
@@ -218,6 +216,11 @@ public class InspeccionBean {
         return "/inspecciones/altaInspeccion?faces-redirect=true";
     }
     
+    /**
+     * Método que guarda la inspección nueva creada en la base de datos
+     * 
+     * @return
+     */
     public String altaInspeccion() {
         try {
             
@@ -228,8 +231,13 @@ public class InspeccionBean {
                 numero.append("/");
                 numero.append(inspeccionProvisional.getAnio());
                 inspeccion.setNumero(numero.toString());
-                // inspeccion.setInspecciones(listaInspeccionesAsociadas);
+                
+                if (inspeccionesAsignadas != null) {
+                    inspeccion.setInspecciones(inspeccionesAsignadas);
+                }
                 inspeccionesService.save(inspeccion);
+                inspeccionBusqueda.resetValues();
+                setProvinciSelec(null);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "La inspección " + numero + " ha sido creada con éxito");
@@ -244,26 +252,25 @@ public class InspeccionBean {
     }
     
     /**
-     * Pasa los datos del usuario que queremos modificar al formulario de modificación para que cambien los valores que
-     * quieran
-     * @param user usuario recuperado del formulario de búsqueda de usuarios
-     * @return
+     * Método que prepara el objeto y los parámetros necesarios antes de proceder a su modificación. Posteriormente
+     * redirige a la vista de modificar inspección.
+     * 
+     * @param inspeccion
+     * @return ruta modificar objeto
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
-        // setEditar(true);
-        // setNuevo(false);
         setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
         this.inspeccion = inspeccion;
-        // listaInspeccionesAsociadas = inspeccionesService.listaInspecciones(inspeccion);
+        inspeccionesAsignadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
     
     /**
-     * Modifica los datos del usuario en función de los valores recuperados del formulario
+     * Guarda la inspección modificada en la base de datos.
      */
     public void modificarInspeccion() {
         try {
@@ -272,9 +279,13 @@ public class InspeccionBean {
             numero.append("/");
             numero.append(inspeccion.getAnio());
             inspeccion.setNumero(numero.toString());
-            // inspeccion.setInspecciones(listaInspeccionesAsociadas);
+            if (inspeccionesAsignadas != null) {
+                inspeccion.setInspecciones(inspeccionesAsignadas);
+            }
             
             if (inspeccionesService.save(inspeccion) != null) {
+                inspeccionBusqueda.resetValues();
+                setProvinciSelec(null);
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                         "La inspección ha sido modificada con éxito");
                 
@@ -313,12 +324,14 @@ public class InspeccionBean {
     
     /*********************************************************
      * 
-     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral
+     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral o si venimos de la asignación de una
+     * inspeción
      * 
      *********************************************************/
     
     public void getFormularioBusqueda() {
-        if ("menu".equalsIgnoreCase(this.vieneDe) || "visualizar".equalsIgnoreCase(this.vieneDe)) {
+        if ("menu".equalsIgnoreCase(this.vieneDe)) {
+            
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
@@ -327,7 +340,7 @@ public class InspeccionBean {
     }
     
     /**
-     * 
+     * Cargar la página siguiente de resultados de la búsqueda
      */
     public void nextInspeccion() {
         
@@ -336,10 +349,6 @@ public class InspeccionBean {
             primerRegistro += MAX_RESULTS_PAGE;
             actualPage++;
             
-            // List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-            // MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
-            // cargaInspeccionesAsociadas(listaInspecciones);
-            // inspeccionBusqueda.setListaInspecciones(listaInspecciones);
             buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
         }
         
@@ -357,10 +366,6 @@ public class InspeccionBean {
             primerRegistro -= MAX_RESULTS_PAGE;
             actualPage--;
             
-            // List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(primerRegistro,
-            // MAX_RESULTS_PAGE, inspeccionBusquedaCopia, listaOrden);
-            // cargaInspeccionesAsociadas(listaInspecciones);
-            // inspeccionBusqueda.setListaInspecciones(listaInspecciones);
             buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
         }
     }
@@ -375,13 +380,13 @@ public class InspeccionBean {
     }
     
     /**
-     * Devuelve el número de páginas de la consulta.
+     * Calcula el número de páginas de la consulta criteria a partir del número de registros devuelto.
      * 
      * @param countRegistros
      * @return número de páginas.
      * @author EZENTIS
      */
-    public long getCountPagesGuia(long countRegistros) {
+    public long getCountPages(long countRegistros) {
         long numPag;
         if (countRegistros % MAX_RESULTS_PAGE == 0)
             numPag = countRegistros / MAX_RESULTS_PAGE;
@@ -391,6 +396,14 @@ public class InspeccionBean {
         return numPag;
     }
     
+    /**
+     * Construye una copia del filtro de búsqueda de inspecciones. Funciona de la siguiente manera: sólo se construirá
+     * un objeto nuevo al realizar una nueva búsqueda; en el resto de casos (ordenar, página siguiente, página
+     * anterior..) se trabajará con una copia del primero.
+     * 
+     * @param inspeccion
+     * @return devolvemos la copia
+     */
     public InspeccionBusqueda copiaInspeccionBusqueda(InspeccionBusqueda inspeccion) {
         InspeccionBusqueda inspeccionCopia = new InspeccionBusqueda();
         inspeccionCopia.setId(inspeccion.getId());
@@ -423,6 +436,8 @@ public class InspeccionBean {
     }
     
     /**
+     * Realiza la ordenación de la tabla de inspecciones pasandole a la consulta criteria una lista de órdenes.
+     * 
      * @param event
      */
     public void onSort(SortEvent event) {
@@ -446,7 +461,7 @@ public class InspeccionBean {
                 listaOrden.add(Order.desc(FECHAALTA));
             }
             
-        } else if ("Originador".equals(columna)) {
+        } else if ("Usuario alta inspección".equals(columna)) {
             if (sortOrder) {
                 listaOrden.add(Order.asc("usernameAlta"));
             } else {
@@ -531,7 +546,7 @@ public class InspeccionBean {
     
     /**
      * 
-     * Elimina la fecha de baja de la inspeccion para volver a ponerla activa
+     * Elimina la fecha de baja de la inspeccion para volver a ponerla activa. Proceso contrario a anular.
      * 
      * @param inspeccion
      */
@@ -539,6 +554,7 @@ public class InspeccionBean {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         inspeccion.setFechaAnulacion(null);
         inspeccion.setUsernameAnulacion(null);
+        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SUSPENDIDA);
         try {
             
             if (inspeccionesService.save(inspeccion) != null) {
@@ -555,8 +571,8 @@ public class InspeccionBean {
     
     /**
      * 
-     * Permite la anulación de una inspeccion. Una vez anulada no podrá ser usada aunque se mantendrá en la base de
-     * datos
+     * Permite la anulación de una inspeccion por lo que su estado cambiará a suspendiada. Una vez anulada no podrá ser
+     * usada aunque se mantendrá en la base de datos.
      * 
      * @param inspeccion La inspeccion a anular
      * 
@@ -566,7 +582,6 @@ public class InspeccionBean {
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         inspeccion.setFechaAnulacion(new Date());
         inspeccion.setUsernameAnulacion(user);
-        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SUSPENDIDA);
         try {
             if (inspeccionesService.save(inspeccion) != null) {
                 String descripcion = "El usuario " + user + " ha anulado la inspección " + inspeccion.getNumero();
@@ -585,8 +600,8 @@ public class InspeccionBean {
     
     /**
      * 
-     * Cuando un usuario use la opción de eliminar una inspección se procederá se hará una elimianción lógica de la base
-     * de datos
+     * Cuando un usuario use la opción de eliminar se hará una elimianción lógica de la base de datos (fecha de baja
+     * será null)
      * 
      * @param inspeccionEliminar La inspección a anular
      * 
@@ -610,6 +625,44 @@ public class InspeccionBean {
             }
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * Método que desasocia una inspección al seleccionar el checkboc
+     * 
+     * @param event
+     */
+    public void onRowUnSelected(UnselectEvent event) {
+        Inspeccion i = (Inspeccion) event.getObject();
+        inspeccionesAsignadas.remove(i);
+    }
+    
+    /**
+     * Método que asocia una inspección al seleccionar el checkboc
+     * 
+     * @param event
+     */
+    public void onRowSelected(SelectEvent event) {
+        Inspeccion i = (Inspeccion) event.getObject();
+        inspeccionesAsignadas.add(i);
+    }
+    
+    /**
+     * Método que capura el evento "Seleccionar todos" en el momento de aociar una inspección
+     * 
+     * @param event captura el evento
+     */
+    public void onToggleSelect(AjaxBehaviorEvent event) {
+        if (!isSelectedAll()) {
+            inspeccionesSeleccionadas = inspeccionesService.buscarInspeccionPorCriteria(0, TODOS_RESULTS_PAGE,
+                    inspeccionBusquedaCopia, listaOrden);
+            inspeccionesSeleccionadas.remove(inspeccion);
+            setInspeccionesAsignadas(inspeccionesSeleccionadas);
+            setSelectedAll(true);
+        } else {
+            setInspeccionesAsignadas(null);
+            setSelectedAll(false);
         }
     }
     

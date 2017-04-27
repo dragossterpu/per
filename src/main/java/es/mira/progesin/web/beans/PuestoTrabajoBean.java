@@ -133,4 +133,5 @@ public class PuestoTrabajoBean implements Serializable {
 	public void init() {
 		listaPuestosTrabajo = puestoTrabajoService.findByFechaBajaIsNull();
 	}
+
 }

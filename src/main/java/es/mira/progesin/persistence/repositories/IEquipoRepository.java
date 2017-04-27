@@ -2,23 +2,15 @@ package es.mira.progesin.persistence.repositories;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 
 public interface IEquipoRepository extends CrudRepository<Equipo, Long> {
     
-    @Query("select case when count(e)>0 then true else false end from Equipo e where e.tipoEquipo = :tipo")
-    boolean existsByTipoEquipo(@Param("tipo") TipoEquipo tipo);
+    boolean existsByTipoEquipo(TipoEquipo tipo);
     
-    // boolean exists(Integer id);
-    
-    // void delete(Integer id);
-    
-    // Equipo findOne(Integer id);
     List<Equipo> findByFechaBajaIsNull();
     
 }

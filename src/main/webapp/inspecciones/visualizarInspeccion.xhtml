@@ -19,7 +19,7 @@
 		<div class="bloqueFormulario" >
 			<div class="columnaIzdaFormulario" >
 			
-				<h:outputLabel for="id" value="Id" />
+				<h:outputLabel for="id" value="Número expediente:" />
 				<p:inputText id="id" value="#{inspeccionBean.inspeccion.id}" converter="#{trimConverter}" disabled="true"/>
 				
 				<h:outputLabel for="anio" value="Año:" />
@@ -49,7 +49,7 @@
 				</p:inputText>
 				
 				<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
-				<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+				<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.inspeccionesAsignadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 					<p:column>
 						<h:outputText value=" #{inspeccion.numero}" />
 					</p:column>    
@@ -70,7 +70,7 @@
 				<h:outputLabel for="tipoUnidad" value="Tipo de unidad:" />
 				<p:inputText id="tipoUnidad" value="#{inspeccionBean.inspeccion.tipoUnidad.descripcion}" converter="#{trimConverter}" disabled="true"/>
 				
-				<h:outputLabel for="usernameAlta" value="Inspector originador:" />
+				<h:outputLabel for="usernameAlta" value="Usuario alta inspección:" />
 				<p:inputText id="usernameAlta" value="#{inspeccionBean.inspeccion.usernameAlta}" converter="#{trimConverter}" disabled="true"/>
 				
 				<h:outputLabel for="fechaAlta" value="Fecha de alta:" />

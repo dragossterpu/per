@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.StreamedContent;
@@ -177,9 +176,8 @@ public class GuiaPersonalizadaBean {
             // "Se ha producido un error en la generación del documento Word");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
             
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Se ha producido un error en la generación del documento Word", "");
-            FacesContext.getCurrentInstance().addMessage("message", message);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "Se ha producido un error en la generación del documento Word", "", "message");
         }
     }
     

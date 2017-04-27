@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 
 @Service
@@ -31,7 +32,8 @@ public class LoginService implements UserDetailsService {
             throw new UsernameNotFoundException("El usuario " + username + " no existe.");
         } else {
             String textoReg = "El usuario " + user.getUsername() + " ha iniciado sesión en la aplicación";
-            registroActividadService.altaRegActividad(textoReg, TipoRegistroEnum.AUDITORIA.name(), "LOGIN");
+            registroActividadService.altaRegActividad(textoReg, TipoRegistroEnum.AUDITORIA.name(),
+                    SeccionesEnum.LOGIN.name());
             return new UserRepositoryUserDetails(user);
         }
     }
@@ -65,18 +67,12 @@ public class LoginService implements UserDetailsService {
         
         @Override
         public boolean isAccountNonExpired() {
-            if (fechaBaja != null) {
-                return false;
-            }
-            return true;
+            return fechaBaja == null;
         }
         
         @Override
         public boolean isAccountNonLocked() {
-            if (EstadoEnum.ACTIVO.equals(estado)) {
-                return true;
-            }
-            return false;
+            return EstadoEnum.ACTIVO.equals(estado);
         }
         
         @Override

@@ -18,7 +18,7 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode()
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @ToString
 @Getter
@@ -26,13 +26,13 @@ import lombok.ToString;
 @Entity
 @Table(name = "TIPOS_INSPECCION")
 @NamedQuery(name = "TipoInspeccion.findAll", query = "SELECT t FROM TipoInspeccion t")
-public class TipoInspeccion implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(length = 10)
-	private String codigo;
-
-	@Column(length = 100)
-	private String descripcion;
+public class TipoInspeccion extends AbstractEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @Column(length = 10)
+    private String codigo;
+    
+    @Column(length = 100)
+    private String descripcion;
 }

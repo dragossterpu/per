@@ -22,7 +22,9 @@ import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
 import lombok.NoArgsConstructor;
@@ -39,6 +41,9 @@ public class UserService implements IUserService {
     
     @Autowired
     private IUserRepository userRepository;
+    
+    @Autowired
+    private IMiembrosRepository miembroRepository;
     
     @Autowired
     private SessionFactory sessionFactory;
@@ -175,6 +180,11 @@ public class UserService implements IUserService {
     @Override
     public List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo) {
         return userRepository.buscarNoJefeNoMiembroEquipo(equipo);
+    }
+    
+    @Override
+    public boolean esJefeEquipo(String username) {
+        return miembroRepository.existsByUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
     }
     
     @Override

@@ -46,8 +46,8 @@ import lombok.Setter;
 public class GuiaPersonalizada {
     
     @Id
-    @SequenceGenerator(name = "seq_guiaPersonalizada", sequenceName = "seq_guiaPersonalizada", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_guiaPersonalizada")
+    @SequenceGenerator(name = "seq_guiapersonalizada", sequenceName = "seq_guiapersonalizada", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_guiapersonalizada")
     @Column(name = "id", nullable = false)
     private Long id;
     

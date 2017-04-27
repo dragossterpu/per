@@ -39,8 +39,8 @@ public class GuiaPasos implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator(name = "seq_pasosGuia", sequenceName = "seq_pasosGuia", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pasosGuia")
+    @SequenceGenerator(name = "seq_pasosguia", sequenceName = "seq_pasosguia", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pasosguia")
     @Column(name = "id", nullable = false)
     private Long id;
     

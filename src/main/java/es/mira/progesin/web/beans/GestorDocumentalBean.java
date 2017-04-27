@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -218,12 +217,9 @@ public class GestorDocumentalBean {
             if (documentoService.extensionCorrecta(uFile)) {
                 documento = documentoService.cargaDocumentoSinGuardar(uFile, tipo, null);
             } else {
-                RequestContext context = RequestContext.getCurrentInstance();
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
                         "La extensión del fichero '" + event.getFile().getFileName()
                                 + "' no corresponde a su tipo real");
-                FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-                context.execute("PF('dialogMessage').show()");
                 registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",
                         TipoRegistroEnum.ERROR.name(), SeccionesEnum.GESTOR.getDescripcion());
             }
@@ -385,9 +381,8 @@ public class GestorDocumentalBean {
                 registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
             }
         } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alta de documentos",
-                    "Complete los campos obligatorios antes de continuar.");
-            FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Alta de documentos",
+                    "Complete los campos obligatorios antes de continuar.", null);
             
         }
     }

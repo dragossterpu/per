@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,12 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +46,9 @@ public class EdicionCuestionarioBean {
     
     @Autowired
     private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
+    
+    @Autowired
+    private IRegistroActividadService regActividadService;
     
     public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
         this.modeloCuestionario = modeloCuestionario;
@@ -74,9 +79,8 @@ public class EdicionCuestionarioBean {
         if (hayPreguntasSeleccionadas) {
             page = "/cuestionarios/previsualizarCuestionario?faces-redirect=true";
         } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Debe seleccionar al menos una pregunta", "");
-            FacesContext.getCurrentInstance().addMessage("message", message);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Debe seleccionar al menos una pregunta",
+                    "", "message");
             page = null;
         }
         return page;
@@ -101,9 +105,9 @@ public class EdicionCuestionarioBean {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cuestionario",
                     "Se ha guardado su cuestionario con éxito");
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el cuestionario");
-            e.printStackTrace();
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
     }
     

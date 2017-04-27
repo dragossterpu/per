@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IGuiasRepository;
@@ -163,6 +164,11 @@ public class GuiaService implements IGuiaService {
     public void eliminar(Guia guia) {
         guiaRepository.delete(guia);
         
+    }
+    
+    @Override
+    public boolean existeByTipoInspeccion(TipoInspeccion tipo) {
+        return guiaRepository.existsByTipoInspeccion(tipo);
     }
     
 }

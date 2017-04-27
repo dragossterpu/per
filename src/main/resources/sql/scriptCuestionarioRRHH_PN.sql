@@ -176,6 +176,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo10', 'MATRIZDISTRIBUCIONACTIVOPOLCIENTIFICAPN', 'TOTAL');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZDISTRIBUCIONACTIVOPUESTOFRONTPN', 'AEROPUERTO');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZDISTRIBUCIONACTIVOPUESTOFRONTPN', 'PUERTO');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZDISTRIBUCIONACTIVOPUESTOFRONTPN', 'C. PRAL.');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZDISTRIBUCIONACTIVOPUESTOFRONTPN', 'COM.');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZDISTRIBUCIONACTIVOPUESTOFRONTPN', 'I. JEFE');
@@ -275,25 +276,20 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZEQUIPODIRECTIVOPN', 'ANTIGÜEDAD EN EL CARGO (AÑOS)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZEQUIPODIRECTIVOPN', 'ANTIGÜEDAD EN EL CARGO (MESES)');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'AÑO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'COMISARIO PRINCIPAL');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'COMISARIO');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'INSPECTORES JEFES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'INSPECTORES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'SUBINSPECTORES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'OFICIALES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo08', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'POLICÍAS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo09', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'SUMAN (FACULTATIVOS)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo10', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'SUMAN (TÉCNICOS)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo11', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'SUMAN (2ª  ACTIVIDAD)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo12', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'TOTAL C.N.P. (CUERPOS GENERALES)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo13', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'TOTAL C.N.P. (PERSONAL LABORAL)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo14', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'TOTAL GENERAL (TOTAL CC.GG. Y P. LAB.)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'HACE CINCO AÑOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'HACE CUATRO AÑOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'HACE TRES AÑOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'HACE DOS AÑOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN', 'AÑO ANTERIOR');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'AÑO');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'COMISARIO PRINCIPAL');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'COMISARIO');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'INSPECTORES JEFES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'INSPECTORES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'SUBINSPECTORES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'OFICIALES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo08', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'POLICÍAS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo09', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'SUMAN (FACULTATIVOS)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo10', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'SUMAN (TÉCNICOS)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo11', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'SUMAN (2ª  ACTIVIDAD)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo12', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'TOTAL C.N.P. (CUERPOS GENERALES)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo13', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'TOTAL C.N.P. (PERSONAL LABORAL)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo14', 'TABLAEVOLUCIONEQUIPODIRECTIVOPN', 'TOTAL GENERAL (TOTAL CC.GG. Y P. LAB.)');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZCONSULTASMEDPN', 'Consultas médicas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZCONSULTASMEDPN', 'Consultas de enfermería (Curas)');
@@ -304,11 +300,11 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07', 'MATRIZCONSULTASMEDPN', 'Consultas psicología clínica');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08', 'MATRIZCONSULTASMEDPN', 'Prescripciones y tratamientos médicos');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09', 'MATRIZCONSULTASMEDPN', 'Reconocimientos y asistencias a detenidos en calabozos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios ()');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios ()');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios ()');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios ()');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios ()');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Promoción interna)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Psicotécnicos)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Periódicos)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Deportivos)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Certificados médicos)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Otros (especificar))');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16', 'MATRIZCONSULTASMEDPN', 'Recetas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal (Visitas Hospitalarias)');
@@ -427,23 +423,13 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZTIROPERSONALACTIVOPN', 'Numérico del personal (3º trimestre)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZTIROPERSONALACTIVOPN', 'Numérico del personal (4º trimestre)');
 
-
-
-
-
-
-
-
-
-
-
 --insert modelo RRHH DE LA POLICIA NACIONAL
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'RRHH_PN','DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'RRHH_PN','DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS (PN)');
 
 --insert área
 
-Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
+Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'DOTACIÓN Y GESTIÓN DE RECURSOS HUMANOS (PN)', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'PLANTILLA Y DISTRIBUCIÓN. COBERTURA DEL CATÁLOGO. JEFATURA SUPERIOR DE POLICIA.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPLANTILLAPN', 0);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'PLANTILLA Y DISTRIBUCIÓN. COBERTURA DEL CATÁLOGO. COMISARIA PROVINCIAL.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPLANTILLAPN',1);
@@ -477,7 +463,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'DISTRIBUCIÓN DE PERSONAL. CUERPOS GENERALES Y PERSONAL LABORAL.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZPERSONALPORGRUPOSPN',25);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'EQUIPO DIRECTIVO. RELACIÓN NOMINAL.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZEQUIPODIRECTIVOPN',26);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Evolución numérica del personal en la plantilla (a 31 de diciembre de cada año)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZEVOLUCIONEQUIPODIRECTIVOPN',27);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Evolución numérica del personal en la plantilla (a 31 de diciembre de cada año). Añadir los datos de los últimos 5 años.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAEVOLUCIONEQUIPODIRECTIVOPN',27);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Valoración de los responsables de la Unidad sobre los puntos anteriores. 
 Catálogo de puestos de trabajo: El vigente catálogo asignado se considera suficiente o insuficiente. En este último caso explicar motivación y propuestas efectuadas para su modificación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',28);
@@ -500,13 +486,9 @@ Problemática y causas relativas al absentismo.', SEQ_AREASCUESTIONARIOS.CURRVAL
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Valoración de los responsables de la Unidad sobre los puntos anteriores. 
 Otras cuestiones dignas de reseñar.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',34);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Valoración de los responsables de la Unidad sobre los puntos anteriores. 
-Otras cuestiones dignas de reseñar.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',34);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio (Personal de Gestión).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',35);
 
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio (Personal de Gestión).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT',35);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio (Personal Operativo).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT',36);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio (Personal Operativo).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',36);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Horarios de servicio.
 Problemática que plantea la implantación de la nueva normativa sobre Jornada laboral. Precisar el turno que se aplica en los servicios de 24 horas (ODAC, GAC, Sala 091, Seguridad y custodia y coordinadores de servicio).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA',37);
@@ -517,84 +499,74 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Sanidad. Personal, horarios y turnos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',40);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Sanidad. Actividad y rendimiento.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',41);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Sanidad. Actividad y rendimiento.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZCONSULTASMEDPN',42);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Unidad de Sanidad. Actividad y rendimiento.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZCONSULTASMEDPN',41);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Absentismo.
 El Jefe de la Unidad Sanitaria elaborará un informe individualizado en el que se aborden, al menos, los siguientes aspectos:
-Evolución de los parámetros de absentismo de causa médica. Estudio de su repercusión por escalas y categorías, así como por áreas funcionales. Problemática singular. Incidencia de las inasistencias y mecanismos dispuestos para el efectivo control en su registro (se adjuntan a continuación tablas que se proponen para la recogida de la información).
-Actividad desarrollada por las Unidades Médicas de Seguimiento del INSS en el control de los procesos de incapacidad temporal. Análisis cuantitativo y cualitativo. Disponibilidad de acceso a la aplicación MUFACE.
-Problemática y necesidades de la Servicio Sanitario. Especial referencia a la prestación del servicio a las Unidades ubicadas en otras plantillas de la Provincia.
-Coordinación de actuaciones con los órganos de personal y retribuciones correspondientes, en aplicación de las medidas dispuestas en Real Decreto-Ley 20/2012, de 13 de julio, de medidas para garantizar la estabilidad presupuestaria y de fomento de la competitividad (artículo 9).
-', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',43);
+-Evolución de los parámetros de absentismo de causa médica. Estudio de su repercusión por escalas y categorías, así como por áreas funcionales. Problemática singular. Incidencia de las inasistencias y mecanismos dispuestos para el efectivo control en su registro (se adjuntan a continuación tablas que se proponen para la recogida de la información).
+-Actividad desarrollada por las Unidades Médicas de Seguimiento del INSS en el control de los procesos de incapacidad temporal. Análisis cuantitativo y cualitativo. Disponibilidad de acceso a la aplicación MUFACE.
+-Problemática y necesidades de la Servicio Sanitario. Especial referencia a la prestación del servicio a las Unidades ubicadas en otras plantillas de la Provincia.
+-Coordinación de actuaciones con los órganos de personal y retribuciones correspondientes, en aplicación de las medidas dispuestas en Real Decreto-Ley 20/2012, de 13 de julio, de medidas para garantizar la estabilidad presupuestaria y de fomento de la competitividad (artículo 9).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',42);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. 
-Datos de incapacidad temporal por escalas. Año en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPESCALA',44);
+Datos de incapacidad temporal por escalas. Año en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPESCALA',43);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. 
-Datos de incapacidad temporal por escalas. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPESCALA',45);
+Datos de incapacidad temporal por escalas. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPESCALA',44);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. 
-Datos de incapacidad temporal por áreas funcionales. Año en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPAREAFUNCIONAL',46);
+Datos de incapacidad temporal por áreas funcionales. Año en curso.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPAREAFUNCIONAL',45);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. 
-Datos de incapacidad temporal por áreas funcionales. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPAREAFUNCIONAL',47);
+Datos de incapacidad temporal por áreas funcionales. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZINCAPACIDADTEMPAREAFUNCIONAL',46);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
-Control de las inasistencias. Situaciones registradas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINASISTENCIASPN',48);
+Control de las inasistencias. Situaciones registradas. Procesos por cada funcionario (Se trata de contabilizar el total de inasistencias registradas y estructurar éstas en función de los días que cada funcionario haya acumulado. Por ejemplo, si fuesen 9 funcionarios los que registraron 9 inasistencias por +4 días se consignará en esa casilla “9”)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINASISTENCIASPN',47);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
-Número de procesos de incapacidad temporal cuya duración supera los periodos que se indican (Días perdidos que acumulan estos procesos). Se reflejarán los datos de las situaciones existentes en el momento de su emisión, señalando expresamente su fecha.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',49);
+Número de procesos de incapacidad temporal cuya duración supera los periodos que se indican (Días perdidos que acumulan estos procesos). Se reflejarán los datos de las situaciones existentes en el momento de su emisión, señalando expresamente su fecha.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT',48);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
-Cómputo del Personal por categorías (sin datos personales) que tenga reconocida alguna limitación para la prestación del servicio, expresiva del destino, si presta servicio o si permanece de baja, así como la limitación concreta. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLALIMITACIONCATEGORIA',50);
+Cómputo del Personal por categorías (sin datos personales) que tenga reconocida alguna limitación para la prestación del servicio, expresiva del destino, si presta servicio o si permanece de baja, así como la limitación concreta. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLALIMITACIONCATEGORIA',49);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. Año en curso.
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
+Cómputo del Personal por categorías (sin datos personales) derivado a Tribunales Médicos (también quienes se encuentren pendientes).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATRIBMEDICOCATEGORIAPN',50);
+
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. Año anterior.
 Cómputo del Personal por categorías (sin datos personales) derivado a Tribunales Médicos (también quienes se encuentren pendientes).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATRIBMEDICOCATEGORIAPN',51);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. Año anterior.
-Cómputo del Personal por categorías (sin datos personales) derivado a Tribunales Médicos (también quienes se encuentren pendientes).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLATRIBMEDICOCATEGORIAPN',52);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. Año en curso.
-Cómputo del Personal por categorías (sin datos personales) en situación de incapacidad temporal para el servicio de esa Jefatura Superior, autorizado a residir en otras demarcaciones, con indicación de la fecha de la baja. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARESIDENCIABAJACATEGORIA',53);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta. Año anterior.
-Cómputo del Personal por categorías (sin datos personales) en situación de incapacidad temporal para el servicio de esa Jefatura Superior, autorizado a residir en otras demarcaciones, con indicación de la fecha de la baja. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARESIDENCIABAJACATEGORIA',54);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
+Cómputo del Personal por categorías (sin datos personales) en situación de incapacidad temporal para el servicio de esa Jefatura Superior, autorizado a residir en otras demarcaciones, con indicación de la fecha de la baja. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARESIDENCIABAJACATEGORIA',52);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
-Cómputo del Personal por categorías (sin datos personales) en situación de incapacidad temporal, pertenecientes a otras Unidades, autorizado a residir en la demarcación de esa Jefatura Superior, con indicación de la fecha de la baja. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARESIDENCIADESTINOCATEGORIA',55);
+Cómputo del Personal por categorías (sin datos personales) en situación de incapacidad temporal, pertenecientes a otras Unidades, autorizado a residir en la demarcación de esa Jefatura Superior, con indicación de la fecha de la baja. Referido a las situaciones vigentes a fecha de emisión de este informe.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARESIDENCIADESTINOCATEGORIA',53);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Modelo de recogida de información propuesta.
-Cómputo del Personal por categorías (sin datos personales) que por motivos distintos a los anteriores no ha prestado su actividad en la Unidad de pertenencia (suspensos funciones, licencias, días sindicales,…, distintas a vacaciones, asuntos particulares).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSMOTIVOSCATEGORIA',56);
+Cómputo del Personal por categorías (sin datos personales) que por motivos distintos a los anteriores no ha prestado su actividad en la Unidad de pertenencia (suspensos funciones, licencias, días sindicales,…, distintas a vacaciones, asuntos particulares).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAOTROSMOTIVOSCATEGORIA',54);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Actividades realizadas (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZFORMACIONREALIZADA',57);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Actividades realizadas (Último año).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZFORMACIONREALIZADA',55);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Actividades realizadas (Año anterior).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZFORMACIONREALIZADA',58);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Actividades realizadas (Año anterior).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZFORMACIONREALIZADA',56);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos centralizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',59);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos centralizados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',57);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos descentralizados por ubicación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOSUBICACION',60);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos descentralizados por ubicación.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOSUBICACION',58);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos de formación electrónica (on line).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',61);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos de formación electrónica (on line).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',59);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Otros cursos o convocatorias (Seguridad Privada, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',62);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Otros cursos o convocatorias (Seguridad Privada, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',60);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Otros cursos o convocatorias (Seguridad Privada, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',63);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Necesidades en materia de especialización (motivar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',61);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Necesidades en materia de actualización (normativa interna y disposiciones relacionadas con la operatividad).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',62);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Alumnos (funcionarios en prácticas). Problemática en materia de formación (material didáctico, profesorado, experiencia del funcionario que les acompaña en el servicio, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',63);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Problemática en materia de formación (infraestructura, material didáctico, medios materiales, profesorado).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',64);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos on-line. Problemática que plantea.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',65);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Formación centralizada (demanda cuantificada y peticiones no cubiertas)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',66);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Formación descentralizada (demanda cuantificada y peticiones no cubiertas).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',67);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Otras cuestiones dignas de reseñar.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',68);
 
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Otros cursos o convocatorias (Seguridad Privada, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACURSOS',64);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Necesidades en materia de especialización (motivar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',65);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Necesidades en materia de actualización (normativa interna y disposiciones relacionadas con la operatividad).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',66);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Alumnos (funcionarios en prácticas). Problemática en materia de formación (material didáctico, profesorado, experiencia del funcionario que les acompaña en el servicio, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',67);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Problemática en materia de formación (infraestructura, material didáctico, medios materiales, profesorado).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',68);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Cursos on-line. Problemática que plantea.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',69);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Formación centralizada (demanda cuantificada y peticiones no cubiertas)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',70);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Formación descentralizada (demanda cuantificada y peticiones no cubiertas).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',71);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación. Otras cuestiones dignas de reseñar.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO',72);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Plan de tiro. Personal en situación de Activo. Último año.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTIROPERSONALACTIVOPN',73);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Plan de tiro. Personal en situación de Activo. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTIROPERSONALACTIVOPN',74);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Plan de tiro. Personal en situación de Activo. Último año.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTIROPERSONALACTIVOPN',69);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Plan de tiro. Personal en situación de Activo. Año anterior.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTIROPERSONALACTIVOPN',70);
 
 commit;
 

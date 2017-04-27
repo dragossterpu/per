@@ -20,15 +20,15 @@
 					<div class="columnaIzdaFormulario" >
 					
 						<h:outputLabel for="anio" value="Año (*):" />
-						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  maxValue="9999" 
-							decimalPlaces="0" thousandSeparator="" maxlength="4" required="true" requiredMessage="Debe introducir un año"/>
+						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  maxValue="9999"
+							decimalPlaces="0" thousandSeparator="" maxlength="4" required="#{param['formAlta:crear']!=null}" requiredMessage="Debe introducir un año"/>
 						<p:messages for="anio" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección (*):" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
 								var="ambitos" allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu  required="true" requiredMessage="Debe seleccionar un ámbito"
+						<p:selectOneMenu  required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un ámbito"
 							value="#{inspeccionBean.inspeccion.ambito}"
 							id="ambitoInspeccionSelect">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -40,7 +40,7 @@
 						<p:messages for="ambitoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion (*):" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un tipo de inspección"
+						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un tipo de inspección"
 							value="#{inspeccionBean.inspeccion.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -52,12 +52,12 @@
 						<p:messages for="tipoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
-						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Debe seleccionar una fecha"
+						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar una fecha"
 						mindate="#{currentDate}" value="#{inspeccionBean.inspeccion.fechaPrevista}"/>
 						<p:messages for="fechaPrevista" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="equipoSelect" value="Equipo (*):" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un equipo"
+						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un equipo"
 							value="#{inspeccionBean.inspeccion.equipo}"
 							id="equipoSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -72,7 +72,7 @@
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
 								var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un cuatrimestre"
+						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un cuatrimestre"
 							value="#{inspeccionBean.inspeccion.cuatrimestre}"
 							id="cuatrimestreInspeccionSelect">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -87,7 +87,7 @@
 					<div class="columnaDchaFormulario">
 						
 						<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad: (*)" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un tipo de unidad"
+						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un tipo de unidad"
 							value="#{inspeccionBean.inspeccion.tipoUnidad}"
 							id="tipoUnidadSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />
@@ -101,7 +101,7 @@
 						
 						<h:outputLabel for="nombreUnidad" value="Nombre de unidad: (*)" />
 						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" 
-							maxlength="255" required="true" requiredMessage="Debe introducir un nombre"/>	
+							maxlength="255" required="#{param['formAlta:crear']!=null}" requiredMessage="Debe introducir un nombre"/>	
 						<p:messages for="nombreUnidad" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="provinciasSelect" value="Provincia: (*)" />
@@ -121,12 +121,13 @@
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="municipiosSelect" value="Municipio: (*)" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un municipio"
+						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un municipio"
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
 							filter="true" 
 							filterMatchMode="startsWith" 
 							converter="#{selectConverter}">
+							
 							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{inspeccionBean.listaMunicipios}"
 								var="municipio"
@@ -135,12 +136,22 @@
 						</p:selectOneMenu>
 						<p:messages for="municipiosSelect" autoUpdate="true"  closable="true"/>
 						
+						<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
+						<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.inspeccionesAsignadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+							<p:column>
+							 	<h:outputText value=" #{inspeccion.numero}" />
+							</p:column>    
+						</p:dataTable>	
+						
 					</div>	
 
 		</div>
 		
 		<div class="botonesFormulario">
-			<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Agregar inspeción" icon="fa fa-fw fa-save" >
+				<f:param name="vieneDe" value="asociarAlta" />
+			</p:commandButton>
+			<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="formAlta"/>
 			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo">
 				<f:param name="vieneDe" value="alta" />
 			</p:button>

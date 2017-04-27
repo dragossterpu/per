@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.web.beans.GuiaBusqueda;
 
 /*******************************************************************************
@@ -74,5 +75,13 @@ public interface IGuiaService {
      * @param guia guía a eliminar
      */
     public void eliminar(Guia guia);
+    
+    /**
+     * Comprueba si existen modelos de gías asociadas a un determinado tipo de inspección
+     * 
+     * @param tipo
+     * @return boolean
+     */
+    boolean existeByTipoInspeccion(TipoInspeccion tipo);
     
 }

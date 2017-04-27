@@ -8,7 +8,6 @@ package es.mira.progesin.web.beans;
  */
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.IUserService;
+import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,8 +43,8 @@ public class MiPerfilBean {
      */
     public void cambiarClave() {
         if (this.getClaveNueva().equals(this.getClaveConfirm()) == Boolean.FALSE) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas introducidas no coinciden", ""));
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "Las contraseñas introducidas no coinciden", "", null);
         } else {
             User usuario = user.getUser();
             // TODO Comprobar que cumple los siguientes criterios: como mínimo un carácter en mayúscula y un número,
@@ -53,11 +53,11 @@ public class MiPerfilBean {
             if (passwordEncoder.matches(this.getClaveActual(), usuario.getPassword())) {
                 usuario.setPassword(passwordEncoder.encode(this.getClaveNueva()));
                 userService.save(usuario);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "La contraseña ha sido modificada con éxito", ""));
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
+                        "La contraseña ha sido modificada con éxito", "", null);
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "La contraseña actual introducida no es válida. Inténtelo de nuevo", ""));
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                        "La contraseña actual introducida no es válida. Inténtelo de nuevo", "", null);
             }
         }
     }

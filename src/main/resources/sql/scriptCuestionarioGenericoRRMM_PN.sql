@@ -17,7 +17,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZAUTOMOCION', 'FURGÓN - P. CIENTÍFICA');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZAUTOMOCION', 'VEH. INTERVEN. EN USO POLICIAL');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZAUTOMOCION', 'OTROS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZAUTOMOCION', 'TOTAL');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZAUTOMOCION', 'TOTAL');
 
 --Nueva matriz
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZDISTRVEHICULOS', 'JEFAT.');
@@ -44,7 +44,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZDISTRVEHICULOS', 'FURGÓN - P. CIENTÍFICA');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZDISTRVEHICULOS', 'VEH. INTERVEN. EN USO POLICIAL');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZDISTRVEHICULOS', 'OTROS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZDISTRVEHICULOS', 'TOTAL');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZDISTRVEHICULOS', 'TOTAL');
 
 --Nueva tabla
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLARELVEHICULOS', 'Marca/Modelo');
@@ -180,8 +180,8 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZACTIVARMERIA', 'Reparaciones');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZACTIVARMERIA', 'Revisiones');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZACTIVARMERIA', 'Limpieza y engrase');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZACTIVARMERIA', 'Prácticas de tiro al año');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZACTIVARMERIA', 'Otros trabajos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZACTIVARMERIA', 'Prácticas de tiro al año');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZACTIVARMERIA', 'Otros trabajos');
 
 --Nueva matriz
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZVESTUARIO', 'Penúltimo año');
@@ -217,8 +217,8 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZTELECOESTADO', 'Portátiles');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZTELECOESTADO', 'Repetidores');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZTELECOESTADO', 'Grabadores');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07', 'MATRIZTELECOESTADO', 'Inhibidor frec. movil');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08', 'MATRIZTELECOESTADO', 'Inhibidor frec. fijo');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07', 'MATRIZTELECOESTADO', 'Inhibidor frec. fijo');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08', 'MATRIZTELECOESTADO', 'Inhibidor frec. movil');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09', 'MATRIZTELECOESTADO', 'Telf. móviles');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10', 'MATRIZTELECOESTADO', 'AVL');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11', 'MATRIZTELECOESTADO', 'Cámaras CCTV');
@@ -253,7 +253,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZTELECODISTRIB', 'TOTAL');
 
 --Insert modelo
-insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'PN_RRMM','CUESTIONARIO PN Genérico de Recursos Materiales');
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'PN_RRMM','CUESTIONARIO GENÉRICO (POLICÍA NACIONAL) DE RECURSOS MATERIALES');
 
 --Insert area AUTOMOCIÓN
 insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'AUTOMOCIÓN', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
@@ -311,7 +311,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Nº de funcionarios pendientes de que se les asignen chalecos individuales, con arreglo a las directrices marcadas por la Dirección Adjunta Operativa.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 23);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Nº y tipo de chalecos en stock.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 24);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas amparadas por Licencia tipo “A” depositadas en la plantilla.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 25);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas, amparadas por Licencia tipo “A”, subastadas, destruidas o remitidas al Servicio Central de Armamento del CNP.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 26);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas, amparadas por Licencia tipo “A”, subastadas, destruidas o remitidas al Servicio Central de Armamento de la PN.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 26);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Actividades de armería realizadas en los dos últimos años.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVARMERIA', 27);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Vestuario (datos relativos a los dos últimos años naturales completos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVESTUARIO', 28);
 

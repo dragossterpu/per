@@ -15,7 +15,7 @@
 		Los campos marcados con (*) son obligatorios
 	</div>
 	
-	<h:form id="formAlta">
+	<h:form id="formModific">
 		<div class="bloqueFormulario">
 				<h4>Datos de la inspección</h4>
 					<div class="columnaIzdaFormulario" >
@@ -25,7 +25,7 @@
 						
 						<h:outputLabel for="anio" value="Año (*):" />
 						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  
-							maxValue="9999" decimalPlaces="0" thousandSeparator="" maxlength="4" required="true" 
+							maxValue="9999" decimalPlaces="0" thousandSeparator="" maxlength="4" required="#{param['formModific:modificar']!=null}" 
 							requiredMessage="Debe introducir un año"/>						
 						<p:messages for="anio" autoUpdate="true"  closable="true" />
 						
@@ -69,10 +69,10 @@
 						
 						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
 						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" mindate="#{currentDate}" 
-							value="#{inspeccionBean.inspeccion.fechaPrevista}" required="true" requiredMessage="Debe seleccionar una fecha"/>
+							value="#{inspeccionBean.inspeccion.fechaPrevista}" required="#{param['formModific:modificar']!=null}" requiredMessage="Debe seleccionar una fecha"/>
 						
 						<h:outputLabel for="equipoSelect" value="Equipo(*):" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un equipo"
+						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.equipo}"
 							id="equipoSelect" converter="#{selectConverter}">
 							<f:selectItems value="#{inspeccionBean.listaEquipos}"
@@ -116,31 +116,33 @@
 						
 						<h:outputLabel for="nombreUnidad" value="Nombre de unidad (*):" />
 						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" 
-							maxlength="255" required="true" requiredMessage="Debe introducir un nombre"/>	
+							maxlength="255" required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un nombre"/>	
 						
-						<h:outputLabel for="provinciasSelect" value="Provincia:" />
+						<h:outputLabel for="provinciasSelect" value="Provincia: (*)" />
 						<p:selectOneMenu
-							valueChangeListener="#{inspeccionBean.onChangeProvincia}" 
 							value="#{inspeccionBean.provinciSelec}"
 							id="provinciasSelect" 
 							filter="true" 
 							filterMatchMode="startsWith"
 							converter="#{selectConverter}">
-							
+							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{applicationBean.listaProvincias}"
 								var="provincia"
 								itemLabel="#{provincia.provincia}"
 								itemValue="#{provincia}" />
-							<p:ajax update=":formAlta:municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+								<p:ajax update=":formModific:municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
 						</p:selectOneMenu>
+						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="municipiosSelect" value="Municipio (*):" />
-						<p:selectOneMenu required="true" requiredMessage="Debe seleccionar un municipio"
+						<p:selectOneMenu required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un municipio"	
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
 							filter="true" 
 							filterMatchMode="startsWith" 
-							converter="#{selectConverter}">
+							converter="#{selectConverter}" >
+														
+							
 							<f:selectItem itemLabel="Todos" itemValue=""/>
 							<f:selectItems value="#{inspeccionBean.listaMunicipios}"
 								var="municipio"
@@ -148,8 +150,10 @@
 								itemValue="#{municipio}" />
 						</p:selectOneMenu>
 						
+						<p:messages for="municipiosSelect" autoUpdate="true"  closable="true"/>
+						
 						<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
-						<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.listaInspeccionesAsociadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+						<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.inspeccionesAsignadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 							<p:column>
 							 	<h:outputText value=" #{inspeccion.numero}" />
 							</p:column>    
@@ -159,8 +163,8 @@
 		</div>
 		
 		<div class="botonesFormulario">
-			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Asociar inspección" icon="fa fa-fw fa-save">
-				<f:param name="vieneDe" value="asociar" />
+			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Agregar inspeción" icon="fa fa-fw fa-save">
+				<f:param name="vieneDe" value="asociarEditar" />
 			</p:commandButton>
 			<p:commandButton actionListener="#{inspeccionBean.modificarInspeccion}" id="modificar" value="Guardar cambios" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
 			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo">

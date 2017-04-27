@@ -15,8 +15,6 @@
 					value="#{puestosTrabajoBean.listaPuestosTrabajo}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }">
 					<p:ajax event="rowEdit" listener="#{puestosTrabajoBean.onRowEdit}"
 						update=":form:msgs" />
-					<p:ajax event="rowEditCancel" listener="#{puestosTrabajoBean.onRowCancel}"
-						update=":form:msgs" />
 
 					<p:column headerText="Puesto de trabajo">
 						<p:cellEditor>

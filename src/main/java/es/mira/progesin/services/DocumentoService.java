@@ -2,7 +2,6 @@ package es.mira.progesin.services;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -351,7 +350,7 @@ public class DocumentoService implements IDocumentoService {
             inspecciones.add(inspeccion);
             docu.setInspeccion(inspecciones);
         }
-        Blob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
+        SerialBlob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
         DocumentoBlob blob = new DocumentoBlob();
         blob.setFichero(fileBlob);
         blob.setNombreFichero(file.getFileName());

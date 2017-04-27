@@ -18,8 +18,6 @@
 		value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}"  onkeypress="if (event.keyCode == 13) {return false; }">
 					<p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}"
 						update=":form:msgs" />
-					<p:ajax event="rowEditCancel" listener="#{tipoDocumentacionBean.onRowCancel}"
-						update=":form:msgs" />
 
 					<p:column headerText="Documento" sortBy="#{tipoDocumentacion.descripcion}">
 						<p:cellEditor>

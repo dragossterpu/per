@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.mail.MessagingException;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ import lombok.Setter;
  * @author Ezentis
  *
  */
-
 @Setter
 @Getter
 @Controller("tipoEquipoBean")
@@ -53,11 +50,18 @@ public class TipoEquipoBean implements Serializable {
     /**
      * Método que nos lleva al listado de los tipos de equipos. Se llama en la carga de la página
      * 
+     * @author Ezentis
      */
     public void tipoEquipoListado() {
         listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
     }
     
+    /**
+     * Elimina un tipo de equipo
+     * 
+     * @author Ezentis
+     * @param tipo objeto a eliminar
+     */
     public void eliminarTipo(TipoEquipo tipo) {
         try {
             if (equipoService.existsByTipoEquipo(tipo)) {
@@ -81,23 +85,33 @@ public class TipoEquipoBean implements Serializable {
     }
     
     @PostConstruct
-    public void init() throws MessagingException {
+    public void init() {
         
-        listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
+        tipoEquipoListado();
         
     }
     
+    /**
+     * Crea un tipo de equipo
+     * 
+     * @author Ezentis
+     * @param codigo
+     * @param descripcion
+     */
     public void altaTipo(String codigo, String descripcion) {
         try {
             TipoEquipo tipoEquipoNuevo = new TipoEquipo(null, codigo, descripcion);
-            if (tipoEquipoService.save(tipoEquipoNuevo) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El tipo de equipo ha sido creado con éxito");
-                String descripcionTipo = "Se ha dado de alta el tipo de equipo: " + codigo + "(" + descripcion + ")";
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
-                        SeccionesEnum.ADMINISTRACION.name());
-            }
+            
+            tipoEquipoService.save(tipoEquipoNuevo);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El tipo de equipo ha sido creado con éxito");
+            
+            String descripcionTipo = "Se ha dado de alta el tipo de equipo: " + codigo + "(" + descripcion + ")";
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.ADMINISTRACION.name());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
@@ -107,32 +121,32 @@ public class TipoEquipoBean implements Serializable {
         // TODO generar alerta / notificación
     }
     
+    /**
+     * Modificación en caliente desde la tabla de un tipo de equipo
+     * 
+     * @author Ezentis
+     * @param event evento lanzado al confirmar el cambio, lleva incluido el objeto TipoEquipo
+     */
     public void onRowEdit(RowEditEvent event) {
         try {
             TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
-            if (tipoEquipoService.save(tipoEquipo) != null) {
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
-                        "Tipo de equipo modificado con éxito", null);
-                
-                String descripcionTipo = "Se ha modificado el tipo de equipo: " + tipoEquipo.getCodigo() + "("
-                        + tipoEquipo.getDescripcion() + ")";
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.ADMINISTRACION.name());
-            }
+            
+            tipoEquipoService.save(tipoEquipo);
+            
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
+                    "Tipo de equipo modificado con éxito", null);
+            
+            String descripcionTipo = "Se ha modificado el tipo de equipo: " + tipoEquipo.getCodigo() + "("
+                    + tipoEquipo.getDescripcion() + ")";
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.ADMINISTRACION.name());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
-    }
-    
-    public void onRowCancel(RowEditEvent event) {
-        TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                tipoEquipo.getCodigo() + " - " + tipoEquipo.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación cancelada", "", null);
     }
     
 }

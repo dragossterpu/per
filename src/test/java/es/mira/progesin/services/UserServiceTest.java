@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -39,7 +40,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoderMock;
     
     @InjectMocks
-    private UserService userService;
+    private IUserService userService = new UserService();
     
     /**
      * Comprueba que existe la clase
@@ -97,6 +98,16 @@ public class UserServiceTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.services.UserService#save(User)}.
+     */
+    @Test
+    public void save() {
+        User user = User.builder().username("ezentis").build();
+        userService.save(user);
+        verify(userRepositoryMock, times(1)).save(user);
+    }
+    
+    /**
      * Test method for
      * {@link es.mira.progesin.services.UserService#findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String, String)}.
      */
@@ -110,8 +121,11 @@ public class UserServiceTest {
      * Test method for
      * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(es.mira.progesin.web.beans.UserBusqueda)}.
      */
+    @Ignore
     @Test
     public void buscarUsuarioCriteria() {
+        // TODO test del buscador de usuarios
+        // userService.buscarUsuarioCriteria(userBusqueda);
         
     }
     

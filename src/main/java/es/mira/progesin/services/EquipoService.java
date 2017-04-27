@@ -25,6 +25,12 @@ import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
+/**
+ * @author EZENTIS
+ * 
+ * Sevicio para la clase Equipo
+ *
+ */
 @Service
 public class EquipoService implements IEquipoService {
     
@@ -33,10 +39,10 @@ public class EquipoService implements IEquipoService {
     private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
     @Autowired
-    IEquipoRepository equipoRepository;
+    private IEquipoRepository equipoRepository;
     
     @Autowired
-    IMiembrosRepository miembrosRepository;
+    private IMiembrosRepository miembrosRepository;
     
     @Autowired
     private SessionFactory sessionFactory;
@@ -131,12 +137,6 @@ public class EquipoService implements IEquipoService {
         session.close();
         
         return listEquipos;
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public void delete(Miembro miembro) {
-        miembrosRepository.delete(miembro);
     }
     
     @Override

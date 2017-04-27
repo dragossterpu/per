@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +39,15 @@ public class CuerposEstadoBean implements Serializable {
     
     private List<CuerpoEstado> listaCuerposEstado;
     
-    private CuerpoEstado cuerpo;
-    
     private String cuerpoNuevo;
     
     private String nombreCortoNuevo;
     
     @Autowired
-    ICuerpoEstadoService cuerposEstadoService;
+    private transient ICuerpoEstadoService cuerposEstadoService;
     
     @Autowired
-    IUserService userService;
+    private transient IUserService userService;
     
     /**
      * Eliminación lógica (se pone fecha de baja) de un cuerpo del estado
@@ -58,11 +55,8 @@ public class CuerposEstadoBean implements Serializable {
      */
     public void eliminarCuerpo(CuerpoEstado cuerpo) {
         if (existenUsuariosCuerpo(cuerpo)) {
-            FacesContext.getCurrentInstance()
-                    .addMessage("msgs",
-                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
-                                    + cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo",
-                                    ""));
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
+                    + cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo", "", "msgs");
         } else {
             cuerpo.setFechaBaja(new Date());
             cuerpo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -107,18 +101,8 @@ public class CuerposEstadoBean implements Serializable {
     public void onRowEdit(RowEditEvent event) {
         CuerpoEstado cuerpoEstado = (CuerpoEstado) event.getObject();
         cuerposEstadoService.save(cuerpoEstado);
-        FacesMessage msg = new FacesMessage("Cuerpo modificado", cuerpoEstado.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-    }
-    
-    /**
-     * Cancela la edición de un cuerpo del estado
-     * @param event
-     */
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                ((CuerpoEstado) event.getObject()).getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
+        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",
+                cuerpoEstado.getDescripcion(), "msgs");
     }
     
     /**

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.Order;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 public interface IInspeccionesService {
@@ -40,5 +41,7 @@ public interface IInspeccionesService {
             List<Order> listaOrden);
     
     public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion);
+    
+    boolean existeByTipoInspeccion(TipoInspeccion tipo);
     
 }

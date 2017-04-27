@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 
 public abstract interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long> {
     @Query("SELECT i FROM Inspeccion i WHERE i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR i.numero LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
@@ -26,6 +27,8 @@ public abstract interface IInspeccionesRepository extends CrudRepository<Inspecc
     @Query(value = "select ins.* from documentos_inspeccion di, inspecciones ins where di.id_inspeccion=ins.id and di.id_documento=?1", nativeQuery = true)
     public abstract List<Inspeccion> cargaInspecciones(Long paramLong);
     
-    @Query(value = "select ins.* from inspecciones_asociadas i, inspecciones ins where i.id_inspeccion=ins.id and i.id_inspeccion= :idInspeccion", nativeQuery = true)
+    @Query(value = "select insAsociadas.* from inspecciones_asociadas i, inspecciones insAsociadas where i.id_inspeccion_asociada=insAsociadas.id and i.id_inspeccion= :idInspeccion", nativeQuery = true)
     public abstract List<Inspeccion> cargaInspeccionesAsociadas(@Param("idInspeccion") Long idInspeccion);
+    
+    boolean existsByTipoInspeccion(TipoInspeccion tipo);
 }
