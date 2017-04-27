@@ -135,7 +135,8 @@
 						</p:selectOneMenu>
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="municipiosSelect" value="Municipio (*):" />
+						<h:outputLabel for="municipiosSelect" value="Municipio (*):"/>
+						<p:commandButton title="Añadir municipio" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus"/>
 						<p:selectOneMenu required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un municipio"	
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
@@ -150,7 +151,6 @@
 								itemLabel="#{municipio.name}"
 								itemValue="#{municipio}" />
 						</p:selectOneMenu>
-						
 						<p:messages for="municipiosSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
@@ -183,6 +183,17 @@
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
 		    <p:graphicImage value="/images/loading.gif" />
 		</p:dialog>
+		
+		<p:dialog id="crearMunicipio" widgetVar="dialogMunicipio" header="Alta municipio" position="center">
+					<h:outputLabel for="inputNombre" value="Nombre (*):" />
+					<p:inputText id="inputNombre" binding="#{nombreMunicipio}" 
+						required="true" requiredMessage="El nombre del municipio no puede estar vacío"/>
+					<p:messages for="inputNombre" autoUpdate="true"  closable="true"/>
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Guardar" actionListener="#{inspeccionBean.crearMunicipio(nombreMunicipio.value)}"/>
+						<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
+					</div>
+			</p:dialog>
 		
 	</h:form>
 	
