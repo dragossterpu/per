@@ -119,20 +119,6 @@ public class AlertaService implements IAlertaService {
     
     /**********************************************************************************
      * 
-     * Guarda en base de datos la alerta recibida como parámetro.
-     * 
-     * @param Alerta
-     * @return Alerta
-     * 
-     **********************************************************************************/
-    
-    @Transactional(readOnly = false)
-    private Alerta save(Alerta entity) {
-        return alertaRepository.save(entity);
-    }
-    
-    /**********************************************************************************
-     * 
      * Crea una alerta a partir de la sección y la descripción que se reciben como parámetros
      * 
      * @param String seccion
@@ -146,7 +132,7 @@ public class AlertaService implements IAlertaService {
             Alerta alerta = new Alerta();
             alerta.setDescripcion(descripcion);
             alerta.setNombreSeccion(seccion);
-            return save(alerta);
+            return alertaRepository.save(alerta);
         } catch (Exception e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }

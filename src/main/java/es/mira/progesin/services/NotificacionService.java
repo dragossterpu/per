@@ -114,20 +114,6 @@ public class NotificacionService implements INotificacionService {
     
     /*********************************************************
      * 
-     * Graba en base de datos una notificación pasada como parámetro
-     * 
-     * @param Notificacion
-     * @return Notificacion
-     * 
-     *******************************************************/
-    
-    @Transactional(readOnly = false)
-    private Notificacion save(Notificacion entity) {
-        return notificacionRepository.save(entity);
-    }
-    
-    /*********************************************************
-     * 
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro
      * 
      * @param String Descripcion
