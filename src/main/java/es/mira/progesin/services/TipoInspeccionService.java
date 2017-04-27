@@ -42,4 +42,9 @@ public class TipoInspeccionService implements ITipoInspeccionService {
         return tipoInspeccionRepository.existsByCodigoIgnoreCase(codigo);
     }
     
+    @Override
+    public List<TipoInspeccion> buscaTodos() {
+        return (List<TipoInspeccion>) tipoInspeccionRepository.findAll();
+    }
+    
 }

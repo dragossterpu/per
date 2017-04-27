@@ -40,4 +40,10 @@ public interface ITipoInspeccionService {
      */
     boolean existeByCodigoIgnoreCase(String codigo);
     
+    /**
+     * Busca todos los tipos de inspección
+     * @return lista tipos isnpecciones
+     */
+    List<TipoInspeccion> buscaTodos();
+    
 }

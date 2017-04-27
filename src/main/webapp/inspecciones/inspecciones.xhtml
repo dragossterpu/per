@@ -48,7 +48,7 @@
 					value="#{inspeccionBean.inspeccionBusqueda.tipoInspeccion}"
 					id="tipoInspeccionSelect" converter="#{selectConverter}">
 					<f:selectItem itemLabel="Todos" itemValue="" />
-					<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+					<f:selectItems value="#{inspeccionBean.listaTiposInspeccion}"
 						var="tipo"
 						itemLabel="#{tipo.descripcion}"
 						itemValue="#{tipo}" />

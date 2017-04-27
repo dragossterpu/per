@@ -24,12 +24,14 @@ import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -67,6 +69,9 @@ public class InspeccionBean {
     @Autowired
     private IEquipoService equipoService;
     
+    @Autowired
+    private ITipoInspeccionService tipoInspeccionService;
+    
     private static final int MAX_RESULTS_PAGE = 20;
     
     private static final int TODOS_RESULTS_PAGE = -1;
@@ -98,7 +103,7 @@ public class InspeccionBean {
     
     private boolean selectedAll;
     
-    private boolean municipioEditable;
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**************************************************************
      * 
@@ -212,6 +217,7 @@ public class InspeccionBean {
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
+        listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
     }
@@ -265,6 +271,7 @@ public class InspeccionBean {
         listaMunicipios = queryEmpleo.getResultList();
         this.inspeccion = inspeccion;
         inspeccionesAsignadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
+        listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
@@ -335,6 +342,7 @@ public class InspeccionBean {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
+            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
         }
         
     }

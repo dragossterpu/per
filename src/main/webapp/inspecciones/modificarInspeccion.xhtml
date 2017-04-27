@@ -47,7 +47,7 @@
 						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
-							<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+							<f:selectItems value="#{inspeccionBean.listaTiposInspeccion}"
 								var="tipo"
 								itemLabel="#{tipo.descripcion}"
 								itemValue="#{tipo}" />
@@ -70,6 +70,7 @@
 						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
 						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" mindate="#{currentDate}" 
 							value="#{inspeccionBean.inspeccion.fechaPrevista}" required="#{param['formModific:modificar']!=null}" requiredMessage="Debe seleccionar una fecha"/>
+						<p:messages for="fechaPrevista" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="equipoSelect" value="Equipo(*):" />
 						<p:selectOneMenu
