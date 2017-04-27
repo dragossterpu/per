@@ -94,7 +94,10 @@ public class SugerenciasBean implements Serializable {
         sugerencia = null;
         sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
     }
-    
+    /**
+     * Método que nos lleva al listado de sugerencias y donde se elimina la sugerencia selecionada.
+     * @return
+     */
     public void eliminarSugerencia(Sugerencia sugerenciaSeleccionada) {
         try {
             sugerenciaService.delete(sugerenciaSeleccionada.getIdSugerencia());
