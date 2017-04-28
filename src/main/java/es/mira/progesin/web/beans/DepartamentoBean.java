@@ -16,12 +16,21 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Bean para la administración de los departamentos. Nuevo departamento, modificar departamento, y eliminar
+ * departamento.
+ * 
+ * @author Ezentis
+ *
+ */
 @Setter
 @Getter
 @Controller("departamentosBean")
@@ -42,6 +51,9 @@ public class DepartamentoBean implements Serializable {
     
     @Autowired
     private transient IUserService userService;
+    
+    @Autowired
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Eliminación lógica (se pone fecha de baja) de un departamento
@@ -74,17 +86,18 @@ public class DepartamentoBean implements Serializable {
      * Alta de un nuevo departamento
      */
     public void altaDepartamento() {
-        Departamento departamento = new Departamento();
-        departamento.setDescripcion(departamentoNuevo);
         try {
-            if (departamentoService.save(departamento) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El departamento ha sido creado con éxito");
-            }
+            Departamento departamento = new Departamento();
+            departamento.setDescripcion(departamentoNuevo);
+            
+            departamentoService.save(departamento);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El departamento ha sido creado con éxito");
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el departamento, inténtelo de nuevo más tarde");
-            // TODO log de errores
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
         // TODO generar alerta / notificación
     }

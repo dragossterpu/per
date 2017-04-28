@@ -16,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -49,6 +51,9 @@ public class CuerposEstadoBean implements Serializable {
     @Autowired
     private transient IUserService userService;
     
+    @Autowired
+    private transient IRegistroActividadService regActividadService;
+    
     /**
      * Eliminación lógica (se pone fecha de baja) de un cuerpo del estado
      * @param cuerpo cuerpo del estado a eliminar
@@ -78,18 +83,19 @@ public class CuerposEstadoBean implements Serializable {
      * Alta un nuevo cuerpo del estado
      */
     public void altaCuerpo() {
-        CuerpoEstado cuerpoEstado = new CuerpoEstado();
-        cuerpoEstado.setDescripcion(cuerpoNuevo);
-        cuerpoEstado.setNombreCorto(nombreCortoNuevo);
         try {
-            if (cuerposEstadoService.save(cuerpoEstado) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El cuerpo ha sido creado con éxito");
-            }
+            CuerpoEstado cuerpoEstado = new CuerpoEstado();
+            cuerpoEstado.setDescripcion(cuerpoNuevo);
+            cuerpoEstado.setNombreCorto(nombreCortoNuevo);
+            
+            cuerposEstadoService.save(cuerpoEstado);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El cuerpo ha sido creado con éxito");
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el cuerpo, inténtelo de nuevo más tarde");
-            // TODO log de errores
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
         // TODO generar alerta / notificación
     }
