@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialException;
+
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -48,9 +50,9 @@ public interface IDocumentoService {
     
     Documento save(Documento entity);
     
-    DefaultStreamedContent descargaDocumento(Documento entity) throws Exception;
+    DefaultStreamedContent descargaDocumento(Documento entity) throws SerialException;
     
-    DefaultStreamedContent descargaDocumento(Long id) throws Exception;
+    DefaultStreamedContent descargaDocumento(Long id) throws SerialException;
     
     Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException;

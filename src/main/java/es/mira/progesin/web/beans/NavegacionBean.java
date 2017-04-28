@@ -1,12 +1,13 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
-import org.primefaces.model.menu.MenuModel;
+import org.primefaces.model.menu.DynamicMenuModel;
+import org.primefaces.model.menu.MenuElement;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Bean que mantiene un contról de las páginas que se visitan de modo que siempre se sepa dónde se encuentra el usuario
+ * y éste pueda navegar hacia atrás a un menú superior hasta llegar al index
+ * 
+ * @author EZENTIS
+ * 
+ */
 @Component("navegacionBean")
 @Scope("session")
 @Getter
@@ -23,7 +31,7 @@ public class NavegacionBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private MenuModel caminoMigas;
+    private DynamicMenuModel caminoMigas;
     
     @PostConstruct
     public void init() {
@@ -37,7 +45,7 @@ public class NavegacionBean implements Serializable {
      * 
      */
     public void iniciarCamino() {
-        caminoMigas = new DefaultMenuModel();
+        caminoMigas = new DynamicMenuModel();
         DefaultMenuItem inicio = new DefaultMenuItem();
         inicio.setUrl("/index.xhtml");
         inicio.setIcon("ui-icon-home");
@@ -53,10 +61,14 @@ public class NavegacionBean implements Serializable {
      * @param ruta de la vista
      */
     public void adelante(String nombre, String ruta) {
-        DefaultMenuItem nuevo = new DefaultMenuItem();
-        nuevo.setUrl(ruta);
-        nuevo.setValue(nombre);
-        caminoMigas.addElement(nuevo);
+        List<MenuElement> elementos = caminoMigas.getElements();
+        DefaultMenuItem ultimo = (DefaultMenuItem) elementos.get(elementos.size() - 1);
+        if (nombre.equals(ultimo.getValue()) == Boolean.FALSE) {
+            DefaultMenuItem nuevo = new DefaultMenuItem();
+            nuevo.setUrl(ruta);
+            nuevo.setValue(nombre);
+            caminoMigas.addElement(nuevo);
+        }
     }
     
     /**
@@ -77,6 +89,6 @@ public class NavegacionBean implements Serializable {
      * @author EZENTIS
      */
     public void atras() {
-        caminoMigas.getElements().remove(caminoMigas.getElements().size());
+        caminoMigas.getElements().remove(caminoMigas.getElements().size() - 1);
     }
 }

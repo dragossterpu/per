@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -270,10 +271,10 @@ public class DocumentoService implements IDocumentoService {
      * @author Ezentis
      * @param Documento Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException
+     * @throws SerialException
      *************************************/
     @Override
-    public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
+    public DefaultStreamedContent descargaDocumento(Documento entity) throws SerialException {
         Documento docu = documentoRepository.findById(entity.getId());
         DocumentoBlob doc = docu.getFichero();
         InputStream stream = doc.getFichero().getBinaryStream();
@@ -289,10 +290,10 @@ public class DocumentoService implements IDocumentoService {
      * @author Ezentis
      * @param Documento Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException
+     * @throws SerialException
      *************************************/
     @Override
-    public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
+    public DefaultStreamedContent descargaDocumento(Long id) throws SerialException {
         Documento entity = documentoRepository.findById(id);
         
         InputStream stream = entity.getFichero().getFichero().getBinaryStream();
