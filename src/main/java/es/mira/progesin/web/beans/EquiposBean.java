@@ -52,6 +52,8 @@ public class EquiposBean implements Serializable {
     
     private static final String MIEMBROS = "miembros";
     
+    private static final int NUMEROCOLUMNASLISTADOEQUIPOS = 4;
+    
     private String vieneDe;
     
     private Equipo equipo;
@@ -62,15 +64,13 @@ public class EquiposBean implements Serializable {
     
     private List<Boolean> columnasVisibles;
     
-    private String estado = null;
+    private String estado;
     
     private List<User> listaUsuarios;
     
-    private List<User> listadoPotencialesJefes = new ArrayList<>();
+    private List<User> listadoPotencialesJefes;
     
-    private List<User> listadoPotencialesMiembros = new ArrayList<>();
-    
-    private int numeroColumnasListadoEquipos = 5;
+    private List<User> listadoPotencialesMiembros;
     
     private EquipoBusqueda equipoBusqueda;
     
@@ -103,13 +103,15 @@ public class EquiposBean implements Serializable {
      * @return vista altaEquipo
      */
     public String getFormAltaEquipo() {
-        this.jefeSeleccionado = null;
-        this.miembrosSeleccionados = new ArrayList<>();
-        this.listadoPotencialesMiembros = null;
-        this.equipo = new Equipo();
-        this.tipoEquipo = null;
+        this.setJefeSeleccionado(null);
+        this.setMiembrosSeleccionados(new ArrayList<>());
+        this.setListadoPotencialesJefes(new ArrayList<>());
+        this.setListadoPotencialesMiembros(new ArrayList<>());
+        this.setEquipo(new Equipo());
+        this.setTipoEquipo(null);
         listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(null);
-        listadoPotencialesJefes = listaUsuarios;
+        listadoPotencialesJefes.addAll(listaUsuarios);
+        listadoPotencialesMiembros.addAll(listaUsuarios);
         skip = false;
         return "/equipos/altaEquipo?faces-redirect=true";
     }
@@ -175,7 +177,7 @@ public class EquiposBean implements Serializable {
      */
     public void limpiarBusqueda() {
         equipoBusqueda.resetValues();
-        this.estado = null;
+        setEstado(null);
     }
     
     /**
@@ -324,16 +326,17 @@ public class EquiposBean implements Serializable {
                 listaMiembros.add(jefe);
                 
                 equipo.setMiembros(listaMiembros);
-                if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-                            "jefe cambiado con éxito");
-                    String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
-                            + "'. Nombre del nuevo jefe: " + equipo.getNombreJefe();
-                    // Guardamos la actividad en bbdd
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                            SeccionesEnum.INSPECCION.name());
-                    notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
-                }
+                
+                equipoService.save(equipo);
+                
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                        "jefe cambiado con éxito");
+                String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
+                        + "'. Nombre del nuevo jefe: " + equipo.getNombreJefe();
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.name());
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -366,17 +369,18 @@ public class EquiposBean implements Serializable {
             List<Miembro> listaMiembros = equipo.getMiembros();
             String nombresCompletos = aniadirMiembrosEquipo(posicion, listaMiembros);
             equipo.setMiembros(listaMiembros);
-            if (equipoService.save(equipo) != null && !listaMiembros.isEmpty()) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-                        "componente/s o colaborador/es añadido/s con éxito");
-                String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones '"
-                        + equipo.getNombreEquipo() + "'. Nombres de componentes " + nombresCompletos;
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.INSPECCION.name());
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
-                
-            }
+            
+            equipoService.save(equipo);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                    "componente/s o colaborador/es añadido/s con éxito");
+            String descripcion = "Se ha añadido nuevos componentes o colaboradores al equipo inspecciones '"
+                    + equipo.getNombreEquipo() + "'. Nombres de componentes " + nombresCompletos;
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.INSPECCION.name());
+            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al añadir nuevos componentes o colaboradores al equipo, inténtelo de nuevo más tarde");
@@ -431,10 +435,9 @@ public class EquiposBean implements Serializable {
     }
     
     /**
-     * Gestiona la transición entre pestañas en el formulario de alta de equipos. Devuelve al estado inicial cada
-     * pestaña del formulario en caso de volver a un paso anterior. Se obliga a elegir un jefe de equipo y controla que
-     * se escoja al menos un miembro o se cornfirme que no se desea ninguno para este equipo antes de pasar a una
-     * pestaña posterior.
+     * Gestiona la transición entre pestañas en el formulario de alta de equipos. Se obliga a elegir un jefe de equipo y
+     * controla que se escoja al menos un miembro o se cornfirme que no se desea ninguno para este equipo antes de pasar
+     * a una pestaña posterior.
      * 
      * @author EZENTIS
      * @param event info de la pestaña actual y la siguente que se solicita
@@ -443,37 +446,29 @@ public class EquiposBean implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         if (JEFEEQUIPO.equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
             if (jefeSeleccionado != null) {
-                listadoPotencialesJefes.remove(jefeSeleccionado);
-                listadoPotencialesMiembros = listadoPotencialesJefes;
+                
+                listadoPotencialesMiembros.remove(jefeSeleccionado);
+                miembrosSeleccionados.removeIf(m -> jefeSeleccionado.equals(m));
+                
             } else {
+                
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Debe elegir un jefe de equipo", "",
                         "");
+                
                 return event.getOldStep();
             }
-        }
-        if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep())
-                && miembrosSeleccionados.isEmpty()) {
-            if (skip) {
-                skip = false;
-            } else {
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                        "Debe elegir uno o más componentes o confirmar que no desea ninguno aparte del jefe", "", "");
-                return event.getOldStep();
-            }
-        }
-        if ("confirm".equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
-            this.miembrosSeleccionados = null;
-            listadoPotencialesJefes = listaUsuarios;
-        }
-        if (MIEMBROS.equals(event.getOldStep()) && JEFEEQUIPO.equals(event.getNewStep())) {
-            listadoPotencialesJefes.add(jefeSeleccionado);
-            this.jefeSeleccionado = null;
-        }
-        if (JEFEEQUIPO.equals(event.getOldStep()) && "general".equals(event.getNewStep())) {
-            this.equipo.setNombreEquipo("");
-            this.tipoEquipo = null;
-            this.jefeSeleccionado = null;
-            this.miembrosSeleccionados = null;
+        } else if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep())
+                && miembrosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
+            
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "Debe elegir uno o más componentes o confirmar que no desea ninguno aparte del jefe", "", "");
+            
+            return event.getOldStep();
+            
+        } else if (MIEMBROS.equals(event.getOldStep()) && JEFEEQUIPO.equals(event.getNewStep())) {
+            
+            listadoPotencialesMiembros.add(jefeSeleccionado);
+            
         }
         return event.getNewStep();
     }
@@ -486,12 +481,11 @@ public class EquiposBean implements Serializable {
     @PostConstruct
     public void init() {
         // para que en el select cargue por defecto la opción "Seleccione uno..."
-        estado = null;
-        this.equipo = null;
-        equipoBusqueda = new EquipoBusqueda();
-        equipoBusqueda.resetValues();
-        columnasVisibles = new ArrayList<>();
-        for (int i = 0; i <= numeroColumnasListadoEquipos; i++) {
+        setEstado(null);
+        setEquipo(null);
+        setEquipoBusqueda(new EquipoBusqueda());
+        setColumnasVisibles(new ArrayList<>());
+        for (int i = 0; i <= NUMEROCOLUMNASLISTADOEQUIPOS; i++) {
             columnasVisibles.add(Boolean.TRUE);
         }
         
