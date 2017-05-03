@@ -116,11 +116,12 @@
 								var="provincia"
 								itemLabel="#{provincia.provincia}"
 								itemValue="#{provincia}" />
-								<p:ajax update=":formAlta:municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+								<p:ajax update=":formAlta:municipiosSelect :formAlta:buttMunicipio" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
 						</p:selectOneMenu>
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="municipiosSelect" value="Municipio: (*)" />
+						<p:commandButton id="buttMunicipio" title="Añadir municipio" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.provinciSelec == null}"/>
 						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un municipio"
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
@@ -167,6 +168,17 @@
 		
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
 		    <p:graphicImage value="/images/loading.gif" />
+		</p:dialog>
+		
+		<p:dialog id="crearMunicipio" widgetVar="dialogMunicipio" header="Alta municipio" position="center" resizable="false" onShow="$('[id*=inputNombre]').val('');" modal="true" width="30%" >
+			<h:outputLabel for="inputNombre" value="Nombre (*):" />
+			<p:inputText id="inputNombre" binding="#{nombreMunicipio}"
+				required="#{param['formAlta:guardar']!=null}" requiredMessage="El nombre del municipio no puede estar vacío" converter="#{trimConverter}" />
+			<p:messages for="inputNombre" autoUpdate="true" closable="true" showDetail="true"/>
+			<div class="centrarBotonesDialog">
+				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value)}" update=":formAlta:municipiosSelect" />
+				<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
+			</div>
 		</p:dialog>
 		
 	</h:form>

@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.criterion.Order;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.event.data.SortEvent;
@@ -30,6 +32,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
+import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
@@ -71,6 +74,9 @@ public class InspeccionBean {
     
     @Autowired
     private ITipoInspeccionService tipoInspeccionService;
+    
+    @Autowired
+    private IMunicipioService municipioService;
     
     private static final int MAX_RESULTS_PAGE = 20;
     
@@ -212,6 +218,7 @@ public class InspeccionBean {
     public String nuevaInspeccion() {
         setProvinciSelec(null);
         setListaMunicipios(null);
+        
         inspeccionesAsignadas = new ArrayList<>();
         inspeccionesSeleccionadas = new ArrayList<>();
         inspeccion = new Inspeccion();
@@ -338,7 +345,6 @@ public class InspeccionBean {
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
@@ -431,16 +437,6 @@ public class InspeccionBean {
         inspeccionCopia.setJefeEquipo(inspeccion.getJefeEquipo());
         
         return inspeccionCopia;
-    }
-    
-    /**
-     * 
-     */
-    public void onChangeProvincia() {
-        TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
-        queryEmpleo.setParameter("provinciaSeleccionada", this.provinciSelec);
-        listaMunicipios = queryEmpleo.getResultList();
-        
     }
     
     /**
@@ -632,7 +628,7 @@ public class InspeccionBean {
                 buscarConOrden(listaOrden, primerRegistro, MAX_RESULTS_PAGE);
             }
         } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
     }
     
@@ -672,6 +668,37 @@ public class InspeccionBean {
             setInspeccionesAsignadas(null);
             setSelectedAll(false);
         }
+    }
+    
+    /**
+     * Guarda un nuevo municipio
+     * @param nombre
+     * @param provincia
+     * @return municipio guardado
+     */
+    public void nuevoMunicipio(String nombre) {
+        Municipio nuevoMunicipio = null;
+        boolean existeMunicipio = municipioService.existeByNameIgnoreCaseAndProvincia(nombre.trim(), provinciSelec);
+        if (existeMunicipio) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Acción no permitida",
+                    "Ya existe un municipio perteneciente a la misma provincia con ese nombre", "inputNombre");
+        } else {
+            nuevoMunicipio = municipioService.crearMunicipio(nombre, provinciSelec);
+            listaMunicipios.add(nuevoMunicipio);
+            Collections.sort(listaMunicipios);
+            inspeccion.setMunicipio(nuevoMunicipio);
+            RequestContext.getCurrentInstance().execute("PF('dialogMunicipio').hide()");
+        }
+    }
+    
+    /**
+     * Devuelve una lista de municipios pertenecientes a una provincia
+     */
+    public void onChangeProvincia() {
+        TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
+        queryEmpleo.setParameter("provinciaSeleccionada", this.provinciSelec);
+        listaMunicipios = queryEmpleo.getResultList();
+        
     }
     
 }

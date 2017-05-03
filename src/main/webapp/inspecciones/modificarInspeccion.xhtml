@@ -131,12 +131,12 @@
 								var="provincia"
 								itemLabel="#{provincia.provincia}"
 								itemValue="#{provincia}" />
-								<p:ajax update=":formModific:municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+								<p:ajax update=":formModific:municipiosSelect :formModific:buttMunicipio" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
 						</p:selectOneMenu>
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="municipiosSelect" value="Municipio (*):"/>
-						<p:commandButton title="Añadir municipio" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus"/>
+						<p:commandButton id="buttMunicipio" title="Añadir municipio" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.provinciSelec == null}"/>
 						<p:selectOneMenu required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un municipio"	
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
@@ -144,7 +144,6 @@
 							filterMatchMode="startsWith" 
 							converter="#{selectConverter}" >
 														
-							
 							<f:selectItem itemLabel="Todos" itemValue=""/>
 							<f:selectItems value="#{inspeccionBean.listaMunicipios}"
 								var="municipio"
@@ -184,16 +183,16 @@
 		    <p:graphicImage value="/images/loading.gif" />
 		</p:dialog>
 		
-		<p:dialog id="crearMunicipio" widgetVar="dialogMunicipio" header="Alta municipio" position="center">
-					<h:outputLabel for="inputNombre" value="Nombre (*):" />
-					<p:inputText id="inputNombre" binding="#{nombreMunicipio}" 
-						required="true" requiredMessage="El nombre del municipio no puede estar vacío"/>
-					<p:messages for="inputNombre" autoUpdate="true"  closable="true"/>
-					<div class="centrarBotonesDialog">
-						<p:commandButton value="Guardar" actionListener="#{inspeccionBean.crearMunicipio(nombreMunicipio.value)}"/>
-						<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
-					</div>
-			</p:dialog>
+		<p:dialog id="crearMunicipio" widgetVar="dialogMunicipio" header="Alta municipio" position="center" resizable="false" onShow="$('[id*=inputNombre]').val('');" modal="true" width="30%" >
+			<h:outputLabel for="inputNombre" value="Nombre (*):" />
+			<p:inputText id="inputNombre" binding="#{nombreMunicipio}"
+				required="#{param['formModific:guardar']!=null}" requiredMessage="El nombre del municipio no puede estar vacío" converter="#{trimConverter}" />
+			<p:messages for="inputNombre" autoUpdate="true" closable="true" showDetail="true"/>
+			<div class="centrarBotonesDialog">
+				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value)}" update=":formModific:municipiosSelect" />
+				<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
+			</div>
+		</p:dialog>
 		
 	</h:form>
 	

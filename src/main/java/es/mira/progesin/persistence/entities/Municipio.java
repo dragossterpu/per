@@ -6,10 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -33,7 +36,7 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "municipios")
 @NamedQuery(name = "Municipio.findByCode_province", query = "SELECT m FROM Municipio m where m.provincia=:provinciaSeleccionada")
-public class Municipio implements Serializable {
+public class Municipio implements Serializable, Comparable<Municipio> {
     
     /**
      * 
@@ -41,6 +44,8 @@ public class Municipio implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @SequenceGenerator(name = "seq_municipio", sequenceName = "seq_municipio", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_municipio")
     @Column(name = "id")
     private Long id;
     
@@ -50,5 +55,10 @@ public class Municipio implements Serializable {
     @ManyToOne
     @JoinColumn(name = "code_province", foreignKey = @ForeignKey(name = "FK_PROVINCIA"))
     private Provincia provincia;
+    
+    @Override
+    public int compareTo(Municipio m) {
+        return this.name.toLowerCase().compareTo(m.name.toLowerCase());
+    }
     
 }
