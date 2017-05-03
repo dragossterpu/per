@@ -1,9 +1,9 @@
-insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(1, 'Policía Nacional', 'PN','system', sysdate);
-insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(2, 'Guardia Civil','GC', 'system', sysdate);
-insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(3, 'Cuerpo General de la Administración','CGA', 'system', sysdate);
-insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(4, 'Cuerpos Comunes de la Defensa','CCD','system', sysdate);
-insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(5, 'Contratados','CONTR', 'system', sysdate);
-insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(6, 'Correos y Telégrafos','CT', 'system', sysdate);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(seq_cuerpos.nextval, 'Policía Nacional', 'PN','system', sysdate);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(seq_cuerpos.nextval, 'Guardia Civil','GC', 'system', sysdate);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(seq_cuerpos.nextval, 'Cuerpo General de la Administración','CGA', 'system', sysdate);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(seq_cuerpos.nextval, 'Cuerpos Comunes de la Defensa','CCD','system', sysdate);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(seq_cuerpos.nextval, 'Contratados','CONTR', 'system', sysdate);
+insert into CUERPOSESTADO (id, descripcion, nombre_corto,username_alta, fecha_alta) values(seq_cuerpos.nextval, 'Correos y Telégrafos','CT', 'system', sysdate);
  
 insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Subdirector General', Sysdate, 'system');
 insert into PUESTOSTRABAJO (id,descripcion, fecha_alta, username_alta) values(SEQ_PUESTO_TRABAJO.nextval, 'Secretario Técnico', Sysdate, 'system');
