@@ -65,16 +65,16 @@ import es.mira.progesin.util.FacesUtilities;
 public class EquiposBeanTest {
     
     @Mock
-    FacesUtilities facesUtilities;
+    private FacesUtilities facesUtilities;
     
     @Mock
-    SecurityContextHolder securityContextHolder;
+    private SecurityContextHolder securityContextHolder;
     
     @Mock
-    SecurityContext securityContext;
+    private SecurityContext securityContext;
     
     @Mock
-    Authentication authentication;
+    private Authentication authentication;
     
     @Mock
     private ITipoEquipoService tipoEquipoService;

@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.hibernate.SessionFactory;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.StreamedContent;
@@ -58,7 +57,6 @@ import lombok.Setter;
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
  */
-
 @Setter
 @Getter
 @Controller("solicitudDocPreviaBean")
@@ -67,37 +65,15 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Autowired
-    private SessionFactory sessionFactory;
-    
-    @Autowired
-    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
-    
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
+    
+    private static final String ASUNTO = "Asunto: ";
     
     private String vieneDe;
     
-    @Autowired
-    transient IRegistroActividadService regActividadService;
-    
-    @Autowired
-    transient INotificacionService notificacionService;
-    
-    @Autowired
-    transient IAlertaService alertaService;
-    
-    transient List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
+    private List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
     
     private List<Boolean> listaColumnToggler;
-    
-    @Autowired
-    transient ISolicitudDocumentacionService solicitudDocumentacionService;
-    
-    @Autowired
-    transient ITipoDocumentacionService tipoDocumentacionService;
-    
-    @Autowired
-    transient IInspeccionesService inspeccionesService;
     
     private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
     
@@ -107,24 +83,51 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private transient StreamedContent file;
     
-    transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
+    private List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
     
-    transient List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
+    private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
     
     private List<TipoDocumentacion> documentosSeleccionados;
     
-    transient List<TipoDocumentacion> listadoDocumentos = new ArrayList<>();
+    private List<TipoDocumentacion> listadoDocumentos;
     
-    @Autowired
-    transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    @Autowired
-    transient IUserService userService;
-    
-    @Autowired
-    transient IDocumentoService documentoService;
+    private Map<String, String> parametrosVistaSolicitud;
     
     private Map<String, String> datosApoyo;
+    
+    private LazyModelSolicitudes model;
+    
+    @Autowired
+    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
+    
+    @Autowired
+    private transient IRegistroActividadService regActividadService;
+    
+    @Autowired
+    private transient INotificacionService notificacionService;
+    
+    @Autowired
+    private transient IAlertaService alertaService;
+    
+    @Autowired
+    private transient ISolicitudDocumentacionService solicitudDocumentacionService;
+    
+    @Autowired
+    private transient ITipoDocumentacionService tipoDocumentacionService;
+    
+    @Autowired
+    private transient IInspeccionesService inspeccionesService;
+    
+    @Autowired
+    private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
+    
+    @Autowired
+    private transient IUserService userService;
+    
+    @Autowired
+    private transient IDocumentoService documentoService;
     
     @Autowired
     private transient PasswordEncoder passwordEncoder;
@@ -133,19 +136,13 @@ public class SolicitudDocPreviaBean implements Serializable {
     private transient ICorreoElectronico correoElectronico;
     
     @Autowired
-    transient ApplicationBean applicationBean;
-    
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    private Map<String, String> parametrosVistaSolicitud;
+    private transient ApplicationBean applicationBean;
     
     @Autowired
     private transient PdfGenerator pdfGenerator;
     
     @Autowired
-    ICuestionarioEnvioService cuestionarioEnvioService;
-    
-    private LazyModelSolicitudes model;
+    private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -157,18 +154,17 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
             if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
-                SolicitudDocumentacionPrevia solicitud = solicitudDocumentacionService
-                        .save(solicitudDocumentacionPrevia);
-                if (solicitud != null) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                            "La solicitud de documentación ha sido creada con éxito");
-                    
-                    altaDocumentos();
-                    String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
-                    // Guardamos la actividad en bbdd
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                            SeccionesEnum.DOCUMENTACION.name());
-                }
+                
+                solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
+                
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                        "La solicitud de documentación ha sido creada con éxito");
+                
+                altaDocumentos();
+                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -239,6 +235,8 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
+            // parametrosVistaSolicitud = applicationBean.getMapaParametros()
+            // .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
             listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
             listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
             solicitudDocumentacionPrevia = solicitud;
@@ -371,9 +369,9 @@ public class SolicitudDocPreviaBean implements Serializable {
             }
             AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
             if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
-                listadoDocumentos = tipoDocumentacionService.findAll();
+                setListadoDocumentos(tipoDocumentacionService.findAll());
             } else {
-                listadoDocumentos = tipoDocumentacionService.findByAmbito(ambito);
+                setListadoDocumentos(tipoDocumentacionService.findByAmbito(ambito));
             }
         }
         if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())
@@ -421,15 +419,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                     solicitud.setFechaBaja(new Date());
                     solicitud.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
                     String usuarioProv = solicitud.getCorreoDestinatario();
-                    if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv)) {
-                        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
-                                "Se ha dado de baja con éxito la solicitud de documentación", null);
-                        
-                        String descripcion = DESCRIPCION + solicitud.getInspeccion().getNumero();
-                        
-                        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                                SeccionesEnum.DOCUMENTACION.name());
-                    }
+                    
+                    solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv);
+                    
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
+                            "Se ha dado de baja con éxito la solicitud de documentación", null);
+                    
+                    String descripcion = DESCRIPCION + solicitud.getInspeccion().getNumero();
+                    
+                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                            SeccionesEnum.DOCUMENTACION.name());
                 }
                 listaSolicitudesPrevia.remove(solicitud);
             } else {
@@ -456,7 +455,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
                 if (solicitudDocumentacionPrevia.getFechaEnvio() != null
                         && !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
-                    StringBuilder asunto = new StringBuilder("Solicitud de documentación previa para la inspección ")
+                    StringBuilder asunto = new StringBuilder(DESCRIPCION)
                             .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                     StringBuilder textoAutomatico = new StringBuilder(
                             "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado.")
@@ -465,7 +464,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                                     .append("\r\nFecha límite de envío nueva: ")
                                     .append(sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio()))
                                     .append("\r\n \r\nMuchas gracias y un saludo.");
-                    String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+                    String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
                     
                     correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(),
                             asunto.toString(), cuerpo);
@@ -510,38 +509,36 @@ public class SolicitudDocPreviaBean implements Serializable {
                 User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
                         passwordEncoder.encode(password), RoleEnum.ROLE_PROV_SOLICITUD);
                 
-                if (solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia,
-                        usuarioProv)) {
-                    System.out.println("Password usuario provisional  : " + password);
-                    StringBuilder asunto = new StringBuilder("Solicitud de documentación previa para la inspección ")
-                            .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
-                    StringBuilder textoAutomatico = new StringBuilder(
-                            "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                                    .append(applicationBean.getMapaParametros().get("URLPROGESIN")
-                                            .get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
-                                    .append(", su usuario de acceso es su correo electrónico y la contraseña es ")
-                                    .append(password)
-                                    .append(". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n")
-                                    .append("Muchas gracias y un saludo.");
-                    String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-                    correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(),
-                            asunto.toString(), cuerpo);
-                    
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
-                            "Se ha enviado con éxito la solicitud de documentación");
-                    
-                    String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
-                            + " enviada";
-                    
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                            SeccionesEnum.DOCUMENTACION.name());
-                    
-                    List<RoleEnum> listRoles = new ArrayList<>();
-                    listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
-                    listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
-                    notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(),
-                            listRoles);
-                }
+                solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+                
+                System.out.println("Password usuario provisional  : " + password);
+                StringBuilder asunto = new StringBuilder(DESCRIPCION)
+                        .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
+                StringBuilder textoAutomatico = new StringBuilder(
+                        "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
+                                .append(applicationBean.getMapaParametros().get("URLPROGESIN")
+                                        .get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
+                                .append(", su usuario de acceso es su correo electrónico y la contraseña es ")
+                                .append(password)
+                                .append(". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n")
+                                .append("Muchas gracias y un saludo.");
+                String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+                        cuerpo);
+                
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
+                        "Se ha enviado con éxito la solicitud de documentación");
+                
+                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+                        + " enviada";
+                
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.DOCUMENTACION.name());
+                
+                List<RoleEnum> listRoles = new ArrayList<>();
+                listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
+                listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(), listRoles);
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -564,17 +561,17 @@ public class SolicitudDocPreviaBean implements Serializable {
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             solicitudDocumentacionPrevia.setUsuarioFinalizacion(usuarioActual);
             String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
-            if (solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv)) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
-                        "Se ha finalizado con éxito la solicitud de documentación");
-                
-                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
-                        + "finalizada";
-                
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
-                
-            }
+            
+            solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
+                    "Se ha finalizado con éxito la solicitud de documentación");
+            
+            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero() + "finalizada";
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
@@ -598,35 +595,34 @@ public class SolicitudDocPreviaBean implements Serializable {
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             solicitudDocumentacionPrevia.setUsuarioNoConforme(usuarioActual);
             String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
-            if (solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia,
-                    usuarioProv)) {
-                
-                StringBuilder asunto = new StringBuilder("Solicitud de documentación previa para la inspección ")
-                        .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
-                StringBuilder textoAutomatico = new StringBuilder(
-                        "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:")
-                                .append("\r\n \r\n").append(motivosNoConforme)
-                                .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                                .append(applicationBean.getMapaParametros().get("URLPROGESIN")
-                                        .get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
-                                .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
-                                .append("\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n")
-                                .append("Muchas gracias y un saludo.");
-                String cuerpo = "Asunto: " + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-                
-                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
-                        cuerpo);
-                
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
-                        "Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
-                
-                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
-                        + " declarada no conforme";
-                
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
-                
-            }
+            
+            solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+            
+            StringBuilder asunto = new StringBuilder(DESCRIPCION)
+                    .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
+            StringBuilder textoAutomatico = new StringBuilder(
+                    "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:")
+                            .append("\r\n \r\n").append(motivosNoConforme)
+                            .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
+                            .append(applicationBean.getMapaParametros().get("URLPROGESIN")
+                                    .get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
+                            .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
+                            .append("\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n")
+                            .append("Muchas gracias y un saludo.");
+            String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+            
+            correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+                    cuerpo);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
+                    "Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
+            
+            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+                    + " declarada no conforme";
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
@@ -788,5 +784,4 @@ public class SolicitudDocPreviaBean implements Serializable {
         
         return solicitudBusquedaCopia;
     }
-    
 }

@@ -63,7 +63,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     private transient INotificacionService notificacionService;
     
     @Autowired
-    transient IAlertaService alertaService;
+    private transient IAlertaService alertaService;
     
     @Autowired
     private transient ITipoDocumentacionService tipoDocumentacionService;
@@ -77,7 +77,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     @Autowired
     private transient IDocumentoService documentoService;
     
-    private transient List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
+    private List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
     
     private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
     
@@ -216,22 +216,22 @@ public class ProvisionalSolicitudBean implements Serializable {
         try {
             solicitudDocumentacionPrevia.setFechaCumplimentacion(new Date());
             String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
-            if (solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia,
-                    usuarioProv)) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentacion",
-                        "Solicitud de documentación cumplimentada con éxito.");
-                String descripcion = "Solicitud documentación previa cuestionario para la inspección "
-                        + solicitudDocumentacionPrevia.getInspeccion().getNumero() + " cumplimentada";
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
-                // Guardamos la alerta en bbdd
-                alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
-                        solicitudDocumentacionPrevia.getInspeccion());
-                
-                alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
-                        RoleEnum.ROLE_SERVICIO_APOYO);
-            }
+            
+            solicitudDocumentacionService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentacion",
+                    "Solicitud de documentación cumplimentada con éxito.");
+            String descripcion = "Solicitud documentación previa cuestionario para la inspección "
+                    + solicitudDocumentacionPrevia.getInspeccion().getNumero() + " cumplimentada";
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
+            // Guardamos la alerta en bbdd
+            alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+                    solicitudDocumentacionPrevia.getInspeccion());
+            
+            alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion, RoleEnum.ROLE_SERVICIO_APOYO);
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");

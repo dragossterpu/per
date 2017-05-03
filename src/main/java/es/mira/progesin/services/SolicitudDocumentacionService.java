@@ -15,13 +15,14 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -132,10 +133,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class, "solicitud");
         consultaCriteriaSolicitudesDoc(solicitudDocPreviaBusqueda, criteria);
-        @SuppressWarnings("unchecked")
-        List<RegistroActividad> listaSolicitudesDocPrevia = criteria.list();
+        criteria.setProjection(Projections.rowCount());
+        long cnt = (Long) criteria.uniqueResult();
+        
         session.close();
-        return listaSolicitudesDocPrevia.size();
+        
+        return Math.toIntExact(cnt);
         
     }
     
@@ -237,7 +240,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SecurityContext sec = SecurityContextHolder.getContext();
+        Authentication auth = sec.getAuthentication();
+        User usuarioActual = (User) auth.getPrincipal();
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
             subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
@@ -250,40 +255,36 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+    public void transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
             User usuarioProv) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         userService.save(usuarioProv);
-        return true;
     }
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+    public void transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
             String usuarioProv) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         if (userService.exists(usuarioProv)) {
             userService.delete(usuarioProv);
         }
-        return true;
     }
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+    public void transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
             String usuarioProv) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         userService.cambiarEstado(usuarioProv, EstadoEnum.INACTIVO);
-        return true;
     }
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+    public void transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
             String usuarioProv) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO);
-        return true;
     }
     
     @Override
