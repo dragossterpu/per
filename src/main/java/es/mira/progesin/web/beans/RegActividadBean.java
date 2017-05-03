@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.hibernate.SessionFactory;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleEvent;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelRegistro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -55,6 +57,11 @@ public class RegActividadBean implements Serializable {
     @Autowired
     transient ApplicationBean applicationBean;
     
+    @Autowired
+    private SessionFactory sessionFactory;
+    
+    private LazyModelRegistro model;
+    
     /**********************************************
      * 
      * Busca en el registro de actividad según los criterios elegidos por el usuario en la vista y carga los resultados
@@ -63,16 +70,16 @@ public class RegActividadBean implements Serializable {
      ********************************************/
     
     public void buscarRegActividad() {
-        List<RegistroActividad> listaRegActividad = regActividadService
-                .buscarRegActividadCriteria(regActividadBusqueda);
-        regActividadBusqueda.setListaRegActividad(listaRegActividad);
+        model.setBusqueda(regActividadBusqueda);
+        model.load(0, 20, null, null, null);
+        
     }
     
     /**********************************************************************************
      * 
      * Controla las columnas visibles en la lista de resultados del buscador
      * 
-     * @param ToggleEvent
+     * @param e Evento toggle
      * 
      **********************************************************************************/
     
@@ -103,6 +110,7 @@ public class RegActividadBean implements Serializable {
     
     public void limpiarBusqueda() {
         regActividadBusqueda.resetValues();
+        model.setRowCount(0);
     }
     
     /**********************************************************************************
@@ -117,13 +125,14 @@ public class RegActividadBean implements Serializable {
         for (int i = 0; i <= numColListRegActividad; i++) {
             list.add(Boolean.TRUE);
         }
+        model = new LazyModelRegistro(regActividadService);
     }
     
     /***********************************************************************************
      * 
      * Devuelve una lista con las secciones cuyo nombre contenga la cadena de texto que se recibe como parámetro
      * 
-     * @param String
+     * @param infoSeccion
      * @return List<String>
      * 
      ***********************************************************************************/
@@ -136,7 +145,7 @@ public class RegActividadBean implements Serializable {
      * 
      * Devuelve una lista con las nombre de usuario que contengan la cadena de texto que se recibe como parámetro
      * 
-     * @param String
+     * @param infoUsuario
      * @return List<String>
      * 
      ***********************************************************************************/
@@ -150,7 +159,7 @@ public class RegActividadBean implements Serializable {
      * Guarda el registro de actividad seleccionado por el usuario en la vista en una variable para que se muestre en un
      * dialog
      * 
-     * @param SelectEvent
+     * @param event
      * 
      ***********************************************************************************/
     
@@ -160,4 +169,5 @@ public class RegActividadBean implements Serializable {
         context.execute("PF('dlg').show();");
         
     }
+    
 }

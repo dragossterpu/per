@@ -52,15 +52,15 @@
 		</div>
 		
 		<div class="botonesFormulario">
-		<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+		<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search"  oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
 		<p:commandButton actionListener="#{regActividadBean.limpiarBusqueda}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-eraser" />
 
 		</div>
 		<p:outputPanel layout="block" id="panelRegActividad">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty regActividadBean.regActividadBusqueda.listaRegActividad}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{regActividadBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty regActividadBean.regActividadBusqueda.listaRegActividad}">
+			<p:outputPanel rendered="#{regActividadBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaRegActividad" fileName="listaRegActividad"/>
@@ -75,17 +75,21 @@
 	            </h:commandLink>
             </p:outputPanel>
 
- 			<p:dataTable  var="regActividad" value="#{regActividadBean.regActividadBusqueda.listaRegActividad}"  rows="20" id="tablaRegActividad"
+ 			<p:dataTable  var="regActividad" value="#{regActividadBean.model}"  
+ 						 rowsPerPageTemplate="5,10,15,20"
+						 rows="20"
+						 id="tablaRegActividad"
                          draggableColumns="true"
-                         paginator="true" 
+                         paginator="true"
+                         lazy="true"
+						 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          resizableColumns="true"
-                         rendered="#{not empty regActividadBean.regActividadBusqueda.listaRegActividad}"
-                         style=""
-                     selectionMode="single"
-                     selection="#{regActividadBean.error}"
-                     rowKey="#{regActividad.idRegActividad}"
-                     >
-                   
+                        selectionMode="single"
+                     	selection="#{regActividadBean.error}"
+                     	rowKey="#{regActividad.idRegActividad}"
+                     	emptyMessage="No se han encontrado resultados"
+                      	rendered="#{regActividadBean.model.rowCount ne 0}">
+                 
 			 <f:facet name="header">
 				Registros de actividad
 				 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
@@ -96,7 +100,7 @@
 				
 				<p:ajax event="rowSelect" listener="#{regActividadBean.onRowSelect}" update=":busquedalistaRegActividad:dialog"/> 
 				
-				<p:column headerText="Fecha " sortBy="#{regActividad.fechaAlta}" width="80" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
+				<p:column headerText="Fecha" sortBy="#{regActividad.fechaAlta}" width="80" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
 					<h:outputText value="#{regActividad.fechaAlta}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
 					</h:outputText>
@@ -107,7 +111,7 @@
 				<p:column headerText="Usuario del registro" sortBy="#{regActividad.usernameRegActividad}"  width="70" visible="#{regActividadBean.list[2]}" exportable="#{regActividadBean.list[2]}">
 					<h:outputText value="#{regActividad.usernameRegActividad}" />
 				</p:column>
-				<p:column headerText="Descripción" sortBy="#{regActividad.descripcion}" width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
+				<p:column headerText="Descripción"  width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
 					<h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,40)}..."></h:outputText>
 					<p:tooltip id="toolTipError" for="descripcionError" value="Hacer click para ampliar información" position="top"/>
 				</p:column>					
@@ -116,7 +120,7 @@
 				</p:column>
 					
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{fn:length(regActividadBean.regActividadBusqueda.listaRegActividad)} registros.
+       				 Resultado de la búsqueda: #{regActividadBean.model.rowCount} registros.
     			</f:facet>
 			</p:dataTable>
 			<p:dialog id="dialog" header="Descripción de la actividad" widgetVar="dlg" modal="true" height="500" width="800">

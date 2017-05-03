@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -57,19 +58,41 @@ public class RegistroActividadService implements IRegistroActividadService {
         return regActividadRepository.save(entity);
     }
     
-    /*********************************************
-     * 
-     * Busca en base de datos según los criterios indicados en un objeto RegActividadBusqueda recibido como parámetro
-     * 
-     * @param RegActividadBusqueda
-     * @return List<RegistroActividad>
-     * 
-     *********************************************/
-    
+    @SuppressWarnings("unchecked")
     @Override
-    public List<RegistroActividad> buscarRegActividadCriteria(RegActividadBusqueda regActividadBusqueda) {
+    public int getCounCriteria(RegActividadBusqueda regActividadBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(RegistroActividad.class);
+        creaCriteria(regActividadBusqueda, criteria);
+        List<RegistroActividad> listaSolicitudesDocPrevia = criteria.list();
+        session.close();
+        return listaSolicitudesDocPrevia.size();
+    }
+    
+    @Override
+    public List<RegistroActividad> buscarRegActividadCriteria(int first, int pageSize, String sortField,
+            SortOrder sortOrder, RegActividadBusqueda regActividadBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(RegistroActividad.class);
+        creaCriteria(regActividadBusqueda, criteria);
+        
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
+        
+        @SuppressWarnings("unchecked")
+        List<RegistroActividad> listado = criteria.list();
+        session.close();
+        
+        return listado;
+    }
+    
+    private void creaCriteria(RegActividadBusqueda regActividadBusqueda, Criteria criteria) {
         
         if (regActividadBusqueda.getFechaDesde() != null) {
             /**
@@ -103,13 +126,6 @@ public class RegistroActividadService implements IRegistroActividadService {
                     MatchMode.ANYWHERE));
         }
         
-        criteria.addOrder(Order.desc("fechaAlta"));
-        
-        @SuppressWarnings("unchecked")
-        List<RegistroActividad> listaRegActividad = criteria.list();
-        session.close();
-        
-        return listaRegActividad;
     }
     
     /*********************************************
