@@ -2,6 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
@@ -37,9 +39,9 @@ public interface ISolicitudDocumentacionService {
     
     List<SolicitudDocumentacionPrevia> findEnviadasNoCumplimentadas();
     
-    long getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
+    int getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
     
-    List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int firstResult, int maxResults,
-            SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
+    List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int first, int pageSize, String sortField,
+            SortOrder sortOrder, SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
     
 }

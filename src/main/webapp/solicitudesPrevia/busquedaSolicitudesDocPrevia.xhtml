@@ -101,17 +101,17 @@
 				</div>
 			</div>
 			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)"/>
+				<p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
                 <p:commandButton actionListener="#{solicitudDocPreviaBean.limpiarBusqueda}" value="Limpiar" update="busquedaSolicitudDocPrevia" icon="fa fa-eraser"/>	
 			</div>
 			
 			<p:separator styleClass="separator ui-state-disabled" />
 
 			<p:outputPanel layout="block" id="panelSolicitudes">
-				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{solicitudDocPreviaBean.model.rowCount eq 0}">
 					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
-				<p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
+				<p:outputPanel  rendered="#{solicitudDocPreviaBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas"/>
@@ -125,24 +125,15 @@
 	               <p:dataExporter type="csv" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas"/>
 	            </h:commandLink>
             </p:outputPanel>
-				<p:dataTable var="solicitud"
-					value="#{solicitudDocPreviaBean.listaSolicitudesPrevia}" rows="20"
-					id="tablaSolicitudes" paginatorTemplate="{Anterior} {Pagina} {Posterior}" paginator="true"
-					rendered="#{not empty solicitudDocPreviaBean.listaSolicitudesPrevia}">
-					
-					<f:facet name="{Anterior}">
-						<h:commandLink title="Anterior(es)" actionListener="#{solicitudDocPreviaBean.previousSolicitud}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-							<f:ajax execute="@form" render="@form" />
-						</h:commandLink>
-					</f:facet>   
-					<f:facet name="{Posterior}">
-						<h:commandLink title="Posterior(es)" actionListener="#{solicitudDocPreviaBean.nextSolicitud}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-							<f:ajax execute="@form" render="@form" />
-						</h:commandLink>
-			   		</f:facet>
-					<f:facet name="{Pagina}">
-						<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{solicitudDocPreviaBean.actualPage} de #{solicitudDocPreviaBean.numPages}</span>	 
-					</f:facet>
+            
+				<p:dataTable var="solicitud"  
+					value="#{solicitudDocPreviaBean.model}" 
+					id="tablaSolicitudes" paginator="true" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					lazy="true"
+					rowsPerPageTemplate="5,10,15,20"
+					rows="20"
+					rendered="#{solicitudDocPreviaBean.model.rowCount ne 0}">
 					<f:facet name="header">
 						Solicitudes documentación
 					 	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
@@ -151,7 +142,7 @@
 						</p:columnToggler>
 					</f:facet>
 					<p:column headerText="Número Inspección"
-						sortBy="#{solicitud.inspeccion.numero}" width="60">
+						sortBy="#{solicitud.inspeccion.numero}" width="60" >
 						<h:outputText value="#{solicitud.inspeccion.numero}" />
 					</p:column>
 					<p:column headerText="Ámbito Inspección"
@@ -230,9 +221,10 @@
 						</p:commandButton>
 					</p:column>
 					<f:facet name="footer">
-       					Resultado de la búsqueda: #{solicitudDocPreviaBean.numeroRegistros} solicitudes.
+       					Resultado de la búsqueda: #{solicitudDocPreviaBean.model.rowCount} solicitudes.
     				</f:facet>
 				</p:dataTable>
+				
 				<p:confirmDialog global="true">
 					<div class="centrarBotonesDialog">
 						<p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

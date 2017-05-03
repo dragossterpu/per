@@ -13,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
+import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -28,6 +30,13 @@ import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
+/**
+ * 
+ * Servicio de solicitudes de documentación
+ * 
+ * @author Ezentis
+ *
+ */
 @Service
 public class SolicitudDocumentacionService implements ISolicitudDocumentacionService {
     
@@ -89,14 +98,19 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      * @author EZENTIS
      */
     @Override
-    public List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int firstResult, int maxResults,
-            SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
+    public List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int first, int pageSize,
+            String sortField, SortOrder sortOrder, SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class, "solicitud");
         consultaCriteriaSolicitudesDoc(solicitudDocPreviaBusqueda, criteria);
-        criteria.setFirstResult(firstResult);
-        criteria.setMaxResults(maxResults);
-        criteria.addOrder(Order.desc("fechaAlta"));
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
         
         @SuppressWarnings("unchecked")
         List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = criteria.list();
@@ -114,16 +128,14 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      * @author EZENTIS
      */
     @Override
-    public long getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
+    public int getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class, "solicitud");
         consultaCriteriaSolicitudesDoc(solicitudDocPreviaBusqueda, criteria);
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
-        
+        @SuppressWarnings("unchecked")
+        List<RegistroActividad> listaSolicitudesDocPrevia = criteria.list();
         session.close();
-        
-        return cnt;
+        return listaSolicitudesDocPrevia.size();
         
     }
     
@@ -233,6 +245,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));
         }
+        
     }
     
     @Override

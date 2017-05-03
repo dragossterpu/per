@@ -80,12 +80,12 @@ public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implemen
      * Sobreescritura del método Load para que funcione con un critera y sólo nos devuelva estríctamente el número de
      * registros solicitados.
      * 
-     * @param primer elemento que se desea recuperar
-     * @param número máximo de registros que deseamos recuperar por página
-     * @param columna por la que se ordenarán los resultados. Corresponde a la propiedad 'sortBy' de la columna de la
-     * vista
-     * @param orden por el que se desea ordenar los resultados
-     * @param mapa de filtros. Este valor no se utiliza en esta sobreescritura.
+     * @param first primer elemento que se desea recuperar
+     * @param pageSize número máximo de registros que deseamos recuperar por página
+     * @param sortField columna por la que se ordenarán los resultados. Corresponde a la propiedad 'sortBy' de la
+     * columna de la vista
+     * @param sortOrder orden por el que se desea ordenar los resultados
+     * @param filters mapa de filtros. Este valor no se utiliza en esta sobreescritura.
      * @return lista de registros que corresponden a los criterios de búsqueda
      * 
      */
@@ -93,16 +93,16 @@ public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implemen
     @Override
     public List<RegistroActividad> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {
-        List<RegistroActividad> listaSolicitudesDocPrevia = null;
+        List<RegistroActividad> listado = null;
         if (busqueda != null) {
             this.setRowCount(registroActividadService.getCounCriteria(busqueda));
-            listaSolicitudesDocPrevia = registroActividadService.buscarRegActividadCriteria(first, pageSize, sortField,
-                    sortOrder, busqueda);
-            this.datasource = listaSolicitudesDocPrevia;
+            listado = registroActividadService.buscarRegActividadCriteria(first, pageSize, sortField, sortOrder,
+                    busqueda);
+            this.datasource = listado;
         } else {
             this.setRowCount(0);
         }
-        return listaSolicitudesDocPrevia;
+        return listado;
     }
     
 }

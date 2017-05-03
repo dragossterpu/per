@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.hibernate.SessionFactory;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.StreamedContent;
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelSolicitudes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -56,6 +58,7 @@ import lombok.Setter;
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
  */
+
 @Setter
 @Getter
 @Controller("solicitudDocPreviaBean")
@@ -65,9 +68,10 @@ public class SolicitudDocPreviaBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Autowired
-    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
+    private SessionFactory sessionFactory;
     
-    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusquedaCopia;
+    @Autowired
+    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
     
@@ -141,17 +145,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     @Autowired
     ICuestionarioEnvioService cuestionarioEnvioService;
     
-    private static final int MAX_RESULTS_PAGE = 20;
-    
-    private static final int FIRST_PAGE = 1;
-    
-    private long numeroRegistros;
-    
-    private int primerRegistro;
-    
-    private long actualPage;
-    
-    private long numPages;
+    private LazyModelSolicitudes model;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -245,8 +239,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
-            // parametrosVistaSolicitud = applicationBean.getMapaParametros()
-            // .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
             listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
             listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
             solicitudDocumentacionPrevia = solicitud;
@@ -343,6 +335,7 @@ public class SolicitudDocPreviaBean implements Serializable {
         listadoDocumentosCargados = new ArrayList<>();
         listaSolicitudesPrevia = new ArrayList<>();
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
+        model = new LazyModelSolicitudes(solicitudDocumentacionService);
     }
     
     /**
@@ -663,6 +656,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void limpiarBusqueda() {
         solicitudDocPreviaBusqueda.resetValues();
         listaSolicitudesPrevia = null;
+        model.setRowCount(0);
     }
     
     /**
@@ -671,13 +665,9 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @author EZENTIS
      */
     public void buscarSolicitudDocPrevia() {
-        primerRegistro = 0;
-        actualPage = FIRST_PAGE;
-        setNumeroRegistros(getCountRegistrosSolicitud());
-        numPages = getCountPagesSolicitud(numeroRegistros);
-        solicitudDocPreviaBusquedaCopia = copiaSolicitudDocPreviaBusqueda(solicitudDocPreviaBusqueda);
-        listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(0, MAX_RESULTS_PAGE,
-                solicitudDocPreviaBusquedaCopia);
+        
+        model.setBusqueda(solicitudDocPreviaBusqueda);
+        model.load(0, 20, null, null, null);
     }
     
     /**
@@ -771,56 +761,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     /**
-     * Cargar la página siguiente de resultados de la búsqueda
-     * 
-     * @author EZENTIS
-     */
-    public void nextSolicitud() {
-        
-        if (actualPage < numPages) {
-            
-            primerRegistro += MAX_RESULTS_PAGE;
-            actualPage++;
-            
-            listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, solicitudDocPreviaBusquedaCopia);
-        }
-        
-    }
-    
-    /**
-     * Cargar la página anterior de resultados de la búsqueda
-     * 
-     * @author EZENTIS
-     */
-    public void previousSolicitud() {
-        
-        if (actualPage > FIRST_PAGE) {
-            
-            primerRegistro -= MAX_RESULTS_PAGE;
-            actualPage--;
-            
-            listaSolicitudesPrevia = solicitudDocumentacionService.buscarSolicitudDocPreviaCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, solicitudDocPreviaBusquedaCopia);
-        }
-    }
-    
-    /**
-     * Recupera el número total de páginas de resultados de la búsqueda
-     * @param countRegistros número de registros total
-     * @return número de páginas de la consulta
-     * @author EZENTIS
-     */
-    public long getCountPagesSolicitud(long countRegistros) {
-        
-        if (countRegistros % MAX_RESULTS_PAGE == 0)
-            return countRegistros / MAX_RESULTS_PAGE;
-        else
-            return countRegistros / MAX_RESULTS_PAGE + 1;
-        
-    }
-    
-    /**
      * @return número de registros de la búsqueda
      * @author EZENTIS
      */
@@ -848,4 +788,5 @@ public class SolicitudDocPreviaBean implements Serializable {
         
         return solicitudBusquedaCopia;
     }
+    
 }
