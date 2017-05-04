@@ -16,24 +16,34 @@ import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
  */
 @Service
 public class CuerpoEstadoService implements ICuerpoEstadoService {
-
-	@Autowired
-	ICuerpoEstadoRepository cuerpoEstadoRepository;
-
-	@Override
-	public Iterable<CuerpoEstado> findAll() {
-		return cuerpoEstadoRepository.findAll();
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public CuerpoEstado save(CuerpoEstado cuerpo) {
-		return cuerpoEstadoRepository.save(cuerpo);
-	}
-
-	@Override
-	public List<CuerpoEstado> findByFechaBajaIsNull() {
-		return cuerpoEstadoRepository.findByFechaBajaIsNull();
-	}
-
+    
+    @Autowired
+    ICuerpoEstadoRepository cuerpoEstadoRepository;
+    
+    @Override
+    public Iterable<CuerpoEstado> findAll() {
+        return cuerpoEstadoRepository.findAll();
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public CuerpoEstado save(CuerpoEstado cuerpo) {
+        return cuerpoEstadoRepository.save(cuerpo);
+    }
+    
+    @Override
+    public List<CuerpoEstado> findByFechaBajaIsNull() {
+        return cuerpoEstadoRepository.findByFechaBajaIsNull();
+    }
+    
+    @Override
+    public boolean existeByNombreCortoIgnoreCase(String nombreCorto) {
+        return cuerpoEstadoRepository.existsByNombreCortoIgnoreCase(nombreCorto);
+    }
+    
+    @Override
+    public boolean existeByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id) {
+        return cuerpoEstadoRepository.existsByNombreCortoIgnoreCaseAndIdNotIn(nombreCorto, id);
+    }
+    
 }
