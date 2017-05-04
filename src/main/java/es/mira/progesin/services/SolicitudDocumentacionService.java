@@ -51,15 +51,15 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     private SessionFactory sessionFactory;
     
     @Autowired
-    ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
+    private ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
     
     @Autowired
-    IUserService userService;
+    private IUserService userService;
     
     @Autowired
-    IDocumentacionPreviaRepository documentacionPreviaRepository;
+    private IDocumentacionPreviaRepository documentacionPreviaRepository;
     
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     @Override
     @Transactional(readOnly = false)

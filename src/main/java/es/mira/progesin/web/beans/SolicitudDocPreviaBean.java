@@ -258,20 +258,21 @@ public class SolicitudDocPreviaBean implements Serializable {
             solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
             solicitudDocumentacionPrevia
                     .setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
-            if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
-                        "Se ha validado con éxito la solicitud de documentación");
-                
-                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
-                        + " validada por apoyo";
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
-                
-                alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
-                        solicitudDocumentacionPrevia.getInspeccion());
-                
-            }
+            
+            solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
+                    "Se ha validado con éxito la solicitud de documentación");
+            
+            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+                    + " validada por apoyo";
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
+            
+            alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+                    solicitudDocumentacionPrevia.getInspeccion());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar apoyo la solicitud, inténtelo de nuevo más tarde");
@@ -289,19 +290,21 @@ public class SolicitudDocPreviaBean implements Serializable {
             solicitudDocumentacionPrevia.setFechaValidJefeEquipo(new Date());
             solicitudDocumentacionPrevia
                     .setUsernameValidJefeEquipo(SecurityContextHolder.getContext().getAuthentication().getName());
-            if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
-                        "Se ha validado con éxito la solicitud de documentación");
-                
-                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
-                        + " validada por jefe equipo";
-                
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
-                
-                alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
-                        RoleEnum.ROLE_JEFE_INSPECCIONES);
-            }
+            
+            solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
+                    "Se ha validado con éxito la solicitud de documentación");
+            
+            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+                    + " validada por jefe equipo";
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
+            
+            alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+                    RoleEnum.ROLE_JEFE_INSPECCIONES);
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar el jefe del equipo la solicitud, inténtelo de nuevo más tarde");
@@ -366,15 +369,15 @@ public class SolicitudDocPreviaBean implements Serializable {
         if ("general".equals(event.getOldStep()) && "documentacion".equals(event.getNewStep())) {
             if (inspeccionSinTareasPendientes() == Boolean.FALSE || usuarioSinTareasPendientes() == Boolean.FALSE) {
                 return event.getOldStep();
-            }
-            AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
-            if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
-                setListadoDocumentos(tipoDocumentacionService.findAll());
             } else {
-                setListadoDocumentos(tipoDocumentacionService.findByAmbito(ambito));
+                AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
+                if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
+                    setListadoDocumentos(tipoDocumentacionService.findAll());
+                } else {
+                    setListadoDocumentos(tipoDocumentacionService.findByAmbito(ambito));
+                }
             }
-        }
-        if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())
+        } else if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())
                 && documentosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Debe elegir uno o más documentos o confirmar que no desea ninguno", "", "");
@@ -450,36 +453,36 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void modificarSolicitud() {
         try {
-            if (solicitudDocumentacionService.save(solicitudDocumentacionPrevia) != null) {
-                String mensajeCorreoEnviado = "";
-                // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
-                if (solicitudDocumentacionPrevia.getFechaEnvio() != null
-                        && !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
-                    StringBuilder asunto = new StringBuilder(DESCRIPCION)
-                            .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
-                    StringBuilder textoAutomatico = new StringBuilder(
-                            "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado.")
-                                    .append("\r\n \r\nFecha límite de envío anterior: ")
-                                    .append(sdf.format(backupFechaLimiteEnvio))
-                                    .append("\r\nFecha límite de envío nueva: ")
-                                    .append(sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio()))
-                                    .append("\r\n \r\nMuchas gracias y un saludo.");
-                    String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-                    
-                    correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(),
-                            asunto.toString(), cuerpo);
-                    mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
-                }
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-                        "La solicitud de documentación ha sido modificada con éxito" + mensajeCorreoEnviado);
-                listadoDocumentosCargados = gestDocumentacionService
-                        .findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+            solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
+            
+            String mensajeCorreoEnviado = "";
+            // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
+            if (solicitudDocumentacionPrevia.getFechaEnvio() != null
+                    && !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
+                StringBuilder asunto = new StringBuilder(DESCRIPCION)
+                        .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
+                StringBuilder textoAutomatico = new StringBuilder(
+                        "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado.")
+                                .append("\r\n \r\nFecha límite de envío anterior: ")
+                                .append(sdf.format(backupFechaLimiteEnvio)).append("\r\nFecha límite de envío nueva: ")
+                                .append(sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio()))
+                                .append("\r\n \r\nMuchas gracias y un saludo.");
+                String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
                 
-                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
-                
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
+                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+                        cuerpo);
+                mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
             }
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                    "La solicitud de documentación ha sido modificada con éxito" + mensajeCorreoEnviado);
+            listadoDocumentosCargados = gestDocumentacionService
+                    .findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+            
+            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
