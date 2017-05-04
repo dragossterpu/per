@@ -22,9 +22,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<primefaces.version>6.0</primefaces.version>
+		<primefaces.version>6.1</primefaces.version>
         <mockito.version>2.7.22</mockito.version>
         <powermock.version>1.7.0RC4</powermock.version>
+        <itext.version>5.5.9</itext.version>
+        <xmlworker.version>5.5.9</xmlworker.version>
+        <jsoup.version>1.10.2</jsoup.version>
 	</properties>
 
 	<dependencies>
@@ -172,16 +175,22 @@
 			<artifactId>layout</artifactId>
 			<version>7.0.1</version>
 		</dependency>
-
-		<!-- To print pdf end -->
-
-		<!-- librería vieja de itext para pruebas, borrar pq no hará falta al usar 
-			la nueva, pero la dejo de momento... -->
+		
+		<!-- Con esta versión funciona el parseo de html a pdf -->
 		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itextpdf</artifactId>
-			<version>5.5.9</version>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itextpdf</artifactId>
+		    <version>${itext.version}</version>
 		</dependency>
+		
+		<!-- librería necesario para el parseo de html a pdf con itext -->
+		<dependency>
+			<groupId>com.itextpdf.tool</groupId>
+			<artifactId>xmlworker</artifactId>
+			<version>${xmlworker.version}</version>
+		</dependency>
+		
+		<!-- To print pdf end -->
 		
 		<!-- Para los test -->
 		<dependency>
@@ -216,6 +225,14 @@
 			<artifactId>el-api</artifactId>
 			<version>2.2</version>
 		</dependency>
+		
+		<!-- Para que limpie el html incluyendo etiquetas de cierre si faltan (al generar los informes con el texteditor) -->
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>${jsoup.version}</version>
+		</dependency>
+		
 		
 	</dependencies>
 	
