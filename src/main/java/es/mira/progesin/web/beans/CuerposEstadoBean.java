@@ -83,28 +83,19 @@ public class CuerposEstadoBean implements Serializable {
     public void altaCuerpo() {
         try {
             CuerpoEstado cuerpoEstado = new CuerpoEstado();
-            boolean existeCuerpo = cuerposEstadoService.existeByNombreCortoIgnoreCase(nombreCortoNuevo);
+            String user = SecurityContextHolder.getContext().getAuthentication().getName();
+            cuerpoEstado.setDescripcion(cuerpoNuevo);
+            cuerpoEstado.setNombreCorto(nombreCortoNuevo);
+            cuerpoEstado.setFechaAlta(new Date());
+            cuerpoEstado.setUsernameAlta(user);
+            cuerposEstadoService.save(cuerpoEstado);
             
-            if (existeCuerpo) {
-                
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                        "El nombre corto ya está siendo utilizado por otro cuerpo.", "", "nombre_corto");
-            } else {
-                String user = SecurityContextHolder.getContext().getAuthentication().getName();
-                cuerpoEstado.setDescripcion(cuerpoNuevo);
-                cuerpoEstado.setNombreCorto(nombreCortoNuevo);
-                cuerpoEstado.setFechaAlta(new Date());
-                cuerpoEstado.setUsernameAlta(user);
-                cuerposEstadoService.save(cuerpoEstado);
-                
-                String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCortoNuevo;
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                        SeccionesEnum.ADMINISTRACION.name());
-                
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El cuerpo ha sido creado con éxito");
-                
-            }
+            String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCortoNuevo;
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.ADMINISTRACION.name());
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El cuerpo ha sido creado con éxito");
             
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
@@ -128,8 +119,7 @@ public class CuerposEstadoBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",
                     cuerpoEstado.getDescripcion(), "msgs");
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Acción no permitida", e.toString(),
-                    "msgs");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
         
     }

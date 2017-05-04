@@ -16,7 +16,10 @@
 			<h:form id="form">
 			
 				<h:outputLabel for="nombre_corto" value="Nombre corto del cuerpo (*):" />
-				<p:inputText id="nombre_corto" value="#{cuerposEstadoBean.nombreCortoNuevo}" required="true" requiredMessage="Introduzca el nombre corto del cuerpo" converter="#{trimConverter}"/>
+				<p:inputText id="nombre_corto" value="#{cuerposEstadoBean.nombreCortoNuevo}" required="true" requiredMessage="Introduzca el nombre corto del cuerpo" converter="#{trimConverter}">
+					<f:attribute name="actualNombreCorto" value="0" />
+					<f:validator binding="#{cuerpoEstadoValidator}" />
+				</p:inputText>
 				<p:messages for="nombre_corto" autoUpdate="true"  closable="true"/>
 			
 				<h:outputLabel for="descripcion" value="Nombre del cuerpo (*):" />

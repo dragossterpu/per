@@ -45,7 +45,7 @@
 							
 							<f:facet name="input">
 								<p:inputText id="cuerpoInput" value="#{cuerpo.descripcion}" converter="#{trimConverter}" required="true"
-									requiredMessage="El nombre del cuerpo no puede estar vacío" />
+									requiredMessage="La descripción del cuerpo no puede estar vacío" />
 <!-- 									<p:messages for="cuerpoInput" autoUpdate="true"  closable="true"/> -->
 							</f:facet>
 						</p:cellEditor> 
@@ -79,7 +79,7 @@
 					</div>
 				</p:confirmDialog>
 				
-				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+				<p:messages id="msgs" autoUpdate="true" closable="true" />
 			</h:form>
 		</div>
 		
