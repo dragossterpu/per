@@ -61,19 +61,25 @@ public class CuerposEstadoBean implements Serializable {
      */
     public void eliminarCuerpo(CuerpoEstado cuerpo) {
         List<User> usuariosCuerpo = userService.findByCuerpoEstado(cuerpo);
-        if (usuariosCuerpo != null && !usuariosCuerpo.isEmpty()) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
-                    + cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo", "", "msgs");
-        } else {
-            cuerpo.setFechaBaja(new Date());
-            cuerpo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-            cuerposEstadoService.save(cuerpo);
-            listaCuerposEstado.remove(cuerpo);
-            
-            String user = SecurityContextHolder.getContext().getAuthentication().getName();
-            String descripcion = "El usuario " + user + " ha eliminado la inspección " + cuerpo.getNombreCorto();
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                    SeccionesEnum.ADMINISTRACION.name());
+        try {
+            if (usuariosCuerpo != null && !usuariosCuerpo.isEmpty()) {
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo "
+                        + cuerpo.getDescripcion() + " al haber usuarios pertenecientes a dicho cuerpo", "", "msgs");
+            } else {
+                cuerpo.setFechaBaja(new Date());
+                cuerpo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+                cuerposEstadoService.save(cuerpo);
+                listaCuerposEstado.remove(cuerpo);
+                
+                String user = SecurityContextHolder.getContext().getAuthentication().getName();
+                String descripcion = "El usuario " + user + " ha eliminado la inspección " + cuerpo.getNombreCorto();
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.ADMINISTRACION.name());
+            }
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+                    "Se ha producido un error al intentar borrar un cuerpo, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
     }
     
@@ -99,13 +105,13 @@ public class CuerposEstadoBean implements Serializable {
             
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
-                    "Se ha producido un error al dar de alta el cuerpo, inténtelo de nuevo más tarde");
+                    "Se ha producido un error al intentar dar de alta el cuerpo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
     }
     
     /**
-     * Modificación de la descripción de un cuerpo
+     * Modificación de un cuerpo
      * @param event
      */
     public void onRowEdit(RowEditEvent event) {
@@ -119,6 +125,8 @@ public class CuerposEstadoBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",
                     cuerpoEstado.getDescripcion(), "msgs");
         } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+                    "Se ha producido un error al intentar modificar un cuerpo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
         
