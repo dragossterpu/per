@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -36,6 +37,7 @@ import org.springframework.test.context.ContextConfiguration;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -398,6 +400,18 @@ public class SolicitudDocPreviaBeanTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(FlowEvent)}.
+     */
+    @Test
+    public void onFlowProcess_pasoApoyoAConfirm() {
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), "apoyo", "confirm");
+        
+        String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
+        
+        assertThat(nombre_paso).isEqualTo("confirm");
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onToggle(ToggleEvent)}.
      */
     @Ignore
@@ -413,13 +427,68 @@ public class SolicitudDocPreviaBeanTest {
      * Test method for
      * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
      */
-    @Ignore
+    @SuppressWarnings("static-access")
     @Test
-    public void eliminarSolicitud() {
-        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+    public void eliminarSolicitud_validacionConFechaBaja() {
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().fechaBaja(new Date()).build();
+        when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_JEFE_INSPECCIONES).build());
         
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
+        verify(facesUtilities, times(1)).setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR),
+                eq("Eliminación abortada"), any(String.class), eq(""));
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
+     */
+    @SuppressWarnings("static-access")
+    @Test
+    public void eliminarSolicitud_validacionRoleNoPermitido() {
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+        when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_GABINETE).build());
+        
+        solicitudDocPreviaBean.eliminarSolicitud(solicitud);
+        
+        verify(facesUtilities, times(1)).setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR),
+                eq("Eliminación abortada"), any(String.class), eq(""));
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
+     */
+    @Test
+    public void eliminarSolicitud_SinFechaEnvio_Fisica() {
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).fechaEnvio(null).build();
+        when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_ADMIN).build());
+        
+        solicitudDocPreviaBean.eliminarSolicitud(solicitud);
+        
+        verify(solicitudDocumentacionService, times(1)).transaccDeleteElimDocPrevia(1L);
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(Exception.class));
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
+     */
+    @Test
+    public void eliminarSolicitud_ConFechaEnvio_Logica() {
+        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .fechaEnvio(new Date()).correoDestinatario("correoDestinatario").build();
+        when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_JEFE_INSPECCIONES).build());
+        
+        solicitudDocPreviaBean.eliminarSolicitud(solicitud);
+        
+        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(solicitud, "correoDestinatario");
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
+                eq(SeccionesEnum.DOCUMENTACION.name()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(Exception.class));
     }
     
     /**

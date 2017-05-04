@@ -16,6 +16,8 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -71,11 +73,9 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private String vieneDe;
     
-    private List<SolicitudDocumentacionPrevia> listaSolicitudesPrevia;
-    
     private List<Boolean> listaColumnToggler;
     
-    private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
+    private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia;
     
     private Date backupFechaLimiteEnvio = null;
     
@@ -83,9 +83,9 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private transient StreamedContent file;
     
-    private List<DocumentacionPrevia> listadoDocumentosPrevios = new ArrayList<>();
+    private List<DocumentacionPrevia> listadoDocumentosPrevios;
     
-    private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados = new ArrayList<>();
+    private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados;
     
     private List<TipoDocumentacion> documentosSeleccionados;
     
@@ -334,7 +334,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void init() {
         solicitudDocPreviaBusqueda.resetValues();
         listadoDocumentosCargados = new ArrayList<>();
-        listaSolicitudesPrevia = new ArrayList<>();
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
         model = new LazyModelSolicitudes(solicitudDocumentacionService);
     }
@@ -404,7 +403,9 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void eliminarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
-            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            SecurityContext sec = SecurityContextHolder.getContext();
+            Authentication auth = sec.getAuthentication();
+            User usuarioActual = (User) auth.getPrincipal();
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
             rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
             rolesAdmitidos.add(RoleEnum.ROLE_SERVICIO_APOYO);
@@ -433,7 +434,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                             SeccionesEnum.DOCUMENTACION.name());
                 }
-                listaSolicitudesPrevia.remove(solicitud);
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
                         "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción", null);
@@ -654,7 +654,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void limpiarBusqueda() {
         solicitudDocPreviaBusqueda.resetValues();
-        listaSolicitudesPrevia = null;
         model.setRowCount(0);
     }
     
