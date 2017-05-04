@@ -1,5 +1,6 @@
 package es.mira.progesin.persistence.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,9 @@ import lombok.Setter;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "guiaPersonalizada")
-public class GuiaPersonalizada {
+public class GuiaPersonalizada implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @Id
     @SequenceGenerator(name = "seq_guiapersonalizada", sequenceName = "seq_guiapersonalizada", allocationSize = 1, initialValue = 1)
