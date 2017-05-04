@@ -14,14 +14,6 @@ public interface ICuerpoEstadoRepository extends CrudRepository<CuerpoEstado, In
     List<CuerpoEstado> findByFechaBajaIsNull();
     
     /**
-     * Comprueba si existe un cuerpo con un determinado nombre corto
-     * 
-     * @param nombreCorto
-     * @return existe?
-     */
-    boolean existsByNombreCortoIgnoreCase(String nombreCorto);
-    
-    /**
      * Existe un Cuerpo que no coincide con un id pero coincide con un nombre corto
      * @param nombreCorto
      * @param id

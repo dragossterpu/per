@@ -38,10 +38,4 @@ public interface ICuerpoEstadoService {
      */
     boolean existeByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id);
     
-    /**
-     * @param nombreCorto
-     * @return
-     */
-    boolean existeByNombreCortoIgnoreCase(String nombreCorto);
-    
 }

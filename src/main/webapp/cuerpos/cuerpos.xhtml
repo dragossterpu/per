@@ -23,12 +23,12 @@
 					<p:column headerText="Nombre corto">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{cuerpo.nombreCorto}" />
+								<h:outputText value="#{cuerpo.nombreCorto}"/>
 							</f:facet>
 							
 							<f:facet name="input">
 								<p:inputText id="nombreCortoInput" value="#{cuerpo.nombreCorto}" converter="#{trimConverter}" required="true"
-									requiredMessage="El nombre del cuerpo no puede estar vacío" >
+									requiredMessage="El nombre del cuerpo no puede estar vacío" maxlength="10">
 									<f:attribute name="actualNombreCorto" value="#{cuerpo.id}" />
 									<f:validator binding="#{cuerpoEstadoValidator}" />
 								</p:inputText>

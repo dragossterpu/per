@@ -37,11 +37,6 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     }
     
     @Override
-    public boolean existeByNombreCortoIgnoreCase(String nombreCorto) {
-        return cuerpoEstadoRepository.existsByNombreCortoIgnoreCase(nombreCorto);
-    }
-    
-    @Override
     public boolean existeByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id) {
         return cuerpoEstadoRepository.existsByNombreCortoIgnoreCaseAndIdNotIn(nombreCorto, id);
     }
