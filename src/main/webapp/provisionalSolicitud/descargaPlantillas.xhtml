@@ -18,7 +18,8 @@
 	<div id="listadoPlantillas">
 	<h:form id="form">
 				<div class="bloqueDocumentos" >		
-						<p:dataTable id="plantillas" var="plantilla" value="#{provisionalSolicitudBean.listaPlantillasAmbito}" sortBy="#{plantilla.key}">
+						<p:dataTable id="plantillas" var="plantilla" value="#{provisionalSolicitudBean.listaPlantillasAmbito}" sortBy="#{plantilla.key}"
+                            emptyMessage="No hay documentos disponibles">
 	
 							<p:column headerText="Nombre" sortBy="#{plantilla.key}">
 									<h:outputText value="#{plantilla.key}" />
