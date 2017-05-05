@@ -281,7 +281,7 @@ select {
 	font-weight: bold;
 	text-align: justify;
 	white-space: pre-line;
-	
+	display: inline-block;
 }
 
 .ui-CommandLink-icono-texto {
