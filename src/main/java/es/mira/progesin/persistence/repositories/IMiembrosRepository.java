@@ -14,4 +14,6 @@ public interface IMiembrosRepository extends CrudRepository<Miembro, Long> {
     
     boolean existsByUsernameAndPosicion(String username, RolEquipoEnum jefeEquipo);
     
+    Miembro findByUsername(String username);
+    
 }

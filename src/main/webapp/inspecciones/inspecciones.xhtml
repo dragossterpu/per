@@ -10,9 +10,11 @@
 		<f:metadata>
 		    <f:viewParam name="vieneDe" value="#{inspeccionBean.vieneDe}" />
 		</f:metadata>
-
-		<ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}"/>
 		
+		<ui:param name="esAdmin" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
+		<ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}"/>
+		
+				
 		<h3>Búsqueda de inspecciones</h3>
 		
 		<h:form>
@@ -95,10 +97,9 @@
 						itemLabel="#{estado.descripcion}"
 						itemValue="#{estado}" />
 				</p:selectOneMenu>
-				
 			</div>
-			<div class="columnaDchaFormulario">
 			
+			<div class="columnaDchaFormulario">
 				<h:outputLabel for="equipoSelect" value="Equipo de inspeccion:" />
 				<p:selectOneMenu
 					value="#{inspeccionBean.inspeccionBusqueda.equipo}"
@@ -162,10 +163,10 @@
 			<h:commandLink title="Limpiar" action="#{inspeccionBean.limpiarBusqueda}" update="busquedaInspecciones" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 				<span class="ui-CommandLink-texto">Limpiar</span>
 			</h:commandLink>
-			<h:commandLink title="Nueva inspección" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{esAdmin and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
+			<h:commandLink title="Nueva inspección" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{(esAdmin or esEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
             	<span class="ui-CommandLink-texto">Nueva inspección</span>
             </h:commandLink>
-            <h:commandLink title="Agregar" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{inspeccionBean.asociarInspecciones}" rendered="#{esAdmin and (inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta')}" >
+            <h:commandLink title="Agregar" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{inspeccionBean.asociarInspecciones}" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" >
             	<span class="ui-CommandLink-texto">Agregar inspección</span>
             </h:commandLink>
       	</div>	
@@ -226,7 +227,7 @@
         			 </p:columnToggler>				
 				</f:facet>
 				
-				<p:column selectionMode="multiple" rendered="#{esAdmin and (inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta')}" style="width:16px;text-align:center">
+				<p:column selectionMode="multiple" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" style="width:16px;text-align:center">
 					
 				</p:column>
 				
@@ -284,21 +285,21 @@
 					<h:outputText value="#{inspeccion.municipio.provincia.provincia}" />
 				</p:column>
 				
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
 					<h:commandLink title="Ver inspección" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.visualizaInspeccion(inspeccion)}"/>
 				</p:column>
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esAdmin or inspeccionBean.perteneceEquipo(inspeccion.equipo)) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
 					<h:commandLink title="Modificar inspección" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.getFormModificarInspeccion(inspeccion)}" 
-					update="tablaInspecciones" rendered="#{esAdmin}" />
+					update="tablaInspecciones" />
 				</p:column>
 				
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false"  rendered="#{esAdmin and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" >
-					<p:commandButton title="Anular inspección" icon="fa fa-toggle-on" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones" rendered="#{esAdmin and empty inspeccion.fechaAnulacion}" >
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false"  rendered="#{((esAdmin or inspeccionBean.perteneceEquipo(inspeccion.equipo)) or inspeccionBean.perteneceEquipo(inspeccion.equipo)) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" >
+					<p:commandButton title="Anular inspección" icon="fa fa-toggle-on" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones" rendered="#{empty inspeccion.fechaAnulacion}" >
 						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección?" icon="fa fa-warning-sign"/>
 					</p:commandButton>
-					<p:commandButton title="Activar inspección" icon="fa fa-toggle-off"  actionListener="#{inspeccionBean.activa(inspeccion)}" rendered="#{esAdmin and not empty inspeccion.fechaAnulacion}" update="tablaInspecciones"/>
+					<p:commandButton title="Activar inspección" icon="fa fa-toggle-off"  actionListener="#{inspeccionBean.activa(inspeccion)}" rendered="#{not empty inspeccion.fechaAnulacion}" update="tablaInspecciones"/>
 				</p:column>
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
+				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esAdmin or inspeccionBean.perteneceEquipo(inspeccion.equipo)) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
 					<p:commandButton title="Eliminar inspección" icon="fa fa-trash" actionListener="#{inspeccionBean.eliminar(inspeccion)}" update="tablaInspecciones" >
 						<p:confirm header="Eliminar inspección" message="¿Está seguro que desea eliminar la inspección?" icon="fa fa-warning-sign"/>
 					</p:commandButton>

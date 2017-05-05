@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -32,6 +33,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
+import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
@@ -77,6 +79,9 @@ public class InspeccionBean {
     
     @Autowired
     private IMunicipioService municipioService;
+    
+    @Autowired
+    private IMiembroService miembroService;
     
     private static final int MAX_RESULTS_PAGE = 20;
     
@@ -218,12 +223,16 @@ public class InspeccionBean {
     public String nuevaInspeccion() {
         setProvinciSelec(null);
         setListaMunicipios(null);
-        
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        Miembro miembro = miembroService.buscaMiembroByUsername(user);
         inspeccionesAsignadas = new ArrayList<>();
         inspeccionesSeleccionadas = new ArrayList<>();
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
+        if (miembro != null) {
+            inspeccion.setEquipo(miembro.getEquipo());
+        }
         listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
@@ -630,6 +639,18 @@ public class InspeccionBean {
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
+    }
+    
+    public boolean perteneceEquipo(Equipo equipo) {
+        List<Miembro> miembrosEquipo = equipoService.findByEquipo(equipo);
+        String user = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean pertenece = false;
+        for (Miembro m : miembrosEquipo) {
+            if (m.getUsername().equals(user)) {
+                pertenece = true;
+            }
+        }
+        return pertenece;
     }
     
     /**
