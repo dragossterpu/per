@@ -248,7 +248,7 @@ public class PdfGenerator {
      * Genera un documento PDF con las preguntas y respuestas de un cuestionario enviado
      * 
      * @param cuestionarioEnviado
-     * @return
+     * @return pdf con el contenido del cuestionario
      * @throws Exception
      */
     public StreamedContent crearCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) throws Exception {
@@ -419,7 +419,7 @@ public class PdfGenerator {
         return tabla;
     }
     
-    public void insertarNumeroPagina(String src, String dest, Document doc) throws IOException, DocumentException {
+    private void insertarNumeroPagina(String src, String dest, Document doc) throws IOException, DocumentException {
         PdfReader reader = new PdfReader(src);
         int nTotalPaginas = reader.getNumberOfPages();
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
@@ -436,4 +436,5 @@ public class PdfGenerator {
         stamper.close();
         reader.close();
     }
+    
 }
