@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -26,6 +27,7 @@ import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepositor
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
@@ -86,6 +88,9 @@ public class CuestionarioEnviadoBean implements Serializable {
     @Autowired
     transient ApplicationBean applicationBean;
     
+    @Autowired
+    private transient ITipoInspeccionService tipoInspeccionService;
+    
     private static final int MAX_RESULTS_PAGE = 20;
     
     private static final int FIRST_PAGE = 1;
@@ -97,6 +102,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     private long actualPage;
     
     private long numPages;
+    
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario
@@ -184,6 +191,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void init() {
         cuestionarioEnviadoBusqueda = new CuestionarioEnviadoBusqueda();
         listaCuestionarioEnvio = new ArrayList<>();
+        listaTiposInspeccion = tipoInspeccionService.buscaTodos();
     }
     
     /**
