@@ -13,8 +13,6 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -202,9 +200,7 @@ public class EquiposBean implements Serializable {
             // TODO ¿comprobar si hay inspecciones sin finalizar?
             equipo.setFechaBaja(new Date());
             
-            SecurityContext sec = SecurityContextHolder.getContext();
-            Authentication auth = sec.getAuthentication();
-            equipo.setUsernameBaja(auth.getName());
+            equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             
             equipoService.save(equipo);
             

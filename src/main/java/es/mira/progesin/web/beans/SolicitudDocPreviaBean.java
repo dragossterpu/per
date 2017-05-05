@@ -16,8 +16,6 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -237,9 +235,9 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             // parametrosVistaSolicitud = applicationBean.getMapaParametros()
             // .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
-            listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitud.getId());
-            listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitud.getId());
-            solicitudDocumentacionPrevia = solicitud;
+            setListadoDocumentosCargados(gestDocumentacionService.findByIdSolicitud(solicitud.getId()));
+            setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
+            setSolicitudDocumentacionPrevia(solicitud);
             return "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -333,7 +331,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     @PostConstruct
     public void init() {
         solicitudDocPreviaBusqueda.resetValues();
-        listadoDocumentosCargados = new ArrayList<>();
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
         model = new LazyModelSolicitudes(solicitudDocumentacionService);
     }
@@ -403,9 +400,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void eliminarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
-            SecurityContext sec = SecurityContextHolder.getContext();
-            Authentication auth = sec.getAuthentication();
-            User usuarioActual = (User) auth.getPrincipal();
+            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
             rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
             rolesAdmitidos.add(RoleEnum.ROLE_SERVICIO_APOYO);
@@ -421,7 +416,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 } else {
                     // Enviada pero no finalizada, existe usuario provisional
                     solicitud.setFechaBaja(new Date());
-                    solicitud.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+                    solicitud.setUsernameBaja(usuarioActual.getUsername());
                     String usuarioProv = solicitud.getCorreoDestinatario();
                     
                     solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitud, usuarioProv);
@@ -475,8 +470,6 @@ public class SolicitudDocPreviaBean implements Serializable {
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La solicitud de documentación ha sido modificada con éxito" + mensajeCorreoEnviado);
-            listadoDocumentosCargados = gestDocumentacionService
-                    .findByIdSolicitud(solicitudDocumentacionPrevia.getId());
             
             String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
             
@@ -514,7 +507,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
                 
-                System.out.println("Password usuario provisional  : " + password);
+                System.out.println("Password usuario provisional : " + password);
                 StringBuilder asunto = new StringBuilder(DESCRIPCION)
                         .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
@@ -758,32 +751,4 @@ public class SolicitudDocPreviaBean implements Serializable {
         return respuesta;
     }
     
-    /**
-     * @return número de registros de la búsqueda
-     * @author EZENTIS
-     */
-    public long getCountRegistrosSolicitud() {
-        return solicitudDocumentacionService.getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
-    }
-    
-    /**
-     * Guarda una copia de los parámetros de búsqueda usados por el usuario
-     * 
-     * @param solicitudBusqueda objeto con los parámetros
-     * @return copia del objeto
-     * @author EZENTIS
-     */
-    public SolicitudDocPreviaBusqueda copiaSolicitudDocPreviaBusqueda(SolicitudDocPreviaBusqueda solicitudBusqueda) {
-        SolicitudDocPreviaBusqueda solicitudBusquedaCopia = new SolicitudDocPreviaBusqueda();
-        solicitudBusquedaCopia.setAmbitoInspeccion(solicitudBusqueda.getAmbitoInspeccion());
-        solicitudBusquedaCopia.setEstado(solicitudBusqueda.getEstado());
-        solicitudBusquedaCopia.setFechaDesde(solicitudBusqueda.getFechaDesde());
-        solicitudBusquedaCopia.setFechaHasta(solicitudBusqueda.getFechaHasta());
-        solicitudBusquedaCopia.setNombreUnidad(solicitudBusqueda.getNombreUnidad());
-        solicitudBusquedaCopia.setNumeroInspeccion(solicitudBusqueda.getNumeroInspeccion());
-        solicitudBusquedaCopia.setTipoInspeccion(solicitudBusqueda.getTipoInspeccion());
-        solicitudBusquedaCopia.setUsuarioCreacion(solicitudBusqueda.getUsuarioCreacion());
-        
-        return solicitudBusquedaCopia;
-    }
 }

@@ -207,10 +207,6 @@ public class EquiposBeanTest {
      */
     @Test
     public void eliminarEquipo() {
-        // User usuarioLogueado = User.builder().username("jefeInspecciones").role(RoleEnum.ROLE_JEFE_INSPECCIONES)
-        // .build();
-        // when(authentication.getPrincipal()).thenReturn(usuarioLogueado);
-        // when(authentication.getName()).thenReturn(usuarioLogueado.getUsername());
         when(authentication.getName()).thenReturn("jefeInspecciones");
         Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
         
@@ -338,8 +334,9 @@ public class EquiposBeanTest {
         
         equipoBean.cambiarJefeEquipo();
         
-        verify(facesUtilities, times(1)).setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), "Modificación",
-                any(String.class), null);
+        PowerMockito.verifyStatic(times(1));
+        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq("Modificación"), any(String.class),
+                eq(null));
     }
     
     /**
@@ -434,8 +431,9 @@ public class EquiposBeanTest {
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        verify(facesUtilities, times(1)).setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
-                any(String.class), eq(""));
+        PowerMockito.verifyStatic(times(1));
+        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+                eq(""));
         assertThat(nombre_paso).isEqualTo("jefeEquipo");
     }
     
@@ -479,8 +477,9 @@ public class EquiposBeanTest {
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        verify(facesUtilities, times(1)).setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
-                any(String.class), eq(""));
+        PowerMockito.verifyStatic(times(1));
+        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+                eq(""));
         assertThat(nombre_paso).isEqualTo("miembros");
     }
     

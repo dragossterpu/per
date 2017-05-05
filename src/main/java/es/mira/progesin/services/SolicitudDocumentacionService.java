@@ -15,8 +15,6 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -240,9 +238,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        SecurityContext sec = SecurityContextHolder.getContext();
-        Authentication auth = sec.getAuthentication();
-        User usuarioActual = (User) auth.getPrincipal();
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
             subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
