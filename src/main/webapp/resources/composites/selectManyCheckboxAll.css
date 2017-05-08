@@ -9,10 +9,11 @@
 
 .checkboxes-all .all label {
     display: inline-block;
-    font-size: 14px !important;
+    font-size: 14px !important; 
     font-weight: bold;
     font-style: italic;
 }
 .checkboxes-all .ui-selectmanycheckbox label {
+	display: inline !important;
     white-space: pre-line;
 }
