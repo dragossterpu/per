@@ -13,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,18 +76,19 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     @Override
-    public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
-            List<Order> listaOrden) {
+    public List<Inspeccion> buscarInspeccionPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            InspeccionBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
         consultaCriteriaInspecciones(busqueda, criteria);
         
-        if (maxResults != -1) {
-            criteria.setFirstResult(firstResult);
-            criteria.setMaxResults(maxResults);
-        }
-        for (Order orden : listaOrden) {
-            criteria.addOrder(orden);
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
         }
         
         @SuppressWarnings("unchecked")
@@ -96,18 +98,15 @@ public class InspeccionesService implements IInspeccionesService {
         return listaInspecciones;
     }
     
+    @SuppressWarnings("unchecked")
     @Override
-    public long getCountInspeccionCriteria(InspeccionBusqueda busqueda) {
+    public int getCountInspeccionCriteria(InspeccionBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
         consultaCriteriaInspecciones(busqueda, criteria);
-        
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
-        
+        List<Inspeccion> listaInspecciones = criteria.list();
         session.close();
-        
-        return cnt;
+        return listaInspecciones.size();
     }
     
     /**
@@ -194,13 +193,6 @@ public class InspeccionesService implements IInspeccionesService {
         
         criteria.add(Restrictions.isNull("fechaBaja"));
     }
-    
-    // @Override
-    // public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto(String infoInspeccion, Long paramLong)
-    // {
-    // return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroIdDistinto("%" + infoInspeccion + "%",
-    // paramLong);
-    // }
     
     @Override
     public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion) {

@@ -171,10 +171,10 @@
             </h:commandLink>
       	</div>	
 		<p:outputPanel layout="block" id="panelInspecciones">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty inspeccionBean.inspeccionBusqueda.listaInspecciones}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{inspeccionBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}">
+			<p:outputPanel rendered="#{inspeccionBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaInspecciones" fileName="listaInspecciones"/>
@@ -188,36 +188,31 @@
 	               <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones"/>
 	            </h:commandLink>
             </p:outputPanel>
- 			<p:dataTable  var="inspeccion" value="#{inspeccionBean.inspeccionBusqueda.listaInspecciones}"  rows="20" id="tablaInspecciones" 
- 						paginator="true" 
-                        paginatorTemplate="{Anterior} {Pagina} {Posterior} {RowsPerPageDropdown}" 
+ 			<p:dataTable  var="inspeccion" value="#{inspeccionBean.model}"  
+ 						rows="20" 
+ 						id="tablaInspecciones" 
+ 			 			rowsPerPageTemplate="5,10,15,20"
+						lazy="true"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+ 						draggableColumns="true"
+                        paginator="true" 
                         resizableColumns="true"
-                        draggableColumns="true" 
                         rowStyleClass="#{not empty inspeccion.fechaAnulacion ? 'anulado' : null}"
-                  	    rendered="#{not empty inspeccionBean.inspeccionBusqueda.listaInspecciones}"
+                  	    rendered="#{inspeccionBean.model.rowCount ne 0}"
                   	    selection="#{inspeccionBean.inspeccionesSeleccionadas}"
+                  	    rowSelectMode="add"
                   	    rowKey="#{inspeccion.id}"
-                  	    rowSelectMode="add">
+                  	    >
                  				                
-                 <p:ajax event="sort" listener="#{inspeccionBean.onSort}"  update="tablaInspecciones" skipChildren="true"/>
                  
                  <p:ajax event="rowUnselectCheckbox"  listener="#{inspeccionBean.onRowUnSelected}" />  
                  <p:ajax event="rowSelectCheckbox" listener="#{inspeccionBean.onRowSelected}" />
+                 <p:ajax event="rowSelect" listener="#{inspeccionBean.onRowSelected}"/>
+                 <p:ajax event="rowUnselect" listener="#{inspeccionBean.onRowUnSelected}" />
+                 <p:ajax event="page" listener="#{inspeccionBean.paginator}" />
+                 
                  <p:ajax event="toggleSelect" listener="#{inspeccionBean.onToggleSelect}" global="true"/>
    			
-                 <f:facet name="{Anterior}">
-					<h:commandLink title="Anterior(es)" actionListener="#{inspeccionBean.previousInspeccion}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-							<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-				</f:facet>   
-				<f:facet name="{Posterior}">
-					<h:commandLink title="Posterior(es)" actionListener="#{inspeccionBean.nextInspeccion}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-							<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-			   	</f:facet>
-				<f:facet name="{Pagina}">
-					<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{inspeccionBean.actualPage} de #{inspeccionBean.numPages}</span> 
-				</f:facet>  
                         
 				<f:facet name="header">
 					Inspecciones	
@@ -306,7 +301,7 @@
 				</p:column>
 				
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{inspeccionBean.numeroRegistros} inspecciones.
+       				 Resultado de la búsqueda: #{inspeccionBean.model.rowCount} inspecciones.
     			</f:facet>
     			
 			</p:dataTable>

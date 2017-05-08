@@ -1,12 +1,11 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -51,13 +50,15 @@ public class InspeccionBusqueda implements Serializable {
     
     private EstadoInspeccionEnum estado;
     
-    private List<Inspeccion> listaInspecciones = new ArrayList<>();
-    
     private Provincia provincia;
     
     private Municipio municipio;
     
     private TipoUnidad tipoUnidad;
+    
+    private String sortField;
+    
+    private SortOrder sortOrder;
     
     /**
      * Limpia los valores del objeto

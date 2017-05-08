@@ -2,7 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import org.hibernate.criterion.Order;
+import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -33,15 +33,15 @@ public interface IInspeccionesService {
     List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(String infoInspeccion,
             String usernameJefeEquipo);
     
-    long getCountInspeccionCriteria(InspeccionBusqueda busqueda);
+    int getCountInspeccionCriteria(InspeccionBusqueda busqueda);
     
     public Inspeccion findInspeccionById(Long id);
-    
-    public List<Inspeccion> buscarInspeccionPorCriteria(int firstResult, int maxResults, InspeccionBusqueda busqueda,
-            List<Order> listaOrden);
     
     public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion);
     
     boolean existeByTipoInspeccion(TipoInspeccion tipo);
+    
+    List<Inspeccion> buscarInspeccionPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            InspeccionBusqueda busqueda);
     
 }
