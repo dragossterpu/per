@@ -21,7 +21,6 @@
 	<div class="menu">
         <!-- <p:breadCrumb model="#{navegacionBean.caminoMigas}" id="caminoMigas"/> -->
 		<ul class="menu-lista">
-<!-- 			<li><p:link href="/logSistema" value="REGISTRO DE ACTIVIDAD" /></li> -->
 			<li><p:link outcome="/index" value="MENÚ PRINCIPAL" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/></li>
 		</ul>
 	</div>

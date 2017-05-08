@@ -8,15 +8,15 @@
 		<p:submenu label="Administración" rendered="#{p:ifGranted('ADMIN')}">
 			<p:menuitem value="Cuerpos" outcome="/administracion/cuerpos/cuerpos" />
 			<p:menuitem value="Tipos de equipo" outcome="/administracion/tipoequipo/tiposEquipo" />
-			<p:menuitem value="Registro de actividad" outcome="/registro/registro">
+			<p:menuitem value="Registro de actividad" outcome="/administracion/registro/registro">
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>	
-			<p:menuitem value="Sugerencias de mejora" outcome="/principal/sugerenciasListado"  />
-			<p:menuitem value="Papelera" outcome="/papelera/papelera" >
+			<p:menuitem value="Sugerencias de mejora" outcome="/administracion/principal/sugerenciasListado"  />
+			<p:menuitem value="Papelera" outcome="/administracion/papelera/papelera" >
 				<f:param name="vieneDe" value="menu" />
 			</p:menuitem>	
-			<p:menuitem value="Puestos de trabajo" outcome="/puestosTrabajo/puestosTrabajo" />
-			<p:menuitem value="Departamentos" outcome="/departamentos/departamentos" />
+			<p:menuitem value="Puestos de trabajo" outcome="/administracion/puestosTrabajo/puestosTrabajo" />
+			<p:menuitem value="Departamentos" outcome="/administracion/departamentos/departamentos" />
 		</p:submenu>
 		<p:submenu label="Usuarios">
 			<p:menuitem value="Administrar usuarios" outcome="/users/usuarios">
@@ -63,7 +63,7 @@
                 <f:param name="vieneDe" value="menu" />
             </p:menuitem>
 
-			<p:menuitem value="Modelos de inspección" outcome="/inspecciones/tiposInspeccion" />
+			<p:menuitem value="Modelos de inspección" outcome="/inspecciones/modeloInspeccion/tiposInspeccion" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
 				
 			<p:menuitem value="Estadísticas" outcome="/enConstruccion" />
 		</p:submenu>

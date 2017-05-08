@@ -54,11 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers(Constantes.RUTA_LOGIN + "/**").anonymous().antMatchers("/acceso/**")
                 .anonymous()
                 // Acceso a la administración sólo para el role ADMIN
-                .antMatchers("/administracion/**").hasRole(RoleEnum.ROLE_ADMIN.getNombre())
-                .antMatchers("/equipos/altaEquipo.xhtml")
+                .antMatchers("/administracion/**", "/users/altaUsuario.xhtml").hasRole(RoleEnum.ROLE_ADMIN.getNombre())
+                // Acceso a ciertas partes sólo el ADMIN y JFFE_INSPECCIONES
+                .antMatchers("/equipos/altaEquipo.xhtml", "/inspecciones/modeloInspeccion/**")
                 .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre())
-                // Acceso al resto de la aplicación
-                .antMatchers("/user*").hasAnyRole().anyRequest().authenticated();
+                // Al resto pueden acceder todos los usuarios autenticados
+                .anyRequest().authenticated();
         
         http.formLogin().loginPage(Constantes.RUTA_LOGIN).loginProcessingUrl(Constantes.RUTA_LOGIN)
                 .defaultSuccessUrl("/index.xhtml", true).failureUrl(Constantes.RUTA_LOGIN);
