@@ -7,31 +7,35 @@
     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="content">
 
-		<h3>Tipos de inspección</h3>
+		<h3>Tipos de equipo de inspección</h3>
 		<br></br>
 		<br></br>
+		<h:form>
+			<p:remoteCommand name="onload"
+				action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
+		</h:form>
 
 		<h:form id="form">
-			<div id="listadoTiposInspeccion">
-				<p:dataTable id="tablaTiposInspeccion" var="tipoInspeccion"
-					value="#{tipoInspeccionBean.listaTipoInspeccion}" editable="true"
+			<div id="listadoTiposEquipo">
+				<p:dataTable id="tablaTiposEquipo" var="tipoEquipo"
+					value="#{tipoEquipoBean.listaTipoEquipo}" editable="true"
 					onkeypress="if (event.keyCode == 13) {return false; }">
-					<p:ajax event="rowEdit" listener="#{tipoInspeccionBean.onRowEdit}" />
+					<p:ajax event="rowEdit" listener="#{tipoEquipoBean.onRowEdit}" />
 
 					<p:column headerText="Código del tipo" width="90">
-						<h:outputText value="#{tipoInspeccion.codigo}" />
+						<h:outputText value="#{tipoEquipo.codigo}" />
 					</p:column>
 
 					<p:column headerText="Descripción del tipo">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{tipoInspeccion.descripcion}" />
+								<h:outputText value="#{tipoEquipo.descripcion}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText id="descripcionInput"
-									value="#{tipoInspeccion.descripcion}" converter="#{trimConverter}"
+									value="#{tipoEquipo.descripcion}" converter="#{trimConverter}"
 									required="true" maxlength="100"
-									requiredMessage="La descripción del tipo de inspección no puede estar vacío" />
+									requiredMessage="La descripción del tipo de equipo no puede estar vacío" />
 								<p:messages for="descripcionInput" autoUpdate="true"
 									closable="true" />
 							</f:facet>
@@ -45,17 +49,17 @@
 
 					<p:column styleClass="botonTabla">
 						<p:commandButton title="Eliminar" icon="fa fa-trash"
-							actionListener="#{tipoInspeccionBean.eliminarTipo(tipoInspeccion)}"
-							update="tablaTiposInspeccion">
-							<p:confirm header="Eliminar tipo de inspección"
-								message="¿Está seguro que desea eliminar este tipo de inspección?"
+							actionListener="#{tipoEquipoBean.eliminarTipo(tipoEquipo)}"
+							update="tablaTiposEquipo">
+							<p:confirm header="Eliminar tipo de equipo"
+								message="¿Está seguro que desea eliminar este tipo de equipo?"
 								icon="fa fa-warning-sign" />
 						</p:commandButton>
 					</p:column>
 
 					<f:facet name="footer">
-   				 		Hay: #{fn:length(tipoInspeccionBean.listaTipoInspeccion)} tipos de inspección.
-					</f:facet>
+   				 Hay: #{fn:length(tipoEquipoBean.listaTipoEquipo)} tipos de equipo.
+			</f:facet>
 				</p:dataTable>
 				<p:confirmDialog global="true">
 					<div class="centrarBotonesDialog">
@@ -70,7 +74,7 @@
 					showDetail="true" />
 			</div>
 			<div class="botonesFormulario">
-                <p:button value="Nuevo tipo de inspección" icon="fa fa-user-plus" outcome="/inspecciones/altaTipoInspeccion"/>
+                <p:button outcome="/administracion/tipoequipo/altaTipoEquipo" value="Nuevo tipo de equipo" icon="fa fa-user-plus"/>
 			</div>
 		</h:form>
 	</ui:define>

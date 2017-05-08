@@ -239,27 +239,6 @@ public class EquiposBean implements Serializable {
         return "/equipos/modificarEquipo?faces-redirect=true";
     }
     
-    // /**
-    // * Modifica los datos de un equipo en función de los valores recuperados del formulario
-    // */
-    // public void modificarEquipo() {
-    // try {
-    // equipoService.save(equipo);
-    //
-    // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-    // "El equipo ha sido modificado con éxito");
-    // String descripcion = "Se ha modificado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
-    // // Guardamos la actividad en bbdd
-    // regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-    // SeccionesEnum.INSPECCION.name());
-    // notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
-    //
-    // } catch (Exception e) {
-    // regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
-    // }
-    //
-    // }
-    
     /**
      * Elimina un miembro de un equipo, ya sea componente o colaborador del equipo que está siendo modificado
      * @author EZENTIS

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.services.LoginService;
 
 /**
@@ -52,7 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
                 .permitAll().antMatchers(Constantes.RUTA_LOGIN + "/**").anonymous().antMatchers("/acceso/**")
                 .anonymous()
-                // .antMatchers("/user*").hasAnyRole(RoleEnum.ADMIN.name(), RoleEnum.USER.name())
+                // Acceso a la administración sólo para el role ADMIN
+                .antMatchers("/administracion/**").hasRole(RoleEnum.ROLE_ADMIN.getNombre())
+                .antMatchers("/equipos/altaEquipo.xhtml")
+                .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre())
+                // Acceso al resto de la aplicación
                 .antMatchers("/user*").hasAnyRole().anyRequest().authenticated();
         
         http.formLogin().loginPage(Constantes.RUTA_LOGIN).loginProcessingUrl(Constantes.RUTA_LOGIN)

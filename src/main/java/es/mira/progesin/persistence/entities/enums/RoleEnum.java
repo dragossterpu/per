@@ -18,14 +18,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum RoleEnum {
     ROLE_ADMIN("Administrador", false), ROLE_JEFE_INSPECCIONES("Jefe de inspecciones", false), ROLE_EQUIPO_INSPECCIONES(
-            "Equipo de inspecciones", false), ROLE_SERVICIO_APOYO("Servicio de apoyo", false), ROLE_GABINETE(
-                    "Gabinete de estudio y análisis", false), ROLE_PROV_SOLICITUD("Provisional vista documentación previa",
+            "Equipo de inspecciones",
+            false), ROLE_SERVICIO_APOYO("Servicio de apoyo", false), ROLE_GABINETE("Gabinete de estudio y análisis",
+                    false), ROLE_PROV_SOLICITUD("Provisional vista documentación previa",
                             true), ROLE_PROV_CUESTIONARIO("Provisional vista cuestionario", true);
     
     private String descripcion;
     
     private boolean prov;
     
+    /**
+     * @return Devuelve un listado con los roles provisionales que permiten acceder a la aplicación a usuarios externos
+     * a IPSS
+     */
     public static List<RoleEnum> getRolesProv() {
         List<RoleEnum> rolesProv = new ArrayList<>();
         for (RoleEnum rol : RoleEnum.values()) {
@@ -33,5 +38,12 @@ public enum RoleEnum {
                 rolesProv.add(rol);
         }
         return rolesProv;
+    }
+    
+    /**
+     * @return Nombre del enum sin el prefijo "ROLE_"
+     */
+    public String getNombre() {
+        return this.name().substring(5);
     }
 }
