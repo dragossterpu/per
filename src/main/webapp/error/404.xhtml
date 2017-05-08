@@ -13,15 +13,10 @@
     <p:outputPanel>
         <div class="ui-messages ui-widget" aria-live="polite">
             <div class="ui-messages-info ui-corner-all">
-                <span class="ui-messages-info-icon icono404"></span>
+                <span class="ui-messages-info-icon iconoError icono404"/>
                 <ul>
-                    <li>
-                        <span class="ui-messages-info-summary">El recurso solicitado no ha sido encontrado, disculpe las molestias.</span>
-                    </li>
-                    <li>
-                        <span class="ui-messages-info-details">La página que ha solicitado no está disponible en <a href="#{request.contextPath}" >Progesin</a>.<br/>
-Puede que la página haya dejado de existir o que haya sido movida a otra localización.</span>
-                    </li>
+                    <li class="ui-messages-info-summary">El recurso solicitado no ha sido encontrado, disculpe las molestias.</li>
+                    <li class="ui-messages-info-details">La página que ha solicitado no está disponible en <a href="#{request.contextPath}" >Progesin</a>. Puede que la página haya dejado de existir o que haya sido movida a otra localización.</li>
                 </ul>
             </div>
         </div>

@@ -349,11 +349,25 @@ select {
 .ui-selectoneradio label {
 	padding: 4px;
 }
-.icono404 {
-	background: url('../images/error-404.png') no-repeat;
+
+.iconoError {
+	background: no-repeat;
 	background-size: 100%; 
-	width: 75px; 
-	height:75px;
+	width: 110px; 
+	height:110px;
+	margin-right: 10px;
+}
+
+.icono403 {
+	background-image: url('../images/error-403.png');
+}
+
+.icono404 {
+	background-image: url('../images/error-404.png');
+}
+
+.icono5xx {
+	background-image: url('../images/error-5xx.png');
 }
 
 .ui-orderlist ul li:nth-child(even) {
