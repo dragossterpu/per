@@ -26,6 +26,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -410,7 +411,7 @@ public class DocumentoService implements IDocumentoService {
     }
     
     @Override
-    public long getCounCriteria(DocumentoBusqueda busqueda) {
+    public int getCounCriteria(DocumentoBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Documento.class, "documento");
         
@@ -420,17 +421,24 @@ public class DocumentoService implements IDocumentoService {
         
         session.close();
         
-        return cnt;
+        return Math.toIntExact(cnt);
     }
     
     @Override
-    public List<Documento> buscarGuiaPorCriteria(int firstResult, int maxResults, DocumentoBusqueda busqueda) {
+    public List<Documento> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            DocumentoBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Documento.class, "documento");
         
         creaCriteria(busqueda, criteria);
-        criteria.setFirstResult(firstResult);
-        criteria.setMaxResults(maxResults);
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
         
         @SuppressWarnings("unchecked")
         List<Documento> listado = criteria.list();
@@ -441,6 +449,7 @@ public class DocumentoService implements IDocumentoService {
     
     private void creaCriteria(DocumentoBusqueda busqueda, Criteria criteria) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        criteria.createAlias("tipoDocumento", "tipo");
         
         if (busqueda.getFechaDesde() != null) {
             /**
@@ -464,7 +473,7 @@ public class DocumentoService implements IDocumentoService {
         }
         
         if (busqueda.getTipoDocumento() != null) {
-            criteria.add(Restrictions.eq("tipoDocumento", busqueda.getTipoDocumento()));
+            criteria.add(Restrictions.eq("tipo", busqueda.getTipoDocumento()));
         }
         
         if (busqueda.getMateriaIndexada() != null) {
@@ -477,7 +486,6 @@ public class DocumentoService implements IDocumentoService {
         }
         
         if (busqueda.getInspeccion() != null) {
-            criteria.createAlias("inspeccion", "inspecciones"); // inner join
             criteria.add(Restrictions.eq("inspecciones.numero", busqueda.getInspeccion().getNumero()));
         }
         
@@ -492,7 +500,6 @@ public class DocumentoService implements IDocumentoService {
                     String.format(Constantes.COMPARADORSINACENTOS, "this_.descripcion", busqueda.getDescripcion())));
         }
         
-        criteria.addOrder(Order.desc("fechaAlta"));
     }
     
     @Override

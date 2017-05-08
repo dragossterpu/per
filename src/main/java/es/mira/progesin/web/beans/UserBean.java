@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelUsuarios;
 import es.mira.progesin.persistence.entities.ClaseUsuario;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
@@ -85,6 +87,8 @@ public class UserBean {
     private String vieneDe;
     
     private int[] nivelesSelect = IntStream.rangeClosed(12, 30).toArray();
+    
+    private LazyModelUsuarios model;
     
     @PersistenceContext
     private EntityManager em;
@@ -201,6 +205,7 @@ public class UserBean {
      */
     public void limpiarBusqueda() {
         userBusqueda.resetValues();
+        model.setRowCount(0);
     }
     
     /**
@@ -208,8 +213,9 @@ public class UserBean {
      */
     public void buscarUsuario() {
         this.estadoUsuario = null;
-        List<User> listaUsuarios = userService.buscarUsuarioCriteria(userBusqueda);
-        userBusqueda.setListaUsuarios(listaUsuarios);
+        model.setBusqueda(userBusqueda);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        
         auditoriaBusqueda(userBusqueda);
     }
     
@@ -328,6 +334,8 @@ public class UserBean {
         for (int i = 0; i <= numeroColumnasListadoUsarios; i++) {
             list.add(Boolean.TRUE);
         }
+        
+        model = new LazyModelUsuarios(userService);
     }
     
     public void buscarEmpleo() {

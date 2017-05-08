@@ -68,10 +68,10 @@
 		<p:separator styleClass="separator ui-state-disabled" />
 		
 		<p:outputPanel layout="block" id="panelCuestionarios">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{cuestionarioPersonalizadoBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
+			<p:outputPanel rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
@@ -85,10 +85,14 @@
 	               <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
 	            </h:commandLink>
             </p:outputPanel>
- 			<p:dataTable  var="cuestionario" value="#{cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}"  rows="20" id="tablaCuestionarios"
+ 			<p:dataTable  var="cuestionario" value="#{cuestionarioPersonalizadoBean.model}"  id="tablaCuestionarios"
                          paginator="true" 
-                         resizableColumns="true" draggableColumns="true"
-                         rendered="#{not empty cuestionarioPersonalizadoBean.listaCuestionarioPersonalizado}">
+                         rowsPerPageTemplate="5,10,15,20"
+						 rows="20"
+						 lazy="true"
+						 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}"
+                         resizableColumns="true" draggableColumns="true">
 				 <f:facet name="header">
 					Cuestionarios personalizados
 				</f:facet>

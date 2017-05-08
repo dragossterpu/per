@@ -15,6 +15,7 @@ import java.util.List;
 import javax.sql.rowset.serial.SerialException;
 
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -69,9 +70,10 @@ public interface IDocumentoService {
     
     boolean extensionCorrecta(UploadedFile file);
     
-    public List<Documento> buscarGuiaPorCriteria(int firstResult, int maxResults, DocumentoBusqueda busqueda);
+    public List<Documento> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            DocumentoBusqueda busqueda);
     
-    public long getCounCriteria(DocumentoBusqueda busqueda);
+    public int getCounCriteria(DocumentoBusqueda busqueda);
     
     public String obtieneNombreFichero(Documento documento);
     

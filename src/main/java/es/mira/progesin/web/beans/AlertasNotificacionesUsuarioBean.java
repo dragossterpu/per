@@ -1,26 +1,24 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
+import es.mira.progesin.lazydata.LazyModelAlertas;
+import es.mira.progesin.lazydata.LazyModelNotificaciones;
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,32 +43,15 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     @Autowired
     private transient IRegistroActividadService regActividad;
     
-    private List<Alerta> listaAlertas = new ArrayList<>();
+    @Autowired
+    private transient IAlertaService alertaService;
     
-    private Page<AlertasNotificacionesUsuario> pageAlertas;
+    @Autowired
+    private transient INotificacionService notificacionService;
     
-    private List<Notificacion> listaNotificaciones = new ArrayList<>();
+    private LazyModelAlertas modelAlertas;
     
-    private Page<AlertasNotificacionesUsuario> pageNotificaciones;
-    
-    /******************************************************
-     * 
-     * Inicializa las listas de alertas y notificaciones recuperando las que corresponden al usuario logado
-     * 
-     ******************************************************/
-    
-    private void initList() {
-        pageAlertas = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
-                SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.ALERTA,
-                new PageRequest(0, 20, Direction.DESC, "fechaAlta"));
-        listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
-        
-        pageNotificaciones = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
-                SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.NOTIFICACION,
-                new PageRequest(0, 20, Direction.DESC, "fechaAlta"));
-        listaNotificaciones = alertasNotificacionesUsuarioService.findNotificaciones(pageNotificaciones.getContent());
-        
-    }
+    private LazyModelNotificaciones modelNotificaciones;
     
     /******************************************************
      * 
@@ -80,14 +61,17 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     
     @PostConstruct
     public void init() {
-        initList();
+        modelAlertas = new LazyModelAlertas(alertaService,
+                SecurityContextHolder.getContext().getAuthentication().getName());
+        modelNotificaciones = new LazyModelNotificaciones(notificacionService,
+                SecurityContextHolder.getContext().getAuthentication().getName());
     }
     
     /******************************************************
      * 
      * Elimina, para el usuario logado, la alerta pasada como parámetro
      * 
-     * @param Alerta
+     * @param alerta a eliminar
      * 
      ******************************************************/
     
@@ -95,7 +79,6 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
-            listaAlertas.remove(alerta);
             String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Alertas");
         } catch (Exception e) {
@@ -108,7 +91,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
      * 
      * Elimina, para el usuario logado, la notificación pasada como parámetro
      * 
-     * @param Notificacion
+     * @param notificacion a eliminar
      * 
      ******************************************************/
     
@@ -116,7 +99,6 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
-            listaNotificaciones.remove(notificacion);
             String descripcion = "Se ha eliminado la notificación :" + notificacion.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Notificaciones");
         } catch (Exception e) {
@@ -125,69 +107,4 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         
     }
     
-    /******************************************************
-     * 
-     * Avanza la paginación de Notificaciones
-     * 
-     * 
-     ******************************************************/
-    
-    public void nextNotificacion() {
-        if (pageNotificaciones.hasNext()) {
-            pageNotificaciones = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
-                    SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.NOTIFICACION,
-                    pageNotificaciones.nextPageable());
-            listaNotificaciones = alertasNotificacionesUsuarioService
-                    .findNotificaciones(pageNotificaciones.getContent());
-        }
-    }
-    
-    /******************************************************
-     * 
-     * Retrocede la paginación de Notificaciones
-     * 
-     * 
-     ******************************************************/
-    
-    public void previousNotificacion() {
-        if (pageNotificaciones.hasPrevious()) {
-            pageNotificaciones = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
-                    SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.NOTIFICACION,
-                    pageNotificaciones.previousPageable());
-            listaNotificaciones = alertasNotificacionesUsuarioService
-                    .findNotificaciones(pageNotificaciones.getContent());
-        }
-    }
-    
-    /******************************************************
-     * 
-     * Avanza la paginación de Alertas
-     * 
-     * 
-     ******************************************************/
-    
-    public void nextAlerta() {
-        if (pageAlertas.hasNext()) {
-            pageAlertas = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
-                    SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.ALERTA,
-                    pageAlertas.nextPageable());
-            listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
-        }
-    }
-    
-    /******************************************************
-     * 
-     * Retrocede la paginación de Alertas
-     * 
-     * 
-     ******************************************************/
-    
-    public void previousAlerta() {
-        if (pageAlertas.hasPrevious()) {
-            pageAlertas = alertasNotificacionesUsuarioService.findByUsuarioAndTipo(
-                    SecurityContextHolder.getContext().getAuthentication().getName(), TipoMensajeEnum.ALERTA,
-                    pageAlertas.previousPageable());
-            listaAlertas = alertasNotificacionesUsuarioService.findAlertas(pageAlertas.getContent());
-        }
-    }
 }

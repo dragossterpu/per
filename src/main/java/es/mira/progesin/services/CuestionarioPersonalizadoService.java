@@ -7,7 +7,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,11 +90,7 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         return cuestionarioPersRep.save(entity);
     }
     
-    @Override
-    public List<CuestionarioPersonalizado> buscarCuestionarioPersonalizadoCriteria(
-            CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
+    private void creaCriteria(CuestionarioPersonalizadoBusqueda cuestionarioBusqueda, Criteria criteria) {
         
         if (cuestionarioBusqueda.getFechaDesde() != null) {
             /**
@@ -135,11 +133,40 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
             criteria.addOrder(Order.desc(FECHABAJA));
         }
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        
+    }
+    
+    @Override
+    public List<CuestionarioPersonalizado> buscarCuestionarioPersonalizadoCriteria(int first, int pageSize,
+            String sortField, SortOrder sortOrder, CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
+        creaCriteria(cuestionarioBusqueda, criteria);
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
         @SuppressWarnings("unchecked")
-        List<CuestionarioPersonalizado> listaCuestionarios = criteria.list();
+        List<CuestionarioPersonalizado> listaCuestionarioEnvio = criteria.list();
         session.close();
         
-        return listaCuestionarios;
+        return listaCuestionarioEnvio;
+    }
+    
+    @Override
+    public int getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
+        creaCriteria(cuestionarioBusqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        session.close();
+        
+        return Math.toIntExact(cnt);
     }
     
 }

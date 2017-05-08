@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.services.IDocumentoService;
@@ -46,6 +47,8 @@ public class ApplicationBean implements Serializable {
     
     private String dominiosValidos;
     
+    private List<TipoInspeccion> listaTiposInspeccion;
+    
     private List<Provincia> listaProvincias;
     
     private List<TipoDocumento> listaTipos;
@@ -61,6 +64,7 @@ public class ApplicationBean implements Serializable {
         setMapaParametros(parametroService.getMapaParametros());
         setDominiosValidos(mapaParametros.get("dominiosCorreo").get("dominiosCorreo"));
         setListaTipos(documentoService.listaTiposDocumento());
+        setListaTiposInspeccion(em.createNamedQuery("TipoInspeccion.findAll", TipoInspeccion.class).getResultList());
         setListaProvincias(em.createNamedQuery("Provincia.findAll", Provincia.class).getResultList());
         setListaTiposUnidad(em.createNamedQuery("TipoUnidad.findAll", TipoUnidad.class).getResultList());
         

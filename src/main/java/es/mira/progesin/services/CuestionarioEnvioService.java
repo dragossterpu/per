@@ -14,6 +14,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -139,14 +140,19 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * @author EZENTIS
      */
     @Override
-    public List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int firstResult, int maxResults,
-            CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
+    public List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int first, int pageSize, String sortField,
+            SortOrder sortOrder, CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(CuestionarioEnvio.class, "cuestionario");
         consultaCriteriaCuestionarioEnviado(cuestionarioEnviadoBusqueda, criteria);
-        criteria.setFirstResult(firstResult);
-        criteria.setMaxResults(maxResults);
-        criteria.addOrder(Order.desc("fechaEnvio"));
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
         @SuppressWarnings("unchecked")
         List<CuestionarioEnvio> listaCuestionarioEnvio = criteria.list();
         session.close();
@@ -162,7 +168,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * @author EZENTIS
      */
     @Override
-    public long getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
+    public int getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(CuestionarioEnvio.class, "cuestionario");
         consultaCriteriaCuestionarioEnviado(cuestionarioEnviadoBusqueda, criteria);
@@ -170,7 +176,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         Long cnt = (Long) criteria.uniqueResult();
         session.close();
         
-        return cnt;
+        return Math.toIntExact(cnt);
     }
     
     /**
@@ -303,6 +309,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             criteria.add(Restrictions.eq("modeloCuestionario.id",
                     cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
         }
+        
     }
     
     @Override

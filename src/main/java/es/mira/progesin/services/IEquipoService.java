@@ -2,6 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
@@ -21,7 +23,10 @@ public interface IEquipoService {
     
     Equipo save(Equipo entity);
     
-    List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda);
+    List<Equipo> buscarEquipoCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            EquipoBusqueda equipoBusqueda);
+    
+    int getCounCriteria(EquipoBusqueda busqueda);
     
     boolean existsByTipoEquipo(TipoEquipo tipo);
     

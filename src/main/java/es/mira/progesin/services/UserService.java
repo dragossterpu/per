@@ -8,7 +8,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -88,10 +90,11 @@ public class UserService implements IUserService {
         return userRepository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
     }
     
-    @Override
-    public List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda) {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(User.class);
+    private void creaCriteria(UserBusqueda userBusqueda, Criteria criteria) {
+        
+        // criteria.createAlias("usuario.role", "role");
+        criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado");
+        criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo");
         
         if (userBusqueda.getFechaDesde() != null) {
             /**
@@ -146,13 +149,7 @@ public class UserService implements IUserService {
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        criteria.addOrder(Order.desc(FECHA_ALTA));
         
-        @SuppressWarnings("unchecked")
-        List<User> listaUsuarios = criteria.list();
-        session.close();
-        
-        return listaUsuarios;
     }
     
     @Override
@@ -212,6 +209,40 @@ public class UserService implements IUserService {
     @Override
     public List<User> findByDepartamento(Departamento departamento) {
         return userRepository.findByDepartamento(departamento);
+    }
+    
+    @Override
+    public List<User> buscarUsuarioCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            UserBusqueda userBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(User.class, "usuario");
+        creaCriteria(userBusqueda, criteria);
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
+        
+        @SuppressWarnings("unchecked")
+        List<User> listado = criteria.list();
+        session.close();
+        
+        return listado;
+    }
+    
+    @Override
+    public int contarRegistros(UserBusqueda userBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(User.class, "usuario");
+        creaCriteria(userBusqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        session.close();
+        
+        return Math.toIntExact(cnt);
     }
     
 }

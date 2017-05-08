@@ -12,6 +12,7 @@ import javax.faces.application.FacesMessage;
 
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ import lombok.Setter;
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
  */
+
 @Setter
 @Getter
 @Controller("solicitudDocPreviaBean")
@@ -507,7 +509,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
                 
-                System.out.println("Password usuario provisional : " + password);
+                System.out.println("Password usuario provisional  : " + password);
                 StringBuilder asunto = new StringBuilder(DESCRIPCION)
                         .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
@@ -658,7 +660,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void buscarSolicitudDocPrevia() {
         
         model.setBusqueda(solicitudDocPreviaBusqueda);
-        model.load(0, 20, null, null, null);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /**

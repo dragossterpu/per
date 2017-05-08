@@ -2,6 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -20,13 +22,27 @@ public interface IGuiaService {
     /***************************************
      * 
      * Devuelve una lista de guías en función de los criterios de búsqueda recibidos como parámetro
+     * @param first
+     * @param pageSize
+     * @param sortField
+     * @param sortOrder
      * 
      * @return List<Guia>
      * @param busqueda
      * 
      *************************************/
     
-    public List<Guia> buscarGuiaPorCriteria(GuiaBusqueda busqueda);
+    public List<Guia> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            GuiaBusqueda busqueda);
+    
+    /**
+     * Devuelve el número total de registros resultado de la búsqueda
+     * 
+     * @param busqueda
+     * @return
+     */
+    
+    public int getCounCriteria(GuiaBusqueda busqueda);
     
     /***************************************
      * 

@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.hibernate.SessionFactory;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.lazydata.LazyModelRegistro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
-import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,19 +47,10 @@ public class RegActividadBean implements Serializable {
     
     private String vieneDe;
     
-    @Autowired
-    transient IRegActividadRepository regActividadRepository;
+    private LazyModelRegistro model;
     
     @Autowired
     transient IRegistroActividadService regActividadService;
-    
-    @Autowired
-    transient ApplicationBean applicationBean;
-    
-    @Autowired
-    private SessionFactory sessionFactory;
-    
-    private LazyModelRegistro model;
     
     /**********************************************
      * 
@@ -71,7 +61,7 @@ public class RegActividadBean implements Serializable {
     
     public void buscarRegActividad() {
         model.setBusqueda(regActividadBusqueda);
-        model.load(0, 20, null, null, null);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
         
     }
     

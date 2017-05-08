@@ -82,7 +82,7 @@
                          draggableColumns="true"
                          paginator="true"
                          lazy="true"
-						 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+						 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          resizableColumns="true"
                         selectionMode="single"
                      	selection="#{regActividadBean.error}"
@@ -111,7 +111,7 @@
 				<p:column headerText="Usuario del registro" sortBy="#{regActividad.usernameRegActividad}"  width="70" visible="#{regActividadBean.list[2]}" exportable="#{regActividadBean.list[2]}">
 					<h:outputText value="#{regActividad.usernameRegActividad}" />
 				</p:column>
-				<p:column headerText="Descripción"  width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
+				<p:column headerText="Descripción"  width="100"  visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
 					<h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,40)}..."></h:outputText>
 					<p:tooltip id="toolTipError" for="descripcionError" value="Hacer click para ampliar información" position="top"/>
 				</p:column>					

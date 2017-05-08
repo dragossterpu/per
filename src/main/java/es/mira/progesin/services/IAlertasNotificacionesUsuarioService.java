@@ -2,9 +2,6 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -19,7 +16,7 @@ import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
  * 
  * @author Ezentis
  * 
- * ***********************************************************/
+ ***********************************************************/
 
 public interface IAlertasNotificacionesUsuarioService {
     
@@ -46,7 +43,5 @@ public interface IAlertasNotificacionesUsuarioService {
     List<Notificacion> findNotificaciones(List<AlertasNotificacionesUsuario> lista);
     
     List<Alerta> findAlertas(List<AlertasNotificacionesUsuario> lista);
-    
-    Page<AlertasNotificacionesUsuario> findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo, Pageable request);
     
 }

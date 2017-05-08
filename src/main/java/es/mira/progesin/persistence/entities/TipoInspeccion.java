@@ -18,15 +18,16 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, of = "codigo")
 @Builder
 @ToString
 @Getter
 @Setter
+
 @Entity
 @Table(name = "TIPOS_INSPECCION")
 @NamedQuery(name = "TipoInspeccion.findAll", query = "SELECT t FROM TipoInspeccion t")
-public class TipoInspeccion extends AbstractEntity implements Serializable {
+public class TipoInspeccion extends AbstractEntity implements Serializable, Comparable<TipoInspeccion> {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -35,4 +36,9 @@ public class TipoInspeccion extends AbstractEntity implements Serializable {
     
     @Column(length = 100)
     private String descripcion;
+    
+    @Override
+    public int compareTo(TipoInspeccion o) {
+        return this.descripcion.compareTo(o.descripcion);
+    }
 }

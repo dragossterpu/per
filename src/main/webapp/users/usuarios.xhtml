@@ -93,10 +93,10 @@
 		<p:separator styleClass="separator ui-state-disabled" />
 		
 		<p:outputPanel layout="block" id="panelUsuarios">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty userBean.userBusqueda.listaUsuarios}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{userBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty userBean.userBusqueda.listaUsuarios}">
+			<p:outputPanel rendered="#{userBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaUsuarios" fileName="listausuarios"/>
@@ -110,13 +110,15 @@
 	               <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios"/>
 	            </h:commandLink>
             </p:outputPanel>
- 			<p:dataTable  var="user" value="#{userBean.userBusqueda.listaUsuarios}"  rows="10" id="tablaUsuarios" 
+ 			<p:dataTable  var="user" value="#{userBean.model}"   id="tablaUsuarios" 
  						draggableColumns="true"
                         paginator="true" 
                         resizableColumns="true"
-                        rendered="#{not empty userBean.userBusqueda.listaUsuarios}" 
-                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                  		rowsPerPageTemplate="5,10,15,20,25">
+                        rendered="#{userBean.model.rowCount ne 0}" 
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                  		lazy="true"
+						rowsPerPageTemplate="5,10,15,20"
+						rows="20">
                         
 				 <f:facet name="header">
 					Usuarios
@@ -145,7 +147,7 @@
 				<p:column headerText="Estado" sortBy="#{user.estado}"  width="80" visible="#{userBean.list[5]}" exportable="#{userBean.list[5]}">
 					<h:outputText value="#{user.estado}" />
 				</p:column>
-				<p:column headerText="Rol" sortBy="#{user.role.descripcion}" width="110" visible="#{userBean.list[6]}" exportable="#{userBean.list[6]}">
+				<p:column headerText="Rol" sortBy="#{user.role}" width="110" visible="#{userBean.list[6]}" exportable="#{userBean.list[6]}">
 					<h:outputText value="#{user.role.descripcion}" />
 				</p:column>
 				<p:column headerText="Cuerpo estado" sortBy="#{user.cuerpoEstado.descripcion}" width="110" visible="#{userBean.list[7]}" exportable="#{userBean.list[7]}">
@@ -165,7 +167,7 @@
 				</p:column>
 				
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{fn:length(userBean.userBusqueda.listaUsuarios)} usuarios.
+       				 Resultado de la búsqueda: #{userBean.model.rowCount} usuarios.
     			</f:facet>
 			</p:dataTable>
 		</p:outputPanel>

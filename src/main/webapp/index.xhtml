@@ -23,7 +23,7 @@
 	<h:form id="busquedaAlertas" rendered="#{rolPermitido}">
 	<div id="alertas">
 			<p:outputPanel layout="block" id="panelAlertas">
-				 <p:outputPanel rendered="#{not empty AlertasNotificacionesUsuarioBean.listaAlertas}">
+				 <p:outputPanel>
 	 				<h:commandLink>
 		               <p:graphicImage  value="/images/xls.png" />
 		               <p:dataExporter type="xls" target="tablaAlertas" fileName="listaAlertas"/>
@@ -37,20 +37,15 @@
 		               <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas"/>
 		            </h:commandLink>
 	            </p:outputPanel>
-				 <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.listaAlertas}" 
+				 <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.modelAlertas}" 
 				id="tablaAlertas"
 				paginator="true" 
-				paginatorTemplate="{Anterior} {Pagina} {Posterior}" 
+				rowsPerPageTemplate="5,10,15,20"
+				rows="20"
+				lazy="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
 				emptyMessage="Ninguna">
-            	<f:facet name="{Anterior}">
-					<h:commandLink title="Anterior(es)" action="#{AlertasNotificacionesUsuarioBean.previousAlerta}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono"  />
-				</f:facet>   
-				<f:facet name="{Posterior}">
-					<h:commandLink title="Posterior(es)" action="#{AlertasNotificacionesUsuarioBean.nextAlerta}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" />
-			   </f:facet>
-				<f:facet name="{Pagina}">
-					<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{(AlertasNotificacionesUsuarioBean.pageAlertas.getNumber()+1)} de #{(AlertasNotificacionesUsuarioBean.pageAlertas.getTotalPages())}</span>	 
-				</f:facet>
+            	
 				<f:facet name="header">
 					Alertas
 				</f:facet>
@@ -59,7 +54,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Descripción" sortBy="#{alerta.descripcion}" width="70" visible="#{alertasBean.list[1]}" exportable="#{alertasBean.list[1]}">
+					<p:column headerText="Descripción" sortBy="#{alerta.descripcion}" width="250" visible="#{alertasBean.list[1]}" exportable="#{alertasBean.list[1]}">
 						<h:outputText value="#{alerta.descripcion}" />
 					</p:column>
 					<p:column headerText="Usuario" sortBy="#{alerta.usernameAlerta}" width="70" visible="#{alertasBean.list[2]}" exportable="#{alertasBean.list[2]}">
@@ -81,7 +76,7 @@
 	<h:form id="busquedaNotificaciones" rendered="#{rolPermitido}">	
 	<div id="notificaciones">
 	<p:outputPanel layout="block" id="panelNotificaciones" >
-			<p:outputPanel rendered="#{not empty AlertasNotificacionesUsuarioBean.listaNotificaciones}">
+			<p:outputPanel>
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaNotificaciones" fileName="listaNotificaciones"/>
@@ -95,21 +90,15 @@
 	               <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones"/>
 	            </h:commandLink>
             </p:outputPanel>
-		<p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.listaNotificaciones}" 
-		
-		id="tablaNotificaciones"
-		paginator="true"
-		paginatorTemplate="{Anterior} {Pagina} {Posterior}" 
-		emptyMessage="Ninguna">
-            <f:facet name="{Anterior}">
-				<h:commandLink title="Anterior(es)" action="#{AlertasNotificacionesUsuarioBean.previousNotificacion}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono"   />
-			</f:facet>   
-			<f:facet name="{Posterior}">
-				<h:commandLink title="Posterior(es)" action="#{AlertasNotificacionesUsuarioBean.nextNotificacion}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" />
-		   </f:facet>
-			<f:facet name="{Pagina}">
-				<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{(AlertasNotificacionesUsuarioBean.pageNotificaciones.getNumber()+1)} de #{(AlertasNotificacionesUsuarioBean.pageNotificaciones.getTotalPages())}</span>	 
-			</f:facet>
+		<p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.modelNotificaciones}" 
+				paginator="true" 
+				rowsPerPageTemplate="5,10,15,20"
+				rows="20"
+				lazy="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+				id="tablaNotificaciones" 
+				emptyMessage="Ninguna">
+            
 		      
 			<f:facet name="header">
 				Notificaciones
@@ -119,7 +108,7 @@
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="300" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
+				<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="250" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
 					<h:outputText value="#{notificacion.descripcion}" />
 				</p:column>
 				<p:column headerText="Usuario" sortBy="#{notificacion.usernameNotificacion}" width="70" visible="#{notificacionesBean.list[2]}" exportable="#{notificacionesBean.list[2]}">

@@ -7,7 +7,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,10 +54,7 @@ public class GuiaService implements IGuiaService {
      * 
      */
     
-    @Override
-    public List<Guia> buscarGuiaPorCriteria(GuiaBusqueda busqueda) {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Guia.class);
+    private void creaCriteria(GuiaBusqueda busqueda, Criteria criteria) {
         
         if (busqueda.getFechaDesde() != null) {
             /**
@@ -97,13 +96,7 @@ public class GuiaService implements IGuiaService {
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        criteria.addOrder(Order.desc("fechaAlta"));
         
-        @SuppressWarnings("unchecked")
-        List<Guia> listaGuias = criteria.list();
-        session.close();
-        
-        return listaGuias;
     }
     
     /**
@@ -169,6 +162,41 @@ public class GuiaService implements IGuiaService {
     @Override
     public boolean existeByTipoInspeccion(TipoInspeccion tipo) {
         return guiaRepository.existsByTipoInspeccion(tipo);
+    }
+    
+    @Override
+    public List<Guia> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            GuiaBusqueda busqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Guia.class);
+        creaCriteria(busqueda, criteria);
+        
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
+        
+        @SuppressWarnings("unchecked")
+        List<Guia> listado = criteria.list();
+        session.close();
+        
+        return listado;
+    }
+    
+    @Override
+    public int getCounCriteria(GuiaBusqueda busqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Guia.class);
+        creaCriteria(busqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        session.close();
+        
+        return Math.toIntExact(cnt);
     }
     
 }

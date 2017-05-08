@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,15 +59,16 @@ public class RegistroActividadService implements IRegistroActividadService {
         return regActividadRepository.save(entity);
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     public int getCounCriteria(RegActividadBusqueda regActividadBusqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(RegistroActividad.class);
         creaCriteria(regActividadBusqueda, criteria);
-        List<RegistroActividad> listaSolicitudesDocPrevia = criteria.list();
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
         session.close();
-        return listaSolicitudesDocPrevia.size();
+        
+        return Math.toIntExact(cnt);
     }
     
     @Override

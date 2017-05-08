@@ -9,11 +9,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelCuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -21,7 +23,6 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -46,8 +47,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     
     private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
     
-    private List<CuestionarioPersonalizado> listaCuestionarioPersonalizado;
-    
     private String vieneDe;
     
     @Autowired
@@ -57,13 +56,12 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
     @Autowired
-    private transient IAreaCuestionarioService areaService;
-    
-    @Autowired
     private EnvioCuestionarioBean envioCuestionarioBean;
     
     @Autowired
     transient IRegistroActividadService regActividadService;
+    
+    private LazyModelCuestionarioPersonalizado model;
     
     /**
      * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
@@ -71,8 +69,9 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * @author EZENTIS
      */
     public void buscarCuestionario() {
-        listaCuestionarioPersonalizado = cuestionarioPersonalizadoService
-                .buscarCuestionarioPersonalizadoCriteria(cuestionarioBusqueda);
+        
+        model.setBusqueda(cuestionarioBusqueda);
+        model.load(0, 20, "fechaCreacion", SortOrder.DESCENDING, null);
     }
     
     /**
@@ -98,7 +97,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     public void limpiar() {
         
         cuestionarioBusqueda.limpiar();
-        listaCuestionarioPersonalizado = null;
+        model.setRowCount(0);
         
     }
     
@@ -124,7 +123,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
                 } else {
                     cuestionarioPersonalizadoService.delete(cuestionario);
                 }
-                listaCuestionarioPersonalizado.remove(cuestionario);
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                         "Cuestionario personalizado eliminado con éxito", null);
                 
@@ -179,6 +177,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     @PostConstruct
     public void init() {
         cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
+        model = new LazyModelCuestionarioPersonalizado(cuestionarioPersonalizadoService);
     }
     
 }

@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -57,15 +58,20 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     }
     
     @Override
-    public List<GuiaPersonalizada> buscarGuiaPorCriteria(int firstResult, int maxResults,
+    public List<GuiaPersonalizada> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             GuiaPersonalizadaBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
         consultaCriteriaGuiasPersonalizadas(busqueda, criteria);
-        criteria.setFirstResult(firstResult);
-        criteria.setMaxResults(maxResults);
-        criteria.addOrder(Order.desc("fechaCreacion"));
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
         
         @SuppressWarnings("unchecked")
         List<GuiaPersonalizada> listaGuias = criteria.list();
@@ -75,7 +81,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     }
     
     @Override
-    public long getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda) {
+    public int getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
@@ -85,7 +91,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         
         session.close();
         
-        return cnt;
+        return Math.toIntExact(cnt);
     }
     
     /**
@@ -93,6 +99,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      * @param criteria
      */
     private void consultaCriteriaGuiasPersonalizadas(GuiaPersonalizadaBusqueda busqueda, Criteria criteria) {
+        
         if (busqueda.getFechaDesde() != null) {
             /**
              * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
@@ -119,9 +126,9 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
             criteria.add(Restrictions.sqlRestriction(String.format(Constantes.COMPARADORSINACENTOS, "USERNAME_CREACION",
                     busqueda.getUsuarioCreacion())));
         }
-        
+        criteria.createAlias("guiaPersonalizada.guia", "guia"); // inner join
         if (busqueda.getTipoInspeccion() != null) {
-            criteria.createCriteria("guia").add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
+            criteria.add(Restrictions.eq("guia.tipoInspeccion", busqueda.getTipoInspeccion()));
         }
         if (busqueda.getEstado() != null) {
             if (EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
@@ -131,6 +138,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
             }
         }
         criteria.add(Restrictions.isNull("fechaBaja"));
+        
     }
     
     @Override

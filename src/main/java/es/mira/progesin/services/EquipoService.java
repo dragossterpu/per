@@ -13,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,6 @@ public class EquipoService implements IEquipoService {
     @Autowired
     private SessionFactory sessionFactory;
     
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
     @Override
     public Iterable<Equipo> findAll() {
         return equipoRepository.findAll();
@@ -75,11 +74,9 @@ public class EquipoService implements IEquipoService {
         return miembrosRepository.findByEquipo(equipo);
     }
     
-    @Override
-    @Transactional(readOnly = true)
-    public List<Equipo> buscarEquipoCriteria(EquipoBusqueda equipoBusqueda) {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Equipo.class, "equipo");
+    private void buscarCriteria(EquipoBusqueda equipoBusqueda, Criteria criteria) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
         if (equipoBusqueda.getFechaDesde() != null) {
             /**
              * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
@@ -132,11 +129,7 @@ public class EquipoService implements IEquipoService {
         } else {
             criteria.addOrder(Order.desc("fechaAlta"));
         }
-        @SuppressWarnings("unchecked")
-        List<Equipo> listEquipos = criteria.list();
-        session.close();
         
-        return listEquipos;
     }
     
     @Override
@@ -147,6 +140,41 @@ public class EquipoService implements IEquipoService {
     @Override
     public List<Equipo> findByFechaBajaIsNotNull() {
         return equipoRepository.findByFechaBajaIsNull();
+    }
+    
+    @Override
+    public List<Equipo> buscarEquipoCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            EquipoBusqueda equipoBusqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Equipo.class, "equipo");
+        buscarCriteria(equipoBusqueda, criteria);
+        
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
+        
+        @SuppressWarnings("unchecked")
+        List<Equipo> listado = criteria.list();
+        session.close();
+        
+        return listado;
+    }
+    
+    @Override
+    public int getCounCriteria(EquipoBusqueda busqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Equipo.class, "equipo");
+        buscarCriteria(busqueda, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        session.close();
+        
+        return Math.toIntExact(cnt);
     }
     
 }

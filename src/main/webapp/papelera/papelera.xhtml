@@ -41,10 +41,14 @@
 					            
 				            </p:outputPanel>
 							<p:dataTable id="tablaDocumentos" var="documento"
-								value="#{gestorDocumentalBean.listadoDocumentos}"
+								value="#{gestorDocumentalBean.model}"
 								emptyMessage="No se han encontrado resultados"
-								paginator="true" 
-								paginatorTemplate="{Anterior} {Pagina} {Posterior}">
+								paginator="true"
+								lazy="true"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								rows="20">
+								 <p:ajax event="sort" listener="#{gestorDocumentalBean.onSort}"  update="tablaDocumentos" skipChildren="true"/>
 								 <f:facet name="header">
 								 	<h:outputText value="Documentos"/>
 									
@@ -53,19 +57,7 @@
 				        			 	  <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
 				        			 </p:columnToggler>
 								</f:facet>
-								<f:facet name="{Anterior}">
-									<h:commandLink title="Anterior(es)" actionListener="#{gestorDocumentalBean.previous}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-										<f:ajax execute="@form" render="@form" />
-									</h:commandLink>
-								</f:facet>   
-								<f:facet name="{Posterior}">
-									<h:commandLink title="Posterior(es)" actionListener="#{gestorDocumentalBean.next}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-										<f:ajax execute="@form" render="@form" />
-									</h:commandLink>
-							   	</f:facet>
-								<f:facet name="{Pagina}">
-									<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{gestorDocumentalBean.actualPage} de #{gestorDocumentalBean.numPages}</span>	 
-								</f:facet>
+								
 								<p:column headerText="Fecha alta" sortBy="#{documento.fechaAlta}" style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
 									<h:outputText value="#{documento.fechaAlta}">
 										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>

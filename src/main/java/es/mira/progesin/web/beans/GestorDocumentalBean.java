@@ -3,6 +3,7 @@ package es.mira.progesin.web.beans;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
@@ -20,6 +22,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelDocumentos;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -50,11 +53,6 @@ import lombok.Setter;
 public class GestorDocumentalBean {
     
     /**
-     * Listado de los documentos que se mostrarán en la vista
-     */
-    private List<Documento> listadoDocumentos = new ArrayList<>();
-    
-    /**
      * Objeto de tipo Documento para el alta de nuevos documentos
      */
     private Documento documento;
@@ -78,9 +76,9 @@ public class GestorDocumentalBean {
     /**
      * Mapa que relaciona los documentos y las inspecciones asociadas
      */
-    private Map<Long, String> mapaInspecciones = new HashMap<>();
+    private Map<Long, String> mapaInspecciones;
     
-    private Map<Long, Boolean> mapaEdicion = new HashMap<>();
+    private Map<Long, Boolean> mapaEdicion;
     
     private List<Boolean> list;
     
@@ -102,26 +100,7 @@ public class GestorDocumentalBean {
     @Autowired
     private ITipoDocumentoRepository tipoDocumentoRepository;
     
-    // Para el paginador
-    
-    private static final int MAX_RESULTS_PAGE = 20;
-    
-    private static final int FIRST_PAGE = 1;
-    
-    private long numeroRegistros;
-    
-    private int primerRegistro;
-    
-    private long actualPage;
-    
-    private long numPages;
-    
-    /**
-     * Copia del objeto de búsqueda
-     */
-    private DocumentoBusqueda documentoBusquedaCopia;
-    
-    // paginador
+    private LazyModelDocumentos model;
     
     /**
      * Inicializa el objeto
@@ -133,17 +112,19 @@ public class GestorDocumentalBean {
         for (int i = 0; i <= 5; i++) {
             list.add(Boolean.TRUE);
         }
-        
+        model = new LazyModelDocumentos(documentoService);
+        mapaInspecciones = new LinkedHashMap<Long, String>();
+        mapaEdicion = new HashMap<>();
     }
     
     /**
      * Resetea el objeto de búsqueda, limpia la lista de resultados y establece el booleano de eliminado a false para
-     * indicar que sólo se van a buscr documentos no eliminados
+     * indicar que sólo se van a buscar documentos no eliminados
      */
     public void resetBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
             documentoBusqueda.resetValues();
-            listadoDocumentos.clear();
+            model.setRowCount(0);
             this.vieneDe = null;
         }
         listaInspecciones = new ArrayList<>();
@@ -247,7 +228,7 @@ public class GestorDocumentalBean {
      */
     public void limpiarBusqueda() {
         documentoBusqueda.resetValues();
-        listadoDocumentos.clear();
+        model.setRowCount(0);
     }
     
     /**
@@ -256,13 +237,8 @@ public class GestorDocumentalBean {
      * 
      */
     public void buscaDocumento() {
-        
-        primerRegistro = 0;
-        actualPage = FIRST_PAGE;
-        setNumeroRegistros(getCountRegistros());
-        numPages = getCountPages(numeroRegistros);
-        documentoBusquedaCopia = new DocumentoBusqueda(documentoBusqueda);
-        listadoDocumentos = documentoService.buscarGuiaPorCriteria(0, MAX_RESULTS_PAGE, documentoBusquedaCopia);
+        model.setBusqueda(documentoBusqueda);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
         cargaMapaInspecciones();
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";
@@ -275,54 +251,6 @@ public class GestorDocumentalBean {
      */
     public long getCountRegistros() {
         return documentoService.getCounCriteria(documentoBusqueda);
-    }
-    
-    /**
-     * A partir del número de registros y del tamaño de página devuelve el número de las mismas.
-     * 
-     * @param countRegistros Número de registros totales
-     * @return Número de páginas
-     */
-    public long getCountPages(long countRegistros) {
-        
-        if (countRegistros % MAX_RESULTS_PAGE == 0)
-            return countRegistros / MAX_RESULTS_PAGE;
-        else
-            return countRegistros / MAX_RESULTS_PAGE + 1;
-    }
-    
-    /**
-     * Avanza en uno la paginación de la tabla de resultados
-     */
-    public void next() {
-        
-        if (actualPage < numPages) {
-            
-            primerRegistro += MAX_RESULTS_PAGE;
-            actualPage++;
-            
-            listadoDocumentos = documentoService.buscarGuiaPorCriteria(primerRegistro, MAX_RESULTS_PAGE,
-                    documentoBusquedaCopia);
-            cargaMapaInspecciones();
-        }
-        
-    }
-    
-    /**
-     * Retrocede en uno la paginación de la tabla de resultados
-     * 
-     */
-    public void previous() {
-        
-        if (actualPage > FIRST_PAGE) {
-            
-            primerRegistro -= MAX_RESULTS_PAGE;
-            actualPage--;
-            
-            listadoDocumentos = documentoService.buscarGuiaPorCriteria(primerRegistro, MAX_RESULTS_PAGE,
-                    documentoBusquedaCopia);
-            cargaMapaInspecciones();
-        }
     }
     
     /**
@@ -523,7 +451,7 @@ public class GestorDocumentalBean {
     
     private void cargaMapaInspecciones() {
         
-        for (Documento doc : listadoDocumentos) {
+        for (Documento doc : model.getDatasource()) {
             String cadenaInspecciones = "";
             for (Inspeccion inspe : documentoService.listaInspecciones(doc)) {
                 cadenaInspecciones = cadenaInspecciones.concat(inspe.getNumero().concat("\n"));
@@ -542,4 +470,5 @@ public class GestorDocumentalBean {
         documentoService.vaciarPapelera();
         buscaDocumento();
     }
+    
 }

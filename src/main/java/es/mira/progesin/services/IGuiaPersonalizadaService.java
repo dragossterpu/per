@@ -2,6 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
@@ -66,20 +68,20 @@ public interface IGuiaPersonalizadaService {
      * @return Número de registros que responden a los parámetros
      * 
      */
-    long getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda);
+    int getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda);
     
     /**
      * Busca en base de datos los resultados que se ajustan a los parámetros recibidos en el objeto de tipo
      * GuiaPersonalizadaBusqueda acotados por los parámetros firstResult (primer resultado) y maxresult (máximo de
      * resultados de la búsqueda)
      * 
-     * @param firstResult Primer elemento de la búsqueda
-     * @param maxResults Máximo número de resultados
+     * @param objeto Paginador para hacer la paginación desde el servidor
      * @param busqueda Objeto que contiene los parámetros de búsqueda
      * @return Listado de guías que responden a los parámetros
      * 
      */
-    List<GuiaPersonalizada> buscarGuiaPorCriteria(int firstResult, int maxResults, GuiaPersonalizadaBusqueda busqueda);
+    List<GuiaPersonalizada> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            GuiaPersonalizadaBusqueda busqueda);
     
     /**
      * Comprueba la existencia en base de datos de guías personalizadas cuya guía modelo corresponde a la recibida como

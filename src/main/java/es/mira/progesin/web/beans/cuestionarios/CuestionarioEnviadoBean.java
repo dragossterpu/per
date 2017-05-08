@@ -10,11 +10,13 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -57,8 +59,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda;
     
-    private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusquedaCopia;
-    
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
     
@@ -69,6 +69,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     private Date backupFechaLimiteCuestionario;
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
@@ -89,21 +91,9 @@ public class CuestionarioEnviadoBean implements Serializable {
     transient ApplicationBean applicationBean;
     
     @Autowired
-    private transient ITipoInspeccionService tipoInspeccionService;
+    transient ITipoInspeccionService tipoInspeccionService;
     
-    private static final int MAX_RESULTS_PAGE = 20;
-    
-    private static final int FIRST_PAGE = 1;
-    
-    private long numeroRegistros;
-    
-    private int primerRegistro;
-    
-    private long actualPage;
-    
-    private long numPages;
-    
-    private List<TipoInspeccion> listaTiposInspeccion;
+    private LazyModelCuestionarioEnviado model;
     
     /**
      * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario
@@ -111,14 +101,9 @@ public class CuestionarioEnviadoBean implements Serializable {
      * @author EZENTIS
      */
     public void buscarCuestionario() {
-        primerRegistro = 0;
-        actualPage = FIRST_PAGE;
-        setNumeroRegistros(getCountRegistrosCuestionario());
-        numPages = getCountPagesCuestionario(numeroRegistros);
+        model.setBusqueda(cuestionarioEnviadoBusqueda);
+        model.load(0, 20, "fechaEnvio", SortOrder.DESCENDING, null);
         
-        cuestionarioEnviadoBusquedaCopia = copiaCuestionarioEnviadoBusqueda(cuestionarioEnviadoBusqueda);
-        listaCuestionarioEnvio = cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(0, MAX_RESULTS_PAGE,
-                cuestionarioEnviadoBusquedaCopia);
     }
     
     /**
@@ -142,6 +127,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void limpiar() {
         cuestionarioEnviadoBusqueda.limpiar();
         listaCuestionarioEnvio = null;
+        model.setRowCount(0);
     }
     
     /**
@@ -191,6 +177,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void init() {
         cuestionarioEnviadoBusqueda = new CuestionarioEnviadoBusqueda();
         listaCuestionarioEnvio = new ArrayList<>();
+        model = new LazyModelCuestionarioEnviado(cuestionarioEnvioService);
         listaTiposInspeccion = tipoInspeccionService.buscaTodos();
     }
     
@@ -369,90 +356,6 @@ public class CuestionarioEnviadoBean implements Serializable {
                     "Se ha producido un error al modificar el cuestionario, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
-    }
-    
-    /**
-     * Cargar la página siguiente de resultados de la búsqueda
-     * 
-     * @author EZENTIS
-     */
-    public void nextCuestionario() {
-        
-        if (actualPage < numPages) {
-            
-            primerRegistro += MAX_RESULTS_PAGE;
-            actualPage++;
-            
-            listaCuestionarioEnvio = cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, cuestionarioEnviadoBusquedaCopia);
-        }
-        
-    }
-    
-    /**
-     * Cargar la página anterior de resultados de la búsqueda
-     * 
-     * @author EZENTIS
-     */
-    public void previousCuestionario() {
-        
-        if (actualPage > FIRST_PAGE) {
-            
-            primerRegistro -= MAX_RESULTS_PAGE;
-            actualPage--;
-            
-            listaCuestionarioEnvio = cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(primerRegistro,
-                    MAX_RESULTS_PAGE, cuestionarioEnviadoBusquedaCopia);
-        }
-    }
-    
-    /**
-     * @return devuelve el número de registros de la consulta criteria.
-     * @author EZENTIS
-     * 
-     */
-    public long getCountRegistrosCuestionario() {
-        return cuestionarioEnvioService.getCountCuestionarioCriteria(cuestionarioEnviadoBusqueda);
-    }
-    
-    /**
-     * Devuelve el número de páginas de la consulta.
-     * 
-     * @param countRegistros
-     * @return número de páginas.
-     * @author EZENTIS
-     */
-    public long getCountPagesCuestionario(long countRegistros) {
-        
-        if (countRegistros % MAX_RESULTS_PAGE == 0)
-            return countRegistros / MAX_RESULTS_PAGE;
-        else
-            return countRegistros / MAX_RESULTS_PAGE + 1;
-    }
-    
-    /**
-     * Copia un objeto de tipo CuestionarioEnviadoBusqueda en otro para mantener los parámetros de búsqueda.
-     * 
-     * @return cuestCopia Copia del objeto. C
-     * @param cuestionario Objeto a copiar.
-     * @author EZENTIS
-     */
-    public CuestionarioEnviadoBusqueda copiaCuestionarioEnviadoBusqueda(CuestionarioEnviadoBusqueda cuestionario) {
-        CuestionarioEnviadoBusqueda cuestCopia = new CuestionarioEnviadoBusqueda();
-        cuestCopia.setAmbitoInspeccion(cuestionario.getAmbitoInspeccion());
-        cuestCopia.setEstado(cuestionario.getEstado());
-        cuestCopia.setFechaDesde(cuestionario.getFechaDesde());
-        cuestCopia.setFechaHasta(cuestionario.getFechaHasta());
-        cuestCopia.setFechaLimiteRespuesta(cuestionario.getFechaLimiteRespuesta());
-        cuestCopia.setNombreUnidad(cuestionario.getNombreUnidad());
-        cuestCopia.setNumeroInspeccion(cuestionario.getNumeroInspeccion());
-        cuestCopia.setTipoInspeccion(cuestionario.getTipoInspeccion());
-        cuestCopia.setNombreEquipo(cuestionario.getNombreEquipo());
-        cuestCopia.setUsernameEnvio(cuestionario.getUsernameEnvio());
-        cuestCopia.setNombreCuestionario(cuestionario.getNombreCuestionario());
-        cuestCopia.setModeloCuestionarioSeleccionado(cuestionario.getModeloCuestionarioSeleccionado());
-        
-        return cuestCopia;
     }
     
 }

@@ -2,6 +2,8 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -58,7 +60,14 @@ public interface IUserService {
      * @param userBusqueda
      * @return lista de usuarios
      */
-    List<User> buscarUsuarioCriteria(UserBusqueda userBusqueda);
+    List<User> buscarUsuarioCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            UserBusqueda userBusqueda);
+    
+    /**
+     * @param userBusqueda
+     * @return
+     */
+    int contarRegistros(UserBusqueda userBusqueda);
     
     /**
      * @param cuerpo

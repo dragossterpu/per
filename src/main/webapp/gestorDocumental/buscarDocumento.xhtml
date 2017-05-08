@@ -68,10 +68,10 @@
 					</div>	
 					
 					<p:outputPanel layout="block" id="panelDocumentos" >
-						<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty gestorDocumentalBean.listadoDocumentos}">
+						<p:outputPanel styleClass="mensajeSinResultados" rendered="#{gestorDocumentalBean.model.rowCount eq 0}">
 							No existe ningún resultado que cumpla los parámetros de su búsqueda.
 						</p:outputPanel>
-						<p:outputPanel rendered="#{not empty gestorDocumentalBean.listadoDocumentos}">
+						<p:outputPanel rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
 			 				<h:commandLink>
 				               <p:graphicImage  value="/images/xls.png" />
 				               <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos"/>
@@ -91,11 +91,15 @@
 				            
 			            </p:outputPanel>
 						<p:dataTable id="tablaDocumentos" var="documento"
-							rendered="#{not empty gestorDocumentalBean.listadoDocumentos}"
-							value="#{gestorDocumentalBean.listadoDocumentos}"
+							value="#{gestorDocumentalBean.model}"
 							emptyMessage="No se han encontrado resultados"
+							lazy="true"
 							paginator="true"
-							paginatorTemplate="{Anterior} {Pagina} {Posterior}">
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15,20"
+							rows="20"
+							rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
+							
 							 <f:facet name="header">
 								Documentos
 								 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
@@ -103,19 +107,7 @@
 			        			 	  <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
 			        			 </p:columnToggler>
 							</f:facet>
-							 <f:facet name="{Anterior}">
-								<h:commandLink title="Anterior(es)" actionListener="#{gestorDocumentalBean.previous}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-									<f:ajax execute="@form" render="@form" />
-								</h:commandLink>
-							</f:facet>   
-							<f:facet name="{Posterior}">
-								<h:commandLink title="Posterior(es)" actionListener="#{gestorDocumentalBean.next}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-									<f:ajax execute="@form" render="@form" />
-								</h:commandLink>
-						   	</f:facet>
-							<f:facet name="{Pagina}">
-								<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{gestorDocumentalBean.actualPage} de #{gestorDocumentalBean.numPages}</span>	 
-							</f:facet>  
+							 
 							
 							<p:column headerText="Fecha" sortBy="#{documento.fechaAlta}"  style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
 								<h:outputText value="#{documento.fechaAlta}">

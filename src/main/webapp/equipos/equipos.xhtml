@@ -88,11 +88,10 @@
 			<p:separator styleClass="separator ui-state-disabled" />
 
 			<p:outputPanel layout="block" id="panelEquipos">
-				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty equiposBean.equipoBusqueda.listaEquipos}">
+				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{equiposBean.model.rowCount eq 0}">
 					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
-				<p:outputPanel
-					rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
+				<p:outputPanel rendered="#{equiposBean.model.rowCount ne 0}">
 					<h:commandLink>
 						<p:graphicImage value="/images/xls.png" />
 						<p:dataExporter type="xls" target="tablaEquipos"
@@ -110,10 +109,15 @@
 					</h:commandLink>
 				</p:outputPanel>
 				<p:dataTable var="equipo"
-					value="#{equiposBean.equipoBusqueda.listaEquipos}" rows="20"
-					id="tablaEquipos" draggableColumns="true" paginator="true"
-					resizableColumns="true"
-					rendered="#{not empty equiposBean.equipoBusqueda.listaEquipos}">
+							value="#{equiposBean.model}" 
+							rowsPerPageTemplate="5,10,15,20"
+						 	rows="20"
+						 	lazy="true"
+						 	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+							id="tablaEquipos" draggableColumns="true" paginator="true"
+							resizableColumns="true"
+							rendered="#{equiposBean.model.rowCount ne 0}"
+							rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
 					<f:facet name="header">
 						Equipos	
 					</f:facet>
@@ -176,7 +180,7 @@
 					</p:column>
 
 					<f:facet name="footer">
-	       				 Resultado de la búsqueda: #{fn:length(equiposBean.equipoBusqueda.listaEquipos)} equipos.
+	       				 Resultado de la búsqueda: #{equiposBean.model.rowCount} equipos.
 	    			</f:facet>
 
 				</p:dataTable>

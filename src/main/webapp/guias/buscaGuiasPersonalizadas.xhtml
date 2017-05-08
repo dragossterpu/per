@@ -60,10 +60,10 @@
 			</h:commandLink>
       	</div>	
 		<p:outputPanel layout="block" id="panelGuias">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{guiaPersonalizadaBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}">
+			<p:outputPanel rendered="#{guiaPersonalizadaBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaGuias" fileName="listaGuias"/>
@@ -77,28 +77,17 @@
 	               <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias"/>
 	            </h:commandLink>
             </p:outputPanel>
- 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}"  rows="20" id="tablaGuias" 
- 						paginator="true" 
-                        paginatorTemplate="{Anterior} {Pagina} {Posterior} {RowsPerPageDropdown}" 
+ 			<p:dataTable  var="guia" value="#{guiaPersonalizadaBean.model}"  id="tablaGuias" 
+ 						rowsPerPageTemplate="5,10,15,20"
+						rows="20"  
+						lazy="true"
+						paginator="true" 
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                         resizableColumns="true"
                         draggableColumns="true"
-                  	    rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizadaBusqueda.listaGuias}" 
+                  	    rendered="#{guiaPersonalizadaBean.model.rowCount ne 0}" 
                   	    rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">
-                  	    
-                 <f:facet name="{Anterior}">
-					<h:commandLink title="Anterior(es)" actionListener="#{guiaPersonalizadaBean.previousGuia}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-						<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-				</f:facet>   
-				<f:facet name="{Posterior}">
-					<h:commandLink title="Posterior(es)" actionListener="#{guiaPersonalizadaBean.nextGuia}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-						<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-			   	</f:facet>
-				<f:facet name="{Pagina}">
-					<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{guiaPersonalizadaBean.actualPage} de #{guiaPersonalizadaBean.numPages}</span>	 
-				</f:facet>  
-                        
+      
 				 <f:facet name="header">
 					Guias
 					 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
@@ -114,13 +103,13 @@
 				<p:column headerText="Usuario" sortBy="#{guia.usernameCreacion}" width="50" visible="#{guiaPersonalizadaBean.list[1]}" exportable="#{guiaPersonalizadaBean.list[1]}">
 					<h:outputText value="#{guia.usernameCreacion}" />
 				</p:column>
-				<p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion.descripcion}"  width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
+				<p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion}"  width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
 					<h:outputText value="#{guia.guia.tipoInspeccion.descripcion}" />
 				</p:column>
 				<p:column headerText="Modelo" sortBy="#{guia.guia.nombre}"  width="100" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
 					<h:outputText value="#{guia.guia.nombre}" />
 				</p:column>
-				<p:column headerText="Inspeccion" sortBy="#{guia.inspeccion.numero}"  width="100" visible="#{guiaPersonalizadaBean.list[4]}" exportable="#{guiaPersonalizadaBean.list[4]}" >
+				<p:column headerText="Inspeccion" sortBy="#{guia.inspeccion}"  width="100" visible="#{guiaPersonalizadaBean.list[4]}" exportable="#{guiaPersonalizadaBean.list[4]}" >
 					<h:outputText value="#{guia.inspeccion.numero}" rendered="#{not empty guia.inspeccion}"/>
 					<p:commandButton title="Asignar" actionListener="#{guiaPersonalizadaBean.asignar(guia)}" rendered="#{empty guia.inspeccion and empty guia.fechaAnulacion}" update="tablaGuias"/>
 				</p:column>
@@ -144,7 +133,7 @@
 					</p:commandButton>
 				</p:column>
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{guiaPersonalizadaBean.numeroRegistros} guías.
+       				 Resultado de la búsqueda: #{guiaPersonalizadaBean.model.rowCount} guías.
     			</f:facet>
 			</p:dataTable>
 		</p:outputPanel>

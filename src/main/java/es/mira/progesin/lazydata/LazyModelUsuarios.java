@@ -7,9 +7,9 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
-import es.mira.progesin.services.ISolicitudDocumentacionService;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.services.IUserService;
+import es.mira.progesin.web.beans.UserBusqueda;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,24 +23,24 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class LazyModelSolicitudes extends LazyDataModel<SolicitudDocumentacionPrevia> implements Serializable {
+public class LazyModelUsuarios extends LazyDataModel<User> implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private SolicitudDocPreviaBusqueda busqueda;
+    private UserBusqueda busqueda;
     
-    private transient ISolicitudDocumentacionService servicio;
+    private transient IUserService servicio;
     
-    private List<SolicitudDocumentacionPrevia> datasource;
+    private List<User> datasource;
     
     /**
      * Constructor que recibe un SessionFactory
      * 
      * @param servicio Servicio de SolicitudDocumentacionPrevia
      */
-    public LazyModelSolicitudes(ISolicitudDocumentacionService servicio) {
+    public LazyModelUsuarios(IUserService servicio) {
         this.servicio = servicio;
-        this.busqueda = new SolicitudDocPreviaBusqueda();
+        this.busqueda = new UserBusqueda();
     }
     
     /**
@@ -54,19 +54,19 @@ public class LazyModelSolicitudes extends LazyDataModel<SolicitudDocumentacionPr
      * @param filters mapa de filtros. Este valor no se utiliza en esta sobreescritura.
      * @return lista de registros que corresponden a los criterios de búsqueda
      */
+    // @Override
     @Override
-    public List<SolicitudDocumentacionPrevia> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+    public List<User> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {
-        List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = null;
+        List<User> listado = null;
         if (busqueda != null) {
-            this.setRowCount(servicio.getCountSolicitudDocPreviaCriteria(busqueda));
-            listaSolicitudesDocPrevia = servicio.buscarSolicitudDocPreviaCriteria(first, pageSize, sortField, sortOrder,
-                    busqueda);
-            this.setDatasource(listaSolicitudesDocPrevia);
+            this.setRowCount(servicio.contarRegistros(busqueda));
+            listado = servicio.buscarUsuarioCriteria(first, pageSize, sortField, sortOrder, busqueda);
+            this.setDatasource(listado);
         } else {
             this.setRowCount(0);
         }
-        return listaSolicitudesDocPrevia;
+        return listado;
         
     }
     

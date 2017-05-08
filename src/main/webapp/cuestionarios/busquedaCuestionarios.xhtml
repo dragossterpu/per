@@ -111,10 +111,10 @@
 		<p:separator styleClass="separator ui-state-disabled" />
 		
 		<p:outputPanel layout="block" id="panelCuestionarios">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{cuestionarioEnviadoBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
+			<p:outputPanel rendered="#{cuestionarioEnviadoBean.model.rowCount ne 0}">
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
@@ -128,24 +128,13 @@
 	               <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados"/>
 	            </h:commandLink>
             </p:outputPanel>
- 			<p:dataTable  var="cuestionario" value="#{cuestionarioEnviadoBean.listaCuestionarioEnvio}"  rows="20" id="tablaCuestionarios"
+ 			<p:dataTable  var="cuestionario" value="#{cuestionarioEnviadoBean.model}"  rowsPerPageTemplate="5,10,15,20"
+						 rows="20" id="tablaCuestionarios"
                          paginator="true" 
-                         paginatorTemplate="{Anterior} {Pagina} {Posterior}"
-                         rendered="#{not empty cuestionarioEnviadoBean.listaCuestionarioEnvio}">
-                         
-                 <f:facet name="{Anterior}">
-					<h:commandLink title="Anterior(es)" actionListener="#{cuestionarioEnviadoBean.previousCuestionario}" styleClass="ui-state-default ui-corner-all fa fa-angle-double-left ui-CommandLink-icono" >
-						<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-				</f:facet>   
-				<f:facet name="{Posterior}">
-					<h:commandLink title="Posterior(es)" actionListener="#{cuestionarioEnviadoBean.nextCuestionario}"  styleClass="ui-state-default ui-corner-all fa fa-angle-double-right ui-CommandLink-icono" >
-						<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-			   	</f:facet>
-				<f:facet name="{Pagina}">
-					<span class="ui-paginator-page ui-state-default ui-state-active ui-corner-all">Página #{cuestionarioEnviadoBean.actualPage} de #{cuestionarioEnviadoBean.numPages}</span>	 
-				</f:facet>
+                         lazy="true"
+						 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rendered="#{cuestionarioEnviadoBean.model.rowCount ne 0}">
+                       
 				
 		 		<f:facet name="header">
 					Cuestionarios enviados
@@ -169,7 +158,7 @@
 				<p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" width="100">
 					<h:outputText value="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" />
 				</p:column>
-				<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" width="100">
+				<p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario}" width="100">
 					<h:outputText value="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
 				</p:column>
 				<p:column headerText="Fecha envío" sortBy="#{cuestionario.fechaEnvio}" width="70" >
@@ -214,7 +203,7 @@
 				</p:column>
 				
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{cuestionarioEnviadoBean.numeroRegistros} cuestionarios.
+       				 Resultado de la búsqueda: #{cuestionarioEnviadoBeanmodel.rowCount} cuestionarios.
     			</f:facet>
 			</p:dataTable>
 

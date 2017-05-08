@@ -64,10 +64,10 @@
 
 		</div>	
 		<p:outputPanel layout="block" id="panelGuias">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{empty guiaBean.busqueda.listaGuias}">
+			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{guiaBean.model.rowCount eq 0}" >
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{not empty guiaBean.busqueda.listaGuias}">
+			<p:outputPanel rendered="#{guiaBean.model.rowCount ne 0}" >
  				<h:commandLink>
 	               <p:graphicImage  value="/images/xls.png" />
 	               <p:dataExporter type="xls" target="tablaGuias" fileName="listaGuias"/>
@@ -81,14 +81,16 @@
 	               <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias"/>
 	            </h:commandLink>
             </p:outputPanel>
- 			<p:dataTable  var="guia" value="#{guiaBean.busqueda.listaGuias}"  rows="10" id="tablaGuias" 
+ 			<p:dataTable  var="guia" id="tablaGuias" value="#{guiaBean.model}"  
+ 						rowsPerPageTemplate="5,10,15,20"
+						rows="20"  
+						lazy="true"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
  						draggableColumns="true"
                         paginator="true" 
                         resizableColumns="true"
-                        rendered="#{not empty guiaBean.busqueda.listaGuias}" 
-                        rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}"
-                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                  		rowsPerPageTemplate="5,10,15,20,25">
+                        rendered="#{guiaBean.model.rowCount ne 0}" 
+                        rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">
                         
 				 <f:facet name="header">
 					Guias
@@ -105,7 +107,7 @@
 				<p:column headerText="Usuario" sortBy="#{guia.usernameAlta}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
 					<h:outputText value="#{guia.usernameAlta}" />
 				</p:column>
-				<p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion.descripcion}"  width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
+				<p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion}"  width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
 					<h:outputText value="#{guia.tipoInspeccion.descripcion}" />
 				</p:column>
 				<p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
@@ -132,7 +134,7 @@
 				
 				
 				<f:facet name="footer">
-       				 Resultado de la búsqueda: #{fn:length(guiaBean.busqueda.listaGuias)} guías.
+       				 Resultado de la búsqueda: #{guiaBean.model.rowCount} guías.
     			</f:facet>
 			</p:dataTable>
 		</p:outputPanel>

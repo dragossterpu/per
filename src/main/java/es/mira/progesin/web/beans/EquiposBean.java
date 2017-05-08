@@ -10,12 +10,14 @@ import javax.faces.application.FacesMessage;
 
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelEquipos;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
@@ -77,6 +79,8 @@ public class EquiposBean implements Serializable {
     private TipoEquipo tipoEquipo;
     
     private transient Iterable<TipoEquipo> tiposEquipo;
+    
+    private LazyModelEquipos model;
     
     @Autowired
     transient ITipoEquipoService tipoEquipoService;
@@ -176,6 +180,7 @@ public class EquiposBean implements Serializable {
     public void limpiarBusqueda() {
         equipoBusqueda.resetValues();
         setEstado(null);
+        model.setRowCount(0);
     }
     
     /**
@@ -185,8 +190,8 @@ public class EquiposBean implements Serializable {
      */
     public void buscarEquipo() {
         
-        List<Equipo> listaEquipos = equipoService.buscarEquipoCriteria(equipoBusqueda);
-        equipoBusqueda.setListaEquipos(listaEquipos);
+        model.setBusqueda(equipoBusqueda);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /**
@@ -484,7 +489,7 @@ public class EquiposBean implements Serializable {
         for (int i = 0; i <= NUMEROCOLUMNASLISTADOEQUIPOS; i++) {
             columnasVisibles.add(Boolean.TRUE);
         }
-        
+        model = new LazyModelEquipos(equipoService);
     }
     
 }

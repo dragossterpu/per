@@ -14,8 +14,15 @@
 
 	<div id="listadoDocumentacion">
 <h:form id="form">
-		<p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" rows="20" paginator="true" resizableColumns="true"
-		value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}"  onkeypress="if (event.keyCode == 13) {return false; }">
+		<p:dataTable id="tablaDocumentacion" 
+					var="tipoDocumentacion" 
+					rowsPerPageTemplate="5,10,15,20"
+					rows="20" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginator="true" 
+					lazy="true"
+					resizableColumns="true"
+					value="#{tipoDocumentacionBean.model}" editable="#{esJefeInspeccionesApoyo}"  onkeypress="if (event.keyCode == 13) {return false; }">
 					<p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}"
 						update=":form:msgs" />
 

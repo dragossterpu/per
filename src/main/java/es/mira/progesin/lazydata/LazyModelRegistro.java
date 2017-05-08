@@ -6,8 +6,6 @@ import java.util.Map;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -22,10 +20,9 @@ import lombok.Setter;
  * @author Ezentis
  *
  */
-@Component
+
 @Setter
 @Getter
-@Scope("session")
 public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -34,7 +31,7 @@ public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implemen
     
     private List<RegistroActividad> datasource;
     
-    private IRegistroActividadService registroActividadService;
+    private transient IRegistroActividadService registroActividadService;
     
     /**
      * 

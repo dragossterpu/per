@@ -8,12 +8,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.lazydata.LazyModelGuias;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
@@ -68,6 +70,8 @@ public class GuiaBean {
     
     private static final String LAGUIA = "La guía '";
     
+    private LazyModelGuias model;
+    
     @Autowired
     private WordGenerator wordGenerator;
     
@@ -92,9 +96,8 @@ public class GuiaBean {
      * 
      *********************************************************/
     public void buscarGuia() {
-        
-        List<Guia> listaGuias = guiaService.buscarGuiaPorCriteria(busqueda);
-        busqueda.setListaGuias(listaGuias);
+        model.setBusqueda(busqueda);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /*********************************************************
@@ -120,6 +123,7 @@ public class GuiaBean {
     
     public void limpiarBusqueda() {
         busqueda.resetValues();
+        model.setRowCount(0);
     }
     
     /*********************************************************
@@ -233,6 +237,7 @@ public class GuiaBean {
         for (int i = 0; i <= 4; i++) {
             list.add(Boolean.TRUE);
         }
+        model = new LazyModelGuias(guiaService);
     }
     
     /*********************************************************
@@ -448,7 +453,7 @@ public class GuiaBean {
                 regActividadService.altaRegActividad("Se ha anulado la guía '".concat(guiaAnular.getNombre()),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            buscarGuia();
+            // buscarGuia();arGuia();
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -470,7 +475,7 @@ public class GuiaBean {
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            buscarGuia();
+            // buscarGuia();
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -496,7 +501,7 @@ public class GuiaBean {
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            buscarGuia();
+            // buscarGuia();
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -517,7 +522,7 @@ public class GuiaBean {
                         LAGUIA.concat(guiaActivar.getNombre().concat("' ha sido activada")),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            buscarGuia();
+            // buscarGuia();
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }

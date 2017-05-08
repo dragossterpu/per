@@ -3,15 +3,27 @@ package es.mira.progesin.services;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.repositories.INotificacionRepository;
 
 /*********************************************************
@@ -32,6 +44,9 @@ public class NotificacionService implements INotificacionService {
     
     @Autowired
     private IRegistroActividadService registroActividadService;
+    
+    @Autowired
+    private SessionFactory sessionFactory;
     
     /*********************************************************
      * 
@@ -267,4 +282,50 @@ public class NotificacionService implements INotificacionService {
         
     }
     
+    @Override
+    public List<Notificacion> buscarPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            String usuario) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Notificacion.class, "notificacion");
+        creaCriteria(usuario, criteria);
+        
+        criteria.setFirstResult(first);
+        criteria.setMaxResults(pageSize);
+        
+        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
+            criteria.addOrder(Order.asc(sortField));
+        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
+            criteria.addOrder(Order.desc(sortField));
+        }
+        
+        @SuppressWarnings("unchecked")
+        List<Notificacion> listado = criteria.list();
+        session.close();
+        
+        return listado;
+    }
+    
+    @Override
+    public int getCounCriteria(String usuario) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Notificacion.class, "notificacion");
+        creaCriteria(usuario, criteria);
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
+        session.close();
+        
+        return Math.toIntExact(cnt);
+    }
+    
+    private void creaCriteria(String usuario, Criteria criteria) {
+        
+        DetachedCriteria usuarioMensaje = DetachedCriteria.forClass(AlertasNotificacionesUsuario.class, "mensaje");
+        usuarioMensaje.add(Restrictions.ilike("mensaje.usuario", usuario, MatchMode.ANYWHERE));
+        usuarioMensaje.add(Restrictions.sqlRestriction("TIPO_MENSAJE = '" + TipoMensajeEnum.NOTIFICACION + "'"));
+        usuarioMensaje.add(Restrictions.eqProperty("notificacion.idNotificacion", "mensaje.idMensaje"));
+        usuarioMensaje.setProjection(Property.forName("mensaje.idMensaje"));
+        
+        criteria.add(Property.forName("notificacion.idNotificacion").in(usuarioMensaje));
+        
+    }
 }

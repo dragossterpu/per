@@ -3,6 +3,8 @@ package es.mira.progesin.services;
 import java.io.Serializable;
 import java.util.List;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -38,9 +40,9 @@ public interface ICuestionarioEnvioService extends Serializable {
     
     List<CuestionarioEnvio> findNoCumplimentados();
     
-    List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int firstResult, int maxResults,
-            CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
+    List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int first, int pageSize, String sortField,
+            SortOrder sortOrder, CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
     
-    long getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
+    int getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
     
 }
