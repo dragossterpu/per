@@ -21,7 +21,7 @@ BEGIN
 		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
 		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
 		DBMS_LOB.CLOSE(l_bfile);
-	insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, seq_documentosblob.currval,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_C.xlsx');
+	insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (seq_documentos.nextval, seq_documentosblob.currval,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_C.xlsx', SYSDATE, 'system',18);
 	insert into parametros(seccion, clave, valor) values ('plantillasGC','Comandancia', seq_documentos.currval);
 	
 	INSERT INTO documentos_blob (id, fichero) VALUES (seq_documentosblob.nextval, empty_blob()) RETURN fichero INTO l_blob;
@@ -29,7 +29,7 @@ BEGIN
 		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
 		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
 		DBMS_LOB.CLOSE(l_bfile);
-	insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, seq_documentosblob.currval,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_CIA.xlsx');
+	insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (seq_documentos.nextval, seq_documentosblob.currval,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_CIA.xlsx', SYSDATE, 'system',18);
 	insert into parametros(seccion, clave, valor) values ('plantillasGC','Compañía', seq_documentos.currval);
 		
 	INSERT INTO documentos_blob (id, fichero) VALUES (seq_documentosblob.nextval, empty_blob()) RETURN fichero INTO l_blob;
@@ -37,7 +37,7 @@ BEGIN
 		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
 		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
 		DBMS_LOB.CLOSE(l_bfile);
-	insert into documentos (id, id_fichero, tipo_contenido, nombre) values (seq_documentos.nextval, seq_documentosblob.currval,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_Z.xlsx');
+	insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (seq_documentos.nextval, seq_documentosblob.currval,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_Z.xlsx', SYSDATE, 'system',18);
 	insert into parametros(seccion, clave, valor) values ('plantillasGC','Zona', seq_documentos.currval);
 	
 	EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';

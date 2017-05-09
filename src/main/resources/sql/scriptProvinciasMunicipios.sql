@@ -1,4 +1,21 @@
---insert provincias
+WHENEVER OSERROR EXIT FAILURE ROLLBACK
+WHENEVER SQLERROR EXIT FAILURE ROLLBACK
+
+prompt =========================================================================
+prompt
+prompt    SCRIPT CARGA PROVINCIAS Y MUNICIPIOS
+prompt
+prompt    Autor: Ezentis
+prompt
+prompt    Fecha creación: 08/05/2017
+prompt =========================================================================
+
+
+prompt =========================================================================
+prompt + Tarea1
+prompt =========================================================================
+prompt Ejecutando carga de provincias...
+
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('1',2,'0'), 'Álava (Vitoria)', 'VI');
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('2',2,'0'), 'Albacete', 'AB');
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('3',2,'0'), 'Alicante', 'A');
@@ -54,7 +71,10 @@ insert into provincias (codigo, provincia,codigo_mn) values (lpad('52',2,'0'), '
 commit;
 
 
---insert municipios
+prompt =========================================================================
+prompt + Tarea2
+prompt =========================================================================
+prompt Ejecutando carga de municipio...
 
 
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALEGRÍA-DULANTZI', lpad('1', 2, '0'));
@@ -557,6 +577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MIRUEÑA DE LOS INFANZONES', lpad('5', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MOMBELTRÁN', lpad('5', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONSALUPE', lpad('5', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MORALEJA DE MATACABRAS', lpad('5', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MUÑANA', lpad('5', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MUÑICO', lpad('5', 2, '0'));
@@ -1036,8 +1057,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MANLLEU', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MANRESA', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MARGANELL', lpad('8', 2, '0'));
-commit;
-
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MARTORELL', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MARTORELLES', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MASIES DE RODA (LES)', lpad('8', 2, '0'));
@@ -1058,6 +1077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTGAT', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTMAJOR', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTMANEU', lpad('8', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTMELÓ', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTORNÈS DEL VALLÈS', lpad('8', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTSENY', lpad('8', 2, '0'));
@@ -1557,6 +1577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VID DE BUREBA (LA)', lpad('9', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VID Y BARRIOS (LA)', lpad('9', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILEÑA', lpad('9', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLADIEGO', lpad('9', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLAESCUSA DE ROA', lpad('9', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLAESCUSA LA SOMBRÍA', lpad('9', 2, '0'));
@@ -2056,6 +2077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MANZANARES', lpad('13', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MEMBRILLA', lpad('13', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MESTANZA', lpad('13', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MIGUELTURRA', lpad('13', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTIEL', lpad('13', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MORAL DE CALATRAVA', lpad('13', 2, '0'));
@@ -2131,8 +2153,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'FUENTE LA LANCHA', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'FUENTE OBEJUNA', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'FUENTE PALMERA', lpad('14', 2, '0'));
-commit;
-
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'FUENTE-TÓJAR', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'GRANJUELA (LA)', lpad('14', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'GUADALCÁZAR', lpad('14', 2, '0'));
@@ -2557,6 +2577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CELLERA DE TER (LA)', lpad('17', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CELRÀ', lpad('17', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CERVIÀ DE TER', lpad('17', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CISTELLA', lpad('17', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'COLERA', lpad('17', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'COLOMERS', lpad('17', 2, '0'));
@@ -3056,6 +3077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MIRALRÍO', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MOCHALES', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MOHERNANDO', lpad('19', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MOLINA DE ARAGÓN', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONASTERIO', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONDÉJAR', lpad('19', 2, '0'));
@@ -3079,8 +3101,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PEDREGAL (EL)', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PEÑALÉN', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PEÑALVER', lpad('19', 2, '0'));
-commit;
-
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PERALEJOS DE LAS TRUCHAS', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PERALVECHE', lpad('19', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PINILLA DE JADRAQUE', lpad('19', 2, '0'));
@@ -3557,6 +3577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLANUEVA DE SIGENA', lpad('22', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'YEBRA DE BASA', lpad('22', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'YÉSERO', lpad('22', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ZAIDÍN', lpad('22', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALBANCHEZ DE MÁGINA', lpad('23', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALCALÁ LA REAL', lpad('23', 2, '0'));
@@ -4056,6 +4077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SORT', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SOSES', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SUDANELL', lpad('25', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SUNYER', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'TALARN', lpad('25', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'TALAVERA', lpad('25', 2, '0'));
@@ -4555,6 +4577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CANILLAS DE ALBAIDA', lpad('29', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CAÑETE LA REAL', lpad('29', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CARRATRACA', lpad('29', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CARTAJIMA', lpad('29', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CÁRTAMA', lpad('29', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CASABERMEJA', lpad('29', 2, '0'));
@@ -5054,6 +5077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'GIJÓN', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'GOZÓN', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'GRADO', lpad('33', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'GRANDAS DE SALIME', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'IBIAS', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ILLANO', lpad('33', 2, '0'));
@@ -5102,8 +5126,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'TINEO', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VALDÉS', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VEGADEO', lpad('33', 2, '0'));
-commit;
-
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLANUEVA DE OSCOS', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLAVICIOSA', lpad('33', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'VILLAYÓN', lpad('33', 2, '0'));
@@ -5555,6 +5577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'LINARES DE RIOFRÍO', lpad('37', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'LUMBRALES', lpad('37', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MACHACÓN', lpad('37', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MACOTERA', lpad('37', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MADROÑAL', lpad('37', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MAÍLLO (EL)', lpad('37', 2, '0'));
@@ -6054,6 +6077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PEDRAZA', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PELAYOS DEL ARROYO', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PEROSILLO', lpad('40', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PINAREJOS', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PINARNEGRILLO', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'PRADALES', lpad('40', 2, '0'));
@@ -6076,8 +6100,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SAN MARTÍN Y MUDRIÁN', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SAN MIGUEL DE BERNUY', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SAN PEDRO DE GAÍLLOS', lpad('40', 2, '0'));
-commit;
-
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SANCHONUÑO', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SANGARCÍA', lpad('40', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SANTA MARÍA LA REAL DE NIEVA', lpad('40', 2, '0'));
@@ -6555,6 +6577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SANTA BÀRBARA', lpad('43', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SANTA COLOMA DE QUERALT', lpad('43', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SANTA OLIVA', lpad('43', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SARRAL', lpad('43', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SAVALLÀ DEL COMTAT', lpad('43', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'SECUITA (LA)', lpad('43', 2, '0'));
@@ -7054,6 +7077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALCUBLAS', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALCÚDIA DE CRESPINS (L'')', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALCÚDIA (L'')', lpad('46', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALDAIA', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALFAFAR', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALFARA DE ALGIMIA', lpad('46', 2, '0'));
@@ -7104,8 +7128,6 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BENISANÓ', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BENISSODA', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BENISUERA', lpad('46', 2, '0'));
-commit;
-
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BÉTERA', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BICORP', lpad('46', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BOCAIRENT', lpad('46', 2, '0'));
@@ -7555,6 +7577,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BERRIATUA', lpad('48', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BERRIZ', lpad('48', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BILBAO', lpad('48', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'BUSTURIA', lpad('48', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'DERIO', lpad('48', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'DIMA', lpad('48', 2, '0'));
@@ -8054,6 +8077,7 @@ insert into municipios (id, name,code_province) values (seq_municipio.nextval, '
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONEGRILLO', lpad('50', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONEVA', lpad('50', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONREAL DE ARIZA', lpad('50', 2, '0'));
+commit;
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTERDE', lpad('50', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MONTÓN', lpad('50', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'MORATA DE JALÓN', lpad('50', 2, '0'));
