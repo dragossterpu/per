@@ -89,7 +89,6 @@ public class UserService implements IUserService {
     
     private void creaCriteria(UserBusqueda userBusqueda, Criteria criteria) {
         
-        // criteria.createAlias("usuario.role", "role");
         criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado");
         criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo");
         

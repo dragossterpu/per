@@ -5,6 +5,7 @@ package es.mira.progesin.constantes;
  * @author Ezentis
  *
  */
+@SuppressWarnings("javadoc")
 public final class Constantes {
     
     public static final String EMAIL_FROM_IPSS = "ipss_progesin@interior.es";
@@ -31,6 +32,9 @@ public final class Constantes {
     
     // "upper(convert(replace(CAMPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"+ VALOR + "', ' ', '')
     // || '%', 'US7ASCII'))"
+    /**
+     * Para buscar en oracle sin tener en cuenta las tildes
+     */
     public static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
     
     private Constantes() {
