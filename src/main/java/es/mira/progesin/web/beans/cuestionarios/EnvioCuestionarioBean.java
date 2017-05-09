@@ -26,7 +26,6 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.CorreoException;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
@@ -151,7 +150,7 @@ public class EnvioCuestionarioBean implements Serializable {
                 } else {
                     List<User> listaUsuariosProvisionales = userService
                             .crearUsuariosProvisionalesCuestionario(correoEnvio, password);
-                    cuestionarioEnvioService.enviarCuestionarioService(listaUsuariosProvisionales, cuestionarioEnvio,
+                    cuestionarioEnvioService.crearYEnviarCuestionario(listaUsuariosProvisionales, cuestionarioEnvio,
                             getCuerpoCorreo(password, listaUsuariosProvisionales));
                     
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
@@ -182,9 +181,8 @@ public class EnvioCuestionarioBean implements Serializable {
      * Construye el correo
      * @param password Password de entrada a la aplicación para los usuarios provisionales
      * @param usuarios Lista de usuarios provisionales
-     * @throws CorreoException
      */
-    private String getCuerpoCorreo(String password, List<User> usuarios) throws CorreoException {
+    private String getCuerpoCorreo(String password, List<User> usuarios) {
         String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")
                 .get(cuestionarioEnvio.getInspeccion().getAmbito().name());
         

@@ -116,7 +116,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
             rolesAdmitidos.add(RoleEnum.ROLE_ADMIN);
             
             if (cuestionario.getFechaBaja() == null && rolesAdmitidos.contains(usuarioActual.getRole())) {
-                if (cuestionarioEnvioService.findByCuestionarioPersonalizado(cuestionario) != null) {
+                if (cuestionarioEnvioService.existsByCuestionarioPersonalizado(cuestionario)) {
                     cuestionario.setFechaBaja(new Date());
                     cuestionario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
                     cuestionarioPersonalizadoService.save(cuestionario);

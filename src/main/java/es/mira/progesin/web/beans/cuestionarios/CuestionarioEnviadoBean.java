@@ -62,8 +62,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
     
-    private List<CuestionarioEnvio> listaCuestionarioEnvio;
-    
     private String vieneDe;
     
     private Date backupFechaLimiteCuestionario;
@@ -126,7 +124,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void limpiar() {
         cuestionarioEnviadoBusqueda.limpiar();
-        listaCuestionarioEnvio = null;
         model.setRowCount(0);
     }
     
@@ -146,17 +143,15 @@ public class CuestionarioEnviadoBean implements Serializable {
                     || usuarioActual.getUsername().equals(cuestionario.getInspeccion().getEquipo().getJefeEquipo()))) {
                 cuestionario.setUsernameAnulacion(usuarioActual.getUsername());
                 cuestionario.setFechaAnulacion(new Date());
-                if (cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario)) {
-                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
-                            "Se ha eliminado con éxito el cuestionario", null);
-                    
-                    String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
-                    
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                            SeccionesEnum.CUESTIONARIO.name());
-                    
-                }
-                listaCuestionarioEnvio.remove(cuestionario);
+                cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
+                        "Se ha eliminado con éxito el cuestionario", null);
+                
+                String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
+                
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.CUESTIONARIO.name());
+                
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
                         "Ya ha sido anulado con anterioridad o no tiene permisos para realizar esta acción", null);
@@ -175,10 +170,9 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        cuestionarioEnviadoBusqueda = new CuestionarioEnviadoBusqueda();
-        listaCuestionarioEnvio = new ArrayList<>();
-        model = new LazyModelCuestionarioEnviado(cuestionarioEnvioService);
-        listaTiposInspeccion = tipoInspeccionService.buscaTodos();
+        setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
+        setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
+        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**
@@ -266,35 +260,35 @@ public class CuestionarioEnviadoBean implements Serializable {
             cuestionario.setFechaNoConforme(new Date());
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             cuestionario.setUsernameNoConforme(usuarioActual);
-            if (cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario)) {
-                
-                StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
-                StringBuilder cuerpo = new StringBuilder(
-                        "\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:")
-                                .append("\r\n \r\n").append(motivosNoConforme)
-                                .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                                .append(applicationBean.getMapaParametros().get("URLPROGESIN")
-                                        .get(cuestionario.getInspeccion().getAmbito().name()))
-                                .append(", el usuario de acceso principal es su correo electrónico. El nombre del resto de usuarios y la contraseña para todos ellos constan en la primera comunicación que se le envió.")
-                                .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
-                                .append("\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n")
-                                .append("Muchas gracias y un saludo.");
-                
-                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
-                
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
-                        "Declarado no conforme con éxito el cuestionario. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
-                
-                String descripcion = asunto.toString() + " declarado no conforme";
-                
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.CUESTIONARIO.name());
-                
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        RoleEnum.ROLE_SERVICIO_APOYO);
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        cuestionario.getInspeccion());
-            }
+            cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario);
+            
+            StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
+            StringBuilder cuerpo = new StringBuilder(
+                    "\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:")
+                            .append("\r\n \r\n").append(motivosNoConforme)
+                            .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
+                            .append(applicationBean.getMapaParametros().get("URLPROGESIN")
+                                    .get(cuestionario.getInspeccion().getAmbito().name()))
+                            .append(", el usuario de acceso principal es su correo electrónico. El nombre del resto de usuarios y la contraseña para todos ellos constan en la primera comunicación que se le envió.")
+                            .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
+                            .append("\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n")
+                            .append("Muchas gracias y un saludo.");
+            
+            correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
+            
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
+                    "Declarado no conforme con éxito el cuestionario. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
+            
+            String descripcion = asunto.toString() + " declarado no conforme";
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.CUESTIONARIO.name());
+            
+            notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                    RoleEnum.ROLE_SERVICIO_APOYO);
+            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                    cuestionario.getInspeccion());
+            
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme el cuestionario, inténtelo de nuevo más tarde");

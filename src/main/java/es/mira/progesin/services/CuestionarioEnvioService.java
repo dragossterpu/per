@@ -91,7 +91,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
+    public void crearYEnviarCuestionario(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
             String cuerpoCorreo) {
         userRepository.save(listadoUsuariosProvisionales);
         CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioRepository.save(cuestionarioEnvio);
@@ -103,6 +103,14 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
     }
     
+    /**
+     * Asignación por defecto de todas las áreas de un cuestionario recien creado al usuario provisional principal
+     * 
+     * @author Ezentis
+     * @param cuestionarioEnviado
+     * @param usuarioProv
+     * @return lista de asignaciones
+     */
     private List<AreaUsuarioCuestEnv> asignarAreasUsuarioProvPrincipal(CuestionarioEnvio cuestionarioEnviado,
             User usuarioProv) {
         List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = new ArrayList<>();
@@ -128,11 +136,13 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     /**
      * Método que devuelve la lista de cuestionarios enviados en una consulta basada en criteria.
      * 
-     * @param firstResult Primer registro.
-     * @param maxResults Máximo número de registros.
-     * @param cuestionarioEnviadoBusqueda objeto con parámetros de búsqueda
-     * @return devuelve la lista de registros tipo CuestionarioEnviadoBusqueda.
      * @author EZENTIS
+     * @param cuestionarioEnviadoBusqueda objeto con los criterios de búsqueda
+     * @param first primer elemento
+     * @param pageSize tamaño de cada página de resultados
+     * @param sortField campo por el que se ordenan los resultados
+     * @param sortOrder sentido de la ordenacion (ascendente/descendente)
+     * @return la lista de cuestionarios enviados.
      */
     @Override
     public List<CuestionarioEnvio> buscarCuestionarioEnviadoCriteria(int first, int pageSize, String sortField,
@@ -324,7 +334,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario) {
+    public void transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario) {
         cuestionarioEnvioRepository.save(cuestionario);
         String correoPrincipal = cuestionario.getCorreoEnvio();
         String cuerpoCorreo = correoPrincipal.substring(0, correoPrincipal.indexOf('@'));
@@ -338,12 +348,11 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             }
         }
         areaUsuarioCuestEnvService.deleteByIdCuestionarioEnviado(cuestionario.getId());
-        return true;
     }
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
+    public void transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
             List<RespuestaCuestionario> listaRespuestas) {
         respuestaRepository.save(listaRespuestas);
         respuestaRepository.flush();
@@ -351,16 +360,14 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         String correoPrincipal = cuestionario.getCorreoEnvio();
         userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
         cuestionarioEnvioRepository.save(cuestionario);
-        return true;
     }
     
     @Override
     @Transactional(readOnly = false)
-    public boolean transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario) {
+    public void transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario) {
         cuestionarioEnvioRepository.save(cuestionario);
         String correoPrincipal = cuestionario.getCorreoEnvio();
         userService.cambiarEstado(correoPrincipal, EstadoEnum.ACTIVO);
-        return true;
     }
     
     @Override
@@ -375,8 +382,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     }
     
     @Override
-    public CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
-        return cuestionarioEnvioRepository.findByCuestionarioPersonalizado(cuestionario);
+    public boolean existsByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
+        return cuestionarioEnvioRepository.existsByCuestionarioPersonalizado(cuestionario);
     }
     
     @Override
