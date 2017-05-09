@@ -73,7 +73,7 @@ public class DepartamentoBean implements Serializable {
         }
     }
     
-    public boolean existenUsuariosDepartamento(Departamento departamento) {
+    private boolean existenUsuariosDepartamento(Departamento departamento) {
         boolean tieneUsuarios = false;
         List<User> usuarios = userService.findByDepartamento(departamento);
         if (usuarios != null && usuarios.isEmpty() == Boolean.FALSE) {

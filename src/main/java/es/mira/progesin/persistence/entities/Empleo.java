@@ -22,6 +22,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entity asociada a un empleo
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -31,7 +37,6 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "EMPLEO")
-// @NamedQuery(name = "Empleo.findAll", query = "SELECT t FROM Empleo t")
 @NamedQuery(name = "EmpleoCuerpo.find", query = "SELECT t FROM Empleo t where t.cuerpo = :cuerpoSeleccionado")
 public class Empleo implements Serializable {
     
