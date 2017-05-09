@@ -3,14 +3,11 @@ package es.mira.progesin.web.beans;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -63,7 +60,7 @@ public class InspeccionBean {
     
     private List<Boolean> list;
     
-    private List<Inspeccion> inspeccionesAsignadas;
+    private List<Inspeccion> inspeccionesAsignadasActuales;
     
     private List<Inspeccion> inspeccionesSeleccionadas;
     
@@ -100,8 +97,6 @@ public class InspeccionBean {
     
     private LazyModelInspeccion model;
     
-    private Map<Integer, List<Entity>> selectedEntityListMap = new Hashtable<>();
-    
     /**************************************************************
      * 
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
@@ -125,13 +120,15 @@ public class InspeccionBean {
     public String visualizaInspeccion(Inspeccion inspeccion) {
         this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
         List<Inspeccion> listaAsociadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
-        setInspeccionesAsignadas(listaAsociadas);
+        setInspeccionesAsignadasActuales(listaAsociadas);
         return "/inspecciones/visualizarInspeccion?faces-redirect=true";
     }
     
     public String getAsociarInspecciones() {
         inspeccionBusqueda.resetValues();
         setProvinciSelec(null);
+        inspeccionBusqueda.setAsociar(true);
+        setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
         buscarInspeccion();
         
         return "/inspecciones/inspecciones?faces-redirect=true";
@@ -157,6 +154,8 @@ public class InspeccionBean {
             rutaSiguiente = "/inspecciones/modificarInspeccion?faces-redirect=true";
             
         }
+        inspeccionBusqueda.setAsociar(false);
+        
         return rutaSiguiente;
     }
     
@@ -182,14 +181,14 @@ public class InspeccionBean {
         setListaMunicipios(null);
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
         Miembro miembro = miembroService.buscaMiembroByUsername(user);
-        inspeccionesAsignadas = new ArrayList<>();
-        inspeccionesSeleccionadas = new ArrayList<>();
+        inspeccionesAsignadasActuales = new ArrayList<>();
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
         if (miembro != null) {
             inspeccion.setEquipo(miembro.getEquipo());
         }
+        inspeccionBusqueda.setInspeccionModif(inspeccion);
         listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
@@ -211,8 +210,8 @@ public class InspeccionBean {
             numero.append(inspeccionProvisional.getAnio());
             inspeccion.setNumero(numero.toString());
             
-            if (inspeccionesAsignadas != null) {
-                inspeccion.setInspecciones(inspeccionesAsignadas);
+            if (inspeccionesAsignadasActuales != null) {
+                inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             }
             inspeccionesService.save(inspeccion);
             inspeccionBusqueda.resetValues();
@@ -244,7 +243,8 @@ public class InspeccionBean {
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
         this.inspeccion = inspeccion;
-        inspeccionesAsignadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
+        inspeccionBusqueda.setInspeccionModif(inspeccion);
+        inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
         listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
@@ -260,8 +260,8 @@ public class InspeccionBean {
             numero.append("/");
             numero.append(inspeccion.getAnio());
             inspeccion.setNumero(numero.toString());
-            if (inspeccionesAsignadas != null) {
-                inspeccion.setInspecciones(inspeccionesAsignadas);
+            if (inspeccionesAsignadasActuales != null) {
+                inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             }
             
             inspeccionesService.save(inspeccion);
@@ -293,9 +293,11 @@ public class InspeccionBean {
     @PostConstruct
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
+        inspeccionBusqueda.setAsociar(false);
         setListaEquipos(equipoService.findByFechaBajaIsNotNull());
         setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
+        inspeccionesSeleccionadas = new ArrayList<>();
         setList(new ArrayList<>());
         for (int i = 0; i <= 14; i++) {
             list.add(Boolean.TRUE);
@@ -312,14 +314,12 @@ public class InspeccionBean {
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
+            inspeccionBusqueda.setAsociar(false);
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
             listaTiposInspeccion = tipoInspeccionService.buscaTodos();
-        } else if ("asociarEditar".equalsIgnoreCase(this.vieneDe) || "asociarAlta".equalsIgnoreCase(this.vieneDe)) {
-            setInspeccionesSeleccionadas(inspeccionesAsignadas);
         }
-        
     }
     
     /**
@@ -334,14 +334,13 @@ public class InspeccionBean {
         inspeccion.setUsernameAnulacion(null);
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SUSPENDIDA);
         try {
-            
             inspeccionesService.save(inspeccion);
             String descripcion = "El usuario " + user + " ha activado la inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.INSPECCION.name());
             
         } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
     }
     
@@ -398,18 +397,6 @@ public class InspeccionBean {
         }
     }
     
-    public boolean perteneceEquipo(Equipo equipo) {
-        List<Miembro> miembrosEquipo = equipoService.findByEquipo(equipo);
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        boolean pertenece = false;
-        for (Miembro m : miembrosEquipo) {
-            if (m.getUsername().equals(user)) {
-                pertenece = true;
-            }
-        }
-        return pertenece;
-    }
-    
     /**
      * Guarda un nuevo municipio
      * @param nombre
@@ -448,7 +435,7 @@ public class InspeccionBean {
      */
     public void onRowUnSelected(UnselectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
-        inspeccionesAsignadas.remove(i);
+        inspeccionesAsignadasActuales.remove(i);
     }
     
     /**
@@ -458,7 +445,7 @@ public class InspeccionBean {
      */
     public void onRowSelected(SelectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
-        inspeccionesAsignadas.add(i);
+        inspeccionesAsignadasActuales.add(i);
     }
     
     /**
@@ -468,48 +455,27 @@ public class InspeccionBean {
      */
     public void onToggleSelect(AjaxBehaviorEvent event) {
         if (!isSelectedAll()) {
-            inspeccionesSeleccionadas.remove(inspeccion);
-            setInspeccionesAsignadas(inspeccionesService.buscarInspeccionPorCriteria(0,
+            setInspeccionesAsignadasActuales(inspeccionesService.buscarInspeccionPorCriteria(0,
                     inspeccionesService.getCountInspeccionCriteria(inspeccionBusqueda), null, null,
                     inspeccionBusqueda));
             setSelectedAll(true);
         } else {
-            setInspeccionesAsignadas(null);
+            setInspeccionesAsignadasActuales(null);
             setSelectedAll(false);
         }
     }
     
     public void paginator(PageEvent event) {
-        setInspeccionesSeleccionadas(inspeccionesAsignadas);
+        setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
     }
     
-    // /**
-    // * Construye una copia del filtro de búsqueda de inspecciones. Funciona de la siguiente manera: sólo se construirá
-    // * un objeto nuevo al realizar una nueva búsqueda; en el resto de casos (ordenar, página siguiente, página
-    // * anterior..) se trabajará con una copia del primero.
-    // *
-    // * @param inspeccion
-    // * @return devolvemos la copia
-    // */
-    // public InspeccionBusqueda copiaInspeccionBusqueda(InspeccionBusqueda inspeccion) {
-    // InspeccionBusqueda inspeccionCopia = new InspeccionBusqueda();
-    // inspeccionCopia.setId(inspeccion.getId());
-    // inspeccionCopia.setNombreUnidad(inspeccion.getNombreUnidad());
-    // inspeccionCopia.setCuatrimestre(inspeccion.getCuatrimestre());
-    // inspeccionCopia.setTipoInspeccion(inspeccion.getTipoInspeccion());
-    // inspeccionCopia.setAmbito(inspeccion.getAmbito());
-    // inspeccionCopia.setEquipo(inspeccion.getEquipo());
-    // inspeccionCopia.setEstado(inspeccion.getEstado());
-    // inspeccionCopia.setFechaDesde(inspeccion.getFechaDesde());
-    // inspeccionCopia.setFechaHasta(inspeccion.getFechaHasta());
-    // inspeccionCopia.setUsuarioCreacion(inspeccion.getUsuarioCreacion());
-    // inspeccionCopia.setAnio(inspeccion.getAnio());
-    // inspeccionCopia.setTipoUnidad(inspeccion.getTipoUnidad());
-    // inspeccionCopia.setProvincia(inspeccion.getProvincia());
-    // inspeccionCopia.setMunicipio(inspeccion.getMunicipio());
-    // inspeccionCopia.setJefeEquipo(inspeccion.getJefeEquipo());
-    //
-    // return inspeccionCopia;
-    // }
+    /**
+     * Elimina una inspección de la lista de inspecciones asociadas
+     * 
+     * @param inspeccion Inspección a desasociar
+     */
+    public void desAsociarInspeccion(Inspeccion inspeccion) {
+        inspeccionesAsignadasActuales.remove(inspeccion);
+    }
     
 }

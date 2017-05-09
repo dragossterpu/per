@@ -15,14 +15,20 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
+import es.mira.progesin.persistence.repositories.IMiembrosRepository;
+import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 @Service
@@ -39,7 +45,10 @@ public class InspeccionesService implements IInspeccionesService {
     IInspeccionesRepository inspeccionesRepository;
     
     @Autowired
-    private IRegistroActividadService regActividadService;
+    private IUserRepository userRepository;
+    
+    @Autowired
+    private IMiembrosRepository miembrosRepository;
     
     @Override
     public Iterable<Inspeccion> findAll() {
@@ -104,9 +113,11 @@ public class InspeccionesService implements IInspeccionesService {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
         consultaCriteriaInspecciones(busqueda, criteria);
-        List<Inspeccion> listaInspecciones = criteria.list();
+        criteria.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteria.uniqueResult();
         session.close();
-        return listaInspecciones.size();
+        
+        return Math.toIntExact(cnt);
     }
     
     /**
@@ -192,6 +203,19 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
+        if (busqueda.isAsociar() && busqueda.getInspeccionModif().getId() != null) {
+            criteria.add(Restrictions.ne("id", busqueda.getInspeccionModif().getId()));
+        } else {
+            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())
+                    && busqueda.getInspeccionModif().getId() != null) {
+                DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
+                subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
+                subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
+                subquery.setProjection(Projections.property("miembro.equipo"));
+                criteria.add(Property.forName("equipo.id").in(subquery));
+            }
+        }
     }
     
     @Override

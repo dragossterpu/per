@@ -153,17 +153,25 @@
 						<p:messages for="municipiosSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />	
-						<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{inspeccionBean.inspeccionesAsignadas}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+						<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" 
+						value="#{inspeccionBean.inspeccionesAsignadasActuales}" var="inspeccion" 
+						scrollable="true" scrollHeight="120"
+						emptyMessage="No hay asociadas inspecciones">
 							<p:column>
 							 	<h:outputText value=" #{inspeccion.numero}" />
-							</p:column>    
-						</p:dataTable>	
+							</p:column> 
+							 <p:column styleClass="botonTabla">
+									<p:commandButton title="Desasociar" icon="fa fa-trash" 
+										 actionListener="#{inspeccionBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
+									</p:commandButton>
+								</p:column>   
+						</p:dataTable>		
 					</div>	
 
 		</div>
 		
 		<div class="botonesFormulario">
-			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Agregar inspeción" icon="fa fa-fw fa-save">
+			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Asociar inspeciones" icon="fa fa-fw fa-save">
 				<f:param name="vieneDe" value="asociarEditar" />
 			</p:commandButton>
 			<p:commandButton actionListener="#{inspeccionBean.modificarInspeccion}" id="modificar" value="Guardar cambios" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>

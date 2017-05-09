@@ -6,6 +6,7 @@ import java.util.Date;
 import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -59,6 +60,10 @@ public class InspeccionBusqueda implements Serializable {
     private String sortField;
     
     private SortOrder sortOrder;
+    
+    private Inspeccion inspeccionModif;
+    
+    private boolean asociar;
     
     /**
      * Limpia los valores del objeto
