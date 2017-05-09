@@ -11,6 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * POJO usado para el buscador de cuestionarios enviados
+ * 
+ * @author EZENTIS
+ *
+ */
 @Setter
 @Getter
 @NoArgsConstructor
@@ -41,6 +47,9 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
     
     private ModeloCuestionario modeloCuestionarioSeleccionado;
     
+    /**
+     * Reseteo de los campos del buscador
+     */
     public void limpiar() {
         setFechaDesde(null);
         setFechaHasta(null);

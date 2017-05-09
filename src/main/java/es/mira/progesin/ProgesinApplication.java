@@ -22,20 +22,35 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
 
-// SpringBootApplication Equivale a @Configuration @EnableAutoConfiguration @ComponentScan
+/**
+ * Clase de arranque y configuración de Spring Boot
+ * 
+ * @author EZENTIS
+ *
+ */
 @SpringBootApplication
 @EnableScheduling
+// SpringBootApplication Equivale a @Configuration @EnableAutoConfiguration @ComponentScan
 public class ProgesinApplication {
     
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(ProgesinApplication.class, args);
     }
     
+    /**
+     * @return HibernateJpaSessionFactoryBean
+     */
     @Bean
     public HibernateJpaSessionFactoryBean sessionFactory() {
         return new HibernateJpaSessionFactoryBean();
     }
     
+    /**
+     * @return scope que simula el scope view de jsf
+     */
     @Bean
     public static CustomScopeConfigurer customScopeConfigurer() {
         CustomScopeConfigurer configurer = new CustomScopeConfigurer();
@@ -43,6 +58,11 @@ public class ProgesinApplication {
         return configurer;
     }
     
+    /**
+     * Implementación que se va a usar para las páginas de error
+     * 
+     * @return ErrorPageRegistrar
+     */
     @Bean
     public ErrorPageRegistrar errorPageRegistrar() {
         return new RegistroPaginasError();

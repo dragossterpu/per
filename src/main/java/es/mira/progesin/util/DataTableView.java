@@ -9,6 +9,12 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Modelo usado para poder pintar tablas y matrices de forma genérica en la vista con primefaces
+ * 
+ * @author EZENTIS
+ *
+ */
 @Getter
 @Setter
 public class DataTableView implements Serializable {
@@ -19,20 +25,38 @@ public class DataTableView implements Serializable {
     
     private List<DatosTablaGenerica> listaDatosTabla;
     
+    /**
+     * Constructor
+     */
     public DataTableView() {
         columns = new ArrayList<>();
         listaDatosTabla = new ArrayList<>();
     }
     
+    /**
+     * Crea una tabla con los valores pasados como parámetros
+     * 
+     * @param valoresColumnas
+     */
     public void crearTabla(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
         crearColumnasDinamicamente(valoresColumnas);
         crearFilaVacia();
     }
     
+    /**
+     * Crea una matriz con la información grabada por los usuarios al responder un cuestionario
+     * 
+     * @param listaDatos
+     */
     public void crearTablaMatriConDatos(List<DatosTablaGenerica> listaDatos) {
         setListaDatosTabla(listaDatos);
     }
     
+    /**
+     * Crea una matriz vacía, sólo con los nombres de las columnas y las filas
+     * 
+     * @param valoresColumnas
+     */
     public void crearMatriz(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
         // Inicializado la lista con un campo vacío para que muestre el datatable con una fila vacía de inputText
         for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
@@ -44,13 +68,13 @@ public class DataTableView implements Serializable {
         }
     }
     
-    public void crearFilaMatriz(String nombreFila) {
+    private void crearFilaMatriz(String nombreFila) {
         DatosTablaGenerica dtg = new DatosTablaGenerica();
         dtg.setNombreFila(nombreFila);
         listaDatosTabla.add(dtg);
     }
     
-    public void crearColumnasDinamicamente(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
+    private void crearColumnasDinamicamente(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
         String header;
         String property;
         for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
@@ -60,6 +84,9 @@ public class DataTableView implements Serializable {
         }
     }
     
+    /**
+     * Crea una fila vacía en una tabla
+     */
     public void crearFilaVacia() {
         DatosTablaGenerica dtg = new DatosTablaGenerica();
         listaDatosTabla.add(dtg);
@@ -67,6 +94,7 @@ public class DataTableView implements Serializable {
     
     /**
      * Elimina el último registro de la tabla, siempre y cuando la tabla tenga más de una fila
+     * @return datos de la tabla sin la última fila
      */
     public DatosTablaGenerica eliminarFila() {
         DatosTablaGenerica filaEliminar = null;
@@ -77,6 +105,10 @@ public class DataTableView implements Serializable {
         return filaEliminar;
     }
     
+    /**
+     * @author sperezp
+     *
+     */
     public class ColumnModel implements Serializable {
         
         private static final long serialVersionUID = 1L;
@@ -85,15 +117,25 @@ public class DataTableView implements Serializable {
         
         private String property;
         
+        /**
+         * @param header nombre de la columna
+         * @param property valor de la columna
+         */
         public ColumnModel(String header, String property) {
             this.header = header;
             this.property = property;
         }
         
+        /**
+         * @return header
+         */
         public String getHeader() {
             return header;
         }
         
+        /**
+         * @return property
+         */
         public String getProperty() {
             return property;
         }

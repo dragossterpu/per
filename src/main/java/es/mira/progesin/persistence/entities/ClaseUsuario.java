@@ -19,6 +19,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entity que define la clase a la que pertenece un usuario
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -27,18 +33,18 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name="Clase_usuario")
+@Table(name = "Clase_usuario")
 @NamedQuery(name = "ClaseUsuario.findAll", query = "SELECT t FROM ClaseUsuario t")
 public class ClaseUsuario implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CLASE")
-    @SequenceGenerator(name="SEQ_CLASE", sequenceName="SEQ_CLASE", allocationSize=1,  initialValue = 1) 
-	@Column(name = "id_clase")
-	private Long id;
-	
-	@Column(name="clase")
-	private String clase;
-
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CLASE")
+    @SequenceGenerator(name = "SEQ_CLASE", sequenceName = "SEQ_CLASE", allocationSize = 1, initialValue = 1)
+    @Column(name = "id_clase")
+    private Long id;
+    
+    @Column(name = "clase")
+    private String clase;
+    
 }

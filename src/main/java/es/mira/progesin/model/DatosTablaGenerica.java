@@ -13,6 +13,12 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Entity donde se guardan las respuestas de tipo tabla o matriz de un cuestionario
+ * 
+ * @author EZENTIS
+ *
+ */
 @Getter
 @Setter
 @Entity
