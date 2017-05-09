@@ -136,7 +136,7 @@
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="municipiosSelect" value="Municipio (*):"/>
-						<p:commandButton id="buttMunicipio" title="Añadir municipio" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.provinciSelec == null}"/>
+						<p:commandButton id="buttMunicipio" title="Añadir municipio (debe seleccionar previamente una provincia)" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.provinciSelec == null}"/>
 						<p:selectOneMenu required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un municipio"	
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
