@@ -1,20 +1,4 @@
-WHENEVER OSERROR EXIT FAILURE ROLLBACK
-WHENEVER SQLERROR EXIT FAILURE ROLLBACK
 
-prompt =========================================================================
-prompt
-prompt    SCRIPT CARGA PROVINCIAS Y MUNICIPIOS
-prompt
-prompt    Autor: Ezentis
-prompt
-prompt    Fecha creación: 08/05/2017
-prompt =========================================================================
-
-
-prompt =========================================================================
-prompt + Tarea1
-prompt =========================================================================
-prompt Ejecutando carga de provincias...
 
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('1',2,'0'), 'Álava (Vitoria)', 'VI');
 insert into provincias (codigo, provincia,codigo_mn) values (lpad('2',2,'0'), 'Albacete', 'AB');
@@ -71,10 +55,7 @@ insert into provincias (codigo, provincia,codigo_mn) values (lpad('52',2,'0'), '
 commit;
 
 
-prompt =========================================================================
-prompt + Tarea2
-prompt =========================================================================
-prompt Ejecutando carga de municipio...
+
 
 
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'ALEGRÍA-DULANTZI', lpad('1', 2, '0'));
