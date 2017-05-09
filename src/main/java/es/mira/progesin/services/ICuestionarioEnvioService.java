@@ -22,14 +22,6 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
  */
 public interface ICuestionarioEnvioService extends Serializable {
     
-    /**
-     * Recupera cuestionario asociados a una inspección
-     * 
-     * @author Ezentis
-     * @return cuestionario
-     */
-    CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
-    
     void enviarCuestionarioService(List<User> user, CuestionarioEnvio cuestionarioEnvio, String cuerpoCorreo)
             throws CorreoException;
     

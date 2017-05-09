@@ -9,16 +9,14 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 
 public interface ICuestionarioEnvioRepository extends CrudRepository<CuestionarioEnvio, Long> {
-
-	CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
-
-	CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(String correo);
-
-	CuestionarioEnvio findDistinctById(Long idCuestionarioEnviado);
-
-	CuestionarioEnvio findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
-
-	CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
-
-	List<CuestionarioEnvio> findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndFechaCumplimentacionIsNull();
+    
+    CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(String correo);
+    
+    CuestionarioEnvio findDistinctById(Long idCuestionarioEnviado);
+    
+    CuestionarioEnvio findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
+    
+    CuestionarioEnvio findByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
+    
+    List<CuestionarioEnvio> findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndFechaCumplimentacionIsNull();
 }

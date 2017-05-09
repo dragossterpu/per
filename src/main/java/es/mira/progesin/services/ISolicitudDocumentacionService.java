@@ -36,20 +36,20 @@ public interface ISolicitudDocumentacionService {
     List<SolicitudDocumentacionPrevia> findAll();
     
     /**
-     * Recupera las solicitudes ya finalizadas pertenecientes a un mismo destinatario
+     * Recupera la solicitud no finalizada perteneciente a un destinatario (no puede haber más de una)
      * 
      * @author Ezentis
      * @param correo
-     * @return lista
+     * @return solicitud
      */
     SolicitudDocumentacionPrevia findNoFinalizadaPorCorreoDestinatario(String correo);
     
     /**
-     * Recupera las solicitudes ya enviadas pero sin finalizar pertenecientes a un mismo destinatario
+     * Recupera la solicitud ya enviada pero sin finalizar perteneciente a un destinatario (no puede haber más de una)
      * 
      * @author Ezentis
      * @param correo
-     * @return lista
+     * @return solicitud
      */
     SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(String correo);
     
@@ -117,7 +117,7 @@ public interface ISolicitudDocumentacionService {
     void transaccDeleteElimDocPrevia(Long idSolicitud);
     
     /**
-     * Recupera las solicitudes no finalizadas asociadas a una inspección
+     * Recupera la solicitud no finalizada asociada a una inspección (no puede haber más de una)
      * 
      * @author Ezentis
      * @param inspeccion
@@ -136,22 +136,22 @@ public interface ISolicitudDocumentacionService {
     /**
      * Método que devuelve el número de solicitudes previas totales en una consulta basada en criteria.
      * 
+     * @author EZENTIS
      * @param solicitudDocPreviaBusqueda
      * @return número de registros
-     * @author EZENTIS
      */
     int getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
     
     /**
      * Método que devuelve la lista de solicitudes previas en una consulta basada en criteria.
      * 
-     * @param solicitudDocPreviaBusqueda
-     * @param first
-     * @param pageSize
-     * @param sortField
-     * @param sortOrder
-     * @return devuelve la lista de registros tipo SolicitudDocPreviaBusqueda.
      * @author EZENTIS
+     * @param solicitudDocPreviaBusqueda objeto con los criterios de búsqueda
+     * @param first primer elemento
+     * @param pageSize tamaño de cada página de resultados
+     * @param sortField campo por el que se ordenan los resultados
+     * @param sortOrder sentido de la ordenacion (ascendente/descendente)
+     * @return la lista de solicitudes.
      */
     List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int first, int pageSize, String sortField,
             SortOrder sortOrder, SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);

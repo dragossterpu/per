@@ -90,11 +90,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
     @Override
-    public CuestionarioEnvio findByInspeccion(Inspeccion inspeccion) {
-        return cuestionarioEnvioRepository.findByInspeccion(inspeccion);
-    }
-    
-    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void enviarCuestionarioService(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
             String cuerpoCorreo) {
