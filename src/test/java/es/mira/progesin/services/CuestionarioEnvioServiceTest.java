@@ -13,6 +13,7 @@ import org.junit.Test;
  * @author Ezentis
  *
  */
+@SuppressWarnings("javadoc")
 public class CuestionarioEnvioServiceTest {
     
     /**

@@ -157,7 +157,7 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, SolicitudDocPreviaBusqueda)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, String, org.primefaces.model.SortOrder, SolicitudDocPreviaBusqueda)}.
      */
     @Ignore
     @Test

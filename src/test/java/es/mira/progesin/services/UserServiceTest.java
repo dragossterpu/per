@@ -119,7 +119,7 @@ public class UserServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(es.mira.progesin.web.beans.UserBusqueda)}.
+     * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(int, int, String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.UserBusqueda)}.
      */
     @Ignore
     @Test

@@ -108,7 +108,8 @@ public class EquipoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.EquipoService#buscarEquipoCriteria(EquipoBusqueda)}.
+     * Test method for
+     * {@link es.mira.progesin.services.EquipoService#buscarEquipoCriteria(int, int, String, org.primefaces.model.SortOrder, EquipoBusqueda)}.
      */
     @Ignore
     @Test
