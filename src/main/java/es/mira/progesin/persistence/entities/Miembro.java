@@ -65,44 +65,4 @@ public class Miembro implements Serializable {
     @Enumerated(EnumType.STRING)
     private RolEquipoEnum posicion;
     
-    // @Override
-    // public int hashCode() {
-    // final int prime = 31;
-    // int result = 1;
-    // result = prime * result + ((equipo == null) ? 0 : equipo.hashCode());
-    // result = prime * result + ((nombreCompleto == null) ? 0 : nombreCompleto.hashCode());
-    // result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
-    // result = prime * result + ((username == null) ? 0 : username.hashCode());
-    // return result;
-    // }
-    //
-    // @Override
-    // public boolean equals(Object obj) {
-    // if (this == obj)
-    // return true;
-    // if (obj == null)
-    // return false;
-    // if (getClass() != obj.getClass())
-    // return false;
-    // Miembro other = (Miembro) obj;
-    // if (equipo == null) {
-    // if (other.equipo != null)
-    // return false;
-    // } else if (!equipo.equals(other.equipo))
-    // return false;
-    // if (nombreCompleto == null) {
-    // if (other.nombreCompleto != null)
-    // return false;
-    // } else if (!nombreCompleto.equals(other.nombreCompleto))
-    // return false;
-    // if (posicion != other.posicion)
-    // return false;
-    // if (username == null) {
-    // if (other.username != null)
-    // return false;
-    // } else if (!username.equals(other.username))
-    // return false;
-    // return true;
-    // }
-    
 }

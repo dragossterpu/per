@@ -99,7 +99,7 @@ public class ProgesinApplication {
     }
     
     @Configuration
-    @Profile("production")
+    @Profile("prod")
     static class ConfigureJSFContextParametersProd implements ServletContextInitializer {
         
         @Override
