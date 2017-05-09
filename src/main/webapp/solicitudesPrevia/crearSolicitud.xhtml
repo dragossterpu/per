@@ -169,7 +169,7 @@
 									required="true"
 									requiredMessage="Es obligatorio un correo persona apoyo">
 									<f:validateRegex
-										pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+										pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
 								</p:inputText>
 
 							</h:panelGrid>
