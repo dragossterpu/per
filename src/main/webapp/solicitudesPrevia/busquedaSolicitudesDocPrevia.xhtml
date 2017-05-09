@@ -133,7 +133,8 @@
 					lazy="true"
 					rowsPerPageTemplate="5,10,15,20"
 					rows="20"
-					rendered="#{solicitudDocPreviaBean.model.rowCount ne 0}">
+					rendered="#{solicitudDocPreviaBean.model.rowCount ne 0}"
+                    emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 					<f:facet name="header">
 						Solicitudes documentación
 					 	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />

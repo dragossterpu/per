@@ -92,7 +92,8 @@
 						 lazy="true"
 						 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}"
-                         resizableColumns="true" draggableColumns="true">
+                         resizableColumns="true" draggableColumns="true"                         
+                         emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 				 <f:facet name="header">
 					Cuestionarios personalizados
 				</f:facet>
