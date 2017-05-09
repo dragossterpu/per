@@ -30,9 +30,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entity con la información relativa a un cuestionario personalizado
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
-// @EqualsAndHashCode()
 @Builder
 @ToString
 @Getter

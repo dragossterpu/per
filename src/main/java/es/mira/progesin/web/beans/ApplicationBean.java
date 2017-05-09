@@ -23,6 +23,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Clase utilizada para cargar datos en el contexto de la aplicación al arrarancar el servidor
+ * 
+ * @author EZENTIS
+ *
+ */
 @Component("applicationBean")
 @Getter
 @Setter
@@ -58,6 +64,9 @@ public class ApplicationBean implements Serializable {
     @PersistenceContext
     private transient EntityManager em;
     
+    /**
+     * Inicialización de datos
+     */
     @PostConstruct
     public void init() {
         setListaPuestosTrabajo((List<PuestoTrabajo>) puestosTrabajoService.findAll());
