@@ -190,7 +190,7 @@ public class GestorDocumentalBean {
      * @param event Evento que se lanza en la carga del documento y que contiene el mismo
      * @throws Exception Se genera una excepción
      */
-    public void cargaFichero(FileUploadEvent event) throws Exception {
+    public void cargaFichero(FileUploadEvent event) {
         try {
             TipoDocumento tipo = tipoDocumentoRepository.findByNombre("OTROS");
             UploadedFile uFile = event.getFile();
@@ -207,7 +207,6 @@ public class GestorDocumentalBean {
             
         } catch (Exception ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
-            throw ex;
         }
     }
     
@@ -297,10 +296,6 @@ public class GestorDocumentalBean {
                     recargaLista();
                     
                     RequestContext.getCurrentInstance().reset("formAlta:asociado");
-                } else {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-                            SeccionesEnum.GESTOR.getDescripcion(), "Se ha producido un error al guardar su documento");
-                    documentoService.delete(documento);
                 }
                 nombreDoc = "";
                 listaInspecciones = new ArrayList<>();
