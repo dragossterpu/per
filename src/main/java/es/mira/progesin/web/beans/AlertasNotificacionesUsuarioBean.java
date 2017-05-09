@@ -61,10 +61,10 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     
     @PostConstruct
     public void init() {
-        modelAlertas = new LazyModelAlertas(alertaService,
-                SecurityContextHolder.getContext().getAuthentication().getName());
-        modelNotificaciones = new LazyModelNotificaciones(notificacionService,
-                SecurityContextHolder.getContext().getAuthentication().getName());
+        setModelAlertas(
+                new LazyModelAlertas(alertaService, SecurityContextHolder.getContext().getAuthentication().getName()));
+        setModelNotificaciones(new LazyModelNotificaciones(notificacionService,
+                SecurityContextHolder.getContext().getAuthentication().getName()));
     }
     
     /******************************************************

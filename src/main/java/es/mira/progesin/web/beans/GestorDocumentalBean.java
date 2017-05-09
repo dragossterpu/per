@@ -113,7 +113,7 @@ public class GestorDocumentalBean {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelDocumentos(documentoService);
-        mapaInspecciones = new LinkedHashMap<Long, String>();
+        mapaInspecciones = new LinkedHashMap<>();
         mapaEdicion = new HashMap<>();
     }
     

@@ -249,9 +249,13 @@ public class PdfGenerator {
      * 
      * @param cuestionarioEnviado
      * @return pdf con el contenido del cuestionario
-     * @throws Exception
+     * @throws IOException
+     * @throws IllegalAccessException
+     * @throws NoSuchFieldException
+     * @throws DocumentException
      */
-    public StreamedContent crearCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) throws Exception {
+    public StreamedContent crearCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado)
+            throws IOException, NoSuchFieldException, IllegalAccessException, DocumentException {
         File fileOr = File.createTempFile(NOMBRE_FICHERO_CUESTIONARIO_ENVIADO_OR, ".pdf");
         
         // Initialize PDF writer
@@ -334,7 +338,7 @@ public class PdfGenerator {
     }
     
     private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document)
-            throws Exception {
+            throws NoSuchFieldException, IllegalAccessException {
         for (RespuestaCuestionario respuesta : listaRespuestas) {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             Paragraph p = new Paragraph(pregunta.getPregunta());
@@ -355,7 +359,8 @@ public class PdfGenerator {
         }
     }
     
-    private Table crearRespuestaTipoTablaMatriz(RespuestaCuestionario respuesta) throws Exception {
+    private Table crearRespuestaTipoTablaMatriz(RespuestaCuestionario respuesta)
+            throws NoSuchFieldException, IllegalAccessException {
         List<DatosTablaGenerica> listaDatosTabla = respuesta.getRespuestaTablaMatriz();
         String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
@@ -401,7 +406,7 @@ public class PdfGenerator {
         return tabla;
     }
     
-    private Table crearTablaDocumentos(RespuestaCuestionario respuesta) throws Exception {
+    private Table crearTablaDocumentos(RespuestaCuestionario respuesta) {
         Table tabla = new Table(1);
         tabla.setWidthPercent(100);
         tabla.setPaddingBottom(10);
@@ -424,8 +429,8 @@ public class PdfGenerator {
         int nTotalPaginas = reader.getNumberOfPages();
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
         PdfContentByte pagecontent;
-        for (int i = 0; i < nTotalPaginas;) {
-            pagecontent = stamper.getOverContent(++i);
+        for (int i = 1; i <= nTotalPaginas; i++) {
+            pagecontent = stamper.getOverContent(i);
             ColumnText.showTextAligned(pagecontent, Element.ALIGN_CENTER,
                     new Phrase(String.format("Página %s de %s", i, nTotalPaginas)),
                     (pagecontent.getPdfDocument().getPageSize().getRight() - doc.getRightMargin()

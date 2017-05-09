@@ -13,7 +13,21 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.util.CorreoException;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
+/**
+ * 
+ * Interfaz del servicio de cuestionarios enviados
+ * 
+ * @author Ezentis
+ *
+ */
 public interface ICuestionarioEnvioService extends Serializable {
+    
+    /**
+     * Recupera cuestionario asociados a una inspección
+     * 
+     * @author Ezentis
+     * @return cuestionario
+     */
     CuestionarioEnvio findByInspeccion(Inspeccion inspeccion);
     
     void enviarCuestionarioService(List<User> user, CuestionarioEnvio cuestionarioEnvio, String cuerpoCorreo)
@@ -21,6 +35,12 @@ public interface ICuestionarioEnvioService extends Serializable {
     
     CuestionarioEnvio findNoFinalizadoPorCorreoEnvio(String correo);
     
+    /**
+     * Guarda la información de un cuestionario enviado en la bdd.
+     * 
+     * @author Ezentis
+     * @param cuestionario
+     */
     void save(CuestionarioEnvio cuestionario);
     
     List<RespuestaCuestionario> transaccSaveConRespuestas(List<RespuestaCuestionario> listaRespuestas);

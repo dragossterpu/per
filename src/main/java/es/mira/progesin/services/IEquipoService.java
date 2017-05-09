@@ -9,6 +9,13 @@ import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
+/**
+ * 
+ * Interfaz del servicio de equipo
+ * 
+ * @author Ezentis
+ *
+ */
 public interface IEquipoService {
     
     Iterable<Equipo> findAll();

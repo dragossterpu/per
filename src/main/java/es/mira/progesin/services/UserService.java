@@ -53,9 +53,6 @@ public class UserService implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    // Obligado por sonar
-    private static final String FECHA_ALTA = "fechaAlta";
-    
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     @Override
