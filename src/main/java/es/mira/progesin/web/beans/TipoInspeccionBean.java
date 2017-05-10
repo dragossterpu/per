@@ -79,26 +79,28 @@ public class TipoInspeccionBean implements Serializable {
      */
     public void eliminarTipo(TipoInspeccion tipo) {
         try {
-            String descripcion;
             
             if (inspeccionesService.existeByTipoInspeccion(tipo) || guiaService.existeByTipoInspeccion(tipo)) {
-                tipo.setFechaBaja(new Date());
-                tipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                tipoInspeccionService.guardarTipo(tipo);
-                descripcion = "Se ha dado de baja el tipo de inspección: " + tipo.getCodigo() + "("
-                        + tipo.getDescripcion() + ")";
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                        "Error. No se puede eliminar el modelo " + tipo.getCodigo()
+                                + " al existir elementos que dependen de él",
+                        "", "msgs");
             } else {
                 tipoInspeccionService.borrarTipo(tipo);
-                descripcion = "Se ha eliminado el tipo de inspección: " + tipo.getCodigo() + "(" + tipo.getDescripcion()
-                        + ")";
+                listaTipoInspeccion.remove(tipo);
+                
+                String descripcion = "Se ha eliminado el tipo de inspección: " + tipo.getCodigo() + "("
+                        + tipo.getDescripcion() + ")";
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.INSPECCION.name());
+                
             }
-            listaTipoInspeccion.remove(tipo);
-            // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                    SeccionesEnum.INSPECCION.name());
+            
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
-                    "Se ha producido un error al eliminar el tipo de inspección, inténtelo de nuevo más tarde", null);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "Error. Se ha producido un error al eliminar el tipo de inspección, inténtelo de nuevo más tarde",
+                    "", "msgs");
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
@@ -118,8 +120,8 @@ public class TipoInspeccionBean implements Serializable {
             
             tipoInspeccionService.guardarTipo(tipo);
             
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
-                    "Tipo de inspección modificado con éxito", null);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
+                    "Modificación. Tipo de inspección modificado con éxito", "", null);
             
             String descripcion = "Se ha modificado el tipo de inspección: " + tipo.getCodigo() + "("
                     + tipo.getDescripcion() + ")";
@@ -128,8 +130,9 @@ public class TipoInspeccionBean implements Serializable {
                     SeccionesEnum.INSPECCION.name());
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
-                    "Se ha producido un error al modificar el tipo de inspección, inténtelo de nuevo más tarde", null);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                    "Error. Se ha producido un error al modificar el tipo de inspección, inténtelo de nuevo más tarde",
+                    "", null);
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
     }

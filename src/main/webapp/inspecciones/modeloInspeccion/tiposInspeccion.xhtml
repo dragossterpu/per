@@ -29,10 +29,9 @@
 								<f:facet name="input">
 									<p:inputText id="descripcionInput"
 										value="#{tipoInspeccion.descripcion}" converter="#{trimConverter}"
-										required="true" maxlength="100"
+										required="true" maxlength="100" 
 										requiredMessage="La descripción del tipo de inspección no puede estar vacío" />
-									<p:messages for="descripcionInput" autoUpdate="true"
-										closable="true" />
+
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -65,12 +64,14 @@
 						</div>
 					</p:confirmDialog>
 	
-					<p:messages globalOnly="true" autoUpdate="true" closable="true"
-						showDetail="true" />
 				</div>
 				<div class="botonesFormulario">
 	                <p:button value="Nuevo tipo de inspección" icon="fa fa-user-plus" outcome="/inspecciones/modeloInspeccion/altaTipoInspeccion"/>
 				</div>
+				
+				<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="false" />
+				
+				
 			</h:form>
 		</div>
 	</ui:define>
