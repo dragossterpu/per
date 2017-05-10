@@ -11,7 +11,7 @@ public interface ICuerpoEstadoRepository extends CrudRepository<CuerpoEstado, In
      * 
      * @return Cuerpos del estado sin fecha de baja, es decir activos
      */
-    List<CuerpoEstado> findByFechaBajaIsNull();
+    List<CuerpoEstado> findByFechaBajaIsNullOrderByIdAsc();
     
     /**
      * Existe un Cuerpo que no coincide con un id pero coincide con un nombre corto
@@ -21,5 +21,10 @@ public interface ICuerpoEstadoRepository extends CrudRepository<CuerpoEstado, In
      * @return
      */
     boolean existsByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id);
+    
+    /**
+     * @return
+     */
+    Iterable<CuerpoEstado> findAllByOrderByIdAsc();
     
 }

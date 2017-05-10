@@ -22,7 +22,7 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     
     @Override
     public Iterable<CuerpoEstado> findAll() {
-        return cuerpoEstadoRepository.findAll();
+        return cuerpoEstadoRepository.findAllByOrderByIdAsc();
     }
     
     @Override
@@ -33,7 +33,7 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     
     @Override
     public List<CuerpoEstado> findByFechaBajaIsNull() {
-        return cuerpoEstadoRepository.findByFechaBajaIsNull();
+        return cuerpoEstadoRepository.findByFechaBajaIsNullOrderByIdAsc();
     }
     
     @Override

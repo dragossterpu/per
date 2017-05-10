@@ -53,7 +53,7 @@ public class TipoEquipoBean implements Serializable {
      * @author Ezentis
      */
     public void tipoEquipoListado() {
-        listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
+        listaTipoEquipo = tipoEquipoService.findAll();
     }
     
     /**
@@ -84,6 +84,9 @@ public class TipoEquipoBean implements Serializable {
         }
     }
     
+    /**
+     * Inicializa el bean
+     */
     @PostConstruct
     public void init() {
         
@@ -117,7 +120,7 @@ public class TipoEquipoBean implements Serializable {
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
-        listaTipoEquipo = (List<TipoEquipo>) tipoEquipoService.findAll();
+        listaTipoEquipo = tipoEquipoService.findAll();
         // TODO generar alerta / notificación
     }
     

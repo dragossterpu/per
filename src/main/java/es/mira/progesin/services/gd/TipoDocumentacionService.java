@@ -18,6 +18,13 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentacionRepository;
 
+/**
+ * 
+ * Implementación del servivio de Tipos de documentación previa
+ * 
+ * @author EZENTIS
+ *
+ */
 @Service
 public class TipoDocumentacionService implements ITipoDocumentacionService {
     @Autowired
@@ -74,6 +81,8 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
             criteria.addOrder(Order.asc(sortField));
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
+        } else if (sortField == null) {
+            criteria.addOrder(Order.asc("id"));
         }
         
         @SuppressWarnings("unchecked")

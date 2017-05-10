@@ -1,5 +1,7 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,14 +9,21 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 
+/**
+ * 
+ * Implementación de los métodos del servicio
+ * 
+ * @author EZENTIS
+ *
+ */
 @Service
 public class TipoEquipoService implements ITipoEquipoService {
     @Autowired
     ITipoEquiposRepository tipoEquiposRepository;
     
     @Override
-    public Iterable<TipoEquipo> findAll() {
-        return tipoEquiposRepository.findAll();
+    public List<TipoEquipo> findAll() {
+        return tipoEquiposRepository.findAllByOrderByIdAsc();
     }
     
     @Override
