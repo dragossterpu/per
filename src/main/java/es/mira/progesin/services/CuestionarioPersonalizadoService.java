@@ -19,6 +19,11 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
+/**
+ * Servicio de modelos de cuestionario personalizados
+ * 
+ * @author EZENTIS
+ */
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {
     
@@ -36,52 +41,8 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
     
     @Override
     @Transactional(readOnly = false)
-    public void delete(Long id) {
-        cuestionarioPersRep.delete(id);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public void delete(Iterable<CuestionarioPersonalizado> entities) {
-        cuestionarioPersRep.delete(entities);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
     public void delete(CuestionarioPersonalizado entity) {
         cuestionarioPersRep.delete(entity);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public void deleteAll() {
-        cuestionarioPersRep.deleteAll();
-    }
-    
-    @Override
-    public boolean exists(Long id) {
-        return cuestionarioPersRep.exists(id);
-    }
-    
-    @Override
-    public Iterable<CuestionarioPersonalizado> findAll() {
-        return cuestionarioPersRep.findAll();
-    }
-    
-    @Override
-    public Iterable<CuestionarioPersonalizado> findAll(Iterable<Long> ids) {
-        return cuestionarioPersRep.findAll(ids);
-    }
-    
-    @Override
-    public CuestionarioPersonalizado findOne(Long id) {
-        return cuestionarioPersRep.findOne(id);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public Iterable<CuestionarioPersonalizado> save(Iterable<CuestionarioPersonalizado> entities) {
-        return cuestionarioPersRep.save(entities);
     }
     
     @Override
