@@ -1,22 +1,31 @@
 package es.mira.progesin.services;
 
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 
 /**
- * Interfaz que contiene los métodos necesarios para trabajar con la clase ModeloCuestionario
+ * Interfaz del servicio de modelos de cuestionario
  * 
  * @author EZENTIS
- *
  */
 public interface IModeloCuestionarioService {
     
-    @Transactional(readOnly = false)
-    public ModeloCuestionario save(ModeloCuestionario modeloCuestionario);
+    /**
+     * Guarda la información de un cuestionario enviado en la bdd.
+     * 
+     * @author Ezentis
+     * @param modelo de cuestionario
+     * @return modelo con id
+     */
+    public ModeloCuestionario save(ModeloCuestionario modelo);
     
-    public Iterable<ModeloCuestionario> findAll();
-    
-    public ModeloCuestionario findOne(Integer id);
+    /**
+     * Recupera una lista con todos los modelos de cuestionario de la bdd.
+     * 
+     * @author Ezentis
+     * @return lista de modelos
+     */
+    public List<ModeloCuestionario> findAll();
     
 }

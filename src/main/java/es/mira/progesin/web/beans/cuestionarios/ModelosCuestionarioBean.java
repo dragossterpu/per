@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -16,32 +15,36 @@ import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Muestra la lista de modelos de cuestionarios cargados en el sistema.
+ * 
+ * @author Ezentis
+ */
 @Setter
 @Getter
 @Controller("modelosCuestionarioBean")
 @Scope("session")
 public class ModelosCuestionarioBean {
-
-	private List<ModeloCuestionario> listadoCuestionarios;
-
-	private StreamedContent file;
-
-	@Autowired
-	private IModeloCuestionarioService modeloCuestionarioService;
-
-	@Autowired
-	private IDocumentoService documentoService;
-
-	@Autowired
-	private IRegistroActividadService regActividadService;
-
-	@PostConstruct
-	public void init() {
-		setListadoCuestionarios((List<ModeloCuestionario>) modeloCuestionarioService.findAll());
-	}
-
-	public void list() {
-		setListadoCuestionarios((List<ModeloCuestionario>) modeloCuestionarioService.findAll());
-	}
-
+    
+    private List<ModeloCuestionario> listadoCuestionarios;
+    
+    @Autowired
+    private IModeloCuestionarioService modeloCuestionarioService;
+    
+    @Autowired
+    private IDocumentoService documentoService;
+    
+    @Autowired
+    private IRegistroActividadService regActividadService;
+    
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
+    @PostConstruct
+    public void init() {
+        setListadoCuestionarios(modeloCuestionarioService.findAll());
+    }
+    
 }

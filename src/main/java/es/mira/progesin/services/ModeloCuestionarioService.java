@@ -1,5 +1,7 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -10,11 +12,13 @@ import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 
 /**
+ * Servicio de modelos de cuestionario
+ * 
  * @author EZENTIS
- *
  */
 @Service
 public class ModeloCuestionarioService implements IModeloCuestionarioService {
+    
     @Autowired
     IModeloCuestionarioRepository modeloCuestionarioRepository;
     
@@ -28,13 +32,8 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
     }
     
     @Override
-    public Iterable<ModeloCuestionario> findAll() {
+    public List<ModeloCuestionario> findAll() {
         return modeloCuestionarioRepository.findAll();
-    }
-    
-    @Override
-    public ModeloCuestionario findOne(Integer id) {
-        return modeloCuestionarioRepository.findOne(id);
     }
     
 }
