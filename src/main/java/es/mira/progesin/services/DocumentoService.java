@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -75,245 +74,51 @@ public class DocumentoService implements IDocumentoService {
     @Autowired
     IGestDocSolicitudDocumentacionRepository gestDocSolicitudDocumentacionRepository;
     
-    /***************************************
-     * 
-     * delete
-     * 
-     * Elimina un documento de la base de datos. El documento se identifica por su id
-     * 
-     * @author Ezentis
-     * @param Long id Identificador del documento a eliminar
-     *
-     *************************************/
-    
     @Override
     public void delete(Long id) {
         documentoRepository.delete(id);
     }
     
-    /***************************************
-     * 
-     * delete
-     * 
-     * Elimina una serie de documentos de la base de datos. Los documentos se identifican por sus id
-     * 
-     * @author Ezentis
-     * @param entities Identificadores de los documentos a eliminar
-     * 
-     *************************************/
-    @Override
-    public void delete(Iterable<Documento> entities) {
-        documentoRepository.delete(entities);
-    }
-    
-    /***************************************
-     * 
-     * delete
-     * 
-     * Elimina una serie de documentos de la base de datos. El documento a eliminar se pasa como parámetro.
-     * 
-     * @author Ezentis
-     * @param Documento entity Documento a eliminar
-     * 
-     *************************************/
     @Override
     public void delete(Documento entity) {
         documentoRepository.delete(entity);
     }
     
-    /***************************************
-     * 
-     * deleteAll
-     * 
-     * Elimina todos los documentos de la base de datos
-     * 
-     * @author Ezentis
-     *
-     *************************************/
-    @Override
-    public void deleteAll() {
-        documentoRepository.deleteAll();
-    }
-    
-    /***************************************
-     * 
-     * exists
-     * 
-     * Localiza un documento identificado por su id en la base de datos. Devuelve un booleano con el resultado de la
-     * búsqueda.
-     * 
-     * @author Ezentis
-     * @param Long id Identificador del documento a buscar
-     * @return boolean Resultado de la búsqueda
-     * 
-     *************************************/
-    @Override
-    public boolean exists(Long id) {
-        return documentoRepository.exists(id);
-    }
-    
-    /***************************************
-     * 
-     * findAll
-     * 
-     * Busca todos los documentos almacenados en base de datos y los devuelve
-     * 
-     * @author Ezentis
-     * @return Iterable<Documento> Todos los documentos almacenados en base de datos
-     * 
-     *************************************/
-    @Override
-    public Iterable<Documento> findAll() {
-        return documentoRepository.findAll();
-    }
-    
-    /***************************************
-     * 
-     * findAll
-     * 
-     * Busca una serie de documentos almacenados en base de datos. Los documentos a buscar están identificados por sus
-     * id. Devuelve los documentos buscados
-     * 
-     * @author Ezentis
-     * @param ids Identificadores de los documentos a buscar
-     * @return Iterable<Documento> Documentos seleccionados
-     * 
-     *************************************/
-    @Override
-    public Iterable<Documento> findAll(Iterable<Long> ids) {
-        return documentoRepository.findAll(ids);
-    }
-    
-    /***************************************
-     * 
-     * findOne
-     * 
-     * Busca un documento en base de datos identificado por su id y lu devuelve.
-     * 
-     * @author Ezentis
-     * @param Long id Identificador del documento a localizar
-     * @return Documento Documento localizado
-     * 
-     *************************************/
-    @Override
-    public Documento findOne(Long id) {
-        return documentoRepository.findOne(id);
-    }
-    
-    /***************************************
-     * 
-     * findByFechaBajaIsNotNull
-     * 
-     * Busca todos los documentos no eliminados.
-     * 
-     * @author Ezentis
-     * @return Iterable<Documento> Documentos seleccionados
-     * 
-     *************************************/
     @Override
     public List<Documento> findByFechaBajaIsNull() {
         return documentoRepository.findByFechaBajaIsNull();
     }
     
-    /***************************************
-     * 
-     * findByFechaBajaIsNotNull
-     * 
-     * Busca todos los documentos eliminados.
-     * 
-     * @author Ezentis
-     * @return Iterable<Documento> Documentos seleccionados
-     * 
-     *************************************/
     @Override
     public List<Documento> findByFechaBajaIsNotNull() {
         return documentoRepository.findByFechaBajaIsNotNull();
     }
     
-    /***************************************
-     * 
-     * save
-     * 
-     * Guarda una serie de documentos en base de datos. Como parámetro recibe los documentos a guardar y devuelve los
-     * documentos guardados.
-     * 
-     * @author Ezentis
-     * @param entities Documentos a salvar
-     * @return Iterable<Documento> Documentos salvado
-     * 
-     *************************************/
     @Override
     public Iterable<Documento> save(Iterable<Documento> entities) {
         return documentoRepository.save(entities);
     }
     
-    /***************************************
-     * 
-     * save
-     * 
-     * Guarda un documento en base de datos. Como parámetro recibe el documento a guardar y devuelve el documento
-     * guardado.
-     * 
-     * @author Ezentis
-     * @param Documento Documento a guardar
-     * @return Documento Documento guardado
-     *************************************/
     @Override
     public Documento save(Documento entity) {
         return documentoRepository.save(entity);
     }
     
-    /***************************************
-     * 
-     * descargaDocumento
-     * 
-     * Recibe un documento como parámetro y devuelve un stream para realizar la descarga.
-     * 
-     * @author Ezentis
-     * @param Documento Documento a descargar
-     * @return DefaultStreamedContent Flujo de descarga
-     * @throws SerialException
-     *************************************/
     @Override
-    public DefaultStreamedContent descargaDocumento(Documento entity) throws SerialException {
+    public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
         Documento docu = documentoRepository.findById(entity.getId());
         DocumentoBlob doc = docu.getFichero();
         InputStream stream = doc.getFichero().getBinaryStream();
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), doc.getNombreFichero());
     }
     
-    /***************************************
-     * 
-     * descargaDocumento
-     * 
-     * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
-     * 
-     * @author Ezentis
-     * @param Documento Documento a descargar
-     * @return DefaultStreamedContent Flujo de descarga
-     * @throws SerialException
-     *************************************/
     @Override
-    public DefaultStreamedContent descargaDocumento(Long id) throws SerialException {
+    public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
         Documento entity = documentoRepository.findById(id);
         
         InputStream stream = entity.getFichero().getFichero().getBinaryStream();
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
     }
-    
-    /***************************************
-     * 
-     * cargaDocumento
-     * 
-     * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base da
-     * datos. Devuelve el documento almacenado
-     * 
-     * @author Ezentis
-     * @param UploadedFile
-     * @return Documento
-     * @throws Exception
-     * 
-     *************************************/
     
     @Override
     public Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
@@ -341,8 +146,7 @@ public class DocumentoService implements IDocumentoService {
         }
     }
     
-    @Override
-    public Documento crearDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
+    private Documento crearDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException {
         Documento docu = new Documento();
         docu.setNombre(file.getFileName());
@@ -360,19 +164,6 @@ public class DocumentoService implements IDocumentoService {
         docu.setTipoContenido(file.getContentType());
         return docu;
     }
-    
-    /***************************************
-     * 
-     * extensionCorrecta
-     * 
-     * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión) se
-     * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera)
-     * 
-     * @author Ezentis
-     * @param UploadedFile
-     * @return boolean
-     *
-     *************************************/
     
     @Override
     public boolean extensionCorrecta(UploadedFile file) {
@@ -425,7 +216,7 @@ public class DocumentoService implements IDocumentoService {
     }
     
     @Override
-    public List<Documento> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+    public List<Documento> buscarDocumentoPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             DocumentoBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(Documento.class, "documento");
@@ -519,11 +310,6 @@ public class DocumentoService implements IDocumentoService {
         documento.setFechaBaja(null);
         documento.setUsernameBaja(null);
         save(documento);
-    }
-    
-    @Override
-    public void borrarDocumento(Documento documento) {
-        delete(documento);
     }
     
     @Override

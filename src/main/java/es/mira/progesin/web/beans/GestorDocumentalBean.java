@@ -207,6 +207,8 @@ public class GestorDocumentalBean {
             
         } catch (Exception ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+                    "Se ha producido un error en la cargad el fichero");
         }
     }
     
@@ -427,10 +429,10 @@ public class GestorDocumentalBean {
             try {
                 
                 if (doc.getInspeccion() == null) {
-                    documentoService.borrarDocumento(doc);
+                    documentoService.delete(doc);
                 } else {
                     doc.setInspeccion(null);
-                    documentoService.borrarDocumento(doc);
+                    documentoService.delete(doc);
                     registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
                             TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
                 }

@@ -1,6 +1,7 @@
 package es.mira.progesin.persistence.entities.gd;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.sql.rowset.serial.SerialBlob;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +51,6 @@ public class DocumentoBlob implements Serializable {
     
     @Column(name = "fichero")
     @Lob
-    private SerialBlob fichero;
+    private Blob fichero;
     
 }

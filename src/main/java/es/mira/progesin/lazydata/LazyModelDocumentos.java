@@ -65,7 +65,7 @@ public class LazyModelDocumentos extends LazyDataModel<Documento> implements Ser
         List<Documento> listado = null;
         if (busqueda != null) {
             this.setRowCount(servicio.getCounCriteria(busqueda));
-            listado = servicio.buscarGuiaPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
+            listado = servicio.buscarDocumentoPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
             this.setDatasource(listado);
         } else {
             this.setRowCount(0);

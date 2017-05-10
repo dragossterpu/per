@@ -9,6 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.sql.rowset.serial.SerialException;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -317,10 +317,10 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
-     * @throws SerialException
+     * @throws SQLException
      */
     @Test
-    public void descargarFichero() throws SerialException {
+    public void descargarFichero() throws SQLException {
         Long idDocumento = null;
         
         solicitudDocPreviaBean.descargarFichero(idDocumento);
