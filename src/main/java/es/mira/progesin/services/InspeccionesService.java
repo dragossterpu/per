@@ -207,8 +207,7 @@ public class InspeccionesService implements IInspeccionesService {
             criteria.add(Restrictions.ne("id", busqueda.getInspeccionModif().getId()));
         } else {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())
-                    && busqueda.getInspeccionModif().getId() != null) {
+            if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
                 DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
                 subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
                 subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));

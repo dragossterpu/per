@@ -21,7 +21,6 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
-import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
@@ -240,27 +239,6 @@ public class UserService implements IUserService {
         session.close();
         
         return Math.toIntExact(cnt);
-    }
-    
-    /**
-     * Dado un equipo concreto, se consulta si el usuario logeado pertenece al mismo
-     * @param e
-     * @return
-     */
-    public boolean perteneceEquipo(Equipo e) {
-        boolean esMiembro = false;
-        List<Miembro> miembrosEquipo = miembroRepository.findByEquipo(e);
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (miembrosEquipo == null) {
-            miembrosEquipo = new ArrayList<>();
-        }
-        for (Miembro m : miembrosEquipo) {
-            if (m.getUsername().equals(usuarioActual.getUsername())) {
-                esMiembro = true;
-                break;
-            }
-        }
-        return esMiembro;
     }
     
 }
