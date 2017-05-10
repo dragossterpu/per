@@ -27,10 +27,15 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
-import es.mira.progesin.persistence.repositories.IMiembrosRepository;
-import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
+/**
+ * 
+ * Servicio de inspecciones
+ * 
+ * @author Ezentis
+ *
+ */
 @Service
 public class InspeccionesService implements IInspeccionesService {
     
@@ -43,12 +48,6 @@ public class InspeccionesService implements IInspeccionesService {
     
     @Autowired
     IInspeccionesRepository inspeccionesRepository;
-    
-    @Autowired
-    private IUserRepository userRepository;
-    
-    @Autowired
-    private IMiembrosRepository miembrosRepository;
     
     @Override
     public Iterable<Inspeccion> findAll() {
@@ -107,7 +106,6 @@ public class InspeccionesService implements IInspeccionesService {
         return listaInspecciones;
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     public int getCountInspeccionCriteria(InspeccionBusqueda busqueda) {
         Session session = sessionFactory.openSession();

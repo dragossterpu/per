@@ -53,21 +53,8 @@
 							update=":formAlta:msgs" />
 
 						<p:column headerText="Documentos">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{documento.nombreFichero}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText id="documentoInput" value="#{documento.nombreFichero}" converter="#{trimConverter}" required="true"
-										requiredMessage="El nombre del documento no puede estar vacío" />
-										<p:messages for="documentoInput" autoUpdate="true"  closable="true"/>
-								</f:facet>
-							</p:cellEditor> 
+							<h:outputText value="#{documento.nombreFichero}" />
 				       </p:column>
-
-						<p:column styleClass="botonTabla">
-							<p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar"/>
-						</p:column>
 						<p:column styleClass="botonTabla">
 							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
 								<p:fileDownload value="#{provisionalSolicitudBean.file}" />
