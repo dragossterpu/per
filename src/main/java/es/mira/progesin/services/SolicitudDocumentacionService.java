@@ -109,6 +109,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             criteria.addOrder(Order.asc(sortField));
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
+        } else if (sortField == null) {
+            criteria.addOrder(Order.asc("id"));
         }
         
         @SuppressWarnings("unchecked")

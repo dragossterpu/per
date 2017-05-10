@@ -220,6 +220,8 @@ public class UserService implements IUserService {
             criteria.addOrder(Order.asc(sortField));
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
+        } else if (sortField == null) {
+            criteria.addOrder(Order.desc("fechaAlta"));
         }
         
         @SuppressWarnings("unchecked")

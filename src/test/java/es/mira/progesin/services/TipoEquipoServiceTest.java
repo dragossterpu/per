@@ -55,7 +55,7 @@ public class TipoEquipoServiceTest {
     @Test
     public void findAll() {
         tipoEquipoService.findAll();
-        verify(tipoEquipoRepository, times(1)).findAll();
+        verify(tipoEquipoRepository, times(1)).findAllByOrderByIdAsc();
     }
     
     /**
