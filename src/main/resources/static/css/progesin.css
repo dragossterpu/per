@@ -18,9 +18,9 @@
 .ui-widget-content {
 } 
 
-.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+/* .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
 	opacity: inherit;
-}
+} */
 
 .ui-datatable-resizable thead th, .ui-datatable-resizable tbody td, .ui-datatable-resizable tfoot td {
     white-space: normal;
@@ -49,6 +49,7 @@
 input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
     cursor: not-allowed;
     background-color: #eee !important;
+    opacity: inherit !important;
 }
 
  ui-datepicker-unselectable ui-state-disabled {
