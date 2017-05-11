@@ -13,6 +13,7 @@ import es.mira.progesin.persistence.entities.Informe;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IInformeRepository;
 import es.mira.progesin.services.RegistroActividadService;
+import es.mira.progesin.util.HtmlDocGenerator;
 import es.mira.progesin.util.HtmlPdfGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,9 @@ public class InformeBean implements Serializable {
     private transient HtmlPdfGenerator htmlPdfGenerator;
     
     @Autowired
+    private transient HtmlDocGenerator htmlDocGenerator;
+    
+    @Autowired
     private transient RegistroActividadService regActividadService;
     
     private transient StreamedContent file;
@@ -49,9 +53,20 @@ public class InformeBean implements Serializable {
         informeRepository.save(informe);
     }
     
-    public void crearPdfCuestionarioEnviado(Informe informe) {
+    public void crearInformePDF(Informe informe) {
         try {
             setFile(htmlPdfGenerator.generarInformePdf(informe));
+        } catch (Exception e) {
+            e.printStackTrace();
+            // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+            // "Se ha producido un error en la generación del PDF");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
+        }
+    }
+    
+    public void crearInformeDOC(Informe informe) {
+        try {
+            // setFile(htmlDocGenerator.generarInformeDoc(informe));
         } catch (Exception e) {
             e.printStackTrace();
             // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
@@ -63,7 +78,9 @@ public class InformeBean implements Serializable {
     @PostConstruct
     public void init() {
         informe = informeRepository.findOne(1L);
-        texto = informe.getTexto();
+        if (informe != null) {
+            texto = informe.getTexto();
+        }
     }
     
 }
