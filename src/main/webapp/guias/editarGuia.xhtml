@@ -24,7 +24,7 @@
 				<p:selectOneMenu
 					value="#{guiaBean.guia.tipoInspeccion}"
 					id="tipoInspeccionSelect" converter="#{selectConverter}">
-					<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+					<f:selectItems value="#{guiaBean.listaTiposInspeccion}"
 						var="tipo"
 						itemLabel="#{tipo.descripcion}"
 						itemValue="#{tipo}" />

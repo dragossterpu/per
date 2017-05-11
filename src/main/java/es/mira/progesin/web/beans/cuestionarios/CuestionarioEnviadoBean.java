@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -90,6 +91,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     private LazyModelCuestionarioEnviado model;
     
+    private List<TipoInspeccion> listaTiposInspeccion;
+    
     /**
      * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario
      * 
@@ -109,6 +112,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void getFormBusquedaCuestionarios() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
+            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
             limpiar();
             this.vieneDe = null;
         }

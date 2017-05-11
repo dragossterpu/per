@@ -65,7 +65,7 @@ public class TipoInspeccionBean implements Serializable {
      */
     @PostConstruct
     private void init() {
-        listaTipoInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
+        listaTipoInspeccion = tipoInspeccionService.buscaTodos();
     }
     
     /**
@@ -163,7 +163,7 @@ public class TipoInspeccionBean implements Serializable {
                     "Se ha producido un error al dar de alta el tipo de inspección, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
-        setListaTipoInspeccion(tipoInspeccionService.buscaByFechaBajaIsNull());
+        setListaTipoInspeccion(tipoInspeccionService.buscaTodos());
     }
     
 }

@@ -26,13 +26,6 @@ public interface ITipoInspeccionService {
     TipoInspeccion guardarTipo(TipoInspeccion entity);
     
     /**
-     * Recupera todos los tipos de inspección que no están dados de baja lógica
-     * 
-     * @return lista de tipos
-     */
-    List<TipoInspeccion> buscaByFechaBajaIsNull();
-    
-    /**
      * Comprueba si existe un tipo de inspección comparando por su código
      * 
      * @param codigo

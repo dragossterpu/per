@@ -49,7 +49,7 @@
 						value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.tipoInspeccion}"
 						id="tipoInspeccionSelect" converter="#{selectConverter}">
 						<f:selectItem itemLabel="Todos" itemValue="" />
-						<f:selectItems value="#{applicationBean.listaTiposInspeccion}"
+						<f:selectItems value="#{solicitudDocPreviaBean.listaTiposInspeccion}"
 							var="tipo"
 							itemLabel="#{tipo.descripcion}"
 							itemValue="#{tipo}" />

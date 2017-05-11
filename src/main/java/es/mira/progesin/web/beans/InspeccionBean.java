@@ -28,6 +28,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -36,6 +37,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,6 +79,9 @@ public class InspeccionBean {
     @Autowired
     private IMiembroService miembroService;
     
+    @Autowired
+    private ITipoInspeccionService tipoInspeccionService;
+    
     @PersistenceContext
     private EntityManager em;
     
@@ -91,6 +96,8 @@ public class InspeccionBean {
     private LazyModelInspeccion model;
     
     private static final String EL_USUARIO = "El usuario";
+    
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**************************************************************
      * 
@@ -315,6 +322,7 @@ public class InspeccionBean {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
+            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
         }
     }
     

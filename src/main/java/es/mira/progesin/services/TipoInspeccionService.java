@@ -33,11 +33,6 @@ public class TipoInspeccionService implements ITipoInspeccionService {
     }
     
     @Override
-    public List<TipoInspeccion> buscaByFechaBajaIsNull() {
-        return tipoInspeccionRepository.findByFechaBajaIsNullOrderByFechaAltaAsc();
-    }
-    
-    @Override
     public boolean existeByCodigoIgnoreCase(String codigo) {
         return tipoInspeccionRepository.existsByCodigoIgnoreCase(codigo);
     }

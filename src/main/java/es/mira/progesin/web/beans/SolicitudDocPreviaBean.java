@@ -25,6 +25,7 @@ import es.mira.progesin.lazydata.LazyModelSolicitudes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
@@ -40,6 +41,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
+import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
@@ -143,6 +145,11 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
+    
+    @Autowired
+    private transient ITipoInspeccionService tipoInspeccionService;
+    
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -635,6 +642,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void getFormBusquedaSolicitudes() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
+            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
             limpiarBusqueda();
             this.vieneDe = null;
         }
