@@ -41,8 +41,6 @@ public class PuestoTrabajoBean implements Serializable {
     
     private List<PuestoTrabajo> listaPuestosTrabajo;
     
-    private String puestoNuevo;
-    
     @Autowired
     private transient IPuestoTrabajoService puestoTrabajoService;
     
@@ -54,6 +52,7 @@ public class PuestoTrabajoBean implements Serializable {
     
     /**
      * Eliminación lógica (se pone fecha de baja) de un puesto
+     * 
      * @param puesto de trabajo a eliminar
      */
     public void eliminarPuesto(PuestoTrabajo puesto) {
@@ -73,6 +72,9 @@ public class PuestoTrabajoBean implements Serializable {
     
     /**
      * Método que comprueba que no hay usuarios asignados al puesto que se desea eliminar
+     * 
+     * @param puesto
+     * @return Devuelve true si existen usuarios asignados al puesto de trabajo, false en caso contrario
      */
     
     public boolean existenUsuariosCuerpo(PuestoTrabajo puesto) {
@@ -86,8 +88,9 @@ public class PuestoTrabajoBean implements Serializable {
     
     /**
      * Alta un nuevo puesto de trabajo
+     * @param puestoNuevo
      */
-    public void altaPuesto() {
+    public void altaPuesto(String puestoNuevo) {
         PuestoTrabajo puesto = new PuestoTrabajo();
         puesto.setDescripcion(puestoNuevo);
         try {

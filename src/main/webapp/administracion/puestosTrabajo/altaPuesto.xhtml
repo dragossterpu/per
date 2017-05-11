@@ -12,11 +12,11 @@
 			<h:form id="form">
 			
 				<h:outputLabel for="descripcion" value="Nombre del puesto de trabajo (*):" />
-				<p:inputText id="descripcion" value="#{puestosTrabajoBean.puestoNuevo}" required="true" requiredMessage="Introduzca el nombre del puesto de trabajo" converter="#{trimConverter}"/>
+				<p:inputText id="descripcion" value="#{puestoNuevo}" required="true" requiredMessage="Introduzca el nombre del puesto de trabajo" converter="#{trimConverter}"/>
 				<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 				
 				<div class="botonesFormulario">
-					<p:commandButton actionListener="#{puestosTrabajoBean.altaPuesto}" value="Crear puesto de trabajo" icon="fa fa-fw fa-save"/>
+					<p:commandButton actionListener="#{puestosTrabajoBean.altaPuesto(puestoNuevo)}" value="Crear puesto de trabajo" icon="fa fa-fw fa-save"/>
 					<p:button outcome="/administracion/puestosTrabajo/puestosTrabajo" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
 		

@@ -81,16 +81,6 @@ public class TipoEquipoBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoEquipoBean#tipoEquipoListado()}.
-     */
-    @Test
-    public void tipoEquipoListado() {
-        tipoEquipoBean.tipoEquipoListado();
-        
-        verify(tipoEquipoService, times(1)).findAll();
-    }
-    
-    /**
      * Test method for {@link es.mira.progesin.web.beans.TipoEquipoBean#eliminarTipo(TipoEquipo)}.
      */
     @Test
@@ -135,7 +125,6 @@ public class TipoEquipoBeanTest {
         
         tipoEquipoBeanMock.init();
         
-        verify(tipoEquipoBeanMock, times(1)).tipoEquipoListado();
     }
     
     /**

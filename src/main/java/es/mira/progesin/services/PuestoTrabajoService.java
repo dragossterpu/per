@@ -9,6 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 
+/**
+ * Servicio para la administración de puestos de trabajo
+ * 
+ * @author EZENTIS
+ *
+ */
 @Service
 public class PuestoTrabajoService implements IPuestoTrabajoService {
     
@@ -28,7 +34,7 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     
     @Override
     public List<PuestoTrabajo> findByFechaBajaIsNull() {
-        return puestoTrabajoRepository.findByFechaBajaIsNull();
+        return puestoTrabajoRepository.findByFechaBajaIsNullOrderByIdAsc();
     }
     
 }
