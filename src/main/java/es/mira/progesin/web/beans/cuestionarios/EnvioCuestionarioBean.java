@@ -142,7 +142,6 @@ public class EnvioCuestionarioBean implements Serializable {
             // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
             if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
                 String password = Utilities.getPassword();
-                System.out.println(password);
                 String correoEnvio = cuestionarioEnvio.getCorreoEnvio();
                 if (userService.exists(correoEnvio)) {
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Envío abortado",

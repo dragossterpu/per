@@ -515,7 +515,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
                 
-                System.out.println("Password usuario provisional  : " + password);
                 StringBuilder asunto = new StringBuilder(DESCRIPCION)
                         .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
@@ -642,7 +641,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void getFormBusquedaSolicitudes() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
+            setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
             limpiarBusqueda();
             this.vieneDe = null;
         }

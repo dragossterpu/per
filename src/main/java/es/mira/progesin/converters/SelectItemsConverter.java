@@ -11,6 +11,11 @@ import javax.faces.convert.Converter;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Componente que permite generar desplegables en formularios html donde las opciones están asociadas a objetos
+ * 
+ * @author Ezentis
+ */
 @Component("selectConverter")
 public class SelectItemsConverter implements Converter {
     
@@ -19,13 +24,21 @@ public class SelectItemsConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object entity) {
         synchronized (entities) {
-            if (!entities.containsKey(entity)) {
-                String uuid = UUID.randomUUID().toString();
-                entities.put(entity, uuid);
-                return uuid;
-            } else {
-                return entities.get(entity);
+            // if (!entities.containsKey(entity)) {
+            // String uuid = UUID.randomUUID().toString();
+            // entities.put(entity, uuid);
+            // return uuid;
+            // } else {
+            // return entities.get(entity);
+            // }
+            // algunas clases tienen sobreescrito el equals por lo que no se actualizan cambios en sus campos, asi
+            // que se procede a refrescar el objeto
+            if (entities.containsKey(entity)) {
+                entities.remove(entity);
             }
+            String uuid = UUID.randomUUID().toString();
+            entities.put(entity, uuid);
+            return uuid;
         }
     }
     
