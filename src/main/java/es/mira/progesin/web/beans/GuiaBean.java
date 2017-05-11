@@ -20,7 +20,6 @@ import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;

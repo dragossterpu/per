@@ -15,10 +15,9 @@ import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 
 /**************************************************
  * 
- * Repositorio de operaciones de base de datos para Alertas y Notificaciones de usuario. El repositorio es de tipo
- * PagingAndSortingRepository para permitir la paginación desde el servidor
+ * Repositorio de operaciones de base de datos para Alertas y Notificaciones de usuario.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  ****************************************************/
 
@@ -28,8 +27,8 @@ public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<
      * 
      * Recupera la lista de AlertasNotificacionesUsuario asignadas al usuario pasado como parámetro
      * 
-     * @param String usuario
-     * @return List<AlertasNotificacionesUsuario>
+     * @param usuario usuario para el que se desean recuperar los mensajes
+     * @return lista de mensajes (alertas o notificaciones) que tiene asiganadas el usuario
      * 
      ********************************************/
     List<AlertasNotificacionesUsuario> findByUsuario(String usuario);
@@ -38,10 +37,10 @@ public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<
      * 
      * Recupera una notificacion/alerta asignada a un usuario y con una id pasados como parámetros
      * 
-     * @param String usuario
-     * @param TipoMensajeEnum tipo
-     * @param Long id
-     * @return AlertasNotificacionesUsuario
+     * @param usuario usuario para el que se desean recuperar los mensajes
+     * @param tipo tipo de mensaje (alerta o notificación) que se desea recuperar
+     * @param id identificador del mensaje a recuperar
+     * @return AlertasNotificacionesUsuario mensaje recuperado
      * 
      ********************************************/
     
@@ -51,9 +50,9 @@ public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<
      * 
      * Recupera una lista AlertasNotificacionesUsuario cuyo tipo y usuario asignado se reciben como parámetro
      * 
-     * @param String usuario
-     * @param TipoMensajeEnum tipo
-     * @return List<AlertasNotificacionesUsuario
+     * @param usuario usuario para el que se desean recuperar los mensajes
+     * @param tipo tipo de mensaje (alerta o notificación) que se desea recuperar
+     * @return lista de mensajes recuperados
      * 
      ********************************************/
     

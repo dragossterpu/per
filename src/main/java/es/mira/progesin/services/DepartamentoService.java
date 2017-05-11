@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 
+/**
+ * Implementación del servicio de departamento
+ * 
+ * @author EZENTIS
+ *
+ */
 @Service
 public class DepartamentoService implements IDepartamentoService {
     

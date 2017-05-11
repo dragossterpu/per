@@ -9,7 +9,7 @@
 	<ui:define name="content">
 	
 	<ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
-    <ui:param name="rolSugerencias" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') or (p:ifGranted('EQUIPO_INSPECCIONES') and userBean.esJefeEquipo())}"/>
+    <ui:param name="rolSugerencias" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') or (p:ifGranted('EQUIPO_INSPECCIONES') and userBean.esJefeEquipo)}"/>
 	        
     <!-- <h:form>
         <p:remoteCommand name="onload" action="#{navegacionBean.iniciarCamino()}" update="caminoMigas" autoRun="true" />

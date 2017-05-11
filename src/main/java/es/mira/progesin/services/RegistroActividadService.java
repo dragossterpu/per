@@ -86,7 +86,7 @@ public class RegistroActividadService implements IRegistroActividadService {
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
         } else if (sortField == null) {
-            criteria.addOrder(Order.asc("idRegActividad"));
+            criteria.addOrder(Order.desc("idRegActividad"));
         }
         
         @SuppressWarnings("unchecked")

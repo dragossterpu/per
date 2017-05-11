@@ -288,7 +288,7 @@ public class AlertaService implements IAlertaService {
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
         } else if (sortField == null) {
-            criteria.addOrder(Order.asc("idAlerta"));
+            criteria.addOrder(Order.desc("idAlerta"));
         }
         
         @SuppressWarnings("unchecked")

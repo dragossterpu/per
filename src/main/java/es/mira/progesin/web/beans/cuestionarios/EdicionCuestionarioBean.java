@@ -26,6 +26,12 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Bean para la edición de modelos de cuestionario
+ * 
+ * @author EZENTIS
+ *
+ */
 @Setter
 @Getter
 @Controller("edicionCuestionarioBean")
@@ -50,6 +56,12 @@ public class EdicionCuestionarioBean {
     @Autowired
     private IRegistroActividadService regActividadService;
     
+    /**
+     * Inicia la edición del modelo de cuestionario
+     * 
+     * @param modeloCuestionario modelo de cuestionario a modificar
+     * @return ruta de la vista de edición a la que se redirigirá la aplicación
+     */
     public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
         this.modeloCuestionario = modeloCuestionario;
         preguntasSelecciondas = new HashMap<>();
@@ -61,10 +73,22 @@ public class EdicionCuestionarioBean {
         return "/cuestionarios/editarCuestionario?faces-redirect=true";
     }
     
+    /**
+     * 
+     * Inicia el alta de un modelo de cuestionario
+     * 
+     * @return ruta de la vista de alta de modelo de cuestionario
+     * 
+     */
     public String nuevoModeloCuestionario() {
-        return "/cuestionarios/nuevoModeloCuestionario";
+        return "/cuestionarios/nuevoModeloCuestionario?faces-redirect=true";
     }
     
+    /**
+     * Previsualiza el modelo de cuestionario
+     * 
+     * @return url de la vista a la que se redirige
+     */
     public String previsualizarFormulario() {
         boolean hayPreguntasSeleccionadas = false;
         String page;
@@ -86,6 +110,11 @@ public class EdicionCuestionarioBean {
         return page;
     }
     
+    /**
+     * Guarda el cuestionario en base de datos
+     * 
+     * @param nombreCuestionario a guardar
+     */
     public void guardarFormulario(String nombreCuestionario) {
         try {
             RequestContext.getCurrentInstance().execute("PF('cuestionarioDialog').hide()");

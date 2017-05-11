@@ -117,12 +117,22 @@ public class UserBean {
     @Autowired
     private IDepartamentoRepository departamentoRepository;
     
+    /**
+     * Muestra el perfil del usuario
+     * 
+     * @return URL de la página donde se visualiza el perfil
+     */
     public String getUserPerfil() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         user = userService.findOne(username);
         return "/principal/miPerfil?faces-redirect=true";
     }
     
+    /**
+     * Comprueba si el usuario es jefe de algún equipo
+     * 
+     * @return booleano con el valor de la consulta
+     */
     public boolean esJefeEquipo() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.esJefeEquipo(username);
@@ -132,7 +142,8 @@ public class UserBean {
      * Método que nos lleva al formulario de alta de nuevos usuarios, inicializando todo lo necesario para mostrar
      * correctamente la página (cuerpos de estado, puestos de trabajo, usuario nuevo). Se llama desde la página de
      * búsqueda de usuarios.
-     * @return
+     * 
+     * @return url de la página de alta de usuarios
      */
     public String nuevoUsuario() {
         user = new User();
@@ -150,9 +161,9 @@ public class UserBean {
     
     /**
      * Método que recoge los valores introducidos en el formulario y da de alta al usuario en la BBDD
-     * @return
+     * 
      */
-    public String altaUsuario() {
+    public void altaUsuario() {
         if (userService.exists(user.getUsername())) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Ya existe un usuario con ese nombre de usuario. Pruebe con otro.", "", "username");
@@ -182,7 +193,7 @@ public class UserBean {
             }
             
         }
-        return null;
+        
     }
     
     /**
@@ -246,7 +257,7 @@ public class UserBean {
      * Pasa los datos del usuario que queremos modificar al formulario de modificación para que cambien los valores que
      * quieran
      * @param user usuario recuperado del formulario de búsqueda de usuarios
-     * @return
+     * @return URL de la página de modificar usuario
      */
     public String getFormModificarUsuario(User user) {
         estadoUsuario = user.getEstado().name();
@@ -310,10 +321,18 @@ public class UserBean {
         }
     }
     
+    /**
+     * Activa/desactiva la visibilidad de las columnas de la tabla de resultados
+     * 
+     * @param e checkbox de la columna seleccionada
+     */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
+    /**
+     * Inicializa el bean
+     */
     @PostConstruct
     public void init() {
         userBusqueda = new UserBusqueda();
@@ -338,6 +357,9 @@ public class UserBean {
         model = new LazyModelUsuarios(userService);
     }
     
+    /**
+     * Busca el objeto Empleo en base de datos a partir del seleccionado en el combo de la vista
+     */
     public void buscarEmpleo() {
         TypedQuery<Empleo> queryEmpleo = em.createNamedQuery("EmpleoCuerpo.find", Empleo.class);
         CuerpoEstado cuerpo = this.cuerpoEstadoSeleccionado != null ? this.cuerpoEstadoSeleccionado

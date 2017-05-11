@@ -46,12 +46,10 @@ public class GuiaService implements IGuiaService {
     private IGuiasRepository guiaRepository;
     
     /**
-     * Busca en la base de datos las guías que cumplan con los criterios contenidos en el objeto GuiaBusqueda que se
-     * recibe como parámetro
+     * Añade los parámetros de búsqueda al criteria
      * 
-     * @param busqueda Objeto que contiene los parámetros de búsqueda
-     * @return Lista de guías que cumplen con los parámetros de búsqueda
-     * 
+     * @param busqueda contiene los parámetros e introducir
+     * @param critera criteria a modificar
      */
     
     private void creaCriteria(GuiaBusqueda busqueda, Criteria criteria) {

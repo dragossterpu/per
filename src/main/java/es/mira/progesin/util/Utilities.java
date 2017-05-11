@@ -7,6 +7,12 @@ import java.util.Random;
 
 import es.mira.progesin.constantes.Constantes;
 
+/**
+ * Métodos de utilidades
+ * 
+ * @author EZENTIS
+ *
+ */
 public class Utilities {
     
     private Utilities() {
@@ -15,9 +21,9 @@ public class Utilities {
     
     // ************* Generating new password Progesin ********************//
     /**
-     * @author EZENTIS STAD
+     * @author EZENTIS
      * @param getPassword
-     * @return
+     * @return contraseña
      * @comment getPassword
      */
     public static String getPassword() {
@@ -65,10 +71,11 @@ public class Utilities {
     
     // ************* Generating new password Progesin END ********************//
     
-    // ************* Descripcion message error Progesin ********************
     /**
-     * @param e
-     * @return
+     * Genera un mensaje de error a partir de una excepción
+     * 
+     * @param e Excepción
+     * @return Mensaje
      */
     public static String messageError(Exception e) {
         String message = Arrays.toString(e.getStackTrace());
@@ -78,7 +85,13 @@ public class Utilities {
         return message;
     }
     
-    // ************* Descripcion message error Progesin END********************
+    /**
+     * Formatea una fecha según un patrón recibido como parámetro
+     * 
+     * @param date fecha a formatear
+     * @param pattern patrón de fecha
+     * @return fecha formateada
+     */
     
     public static String getFechaFormateada(Date date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);

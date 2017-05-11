@@ -297,7 +297,7 @@ public class NotificacionService implements INotificacionService {
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
         } else if (sortField == null) {
-            criteria.addOrder(Order.asc("idNotificacion"));
+            criteria.addOrder(Order.desc("idNotificacion"));
         }
         
         @SuppressWarnings("unchecked")
