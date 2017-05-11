@@ -20,6 +20,7 @@ import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
@@ -334,7 +335,8 @@ public class GuiaBean {
                 if (paso.getId() != null && paso.equals(pasoGrabar)) {
                     pasoGrabar.setOrden(i);
                     listaPasosAux.set(i, pasoGrabar);
-                } else if (pasoGrabar.getPaso().equals(paso.getPaso()) && paso.getId() == null
+                }
+                if (pasoGrabar.getPaso().equals(paso.getPaso()) && paso.getId() == null
                         && paso.getFechaBaja() == null) {
                     pasoGrabar.setOrden(i);
                     listaPasosAux.set(i, pasoGrabar);
@@ -447,7 +449,7 @@ public class GuiaBean {
                 regActividadService.altaRegActividad("Se ha anulado la guía '".concat(guiaAnular.getNombre()),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            // buscarGuia();arGuia();
+            
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -469,7 +471,7 @@ public class GuiaBean {
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            // buscarGuia();
+            
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -495,7 +497,7 @@ public class GuiaBean {
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            // buscarGuia();
+            
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -516,7 +518,7 @@ public class GuiaBean {
                         LAGUIA.concat(guiaActivar.getNombre().concat("' ha sido activada")),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            // buscarGuia();
+            
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }

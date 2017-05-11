@@ -583,7 +583,8 @@ public class ModificarModeloCuestionarioBean {
             if (pregunta.getId() != null && pregunta.equals(preguntaGrabar)) {
                 int i = pregunta.getOrden();
                 preguntaGrabar.setOrden(i);
-            } else if (preguntaGrabar.getPregunta().equals(pregunta.getPregunta()) && pregunta.getId() == null
+            }
+            if (preguntaGrabar.getPregunta().equals(pregunta.getPregunta()) && pregunta.getId() == null
                     && pregunta.getFechaBaja() == null) {
                 int i = pregunta.getOrden();
                 preguntaGrabar.setOrden(i);

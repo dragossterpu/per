@@ -198,8 +198,7 @@ public class InspeccionBean {
     public String altaInspeccion() {
         try {
             
-            Inspeccion inspeccionProvisional = null;
-            inspeccionProvisional = inspeccionesService.save(inspeccion);
+            Inspeccion inspeccionProvisional = inspeccionesService.save(inspeccion);
             
             StringBuilder numero = new StringBuilder(String.valueOf(inspeccionProvisional.getId()));
             numero.append("/");
@@ -395,16 +394,15 @@ public class InspeccionBean {
      * Guarda un nuevo municipio
      * @param nombre
      * @param provincia
-     * @return municipio guardado
      */
     public void nuevoMunicipio(String nombre) {
-        Municipio nuevoMunicipio = null;
+        
         boolean existeMunicipio = municipioService.existeByNameIgnoreCaseAndProvincia(nombre.trim(), provinciSelec);
         if (existeMunicipio) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Acción no permitida",
                     "Ya existe un municipio perteneciente a la misma provincia con ese nombre", "inputNombre");
         } else {
-            nuevoMunicipio = municipioService.crearMunicipio(nombre, provinciSelec);
+            Municipio nuevoMunicipio = municipioService.crearMunicipio(nombre, provinciSelec);
             listaMunicipios.add(nuevoMunicipio);
             Collections.sort(listaMunicipios);
             inspeccion.setMunicipio(nuevoMunicipio);

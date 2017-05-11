@@ -23,13 +23,12 @@ public class CuerpoEstadoValidator implements Validator {
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        FacesMessage facesMsg = null;
         
         String nuevoNombreCorto = value.toString();
         int id = Integer.parseInt(component.getAttributes().get("actualNombreCorto").toString());
         boolean existeCuerpo = cuerpoEstadoService.existeByNombreCortoIgnoreCaseAndIdNotIn(nuevoNombreCorto, id);
         if (existeCuerpo) {
-            facesMsg = new FacesMessage(
+            FacesMessage facesMsg = new FacesMessage(
                     "El nombre corto " + nuevoNombreCorto + " ya está siendo utilizado por otro cuerpo.");
             facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(facesMsg);
