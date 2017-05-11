@@ -30,6 +30,8 @@ public final class Constantes {
     
     public static final String RUTA_LOGOUT = "/logout";
     
+    public static final String ERROR_MENSAJE = "Error";
+    
     // "upper(convert(replace(CAMPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"+ VALOR + "', ' ', '')
     // || '%', 'US7ASCII'))"
     /**

@@ -8,13 +8,7 @@
 	<ui:define name="content">
 
 		<h3>Tipos de equipo de inspección</h3>
-		<br></br>
-		<br></br>
-		<h:form>
-			<p:remoteCommand name="onload"
-				action="#{tipoEquipoBean.tipoEquipoListado}" autoRun="true" />
-		</h:form>
-
+<div class="bloqueFormulario" >
 		<h:form id="form">
 			<div id="listadoTiposEquipo">
 				<p:dataTable id="tablaTiposEquipo" var="tipoEquipo"
@@ -77,5 +71,6 @@
                 <p:button outcome="/administracion/tipoequipo/altaTipoEquipo" value="Nuevo tipo de equipo" icon="fa fa-user-plus"/>
 			</div>
 		</h:form>
+	</div>
 	</ui:define>
 </ui:composition>

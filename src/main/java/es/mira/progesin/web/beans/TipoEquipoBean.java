@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -31,12 +33,10 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("tipoEquipoBean")
-@Scope("session")
+@Scope(FacesViewScope.NAME)
 public class TipoEquipoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
-    private static final String ERROR = "Error";
     
     private List<TipoEquipo> listaTipoEquipo;
     
@@ -48,15 +48,6 @@ public class TipoEquipoBean implements Serializable {
     
     @Autowired
     private transient IRegistroActividadService regActividadService;
-    
-    /**
-     * Método que nos lleva al listado de los tipos de equipos. Se llama en la carga de la página
-     * 
-     * @author Ezentis
-     */
-    public void tipoEquipoListado() {
-        listaTipoEquipo = tipoEquipoService.findAll();
-    }
     
     /**
      * Elimina un tipo de equipo
@@ -79,7 +70,7 @@ public class TipoEquipoBean implements Serializable {
                         SeccionesEnum.ADMINISTRACION.name());
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERROR_MENSAJE,
                     "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
@@ -91,9 +82,7 @@ public class TipoEquipoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        
-        tipoEquipoListado();
-        
+        listaTipoEquipo = tipoEquipoService.findAll();
     }
     
     /**
@@ -118,7 +107,7 @@ public class TipoEquipoBean implements Serializable {
                     SeccionesEnum.ADMINISTRACION.name());
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERROR_MENSAJE,
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
@@ -148,7 +137,7 @@ public class TipoEquipoBean implements Serializable {
                     SeccionesEnum.ADMINISTRACION.name());
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERROR_MENSAJE,
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
