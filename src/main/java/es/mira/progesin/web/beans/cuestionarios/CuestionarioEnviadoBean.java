@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -67,8 +66,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     private Date backupFechaLimiteCuestionario;
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    private List<TipoInspeccion> listaTiposInspeccion;
     
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
@@ -172,7 +169,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void init() {
         setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
         setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
-        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**

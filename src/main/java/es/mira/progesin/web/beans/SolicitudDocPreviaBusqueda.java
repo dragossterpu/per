@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -59,8 +58,6 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
     
     private List<User> listaUsuarios;
     
-    private List<TipoInspeccion> listaTiposInspeccion;
-    
     @PersistenceContext
     private transient EntityManager em;
     
@@ -70,8 +67,6 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
     @PostConstruct
     public void init() {
         setListaUsuarios(userService.findByfechaBajaIsNullAndRoleNotIn(RoleEnum.getRolesProv()));
-        TypedQuery<TipoInspeccion> query = em.createNamedQuery("TipoInspeccion.findAll", TipoInspeccion.class);
-        setListaTiposInspeccion(query.getResultList());
     }
     
     /**

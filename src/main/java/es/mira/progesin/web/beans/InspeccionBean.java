@@ -28,7 +28,6 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -92,8 +91,6 @@ public class InspeccionBean {
     private Provincia provinciSelec;
     
     private boolean selectedAll;
-    
-    private List<TipoInspeccion> listaTiposInspeccion;
     
     private LazyModelInspeccion model;
     
@@ -189,7 +186,6 @@ public class InspeccionBean {
             inspeccion.setEquipo(miembro.getEquipo());
         }
         inspeccionBusqueda.setInspeccionModif(inspeccion);
-        listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
     }
@@ -245,7 +241,6 @@ public class InspeccionBean {
         this.inspeccion = inspeccion;
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
-        listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
@@ -318,7 +313,6 @@ public class InspeccionBean {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
-            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
         }
     }
     

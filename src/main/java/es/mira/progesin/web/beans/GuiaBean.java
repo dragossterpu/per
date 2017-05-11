@@ -20,7 +20,6 @@ import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
@@ -63,8 +62,6 @@ public class GuiaBean {
     private List<GuiaPasos> listaPasosSeleccionados;
     
     private StreamedContent file;
-    
-    List<TipoInspeccion> listaTiposInspeccion;
     
     boolean alta = false;
     
@@ -139,7 +136,6 @@ public class GuiaBean {
         this.guia = new Guia();
         listaPasos = new ArrayList<>();
         listaPasosGrabar = new ArrayList<>();
-        listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         return "/guias/editarGuia?faces-redirect=true";
     }
     
@@ -157,7 +153,6 @@ public class GuiaBean {
         this.guia = guia;
         listaPasosGrabar = guiaService.listaPasos(guia);
         listaPasos = guiaService.listaPasosNoNull(guia);
-        listaTiposInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
         
         return "/guias/editarGuia?faces-redirect=true";
     }
@@ -360,7 +355,6 @@ public class GuiaBean {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
             limpiarBusqueda();
             this.vieneDe = null;
-            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
         }
         
     }
