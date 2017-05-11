@@ -15,7 +15,7 @@ import es.mira.progesin.web.beans.InspeccionBusqueda;
 public interface IInspeccionesService {
     
     /**
-     * Método que guarada una inspección
+     * Método que guarda una inspección
      * @param inspecciones a guardar
      * @return devuelve el resultado del guardado de la inspección
      */

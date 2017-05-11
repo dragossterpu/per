@@ -323,6 +323,7 @@ public class InspeccionBean {
             limpiarBusqueda();
             this.vieneDe = null;
             listaTiposInspeccion = tipoInspeccionService.buscaTodos();
+            listaEquipos = (List<Equipo>) equipoService.findAll();
         }
     }
     
