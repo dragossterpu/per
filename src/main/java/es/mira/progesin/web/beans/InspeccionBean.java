@@ -211,6 +211,9 @@ public class InspeccionBean {
         try {
             
             Inspeccion inspeccionProvisional = inspeccionesService.save(inspeccion);
+            inspeccionProvisional.setFechaAlta(new Date());
+            String user = SecurityContextHolder.getContext().getAuthentication().getName();
+            inspeccionProvisional.setUsernameAlta(user);
             
             StringBuilder numero = new StringBuilder(String.valueOf(inspeccionProvisional.getId()));
             numero.append("/");
@@ -270,6 +273,9 @@ public class InspeccionBean {
             if (inspeccionesAsignadasActuales != null) {
                 inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             }
+            inspeccion.setFechaModificacion(new Date());
+            String user = SecurityContextHolder.getContext().getAuthentication().getName();
+            inspeccion.setUsernameModif(user);
             
             inspeccionesService.save(inspeccion);
             inspeccionBusqueda.resetValues();
