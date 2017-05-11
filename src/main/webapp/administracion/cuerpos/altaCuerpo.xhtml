@@ -6,28 +6,24 @@
     xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
     
-   <!-- <h:form>
-            <p:remoteCommand name="onload" action="#{navegacionBean.adelante('Alta cuerpo', request.servletPath)}" update="caminoMigas" autoRun="true" />
-        </h:form> -->
-        
 		<h3>Alta cuerpo</h3>
 
 		<div class="bloqueFormulario" style="width: 50%">
 			<h:form id="form">
 			
 				<h:outputLabel for="nombre_corto" value="Nombre corto del cuerpo (*):" />
-				<p:inputText id="nombre_corto" value="#{cuerposEstadoBean.nombreCortoNuevo}" required="true" requiredMessage="Introduzca el nombre corto del cuerpo" converter="#{trimConverter}" maxlength="10">
+				<p:inputText id="nombre_corto" value="#{nombreCortoNuevo}" required="true" requiredMessage="Introduzca el nombre corto del cuerpo" converter="#{trimConverter}" maxlength="10">
 					<f:attribute name="actualNombreCorto" value="0" />
 					<f:validator binding="#{cuerpoEstadoValidator}" />
 				</p:inputText>
 				<p:messages for="nombre_corto" autoUpdate="true"  closable="true"/>
 			
 				<h:outputLabel for="descripcion" value="Nombre del cuerpo (*):" />
-				<p:inputText id="descripcion" value="#{cuerposEstadoBean.cuerpoNuevo}" required="true" requiredMessage="Introduzca el nombre del cuerpo" converter="#{trimConverter}"/>
+				<p:inputText id="descripcion" value="#{descripcionCuerpo}" required="true" requiredMessage="Introduzca el nombre del cuerpo" converter="#{trimConverter}"/>
 				<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 				
 				<div class="botonesFormulario">
-					<p:commandButton actionListener="#{cuerposEstadoBean.altaCuerpo}" value="Crear cuerpo" icon="fa fa-fw fa-save"/>
+					<p:commandButton actionListener="#{cuerposEstadoBean.altaCuerpo(nombreCortoNuevo,descripcionCuerpo)}" value="Crear cuerpo" icon="fa fa-fw fa-save"/>
 					<p:button outcome="/administracion/cuerpos/cuerpos" value="Cancelar" icon="fa fa-fw fa-undo"/>
 				</div>
 		

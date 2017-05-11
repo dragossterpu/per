@@ -42,10 +42,6 @@ public class CuerposEstadoBean implements Serializable {
     
     private List<CuerpoEstado> listaCuerposEstado;
     
-    private String cuerpoNuevo;
-    
-    private String nombreCortoNuevo;
-    
     @Autowired
     private transient ICuerpoEstadoService cuerposEstadoService;
     
@@ -85,18 +81,21 @@ public class CuerposEstadoBean implements Serializable {
     
     /**
      * Alta un nuevo cuerpo del estado
+     * 
+     * @param nombreCorto
+     * @param descripcionCuerpo
      */
-    public void altaCuerpo() {
+    public void altaCuerpo(String nombreCorto, String descripcionCuerpo) {
         try {
             CuerpoEstado cuerpoEstado = new CuerpoEstado();
             String user = SecurityContextHolder.getContext().getAuthentication().getName();
-            cuerpoEstado.setDescripcion(cuerpoNuevo);
-            cuerpoEstado.setNombreCorto(nombreCortoNuevo);
+            cuerpoEstado.setDescripcion(descripcionCuerpo);
+            cuerpoEstado.setNombreCorto(nombreCorto);
             cuerpoEstado.setFechaAlta(new Date());
             cuerpoEstado.setUsernameAlta(user);
             cuerposEstadoService.save(cuerpoEstado);
             
-            String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCortoNuevo;
+            String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCorto;
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.ADMINISTRACION.name());
             

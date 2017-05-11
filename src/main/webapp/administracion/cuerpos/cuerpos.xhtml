@@ -6,10 +6,6 @@
     xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
     
-   <!-- <h:form>
-            <p:remoteCommand name="onload" action="#{navegacionBean.recomenzar('Cuerpos', request.servletPath)}" update="caminoMigas" autoRun="true" />
-        </h:form> -->
-        
 		<h3 id="titulo">Cuerpos</h3>
 
 		<div class="bloqueFormulario" >
@@ -32,7 +28,6 @@
 									<f:attribute name="actualNombreCorto" value="#{cuerpo.id}" />
 									<f:validator binding="#{cuerpoEstadoValidator}" />
 								</p:inputText>
-<!-- 									<p:messages for="nombreCortoInput" autoUpdate="true"  closable="true"/> -->
 							</f:facet>
 						</p:cellEditor> 
 			      	</p:column>
@@ -46,7 +41,6 @@
 							<f:facet name="input">
 								<p:inputText id="cuerpoInput" value="#{cuerpo.descripcion}" converter="#{trimConverter}" required="true"
 									requiredMessage="La descripción del cuerpo no puede estar vacío" />
-<!-- 									<p:messages for="cuerpoInput" autoUpdate="true"  closable="true"/> -->
 							</f:facet>
 						</p:cellEditor> 
 			       </p:column>
