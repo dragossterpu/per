@@ -317,7 +317,7 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
-     * @throws SQLException
+     * @throws SQLException error al recuperar el blob
      */
     @Test
     public void descargarFichero() throws SQLException {
@@ -505,7 +505,7 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#modificarSolicitud()}.
-     * @throws ParseException
+     * @throws ParseException error al generar la fecha en el test
      */
     @Test
     public void modificarSolicitud_SinFechaLimiteCambiada() throws ParseException {

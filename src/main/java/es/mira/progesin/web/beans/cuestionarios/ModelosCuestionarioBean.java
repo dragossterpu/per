@@ -44,6 +44,15 @@ public class ModelosCuestionarioBean {
      */
     @PostConstruct
     public void init() {
+        cargarModelos();
+    }
+    
+    /**
+     * Carga la lista con todos los modelos de cuestionario de la bdd.
+     * 
+     * @author Ezentis
+     */
+    public void cargarModelos() {
         setListadoCuestionarios(modeloCuestionarioService.findAll());
     }
     

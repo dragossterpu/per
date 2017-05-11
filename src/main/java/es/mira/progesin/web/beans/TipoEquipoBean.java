@@ -36,6 +36,8 @@ public class TipoEquipoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    private static final String ERROR = "Error";
+    
     private List<TipoEquipo> listaTipoEquipo;
     
     @Autowired
@@ -77,7 +79,7 @@ public class TipoEquipoBean implements Serializable {
                         SeccionesEnum.ADMINISTRACION.name());
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
@@ -98,8 +100,8 @@ public class TipoEquipoBean implements Serializable {
      * Crea un tipo de equipo
      * 
      * @author Ezentis
-     * @param codigo
-     * @param descripcion
+     * @param codigo abreviatura
+     * @param descripcion definición del tipo
      */
     public void altaTipo(String codigo, String descripcion) {
         try {
@@ -116,7 +118,7 @@ public class TipoEquipoBean implements Serializable {
                     SeccionesEnum.ADMINISTRACION.name());
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
@@ -146,7 +148,7 @@ public class TipoEquipoBean implements Serializable {
                     SeccionesEnum.ADMINISTRACION.name());
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }

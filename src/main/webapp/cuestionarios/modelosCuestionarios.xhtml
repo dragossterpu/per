@@ -11,7 +11,7 @@
 	
 		<h3>Modelos de cuestionario</h3>
 		<h:form>
-		    <p:remoteCommand name="onload" action="#{modelosCuestionarioBean.list}" update=":form:tablaCuestionarios" autoRun="true" />
+		    <p:remoteCommand name="onload" action="#{modelosCuestionarioBean.cargarModelos}" update=":form:tablaCuestionarios" autoRun="true" />
 		</h:form>
 
 		<div class="bloqueFormulario" >

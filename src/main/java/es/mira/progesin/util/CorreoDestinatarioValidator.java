@@ -31,7 +31,7 @@ public class CorreoDestinatarioValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) {
         
-        FacesMessage facesMsg = null;
+        String msg = null;
         
         String nuevoCorreoDestinatario = value.toString();
         
@@ -39,18 +39,16 @@ public class CorreoDestinatarioValidator implements Validator {
         
         String regex = "(?i)^[_a-z0-9-+]+(.[_a-z0-9-]+)*@(" + applicationBean.getDominiosValidos() + ")$";
         if (!nuevoCorreoDestinatario.matches(regex)) {
-            facesMsg = new FacesMessage("Formato de correo incorrecto o dominio no válido.");
+            msg = "Formato de correo incorrecto o dominio no válido.";
         } else if (nuevoCorreoDestinatario.equals(actualCorreoDestinatario) == Boolean.FALSE) {
             if (solicitudDocumentacionService.findNoFinalizadaPorCorreoDestinatario(nuevoCorreoDestinatario) != null) {
-                facesMsg = new FacesMessage(
-                        "No se puede asignar esta solicitud al destinatario con este correo, ya tiene otra solicitud en curso. Debe finalizarla o anularla antes de proseguir.");
+                msg = "No se puede asignar esta solicitud al destinatario con este correo, ya tiene otra solicitud en curso. Debe finalizarla o anularla antes de proseguir.";
             } else if (cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(nuevoCorreoDestinatario) != null) {
-                facesMsg = new FacesMessage(
-                        "No se puede asignar esta solicitud al destinatario con este correo, ya tiene un cuestionario en curso. Debe finalizarlo o anularlo antes de proseguir.");
+                msg = "No se puede asignar esta solicitud al destinatario con este correo, ya tiene un cuestionario en curso. Debe finalizarlo o anularlo antes de proseguir.";
             }
         }
-        if (facesMsg != null) {
-            facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+        if (msg != null) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             throw new ValidatorException(facesMsg);
         }
     }
