@@ -320,7 +320,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void getFormularioCrearSolicitud() {
         documentosSeleccionados = new ArrayList<>();
         solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-        solicitudDocumentacionPrevia.setInspeccion(new Inspeccion());
         datosApoyo();
         skip = false;
     }
@@ -699,23 +698,20 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public boolean inspeccionSinTareasPendientes() {
         Inspeccion inspeccion = solicitudDocumentacionPrevia.getInspeccion();
-        boolean respuesta = true;
         SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
                 .findNoFinalizadaPorInspeccion(inspeccion);
         if (solicitudPendiente != null) {
             String mensaje = "No se puede crear la solicitud ya que existe otra solicitud en curso para esta inspección. "
                     + "Debe finalizarla o anularla antes de proseguir.";
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
-            respuesta = false;
         }
         CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion);
         if (cuestionarioPendiente != null) {
             String mensaje = "No se puede crear la solicitud ya que existe un cuestionario en curso para esta inspección. "
                     + "Debe finalizarlo o anularlo antes de proseguir.";
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
-            respuesta = false;
         }
-        return respuesta;
+        return solicitudPendiente == null && cuestionarioPendiente == null;
     }
     
     /**
@@ -727,7 +723,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public boolean usuarioSinTareasPendientes() {
         String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
-        boolean respuesta = true;
         SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
                 .findNoFinalizadaPorCorreoDestinatario(correoDestinatario);
         if (solicitudPendiente != null) {
@@ -737,7 +732,6 @@ public class SolicitudDocPreviaBean implements Serializable {
                             + solicitudPendiente.getInspeccion().getNumero()
                             + ". Debe finalizarla o anularla antes de proseguir.",
                     "", null);
-            respuesta = false;
         }
         CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService
                 .findNoFinalizadoPorCorreoEnvio(correoDestinatario);
@@ -748,9 +742,8 @@ public class SolicitudDocPreviaBean implements Serializable {
                             + cuestionarioPendiente.getInspeccion().getNumero()
                             + ". Debe finalizarlo o anularlo antes de proseguir.",
                     "", null);
-            respuesta = false;
         }
-        return respuesta;
+        return solicitudPendiente == null && cuestionarioPendiente == null;
     }
     
 }

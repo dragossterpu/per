@@ -9,11 +9,16 @@ import javax.faces.validator.ValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
+ * Comprueba que el correo introducido en el formulario de modificación de una solicitud es válido y no se está usando
+ * en otra solicitud o cuestionario
+ * 
  * @author EZENTIS
  */
 @Component("correoDestinatarioValidator")
@@ -41,10 +46,20 @@ public class CorreoDestinatarioValidator implements Validator {
         if (!nuevoCorreoDestinatario.matches(regex)) {
             msg = "Formato de correo incorrecto o dominio no válido.";
         } else if (nuevoCorreoDestinatario.equals(actualCorreoDestinatario) == Boolean.FALSE) {
-            if (solicitudDocumentacionService.findNoFinalizadaPorCorreoDestinatario(nuevoCorreoDestinatario) != null) {
-                msg = "No se puede asignar esta solicitud al destinatario con este correo, ya tiene otra solicitud en curso. Debe finalizarla o anularla antes de proseguir.";
-            } else if (cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(nuevoCorreoDestinatario) != null) {
-                msg = "No se puede asignar esta solicitud al destinatario con este correo, ya tiene un cuestionario en curso. Debe finalizarlo o anularlo antes de proseguir.";
+            SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
+                    .findNoFinalizadaPorCorreoDestinatario(nuevoCorreoDestinatario);
+            if (solicitudPendiente != null) {
+                msg = "No se puede asignar esta solicitud al destinatario con este correo, ya tiene otra solicitud en curso para la inspeccion "
+                        + solicitudPendiente.getInspeccion().getNumero()
+                        + ". Debe finalizarla o anularla antes de proseguir.";
+            } else {
+                CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService
+                        .findNoFinalizadoPorCorreoEnvio(nuevoCorreoDestinatario);
+                if (cuestionarioPendiente != null) {
+                    msg = "No se puede asignar esta solicitud al destinatario con este correo, ya tiene un cuestionario en curso para la inspeccion "
+                            + cuestionarioPendiente.getInspeccion().getNumero()
+                            + ". Debe finalizarlo o anularlo antes de proseguir.";
+                }
             }
         }
         if (msg != null) {
