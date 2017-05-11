@@ -12,7 +12,7 @@
 			<h:form id="form">
 			
 				<h:outputLabel for="descripcion" value="Nombre del departamento (*):" />
-				<p:inputText id="descripcion" value="#{departamentoNuevo}" required="true" requiredMessage="Introduzca el nombre del departamento" converter="#{trimConverter}"/>
+				<p:inputText id="descripcion" value="#{departamentoNuevo}" required="true" requiredMessage="Introduzca el nombre del departamento" converter="#{trimConverter}" maxlength="100"/>
 				<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 				
 				<div class="botonesFormulario">

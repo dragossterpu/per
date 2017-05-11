@@ -23,7 +23,7 @@
 				<p:messages for="nombre_corto" autoUpdate="true"  closable="true"/>
 			
 				<h:outputLabel for="descripcion" value="Nombre del cuerpo (*):" />
-				<p:inputText id="descripcion" value="#{descripcionCuerpo}" required="true" requiredMessage="Introduzca el nombre del cuerpo" converter="#{trimConverter}"/>
+				<p:inputText id="descripcion" value="#{descripcionCuerpo}" required="true" requiredMessage="Introduzca el nombre del cuerpo" converter="#{trimConverter}" maxlength="100"/>
 				<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 				
 				<div class="botonesFormulario">
