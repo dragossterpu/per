@@ -193,6 +193,7 @@ public class InspeccionBean {
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         if (miembro != null) {
             inspeccion.setEquipo(miembro.getEquipo());
         }
@@ -248,6 +249,7 @@ public class InspeccionBean {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         this.inspeccion = inspeccion;
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
@@ -299,7 +301,6 @@ public class InspeccionBean {
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
         inspeccionBusqueda.setAsociar(false);
-        setListaEquipos(equipoService.findByFechaBajaIsNotNull());
         setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
         inspeccionesSeleccionadas = new ArrayList<>();

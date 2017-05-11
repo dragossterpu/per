@@ -130,11 +130,11 @@ public class EquipoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.EquipoService#findByFechaBajaIsNotNull()}.
+     * Test method for {@link es.mira.progesin.services.EquipoService#findByFechaBajaIsNull()}.
      */
     @Test
-    public void findByFechaBajaIsNotNull() {
-        equipoService.findByFechaBajaIsNotNull();
+    public void findByFechaBajaIsNull() {
+        equipoService.findByFechaBajaIsNull();
         verify(equipoRepository, times(1)).findByFechaBajaIsNull();
     }
     

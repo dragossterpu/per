@@ -138,7 +138,7 @@ public class EquipoService implements IEquipoService {
     }
     
     @Override
-    public List<Equipo> findByFechaBajaIsNotNull() {
+    public List<Equipo> findByFechaBajaIsNull() {
         return equipoRepository.findByFechaBajaIsNull();
     }
     

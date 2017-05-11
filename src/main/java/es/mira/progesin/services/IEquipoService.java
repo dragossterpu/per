@@ -18,9 +18,12 @@ import es.mira.progesin.web.beans.EquipoBusqueda;
  */
 public interface IEquipoService {
     
+    /**
+     * @return Iterable con todos los equipos
+     */
     Iterable<Equipo> findAll();
     
-    List<Equipo> findByFechaBajaIsNotNull();
+    List<Equipo> findByFechaBajaIsNull();
     
     Miembro save(Miembro miembro);
     
