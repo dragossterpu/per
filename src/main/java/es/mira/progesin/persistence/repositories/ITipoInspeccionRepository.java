@@ -12,7 +12,7 @@ public interface ITipoInspeccionRepository extends CrudRepository<TipoInspeccion
      * 
      * @return lista de tipos
      */
-    List<TipoInspeccion> findByFechaBajaIsNull();
+    List<TipoInspeccion> findByFechaBajaIsNullOrderByFechaAltaAsc();
     
     /**
      * @param codigo

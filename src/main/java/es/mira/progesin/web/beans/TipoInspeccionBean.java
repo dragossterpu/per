@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -37,7 +38,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("tipoInspeccionBean")
-@Scope("session")
+@Scope(FacesViewScope.NAME)
 public class TipoInspeccionBean implements Serializable {
     
     /**
@@ -62,13 +63,9 @@ public class TipoInspeccionBean implements Serializable {
     /**
      * Recarga la lista de tipos de inspeccion
      */
-    public void listarTiposInspeccion() {
-        listaTipoInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
-    }
-    
     @PostConstruct
     private void init() {
-        listarTiposInspeccion();
+        listaTipoInspeccion = tipoInspeccionService.buscaByFechaBajaIsNull();
     }
     
     /**

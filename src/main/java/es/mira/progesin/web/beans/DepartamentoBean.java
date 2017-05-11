@@ -44,8 +44,6 @@ public class DepartamentoBean implements Serializable {
     
     private List<Departamento> listaDepartamentos;
     
-    private String departamentoNuevo;
-    
     @Autowired
     private transient IDepartamentoService departamentoService;
     
@@ -84,8 +82,9 @@ public class DepartamentoBean implements Serializable {
     
     /**
      * Alta de un nuevo departamento
+     * @param departamentoNuevo
      */
-    public void altaDepartamento() {
+    public void altaDepartamento(String departamentoNuevo) {
         try {
             Departamento departamento = new Departamento();
             departamento.setDescripcion(departamentoNuevo);

@@ -34,7 +34,7 @@ public class TipoInspeccionService implements ITipoInspeccionService {
     
     @Override
     public List<TipoInspeccion> buscaByFechaBajaIsNull() {
-        return tipoInspeccionRepository.findByFechaBajaIsNull();
+        return tipoInspeccionRepository.findByFechaBajaIsNullOrderByFechaAltaAsc();
     }
     
     @Override
