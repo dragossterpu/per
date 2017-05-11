@@ -36,7 +36,6 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,9 +72,6 @@ public class InspeccionBean {
     private IEquipoService equipoService;
     
     @Autowired
-    private ITipoInspeccionService tipoInspeccionService;
-    
-    @Autowired
     private IMunicipioService municipioService;
     
     @Autowired
@@ -94,6 +90,8 @@ public class InspeccionBean {
     
     private LazyModelInspeccion model;
     
+    private static final String EL_USUARIO = "El usuario";
+    
     /**************************************************************
      * 
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
@@ -109,8 +107,8 @@ public class InspeccionBean {
      * 
      * Visualiza la inspeccion personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección"
      * 
-     * @param inspeccion
-     * @return String
+     * @param inspeccion a visualizar
+     * @return Devuelve la ruta de la vista visualizarInspecciones
      * 
      *********************************************************/
     
@@ -121,6 +119,12 @@ public class InspeccionBean {
         return "/inspecciones/visualizarInspeccion?faces-redirect=true";
     }
     
+    /**
+     * Visualiza la vista de busqueda de inspecciones donde podemos asociar otras inspecciones a la que estamos
+     * modificando o creando nueva
+     * 
+     * @return devuelve la ruta de la vista donde asociamos las inspecciones
+     */
     public String getAsociarInspecciones() {
         inspeccionBusqueda.resetValues();
         setProvinciSelec(null);
@@ -135,7 +139,7 @@ public class InspeccionBean {
      * Después de asociar/desasociar inspeccines nos redirige a la vista de alta o de modificación dependiendo de si
      * estamos haciendo un alta nueva o una modificación respectivamente.
      * 
-     * @return
+     * @return devuelve la ruta del alta o modificación de inspecciones dependiendo de la accción que estamos realizando
      */
     public String asociarInspecciones() {
         String rutaSiguiente = null;
@@ -158,7 +162,7 @@ public class InspeccionBean {
     
     /*********************************************************
      * 
-     * Limpia los valores del objeto de búsqueda
+     * Limpia los valores del objeto de búsqueda de inspecciones
      * 
      *********************************************************/
     
@@ -171,7 +175,7 @@ public class InspeccionBean {
     /**
      * Método que nos lleva al formulario de alta de nueva inspección, inicializando todo lo necesario para mostrar
      * correctamente la página. Se llama desde la página de búsqueda de inspecciones.
-     * @return
+     * @return devuelve la ruta donde realizamos el alta de la inspección
      */
     public String nuevaInspeccion() {
         setProvinciSelec(null);
@@ -192,8 +196,8 @@ public class InspeccionBean {
     
     /**
      * Método que guarda la inspección nueva creada en la base de datos
+     * @return null no redirigimos
      * 
-     * @return
      */
     public String altaInspeccion() {
         try {
@@ -230,7 +234,7 @@ public class InspeccionBean {
      * redirige a la vista de modificar inspección.
      * 
      * @param inspeccion
-     * @return ruta modificar objeto
+     * @return devuelve la ruta donde se realiza la modificaión de la inspección
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
         setProvinciSelec(inspeccion.getMunicipio().getProvincia());
@@ -301,8 +305,7 @@ public class InspeccionBean {
     
     /*********************************************************
      * 
-     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral o si venimos de la asignación de una
-     * inspeción
+     * Limpia el menú de búsqueda si se accede a través del menú lateral
      * 
      *********************************************************/
     
@@ -328,7 +331,7 @@ public class InspeccionBean {
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SUSPENDIDA);
         try {
             inspeccionesService.save(inspeccion);
-            String descripcion = "El usuario " + user + " ha activado la inspección " + inspeccion.getNumero();
+            String descripcion = EL_USUARIO + " " + user + " ha activado la inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.INSPECCION.name());
             
@@ -341,8 +344,7 @@ public class InspeccionBean {
      * 
      * Permite la anulación de una inspeccion por lo que su estado cambiará a suspendiada. Una vez anulada no podrá ser
      * usada aunque se mantendrá en la base de datos.
-     * 
-     * @param inspeccion La inspeccion a anular
+     * @param inspeccion que vamos a anular
      * 
      */
     
@@ -352,7 +354,7 @@ public class InspeccionBean {
         inspeccion.setUsernameAnulacion(user);
         try {
             inspeccionesService.save(inspeccion);
-            String descripcion = "El usuario " + user + " ha anulado la inspección " + inspeccion.getNumero();
+            String descripcion = EL_USUARIO + " " + user + " ha anulado la inspección " + inspeccion.getNumero();
             
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
@@ -380,7 +382,7 @@ public class InspeccionBean {
         try {
             inspeccionesService.save(inspeccionEliminar);
             
-            String descripcion = "El usuario " + user + " ha eliminado la inspección " + inspeccion.getNumero();
+            String descripcion = EL_USUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
@@ -393,10 +395,8 @@ public class InspeccionBean {
     /**
      * Guarda un nuevo municipio
      * @param nombre
-     * @param provincia
      */
     public void nuevoMunicipio(String nombre) {
-        
         boolean existeMunicipio = municipioService.existeByNameIgnoreCaseAndProvincia(nombre.trim(), provinciSelec);
         if (existeMunicipio) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Acción no permitida",
@@ -411,7 +411,8 @@ public class InspeccionBean {
     }
     
     /**
-     * Devuelve una lista de municipios pertenecientes a una provincia
+     * Devuelve una lista de municipios pertenecientes a una provincia. Se utiliza para recargar la lista de municipios
+     * dependiendo de la provincia seleccionad.
      */
     public void onChangeProvincia() {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
@@ -441,7 +442,8 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que capura el evento "Seleccionar todos" en el momento de aociar una inspección
+     * Método que capura el evento "Seleccionar todos" o "Deseleccionar todos" en el momento de asociar una inspección.
+     * Automáticamente los carga en la lista de inspecciones asociadas.
      *
      * @param event captura el evento
      */
@@ -457,8 +459,14 @@ public class InspeccionBean {
         }
     }
     
+    /**
+     * Añade todas las inspecciones asignadas a las inspecciones seleccionadas en la tabla para no perderlas cuando
+     * realizamos la paginación de servidor.
+     * 
+     * @param event evento de cambio de página de la tabla de inspecciones
+     */
     public void paginator(PageEvent event) {
-        setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
+        inspeccionesSeleccionadas = inspeccionesAsignadasActuales;
     }
     
     /**
