@@ -319,6 +319,12 @@ public class VisualizarCuestionario implements Serializable {
         }
     }
     
+    /**
+     * Descarga de un documento subido por el usuario provisional
+     * 
+     * @author Ezentis
+     * @param documento seleccionado
+     */
     public void descargarFichero(Documento documento) {
         try {
             setFile(documentoService.descargaDocumento(documento));
@@ -327,6 +333,12 @@ public class VisualizarCuestionario implements Serializable {
         }
     }
     
+    /**
+     * Genera un archivo word para ser descargado con las preguntas del modelo de cuestionario personalizado
+     * 
+     * @author Ezentis
+     * @param cuestionarioPersonalizado mostrado
+     */
     public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado) {
         try {
             setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado));
@@ -337,6 +349,13 @@ public class VisualizarCuestionario implements Serializable {
         }
     }
     
+    /**
+     * Genera un archivo pdf para ser descargado con las preguntas y las respuestas del cuestionario enviado una vez
+     * cumplimentado
+     * 
+     * @author Ezentis
+     * @param cuestionarioEnviado mostrado
+     */
     public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
         try {
             setFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
@@ -347,6 +366,11 @@ public class VisualizarCuestionario implements Serializable {
         }
     }
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
     public void init() {
         setUsuarioActual((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
