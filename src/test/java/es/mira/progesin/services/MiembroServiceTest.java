@@ -5,9 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -67,21 +64,10 @@ public class MiembroServiceTest {
      * Test method for {@link es.mira.progesin.services.MiembroService#save(Miembro)}.
      */
     @Test
-    public void save_Miembro() {
+    public void save() {
         Miembro miembro = mock(Miembro.class);
         miembroService.save(miembro);
         verify(miembrosRepository, times(1)).save(miembro);
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.MiembroService#save(List)}.
-     */
-    @Test
-    public void save_ListaMiembros() {
-        List<Miembro> listaMiembros = new ArrayList<Miembro>();
-        listaMiembros.add(mock(Miembro.class));
-        miembroService.save(listaMiembros);
-        verify(miembrosRepository, times(1)).save(listaMiembros);
     }
     
     /**
