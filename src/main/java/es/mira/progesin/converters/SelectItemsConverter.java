@@ -24,21 +24,13 @@ public class SelectItemsConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object entity) {
         synchronized (entities) {
-            // if (!entities.containsKey(entity)) {
-            // String uuid = UUID.randomUUID().toString();
-            // entities.put(entity, uuid);
-            // return uuid;
-            // } else {
-            // return entities.get(entity);
-            // }
-            // algunas clases tienen sobreescrito el equals por lo que no se actualizan cambios en sus campos, asi
-            // que se procede a refrescar el objeto
-            if (entities.containsKey(entity)) {
-                entities.remove(entity);
+            if (!entities.containsKey(entity)) {
+                String uuid = UUID.randomUUID().toString();
+                entities.put(entity, uuid);
+                return uuid;
+            } else {
+                return entities.get(entity);
             }
-            String uuid = UUID.randomUUID().toString();
-            entities.put(entity, uuid);
-            return uuid;
         }
     }
     
