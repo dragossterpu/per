@@ -49,7 +49,7 @@ public class AlertaService implements IAlertaService {
     private IUserService userService;
     
     @Autowired
-    private IEquipoService equipoService;
+    private IMiembroService miembroService;
     
     @Autowired
     private IRegistroActividadService registroActividadService;
@@ -240,7 +240,7 @@ public class AlertaService implements IAlertaService {
     @Override
     public void crearAlertaEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
         try {
-            List<Miembro> miembrosEquipo = equipoService.findByEquipo(inspeccion.getEquipo());
+            List<Miembro> miembrosEquipo = miembroService.findByEquipo(inspeccion.getEquipo());
             for (Miembro miembro : miembrosEquipo) {
                 crearAlertaUsuario(seccion, descripcion, miembro.getUsername());
             }

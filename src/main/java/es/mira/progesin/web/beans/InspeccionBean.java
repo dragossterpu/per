@@ -330,7 +330,7 @@ public class InspeccionBean {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
-            listaEquipos = (List<Equipo>) equipoService.findAll();
+            listaEquipos = equipoService.findAll();
         }
     }
     

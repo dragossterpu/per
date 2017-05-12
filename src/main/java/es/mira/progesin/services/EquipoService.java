@@ -16,14 +16,12 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
-import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 /**
@@ -43,35 +41,16 @@ public class EquipoService implements IEquipoService {
     private IEquipoRepository equipoRepository;
     
     @Autowired
-    private IMiembrosRepository miembrosRepository;
-    
-    @Autowired
     private SessionFactory sessionFactory;
     
     @Override
-    public Iterable<Equipo> findAll() {
-        return equipoRepository.findAll();
+    public List<Equipo> findAll() {
+        return (List<Equipo>) equipoRepository.findAll();
     }
     
     @Override
     public Equipo save(Equipo entity) {
         return equipoRepository.save(entity);
-    }
-    
-    @Override
-    public Miembro save(Miembro miembro) {
-        return miembrosRepository.save(miembro);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<Miembro> save(List<Miembro> listaMiembros) {
-        return (List<Miembro>) miembrosRepository.save(listaMiembros);
-    }
-    
-    @Override
-    public List<Miembro> findByEquipo(Equipo equipo) {
-        return miembrosRepository.findByEquipo(equipo);
     }
     
     private void buscarCriteria(EquipoBusqueda equipoBusqueda, Criteria criteria) {

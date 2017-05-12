@@ -44,6 +44,7 @@ import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
+import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
@@ -82,6 +83,9 @@ public class EquiposBeanTest {
     
     @Mock
     private IEquipoService equipoService;
+    
+    @Mock
+    private IMiembroService miembroService;
     
     @Mock
     private IUserService userService;
@@ -234,7 +238,7 @@ public class EquiposBeanTest {
         
         String ruta_vista = equipoBean.getFormModificarEquipo(equipo);
         
-        verify(equipoService, times(1)).findByEquipo(equipo);
+        verify(miembroService, times(1)).findByEquipo(equipo);
         assertThat(ruta_vista).isEqualTo("/equipos/modificarEquipo?faces-redirect=true");
     }
     

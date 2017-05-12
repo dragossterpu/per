@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
+import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoEquipoService;
@@ -87,6 +88,9 @@ public class EquiposBean implements Serializable {
     
     @Autowired
     transient IEquipoService equipoService;
+    
+    @Autowired
+    transient IMiembroService miembroService;
     
     @Autowired
     transient IUserService userService;
@@ -233,7 +237,7 @@ public class EquiposBean implements Serializable {
      */
     public String getFormModificarEquipo(Equipo equipo) {
         this.miembrosSeleccionados = new ArrayList<>();
-        List<Miembro> miembrosEquipo = equipoService.findByEquipo(equipo);
+        List<Miembro> miembrosEquipo = miembroService.findByEquipo(equipo);
         equipo.setMiembros(miembrosEquipo);
         this.equipo = equipo;
         return "/equipos/modificarEquipo?faces-redirect=true";
