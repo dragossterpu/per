@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.mail.MessagingException;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,18 +69,6 @@ public class TipoDocumentacionBean implements Serializable {
     transient INotificacionService notificacionService;
     
     /**
-     * Muestra el listado de tipos de documentación disponibles. Se llama desde el menu lateral
-     * 
-     * @author EZENTIS
-     * @return vista documentacionPrevia
-     */
-    public String tipoDocumentacionListado() {
-        // listaTipoDocumentacion = tipoDocumentacionService.findAll();
-        
-        return "/documentacionPrevia/documentacionPrevia";
-    }
-    
-    /**
      * Elimina un tipo de documentación. Elimina el tipo de documentación y actualiza la lista de la vista
      * documentacionPrevia
      * 
@@ -99,12 +86,17 @@ public class TipoDocumentacionBean implements Serializable {
                 SeccionesEnum.DOCUMENTACION.name());
     }
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
-    public void init() throws MessagingException {
+    public void init() {
         listaTipoDocumentacion = tipoDocumentacionService.findAll();
         Map<String, String> mapaExtensiones = applicationBean.getMapaParametros().get("extensiones");
         setListaExtensionesPosibles(new ArrayList<>(mapaExtensiones.keySet()));
-        model = new LazyModelTipoDocPrevia(tipoDocumentacionService);
+        setModel(new LazyModelTipoDocPrevia(tipoDocumentacionService));
     }
     
     /**
