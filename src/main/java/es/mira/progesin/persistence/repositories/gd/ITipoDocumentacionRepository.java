@@ -8,9 +8,7 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 
 public interface ITipoDocumentacionRepository extends CrudRepository<TipoDocumentacion, Long> {
-	@Override
-	List<TipoDocumentacion> findAll();
-
-	List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito);
-
+    
+    List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito);
+    
 }

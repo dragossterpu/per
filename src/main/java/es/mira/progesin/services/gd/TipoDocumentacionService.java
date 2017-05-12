@@ -38,7 +38,7 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
     
     @Override
     public List<TipoDocumentacion> findAll() {
-        return tipoDocumentacionRepository.findAll();
+        return (List<TipoDocumentacion>) tipoDocumentacionRepository.findAll();
     }
     
     @Override

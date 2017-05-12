@@ -17,26 +17,15 @@ import es.mira.progesin.persistence.entities.Notificacion;
  ************************************/
 
 public interface INotificacionRepository extends CrudRepository<Notificacion, Long> {
-
-	/***********************************
-	 * 
-	 * Devuelve una lista de notificaciones que no han sido dadas de baja
-	 * 
-	 * @return List<Alerta>
-	 * 
-	 ************************************/
-
-	List<Notificacion> findByFechaBajaIsNull();
-
-	/***********************************
-	 * 
-	 * Devuelve una lista de todas las notificaciones
-	 * 
-	 * @return List<Alerta>
-	 * 
-	 ************************************/
-
-	@Override
-	List<Notificacion> findAll();
-
+    
+    /***********************************
+     * 
+     * Devuelve una lista de notificaciones que no han sido dadas de baja
+     * 
+     * @return List<Alerta>
+     * 
+     ************************************/
+    
+    List<Notificacion> findByFechaBajaIsNull();
+    
 }

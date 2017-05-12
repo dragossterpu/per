@@ -98,7 +98,7 @@ public class NotificacionService implements INotificacionService {
     
     @Override
     public List<Notificacion> findAll() {
-        return notificacionRepository.findAll();
+        return (List<Notificacion>) notificacionRepository.findAll();
     }
     
     /*********************************************************

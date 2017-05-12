@@ -33,7 +33,7 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
     
     @Override
     public List<ModeloCuestionario> findAll() {
-        return modeloCuestionarioRepository.findAll();
+        return (List<ModeloCuestionario>) modeloCuestionarioRepository.findAll();
     }
     
 }
