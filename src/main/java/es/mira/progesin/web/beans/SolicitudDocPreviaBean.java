@@ -341,7 +341,6 @@ public class SolicitudDocPreviaBean implements Serializable {
         solicitudDocPreviaBusqueda.resetValues();
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
         model = new LazyModelSolicitudes(solicitudDocumentacionService);
-        listaTiposInspeccion = new ArrayList<>();
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     

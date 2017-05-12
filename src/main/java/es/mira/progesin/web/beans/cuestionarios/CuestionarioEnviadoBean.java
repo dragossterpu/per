@@ -172,7 +172,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void init() {
         setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
         setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
-        listaTiposInspeccion = new ArrayList<>();
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     

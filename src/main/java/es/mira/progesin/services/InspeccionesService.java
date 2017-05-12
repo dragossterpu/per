@@ -98,7 +98,7 @@ public class InspeccionesService implements IInspeccionesService {
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
         } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
+            criteria.addOrder(Order.desc("fechaAlta"));
         }
         
         @SuppressWarnings("unchecked")

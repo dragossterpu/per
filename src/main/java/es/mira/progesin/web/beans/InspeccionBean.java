@@ -315,7 +315,6 @@ public class InspeccionBean {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelInspeccion(inspeccionesService);
-        listaTiposInspeccion = new ArrayList<>();
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
