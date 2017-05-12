@@ -166,14 +166,12 @@
 			<h:commandLink title="Limpiar" action="#{inspeccionBean.limpiarBusqueda}" update="busquedaInspecciones" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
 				<span class="ui-CommandLink-texto">Limpiar</span>
 			</h:commandLink>
-			<h:commandLink title="Nueva inspección" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{(esAdmin or esEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
-            	<span class="ui-CommandLink-texto">Nueva inspección</span>
-            </h:commandLink>
+			<p:commandButton value="Nueva inspección" icon="fa fa-user-plus" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{(esAdmin or esEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}"/>
             <h:commandLink title="Agregar" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{inspeccionBean.asociarInspecciones}" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" >
             	<span class="ui-CommandLink-texto">Aceptar</span>
             </h:commandLink>
 
-      	</div>	
+      	</div>
 		<p:outputPanel layout="block" id="panelInspecciones">
 			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{inspeccionBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
@@ -314,7 +312,13 @@
 				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
 			</div>
 		</p:confirmDialog>
-			
+		
+		<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+			<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
+			<div class="centrarBotonesDialog">
+				<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"/>
+			</div>
+		</p:dialog>
 		</h:form>
 		
 	</ui:define>

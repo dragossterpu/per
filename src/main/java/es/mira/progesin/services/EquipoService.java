@@ -158,4 +158,9 @@ public class EquipoService implements IEquipoService {
         return Math.toIntExact(cnt);
     }
     
+    @Override
+    public List<Equipo> buscarEquiposByUsername(String paramLogin) {
+        return equipoRepository.buscarEquiposByUsername(paramLogin);
+    }
+    
 }

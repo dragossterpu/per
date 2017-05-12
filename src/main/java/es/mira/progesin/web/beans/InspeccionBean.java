@@ -25,11 +25,12 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -185,21 +186,33 @@ public class InspeccionBean {
      * @return devuelve la ruta donde realizamos el alta de la inspección
      */
     public String nuevaInspeccion() {
+        String rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
         setProvinciSelec(null);
         setListaMunicipios(null);
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        Miembro miembro = miembroService.buscaMiembroByUsername(user);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         inspeccionesAsignadasActuales = new ArrayList<>();
         inspeccion = new Inspeccion();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
-        listaEquipos = equipoService.findByFechaBajaIsNull();
-        if (miembro != null) {
-            inspeccion.setEquipo(miembro.getEquipo());
-        }
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         
-        return "/inspecciones/altaInspeccion?faces-redirect=true";
+        List<Equipo> listaEquiposUser = equipoService.buscarEquiposByUsername(user.getUsername());
+        
+        if ((listaEquiposUser == null || listaEquiposUser.isEmpty())
+                && user.getRole().equals(RoleEnum.ROLE_EQUIPO_INSPECCIONES)) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+                    "Su usuario no tiene permisos para crear una inspección ya que no está asociado a ningún equipo",
+                    "");
+            rutaSiguiente = null;
+            
+        } else if (listaEquiposUser != null && !listaEquiposUser.isEmpty()
+                && user.getRole().equals(RoleEnum.ROLE_EQUIPO_INSPECCIONES)) {
+            
+            setListaEquipos(listaEquiposUser);
+        }
+        
+        return rutaSiguiente;
+        
     }
     
     /**
@@ -252,7 +265,15 @@ public class InspeccionBean {
         TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
         queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
         listaMunicipios = queryEmpleo.getResultList();
-        listaEquipos = equipoService.findByFechaBajaIsNull();
+        
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        if (user.getRole().equals(RoleEnum.ROLE_EQUIPO_INSPECCIONES)) {
+            listaEquipos = equipoService.buscarEquiposByUsername(user.getUsername());
+        } else {
+            listaEquipos = equipoService.findByFechaBajaIsNull();
+        }
+        
         this.inspeccion = inspeccion;
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);

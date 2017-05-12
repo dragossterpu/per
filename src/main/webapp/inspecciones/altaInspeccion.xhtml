@@ -59,7 +59,7 @@
 						<p:messages for="fechaPrevista" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="equipoSelect" value="Equipo (*):" />
-						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un equipo" disabled="#{esEquipo}"
+						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un equipo"
 							value="#{inspeccionBean.inspeccion.equipo}"
 							id="equipoSelect" converter="#{selectConverter}">
 							<f:selectItem itemLabel="Todos" itemValue="" />

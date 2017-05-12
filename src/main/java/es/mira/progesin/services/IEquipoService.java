@@ -74,4 +74,6 @@ public interface IEquipoService {
      */
     boolean existsByTipoEquipo(TipoEquipo tipo);
     
+    public abstract List<Equipo> buscarEquiposByUsername(String paramLogin);
+    
 }
