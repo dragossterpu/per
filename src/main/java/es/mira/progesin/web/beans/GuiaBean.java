@@ -236,6 +236,8 @@ public class GuiaBean {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelGuias(guiaService);
+        listaTiposInspeccion = new ArrayList<>();
+        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /*********************************************************
@@ -359,8 +361,6 @@ public class GuiaBean {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
             limpiarBusqueda();
             this.vieneDe = null;
-            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
-            
         }
         
     }

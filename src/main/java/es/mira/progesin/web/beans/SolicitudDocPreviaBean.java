@@ -341,6 +341,8 @@ public class SolicitudDocPreviaBean implements Serializable {
         solicitudDocPreviaBusqueda.resetValues();
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
         model = new LazyModelSolicitudes(solicitudDocumentacionService);
+        listaTiposInspeccion = new ArrayList<>();
+        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**
@@ -641,7 +643,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void getFormBusquedaSolicitudes() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
             limpiarBusqueda();
             this.vieneDe = null;
         }

@@ -86,6 +86,10 @@ public class TipoInspeccionBean implements Serializable {
                 tipoInspeccionService.borrarTipo(tipo);
                 listaTipoInspeccion.remove(tipo);
                 
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
+                        "Baja. Tipo de inspección eliminada con éxito. Los cambios surtirán efecto al iniciar sesión.",
+                        "", null);
+                
                 String descripcion = "Se ha eliminado el tipo de inspección: " + tipo.getCodigo() + "("
                         + tipo.getDescripcion() + ")";
                 // Guardamos la actividad en bbdd
@@ -118,7 +122,8 @@ public class TipoInspeccionBean implements Serializable {
             tipoInspeccionService.guardarTipo(tipo);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
-                    "Modificación. Tipo de inspección modificado con éxito", "", null);
+                    "Modificación. Tipo de inspección modificado con éxito. Los cambios surtirán efecto al iniciar sesión.",
+                    "", null);
             
             String descripcion = "Se ha modificado el tipo de inspección: " + tipo.getCodigo() + "("
                     + tipo.getDescripcion() + ")";
@@ -149,9 +154,10 @@ public class TipoInspeccionBean implements Serializable {
             tipoNuevo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
             
             tipoInspeccionService.guardarTipo(tipoNuevo);
+            listaTipoInspeccion.add(tipoNuevo);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "El tipo de inspección ha sido creado con éxito");
+                    "El tipo de inspección ha sido creado con éxito. Los cambios surtirán efecto al inicar sesión.");
             
             String descripcionTipo = "Se ha dado de alta el tipo de inspección: " + codigo + "(" + descripcion + ")";
             // Guardamos la actividad en bbdd
@@ -163,7 +169,7 @@ public class TipoInspeccionBean implements Serializable {
                     "Se ha producido un error al dar de alta el tipo de inspección, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
-        setListaTipoInspeccion(tipoInspeccionService.buscaTodos());
+        // setListaTipoInspeccion(tipoInspeccionService.buscaTodos());
     }
     
 }

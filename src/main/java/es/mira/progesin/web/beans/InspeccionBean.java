@@ -43,7 +43,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author EZENTIS
+ * @author Ezentis
  *
  */
 @Setter
@@ -315,6 +315,8 @@ public class InspeccionBean {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelInspeccion(inspeccionesService);
+        listaTiposInspeccion = new ArrayList<>();
+        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /*********************************************************
@@ -329,7 +331,6 @@ public class InspeccionBean {
             setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
-            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
             listaEquipos = (List<Equipo>) equipoService.findAll();
         }
     }

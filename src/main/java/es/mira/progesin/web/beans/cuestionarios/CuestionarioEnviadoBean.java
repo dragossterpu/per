@@ -112,7 +112,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void getFormBusquedaCuestionarios() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            listaTiposInspeccion = tipoInspeccionService.buscaTodos();
             limpiar();
             this.vieneDe = null;
         }
@@ -173,6 +172,8 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void init() {
         setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
         setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
+        listaTiposInspeccion = new ArrayList<>();
+        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**
