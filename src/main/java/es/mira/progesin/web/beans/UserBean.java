@@ -189,6 +189,8 @@ public class UserBean {
                             SeccionesEnum.USUARIOS.name());
                 }
             } catch (Exception e) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta",
+                        "Se ha producido un error al dar de alta el usuario. Inténtelo de nuevo más tarde");
                 regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
             }
             
