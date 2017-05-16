@@ -316,7 +316,7 @@ public class DocumentoService implements IDocumentoService {
     
     @Override
     public List<Inspeccion> listaInspecciones(Documento documento) {
-        return iInspeccionRepository.cargaInspecciones(documento.getId());
+        return iInspeccionRepository.cargaInspeccionesDocumento(documento.getId());
     }
     
     @Override

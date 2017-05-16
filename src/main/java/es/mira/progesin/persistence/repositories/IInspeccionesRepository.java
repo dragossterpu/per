@@ -33,11 +33,11 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
             @Param("infoInspeccion") String paramString1, @Param("usernameJefeEquipo") String paramString2);
     
     /**
-     * @param paramLong id del documento
+     * @param idDocumento id del documento
      * @return devuelve lista de inspecciones asociadas a un documento
      */
     @Query(value = "select ins.* from documentos_inspeccion di, inspecciones ins where di.id_inspeccion=ins.id and di.id_documento=?1", nativeQuery = true)
-    public List<Inspeccion> cargaInspecciones(Long paramLong);
+    public List<Inspeccion> cargaInspeccionesDocumento(Long idDocumento);
     
     /**
      * @param idInspeccion
