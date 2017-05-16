@@ -13,7 +13,6 @@ import es.mira.progesin.persistence.entities.Informe;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IInformeRepository;
 import es.mira.progesin.services.RegistroActividadService;
-import es.mira.progesin.util.HtmlDocGenerator;
 import es.mira.progesin.util.HtmlPdfGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,8 +39,8 @@ public class InformeBean implements Serializable {
     @Autowired
     private transient HtmlPdfGenerator htmlPdfGenerator;
     
-    @Autowired
-    private transient HtmlDocGenerator htmlDocGenerator;
+    // @Autowired
+    // private transient HtmlDocGenerator htmlDocGenerator;
     
     @Autowired
     private transient RegistroActividadService regActividadService;

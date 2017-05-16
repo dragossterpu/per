@@ -16,11 +16,6 @@
            <p:fileDownload value="#{informeBean.file}" />
         </h:commandLink>
         
-        <h:commandLink  actionListener="#{informeBean.crearInformeDOC(informeBean.informe)}" 
-			title="Descargar documento PDF del informe">
-           <p:graphicImage value="/images/doc.png" styleClass="pdfImg"/>
-           <p:fileDownload value="#{informeBean.file}" />
-        </h:commandLink>
         
         <div class="ql-editor" id="informe">
         	<h:outputText value="#{informeBean.texto}" escape="false" />
