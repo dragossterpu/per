@@ -33,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginService loginService;
     
+    @Autowired
+    AuthenticationSuccessHandlerPersonalizado authenticationSuccessHandlerPersonalizado;
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
@@ -55,14 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous()
                 // Acceso a la administración sólo para el role ADMIN
                 .antMatchers("/administracion/**", "/users/altaUsuario.xhtml").hasRole(RoleEnum.ROLE_ADMIN.getNombre())
-                // Acceso a ciertas partes sólo el ADMIN y JFFE_INSPECCIONES
+                // Acceso a ciertas partes sólo el ADMIN y JEFE_INSPECCIONES
                 .antMatchers("/equipos/altaEquipo.xhtml", "/inspecciones/modeloInspeccion/**")
                 .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre())
                 // Al resto pueden acceder todos los usuarios autenticados
-                .anyRequest().authenticated();
-        
-        http.formLogin().loginPage(Constantes.RUTA_LOGIN).loginProcessingUrl(Constantes.RUTA_LOGIN)
-                .defaultSuccessUrl("/index.xhtml", true).failureUrl(Constantes.RUTA_LOGIN);
+                .anyRequest().authenticated().and().formLogin().loginPage(Constantes.RUTA_LOGIN).permitAll()
+                .successHandler(authenticationSuccessHandlerPersonalizado).failureUrl(Constantes.RUTA_LOGIN);
         
         http.logout().logoutUrl(Constantes.RUTA_LOGOUT).logoutSuccessUrl(Constantes.RUTA_LOGIN);
         

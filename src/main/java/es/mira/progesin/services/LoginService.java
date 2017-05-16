@@ -14,16 +14,17 @@ import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 
+/**
+ * Servicio de login
+ * 
+ * @author EZENTIS
+ *
+ */
 @Service
 public class LoginService implements UserDetailsService {
     @Autowired
     private IUserService userService;
-    
-    @Autowired
-    private IRegistroActividadService registroActividadService;
     
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -31,9 +32,6 @@ public class LoginService implements UserDetailsService {
         if (null == user) {
             throw new UsernameNotFoundException("El usuario " + username + " no existe.");
         } else {
-            String textoReg = "El usuario " + user.getUsername() + " ha iniciado sesión en la aplicación";
-            registroActividadService.altaRegActividad(textoReg, TipoRegistroEnum.AUDITORIA.name(),
-                    SeccionesEnum.LOGIN.name());
             return new UserRepositoryUserDetails(user);
         }
     }
