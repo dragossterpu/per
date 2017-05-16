@@ -14,11 +14,26 @@ import es.mira.progesin.constantes.Constantes;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Gestiona peticiones HTTP relativas al inicio y finalización de sesiones en el sistema
+ * 
+ * @author Ezentis
+ */
 @Getter
 @Setter
 @Controller
 public class LoginController {
     
+    /**
+     * Intercepta peticiones a la ruta de login "/login" y responde de manera distinta si es una petición normal o AJAX
+     * (útil en caso de caducar la sesión actual)
+     * 
+     * @param request peticion http del cliente
+     * @param response respuesta http del servidor
+     * @return acción de login mapeada en el dispatcher en caso de peticion normal, fuerza redirección en caso de
+     * petición AJAX dentro de una vista
+     * @throws IOException en caso de fallo en servlet
+     */
     @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTA_LOGIN)
     public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
@@ -34,6 +49,12 @@ public class LoginController {
         }
     }
     
+    /**
+     * Intercepta peticiones a la ruta de login "/logout" e invalida la sesión actual del usuario
+     * 
+     * @param session sesión asociada a la petición actual
+     * @return acción de login mapeada en el dispatcher
+     */
     @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTA_LOGOUT)
     public String logout(HttpSession session) {
         session.invalidate();

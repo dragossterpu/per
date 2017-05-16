@@ -50,11 +50,6 @@ public class InspeccionesService implements IInspeccionesService {
     IInspeccionesRepository inspeccionesRepository;
     
     @Override
-    public Iterable<Inspeccion> findAll() {
-        return inspeccionesRepository.findAll();
-    }
-    
-    @Override
     @Transactional(readOnly = false)
     public Inspeccion save(Inspeccion inspeccion) {
         return inspeccionesRepository.save(inspeccion);

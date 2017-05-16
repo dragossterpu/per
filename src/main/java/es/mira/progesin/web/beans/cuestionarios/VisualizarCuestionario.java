@@ -293,8 +293,7 @@ public class VisualizarCuestionario implements Serializable {
      * Construye la tabla o matriz que se usará del cuestionario con las respuestas cumplimentadas
      * 
      * @author EZENTIS
-     * @see visualizar
-     * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
+     * @see #visualizar
      */
     public void construirTipoRespuestaTablaMatrizConDatos() {
         mapaRespuestasTablaAux.forEach((pregunta, listaDatos) -> {

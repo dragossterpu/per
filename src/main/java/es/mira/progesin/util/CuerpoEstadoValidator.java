@@ -22,7 +22,7 @@ public class CuerpoEstadoValidator implements Validator {
     ICuerpoEstadoService cuerpoEstadoService;
     
     @Override
-    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+    public void validate(FacesContext context, UIComponent component, Object value) {
         
         String nuevoNombreCorto = value.toString();
         int id = Integer.parseInt(component.getAttributes().get("actualNombreCorto").toString());

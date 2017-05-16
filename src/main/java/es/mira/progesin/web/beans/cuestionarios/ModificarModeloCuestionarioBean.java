@@ -107,8 +107,8 @@ public class ModificarModeloCuestionarioBean {
     /**
      * Incicia el proceso de edición de un modelo de cuestionario recibido como parámetro
      * 
-     * @param modeloCuestionario
-     * @return String
+     * @param modeloCuestionario seleccionado
+     * @return ruta de la vista del formulario
      */
     public String editarModelo(ModeloCuestionario modeloCuestionario) {
         this.esNuevoModelo = false;
@@ -135,10 +135,9 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * 
      * Inicia el proceso de alta de un nuevo modelo de cuestionario
      * 
-     * @return String
+     * @return ruta de la vista del formulario
      */
     public String nuevoModelo() {
         this.esNuevoModelo = true;
@@ -226,9 +225,9 @@ public class ModificarModeloCuestionarioBean {
      * Añade preguntas a un área. Se reciben como parámetros el área al que pertenecerá, el texto de la pregunta y su
      * tipo.
      * 
-     * @param area
-     * @param pregunta
-     * @param tipo
+     * @param area seleccionada
+     * @param pregunta a añadir
+     * @param tipo de pregunta elegido
      */
     public void aniadePregunta(AreasCuestionario area, String pregunta, String tipo) {
         if (!pregunta.isEmpty() && !tipo.isEmpty()) {
@@ -251,7 +250,7 @@ public class ModificarModeloCuestionarioBean {
     /**
      * Almacena el valor de la pregunta seleccionada por el usuario en la vista
      * 
-     * @param event
+     * @param event evento asociado al desplegable con la pregunta elegida
      */
     public void onSelectPregunta(SelectEvent event) {
         preguntaSelec = (PreguntasCuestionario) event.getObject();
@@ -261,7 +260,7 @@ public class ModificarModeloCuestionarioBean {
      * Elimina una pregunta del modelo. Se hace una comprobación de si la pregunta está en uso en algún cuestionario
      * personalizado. En caso afirmativo la eliminación será lógica mientras que lo será física en caso contrario.
      * 
-     * @param area
+     * @param area seleccionada
      */
     public void borraPregunta(AreasCuestionario area) {
         if (preguntaSelec != null) {
@@ -308,8 +307,8 @@ public class ModificarModeloCuestionarioBean {
      * Este método controla el flujo de la pantalla permitiendo avanzar y retroceder entre los diversos pasos. Tambien
      * controla que cada paso haya sido completado antes de continuar al siguiente.
      * 
-     * @param event
-     * @return String
+     * @param event evento asociado a los botones de flujo entre pestañas
+     * @return nombre del siguiente paso
      */
     public String onFlowProcess(FlowEvent event) {
         boolean correcto = true;
@@ -320,8 +319,6 @@ public class ModificarModeloCuestionarioBean {
         }
         
         if ("preguntas".equals(event.getNewStep())) {
-            // listaAreasCuestionario = ordenarAreas(listaAreasCuestionario);
-            // modeloCuestionario.setAreas(listaAreasCuestionario);
             listaAreasCuestionarioVisualizar = ordenarAreas(listaAreasCuestionarioVisualizar);
         }
         
@@ -350,7 +347,7 @@ public class ModificarModeloCuestionarioBean {
      * 
      * Recupera el listado de valores posibles para un tipo de respuesta
      * 
-     * @param tipo
+     * @param tipo seleccionado
      * @return List<String>
      */
     public List<String> getValoresTipoRespuesta(String tipo) {
@@ -361,8 +358,8 @@ public class ModificarModeloCuestionarioBean {
      * 
      * Añade un nuevo valor a un tipo de respuesta
      * 
-     * @param valor
-     * @param tipoRespuesta
+     * @param valor a añadir
+     * @param tipoRespuesta seleccionado
      */
     public void aniadeValor(String valor, String tipoRespuesta) {
         if ((!valor.isEmpty() && Constantes.TIPO_RESPUESTA_RADIO.equals(tipoRespuesta))
@@ -376,7 +373,7 @@ public class ModificarModeloCuestionarioBean {
      * 
      * Borra uno de los posibles valores de un tipo de respuesta. Elimina el valor que previamente se ha seleccionado
      * 
-     * @see onSelectValor
+     * @see #onSelectValor
      */
     public void borraValor() {
         if (valorSeleccionado != null) {
@@ -388,7 +385,7 @@ public class ModificarModeloCuestionarioBean {
      * 
      * Almacena en una variable el valor seleccionado por el usuario en la vista
      * 
-     * @param event
+     * @param event evento asociado al desplegable con el valor seleccionado
      */
     public void onSelectValor(SelectEvent event) {
         valorSeleccionado = event.getObject().toString();
@@ -397,7 +394,7 @@ public class ModificarModeloCuestionarioBean {
     /**
      * Añade un nuevo valor a la lista de valores de fila (para matrices/tablas)
      * 
-     * @param valorFila
+     * @param valorFila a añadir
      */
     public void aniadeValorFila(String valorFila) {
         listadoValoresFila.add(valorFila);
@@ -407,7 +404,7 @@ public class ModificarModeloCuestionarioBean {
      * Elimina un valor en la lista e valores de fila (para matrices/tablas) Elimina el valor que previamente se ha
      * seleccionado
      * 
-     * @see onSelectValor
+     * @see #onSelectValor
      */
     public void borraValorFila() {
         listadoValoresFila.remove(valorSeleccionado);
@@ -416,7 +413,7 @@ public class ModificarModeloCuestionarioBean {
     /**
      * Almacena en la base de datos un nuevo tipo de respuesta. Se actualiza la lista de tipos disponibles.
      * 
-     * @param nombreTipoPregunta
+     * @param nombreTipoPregunta a añadir
      */
     public void guardaTipoRespuesta(String nombreTipoPregunta) {
         try {
@@ -523,8 +520,8 @@ public class ModificarModeloCuestionarioBean {
     /**
      * Se asigna un valor de orden a las áreas según su posición dentro de la lista de áreas
      * 
-     * @param listado List<AreasCuestionario>
-     * @return List<AreasCuestionario>
+     * @param listado sin orden
+     * @return listado ordenado
      */
     public List<AreasCuestionario> ordenarAreas(List<AreasCuestionario> listado) {
         List<AreasCuestionario> listaNueva = new ArrayList<>();
@@ -596,7 +593,7 @@ public class ModificarModeloCuestionarioBean {
      * Construye una visualización de tipo de respuesta seleccionado de forma que el usuario pueda ver de forma más
      * gráfica el tipo de respuesta que está añadiendo al cuestionario.
      * 
-     * @param event
+     * @param event evento asociado al desplegable con el tipo seleccionado
      */
     public void onSelectTipo(SelectEvent event) {
         setTipoSeleccionado(event.getObject().toString());
@@ -609,9 +606,9 @@ public class ModificarModeloCuestionarioBean {
     
     /**
      * 
-     * Consutruye una tabla o matriz vacía para su visualización
+     * Construye una tabla o matriz vacía para su visualización
      * 
-     * @see onSelectTipo
+     * @see #onSelectTipo
      * 
      */
     private void construirTipoRespuestaTablaMatrizVacia(String tipo) {

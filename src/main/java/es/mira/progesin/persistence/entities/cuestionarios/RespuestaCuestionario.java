@@ -48,8 +48,7 @@ public class RespuestaCuestionario implements Serializable {
     @EmbeddedId
     RespuestaCuestionarioId respuestaId;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE,
-            CascadeType.PERSIST }/* , orphanRemoval = true */)
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumns(value = { @JoinColumn(name = "RESPUESTA_ID_CUEST_ENVIADO"),
             @JoinColumn(name = "RESPUESTA_ID_PREGUNTA") })
     @OrderBy("id")
@@ -68,37 +67,5 @@ public class RespuestaCuestionario implements Serializable {
     
     @Column
     private Date fechaValidacion;
-    
-    // @Override
-    // public int hashCode() {
-    // final int prime = 31;
-    // int result = 1;
-    // result = prime * result + ((respuestaId == null) ? 0 : respuestaId.hashCode());
-    // return result;
-    // }
-    //
-    // @Override
-    // public boolean equals(Object obj) {
-    // if (this == obj) {
-    // return true;
-    // }
-    // if (obj == null) {
-    // return false;
-    // }
-    // if (getClass() != obj.getClass()) {
-    // return false;
-    // }
-    // RespuestaCuestionario other = (RespuestaCuestionario) obj;
-    // if (respuestaId == null) {
-    // if (other.respuestaId != null) {
-    // return false;
-    // }
-    // } else if (!respuestaId.getCuestionarioEnviado().getId()
-    // .equals(other.respuestaId.getCuestionarioEnviado().getId())
-    // && !respuestaId.getPregunta().getId().equals(other.respuestaId.getPregunta().getId())) {
-    // return false;
-    // }
-    // return true;
-    // }
     
 }

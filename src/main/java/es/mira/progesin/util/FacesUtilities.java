@@ -21,9 +21,10 @@ import org.springframework.stereotype.Component;
 public class FacesUtilities {
     
     /**
-     * Redirige a la página pasada como parametro
+     * Redirige a la página proporcionada sin parámetros
      * 
-     * @param pagina
+     * @author Ezentis
+     * @param pagina deseada
      */
     public void redirect(String pagina) {
         FacesContext ctx = FacesContext.getCurrentInstance();
@@ -39,8 +40,10 @@ public class FacesUtilities {
     }
     
     /**
+     * Redirige a la página proporcionada con parámetros GET a evaluar en destino
      * 
-     * @param pagina
+     * @author Ezentis
+     * @param pagina deseada
      * @param paramGET cadena con parametros que se quieran pasar a la página destino separados por '&'
      */
     public void redirect(String pagina, String paramGET) {
@@ -59,9 +62,10 @@ public class FacesUtilities {
     /**
      * Muestra una cuadro de diálogo con información
      * 
-     * @param severity
-     * @param summary
-     * @param detail
+     * @author Ezentis
+     * @param severity gravedad del aviso
+     * @param summary resumen
+     * @param detail detalles del mensaje
      */
     public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail) {
         RequestContext context = RequestContext.getCurrentInstance();
@@ -73,10 +77,11 @@ public class FacesUtilities {
     /**
      * Muestra un mensaje por pantalla
      * 
-     * @param severity
-     * @param summary
-     * @param detail
-     * @param idMensaje
+     * @author Ezentis
+     * @param severity gravedad del aviso
+     * @param summary resumen
+     * @param detail detalles del mensaje
+     * @param idMensaje identificador del componente "message/s" de PrimeFaces donde se desea mostrar
      */
     public static void setMensajeInformativo(Severity severity, String summary, String detail, String idMensaje) {
         FacesMessage message = new FacesMessage(severity, summary, detail);

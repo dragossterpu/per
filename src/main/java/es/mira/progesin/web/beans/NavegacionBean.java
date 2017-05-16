@@ -33,6 +33,11 @@ public class NavegacionBean implements Serializable {
     
     private DynamicMenuModel caminoMigas;
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
     public void init() {
         iniciarCamino();

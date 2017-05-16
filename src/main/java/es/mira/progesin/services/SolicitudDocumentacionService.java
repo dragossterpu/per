@@ -92,7 +92,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     /**
      * Método que devuelve la lista de solicitudes previas en una consulta basada en criteria.
      * 
-     * @param solicitudDocPreviaBusqueda
+     * @param solicitudDocPreviaBusqueda objeto con los parámetros de búsqueda
      * @return devuelve la lista de registros tipo SolicitudDocPreviaBusqueda.
      * @author EZENTIS
      */
@@ -124,7 +124,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     /**
      * Método que devuelve el número de solicitudes previas totales en una consulta basada en criteria.
      * 
-     * @param solicitudDocPreviaBusqueda
+     * @param solicitudDocPreviaBusqueda objeto con los parámetros de búsqueda
      * @return número de registros
      * @author EZENTIS
      */

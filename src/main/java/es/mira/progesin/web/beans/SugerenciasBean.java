@@ -65,8 +65,8 @@ public class SugerenciasBean implements Serializable {
      * Guarda una nueva sugerencia con los datos del formulario
      * 
      * @author EZENTIS
-     * @param String módulo o sección del sistema al que hace referencia
-     * @param String descripción de la sugerencia
+     * @param modulo o sección del sistema al que hace referencia
+     * @param descripcion de la sugerencia
      * @return vista crearSugerencia
      */
     public String guardarSugerencia(String modulo, String descripcion) {
@@ -82,21 +82,25 @@ public class SugerenciasBean implements Serializable {
                     "Se ha producido un error al guardar la sugerencia. Inténtelo de nuevo más tarde.");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/principal/crearSugerencia";
+        return "/principal/crearSugerencia?faces-redirect=true";
         
     }
     
     /**
-     * Método que nos lleva al listado de sugerencias Se llama desde el menu lateral
-     * @return
+     * Método que nos lleva al listado de sugerencias Se llama desde el menu lateral.
+     * 
+     * @author Ezentis
      */
     public void sugerenciasListado() {
         sugerencia = null;
         sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
     }
+    
     /**
      * Método que nos lleva al listado de sugerencias y donde se elimina la sugerencia selecionada.
-     * @return
+     * 
+     * @author Ezentis
+     * @param sugerenciaSeleccionada en la tabla
      */
     public void eliminarSugerencia(Sugerencia sugerenciaSeleccionada) {
         try {
@@ -115,19 +119,19 @@ public class SugerenciasBean implements Serializable {
      * Muestra el formulario para redactar y enviar la respuesta a una sugerencia
      * 
      * @author EZENTIS
-     * @param Sugerencia sugerencia seleccionada
+     * @param sugerenciaSeleccionada en la tabla
      * @return vista contestarSugerencia
      */
     public String contestarSugerencia(Sugerencia sugerenciaSeleccionada) {
         sugerencia = sugerenciaSeleccionada;
-        return "/principal/contestarSugerencia";
+        return "/principal/contestarSugerencia?faces-redirect=true";
     }
     
     /**
      * Envía al correo electrónico de quien hizo la sugerencia el mensaje de respuesta
      * 
      * @author EZENTIS
-     * @param Sugerencia sugerencia seleccionada
+     * @param sugerenciaSeleccionada en la tabla
      * @param contestacion mensaje a enviar
      * @return vista contestarSugerencia
      */
@@ -158,9 +162,14 @@ public class SugerenciasBean implements Serializable {
                     "Se ha producido un error al contestar la sugerencia. Inténtelo de nuevo más tarde.");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/principal/contestarSugerencia";
+        return "/principal/contestarSugerencia?faces-redirect=true";
     }
     
+    /**
+     * PostConstruct, inicializa el bean
+     * 
+     * @author EZENTIS
+     */
     @PostConstruct
     public void init() {
         

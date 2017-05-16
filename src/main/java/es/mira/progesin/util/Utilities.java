@@ -21,10 +21,10 @@ public class Utilities {
     
     // ************* Generating new password Progesin ********************//
     /**
+     * Devuelve una contraseña basada en una combinación de letras y números
+     * 
      * @author EZENTIS
-     * @param getPassword
      * @return contraseña
-     * @comment getPassword
      */
     public static String getPassword() {
         return getPinLetters() + getPinNumber();

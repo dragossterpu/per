@@ -22,11 +22,6 @@ public interface IInspeccionesService {
     public Inspeccion save(Inspeccion inspecciones);
     
     /**
-     * @return devuelve un Iterable con el total de inspecciones de la base de datos
-     */
-    public Iterable<Inspeccion> findAll();
-    
-    /**
      * Borra una inspección pasada por parámetro
      * @param inspecciones a borrar
      */
