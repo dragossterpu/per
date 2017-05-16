@@ -23,7 +23,7 @@ public interface IEquipoService {
      * @author Ezentis
      * @return lista de equipos
      */
-    List<Equipo> findAll();
+    public List<Equipo> findAll();
     
     /**
      * Recupera sólo los equipos activos
@@ -31,7 +31,7 @@ public interface IEquipoService {
      * @author Ezentis
      * @return lista de equipos
      */
-    List<Equipo> findByFechaBajaIsNull();
+    public List<Equipo> findByFechaBajaIsNull();
     
     /**
      * Guarda la información de un equipo en la bdd.
@@ -40,7 +40,7 @@ public interface IEquipoService {
      * @param entity equipo
      * @return equipo con id
      */
-    Equipo save(Equipo entity);
+    public Equipo save(Equipo entity);
     
     /**
      * Método que devuelve la lista de equipos en una consulta basada en criteria.
@@ -53,7 +53,7 @@ public interface IEquipoService {
      * @param sortOrder sentido de la ordenacion (ascendente/descendente)
      * @return la lista de equipos.
      */
-    List<Equipo> buscarEquipoCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+    public List<Equipo> buscarEquipoCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             EquipoBusqueda equipoBusqueda);
     
     /**
@@ -63,7 +63,7 @@ public interface IEquipoService {
      * @return devuelve el número de registros de una consulta criteria.
      * @author EZENTIS
      */
-    int getCounCriteria(EquipoBusqueda equipoBusqueda);
+    public int getCounCriteria(EquipoBusqueda equipoBusqueda);
     
     /**
      * Comprueba si existe algún equipo del tipo proporcionado
@@ -72,8 +72,8 @@ public interface IEquipoService {
      * @param tipo
      * @return boolean, si o no
      */
-    boolean existsByTipoEquipo(TipoEquipo tipo);
+    public boolean existsByTipoEquipo(TipoEquipo tipo);
     
-    public abstract List<Equipo> buscarEquiposByUsername(String paramLogin);
+    public List<Equipo> buscarEquiposByUsername(String paramLogin);
     
 }

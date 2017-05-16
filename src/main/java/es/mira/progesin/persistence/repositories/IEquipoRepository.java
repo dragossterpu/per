@@ -19,14 +19,20 @@ public interface IEquipoRepository extends CrudRepository<Equipo, Long> {
      * @param tipo de equipo
      * @return true o false dependiendo de si existe el equipo
      */
-    boolean existsByTipoEquipo(TipoEquipo tipo);
+    public boolean existsByTipoEquipo(TipoEquipo tipo);
     
     /**
+     *
      * @return devuelve todos los equipos que no se encuentran en situación de baja lógica
      */
-    List<Equipo> findByFechaBajaIsNull();
+    public List<Equipo> findByFechaBajaIsNull();
     
+    /**
+     * Búsqueda de equipos por nombre de usuario
+     * @param paramLogin nombre usuario (username)
+     * @return listado de equipos a los que pertenece el usuario
+     */
     @Query("SELECT e FROM Equipo e, Miembro m WHERE m.equipo = e.id AND upper(m.username) LIKE upper(:infoLogin))")
-    public abstract List<Equipo> buscarEquiposByUsername(@Param("infoLogin") String paramLogin);
+    public List<Equipo> buscarEquiposByUsername(@Param("infoLogin") String paramLogin);
     
 }
