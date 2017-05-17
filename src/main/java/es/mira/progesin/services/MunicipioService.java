@@ -46,7 +46,7 @@ public class MunicipioService implements IMunicipioService {
             
             String descripcion = "El usuario " + user + " ha creado el nuevo municipio " + nombre;
             
-            registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+            registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
             
         } catch (Exception e) {

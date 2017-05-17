@@ -130,7 +130,6 @@ public class InspeccionBean {
      */
     public String getAsociarInspecciones() {
         inspeccionBusqueda.resetValues();
-        setProvinciSelec(null);
         inspeccionBusqueda.setAsociar(true);
         setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
         buscarInspeccion();
@@ -148,7 +147,7 @@ public class InspeccionBean {
         String rutaSiguiente = null;
         String vaHacia = this.vieneDe;
         if (inspeccion.getMunicipio() != null) {
-            setProvinciSelec(inspeccion.getMunicipio().getProvincia());
+            // setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         }
         
         if ("asociarAlta".equals(vaHacia)) {
@@ -171,7 +170,6 @@ public class InspeccionBean {
     
     public void limpiarBusqueda() {
         inspeccionBusqueda.resetValues();
-        setProvinciSelec(null);
         model.setRowCount(0);
     }
     
@@ -182,7 +180,6 @@ public class InspeccionBean {
      */
     public String nuevaInspeccion() {
         // String rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
-        setProvinciSelec(null);
         setListaMunicipios(null);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         inspeccionesAsignadasActuales = new ArrayList<>();
@@ -226,7 +223,6 @@ public class InspeccionBean {
             }
             inspeccionesService.save(inspeccion);
             inspeccionBusqueda.resetValues();
-            setProvinciSelec(null);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "La inspección " + numero + " ha sido creada con éxito");
@@ -249,7 +245,6 @@ public class InspeccionBean {
      * @return devuelve la ruta donde se realiza la modificaión de la inspección
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
-        setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         setListaMunicipios(municipioService.findByProvincia(inspeccion.getMunicipio().getProvincia()));
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -261,6 +256,7 @@ public class InspeccionBean {
         }
         
         this.inspeccion = inspeccion;
+        setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
         
@@ -286,7 +282,6 @@ public class InspeccionBean {
             
             inspeccionesService.save(inspeccion);
             inspeccionBusqueda.resetValues();
-            setProvinciSelec(null);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
@@ -314,7 +309,6 @@ public class InspeccionBean {
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
         inspeccionBusqueda.setAsociar(false);
-        setProvinciSelec(null);
         listaMunicipios = new ArrayList<>();
         inspeccionesSeleccionadas = new ArrayList<>();
         setList(new ArrayList<>());
@@ -334,7 +328,6 @@ public class InspeccionBean {
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
             inspeccionBusqueda.setAsociar(false);
-            setProvinciSelec(null);
             limpiarBusqueda();
             this.vieneDe = null;
             listaEquipos = equipoService.findAll();
@@ -419,13 +412,13 @@ public class InspeccionBean {
      * Guarda un nuevo municipio
      * @param nombre
      */
-    public void nuevoMunicipio(String nombre) {
-        boolean existeMunicipio = municipioService.existeByNameIgnoreCaseAndProvincia(nombre.trim(), provinciSelec);
+    public void nuevoMunicipio(String nombre, Provincia provincia) {
+        boolean existeMunicipio = municipioService.existeByNameIgnoreCaseAndProvincia(nombre.trim(), provincia);
         if (existeMunicipio) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Acción no permitida",
                     "Ya existe un municipio perteneciente a la misma provincia con ese nombre", "inputNombre");
         } else {
-            Municipio nuevoMunicipio = municipioService.crearMunicipio(nombre, provinciSelec);
+            Municipio nuevoMunicipio = municipioService.crearMunicipio(nombre, provincia);
             listaMunicipios.add(nuevoMunicipio);
             Collections.sort(listaMunicipios);
             inspeccion.setMunicipio(nuevoMunicipio);
@@ -436,9 +429,14 @@ public class InspeccionBean {
     /**
      * Devuelve una lista de municipios pertenecientes a una provincia. Se utiliza para recargar la lista de municipios
      * dependiendo de la provincia seleccionad.
+     * @param provincia
      */
-    public void onChangeProvincia() {
-        listaMunicipios = municipioService.findByProvincia(inspeccionBusqueda.getProvincia());
+    public void onChangeProvincia(Provincia provincia) {
+        if (provincia != null) {
+            setListaMunicipios(municipioService.findByProvincia(provincia));
+        } else {
+            setListaMunicipios(null);
+        }
         
     }
     

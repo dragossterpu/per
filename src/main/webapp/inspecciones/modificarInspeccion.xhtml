@@ -129,14 +129,14 @@
 							<f:selectItem itemLabel="Todos" itemValue="" />
 							<f:selectItems value="#{applicationBean.listaProvincias}"
 								var="provincia"
-								itemLabel="#{provincia.provincia}"
+								itemLabel="#{provincia.nombre}"
 								itemValue="#{provincia}" />
-								<p:ajax update=":formModific:municipiosSelect :formModific:buttMunicipio" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+								<p:ajax update=":formModific:municipiosSelect :formModific:buttMunicipio" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia(inspeccionBean.provinciSelec)}"/>
 						</p:selectOneMenu>
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="municipiosSelect" value="Municipio (*):"/>
-						<p:commandButton id="buttMunicipio" title="Añadir municipio (debe seleccionar previamente una provincia)" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.provinciSelec == null}"/>
+						<p:commandButton id="buttMunicipio" title="Añadir municipio (debe seleccionar previamente una provincia)" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.listaMunicipios == null}"/>
 						<p:selectOneMenu required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un municipio"	
 							value="#{inspeccionBean.inspeccion.municipio}"
 							id="municipiosSelect"
@@ -197,7 +197,7 @@
 				required="#{param['formModific:guardar']!=null}" requiredMessage="El nombre del municipio no puede estar vacío" converter="#{trimConverter}" />
 			<p:messages for="inputNombre" autoUpdate="true" closable="true" showDetail="true"/>
 			<div class="centrarBotonesDialog">
-				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value)}" update=":formModific:municipiosSelect" />
+				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value, inspeccionBean.provinciSelec)}" update=":formModific:municipiosSelect" />
 				<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
 			</div>
 		</p:dialog>

@@ -39,8 +39,8 @@ public class Provincia implements Serializable {
     @Column(name = "codigo", length = 3)
     private String codigo;
     
-    @Column(name = "provincia", length = 100)
-    private String provincia;
+    @Column(name = "nombre", length = 100)
+    private String nombre;
     
     @Column(name = "codigo_mn", length = 10)
     private String codigoMN;

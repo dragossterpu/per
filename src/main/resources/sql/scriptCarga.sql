@@ -456,7 +456,7 @@ prompt =========================================================================
   CREATE TABLE PROVINCIAS 
    (	CODIGO VARCHAR2(3 CHAR), 
 	CODIGO_MN VARCHAR2(10 CHAR), 
-	PROVINCIA VARCHAR2(100 CHAR)
+	NOMBRE VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================

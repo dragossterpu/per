@@ -51,7 +51,7 @@ public class Municipio implements Serializable, Comparable<Municipio> {
     private String name;
     
     @ManyToOne
-    @JoinColumn(name = "code_province", foreignKey = @ForeignKey(name = "FK_PROVINCIA"))
+    @JoinColumn(name = "code_province", foreignKey = @ForeignKey(name = "FK_PROVINCIA"), nullable = false)
     private Provincia provincia;
     
     @Override
