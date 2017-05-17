@@ -25,12 +25,13 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -186,7 +187,7 @@ public class InspeccionBean {
      * @return devuelve la ruta donde realizamos el alta de la inspección
      */
     public String nuevaInspeccion() {
-        String rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
+        // String rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
         setProvinciSelec(null);
         setListaMunicipios(null);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -196,22 +197,15 @@ public class InspeccionBean {
         inspeccion.setInspecciones(new ArrayList<>());
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         
-        List<Equipo> listaEquiposUser = equipoService.buscarEquiposByUsername(user.getUsername());
+        // List<Equipo> listaEquiposUser = equipoService.buscarEquiposByUsername(user.getUsername());
+        Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
         
-        if ((listaEquiposUser == null || listaEquiposUser.isEmpty())
-                && user.getRole().equals(RoleEnum.ROLE_EQUIPO_INSPECCIONES)) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-                    "Su usuario no tiene permisos para crear una inspección ya que no está asociado a ningún equipo",
-                    "");
-            rutaSiguiente = null;
-            
-        } else if (listaEquiposUser != null && !listaEquiposUser.isEmpty()
-                && user.getRole().equals(RoleEnum.ROLE_EQUIPO_INSPECCIONES)) {
-            
-            setListaEquipos(listaEquiposUser);
+        if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
+            listaEquipos = new ArrayList<>();
+            listaEquipos.add(miembro.getEquipo());
         }
         
-        return rutaSiguiente;
+        return "/inspecciones/altaInspeccion?faces-redirect=true";
         
     }
     
@@ -267,11 +261,11 @@ public class InspeccionBean {
         listaMunicipios = queryEmpleo.getResultList();
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
         
-        if (user.getRole().equals(RoleEnum.ROLE_EQUIPO_INSPECCIONES)) {
-            listaEquipos = equipoService.buscarEquiposByUsername(user.getUsername());
-        } else {
-            listaEquipos = equipoService.findByFechaBajaIsNull();
+        if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
+            listaEquipos = new ArrayList<>();
+            listaEquipos.add(miembro.getEquipo());
         }
         
         this.inspeccion = inspeccion;

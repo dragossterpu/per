@@ -157,7 +157,7 @@
 		</div>
 		
 		<div class="botonesFormulario">
-			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Asociar inspeciones" icon="fa fa-fw fa-save" >
+			<p:commandButton action="#{inspeccionBean.getAsociarInspecciones}" value="Asociar inspeciones" icon="fa fa-search" >
 				<f:param name="vieneDe" value="asociarAlta" />
 			</p:commandButton>
 			<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="formAlta"/>
