@@ -21,6 +21,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entidad para los documentos adjutos de la solicitud de documentación previa
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
