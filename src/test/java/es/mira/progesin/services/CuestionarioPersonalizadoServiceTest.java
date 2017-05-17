@@ -3,136 +3,121 @@
  */
 package es.mira.progesin.services;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import org.hibernate.SessionFactory;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.primefaces.model.SortOrder;
+
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
+import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 /**
- * @author Ezentis
+ * @author EZENTIS
+ * 
+ * Test del servicio Modelo de cuestionario personalizado
  *
  */
-@SuppressWarnings("javadoc")
+@RunWith(MockitoJUnitRunner.class)
 public class CuestionarioPersonalizadoServiceTest {
     
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
+    @Mock
+    ICuestionarioPersonalizadoRepository cuestionarioPersonalizadoRepository;
+    
+    @Mock
+    private SessionFactory sessionFactory;
+    
+    @InjectMocks
+    private CuestionarioPersonalizadoService cuestionarioPersonalizadoService;
     
     /**
-     * @throws java.lang.Exception
-     */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-    
-    /**
-     * @throws java.lang.Exception
+     * Configuración inicial del test
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
     }
     
     /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#delete(java.lang.Long)}.
+     * Comprobación clase existe
      */
     @Test
-    public final void testDeleteLong() {
-        
+    public void type() {
+        assertThat(CuestionarioPersonalizadoService.class).isNotNull();
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#delete(java.lang.Iterable)}.
+     * Comprobación clase no abstracta
      */
     @Test
-    public final void testDeleteIterableOfCuestionarioPersonalizado() {
-        
+    public void instantiation() {
+        CuestionarioPersonalizadoService target = new CuestionarioPersonalizadoService();
+        assertThat(target).isNotNull();
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#delete(es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#delete(CuestionarioPersonalizado)}.
      */
     @Test
-    public final void testDeleteCuestionarioPersonalizado() {
+    public void delete() {
+        CuestionarioPersonalizado cuestionario = mock(CuestionarioPersonalizado.class);
         
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#deleteAll()}.
-     */
-    @Test
-    public final void testDeleteAll() {
+        cuestionarioPersonalizadoService.delete(cuestionario);
         
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#exists(java.lang.Long)}.
-     */
-    @Test
-    public final void testExists() {
-        
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#findAll()}.
-     */
-    @Test
-    public final void testFindAll() {
-        
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#findAll(java.lang.Iterable)}.
-     */
-    @Test
-    public final void testFindAllIterableOfLong() {
-        
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#findOne(java.lang.Long)}.
-     */
-    @Test
-    public final void testFindOne() {
-        
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#save(java.lang.Iterable)}.
-     */
-    @Test
-    public final void testSaveIterableOfCuestionarioPersonalizado() {
-        
+        verify(cuestionarioPersonalizadoRepository, times(1)).delete(cuestionario);
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#save(es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#save(CuestionarioPersonalizado)}.
      */
     @Test
-    public final void testSaveCuestionarioPersonalizado() {
+    public void save() {
+        CuestionarioPersonalizado cuestionario = mock(CuestionarioPersonalizado.class);
         
+        cuestionarioPersonalizadoService.save(cuestionario);
+        
+        verify(cuestionarioPersonalizadoRepository, times(1)).save(cuestionario);
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, String, SortOrder, CuestionarioPersonalizadoBusqueda)}.
      */
+    @Ignore
     @Test
-    public final void testBuscarCuestionarioPersonalizadoCriteria() {
-        
+    public void buscarCuestionarioPersonalizadoCriteria() {
+        // int first = 0;
+        // int pageSize = 0;
+        // String sortField = null;
+        // SortOrder sortOrder = mock(SortOrder.class);
+        // CuestionarioPersonalizadoBusqueda cuestionarioBusqueda = mock(CuestionarioPersonalizadoBusqueda.class);
+        //
+        // cuestionarioPersonalizadoService.buscarCuestionarioPersonalizadoCriteria(first, pageSize, sortField,
+        // sortOrder,
+        // cuestionarioBusqueda);
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda)}.
+     */
+    @Ignore
+    @Test
+    public void getCountCuestionarioCriteria() {
+        // CuestionarioPersonalizadoBusqueda cuestionarioBusqueda = mock(CuestionarioPersonalizadoBusqueda.class);
+        //
+        // cuestionarioPersonalizadoService.getCountCuestionarioCriteria(cuestionarioBusqueda);
     }
     
 }

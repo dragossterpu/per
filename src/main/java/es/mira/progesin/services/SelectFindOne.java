@@ -14,6 +14,8 @@ import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.IClaseUsuarioRepository;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
@@ -21,10 +23,12 @@ import es.mira.progesin.persistence.repositories.IEmpleoRepository;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.persistence.repositories.IMunicipioRepository;
+import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IProvinciaRepository;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
 import es.mira.progesin.persistence.repositories.ITipoUnidadRepository;
+import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 
 /**
  * @author EZENTIS
@@ -49,7 +53,7 @@ public class SelectFindOne {
     private IClaseUsuarioRepository claseUsuarioRepository;
     
     @Autowired
-    private IEmpleoRepository empeloRepository;
+    private IEmpleoRepository empleoRepository;
     
     @Autowired
     private ITipoInspeccionRepository tipoInspeccionRepository;
@@ -65,6 +69,12 @@ public class SelectFindOne {
     
     @Autowired
     private IMunicipioRepository municipioRepository;
+    
+    @Autowired
+    private IPreguntaCuestionarioRepository preguntaCuestionarioRepository;
+    
+    @Autowired
+    private ITipoDocumentoRepository tipoDocumentoRepository;
     
     /**
      * @param id
@@ -111,7 +121,7 @@ public class SelectFindOne {
      * @return
      */
     public Empleo findOneEmpleo(String id) {
-        return empeloRepository.findOne(Long.valueOf(id));
+        return empleoRepository.findOne(Long.valueOf(id));
     }
     
     /**
@@ -152,5 +162,21 @@ public class SelectFindOne {
      */
     public TipoUnidad findOneTipoUnidad(String id) {
         return tipoUnidadRepository.findOne(Long.valueOf(id));
+    }
+    
+    /**
+     * @param id
+     * @return
+     */
+    public PreguntasCuestionario findOnePreguntaCuestionario(String id) {
+        return preguntaCuestionarioRepository.findOne(Long.valueOf(id));
+    }
+    
+    /**
+     * @param id
+     * @return
+     */
+    public TipoDocumento findOneTipoDocumento(String id) {
+        return tipoDocumentoRepository.findOne(Long.valueOf(id));
     }
 }

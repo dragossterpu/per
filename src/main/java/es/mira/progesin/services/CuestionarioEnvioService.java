@@ -57,6 +57,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
     @Autowired
     private SessionFactory sessionFactory;
     
@@ -83,8 +85,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     @Autowired
     private transient IPreguntaCuestionarioRepository preguntasRepository;
-    
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     @Autowired
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
