@@ -4,24 +4,13 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 
+/**
+ * Servicio para Áreas de Cuestionario
+ * 
+ * @author EZENTIS
+ *
+ */
 public interface IAreaCuestionarioService {
-    void delete(Long id);
-    
-    void delete(Iterable<AreasCuestionario> entities);
-    
-    void delete(AreasCuestionario entity);
-    
-    boolean exists(Long id);
-    
-    Iterable<AreasCuestionario> findAll();
-    
-    Iterable<AreasCuestionario> findAll(Iterable<Long> ids);
-    
-    AreasCuestionario findOne(Long id);
-    
-    Iterable<AreasCuestionario> save(Iterable<AreasCuestionario> entities);
-    
-    AreasCuestionario save(AreasCuestionario entity);
     
     /**
      * Busca las áreas de un cuestionario ordenadas de manera ascendente por el campo orden
@@ -32,8 +21,10 @@ public interface IAreaCuestionarioService {
     List<AreasCuestionario> findAreasByIdCuestionarioByOrder(Integer idCuestionario);
     
     /**
-     * @param listaIdAreasElegidas
-     * @return lista de areas asociadas a los ids
+     * Busca un listado de áreas a partir de una lista de id recibida como parámetro
+     * 
+     * @param listaIdAreasElegidas lista de id de áreas a buscar
+     * @return Listado de áreas localizadas
      */
     List<AreasCuestionario> findByIdIn(List<Long> listaIdAreasElegidas);
     

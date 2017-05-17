@@ -97,25 +97,10 @@ public class GuiaService implements IGuiaService {
         
     }
     
-    /**
-     * Recupera el listado de pasos contenidos en una guía
-     * 
-     * @param guía Guía de la que se desean recuperar los pasos
-     * @return Lista de pasos de la guía
-     * 
-     */
     @Override
     public List<GuiaPasos> listaPasos(Guia guia) {
         return pasosRepository.findByIdGuiaOrderByOrdenAsc(guia);
     }
-    
-    /**
-     * Recupera el listado de pasos contenidos en una guía sin fecha de baja
-     * 
-     * @param guía Guía de la que se desean recuperar los pasos
-     * @return Lista de pasos de la guía
-     * 
-     */
     
     @Override
     public List<GuiaPasos> listaPasosNoNull(Guia guia) {
@@ -123,24 +108,11 @@ public class GuiaService implements IGuiaService {
         
     }
     
-    /**
-     * Almacena la guía recibida como parámetro en base de datos
-     * 
-     * @param guia La guía a guardar
-     * @return La guía guardada
-     */
     @Override
     @Transactional(readOnly = false)
     public Guia guardaGuia(Guia guia) {
         return guiaRepository.save(guia);
     }
-    
-    /**
-     * Comprueba la existencia de un paso recibido como parámetro en las guías personalizadas
-     * 
-     * @param paso Paso del que se desea comprobar si existe en alguna guía personalizada
-     * @return True si se encuentra el paso en alguna guía personalizada, false en caso contrario
-     */
     
     @Override
     public boolean existePaso(GuiaPasos paso) {
@@ -148,9 +120,6 @@ public class GuiaService implements IGuiaService {
         
     }
     
-    /**
-     * Elimina de la base de datos una guía pasada como parámetro
-     */
     @Override
     public void eliminar(Guia guia) {
         guiaRepository.delete(guia);

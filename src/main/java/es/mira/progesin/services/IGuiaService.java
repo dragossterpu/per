@@ -13,7 +13,7 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
  * 
  * Servicio de guías
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  *****************************************************************************/
 
@@ -21,14 +21,16 @@ public interface IGuiaService {
     
     /***************************************
      * 
-     * Devuelve una lista de guías en función de los criterios de búsqueda recibidos como parámetro
-     * @param first
-     * @param pageSize
-     * @param sortField
-     * @param sortOrder
+     * Devuelve una lista de guías en función de los criterios de búsqueda recibidos como parámetro. El listado se
+     * devuelve paginado
      * 
-     * @return List<Guia>
-     * @param busqueda
+     * @param first Primer elemento del listado
+     * @param pageSize Número máximo de registros recuperados
+     * @param sortField Campo por el que sed realiza la ordenación del listado
+     * @param sortOrder Sentido de la ordenación
+     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * 
+     * @return List<Guia> Listado resultante de la búsqueda
      * 
      *************************************/
     
@@ -38,8 +40,8 @@ public interface IGuiaService {
     /**
      * Devuelve el número total de registros resultado de la búsqueda
      * 
-     * @param busqueda
-     * @return
+     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * @return número de registros resultantes de la búsqueda
      */
     
     public int getCounCriteria(GuiaBusqueda busqueda);
@@ -57,29 +59,29 @@ public interface IGuiaService {
     
     /**
      * Devuelve la lista de pasos que no han sido dados de baja y están contenidos en una guía recibida como parámetro
-     * 
+     *
      * @param guia Guía de la que se desean recuperar los pasos
      * @return Lista de pasos
      */
     public List<GuiaPasos> listaPasosNoNull(Guia guia);
     
     /***************************************
-     * 
+     *
      * Almacena en BDD una guía pasada como parámetro
-     * 
-     * @return Guia
-     * @param guia
-     * 
+     *
+     * @param guia a guardar
+     * @return Guia guardada
+     *
      *************************************/
     
     public Guia guardaGuia(Guia guia);
     
     /***************************************
-     * 
+     *
      * Comprueba la existencia de un paso recibido como parámetro en las guías personalizadas
-     * 
-     * @return boolean
-     * @param paso
+     *
+     * @param paso Paso del que queremos verificar la existencia
+     * @return boolean Existencia o no del paso
      * 
      *************************************/
     
@@ -87,16 +89,16 @@ public interface IGuiaService {
     
     /**
      * Permite la eliminación de una guía de la base de datos
-     * 
+     *
      * @param guia guía a eliminar
      */
     public void eliminar(Guia guia);
     
     /**
      * Comprueba si existen modelos de gías asociadas a un determinado tipo de inspección
-     * 
-     * @param tipo
-     * @return boolean
+     *
+     * @param tipo tipo de Inspección
+     * @return boolean existencia o no de la asociación
      */
     boolean existeByTipoInspeccion(TipoInspeccion tipo);
     

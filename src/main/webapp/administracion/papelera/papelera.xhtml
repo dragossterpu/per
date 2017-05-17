@@ -48,7 +48,7 @@
 								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								rowsPerPageTemplate="5,10,15,20"
 								rows="20">
-								 <p:ajax event="sort" listener="#{gestorDocumentalBean.onSort}"  update="tablaDocumentos" skipChildren="true"/>
+								
 								 <f:facet name="header">
 								 	<h:outputText value="Documentos"/>
 									
@@ -74,10 +74,10 @@
 								<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
 									<h:outputText value="#{documento.nombre}" />
 								</p:column>
-								<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento.nombre}"  visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
+								<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}"  visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
 									<h:outputText value="#{documento.tipoDocumento.nombre}" />	
 								</p:column>
-								<p:column headerText="Inspeccion"  sortBy="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" width="100"  visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
+								<p:column headerText="Inspeccion"  width="100"  visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
 									<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
 	
 								</p:column>

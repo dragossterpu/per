@@ -32,74 +32,66 @@ import lombok.Setter;
 @Component("notificacionesBean")
 @Scope(FacesViewScope.NAME)
 public class NotificacionesBean implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private List<Boolean> list;
-
-	@Autowired
-	transient INotificacionService notificacionService;
-
-	@Autowired
-	transient IRegistroActividadService regActividadService;
-
-	private List<Notificacion> listaNotificaciones = new ArrayList<>();
-
-	private int numColListNotif = 4;
-
-	private void initList() {
-		listaNotificaciones = notificacionService.findByFechaBajaIsNull();
-
-	}
-
-	/**********************************************************************************
-	 * 
-	 * Controla las columnas visibles en la lista de resultados del buscador
-	 * 
-	 * @param ToggleEvent
-	 * 
-	 **********************************************************************************/
-
-	public void onToggle(ToggleEvent e) {
-		list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-	}
-
-	/**
-	 * @comment Realiza una eliminación lógico de la notificación (le pone fecha de baja)
-	 * @comment La notificacion seleccionada de la tabla de notificaciones
-	 * @param notificacion
-	 * @author EZENTIS
-	 */
-	public void eliminarNotificacion(Notificacion notificacion) {
-		notificacion.setFechaBaja(new Date());
-		notificacion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-		try {
-			listaNotificaciones.remove(notificacion);
-			String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
-			// Guardamos la actividad en bbdd
-			regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-					SeccionesEnum.NOTIFICACIONES.getDescripcion());
-		}
-		catch (Exception e) {
-			// Guardamos loe posibles errores en bbdd
-			regActividadService.altaRegActividadError(SeccionesEnum.NOTIFICACIONES.getDescripcion(), e);
-
-		}
-
-	}
-
-	/*****************************************
-	 * 
-	 * Inicializa el bean
-	 * 
-	 ***************************************/
-
-	@PostConstruct
-	public void init() {
-		initList();
-		list = new ArrayList<>();
-		for (int i = 0; i <= numColListNotif; i++) {
-			list.add(Boolean.TRUE);
-		}
-	}
-
+    private static final long serialVersionUID = 1L;
+    
+    private List<Boolean> list;
+    
+    @Autowired
+    transient INotificacionService notificacionService;
+    
+    @Autowired
+    transient IRegistroActividadService regActividadService;
+    
+    private int numColListNotif = 4;
+    
+    /**********************************************************************************
+     *
+     * Controla las columnas visibles en la lista de resultados del buscador
+     *
+     * @param e evento toggle de la vista
+     *
+     **********************************************************************************/
+    
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+    }
+    
+    /**
+     * @comment Realiza una eliminación lógico de la notificación (le pone fecha de baja)
+     * @comment La notificacion seleccionada de la tabla de notificaciones
+     * @param notificacion
+     * @author EZENTIS
+     */
+    public void eliminarNotificacion(Notificacion notificacion) {
+        notificacion.setFechaBaja(new Date());
+        notificacion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+        try {
+            
+            String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.NOTIFICACIONES.getDescripcion());
+        } catch (Exception e) {
+            
+            regActividadService.altaRegActividadError(SeccionesEnum.NOTIFICACIONES.getDescripcion(), e);
+            
+        }
+        
+    }
+    
+    /*****************************************
+     *
+     * Inicializa el bean
+     *
+     ***************************************/
+    
+    @PostConstruct
+    public void init() {
+        
+        list = new ArrayList<>();
+        for (int i = 0; i <= numColListNotif; i++) {
+            list.add(Boolean.TRUE);
+        }
+    }
+    
 }

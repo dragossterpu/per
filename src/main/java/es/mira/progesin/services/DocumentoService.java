@@ -242,7 +242,6 @@ public class DocumentoService implements IDocumentoService {
     
     private void creaCriteria(DocumentoBusqueda busqueda, Criteria criteria) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        criteria.createAlias("tipoDocumento", "tipo");
         
         if (busqueda.getFechaDesde() != null) {
             /**
@@ -266,7 +265,7 @@ public class DocumentoService implements IDocumentoService {
         }
         
         if (busqueda.getTipoDocumento() != null) {
-            criteria.add(Restrictions.eq("tipo", busqueda.getTipoDocumento()));
+            criteria.add(Restrictions.eq("tipoDocumento", busqueda.getTipoDocumento()));
         }
         
         if (busqueda.getMateriaIndexada() != null) {
@@ -279,6 +278,7 @@ public class DocumentoService implements IDocumentoService {
         }
         
         if (busqueda.getInspeccion() != null) {
+            criteria.createAlias("inspeccion", "inspecciones");
             criteria.add(Restrictions.eq("inspecciones.numero", busqueda.getInspeccion().getNumero()));
         }
         

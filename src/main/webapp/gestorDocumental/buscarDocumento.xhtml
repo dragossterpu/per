@@ -118,10 +118,10 @@
 							<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
 								<h:outputText value="#{documento.nombre}" />
 							</p:column>
-							<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento.nombre}"  visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
+							<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}"  visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
 								<h:outputText value="#{documento.tipoDocumento.nombre}" />	
 							</p:column>
-							<p:column headerText="Inspeccion"  sortBy="#{gestorDocumentalBean.mapaInspecciones[documento.id]}"  width="100"  visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
+							<p:column headerText="Inspeccion"   width="100"  visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
 								<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
 
 							</p:column>

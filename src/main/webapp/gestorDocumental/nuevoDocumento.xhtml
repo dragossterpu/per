@@ -16,7 +16,7 @@
 				<div class="bloqueFormulario">
 						<div class="columnaIzdaFormulario">
 							<h:outputLabel for="nombreDocumento" value="Nombre del documento (*):" />
-							<p:inputText id="nombreDocumento" binding="#{nombreDocumento}" converter="#{trimConverter}"/>
+							<p:inputText id="nombreDocumento" binding="#{nombreDocumento}" converter="#{trimConverter}" maxlength="255"/>
 
 							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento (*):" />
 							<p:selectOneMenu
@@ -27,7 +27,7 @@
 									itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
 							</p:selectOneMenu>
 							<h:outputLabel for="descripcion" value="Descripción:" />
-							<p:inputText id="descripcion"  binding="#{descripcion}" converter="#{trimConverter}"/>	
+							<p:inputText id="descripcion"  binding="#{descripcion}" converter="#{trimConverter}" />	
 						</div>
 						<div class="columnaDchaFormulario">						
 							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
