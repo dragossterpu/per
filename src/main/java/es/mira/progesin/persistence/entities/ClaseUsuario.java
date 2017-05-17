@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,7 +33,6 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "Clase_usuario")
-@NamedQuery(name = "ClaseUsuario.findAll", query = "SELECT t FROM ClaseUsuario t")
 public class ClaseUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     

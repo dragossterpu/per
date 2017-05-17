@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +24,6 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "tipos_unidad")
-@NamedQuery(name = "TipoUnidad.findAll", query = "SELECT t FROM TipoUnidad t")
 public class TipoUnidad implements Serializable {
     
     /**
@@ -35,7 +33,7 @@ public class TipoUnidad implements Serializable {
     
     @Id
     @Column(name = "id", length = 10, nullable = false)
-    private long id;
+    private Long id;
     
     @Column(name = "descripcion", length = 100)
     private String descripcion;

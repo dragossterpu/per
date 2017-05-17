@@ -9,9 +9,6 @@ import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
@@ -32,7 +29,10 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.repositories.IClaseUsuarioRepository;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
+import es.mira.progesin.persistence.repositories.IEmpleoRepository;
+import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -90,12 +90,6 @@ public class UserBean {
     
     private LazyModelUsuarios model;
     
-    @PersistenceContext
-    private EntityManager em;
-    
-    @Autowired
-    ApplicationBean applicationBean;
-    
     @Autowired
     IUserService userService;
     
@@ -116,6 +110,15 @@ public class UserBean {
     
     @Autowired
     private IDepartamentoRepository departamentoRepository;
+    
+    @Autowired
+    private IClaseUsuarioRepository claseUsuarioRepository;
+    
+    @Autowired
+    private IEmpleoRepository empleoRepository;
+    
+    @Autowired
+    private IPuestoTrabajoRepository puestoTrabajoRepository;
     
     /**
      * Muestra el perfil del usuario
@@ -149,8 +152,8 @@ public class UserBean {
         user = new User();
         user.setFechaAlta(new Date());
         user.setEstado(EstadoEnum.ACTIVO);
-        cuerposEstado = (List<CuerpoEstado>) cuerposEstadoService.findAll();
-        puestosTrabajo = applicationBean.getListaPuestosTrabajo();
+        setCuerposEstado((List<CuerpoEstado>) cuerposEstadoService.findAll());
+        setPuestosTrabajo((List<PuestoTrabajo>) puestoTrabajoRepository.findAll());
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         puestoTrabajoSeleccionado = null;
         cuerpoEstadoSeleccionado = null;
@@ -338,13 +341,10 @@ public class UserBean {
     @PostConstruct
     public void init() {
         userBusqueda = new UserBusqueda();
-        this.cuerposEstado = (List<CuerpoEstado>) cuerposEstadoService.findAll();
-        this.puestosTrabajo = applicationBean.getListaPuestosTrabajo();
-        
+        setCuerposEstado((List<CuerpoEstado>) cuerposEstadoService.findAll());
+        setPuestosTrabajo((List<PuestoTrabajo>) puestoTrabajoRepository.findAll());
         setListaDepartamentos((List<Departamento>) departamentoRepository.findAll());
-        
-        TypedQuery<ClaseUsuario> queryClase = em.createNamedQuery("ClaseUsuario.findAll", ClaseUsuario.class);
-        setListadoClases(queryClase.getResultList());
+        setListadoClases((List<ClaseUsuario>) claseUsuarioRepository.findAll());
         
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         this.puestoTrabajoSeleccionado = null;
@@ -363,11 +363,9 @@ public class UserBean {
      * Busca el objeto Empleo en base de datos a partir del seleccionado en el combo de la vista
      */
     public void buscarEmpleo() {
-        TypedQuery<Empleo> queryEmpleo = em.createNamedQuery("EmpleoCuerpo.find", Empleo.class);
         CuerpoEstado cuerpo = this.cuerpoEstadoSeleccionado != null ? this.cuerpoEstadoSeleccionado
                 : this.user.getCuerpoEstado();
-        queryEmpleo.setParameter("cuerpoSeleccionado", cuerpo);
-        setListaEmpleos(queryEmpleo.getResultList());
+        setListaEmpleos(empleoRepository.findByCuerpo(cuerpo));
     }
     
     private void auditoriaBusqueda(UserBusqueda usuario) {

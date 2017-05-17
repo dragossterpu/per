@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -35,7 +34,6 @@ import lombok.ToString;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "municipios")
-@NamedQuery(name = "Municipio.findByCode_province", query = "SELECT m FROM Municipio m where m.provincia=:provinciaSeleccionada")
 public class Municipio implements Serializable, Comparable<Municipio> {
     
     /**

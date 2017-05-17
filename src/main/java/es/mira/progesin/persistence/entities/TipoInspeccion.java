@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +15,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entidad para los modelos de inspecciones
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, of = "codigo")
@@ -23,10 +28,8 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-
 @Entity
 @Table(name = "TIPOS_INSPECCION")
-@NamedQuery(name = "TipoInspeccion.findAll", query = "SELECT t FROM TipoInspeccion t")
 public class TipoInspeccion extends AbstractEntity implements Serializable, Comparable<TipoInspeccion> {
     private static final long serialVersionUID = 1L;
     

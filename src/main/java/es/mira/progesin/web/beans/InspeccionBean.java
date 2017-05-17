@@ -8,9 +8,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -83,9 +80,6 @@ public class InspeccionBean {
     
     @Autowired
     private ITipoInspeccionService tipoInspeccionService;
-    
-    @PersistenceContext
-    private EntityManager em;
     
     private List<Municipio> listaMunicipios;
     
@@ -256,9 +250,7 @@ public class InspeccionBean {
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
         setProvinciSelec(inspeccion.getMunicipio().getProvincia());
-        TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
-        queryEmpleo.setParameter("provinciaSeleccionada", provinciSelec);
-        listaMunicipios = queryEmpleo.getResultList();
+        setListaMunicipios(municipioService.findByProvincia(inspeccion.getMunicipio().getProvincia()));
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
@@ -446,9 +438,7 @@ public class InspeccionBean {
      * dependiendo de la provincia seleccionad.
      */
     public void onChangeProvincia() {
-        TypedQuery<Municipio> queryEmpleo = em.createNamedQuery("Municipio.findByCode_province", Municipio.class);
-        queryEmpleo.setParameter("provinciaSeleccionada", this.provinciSelec);
-        listaMunicipios = queryEmpleo.getResultList();
+        listaMunicipios = municipioService.findByProvincia(inspeccionBusqueda.getProvincia());
         
     }
     
