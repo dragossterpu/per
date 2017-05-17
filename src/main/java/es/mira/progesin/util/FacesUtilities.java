@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class FacesUtilities {
     
     /**
-     * Redirige a la página proporcionada sin parámetros
+     * Redirige a la página pasada como parámetro
      * 
      * @author Ezentis
      * @param pagina deseada
@@ -40,7 +40,7 @@ public class FacesUtilities {
     }
     
     /**
-     * Redirige a la página proporcionada con parámetros GET a evaluar en destino
+     * Redirige a la página pasada como parámetro añadiendo parámetros GET a evaluar en destino
      * 
      * @author Ezentis
      * @param pagina deseada

@@ -242,25 +242,6 @@ public class EquiposBeanTest {
         assertThat(ruta_vista).isEqualTo("/equipos/modificarEquipo?faces-redirect=true");
     }
     
-    // /**
-    // * Test method for {@link es.mira.progesin.web.beans.EquiposBean#modificarEquipo()}.
-    // */
-    // @Test
-    // public void modificarEquipo() {
-    // Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
-    // equipoBean.setEquipo(equipo);
-    //
-    // equipoBean.modificarEquipo();
-    //
-    // verify(equipoService, times(1)).save(equipoCaptor.capture());
-    // verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-    // eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.name()));
-    // verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
-    // eq(SeccionesEnum.INSPECCION.name()), eq(equipoCaptor.getValue()));
-    // verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
-    // any(Exception.class));
-    // }
-    
     /**
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#eliminarEquipo(Equipo)}.
      */
