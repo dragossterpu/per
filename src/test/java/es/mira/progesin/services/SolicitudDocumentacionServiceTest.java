@@ -82,7 +82,7 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Test
     public void type() {
-        assertThat(EquipoService.class).isNotNull();
+        assertThat(SolicitudDocumentacionService.class).isNotNull();
     }
     
     /**
@@ -90,7 +90,7 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Test
     public void instantiation() {
-        EquipoService target = new EquipoService();
+        SolicitudDocumentacionService target = new SolicitudDocumentacionService();
         assertThat(target).isNotNull();
     }
     
