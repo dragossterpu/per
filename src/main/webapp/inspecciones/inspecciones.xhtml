@@ -139,7 +139,7 @@
 					<f:selectItem itemLabel="Todos" itemValue="" />
 					<f:selectItems value="#{applicationBean.listaProvincias}"
 						var="provincia"
-						itemLabel="#{provincia.provincia}"
+						itemLabel="#{provincia.nombre}"
 						itemValue="#{provincia}" />
 						<p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
 
@@ -200,15 +200,13 @@
                         resizableColumns="true"
                   	    rendered="#{inspeccionBean.model.rowCount ne 0}"
                   	    selection="#{inspeccionBean.inspeccionesSeleccionadas}"
-                  	    rowKey="#{inspeccion.id}" >
+                  	    rowKey="#{inspeccion.id}" 
+                  	    rowSelectMode="checkbox">
 <!--                  			    rowStyleClass="#{not empty inspeccion.fechaAnulacion ? 'anulado' : null}"	atributo de la tabla                 -->
                  
-                 <p:ajax event="rowUnselectCheckbox"  listener="#{inspeccionBean.onRowUnSelected}" />  
+                 <p:ajax event="rowUnselectCheckbox"  listener="#{inspeccionBean.onRowUnSelected}"/>  
                  <p:ajax event="rowSelectCheckbox" listener="#{inspeccionBean.onRowSelected}" />
-                 <p:ajax event="rowSelect" listener="#{inspeccionBean.onRowSelected}"/>
-                 <p:ajax event="rowUnselect" listener="#{inspeccionBean.onRowUnSelected}" />
                  <p:ajax event="page" listener="#{inspeccionBean.paginator}" />
-                 
                  <p:ajax event="toggleSelect" listener="#{inspeccionBean.onToggleSelect}" global="true"/>
    			
                         
@@ -274,8 +272,8 @@
 					<h:outputText value="#{inspeccion.municipio.name}" />
 				</p:column>
 				
-				<p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia.provincia}" width="70" visible="#{inspeccionBean.list[12]}" exportable="#{inspeccionBean.list[12]}">
-					<h:outputText value="#{inspeccion.municipio.provincia.provincia}" />
+				<p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia.nombre}" width="70" visible="#{inspeccionBean.list[12]}" exportable="#{inspeccionBean.list[12]}">
+					<h:outputText value="#{inspeccion.municipio.provincia.nombre}" />
 				</p:column>
 				
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
