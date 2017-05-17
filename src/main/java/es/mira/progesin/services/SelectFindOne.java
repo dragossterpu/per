@@ -168,7 +168,7 @@ public class SelectFindOne {
      * @param id
      * @return
      */
-    public PreguntasCuestionario findOnePreguntaCuestionario(String id) {
+    public PreguntasCuestionario findOnePreguntasCuestionario(String id) {
         return preguntaCuestionarioRepository.findOne(Long.valueOf(id));
     }
     
