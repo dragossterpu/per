@@ -37,28 +37,22 @@ public class GuiasConverter implements Converter {
         Object ret = null;
         if (component instanceof OrderList) {
             Object list = ((OrderList) component).getValue();
+            Iterator<?> iterador;
             if (list instanceof PersistentBag) {
                 PersistentBag bolsa = (PersistentBag) list;
-                Iterator<?> iterador = bolsa.iterator();
-                while (iterador.hasNext()) {
-                    Object objeto = iterador.next();
-                    String nameSinSaltos = cadenaSinSaltos(((GuiaPasos) objeto).getPaso());
-                    String valueSinSaltos = cadenaSinSaltos(value);
-                    if (valueSinSaltos.equals(nameSinSaltos)) {
-                        ret = objeto;
-                        break;
-                    }
-                }
+                iterador = bolsa.iterator();
             } else {
                 @SuppressWarnings("unchecked")
                 ArrayList<GuiaPasos> lista = (ArrayList<GuiaPasos>) list;
-                for (Object objeto : lista) {
-                    String nameSinSaltos = cadenaSinSaltos(((GuiaPasos) objeto).getPaso());
-                    String valueSinSaltos = cadenaSinSaltos(value);
-                    if (valueSinSaltos.equals(nameSinSaltos)) {
-                        ret = objeto;
-                        break;
-                    }
+                iterador = lista.iterator();
+            }
+            while (iterador.hasNext()) {
+                Object objeto = iterador.next();
+                String nameSinSaltos = cadenaSinSaltos(((GuiaPasos) objeto).getPaso());
+                String valueSinSaltos = cadenaSinSaltos(value);
+                if (valueSinSaltos.equals(nameSinSaltos)) {
+                    ret = objeto;
+                    break;
                 }
             }
         }

@@ -35,28 +35,22 @@ public class PreguntasConverter implements Converter {
         Object ret = null;
         if (component instanceof OrderList) {
             Object list = ((OrderList) component).getValue();
+            Iterator<?> iterador;
             if (list instanceof PersistentBag) {
                 PersistentBag bolsa = (PersistentBag) list;
-                Iterator<?> iterador = bolsa.iterator();
-                while (iterador.hasNext()) {
-                    Object objeto = iterador.next();
-                    String nameSinSaltos = cadenaSinSaltos(((PreguntasCuestionario) objeto).getPregunta());
-                    String valueSinSaltos = cadenaSinSaltos(value);
-                    if (valueSinSaltos.equals(nameSinSaltos)) {
-                        ret = objeto;
-                        break;
-                    }
-                }
+                iterador = bolsa.iterator();
             } else {
                 @SuppressWarnings("unchecked")
                 ArrayList<PreguntasCuestionario> lista = (ArrayList<PreguntasCuestionario>) list;
-                for (Object objeto : lista) {
-                    String nameSinSaltos = cadenaSinSaltos(((PreguntasCuestionario) objeto).getPregunta());
-                    String valueSinSaltos = cadenaSinSaltos(value);
-                    if (valueSinSaltos.equals(nameSinSaltos)) {
-                        ret = objeto;
-                        break;
-                    }
+                iterador = lista.iterator();
+            }
+            while (iterador.hasNext()) {
+                Object objeto = iterador.next();
+                String nameSinSaltos = cadenaSinSaltos(((PreguntasCuestionario) objeto).getPregunta());
+                String valueSinSaltos = cadenaSinSaltos(value);
+                if (valueSinSaltos.equals(nameSinSaltos)) {
+                    ret = objeto;
+                    break;
                 }
             }
         }
