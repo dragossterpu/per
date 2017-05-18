@@ -202,7 +202,6 @@
                   	    selection="#{inspeccionBean.inspeccionesSeleccionadas}"
                   	    rowKey="#{inspeccion.id}" 
                   	    rowSelectMode="checkbox">
-<!--                  			    rowStyleClass="#{not empty inspeccion.fechaAnulacion ? 'anulado' : null}"	atributo de la tabla                 -->
                  
                  <p:ajax event="rowUnselectCheckbox"  listener="#{inspeccionBean.onRowUnSelected}"/>  
                  <p:ajax event="rowSelectCheckbox" listener="#{inspeccionBean.onRowSelected}" />
@@ -284,12 +283,6 @@
 					update="tablaInspecciones" />
 				</p:column>
 				
-				<p:column styleClass="botonTabla" exportable="false" toggleable="false"  rendered="false" >
-					<p:commandButton title="Anular inspección" icon="fa fa-toggle-on" actionListener="#{inspeccionBean.anular(inspeccion)}" update="tablaInspecciones" rendered="#{empty inspeccion.fechaAnulacion}" >
-						<p:confirm header="Anular inspección" message="¿Está seguro que desea anular la inspección?" icon="fa fa-warning-sign"/>
-					</p:commandButton>
-					<p:commandButton title="Activar inspección" icon="fa fa-toggle-off"  actionListener="#{inspeccionBean.activa(inspeccion)}" rendered="#{not empty inspeccion.fechaAnulacion}" update="tablaInspecciones"/>
-				</p:column>
 				<p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esAdmin or esJefeEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
 					<p:commandButton title="Eliminar inspección" icon="fa fa-trash" update="tablaInspecciones" >
 						<p:confirm header="Eliminar inspección" message="¿Está seguro que desea eliminar la inspección?" icon="fa fa-warning-sign"/>

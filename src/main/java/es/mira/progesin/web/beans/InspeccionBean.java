@@ -7,12 +7,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
-import org.primefaces.event.data.PageEvent;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -42,7 +40,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @Setter
@@ -179,16 +177,14 @@ public class InspeccionBean {
      * @return devuelve la ruta donde realizamos el alta de la inspección
      */
     public String nuevaInspeccion() {
-        // String rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
         setListaMunicipios(null);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         inspeccionesAsignadasActuales = new ArrayList<>();
         inspeccion = new Inspeccion();
-        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SIN_INICIAR);
+        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         
-        // List<Equipo> listaEquiposUser = equipoService.buscarEquiposByUsername(user.getUsername());
         Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
         
         if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
@@ -336,54 +332,6 @@ public class InspeccionBean {
     
     /**
      * 
-     * Elimina la fecha de baja de la inspeccion para volver a ponerla activa. Proceso contrario a anular.
-     * 
-     * @param inspeccion
-     */
-    public void activa(Inspeccion inspeccion) {
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        inspeccion.setFechaAnulacion(null);
-        inspeccion.setUsernameAnulacion(null);
-        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.ESTADO_SUSPENDIDA);
-        try {
-            inspeccionesService.save(inspeccion);
-            String descripcion = EL_USUARIO + " " + user + " ha activado la inspección " + inspeccion.getNumero();
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.INSPECCION.name());
-            
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
-        }
-    }
-    
-    /**
-     * 
-     * Permite la anulación de una inspeccion por lo que su estado cambiará a suspendiada. Una vez anulada no podrá ser
-     * usada aunque se mantendrá en la base de datos.
-     * @param inspeccion que vamos a anular
-     * 
-     */
-    
-    public void anular(Inspeccion inspeccion) {
-        String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        inspeccion.setFechaAnulacion(new Date());
-        inspeccion.setUsernameAnulacion(user);
-        try {
-            inspeccionesService.save(inspeccion);
-            String descripcion = EL_USUARIO + " " + user + " ha anulado la inspección " + inspeccion.getNumero();
-            
-            // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.INSPECCION.name());
-        } catch (Exception e) {
-            // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
-        }
-        
-    }
-    
-    /**
-     * 
      * Cuando un usuario use la opción de eliminar se hará una elimianción lógica de la base de datos (fecha de baja
      * será null)
      * 
@@ -410,7 +358,8 @@ public class InspeccionBean {
     
     /**
      * Guarda un nuevo municipio
-     * @param nombre
+     * @param nombre del municipio nuevo
+     * @param provincia a la que se asocia el nuevo municipio
      */
     public void nuevoMunicipio(String nombre, Provincia provincia) {
         boolean existeMunicipio = municipioService.existeByNameIgnoreCaseAndProvincia(nombre.trim(), provincia);
@@ -463,10 +412,8 @@ public class InspeccionBean {
     /**
      * Método que capura el evento "Seleccionar todos" o "Deseleccionar todos" en el momento de asociar una inspección.
      * Automáticamente los carga en la lista de inspecciones asociadas.
-     *
-     * @param event captura el evento
      */
-    public void onToggleSelect(AjaxBehaviorEvent event) {
+    public void onToggleSelect() {
         if (!isSelectedAll()) {
             setInspeccionesAsignadasActuales(inspeccionesService.buscarInspeccionPorCriteria(0,
                     inspeccionesService.getCountInspeccionCriteria(inspeccionBusqueda), null, null,
@@ -481,10 +428,8 @@ public class InspeccionBean {
     /**
      * Añade todas las inspecciones asignadas a las inspecciones seleccionadas en la tabla para no perderlas cuando
      * realizamos la paginación de servidor.
-     * 
-     * @param event evento de cambio de página de la tabla de inspecciones
      */
-    public void paginator(PageEvent event) {
+    public void paginator() {
         inspeccionesSeleccionadas = inspeccionesAsignadasActuales;
     }
     
@@ -496,5 +441,53 @@ public class InspeccionBean {
     public void desAsociarInspeccion(Inspeccion inspeccion) {
         inspeccionesAsignadasActuales.remove(inspeccion);
     }
+    
+    /**
+     * 
+     * Elimina la fecha de baja de la inspeccion para volver a ponerla activa. Proceso contrario a anular.
+     * 
+     * @param inspeccion
+     */
+    // public void activa(Inspeccion inspeccion) {
+    // String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    // inspeccion.setFechaAnulacion(null);
+    // inspeccion.setUsernameAnulacion(null);
+    // inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SUSPENDIDA);
+    // try {
+    // inspeccionesService.save(inspeccion);
+    // String descripcion = EL_USUARIO + " " + user + " ha activado la inspección " + inspeccion.getNumero();
+    // regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+    // SeccionesEnum.INSPECCION.name());
+    //
+    // } catch (Exception e) {
+    // regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
+    // }
+    // }
+    
+    /**
+     * 
+     * Permite la anulación de una inspeccion por lo que su estado cambiará a suspendiada. Una vez anulada no podrá ser
+     * usada aunque se mantendrá en la base de datos.
+     * @param inspeccion que vamos a anular
+     * 
+     */
+    
+    // public void anular(Inspeccion inspeccion) {
+    // String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    // inspeccion.setFechaAnulacion(new Date());
+    // inspeccion.setUsernameAnulacion(user);
+    // try {
+    // inspeccionesService.save(inspeccion);
+    // String descripcion = EL_USUARIO + " " + user + " ha anulado la inspección " + inspeccion.getNumero();
+    //
+    // // Guardamos la actividad en bbdd
+    // regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+    // SeccionesEnum.INSPECCION.name());
+    // } catch (Exception e) {
+    // // Guardamos los posibles errores en bbdd
+    // regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+    // }
+    //
+    // }
     
 }
