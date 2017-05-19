@@ -1,6 +1,10 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -32,6 +36,10 @@ public class InformeBean implements Serializable {
     private String texto;
     
     private Informe informe;
+    
+    private Map<String, List<String>> mapaAreaSubareas;
+    
+    private List<String> areasInforme;
     
     @Autowired
     private transient IInformeRepository informeRepository;
@@ -76,10 +84,34 @@ public class InformeBean implements Serializable {
     
     @PostConstruct
     public void init() {
+        setAreasInforme(crearAreasInforme());
+        setMapaAreaSubareas(crearMapaAreasSubareas());
         informe = informeRepository.findOne(1L);
         if (informe != null) {
             texto = informe.getTexto();
         }
     }
     
+    public List<String> crearAreasInforme() {
+        return Arrays.asList("1.- ÁMBITO Y ORIGEN DE LA INSPECCIÓN", "2.- REUNIONES Y VISITAS INSTITUCIONALES",
+                "3.-INFRAESTRUCTURAS E INSTALACIONES");
+    }
+    
+    public Map<String, List<String>> crearMapaAreasSubareas() {
+        Map<String, List<String>> estructuraInforme = new HashMap<>();
+        estructuraInforme.put("1.- ÁMBITO Y ORIGEN DE LA INSPECCIÓN",
+                Arrays.asList("1.1.- Unidad inspeccionada", "1.2.- Ambito territorial, poblacion y servicios",
+                        "1.3.- Objetivos generales y especificos", "1.4.- Problematica de interes policial"));
+        
+        estructuraInforme.put("2.- REUNIONES Y VISITAS INSTITUCIONALES", Arrays.asList("2.1.- Con Autoridades",
+                "2.2.- Con Asociaciones Civiles", "2.2.- Con Asociaciones Profesionales"));
+        
+        estructuraInforme.put("3.-INFRAESTRUCTURAS E INSTALACIONES",
+                Arrays.asList("3.1.- Situacion y estado de los inmuebles", "3.2.- Instalaciones y equipos",
+                        "3.3.- Medidas de seguridad y protecclon de los acuartelamientos",
+                        "3.4.- Deposito de detenidos", "3.5.- Galeria de Tiro", "3.6.- Otros aspectos relevantes",
+                        "3.7.- Conclusiones y propuestas"));
+        
+        return estructuraInforme;
+    }
 }
