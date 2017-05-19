@@ -24,6 +24,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * @author Ezentis
+ * 
+ * Entidad para un Municipio
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -36,9 +42,6 @@ import lombok.ToString;
 @Table(name = "municipios")
 public class Municipio implements Serializable, Comparable<Municipio> {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
     @Id
