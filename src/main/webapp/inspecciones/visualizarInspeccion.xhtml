@@ -43,7 +43,7 @@
 				<h:outputLabel for="jefeEquipo" value="Jefe del equipo:" />				
 				<p:inputText  id="jefeEquipo" value="#{inspeccionBean.inspeccion.equipo.jefeEquipo}" converter="#{trimConverter}" disabled="true"/>
 				
-				<h:outputLabel for="fechaPrevista" value="Fecha prevista:" />
+				<h:outputLabel for="fechaPrevista" value="Fecha prevista visita:" />
 				<p:inputText id="fechaPrevista" value="#{inspeccionBean.inspeccion.fechaPrevista}" disabled="true">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 				</p:inputText>

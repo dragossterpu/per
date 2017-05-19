@@ -53,10 +53,9 @@
 						</p:selectOneMenu>
 						<p:messages for="tipoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
-						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar una fecha"
+						<h:outputLabel for="fechaPrevista" value="Fecha prevista visita:" />
+						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" 
 						mindate="#{currentDate}" value="#{inspeccionBean.inspeccion.fechaPrevista}"/>
-						<p:messages for="fechaPrevista" autoUpdate="true"  closable="true"/>
 						
 						<h:outputLabel for="equipoSelect" value="Equipo (*):" />
 						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un equipo"
@@ -70,7 +69,7 @@
 						</p:selectOneMenu>
 						<p:messages for="equipoSelect" autoUpdate="true"  closable="true"/>	
 						
-						<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección: (*)" />
+						<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección (*):" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
 								var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
@@ -88,7 +87,7 @@
 					
 					<div class="columnaDchaFormulario">
 						
-						<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad: (*)" />
+						<h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad (*):" />
 						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un tipo de unidad"
 							value="#{inspeccionBean.inspeccion.tipoUnidad}"
 							id="tipoUnidadSelect" converter="#{selectConverter}">
@@ -100,14 +99,14 @@
 						</p:selectOneMenu>
 						<p:messages for="tipoUnidadSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="nombreUnidad" value="Nombre de unidad: (*)" />
+						<h:outputLabel for="nombreUnidad" value="Nombre de unidad (*):" />
 						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" 
 							maxlength="255" required="#{param['formAlta:crear']!=null}" requiredMessage="Debe introducir un nombre"/>	
 						<p:messages for="nombreUnidad" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="provinciasSelect" value="Provincia: (*)" />
+						<h:outputLabel for="provinciasSelect" value="Provincia (*):" />
 						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar una provincia"
-							value="#{provinciaSeleccionada}"
+							value="#{inspeccionBean.provinciSelec}"
 							id="provinciasSelect" 
 							filter="true" 
 							filterMatchMode="startsWith"
@@ -117,11 +116,11 @@
 								var="provincia"
 								itemLabel="#{provincia.nombre}"
 								itemValue="#{provincia}" />
-								<p:ajax update=":formAlta:municipiosSelect :formAlta:buttMunicipio" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia(provinciaSeleccionada)}"/>
+								<p:ajax update=":formAlta:municipiosSelect :formAlta:buttMunicipio" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia(inspeccionBean.provinciSelec)}"/>
 						</p:selectOneMenu>
 						<p:messages for="provinciasSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="municipiosSelect" value="Municipio: (*)" />
+						<h:outputLabel for="municipiosSelect" value="Municipio (*):" />
 						<p:commandButton id="buttMunicipio" title="Añadir municipio" type="button" onclick="PF('dialogMunicipio').show()" icon="fa fa-fw fa fa-plus" update="crearMunicipio" disabled="#{inspeccionBean.listaMunicipios == null}"/>
 						<p:selectOneMenu required="#{param['formAlta:crear']!=null}" requiredMessage="Debe seleccionar un municipio"
 							value="#{inspeccionBean.inspeccion.municipio}"
@@ -183,7 +182,7 @@
 				required="#{param['formAlta:guardar']!=null}" requiredMessage="El nombre del municipio no puede estar vacío" converter="#{trimConverter}" />
 			<p:messages for="inputNombre" autoUpdate="true" closable="true" showDetail="true"/>
 			<div class="centrarBotonesDialog">
-				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value, provinciaSeleccionada)}" update=":formAlta:municipiosSelect" />
+				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value, inspeccionBean.provinciSelec)}" update=":formAlta:municipiosSelect" />
 				<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
 			</div>
 		</p:dialog>

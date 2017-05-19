@@ -29,7 +29,7 @@
 							requiredMessage="Debe introducir un año"/>						
 						<p:messages for="anio" autoUpdate="true"  closable="true" />
 						
-						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección:" />
+						<h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección (*):" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum"
 								var="ambitos" allSuffix="ALL_ENUM_VALUES" />
@@ -43,7 +43,7 @@
 						</p:selectOneMenu>
 						<p:messages for="ambitoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+						<h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion (*):" />
 						<p:selectOneMenu
 							value="#{inspeccionBean.inspeccion.tipoInspeccion}"
 							id="tipoInspeccionSelect" converter="#{selectConverter}">
@@ -54,7 +54,7 @@
 						</p:selectOneMenu>
 						<p:messages for="tipoInspeccionSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="estadoInspeccionSelect" value="Estado de la inspección:" />
+						<h:outputLabel for="estadoInspeccionSelect" value="Estado de la inspección (*):" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum"
 								var="estados" allSuffix="ALL_ENUM_VALUES" />
@@ -67,10 +67,9 @@
 								itemValue="#{estado}" />
 						</p:selectOneMenu>
 						
-						<h:outputLabel for="fechaPrevista" value="Fecha prevista: (*)" />
+						<h:outputLabel for="fechaPrevista" value="Fecha prevista visita:" />
 						<p:calendar  id="fechaPrevista" pattern="dd/MM/yyyy" locale="es" navigator="true" mindate="#{currentDate}" 
-							value="#{inspeccionBean.inspeccion.fechaPrevista}" required="#{param['formModific:modificar']!=null}" requiredMessage="Debe seleccionar una fecha"/>
-						<p:messages for="fechaPrevista" autoUpdate="true"  closable="true"/>
+							value="#{inspeccionBean.inspeccion.fechaPrevista}" />
 						
 						<h:outputLabel for="equipoSelect" value="Equipo(*):" />
 						<p:selectOneMenu
@@ -83,7 +82,7 @@
 						</p:selectOneMenu>
 						<p:messages for="equipoSelect" autoUpdate="true"  closable="true"/>
 						
-						<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección:" />
+						<h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección (*):" />
 						<p:importEnum
 								type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum"
 								var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
@@ -119,7 +118,7 @@
 						<p:inputText id="nombreUnidad" value="#{inspeccionBean.inspeccion.nombreUnidad}" converter="#{trimConverter}" 
 							maxlength="255" required="#{param['formModific:modificar']!=null}" requiredMessage="Debe introducir un nombre"/>	
 						
-						<h:outputLabel for="provinciasSelect" value="Provincia: (*)" />
+						<h:outputLabel for="provinciasSelect" value="Provincia (*):" />
 						<p:selectOneMenu
 							value="#{inspeccionBean.provinciSelec}"
 							id="provinciasSelect" 
