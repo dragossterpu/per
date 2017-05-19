@@ -45,7 +45,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "inspecciones")
-public class Inspeccion extends AbstractEntity implements Serializable {
+public class Inspeccion extends AbstractEntity implements Serializable, Comparable<Inspeccion> {
     
     private static final long serialVersionUID = 1L;
     
@@ -120,5 +120,10 @@ public class Inspeccion extends AbstractEntity implements Serializable {
             @JoinColumn(name = "id_inspeccion") }, inverseJoinColumns = {
                     @JoinColumn(name = "id_inspeccion_asociada") })
     private List<Inspeccion> inspecciones;
+    
+    @Override
+    public int compareTo(Inspeccion i) {
+        return this.id.compareTo(i.id);
+    }
     
 }

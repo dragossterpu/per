@@ -147,7 +147,7 @@ public class InspeccionBean {
         if (inspeccion.getMunicipio() != null) {
             setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         }
-        
+        Collections.sort(inspeccionesAsignadasActuales);
         if ("asociarAlta".equals(vaHacia)) {
             rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
             

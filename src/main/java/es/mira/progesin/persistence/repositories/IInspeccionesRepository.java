@@ -43,7 +43,7 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * @param idInspeccion
      * @return devuelve una lista con las inspecciones asociads de otra indicando su id
      */
-    @Query(value = "select insAsociadas.* from inspecciones_asociadas i, inspecciones insAsociadas where i.id_inspeccion_asociada=insAsociadas.id and i.id_inspeccion= :idInspeccion", nativeQuery = true)
+    @Query(value = "select insAsociadas.* from inspecciones_asociadas i, inspecciones insAsociadas where i.id_inspeccion_asociada=insAsociadas.id and i.id_inspeccion= :idInspeccion ORDER BY insAsociadas.id,insAsociadas.anio", nativeQuery = true)
     public List<Inspeccion> cargaInspeccionesAsociadas(@Param("idInspeccion") Long idInspeccion);
     
     /**
