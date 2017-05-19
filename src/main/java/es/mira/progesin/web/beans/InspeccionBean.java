@@ -100,6 +100,7 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
+        inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
