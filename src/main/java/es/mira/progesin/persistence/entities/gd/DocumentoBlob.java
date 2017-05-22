@@ -1,7 +1,6 @@
 package es.mira.progesin.persistence.entities.gd;
 
 import java.io.Serializable;
-import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,6 +50,6 @@ public class DocumentoBlob implements Serializable {
     
     @Column(name = "fichero")
     @Lob
-    private Blob fichero;
+    private byte[] fichero;
     
 }

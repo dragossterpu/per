@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -7,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -108,15 +107,14 @@ public class DocumentoService implements IDocumentoService {
     public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
         Documento docu = documentoRepository.findById(entity.getId());
         DocumentoBlob doc = docu.getFichero();
-        InputStream stream = doc.getFichero().getBinaryStream();
+        InputStream stream = new ByteArrayInputStream(doc.getFichero());
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), doc.getNombreFichero());
     }
     
     @Override
     public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
         Documento entity = documentoRepository.findById(id);
-        
-        InputStream stream = entity.getFichero().getFichero().getBinaryStream();
+        InputStream stream = new ByteArrayInputStream(entity.getFichero().getFichero());
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
     }
     
@@ -156,7 +154,7 @@ public class DocumentoService implements IDocumentoService {
             inspecciones.add(inspeccion);
             docu.setInspeccion(inspecciones);
         }
-        SerialBlob fileBlob = new SerialBlob(StreamUtils.copyToByteArray(file.getInputstream()));
+        byte[] fileBlob = StreamUtils.copyToByteArray(file.getInputstream());
         DocumentoBlob blob = new DocumentoBlob();
         blob.setFichero(fileBlob);
         blob.setNombreFichero(file.getFileName());
