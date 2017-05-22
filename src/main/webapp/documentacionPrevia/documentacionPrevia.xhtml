@@ -10,10 +10,10 @@
 	<ui:param name="esJefeInspeccionesApoyo" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}"/>
 	
 	<h3>Tipos de documentación previa</h3>
-	<br></br><br></br>
+	
 
 	<div id="listadoDocumentacion">
-<h:form id="form">
+		<h:form id="form">
 		<p:dataTable id="tablaDocumentacion" 
 					var="tipoDocumentacion" 
 					rowsPerPageTemplate="5,10,15,20"
@@ -33,7 +33,7 @@
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText id="documentacionInput2" value="#{tipoDocumentacion.descripcion}" converter="#{trimConverter}" required="true"
-									requiredMessage="El documento no puede estar vacío" />
+									requiredMessage="El documento no puede estar vacío" maxlength="255"/>
 									<p:messages for="documentacionInput2" autoUpdate="true"  closable="true"/>
 							</f:facet>
 						</p:cellEditor> 
@@ -45,7 +45,7 @@
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText id="documentacionInput3" value="#{tipoDocumentacion.nombre}" converter="#{trimConverter}" required="true"
-									requiredMessage="El nombre del fichero no puede estar vacío" />
+									requiredMessage="El nombre del fichero no puede estar vacío" maxlength="100"/>
 									<p:messages for="documentacionInput3" autoUpdate="true"  closable="true"/>
 							</f:facet>
 						</p:cellEditor> 

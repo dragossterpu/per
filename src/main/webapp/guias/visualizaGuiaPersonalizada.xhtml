@@ -9,7 +9,7 @@
 	<h:form id="formGuias">		
 	
 		<div class="tituloCuestionario">
-			<h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}"/>
+			<H2><h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}"/></H2>
 		</div>
 		
 		<p:messages autoUpdate="true" showSummary="true" closable="true"/> 
@@ -20,8 +20,15 @@
 		   <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
 		</h:commandLink>
 		
-		<div class="tituloCuestionario">	
-			<h:outputText value="Inspección: #{guiaPersonalizadaBean.guiaPersonalizada.inspeccion.numero}" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}"/>
+		<div class="listaInspecciones">	
+			
+			<p:dataList value="#{guiaPersonalizadaBean.guiaPersonalizada.inspeccion}" var="inspeccion" type="unordered" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}">
+		        <f:facet name="header">
+		            <h:outputText value="Inspecciones asociadas:"/>
+		        </f:facet>
+		        <h:outputText value="#{inspeccion.numero}"/>
+		        
+		    </p:dataList>
 		</div>
 		
 		

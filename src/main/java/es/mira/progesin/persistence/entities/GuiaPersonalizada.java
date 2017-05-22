@@ -85,7 +85,12 @@ public class GuiaPersonalizada implements Serializable {
     @JoinTable(name = "guia_personalizada_pasos", joinColumns = @JoinColumn(name = "id_guia_pers"), inverseJoinColumns = @JoinColumn(name = "id_paso_elegido"))
     private List<GuiaPasos> pasosElegidos;
     
-    @ManyToOne
-    @JoinColumn(name = "inspeccion", foreignKey = @ForeignKey(name = "fk_gpr_inspeccion"))
-    private Inspeccion inspeccion;
+    // @ManyToOne
+    // @JoinColumn(name = "inspeccion", foreignKey = @ForeignKey(name = "fk_gpr_inspeccion"))
+    // private Inspeccion inspeccion;
+    
+    @ManyToMany
+    @JoinTable(name = "guia_inspeccion", joinColumns = { @JoinColumn(name = "id_guia") }, inverseJoinColumns = {
+            @JoinColumn(name = "id_inspeccion") })
+    private List<Inspeccion> inspeccion;
 }

@@ -39,6 +39,9 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
     @Query(value = "select ins.* from documentos_inspeccion di, inspecciones ins where di.id_inspeccion=ins.id and di.id_documento=?1", nativeQuery = true)
     public List<Inspeccion> cargaInspeccionesDocumento(Long idDocumento);
     
+    @Query(value = "select ins.* from guia_inspeccion di, inspecciones ins where di.id_inspeccion=ins.id and di.id_guia=?1", nativeQuery = true)
+    public List<Inspeccion> cargaInspeccionesGuia(Long idGuia);
+    
     /**
      * @param idInspeccion
      * @return devuelve una lista con las inspecciones asociads de otra indicando su id

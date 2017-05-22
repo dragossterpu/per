@@ -17,11 +17,33 @@
 				<h:panelGrid columns="2" columnClasses="label, value">
 					<h:outputLabel for="inputNombre" value="Nombre (*):" />
 					<p:inputText id="inputNombre" binding="#{inputNombre}" />
-					<h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección:" />
-					<p:autoComplete id="infoInspeccion" value="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}"
-                        var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-                        queryDelay="1000">
-                   </p:autoComplete>
+					<h:outputLabel for="inputNombre" value="Inspecciones asociadas:" />
+					<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera"  value="#{guiaBean.listaInspecciones}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+						<p:column headerText="Número de inspección">
+							<h:outputText value=" #{inspeccion.numero}" />
+						</p:column>
+						<p:column headerText="Unidad">
+							<h:outputText value=" #{inspeccion.nombreUnidad}" />
+						</p:column>
+						<p:column styleClass="botonTabla">
+							<p:commandButton title="Desasociar" icon="fa fa-trash" 
+								 actionListener="#{guiaBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
+								<p:confirm header="Desasociar inspección"
+									message="¿Está seguro que desea desasociar esta inspección?"
+									icon="fa fa-warning-sign" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<h:outputLabel  />
+					 <h:panelGrid columns="2" >
+						<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}"
+								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+								queryDelay="1000">
+							</p:autoComplete>
+							<p:commandButton value="Asociar inspección" actionListener="#{guiaBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">
+								<p:resetInput target="infoInspeccion" />
+							</p:commandButton>
+					 </h:panelGrid>
 				</h:panelGrid>
 				<div id="pasos">
 					<my:selectManyCheckboxAll value="#{guiaBean.listaPasosSeleccionados}" >
@@ -33,7 +55,7 @@
 			   
 			    <div class="botonesFormulario">
 					<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-					<p:commandButton value="Guardar" actionListener="#{guiaBean.guardarPersonalizada(inputNombre.value, infoInspeccion)}" icon="fa fa-fw fa-save"/>
+					<p:commandButton value="Guardar" actionListener="#{guiaBean.guardarPersonalizada(inputNombre.value)}" icon="fa fa-fw fa-save"/>
 				</div>
 			    
 			    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
@@ -43,6 +65,15 @@
 					</div>
 				</p:dialog> 
 
+				<p:confirmDialog global="true">
+					<div class="centrarBotonesDialog">
+						<p:commandButton value="Aceptar" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+					</div>
+				</p:confirmDialog>
+				
 			</h:form>
 		</div>
 		

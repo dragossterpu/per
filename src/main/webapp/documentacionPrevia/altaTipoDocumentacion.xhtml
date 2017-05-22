@@ -11,11 +11,11 @@
 		<div class="bloqueFormulario">
 			<h:form id="form">
 				<h:outputLabel for="descripcion" value="Descripción (*):" />
-				<p:inputText id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" converter="#{trimConverter}"/>
+				<p:inputTextarea id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" maxlength="255" converter="#{trimConverter}"/>
 				<p:messages for="descripcion" autoUpdate="true"  closable="true"/>
 				
 				<h:outputLabel for="nombre" value="Nombre (*):" />
-				<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" converter="#{trimConverter}"/>
+				<p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" maxlength="100" converter="#{trimConverter}"/>
 				<p:messages for="nombre" autoUpdate="true"  closable="true"/>
 				
 				<h:outputLabel for="extensiones" value="Extensiones (*):" />

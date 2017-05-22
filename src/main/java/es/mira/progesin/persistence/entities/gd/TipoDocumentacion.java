@@ -53,7 +53,7 @@ public class TipoDocumentacion implements Serializable {
     @Column(name = "DESCRIPCION", length = 255)
     private String descripcion;
     
-    @Column(name = "NOMBRE", length = 255)
+    @Column(name = "NOMBRE", length = 100)
     private String nombre;
     
     @Column(name = "EXTENSIONES")

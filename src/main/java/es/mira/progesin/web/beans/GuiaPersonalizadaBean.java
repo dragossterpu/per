@@ -1,12 +1,13 @@
 package es.mira.progesin.web.beans;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,8 @@ public class GuiaPersonalizadaBean {
     
     private LazyModelGuiasPersonalizadas model;
     
+    private Map<Long, String> mapaInspecciones;
+    
     @Autowired
     private WordGenerator wordGenerator;
     
@@ -72,6 +75,7 @@ public class GuiaPersonalizadaBean {
         
         model.setBusqueda(guiaPersonalizadaBusqueda);
         model.load(0, 20, "fechaCreacion", SortOrder.DESCENDING, null);
+        cargaMapaInspecciones();
     }
     
     /*********************************************************
@@ -86,6 +90,7 @@ public class GuiaPersonalizadaBean {
     public String visualizaGuia(GuiaPersonalizada guiaPersonalizada) {
         this.guiaPersonalizada = guiaPersonalizada;
         setListaPasos(guiaPersonalizadaService.listaPasos(guiaPersonalizada));
+        guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(guiaPersonalizada));
         return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
     }
     
@@ -140,7 +145,7 @@ public class GuiaPersonalizadaBean {
             lista.add(Boolean.TRUE);
         }
         setList(lista);
-        
+        mapaInspecciones = new LinkedHashMap<>();
         model = new LazyModelGuiasPersonalizadas(guiaPersonalizadaService);
     }
     
@@ -177,35 +182,6 @@ public class GuiaPersonalizadaBean {
     }
     
     /**
-     * Asigna la guía recibida como parámetro a la variable guiaPersonalizada
-     * 
-     * @param guia
-     */
-    public void asignar(GuiaPersonalizada guia) {
-        guiaPersonalizada = guia;
-        RequestContext.getCurrentInstance().execute("PF('inspeccionDialogo').show()");
-    }
-    
-    /**
-     * Asigna el valor de la inspección a la guia y guarda en base de datos
-     * 
-     * @param inspeccion
-     */
-    public void asignarInspeccion(Inspeccion inspeccion) {
-        try {
-            RequestContext.getCurrentInstance().execute("PF('inspeccionDialogo').hide()");
-            guiaPersonalizada.setInspeccion(inspeccion);
-            guiaPersonalizadaService.save(guiaPersonalizada);
-            
-        } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-                    "Se ha producido un error al asignar una inspección a la guía personalizada");
-            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
-        }
-        
-    }
-    
-    /**
      * 
      * Elimina la fecha de baja de la guía para volver a ponerla activa
      * 
@@ -223,6 +199,17 @@ public class GuiaPersonalizadaBean {
             }
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        }
+    }
+    
+    private void cargaMapaInspecciones() {
+        
+        for (GuiaPersonalizada guia : model.getDatasource()) {
+            String cadenaInspecciones = "";
+            for (Inspeccion inspe : guiaPersonalizadaService.listaInspecciones(guia)) {
+                cadenaInspecciones = cadenaInspecciones.concat(inspe.getNumero().concat("\n"));
+            }
+            mapaInspecciones.put(guia.getId(), cadenaInspecciones);
         }
     }
     
