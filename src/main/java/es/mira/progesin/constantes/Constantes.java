@@ -32,6 +32,11 @@ public final class Constantes {
     
     public static final String ERROR_MENSAJE = "Error";
     
+    /**
+     * CSS utilizado en la generación de un informe en formato PDF
+     */
+    public static final String CSS_TEXT_EDITOR_PDF = "/static/css/texteditor_pdf.css";
+    
     // "upper(convert(replace(CAMPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"+ VALOR + "', ' ', '')
     // || '%', 'US7ASCII'))"
     /**

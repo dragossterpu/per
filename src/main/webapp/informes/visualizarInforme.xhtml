@@ -1,0 +1,26 @@
+<ui:composition template="../layouts/layoutInterior.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+	
+	<h:form id="informe">		
+	
+		<h:outputStylesheet library="primefaces" name="texteditor/texteditor.css" />
+		
+		<h:commandLink  actionListener="#{informeBean.crearInformePDF(informeBean.informe)}" 
+			title="Descargar documento PDF del informe">
+           <p:graphicImage value="/images/pdf.png" styleClass="pdfImg"/>
+           <p:fileDownload value="#{informeBean.file}" />
+        </h:commandLink>
+        
+        
+        <div class="ql-editor" id="informe">
+        	<h:outputText value="#{informeBean.texto}" escape="false" />
+        </div>
+	</h:form>	
+	
+	</ui:define>
+</ui:composition>
