@@ -28,10 +28,10 @@ public class IEquipoRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.ITipoEquiposRepository#findByCodigoIgnoreCase(java.lang.String)}.
+     * {@link es.mira.progesin.persistence.repositories.IEquipoRepository#existsByTipoEquipo(TipoEquipo)}.
      */
     @Test
-    public final void testFindValueForKey() {
+    public final void existsByTipoEquipo() {
         TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("IAPRL")
                 .descripcion("Inspecciones Área Prevención de Riesgos Laborales").build();
         boolean existeEquipo = this.repository.existsByTipoEquipo(tEquipo);

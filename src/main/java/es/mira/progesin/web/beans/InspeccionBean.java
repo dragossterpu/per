@@ -100,6 +100,7 @@ public class InspeccionBean {
      * 
      **************************************************************/
     public void buscarInspeccion() {
+        inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
@@ -147,7 +148,7 @@ public class InspeccionBean {
         if (inspeccion.getMunicipio() != null) {
             setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         }
-        
+        Collections.sort(inspeccionesAsignadasActuales);
         if ("asociarAlta".equals(vaHacia)) {
             rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
             

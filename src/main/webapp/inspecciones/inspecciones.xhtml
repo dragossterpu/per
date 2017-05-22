@@ -131,7 +131,7 @@
 				
 				<h:outputLabel for="provinciasSelect" value="Provincia:" />
 				<p:selectOneMenu
-					value="#{inspeccionBean.inspeccionBusqueda.provincia}"
+					value="#{inspeccionBean.provinciSelec}"
 					id="provinciasSelect" 
 					filter="true" 
 					filterMatchMode="startsWith"
@@ -141,7 +141,7 @@
 						var="provincia"
 						itemLabel="#{provincia.nombre}"
 						itemValue="#{provincia}" />
-						<p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia}"/>
+					<p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia(inspeccionBean.provinciSelec)}"/>
 
 				</p:selectOneMenu>
 				
