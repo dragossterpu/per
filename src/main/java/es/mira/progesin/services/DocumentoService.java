@@ -66,7 +66,7 @@ public class DocumentoService implements IDocumentoService {
     private IDocumentoRepository documentoRepository;
     
     @Autowired
-    private IInspeccionesRepository iInspeccionRepository;
+    private IInspeccionesRepository inspeccionRepository;
     
     @Autowired
     private ITipoDocumentoRepository tipoDocumentoRepository;
@@ -316,7 +316,7 @@ public class DocumentoService implements IDocumentoService {
     
     @Override
     public List<Inspeccion> listaInspecciones(Documento documento) {
-        return iInspeccionRepository.cargaInspeccionesDocumento(documento.getId());
+        return inspeccionRepository.cargaInspeccionesDocumento(documento.getId());
     }
     
     @Override

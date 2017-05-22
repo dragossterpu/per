@@ -19,9 +19,11 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
+import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
 /**********************************************************
@@ -45,6 +47,9 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     
     @Autowired
     private IGuiasPasosRepository pasosRepository;
+    
+    @Autowired
+    private IInspeccionesRepository inspeccionRepository;
     
     @Override
     public void eliminar(GuiaPersonalizada guia) {
@@ -159,6 +164,11 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     @Override
     public boolean buscarPorModeloGuia(Guia guia) {
         return guiaPersonalizadaRepository.findByIdGuia(guia);
+    }
+    
+    @Override
+    public List<Inspeccion> listaInspecciones(GuiaPersonalizada guia) {
+        return inspeccionRepository.cargaInspeccionesGuia(guia.getId());
     }
     
 }

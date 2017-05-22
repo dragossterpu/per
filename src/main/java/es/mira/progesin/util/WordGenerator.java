@@ -225,20 +225,33 @@ public class WordGenerator {
      * 
      * Crea un párrafo formateado que contiene el identificador de la inspección a la que está asignado el documento.
      * 
-     * @param doc Documento al que se desea anexar el título
-     * @param inspeccion Inspección a la que está asignado el documento
+     * @param doc Documento al que se desea anexar los números de inspección
+     * @param inspecciones Lista de inspecciones Inspección a la que está asignado
      * 
      */
-    private void creaNumeroInspeccion(XWPFDocument doc, Inspeccion inspeccion) {
+    private void creaNumeroInspeccion(XWPFDocument doc, List<Inspeccion> inspecciones) {
+        
         XWPFParagraph parrafo = doc.createParagraph();
         XWPFRun texto = parrafo.createRun();
-        texto.setText("Inspección número ".concat(inspeccion.getNumero()));
+        if (inspecciones.size() > 1) {
+            texto.setText("Inspecciones asociadas ");
+        } else {
+            texto.setText("Inspección asociada ");
+        }
         texto.setBold(true);
         texto.setFontSize(12);
         texto.setFontFamily(FONT_FAMILY);
-        parrafo.setSpacingAfterLines(200);
-        parrafo.setAlignment(ParagraphAlignment.CENTER);
         parrafo.addRun(texto);
+        for (Inspeccion ins : inspecciones) {
+            texto.addCarriageReturn();
+            texto.setText(ins.getNumero());
+            parrafo.addRun(texto);
+        }
+        
+        parrafo.setSpacingAfterLines(200);
+        parrafo.setAlignment(ParagraphAlignment.LEFT);
+        parrafo.addRun(texto);
+        
     }
     
     /**
@@ -303,8 +316,16 @@ public class WordGenerator {
      */
     
     private void creaCuerpoGuia(XWPFDocument doc, List<GuiaPasos> listaPasos) {
-        XWPFParagraph parrafo;
-        XWPFRun texto;
+        XWPFParagraph parrafo = doc.createParagraph();
+        XWPFRun texto = parrafo.createRun();
+        parrafo.setSpacingBeforeLines(100);
+        parrafo.setSpacingAfterLines(100);
+        texto.setText("Pasos");
+        texto.setBold(true);
+        texto.setFontSize(16);
+        texto.setFontFamily(FONT_FAMILY);
+        parrafo.addRun(texto);
+        
         for (GuiaPasos paso : listaPasos) {
             parrafo = doc.createParagraph();
             // Texto pregunta

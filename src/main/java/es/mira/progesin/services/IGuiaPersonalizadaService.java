@@ -7,6 +7,7 @@ import org.primefaces.model.SortOrder;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
 /*********************************
@@ -95,5 +96,7 @@ public interface IGuiaPersonalizadaService {
      * 
      */
     boolean buscarPorModeloGuia(Guia guia);
+    
+    public List<Inspeccion> listaInspecciones(GuiaPersonalizada guia);
     
 }

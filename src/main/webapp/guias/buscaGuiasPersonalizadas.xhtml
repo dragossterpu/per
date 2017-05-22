@@ -110,8 +110,7 @@
 					<h:outputText value="#{guia.guia.nombre}" />
 				</p:column>
 				<p:column headerText="Inspeccion" sortBy="#{guia.inspeccion}"  width="100" visible="#{guiaPersonalizadaBean.list[4]}" exportable="#{guiaPersonalizadaBean.list[4]}" >
-					<h:outputText value="#{guia.inspeccion.numero}" rendered="#{not empty guia.inspeccion}"/>
-					<p:commandButton title="Asignar" actionListener="#{guiaPersonalizadaBean.asignar(guia)}" rendered="#{empty guia.inspeccion and empty guia.fechaAnulacion}" update="tablaGuias"/>
+					<h:outputText value="#{guiaPersonalizadaBean.mapaInspecciones[guia.id]}" styleClass="saltoLinea"/>
 				</p:column>
 				<p:column headerText="Nombre" sortBy="#{guia.nombreGuiaPersonalizada}" width="180" visible="#{guiaPersonalizadaBean.list[5]}" exportable="#{guiaPersonalizadaBean.list[5]}">
 					<h:outputText value="#{guia.nombreGuiaPersonalizada}" />

@@ -40,14 +40,14 @@
 			
 			<div class="botonesFormulario">
 			<p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia, contestacion)}" value="Contestar" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-			<p:button outcome="/principal/sugerenciasListado" value="Cancelar" icon="fa fa-fw fa-undo"/>
+			<p:button outcome="sugerenciasListado" value="Cancelar" icon="fa fa-fw fa-undo"/>
 			
 			</div>
 			
 			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
 				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
 					<div class="centrarBotonesDialog">
-						<p:button value="Cerrar" outcome="/principal/sugerenciasListado" />
+						<p:button value="Cerrar" outcome="sugerenciasListado" />
 					</div>
 			</p:dialog>
 			

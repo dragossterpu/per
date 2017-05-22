@@ -1608,7 +1608,7 @@ prompt Ejecutando inserción de datos TIPOS_UNIDAD...
 prompt =========================================================================
 
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Cª Distrito');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Cª local');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Cª Local');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Cª Provincial');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'CIA');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'CIE');

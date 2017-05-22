@@ -124,7 +124,7 @@ public class SugerenciasBean implements Serializable {
      */
     public String contestarSugerencia(Sugerencia sugerenciaSeleccionada) {
         sugerencia = sugerenciaSeleccionada;
-        return "/principal/contestarSugerencia?faces-redirect=true";
+        return "/administracion/sugerencias/contestarSugerencia?faces-redirect=true";
     }
     
     /**
@@ -162,7 +162,7 @@ public class SugerenciasBean implements Serializable {
                     "Se ha producido un error al contestar la sugerencia. Inténtelo de nuevo más tarde.");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);
         }
-        return "/principal/contestarSugerencia?faces-redirect=true";
+        return "/administracion/sugerencias/contestarSugerencia?faces-redirect=true";
     }
     
     /**

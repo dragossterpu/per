@@ -26,7 +26,7 @@
         	<p:column headerText="Usuario"
         		sortBy="#{areaUsuario.usernameProv}">
                 <p:selectOneMenu id="usuarioProvSelect" layout="responsive" columns="4"
-                    value="#{areaUsuario.usernameProv}" converter="#{selectConverter}"
+                    value="#{areaUsuario.usernameProv}" 
                     disabled="#{areaUsuario.usernameProv ne request.remoteUser}">
 					<f:selectItems value="#{responderCuestionarioBean.usuariosProv}"
 						var="usuarioProv"

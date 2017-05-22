@@ -62,13 +62,19 @@ public class GuiaBean {
     
     private List<GuiaPasos> listaPasosSeleccionados;
     
+    private List<Inspeccion> listaInspecciones;
+    
     private StreamedContent file;
     
     boolean alta = false;
     
     private static final String LAGUIA = "La guía '";
     
+    private static final String ERROR = "ERROR";
+    
     private LazyModelGuias model;
+    
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     @Autowired
     private WordGenerator wordGenerator;
@@ -88,7 +94,8 @@ public class GuiaBean {
     @Autowired
     private ITipoInspeccionService tipoInspeccionService;
     
-    private List<TipoInspeccion> listaTiposInspeccion;
+    @Autowired
+    private IRegistroActividadService registroActividadService;
     
     /*********************************************************
      * 
@@ -251,7 +258,7 @@ public class GuiaBean {
         try {
             setFile(wordGenerator.crearDocumentoGuia(guia));
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error en la generación del documento Word");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
         }
@@ -280,7 +287,7 @@ public class GuiaBean {
             guia.setPasos(listaPasosGrabar);
             grabaGuia();
         } else {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error", mensajeError, null);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR, mensajeError, null);
             
         }
     }
@@ -312,7 +319,7 @@ public class GuiaBean {
             }
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al grabar la guía");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
         }
@@ -377,6 +384,7 @@ public class GuiaBean {
         alta = false;
         this.guia = guia;
         listaPasosSeleccionados = new ArrayList<>();
+        listaInspecciones = new ArrayList<>();
         listaPasos = guiaService.listaPasosNoNull(guia);
         
         return "/guias/personalizarGuia?faces-redirect=true";
@@ -391,7 +399,7 @@ public class GuiaBean {
      * 
      *********************************************************/
     
-    public void guardarPersonalizada(String nombre, Inspeccion inspeccion) {
+    public void guardarPersonalizada(String nombre) {
         boolean error = false;
         String mensajeError = "No se puede crear su guía personalizada.";
         try {
@@ -409,17 +417,17 @@ public class GuiaBean {
                 personalizada.setNombreGuiaPersonalizada(nombre);
                 personalizada.setGuia(guia);
                 personalizada.setPasosElegidos(listaPasosSeleccionados);
-                personalizada.setInspeccion(inspeccion);
+                personalizada.setInspeccion(listaInspecciones);
                 if (guiaPersonalizadaService.save(personalizada) != null) {
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
                             "Se ha guardado su guía personalizada con éxito");
                 }
-                
+                listaInspecciones = new ArrayList<>();
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensajeError, "", "message");
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al guardar la guía personalizada");
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -525,5 +533,53 @@ public class GuiaBean {
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
+    }
+    
+    /**
+     * Añade una nueva inspección a la lista de inspecciones del documento. Se comprueba que la inspección existe y no
+     * está ya añadida.
+     * 
+     * @param inspeccion La inspección a añadir
+     */
+    public void asignarNuevaInspeccion(Inspeccion inspeccion) {
+        if (inspeccion != null && !contieneInspeccion(listaInspecciones, inspeccion)) {
+            try {
+                listaInspecciones.add(inspeccion);
+                
+            } catch (Exception e) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
+                        "Se ha producido un error al asignar una inspección al documento");
+                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+            }
+            
+        }
+    }
+    
+    /**
+     * Elimina una inspección de la lista del documento
+     * 
+     * @param inspeccion Inspección a desasociar
+     */
+    public void desAsociarInspeccion(Inspeccion inspeccion) {
+        try {
+            listaInspecciones.remove(inspeccion);
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+                    "Se ha producido un error al desasociar una inspección del documento");
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+        }
+    }
+    
+    private boolean contieneInspeccion(List<Inspeccion> lista, Inspeccion inspeccion) {
+        boolean respuesta = false;
+        
+        for (Inspeccion i : lista) {
+            if (i.getNumero().equals(inspeccion.getNumero())) {
+                respuesta = true;
+            }
+            
+        }
+        
+        return respuesta;
     }
 }

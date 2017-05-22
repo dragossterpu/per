@@ -8,10 +8,12 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Empleo;
 import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
+import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -21,11 +23,13 @@ import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.persistence.repositories.IEmpleoRepository;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
+import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.persistence.repositories.IMunicipioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IProvinciaRepository;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
+import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
 import es.mira.progesin.persistence.repositories.ITipoUnidadRepository;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
@@ -71,10 +75,16 @@ public class SelectFindOne {
     private IMunicipioRepository municipioRepository;
     
     @Autowired
+    private ITipoDocumentoRepository tipoDocumentoRepository;
+    
+    @Autowired
     private IPreguntaCuestionarioRepository preguntaCuestionarioRepository;
     
     @Autowired
-    private ITipoDocumentoRepository tipoDocumentoRepository;
+    private IGuiasPasosRepository guiasPasosRepository;
+    
+    @Autowired
+    private ITipoEquiposRepository tipoEquiposRepository;
     
     /**
      * @param id
@@ -164,19 +174,19 @@ public class SelectFindOne {
         return tipoUnidadRepository.findOne(Long.valueOf(id));
     }
     
-    /**
-     * @param id
-     * @return
-     */
+    public TipoDocumento findOneTipoDocumento(String id) {
+        return tipoDocumentoRepository.findOne(Long.valueOf(id));
+    }
+    
     public PreguntasCuestionario findOnePreguntasCuestionario(String id) {
         return preguntaCuestionarioRepository.findOne(Long.valueOf(id));
     }
     
-    /**
-     * @param id
-     * @return
-     */
-    public TipoDocumento findOneTipoDocumento(String id) {
-        return tipoDocumentoRepository.findOne(Long.valueOf(id));
+    public GuiaPasos findOneGuiaPasos(String id) {
+        return guiasPasosRepository.findOne(Long.valueOf(id));
+    }
+    
+    public TipoEquipo findOneTipoEquipo(String id) {
+        return tipoEquiposRepository.findOne(Long.valueOf(id));
     }
 }
