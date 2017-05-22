@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
+import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
 /**
@@ -78,6 +79,18 @@ public class MiembroServiceTest {
         Equipo equipo = mock(Equipo.class);
         miembroService.findByEquipo(equipo);
         verify(miembrosRepository, times(1)).findByEquipo(equipo);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.MiembroService#esJefeEquipo(String)}.
+     */
+    @Test
+    public void esJefeEquipo() {
+        String username = "usuarioLogueado";
+        
+        miembroService.esJefeEquipo(username);
+        
+        verify(miembrosRepository, times(1)).existsByUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
     }
     
 }

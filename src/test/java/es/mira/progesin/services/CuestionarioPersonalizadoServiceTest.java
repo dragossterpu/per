@@ -38,7 +38,7 @@ public class CuestionarioPersonalizadoServiceTest {
     private SessionFactory sessionFactory;
     
     @InjectMocks
-    private CuestionarioPersonalizadoService cuestionarioPersonalizadoService;
+    private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService();
     
     /**
      * Configuración inicial del test

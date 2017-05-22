@@ -103,7 +103,7 @@ public class IUserRepositoryTest {
     public final void testBuscarNoJefeNoMiembroEquipo() {
         Equipo equipo = Equipo.builder().id(2L).jefeEquipo("cgonzalez").build();
         List<User> userList = this.repository.buscarNoJefeNoMiembroEquipo(equipo);
-        assertThat(userList.size()).isEqualTo(34);
+        assertThat(userList.size()).isEqualTo(33);
     }
     
     /**

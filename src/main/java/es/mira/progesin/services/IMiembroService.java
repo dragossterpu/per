@@ -37,4 +37,13 @@ public interface IMiembroService {
      * @return lista de miembros
      */
     List<Miembro> findByEquipo(Equipo equipo);
+    
+    /**
+     * Comprueba si un usuario es jefe de algún equipo de inspecciones
+     * 
+     * @param username
+     * @return verdadero o falso
+     */
+    boolean esJefeEquipo(String username);
+    
 }

@@ -13,7 +13,7 @@
 		
 		<ui:param name="usernameActual" value="#{request.remoteUser}"/>
 		<ui:param name="esAdmin" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}"/>
-		<ui:param name="esJefeEquipo" value="#{userService.esJefeEquipo(usernameActual)}"/>
+		<ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}"/>
 		
 				
 		<h3><h:outputText for="id" value="Búsqueda de inspecciones" rendered="#{inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}"/></h3>

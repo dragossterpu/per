@@ -102,14 +102,6 @@ public interface IUserService {
     List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo);
     
     /**
-     * Comprueba si un usuario es jefe de algún equipo de inspecciones
-     * 
-     * @param username
-     * @return verdadero o falso
-     */
-    boolean esJefeEquipo(String username);
-    
-    /**
      * @param correoPrincipal
      * @param rawPassword
      * @return lista de usuarios
