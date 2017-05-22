@@ -37,7 +37,7 @@
 							<h:outputLabel for="tablaInspecciones" value="Inspecciones asociadas:" />
 							<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera"  value="#{gestorDocumentalBean.documento.inspeccion}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 						        <p:column>
-							        <h:outputText value=" #{inspeccion.numero}" />
+							        <h:outputText value="#{inspeccion.id}/#{inspeccion.anio}" />
 							    </p:column>
 							    <p:column styleClass="botonTabla">
 									<p:commandButton title="Desasociar" icon="fa fa-trash" 
@@ -50,7 +50,7 @@
 						    </p:dataTable>
 						     <div class="centrarBotonesDialog">
 						     	<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
-										var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+										var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.id).concat('/').concat(inspeccion.anio)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
 										queryDelay="1000">
 									</p:autoComplete>
 									<p:commandButton value="Asociar inspección" actionListener="#{gestorDocumentalBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">

@@ -32,7 +32,7 @@ public interface IInspeccionesService {
      * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
      * inspección
      */
-    List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion);
+    List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion);
     
     /**
      * @param infoInspeccion puede ser nombre de unidad o número de inspección

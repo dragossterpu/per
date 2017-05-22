@@ -28,7 +28,7 @@
 			<div class="bloqueFormulario">
 				<h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
 				<p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}"
-                    var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
+                    var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.id).concat('/').concat(inspeccion.anio)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" 
                     required="true" requiredMessage="Introduzca la unidad o el número de la inspección" 
                     emptyMessage="No se encuentraron resultados coincidentes"
                     queryDelay="1000"

@@ -131,6 +131,7 @@ public class InspeccionBean {
         inspeccionBusqueda.resetValues();
         inspeccionBusqueda.setAsociar(true);
         setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
+        setProvinciSelec(null);
         buscarInspeccion();
         
         return "/inspecciones/inspecciones?faces-redirect=true";
@@ -182,7 +183,6 @@ public class InspeccionBean {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         inspeccionesAsignadasActuales = new ArrayList<>();
         inspeccion = new Inspeccion();
-        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SIN_INICIAR);
         inspeccion.setInspecciones(new ArrayList<>());
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         setProvinciSelec(null);
@@ -205,26 +205,20 @@ public class InspeccionBean {
      */
     public String altaInspeccion() {
         try {
+            inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SIN_INICIAR);
             
-            Inspeccion inspeccionProvisional = inspeccionesService.save(inspeccion);
-            inspeccionProvisional.setFechaAlta(new Date());
-            String user = SecurityContextHolder.getContext().getAuthentication().getName();
-            inspeccionProvisional.setUsernameAlta(user);
-            
-            StringBuilder numero = new StringBuilder(String.valueOf(inspeccionProvisional.getId()));
-            numero.append("/");
-            numero.append(inspeccionProvisional.getAnio());
-            inspeccion.setNumero(numero.toString());
+            inspeccionesService.save(inspeccion);
             
             if (inspeccionesAsignadasActuales != null) {
                 inspeccion.setInspecciones(inspeccionesAsignadasActuales);
+                inspeccionesService.save(inspeccion);
             }
-            inspeccionesService.save(inspeccion);
+            
             inspeccionBusqueda.resetValues();
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "La inspección " + numero + " ha sido creada con éxito");
-            String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
+                    "La inspección " + inspeccion.getId() + "/" + inspeccion.getAnio() + " ha sido creada con éxito");
+            String descripcion = "Alta nueva inspección " + inspeccion.getId() + "/" + inspeccion.getAnio();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
         } catch (
@@ -267,23 +261,16 @@ public class InspeccionBean {
     public void modificarInspeccion() {
         try {
             
-            StringBuilder numero = new StringBuilder(String.valueOf(inspeccion.getId()));
-            numero.append("/");
-            numero.append(inspeccion.getAnio());
-            inspeccion.setNumero(numero.toString());
             if (inspeccionesAsignadasActuales != null) {
                 inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             }
-            inspeccion.setFechaModificacion(new Date());
-            String user = SecurityContextHolder.getContext().getAuthentication().getName();
-            inspeccion.setUsernameModif(user);
             
             inspeccionesService.save(inspeccion);
             inspeccionBusqueda.resetValues();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
-            String descripcion = "Modificación de la inspección : " + inspeccion.getNumero();
+            String descripcion = "Modificación de la inspección : " + inspeccion.getId() + "/" + inspeccion.getAnio();
             
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
@@ -310,7 +297,7 @@ public class InspeccionBean {
         listaMunicipios = new ArrayList<>();
         inspeccionesSeleccionadas = new ArrayList<>();
         setList(new ArrayList<>());
-        for (int i = 0; i <= 14; i++) {
+        for (int i = 0; i <= 13; i++) {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelInspeccion(inspeccionesService);
@@ -348,7 +335,8 @@ public class InspeccionBean {
         try {
             inspeccionesService.save(inspeccionEliminar);
             
-            String descripcion = EL_USUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getNumero();
+            String descripcion = EL_USUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getId() + "/"
+                    + inspeccion.getAnio();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());

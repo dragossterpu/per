@@ -161,14 +161,16 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
             if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
-                
                 solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "La solicitud de documentación ha sido creada con éxito");
                 
                 altaDocumentos();
-                String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
+                
+                String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId())
+                        .concat("/").concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+                String descripcion = DESCRIPCION + numeroInspeccion;
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.DOCUMENTACION.name());
@@ -226,7 +228,10 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return vista modificarSolicitud
      */
     public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
+        String numeroInspeccion = String.valueOf(solicitud.getInspeccion().getId()).concat("/")
+                .concat(String.valueOf(solicitud.getInspeccion().getAnio()));
         solicitudDocumentacionPrevia = solicitud;
+        solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
         backupFechaLimiteEnvio = solicitud.getFechaLimiteEnvio();
         return "/solicitudesPrevia/modificarSolicitud?faces-redirect=true";
     }
@@ -244,6 +249,11 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             // parametrosVistaSolicitud = applicationBean.getMapaParametros()
             // .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
+            
+            String numeroInspeccion = String.valueOf(solicitud.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(solicitud.getInspeccion().getAnio()));
+            solicitud.getInspeccion().setNumero(numeroInspeccion);
+            
             setListadoDocumentosCargados(gestDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setSolicitudDocumentacionPrevia(solicitud);
@@ -262,6 +272,10 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void validacionApoyo() {
         try {
+            String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+            solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
+            
             solicitudDocumentacionPrevia.setFechaValidApoyo(new Date());
             solicitudDocumentacionPrevia
                     .setUsernameValidApoyo(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -294,6 +308,10 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void validacionJefeEquipo() {
         try {
+            String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+            solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
+            
             solicitudDocumentacionPrevia.setFechaValidJefeEquipo(new Date());
             solicitudDocumentacionPrevia
                     .setUsernameValidJefeEquipo(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -458,6 +476,9 @@ public class SolicitudDocPreviaBean implements Serializable {
     public void modificarSolicitud() {
         try {
             solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
+            String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+            solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
             
             String mensajeCorreoEnviado = "";
             // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
@@ -516,6 +537,10 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
                 
+                String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId())
+                        .concat("/").concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+                solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
+                
                 StringBuilder asunto = new StringBuilder(DESCRIPCION)
                         .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
@@ -560,6 +585,11 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void finalizarSolicitud() {
         try {
+            
+            String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+            solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
+            
             solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
             solicitudDocumentacionPrevia.setFechaNoConforme(null);
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -594,6 +624,11 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void noConformeSolicitud(String motivosNoConforme) {
         try {
+            
+            String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+            solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
+            
             solicitudDocumentacionPrevia.setFechaCumplimentacion(null);
             solicitudDocumentacionPrevia.setFechaNoConforme(new Date());
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -678,7 +713,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+        return inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
     }
     
     /**
@@ -729,14 +764,17 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return boolean
      */
     public boolean usuarioSinTareasPendientes() {
+        String numeroInspeccion = String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getId()).concat("/")
+                .concat(String.valueOf(solicitudDocumentacionPrevia.getInspeccion().getAnio()));
+        
         String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
         SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
                 .findNoFinalizadaPorCorreoDestinatario(correoDestinatario);
+        
         if (solicitudPendiente != null) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
-                            + ", ya existe otra solicitud en curso para la inspeccion "
-                            + solicitudPendiente.getInspeccion().getNumero()
+                            + ", ya existe otra solicitud en curso para la inspeccion " + numeroInspeccion
                             + ". Debe finalizarla o anularla antes de proseguir.",
                     "", null);
         }
@@ -745,8 +783,7 @@ public class SolicitudDocPreviaBean implements Serializable {
         if (cuestionarioPendiente != null) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
-                            + ", ya existe un cuestionario en curso para la inspeccion "
-                            + cuestionarioPendiente.getInspeccion().getNumero()
+                            + ", ya existe un cuestionario en curso para la inspeccion " + numeroInspeccion
                             + ". Debe finalizarlo o anularlo antes de proseguir.",
                     "", null);
         }

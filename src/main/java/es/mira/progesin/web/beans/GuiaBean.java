@@ -442,7 +442,7 @@ public class GuiaBean {
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+        return inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
     }
     
     /**
@@ -542,7 +542,7 @@ public class GuiaBean {
      * @param inspeccion La inspección a añadir
      */
     public void asignarNuevaInspeccion(Inspeccion inspeccion) {
-        if (inspeccion != null && !contieneInspeccion(listaInspecciones, inspeccion)) {
+        if (inspeccion != null && !listaInspecciones.contains(inspeccion)) {
             try {
                 listaInspecciones.add(inspeccion);
                 
@@ -570,16 +570,4 @@ public class GuiaBean {
         }
     }
     
-    private boolean contieneInspeccion(List<Inspeccion> lista, Inspeccion inspeccion) {
-        boolean respuesta = false;
-        
-        for (Inspeccion i : lista) {
-            if (i.getNumero().equals(inspeccion.getNumero())) {
-                respuesta = true;
-            }
-            
-        }
-        
-        return respuesta;
-    }
 }

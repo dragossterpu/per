@@ -207,7 +207,8 @@ public class GuiaPersonalizadaBean {
         for (GuiaPersonalizada guia : model.getDatasource()) {
             String cadenaInspecciones = "";
             for (Inspeccion inspe : guiaPersonalizadaService.listaInspecciones(guia)) {
-                cadenaInspecciones = cadenaInspecciones.concat(inspe.getNumero().concat("\n"));
+                cadenaInspecciones = cadenaInspecciones.concat(
+                        String.valueOf(inspe.getId()).concat("/").concat(String.valueOf(inspe.getAnio()).concat("\n")));
             }
             mapaInspecciones.put(guia.getId(), cadenaInspecciones);
         }

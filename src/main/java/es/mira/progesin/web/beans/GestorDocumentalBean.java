@@ -271,7 +271,7 @@ public class GestorDocumentalBean {
      * @return Resultados coincidentes con la cadena de búsqueda
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+        return inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
     }
     
     /**
@@ -344,19 +344,6 @@ public class GestorDocumentalBean {
         }
     }
     
-    private boolean contieneInspeccion(List<Inspeccion> lista, Inspeccion inspeccion) {
-        boolean respuesta = false;
-        
-        for (Inspeccion i : lista) {
-            if (i.getNumero().equals(inspeccion.getNumero())) {
-                respuesta = true;
-            }
-            
-        }
-        
-        return respuesta;
-    }
-    
     /**
      * Añade una nueva inspección a la lista de inspecciones del documento. Se comprueba que la inspección existe y no
      * está ya añadida.
@@ -364,14 +351,14 @@ public class GestorDocumentalBean {
      * @param inspeccion La inspección a añadir
      */
     public void asignarNuevaInspeccion(Inspeccion inspeccion) {
-        if (inspeccion != null && !contieneInspeccion(listaInspecciones, inspeccion)) {
+        if (inspeccion != null && !listaInspecciones.contains(inspeccion)) {
             try {
                 if (documento.getInspeccion() == null || documento.getInspeccion().isEmpty()) {
                     listaInspecciones = new ArrayList<>();
                 } else {
                     listaInspecciones = new ArrayList<>(documento.getInspeccion());
                 }
-                if (!contieneInspeccion(listaInspecciones, inspeccion)) {
+                if (!listaInspecciones.contains(inspeccion)) {
                     listaInspecciones.add(inspeccion);
                     documento.setInspeccion(listaInspecciones);
                 }
@@ -451,7 +438,8 @@ public class GestorDocumentalBean {
         for (Documento doc : model.getDatasource()) {
             String cadenaInspecciones = "";
             for (Inspeccion inspe : documentoService.listaInspecciones(doc)) {
-                cadenaInspecciones = cadenaInspecciones.concat(inspe.getNumero().concat("\n"));
+                cadenaInspecciones = cadenaInspecciones.concat(
+                        String.valueOf(inspe.getId()).concat("/").concat(String.valueOf(inspe.getAnio()).concat("\n")));
             }
             mapaInspecciones.put(doc.getId(), cadenaInspecciones);
             

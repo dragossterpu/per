@@ -20,7 +20,7 @@
 					<h:outputLabel for="inputNombre" value="Inspecciones asociadas:" />
 					<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera"  value="#{guiaBean.listaInspecciones}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
 						<p:column headerText="Número de inspección">
-							<h:outputText value=" #{inspeccion.numero}" />
+							<h:outputText value=" #{inspeccion.id}/#{inspeccion.anio}" />
 						</p:column>
 						<p:column headerText="Unidad">
 							<h:outputText value=" #{inspeccion.nombreUnidad}" />
@@ -37,7 +37,7 @@
 					<h:outputLabel  />
 					 <h:panelGrid columns="2" >
 						<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}"
-								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.id).concat('/').concat(inspeccion.anio)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
 								queryDelay="1000">
 							</p:autoComplete>
 							<p:commandButton value="Asociar inspección" actionListener="#{guiaBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
@@ -55,7 +55,8 @@ public class Inspeccion extends AbstractEntity implements Serializable, Comparab
     @Column(name = "id")
     private Long id;
     
-    @Column(name = "numero", length = 100)
+    @Transient
+    @Column(name = "numero")
     private String numero;
     
     @ManyToOne
@@ -115,7 +116,7 @@ public class Inspeccion extends AbstractEntity implements Serializable, Comparab
     @Column(name = "fecha_anulacion")
     protected Date fechaAnulacion;
     
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "inspecciones_asociadas", joinColumns = {
             @JoinColumn(name = "id_inspeccion") }, inverseJoinColumns = {
                     @JoinColumn(name = "id_inspeccion_asociada") })

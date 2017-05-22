@@ -135,6 +135,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void eliminarCuestionario(CuestionarioEnvio cuestionario) {
         try {
+            
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
             rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
@@ -146,6 +147,10 @@ public class CuestionarioEnviadoBean implements Serializable {
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                         "Se ha eliminado con éxito el cuestionario", null);
+                
+                String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
+                        .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
+                cuestionario.getInspeccion().setNumero(numeroInspeccion);
                 
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
                 
@@ -223,6 +228,10 @@ public class CuestionarioEnviadoBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
                         "Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
                 
+                String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
+                        .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
+                cuestionario.getInspeccion().setNumero(numeroInspeccion);
+                
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero() + " finalizado";
                 
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
@@ -261,6 +270,10 @@ public class CuestionarioEnviadoBean implements Serializable {
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             cuestionario.setUsernameNoConforme(usuarioActual);
             cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario);
+            
+            String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
+            cuestionario.getInspeccion().setNumero(numeroInspeccion);
             
             StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
             StringBuilder cuerpo = new StringBuilder(
@@ -325,6 +338,11 @@ public class CuestionarioEnviadoBean implements Serializable {
             // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
             if (cuestionario.getFechaEnvio() != null
                     && !backupFechaLimiteCuestionario.equals(cuestionario.getFechaLimiteCuestionario())) {
+                
+                String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
+                        .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
+                cuestionario.getInspeccion().setNumero(numeroInspeccion);
+                
                 StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
                         "\r\n \r\nEl plazo del que disponía para enviar el cuestionario conectándose a la aplicación PROGESIN ha sido modificado.")
@@ -339,6 +357,10 @@ public class CuestionarioEnviadoBean implements Serializable {
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El cuestionario ha sido modificado con éxito" + mensajeCorreoEnviado);
+            
+            String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
+            cuestionario.getInspeccion().setNumero(numeroInspeccion);
             
             String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
             

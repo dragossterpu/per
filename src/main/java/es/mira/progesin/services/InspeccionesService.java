@@ -62,8 +62,8 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     @Override
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion) {
-        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
+    public List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion) {
+        return inspeccionesRepository.buscarPorNombreUnidadONumero("%" + infoInspeccion + "%");
     }
     
     @Override
@@ -200,7 +200,7 @@ public class InspeccionesService implements IInspeccionesService {
         criteria.add(Restrictions.isNull("fechaBaja"));
         if (busqueda.isAsociar() && busqueda.getInspeccionModif().getId() != null) {
             criteria.add(Restrictions.ne("id", busqueda.getInspeccionModif().getId()));
-        } else {
+        } else if (!busqueda.isAsociar()) {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
                 DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");

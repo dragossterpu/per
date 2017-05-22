@@ -701,7 +701,7 @@ public class SolicitudDocPreviaBeanTest {
         
         solicitudDocPreviaBean.autocompletarInspeccion(infoInspeccion);
         
-        verify(inspeccionesService, times(1)).buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+        verify(inspeccionesService, times(1)).buscarPorNombreUnidadONumero(infoInspeccion);
         
     }
     

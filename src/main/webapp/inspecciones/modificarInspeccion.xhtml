@@ -21,7 +21,7 @@
 					<div class="columnaIzdaFormulario" >
 					
 						<h:outputLabel for="numero" value="Número inspección:" />
-						<p:inputText  id="numero" value="#{inspeccionBean.inspeccion.numero}" converter="#{trimConverter}" disabled="true"/>
+						<p:inputText  id="numero" value="#{inspeccionBean.inspeccion.id}/#{inspeccionBean.inspeccion.anio}" converter="#{trimConverter}" disabled="true"/>
 						
 						<h:outputLabel for="anio" value="Año (*):" />
 						<p:inputNumber id="anio" value="#{inspeccionBean.inspeccion.anio}"  
@@ -157,7 +157,7 @@
 						scrollable="true" scrollHeight="120"
 						emptyMessage="No hay asociadas inspecciones">
 							<p:column>
-							 	<h:outputText value=" #{inspeccion.numero}" />
+							 	<h:outputText value="#{inspeccion.id}/#{inspeccion.anio}" />
 							</p:column> 
 							 <p:column styleClass="botonTabla">
 									<p:commandButton title="Desasociar" icon="fa fa-trash" 

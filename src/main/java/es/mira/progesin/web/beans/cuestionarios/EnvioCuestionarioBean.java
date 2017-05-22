@@ -98,7 +98,7 @@ public class EnvioCuestionarioBean implements Serializable {
             return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
                     usuarioActual.getUsername());
         } else {
-            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+            return inspeccionService.buscarPorNombreUnidadONumero(infoInspeccion);
         }
     }
     
@@ -154,6 +154,10 @@ public class EnvioCuestionarioBean implements Serializable {
                     
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                             "El cuestionario se ha enviado con éxito");
+                    
+                    String numeroInspeccion = String.valueOf(cuestionarioEnvio.getInspeccion().getId()).concat("/")
+                            .concat(String.valueOf(cuestionarioEnvio.getInspeccion().getAnio()));
+                    cuestionarioEnvio.getInspeccion().setNumero(numeroInspeccion);
                     
                     String descripcion = "Se ha enviado el cuestionario de la inspección: "
                             + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
@@ -244,6 +248,10 @@ public class EnvioCuestionarioBean implements Serializable {
         SolicitudDocumentacionPrevia solicitudPendiente = solDocService
                 .findNoFinalizadaPorCorreoDestinatario(correoEnvio);
         if (solicitudPendiente != null) {
+            String numeroInspeccion = String.valueOf(cuestionarioEnvio.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(cuestionarioEnvio.getInspeccion().getAnio()));
+            cuestionarioEnvio.getInspeccion().setNumero(numeroInspeccion);
+            
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
                             + ", ya existe una solicitud en curso para la inspeccion "
@@ -254,6 +262,11 @@ public class EnvioCuestionarioBean implements Serializable {
         }
         CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio);
         if (cuestionarioPendiente != null) {
+            
+            String numeroInspeccion = String.valueOf(cuestionarioEnvio.getInspeccion().getId()).concat("/")
+                    .concat(String.valueOf(cuestionarioEnvio.getInspeccion().getAnio()));
+            cuestionarioEnvio.getInspeccion().setNumero(numeroInspeccion);
+            
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
                             + ", ya existe otro cuestionario en curso para la inspeccion "

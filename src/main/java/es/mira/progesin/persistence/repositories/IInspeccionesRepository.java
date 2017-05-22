@@ -19,8 +19,8 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
      * inspección
      */
-    @Query("SELECT i FROM Inspeccion i WHERE i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR i.numero LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
-    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(@Param("infoInspeccion") String paramString);
+    @Query("SELECT i FROM Inspeccion i WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
+    public List<Inspeccion> buscarPorNombreUnidadONumero(@Param("infoInspeccion") String paramString);
     
     /**
      * @param paramString1 puede ser nombre de unidad o número de inspección
@@ -28,7 +28,7 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * @return devuelve una lista con todas las inspecciones filtradas por nombre de la unidad y jefe de equiopo o por
      * el número de inspección y el jefe de equipo
      */
-    @Query("SELECT i FROM Inspeccion i WHERE EXISTS (SELECT e FROM Equipo e WHERE e.id = i.equipo AND e.jefeEquipo = :usernameJefeEquipo) AND i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR i.numero LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
+    @Query("SELECT i FROM Inspeccion i WHERE EXISTS (SELECT e FROM Equipo e WHERE e.id = i.equipo AND e.jefeEquipo = :usernameJefeEquipo) AND i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
     public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(
             @Param("infoInspeccion") String paramString1, @Param("usernameJefeEquipo") String paramString2);
     
