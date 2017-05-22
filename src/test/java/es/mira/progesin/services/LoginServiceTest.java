@@ -4,7 +4,6 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -68,14 +67,12 @@ public class LoginServiceTest {
     /**
      * Test method for {@link es.mira.progesin.services.LoginService#loadUserByUsername(java.lang.String)}.
      */
-    @Test
+    @Test(expected = UsernameNotFoundException.class)
     public void loadUserByUsername_novalido() {
         
         when(userService.findByUsernameIgnoreCase("novalido")).thenReturn(null);
         
-        assertThatThrownBy(() -> loginService.loadUserByUsername("novalido"))
-                .isInstanceOf(UsernameNotFoundException.class);
-        
+        loginService.loadUserByUsername("novalido");
     }
     
 }

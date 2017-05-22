@@ -297,8 +297,8 @@ public class EquiposBean implements Serializable {
         
         try {
             if (jefeSeleccionado == null) {
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Modificación",
-                        "Debe seleccionar un nuevo jefe de equipo", null);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                        "Debe seleccionar un nuevo jefe de equipo", "", null);
             } else {
                 List<Miembro> listaMiembros = equipo.getMiembros();
                 listaMiembros.removeIf(m -> RolEquipoEnum.JEFE_EQUIPO.equals(m.getPosicion()));

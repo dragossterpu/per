@@ -324,7 +324,7 @@ public class EquiposBeanTest {
         equipoBean.cambiarJefeEquipo();
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq("Modificación"), any(String.class),
+        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
     
