@@ -45,7 +45,9 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
     
     private User usuarioCreacion;
     
-    private String numeroInspeccion;
+    private String idInspeccion;
+    
+    private String anioInspeccion;
     
     private TipoInspeccion tipoInspeccion;
     
@@ -79,7 +81,8 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
         setFechaHasta(null);
         setEstado(null);
         setUsuarioCreacion(null);
-        setNumeroInspeccion(null);
+        setIdInspeccion(null);
+        setAnioInspeccion(null);
         setTipoInspeccion(null);
         setAmbitoInspeccion(null);
         setNombreUnidad(null);

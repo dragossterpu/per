@@ -17,16 +17,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
+import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
@@ -76,6 +79,9 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     @Autowired
     private transient ICorreoElectronico correoElectronico;
+    
+    @Autowired
+    private transient IInspeccionesService inspeccionesService;
     
     @Autowired
     transient IRegistroActividadService regActividadService;
@@ -147,10 +153,6 @@ public class CuestionarioEnviadoBean implements Serializable {
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                         "Se ha eliminado con éxito el cuestionario", null);
-                
-                String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
-                        .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
-                cuestionario.getInspeccion().setNumero(numeroInspeccion);
                 
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
                 
@@ -225,12 +227,14 @@ public class CuestionarioEnviadoBean implements Serializable {
                 cuestionario.setFechaFinalizacion(fechaActual);
                 cuestionario.setFechaNoConforme(null);
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
+                
+                // Cambio de estado de la inspección asociada
+                Inspeccion inspeccionCambioEstado = cuestionario.getInspeccion();
+                inspeccionCambioEstado.setEstadoInspeccion(EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
+                inspeccionesService.save(inspeccionCambioEstado);
+                
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
                         "Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
-                
-                String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
-                        .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
-                cuestionario.getInspeccion().setNumero(numeroInspeccion);
                 
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero() + " finalizado";
                 
@@ -270,10 +274,6 @@ public class CuestionarioEnviadoBean implements Serializable {
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             cuestionario.setUsernameNoConforme(usuarioActual);
             cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario);
-            
-            String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
-                    .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
-            cuestionario.getInspeccion().setNumero(numeroInspeccion);
             
             StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
             StringBuilder cuerpo = new StringBuilder(
@@ -339,10 +339,6 @@ public class CuestionarioEnviadoBean implements Serializable {
             if (cuestionario.getFechaEnvio() != null
                     && !backupFechaLimiteCuestionario.equals(cuestionario.getFechaLimiteCuestionario())) {
                 
-                String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
-                        .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
-                cuestionario.getInspeccion().setNumero(numeroInspeccion);
-                
                 StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
                         "\r\n \r\nEl plazo del que disponía para enviar el cuestionario conectándose a la aplicación PROGESIN ha sido modificado.")
@@ -357,10 +353,6 @@ public class CuestionarioEnviadoBean implements Serializable {
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El cuestionario ha sido modificado con éxito" + mensajeCorreoEnviado);
-            
-            String numeroInspeccion = String.valueOf(cuestionario.getInspeccion().getId()).concat("/")
-                    .concat(String.valueOf(cuestionario.getInspeccion().getAnio()));
-            cuestionario.getInspeccion().setNumero(numeroInspeccion);
             
             String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
             

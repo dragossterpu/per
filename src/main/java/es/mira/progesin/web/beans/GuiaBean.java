@@ -442,7 +442,7 @@ public class GuiaBean {
      * @return Devuelve la lista de inspecciones que contienen algún caracter coincidente con el texto introducido
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
+        return inspeccionesService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
     }
     
     /**

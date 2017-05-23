@@ -62,8 +62,8 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     @Override
-    public List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion) {
-        return inspeccionesRepository.buscarPorNombreUnidadONumero("%" + infoInspeccion + "%");
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion) {
+        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
     }
     
     @Override
@@ -138,11 +138,11 @@ public class InspeccionesService implements IInspeccionesService {
                     .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
         }
         
-        if (busqueda.getId() != null && !busqueda.getId().isEmpty()) {
+        if (busqueda.getId() != null) {
             criteria.add(Restrictions.eq("id", Long.parseLong(busqueda.getId())));
         }
         
-        if (busqueda.getAnio() != null && !busqueda.getAnio().isEmpty()) {
+        if (busqueda.getAnio() != null) {
             criteria.add(Restrictions.eq("anio", Integer.parseInt(busqueda.getAnio())));
         }
         
@@ -220,6 +220,11 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public boolean existeByTipoInspeccion(TipoInspeccion tipo) {
         return inspeccionesRepository.existsByTipoInspeccion(tipo);
+    }
+    
+    @Override
+    public List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion) {
+        return inspeccionesRepository.buscarPorNombreUnidadONumero("%" + infoInspeccion + "%");
     }
     
 }

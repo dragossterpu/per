@@ -33,7 +33,9 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
     
     private String usernameEnvio;
     
-    private String numeroInspeccion;
+    private String idInspeccion;
+    
+    private String anioInspeccion;
     
     private TipoInspeccion tipoInspeccion;
     
@@ -56,7 +58,8 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
         setFechaLimiteRespuesta(null);
         setEstado(null);
         setUsernameEnvio(null);
-        setNumeroInspeccion(null);
+        setIdInspeccion(null);
+        setAnioInspeccion(null);
         setTipoInspeccion(null);
         setAmbitoInspeccion(null);
         setNombreEquipo(null);

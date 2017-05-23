@@ -277,7 +277,9 @@ public class DocumentoService implements IDocumentoService {
         
         if (busqueda.getInspeccion() != null) {
             criteria.createAlias("inspeccion", "inspecciones");
-            criteria.add(Restrictions.eq("inspecciones.numero", busqueda.getInspeccion().getNumero()));
+            criteria.add(Restrictions.eq("inspecciones.id", busqueda.getInspeccion().getId()));
+            criteria.add(Restrictions.eq("inspecciones.anio", busqueda.getInspeccion().getAnio()));
+            
         }
         
         if (busqueda.isEliminado()) {

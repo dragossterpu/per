@@ -15,6 +15,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -63,6 +64,9 @@ public class EnvioCuestionarioBean implements Serializable {
     private transient IUserService userService;
     
     @Autowired
+    private transient IInspeccionesService inspeccionesService;
+    
+    @Autowired
     private transient PasswordEncoder passwordEncoder;
     
     @Autowired
@@ -98,7 +102,7 @@ public class EnvioCuestionarioBean implements Serializable {
             return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
                     usuarioActual.getUsername());
         } else {
-            return inspeccionService.buscarPorNombreUnidadONumero(infoInspeccion);
+            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
         }
     }
     
@@ -152,12 +156,13 @@ public class EnvioCuestionarioBean implements Serializable {
                     cuestionarioEnvioService.crearYEnviarCuestionario(listaUsuariosProvisionales, cuestionarioEnvio,
                             getCuerpoCorreo(password, listaUsuariosProvisionales));
                     
+                    // Cambio de estado de la inspección asociada
+                    Inspeccion inspeccionCambioEstado = cuestionarioEnvio.getInspeccion();
+                    inspeccionCambioEstado.setEstadoInspeccion(EstadoInspeccionEnum.PEND_RECIBIR_CUESTIONARIO);
+                    inspeccionesService.save(inspeccionCambioEstado);
+                    
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                             "El cuestionario se ha enviado con éxito");
-                    
-                    String numeroInspeccion = String.valueOf(cuestionarioEnvio.getInspeccion().getId()).concat("/")
-                            .concat(String.valueOf(cuestionarioEnvio.getInspeccion().getAnio()));
-                    cuestionarioEnvio.getInspeccion().setNumero(numeroInspeccion);
                     
                     String descripcion = "Se ha enviado el cuestionario de la inspección: "
                             + cuestionarioEnvio.getInspeccion().getNumero() + " correctamente.";
@@ -248,9 +253,6 @@ public class EnvioCuestionarioBean implements Serializable {
         SolicitudDocumentacionPrevia solicitudPendiente = solDocService
                 .findNoFinalizadaPorCorreoDestinatario(correoEnvio);
         if (solicitudPendiente != null) {
-            String numeroInspeccion = String.valueOf(cuestionarioEnvio.getInspeccion().getId()).concat("/")
-                    .concat(String.valueOf(cuestionarioEnvio.getInspeccion().getAnio()));
-            cuestionarioEnvio.getInspeccion().setNumero(numeroInspeccion);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
@@ -262,10 +264,6 @@ public class EnvioCuestionarioBean implements Serializable {
         }
         CuestionarioEnvio cuestionarioPendiente = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio);
         if (cuestionarioPendiente != null) {
-            
-            String numeroInspeccion = String.valueOf(cuestionarioEnvio.getInspeccion().getId()).concat("/")
-                    .concat(String.valueOf(cuestionarioEnvio.getInspeccion().getAnio()));
-            cuestionarioEnvio.getInspeccion().setNumero(numeroInspeccion);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede enviar el cuestionario al destinatario con correo " + correoEnvio

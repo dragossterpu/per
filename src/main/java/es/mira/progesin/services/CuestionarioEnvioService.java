@@ -99,7 +99,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 listadoUsuariosProvisionales.get(0));
         areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
         String cuerpo = cuestionarioEnviado.getMotivoCuestionario().concat("\r\n").concat(cuerpoCorreo);
-        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
+        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getId() + "/"
+                + cuestionarioEnvio.getInspeccion().getAnio();
         correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
     }
     
@@ -267,12 +268,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                     .replaceAll(ACENTOS, "");
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
         }
-        if (cuestionarioEnviadoBusqueda.getNumeroInspeccion() != null
-                && !cuestionarioEnviadoBusqueda.getNumeroInspeccion().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNumeroInspeccion(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("inspeccion.numero", parametro, MatchMode.ANYWHERE));
+        if (cuestionarioEnviadoBusqueda.getIdInspeccion() != null
+                && !cuestionarioEnviadoBusqueda.getIdInspeccion().isEmpty()) {
+            criteria.add(
+                    Restrictions.eq("inspeccion.id", Long.parseLong(cuestionarioEnviadoBusqueda.getIdInspeccion())));
+        }
+        if (cuestionarioEnviadoBusqueda.getAnioInspeccion() != null
+                && !cuestionarioEnviadoBusqueda.getAnioInspeccion().isEmpty()) {
+            criteria.add(Restrictions.eq("inspeccion.anio",
+                    Integer.parseInt(cuestionarioEnviadoBusqueda.getAnioInspeccion())));
         }
         if (cuestionarioEnviadoBusqueda.getAmbitoInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.ambito", cuestionarioEnviadoBusqueda.getAmbitoInspeccion()));

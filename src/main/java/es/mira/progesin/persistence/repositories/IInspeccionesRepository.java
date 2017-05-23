@@ -18,9 +18,19 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * @param paramString nombre de la unidad o número de inspección
      * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
      * inspección
+     * 
      */
     @Query("SELECT i FROM Inspeccion i WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
     public List<Inspeccion> buscarPorNombreUnidadONumero(@Param("infoInspeccion") String paramString);
+    
+    /**
+     * @param paramString nombre de la unidad o número de inspección
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     * 
+     */
+    @Query("SELECT i FROM Inspeccion i WHERE i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(@Param("infoInspeccion") String paramString);
     
     /**
      * @param paramString1 puede ser nombre de unidad o número de inspección

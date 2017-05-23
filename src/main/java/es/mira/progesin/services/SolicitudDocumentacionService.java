@@ -223,12 +223,15 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                     .replaceAll(ACENTOS, "");
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
         }
-        if (solicitudDocPreviaBusqueda.getNumeroInspeccion() != null
-                && !solicitudDocPreviaBusqueda.getNumeroInspeccion().isEmpty()) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNumeroInspeccion(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
-            criteria.add(Restrictions.ilike("inspeccion.numero", parametro, MatchMode.ANYWHERE));
+        if (solicitudDocPreviaBusqueda.getIdInspeccion() != null
+                && !solicitudDocPreviaBusqueda.getIdInspeccion().isEmpty()) {
+            criteria.add(
+                    Restrictions.eq("inspeccion.id", Long.parseLong(solicitudDocPreviaBusqueda.getIdInspeccion())));
+        }
+        if (solicitudDocPreviaBusqueda.getAnioInspeccion() != null
+                && !solicitudDocPreviaBusqueda.getAnioInspeccion().isEmpty()) {
+            criteria.add(Restrictions.eq("inspeccion.anio",
+                    Integer.parseInt(solicitudDocPreviaBusqueda.getAnioInspeccion())));
         }
         if (solicitudDocPreviaBusqueda.getAmbitoInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.ambito", solicitudDocPreviaBusqueda.getAmbitoInspeccion()));

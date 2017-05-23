@@ -172,10 +172,6 @@ public class ResponderCuestionarioBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
                         "Cuestionario cumplimentado y enviado con éxito.");
                 
-                String numeroInspeccion = String.valueOf(cuestionarioEnviado.getInspeccion().getId()).concat("/")
-                        .concat(String.valueOf(cuestionarioEnviado.getInspeccion().getAnio()));
-                cuestionarioEnviado.getInspeccion().setNumero(numeroInspeccion);
-                
                 String textoNotReg = "Cuestionario para la inspección "
                         + cuestionarioEnviado.getInspeccion().getNumero() + " respondido";
                 
