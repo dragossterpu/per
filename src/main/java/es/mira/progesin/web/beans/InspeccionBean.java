@@ -149,7 +149,7 @@ public class InspeccionBean {
         if (inspeccion.getMunicipio() != null) {
             setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         }
-        Collections.sort(inspeccionesAsignadasActuales);
+        Collections.sort(inspeccionesAsignadasActuales, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
         if ("asociarAlta".equals(vaHacia)) {
             rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
             
