@@ -15,7 +15,6 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
-import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -155,11 +154,6 @@ public class EnvioCuestionarioBean implements Serializable {
                             .crearUsuariosProvisionalesCuestionario(correoEnvio, password);
                     cuestionarioEnvioService.crearYEnviarCuestionario(listaUsuariosProvisionales, cuestionarioEnvio,
                             getCuerpoCorreo(password, listaUsuariosProvisionales));
-                    
-                    // Cambio de estado de la inspección asociada
-                    Inspeccion inspeccionCambioEstado = cuestionarioEnvio.getInspeccion();
-                    inspeccionCambioEstado.setEstadoInspeccion(EstadoInspeccionEnum.PEND_RECIBIR_CUESTIONARIO);
-                    inspeccionesService.save(inspeccionCambioEstado);
                     
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                             "El cuestionario se ha enviado con éxito");

@@ -29,7 +29,6 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -163,11 +162,6 @@ public class SolicitudDocPreviaBean implements Serializable {
             // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
             if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
                 solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
-                
-                // Cambio de estado de la inspección asociada
-                Inspeccion inspeccionCambioEstado = solicitudDocumentacionPrevia.getInspeccion();
-                inspeccionCambioEstado.setEstadoInspeccion(EstadoInspeccionEnum.PEND_RECIBIR_DOC_PREVIA);
-                inspeccionesService.save(inspeccionCambioEstado);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "La solicitud de documentación ha sido creada con éxito");
@@ -574,11 +568,6 @@ public class SolicitudDocPreviaBean implements Serializable {
             String usuarioProv = solicitudDocumentacionPrevia.getCorreoDestinatario();
             
             solicitudDocumentacionService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
-            
-            // Cambio de estado de la inspección asociada
-            Inspeccion inspeccionCambioEstado = solicitudDocumentacionPrevia.getInspeccion();
-            inspeccionCambioEstado.setEstadoInspeccion(EstadoInspeccionEnum.PEND_ENVIAR_CUESTIONARIO);
-            inspeccionesService.save(inspeccionCambioEstado);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
                     "Se ha finalizado con éxito la solicitud de documentación");

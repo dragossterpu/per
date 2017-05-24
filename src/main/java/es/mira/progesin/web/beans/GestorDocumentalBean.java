@@ -438,8 +438,7 @@ public class GestorDocumentalBean {
         for (Documento doc : model.getDatasource()) {
             String cadenaInspecciones = "";
             for (Inspeccion inspe : documentoService.listaInspecciones(doc)) {
-                cadenaInspecciones = cadenaInspecciones.concat(
-                        String.valueOf(inspe.getId()).concat("/").concat(String.valueOf(inspe.getAnio()).concat("\n")));
+                cadenaInspecciones = cadenaInspecciones.concat(inspe.getNumero()).concat("\n");
             }
             mapaInspecciones.put(doc.getId(), cadenaInspecciones);
             

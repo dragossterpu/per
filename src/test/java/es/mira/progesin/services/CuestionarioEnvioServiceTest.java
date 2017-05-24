@@ -40,6 +40,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
@@ -85,6 +86,9 @@ public class CuestionarioEnvioServiceTest {
     
     @Mock
     private transient IUserService userService;
+    
+    @Mock
+    private transient IInspeccionesService inspeccionesService;
     
     @Mock
     private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
@@ -163,6 +167,8 @@ public class CuestionarioEnvioServiceTest {
         verify(areaUsuarioCuestEnvRepository, times(1)).save(areasUsuarioCuestEnvCaptor.capture());
         assertThat(areasUsuarioCuestEnvCaptor.getValue()).hasSize(2);
         verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class), any(String.class));
+        verify(inspeccionesService, times(1)).cambiarEstado(cuestionarioEnviado.getInspeccion(),
+                EstadoInspeccionEnum.PEND_RECIBIR_CUESTIONARIO);
     }
     
     /**
@@ -248,6 +254,8 @@ public class CuestionarioEnvioServiceTest {
         verify(userService, times(10)).exists(any(String.class));
         verify(userService, times(9)).delete(any(String.class));
         verify(areaUsuarioCuestEnvService, times(1)).deleteByIdCuestionarioEnviado(cuestionario.getId());
+        verify(inspeccionesService, times(1)).cambiarEstado(cuestionario.getInspeccion(),
+                EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
     }
     
     /**

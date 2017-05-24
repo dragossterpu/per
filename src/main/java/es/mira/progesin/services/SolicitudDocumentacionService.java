@@ -24,6 +24,7 @@ import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
@@ -53,6 +54,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     
     @Autowired
     private IUserService userService;
+    
+    @Autowired
+    private IInspeccionesService inspeccionesService;
     
     @Autowired
     private IDocumentacionPreviaRepository documentacionPreviaRepository;
@@ -259,6 +263,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             User usuarioProv) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         userService.save(usuarioProv);
+        inspeccionesService.cambiarEstado(solicitudDocumentacionPrevia.getInspeccion(),
+                EstadoInspeccionEnum.PEND_RECIBIR_DOC_PREVIA);
     }
     
     @Override
@@ -269,6 +275,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         if (userService.exists(usuarioProv)) {
             userService.delete(usuarioProv);
         }
+        inspeccionesService.cambiarEstado(solicitudDocumentacionPrevia.getInspeccion(),
+                EstadoInspeccionEnum.PEND_ENVIAR_CUESTIONARIO);
     }
     
     @Override

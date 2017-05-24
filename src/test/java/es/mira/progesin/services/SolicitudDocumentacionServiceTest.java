@@ -27,6 +27,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
@@ -55,6 +56,9 @@ public class SolicitudDocumentacionServiceTest {
     
     @Mock
     private IUserService userService;
+    
+    @Mock
+    private IInspeccionesService inspeccionesService;
     
     @Mock
     private IDocumentacionPreviaRepository documentacionPreviaRepository;
@@ -100,11 +104,11 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Test
     public void save() {
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = mock(SolicitudDocumentacionPrevia.class);
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
         
-        solicitudDocPreviaService.save(solicitudDocumentacionPrevia);
+        solicitudDocPreviaService.save(solicitud);
         
-        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitudDocumentacionPrevia);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         
     }
     
@@ -192,13 +196,16 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Test
     public void transaccSaveCreaUsuarioProv() {
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = mock(SolicitudDocumentacionPrevia.class);
+        Inspeccion inspeccion = mock(Inspeccion.class);
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
         User usuarioProv = mock(User.class);
         
-        solicitudDocPreviaService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+        solicitudDocPreviaService.transaccSaveCreaUsuarioProv(solicitud, usuarioProv);
         
-        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitudDocumentacionPrevia);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).save(usuarioProv);
+        verify(inspeccionesService, times(1)).cambiarEstado(solicitud.getInspeccion(),
+                EstadoInspeccionEnum.PEND_RECIBIR_DOC_PREVIA);
         
     }
     
@@ -208,14 +215,17 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Test
     public void transaccSaveElimUsuarioProv() {
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = mock(SolicitudDocumentacionPrevia.class);
+        Inspeccion inspeccion = mock(Inspeccion.class);
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
         String usuarioProv = "usuario";
         when(userService.exists(usuarioProv)).thenReturn(Boolean.TRUE);
         
-        solicitudDocPreviaService.transaccSaveElimUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+        solicitudDocPreviaService.transaccSaveElimUsuarioProv(solicitud, usuarioProv);
         
-        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitudDocumentacionPrevia);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).delete(usuarioProv);
+        verify(inspeccionesService, times(1)).cambiarEstado(solicitud.getInspeccion(),
+                EstadoInspeccionEnum.PEND_ENVIAR_CUESTIONARIO);
     }
     
     /**
@@ -225,12 +235,12 @@ public class SolicitudDocumentacionServiceTest {
     @Test
     public void transaccSaveInactivaUsuarioProv() {
         
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = mock(SolicitudDocumentacionPrevia.class);
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
         String usuarioProv = "usuario";
         
-        solicitudDocPreviaService.transaccSaveInactivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+        solicitudDocPreviaService.transaccSaveInactivaUsuarioProv(solicitud, usuarioProv);
         
-        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitudDocumentacionPrevia);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).cambiarEstado(usuarioProv, EstadoEnum.INACTIVO);
     }
     
@@ -240,12 +250,12 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Test
     public void transaccSaveActivaUsuarioProv() {
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = mock(SolicitudDocumentacionPrevia.class);
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
         String usuarioProv = "usuario";
         
-        solicitudDocPreviaService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
+        solicitudDocPreviaService.transaccSaveActivaUsuarioProv(solicitud, usuarioProv);
         
-        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitudDocumentacionPrevia);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).cambiarEstado(usuarioProv, EstadoEnum.ACTIVO);
     }
     

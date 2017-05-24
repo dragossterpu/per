@@ -228,11 +228,6 @@ public class CuestionarioEnviadoBean implements Serializable {
                 cuestionario.setFechaNoConforme(null);
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
                 
-                // Cambio de estado de la inspección asociada
-                Inspeccion inspeccionCambioEstado = cuestionario.getInspeccion();
-                inspeccionCambioEstado.setEstadoInspeccion(EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
-                inspeccionesService.save(inspeccionCambioEstado);
-                
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
                         "Cuestionario finalizado con éxito, todas sus respuestas han sido validadas");
                 

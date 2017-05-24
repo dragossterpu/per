@@ -31,6 +31,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
@@ -78,6 +79,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     private transient IUserService userService;
     
     @Autowired
+    private transient IInspeccionesService inspeccionesService;
+    
+    @Autowired
     private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
     @Autowired
@@ -99,9 +103,11 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 listadoUsuariosProvisionales.get(0));
         areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
         String cuerpo = cuestionarioEnviado.getMotivoCuestionario().concat("\r\n").concat(cuerpoCorreo);
-        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getId() + "/"
-                + cuestionarioEnvio.getInspeccion().getAnio();
+        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
         correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+        
+        inspeccionesService.cambiarEstado(cuestionarioEnvio.getInspeccion(),
+                EstadoInspeccionEnum.PEND_RECIBIR_CUESTIONARIO);
     }
     
     /**
@@ -355,6 +361,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             }
         }
         areaUsuarioCuestEnvService.deleteByIdCuestionarioEnviado(cuestionario.getId());
+        
+        inspeccionesService.cambiarEstado(cuestionario.getInspeccion(),
+                EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
     }
     
     @Override

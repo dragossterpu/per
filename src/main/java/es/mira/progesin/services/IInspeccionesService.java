@@ -6,6 +6,7 @@ import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 /**
@@ -86,5 +87,13 @@ public interface IInspeccionesService {
      */
     List<Inspeccion> buscarInspeccionPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             InspeccionBusqueda busqueda);
+    
+    /**
+     * Cambia el estado de una inspección
+     * 
+     * @param inspeccion
+     * @param estado
+     */
+    void cambiarEstado(Inspeccion inspeccion, EstadoInspeccionEnum estado);
     
 }

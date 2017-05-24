@@ -217,8 +217,8 @@ public class InspeccionBean {
             inspeccionBusqueda.resetValues();
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "La inspección " + inspeccion.getId() + "/" + inspeccion.getAnio() + " ha sido creada con éxito");
-            String descripcion = "Alta nueva inspección " + inspeccion.getId() + "/" + inspeccion.getAnio();
+                    "La inspección " + inspeccion.getNumero() + " ha sido creada con éxito");
+            String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
         } catch (
@@ -233,7 +233,7 @@ public class InspeccionBean {
      * Método que prepara el objeto y los parámetros necesarios antes de proceder a su modificación. Posteriormente
      * redirige a la vista de modificar inspección.
      * 
-     * @param inspeccion
+     * @param inspeccion seleccionada
      * @return devuelve la ruta donde se realiza la modificaión de la inspección
      */
     public String getFormModificarInspeccion(Inspeccion inspeccion) {
@@ -270,7 +270,7 @@ public class InspeccionBean {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
-            String descripcion = "Modificación de la inspección : " + inspeccion.getId() + "/" + inspeccion.getAnio();
+            String descripcion = "Modificación de la inspección : " + inspeccion.getNumero();
             
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
@@ -335,8 +335,7 @@ public class InspeccionBean {
         try {
             inspeccionesService.save(inspeccionEliminar);
             
-            String descripcion = EL_USUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getId() + "/"
-                    + inspeccion.getAnio();
+            String descripcion = EL_USUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
@@ -367,8 +366,8 @@ public class InspeccionBean {
     
     /**
      * Devuelve una lista de municipios pertenecientes a una provincia. Se utiliza para recargar la lista de municipios
-     * dependiendo de la provincia seleccionad.
-     * @param provincia
+     * dependiendo de la provincia seleccionada.
+     * @param provincia seleccionada
      */
     public void onChangeProvincia(Provincia provincia) {
         if (provincia != null) {
@@ -380,9 +379,9 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que desasocia una inspección al seleccionar el checkboc
+     * Método que desasocia una inspección al seleccionar el checkbox
      *
-     * @param event
+     * @param event lanzado que contiene la inspeccion
      */
     public void onRowUnSelected(UnselectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
@@ -390,9 +389,9 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que asocia una inspección al seleccionar el checkboc
+     * Método que asocia una inspección al seleccionar el checkbox
      *
-     * @param event
+     * @param event lanzado que contiene la inspeccion
      */
     public void onRowSelected(SelectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();

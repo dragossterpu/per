@@ -25,6 +25,7 @@ import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
@@ -225,6 +226,12 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion) {
         return inspeccionesRepository.buscarPorNombreUnidadONumero("%" + infoInspeccion + "%");
+    }
+    
+    @Override
+    public void cambiarEstado(Inspeccion inspeccion, EstadoInspeccionEnum estado) {
+        inspeccion.setEstadoInspeccion(estado);
+        inspeccionesRepository.save(inspeccion);
     }
     
 }
