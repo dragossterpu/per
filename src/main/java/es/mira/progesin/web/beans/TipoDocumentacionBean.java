@@ -119,15 +119,14 @@ public class TipoDocumentacionBean implements Serializable {
         documentacion.setExtensiones(extensionesNuevo);
         documentacion.setAmbito(ambitoNuevo);
         try {
-            if (tipoDocumentacionService.save(documentacion) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El tipo de documentación ha sido creado con éxito");
-                String descripcion = "Se ha dado de alta un nuevo tipo de documentación. Nombre: "
-                        + documentacion.getNombre();
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                        SeccionesEnum.DOCUMENTACION.name());
-            }
+            tipoDocumentacionService.save(documentacion);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El tipo de documentación ha sido creado con éxito");
+            String descripcion = "Se ha dado de alta un nuevo tipo de documentación. Nombre: "
+                    + documentacion.getNombre();
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.DOCUMENTACION.name());
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta la documentación, inténtelo de nuevo más tarde");
