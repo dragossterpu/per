@@ -40,7 +40,7 @@ import es.mira.progesin.web.beans.UserBusqueda;
 @PowerMockIgnore("javax.management.*")
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-public class UserServiceCriteraTest {
+public class UserServiceCriteriaTest {
     
     @Autowired
     private SessionFactory sessionFactory;
