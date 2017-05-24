@@ -28,7 +28,6 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-// @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class IUserRepositoryTest {
     
     @Autowired
@@ -36,7 +35,8 @@ public class IUserRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String, String)}.
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String, String)}
+     * .
      */
     @Test
     public final void testFindByCorreoIgnoreCaseOrDocIdentidadIgnoreCase() {
@@ -138,4 +138,13 @@ public class IUserRepositoryTest {
         assertThat(userList).isNullOrEmpty();
     }
     
+    /**
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#existsByCuerpoEstado(CuerpoEstado)}.
+     */
+    @Test
+    public final void existsByCuerpoEstado() {
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).build();
+        assertThat(this.repository.existsByCuerpoEstado(cuerpo)).isTrue();
+    }
 }

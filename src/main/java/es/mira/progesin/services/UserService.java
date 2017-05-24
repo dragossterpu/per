@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -25,7 +25,6 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
-import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.web.beans.UserBusqueda;
 import lombok.NoArgsConstructor;
@@ -44,15 +43,21 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
     
     @Autowired
-    private IMiembrosRepository miembroRepository;
-    
-    @Autowired
     private SessionFactory sessionFactory;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+    /**
+     * Constructor usado para el test
+     * 
+     * @param sessionFactory
+     */
+    public UserService(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
     
     @Override
     @Transactional(readOnly = false)
@@ -108,21 +113,33 @@ public class UserService implements IUserService {
                     .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
         }
         
+        // if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
+        // criteria.add(Restrictions.sqlRestriction(
+        // String.format(Constantes.COMPARADORSINACENTOS, "nombre", userBusqueda.getNombre())));
+        // }
+        // if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
+        // criteria.add(Restrictions.sqlRestriction(
+        // String.format(Constantes.COMPARADORSINACENTOS, "PRIM_APELLIDO", userBusqueda.getApellido1())));
+        // }
+        // if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
+        // criteria.add(Restrictions.sqlRestriction(
+        // String.format(Constantes.COMPARADORSINACENTOS, "SEGUNDO_APELLIDO", userBusqueda.getApellido2())));
+        // }
+        
         if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "nombre", userBusqueda.getNombre())));
+            criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
         }
+        
         if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "PRIM_APELLIDO", userBusqueda.getApellido1())));
+            criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
         }
+        
         if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "SEGUNDO_APELLIDO", userBusqueda.getApellido2())));
+            criteria.add(Restrictions.ilike("apellido2", userBusqueda.getApellido2(), MatchMode.ANYWHERE));
         }
-        if (userBusqueda.getUsername() != null && !userBusqueda.getUsername().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "USERNAME", userBusqueda.getUsername())));
+        
+        if (userBusqueda.getUsername() != null && userBusqueda.getUsername().isEmpty() == Boolean.FALSE) {
+            criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
         }
         if (userBusqueda.getCuerpoEstado() != null) {
             criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
