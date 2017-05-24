@@ -2,6 +2,8 @@ package es.mira.progesin.persistence.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,17 @@ public class ITipoEquiposRepositoryTest {
      * {@link es.mira.progesin.persistence.repositories.ITipoEquiposRepository#findByCodigoIgnoreCase(java.lang.String)}.
      */
     @Test
-    public final void testFindValueForKey() {
-        TipoEquipo tEquipo = this.repository.findByCodigoIgnoreCase("iAPrL");
-        assertThat(tEquipo.getDescripcion()).isEqualTo("Inspecciones Área Prevención de Riesgos Laborales");
+    public final void findByCodigoIgnoreCase() {
+        TipoEquipo tipoEquipo = this.repository.findByCodigoIgnoreCase("iAPrL");
+        assertThat(tipoEquipo.getDescripcion()).isEqualTo("Inspecciones Área Prevención de Riesgos Laborales");
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.persistence.repositories.ITipoEquiposRepository#findAllByOrderByIdAsc()}.
+     */
+    @Test
+    public final void findAllByOrderByIdAsc() {
+        List<TipoEquipo> tiposEquipo = this.repository.findAllByOrderByIdAsc();
+        assertThat(tiposEquipo).hasSize(8);
+    }
 }
