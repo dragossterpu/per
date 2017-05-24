@@ -1,6 +1,3 @@
-/**
- * 
- */
 package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -224,7 +224,9 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void getFormModificarSolicitud() {
-        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
         
         String ruta_vista = solicitudDocPreviaBean.getFormModificarSolicitud(solicitud);
         
@@ -237,10 +239,13 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void visualizarSolicitud() {
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
         
         String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
-        
+        assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getInspeccion().getNumero())
+                .isEqualTo("1/2017");
         verify(gestDocumentacionService, times(1)).findByIdSolicitud(1L);
         verify(tipoDocumentacionService, times(1)).findByIdSolicitud(1L);
         assertThat(ruta_vista).isEqualTo("/solicitudesPrevia/vistaSolicitud?faces-redirect=true");
@@ -253,7 +258,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void validacionApoyo() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -277,7 +282,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void validacionJefeEquipo() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -491,7 +496,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void eliminarSolicitud_ConFechaEnvio_Logica() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .fechaEnvio(new Date()).correoDestinatario("correoDestinatario").build();
         when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_JEFE_INSPECCIONES).build());
@@ -511,7 +516,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void modificarSolicitud_SinFechaLimiteCambiada() throws ParseException {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SimpleDateFormat sdf = solicitudDocPreviaBean.getSdf();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("10/1/2017"))
@@ -535,7 +540,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void modificarSolicitud_ConFechaLimiteCambiada() throws ParseException {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SimpleDateFormat sdf = solicitudDocPreviaBean.getSdf();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("11/1/2017"))
@@ -560,7 +565,7 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void enviarSolicitud_validacionUsuarioProvExiste() {
         String correoDestinatario = "correoDestinatario";
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario("correoDestinatario").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -581,7 +586,7 @@ public class SolicitudDocPreviaBeanTest {
     public void enviarSolicitud() {
         String correoDestinatario = "correoDestinatario";
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").ambito(ambito).build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario(correoDestinatario).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -616,7 +621,7 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void finalizarSolicitud() {
         String correoDestinatario = "correoDestinatario";
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario(correoDestinatario).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -636,7 +641,7 @@ public class SolicitudDocPreviaBeanTest {
     public void noConformeSolicitud() {
         String correoDestinatario = "correoDestinatario";
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").ambito(ambito).build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario(correoDestinatario).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -727,7 +732,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void inspeccionSinTareasPendientes() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -746,7 +751,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void inspeccionSinTareasPendientes_validacion() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -767,7 +772,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void usuarioSinTareasPendientes() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L)
                 .correoDestinatario(correoDestinatario).inspeccion(inspeccion).build();
@@ -787,8 +792,8 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void usuarioSinTareasPendientes_validacion() {
-        Inspeccion inspeccion = Inspeccion.builder().numero("1/2017").build();
-        Inspeccion inspeccionPendiente = Inspeccion.builder().numero("2/2017").build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        Inspeccion inspeccionPendiente = Inspeccion.builder().id(2L).anio(2017).build();
         String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L)
                 .correoDestinatario(correoDestinatario).inspeccion(inspeccion).build();

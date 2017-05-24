@@ -19,7 +19,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
@@ -54,10 +53,6 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inspeccion")
     @Column(name = "id")
     private Long id;
-    
-    @Transient
-    @Column(name = "numero")
-    private String numero;
     
     @ManyToOne
     @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_i_tipo_inspeccion"), nullable = false)
@@ -121,5 +116,12 @@ public class Inspeccion extends AbstractEntity implements Serializable {
             @JoinColumn(name = "id_inspeccion") }, inverseJoinColumns = {
                     @JoinColumn(name = "id_inspeccion_asociada") })
     private List<Inspeccion> inspecciones;
+    
+    /**
+     * @return numero de inspección, compuesto por el id y el año
+     */
+    public String getNumero() {
+        return id + "/" + anio;
+    }
     
 }

@@ -39,6 +39,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
@@ -168,12 +169,14 @@ public class CuestionarioEnvioServiceTest {
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#findNoFinalizadoPorCorreoEnvio(String)}.
      */
-    @Ignore
     @Test
     public void findNoFinalizadoPorCorreoEnvio() {
         String correo = null;
         
         cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correo);
+        
+        verify(cuestionarioEnvioRepository, times(1))
+                .findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(correo);
     }
     
     /**
@@ -183,14 +186,10 @@ public class CuestionarioEnvioServiceTest {
     @Ignore
     @Test
     public void buscarCuestionarioEnviadoCriteria() {
-        int first = 0;
-        int pageSize = 0;
-        String sortField = null;
-        SortOrder sortOrder = mock(SortOrder.class);
-        CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda = mock(CuestionarioEnviadoBusqueda.class);
-        
-        cuestionarioEnvioService.buscarCuestionarioEnviadoCriteria(first, pageSize, sortField, sortOrder,
-                cuestionarioEnviadoBusqueda);
+        /**
+         * ver CriteriaTests
+         * {@link CrietariaTests#buscarCuestionarioEnviadoCriteria(int, int, String, SortOrder, CuestionarioEnviadoBusqueda)}
+         */
     }
     
     /**
@@ -208,104 +207,130 @@ public class CuestionarioEnvioServiceTest {
     /**
      * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#save(CuestionarioEnvio)}.
      */
-    @Ignore
     @Test
     public void save() {
         CuestionarioEnvio cuestionario = mock(CuestionarioEnvio.class);
         
         cuestionarioEnvioService.save(cuestionario);
+        
+        verify(cuestionarioEnvioRepository, times(1)).save(cuestionario);
     }
     
     /**
      * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveConRespuestas(List)}.
      */
-    @Ignore
     @Test
     public void transaccSaveConRespuestas() {
         List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
+        listaRespuestas.add(mock(RespuestaCuestionario.class));
+        when(respuestaRepository.save(listaRespuestas)).thenReturn(listaRespuestas);
         
-        cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
+        List<RespuestaCuestionario> respuesta = cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
+        
+        verify(respuestaRepository, times(1)).save(listaRespuestas);
+        verify(datosTablaRepository, times(1)).deleteRespuestasTablaHuerfanas();
+        assertThat(respuesta).isEqualTo(listaRespuestas);
     }
     
     /**
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveElimUsuariosProv(CuestionarioEnvio)}.
      */
-    @Ignore
     @Test
     public void transaccSaveElimUsuariosProv() {
-        CuestionarioEnvio cuestionario = mock(CuestionarioEnvio.class);
+        CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio("correo@dominio.es").build();
+        when(userService.exists(any(String.class))).thenReturn(Boolean.TRUE);
+        when(userService.exists("correo9@dominio.es")).thenReturn(Boolean.FALSE);
         
         cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
+        
+        verify(cuestionarioEnvioRepository, times(1)).save(cuestionario);
+        verify(userService, times(10)).exists(any(String.class));
+        verify(userService, times(9)).delete(any(String.class));
+        verify(areaUsuarioCuestEnvService, times(1)).deleteByIdCuestionarioEnviado(cuestionario.getId());
     }
     
     /**
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio, List)}.
      */
-    @Ignore
     @Test
     public void transaccSaveConRespuestasInactivaUsuariosProv() {
-        CuestionarioEnvio cuestionario = mock(CuestionarioEnvio.class);
+        String correoPrincipal = "correo@dominio.es";
+        CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio(correoPrincipal).build();
         List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
         
         cuestionarioEnvioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionario, listaRespuestas);
+        
+        verify(respuestaRepository, times(1)).save(listaRespuestas);
+        verify(datosTablaRepository, times(1)).deleteRespuestasTablaHuerfanas();
+        verify(userService, times(1)).cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
+        verify(cuestionarioEnvioRepository, times(1)).save(cuestionario);
     }
     
     /**
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveActivaUsuariosProv(CuestionarioEnvio)}.
      */
-    @Ignore
     @Test
     public void transaccSaveActivaUsuariosProv() {
-        CuestionarioEnvio cuestionario = mock(CuestionarioEnvio.class);
+        String correoPrincipal = "correo@dominio.es";
+        CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio(correoPrincipal).build();
         
         cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario);
+        
+        verify(cuestionarioEnvioRepository, times(1)).save(cuestionario);
+        verify(userService, times(1)).cambiarEstado(correoPrincipal, EstadoEnum.ACTIVO);
     }
     
     /**
      * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#findById(Long)}.
      */
-    @Ignore
     @Test
     public void findById() {
-        Long idCuestionarioEnviado = null;
+        Long idCuestionarioEnviado = 1L;
         
         cuestionarioEnvioService.findById(idCuestionarioEnviado);
+        
+        verify(cuestionarioEnvioRepository, times(1)).findOne(idCuestionarioEnviado);
     }
     
     /**
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#findNoFinalizadoPorInspeccion(Inspeccion)}.
      */
-    @Ignore
     @Test
     public void findNoFinalizadoPorInspeccion() {
         Inspeccion inspeccion = mock(Inspeccion.class);
         
         cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion);
+        
+        verify(cuestionarioEnvioRepository, times(1))
+                .findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndInspeccion(inspeccion);
     }
     
     /**
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#existsByCuestionarioPersonalizado(CuestionarioPersonalizado)}.
      */
-    @Ignore
     @Test
     public void existsByCuestionarioPersonalizado() {
         CuestionarioPersonalizado cuestionario = mock(CuestionarioPersonalizado.class);
         
         cuestionarioEnvioService.existsByCuestionarioPersonalizado(cuestionario);
+        
+        verify(cuestionarioEnvioRepository, times(1)).existsByCuestionarioPersonalizado(cuestionario);
     }
     
     /**
      * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#findNoCumplimentados()}.
      */
-    @Ignore
     @Test
     public void findNoCumplimentados() {
         cuestionarioEnvioService.findNoCumplimentados();
+        
+        verify(cuestionarioEnvioRepository, times(1))
+                .findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndFechaCumplimentacionIsNull();
     }
     
 }

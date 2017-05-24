@@ -232,7 +232,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         solicitudDocumentacionPrevia = solicitud;
-        solicitudDocumentacionPrevia.getInspeccion().setNumero(solicitud.getInspeccion().getNumero());
         backupFechaLimiteEnvio = solicitud.getFechaLimiteEnvio();
         return "/solicitudesPrevia/modificarSolicitud?faces-redirect=true";
     }
@@ -250,8 +249,6 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             // parametrosVistaSolicitud = applicationBean.getMapaParametros()
             // .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
-            String numeroInspeccion = solicitud.getInspeccion().getId() + "/" + solicitud.getInspeccion().getAnio();
-            solicitud.getInspeccion().setNumero(numeroInspeccion);
             setListadoDocumentosCargados(gestDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setSolicitudDocumentacionPrevia(solicitud);
@@ -749,10 +746,6 @@ public class SolicitudDocPreviaBean implements Serializable {
         String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
         SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
                 .findNoFinalizadaPorCorreoDestinatario(correoDestinatario);
-        String numeroInspeccion = solicitudDocumentacionPrevia.getInspeccion().getId() + "/"
-                + solicitudDocumentacionPrevia.getInspeccion().getAnio();
-        
-        solicitudDocumentacionPrevia.getInspeccion().setNumero(numeroInspeccion);
         
         if (solicitudPendiente != null) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
