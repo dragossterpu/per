@@ -120,4 +120,11 @@ public interface IUserService {
      */
     List<User> findByDepartamento(Departamento departamento);
     
+    /**
+     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado
+     * 
+     * @param cuerpo cuerpo que se desea verificar
+     * @return resultado de la consulta
+     */
+    boolean existByCuerpoEstado(CuerpoEstado cuerpo);
 }

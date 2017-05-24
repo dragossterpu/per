@@ -104,4 +104,12 @@ public interface IUserRepository extends CrudRepository<User, String> {
      * @return resultado de la búsqueda
      */
     List<User> findByDepartamento(Departamento departamento);
+    
+    /**
+     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado recibido como parámetro
+     * 
+     * @param cuerpo que se desea verificar
+     * @return resultado de la comprobación
+     */
+    boolean existsByCuerpoEstado(CuerpoEstado cuerpo);
 }

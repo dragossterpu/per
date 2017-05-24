@@ -237,4 +237,9 @@ public class UserService implements IUserService {
         return Math.toIntExact(cnt);
     }
     
+    @Override
+    public boolean existByCuerpoEstado(CuerpoEstado cuerpo) {
+        return userRepository.existsByCuerpoEstado(cuerpo);
+    }
+    
 }
