@@ -69,38 +69,4 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
         return documentacionPreviaRepository.findByIdSolicitud(idSolicitud);
     }
     
-    @Override
-    public List<TipoDocumentacion> buscarRegistros(int first, int pageSize, String sortField, SortOrder sortOrder) {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(TipoDocumentacion.class);
-        
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
-        
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
-        
-        @SuppressWarnings("unchecked")
-        List<TipoDocumentacion> listado = criteria.list();
-        session.close();
-        
-        return listado;
-    }
-    
-    @Override
-    public int contarRegistros() {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(TipoDocumentacion.class);
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
-        session.close();
-        
-        return Math.toIntExact(cnt);
-    }
-    
 }

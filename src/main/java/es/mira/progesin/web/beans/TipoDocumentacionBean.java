@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.lazydata.LazyModelTipoDocPrevia;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -54,8 +53,6 @@ public class TipoDocumentacionBean implements Serializable {
     
     private AmbitoInspeccionEnum ambitoNuevo;
     
-    private LazyModelTipoDocPrevia model;
-    
     @Autowired
     transient ApplicationBean applicationBean;
     
@@ -67,6 +64,17 @@ public class TipoDocumentacionBean implements Serializable {
     
     @Autowired
     transient INotificacionService notificacionService;
+    
+    /**
+     * Muestra el listado de tipos de documentación disponibles. Se llama desde el menu lateral
+     * 
+     * @author EZENTIS
+     * @return vista documentacionPrevia
+     */
+    public String tipoDocumentacionListado() {
+        listaTipoDocumentacion = tipoDocumentacionService.findAll();
+        return "/documentacionPrevia/documentacionPrevia";
+    }
     
     /**
      * Elimina un tipo de documentación. Elimina el tipo de documentación y actualiza la lista de la vista
@@ -96,7 +104,6 @@ public class TipoDocumentacionBean implements Serializable {
         listaTipoDocumentacion = tipoDocumentacionService.findAll();
         Map<String, String> mapaExtensiones = applicationBean.getMapaParametros().get("extensiones");
         setListaExtensionesPosibles(new ArrayList<>(mapaExtensiones.keySet()));
-        setModel(new LazyModelTipoDocPrevia(tipoDocumentacionService));
     }
     
     /**

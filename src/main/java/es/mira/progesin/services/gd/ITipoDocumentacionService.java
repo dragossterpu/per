@@ -63,24 +63,4 @@ public interface ITipoDocumentacionService {
      */
     List<DocumentacionPrevia> findByIdSolicitud(Long idSolicitud);
     
-    /**
-     * 
-     * Consulta en base de datos en base a los parámetros recibidos. La consulta se hace paginada.
-     * 
-     * @param first Primer elemento a devolver de la búsqueda
-     * @param pageSize Número máximo de registros a mostrar
-     * @param sortField Campo por el cual se ordena la búsqueda
-     * @param sortOrder Sentido de la ordenación
-     * @return Lista de los documentos que corresponden a los criterios recibidos
-     * 
-     */
-    List<TipoDocumentacion> buscarRegistros(int first, int pageSize, String sortField, SortOrder sortOrder);
-    
-    /**
-     * Devuelve el número total de registros en base de datos
-     * 
-     * @return número de registros
-     */
-    int contarRegistros();
-    
 }
