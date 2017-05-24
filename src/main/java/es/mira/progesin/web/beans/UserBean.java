@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,7 +55,12 @@ import lombok.Setter;
 @Getter
 @Controller("userBean")
 @Scope("session")
-public class UserBean {
+public class UserBean implements Serializable {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     
     private User user;
     
@@ -91,34 +97,34 @@ public class UserBean {
     private LazyModelUsuarios model;
     
     @Autowired
-    IUserService userService;
+    private transient IUserService userService;
     
     @Autowired
-    ICuerpoEstadoService cuerposEstadoService;
+    private transient ICuerpoEstadoService cuerposEstadoService;
     
     @Autowired
-    IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     @Autowired
-    INotificacionService notificacionService;
+    private transient INotificacionService notificacionService;
     
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private transient PasswordEncoder passwordEncoder;
     
     @Autowired
-    CorreoElectronico correo;
+    private transient CorreoElectronico correo;
     
     @Autowired
-    private IDepartamentoRepository departamentoRepository;
+    private transient IDepartamentoRepository departamentoRepository;
     
     @Autowired
-    private IClaseUsuarioRepository claseUsuarioRepository;
+    private transient IClaseUsuarioRepository claseUsuarioRepository;
     
     @Autowired
-    private IEmpleoRepository empleoRepository;
+    private transient IEmpleoRepository empleoRepository;
     
     @Autowired
-    private IPuestoTrabajoRepository puestoTrabajoRepository;
+    private transient IPuestoTrabajoRepository puestoTrabajoRepository;
     
     /**
      * Muestra el perfil del usuario
