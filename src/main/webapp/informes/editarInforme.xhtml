@@ -8,7 +8,7 @@
 	
 	<h:form id="informe">
 
-
+<!-- 
 			<p:accordionPanel value="#{informeBean.areasInforme}" var="area" activeIndex="-1">
 				<p:tab title="#{area}">
 					<p:accordionPanel value="#{informeBean.mapaAreaSubareas[area]}" var="subarea" activeIndex="-1">
@@ -17,9 +17,9 @@
 						</p:tab>
 					</p:accordionPanel>
 				</p:tab>
-			</p:accordionPanel>
+			</p:accordionPanel> -->
 
-		<!-- 	<p:textEditor widgetVar="editor1" value="#{informeBean.texto}" height="300" style="margin-bottom:10px"/> -->
+		<p:textEditor widgetVar="editor1" value="#{informeBean.texto}" height="300" style="margin-bottom:10px"/>
  
 	    <p:commandButton value="Submit" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
 	    <p:commandButton value="Clear" type="button" onclick="PF('editor1').clear();" icon="ui-icon-close" />

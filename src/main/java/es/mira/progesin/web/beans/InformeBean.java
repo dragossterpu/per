@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +57,7 @@ public class InformeBean implements Serializable {
     private transient StreamedContent file;
     
     public void guardarInforme() {
-        informe = Informe.builder().texto(texto).build();
+        informe = Informe.builder().texto(texto.getBytes()).build();
         informeRepository.save(informe);
     }
     
@@ -88,7 +89,12 @@ public class InformeBean implements Serializable {
         setMapaAreaSubareas(crearMapaAreasSubareas());
         informe = informeRepository.findOne(1L);
         if (informe != null) {
-            texto = informe.getTexto();
+            try {
+                texto = new String(informe.getTexto(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
     

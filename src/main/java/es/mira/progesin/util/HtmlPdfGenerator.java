@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
@@ -85,11 +86,13 @@ public class HtmlPdfGenerator {
         return classPathResource.getInputStream();
     }
     
-    private String obtenerDatosInformeConEstilo(Informe informe) {
+    private String obtenerDatosInformeConEstilo(Informe informe) throws UnsupportedEncodingException {
+        String textoInforme;
         StringBuilder informeFormateado = new StringBuilder();
-        if (informe != null && informe.getTexto() != null && informe.getTexto().trim().isEmpty() == Boolean.FALSE) {
+        if (informe != null && informe.getTexto() != null) {
             informeFormateado.append("<div class=\"ql-editor\">");
-            informeFormateado.append(informe.getTexto());
+            textoInforme = new String(informe.getTexto(), "UTF-8");
+            informeFormateado.append(textoInforme);
             informeFormateado.append("</div>");
         }
         System.out.println(limpiarHtml(informeFormateado.toString()));

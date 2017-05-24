@@ -6,6 +6,7 @@ import java.util.Date;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -16,6 +17,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@NoArgsConstructor
 public class DocumentoBusqueda implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -50,13 +52,6 @@ public class DocumentoBusqueda implements Serializable {
         this.setInspeccion(original.getInspeccion());
         this.setEliminado(original.isEliminado());
         this.setDescripcion(original.getDescripcion());
-    }
-    
-    /**
-     * Constructor vacío
-     */
-    public DocumentoBusqueda() {
-        
     }
     
     /**
