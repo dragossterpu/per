@@ -44,6 +44,7 @@ import es.mira.progesin.util.FacesUtilities;
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
+@SuppressWarnings("static-access")
 public class CuerposEstadoBeanTest {
     
     @Mock
@@ -92,6 +93,10 @@ public class CuerposEstadoBeanTest {
         assertThat(target, notNullValue());
     }
     
+    /**
+     * Inicializa el test
+     */
+    
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
@@ -102,6 +107,9 @@ public class CuerposEstadoBeanTest {
         when(authentication.getName()).thenReturn("usuarioLogueado");
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
+     */
     @Test
     public void eliminarCuerpo_conUsuarios() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
@@ -114,6 +122,9 @@ public class CuerposEstadoBeanTest {
         
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
+     */
     @Test
     public void eliminarCuerpo_sinUsuarios() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
@@ -129,6 +140,9 @@ public class CuerposEstadoBeanTest {
                 eq(SeccionesEnum.ADMINISTRACION.name()));
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
+     */
     @Test
     public void eliminarCuerpo_conusuarios_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
@@ -143,6 +157,9 @@ public class CuerposEstadoBeanTest {
         
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#altaCuerpo}.
+     */
     @Test
     public void altaCuerpo() {
         
@@ -155,6 +172,9 @@ public class CuerposEstadoBeanTest {
                 eq(SeccionesEnum.ADMINISTRACION.name()));
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#altaCuerpo}.
+     */
     @Test
     public void altaCuerpo_excepcion() {
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
@@ -166,6 +186,9 @@ public class CuerposEstadoBeanTest {
                 exceptionCaptor.capture());
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#onRowEdit}.
+     */
     @Test
     public void onRowEdit() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
@@ -182,6 +205,9 @@ public class CuerposEstadoBeanTest {
         
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#onRowEdit}.
+     */
     @Test
     public void onRowEdit_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
@@ -195,6 +221,9 @@ public class CuerposEstadoBeanTest {
                 exceptionCaptor.capture());
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#init}.
+     */
     @Test
     public void init() {
         CuerposEstadoBean cuerpoEstadoMock = spy(cuerposEstadoBean);
