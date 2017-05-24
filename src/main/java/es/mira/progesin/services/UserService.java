@@ -2,7 +2,9 @@ package es.mira.progesin.services;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -97,34 +100,13 @@ public class UserService implements IUserService {
         criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo");
         
         if (userBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(userBusqueda.getFechaDesde()) + "'"));
-        }
-        if (userBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(userBusqueda.getFechaHasta()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHA_ALTA, userBusqueda.getFechaDesde()));
         }
         
-        // if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
-        // criteria.add(Restrictions.sqlRestriction(
-        // String.format(Constantes.COMPARADORSINACENTOS, "nombre", userBusqueda.getNombre())));
-        // }
-        // if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
-        // criteria.add(Restrictions.sqlRestriction(
-        // String.format(Constantes.COMPARADORSINACENTOS, "PRIM_APELLIDO", userBusqueda.getApellido1())));
-        // }
-        // if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
-        // criteria.add(Restrictions.sqlRestriction(
-        // String.format(Constantes.COMPARADORSINACENTOS, "SEGUNDO_APELLIDO", userBusqueda.getApellido2())));
-        // }
+        if (userBusqueda.getFechaHasta() != null) {
+            Date fechaHasta = new Date(userBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHA_ALTA, fechaHasta));
+        }
         
         if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
             criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
@@ -232,7 +214,7 @@ public class UserService implements IUserService {
         } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
             criteria.addOrder(Order.desc(sortField));
         } else if (sortField == null) {
-            criteria.addOrder(Order.desc("fechaAlta"));
+            criteria.addOrder(Order.desc(Constantes.FECHA_ALTA));
         }
         
         @SuppressWarnings("unchecked")

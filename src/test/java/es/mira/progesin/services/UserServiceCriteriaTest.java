@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -66,17 +69,21 @@ public class UserServiceCriteriaTest {
      */
     @Test
     public void buscarUsuarioCriteria() {
-        int first = 1;
+        int first = 0;
         int pageSize = 20;
         String sortField = "username";
         SortOrder sortOrder = SortOrder.ASCENDING;
         
         UserService userService = new UserService(sessionFactory);
-        UserBusqueda userBusqueda = UserBusqueda.builder().role(RoleEnum.ROLE_EQUIPO_INSPECCIONES).build();
+        
+        LocalDate localDate = LocalDate.of(2017, 1, 15);
+        Date fechaDesde = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date fechaHasta = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        UserBusqueda userBusqueda = UserBusqueda.builder().fechaDesde(fechaDesde).fechaHasta(fechaHasta).build();
         
         List<User> listaUsuarios = userService.buscarUsuarioCriteria(first, pageSize, sortField, sortOrder,
                 userBusqueda);
-        assertThat(listaUsuarios).hasSize(20);
+        assertThat(listaUsuarios).hasSize(1);
     }
     
     /**

@@ -44,6 +44,8 @@ public final class Constantes {
      */
     public static final String COMPARADORSINACENTOS = "upper(convert(replace(%1$s, \' \', \'\'), \'US7ASCII\')) LIKE upper(convert(\'%%\' || replace(\'%2$s\', \' \', \'\') || \'%%\', \'US7ASCII\'))";
     
+    public static final String FECHA_ALTA = "fechaAlta";
+    
     private Constantes() {
         throw new IllegalAccessError("Constantes class");
     }
