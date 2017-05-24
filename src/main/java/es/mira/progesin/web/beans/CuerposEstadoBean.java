@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
@@ -57,9 +56,8 @@ public class CuerposEstadoBean implements Serializable {
      * @param cuerpo cuerpo del estado a eliminar
      */
     public void eliminarCuerpo(CuerpoEstado cuerpo) {
-        List<User> usuariosCuerpo = userService.findByCuerpoEstado(cuerpo);
         try {
-            if (usuariosCuerpo != null && !usuariosCuerpo.isEmpty()) {
+            if (userService.existByCuerpoEstado(cuerpo)) {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo "
                         + cuerpo.getDescripcion() + " al haber usuarios pertenecientes a dicho cuerpo", "", "msgs");
             } else {
@@ -86,6 +84,7 @@ public class CuerposEstadoBean implements Serializable {
      * @param nombreCorto
      * @param descripcionCuerpo
      */
+    
     public void altaCuerpo(String nombreCorto, String descripcionCuerpo) {
         try {
             CuerpoEstado cuerpoEstado = new CuerpoEstado();
