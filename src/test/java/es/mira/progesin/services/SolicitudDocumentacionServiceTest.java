@@ -4,10 +4,14 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.junit.Before;
@@ -23,13 +27,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
+import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 /**
@@ -41,9 +48,6 @@ import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityContextHolder.class)
 public class SolicitudDocumentacionServiceTest {
-    
-    @Mock
-    private SecurityContextHolder securityContextHolder;
     
     @Mock
     private SecurityContext securityContext;
@@ -61,6 +65,9 @@ public class SolicitudDocumentacionServiceTest {
     private IInspeccionesService inspeccionesService;
     
     @Mock
+    private ITipoDocumentacionService tipoDocumentacionService;
+    
+    @Mock
     private IDocumentacionPreviaRepository documentacionPreviaRepository;
     
     @Mock
@@ -72,12 +79,11 @@ public class SolicitudDocumentacionServiceTest {
     /**
      * Configuración inicial del test
      */
-    @SuppressWarnings("static-access")
     @Before
     public void setUp() {
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
-        when(securityContextHolder.getContext()).thenReturn(securityContext);
+        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
     }
     
@@ -312,6 +318,23 @@ public class SolicitudDocumentacionServiceTest {
         
         verify(solicitudDocumentacionPreviaRepository, times(1))
                 .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia, List)}.
+     */
+    @Test
+    public void transaccSaveAltaDocumentos() {
+        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = mock(SolicitudDocumentacionPrevia.class);
+        List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
+        documentosSeleccionados.add(mock(TipoDocumentacion.class));
+        documentosSeleccionados.add(mock(TipoDocumentacion.class));
+        
+        solicitudDocPreviaService.transaccSaveAltaDocumentos(solicitudDocumentacionPrevia, documentosSeleccionados);
+        
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitudDocumentacionPrevia);
+        verify(tipoDocumentacionService, times(2)).save(any(DocumentacionPrevia.class));
     }
     
 }

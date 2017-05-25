@@ -161,12 +161,12 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
             if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
-                solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
+                solicitudDocumentacionService.transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
+                        documentosSeleccionados);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "La solicitud de documentación ha sido creada con éxito");
                 
-                altaDocumentos();
                 String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero();
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
@@ -193,27 +193,6 @@ public class SolicitudDocPreviaBean implements Serializable {
         solicitudDocumentacionPrevia.setApoyoNombre(datosApoyo.get("ApoyoNombre"));
         solicitudDocumentacionPrevia.setApoyoPuesto(datosApoyo.get("ApoyoPuesto"));
         solicitudDocumentacionPrevia.setApoyoTelefono(datosApoyo.get("ApoyoTelefono"));
-    }
-    
-    /**
-     * Permite dar de alta los documentos seleccionados al crear una solicitud de documentación. Colección de documentos
-     * de entre los disponibles en TipoDocumentación que se asignan a la solicitud.
-     * 
-     * @author EZENTIS
-     * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
-     * @see es.mira.progesin.persistence.entities.DocumentacionPrevia
-     * @see #crearSolicitud()
-     */
-    private void altaDocumentos() {
-        
-        for (TipoDocumentacion documento : documentosSeleccionados) {
-            DocumentacionPrevia docPrevia = new DocumentacionPrevia();
-            docPrevia.setIdSolicitud(solicitudDocumentacionPrevia.getId());
-            docPrevia.setDescripcion(documento.getDescripcion());
-            docPrevia.setExtensiones(documento.getExtensiones());
-            docPrevia.setNombre(documento.getNombre());
-            tipoDocumentacionService.save(docPrevia);
-        }
     }
     
     /**
@@ -705,7 +684,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @author EZENTIS
      * @return boolean
      */
-    public boolean inspeccionSinTareasPendientes() {
+    private boolean inspeccionSinTareasPendientes() {
         Inspeccion inspeccion = solicitudDocumentacionPrevia.getInspeccion();
         SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
                 .findNoFinalizadaPorInspeccion(inspeccion);
@@ -730,7 +709,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @author EZENTIS
      * @return boolean
      */
-    public boolean usuarioSinTareasPendientes() {
+    private boolean usuarioSinTareasPendientes() {
         
         String correoDestinatario = solicitudDocumentacionPrevia.getCorreoDestinatario();
         SolicitudDocumentacionPrevia solicitudPendiente = solicitudDocumentacionService
@@ -740,7 +719,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
                             + ", ya existe otra solicitud en curso para la inspeccion "
-                            + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+                            + solicitudPendiente.getInspeccion().getNumero()
                             + ". Debe finalizarla o anularla antes de proseguir.",
                     "", null);
         }
@@ -750,7 +729,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "No se puede crear una solicitud para el destinatario con correo " + correoDestinatario
                             + ", ya existe un cuestionario en curso para la inspeccion "
-                            + solicitudDocumentacionPrevia.getInspeccion().getNumero()
+                            + cuestionarioPendiente.getInspeccion().getNumero()
                             + ". Debe finalizarlo o anularlo antes de proseguir.",
                     "", null);
         }

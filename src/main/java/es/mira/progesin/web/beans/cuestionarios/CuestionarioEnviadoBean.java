@@ -17,13 +17,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
-import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
-import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;

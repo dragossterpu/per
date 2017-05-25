@@ -41,9 +41,6 @@ import es.mira.progesin.util.FacesUtilities;
 public class TipoEquipoBeanTest {
     
     @Mock
-    private FacesUtilities facesUtilities;
-    
-    @Mock
     private ITipoEquipoService tipoEquipoService;
     
     @Mock

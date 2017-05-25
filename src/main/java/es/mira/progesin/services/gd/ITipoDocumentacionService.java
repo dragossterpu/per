@@ -2,8 +2,6 @@ package es.mira.progesin.services.gd;
 
 import java.util.List;
 
-import org.primefaces.model.SortOrder;
-
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;

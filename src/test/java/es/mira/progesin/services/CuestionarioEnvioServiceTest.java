@@ -61,9 +61,6 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 public class CuestionarioEnvioServiceTest {
     
     @Mock
-    private SecurityContextHolder securityContextHolder;
-    
-    @Mock
     private SecurityContext securityContext;
     
     @Mock
@@ -111,12 +108,11 @@ public class CuestionarioEnvioServiceTest {
     /**
      * Configuración inicial del test
      */
-    @SuppressWarnings("static-access")
     @Before
     public void setUp() {
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
-        when(securityContextHolder.getContext()).thenReturn(securityContext);
+        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
     }
     
