@@ -30,7 +30,7 @@
 			
             <p:outputPanel rendered="#{yaEnviado}">
                 <p>
-            	    <span class="infoInspeccionFechaLimite">Número de inspección: #{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.id}/#{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.anio}</span>
+            	    <span class="infoInspeccionFechaLimite">Número de inspección: #{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.numero}</span>
                     <span class="infoInspeccionFechaLimite">Fecha límite de respuesta: <h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.fechaLimiteCuestionario}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></span>
                 </p>
             </p:outputPanel>

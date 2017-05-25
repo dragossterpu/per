@@ -38,7 +38,7 @@
 							</p:selectOneMenu>
 							<h:outputLabel for="autoInspeccion" value="Nombre Unidad - Número Inspección:" />
 							<p:autoComplete id="autoInspeccion" value="#{gestorDocumentalBean.documentoBusqueda.inspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
-								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.id).concat('/').concat(inspeccion.anio)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
+								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
 								 queryDelay="1000">
 							</p:autoComplete>
 							
