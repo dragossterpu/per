@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,12 +61,17 @@ public class TipoDocumentacionBeanTest {
     @Mock
     private IParametroService parametroServiceMock;
     
+    private List<String> exts;
+    
     /**
      * @throws java.lang.Exception
      */
     @Before
     public void setUp() throws Exception {
         PowerMockito.mockStatic(FacesUtilities.class);
+        exts = new ArrayList<>();
+        exts.add(".pdf");
+        exts.add(".docx");
     }
     
     /**
@@ -88,14 +92,21 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.web.beans.TipoDocumentacionBean#tipoDocumentacionListado()}.
+     */
+    @Test
+    public void testTipoDocumentacionListado() {
+        String ruta_vista = tipoDocumentacionBeanMock.tipoDocumentacionListado();
+        verify(tipoDocumentacionServiceMock, times(1)).findAll();
+        assertThat(ruta_vista).isEqualTo("/documentacionPrevia/documentacionPrevia");
+    }
+    
+    /**
      * Test method for
      * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}.
      */
     @Test
     public void testEliminarDocumentacion() {
-        List<String> exts = new ArrayList<>();
-        exts.add(".pdf");
-        exts.add(".docx");
         
         TipoDocumentacion tipoDoc = TipoDocumentacion.builder().id(1L).nombre("tipo1").descripcion("tipo test")
                 .ambito(AmbitoInspeccionEnum.PN).extensiones(exts).build();
@@ -124,10 +135,9 @@ public class TipoDocumentacionBeanTest {
         Map<String, Map<String, String>> mapaParametros = new HashMap<>();
         mapaParametros.put("extensiones", mapaExtensiones);
         
-        TipoDocumentacionBean tipoDocumentacionBean = spy(tipoDocumentacionBeanMock);
         when(applicationBeanMock.getMapaParametros()).thenReturn(mapaParametros);
         
-        tipoDocumentacionBean.init();
+        tipoDocumentacionBeanMock.init();
     }
     
     /**
@@ -135,17 +145,16 @@ public class TipoDocumentacionBeanTest {
      */
     @Test
     public void testAltaTipo() {
-        List<String> exts = new ArrayList<>();
-        exts.add(".pdf");
-        exts.add(".docx");
-        
-        TipoDocumentacion tipoDoc = TipoDocumentacion.builder().nombre("tipo1").descripcion("tipo test")
-                .ambito(AmbitoInspeccionEnum.PN).extensiones(exts).build();
         
         tipoDocumentacionBeanMock.setNombreNuevo("tipo1");
         tipoDocumentacionBeanMock.setDescripcionNuevo("tipo test");
         tipoDocumentacionBeanMock.setExtensionesNuevo(exts);
         tipoDocumentacionBeanMock.setAmbitoNuevo(AmbitoInspeccionEnum.PN);
+        
+        TipoDocumentacion tipoDoc = TipoDocumentacion.builder().nombre(tipoDocumentacionBeanMock.getNombreNuevo())
+                .descripcion(tipoDocumentacionBeanMock.getDescripcionNuevo())
+                .ambito(tipoDocumentacionBeanMock.getAmbitoNuevo())
+                .extensiones(tipoDocumentacionBeanMock.getExtensionesNuevo()).build();
         
         when(tipoDocumentacionServiceMock.save(tipoDoc)).thenReturn(tipoDoc);
         
@@ -154,6 +163,8 @@ public class TipoDocumentacionBeanTest {
         verify(tipoDocumentacionServiceMock, times(1)).save(tipoDoc);
         verify(regActividadServiceMock, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.name()));
+        verify(regActividadServiceMock, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(Exception.class));
     }
     
     /**
@@ -162,9 +173,6 @@ public class TipoDocumentacionBeanTest {
      */
     @Test
     public void testOnRowEdit() {
-        List<String> exts = new ArrayList<>();
-        exts.add(".pdf");
-        exts.add(".docx");
         
         TipoDocumentacion tipoDoc = TipoDocumentacion.builder().nombre("tipo1").descripcion("tipo test")
                 .ambito(AmbitoInspeccionEnum.PN).extensiones(exts).build();
