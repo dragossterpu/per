@@ -209,11 +209,13 @@ public class UserService implements IUserService {
         criteria.setFirstResult(first);
         criteria.setMaxResults(pageSize);
         
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
+        if (sortField != null) {
+            if (SortOrder.ASCENDING.equals(sortOrder)) {
+                criteria.addOrder(Order.asc(sortField));
+            } else {
+                criteria.addOrder(Order.desc(sortField));
+            }
+        } else {
             criteria.addOrder(Order.desc(Constantes.FECHA_ALTA));
         }
         

@@ -197,4 +197,14 @@ public class UserServiceTest {
         verify(userRepositoryMock, times(1)).findByDepartamento(departamento);
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#existByCuerpoEstado(CuerpoEstado)}.
+     */
+    @Test
+    public void existByCuerpoEstado() {
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).build();
+        userService.existByCuerpoEstado(cuerpo);
+        verify(userRepositoryMock, times(1)).existsByCuerpoEstado(cuerpo);
+        
+    }
 }
