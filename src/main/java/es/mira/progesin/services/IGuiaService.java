@@ -9,17 +9,17 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.web.beans.GuiaBusqueda;
 
-/*******************************************************************************
+/**
  * 
  * Servicio de guías
  * 
  * @author EZENTIS
  * 
- *****************************************************************************/
+ */
 
 public interface IGuiaService {
     
-    /***************************************
+    /**
      * 
      * Devuelve una lista de guías en función de los criterios de búsqueda recibidos como parámetro. El listado se
      * devuelve paginado
@@ -32,7 +32,7 @@ public interface IGuiaService {
      * 
      * @return List<Guia> Listado resultante de la búsqueda
      * 
-     *************************************/
+     */
     
     public List<Guia> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             GuiaBusqueda busqueda);
@@ -46,14 +46,14 @@ public interface IGuiaService {
     
     public int getCounCriteria(GuiaBusqueda busqueda);
     
-    /***************************************
+    /**
      * 
      * Devuelve la lista de pasos contenidos en una guía recibida como parámetro
      * 
      * @return List<GuiaPasos>
      * @param guia Guía de la que se desean recuperar los pasos
      * 
-     *************************************/
+     */
     
     public List<GuiaPasos> listaPasos(Guia guia);
     
@@ -65,25 +65,25 @@ public interface IGuiaService {
      */
     public List<GuiaPasos> listaPasosNoNull(Guia guia);
     
-    /***************************************
+    /**
      *
      * Almacena en BDD una guía pasada como parámetro
      *
      * @param guia a guardar
      * @return Guia guardada
      *
-     *************************************/
+     */
     
     public Guia guardaGuia(Guia guia);
     
-    /***************************************
+    /**
      *
      * Comprueba la existencia de un paso recibido como parámetro en las guías personalizadas
      *
      * @param paso Paso del que queremos verificar la existencia
      * @return boolean Existencia o no del paso
      * 
-     *************************************/
+     */
     
     public boolean existePaso(GuiaPasos paso);
     

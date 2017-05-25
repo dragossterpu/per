@@ -224,12 +224,10 @@ public class VisualizarCuestionario implements Serializable {
             }
         }
         
-        /******************************************************/
         if (visualizarRespuestas) {
             construirTipoRespuestaTablaMatrizConDatos();
         }
         
-        /******************************************************/
         Set<AreasCuestionario> areasSet = mapaAreaPreguntas.keySet();
         
         // JSF ui:repeat no funciona con Set

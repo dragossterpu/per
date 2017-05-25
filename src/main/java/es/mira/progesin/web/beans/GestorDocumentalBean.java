@@ -38,12 +38,12 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
-/**********************************************************
+/**
  * Bean para el gestor documental
  * 
  * @author EZENTIS
  * 
- ********************************************************/
+ */
 
 @Setter
 @Getter

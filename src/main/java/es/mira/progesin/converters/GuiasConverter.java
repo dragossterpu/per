@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.GuiaPasos;
 
-/***********************************
+/**
  * 
  * Conversor para objetos orderList de PrimeFaces
  * 
@@ -21,7 +21,7 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
  * 
  * @author Ezentis
  * 
- *************************************/
+ **/
 
 @Component("guiasConverter")
 public class GuiasConverter implements Converter {

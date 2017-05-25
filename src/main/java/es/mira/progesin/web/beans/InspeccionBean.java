@@ -93,26 +93,26 @@ public class InspeccionBean {
     
     private List<TipoInspeccion> listaTiposInspeccion;
     
-    /**************************************************************
+    /**
      * 
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
      * de la tabla y con el orden por defecto
      * 
-     **************************************************************/
+     */
     public void buscarInspeccion() {
         inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
-    /*********************************************************
+    /**
      * 
      * Visualiza la inspeccion personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección"
      * 
      * @param inspeccion a visualizar
      * @return Devuelve la ruta de la vista visualizarInspecciones
      * 
-     *********************************************************/
+     */
     
     public String visualizaInspeccion(Inspeccion inspeccion) {
         this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
@@ -162,11 +162,11 @@ public class InspeccionBean {
         return rutaSiguiente;
     }
     
-    /*********************************************************
+    /**
      * 
      * Limpia los valores del objeto de búsqueda de inspecciones
      * 
-     *********************************************************/
+     */
     
     public void limpiarBusqueda() {
         inspeccionBusqueda.resetValues();
@@ -284,11 +284,11 @@ public class InspeccionBean {
         
     }
     
-    /*********************************************************
+    /**
      * 
      * Inicializa el bean
      * 
-     *********************************************************/
+     */
     
     @PostConstruct
     public void init() {
@@ -304,11 +304,11 @@ public class InspeccionBean {
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
-    /*********************************************************
+    /**
      * 
      * Limpia el menú de búsqueda si se accede a través del menú lateral
      * 
-     *********************************************************/
+     */
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {

@@ -8,13 +8,13 @@ import es.mira.progesin.persistence.entities.RegistroActividad;
 import lombok.Getter;
 import lombok.Setter;
 
-/***************************************************
+/**
  * 
  * Bean para almacenar los criterios de búsqueda en el registro de actividad de la aplicación
  * 
  * @author Ezentis
  * 
- *************************************************/
+ */
 
 @Setter
 @Getter

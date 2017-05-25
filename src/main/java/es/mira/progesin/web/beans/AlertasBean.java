@@ -24,12 +24,12 @@ import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
 
-/*************************************************
+/**
  * 
  * Bean para las alertas
  * 
  * @author EZENTIS
- *************************************************/
+ */
 @Setter
 @Getter
 @Controller("alertasBean")
@@ -49,14 +49,14 @@ public class AlertasBean implements Serializable {
     
     private int numColListAlert = 5;
     
-    /********************************************************************************
+    /**
      * 
      * Realiza una eliminación lógico de la alerta (le pone fecha de baja)
      * 
      * @param alerta
      * 
      * @author EZENTIS
-     *********************************************************************************/
+     */
     public void eliminarAlertas(Alerta alerta) {
         alerta.setFechaBaja(new Date());
         alerta.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -76,34 +76,34 @@ public class AlertasBean implements Serializable {
         
     }
     
-    /********************************************************************************
+    /**
      * 
      * Inicializa el listado de alertas para el usuario logado
      * 
-     *********************************************************************************/
+     */
     
     private void initList() {
         listaAlertas = alertasNotificacionesUsuarioService
                 .findAlertasByUser(SecurityContextHolder.getContext().getAuthentication().getName());
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Controla las columnas visibles en la lista de resultados del buscador
      * 
      * @param e ToggleEvent
      * 
-     **********************************************************************************/
+     */
     
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
-    /********************************************************************************
+    /**
      * 
      * Inicializa el bean
      * 
-     *********************************************************************************/
+     */
     
     @PostConstruct
     public void init() {

@@ -11,7 +11,7 @@ import es.mira.progesin.persistence.entities.ParametroId;
 
 public interface IParametrosRepository extends CrudRepository<Parametro, ParametroId> {
     
-    /***************************************
+    /**
      * 
      * findValueForKey
      * 
@@ -23,12 +23,12 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
      * @param seccion
      * @return valor
      *
-     *************************************/
+     */
     
     @Query("select param.valor from Parametro c where c.param.clave = :clave and c.param.seccion= :seccion)")
     String findValueForKey(@Param("clave") String clave, @Param("seccion") String seccion);
     
-    /***************************************
+    /**
      * 
      * findValuesForSeccion
      * 
@@ -39,12 +39,12 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
      * @param seccion
      * @return valor
      *
-     *************************************/
+     */
     
     @Query("select param.valor from Parametro c where c.param.seccion= :seccion)")
     List<String> findValuesForSeccion(@Param("seccion") String seccion);
     
-    /***************************************
+    /**
      * 
      * findParamByParamSeccion
      * 
@@ -55,7 +55,7 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
      * @param seccion
      * @return Lista parámetros
      *
-     *************************************/
+     */
     
     List<Parametro> findParamByParamSeccion(String seccion);
     

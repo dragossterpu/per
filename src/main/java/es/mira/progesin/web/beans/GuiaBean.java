@@ -33,12 +33,12 @@ import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
-/*********************************************
+/**
  * Bean de guías
  * 
  * @author Ezentis
  * 
- *******************************************/
+ */
 
 @Setter
 @Getter
@@ -97,24 +97,24 @@ public class GuiaBean {
     @Autowired
     private IRegistroActividadService registroActividadService;
     
-    /*********************************************************
+    /**
      * 
      * Busca las guías según los filtros introducidos en el formulario de búsqueda
      * 
-     *********************************************************/
+     */
     public void buscarGuia() {
         model.setBusqueda(busqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
-    /*********************************************************
+    /**
      * 
      * Visualiza la guía pasada como parámetro redirigiendo a la vista "visualizaGuía"
      * 
      * @param guia Guia
      * @return String
      * 
-     *********************************************************/
+     */
     
     public String visualizaGuia(Guia guia) {
         this.guia = guia;
@@ -122,24 +122,24 @@ public class GuiaBean {
         return "/guias/visualizaGuia?faces-redirect=true";
     }
     
-    /*********************************************************
+    /**
      * 
      * Limpia los valores del objeto de búsqueda
      * 
-     *********************************************************/
+     */
     
     public void limpiarBusqueda() {
         busqueda.resetValues();
         model.setRowCount(0);
     }
     
-    /*********************************************************
+    /**
      * 
      * Inicia el proceso de creación de una nueva guía redirigiendo a la vista "editarGuia"
      * 
      * @return String
      * 
-     *********************************************************/
+     */
     
     public String nuevaGuia() {
         alta = true;
@@ -149,14 +149,14 @@ public class GuiaBean {
         return "/guias/editarGuia?faces-redirect=true";
     }
     
-    /*********************************************************
+    /**
      * 
      * Inicia el proceso de edición de una guía pasada como parámetro redirigiendo a la vista "editarGuia"
      * 
      * @param guia Guia
      * @return String
      * 
-     *********************************************************/
+     */
     
     public String editaGuia(Guia guia) {
         alta = false;
@@ -167,13 +167,13 @@ public class GuiaBean {
         return "/guias/editarGuia?faces-redirect=true";
     }
     
-    /*********************************************************
+    /**
      * 
      * Añade un nuevo paso a la guía
      * 
      * @param pregunta String
      * 
-     *********************************************************/
+     */
     
     public void aniadePaso(String pregunta) {
         GuiaPasos nuevaPregunta = new GuiaPasos();
@@ -183,7 +183,7 @@ public class GuiaBean {
         listaPasosGrabar.add(nuevaPregunta);
     }
     
-    /*********************************************************
+    /**
      * 
      * Elimina un paso de la guía.
      * 
@@ -191,7 +191,7 @@ public class GuiaBean {
      * introducirá una fecha de baja. Si no ha sido usada en ninguna guía se eliminara físicamente de la base de datos
      * 
      * 
-     *********************************************************/
+     */
     
     public void borraPaso() {
         if (pasoSeleccionado != null) {
@@ -217,23 +217,23 @@ public class GuiaBean {
         }
     }
     
-    /*********************************************************
+    /**
      * 
      * Asigna a la variable "pasoSeleccionado" el valor seleccionado por el usuario en la vista
      * 
      * @param event SelectEvent
      * 
-     *********************************************************/
+     */
     
     public void onSelectPaso(SelectEvent event) {
         pasoSeleccionado = (GuiaPasos) event.getObject();
     }
     
-    /*********************************************************
+    /**
      * 
      * Inicializa el bean
      * 
-     *********************************************************/
+     */
     
     @PostConstruct
     public void init() {
@@ -246,13 +246,13 @@ public class GuiaBean {
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
-    /*********************************************************
+    /**
      * 
      * Crea un documento Word a partir de una guía pasada como parámetro
      * 
      * @param guia Guia
      * 
-     *********************************************************/
+     */
     
     public void crearDocumentoWordGuia(Guia guia) {
         try {
@@ -264,12 +264,12 @@ public class GuiaBean {
         }
     }
     
-    /*********************************************************
+    /**
      * 
      * Comprueba que el formulario está relleno. En caso afirmativo se grabará la guía en base de datos. En caso
      * contrario se muestra un mensaje de error
      * 
-     *********************************************************/
+     */
     
     public void guardaGuia() {
         boolean correcto = true;
@@ -292,11 +292,11 @@ public class GuiaBean {
         }
     }
     
-    /*********************************************************
+    /**
      * 
      * Almacena en base de datos la guía
      * 
-     *********************************************************/
+     */
     
     private void grabaGuia() {
         
@@ -325,13 +325,13 @@ public class GuiaBean {
         }
     }
     
-    /*********************************************************
+    /**
      * 
      * Ordena los pasos de una lista pasada como parámetro almacenando el orden en los objetos GuiaPaso contenidos en la
      * misma
      *
      * 
-     *********************************************************/
+     */
     
     private void ordenaPasos() {
         
@@ -357,11 +357,11 @@ public class GuiaBean {
         
     }
     
-    /*********************************************************
+    /**
      * 
      * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral
      * 
-     *********************************************************/
+     */
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -371,14 +371,14 @@ public class GuiaBean {
         
     }
     
-    /*********************************************************
+    /**
      * 
      * Inicia el proceso de creación de una guía personalizada y redirige a la vista de personalización
      *
      * @param guia Guia
      * @return String
      * 
-     *********************************************************/
+     */
     
     public String creaPersonalizada(Guia guia) {
         alta = false;
@@ -390,14 +390,14 @@ public class GuiaBean {
         return "/guias/personalizarGuia?faces-redirect=true";
     }
     
-    /*********************************************************
+    /**
      * 
      * Almacena en BDD la guía personalizada
      *
      * @param nombre String
      * @param inspeccion Inspección a la que se asigna la guía
      * 
-     *********************************************************/
+     */
     
     public void guardarPersonalizada(String nombre) {
         boolean error = false;

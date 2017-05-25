@@ -25,13 +25,13 @@ import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 import lombok.extern.slf4j.Slf4j;
 
-/****************************************************
+/*******************
  * 
  * Implementación del servicio de Registro de Actividad
  * 
  * @author Ezentis
  *
- ****************************************************/
+ *****************/
 
 @Slf4j
 @Service("registroActividadService")
@@ -45,13 +45,13 @@ public class RegistroActividadService implements IRegistroActividadService {
     @Autowired
     private SessionFactory sessionFactory;
     
-    /*********************************************
+    /************
      * 
      * Guarda en base de datos el registro de actividad recibido como parámetro
      * 
      * @param RegistroActividad
      * 
-     *********************************************/
+     **********/
     
     @Override
     @Transactional(readOnly = false)
@@ -132,7 +132,7 @@ public class RegistroActividadService implements IRegistroActividadService {
         
     }
     
-    /*********************************************
+    /************
      * 
      * Graba en el registro de actividad un error del que se reciben como parámetro la sección y la excepción lanzada.
      * De la excepción posteriormente se grabará el stacktrace
@@ -140,7 +140,7 @@ public class RegistroActividadService implements IRegistroActividadService {
      * @param String
      * @param Exception
      * 
-     *********************************************/
+     **********/
     
     @Override
     public void altaRegActividadError(String nombreSeccion, Exception e) {
@@ -159,7 +159,7 @@ public class RegistroActividadService implements IRegistroActividadService {
         }
     }
     
-    /*********************************************
+    /************
      * 
      * Graba en el registro de actividad una acción de la que quiere guardarse traza. Se reciben como parámetro la
      * sección, el tipo de registro y la descripción.
@@ -168,7 +168,7 @@ public class RegistroActividadService implements IRegistroActividadService {
      * @param String tipoReg
      * @param String seccion
      * 
-     *********************************************/
+     **********/
     @Override
     public void altaRegActividad(String descripcion, String tipoReg, String seccion) {
         try {
@@ -190,28 +190,28 @@ public class RegistroActividadService implements IRegistroActividadService {
         
     }
     
-    /****************************************************
+    /*******************
      * 
      * Devuelve una lista de nombre de seccion cuyo nombreSeccion incluya la cadena recibida como parámetro
      * 
      * @param info
      * @return List<String>
      * 
-     ****************************************************/
+     *****************/
     
     @Override
     public List<String> buscarPorNombreSeccion(String infoSeccion) {
         return regActividadRepository.buscarPorNombreSeccion("%" + infoSeccion + "%");
     }
     
-    /****************************************************
+    /*******************
      * 
      * Devuelve una lista de nombres de usuario cuyo nombre incluya la cadena recibida como parámetro
      * 
      * @param info
      * @return List<String>
      * 
-     ****************************************************/
+     *****************/
     
     @Override
     public List<String> buscarPorUsuarioRegistro(String infoUsuario) {

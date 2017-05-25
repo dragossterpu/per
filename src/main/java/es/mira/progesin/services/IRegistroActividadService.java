@@ -7,13 +7,13 @@ import org.primefaces.model.SortOrder;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
 
-/******************************************************
+/**
  * 
  * Interfaz para el servicio de Registro de Actividad
  * 
  * @author Ezentis
  *
- ******************************************************/
+ **/
 
 public interface IRegistroActividadService {
     

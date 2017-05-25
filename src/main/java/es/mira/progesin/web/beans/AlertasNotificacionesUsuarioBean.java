@@ -23,12 +23,12 @@ import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
 
-/******************************************************
+/**
  * 
  * Bean para los mensajes (Alertas y notificaciones)
  * @author EZENTIS
  * 
- ******************************************************/
+ */
 
 @Setter
 @Getter
@@ -53,11 +53,11 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     
     private LazyModelNotificaciones modelNotificaciones;
     
-    /******************************************************
+    /**
      * 
      * Inicializa el bean
      * 
-     ******************************************************/
+     */
     
     @PostConstruct
     public void init() {
@@ -67,13 +67,13 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
                 SecurityContextHolder.getContext().getAuthentication().getName()));
     }
     
-    /******************************************************
+    /**
      * 
      * Elimina, para el usuario logado, la alerta pasada como parámetro
      * 
      * @param alerta a eliminar
      * 
-     ******************************************************/
+     */
     
     public void eliminarAlertas(Alerta alerta) {
         try {
@@ -87,13 +87,13 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         
     }
     
-    /******************************************************
+    /**
      * 
      * Elimina, para el usuario logado, la notificación pasada como parámetro
      * 
      * @param notificacion a eliminar
      * 
-     ******************************************************/
+     */
     
     public void eliminarNotificacion(Notificacion notificacion) {
         try {

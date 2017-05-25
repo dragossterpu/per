@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 
-/***********************************
+/**
  * 
  * Conversor para objetos orderList de PrimeFaces
  * 

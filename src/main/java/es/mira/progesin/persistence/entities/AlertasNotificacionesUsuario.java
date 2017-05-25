@@ -23,13 +23,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/*****************************************
+/**
  * 
  * Entity creada para almacenar las alertas y notificaciones asignadas a un usuario
  * 
  * @author Ezentis
  * 
- ***************************************/
+ */
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,25 +43,25 @@ import lombok.ToString;
 @Table(name = "AlertasNotificacionesUsuario")
 @IdClass(AlertasNotificacionesUsuario.class)
 public class AlertasNotificacionesUsuario implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "TIPO_MENSAJE", length = 50)
-	@Enumerated(EnumType.STRING)
-	private TipoMensajeEnum tipo;
-
-	@Id
-	@Column(name = "USUARIO")
-	private String usuario;
-
-	@Id
-	@Column(name = "ID_MENSAJE", length = 50)
-	private Long idMensaje;
-
-	@Column(name = "NOMBRE_SECCION", length = 50)
-	private String nombreSeccion;
-
-	@Column(name = "FECHA_ALTA")
-	private Date fechaAlta;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @Column(name = "TIPO_MENSAJE", length = 50)
+    @Enumerated(EnumType.STRING)
+    private TipoMensajeEnum tipo;
+    
+    @Id
+    @Column(name = "USUARIO")
+    private String usuario;
+    
+    @Id
+    @Column(name = "ID_MENSAJE", length = 50)
+    private Long idMensaje;
+    
+    @Column(name = "NOMBRE_SECCION", length = 50)
+    private String nombreSeccion;
+    
+    @Column(name = "FECHA_ALTA")
+    private Date fechaAlta;
 }
