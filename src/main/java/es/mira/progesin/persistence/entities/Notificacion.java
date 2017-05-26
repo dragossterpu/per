@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/*****************************************
+/**
  * 
  * Entity creada para almacenar las notificaciones
  * 
  * @author Ezentis
  * 
- ***************************************/
+ */
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -24,13 +24,13 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
 
-/*****************************************************
+/********************
  * 
  * Servicio para la programación de tareas automáticas
  * 
  * @author Ezentis
  * 
- ***************************************************/
+ ****************/
 
 @Service("tareasService")
 
@@ -62,12 +62,6 @@ public class TareasService implements ITareasService {
     
     private static final String INICIO = "Se envía este correo como redordatorio\n";
     
-    /**********************************************
-     * 
-     * Se inicializa el bean. Se recuperan los parámetros de tareas y se guardan en un mapa
-     * 
-     ********************************************/
-    
     @PostConstruct
     private void init() {
         Map<String, String> parametrosTareas = applicationBean.getMapaParametros().get("tareas");
@@ -80,14 +74,6 @@ public class TareasService implements ITareasService {
         }
         
     }
-    
-    /**********************************************
-     * 
-     * Se establece la tarea que enviará los recordatorios de cumplimentación de los cuestionarios
-     * 
-     * La tarea se programa para todos los días de lunes a viernes a las 8 de la mañana
-     * 
-     ********************************************/
     
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
@@ -128,14 +114,6 @@ public class TareasService implements ITareasService {
             registroActividad.altaRegActividadError("Batch envio recordatorio", e);
         }
     }
-    
-    /**********************************************
-     * 
-     * Se establece la tarea que enviará los recordatorios del envío de documentación previa
-     * 
-     * La tarea se programa para todos los días de lunes a viernes a las 8 de la mañana
-     * 
-     ********************************************/
     
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")

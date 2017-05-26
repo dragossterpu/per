@@ -1,9 +1,6 @@
 package es.mira.progesin.services;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,7 +28,7 @@ public class CuerpoEstadoServiceTest {
     private ICuerpoEstadoRepository repository;
     
     @InjectMocks
-    private CuerpoEstadoService service = new CuerpoEstadoService();
+    private ICuerpoEstadoService service = new CuerpoEstadoService();
     
     /**
      * Comprueba que la clase existe
@@ -39,7 +36,7 @@ public class CuerpoEstadoServiceTest {
      */
     @Test
     public void type() throws Exception {
-        assertThat(CuerpoEstadoService.class, notNullValue());
+        assertThat(CuerpoEstadoService.class).isNotNull();
     }
     
     /**
@@ -49,7 +46,7 @@ public class CuerpoEstadoServiceTest {
     @Test
     public void instantiation() throws Exception {
         CuerpoEstadoService target = new CuerpoEstadoService();
-        assertThat(target, notNullValue());
+        assertThat(target).isNotNull();
     }
     
     /**
@@ -88,8 +85,7 @@ public class CuerpoEstadoServiceTest {
         String nombreCorto = null;
         int id = 0;
         boolean actual = service.existeByNombreCortoIgnoreCaseAndIdNotIn(nombreCorto, id);
-        boolean expected = false;
-        assertThat(actual, is(equalTo(expected)));
+        assertThat(actual).isEqualTo(false);
     }
     
 }

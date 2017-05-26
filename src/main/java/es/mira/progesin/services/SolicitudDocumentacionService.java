@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -26,8 +27,10 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
+import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 /**
@@ -60,6 +63,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     
     @Autowired
     private IDocumentacionPreviaRepository documentacionPreviaRepository;
+    
+    @Autowired
+    private ITipoDocumentacionService tipoDocumentacionService;
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -319,6 +325,22 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     public List<SolicitudDocumentacionPrevia> findEnviadasNoCumplimentadas() {
         return solicitudDocumentacionPreviaRepository
                 .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+            List<TipoDocumentacion> documentosSeleccionados) {
+        solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
+        documentosSeleccionados.forEach(documento -> {
+            DocumentacionPrevia docPrevia = new DocumentacionPrevia();
+            docPrevia.setIdSolicitud(solicitudDocumentacionPrevia.getId());
+            docPrevia.setDescripcion(documento.getDescripcion());
+            docPrevia.setExtensiones(documento.getExtensiones());
+            docPrevia.setNombre(documento.getNombre());
+            tipoDocumentacionService.save(docPrevia);
+        });
+        
     }
     
 }

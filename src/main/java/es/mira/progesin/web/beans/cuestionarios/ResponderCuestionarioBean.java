@@ -141,8 +141,8 @@ public class ResponderCuestionarioBean implements Serializable {
     private void actualizarIdRespuestasTabla(List<RespuestaCuestionario> listaRespuestas) {
         listaRespuestas.forEach(respuesta -> {
             String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
-            if ((tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                    || tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))
+            if ((tipoRespuesta.startsWith(Constantes.TIPORESPUESTATABLA)
+                    || tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ))
                     && respuesta.getRespuestaTablaMatriz() != null) {
                 visualizarCuestionario.getMapaRespuestasTablaAux().put(respuesta.getRespuestaId().getPregunta(),
                         respuesta.getRespuestaTablaMatriz());

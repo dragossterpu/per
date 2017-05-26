@@ -26,13 +26,13 @@ import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.repositories.IAlertaRepository;
 import es.mira.progesin.util.ICorreoElectronico;
 
-/**********************************************************************************
+/**
  * 
  * Implementación del servicio de alertas
  * 
  * @author Ezentis
  * 
- **********************************************************************************/
+ */
 
 @Service
 public class AlertaService implements IAlertaService {
@@ -57,13 +57,13 @@ public class AlertaService implements IAlertaService {
     @Autowired
     private SessionFactory sessionFactory;
     
-    /**********************************************************************************
+    /**
      * 
      * Elimina de la base de datos una alerta cuyo id se recibe como parámetro
      * 
      * @param Long
      * 
-     **********************************************************************************/
+     */
     
     @Override
     @Transactional(readOnly = false)
@@ -71,12 +71,12 @@ public class AlertaService implements IAlertaService {
         alertaRepository.delete(id);
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Elimina de la base de datos todas las alertas
      * 
      * 
-     **********************************************************************************/
+     */
     
     @Override
     @Transactional(readOnly = false)
@@ -84,58 +84,58 @@ public class AlertaService implements IAlertaService {
         alertaRepository.deleteAll();
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Comprueba si existe en de base de datos una alerta cuyo id se pasa como parámetro
      * 
      * @param Long
      * 
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public boolean exists(Long id) {
         return alertaRepository.exists(id);
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Busca en base de datos todas las alertas que no hayan sido dadas de baja
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public List<Alerta> findByFechaBajaIsNull() {
         return alertaRepository.findByFechaBajaIsNull();
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Busca en base de datos las alertas cuyos id se recibe como parámetro
      * 
      * @param ids Iterable<Long>
      * @return Iterable<Alerta>
      * 
-     **********************************************************************************/
+     */
     
     public Iterable<Alerta> findAll(Iterable<Long> ids) {
         return alertaRepository.findAll(ids);
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Busca en base de datos las alerta cuyo id se recibe como parámetro
      * 
      * @param Long
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public Alerta findOne(Long id) {
         return alertaRepository.findOne(id);
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Crea una alerta a partir de la sección y la descripción que se reciben como parámetros
      * 
@@ -143,7 +143,7 @@ public class AlertaService implements IAlertaService {
      * @param String descripcion
      * @return Alerta
      * 
-     **********************************************************************************/
+     */
     
     private Alerta crearAlerta(String seccion, String descripcion) {
         try {
@@ -157,7 +157,7 @@ public class AlertaService implements IAlertaService {
         return null;
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Crea una alerta y se asigna a u usuario. Se crea a partir de la sección, la descripción y el usuario que se
      * reciben como parámetros
@@ -166,7 +166,7 @@ public class AlertaService implements IAlertaService {
      * @param String descripcion
      * @param String usuario
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public void crearAlertaUsuario(String seccion, String descripcion, String usuario) {
@@ -183,7 +183,7 @@ public class AlertaService implements IAlertaService {
         
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Crea una alerta y se asigna a un rol. Se crea a partir de la sección, la descripción y el rol que se reciben como
      * parámetros
@@ -192,7 +192,7 @@ public class AlertaService implements IAlertaService {
      * @param String descripcion
      * @param RoleEnum rol
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public void crearAlertaRol(String seccion, String descripcion, RoleEnum rol) {
@@ -207,7 +207,7 @@ public class AlertaService implements IAlertaService {
         
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Crea una alerta y se asigna a varios roles. Se crea a partir de la sección, la descripción y la lista de roles
      * que se reciben como parámetros
@@ -216,7 +216,7 @@ public class AlertaService implements IAlertaService {
      * @param descripcion String
      * @param roles List<RoleEnum>
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public void crearAlertaRol(String seccion, String descripcion, List<RoleEnum> roles) {
@@ -226,7 +226,7 @@ public class AlertaService implements IAlertaService {
         
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Crea una alerta y se asigna a un equipo de inspección. Se crea a partir de la sección, la descripción y la
      * inspección que se reciben como parámetros
@@ -235,7 +235,7 @@ public class AlertaService implements IAlertaService {
      * @param String descripcion
      * @param Inspeccion inspeccion
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public void crearAlertaEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
@@ -251,7 +251,7 @@ public class AlertaService implements IAlertaService {
         
     }
     
-    /**********************************************************************************
+    /**
      * 
      * Crea una alerta y se asigna al jefe de un equipo asignado a una inspección. Se crea a partir de la sección, la
      * descripción y la inspección que se reciben como parámetros
@@ -260,7 +260,7 @@ public class AlertaService implements IAlertaService {
      * @param String descripcion
      * @param Inspeccion inspeccion
      * 
-     **********************************************************************************/
+     */
     
     @Override
     public void crearAlertaJefeEquipo(String seccion, String descripcion, Inspeccion inspeccion) {

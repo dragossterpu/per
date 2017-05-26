@@ -7,6 +7,7 @@ import org.primefaces.model.SortOrder;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 /**
@@ -155,5 +156,16 @@ public interface ISolicitudDocumentacionService {
      */
     List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int first, int pageSize, String sortField,
             SortOrder sortOrder, SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda);
+    
+    /**
+     * Crea una solicitud de documentación y da de alta los documentos seleccionados. Colección de documentos de entre
+     * los disponibles en TipoDocumentación que se asignan a la solicitud.
+     * 
+     * @author EZENTIS
+     * @param solicitudDocumentacionPrevia
+     * @param documentosSeleccionados
+     */
+    void transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
+            List<TipoDocumentacion> documentosSeleccionados);
     
 }

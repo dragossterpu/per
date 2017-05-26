@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -76,12 +77,6 @@ import es.mira.progesin.util.PdfGenerator;
 public class SolicitudDocPreviaBeanTest {
     
     @Mock
-    private FacesUtilities facesUtilities;
-    
-    @Mock
-    private SecurityContextHolder securityContextHolder;
-    
-    @Mock
     private SecurityContext securityContext;
     
     @Mock
@@ -141,13 +136,12 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Configuración inicial del test
      */
-    @SuppressWarnings("static-access")
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
-        when(securityContextHolder.getContext()).thenReturn(securityContext);
+        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("usuarioLogueado");
     }
@@ -173,18 +167,19 @@ public class SolicitudDocPreviaBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#crearSolicitud()}.
      */
     @Test
-    public void crearSolicitud_SinDocumentacion() {
+    public void crearSolicitud() {
         Inspeccion inspeccion = mock(Inspeccion.class);
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).build();
-        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
-        solicitudDocPreviaBean.setDocumentosSeleccionados(new ArrayList<>());
         String correoDestinatario = "correoDestinatario";
-        when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoDestinatario)).thenReturn(null);
+        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
+                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
+        List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
+        solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
         
         solicitudDocPreviaBean.crearSolicitud();
-        verify(solicitudDocumentacionService, times(1)).save(solicitudDocumentacionPrevia);
+        
+        verify(solicitudDocumentacionService, times(1)).transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
+                documentosSeleccionados);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
@@ -195,27 +190,70 @@ public class SolicitudDocPreviaBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#crearSolicitud()}.
      */
     @Test
-    public void crearSolicitud_ConDocumentacion() {
+    public void crearSolicitud_validacionInspeccionConTareasPendientes() {
         Inspeccion inspeccion = mock(Inspeccion.class);
+        String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).build();
+                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
-        documentosSeleccionados.add(TipoDocumentacion.builder().nombre("tipo1").build());
-        documentosSeleccionados.add(TipoDocumentacion.builder().nombre("tipo2").build());
         solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
-        String correoDestinatario = "correoDestinatario";
-        when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoDestinatario)).thenReturn(null);
+        when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion))
+                .thenReturn(mock(SolicitudDocumentacionPrevia.class));
         
         solicitudDocPreviaBean.crearSolicitud();
         
-        verify(solicitudDocumentacionService, times(1)).save(solicitudDocumentacionPrevia);
-        verify(tipoDocumentacionService, times(2)).save(any(DocumentacionPrevia.class));
-        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.DOCUMENTACION.name()));
+        verify(solicitudDocumentacionService, times(0)).transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
+                documentosSeleccionados);
         verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
                 any(Exception.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#crearSolicitud()}.
+     */
+    @Test
+    public void crearSolicitud_validacionUsuarioConTareasPendientes() {
+        Inspeccion inspeccion = mock(Inspeccion.class);
+        String correoDestinatario = "correoDestinatario";
+        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
+                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
+        List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
+        solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
+        Inspeccion inspeccion2 = mock(Inspeccion.class);
+        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoDestinatario))
+                .thenReturn(CuestionarioEnvio.builder().inspeccion(inspeccion2).build());
+        
+        solicitudDocPreviaBean.crearSolicitud();
+        
+        verify(solicitudDocumentacionService, times(0)).transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
+                documentosSeleccionados);
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(Exception.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#crearSolicitud()}.
+     */
+    @Test
+    public void crearSolicitud_Excepcion() {
+        Inspeccion inspeccion = mock(Inspeccion.class);
+        String correoDestinatario = "correoDestinatario";
+        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
+                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
+        List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
+        solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
+        doThrow(SQLException.class).when(solicitudDocumentacionService)
+                .transaccSaveAltaDocumentos(solicitudDocumentacionPrevia, documentosSeleccionados);
+        
+        solicitudDocPreviaBean.crearSolicitud();
+        
+        verify(regActividadService, times(0)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
+                eq(SeccionesEnum.DOCUMENTACION.name()));
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(SQLException.class));
     }
     
     /**
@@ -254,6 +292,23 @@ public class SolicitudDocPreviaBeanTest {
     }
     
     /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#visualizarSolicitud(SolicitudDocumentacionPrevia)}.
+     */
+    @Test
+    public void visualizarSolicitud_Excepcion() {
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
+        when(gestDocumentacionService.findByIdSolicitud(1L)).thenThrow(SQLException.class);
+        
+        String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
+        assertThat(ruta_vista).isEqualTo(null);
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(SQLException.class));
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionApoyo()}.
      */
     @Test
@@ -274,7 +329,25 @@ public class SolicitudDocPreviaBeanTest {
                 eq(inspeccion));
         verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
                 any(Exception.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionApoyo()}.
+     */
+    @Test
+    public void validacionApoyo_Excepcion() {
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
+        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
+        when(solicitudDocumentacionService.save(solicitudCaptor.capture())).thenThrow(SQLException.class);
         
+        solicitudDocPreviaBean.validacionApoyo();
+        
+        verify(regActividadService, times(0)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(SQLException.class));
     }
     
     /**
@@ -298,6 +371,25 @@ public class SolicitudDocPreviaBeanTest {
                 eq(RoleEnum.ROLE_JEFE_INSPECCIONES));
         verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
                 any(Exception.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#validacionJefeEquipo()}.
+     */
+    @Test
+    public void validacionJefeEquipo_Excepcion() {
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
+        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
+        when(solicitudDocumentacionService.save(solicitudCaptor.capture())).thenThrow(SQLException.class);
+        
+        solicitudDocPreviaBean.validacionJefeEquipo();
+        
+        verify(regActividadService, times(0)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(SQLException.class));
     }
     
     /**
@@ -333,6 +425,23 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.descargarFichero(idDocumento);
         
         verify(documentoService).descargaDocumento(idDocumento);
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(Exception.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
+     * @throws SQLException error al recuperar el blob
+     */
+    @Test
+    public void descargarFichero_Excepcion() throws SQLException {
+        Long idDocumento = null;
+        when(documentoService.descargaDocumento(idDocumento)).thenThrow(SQLException.class);
+        
+        solicitudDocPreviaBean.descargarFichero(idDocumento);
+        
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(SQLException.class));
     }
     
     /**
@@ -350,6 +459,24 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(tipoDocumentacionService, times(1)).findByAmbito(ambito);
         assertThat(nombre_paso).isEqualTo("documentacion");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(FlowEvent)}.
+     */
+    @Test
+    public void onFlowProcess_pasoGeneralADocumentacion_TareasPendientes() {
+        AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.PN;
+        Inspeccion inspeccion = Inspeccion.builder().ambito(ambito).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
+        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), "general", "documentacion");
+        when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion))
+                .thenReturn(mock(SolicitudDocumentacionPrevia.class));
+        
+        String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
+        
+        assertThat(nombre_paso).isEqualTo("general");
     }
     
     /**
@@ -400,7 +527,6 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(FlowEvent)}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void onFlowProcess_pasoDocumentacionAApoyo_validacionDocumentosNoSeleccionados() {
         solicitudDocPreviaBean.setSkip(Boolean.FALSE);
@@ -410,7 +536,7 @@ public class SolicitudDocPreviaBeanTest {
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
         assertThat(nombre_paso).isEqualTo("documentacion");
     }
@@ -443,7 +569,6 @@ public class SolicitudDocPreviaBeanTest {
      * Test method for
      * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void eliminarSolicitud_validacionConFechaBaja() {
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().fechaBaja(new Date()).build();
@@ -452,7 +577,7 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), eq("Eliminación abortada"),
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), eq("Eliminación abortada"),
                 any(String.class), eq(null));
     }
     
@@ -460,7 +585,6 @@ public class SolicitudDocPreviaBeanTest {
      * Test method for
      * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#eliminarSolicitud(SolicitudDocumentacionPrevia)}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void eliminarSolicitud_validacionRoleNoPermitido() {
         SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
@@ -469,7 +593,7 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), eq("Eliminación abortada"),
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), eq("Eliminación abortada"),
                 any(String.class), eq(null));
     }
     
@@ -561,7 +685,6 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#enviarSolicitud()}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void enviarSolicitud_validacionUsuarioProvExiste() {
         String correoDestinatario = "correoDestinatario";
@@ -575,7 +698,7 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(userService, times(1)).exists(correoDestinatario);
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Envío abortado"),
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Envío abortado"),
                 any(String.class));
     }
     
@@ -727,86 +850,4 @@ public class SolicitudDocPreviaBeanTest {
         
     }
     
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#inspeccionSinTareasPendientes()}.
-     */
-    @Test
-    public void inspeccionSinTareasPendientes() {
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .build();
-        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);
-        
-        boolean respuesta = solicitudDocPreviaBean.inspeccionSinTareasPendientes();
-        
-        verify(solicitudDocumentacionService, times(1)).findNoFinalizadaPorInspeccion(inspeccion);
-        verify(cuestionarioEnvioService, times(1)).findNoFinalizadoPorInspeccion(inspeccion);
-        assertThat(respuesta).isTrue();
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#inspeccionSinTareasPendientes()}.
-     */
-    @Test
-    public void inspeccionSinTareasPendientes_validacion() {
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .build();
-        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion))
-                .thenReturn(mock(SolicitudDocumentacionPrevia.class));
-        when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion))
-                .thenReturn(mock(CuestionarioEnvio.class));
-        
-        boolean respuesta = solicitudDocPreviaBean.inspeccionSinTareasPendientes();
-        
-        verify(solicitudDocumentacionService, times(1)).findNoFinalizadaPorInspeccion(inspeccion);
-        verify(cuestionarioEnvioService, times(1)).findNoFinalizadoPorInspeccion(inspeccion);
-        assertThat(respuesta).isFalse();
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#usuarioSinTareasPendientes()}.
-     */
-    @Test
-    public void usuarioSinTareasPendientes() {
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
-        String correoDestinatario = "correoDestinatario";
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L)
-                .correoDestinatario(correoDestinatario).inspeccion(inspeccion).build();
-        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(solicitudDocumentacionService.findNoFinalizadaPorCorreoDestinatario(correoDestinatario)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoDestinatario)).thenReturn(null);
-        
-        boolean respuesta = solicitudDocPreviaBean.usuarioSinTareasPendientes();
-        
-        verify(solicitudDocumentacionService, times(1)).findNoFinalizadaPorCorreoDestinatario(correoDestinatario);
-        verify(cuestionarioEnvioService, times(1)).findNoFinalizadoPorCorreoEnvio(correoDestinatario);
-        assertThat(respuesta).isTrue();
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#usuarioSinTareasPendientes()}.
-     */
-    @Test
-    public void usuarioSinTareasPendientes_validacion() {
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
-        Inspeccion inspeccionPendiente = Inspeccion.builder().id(2L).anio(2017).build();
-        String correoDestinatario = "correoDestinatario";
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L)
-                .correoDestinatario(correoDestinatario).inspeccion(inspeccion).build();
-        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(solicitudDocumentacionService.findNoFinalizadaPorCorreoDestinatario(correoDestinatario))
-                .thenReturn(SolicitudDocumentacionPrevia.builder().inspeccion(inspeccionPendiente).build());
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoDestinatario))
-                .thenReturn(CuestionarioEnvio.builder().inspeccion(inspeccionPendiente).build());
-        
-        boolean respuesta = solicitudDocPreviaBean.usuarioSinTareasPendientes();
-        
-        verify(solicitudDocumentacionService, times(1)).findNoFinalizadaPorCorreoDestinatario(correoDestinatario);
-        verify(cuestionarioEnvioService, times(1)).findNoFinalizadoPorCorreoEnvio(correoDestinatario);
-        assertThat(respuesta).isFalse();
-    }
 }

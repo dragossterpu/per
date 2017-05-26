@@ -25,13 +25,13 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.repositories.INotificacionRepository;
 
-/*********************************************************
+/**
  * 
  * Servicio de notificaciones
  * 
  * @author Ezentis
  * 
- *******************************************************/
+ */
 
 @Service
 public class NotificacionService implements INotificacionService {

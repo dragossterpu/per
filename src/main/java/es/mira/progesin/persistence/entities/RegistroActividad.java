@@ -23,13 +23,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/***************************************************
+/**
  * 
  * Entidad para el almacenamiento de registros de actividad en base de datos
  * 
  * @author Ezentis
  * 
- *************************************************/
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()

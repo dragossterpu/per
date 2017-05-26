@@ -27,12 +27,12 @@ import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
-/*********************************************
+/**
  * Bean de guías personalizadas
  * 
  * @author Ezentis
  * 
- *******************************************/
+ */
 
 @Setter
 @Getter
@@ -66,11 +66,11 @@ public class GuiaPersonalizadaBean {
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
-    /**************************************************************
+    /**
      * 
      * Busca las guías según los filtros introducidos en el formulario de búsqueda
      * 
-     **************************************************************/
+     */
     public void buscarGuia() {
         
         model.setBusqueda(guiaPersonalizadaBusqueda);
@@ -78,14 +78,14 @@ public class GuiaPersonalizadaBean {
         cargaMapaInspecciones();
     }
     
-    /*********************************************************
+    /**
      * 
      * Visualiza la guía personalizada pasada como parámetro redirigiendo a la vista "visualizaGuíaPersonalizada"
      * 
      * @param guiaPersonalizada
      * @return String
      * 
-     *********************************************************/
+     */
     
     public String visualizaGuia(GuiaPersonalizada guiaPersonalizada) {
         this.guiaPersonalizada = guiaPersonalizada;
@@ -94,48 +94,48 @@ public class GuiaPersonalizadaBean {
         return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
     }
     
-    /*********************************************************
+    /**
      * 
      * Limpia los valores del objeto de búsqueda
      * 
-     *********************************************************/
+     */
     
     public void limpiarBusqueda() {
         guiaPersonalizadaBusqueda.resetValues();
         model.setRowCount(0);
     }
     
-    /*********************************************************
+    /**
      * 
      * Anula una guía personalizada pasada como parámetro.
      * 
      * @param guiaPersonalizada
      * 
-     *********************************************************/
+     */
     
     public void anular(GuiaPersonalizada guiaPersonalizada) {
         guiaPersonalizadaService.anular(guiaPersonalizada);
         
     }
     
-    /*********************************************************
+    /**
      * 
      * Borra de base de datos una guía personalizada pasada como parámetro
      * 
      * @param guiaPersonalizada
      * 
-     *********************************************************/
+     */
     
     public void eliminar(GuiaPersonalizada guiaPersonalizada) {
         guiaPersonalizadaService.eliminar(guiaPersonalizada);
         
     }
     
-    /*********************************************************
+    /**
      * 
      * Inicializa el bean
      * 
-     *********************************************************/
+     */
     
     @PostConstruct
     public void init() {
@@ -149,13 +149,13 @@ public class GuiaPersonalizadaBean {
         model = new LazyModelGuiasPersonalizadas(guiaPersonalizadaService);
     }
     
-    /*********************************************************
+    /**
      * 
      * Crea un documento Word a partir de una guía personalizada pasada como parámetro
      * 
      * @param guia
      * 
-     *********************************************************/
+     */
     
     public void crearDocumentoWordGuia(GuiaPersonalizada guia) {
         try {
@@ -167,11 +167,11 @@ public class GuiaPersonalizadaBean {
         }
     }
     
-    /*********************************************************
+    /**
      * 
      * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral
      * 
-     *********************************************************/
+     */
     
     public void getFormularioBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {

@@ -161,8 +161,8 @@ public class VisualizarCuestionario implements Serializable {
         listaRespuestas.forEach(respuesta -> {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             String tipoRespuesta = pregunta.getTipoRespuesta();
-            if ((tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                    || tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))
+            if ((tipoRespuesta.startsWith(Constantes.TIPORESPUESTATABLA)
+                    || tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ))
                     && respuesta.getRespuestaTablaMatriz() != null) {
                 mapaRespuestasTablaAux.put(pregunta, respuesta.getRespuestaTablaMatriz());
             } else {
@@ -217,19 +217,17 @@ public class VisualizarCuestionario implements Serializable {
                 listaPreguntas.add(pregunta);
                 mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
                 if (pregunta.getTipoRespuesta() != null
-                        && (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                                || pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ))) {
+                        && (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)
+                                || pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTAMATRIZ))) {
                     construirTipoRespuestaTablaMatrizVacia(pregunta);
                 }
             }
         }
         
-        /******************************************************/
         if (visualizarRespuestas) {
             construirTipoRespuestaTablaMatrizConDatos();
         }
         
-        /******************************************************/
         Set<AreasCuestionario> areasSet = mapaAreaPreguntas.keySet();
         
         // JSF ui:repeat no funciona con Set
@@ -281,7 +279,7 @@ public class VisualizarCuestionario implements Serializable {
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
                 .findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
         if (pregunta.getTipoRespuesta() != null
-                && pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)) {
+                && pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)) {
             dataTableView.crearTabla(valoresColumnas);
         } else {
             dataTableView.crearMatriz(valoresColumnas);

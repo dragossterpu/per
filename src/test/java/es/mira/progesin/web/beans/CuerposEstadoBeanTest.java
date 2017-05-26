@@ -1,15 +1,16 @@
 package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,11 +45,10 @@ import es.mira.progesin.util.FacesUtilities;
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
-@SuppressWarnings("static-access")
+
 public class CuerposEstadoBeanTest {
     
-    @Mock
-    private SecurityContextHolder securityContextHolder;
+    private List<CuerpoEstado> listaCuerposEstado;
     
     @Mock
     private SecurityContext securityContext;
@@ -80,7 +80,7 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void type() throws Exception {
-        assertThat(CuerposEstadoBean.class, notNullValue());
+        assertThat(CuerposEstadoBean.class).isNotNull();
     }
     
     /**
@@ -90,7 +90,7 @@ public class CuerposEstadoBeanTest {
     @Test
     public void instantiation() throws Exception {
         CuerposEstadoBean target = new CuerposEstadoBean();
-        assertThat(target, notNullValue());
+        assertThat(target).isNotNull();
     }
     
     /**
@@ -102,7 +102,7 @@ public class CuerposEstadoBeanTest {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
-        when(securityContextHolder.getContext()).thenReturn(securityContext);
+        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("usuarioLogueado");
     }
@@ -127,24 +127,31 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void eliminarCuerpo_sinUsuarios() {
+        listaCuerposEstado = new ArrayList<>();
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
+        listaCuerposEstado.add(cuerpo);
+        cuerposEstadoBean.setListaCuerposEstado(listaCuerposEstado);
         when(userService.existByCuerpoEstado(cuerpo)).thenReturn(false);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
-        regActividadService.altaRegActividad("El usuario", TipoRegistroEnum.ALTA.name(),
+        listaCuerposEstado.remove(cuerpo);
+        String user = authentication.getName();
+        String descripcion = "El usuario " + user + " ha eliminado la inspección " + cuerpo.getNombreCorto();
+        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                 SeccionesEnum.ADMINISTRACION.name());
         
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
+        
     }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
      */
     @Test
-    public void eliminarCuerpo_conusuarios_excepcion() {
+    public void eliminarCuerpo_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
         when(userService.existByCuerpoEstado(cuerpo)).thenThrow(Exception.class);
         
@@ -177,13 +184,11 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void altaCuerpo_excepcion() {
+        when(cuerposEstadoService.save(cuerpoCaptor.capture())).thenThrow(SQLException.class);
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
-        regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), new Exception());
-        
-        when(cuerposEstadoService.save(cuerpoCaptor.capture())).thenThrow(Exception.class);
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                exceptionCaptor.capture());
+                any(SQLException.class));
     }
     
     /**
@@ -226,8 +231,9 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void init() {
-        CuerposEstadoBean cuerpoEstadoMock = spy(cuerposEstadoBean);
-        cuerpoEstadoMock.init();
+        cuerposEstadoBean.init();
+        verify(cuerposEstadoService, times(1)).findByFechaBajaIsNull();
+        
     }
     
 }

@@ -10,55 +10,55 @@ import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
-/*********************************
+/**
  * 
  * Interfaz del servicio de guías personalizadas
  * 
  * @author Ezentis
  * 
- ****************************************/
+ */
 
 public interface IGuiaPersonalizadaService {
     
-    /*********************************
+    /**
      * 
      * Elimina una guía personalizada de la base de datos
      * 
      * @param guia
      * 
-     ****************************************/
+     */
     
     void eliminar(GuiaPersonalizada guia);
     
-    /*********************************
+    /**
      * 
      * Anula una guía personalizada de la base de datos
      * 
      * @param guia
      * 
-     ****************************************/
+     */
     
     void anular(GuiaPersonalizada guia);
     
-    /*********************************
+    /**
      * 
      * Almacena una guía personalizada en la base de datos
      * 
      * @param guia
      * @return GuiaPersonalizada
      * 
-     ****************************************/
+     */
     
     GuiaPersonalizada save(GuiaPersonalizada guia);
     
-    /*********************************
+    /**
      * 
      * Devuelve una lista de pasos contenidos en una guía personalizada pasada como parámetro
      * 
      * @param guia
      * @return List<GuiaPasos>
      * 
-     ****************************************/
+     */
     
     public List<GuiaPasos> listaPasos(GuiaPersonalizada guia);
     
@@ -97,6 +97,12 @@ public interface IGuiaPersonalizadaService {
      */
     boolean buscarPorModeloGuia(Guia guia);
     
+    /**
+     * Lista las inspecciones asignadas a una guía personalizada
+     * 
+     * @param guia Guía de la que se quiere recuperar las inspecciones
+     * @return respuesta
+     */
     public List<Inspeccion> listaInspecciones(GuiaPersonalizada guia);
     
 }

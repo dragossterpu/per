@@ -30,17 +30,17 @@ import es.mira.progesin.web.beans.DocumentoBusqueda;
  */
 public interface IDocumentoService {
     
-    /***************************************
+    /**
      *
      * Elimina un documento de la base de datos. El documento se identifica por su id
      *
      * @param id Identificador del documento a eliminar
      *
-     *************************************/
+     */
     
     void delete(Long id);
     
-    /***************************************
+    /**
      * 
      * delete
      * 
@@ -49,11 +49,11 @@ public interface IDocumentoService {
      * 
      * @param entity Documento a eliminar
      * 
-     *************************************/
+     */
     
     void delete(Documento entity);
     
-    /***************************************
+    /**
      * 
      * save
      * 
@@ -64,11 +64,11 @@ public interface IDocumentoService {
      * @param entities Documentos a salvar
      * @return Iterable<Documento> Documentos salvado
      * 
-     *************************************/
+     */
     
     Iterable<Documento> save(Iterable<Documento> entities);
     
-    /***************************************
+    /**
      * 
      * save
      * 
@@ -78,11 +78,11 @@ public interface IDocumentoService {
      * 
      * @param entity Documento Documento a guardar
      * @return Documento Documento guardado
-     *************************************/
+     */
     
     Documento save(Documento entity);
     
-    /***************************************
+    /**
      * 
      * descargaDocumento
      * 
@@ -92,11 +92,11 @@ public interface IDocumentoService {
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
      * @throws SQLException
-     *************************************/
+     */
     
     DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException;
     
-    /***************************************
+    /**
      * 
      * descargaDocumento
      * 
@@ -106,11 +106,11 @@ public interface IDocumentoService {
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
      * @throws SQLException
-     *************************************/
+     */
     
     DefaultStreamedContent descargaDocumento(Long id) throws SQLException;
     
-    /***************************************
+    /**
      * 
      * cargaDocumento
      * 
@@ -125,7 +125,7 @@ public interface IDocumentoService {
      * @throws SQLException
      * @throws IOException
      * 
-     *************************************/
+     */
     
     Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException;
@@ -144,7 +144,7 @@ public interface IDocumentoService {
     public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException;
     
-    /***************************************
+    /**
      * 
      * findByFechaBajaIsNotNull
      * 
@@ -153,11 +153,11 @@ public interface IDocumentoService {
      * 
      * @return Iterable<Documento> Documentos seleccionados
      * 
-     *************************************/
+     */
     
     List<Documento> findByFechaBajaIsNull();
     
-    /***************************************
+    /**
      * 
      * findByFechaBajaIsNotNull
      * 
@@ -166,11 +166,11 @@ public interface IDocumentoService {
      * 
      * @return Iterable<Documento> Documentos seleccionados
      * 
-     *************************************/
+     */
     
     List<Documento> findByFechaBajaIsNotNull();
     
-    /***************************************
+    /**
      * 
      * extensionCorrecta
      * 
@@ -181,7 +181,7 @@ public interface IDocumentoService {
      * @param file fichero para el cual se quiere comprobar la validez de la extensión
      * @return boolean
      *
-     *************************************/
+     */
     
     boolean extensionCorrecta(UploadedFile file);
     

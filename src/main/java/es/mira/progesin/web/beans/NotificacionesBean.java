@@ -44,13 +44,13 @@ public class NotificacionesBean implements Serializable {
     
     private int numColListNotif = 4;
     
-    /**********************************************************************************
+    /**
      *
      * Controla las columnas visibles en la lista de resultados del buscador
      *
      * @param e evento toggle de la vista
      *
-     **********************************************************************************/
+     */
     
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
@@ -79,11 +79,11 @@ public class NotificacionesBean implements Serializable {
         
     }
     
-    /*****************************************
+    /**
      *
      * Inicializa el bean
      *
-     ***************************************/
+     */
     
     @PostConstruct
     public void init() {

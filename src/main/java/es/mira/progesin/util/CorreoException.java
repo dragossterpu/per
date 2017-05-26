@@ -2,13 +2,13 @@ package es.mira.progesin.util;
 
 import java.util.Arrays;
 
-/*********************************************
+/**
  * 
  * Se crea una nueva excepción personalizada para los errores de la clase CorreoElectronico
  * 
  * @author Ezentis
  *
- *********************************************/
+ */
 
 public class CorreoException extends RuntimeException {
     

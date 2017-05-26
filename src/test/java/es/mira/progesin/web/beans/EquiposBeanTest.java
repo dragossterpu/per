@@ -64,12 +64,6 @@ import es.mira.progesin.util.FacesUtilities;
 public class EquiposBeanTest {
     
     @Mock
-    private FacesUtilities facesUtilities;
-    
-    @Mock
-    private SecurityContextHolder securityContextHolder;
-    
-    @Mock
     private SecurityContext securityContext;
     
     @Mock
@@ -105,13 +99,12 @@ public class EquiposBeanTest {
     /**
      * Configuración inicial del test
      */
-    @SuppressWarnings("static-access")
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
-        when(securityContextHolder.getContext()).thenReturn(securityContext);
+        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
     }
     
@@ -313,7 +306,6 @@ public class EquiposBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#guardarMiembros(RolEquipoEnum)}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void cambiarJefeEquipo_validacionJefeNoSeleccionado() {
         equipoBean.setJefeSeleccionado(null);
@@ -321,7 +313,7 @@ public class EquiposBeanTest {
         equipoBean.cambiarJefeEquipo();
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
     
@@ -409,7 +401,6 @@ public class EquiposBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onFlowProcess(FlowEvent)}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void onFlowProcess_pasoJefeEquipoAMiembros_validacionJefeNoSeleccionado() {
         equipoBean.setJefeSeleccionado(null);
@@ -418,7 +409,7 @@ public class EquiposBeanTest {
         String nombre_paso = equipoBean.onFlowProcess(event);
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
         assertThat(nombre_paso).isEqualTo("jefeEquipo");
     }
@@ -454,7 +445,6 @@ public class EquiposBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onFlowProcess(FlowEvent)}.
      */
-    @SuppressWarnings("static-access")
     @Test
     public void onFlowProcess_pasoMiembrosAConfirm_validacionMiembrosNoSeleccionados() {
         equipoBean.setSkip(false);
@@ -464,7 +454,7 @@ public class EquiposBeanTest {
         String nombre_paso = equipoBean.onFlowProcess(event);
         
         PowerMockito.verifyStatic(times(1));
-        facesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
         assertThat(nombre_paso).isEqualTo("miembros");
     }

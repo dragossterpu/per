@@ -1,7 +1,6 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -13,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -51,8 +51,10 @@ public class UserServiceCriteriaTest {
     @Autowired
     private SessionFactory sessionFactory;
     
+    @Mock
     private SecurityContext securityContext;
     
+    @Mock
     private Authentication authentication;
     
     /**
@@ -61,8 +63,6 @@ public class UserServiceCriteriaTest {
     @Before
     public void setUp() {
         PowerMockito.mockStatic(SecurityContextHolder.class);
-        securityContext = mock(SecurityContext.class);
-        authentication = mock(Authentication.class);
         
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);

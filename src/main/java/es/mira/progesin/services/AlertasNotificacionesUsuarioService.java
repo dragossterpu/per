@@ -19,14 +19,14 @@ import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
-/********************
+/**
  * 
  * Implementación del servicio de alertas y notificaciones de usuario
  * 
  * @author Ezentis
  * 
  *
- ********************/
+ */
 
 @Service
 public class AlertasNotificacionesUsuarioService implements IAlertasNotificacionesUsuarioService {

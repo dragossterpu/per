@@ -23,13 +23,13 @@ import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IGuiasRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
 
-/**********************************************************
+/**
  * 
  * Implementación de los métodos definidos en la interfaz IGuiaService
  * 
  * @author Ezentis
  *
- ***********************************************************/
+ */
 
 @Service
 public class GuiaService implements IGuiaService {
