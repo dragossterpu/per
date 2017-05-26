@@ -25,10 +25,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para la administración de los departamentos. Nuevo departamento, modificar departamento, y eliminar
+ * Bean controller para la administración de los departamentos. Nuevo departamento, modificar departamento, y eliminar
  * departamento.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @Setter
@@ -42,19 +42,35 @@ public class DepartamentoBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Variable utilizada para alamcenar los departamentos mostrados.
+     * 
+     */
     private List<Departamento> listaDepartamentos;
     
+    /**
+     * Variable utilizada para inyectar el servicio de departamentos.
+     * 
+     */
     @Autowired
     private transient IDepartamentoService departamentoService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de usuarios.
+     * 
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de registro de actividad.
+     * 
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Eliminación lógica (se pone fecha de baja) de un departamento
+     * Eliminación lógica (se pone fecha de baja) de un departamento.
      * @param departamento a eliminar
      */
     public void eliminarDepartamento(Departamento departamento) {
@@ -71,6 +87,11 @@ public class DepartamentoBean implements Serializable {
         }
     }
     
+    /**
+     * Comprueba si existen usuarios asociados a un departamento.
+     * @param departamento a comprobar
+     * @return resultado booleano
+     */
     private boolean existenUsuariosDepartamento(Departamento departamento) {
         boolean tieneUsuarios = false;
         List<User> usuarios = userService.findByDepartamento(departamento);
@@ -81,8 +102,9 @@ public class DepartamentoBean implements Serializable {
     }
     
     /**
-     * Alta de un nuevo departamento
-     * @param departamentoNuevo
+     * Alta de un nuevo departamento.
+     * 
+     * @param departamentoNuevo auwe se da de alta
      */
     public void altaDepartamento(String departamentoNuevo) {
         try {
@@ -102,8 +124,8 @@ public class DepartamentoBean implements Serializable {
     }
     
     /**
-     * Modificación de la descripción de un departamento
-     * @param event
+     * Modificación de la descripción de un departamento.
+     * @param event evento que captura el departamento a editar
      */
     public void onRowEdit(RowEditEvent event) {
         Departamento departamento = (Departamento) event.getObject();
@@ -113,7 +135,7 @@ public class DepartamentoBean implements Serializable {
     }
     
     /**
-     * Médodo usado para inicializar la lista de departamentos que se mostrarán en la página
+     * Médodo usado para inicializar la lista de departamentos que se mostrarán en la página.
      */
     @PostConstruct
     public void init() {

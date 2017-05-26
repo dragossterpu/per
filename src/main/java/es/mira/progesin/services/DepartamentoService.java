@@ -9,7 +9,7 @@ import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 
 /**
- * Implementación del servicio de departamento
+ * Implementación del servicio de departamentos.
  * 
  * @author EZENTIS
  *
