@@ -10,22 +10,22 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionarioId;
 
 public interface IConfiguracionRespuestasCuestionarioRepository
-		extends CrudRepository<ConfiguracionRespuestasCuestionario, ConfiguracionRespuestasCuestionarioId> {
-
-	@Query("select c.config.valor from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion)")
-	List<String> findValoresPorSeccion(@Param("seccion") String seccion);
-
-	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionOrderByConfigClaveAsc(String seccion);
-
-	@Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave not like 'nombreFila%')")
-	List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(@Param("seccion") String seccion);
-
-	@Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave like 'nombreFila%')")
-	List<ConfiguracionRespuestasCuestionario> findFilasBySeccion(@Param("seccion") String seccion);
-
-	List<ConfiguracionRespuestasCuestionario> findByConfigSeccionIn(List<String> seccion);
-
-	@Query("select distinct(c.config.seccion) from ConfiguracionRespuestasCuestionario c order by c.config.seccion")
-	List<String> findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
-
+        extends CrudRepository<ConfiguracionRespuestasCuestionario, ConfiguracionRespuestasCuestionarioId> {
+    
+    @Query("select c.config.valor from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion)")
+    List<String> findValoresPorSeccion(@Param("seccion") String seccion);
+    
+    List<ConfiguracionRespuestasCuestionario> findByConfigSeccionOrderByConfigClaveAsc(String seccion);
+    
+    @Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave not like 'nombreFila%')")
+    List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(@Param("seccion") String seccion);
+    
+    @Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave like 'nombreFila%')")
+    List<ConfiguracionRespuestasCuestionario> findFilasBySeccion(@Param("seccion") String seccion);
+    
+    List<ConfiguracionRespuestasCuestionario> findByConfigSeccionIn(List<String> seccion);
+    
+    @Query("select distinct(c.config.seccion) from ConfiguracionRespuestasCuestionario c order by c.config.seccion")
+    List<String> findAllDistinctTipoRespuestaOrderByTipoRespuestaAsc();
+    
 }

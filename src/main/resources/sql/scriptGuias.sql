@@ -507,7 +507,7 @@ Analizar la memoria.', 48);
 commit;
 
 insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values 
-		(SEQ_GUIAS.NEXTVAL, 'ADMINISTRACIÓN.', 'I.T_CIE', 6,trunc(sysdate), 'system');
+  (SEQ_GUIAS.NEXTVAL, 'ADMINISTRACIÓN.', 'I.T_CIE', 6,trunc(sysdate), 'system');
 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (SEQ_PASOSGUIA.nextval, SEQ_GUIAS.CURRVAL, 'Estructura. Examinar vacantes, comisiones de servicio, absentismo.', 0);
@@ -838,7 +838,7 @@ Aparatos a presión (compresores).
 Depósitos de combustibles. Comprobar revisiones e inspecciones.  
 Combustibles líquidos.  
 Combustibles gaseosos.', 21);
-	
+ 
 insert into guia_Pasos (id, id_guia, paso, orden) values 
 (SEQ_PASOSGUIA.nextval, SEQ_GUIAS.CURRVAL, 
 'Prevención/control Legionelosis.  

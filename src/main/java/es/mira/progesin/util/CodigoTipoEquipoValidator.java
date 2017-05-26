@@ -17,23 +17,23 @@ import es.mira.progesin.services.ITipoEquipoService;
  */
 @Component("codigoTipoEquipoValidator")
 public class CodigoTipoEquipoValidator implements Validator {
-
-	@Autowired
-	private ITipoEquipoService tipoEquipoService;
-
-	@Override
-	public void validate(FacesContext context, UIComponent component, Object value) {
-
-		String codigoNuevo = value.toString();
-		Long idTipoEquipo = (Long) component.getAttributes().get("idTipoEquipo");
-
-		TipoEquipo tipoEquipoBDD = tipoEquipoService.findByCodigoIgnoreCase(codigoNuevo);
-		if (tipoEquipoBDD != null && tipoEquipoBDD.getId().equals(idTipoEquipo) == Boolean.FALSE) {
-			FacesMessage facesMsg = new FacesMessage("Ya existe un tipo de equipo con ese código");
-			facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(facesMsg);
-		}
-
-	}
-
+    
+    @Autowired
+    private ITipoEquipoService tipoEquipoService;
+    
+    @Override
+    public void validate(FacesContext context, UIComponent component, Object value) {
+        
+        String codigoNuevo = value.toString();
+        Long idTipoEquipo = (Long) component.getAttributes().get("idTipoEquipo");
+        
+        TipoEquipo tipoEquipoBDD = tipoEquipoService.findByCodigoIgnoreCase(codigoNuevo);
+        if (tipoEquipoBDD != null && tipoEquipoBDD.getId().equals(idTipoEquipo) == Boolean.FALSE) {
+            FacesMessage facesMsg = new FacesMessage("Ya existe un tipo de equipo con ese código");
+            facesMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(facesMsg);
+        }
+        
+    }
+    
 }

@@ -21,13 +21,13 @@ insert into PUESTOSTRABAJO values(12, 'Secretario Técnico');
 insert into PUESTOSTRABAJO values(13, 'Subdirector General');
  
 insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values (1, 'Gestión  Inspección Área Prevención de Riesgos Laborales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(2, 'Gestión Inspecciones Generales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(3, 'Gestión Inspecciones de Seguimiento.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(4, 'Gestión Inspecciones Incidentales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(5, 'Gestión Inspecciones Prevención de Riesgos Laborales.');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(6, 'Gestión Inspecciones Temáticas (CIES).');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(7, 'Gestión Servicio de Calidad y Quejas');
-insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values	(8, 'Otros');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (2, 'Gestión Inspecciones Generales.');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (3, 'Gestión Inspecciones de Seguimiento.');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (4, 'Gestión Inspecciones Incidentales.');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (5, 'Gestión Inspecciones Prevención de Riesgos Laborales.');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (6, 'Gestión Inspecciones Temáticas (CIES).');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (7, 'Gestión Servicio de Calidad y Quejas');
+insert into TIPO_EQUIPO (ID_TIPO_EQUIPO, DESCRIPCION) Values    (8, 'Otros');
 
  
 
@@ -56,23 +56,23 @@ insert into users (username, prim_apellido, segundo_apellido, correo, doc_identi
   fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
   values( 'jmanuel', 'SIERRA', 'EXOJO', 'correo@correo.es', 'n10704', 'SI', 'ACTIVO', '01/01/2011', NULL, NULL, NULL, 'JOSE MANUEL',
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'EQUIPO_INSPECCIONES', '665566544', 'user_alta', null, null, '22/06/2016', 3, 2, 20);
-  	
+      
 insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
   nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
   fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values	( 'alopez', 'LOPEZ', 'BETRIAN', 'correo@correo.es', 'n10971', 'SI', 'ACTIVO', '12/11/2007', NULL, NULL, NULL, 'ANTONIO',
+  values    ( 'alopez', 'LOPEZ', 'BETRIAN', 'correo@correo.es', 'n10971', 'SI', 'ACTIVO', '12/11/2007', NULL, NULL, NULL, 'ANTONIO',
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '01/04/2014', 5, 3, 15);
     
 insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
   nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
   fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values	( 'fvilchews', 'VILCHES', 'RENTERO', 'correo@correo.es', 'n11718', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'FRANCISCO',
+  values    ( 'fvilchews', 'VILCHES', 'RENTERO', 'correo@correo.es', 'n11718', 'SI', 'ACTIVO', '01/09/2016', NULL, NULL, NULL, 'FRANCISCO',
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '17/04/2015', 6, 1, 28);
      
 insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
   nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,
   fecha_destino_ipss, ID_PUESTO,ID_CUERPO, nivel) 
-  values	 ( 'ajangulo', 'ANGULO', 'BALLARIN', 'correo@correo.es', 'n13453', 'SI', 'ACTIVO', '02/2/2007', NULL, NULL, NULL, 'ANTONIO JAVIER',
+  values     ( 'ajangulo', 'ANGULO', 'BALLARIN', 'correo@correo.es', 'n13453', 'SI', 'ACTIVO', '02/2/2007', NULL, NULL, NULL, 'ANTONIO JAVIER',
   '2222222222', '$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve', 'ADMIN', '665566544', 'user_alta', null, null, '12/01/2009', 7, 2, 27);
  insert into users (username, prim_apellido, segundo_apellido, correo, doc_identidad, envio_notif, estado, fecha_alta, fecha_baja, fecha_inactivo, fecha_modificacion,
   nombre, num_identificacion, password, role, telefono, username_alta, username_baja,  username_modif,

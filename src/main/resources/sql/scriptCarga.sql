@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt	  Actualización:  08/05/2017	
+prompt    Actualización:  08/05/2017    
 prompt =========================================================================
 
 
@@ -32,7 +32,7 @@ BEGIN
     END;
   END LOOP;
 END;
-/	
+/    
 COMMIT;
 
 prompt =========================================================================
@@ -45,13 +45,13 @@ prompt  Creacion tabla  ALERTAS
 prompt =========================================================================
 
   CREATE TABLE ALERTAS 
-   (	ID_ALERTA NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(2000 CHAR), 
-	FECHA_REGISTRO TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	NOMBRE_SECCION VARCHAR2(50 CHAR), 
-	USUARIO_REGISTRO VARCHAR2(255 CHAR), 
-	USUARIO_BAJA VARCHAR2(255 CHAR)
+   (    ID_ALERTA NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(2000 CHAR), 
+    FECHA_REGISTRO TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    NOMBRE_SECCION VARCHAR2(50 CHAR), 
+    USUARIO_REGISTRO VARCHAR2(255 CHAR), 
+    USUARIO_BAJA VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -59,11 +59,11 @@ prompt  Creacion tabla  ALERTAS_NOTIFICACIONES_USUARIO
 prompt =========================================================================
 
   CREATE TABLE ALERTAS_NOTIFICACIONES_USUARIO 
-   (	USUARIO VARCHAR2(255 CHAR), 
-	TIPO_MENSAJE VARCHAR2(50 CHAR), 
-	ID_MENSAJE NUMBER(19,0), 
-	FECHA_ALTA TIMESTAMP (6), 
-	NOMBRE_SECCION VARCHAR2(50 CHAR)
+   (    USUARIO VARCHAR2(255 CHAR), 
+    TIPO_MENSAJE VARCHAR2(50 CHAR), 
+    ID_MENSAJE NUMBER(19,0), 
+    FECHA_ALTA TIMESTAMP (6), 
+    NOMBRE_SECCION VARCHAR2(50 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -71,12 +71,12 @@ prompt  Creacion tabla  AREASCUESTIONARIO
 prompt =========================================================================
 
   CREATE TABLE AREASCUESTIONARIO 
-   (	ID NUMBER(19,0), 
-	NOMBRE_AREA VARCHAR2(255 CHAR), 
-	FECHA_BAJA TIMESTAMP (6), 
-	ID_CUESTIONARIO NUMBER(10,0), 
-	ORDEN NUMBER(10,0), 
-	USERNAME_BAJA VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    NOMBRE_AREA VARCHAR2(255 CHAR), 
+    FECHA_BAJA TIMESTAMP (6), 
+    ID_CUESTIONARIO NUMBER(10,0), 
+    ORDEN NUMBER(10,0), 
+    USERNAME_BAJA VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -84,9 +84,9 @@ prompt  Creacion tabla  AREAS_USUARIO_CUESTENV
 prompt =========================================================================
 
   CREATE TABLE AREAS_USUARIO_CUESTENV 
-   (	ID_AREA NUMBER(19,0), 
-	ID_CUESTIONARIO_ENVIADO NUMBER(19,0), 
-	USERNAME_PROV VARCHAR2(255 CHAR)
+   (    ID_AREA NUMBER(19,0), 
+    ID_CUESTIONARIO_ENVIADO NUMBER(19,0), 
+    USERNAME_PROV VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -94,8 +94,8 @@ prompt  Creacion tabla  CLASE_USUARIO
 prompt =========================================================================
 
   CREATE TABLE CLASE_USUARIO 
-   (	ID_CLASE NUMBER(19,0), 
-	CLASE VARCHAR2(255 CHAR)
+   (    ID_CLASE NUMBER(19,0), 
+    CLASE VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -103,9 +103,9 @@ prompt  Creacion tabla  CONFIG_RESPUESTAS_CUESTIONARIO
 prompt =========================================================================
 
   CREATE TABLE CONFIG_RESPUESTAS_CUESTIONARIO 
-   (	CLAVE VARCHAR2(255 CHAR), 
-	SECCION VARCHAR2(255 CHAR), 
-	VALOR VARCHAR2(255 CHAR)
+   (    CLAVE VARCHAR2(255 CHAR), 
+    SECCION VARCHAR2(255 CHAR), 
+    VALOR VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -113,15 +113,15 @@ prompt  Creacion tabla  CUERPOSESTADO
 prompt =========================================================================
 
   CREATE TABLE CUERPOSESTADO 
-   (	ID NUMBER(10,0), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	DESCRIPCION VARCHAR2(100 CHAR), 
-	NOMBRE_CORTO VARCHAR2(10 CHAR)
+   (    ID NUMBER(10,0), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    DESCRIPCION VARCHAR2(100 CHAR), 
+    NOMBRE_CORTO VARCHAR2(10 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -129,13 +129,13 @@ prompt  Creacion tabla  CUESTIONARIO_PERSONALIZADO
 prompt =========================================================================
 
   CREATE TABLE CUESTIONARIO_PERSONALIZADO 
-   (	ID NUMBER(19,0), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_CREACION TIMESTAMP (6), 
-	NOMBRE_CUESTIONARIO VARCHAR2(100 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_CREACION VARCHAR2(255 CHAR), 
-	ID_MODELO_CUESTIONARIO NUMBER(10,0)
+   (    ID NUMBER(19,0), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_CREACION TIMESTAMP (6), 
+    NOMBRE_CUESTIONARIO VARCHAR2(100 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_CREACION VARCHAR2(255 CHAR), 
+    ID_MODELO_CUESTIONARIO NUMBER(10,0)
    ) ;
 /
 prompt =========================================================================
@@ -143,23 +143,23 @@ prompt  Creacion tabla  CUESTIONARIOS_ENVIADOS
 prompt =========================================================================
 
   CREATE TABLE CUESTIONARIOS_ENVIADOS 
-   (	ID NUMBER(19,0), 
-	CARGO VARCHAR2(500 CHAR), 
-	CORREO VARCHAR2(500 CHAR), 
-	FECHA_ANULACION TIMESTAMP (6), 
-	FECHA_CUMPLIMENTACION TIMESTAMP (6), 
-	FECHA_ENVIO TIMESTAMP (6), 
-	FECHA_FINALIZACION TIMESTAMP (6), 
-	FECHA_LIMITE_CUESTIONARIO TIMESTAMP (6), 
-	FECHA_NO_CONFORME TIMESTAMP (6), 
-	MOTIVO VARCHAR2(2000 CHAR), 
-	NOMBRE_USUARIO VARCHAR2(500 CHAR), 
-	USERNAME_ANULACION VARCHAR2(255 CHAR), 
-	USERNAME_ENVIO VARCHAR2(255 CHAR), 
-	USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
-	USERNAME_NO_CONFORME VARCHAR2(255 CHAR), 
-	ID_CUESTIONARIO_PERSONALIZADO NUMBER(19,0), 
-	ID_INSPECCION NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    CARGO VARCHAR2(500 CHAR), 
+    CORREO VARCHAR2(500 CHAR), 
+    FECHA_ANULACION TIMESTAMP (6), 
+    FECHA_CUMPLIMENTACION TIMESTAMP (6), 
+    FECHA_ENVIO TIMESTAMP (6), 
+    FECHA_FINALIZACION TIMESTAMP (6), 
+    FECHA_LIMITE_CUESTIONARIO TIMESTAMP (6), 
+    FECHA_NO_CONFORME TIMESTAMP (6), 
+    MOTIVO VARCHAR2(2000 CHAR), 
+    NOMBRE_USUARIO VARCHAR2(500 CHAR), 
+    USERNAME_ANULACION VARCHAR2(255 CHAR), 
+    USERNAME_ENVIO VARCHAR2(255 CHAR), 
+    USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
+    USERNAME_NO_CONFORME VARCHAR2(255 CHAR), 
+    ID_CUESTIONARIO_PERSONALIZADO NUMBER(19,0), 
+    ID_INSPECCION NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -167,8 +167,8 @@ prompt  Creacion tabla  CUEST_PER_PREGUNTAS
 prompt =========================================================================
 
   CREATE TABLE CUEST_PER_PREGUNTAS 
-   (	ID_CUEST_PERS NUMBER(19,0), 
-	ID_PREG_ELEGIDA NUMBER(19,0)
+   (    ID_CUEST_PERS NUMBER(19,0), 
+    ID_PREG_ELEGIDA NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -176,14 +176,14 @@ prompt  Creacion tabla  DEPARTAMENTO
 prompt =========================================================================
 
   CREATE TABLE DEPARTAMENTO 
-   (	ID NUMBER(19,0), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	DESCRIPCION VARCHAR2(100 CHAR)
+   (    ID NUMBER(19,0), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    DESCRIPCION VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -191,11 +191,11 @@ prompt  Creacion tabla  DOCUMENTACION_PREVIA
 prompt =========================================================================
 
   CREATE TABLE DOCUMENTACION_PREVIA 
-   (	ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(255 CHAR), 
-	EXTENSIONES VARCHAR2(255 CHAR), 
-	ID_SOLICITUD NUMBER(19,0), 
-	NOMBRE VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(255 CHAR), 
+    EXTENSIONES VARCHAR2(255 CHAR), 
+    ID_SOLICITUD NUMBER(19,0), 
+    NOMBRE VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -203,17 +203,17 @@ prompt  Creacion tabla  DOCUMENTOS
 prompt =========================================================================
 
   CREATE TABLE DOCUMENTOS 
-   (	ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(2000 CHAR), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	MATERIA_INDEXADA VARCHAR2(2000 CHAR), 
-	NOMBRE VARCHAR2(255 CHAR), 
-	TIPO_CONTENIDO VARCHAR2(255 CHAR), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	ID_FICHERO NUMBER(19,0), 
-	TIPO_DOCUMENTO NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(2000 CHAR), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    MATERIA_INDEXADA VARCHAR2(2000 CHAR), 
+    NOMBRE VARCHAR2(255 CHAR), 
+    TIPO_CONTENIDO VARCHAR2(255 CHAR), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    ID_FICHERO NUMBER(19,0), 
+    TIPO_DOCUMENTO NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -221,9 +221,9 @@ prompt  Creacion tabla  DOCUMENTOS_BLOB
 prompt =========================================================================
 
   CREATE TABLE DOCUMENTOS_BLOB 
-   (	ID NUMBER(19,0), 
-	FICHERO BLOB, 
-	NOMBRE_FICHERO VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    FICHERO BLOB, 
+    NOMBRE_FICHERO VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -231,8 +231,8 @@ prompt  Creacion tabla  DOCUMENTOS_INSPECCION
 prompt =========================================================================
 
   CREATE TABLE DOCUMENTOS_INSPECCION 
-   (	ID_DOCUMENTO NUMBER(19,0), 
-	ID_INSPECCION NUMBER(19,0)
+   (    ID_DOCUMENTO NUMBER(19,0), 
+    ID_INSPECCION NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -240,10 +240,10 @@ prompt  Creacion tabla  EMPLEO
 prompt =========================================================================
 
   CREATE TABLE EMPLEO 
-   (	ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(100 CHAR), 
-	NOMBRE_CORTO VARCHAR2(20 CHAR), 
-	ID_CUERPO NUMBER(10,0)
+   (    ID NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(100 CHAR), 
+    NOMBRE_CORTO VARCHAR2(20 CHAR), 
+    ID_CUERPO NUMBER(10,0)
    ) ;
 /
 prompt =========================================================================
@@ -251,17 +251,17 @@ prompt  Creacion tabla  EQUIPO
 prompt =========================================================================
 
   CREATE TABLE EQUIPO 
-   (	ID NUMBER(19,0), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	JEFE_EQUIPO VARCHAR2(100 CHAR), 
-	NOMBRE_EQUIPO VARCHAR2(100 CHAR), 
-	NOMBRE_JEFE VARCHAR2(150 CHAR), 
-	ID_TIPO_EQUIPO NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    JEFE_EQUIPO VARCHAR2(100 CHAR), 
+    NOMBRE_EQUIPO VARCHAR2(100 CHAR), 
+    NOMBRE_JEFE VARCHAR2(150 CHAR), 
+    ID_TIPO_EQUIPO NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -269,17 +269,17 @@ prompt  Creacion tabla  GESTDOCSOLICITUDDOCUMENTACION
 prompt =========================================================================
 
   CREATE TABLE GESTDOCSOLICITUDDOCUMENTACION 
-   (	ID NUMBER(19,0), 
-	EXTENSION VARCHAR2(4 CHAR), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	ID_DOCUMENTO NUMBER(19,0), 
-	ID_SOLICITUD NUMBER(19,0), 
-	NOMBRE VARCHAR2(255 CHAR), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIFICACION VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    EXTENSION VARCHAR2(4 CHAR), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    ID_DOCUMENTO NUMBER(19,0), 
+    ID_SOLICITUD NUMBER(19,0), 
+    NOMBRE VARCHAR2(255 CHAR), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIFICACION VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -287,12 +287,12 @@ prompt  Creacion tabla  GUIA_PASOS
 prompt =========================================================================
 
   CREATE TABLE GUIA_PASOS 
-   (	ID NUMBER(19,0), 
-	FECHA_BAJA TIMESTAMP (6), 
-	ORDEN NUMBER(10,0), 
-	PASO VARCHAR2(2000 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	ID_GUIA NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    FECHA_BAJA TIMESTAMP (6), 
+    ORDEN NUMBER(10,0), 
+    PASO VARCHAR2(2000 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    ID_GUIA NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -300,16 +300,16 @@ prompt  Creacion tabla  GUIA_PERSONALIZADA
 prompt =========================================================================
 
   CREATE TABLE GUIA_PERSONALIZADA 
-   (	ID NUMBER(19,0), 
-	FECHA_ANULACION TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_CREACION TIMESTAMP (6), 
-	NOMBRE_GUIA_PERSONALIZADA VARCHAR2(100 CHAR), 
-	USERNAME_ANULACION VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_CREACION VARCHAR2(255 CHAR), 
-	ID_MODELO_GUIA NUMBER(19,0), 
-	INSPECCION NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    FECHA_ANULACION TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_CREACION TIMESTAMP (6), 
+    NOMBRE_GUIA_PERSONALIZADA VARCHAR2(100 CHAR), 
+    USERNAME_ANULACION VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_CREACION VARCHAR2(255 CHAR), 
+    ID_MODELO_GUIA NUMBER(19,0), 
+    INSPECCION NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -317,8 +317,8 @@ prompt  Creacion tabla  GUIA_PERSONALIZADA_PASOS
 prompt =========================================================================
 
   CREATE TABLE GUIA_PERSONALIZADA_PASOS 
-   (	ID_GUIA_PERS NUMBER(19,0), 
-	ID_PASO_ELEGIDO NUMBER(19,0)
+   (    ID_GUIA_PERS NUMBER(19,0), 
+    ID_PASO_ELEGIDO NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -326,18 +326,18 @@ prompt  Creacion tabla  GUIAS
 prompt =========================================================================
 
   CREATE TABLE GUIAS 
-   (	ID NUMBER(19,0), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	FECHA_ANULACION TIMESTAMP (6), 
-	NOMBRE_GUIA VARCHAR2(255 CHAR), 
-	ORDEN NUMBER(10,0), 
-	USERNAME_ANULACION VARCHAR2(255 CHAR), 
-	TIPO_INSPECCION VARCHAR2(10 CHAR)
+   (    ID NUMBER(19,0), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    FECHA_ANULACION TIMESTAMP (6), 
+    NOMBRE_GUIA VARCHAR2(255 CHAR), 
+    ORDEN NUMBER(10,0), 
+    USERNAME_ANULACION VARCHAR2(255 CHAR), 
+    TIPO_INSPECCION VARCHAR2(10 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -345,28 +345,28 @@ prompt  Creacion tabla  INSPECCIONES
 prompt =========================================================================
 
   CREATE TABLE INSPECCIONES 
-   (	ID NUMBER(19,0), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	AMBITO VARCHAR2(10 CHAR), 
-	ANIO NUMBER(10,0), 
-	CUATRIMESTRE VARCHAR2(30 CHAR), 
-	ESTADO_INSPECCION VARCHAR2(30 CHAR), 
-	FECHA_ANULACION TIMESTAMP (6), 
-	FECHA_FINALIZACION TIMESTAMP (6), 
-	FECHA_PREVISTA TIMESTAMP (6), 
-	NOMBRE_UNIDAD VARCHAR2(255 CHAR), 
-	NUMERO VARCHAR2(100 CHAR), 
-	USERNAME_ANULACION VARCHAR2(255 CHAR), 
-	USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
-	ID_EQUIPO NUMBER(19,0), 
-	ID_MUNICIPIO NUMBER(19,0), 
-	TIPO_INSPECCION VARCHAR2(10 CHAR), 
-	TIPO_UNIDAD NUMBER(19,0)
+(   ID NUMBER(19,0), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    AMBITO VARCHAR2(10 CHAR), 
+    ANIO NUMBER(10,0), 
+    CUATRIMESTRE VARCHAR2(30 CHAR), 
+    ESTADO_INSPECCION VARCHAR2(30 CHAR), 
+    FECHA_ANULACION TIMESTAMP (6), 
+    FECHA_FINALIZACION TIMESTAMP (6), 
+    FECHA_PREVISTA TIMESTAMP (6), 
+    NOMBRE_UNIDAD VARCHAR2(255 CHAR), 
+    NUMERO VARCHAR2(100 CHAR), 
+    USERNAME_ANULACION VARCHAR2(255 CHAR), 
+    USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
+    ID_EQUIPO NUMBER(19,0), 
+    ID_MUNICIPIO NUMBER(19,0), 
+    TIPO_INSPECCION VARCHAR2(10 CHAR), 
+    TIPO_UNIDAD NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -374,8 +374,8 @@ prompt  Creacion tabla  INSPECCIONES_ASOCIADAS
 prompt =========================================================================
 
   CREATE TABLE INSPECCIONES_ASOCIADAS 
-   (	ID_INSPECCION NUMBER(19,0), 
-	ID_INSPECCION_ASOCIADA NUMBER(19,0)
+   (    ID_INSPECCION NUMBER(19,0), 
+    ID_INSPECCION_ASOCIADA NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -383,11 +383,11 @@ prompt  Creacion tabla  MIEMBROS
 prompt =========================================================================
 
   CREATE TABLE MIEMBROS 
-   (	ID NUMBER(19,0), 
-	NOMBRE_COMPLETO VARCHAR2(255 CHAR), 
-	POSICION VARCHAR2(255 CHAR), 
-	USERNAME VARCHAR2(255 CHAR), 
-	ID_EQUIPO NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    NOMBRE_COMPLETO VARCHAR2(255 CHAR), 
+    POSICION VARCHAR2(255 CHAR), 
+    USERNAME VARCHAR2(255 CHAR), 
+    ID_EQUIPO NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -395,9 +395,9 @@ prompt  Creacion tabla  MODELOSCUESTIONARIOS
 prompt =========================================================================
 
   CREATE TABLE MODELOSCUESTIONARIOS 
-   (	ID NUMBER(10,0), 
-	CODIGO VARCHAR2(255 CHAR), 
-	DESCRIPCION VARCHAR2(255 CHAR)
+   (    ID NUMBER(10,0), 
+    CODIGO VARCHAR2(255 CHAR), 
+    DESCRIPCION VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -405,9 +405,9 @@ prompt  Creacion tabla  MUNICIPIOS
 prompt =========================================================================
 
   CREATE TABLE MUNICIPIOS 
-   (	ID NUMBER(19,0), 
-	NAME VARCHAR2(100 CHAR), 
-	CODE_PROVINCE VARCHAR2(3 CHAR)
+   (    ID NUMBER(19,0), 
+    NAME VARCHAR2(100 CHAR), 
+    CODE_PROVINCE VARCHAR2(3 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -415,14 +415,14 @@ prompt  Creacion tabla  NOTIFICACIONES
 prompt =========================================================================
 
   CREATE TABLE NOTIFICACIONES 
-   (	ID_NOTIFICACION NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(2000 CHAR), 
-	FECHA_NOTIFICACION TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	NOMBRE_SECCION VARCHAR2(50 CHAR), 
-	TIPO_NOTIFICACION VARCHAR2(20 CHAR), 
-	USUARIO_BAJA VARCHAR2(255 CHAR), 
-	USUARIO_REGISTRO VARCHAR2(255 CHAR)
+   (    ID_NOTIFICACION NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(2000 CHAR), 
+    FECHA_NOTIFICACION TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    NOMBRE_SECCION VARCHAR2(50 CHAR), 
+    TIPO_NOTIFICACION VARCHAR2(20 CHAR), 
+    USUARIO_BAJA VARCHAR2(255 CHAR), 
+    USUARIO_REGISTRO VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -430,9 +430,9 @@ prompt  Creacion tabla  PARAMETROS
 prompt =========================================================================
 
   CREATE TABLE PARAMETROS 
-   (	CLAVE VARCHAR2(255 CHAR), 
-	SECCION VARCHAR2(255 CHAR), 
-	VALOR VARCHAR2(4000 CHAR)
+   (    CLAVE VARCHAR2(255 CHAR), 
+    SECCION VARCHAR2(255 CHAR), 
+    VALOR VARCHAR2(4000 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -440,13 +440,13 @@ prompt  Creacion tabla  PREGUNTASCUESTIONARIO
 prompt =========================================================================
 
   CREATE TABLE PREGUNTASCUESTIONARIO 
-   (	ID NUMBER(19,0), 
-	FECHA_BAJA TIMESTAMP (6), 
-	ORDEN NUMBER(10,0), 
-	PREGUNTA VARCHAR2(2000 CHAR), 
-	TIPO_RESPUESTA VARCHAR2(100 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	ID_AREA NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    FECHA_BAJA TIMESTAMP (6), 
+    ORDEN NUMBER(10,0), 
+    PREGUNTA VARCHAR2(2000 CHAR), 
+    TIPO_RESPUESTA VARCHAR2(100 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    ID_AREA NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -454,9 +454,9 @@ prompt  Creacion tabla  PROVINCIAS
 prompt =========================================================================
 
   CREATE TABLE PROVINCIAS 
-   (	CODIGO VARCHAR2(3 CHAR), 
-	CODIGO_MN VARCHAR2(10 CHAR), 
-	NOMBRE VARCHAR2(100 CHAR)
+   (    CODIGO VARCHAR2(3 CHAR), 
+    CODIGO_MN VARCHAR2(10 CHAR), 
+    NOMBRE VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -464,14 +464,14 @@ prompt  Creacion tabla  PUESTOSTRABAJO
 prompt =========================================================================
 
   CREATE TABLE PUESTOSTRABAJO 
-   (	ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(100 CHAR), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIF TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(12 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(100 CHAR), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIF TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(12 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -479,12 +479,12 @@ prompt  Creacion tabla  REG_ACTIVIDAD
 prompt =========================================================================
 
   CREATE TABLE REG_ACTIVIDAD 
-   (	REG_ACTIVIDAD NUMBER(19,0), 
-	DESCRIPCION CLOB, 
-	FECHA_ALTA TIMESTAMP (6), 
-	NOMBRE_SECCION VARCHAR2(50 CHAR), 
-	TIPO_REG_ACTIVIDAD VARCHAR2(255 CHAR), 
-	USUARIO_REGISTRO VARCHAR2(255 CHAR)
+   (    REG_ACTIVIDAD NUMBER(19,0), 
+    DESCRIPCION CLOB, 
+    FECHA_ALTA TIMESTAMP (6), 
+    NOMBRE_SECCION VARCHAR2(50 CHAR), 
+    TIPO_REG_ACTIVIDAD VARCHAR2(255 CHAR), 
+    USUARIO_REGISTRO VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -492,30 +492,30 @@ prompt  Creacion tabla  RESPUESTA_DATOS_TABLA
 prompt =========================================================================
 
   CREATE TABLE RESPUESTA_DATOS_TABLA 
-   (	ID NUMBER(19,0), 
-	CAMPO01 VARCHAR2(255 CHAR), 
-	CAMPO02 VARCHAR2(255 CHAR), 
-	CAMPO03 VARCHAR2(255 CHAR), 
-	CAMPO04 VARCHAR2(255 CHAR), 
-	CAMPO05 VARCHAR2(255 CHAR), 
-	CAMPO06 VARCHAR2(255 CHAR), 
-	CAMPO07 VARCHAR2(255 CHAR), 
-	CAMPO08 VARCHAR2(255 CHAR), 
-	CAMPO09 VARCHAR2(255 CHAR), 
-	CAMPO10 VARCHAR2(255 CHAR), 
-	CAMPO11 VARCHAR2(255 CHAR), 
-	CAMPO12 VARCHAR2(255 CHAR), 
-	CAMPO13 VARCHAR2(255 CHAR), 
-	CAMPO14 VARCHAR2(255 CHAR), 
-	CAMPO15 VARCHAR2(255 CHAR), 
-	CAMPO16 VARCHAR2(255 CHAR), 
-	CAMPO17 VARCHAR2(255 CHAR), 
-	CAMPO18 VARCHAR2(255 CHAR), 
-	CAMPO19 VARCHAR2(255 CHAR), 
-	CAMPO20 VARCHAR2(255 CHAR), 
-	NOMBRE_FILA VARCHAR2(255 CHAR), 
-	RESPUESTA_ID_CUEST_ENVIADO NUMBER(19,0), 
-	RESPUESTA_ID_PREGUNTA NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    CAMPO01 VARCHAR2(255 CHAR), 
+    CAMPO02 VARCHAR2(255 CHAR), 
+    CAMPO03 VARCHAR2(255 CHAR), 
+    CAMPO04 VARCHAR2(255 CHAR), 
+    CAMPO05 VARCHAR2(255 CHAR), 
+    CAMPO06 VARCHAR2(255 CHAR), 
+    CAMPO07 VARCHAR2(255 CHAR), 
+    CAMPO08 VARCHAR2(255 CHAR), 
+    CAMPO09 VARCHAR2(255 CHAR), 
+    CAMPO10 VARCHAR2(255 CHAR), 
+    CAMPO11 VARCHAR2(255 CHAR), 
+    CAMPO12 VARCHAR2(255 CHAR), 
+    CAMPO13 VARCHAR2(255 CHAR), 
+    CAMPO14 VARCHAR2(255 CHAR), 
+    CAMPO15 VARCHAR2(255 CHAR), 
+    CAMPO16 VARCHAR2(255 CHAR), 
+    CAMPO17 VARCHAR2(255 CHAR), 
+    CAMPO18 VARCHAR2(255 CHAR), 
+    CAMPO19 VARCHAR2(255 CHAR), 
+    CAMPO20 VARCHAR2(255 CHAR), 
+    NOMBRE_FILA VARCHAR2(255 CHAR), 
+    RESPUESTA_ID_CUEST_ENVIADO NUMBER(19,0), 
+    RESPUESTA_ID_PREGUNTA NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -523,9 +523,9 @@ prompt  Creacion tabla  RESPUESTAS_CUEST_DOCS
 prompt =========================================================================
 
   CREATE TABLE RESPUESTAS_CUEST_DOCS 
-   (	ID_CUESTIONARIO_ENVIADO NUMBER(19,0), 
-	ID_PREGUNTA NUMBER(19,0), 
-	ID_DOCUMENTO NUMBER(19,0)
+   (    ID_CUESTIONARIO_ENVIADO NUMBER(19,0), 
+    ID_PREGUNTA NUMBER(19,0), 
+    ID_DOCUMENTO NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -533,11 +533,11 @@ prompt  Creacion tabla  RESPUESTASCUESTIONARIO
 prompt =========================================================================
 
   CREATE TABLE RESPUESTASCUESTIONARIO 
-   (	FECHA_VALIDACION TIMESTAMP (6), 
-	RESPUESTA_TEXTO VARCHAR2(2000 CHAR), 
-	USERNAME_VALIDACION VARCHAR2(255 CHAR), 
-	ID_CUEST_ENVIADO NUMBER(19,0), 
-	ID_PREGUNTA NUMBER(19,0)
+   (    FECHA_VALIDACION TIMESTAMP (6), 
+    RESPUESTA_TEXTO VARCHAR2(2000 CHAR), 
+    USERNAME_VALIDACION VARCHAR2(255 CHAR), 
+    ID_CUEST_ENVIADO NUMBER(19,0), 
+    ID_PREGUNTA NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -545,39 +545,39 @@ prompt  Creacion tabla  SOLICITUD_DOC_PREVIA
 prompt =========================================================================
 
   CREATE TABLE SOLICITUD_DOC_PREVIA 
-   (	ID NUMBER(19,0), 
-	APOYO_CORREO VARCHAR2(255 CHAR), 
-	APOYO_NOMBRE VARCHAR2(255 CHAR), 
-	APOYO_PUESTO VARCHAR2(255 CHAR), 
-	APOYO_TELEFONO VARCHAR2(255 CHAR), 
-	ASUNTO VARCHAR2(255 CHAR), 
-	CARGO_INTERLOCUTOR VARCHAR2(255 CHAR), 
-	CATEGORIA_INTERLOCUTOR VARCHAR2(255 CHAR), 
-	CORREO_CORPORATIVO_INTER VARCHAR2(255 CHAR), 
-	CORREO_CORPORATIVO_INTER_COMPL VARCHAR2(255 CHAR), 
-	CORREO_DESTINATARIO VARCHAR2(255 CHAR), 
-	DESCARGA_PLANTILLAS VARCHAR2(255 CHAR), 
-	DESTINATARIO VARCHAR2(255 CHAR), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_CUMPLIMENTACION TIMESTAMP (6), 
-	FECHA_ENVIO TIMESTAMP (6), 
-	FECHA_FINALIZACION TIMESTAMP (6), 
-	FECHA_LIMITE_CUMPLIMENTAR TIMESTAMP (6), 
-	FECHA_LIMITE_ENVIO TIMESTAMP (6), 
-	FECHA_NO_CONFORME TIMESTAMP (6), 
-	FECHA_VALID_APOYO TIMESTAMP (6), 
-	FECHA_VALID_JEFE_EQUIPO TIMESTAMP (6), 
-	NOMBRE_COMPLETO_INTERLOCUTOR VARCHAR2(255 CHAR), 
-	TELEFONO_INTERLOCUTOR VARCHAR2(255 CHAR), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_ENVIO VARCHAR2(255 CHAR), 
-	USERNAME_VALID_APOYO VARCHAR2(255 CHAR), 
-	USERNAME_VALID_JEFE_EQUIPO VARCHAR2(255 CHAR), 
-	USUARIO_FINALIZACION VARCHAR2(255 CHAR), 
-	USUARIO_NO_CONFORME VARCHAR2(255 CHAR), 
-	ID_INSPECCION NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    APOYO_CORREO VARCHAR2(255 CHAR), 
+    APOYO_NOMBRE VARCHAR2(255 CHAR), 
+    APOYO_PUESTO VARCHAR2(255 CHAR), 
+    APOYO_TELEFONO VARCHAR2(255 CHAR), 
+    ASUNTO VARCHAR2(255 CHAR), 
+    CARGO_INTERLOCUTOR VARCHAR2(255 CHAR), 
+    CATEGORIA_INTERLOCUTOR VARCHAR2(255 CHAR), 
+    CORREO_CORPORATIVO_INTER VARCHAR2(255 CHAR), 
+    CORREO_CORPORATIVO_INTER_COMPL VARCHAR2(255 CHAR), 
+    CORREO_DESTINATARIO VARCHAR2(255 CHAR), 
+    DESCARGA_PLANTILLAS VARCHAR2(255 CHAR), 
+    DESTINATARIO VARCHAR2(255 CHAR), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_CUMPLIMENTACION TIMESTAMP (6), 
+    FECHA_ENVIO TIMESTAMP (6), 
+    FECHA_FINALIZACION TIMESTAMP (6), 
+    FECHA_LIMITE_CUMPLIMENTAR TIMESTAMP (6), 
+    FECHA_LIMITE_ENVIO TIMESTAMP (6), 
+    FECHA_NO_CONFORME TIMESTAMP (6), 
+    FECHA_VALID_APOYO TIMESTAMP (6), 
+    FECHA_VALID_JEFE_EQUIPO TIMESTAMP (6), 
+    NOMBRE_COMPLETO_INTERLOCUTOR VARCHAR2(255 CHAR), 
+    TELEFONO_INTERLOCUTOR VARCHAR2(255 CHAR), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_ENVIO VARCHAR2(255 CHAR), 
+    USERNAME_VALID_APOYO VARCHAR2(255 CHAR), 
+    USERNAME_VALID_JEFE_EQUIPO VARCHAR2(255 CHAR), 
+    USUARIO_FINALIZACION VARCHAR2(255 CHAR), 
+    USUARIO_NO_CONFORME VARCHAR2(255 CHAR), 
+    ID_INSPECCION NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -585,13 +585,13 @@ prompt  Creacion tabla  SUGERENCIA
 prompt =========================================================================
 
   CREATE TABLE SUGERENCIA 
-   (	ID_SUGERENCIA NUMBER(10,0), 
-	DESCRIPCION VARCHAR2(4000 CHAR), 
-	FECHA_CONTESTACION TIMESTAMP (6), 
-	FECHA_REGISTRO TIMESTAMP (6), 
-	MODULO VARCHAR2(50 CHAR), 
-	USUARIO_CONTESTACION VARCHAR2(255 CHAR), 
-	USUARIO_REGISTRO VARCHAR2(255 CHAR)
+   (    ID_SUGERENCIA NUMBER(10,0), 
+    DESCRIPCION VARCHAR2(4000 CHAR), 
+    FECHA_CONTESTACION TIMESTAMP (6), 
+    FECHA_REGISTRO TIMESTAMP (6), 
+    MODULO VARCHAR2(50 CHAR), 
+    USUARIO_CONTESTACION VARCHAR2(255 CHAR), 
+    USUARIO_REGISTRO VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -599,11 +599,11 @@ prompt  Creacion tabla  TIPODOCUMENTACIONPREVIA
 prompt =========================================================================
 
   CREATE TABLE TIPODOCUMENTACIONPREVIA 
-   (	ID NUMBER(19,0), 
-	AMBITO VARCHAR2(10 CHAR), 
-	DESCRIPCION VARCHAR2(255 CHAR), 
-	EXTENSIONES VARCHAR2(255 CHAR), 
-	NOMBRE VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    AMBITO VARCHAR2(10 CHAR), 
+    DESCRIPCION VARCHAR2(255 CHAR), 
+    EXTENSIONES VARCHAR2(255 CHAR), 
+    NOMBRE VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -611,8 +611,8 @@ prompt  Creacion tabla  TIPO_DOCUMENTO
 prompt =========================================================================
 
   CREATE TABLE TIPO_DOCUMENTO 
-   (	ID NUMBER(19,0), 
-	NOMBRE VARCHAR2(255 CHAR)
+   (    ID NUMBER(19,0), 
+    NOMBRE VARCHAR2(255 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -620,9 +620,9 @@ prompt  Creacion tabla  TIPO_EQUIPO
 prompt =========================================================================
 
   CREATE TABLE TIPO_EQUIPO 
-   (	ID NUMBER(19,0), 
-	CODIGO VARCHAR2(5 CHAR), 
-	DESCRIPCION VARCHAR2(100 CHAR)
+   (    ID NUMBER(19,0), 
+    CODIGO VARCHAR2(5 CHAR), 
+    DESCRIPCION VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -630,14 +630,14 @@ prompt  Creacion tabla  TIPOS_INSPECCION
 prompt =========================================================================
 
   CREATE TABLE TIPOS_INSPECCION 
-   (	CODIGO VARCHAR2(10 CHAR), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	DESCRIPCION VARCHAR2(100 CHAR)
+   (    CODIGO VARCHAR2(10 CHAR), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    DESCRIPCION VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -645,8 +645,8 @@ prompt  Creacion tabla  TIPOS_UNIDAD
 prompt =========================================================================
 
   CREATE TABLE TIPOS_UNIDAD 
-   (	ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(100 CHAR)
+   (    ID NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -654,35 +654,35 @@ prompt  Creacion tabla  USERS
 prompt =========================================================================
 
   CREATE TABLE USERS 
-   (	USERNAME VARCHAR2(255 CHAR), 
-	FECHA_ALTA TIMESTAMP (6), 
-	FECHA_BAJA TIMESTAMP (6), 
-	FECHA_MODIFICACION TIMESTAMP (6), 
-	USERNAME_ALTA VARCHAR2(255 CHAR), 
-	USERNAME_BAJA VARCHAR2(255 CHAR), 
-	USERNAME_MODIF VARCHAR2(255 CHAR), 
-	PRIM_APELLIDO VARCHAR2(50 CHAR), 
-	SEGUNDO_APELLIDO VARCHAR2(50 CHAR), 
-	CATEGORIA VARCHAR2(20 CHAR), 
-	CORREO VARCHAR2(50 CHAR), 
-	DESPACHO VARCHAR2(20 CHAR), 
-	DOC_IDENTIDAD VARCHAR2(10 CHAR), 
-	ESTADO VARCHAR2(8 CHAR), 
-	FECHA_DESTINO_IPSS TIMESTAMP (6), 
-	FECHA_INACTIVO TIMESTAMP (6), 
-	FECHA_INGRESO TIMESTAMP (6), 
-	NIVEL NUMBER(10,0), 
-	NOMBRE VARCHAR2(50 CHAR), 
-	PASSWORD VARCHAR2(100 CHAR), 
-	ROLE VARCHAR2(25 CHAR), 
-	TELEFONO VARCHAR2(12 CHAR), 
-	TFNO_MOVIL_OFICIAL VARCHAR2(12 CHAR), 
-	TFNO_MOVIL_PARTICULAR VARCHAR2(12 CHAR), 
-	ID_CLASE NUMBER(19,0), 
-	ID_CUERPO NUMBER(10,0), 
-	ID_DEPARTAMENTO NUMBER(19,0), 
-	ID_EMPLEO NUMBER(19,0), 
-	ID_PUESTO NUMBER(19,0)
+   (    USERNAME VARCHAR2(255 CHAR), 
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR), 
+    PRIM_APELLIDO VARCHAR2(50 CHAR), 
+    SEGUNDO_APELLIDO VARCHAR2(50 CHAR), 
+    CATEGORIA VARCHAR2(20 CHAR), 
+    CORREO VARCHAR2(50 CHAR), 
+    DESPACHO VARCHAR2(20 CHAR), 
+    DOC_IDENTIDAD VARCHAR2(10 CHAR), 
+    ESTADO VARCHAR2(8 CHAR), 
+    FECHA_DESTINO_IPSS TIMESTAMP (6), 
+    FECHA_INACTIVO TIMESTAMP (6), 
+    FECHA_INGRESO TIMESTAMP (6), 
+    NIVEL NUMBER(10,0), 
+    NOMBRE VARCHAR2(50 CHAR), 
+    PASSWORD VARCHAR2(100 CHAR), 
+    ROLE VARCHAR2(25 CHAR), 
+    TELEFONO VARCHAR2(12 CHAR), 
+    TFNO_MOVIL_OFICIAL VARCHAR2(12 CHAR), 
+    TFNO_MOVIL_PARTICULAR VARCHAR2(12 CHAR), 
+    ID_CLASE NUMBER(19,0), 
+    ID_CUERPO NUMBER(10,0), 
+    ID_DEPARTAMENTO NUMBER(19,0), 
+    ID_EMPLEO NUMBER(19,0), 
+    ID_PUESTO NUMBER(19,0)
    ) ;
 /
 
@@ -1131,186 +1131,186 @@ prompt  Reference Constraints para la tabla  AREASCUESTIONARIO
 prompt =========================================================================
 
   ALTER TABLE AREASCUESTIONARIO ADD CONSTRAINT FK_AC_CUESTIONARIO FOREIGN KEY (ID_CUESTIONARIO)
-	  REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE;
+      REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  CUESTIONARIO_PERSONALIZADO
 prompt =========================================================================
 
   ALTER TABLE CUESTIONARIO_PERSONALIZADO ADD CONSTRAINT FK_CP_MODELO_CUESTIONARIO FOREIGN KEY (ID_MODELO_CUESTIONARIO)
-	  REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE;
+      REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  CUESTIONARIOS_ENVIADOS
 prompt =========================================================================
 
   ALTER TABLE CUESTIONARIOS_ENVIADOS ADD CONSTRAINT FK_CE_CUEST_PERSON FOREIGN KEY (ID_CUESTIONARIO_PERSONALIZADO)
-	  REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE;
+      REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE;
   ALTER TABLE CUESTIONARIOS_ENVIADOS ADD CONSTRAINT FK_CE_INSPECCION FOREIGN KEY (ID_INSPECCION)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  CUEST_PER_PREGUNTAS
 prompt =========================================================================
 
   ALTER TABLE CUEST_PER_PREGUNTAS ADD CONSTRAINT FK_CP_PREGELEGIDA FOREIGN KEY (ID_PREG_ELEGIDA)
-	  REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE;
+      REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE;
   ALTER TABLE CUEST_PER_PREGUNTAS ADD CONSTRAINT FK_CP_CUESTIONARIOPER FOREIGN KEY (ID_CUEST_PERS)
-	  REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE;
+      REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  DOCUMENTOS
 prompt =========================================================================
 
   ALTER TABLE DOCUMENTOS ADD CONSTRAINT FK_DOC_TIPODOC FOREIGN KEY (TIPO_DOCUMENTO)
-	  REFERENCES TIPO_DOCUMENTO (ID) ENABLE;
+      REFERENCES TIPO_DOCUMENTO (ID) ENABLE;
   ALTER TABLE DOCUMENTOS ADD CONSTRAINT FK_D_FICHERO FOREIGN KEY (ID_FICHERO)
-	  REFERENCES DOCUMENTOS_BLOB (ID) ENABLE;
+      REFERENCES DOCUMENTOS_BLOB (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  DOCUMENTOS_INSPECCION
 prompt =========================================================================
 
   ALTER TABLE DOCUMENTOS_INSPECCION ADD CONSTRAINT FK_DOCUINS_INSPECCION FOREIGN KEY (ID_INSPECCION)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
   ALTER TABLE DOCUMENTOS_INSPECCION ADD CONSTRAINT FK_DOCUINS_DOCUMENTO FOREIGN KEY (ID_DOCUMENTO)
-	  REFERENCES DOCUMENTOS (ID) ENABLE;
+      REFERENCES DOCUMENTOS (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  EMPLEO
 prompt =========================================================================
 
   ALTER TABLE EMPLEO ADD CONSTRAINT FK_EM_CUERPO FOREIGN KEY (ID_CUERPO)
-	  REFERENCES CUERPOSESTADO (ID) ENABLE;
+      REFERENCES CUERPOSESTADO (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  EQUIPO
 prompt =========================================================================
 
   ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_TIPOEQUIPO FOREIGN KEY (ID_TIPO_EQUIPO)
-	  REFERENCES TIPO_EQUIPO (ID) ENABLE;
+      REFERENCES TIPO_EQUIPO (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIA_PASOS
 prompt =========================================================================
 
   ALTER TABLE GUIA_PASOS ADD CONSTRAINT FK_GP_GUIA FOREIGN KEY (ID_GUIA)
-	  REFERENCES GUIAS (ID) ENABLE;
+      REFERENCES GUIAS (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIA_PERSONALIZADA
 prompt =========================================================================
 
   ALTER TABLE GUIA_PERSONALIZADA ADD CONSTRAINT FK_GPR_INSPECCION FOREIGN KEY (INSPECCION)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
   ALTER TABLE GUIA_PERSONALIZADA ADD CONSTRAINT FK_GPR_MODELO_GUIA FOREIGN KEY (ID_MODELO_GUIA)
-	  REFERENCES GUIAS (ID) ENABLE;
+      REFERENCES GUIAS (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIA_PERSONALIZADA_PASOS
 prompt =========================================================================
 
   ALTER TABLE GUIA_PERSONALIZADA_PASOS ADD CONSTRAINT FK_GUIAPERPASO_PASO FOREIGN KEY (ID_PASO_ELEGIDO)
-	  REFERENCES GUIA_PASOS (ID) ENABLE;
+      REFERENCES GUIA_PASOS (ID) ENABLE;
   ALTER TABLE GUIA_PERSONALIZADA_PASOS ADD CONSTRAINT FK_GUIAPERPASO_GUIAPER FOREIGN KEY (ID_GUIA_PERS)
-	  REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
+      REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIAS
 prompt =========================================================================
 
   ALTER TABLE GUIAS ADD CONSTRAINT FK_G_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
-	  REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE;
+      REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  INSPECCIONES
 prompt =========================================================================
 
   ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_EQUIPO FOREIGN KEY (ID_EQUIPO)
-	  REFERENCES EQUIPO (ID) ENABLE;
+      REFERENCES EQUIPO (ID) ENABLE;
   ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_MUNICIPIO FOREIGN KEY (ID_MUNICIPIO)
-	  REFERENCES MUNICIPIOS (ID) ENABLE;
+      REFERENCES MUNICIPIOS (ID) ENABLE;
   ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_TIPOUNIDAD FOREIGN KEY (TIPO_UNIDAD)
-	  REFERENCES TIPOS_UNIDAD (ID) ENABLE;
+      REFERENCES TIPOS_UNIDAD (ID) ENABLE;
   ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
-	  REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE;
+      REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  INSPECCIONES_ASOCIADAS
 prompt =========================================================================
 
   ALTER TABLE INSPECCIONES_ASOCIADAS ADD CONSTRAINT FA_INSASO_INSPECCIONASOC FOREIGN KEY (ID_INSPECCION_ASOCIADA)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
   ALTER TABLE INSPECCIONES_ASOCIADAS ADD CONSTRAINT FK_INSASO_INSPECCION FOREIGN KEY (ID_INSPECCION)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  MIEMBROS
 prompt =========================================================================
 
   ALTER TABLE MIEMBROS ADD CONSTRAINT FK_M_EQUIPO FOREIGN KEY (ID_EQUIPO)
-	  REFERENCES EQUIPO (ID) ENABLE;
+      REFERENCES EQUIPO (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  MUNICIPIOS
 prompt =========================================================================
 
   ALTER TABLE MUNICIPIOS ADD CONSTRAINT FK_PROVINCIA FOREIGN KEY (CODE_PROVINCE)
-	  REFERENCES PROVINCIAS (CODIGO) ENABLE;
+      REFERENCES PROVINCIAS (CODIGO) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  PREGUNTASCUESTIONARIO
 prompt =========================================================================
 
   ALTER TABLE PREGUNTASCUESTIONARIO ADD CONSTRAINT FK_PC_AREA FOREIGN KEY (ID_AREA)
-	  REFERENCES AREASCUESTIONARIO (ID) ENABLE;
+      REFERENCES AREASCUESTIONARIO (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  RESPUESTA_DATOS_TABLA
 prompt =========================================================================
 
   ALTER TABLE RESPUESTA_DATOS_TABLA ADD CONSTRAINT FK_RESPUESTADATOS FOREIGN KEY (RESPUESTA_ID_CUEST_ENVIADO, RESPUESTA_ID_PREGUNTA)
-	  REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE;
+      REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  RESPUESTAS_CUEST_DOCS
 prompt =========================================================================
 
   ALTER TABLE RESPUESTAS_CUEST_DOCS ADD CONSTRAINT FK_RESPCUESTDOCS FOREIGN KEY (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA)
-	  REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE;
+      REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE;
   ALTER TABLE RESPUESTAS_CUEST_DOCS ADD CONSTRAINT FK_RESPCUESTDOCS_DOCU FOREIGN KEY (ID_DOCUMENTO)
-	  REFERENCES DOCUMENTOS (ID) ENABLE;
+      REFERENCES DOCUMENTOS (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  RESPUESTASCUESTIONARIO
 prompt =========================================================================
 
   ALTER TABLE RESPUESTASCUESTIONARIO ADD CONSTRAINT FK_RC_CUEST_ENVIADO FOREIGN KEY (ID_CUEST_ENVIADO)
-	  REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE;
+      REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE;
   ALTER TABLE RESPUESTASCUESTIONARIO ADD CONSTRAINT FK_RC_PREGUNTA FOREIGN KEY (ID_PREGUNTA)
-	  REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE;
+      REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  SOLICITUD_DOC_PREVIA
 prompt =========================================================================
 
   ALTER TABLE SOLICITUD_DOC_PREVIA ADD CONSTRAINT FK_SDP_INSPECCION FOREIGN KEY (ID_INSPECCION)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  USERS
 prompt =========================================================================
 
   ALTER TABLE USERS ADD CONSTRAINT FK_U_CLASE FOREIGN KEY (ID_CLASE)
-	  REFERENCES CLASE_USUARIO (ID_CLASE) ENABLE;
+      REFERENCES CLASE_USUARIO (ID_CLASE) ENABLE;
   ALTER TABLE USERS ADD CONSTRAINT FK_U_CUERPO FOREIGN KEY (ID_CUERPO)
-	  REFERENCES CUERPOSESTADO (ID) ENABLE;
+      REFERENCES CUERPOSESTADO (ID) ENABLE;
   ALTER TABLE USERS ADD CONSTRAINT FK_U_DEPARTAMENTO FOREIGN KEY (ID_DEPARTAMENTO)
-	  REFERENCES DEPARTAMENTO (ID) ENABLE;
+      REFERENCES DEPARTAMENTO (ID) ENABLE;
   ALTER TABLE USERS ADD CONSTRAINT FK_U_EMPLEO FOREIGN KEY (ID_EMPLEO)
-	  REFERENCES EMPLEO (ID) ENABLE;
+      REFERENCES EMPLEO (ID) ENABLE;
   ALTER TABLE USERS ADD CONSTRAINT FK_U_PUESTO FOREIGN KEY (ID_PUESTO)
-	  REFERENCES PUESTOSTRABAJO (ID) ENABLE;
+      REFERENCES PUESTOSTRABAJO (ID) ENABLE;
 /
 
 prompt =========================================================================
@@ -1391,32 +1391,32 @@ prompt Ejecutando inserción de datos DOCUMENTOS_BLOB...
 prompt =========================================================================
 
 DECLARE
-	l_bfile  BFILE;
-	l_blob   BLOB;
+    l_bfile  BFILE;
+    l_blob   BLOB;
 BEGIN
 
-	EXECUTE IMMEDIATE 'CREATE OR REPLACE DIRECTORY PLANTILLAS_PROGESIN AS ''C:/Plantillas''';
+    EXECUTE IMMEDIATE 'CREATE OR REPLACE DIRECTORY PLANTILLAS_PROGESIN AS ''C:/Plantillas''';
 
-	INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (1, empty_blob(), '00_d_CPT_C.xlsx') RETURN fichero INTO l_blob;
-		l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_C.xlsx');
-		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
-		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
-		DBMS_LOB.CLOSE(l_bfile);
-		
-	INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (2, empty_blob(), '00_d_CPT_CIA.xlsx') RETURN fichero INTO l_blob;
-		l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_CIA.xlsx');
-		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
-		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
-		DBMS_LOB.CLOSE(l_bfile);
-		
-	INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (3, empty_blob(),'00_d_CPT_Z.xlsx') RETURN fichero INTO l_blob;
-		l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_Z.xlsx');
-		DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
-		DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
-		DBMS_LOB.CLOSE(l_bfile);
+    INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (1, empty_blob(), '00_d_CPT_C.xlsx') RETURN fichero INTO l_blob;
+        l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_C.xlsx');
+        DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+        DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+        DBMS_LOB.CLOSE(l_bfile);
+        
+    INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (2, empty_blob(), '00_d_CPT_CIA.xlsx') RETURN fichero INTO l_blob;
+        l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_CIA.xlsx');
+        DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+        DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+        DBMS_LOB.CLOSE(l_bfile);
+        
+    INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (3, empty_blob(),'00_d_CPT_Z.xlsx') RETURN fichero INTO l_blob;
+        l_bfile := BFILENAME('PLANTILLAS_PROGESIN', '00_d_CPT_Z.xlsx');
+        DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+        DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+        DBMS_LOB.CLOSE(l_bfile);
 
-	EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';
-	
+    EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';
+    
 EXCEPTION WHEN OTHERS THEN NULL;
 END;
 /
@@ -1666,7 +1666,7 @@ begin
   --secuencia SEQ_DOCUMENTACION_PREVIA  
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_DOCUMENTACION_PREVIA  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
   
-  select max(id)+1 into maximo from PUESTOSTRABAJO;	
+  select max(id)+1 into maximo from PUESTOSTRABAJO;    
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_PUESTO_TRABAJO  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH ' || maximo || ' CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
   
   --secuencia   SEQ_DOCUMENTOS
@@ -1722,7 +1722,7 @@ begin
 
   --secuencia   SEQ_MUNICIPIO
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_MUNICIPIO  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
-  	
+      
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  seq_gd_sol_doc  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
   
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  seq_sugerencias  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;

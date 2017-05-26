@@ -6,9 +6,10 @@ body {
     color: #3d3d44;
     background: #d5d5d6;
 }
+
 #header {
     height: 190px;
-    background: url(../images/cabecera_ministerio.png )no-repeat;
+    background: url(../images/cabecera_ministerio.png ) no-repeat;
     background-position: center;
     -moz-box-shadow: inset 0 0 3px #000000;
     -webkit-box-shadow: inset 0 0 3px #000000;
@@ -23,43 +24,42 @@ body {
     position: relative;
     background: #ffffff;
 }
+
 #login_form {
-	width:979px;
-	margin-left: auto;
-	margin-right: auto;
+    width: 979px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#login_form h1{
-	text-align: center;
+#login_form h1 {
+    text-align: center;
 }
 
-#login_form h2{
-	text-align: center;
+#login_form h2 {
+    text-align: center;
 }
 
 fieldset {
-	padding: 10px;
-/* 	margin: 40px 0 20px 0; */
-	border: #6e80b3 solid 1px;
-	clear: both;
-	background: #efebeb;
-	width: 250px;
+    padding: 10px;
+    border: #6e80b3 solid 1px;
+    clear: both;
+    background: #efebeb;
+    width: 250px;
 }
 
 fieldset fieldset {
-	border: none;
+    border: none;
 }
 
 fieldset.limites input {
-	width: 50px;
+    width: 50px;
 }
 
 legend {
-	font-weight: bold;
-	color: #0c0c0c;
-/* 	color: #6e80b3; */
-	font-size: 1.1em;
-	font-variant: small-caps;
+    font-weight: bold;
+    color: #0c0c0c;
+    font-size: 1.1em;
+    font-variant: small-caps;
 }
 
 form#acceso label, form#alta label {
@@ -74,47 +74,46 @@ form#acceso {
 }
 
 label {
-	display: block;
-	font-weight: bold;
-	color: #0c0c0c;
-	font-size: .9em;
-	margin: 5px 0 5px 0;
+    display: block;
+    font-weight: bold;
+    color: #0c0c0c;
+    font-size: .9em;
+    margin: 5px 0 5px 0;
 }
 
 input, select, button {
-	border: #ccc solid 1px;
-	display: block;
-	margin: 0 0 15px 0;
-	width: 150px;
+    border: #ccc solid 1px;
+    display: block;
+    margin: 0 0 15px 0;
+    width: 150px;
 }
 
 input:focus, button:focus {
-	border: #6e80b3 solid 1px;
+    border: #6e80b3 solid 1px;
 }
 
 body {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: .8em;
-	color: #3d3d44;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: .8em;
+    color: #3d3d44;
 }
-
 
 input[type="submit"], input[type="button"], button {
-	display: block !important;
-	text-align: center !important;
-	border: none !important;
-	background: url(../images/boton_gris.png) no-repeat top !important;
-	width: 100px !important;
-	height: 29px !important;
-	padding: 0 0 5px 0 !important;
-	margin: 20px 0 !important;
-	font-size: .9em !important;
-	font-weight: normal !important;
-	font-family: Arial,Verdana,sans-serif !important;
+    display: block !important;
+    text-align: center !important;
+    border: none !important;
+    background: url(../images/boton_gris.png) no-repeat top !important;
+    width: 100px !important;
+    height: 29px !important;
+    padding: 0 0 5px 0 !important;
+    margin: 20px 0 !important;
+    font-size: .9em !important;
+    font-weight: normal !important;
+    font-family: Arial, Verdana, sans-serif !important;
 }
 
-input[type="submit"]:hover,input[type="button"]:hover, button:hover {
-	background: url(../images/boton_gris.png) no-repeat bottom;
+input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+    background: url(../images/boton_gris.png) no-repeat bottom;
 }
 
 #login_form h1 {
@@ -129,15 +128,17 @@ a:link, a:visited {
     color: #0c0c0c;
     padding: 35px;
 }
+
 a.ui-messages-close {
-	padding: 0 !important; /* evitar que se aplique a enlaces de primefaces */
+    padding: 0 !important;
+    /* evitar que se aplique a enlaces de primefaces */
 }
 
 .error {
-	color: red;
-	padding-top: 10px;
+    color: red;
+    padding-top: 10px;
 }
 
-.centrarBotonesDialog{
-	text-align: center;
+.centrarBotonesDialog {
+    text-align: center;
 }

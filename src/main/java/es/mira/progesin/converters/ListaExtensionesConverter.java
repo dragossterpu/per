@@ -15,18 +15,18 @@ import org.springframework.stereotype.Component;
  */
 @Component("listaExtensionesConverter")
 public class ListaExtensionesConverter implements Converter {
-
-	private static final String SEPARADOR = ", ";
-
-	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-		return (submittedValue != null) ? new ArrayList<>(Arrays.asList(submittedValue.split(SEPARADOR))) : null;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-		return (modelValue != null) ? String.join(SEPARADOR, (List<String>) modelValue) : null;
-	}
-
+    
+    private static final String SEPARADOR = ", ";
+    
+    @Override
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        return (submittedValue != null) ? new ArrayList<>(Arrays.asList(submittedValue.split(SEPARADOR))) : null;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        return (modelValue != null) ? String.join(SEPARADOR, (List<String>) modelValue) : null;
+    }
+    
 }
