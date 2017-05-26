@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
@@ -34,20 +35,12 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 /**
+ * Servicio de solicitudes de documentación.
  * 
- * Servicio de solicitudes de documentación
- * 
- * @author Ezentis
- *
+ * @author EZENTIS
  */
 @Service
 public class SolicitudDocumentacionService implements ISolicitudDocumentacionService {
-    
-    private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
-    
-    private static final String FECHAFINALIZACION = "fechaFinalizacion";
-    
-    private static final String FECHABAJA = "fechaBaja";
     
     @Autowired
     private SessionFactory sessionFactory;
@@ -175,25 +168,25 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                 case ENVIADA:
                     criteria.add(Restrictions.isNotNull("fechaEnvio"));
                     criteria.add(Restrictions.isNull("fechaCumplimentacion"));
-                    criteria.add(Restrictions.isNull(FECHABAJA));
+                    criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
                     break;
                 case CUMPLIMENTADA:
                     criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
-                    criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHABAJA));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAFINALIZACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
                     break;
                 // Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
                 case NO_CONFORME:
                     criteria.add(Restrictions.isNotNull("fechaNoConforme"));
-                    criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHABAJA));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAFINALIZACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
                     break;
                 case FINALIZADA:
-                    criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHABAJA));
+                    criteria.add(Restrictions.isNotNull(Constantes.FECHAFINALIZACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
                     break;
                 case ANULADA:
-                    criteria.add(Restrictions.isNotNull(FECHABAJA));
+                    criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
                     break;
                 // case CREADA:
                 default:
@@ -201,7 +194,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                     break;
             }
         } else {
-            criteria.add(Restrictions.isNull(FECHABAJA));
+            criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
         }
         if (solicitudDocPreviaBusqueda.getFechaDesde() != null) {
             /**
@@ -230,7 +223,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                 && !solicitudDocPreviaBusqueda.getNombreUnidad().isEmpty()) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
+                    .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
         }
         if (solicitudDocPreviaBusqueda.getIdInspeccion() != null

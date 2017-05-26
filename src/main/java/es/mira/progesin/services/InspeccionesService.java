@@ -31,16 +31,12 @@ import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 /**
- * 
  * Implementación del servicio de inspecciones.
  * 
- * @author Ezentis
- *
+ * @author EZENTIS
  */
 @Service
 public class InspeccionesService implements IInspeccionesService {
-    
-    private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -175,7 +171,8 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         if (busqueda.getJefeEquipo() != null && !busqueda.getJefeEquipo().isEmpty()) {
-            parametro = Normalizer.normalize(busqueda.getJefeEquipo(), Normalizer.Form.NFKD).replaceAll(ACENTOS, "");
+            parametro = Normalizer.normalize(busqueda.getJefeEquipo(), Normalizer.Form.NFKD)
+                    .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("equipo.jefeEquipo", parametro, MatchMode.ANYWHERE));
         }
         

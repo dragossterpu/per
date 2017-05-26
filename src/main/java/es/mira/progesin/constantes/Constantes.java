@@ -86,6 +86,26 @@ public final class Constantes {
     public static final String FECHAALTA = "fechaAlta";
     
     /**
+     * Palabra "fechaFinalizacion" para no repetirla n veces dentro de una clase.
+     */
+    public static final String FECHAFINALIZACION = "fechaFinalizacion";
+    
+    /**
+     * Palabra "fechaAnulacion" para no repetirla n veces dentro de una clase.
+     */
+    public static final String FECHAANULACION = "fechaAnulacion";
+    
+    /**
+     * Palabra "fechaBaja" para no repetirla n veces dentro de una clase.
+     */
+    public static final String FECHABAJA = "fechaBaja";
+    
+    /**
+     * Expresión regular para quitar tildes en java.
+     */
+    public static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

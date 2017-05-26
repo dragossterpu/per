@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
@@ -43,7 +44,7 @@ import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
 /**
- * Servicio de cuestionarios enviados
+ * Servicio de cuestionarios enviados.
  * 
  * @author EZENTIS
  */
@@ -51,12 +52,6 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     private static final long serialVersionUID = 1L;
-    
-    private static final String FECHAFINALIZACION = "fechaFinalizacion";
-    
-    private static final String FECHAANULACION = "fechaAnulacion";
-    
-    private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -111,9 +106,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     }
     
     /**
-     * Asignación por defecto de todas las áreas de un cuestionario recien creado al usuario provisional principal
+     * Asignación por defecto de todas las áreas de un cuestionario recien creado al usuario provisional principal.
      * 
-     * @author Ezentis
      * @param cuestionarioEnviado
      * @param usuarioProv
      * @return lista de asignaciones
@@ -143,7 +137,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     /**
      * Método que devuelve la lista de cuestionarios enviados en una consulta basada en criteria.
      * 
-     * @author EZENTIS
      * @param cuestionarioEnviadoBusqueda objeto con los criterios de búsqueda
      * @param first primer elemento
      * @param pageSize tamaño de cada página de resultados
@@ -180,7 +173,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * 
      * @param cuestionarioEnviadoBusqueda objeto con parámetros de búsqueda
      * @return devuelve el número de registros de una consulta criteria.
-     * @author EZENTIS
      */
     @Override
     public int getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
@@ -197,8 +189,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     /**
      * Consulta de cuestionarios basada en criteria.
      * 
-     * @param cuestionarioEnviadoBusqueda
-     * @param criteria
+     * @param cuestionarioEnviadoBusqueda parametros de búsqueda
+     * @param criteria consulta con los párametros
      */
     private void consultaCriteriaCuestionarioEnviado(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda,
             Criteria criteria) {
@@ -207,30 +199,30 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             switch (cuestionarioEnviadoBusqueda.getEstado()) {
                 case CUMPLIMENTADO:
                     criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
-                    criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAFINALIZACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
                     break;
                 // Aparecen como no conformes tanto si están sólo reenviadas como si están recumplimentadas
                 case NO_CONFORME:
                     criteria.add(Restrictions.isNotNull("fechaNoConforme"));
-                    criteria.add(Restrictions.isNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAFINALIZACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
                     break;
                 case FINALIZADO:
-                    criteria.add(Restrictions.isNotNull(FECHAFINALIZACION));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
+                    criteria.add(Restrictions.isNotNull(Constantes.FECHAFINALIZACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
                     break;
                 case ANULADO:
-                    criteria.add(Restrictions.isNotNull(FECHAANULACION));
+                    criteria.add(Restrictions.isNotNull(Constantes.FECHAANULACION));
                     break;
                 // case ENVIADO:
                 default:
                     criteria.add(Restrictions.isNull("fechaCumplimentacion"));
-                    criteria.add(Restrictions.isNull(FECHAANULACION));
+                    criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
                     break;
             }
         } else {
-            criteria.add(Restrictions.isNull(FECHAANULACION));
+            criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
         }
         if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
             /**
@@ -262,7 +254,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 && !cuestionarioEnviadoBusqueda.getUsernameEnvio().isEmpty()) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getUsernameEnvio(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
+                    .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("usernameEnvio", parametro, MatchMode.ANYWHERE));
         }
         
@@ -271,7 +263,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 && !cuestionarioEnviadoBusqueda.getNombreUnidad().isEmpty()) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
+                    .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
         }
         if (cuestionarioEnviadoBusqueda.getIdInspeccion() != null
@@ -299,7 +291,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 && !cuestionarioEnviadoBusqueda.getNombreEquipo().isEmpty()) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
+                    .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("equipo.nombreEquipo", parametro, MatchMode.ANYWHERE));
         }
         
@@ -317,7 +309,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 && !cuestionarioEnviadoBusqueda.getNombreCuestionario().isEmpty()) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreCuestionario(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
+                    .replaceAll(Constantes.ACENTOS, "");
             criteria.add(
                     Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario", parametro, MatchMode.ANYWHERE));
         }

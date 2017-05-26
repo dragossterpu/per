@@ -17,6 +17,7 @@ import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
@@ -34,8 +35,6 @@ import es.mira.progesin.web.beans.EquipoBusqueda;
 public class EquipoService implements IEquipoService {
     
     private static final String FECHABAJA = "fechaBaja";
-    
-    private static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
     @Autowired
     private IEquipoRepository equipoRepository;
@@ -92,7 +91,7 @@ public class EquipoService implements IEquipoService {
             
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(equipoBusqueda.getNombreMiembro(), Normalizer.Form.NFKD)
-                    .replaceAll(ACENTOS, "");
+                    .replaceAll(Constantes.ACENTOS, "");
             subquery.add(Restrictions.ilike("miembro.nombreCompleto", parametro, MatchMode.ANYWHERE));
             subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
             subquery.setProjection(Projections.property("miembro.equipo"));
