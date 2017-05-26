@@ -27,10 +27,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author Ezentis
+ * Entidad para un Puesto de trabajo.
  * 
- * Entidad para un Puesto de trabajo
- *
+ * @author EZENTIS
+ * 
  */
 @AllArgsConstructor
 @NoArgsConstructor

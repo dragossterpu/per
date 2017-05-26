@@ -10,7 +10,7 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 
 /**
- * Servicio para la administración de puestos de trabajo
+ * Implemenatación del servicio para la administración de puestos de trabajo.
  * 
  * @author EZENTIS
  *

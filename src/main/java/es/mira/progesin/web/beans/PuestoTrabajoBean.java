@@ -26,8 +26,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para la administración de los puestos de trabajo
- * @author rgomez
+ * Bean controller para la administración de los puestos de trabajo.
+ * @author EZENTIS
  *
  */
 
@@ -39,19 +39,35 @@ public class PuestoTrabajoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Variable utilizada para alamcenar los puestos a gestionar.
+     * 
+     */
     private List<PuestoTrabajo> listaPuestosTrabajo;
     
+    /**
+     * Variable utilizada para inyectar el servicio de puestos de trabajo.
+     * 
+     */
     @Autowired
     private transient IPuestoTrabajoService puestoTrabajoService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de usuarios.
+     * 
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de regitro de actividad.
+     * 
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Eliminación lógica (se pone fecha de baja) de un puesto
+     * Eliminación lógica (se pone fecha de baja) de un puesto.
      * 
      * @param puesto de trabajo a eliminar
      */
@@ -71,9 +87,9 @@ public class PuestoTrabajoBean implements Serializable {
     }
     
     /**
-     * Método que comprueba que no hay usuarios asignados al puesto que se desea eliminar
+     * Método que comprueba que no hay usuarios asignados al puesto que se desea eliminar.
      * 
-     * @param puesto
+     * @param puesto a comprobar
      * @return Devuelve true si existen usuarios asignados al puesto de trabajo, false en caso contrario
      */
     
@@ -87,8 +103,8 @@ public class PuestoTrabajoBean implements Serializable {
     }
     
     /**
-     * Alta un nuevo puesto de trabajo
-     * @param puestoNuevo
+     * Alta un nuevo puesto de trabajo.
+     * @param puestoNuevo nombre del nuevo puesto
      */
     public void altaPuesto(String puestoNuevo) {
         PuestoTrabajo puesto = new PuestoTrabajo();
@@ -107,8 +123,8 @@ public class PuestoTrabajoBean implements Serializable {
     }
     
     /**
-     * Modificación de la descripción de un puesto de trabajo
-     * @param event
+     * Modificación de la descripción de un puesto de trabajo.
+     * @param event evento del que se obtiene el puesto a editar
      */
     public void onRowEdit(RowEditEvent event) {
         PuestoTrabajo puesto = (PuestoTrabajo) event.getObject();
@@ -118,8 +134,8 @@ public class PuestoTrabajoBean implements Serializable {
     }
     
     /**
-     * Cancela la edición de un puesto de trabajo
-     * @param event
+     * Cancela la edición de un puesto de trabajo.
+     * @param event para obtener la descripción del mensaje
      */
     public void onRowCancel(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Modificación cancelada",
@@ -128,7 +144,7 @@ public class PuestoTrabajoBean implements Serializable {
     }
     
     /**
-     * Médodo usado para inicializar la lista de cuerpos de estado que se mostrarán en la página
+     * Médodo usado para inicializar la lista de cuerpos de estado que se mostrarán en la página.
      */
     @PostConstruct
     public void init() {
