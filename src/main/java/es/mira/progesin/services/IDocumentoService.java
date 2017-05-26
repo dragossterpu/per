@@ -23,7 +23,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.web.beans.DocumentoBusqueda;
 
 /**
- * Interfaz del servicio de Documentos
+ * Interfaz del servicio de Documentos.
  * 
  * @author Ezentis
  *

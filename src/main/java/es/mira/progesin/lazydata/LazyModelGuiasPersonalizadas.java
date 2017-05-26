@@ -15,7 +15,7 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
  * @author Ezentis
  *
@@ -27,24 +27,33 @@ public class LazyModelGuiasPersonalizadas extends LazyDataModel<GuiaPersonalizad
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private GuiaPersonalizadaBusqueda busqueda;
     
+    /**
+     * Servicio a utilizar.
+     */
     private transient IGuiaPersonalizadaService servicio;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private List<GuiaPersonalizada> datasource;
     
     /**
-     * Constructor que recibe un SessionFactory
+     * Constructor.
      * 
-     * @param servicio Servicio de SolicitudDocumentacionPrevia
+     * @param service Servicio a utilizar
      */
-    public LazyModelGuiasPersonalizadas(IGuiaPersonalizadaService servicio) {
-        this.servicio = servicio;
+    public LazyModelGuiasPersonalizadas(IGuiaPersonalizadaService service) {
+        this.servicio = service;
         this.busqueda = new GuiaPersonalizadaBusqueda();
     }
     
     /**
-     * Sobreescritura del método load que se ejecuta cada vez que se hace alguna acción sobre la datatable de la vista
+     * Sobreescritura del método load que se ejecuta cada vez que se hace alguna acción sobre la datatable de la vista.
      * 
      * @param first primer elemento que se desea recuperar
      * @param pageSize número máximo de registros que deseamos recuperar por página
@@ -54,7 +63,7 @@ public class LazyModelGuiasPersonalizadas extends LazyDataModel<GuiaPersonalizad
      * @param filters mapa de filtros. Este valor no se utiliza en esta sobreescritura.
      * @return lista de registros que corresponden a los criterios de búsqueda
      */
-    // @Override
+    
     @Override
     public List<GuiaPersonalizada> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {

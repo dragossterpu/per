@@ -15,9 +15,9 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -27,21 +27,37 @@ public class LazyModelCuestionarioEnviado extends LazyDataModel<CuestionarioEnvi
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private CuestionarioEnviadoBusqueda busqueda;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     private ICuestionarioEnvioService servicio;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private List<CuestionarioEnvio> datasource;
     
     /**
-     * Constructor
-     * @param service
+     * Constructor.
+     * 
+     * @param service Servicio de cuestionarios enviados a utilizar
      */
     public LazyModelCuestionarioEnviado(ICuestionarioEnvioService service) {
         this.servicio = service;
         this.busqueda = new CuestionarioEnviadoBusqueda();
     }
     
+    /**
+     * Sobreescritura del método getRowData para adaptarlo a nuestro modelo.
+     * 
+     * @param rowKey Fila que se ha seleccionado en la vista
+     * @return Cuestionario enviado que corresponde a la fila seleccionada
+     */
     @Override
     public CuestionarioEnvio getRowData(String rowKey) {
         for (CuestionarioEnvio solicitud : datasource) {
@@ -51,11 +67,28 @@ public class LazyModelCuestionarioEnviado extends LazyDataModel<CuestionarioEnvi
         return null;
     }
     
+    /**
+     * Sobreestritura del método getRowKey para adaptarlo a nuestro modelo.
+     * 
+     * @param solicitud Cuestionario del que se desea recuperar la clave
+     * @return Clave del cuestionario
+     */
+    
     @Override
     public Object getRowKey(CuestionarioEnvio solicitud) {
         return solicitud.getId();
     }
     
+    /**
+     * Sobreescritura del método load para realizar la carga paginada.
+     * 
+     * @param first primer elemento de la paginación
+     * @param pageSize número máximo de registros recuperados
+     * @param sortField campo por el que se ordena
+     * @param sortOrder sentido de la orientación
+     * @param filters que se aplicarán a la búsqueda.
+     * @return listado de registros que corresponden a la búsqueda
+     */
     @Override
     public List<CuestionarioEnvio> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {

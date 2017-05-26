@@ -15,7 +15,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 
 /**
  * 
- * Conversor para objetos orderList de PrimeFaces
+ * Conversor para objetos orderList de PrimeFaces.
  * 
  * Para listas PreguntasCuestionario
  * 
@@ -24,12 +24,18 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 @Component("preguntasConverter")
 public class PreguntasConverter implements Converter {
     
+    /**
+     * Conversor de PreguntasCuestionario que recupera su campo pregunta (La descripción) como cadena.
+     */
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         
         return ((PreguntasCuestionario) value).getPregunta();
     }
     
+    /**
+     * Conversor que devuelve el objeto entero a partir de su pregunta recibido como string.
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         Object ret = null;
@@ -57,6 +63,12 @@ public class PreguntasConverter implements Converter {
         return ret;
     }
     
+    /**
+     * Devuelve la cadena sin saltos.
+     * 
+     * @param cadena a modificar
+     * @return cadena modificada
+     */
     private String cadenaSinSaltos(String cadena) {
         String sinSaltos = cadena.replace('\n', ' ');
         sinSaltos = sinSaltos.replace('\r', ' ');

@@ -10,7 +10,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 /**
  * 
- * Interfaz del servicio de Alertas
+ * Interfaz del servicio de Alertas.
  * 
  * @author Ezentis
  * 
@@ -19,7 +19,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 public interface IAlertaService {
     /**
      * 
-     * Elimina de la base de datos una alerta cuyo id se recibe como parámetro
+     * Elimina de la base de datos una alerta cuyo id se recibe como parámetro.
      * 
      * @param id de la alerta a eliminar de la base de datos
      * 
@@ -28,7 +28,7 @@ public interface IAlertaService {
     
     /**
      * 
-     * Elimina de la base de datos todas las alertas
+     * Elimina de la base de datos todas las alertas.
      * 
      * 
      */
@@ -36,7 +36,7 @@ public interface IAlertaService {
     
     /**
      * 
-     * Comprueba si existe en de base de datos una alerta cuyo id se pasa como parámetro
+     * Comprueba si existe en de base de datos una alerta cuyo id se pasa como parámetro.
      * 
      * @param id de la alerta a buscar en base de datos
      * @return booleano con el valor de la consulta
@@ -47,7 +47,7 @@ public interface IAlertaService {
     
     /**
      * 
-     * Busca en base de datos las alerta cuyo id se recibe como parámetro
+     * Busca en base de datos las alerta cuyo id se recibe como parámetro.
      * 
      * @param id de la alerta a localizar en base de datos
      * @return alerta que corresponde a la búsqueda
@@ -58,7 +58,7 @@ public interface IAlertaService {
     
     /**
      * 
-     * Busca en base de datos todas las alertas que no hayan sido dadas de baja
+     * Busca en base de datos todas las alertas que no hayan sido dadas de baja.
      * 
      * @return Lista de las alertas cuya fecha de baja es nulo
      * 
@@ -124,8 +124,8 @@ public interface IAlertaService {
      * Crea una alerta y se asigna al jefe de un equipo asignado a una inspección. Se crea a partir de la sección, la
      * descripción y la inspección que se reciben como parámetros
      * 
-     * @param seccion
-     * @param descripcion
+     * @param seccion para la que se crea la alerta
+     * @param descripcion de la alerta
      * @param inspeccion se envia la alerta al jefe del equipo que tiene asignada la inspección recibida como parámetro
      * 
      */
@@ -146,7 +146,7 @@ public interface IAlertaService {
     List<Alerta> buscarPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder, String usuario);
     
     /**
-     * Devuelve el número de alertas existentes en base de datos para el usuario pasado como parámetro
+     * Devuelve el número de alertas existentes en base de datos para el usuario pasado como parámetro.
      * 
      * @param usuario Usuario para el cual se buscan las alertas
      * @return integer correspondiente al número total de las alertas contenidas en base de datos para el usuario

@@ -16,7 +16,7 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
  * @author Ezentis
  *
@@ -28,23 +28,37 @@ public class LazyModelDocumentos extends LazyDataModel<Documento> implements Ser
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private DocumentoBusqueda busqueda;
     
+    /**
+     * Servicio.
+     */
     private transient IDocumentoService servicio;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private List<Documento> datasource;
     
     /**
-     * Constructor
+     * Constructor.
      * 
-     * @param service
-     * 
+     * @param service Servicio a utilizar
      */
     public LazyModelDocumentos(IDocumentoService service) {
         this.servicio = service;
         this.busqueda = new DocumentoBusqueda();
     }
     
+    /**
+     * Sobreescritura del método getRowData para adaptarlo a nuestro modelo.
+     * 
+     * @param rowKey Fila que se ha seleccionado en la vista
+     * @return Documento que corresponde a la fila seleccionada
+     */
     @Override
     public Documento getRowData(String rowKey) {
         for (Documento solicitud : datasource) {
@@ -54,11 +68,27 @@ public class LazyModelDocumentos extends LazyDataModel<Documento> implements Ser
         return null;
     }
     
+    /**
+     * Sobreestritura del método getRowKey para adaptarlo a nuestro modelo.
+     * 
+     * @param solicitud Documento del que se desea recuperar la clave
+     * @return Clave del documento
+     */
     @Override
     public Object getRowKey(Documento solicitud) {
         return solicitud.getId();
     }
     
+    /**
+     * Sobreescritura del método load para realizar la carga paginada.
+     * 
+     * @param first primer elemento de la paginación
+     * @param pageSize número máximo de registros recuperados
+     * @param sortField campo por el que se ordena
+     * @param sortOrder sentido de la orientación
+     * @param filters que se aplicarán a la búsqueda.
+     * @return listado de registros que corresponden a la búsqueda
+     */
     @Override
     public List<Documento> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {

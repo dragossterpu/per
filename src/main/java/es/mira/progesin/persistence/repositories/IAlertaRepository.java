@@ -17,15 +17,15 @@ import es.mira.progesin.persistence.entities.Alerta;
  */
 
 public interface IAlertaRepository extends CrudRepository<Alerta, Long> {
-
-	/**
-	 * 
-	 * Devuelve una lista de alertas que no han sido dadas de baja
-	 * 
-	 * @return List<Alerta>
-	 * 
-	 */
-
-	List<Alerta> findByFechaBajaIsNull();
-
+    
+    /**
+     * 
+     * Devuelve una lista de alertas que no han sido dadas de baja.
+     * 
+     * @return List<Alerta>
+     * 
+     */
+    
+    List<Alerta> findByFechaBajaIsNull();
+    
 }

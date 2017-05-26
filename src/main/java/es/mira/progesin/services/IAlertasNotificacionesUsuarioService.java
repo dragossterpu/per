@@ -12,7 +12,7 @@ import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 
 /**
  * 
- * Interfaz para el servicio de Alertas y Notificaciones de usuario
+ * Interfaz para el servicio de Alertas y Notificaciones de usuario.
  * 
  * @author EZENTIS
  * 
@@ -21,8 +21,6 @@ import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 public interface IAlertasNotificacionesUsuarioService {
     
     /**
-     * 
-     * Delete
      * 
      * Elimina un registro de base de datos. El registro se identifica por su tipo, el id y el usuario vinculado
      * 
@@ -36,8 +34,6 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * Save
-     * 
      * Guarda un registro en base de datos.
      * 
      * @param entity Mensaje (Alerta o Notificacion) a guardar en base de datos
@@ -49,9 +45,7 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * findAlertasByUser
-     * 
-     * Devuelve un listado de alertas vinculadas al usuario
+     * Devuelve un listado de alertas vinculadas al usuario.
      * 
      * @param user usuario para el que se busca el listado de alertas
      * @return listado de alertas asignadas al usuario
@@ -62,9 +56,7 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * findNotificacionesByUser
-     * 
-     * Devuelve un listado de notificaciones vinculadas al usuario
+     * Devuelve un listado de notificaciones vinculadas al usuario.
      * 
      * @param user usuario para el que se busca el listado de notificaciones
      * @return listado de alertas asignadas al usuario
@@ -75,9 +67,7 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * grabarMensajeUsuario
-     * 
-     * Graba un mensaje (Alerta o Notificacion) vinculado a un usuario
+     * Graba un mensaje (Alerta o Notificacion) vinculado a un usuario.
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param user usuario al que se asigna el mensaje
@@ -89,9 +79,7 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * grabarMensajeJefeEquipo
-     * 
-     * Graba un mensaje (Alerta o Notificacion) vinculado al jefe de un equipo
+     * Graba un mensaje (Alerta o Notificacion) vinculado al jefe de un equipo.
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param inspeccion Se asignará el mensaje al jefe del equipo que tiene asignada esta inspección
@@ -103,9 +91,7 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * grabarMensajeRol
-     * 
-     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a un mismo rol
+     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a un mismo rol.
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param rol rol del los usuarios a los que se asignará el mensaje
@@ -116,9 +102,7 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * grabarMensajeRol
-     * 
-     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a una lista de roles
+     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a una lista de roles.
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param roles lista de roles a los que pertenecen los usuarios a los que se asignará el mensaje
@@ -129,10 +113,8 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * grabarMensajeEquipo
-     * 
      * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
-     * inspección
+     * inspección.
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param inspeccion Se asignará el mensaje a los miembros del equipo que tiene asignada esta inspección
@@ -143,10 +125,8 @@ public interface IAlertasNotificacionesUsuarioService {
     
     /**
      * 
-     * grabarMensajeEquipo
-     * 
      * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
-     * inspección
+     * inspección.
      * 
      * @param entidad Alerta o Notificación
      * @param equipo al que se desea enviar el Mensaje (Alerta o Notificacion)
@@ -158,7 +138,7 @@ public interface IAlertasNotificacionesUsuarioService {
     /**
      * 
      * Recupera la lista de notificaciones en función de una lista contenida en una lista de
-     * AlertasNotificacionesUsuario pasada como parámetro
+     * AlertasNotificacionesUsuario pasada como parámetro.
      * 
      * @param lista List<AlertasNotificacionesUsuario>
      * @return List<Notificacion>
@@ -170,7 +150,7 @@ public interface IAlertasNotificacionesUsuarioService {
     /**
      * 
      * Recupera la lista de alertas en función de una lista contenida en una lista de AlertasNotificacionesUsuario
-     * pasada como parámetro
+     * pasada como parámetro.
      * 
      * @param lista List<AlertasNotificacionesUsuario>
      * @return List<Alerta>

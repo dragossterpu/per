@@ -13,15 +13,20 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 
 /**
  * 
- * Conversor para objetos orderList de PrimeFaces
+ * Conversor para objetos orderList de PrimeFaces.
  * 
- * Para listas de AreasCuestionario y PreguntasCuestionario
+ * Para listas de AreasCuestionario
+ * 
+ * @author EZENTIS
  * 
  */
 
 @Component("areasConverter")
 public class AreasConverter implements Converter {
     
+    /**
+     * Conversor de AreasCuestionario que recupera su campo área (La descripción) como cadena.
+     */
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         
@@ -29,6 +34,9 @@ public class AreasConverter implements Converter {
         
     }
     
+    /**
+     * Conversor que devuelve el objeto entero a partir de su descripción recibido como string.
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         Object ret = null;

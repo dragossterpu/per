@@ -135,9 +135,8 @@ public class CuerposEstadoBeanTest {
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         listaCuerposEstado.remove(cuerpo);
-        String user = authentication.getName();
-        String descripcion = "El usuario " + user + " ha eliminado la inspección " + cuerpo.getNombreCorto();
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+        
+        regActividadService.altaRegActividad(any(String.class), TipoRegistroEnum.ALTA.name(),
                 SeccionesEnum.ADMINISTRACION.name());
         
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
@@ -201,7 +200,7 @@ public class CuerposEstadoBeanTest {
         when(event.getObject()).thenReturn(cuerpo);
         
         cuerposEstadoBean.onRowEdit(event);
-        regActividadService.altaRegActividad("El usuario", TipoRegistroEnum.MODIFICACION.name(),
+        regActividadService.altaRegActividad(any(String.class), TipoRegistroEnum.MODIFICACION.name(),
                 SeccionesEnum.ADMINISTRACION.name());
         
         verify(cuerposEstadoService, times(1)).save(cuerpoCaptor.capture());

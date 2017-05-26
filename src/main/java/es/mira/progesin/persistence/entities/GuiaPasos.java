@@ -22,7 +22,8 @@ import lombok.Setter;
 
 /**
  * 
- * Entidad para el almacenamiento de pasos de guía
+ * 
+ * Entidad para el almacenamiento de pasos de guía.
  * 
  * @author Ezentis
  *
@@ -38,28 +39,49 @@ import lombok.Setter;
 public class GuiaPasos implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador del paso. Se genera a través de una secuencia.
+     */
     @Id
     @SequenceGenerator(name = "seq_pasosguia", sequenceName = "seq_pasosguia", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pasosguia")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Identificador de la guía a la que están asignados los pasos.
+     */
     @ManyToOne
     @JoinColumn(name = "idGuia", foreignKey = @ForeignKey(name = "fk_gp_Guia"))
     private Guia idGuia;
     
+    /**
+     * Texto descriptivo del paso.
+     */
     @Column(name = "paso", nullable = false, length = 2000)
     private String paso;
     
+    /**
+     * Orden del paso en la guía.
+     */
     @Column(name = "orden", nullable = false)
     private Integer orden;
     
+    /**
+     * Fecha de baja del paso.
+     */
     @Column(name = "fecha_baja")
-    protected Date fechaBaja;
+    private Date fechaBaja;
     
+    /**
+     * Usuario que da de baja el paso.
+     */
     @Column(name = "username_baja")
-    protected String usernameBaja;
+    private String usernameBaja;
     
+    /**
+     * Implementación del método hashCode.
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -68,6 +90,9 @@ public class GuiaPasos implements Serializable {
         return result;
     }
     
+    /**
+     * Implentación del método equals.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
