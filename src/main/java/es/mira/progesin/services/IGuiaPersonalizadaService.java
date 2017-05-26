@@ -12,7 +12,7 @@ import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
 /**
  * 
- * Interfaz del servicio de guías personalizadas
+ * Interfaz del servicio de guías personalizadas.
  * 
  * @author Ezentis
  * 
@@ -22,9 +22,9 @@ public interface IGuiaPersonalizadaService {
     
     /**
      * 
-     * Elimina una guía personalizada de la base de datos
+     * Elimina una guía personalizada de la base de datos.
      * 
-     * @param guia
+     * @param guia que se desea eliminar
      * 
      */
     
@@ -32,9 +32,9 @@ public interface IGuiaPersonalizadaService {
     
     /**
      * 
-     * Anula una guía personalizada de la base de datos
+     * Anula una guía personalizada de la base de datos.
      * 
-     * @param guia
+     * @param guia que se desea eliminar
      * 
      */
     
@@ -42,10 +42,10 @@ public interface IGuiaPersonalizadaService {
     
     /**
      * 
-     * Almacena una guía personalizada en la base de datos
+     * Almacena una guía personalizada en la base de datos.
      * 
-     * @param guia
-     * @return GuiaPersonalizada
+     * @param guia guia a guardar
+     * @return guia guardada
      * 
      */
     
@@ -53,17 +53,17 @@ public interface IGuiaPersonalizadaService {
     
     /**
      * 
-     * Devuelve una lista de pasos contenidos en una guía personalizada pasada como parámetro
+     * Devuelve una lista de pasos contenidos en una guía personalizada pasada como parámetro.
      * 
-     * @param guia
-     * @return List<GuiaPasos>
+     * @param guia de la que se desea recuperar los pasos
+     * @return lista de los pasos
      * 
      */
     
     public List<GuiaPasos> listaPasos(GuiaPersonalizada guia);
     
     /**
-     * Devuelve el número de registros de la base de datos que cumplen con los criterio pasados como parámetro
+     * Devuelve el número de registros de la base de datos que cumplen con los criterio pasados como parámetro.
      * 
      * @param busqueda Objeto que contiene los parámetros de búsqueda
      * @return Número de registros que responden a los parámetros
@@ -74,7 +74,7 @@ public interface IGuiaPersonalizadaService {
     /**
      * Busca en base de datos los resultados que se ajustan a los parámetros recibidos en el objeto de tipo
      * GuiaPersonalizadaBusqueda acotados por los parámetros first (primer resultado) y pageSize (máximo de resultados
-     * de la búsqueda)
+     * de la búsqueda).
      * 
      * @param first primer elemento de los resultados
      * @param pageSize número máximo de resultados
@@ -89,7 +89,7 @@ public interface IGuiaPersonalizadaService {
     
     /**
      * Comprueba la existencia en base de datos de guías personalizadas cuya guía modelo corresponde a la recibida como
-     * parámetro
+     * parámetro.
      * 
      * @param guia Guía de la que quiere confirmarse si existen guías personalizadas
      * @return Booleano correspondiendo a la respuesta
@@ -98,7 +98,7 @@ public interface IGuiaPersonalizadaService {
     boolean buscarPorModeloGuia(Guia guia);
     
     /**
-     * Lista las inspecciones asignadas a una guía personalizada
+     * Lista las inspecciones asignadas a una guía personalizada.
      * 
      * @param guia Guía de la que se quiere recuperar las inspecciones
      * @return respuesta

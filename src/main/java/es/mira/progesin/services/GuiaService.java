@@ -25,7 +25,7 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
 
 /**
  * 
- * Implementación de los métodos definidos en la interfaz IGuiaService
+ * Implementación de los métodos definidos en la interfaz IGuiaService.
  * 
  * @author Ezentis
  *
@@ -46,7 +46,7 @@ public class GuiaService implements IGuiaService {
     private IGuiasRepository guiaRepository;
     
     /**
-     * Añade los parámetros de búsqueda al criteria
+     * Añade los parámetros de búsqueda al criteria.
      * 
      * @param busqueda contiene los parámetros e introducir
      * @param critera criteria a modificar

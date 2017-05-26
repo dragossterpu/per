@@ -9,7 +9,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 
 /**
- * Implementación del servicio de Áreas de cuestionario
+ * Implementación del servicio de Áreas de cuestionario.
  * 
  * @author EZENTIS
  *

@@ -15,7 +15,7 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
 
 /**
  * 
- * Conversor para objetos orderList de PrimeFaces
+ * Conversor para objetos orderList de PrimeFaces.
  * 
  * Convierte objetos de tipo GuiaPasos para su uso con el control orderList
  * 
@@ -26,12 +26,18 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
 @Component("guiasConverter")
 public class GuiasConverter implements Converter {
     
+    /**
+     * Conversor de GuiaPasos que recupera su campo paso (La descripción) como cadena.
+     */
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         
         return ((GuiaPasos) value).getPaso();
     }
     
+    /**
+     * Conversor que devuelve el objeto entero a partir de su paso recibido como string.
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         Object ret = null;
@@ -59,6 +65,12 @@ public class GuiasConverter implements Converter {
         return ret;
     }
     
+    /**
+     * Devuelve la cadena sin saltos.
+     * 
+     * @param cadena a modificar
+     * @return cadena modificada
+     */
     private String cadenaSinSaltos(String cadena) {
         String sinSaltos = cadena.replace('\n', ' ');
         sinSaltos = sinSaltos.replace('\r', ' ');

@@ -20,12 +20,12 @@ import lombok.ToString;
 @Setter
 @Embeddable
 public class ParametroId implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	String seccion;
-
-	String clave;
-
-	@Column(length = 4000)
-	String valor;
+    private static final long serialVersionUID = 1L;
+    
+    String seccion;
+    
+    String clave;
+    
+    @Column(length = 4000)
+    String valor;
 }

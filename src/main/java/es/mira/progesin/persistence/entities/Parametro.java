@@ -14,6 +14,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entidad para los parámetros.
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -24,8 +30,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "parametros")
 public class Parametro implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@EmbeddedId
-	ParametroId param;
+    private static final long serialVersionUID = 1L;
+    
+    @EmbeddedId
+    ParametroId param;
 }

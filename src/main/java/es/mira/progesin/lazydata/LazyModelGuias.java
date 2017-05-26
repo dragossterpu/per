@@ -15,7 +15,7 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
  * @author Ezentis
  *
@@ -27,34 +27,42 @@ public class LazyModelGuias extends LazyDataModel<Guia> implements Serializable 
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private GuiaBusqueda busqueda;
     
+    /**
+     * Servicio.
+     */
     private transient IGuiaService servicio;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private List<Guia> datasource;
     
     /**
-     * Constructor que recibe un SessionFactory
+     * Constructor.
      * 
-     * @param servicio Servicio de SolicitudDocumentacionPrevia
+     * @param service Servicio a utilizar
      */
-    public LazyModelGuias(IGuiaService servicio) {
-        this.servicio = servicio;
+    public LazyModelGuias(IGuiaService service) {
+        this.servicio = service;
         this.busqueda = new GuiaBusqueda();
     }
     
     /**
-     * Sobreescritura del método load que se ejecuta cada vez que se hace alguna acción sobre la datatable de la vista
+     * Sobreescritura del método load para realizar la carga paginada.
      * 
-     * @param first primer elemento que se desea recuperar
-     * @param pageSize número máximo de registros que deseamos recuperar por página
-     * @param sortField columna por la que se ordenarán los resultados. Corresponde a la propiedad 'sortBy' de la
-     * columna de la vista
-     * @param sortOrder orden por el que se desea ordenar los resultados
-     * @param filters mapa de filtros. Este valor no se utiliza en esta sobreescritura.
-     * @return lista de registros que corresponden a los criterios de búsqueda
+     * @param first primer elemento de la paginación
+     * @param pageSize número máximo de registros recuperados
+     * @param sortField campo por el que se ordena
+     * @param sortOrder sentido de la orientación
+     * @param filters que se aplicarán a la búsqueda.
+     * @return listado de registros que corresponden a la búsqueda
      */
-    // @Override
+    
     @Override
     public List<Guia> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {
