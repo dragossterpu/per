@@ -32,7 +32,7 @@ public class MiembroServiceTest {
     private IMiembroService miembroService = new MiembroService();
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -40,7 +40,7 @@ public class MiembroServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

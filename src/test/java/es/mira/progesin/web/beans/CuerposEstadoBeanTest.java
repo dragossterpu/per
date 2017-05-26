@@ -75,7 +75,7 @@ public class CuerposEstadoBeanTest {
     private ArgumentCaptor<Exception> exceptionCaptor;
     
     /**
-     * Comprueba que la clase existe
+     * Comprueba que la clase existe.
      * @throws Exception
      */
     @Test
@@ -84,7 +84,7 @@ public class CuerposEstadoBeanTest {
     }
     
     /**
-     * Comprueba que la clase se puede instanciar
+     * Comprueba que la clase se puede instanciar.
      * @throws Exception
      */
     @Test
@@ -94,7 +94,7 @@ public class CuerposEstadoBeanTest {
     }
     
     /**
-     * Inicializa el test
+     * Inicializa el test.
      */
     
     @Before

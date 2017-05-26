@@ -19,10 +19,9 @@ import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 /**
- * @author EZENTIS
+ * Test del servicio Equipo.
  * 
- * Test del servicio Equipo
- *
+ * @author EZENTIS
  */
 @RunWith(MockitoJUnitRunner.class)
 public class EquipoServiceTest {
@@ -37,7 +36,7 @@ public class EquipoServiceTest {
     private IEquipoService equipoService = new EquipoService();
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -45,7 +44,7 @@ public class EquipoServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

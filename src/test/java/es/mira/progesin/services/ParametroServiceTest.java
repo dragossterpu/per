@@ -37,7 +37,7 @@ public class ParametroServiceTest {
     private IParametroService parametroService = new ParametroService();
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -45,7 +45,7 @@ public class ParametroServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

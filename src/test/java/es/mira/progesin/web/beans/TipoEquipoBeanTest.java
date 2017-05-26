@@ -53,7 +53,7 @@ public class TipoEquipoBeanTest {
     private TipoEquipoBean tipoEquipoBean;
     
     /**
-     * Configuración inicial del test
+     * Configuración inicial del test.
      */
     @Before
     public void setUp() {
@@ -61,7 +61,7 @@ public class TipoEquipoBeanTest {
     }
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -69,7 +69,7 @@ public class TipoEquipoBeanTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

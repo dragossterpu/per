@@ -41,7 +41,7 @@ public class TipoDocumentacionServiceTest {
     private ITipoDocumentacionService tipoDocumentacionServiceMock = new TipoDocumentacionService();
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -49,7 +49,7 @@ public class TipoDocumentacionServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

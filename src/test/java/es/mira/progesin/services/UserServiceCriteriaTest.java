@@ -58,7 +58,7 @@ public class UserServiceCriteriaTest {
     private Authentication authentication;
     
     /**
-     * Configuración inicial del test
+     * Configuración inicial del test.
      */
     @Before
     public void setUp() {

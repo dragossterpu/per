@@ -41,14 +41,14 @@ public class CuestionarioPersonalizadoServiceTest {
     private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService();
     
     /**
-     * Configuración inicial del test
+     * Configuración inicial del test.
      */
     @Before
     public void setUp() {
     }
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -56,7 +56,7 @@ public class CuestionarioPersonalizadoServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

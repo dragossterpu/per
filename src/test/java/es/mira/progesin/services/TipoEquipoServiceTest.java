@@ -33,7 +33,7 @@ public class TipoEquipoServiceTest {
     private ITipoEquipoService tipoEquipoService = new TipoEquipoService();
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -41,7 +41,7 @@ public class TipoEquipoServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

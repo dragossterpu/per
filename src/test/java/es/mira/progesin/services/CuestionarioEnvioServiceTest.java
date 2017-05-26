@@ -106,7 +106,7 @@ public class CuestionarioEnvioServiceTest {
     ArgumentCaptor<List<AreaUsuarioCuestEnv>> areasUsuarioCuestEnvCaptor;
     
     /**
-     * Configuración inicial del test
+     * Configuración inicial del test.
      */
     @Before
     public void setUp() {
@@ -117,7 +117,7 @@ public class CuestionarioEnvioServiceTest {
     }
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -125,7 +125,7 @@ public class CuestionarioEnvioServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

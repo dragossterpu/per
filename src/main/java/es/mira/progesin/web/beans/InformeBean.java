@@ -23,16 +23,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author EZENTIS
- * 
- * Bean para la edición de informes
+ * Bean para la edición de informes.
  *
+ * @author EZENTIS
  */
 @Setter
 @Getter
 @Controller("informeBean")
 @Scope("session")
 public class InformeBean implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     private String texto;
     

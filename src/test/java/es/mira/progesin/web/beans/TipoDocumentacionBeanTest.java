@@ -75,7 +75,7 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -83,7 +83,7 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

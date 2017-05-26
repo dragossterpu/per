@@ -134,7 +134,7 @@ public class SolicitudDocPreviaBeanTest {
     private ArgumentCaptor<SolicitudDocumentacionPrevia> solicitudCaptor;
     
     /**
-     * Configuración inicial del test
+     * Configuración inicial del test.
      */
     @Before
     public void setUp() {
@@ -147,7 +147,7 @@ public class SolicitudDocPreviaBeanTest {
     }
     
     /**
-     * Comprobación clase existe
+     * Comprobación clase existe.
      */
     @Test
     public void type() {
@@ -155,7 +155,7 @@ public class SolicitudDocPreviaBeanTest {
     }
     
     /**
-     * Comprobación clase no abstracta
+     * Comprobación clase no abstracta.
      */
     @Test
     public void instantiation() {

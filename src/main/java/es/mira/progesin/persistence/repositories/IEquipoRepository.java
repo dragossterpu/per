@@ -28,7 +28,8 @@ public interface IEquipoRepository extends CrudRepository<Equipo, Long> {
     public List<Equipo> findByFechaBajaIsNull();
     
     /**
-     * Búsqueda de equipos por nombre de usuario
+     * Búsqueda de equipos por nombre de usuario.
+     * 
      * @param paramLogin nombre usuario (username)
      * @return listado de equipos a los que pertenece el usuario
      */
