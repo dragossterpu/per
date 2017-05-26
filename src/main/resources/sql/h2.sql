@@ -23,10 +23,6 @@ insert into DEPARTAMENTO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacio
 insert into DEPARTAMENTO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('10','Asesores',TODAY,null,null,'system',null,null);
 insert into DEPARTAMENTO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('11','Conductores',TODAY,null,null,'system',null,null);
 
-
-
-
-
 insert into EMPLEO (ID,DESCRIPCION,NOMBRE_CORTO,ID_CUERPO) values ('1','Teniente General','Tte. Gral.','2');
 insert into EMPLEO (ID,DESCRIPCION,NOMBRE_CORTO,ID_CUERPO) values ('2','General de División','Gral. Div.','2');
 insert into EMPLEO (ID,DESCRIPCION,NOMBRE_CORTO,ID_CUERPO) values ('3','General de Brigada','Gral. Bri.','2');
@@ -241,7 +237,6 @@ insert into PROVINCIAS (CODIGO,CODIGO_MN,NOMBRE) values (28,'M','Madrid');
 insert into MUNICIPIOS (ID,NAME,CODE_PROVINCE) values (4331,'FRESNO DE TOROTE',28);
 insert into MUNICIPIOS (ID,NAME,CODE_PROVINCE) values (4348,'LEGANÉS',28);
 
-
 insert into tipos_unidad (id, descripcion) values (1, 'Cª Distrito');
 insert into tipos_unidad (id, descripcion) values (2, 'Cª local');
 insert into tipos_unidad (id, descripcion) values (3, 'Cª Provincial');
@@ -278,6 +273,59 @@ insert into SOLICITUD_DOC_PREVIA (ID,APOYO_CORREO,APOYO_NOMBRE,APOYO_PUESTO,APOY
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (1,'Actas de las Comisiones Provinciales de Seguridad Privada de los años 2014 y 2015','PDF',1,'ACPSP');
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (2,'Evaluación de Riesgos Laborales','PDF',1,'PRL');
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (3,'Memoria Anual de 2015','PDF',1,'MA');
+
+insert into tipo_documento (id, nombre) values (1,'tipoDoc1');
+insert into tipo_documento (id, nombre) values (2,'tipoDoc2');
+insert into tipo_documento (id, nombre) values (3,'tipoDoc3');
+
+insert into documentos_blob (id, nombre_fichero) VALUES (1, 'fichero1.xlsx');
+insert into documentos_blob (id, nombre_fichero) VALUES (2, 'fichero2.xlsx');
+insert into documentos_blob (id, nombre_fichero) VALUES (3, 'fichero3.xlsx');
+
+insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (1, 1,'contenido_docx1','documento1.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 3);
+insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (2, 3,'contenido_docx2','documento2.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 2);
+insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento,fecha_baja) values (3, 2,'contenido_docx3','documento3.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 1, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'));
+
+--Cuestionarios
+
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLATEST', 'TABLATEST1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZTEST', 'MATRIZTEST1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZTEST', 'MATRIZTEST2');
+
+Insert into MODELOSCUESTIONARIOS (id,CODIGO,DESCRIPCION) values (1,'MODELO_TEST','MODELO_TEST1');
+Insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (1, 'AREATEST1', 1, 0);
+
+insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (1, 'PreguntaTest1', 1, 'MATRIZTEST', 0);
+insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (2, 'PreguntaTest2', 1, 'TABLATEST', 1);
+insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (3, 'PreguntaTest3', 1, 'TABLATEST', 2);
+
+--Cuestionario personalizado activo
+insert into cuestionario_personalizado (ID, FECHA_BAJA, FECHA_CREACION, NOMBRE_CUESTIONARIO, USERNAME_BAJA, USERNAME_CREACION, ID_MODELO_CUESTIONARIO) VALUES (1, null, to_timestamp('28/04/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO_TEST1', null, 'system', 1);
+
+--Cuestionario personalizado de baja
+insert into cuestionario_personalizado (ID, FECHA_BAJA, FECHA_CREACION, NOMBRE_CUESTIONARIO, USERNAME_BAJA, USERNAME_CREACION, ID_MODELO_CUESTIONARIO) VALUES (2, to_timestamp('21/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('20/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO_TEST2', null, 'system', 1);
+
+--Cuestionario enviado sin respuesta aún
+insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
+(1, 'cargoTest1', 'test1@ezentis.com', null, null, to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, SYSDATE, null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, null, 1, 1);
+
+--Cuestionario enviado y cumplimentado sin revisar
+insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
+(2, 'cargoTest2', 'test2@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, SYSDATE, null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, null, 1, 1);
+
+--Cuestionario enviado y cumplimentado no conforme
+insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
+(3, 'cargoTest3', 'test3@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, SYSDATE, to_timestamp('20/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, 'system', 1, 1);
+
+--Cuestionario enviado y cumplimentado finalizado
+insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
+(4, 'cargoTest4', 'test4@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), SYSDATE, to_timestamp('26/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', 'system', null, 1, 1);
+
+insert into respuestascuestionario (FECHA_VALIDACION, RESPUESTA_TEXTO, USERNAME_VALIDACION, ID_CUEST_ENVIADO, ID_PREGUNTA) VALUES (null, 'respuesta_test1', 'system', 1, 1);
+insert into respuestascuestionario (FECHA_VALIDACION, RESPUESTA_TEXTO, USERNAME_VALIDACION, ID_CUEST_ENVIADO, ID_PREGUNTA) VALUES (null, 'respuesta_test2', 'system', 1, 2);
+
+insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 1, 3);
+insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 2, 2);
 
 
 COMMIT;
