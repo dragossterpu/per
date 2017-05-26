@@ -2,7 +2,7 @@ package es.mira.progesin.services;
 
 /**
  *
- * Intefaz para el servicio de documentos
+ * Intefaz para el servicio de documentos.
  * 
  * @author Ezentis
  * 
@@ -25,7 +25,7 @@ import es.mira.progesin.web.beans.DocumentoBusqueda;
 /**
  * Interfaz del servicio de Documentos.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 public interface IDocumentoService {
@@ -175,7 +175,7 @@ public interface IDocumentoService {
      * extensionCorrecta
      * 
      * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión) se
-     * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera)
+     * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera).
      * 
      * 
      * @param file fichero para el cual se quiere comprobar la validez de la extensión
@@ -201,7 +201,7 @@ public interface IDocumentoService {
             DocumentoBusqueda busqueda);
     
     /**
-     * Consulta el número de registros en base de datos que corresponden a los criterios de búsqueda
+     * Consulta el número de registros en base de datos que corresponden a los criterios de búsqueda.
      * 
      * @param busqueda Objeto que contiene los criterios de búsqueda
      * @return número de registros correspondientes a la búsqueda
@@ -217,14 +217,14 @@ public interface IDocumentoService {
     public String obtieneNombreFichero(Documento documento);
     
     /**
-     * Devuelve la lista de tipos de documentos
+     * Devuelve la lista de tipos de documentos.
      * 
      * @return lista de tipos de documentos
      */
     public List<TipoDocumento> listaTiposDocumento();
     
     /**
-     * Recupera un documento de la papelera
+     * Recupera un documento de la papelera.
      * 
      * @param documento Es el documento a recuperar de la papelera
      */
@@ -232,7 +232,7 @@ public interface IDocumentoService {
     
     /**
      * 
-     * Devuelve una lista de las inspecciones asociadas al documento pasado como parámetro
+     * Devuelve una lista de las inspecciones asociadas al documento pasado como parámetro.
      * 
      * @param documento del que se desean recuperar las inspecciones
      * @return lista de inspecciones asociadas al documento
@@ -240,7 +240,7 @@ public interface IDocumentoService {
     public List<Inspeccion> listaInspecciones(Documento documento);
     
     /**
-     * Devuelve una lista de id de Cuestionarios que tienen asociado el documento pasado como parámetro
+     * Devuelve una lista de id de Cuestionarios que tienen asociado el documento pasado como parámetro.
      * 
      * @param documento del que se desean recuperar los cuestionarios
      * @return lista de cuestionarios
@@ -248,7 +248,7 @@ public interface IDocumentoService {
     public List<Long> buscaDocumentoEnCuestionarios(Documento documento);
     
     /**
-     * Devuelve una lista de solicitudes de documentación que tienen asociado el documento pasado como parámetro
+     * Devuelve una lista de solicitudes de documentación que tienen asociado el documento pasado como parámetro.
      * 
      * @param documento del que se desean recuperar las solicitudes
      * @return lista de solicitudes
@@ -257,7 +257,7 @@ public interface IDocumentoService {
     public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento);
     
     /**
-     * Elimina todos los documentos almacenados en la papelera
+     * Elimina todos los documentos almacenados en la papelera.
      */
     public void vaciarPapelera();
     

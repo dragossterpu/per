@@ -10,7 +10,7 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
 
 /**
- * Servicio para la gestión de tipos de inspección
+ * Implementación del servicio para la gestión de tipos de inspección.
  * @author EZENTIS
  *
  */

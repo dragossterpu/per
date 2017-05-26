@@ -10,38 +10,38 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.gd.Documento;
 
 /**
- * Repositorio de operaciones de base de datos para la entidad Documento
+ * Repositorio de operaciones de base de datos para la entidad Documento.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
     
     /**
-     * Recupera el listado de documentos que no han sido dados de baja
+     * Recupera el listado de documentos que no han sido dados de baja.
      * 
-     * @return List<Documento>
+     * @return List<Documento> lista de documentos encontrados
      */
     List<Documento> findByFechaBajaIsNull();
     
     /**
-     * Recupera el listado de documentos que han sido dados de baja
+     * Recupera el listado de documentos que han sido dados de baja.
      * 
-     * @return List<Documento>
+     * @return List<Documento> lista de documentos encontrados
      */
     List<Documento> findByFechaBajaIsNotNull();
     
     /**
-     * Recupera documento de la base de datos identificado por el id recibido como parámetro
+     * Recupera documento de la base de datos identificado por el id recibido como parámetro.
      * 
      * @param id Long Identificador del fichero
-     * @return Documento
+     * @return Documento encontrado
      */
     @EntityGraph(value = "Documento.fichero", type = EntityGraph.EntityGraphType.LOAD)
     Documento findById(Long id);
     
     /**
-     * Devuelve una lista con los id de los cuestionarios que tengan adjunto el documento recibido como parámetro
+     * Devuelve una lista con los id de los cuestionarios que tengan adjunto el documento recibido como parámetro.
      * 
      * @param idDocumento Id del documento a buscar
      * @return Lista de los id de los cuestionarios que tienen adjunto este documento
@@ -50,7 +50,7 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
     List<Long> buscaRespuestaDocumento(Long idDocumento);
     
     /**
-     * Elimina todos los registros cuya fecha de baja no sea null
+     * Elimina todos los registros cuya fecha de baja no sea null.
      */
     @Transactional(readOnly = false)
     void deleteByFechaBajaIsNotNull();
