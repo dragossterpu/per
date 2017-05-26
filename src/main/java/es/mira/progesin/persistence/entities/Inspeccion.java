@@ -31,9 +31,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @author EZENTIS
+ * Entidad para una inspección.
  * 
- * Entidad para una inspección
+ * @author EZENTIS
  *
  */
 @AllArgsConstructor
@@ -106,10 +106,10 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     private Date fechaPrevista;
     
     @Column(name = "username_anulacion")
-    protected String usernameAnulacion;
+    private String usernameAnulacion;
     
     @Column(name = "fecha_anulacion")
-    protected Date fechaAnulacion;
+    private Date fechaAnulacion;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "inspecciones_asociadas", joinColumns = {

@@ -100,12 +100,12 @@ public class UserService implements IUserService {
         criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo");
         
         if (userBusqueda.getFechaDesde() != null) {
-            criteria.add(Restrictions.ge(Constantes.FECHA_ALTA, userBusqueda.getFechaDesde()));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, userBusqueda.getFechaDesde()));
         }
         
         if (userBusqueda.getFechaHasta() != null) {
             Date fechaHasta = new Date(userBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
-            criteria.add(Restrictions.le(Constantes.FECHA_ALTA, fechaHasta));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
         if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
@@ -216,7 +216,7 @@ public class UserService implements IUserService {
                 criteria.addOrder(Order.desc(sortField));
             }
         } else {
-            criteria.addOrder(Order.desc(Constantes.FECHA_ALTA));
+            criteria.addOrder(Order.desc(Constantes.FECHAALTA));
         }
         
         @SuppressWarnings("unchecked")

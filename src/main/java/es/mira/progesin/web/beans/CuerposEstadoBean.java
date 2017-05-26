@@ -72,7 +72,7 @@ public class CuerposEstadoBean implements Serializable {
                         SeccionesEnum.ADMINISTRACION.name());
             }
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERROR_MENSAJE,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar borrar un cuerpo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
@@ -103,7 +103,7 @@ public class CuerposEstadoBean implements Serializable {
                     "El cuerpo ha sido creado con éxito");
             
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERROR_MENSAJE,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar dar de alta el cuerpo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }

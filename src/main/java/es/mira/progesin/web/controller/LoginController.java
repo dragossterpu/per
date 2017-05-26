@@ -34,7 +34,7 @@ public class LoginController {
      * petición AJAX dentro de una vista
      * @throws IOException en caso de fallo en servlet
      */
-    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTA_LOGIN)
+    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTALOGIN)
     public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
             // JSF ajax request. Return special XML response which instructs JavaScript that it should in turn perform a
@@ -55,7 +55,7 @@ public class LoginController {
      * @param session sesión asociada a la petición actual
      * @return acción de login mapeada en el dispatcher
      */
-    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTA_LOGOUT)
+    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTALOGOUT)
     public String logout(HttpSession session) {
         session.invalidate();
         return Constantes.LOGIN;

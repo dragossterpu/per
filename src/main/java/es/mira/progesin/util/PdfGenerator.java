@@ -345,8 +345,8 @@ public class PdfGenerator {
             p.setBold();
             document.add(p);
             
-            if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                    || pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
+            if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)
+                    || pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
                 document.add(crearRespuestaTipoTablaMatriz(respuesta));
             } else {
                 p = new Paragraph(respuesta.getRespuestaTexto());
@@ -371,7 +371,7 @@ public class PdfGenerator {
         tabla.setPaddingBottom(30);
         tabla.setPaddingTop(30);
         
-        if (tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
+        if (tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
             tabla = new Table(valoresColumnas.size() + 1);
             // Añado la primera columna de la cabecera vacía
             tabla.addHeaderCell("");
@@ -389,7 +389,7 @@ public class PdfGenerator {
         tabla.getHeader().setPaddingTop(20);
         
         for (DatosTablaGenerica datosTabla : listaDatosTabla) {
-            if (tipoRespuesta.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
+            if (tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
                 Cell cell = new Cell();
                 cell.add(datosTabla.getNombreFila());
                 cell.setBackgroundColor(Color.LIGHT_GRAY);

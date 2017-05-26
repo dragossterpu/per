@@ -17,9 +17,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author EZENTIS
+ * Clase abstracta para evitar la duplicidad de código en el resto de las entities.
  * 
- * Clase abstracta para evitar la duplicidad de código en el resto de las entities
+ * @author EZENTIS
  *
  */
 @Getter

@@ -55,7 +55,7 @@ public class HtmlPdfGenerator {
         
         // CSS
         CSSResolver cssResolver = new StyleAttrCSSResolver();
-        CssFile cssTextEditor = XMLWorkerHelper.getCSS(getCSSInputStream(Constantes.CSS_TEXT_EDITOR_PDF));
+        CssFile cssTextEditor = XMLWorkerHelper.getCSS(getCSSInputStream(Constantes.CSSTEXTEDITORPDF));
         cssResolver.addCss(cssTextEditor);
         
         // HTML

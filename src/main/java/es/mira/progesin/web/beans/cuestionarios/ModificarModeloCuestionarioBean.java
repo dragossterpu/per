@@ -362,7 +362,7 @@ public class ModificarModeloCuestionarioBean {
      * @param tipoRespuesta seleccionado
      */
     public void aniadeValor(String valor, String tipoRespuesta) {
-        if ((!valor.isEmpty() && Constantes.TIPO_RESPUESTA_RADIO.equals(tipoRespuesta))
+        if ((!valor.isEmpty() && Constantes.TIPORESPUESTARADIO.equals(tipoRespuesta))
                 || (!valor.isEmpty() && listadoValoresNuevaRespuesta.size() <= 20)) {
             listadoValoresNuevaRespuesta.add(valor);
         }
@@ -422,7 +422,7 @@ public class ModificarModeloCuestionarioBean {
                 textoError = "Introdzca el nombre de la respuesta";
             } else if (listadoValoresNuevaRespuesta.isEmpty()) {
                 textoError = "Introduzca los valores del tipo de respuesta";
-            } else if (Constantes.TIPO_RESPUESTA_MATRIZ.equals(tipoPersonalizado) && listadoValoresFila.isEmpty()) {
+            } else if (Constantes.TIPORESPUESTAMATRIZ.equals(tipoPersonalizado) && listadoValoresFila.isEmpty()) {
                 textoError = "Introduzca los valores para las filas";
             }
             if (textoError.isEmpty()) {
@@ -597,8 +597,8 @@ public class ModificarModeloCuestionarioBean {
      */
     public void onSelectTipo(SelectEvent event) {
         setTipoSeleccionado(event.getObject().toString());
-        if (tipoSeleccionado.startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                || tipoSeleccionado.startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
+        if (tipoSeleccionado.startsWith(Constantes.TIPORESPUESTATABLA)
+                || tipoSeleccionado.startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
             datosTabla = new DataTableView();
             construirTipoRespuestaTablaMatrizVacia(tipoSeleccionado);
         }
@@ -614,7 +614,7 @@ public class ModificarModeloCuestionarioBean {
     private void construirTipoRespuestaTablaMatrizVacia(String tipo) {
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestasCuestionarioRepository
                 .findByConfigSeccionOrderByConfigClaveAsc(tipo);
-        if (tipo != null && tipo.startsWith(Constantes.TIPO_RESPUESTA_TABLA)) {
+        if (tipo != null && tipo.startsWith(Constantes.TIPORESPUESTATABLA)) {
             datosTabla.crearTabla(valoresColumnas);
         } else {
             datosTabla.crearMatriz(valoresColumnas);

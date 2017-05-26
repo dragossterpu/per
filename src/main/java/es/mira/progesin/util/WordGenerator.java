@@ -174,7 +174,7 @@ public class WordGenerator {
         
         XWPFRun run = paragraph.createRun();
         
-        ClassPathResource logo = new ClassPathResource(Constantes.LOGO_MININISTERIO_INTERIOR);
+        ClassPathResource logo = new ClassPathResource(Constantes.LOGOMININISTERIOINTERIOR);
         XWPFPicture picture = run.addPicture(logo.getInputStream(), XWPFDocument.PICTURE_TYPE_PNG, logo.getPath(),
                 Units.toEMU(177 * 0.6), Units.toEMU(90 * 0.6));
         
@@ -189,7 +189,7 @@ public class WordGenerator {
         setTabStop(paragraph, STTabJc.Enum.forString("right"), pos2);
         
         run.addTab();
-        logo = new ClassPathResource(Constantes.LOGO_IPSS);
+        logo = new ClassPathResource(Constantes.LOGOIPSS);
         XWPFPicture picture2 = run.addPicture(logo.getInputStream(), XWPFDocument.PICTURE_TYPE_PNG, logo.getPath(),
                 Units.toEMU(264 * 0.6), Units.toEMU(85 * 0.6));
         blipID = "";
@@ -458,8 +458,8 @@ public class WordGenerator {
             parrafo.setAlignment(ParagraphAlignment.BOTH);
             parrafo.addRun(texto);
             
-            if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)
-                    || pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
+            if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)
+                    || pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
                 crearRespuestaTablaMatriz(doc, pregunta);
             }
         }
@@ -478,7 +478,7 @@ public class WordGenerator {
                 .findColumnasBySeccion(pregunta.getTipoRespuesta());
         
         XWPFTable table;
-        if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)) {
+        if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)) {
             table = doc.createTable(1, valoresColumnas.size());
         } else {
             table = doc.createTable(1, valoresColumnas.size() + 1);
@@ -494,7 +494,7 @@ public class WordGenerator {
         XWPFParagraph parrafoCelda;
         for (int col = 0; col < valoresColumnas.size(); col++) {
             
-            if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_TABLA)) {
+            if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)) {
                 parrafoCelda = filaCabecera.getCell(col).addParagraph();
             } else {
                 parrafoCelda = filaCabecera.getCell(col + 1).addParagraph();
@@ -504,7 +504,7 @@ public class WordGenerator {
             filaCabecera.getCell(col).setColor(COLOR_CELDA_TABLA);
         }
         
-        if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPO_RESPUESTA_MATRIZ)) {
+        if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
             // Añado una fila por cada línea de la matriz
             List<ConfiguracionRespuestasCuestionario> valoresFilas = configuracionRespuestaRepository
                     .findFilasBySeccion(pregunta.getTipoRespuesta());
