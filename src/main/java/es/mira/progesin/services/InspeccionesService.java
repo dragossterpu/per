@@ -32,7 +32,7 @@ import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 /**
  * 
- * Servicio de inspecciones
+ * Implementación del servicio de inspecciones.
  * 
  * @author Ezentis
  *

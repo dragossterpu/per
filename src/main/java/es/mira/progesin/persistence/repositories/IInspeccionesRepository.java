@@ -10,6 +10,8 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 
 /**
+ * Repositorio de inspecciones.
+ * 
  * @author Ezentis
  *
  */
@@ -49,11 +51,15 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
     @Query(value = "select ins.* from documentos_inspeccion di, inspecciones ins where di.id_inspeccion=ins.id and di.id_documento=?1", nativeQuery = true)
     public List<Inspeccion> cargaInspeccionesDocumento(Long idDocumento);
     
+    /**
+     * @param idGuia identificador de la guía
+     * @return lista de inspecciones asociadas a una guía
+     */
     @Query(value = "select ins.* from guia_inspeccion di, inspecciones ins where di.id_inspeccion=ins.id and di.id_guia=?1", nativeQuery = true)
     public List<Inspeccion> cargaInspeccionesGuia(Long idGuia);
     
     /**
-     * @param idInspeccion
+     * @param idInspeccion identificador de la inspección
      * @return devuelve una lista con las inspecciones asociads de otra indicando su id
      */
     @Query(value = "select insAsociadas.* from inspecciones_asociadas i, inspecciones insAsociadas where i.id_inspeccion_asociada=insAsociadas.id and i.id_inspeccion= :idInspeccion ORDER BY insAsociadas.id,insAsociadas.anio", nativeQuery = true)
@@ -61,7 +67,7 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
     
     /**
      * @param tipo de inspección
-     * @return true o false dependiendo de si existe una inspección del tipo pasado por parámetro
+     * @return valor booleano dependiendo de si existe una inspección del tipo pasado por parámetro
      */
     public boolean existsByTipoInspeccion(TipoInspeccion tipo);
 }

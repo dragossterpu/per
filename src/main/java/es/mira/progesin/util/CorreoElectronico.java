@@ -22,8 +22,7 @@ import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 
 /**
- * 
- * Implementación de la clase ICorreoElectronico
+ * Implementación de la clase ICorreoElectronico.
  * 
  * @author EZENTIS
  * 

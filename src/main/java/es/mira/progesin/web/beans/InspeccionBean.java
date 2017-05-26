@@ -40,6 +40,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * 
+ * Bean controller donde se ubica la lógica de la administración de inspecciones. Busca inspecciones, las guarda,
+ * edita...
+ * 
  * @author EZENTIS
  *
  */
@@ -49,54 +53,136 @@ import lombok.Setter;
 @Scope("session")
 public class InspeccionBean {
     
+    /**
+     * Variable utilizada para almacenar un parámetro que corresponde a la última úbicación, última vista visitada
+     * cuando realizamos una navegación.
+     * 
+     */
     private String vieneDe;
     
+    /**
+     * Variable utilizada para almacenar la inspección los valores de filtrado cuando se realiza una busqueda de
+     * inspecciones.
+     * 
+     */
     private InspeccionBusqueda inspeccionBusqueda;
     
+    /**
+     * Variable utilizada para almacenar la inspección cargada en memoria en ese momento. Puede ser una a modificar, una
+     * nueva inspección...
+     * 
+     */
     private Inspeccion inspeccion;
     
+    /**
+     * Variable utilizada para almacenar el resultado de mostrar una columna o no en la tabla de búsqueda de
+     * inspecciones.
+     * 
+     */
     private List<Boolean> list;
     
+    /**
+     * Variable utilizada para almacenar la lista de inspecciones asignadas a cierta inspección antes de proceder a su
+     * almacenamiento en base de datos.
+     * 
+     */
     private List<Inspeccion> inspeccionesAsignadasActuales;
     
+    /**
+     * Variable utilizada para almacenar la lista de inspecciones seleccionadas en la tabla de búsqueda. Es inicializada
+     * y controlada por Primefaces.
+     * 
+     */
     private List<Inspeccion> inspeccionesSeleccionadas;
     
+    /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
     @Autowired
     private IRegistroActividadService regActividadService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de inspecciones.
+     * 
+     */
     @Autowired
     private IInspeccionesService inspeccionesService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de equipos.
+     * 
+     */
     @Autowired
     private IEquipoService equipoService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de los municipios.
+     * 
+     */
     @Autowired
     private IMunicipioService municipioService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de los miembros de un equipo.
+     * 
+     */
     @Autowired
     private IMiembroService miembroService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de los tipos de inspección.
+     * 
+     */
     @Autowired
     private ITipoInspeccionService tipoInspeccionService;
     
+    /**
+     * Variable utilizada para almacenar la lista de municipios asociados a una inspección.
+     * 
+     */
     private List<Municipio> listaMunicipios;
     
+    /**
+     * Variable utilizada para cargar la lista de equipos.
+     * 
+     */
     private List<Equipo> listaEquipos;
     
+    /**
+     * Variable utilizada para almacenar el valor de la provincia seleccionada.
+     * 
+     */
     private Provincia provinciSelec;
     
+    /**
+     * Variable booleana utilizada para controlar la selección total de inspecciones asociadas.
+     * 
+     */
     private boolean selectedAll;
     
+    /**
+     * Declaración del modelo lazy de inspecciones utilizada para la paginación del servidor.
+     * 
+     */
     private LazyModelInspeccion model;
     
-    private static final String EL_USUARIO = "El usuario";
+    /**
+     * Constante utilizada varias veces para mostrar mensajes.
+     * 
+     */
+    private static final String ELUSUARIO = "El usuario";
     
+    /**
+     * Lista de tipos de inspecciones precargadas para utilizar en los combos de selección.
+     * 
+     */
     private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * 
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
-     * de la tabla y con el orden por defecto
+     * de la tabla y con el orden por defecto.
      * 
      */
     public void buscarInspeccion() {
@@ -107,23 +193,24 @@ public class InspeccionBean {
     
     /**
      * 
-     * Visualiza la inspeccion personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección"
+     * Visualiza la inspeccion personalizada pasada como parámetro redirigiendo a la vista "visualizaInspección".
      * 
-     * @param inspeccion a visualizar
+     * @param insp a visualizar
      * @return Devuelve la ruta de la vista visualizarInspecciones
      * 
      */
     
-    public String visualizaInspeccion(Inspeccion inspeccion) {
-        this.inspeccion = inspeccionesService.findInspeccionById(inspeccion.getId());
+    public String visualizaInspeccion(Inspeccion insp) {
+        this.inspeccion = inspeccionesService.findInspeccionById(insp.getId());
         List<Inspeccion> listaAsociadas = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
         setInspeccionesAsignadasActuales(listaAsociadas);
         return "/inspecciones/visualizarInspeccion?faces-redirect=true";
     }
     
     /**
+     * 
      * Visualiza la vista de busqueda de inspecciones donde podemos asociar otras inspecciones a la que estamos
-     * modificando o creando nueva
+     * modificando o creando nueva.
      * 
      * @return devuelve la ruta de la vista donde asociamos las inspecciones
      */
@@ -164,7 +251,7 @@ public class InspeccionBean {
     
     /**
      * 
-     * Limpia los valores del objeto de búsqueda de inspecciones
+     * Limpia los valores del objeto de búsqueda de inspecciones.
      * 
      */
     
@@ -199,8 +286,8 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que guarda la inspección nueva creada en la base de datos
-     * @return null no redirigimos
+     * Método que guarda la inspección nueva creada en la base de datos.
+     * @return null nos quedamos en la vista actual.
      * 
      */
     public String altaInspeccion() {
@@ -233,11 +320,11 @@ public class InspeccionBean {
      * Método que prepara el objeto y los parámetros necesarios antes de proceder a su modificación. Posteriormente
      * redirige a la vista de modificar inspección.
      * 
-     * @param inspeccion seleccionada
+     * @param insp seleccionada
      * @return devuelve la ruta donde se realiza la modificaión de la inspección
      */
-    public String getFormModificarInspeccion(Inspeccion inspeccion) {
-        setListaMunicipios(municipioService.findByProvincia(inspeccion.getMunicipio().getProvincia()));
+    public String getFormModificarInspeccion(Inspeccion insp) {
+        setListaMunicipios(municipioService.findByProvincia(insp.getMunicipio().getProvincia()));
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
@@ -247,16 +334,18 @@ public class InspeccionBean {
             listaEquipos.add(miembro.getEquipo());
         }
         
-        this.inspeccion = inspeccion;
-        setProvinciSelec(inspeccion.getMunicipio().getProvincia());
-        inspeccionBusqueda.setInspeccionModif(inspeccion);
+        this.inspeccion = insp;
+        setProvinciSelec(insp.getMunicipio().getProvincia());
+        inspeccionBusqueda.setInspeccionModif(insp);
         inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
     
     /**
+     * 
      * Guarda la inspección modificada en la base de datos.
+     * 
      */
     public void modificarInspeccion() {
         try {
@@ -286,7 +375,7 @@ public class InspeccionBean {
     
     /**
      * 
-     * Inicializa el bean
+     * Inicializa el bean de búsqueda.
      * 
      */
     
@@ -306,7 +395,7 @@ public class InspeccionBean {
     
     /**
      * 
-     * Limpia el menú de búsqueda si se accede a través del menú lateral
+     * Limpia el menú de búsqueda si se accede a través del menú lateral.
      * 
      */
     
@@ -320,11 +409,10 @@ public class InspeccionBean {
     }
     
     /**
-     * 
      * Cuando un usuario use la opción de eliminar se hará una elimianción lógica de la base de datos (fecha de baja
-     * será null)
+     * será null).
      * 
-     * @param inspeccionEliminar La inspección a anular
+     * @param inspeccionEliminar inspección a dar de baja
      * 
      */
     public void eliminar(Inspeccion inspeccionEliminar) {
@@ -335,7 +423,7 @@ public class InspeccionBean {
         try {
             inspeccionesService.save(inspeccionEliminar);
             
-            String descripcion = EL_USUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getNumero();
+            String descripcion = ELUSUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
@@ -346,7 +434,8 @@ public class InspeccionBean {
     }
     
     /**
-     * Guarda un nuevo municipio
+     * Guarda un nuevo municipio.
+     * 
      * @param nombre del municipio nuevo
      * @param provincia a la que se asocia el nuevo municipio
      */
@@ -379,9 +468,9 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que desasocia una inspección al seleccionar el checkbox
+     * Método que desasocia una inspección al deseleccionar su checkbox.
      *
-     * @param event lanzado que contiene la inspeccion
+     * @param event evento lanzado que contiene la inspección
      */
     public void onRowUnSelected(UnselectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
@@ -389,9 +478,9 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que asocia una inspección al seleccionar el checkbox
+     * Método que asocia una inspección al seleccionar su checkbox.
      *
-     * @param event lanzado que contiene la inspeccion
+     * @param event evento lanzado que contiene la inspección
      */
     public void onRowSelected(SelectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
@@ -399,8 +488,9 @@ public class InspeccionBean {
     }
     
     /**
-     * Método que capura el evento "Seleccionar todos" o "Deseleccionar todos" en el momento de asociar una inspección.
+     * Método que capura el evento "Seleccionar todos" o "Deseleccionar todos" en la vista de asociar inspecciones.
      * Automáticamente los carga en la lista de inspecciones asociadas.
+     * 
      */
     public void onToggleSelect() {
         if (!isSelectedAll()) {
@@ -415,20 +505,21 @@ public class InspeccionBean {
     }
     
     /**
-     * Añade todas las inspecciones asignadas a las inspecciones seleccionadas en la tabla para no perderlas cuando
-     * realizamos la paginación de servidor.
+     * Añade todas las inspecciones asignadas a las inspecciones seleccionadas en la tabla para no perderlas al cambiar
+     * de página.
+     * 
      */
     public void paginator() {
         inspeccionesSeleccionadas = inspeccionesAsignadasActuales;
     }
     
     /**
-     * Elimina una inspección de la lista de inspecciones asociadas
+     * Elimina una inspección de la lista de inspecciones asociadas.
      * 
-     * @param inspeccion Inspección a desasociar
+     * @param insp Inspección a desasociar
      */
-    public void desAsociarInspeccion(Inspeccion inspeccion) {
-        inspeccionesAsignadasActuales.remove(inspeccion);
+    public void desAsociarInspeccion(Inspeccion insp) {
+        inspeccionesAsignadasActuales.remove(insp);
     }
     
 }
