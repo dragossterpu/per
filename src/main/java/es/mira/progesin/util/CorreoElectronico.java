@@ -17,6 +17,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;

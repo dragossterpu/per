@@ -1,4 +1,4 @@
-package es.mira.progesin.util;
+package es.mira.progesin.exceptions;
 
 import java.util.Arrays;
 

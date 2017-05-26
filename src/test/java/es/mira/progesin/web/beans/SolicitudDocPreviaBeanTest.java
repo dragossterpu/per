@@ -10,7 +10,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +40,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -258,7 +258,8 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormModificarSolicitud(SolicitudDocumentacionPrevia)}.
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormModificarSolicitud(SolicitudDocumentacionPrevia)}
+     * .
      */
     @Test
     public void getFormModificarSolicitud() {
@@ -835,10 +836,10 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#imprimirPdf()}.
-     * @throws IOException al generar el archivo
+     * @throws ProgesinException al generar el archivo
      */
     @Test
-    public void imprimirPdf() throws IOException {
+    public void imprimirPdf() throws ProgesinException {
         SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         @SuppressWarnings("unchecked")
