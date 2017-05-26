@@ -17,14 +17,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum RoleEnum {
-    ROLE_ADMIN("Administrador", false), ROLE_JEFE_INSPECCIONES("Jefe de inspecciones", false), ROLE_EQUIPO_INSPECCIONES(
-            "Equipo de inspecciones",
-            false), ROLE_SERVICIO_APOYO("Servicio de apoyo", false), ROLE_GABINETE("Gabinete de estudio y análisis",
-                    false), ROLE_PROV_SOLICITUD("Provisional vista documentación previa",
-                            true), ROLE_PROV_CUESTIONARIO("Provisional vista cuestionario", true);
+    /**
+     * Role administrador.
+     */
+    ROLE_ADMIN("Administrador", false),
+    /**
+     * Role jefe de inspecciones.
+     */
+    ROLE_JEFE_INSPECCIONES("Jefe de inspecciones", false),
+    /**
+     * Role equipo de inspecciones.
+     */
+    ROLE_EQUIPO_INSPECCIONES("Equipo de inspecciones", false),
+    /**
+     * Role servicio de apoyo.
+     */
+    ROLE_SERVICIO_APOYO("Servicio de apoyo", false),
+    /**
+     * Role para el gabinete.
+     */
+    ROLE_GABINETE("Gabinete de estudio y análisis", false),
+    /**
+     * Role para los usuarios provisionales a la hora de contestar la solicitud de documentación previa.
+     */
+    ROLE_PROV_SOLICITUD("Provisional vista documentación previa", true),
+    /**
+     * Role para los usuarios provisionales a la hora de contestar un cuestionario.
+     */
+    ROLE_PROV_CUESTIONARIO("Provisional vista cuestionario", true);
     
+    /**
+     * Descripción del enum.
+     */
     private String descripcion;
     
+    /**
+     * Indica que role es para los usuarios provisionales.
+     */
     private boolean prov;
     
     /**

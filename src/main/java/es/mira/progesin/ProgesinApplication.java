@@ -23,7 +23,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 
 /**
- * Clase de arranque y configuración de Spring Boot
+ * Clase de arranque y configuración de Spring Boot.
  * 
  * @author EZENTIS
  *
@@ -34,7 +34,8 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 public class ProgesinApplication {
     
     /**
-     * @param args
+     * Punto de entrada de la aplicación para Spring Boot.
+     * @param args parámetros de entrada del método main
      */
     public static void main(String[] args) {
         SpringApplication.run(ProgesinApplication.class, args);
@@ -59,7 +60,7 @@ public class ProgesinApplication {
     }
     
     /**
-     * Implementación que se va a usar para las páginas de error
+     * Implementación que se va a usar para las páginas de error.
      * 
      * @return ErrorPageRegistrar
      */

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import com.sun.faces.config.FacesInitializer;
 
 /**
- * Configuración necesaria para la utilización de JSF junto con Spring
+ * Configuración necesaria para la utilización de JSF junto con Spring.
  * 
  * @author EZENTIS
  *
@@ -31,7 +31,7 @@ public class ConfigureJSF {
     
     /**
      * Clase que hereda de org.springframework.boot.web.servlet.ServletRegistrationBean para poder sobreescribir el
-     * método onStartup y definir el FacesInitializer de JSF
+     * método onStartup y definir el FacesInitializer de JSF.
      * 
      * @author EZENTIS
      *
@@ -39,12 +39,15 @@ public class ConfigureJSF {
     public class JsfServletRegistrationBean extends ServletRegistrationBean {
         
         /**
-         * Constructor
+         * Constructor.
          */
         public JsfServletRegistrationBean() {
             super();
         }
         
+        /**
+         * Configuración al arrancar el Servlet.
+         */
         @Override
         public void onStartup(ServletContext servletContext) throws ServletException {
             

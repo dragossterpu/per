@@ -28,21 +28,35 @@ import es.mira.progesin.services.LoginService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
-    private static final int MAX_CONCURRENT_USER_SESSIONS = 1;
+    /**
+     * Número máximo de usuarios que pueden iniciar sessión con el mismo nombre de usuario.
+     */
+    private static final int MAXCONCURRENTUSERSESSIONS = 1;
     
+    /**
+     * Implementación de UserDetailsService que necesita Spring Security.
+     */
     @Autowired
     private LoginService loginService;
     
+    /**
+     * Implementación de lo que tiene que hacer Spring Security cuando un usuario se loguee con éxito. Usado para la
+     * auditoría de acceso a la aplicación.
+     */
     @Autowired
-    AuthenticationSuccessHandlerPersonalizado authenticationSuccessHandlerPersonalizado;
+    private AuthenticationSuccessHandlerPersonalizado authenticationSuccessHandlerPersonalizado;
     
+    /**
+     * Configuramos el UserDetailsService y el PasswordEncoder que vamos a usar.
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }
     
     /**
-     * Configuración de la codificación de la contraseña usando BCrypt
+     * Configuración de la codificación de la contraseña usando BCrypt.
+     * 
      * @return PasswordEncoder
      */
     @Bean
@@ -50,31 +64,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
     
+    /**
+     * Configuración de la seguridad para no permitir el acceso a páginas por usuarios que no tengan los permisos
+     * adecuados. Defininicón de la redirección de la apliación al iniciar y cerrar sesión en la aplicación.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
-                .permitAll().antMatchers(Constantes.RUTA_LOGIN + "/**").anonymous().antMatchers("/acceso/**")
-                .anonymous()
+                .permitAll().antMatchers(Constantes.RUTALOGIN + "/**").anonymous().antMatchers("/acceso/**").anonymous()
                 // Acceso a la administración sólo para el role ADMIN
                 .antMatchers("/administracion/**", "/users/altaUsuario.xhtml").hasRole(RoleEnum.ROLE_ADMIN.getNombre())
                 // Acceso a ciertas partes sólo el ADMIN y JEFE_INSPECCIONES
                 .antMatchers("/equipos/altaEquipo.xhtml", "/inspecciones/modeloInspeccion/**")
                 .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre())
                 // Al resto pueden acceder todos los usuarios autenticados
-                .anyRequest().authenticated().and().formLogin().loginPage(Constantes.RUTA_LOGIN).permitAll()
-                .successHandler(authenticationSuccessHandlerPersonalizado).failureUrl(Constantes.RUTA_LOGIN);
+                .anyRequest().authenticated().and().formLogin().loginPage(Constantes.RUTALOGIN).permitAll()
+                .successHandler(authenticationSuccessHandlerPersonalizado).failureUrl(Constantes.RUTALOGIN);
         
-        http.logout().logoutUrl(Constantes.RUTA_LOGOUT).logoutSuccessUrl(Constantes.RUTA_LOGIN);
+        http.logout().logoutUrl(Constantes.RUTALOGOUT).logoutSuccessUrl(Constantes.RUTALOGIN);
         
         // configuración para el manejo de las sessiones de los usuarios
-        http.sessionManagement().maximumSessions(MAX_CONCURRENT_USER_SESSIONS).maxSessionsPreventsLogin(true)
+        http.sessionManagement().maximumSessions(MAXCONCURRENTUSERSESSIONS).maxSessionsPreventsLogin(true)
                 .sessionRegistry(sessionRegistry());
         
     }
     
     /**
-     * Usado por spring security para saber los usuarios (Principal) que han iniciado sesión
+     * Usado por spring security para saber los usuarios (Principal) que han iniciado sesión.
      * 
      * @return SessionRegistry
      */
@@ -85,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     /**
      * Trigger usado cuando un usuario cancela su sesión. Es necesario tenerlo definido para poder validar las sesiones
-     * que tiene abiertas un usuario
+     * que tiene abiertas un usuario.
      * 
      * @return HttpSessionEventPublisher
      */
