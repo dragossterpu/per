@@ -48,16 +48,25 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_inspeccion", sequenceName = "seq_inspeccion", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inspeccion")
     @Column(name = "id")
     private Long id;
     
+    /**
+     * Tipo de inspección.
+     */
     @ManyToOne
     @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_i_tipo_inspeccion"), nullable = false)
     private TipoInspeccion tipoInspeccion;
     
+    /**
+     * Equipo.
+     */
     @ManyToOne
     @JoinColumn(name = "id_equipo", foreignKey = @ForeignKey(name = "fk_i_equipo"), nullable = false)
     private Equipo equipo;
@@ -70,47 +79,86 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     // @JoinColumn(name = "inspeccion")
     // private List<CuestionarioEnvio> cuestionarios;
     
+    /**
+     * Nombre de unidad.
+     */
     @Column(name = "nombre_unidad")
     private String nombreUnidad;
     
+    /**
+     * Tipo de unidad.
+     */
     @ManyToOne
     @JoinColumn(name = "tipo_unidad", foreignKey = @ForeignKey(name = "FK_i_TIPOUNIDAD"))
     private TipoUnidad tipoUnidad;
     
+    /**
+     * Ámbito.
+     */
     @Column(name = "ambito", length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
     private AmbitoInspeccionEnum ambito;
     
+    /**
+     * Cuatrimestre.
+     */
     @Column(name = "cuatrimestre", length = 30)
     @Enumerated(EnumType.STRING)
     private CuatrimestreEnum cuatrimestre;
     
+    /**
+     * Estado de inspección.
+     */
     @Column(name = "estado_inspeccion", length = 30)
     @Enumerated(EnumType.STRING)
     private EstadoInspeccionEnum estadoInspeccion;
     
+    /**
+     * Año.
+     */
     @Column(name = "anio", nullable = false)
     private Integer anio;
     
+    /**
+     * Minicipio.
+     */
     @ManyToOne
     @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))
     private Municipio municipio;
     
+    /**
+     * Fecha de finalización.
+     */
     @Column(name = "fecha_finalizacion")
     private Date fechaFinalizacion;
     
+    /**
+     * Usuario de finalización.
+     */
     @Column(name = "username_finalizacion")
     private String usernameFinalizacion;
     
+    /**
+     * Fecha prevista.
+     */
     @Column(name = "fecha_prevista")
     private Date fechaPrevista;
     
+    /**
+     * Usuario de anulación.
+     */
     @Column(name = "username_anulacion")
     private String usernameAnulacion;
     
+    /**
+     * Fecha de anulación.
+     */
     @Column(name = "fecha_anulacion")
     private Date fechaAnulacion;
     
+    /**
+     * Inspecciones asociadas.
+     */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "inspecciones_asociadas", joinColumns = {
             @JoinColumn(name = "id_inspeccion") }, inverseJoinColumns = {

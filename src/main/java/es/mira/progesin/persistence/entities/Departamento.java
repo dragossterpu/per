@@ -19,10 +19,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 
+ * Entity para un departamento.
+ * 
  * @author EZENTIS
  * 
- * Entity para un departamento
- *
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,12 +38,18 @@ public class Departamento extends AbstractEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEPARTAMENTO")
     @SequenceGenerator(name = "SEQ_DEPARTAMENTO", sequenceName = "SEQ_DEPARTAMENTO", allocationSize = 1)
     @Column(name = "id", length = 5)
     private Long id;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "descripcion", length = 100)
     private String descripcion;
     
