@@ -40,39 +40,65 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 /**
- * @author EZENTIS
+ * Test del servicio Solicitud Documentación Previa.
  * 
- * Test del servicio Solicitud Documentación Previa
- *
+ * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityContextHolder.class)
 public class SolicitudDocumentacionServiceTest {
     
+    /**
+     * Mock del security context.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Mock del objeto authentication.
+     */
     @Mock
     private Authentication authentication;
     
+    /**
+     * Mock del session factory.
+     */
     @Mock
     private SessionFactory sessionFactory;
     
+    /**
+     * Mock del servicio de usuario.
+     */
     @Mock
     private IUserService userService;
     
+    /**
+     * Mock del servicio de inspección.
+     */
     @Mock
     private IInspeccionesService inspeccionesService;
     
+    /**
+     * Mock del servicio de tipo de documentación.
+     */
     @Mock
     private ITipoDocumentacionService tipoDocumentacionService;
     
+    /**
+     * Mock del repositorio de la documentación requerida en una solicitud.
+     */
     @Mock
     private IDocumentacionPreviaRepository documentacionPreviaRepository;
     
+    /**
+     * Mock del repositorio de solicitudes de documentación.
+     */
     @Mock
     private ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
     
+    /**
+     * Instancia de prueba del servicio de solicitudes de documentación.
+     */
     @InjectMocks
     private ISolicitudDocumentacionService solicitudDocPreviaService = new SolicitudDocumentacionService();
     
