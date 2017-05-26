@@ -1,8 +1,0 @@
-Contraseñas
-
-JBoss entorno de pruebas
-Usuario/Contraseña: admin/@Ezents2016
-
-Base de datos
-Usuario/Contraseña: system/Progesin2016
-Usuario/Contraseña: progesin_ses/root
