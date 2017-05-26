@@ -26,12 +26,21 @@ import es.mira.progesin.web.beans.EquipoBusqueda;
 @RunWith(MockitoJUnitRunner.class)
 public class EquipoServiceTest {
     
+    /**
+     * Mock del repositorio de miembros de equipo.
+     */
     @Mock
     private IMiembrosRepository miembrosRepository;
     
+    /**
+     * Mock del repositorio de equipos.
+     */
     @Mock
     private IEquipoRepository equipoRepository;
     
+    /**
+     * Instancia de prueba del servicio de equipos.
+     */
     @InjectMocks
     private IEquipoService equipoService = new EquipoService();
     

@@ -26,10 +26,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author EZENTIS
- * 
- * Entity para un equipo de inspecciones
+ * Entity para un equipo de inspecciones.
  *
+ * @author EZENTIS
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,25 +42,43 @@ import lombok.ToString;
 public class Equipo extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_equipo", sequenceName = "seq_equipo", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_equipo")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Nombre.
+     */
     @Column(name = "nombreEquipo", length = 100, nullable = false)
     private String nombreEquipo;
     
+    /**
+     * Tipo.
+     */
     @ManyToOne
     @JoinColumn(name = "idTipoEquipo", foreignKey = @ForeignKey(name = "fk_eq_TipoEquipo"))
     private TipoEquipo tipoEquipo;
     
+    /**
+     * Username del jefe del equipo.
+     */
     @Column(name = "jefeEquipo", length = 100, nullable = false)
     private String jefeEquipo;
     
+    /**
+     * Nombre del jefe del equipo.
+     */
     @Column(name = "nombreJefe", length = 150)
     private String nombreJefe;
     
+    /**
+     * Miembros que integran el equipo incluidos jefe y colaboradores.
+     */
     @OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Miembro> miembros;
     

@@ -14,13 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 /**
- * Servicio de modelos de cuestionario personalizados
+ * Servicio de modelos de cuestionario personalizados.
  * 
  * @author EZENTIS
  */
@@ -36,8 +37,6 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     private static final String FECHA_CREACION = "fechaCreacion";
-    
-    private static final String FECHABAJA = "fechaBaja";
     
     @Override
     @Transactional(readOnly = false)
@@ -87,11 +86,11 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
             
         }
         if (cuestionarioBusqueda.getEstado() == null || cuestionarioBusqueda.getEstado().equals(EstadoEnum.ACTIVO)) {
-            criteria.add(Restrictions.isNull(FECHABAJA));
+            criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
             criteria.addOrder(Order.desc(FECHA_CREACION));
         } else if (cuestionarioBusqueda.getEstado().equals(EstadoEnum.INACTIVO)) {
-            criteria.add(Restrictions.isNotNull(FECHABAJA));
-            criteria.addOrder(Order.desc(FECHABAJA));
+            criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
+            criteria.addOrder(Order.desc(Constantes.FECHABAJA));
         }
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         

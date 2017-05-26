@@ -18,17 +18,22 @@ import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 
 /**
- * @author EZENTIS
+ * Test del servicio de TipoEquipo.
  * 
- * Test del servicio de TipoEquipo
- *
+ * @author EZENTIS
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TipoEquipoServiceTest {
     
+    /**
+     * Mock del repositorio de equipos.
+     */
     @Mock
     private ITipoEquiposRepository tipoEquipoRepository;
     
+    /**
+     * Instancia de prueba del servicio de tipos de equipo.
+     */
     @InjectMocks
     private ITipoEquipoService tipoEquipoService = new TipoEquipoService();
     

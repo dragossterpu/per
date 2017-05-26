@@ -31,24 +31,35 @@ import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
- * @author EZENTIS
+ * Test del bean TipoEquipo.
  * 
- * Test del bean TipoEquipo
+ * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
 // @PowerMockRunnerDelegate(SpringRunner.class)
 @PrepareForTest(FacesUtilities.class)
 public class TipoEquipoBeanTest {
-    
+    /**
+     * Mock del servicio de tipo equipo.
+     */
     @Mock
     private ITipoEquipoService tipoEquipoService;
     
+    /**
+     * Mock del servicio de equipo.
+     */
     @Mock
     private IEquipoService equipoService;
     
+    /**
+     * Mock del servicio de registro actividad.
+     */
     @Mock
     private IRegistroActividadService regActividadService;
     
+    /**
+     * Instancia de prueba del bean de tipos de equipo.
+     */
     @InjectMocks
     private TipoEquipoBean tipoEquipoBean;
     

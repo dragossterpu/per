@@ -19,10 +19,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad para los tipos de equipo4
+ * Entidad para los tipos de equipo.
  * 
- * @author Ezentis
- *
+ * @author EZENTIS
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,20 +32,28 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "TIPO_EQUIPO")
-
 public class TipoEquipo implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_tipo_equipo", sequenceName = "seq_tipo_equipo", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tipo_equipo")
     @Column(name = "ID")
     private Long id;
     
+    /**
+     * Código.
+     */
     @Column(name = "CODIGO", length = 5, unique = true)
     private String codigo;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "DESCRIPCION", length = 100)
     private String descripcion;
     

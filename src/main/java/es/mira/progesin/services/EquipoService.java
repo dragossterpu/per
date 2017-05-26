@@ -26,19 +26,22 @@ import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 /**
- * @author EZENTIS
- * 
- * Sevicio para la clase Equipo
+ * Sevicio para la clase Equipo.
  *
+ * @author EZENTIS
  */
 @Service
 public class EquipoService implements IEquipoService {
     
-    private static final String FECHABAJA = "fechaBaja";
-    
+    /**
+     * Repositorio de equipos.
+     */
     @Autowired
     private IEquipoRepository equipoRepository;
     
+    /**
+     * Session factory.
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
@@ -99,13 +102,13 @@ public class EquipoService implements IEquipoService {
             
         }
         if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.ACTIVO.name())) {
-            criteria.add(Restrictions.isNull(FECHABAJA));
+            criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
         }
         if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.INACTIVO.name())) {
-            criteria.add(Restrictions.isNotNull(FECHABAJA));
-            criteria.addOrder(Order.desc(FECHABAJA));
+            criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
+            criteria.addOrder(Order.desc(Constantes.FECHABAJA));
         } else {
-            criteria.addOrder(Order.desc("fechaAlta"));
+            criteria.addOrder(Order.desc(Constantes.FECHAALTA));
         }
         
     }

@@ -49,10 +49,9 @@ import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
- * @author EZENTIS
+ * Test del bean Equipos.
  * 
- * Test del bean Equipos
- *
+ * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
 // Evita conflictos con clases del sistema al enlazar los mocks por tipo
@@ -63,36 +62,69 @@ import es.mira.progesin.util.FacesUtilities;
 // @TestExecutionListeners(listeners = { WithSecurityContextTestExecutionListener.class })
 public class EquiposBeanTest {
     
+    /**
+     * Mock del security context.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Mock del objeto authentication.
+     */
     @Mock
     private Authentication authentication;
     
+    /**
+     * Mock del servicio de tipos de equipo.
+     */
     @Mock
     private ITipoEquipoService tipoEquipoService;
     
+    /**
+     * Mock del servicio de equipos.
+     */
     @Mock
     private IEquipoService equipoService;
     
+    /**
+     * Mock del servicio de miembros de equipo.
+     */
     @Mock
     private IMiembroService miembroService;
     
+    /**
+     * Mock del servicio de usuarios.
+     */
     @Mock
     private IUserService userService;
     
+    /**
+     * Mock del servicio de registro de actividad.
+     */
     @Mock
     private IRegistroActividadService regActividadService;
     
+    /**
+     * Mock del servicio de notificaciones.
+     */
     @Mock
     private INotificacionService notificacionService;
     
+    /**
+     * Mock del objeto parametros busqueda equipos.
+     */
     @Mock
     private EquipoBusqueda equipoBusqueda;
     
+    /**
+     * Captor del objeto equipo.
+     */
     @Captor
     private ArgumentCaptor<Equipo> equipoCaptor;
     
+    /**
+     * Instancia de prueba del bean de equipos.
+     */
     @InjectMocks
     private EquiposBean equipoBean;
     
