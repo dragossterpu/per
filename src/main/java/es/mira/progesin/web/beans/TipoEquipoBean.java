@@ -27,7 +27,7 @@ import lombok.Setter;
  * Controlador para la gestión de los tipos de equipos de inspección. Alta de equipo, modificar equipo, eliminación de
  * equipo y búsqueda de equipo.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @Setter
@@ -38,21 +38,36 @@ public class TipoEquipoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Variable utilizada para alamcenar los tipos a gestionar y mostrados en al tabla.
+     * 
+     */
     private List<TipoEquipo> listaTipoEquipo;
     
+    /**
+     * Variable utilizada para inyectar el servicio de tipos de equipo.
+     * 
+     */
     @Autowired
     private transient ITipoEquipoService tipoEquipoService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de equipos.
+     * 
+     */
     @Autowired
     private transient IEquipoService equipoService;
     
+    /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Elimina un tipo de equipo
+     * Elimina un tipo de equipo.
      * 
-     * @author Ezentis
      * @param tipo objeto a eliminar
      */
     public void eliminarTipo(TipoEquipo tipo) {
@@ -78,7 +93,7 @@ public class TipoEquipoBean implements Serializable {
     }
     
     /**
-     * Inicializa el bean
+     * Inicializa el bean. Se inicializa la lista de tipos con los existentes en BBDD.
      */
     @PostConstruct
     public void init() {
@@ -86,10 +101,9 @@ public class TipoEquipoBean implements Serializable {
     }
     
     /**
-     * Crea un tipo de equipo
+     * Crea un tipo de equipo.
      * 
-     * @author Ezentis
-     * @param codigo abreviatura
+     * @param codigo abreviatura del tipo
      * @param descripcion definición del tipo
      */
     public void altaTipo(String codigo, String descripcion) {
@@ -116,9 +130,8 @@ public class TipoEquipoBean implements Serializable {
     }
     
     /**
-     * Modificación en caliente desde la tabla de un tipo de equipo
+     * Modificación en caliente desde la tabla de un tipo de equipo.
      * 
-     * @author Ezentis
      * @param event evento lanzado al confirmar el cambio, lleva incluido el objeto TipoEquipo
      */
     public void onRowEdit(RowEditEvent event) {

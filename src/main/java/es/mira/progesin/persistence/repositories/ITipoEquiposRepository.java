@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 
 /**
- * Repositorio de funciones de acceso a la base de datos para la entidad TipoEquipo
+ * Repositorio de funciones de acceso a la base de datos para la entidad TipoEquipo.
  * 
  * @author EZENTIS
  *
@@ -15,7 +15,7 @@ import es.mira.progesin.persistence.entities.TipoEquipo;
 public interface ITipoEquiposRepository extends CrudRepository<TipoEquipo, Long> {
     
     /**
-     * Recupera de base de datos un objeto cuyo código se recibe como parámetro
+     * Recupera de base de datos un objeto cuyo código se recibe como parámetro.
      * 
      * @param codigo del objeto a recuperar
      * @return objeto recuperado
@@ -23,7 +23,7 @@ public interface ITipoEquiposRepository extends CrudRepository<TipoEquipo, Long>
     TipoEquipo findByCodigoIgnoreCase(String codigo);
     
     /**
-     * Recupera todos los objetos ordenados ascendentemente por id
+     * Recupera todos los objetos ordenados ascendentemente por id.
      * 
      * @return lista de objetos
      */

@@ -11,7 +11,7 @@ import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 
 /**
  * 
- * Implementación de los métodos del servicio
+ * Implementación del servicio de tipos de equipo.
  * 
  * @author EZENTIS
  *
