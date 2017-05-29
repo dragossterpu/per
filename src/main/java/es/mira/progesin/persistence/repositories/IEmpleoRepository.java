@@ -8,7 +8,7 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Empleo;
 
 /**
- * Repositorio para los empleos de un usuario
+ * Repositorio para los empleos de un usuario.
  * 
  * @author EZENTIS
  *
@@ -16,10 +16,10 @@ import es.mira.progesin.persistence.entities.Empleo;
 public interface IEmpleoRepository extends CrudRepository<Empleo, Long> {
     
     /**
-     * Busca los empleos asociados a un cuerpo
+     * Busca los empleos asociados a un cuerpo.
      * 
-     * @param cuerpo
-     * @return lista de empleos
+     * @param cuerpo seleccionado
+     * @return lista de empleos por cuerpo
      */
     public List<Empleo> findByCuerpo(CuerpoEstado cuerpo);
 }

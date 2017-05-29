@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 
 /**
- * Repositorio para los tipod de unidad
+ * Repositorio para los tipos de unidad.
  * 
  * @author EZENTIS
  *

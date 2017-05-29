@@ -7,15 +7,16 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 
 /**
- * Respositorio de los puestos de trabajo
+ * Respositorio de los puestos de trabajo.
  * 
  * @author EZENTIS
  *
  */
 public interface IPuestoTrabajoRepository extends CrudRepository<PuestoTrabajo, Long> {
     /**
+     * Busca los puestos de trabajo sin fecha de baja, es decir activos ordenados ascendentemente.
      * 
-     * @return Puestos de trabajo sin fecha de baja, es decir activos
+     * @return lista de puestos
      */
     List<PuestoTrabajo> findByFechaBajaIsNullOrderByIdAsc();
     

@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 
 /**
- * Repositorio de operaciones con base de datos para la entidad AreasCuestionario
+ * Repositorio de operaciones con base de datos para la entidad AreasCuestionario.
  * 
  * @author EZENTIS
  *
@@ -19,7 +19,7 @@ public interface IAreaCuestionarioRepository extends CrudRepository<AreasCuestio
     
     /**
      * Recupera un listado de todas las áreas ordenadas ascendentemente de un cuestionario cuyo id se recibe como
-     * parámetro
+     * parámetro.
      * 
      * @param idCuestionario identificador del cuestionario del que se obtendrán las áreas
      * @return Listado de áreas pertenecientes al cuestionario recibido como parámetro
@@ -29,7 +29,7 @@ public interface IAreaCuestionarioRepository extends CrudRepository<AreasCuestio
     
     /**
      * Recupera un listado de todas las áreas que no se han dado de baja, ordenadas ascendentemente, de un cuestionario
-     * cuyo id se recibe como parámetro
+     * cuyo id se recibe como parámetro.
      * 
      * @param idCuestionario identificador del cuestionario del que se obtendrán las áreas
      * @return Listado de áreas pertenecientes al cuestionario recibido como parámetro
@@ -38,7 +38,7 @@ public interface IAreaCuestionarioRepository extends CrudRepository<AreasCuestio
     
     /**
      * Busca un área identificada por su id recibido como parámetro en cuestionarios personalizados para verificar si ha
-     * sido empleada en alguno
+     * sido empleada en alguno.
      * 
      * @param idArea id del área a buscar en cuestionarios personalizados
      * @return Área encontrada en cuestionarios personalizados
@@ -49,7 +49,7 @@ public interface IAreaCuestionarioRepository extends CrudRepository<AreasCuestio
     AreasCuestionario findAreaExistenteEnCuestionariosPersonalizados(Long idArea);
     
     /**
-     * Recupera un listado de áreas a partir de una lista de id recibida como parámetro
+     * Recupera un listado de áreas a partir de una lista de id recibida como parámetro.
      * 
      * @param listaIdAreasElegidas lista de id de áreas a buscar
      * @return Listado de áreas localizadas

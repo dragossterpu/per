@@ -8,26 +8,26 @@ import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 
 /**
- * Repositorio de municipios
+ * Repositorio de municipios.
  * 
  * @author EZENTIS
  *
  */
 public interface IMunicipioRepository extends CrudRepository<Municipio, Long> {
     /**
-     * Comprueba si existe un municipio
+     * Comprueba si existe un municipio sabiendo su nombre y la provincia a la que pertenece.
      * 
-     * @param name
-     * @param provincia
+     * @param name nombre del municipio.
+     * @param provincia del municipio
      * @return existe?
      */
     boolean existsByNameIgnoreCaseAndProvincia(String name, Provincia provincia);
     
     /**
-     * Busca los municipios de una provincia
+     * Busca todos los municipios de una provincia.
      * 
-     * @param provincia
-     * @return lista de municipios
+     * @param provincia seleccionada
+     * @return lista de municipios por provincia
      */
     List<Municipio> findByProvincia(Provincia provincia);
 }

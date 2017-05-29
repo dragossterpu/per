@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import es.mira.progesin.persistence.entities.Provincia;
 
 /**
- * Repositorio para las provincias
+ * Repositorio para las provincias.
  * 
  * @author EZENTIS
  *
