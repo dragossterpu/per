@@ -38,31 +38,65 @@ import es.mira.progesin.web.beans.InspeccionBusqueda;
 @Service
 public class InspeccionesService implements IInspeccionesService {
     
+    /**
+     * Variable para el formato de la fecha.
+     */
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Variable utilizada para inyectar la SessionFactory.
+     * 
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Variable utilizada para inyectar el repositorio de inspecciones.
+     * 
+     */
     @Autowired
     IInspeccionesRepository inspeccionesRepository;
     
+    /**
+     * Método que guarda una inspección.
+     * @param inspeccion a guardar
+     * @return devuelve la inspección guardada
+     */
     @Override
     @Transactional(readOnly = false)
     public Inspeccion save(Inspeccion inspeccion) {
         return inspeccionesRepository.save(inspeccion);
     }
     
+    /**
+     * Borra una inspección pasada por parámetro.
+     * @param inspeccion a borrar
+     */
     @Override
     @Transactional(readOnly = false)
     public void delete(Inspeccion inspeccion) {
         inspeccionesRepository.delete(inspeccion);
     }
     
+    /**
+     * Busca inspecciones no finalizadas filtrando por el nombre de la unidad o el número de la inspección.
+     * 
+     * @param infoInspeccion nombre de la unidad o número de inspección
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
     @Override
     public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumero(String infoInspeccion) {
         return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumero("%" + infoInspeccion + "%");
     }
     
+    /**
+     * Busca inspecciones filtrando por el nombre de la unidad o el número de la inspección.
+     * 
+     * @param infoInspeccion nombre de la unidad o número de inspección
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
     @Override
     public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(String infoInspeccion,
             String usernameJefeEquipo) {
@@ -70,11 +104,27 @@ public class InspeccionesService implements IInspeccionesService {
                 usernameJefeEquipo);
     }
     
+    /**
+     * Busca una inspección con cierto id pasado por parámetro.
+     * 
+     * @param id de la inspección
+     * @return devuelve inspección si es encontrada.
+     */
     @Override
     public Inspeccion findInspeccionById(Long id) {
         return inspeccionesRepository.findOne(id);
     }
     
+    /**
+     * Método que realiza una consulta de inspecciones, usando criteria, coincidente con determinados parámetros.
+     * 
+     * @param first primer registro
+     * @param pageSize tamaño de la página (número de registros que queremos)
+     * @param sortField campo por el que ordenamos
+     * @param sortOrder si la ordenación es ascendente o descendente
+     * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
+     * @return lista de inspecciones resultado de la consulta
+     */
     @Override
     public List<Inspeccion> buscarInspeccionPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             InspeccionBusqueda busqueda) {
@@ -100,6 +150,10 @@ public class InspeccionesService implements IInspeccionesService {
         return listaInspecciones;
     }
     
+    /**
+     * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
+     * @return número de registros encontrados
+     */
     @Override
     public int getCountInspeccionCriteria(InspeccionBusqueda busqueda) {
         Session session = sessionFactory.openSession();
@@ -113,8 +167,10 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     /**
-     * @param busqueda
-     * @param criteria
+     * Consulta criteria para búsqueda de inspecciones.
+     * 
+     * @param busqueda filtro de búsqueda
+     * @param criteria objeto criteria
      */
     private void consultaCriteriaInspecciones(InspeccionBusqueda busqueda, Criteria criteria) {
         String parametro;
@@ -210,21 +266,46 @@ public class InspeccionesService implements IInspeccionesService {
         }
     }
     
+    /**
+     * Devuelve la lista de inspecciones asociadas a otra.
+     * 
+     * @param inspeccion pasada por parámetro
+     * @return devuelve lista de inspecciones asociadas
+     */
     @Override
     public List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion) {
         return inspeccionesRepository.cargaInspeccionesAsociadas(inspeccion.getId());
     }
     
+    /**
+     * Comprueba si existe una inspección de determinado tipo.
+     * 
+     * @param tipo de inspección
+     * @return valor booleando de la comprobación
+     */
     @Override
     public boolean existeByTipoInspeccion(TipoInspeccion tipo) {
         return inspeccionesRepository.existsByTipoInspeccion(tipo);
     }
     
+    /**
+     * Busca inspecciones filtrando por el nombre de la unidad o el número de la inspección.
+     * 
+     * @param infoInspeccion nombre de la unidad o número de inspección
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
     @Override
     public List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion) {
         return inspeccionesRepository.buscarPorNombreUnidadONumero("%" + infoInspeccion + "%");
     }
     
+    /**
+     * Cambia el estado de una inspección.
+     * 
+     * @param inspeccion a cambiar
+     * @param estado a poner
+     */
     @Override
     public void cambiarEstado(Inspeccion inspeccion, EstadoInspeccionEnum estado) {
         inspeccion.setEstadoInspeccion(estado);

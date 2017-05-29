@@ -45,16 +45,32 @@ public class EquipoService implements IEquipoService {
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Recupera todos los equipos activos y dados de baja.
+     * 
+     * @return lista de equipos
+     */
     @Override
     public List<Equipo> findAll() {
         return (List<Equipo>) equipoRepository.findAll();
     }
     
+    /**
+     * Guarda la información de un equipo en la bdd.
+     * 
+     * @param entity equipo
+     * @return equipo con id
+     */
     @Override
     public Equipo save(Equipo entity) {
         return equipoRepository.save(entity);
     }
     
+    /**
+     * Método que devuelve la lista de equipos en una consulta basada en criteria.
+     * @param equipoBusqueda filtro de la búsqueda
+     * @param criteria objeto criteria
+     */
     private void buscarCriteria(EquipoBusqueda equipoBusqueda, Criteria criteria) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
@@ -92,7 +108,6 @@ public class EquipoService implements IEquipoService {
         if (equipoBusqueda.getNombreMiembro() != null && !equipoBusqueda.getNombreMiembro().isEmpty()) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
             
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(equipoBusqueda.getNombreMiembro(), Normalizer.Form.NFKD)
                     .replaceAll(Constantes.ACENTOS, "");
             subquery.add(Restrictions.ilike("miembro.nombreCompleto", parametro, MatchMode.ANYWHERE));
@@ -113,16 +128,37 @@ public class EquipoService implements IEquipoService {
         
     }
     
+    /**
+     * Comprueba si existe algún equipo del tipo proporcionado.
+     * 
+     * @param tipo de equipo
+     * @return boolean valor booleano
+     */
     @Override
     public boolean existsByTipoEquipo(TipoEquipo tipo) {
         return equipoRepository.existsByTipoEquipo(tipo);
     }
     
+    /**
+     * Recupera sólo los equipos activos.
+     * 
+     * @return lista de equipos
+     */
     @Override
     public List<Equipo> findByFechaBajaIsNull() {
         return equipoRepository.findByFechaBajaIsNull();
     }
     
+    /**
+     * Método que devuelve la lista de equipos en una consulta basada en criteria.
+     * 
+     * @param equipoBusqueda objeto con los criterios de búsqueda
+     * @param first primer elemento
+     * @param pageSize tamaño de cada página de resultados
+     * @param sortField campo por el que se ordenan los resultados
+     * @param sortOrder sentido de la ordenacion (ascendente/descendente)
+     * @return la lista de equipos.
+     */
     @Override
     public List<Equipo> buscarEquipoCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             EquipoBusqueda equipoBusqueda) {
@@ -148,6 +184,12 @@ public class EquipoService implements IEquipoService {
         return listado;
     }
     
+    /**
+     * Método que devuelve el número de equipos en una consulta basada en criteria.
+     * 
+     * @param busqueda objeto con parámetros de búsqueda
+     * @return devuelve el número de registros de una consulta criteria.
+     */
     @Override
     public int getCounCriteria(EquipoBusqueda busqueda) {
         Session session = sessionFactory.openSession();
@@ -160,6 +202,12 @@ public class EquipoService implements IEquipoService {
         return Math.toIntExact(cnt);
     }
     
+    /**
+     * Búsqueda de equipos por nombre de usuario.
+     * 
+     * @param paramLogin nombre usuario (username)
+     * @return listado de equipos a los que pertenece el usuario
+     */
     @Override
     public List<Equipo> buscarEquiposByUsername(String paramLogin) {
         return equipoRepository.buscarEquiposByUsername(paramLogin);

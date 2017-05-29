@@ -58,7 +58,7 @@ public interface IInspeccionesService {
     
     /**
      * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
-     * @return búsqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
+     * @return número de registros encontrados
      */
     int getCountInspeccionCriteria(InspeccionBusqueda busqueda);
     
