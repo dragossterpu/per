@@ -69,92 +69,187 @@ public class SolicitudDocPreviaBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Constante con el valor de la descripción.
+     */
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
     
+    /**
+     * Constante.
+     */
     private static final String ASUNTO = "Asunto: ";
     
+    /**
+     * Parámetro para controlar desde dónde se accede a la vista.
+     */
     private String vieneDe;
     
+    /**
+     * Lista de booleanos para controlar la visibilidad de las columnas en la vista.
+     */
     private List<Boolean> listaColumnToggler;
     
+    /**
+     * Solicitud de documentación previa.
+     */
     private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia;
     
-    private Date backupFechaLimiteEnvio = null;
+    /**
+     * Copia de la fecha límite de envío.
+     */
+    private Date backupFechaLimiteEnvio;
     
     private boolean skip;
     
+    /**
+     * Objeto que almacena el documento descargable.
+     */
     private transient StreamedContent file;
     
+    /**
+     * Lista de documentos.
+     */
     private List<DocumentacionPrevia> listadoDocumentosPrevios;
     
+    /**
+     * Listado de documentos cargados.
+     */
     private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados;
     
+    /**
+     * Lista de documentos seleccionados.
+     */
     private List<TipoDocumentacion> documentosSeleccionados;
     
+    /**
+     * Lista de tipos de documentos.
+     */
     private List<TipoDocumentacion> listadoDocumentos;
     
+    /**
+     * Formato de fecha.
+     */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Mapa con los parámetros de vista.
+     */
     private Map<String, String> parametrosVistaSolicitud;
     
+    /**
+     * Mapa con los datos de apoyo.
+     */
     private Map<String, String> datosApoyo;
     
+    /**
+     * LazyModel para la visualización de datos paginados en la vista.
+     */
     private LazyModelSolicitudes model;
     
+    /**
+     * Lista de tipos de inspección.
+     */
+    private List<TipoInspeccion> listaTiposInspeccion;
+    
+    /**
+     * Objeto de búsqueda de solicitudes.
+     */
     @Autowired
     private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private transient INotificacionService notificacionService;
     
+    /**
+     * Servicio de alertas.
+     */
     @Autowired
     private transient IAlertaService alertaService;
     
+    /**
+     * Servicio de Solicitudes de Documentación.
+     */
     @Autowired
     private transient ISolicitudDocumentacionService solicitudDocumentacionService;
     
+    /**
+     * Servicio de tipo de documentación.
+     */
     @Autowired
     private transient ITipoDocumentacionService tipoDocumentacionService;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private transient IInspeccionesService inspeccionesService;
     
+    /**
+     * Servicio de gestor de documentación de solicitudes.
+     */
     @Autowired
     private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private transient IDocumentoService documentoService;
     
+    /**
+     * Encriptador del palabras claves.
+     */
     @Autowired
     private transient PasswordEncoder passwordEncoder;
     
+    /**
+     * Clase para el manejo de correos electrónicos.
+     */
     @Autowired
     private transient ICorreoElectronico correoElectronico;
     
+    /**
+     * Bean de configuración de la aplicación.
+     */
     @Autowired
     private transient ApplicationBean applicationBean;
     
+    /**
+     * Generador de PDF.
+     */
     @Autowired
     private transient PdfGenerator pdfGenerator;
     
+    /**
+     * Servicio de Cuestionarios enviados.
+     */
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Servicio de tipos de inspección.
+     */
     @Autowired
     private transient ITipoInspeccionService tipoInspeccionService;
-    
-    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
      * 
-     * @author EZENTIS
      */
     public void crearSolicitud() {
         
@@ -184,7 +279,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Obtener los datos del jefe del equipo de apoyo. Se encuentran almacenados en la tabla parametros para que puedan
      * ser modificados por el DBA
      * 
-     * @author EZENTIS
      * @see #getFormularioCrearSolicitud()
      * @see es.mira.progesin.persistence.entities.Parametro
      */
@@ -199,7 +293,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Pasa los datos de la solicitud que queremos modificar al formulario de modificación para que cambien los valores
      * que quieran.
      * 
-     * @author EZENTIS
      * @param solicitud recuperada del formulario
      * @return vista modificarSolicitud
      */
@@ -214,14 +307,11 @@ public class SolicitudDocPreviaBean implements Serializable {
      * permite pasar al siguiente estado si se tiene el rol adecuado. Posibles estados: alta, validada por apoyo,
      * validada por jefe equipo, enviada, cumplimentada, no conforme y finalizada
      * 
-     * @author EZENTIS
      * @param solicitud a mostrar
      * @return vista vistaSolicitud
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
-            // parametrosVistaSolicitud = applicationBean.getMapaParametros()
-            // .get("vistaSolicitud" + solicitud.getInspeccion().getAmbito());
             setListadoDocumentosCargados(gestDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setSolicitudDocumentacionPrevia(solicitud);
@@ -234,9 +324,8 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     /**
-     * Permite al equipo de apoyo validar la solicitud de documentación
+     * Permite al equipo de apoyo validar la solicitud de documentación.
      * 
-     * @author EZENTIS
      */
     public void validacionApoyo() {
         try {
@@ -269,7 +358,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Permite al jefe del equipo de apoyo validar la solicitud de documentación
      * 
-     * @author EZENTIS
      */
     public void validacionJefeEquipo() {
         try {
@@ -302,7 +390,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Carga el formulario para crear una solicitud.
      * 
-     * @author EZENTIS
      */
     public void getFormularioCrearSolicitud() {
         documentosSeleccionados = new ArrayList<>();
@@ -312,9 +399,8 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
@@ -372,7 +458,8 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     /**
-     * Método para cambiar los campos que se muestran en la tabla de resultados del buscador
+     * Método para cambiar los campos que se muestran en la tabla de resultados del buscador.
+     * 
      * @param e ToggleEvent evento que lanza el método
      */
     public void onToggle(ToggleEvent e) {
@@ -384,7 +471,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * lógica junto a la eliminación física del usuario provisional. Además desde la interfaz las solicitudes
      * finalizadas no se pueden eliminar.
      * 
-     * @author EZENTIS
      * @param solicitud a eliminar
      */
     public void eliminarSolicitud(SolicitudDocumentacionPrevia solicitud) {
@@ -433,7 +519,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Modifica los datos de la solicitud de documentación previa. En caso de que la fecha límite de envío por parte de
      * la unidad sea alterada, se notifica por correo electrónico dicho cambio.
      * 
-     * @author EZENTIS
      */
     public void modificarSolicitud() {
         try {
@@ -475,7 +560,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Permite al jefe de equipo de inspecciones validar la solicitud de documentación y enviarla y dar de alta un
      * usuario provisional para que algún miembro de la unidad a inspeccionar la cumplimente.
      * 
-     * @author EZENTIS
      */
     public void enviarSolicitud() {
         try {
@@ -535,7 +619,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * documentación adjuntada por la unidad que se va a inspeccionar. Adicionalmente elimina el usuario provisinal que
      * se usó para llevarla a cabo puesto que ya no se va a usar más.
      * 
-     * @author EZENTIS
      */
     public void finalizarSolicitud() {
         try {
@@ -569,7 +652,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * cumplimentación y reenvia la solicitud al destinatario de la unidad con el motivo de dicha no conformidad.
      * Adicionalmente reactiva el usuario provisinal que se usó para llevarla a cabo.
      * 
-     * @author EZENTIS
+     * 
      * @param motivosNoConforme texto introducido por el usuario
      */
     public void noConformeSolicitud(String motivosNoConforme) {
@@ -619,7 +702,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Devuelve al formulario de búsqueda de solicitudes de documentación previa a su estado inicial y borra los
      * resultados de búsquedas anteriores si se navega desde el menú u otra sección.
      * 
-     * @author EZENTIS
+     * 
      */
     public void getFormBusquedaSolicitudes() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -632,7 +715,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Borra los resultados de búsquedas anteriores.
      * 
-     * @author EZENTIS
+     * 
      */
     public void limpiarBusqueda() {
         solicitudDocPreviaBusqueda.resetValues();
@@ -642,7 +725,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Busca las solicitudes de documentación previa según los filtros introducidos en el formulario de búsqueda.
      * 
-     * @author EZENTIS
+     * 
      */
     public void buscarSolicitudDocPrevia() {
         
@@ -663,9 +746,8 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     /**
-     * Imprime la vista en formato PDF
+     * Imprime la vista en formato PDF.
      * 
-     * @author EZENTIS
      */
     public void imprimirPdf() {
         try {
@@ -681,8 +763,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Comprueba si no existen solicitudes o cuestionarios sin finalizar asociados a la inspeccion de esta solicitud.
      * 
-     * @author EZENTIS
-     * @return boolean
+     * @return boolean Respuesta de la comprobación
      */
     private boolean inspeccionSinTareasPendientes() {
         Inspeccion inspeccion = solicitudDocumentacionPrevia.getInspeccion();
@@ -706,8 +787,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Comprueba si no existen solicitudes o cuestionarios sin finalizar asignados al correo electrónico elegido para
      * esta solicitud.
      * 
-     * @author EZENTIS
-     * @return boolean
+     * @return boolean Respuesta de la comprobación
      */
     private boolean usuarioSinTareasPendientes() {
         

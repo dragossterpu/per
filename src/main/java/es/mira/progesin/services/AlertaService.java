@@ -105,18 +105,29 @@ public class AlertaService implements IAlertaService {
         alertaRepository.deleteAll();
     }
     
+    /**
+     * 
+     * Comprueba si existe en de base de datos una alerta cuyo id se pasa como parámetro.
+     * 
+     * @param id de la alerta a buscar en base de datos
+     * @return booleano con el valor de la consulta
+     *
+     */
     @Override
     public boolean exists(Long id) {
         return alertaRepository.exists(id);
     }
     
+    /**
+     * 
+     * Busca en base de datos todas las alertas que no hayan sido dadas de baja.
+     * 
+     * @return Lista de las alertas cuya fecha de baja es nulo
+     * 
+     */
     @Override
     public List<Alerta> findByFechaBajaIsNull() {
         return alertaRepository.findByFechaBajaIsNull();
-    }
-    
-    public Iterable<Alerta> findAll(Iterable<Long> ids) {
-        return alertaRepository.findAll(ids);
     }
     
     @Override

@@ -42,7 +42,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para la visualización de los cuestionarios por pantalla
+ * Bean para la visualización de los cuestionarios por pantalla.
  * 
  * @author EZENTIS
  *
@@ -53,25 +53,10 @@ import lombok.Setter;
 @Scope("session")
 public class VisualizarCuestionario implements Serializable {
     
+    /**
+     * Nombre de la sección
+     */
     private static final String NOMBRESECCION = "Visualizar cuestionario";
-    
-    @Autowired
-    private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
-    
-    @Autowired
-    private transient IRespuestaCuestionarioRepository respuestaRepository;
-    
-    @Autowired
-    private transient IDatosTablaGenericaRepository datosTablaRepository;
-    
-    @Autowired
-    private transient IPreguntaCuestionarioRepository preguntasRepository;
-    
-    @Autowired
-    transient IRegistroActividadService regActividadService;
-    
-    @Autowired
-    transient IDocumentoService documentoService;
     
     private static final long serialVersionUID = 1L;
     
@@ -101,12 +86,6 @@ public class VisualizarCuestionario implements Serializable {
     
     private transient StreamedContent file;
     
-    @Autowired
-    private transient WordGenerator wordGenerator;
-    
-    @Autowired
-    private transient PdfGenerator pdfGenerator;
-    
     private User usuarioActual;
     
     private boolean esUsuarioProvisional;
@@ -114,6 +93,42 @@ public class VisualizarCuestionario implements Serializable {
     private List<AreasCuestionario> listaAreasVisualizarUsuario;
     
     private Map<Long, AreasCuestionario> mapaAreasVisualizarUsuario;
+    
+    /**
+     * Repositorio de tipos de respuestas de cuestionario.
+     */
+    @Autowired
+    private transient IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
+    
+    /**
+     * Repositorio de respuestas de cuestionario.
+     */
+    @Autowired
+    private transient IRespuestaCuestionarioRepository respuestaRepository;
+    
+    /**
+     * Repositorio de tabla de datos
+     */
+    @Autowired
+    private transient IDatosTablaGenericaRepository datosTablaRepository;
+    
+    /**
+     * 
+     */
+    @Autowired
+    private transient IPreguntaCuestionarioRepository preguntasRepository;
+    
+    @Autowired
+    transient IRegistroActividadService regActividadService;
+    
+    @Autowired
+    transient IDocumentoService documentoService;
+    
+    @Autowired
+    private transient WordGenerator wordGenerator;
+    
+    @Autowired
+    private transient PdfGenerator pdfGenerator;
     
     /**
      * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -319,7 +334,7 @@ public class VisualizarCuestionario implements Serializable {
     /**
      * Descarga de un documento subido por el usuario provisional
      * 
-     * @author Ezentis
+     * @author EZENTIS
      * @param documento seleccionado
      */
     public void descargarFichero(Documento documento) {
@@ -333,7 +348,7 @@ public class VisualizarCuestionario implements Serializable {
     /**
      * Genera un archivo word para ser descargado con las preguntas del modelo de cuestionario personalizado
      * 
-     * @author Ezentis
+     * @author EZENTIS
      * @param cuestionarioPersonalizado mostrado
      */
     public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado) {
@@ -350,7 +365,7 @@ public class VisualizarCuestionario implements Serializable {
      * Genera un archivo pdf para ser descargado con las preguntas y las respuestas del cuestionario enviado una vez
      * cumplimentado
      * 
-     * @author Ezentis
+     * @author EZENTIS
      * @param cuestionarioEnviado mostrado
      */
     public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
