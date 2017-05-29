@@ -168,12 +168,6 @@ public class InspeccionBean {
     private LazyModelInspeccion model;
     
     /**
-     * Constante utilizada varias veces para mostrar mensajes.
-     * 
-     */
-    private static final String ELUSUARIO = "El usuario";
-    
-    /**
      * Lista de tipos de inspecciones precargadas para utilizar en los combos de selección.
      * 
      */
@@ -421,7 +415,7 @@ public class InspeccionBean {
         try {
             inspeccionesService.save(inspeccionEliminar);
             
-            String descripcion = ELUSUARIO + " " + user + " ha eliminado la inspección " + inspeccion.getNumero();
+            String descripcion = "El usuario " + user + " ha eliminado la inspección " + inspeccion.getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
