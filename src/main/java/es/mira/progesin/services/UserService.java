@@ -42,46 +42,88 @@ import lombok.NoArgsConstructor;
 @Service
 public class UserService implements IUserService {
     
+    /**
+     * Repositorio de usuarios.
+     */
     @Autowired
     private IUserRepository userRepository;
     
+    /**
+     * Factoría de sesiones.
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Encriptador de palabras clave.
+     */
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    /**
+     * Formato de fecha.
+     */
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
-     * Constructor usado para el test
+     * Constructor usado para el test.
      * 
-     * @param sessionFactory
+     * @param sessionFact
      */
-    public UserService(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserService(SessionFactory sessionFact) {
+        this.sessionFactory = sessionFact;
     }
     
+    /**
+     * Elimina el usuario seleccionado de la base de datos.
+     * 
+     * @param id Username del usuario a eliminar
+     */
     @Override
     @Transactional(readOnly = false)
     public void delete(String id) {
         userRepository.delete(id);
     }
     
+    /**
+     * Comprueba la existencia de un usuario en la base de datos.
+     * 
+     * @param id Username del usuario a buscar
+     * @return Respuesta de la consulta.
+     */
     @Override
     public boolean exists(String id) {
         return userRepository.exists(id);
     }
     
+    /**
+     * Busca en base de datos un usuario identificado por su username.
+     * 
+     * @param id Username del usuario a buscar
+     * @return User Usuario que correponde a la búsqueda.
+     */
     @Override
     public User findOne(String id) {
         return userRepository.findOne(id);
     }
     
+    /**
+     * Busca en base de datos un usuario identificado por su username ignorando mayúsculas/minúsculas.
+     * 
+     * @param id Username del usuario a buscar
+     * @return Usuario que correponde a la búsqueda.
+     */
     @Override
     public User findByUsernameIgnoreCase(String id) {
         return userRepository.findByUsernameIgnoreCase(id);
     }
+    
+    /**
+     * Guarda en base de datos el usuario.
+     * 
+     * @param entity Usuario a guardar
+     * @return Usuario guardado.
+     */
     
     @Override
     @Transactional(readOnly = false)
@@ -89,11 +131,25 @@ public class UserService implements IUserService {
         return userRepository.save(entity);
     }
     
+    /**
+     * Busca un usuario por su correo o su documento de identidad, ignorando mayúsculas.
+     * 
+     * @param correo correo del usuario a buscar
+     * @param nif documento del usuario a buscar
+     * @return resultado de la búsqueda
+     * 
+     */
     @Override
     public User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String nif) {
         return userRepository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
     }
     
+    /**
+     * Introduce parámetros de búsqueda dentro del criteria.
+     * 
+     * @param userBusqueda Objeto que contiene los parámetros a introducir
+     * @param criteria Criteria que se desea modificar.
+     */
     private void creaCriteria(UserBusqueda userBusqueda, Criteria criteria) {
         
         criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado");
@@ -146,16 +202,35 @@ public class UserService implements IUserService {
         
     }
     
+    /**
+     * Busca los usuarios que estén asignados a un cuerpo de estado.
+     * 
+     * @param cuerpo Cuerpo por el que se desea buscar
+     * @return Lista de usuarios
+     */
     @Override
     public List<User> findByCuerpoEstado(CuerpoEstado cuerpo) {
         return userRepository.findByCuerpoEstado(cuerpo);
     }
     
+    /**
+     * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol no esté en el listado que se recibe como
+     * parámetro.
+     * 
+     * @param rolesProv listado de roles a los que no queremos que pertenezcan los usuarios
+     * @return resultado de la búsqueda
+     */
     @Override
     public List<User> findByfechaBajaIsNullAndRoleNotIn(List<RoleEnum> rolesProv) {
         return userRepository.findByfechaBajaIsNullAndRoleNotIn(rolesProv);
     }
     
+    /**
+     * Cambia el estado del usuario.
+     * 
+     * @param username Username del usuario al que se desea cambiar el estado
+     * @param estado Estado que se desea asignar al usuario
+     */
     @Override
     public void cambiarEstado(String username, EstadoEnum estado) {
         User user = userRepository.findOne(username);
@@ -163,16 +238,36 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
     
+    /**
+     * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol corresponda al que se recibe como
+     * parámetro.
+     * 
+     * @param rol al que no queremos que pertenezcan los usuarios
+     * @return resultado de la búsqueda
+     */
     @Override
     public List<User> findByfechaBajaIsNullAndRole(RoleEnum rol) {
         return userRepository.findByfechaBajaIsNullAndRole(rol);
     }
     
+    /**
+     * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo.
+     * 
+     * @param equipo equipo para el que se hace la consulta
+     * @return resultado de la búsqueda
+     */
     @Override
     public List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo) {
         return userRepository.buscarNoJefeNoMiembroEquipo(equipo);
     }
     
+    /**
+     * Crea usuario provisionales.
+     * 
+     * @param correoPrincipal Correo electrónico del usuario principal
+     * @param password Palabra clave
+     * @return Lista de usuarios Lista de usuarios creados
+     */
     @Override
     public List<User> crearUsuariosProvisionalesCuestionario(String correoPrincipal, String password) {
         List<User> listaUsuarios = new ArrayList<>();
@@ -190,15 +285,40 @@ public class UserService implements IUserService {
         return listaUsuarios;
     }
     
+    /**
+     * Recupera un listado de usuarios cuyo puesto de trabajo corresponde con el recibido como parámetro.
+     * 
+     * @param puesto sobre el que se hace la consulta
+     * @return resultado de la búsqueda
+     */
     @Override
     public List<User> findByPuestoTrabajo(PuestoTrabajo puesto) {
         return userRepository.findByPuestoTrabajo(puesto);
     }
     
+    /**
+     * Recupera un listado de todos los usuarios que pertenecen a un departamento.
+     * 
+     * @param departamento sobre el que se hace la consulta
+     * @return resultado de la búsqueda
+     */
     @Override
     public List<User> findByDepartamento(Departamento departamento) {
         return userRepository.findByDepartamento(departamento);
     }
+    
+    /**
+     * Devuelve una lista de usuarios en función de los criterios de búsqueda recibidos como parámetro. El listado se
+     * devuelve paginado.
+     * 
+     * @param first Primer elemento del listado
+     * @param pageSize Número máximo de registros recuperados
+     * @param sortField Campo por el que sed realiza la ordenación del listado
+     * @param sortOrder Sentido de la ordenación
+     * @param userBusqueda Objeto que contiene los parámetros de búsqueda
+     * 
+     * @return Listado resultante de la búsqueda
+     */
     
     @Override
     public List<User> buscarUsuarioCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
@@ -226,6 +346,12 @@ public class UserService implements IUserService {
         return listado;
     }
     
+    /**
+     * Devuelve el número total de registros resultado de la búsqueda.
+     * 
+     * @param userBusqueda Objeto que contiene los parámetros de búsqueda
+     * @return número de registros resultantes de la búsqueda
+     */
     @Override
     public int contarRegistros(UserBusqueda userBusqueda) {
         Session session = sessionFactory.openSession();
@@ -238,6 +364,12 @@ public class UserService implements IUserService {
         return Math.toIntExact(cnt);
     }
     
+    /**
+     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado.
+     * 
+     * @param cuerpo cuerpo que se desea verificar
+     * @return resultado de la consulta
+     */
     @Override
     public boolean existByCuerpoEstado(CuerpoEstado cuerpo) {
         return userRepository.existsByCuerpoEstado(cuerpo);

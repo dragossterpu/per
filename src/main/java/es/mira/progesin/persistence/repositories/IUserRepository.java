@@ -14,14 +14,14 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 /**
- * Repositorio de operaciones con base de datos para la entidad User
+ * Repositorio de operaciones con base de datos para la entidad User.
  * 
  * @author EZENTIS
  *
  */
 public interface IUserRepository extends CrudRepository<User, String> {
     /**
-     * Busca un usuario por su correo o su documento de identidad, ignorando mayúsculas
+     * Busca un usuario por su correo o su documento de identidad, ignorando mayúsculas.
      * 
      * @param correo correo del usuario a buscar
      * @param docIdentidad documento del usuario a buscar
@@ -31,7 +31,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String docIdentidad);
     
     /**
-     * Busca un usuario a partir de su correo electrónico
+     * Busca un usuario a partir de su correo electrónico.
      * 
      * @param correo del usuario a buscar
      * @return resultado de la búsqueda
@@ -39,7 +39,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByCorreo(String correo);
     
     /**
-     * Busca un usuario por su correo o su documento de identidad
+     * Busca un usuario por su correo o su documento de identidad.
      * 
      * @param correo correo del usuario a buscar
      * @param docIdentidad documento del usuario a buscar
@@ -48,7 +48,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByCorreoOrDocIdentidad(String correo, String docIdentidad);
     
     /**
-     * Recupera un listado de usuarios que pertenezcan a un cuerpo recibido como parámetro
+     * Recupera un listado de usuarios que pertenezcan a un cuerpo recibido como parámetro.
      * 
      * @param cuerpo al que pertenecen los usuarios
      * @return resultado de la búsqueda
@@ -57,7 +57,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     
     /**
      * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol no esté en el listado que se recibe como
-     * parámetro
+     * parámetro.
      * 
      * @param rolesProv listado de roles a los que no queremos que pertenezcan los usuarios
      * @return resultado de la búsqueda
@@ -66,15 +66,16 @@ public interface IUserRepository extends CrudRepository<User, String> {
     
     /**
      * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol corresponda al que se recibe como
-     * parámetro
+     * parámetro.
      * 
-     * @param rol listado de roles a los que no queremos que pertenezcan los usuarios
+     * @param rol al que no queremos que pertenezcan los usuarios
      * @return resultado de la búsqueda
      */
     List<User> findByfechaBajaIsNullAndRole(RoleEnum rol);
     
     /**
-     * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo
+     * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo.
+     * 
      * @param equipo equipo para el que se hace la consulta
      * @return resultado de la búsqueda
      */
@@ -82,7 +83,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     List<User> buscarNoJefeNoMiembroEquipo(@Param("equipo") Equipo equipo);
     
     /**
-     * Recupera un usuario a partir del id recibido como parámetro ignorando mayúsculas
+     * Recupera un usuario a partir del id recibido como parámetro ignorando mayúsculas.
      * 
      * @param id del usuario a localizar
      * @return resultado de la búsqueda
@@ -90,7 +91,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByUsernameIgnoreCase(String id);
     
     /**
-     * Recupera un listado de usuarios cuyo puesto de trabajo corresponde con el recibido como parámetro
+     * Recupera un listado de usuarios cuyo puesto de trabajo corresponde con el recibido como parámetro.
      * 
      * @param puesto sobre el que se hace la consulta
      * @return resultado de la búsqueda
@@ -98,7 +99,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     List<User> findByPuestoTrabajo(PuestoTrabajo puesto);
     
     /**
-     * Recupera un listado de todos los usuarios que pertenecen a un departamento
+     * Recupera un listado de todos los usuarios que pertenecen a un departamento.
      * 
      * @param departamento sobre el que se hace la consulta
      * @return resultado de la búsqueda
@@ -106,7 +107,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
     List<User> findByDepartamento(Departamento departamento);
     
     /**
-     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado recibido como parámetro
+     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado recibido como parámetro.
      * 
      * @param cuerpo que se desea verificar
      * @return resultado de la comprobación
