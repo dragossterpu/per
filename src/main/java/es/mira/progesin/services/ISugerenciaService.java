@@ -12,7 +12,7 @@ public interface ISugerenciaService {
     /**
      * Borra una sugerencia de BBDD conociendo su identificador.
      * 
-     * @param id identificador de la sugerencia a elimianr
+     * @param id identificador de la sugerencia a eliminar
      */
     void delete(Integer id);
     

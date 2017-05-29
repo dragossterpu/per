@@ -13,20 +13,22 @@ import es.mira.progesin.persistence.entities.Departamento;
 public interface IDepartamentoService {
     
     /**
-     * @param departamento a guaradar
+     * Guarda o actualiza un departamento.
+     * 
+     * @param departamento a guardar
      * @return Departamento actualizado
      */
     Departamento save(Departamento departamento);
     
     /**
      * Busca todos los departamentos de trabajo dados de alta en la BBDD.
-     * @return Iterable<Departamento>
+     * @return Iterable<Departamento> iterable con todos los departamentos en BBDD
      */
     Iterable<Departamento> findAll();
     
     /**
      * Busca todos los departamentos sin fecha de baja, es decir activos.
-     * @return List<Departamento>
+     * @return List<Departamento> lista departamentos en alta
      */
     List<Departamento> findByFechaBajaIsNull();
     

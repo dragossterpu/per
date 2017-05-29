@@ -73,7 +73,7 @@ public interface IRegistroActividadService {
     public List<String> buscarPorNombreSeccion(String infoSeccion);
     
     /**
-     * Busca los registros realziados por un usuario.
+     * Busca los registros realizados por un usuario.
      * 
      * @param infoUsuario Usuario para el que se hace la consulta
      * @return Listado de los registros resultantes

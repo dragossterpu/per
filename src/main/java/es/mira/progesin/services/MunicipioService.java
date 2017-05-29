@@ -21,17 +21,38 @@ import es.mira.progesin.persistence.repositories.IMunicipioRepository;
 @Service
 public class MunicipioService implements IMunicipioService {
     
+    /**
+     * Variable utilizada para inyectar el repositorio de municipios.
+     * 
+     */
     @Autowired
     private IMunicipioRepository municipioRepository;
     
+    /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
     @Autowired
     private IRegistroActividadService registroActividadService;
     
+    /**
+     * Comprueba si existe un municipio conociendo su nombre.
+     * 
+     * @param name nombre del municipio
+     * @param provincia a la que pertenece el municipio
+     * @return valor booleano
+     */
     @Override
     public boolean existeByNameIgnoreCaseAndProvincia(String name, Provincia provincia) {
         return municipioRepository.existsByNameIgnoreCaseAndProvincia(name, provincia);
     }
     
+    /**
+     * Guarda un nuevo municipio.
+     * @param nombre del municipio
+     * @param provincia a la que pertenece el municipio
+     * @return municipio creado (true si es guardado correctamente)
+     */
     @Override
     @Transactional(readOnly = false)
     public Municipio crearMunicipio(String nombre, Provincia provincia) {
@@ -56,6 +77,12 @@ public class MunicipioService implements IMunicipioService {
         
     }
     
+    /**
+     * Busca los municipios pertenecientes a una provincia.
+     * 
+     * @param provincia que queremos consultar
+     * @return lista de municipios por provincia
+     */
     @Override
     public List<Municipio> findByProvincia(Provincia provincia) {
         return municipioRepository.findByProvincia(provincia);
