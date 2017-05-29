@@ -66,9 +66,9 @@ import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.PdfGenerator;
 
 /**
- * @author EZENTIS
+ * Test del bean solicitudDocPrevia.
  * 
- * Test del bean solicitudDocPrevia
+ * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
 // Evita conflictos con clases del sistema al enlazar los mocks por tipo
@@ -76,60 +76,117 @@ import es.mira.progesin.util.PdfGenerator;
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
 public class SolicitudDocPreviaBeanTest {
     
+    /**
+     * Mock de security context.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Mock del objeto authentication.
+     */
     @Mock
     private Authentication authentication;
     
+    /**
+     * Mock del objeto de parámetros de búsqueda.
+     */
     @Mock
     private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
+    /**
+     * Mock del servicio del registro de actividad.
+     */
     @Mock
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Mock del servicio de notificaciones.
+     */
     @Mock
     private transient INotificacionService notificacionService;
     
+    /**
+     * Mock del servicio de alertas.
+     */
     @Mock
     private transient IAlertaService alertaService;
     
+    /**
+     * Mock del servicio de solicitudes de documentación.
+     */
     @Mock
     private transient ISolicitudDocumentacionService solicitudDocumentacionService;
     
+    /**
+     * Mock del servicio de tipos de documentación.
+     */
     @Mock
     private transient ITipoDocumentacionService tipoDocumentacionService;
     
+    /**
+     * Mock del servicio de inspecciones.
+     */
     @Mock
     private transient IInspeccionesService inspeccionesService;
     
+    /**
+     * Mock del servicio de documentación adjunta de solicitudes.
+     */
     @Mock
     private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
     
+    /**
+     * Mock del servicio de usuarios.
+     */
     @Mock
     private transient IUserService userService;
     
+    /**
+     * Mock del servicio de documentos.
+     */
     @Mock
     private transient IDocumentoService documentoService;
     
+    /**
+     * Mock del cifrador de contraseñas.
+     */
     @Mock
     private transient PasswordEncoder passwordEncoder;
     
+    /**
+     * Mock del servicio de correos electrónicos.
+     */
     @Mock
     private transient ICorreoElectronico correoElectronico;
     
+    /**
+     * Mock del bean de aplicación.
+     */
     @Mock
     private transient ApplicationBean applicationBean;
     
+    /**
+     * Mock del generador de pdfs.
+     */
     @Mock
     private transient PdfGenerator pdfGenerator;
     
+    /**
+     * Mock del servicio de cuestionarios enviados.
+     */
     @Mock
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Instancia de prueba del bean de solicitudes de documentación.
+     */
     @InjectMocks
     private SolicitudDocPreviaBean solicitudDocPreviaBean;
     
+    /**
+     * Captura de parametros solicitud.
+     */
     @Captor
     private ArgumentCaptor<SolicitudDocumentacionPrevia> solicitudCaptor;
     
