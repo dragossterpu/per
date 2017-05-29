@@ -25,10 +25,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author Ezentis
  * 
- * Entidad para un Municipio
- *
+ * Entidad para almacenar un Municipio.
+ * 
+ * @author EZENTIS
+ * 
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,19 +45,31 @@ public class Municipio implements Serializable, Comparable<Municipio> {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_municipio", sequenceName = "seq_municipio", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_municipio")
     @Column(name = "id")
     private Long id;
     
+    /**
+     * Nombre del municipio.
+     */
     @Column(name = "name", length = 100)
     private String name;
     
+    /**
+     * Provincia del municipio.
+     */
     @ManyToOne
     @JoinColumn(name = "code_province", foreignKey = @ForeignKey(name = "FK_PROVINCIA"), nullable = false)
     private Provincia provincia;
     
+    /**
+     * Sobreescritura del método para porder realizar la ordenación de listas.
+     */
     @Override
     public int compareTo(Municipio m) {
         return this.name.toLowerCase().compareTo(m.name.toLowerCase());

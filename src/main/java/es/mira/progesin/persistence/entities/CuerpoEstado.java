@@ -19,8 +19,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * POJO para los Cuerpos del estado
- * @author Ezentis
+ * Entity creada para almacenar los Cuerpos del estado.
+ * @author EZENTIS
  *
  */
 
@@ -37,15 +37,24 @@ public class CuerpoEstado extends AbstractEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_cuerpos", sequenceName = "seq_cuerpos", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cuerpos")
     @Column(name = "ID", length = 2)
     private Integer id;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "DESCRIPCION", length = 100, nullable = false)
     private String descripcion;
     
+    /**
+     * Nombre corto.
+     */
     @Column(name = "nombre_corto", length = 10)
     private String nombreCorto;
     

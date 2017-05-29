@@ -22,7 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entity asociada a un empleo
+ * Entity creada para almacenar un empleo.
  * 
  * @author EZENTIS
  *
@@ -40,19 +40,31 @@ public class Empleo implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EMPLEO")
     @SequenceGenerator(name = "SEQ_EMPLEO", sequenceName = "SEQ_EMPLEO", allocationSize = 1, initialValue = 1)
     @Column(name = "ID", length = 2)
     private Long id;
     
+    /**
+     * Cuerpo de estado.
+     */
     @ManyToOne
     @JoinColumn(name = "ID_CUERPO", foreignKey = @ForeignKey(name = "FK_EM_CUERPO"))
     private CuerpoEstado cuerpo;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "DESCRIPCION", length = 100)
     private String descripcion;
     
+    /**
+     * Nombre corto.
+     */
     @Column(name = "NOMBRE_CORTO", length = 20)
     private String nombreCorto;
     

@@ -18,6 +18,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 
+ * Entidad para almacenar una provincia.
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -30,18 +37,24 @@ import lombok.ToString;
 @Table(name = "provincias")
 public class Provincia implements Serializable {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Código. Identificador de la provincia
+     */
     @Id
     @Column(name = "codigo", length = 3)
     private String codigo;
     
+    /**
+     * Nombre de la provincia.
+     */
     @Column(name = "nombre", length = 100)
     private String nombre;
     
+    /**
+     * Código MN de la provincia.
+     */
     @Column(name = "codigo_mn", length = 10)
     private String codigoMN;
     

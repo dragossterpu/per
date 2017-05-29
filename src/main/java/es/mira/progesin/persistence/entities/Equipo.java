@@ -26,7 +26,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entity para un equipo de inspecciones.
+ * Entity creada para almacenar un equipo de inspecciones.
  *
  * @author EZENTIS
  */
@@ -52,7 +52,7 @@ public class Equipo extends AbstractEntity implements Serializable {
     private Long id;
     
     /**
-     * Nombre.
+     * Nombre del equipo.
      */
     @Column(name = "nombreEquipo", length = 100, nullable = false)
     private String nombreEquipo;

@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entidad para una inspección.
+ * Entidad creada para alamcenar una inspección.
  * 
  * @author EZENTIS
  *

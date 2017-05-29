@@ -27,7 +27,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entity para los miembros pertenecientes a un equipo
+ * Entity para almacenar los miembros pertenecientes a un equipo.
  * 
  * @author EZENTIS
  *
@@ -45,22 +45,37 @@ public class Miembro implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_miembros", sequenceName = "seq_miembros", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_miembros")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Equipo al que pertenece el miembro.
+     */
     @ManyToOne
     @JoinColumn(name = "ID_EQUIPO", foreignKey = @ForeignKey(name = "FK_M_EQUIPO"))
     private Equipo equipo;
     
+    /**
+     * Login del miembro.
+     */
     @Column(name = "username")
     private String username;
     
+    /**
+     * Nombre compelto del miembro.
+     */
     @Column(name = "nombre_completo")
     private String nombreCompleto;
     
+    /**
+     * Posición, rol dentro del equipo: jefe, componente o colaborador.
+     */
     @Column(name = "posicion")
     @Enumerated(EnumType.STRING)
     private RolEquipoEnum posicion;

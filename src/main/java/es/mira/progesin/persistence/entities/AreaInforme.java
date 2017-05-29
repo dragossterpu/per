@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad para el área de un informe
+ * Entidad para almacenar el área de un informe.
  * 
  * @author EZENTIS
  *
@@ -30,13 +30,22 @@ public class AreaInforme implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @Column(name = "ID")
     private Long id;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "DESCRIPCION", length = 1000, nullable = false)
     private String descripcion;
     
+    /**
+     * Lista de subáreas.
+     */
     @OneToMany(mappedBy = "area")
     private List<SubareaInforme> subareas;
 }

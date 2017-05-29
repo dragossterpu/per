@@ -19,7 +19,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entity que define la clase a la que pertenece un usuario
+ * Entity utilizada para almacenar la clase a la que pertenece un usuario.
  * 
  * @author EZENTIS
  *
@@ -36,12 +36,18 @@ import lombok.ToString;
 public class ClaseUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CLASE")
     @SequenceGenerator(name = "SEQ_CLASE", sequenceName = "SEQ_CLASE", allocationSize = 1, initialValue = 1)
     @Column(name = "id_clase")
     private Long id;
     
+    /**
+     * Clase de usuario.
+     */
     @Column(name = "clase")
     private String clase;
     

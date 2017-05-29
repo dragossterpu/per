@@ -46,34 +46,58 @@ public class PuestoTrabajo implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PUESTO_TRABAJO")
     @SequenceGenerator(name = "SEQ_PUESTO_TRABAJO", sequenceName = "SEQ_PUESTO_TRABAJO", allocationSize = 1)
     @Column(name = "ID", length = 2)
     private Long id;
     
+    /**
+     * Descripción del puesto.
+     */
     @Column(name = "DESCRIPCION", length = 100)
     private String descripcion;
     
+    /**
+     * Fecha de alta.
+     */
     @CreatedDate
     @Column(name = "fecha_alta", nullable = false)
     private Date fechaAlta;
     
+    /**
+     * Usuario de alta.
+     */
     @CreatedBy
     @Column(name = "username_alta", nullable = false)
     private String usernameAlta;
     
+    /**
+     * Fecha de modificación.
+     */
     @LastModifiedDate
     @Column(name = "fecha_modif")
     private Date fechaModif;
     
+    /**
+     * Usuario de modificación.
+     */
     @LastModifiedBy
     @Column(name = "username_modif")
     private String usernameModif;
     
+    /**
+     * Fecha de baja.
+     */
     @Column(name = "fecha_baja")
     private Date fechaBaja;
     
+    /**
+     * Usuario de baja.
+     */
     @Column(name = "username_baja", length = 12)
     private String usernameBaja;
     

@@ -30,24 +30,42 @@ public abstract class AbstractEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Usuario de creación.
+     */
     @CreatedBy
     @Column(name = "username_alta", nullable = false)
     protected String usernameAlta;
     
+    /**
+     * Fecha de creaión.
+     */
     @CreatedDate
     @Column(name = "fecha_alta", nullable = false)
     protected Date fechaAlta;
     
+    /**
+     * Usuario de baja.
+     */
     @Column(name = "username_baja")
     protected String usernameBaja;
     
+    /**
+     * Fecha de baja.
+     */
     @Column(name = "fecha_baja")
     protected Date fechaBaja;
     
+    /**
+     * Usuario que realiza la última modificación.
+     */
     @LastModifiedBy
     @Column(name = "username_modif")
     protected String usernameModif;
     
+    /**
+     * Fecha de última modificación.
+     */
     @LastModifiedDate
     @Column(name = "fecha_modificacion")
     protected Date fechaModificacion;

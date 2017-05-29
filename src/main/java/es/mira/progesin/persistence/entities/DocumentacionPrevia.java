@@ -46,21 +46,36 @@ public class DocumentacionPrevia implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_documentacion_previa", sequenceName = "seq_documentacion_previa", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentacion_previa")
     @Column(name = "ID", nullable = false)
     private Long id;
     
+    /**
+     * ID de la solicitud.
+     */
     @Column(name = "ID_SOLICITUD")
     private Long idSolicitud;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "descripcion")
     private String descripcion;
     
+    /**
+     * Nombre.
+     */
     @Column(name = "NOMBRE", length = 255)
     private String nombre;
     
+    /**
+     * Lista de extensiones.
+     */
     @Column(name = "EXTENSIONES")
     @Convert(converter = ListaExtensionesAdapter.class)
     private List<String> extensiones;
