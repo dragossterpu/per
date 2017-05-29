@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("javadoc")
 public enum CategoriaEnum {
     /**
      * Funcionarios del grupo A1.

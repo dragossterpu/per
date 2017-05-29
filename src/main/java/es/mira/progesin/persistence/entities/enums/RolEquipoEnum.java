@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public enum RolEquipoEnum {
     /**
      * Jefe del equipo.

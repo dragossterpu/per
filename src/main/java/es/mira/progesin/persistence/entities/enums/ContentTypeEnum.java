@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("javadoc")
 public enum ContentTypeEnum {
     /**
      * ContentType para la generación de un archivo DOCX.
