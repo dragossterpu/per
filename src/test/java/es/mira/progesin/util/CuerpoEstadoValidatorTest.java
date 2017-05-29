@@ -30,7 +30,7 @@ public class CuerpoEstadoValidatorTest {
     private CuerpoEstadoValidator validador;
     
     /**
-     * Test method for {@link es.mira.progesin.util.CuerpoEstadoValidator#validate()}.
+     * Test method for {@link es.mira.progesin.util.CuerpoEstadoValidator#validate(FacesContext, UIComponent, Object)}.
      */
     @Test(expected = Exception.class)
     public void validate() {
@@ -52,7 +52,7 @@ public class CuerpoEstadoValidatorTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.util.CuerpoEstadoValidator#validate()}.
+     * Test method for {@link es.mira.progesin.util.CuerpoEstadoValidator#validate(FacesContext, UIComponent, Object)}.
      */
     @Test
     public void validate_false() {

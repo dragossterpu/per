@@ -41,7 +41,7 @@ public class ICuerpoEstadoRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository#existsByNombreCortoIgnoreCaseAndIdNotIn()}.
+     * {@link es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository#existsByNombreCortoIgnoreCaseAndIdNotIn(String, int)}.
      */
     @Test
     public final void existsByNombreCortoIgnoreCaseAndIdNotIn() {

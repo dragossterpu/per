@@ -59,7 +59,7 @@ public class CuerpoEstadoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#save()}.
+     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#save(CuerpoEstado)}.
      */
     @Test
     public void save() {
@@ -78,7 +78,8 @@ public class CuerpoEstadoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#existeByNombreCortoIgnoreCaseAndIdNotIn()}.
+     * Test method for
+     * {@link es.mira.progesin.services.CuerpoEstadoService#existeByNombreCortoIgnoreCaseAndIdNotIn(String, int)}.
      */
     @Test
     public void existeByNombreCortoIgnoreCaseAndIdNotIn() {
