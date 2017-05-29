@@ -26,7 +26,7 @@ public interface IMunicipioService {
      * Guarda un nuevo municipio.
      * @param nombre del municipio
      * @param provincia a la que pertenece el municipio
-     * @return municipio creado (true si es guadado correctamente)
+     * @return municipio creado (true si es guardado correctamente)
      */
     Municipio crearMunicipio(String nombre, Provincia provincia);
     
