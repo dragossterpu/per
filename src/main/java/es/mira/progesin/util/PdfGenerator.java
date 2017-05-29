@@ -91,11 +91,6 @@ public class PdfGenerator {
     private static final String NOMBREPDFCUESTIONARIO = "Cuestionario.pdf";
     
     /**
-     * Escala a aplicar en las imágenes para que no salgan desproporcionadas.
-     */
-    private static final double ESCALA = 0.6;
-    
-    /**
      * Repositorio de respuestas de cuestionario.
      */
     @Autowired
@@ -178,25 +173,26 @@ public class PdfGenerator {
     private void crearCabeceraFooter(PdfDocument pdf, Document document, boolean insertarFooter) throws IOException {
         File file = new ClassPathResource(Constantes.LOGOMININISTERIOINTERIOR).getFile();
         Image logoMinisterioInterior = new Image(ImageDataFactory.create(file.getPath()));
-        logoMinisterioInterior.scaleAbsolute((float) (logoMinisterioInterior.getImageWidth() * ESCALA),
-                (float) (logoMinisterioInterior.getImageHeight() * ESCALA));
+        logoMinisterioInterior.scaleAbsolute((float) (logoMinisterioInterior.getImageWidth() * Constantes.ESCALA),
+                (float) (logoMinisterioInterior.getImageHeight() * Constantes.ESCALA));
         
         file = new ClassPathResource(Constantes.LOGOIPSS).getFile();
         Image ipssLogo = new Image(ImageDataFactory.create(file.getPath()));
-        ipssLogo.scaleAbsolute((float) (ipssLogo.getImageWidth() * ESCALA),
-                (float) (ipssLogo.getImageHeight() * ESCALA));
+        ipssLogo.scaleAbsolute((float) (ipssLogo.getImageWidth() * Constantes.ESCALA),
+                (float) (ipssLogo.getImageHeight() * Constantes.ESCALA));
         
         file = new ClassPathResource(HEADERSOLDOCPAG1).getFile();
         Image headerRepetido = new Image(ImageDataFactory.create(file.getPath()));
-        headerRepetido.scaleAbsolute((float) (headerRepetido.getImageWidth() * ESCALA),
-                (float) (headerRepetido.getImageHeight() * ESCALA));
+        headerRepetido.scaleAbsolute((float) (headerRepetido.getImageWidth() * Constantes.ESCALA),
+                (float) (headerRepetido.getImageHeight() * Constantes.ESCALA));
         
         // Footer
         Image footer = null;
         if (insertarFooter) {
             file = new ClassPathResource(LOGOCALIDAD).getFile();
             footer = new Image(ImageDataFactory.create(file.getPath()));
-            footer.scaleAbsolute((float) (footer.getImageWidth() * ESCALA), (float) (footer.getImageHeight() * ESCALA));
+            footer.scaleAbsolute((float) (footer.getImageWidth() * Constantes.ESCALA),
+                    (float) (footer.getImageHeight() * Constantes.ESCALA));
         }
         
         HeaderFooterPdf handler = new HeaderFooterPdf(document, logoMinisterioInterior, ipssLogo, headerRepetido,

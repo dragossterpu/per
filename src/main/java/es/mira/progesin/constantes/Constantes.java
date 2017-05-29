@@ -106,6 +106,11 @@ public final class Constantes {
     public static final String ACENTOS = "\\p{InCombiningDiacriticalMarks}+";
     
     /**
+     * Factor de escala para las imágenes de cabecera de los documentos Word y PDF
+     */
+    public static final double ESCALA = 0.6;
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

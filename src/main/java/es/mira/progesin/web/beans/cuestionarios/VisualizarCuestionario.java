@@ -52,46 +52,92 @@ import lombok.Setter;
 @Controller("visualizarCuestionario")
 @Scope("session")
 public class VisualizarCuestionario implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     /**
-     * Nombre de la sección
+     * Nombre de la sección.
      */
     private static final String NOMBRESECCION = "Visualizar cuestionario";
     
-    private static final long serialVersionUID = 1L;
-    
-    // para la visualización
+    /**
+     * CuestionarioEnvio para la visualización.
+     */
     private CuestionarioEnvio cuestionarioEnviado;
     
-    // para la visualización
+    /**
+     * CuestionarioPersonalizado para la visualización.
+     */
     private CuestionarioPersonalizado cuestionarioPersonalizado;
     
+    /**
+     * Mapa de áreas y preguntas.
+     */
     private Map<AreasCuestionario, List<PreguntasCuestionario>> mapaAreaPreguntas;
     
+    /**
+     * Lista de áreas.
+     */
     private List<AreasCuestionario> areas;
     
+    /**
+     * Mapa de validaciones de áreas.
+     */
     private Map<AreasCuestionario, Boolean> mapaValidacionAreas;
     
+    /**
+     * Mapa de validación de respuestas.
+     */
     private Map<PreguntasCuestionario, Boolean> mapaValidacionRespuestas;
     
+    /**
+     * Mapa de respuestas.
+     */
     private Map<PreguntasCuestionario, String> mapaRespuestas;
     
+    /**
+     * Mapa de respuestas tabla.
+     */
     private Map<PreguntasCuestionario, DataTableView> mapaRespuestasTabla;
     
-    private HashMap<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux;
+    /**
+     * Mapa de respuestas tabla auxiliar.
+     */
+    private Map<PreguntasCuestionario, List<DatosTablaGenerica>> mapaRespuestasTablaAux;
     
+    /**
+     * Mapa de documentos.
+     */
     private Map<PreguntasCuestionario, List<Documento>> mapaDocumentos;
     
+    /**
+     * Lista de respuestas.
+     */
     private List<RespuestaCuestionario> listaRespuestas;
     
+    /**
+     * Fichero para la descarga de documento.
+     */
     private transient StreamedContent file;
     
+    /**
+     * Usuario actual.
+     */
     private User usuarioActual;
+    
+    /**
+     * Booleano que indica que si el usuario es provisional.
+     */
     
     private boolean esUsuarioProvisional;
     
+    /**
+     * Lista de las áreas que visualiza el usuario.
+     */
     private List<AreasCuestionario> listaAreasVisualizarUsuario;
     
+    /**
+     * Mapa de las áreas visualizables.
+     */
     private Map<Long, AreasCuestionario> mapaAreasVisualizarUsuario;
     
     /**
@@ -107,34 +153,46 @@ public class VisualizarCuestionario implements Serializable {
     private transient IRespuestaCuestionarioRepository respuestaRepository;
     
     /**
-     * Repositorio de tabla de datos
+     * Repositorio de tabla de datos.
      */
     @Autowired
     private transient IDatosTablaGenericaRepository datosTablaRepository;
     
     /**
-     * 
+     * Repositorio de preguntas.
      */
     @Autowired
     private transient IPreguntaCuestionarioRepository preguntasRepository;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     transient IDocumentoService documentoService;
     
+    /**
+     * Generador de words.
+     */
     @Autowired
     private transient WordGenerator wordGenerator;
     
+    /**
+     * Generador de PDF.
+     */
     @Autowired
     private transient PdfGenerator pdfGenerator;
     
     /**
      * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
-     * texto, adjuntos, tablas...)
+     * texto, adjuntos, tablas...).
      * 
-     * @author EZENTIS
+     * 
      * @param cuestionario que se desea visualizar
      * @return Nombre de la vista a mostrar
      */
@@ -147,14 +205,14 @@ public class VisualizarCuestionario implements Serializable {
     }
     
     /**
-     * Muestra en pantalla el cuestionario con las respuestas de la unidad inspeccionada
+     * Muestra en pantalla el cuestionario con las respuestas de la unidad inspeccionada.
      * 
-     * @author EZENTIS
-     * @param cuestionarioEnviado seleccionado en los resultados de la búsqueda
+     * 
+     * @param cuestionario seleccionado en los resultados de la búsqueda
      * @return vista desde la que ha sido llamada responderCuestionario o validarCuestionario
      */
-    public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionarioEnviado) {
-        this.setCuestionarioEnviado(cuestionarioEnviado);
+    public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionario) {
+        this.setCuestionarioEnviado(cuestionario);
         setMapaRespuestas(new HashMap<>());
         setMapaRespuestasTabla(new HashMap<>());
         setMapaDocumentos(new HashMap<>());
@@ -200,9 +258,9 @@ public class VisualizarCuestionario implements Serializable {
     
     /**
      * Carga las preguntas de un cuestionario en base a su modelo personalizado y construye la estructura de aquellas
-     * que precisen una tabla o matriz para representar su respuesta
+     * que precisen una tabla o matriz para representar su respuesta.
      * 
-     * @author EZENTIS
+     * 
      * @param cuestionario seleccionado
      * @param visualizarRespuestas indica si se llama para mostrar un cuestionario vacío o ya respondido
      * @param soloNoValidadas indica si hay que mostrar todas las preguntas/respuestas o sólo aquellas que aún no han
@@ -258,6 +316,12 @@ public class VisualizarCuestionario implements Serializable {
         }
     }
     
+    /**
+     * Recupera el listado de preguntas de un cuestionario.
+     * 
+     * @param cuestionario Cuestionario del que se desea extraer las preguntas
+     * @return Listado de preguntas
+     */
     private List<PreguntasCuestionario> recuperarPreguntas(CuestionarioPersonalizado cuestionario) {
         List<PreguntasCuestionario> preguntas;
         if (esUsuarioProvisional == Boolean.FALSE) {
@@ -273,7 +337,7 @@ public class VisualizarCuestionario implements Serializable {
      * Obtiene los valores asociados a un tipo de respuesta RADIO o similar. Se usa dentro del xhtml para obtener los
      * valores a visualizar en pantalla.
      * 
-     * @author EZENTIS
+     * 
      * @param tipo Tipo de respuesta de la pregunta
      * @return Lista de valores asociados al tipo de respuesta
      */
@@ -283,9 +347,9 @@ public class VisualizarCuestionario implements Serializable {
     
     /**
      * Construye la tabla o matriz que se usará en el formulario para responder las preguntas cuyo tipo de respuesta
-     * empieza por TABLA o MATRIZ
+     * empieza por TABLA o MATRIZ.
      * 
-     * @author EZENTIS
+     * 
      * @see visualizar
      * @param pregunta Pregunta del tipo respuesta que empiezan por TABLA o MATRIZ
      */
@@ -303,9 +367,9 @@ public class VisualizarCuestionario implements Serializable {
     }
     
     /**
-     * Construye la tabla o matriz que se usará del cuestionario con las respuestas cumplimentadas
+     * Construye la tabla o matriz que se usará del cuestionario con las respuestas cumplimentadas.
      * 
-     * @author EZENTIS
+     * 
      * @see #visualizar
      */
     public void construirTipoRespuestaTablaMatrizConDatos() {
@@ -318,9 +382,9 @@ public class VisualizarCuestionario implements Serializable {
     
     /**
      * Añade una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
-     * empezar por TABLA
+     * empezar por TABLA.
      * 
-     * @author EZENTIS
+     * 
      * @param pregunta Pregunta de un cuestionario
      */
     public void aniadirFilaRespuestaTabla(PreguntasCuestionario pregunta) {
@@ -332,9 +396,9 @@ public class VisualizarCuestionario implements Serializable {
     }
     
     /**
-     * Descarga de un documento subido por el usuario provisional
+     * Descarga de un documento subido por el usuario provisional.
      * 
-     * @author EZENTIS
+     * 
      * @param documento seleccionado
      */
     public void descargarFichero(Documento documento) {
@@ -346,14 +410,14 @@ public class VisualizarCuestionario implements Serializable {
     }
     
     /**
-     * Genera un archivo word para ser descargado con las preguntas del modelo de cuestionario personalizado
+     * Genera un archivo word para ser descargado con las preguntas del modelo de cuestionario personalizado.
      * 
-     * @author EZENTIS
-     * @param cuestionarioPersonalizado mostrado
+     * 
+     * @param cuestionario mostrado
      */
-    public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado) {
+    public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
         try {
-            setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado));
+            setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionario));
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
                     "Se ha producido un error en la generación del documento Word");
@@ -363,14 +427,14 @@ public class VisualizarCuestionario implements Serializable {
     
     /**
      * Genera un archivo pdf para ser descargado con las preguntas y las respuestas del cuestionario enviado una vez
-     * cumplimentado
+     * cumplimentado.
      * 
-     * @author EZENTIS
-     * @param cuestionarioEnviado mostrado
+     * 
+     * @param cuestionario mostrado
      */
-    public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
+    public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionario) {
         try {
-            setFile(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado));
+            setFile(pdfGenerator.crearCuestionarioEnviado(cuestionario));
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
                     "Se ha producido un error en la generación del PDF");
@@ -379,9 +443,8 @@ public class VisualizarCuestionario implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
@@ -393,7 +456,7 @@ public class VisualizarCuestionario implements Serializable {
      * Construye un mapa que relaciona el id con su objeto area de un cuestionario enviado para recuperar el nombre del
      * area.
      * 
-     * @author EZENTIS
+     * 
      */
     public void generarMapaAreasVisualizarUsuario() {
         mapaAreasVisualizarUsuario = new HashMap<>();

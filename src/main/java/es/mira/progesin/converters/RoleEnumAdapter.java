@@ -28,7 +28,7 @@ public class RoleEnumAdapter implements AttributeConverter<RoleEnum, String> {
     }
     
     /**
-     * Método que decibe un nombre y devuelve su correspondiente RoleEnum.
+     * Método que recibe un nombre y devuelve su correspondiente RoleEnum.
      */
     @Override
     public RoleEnum convertToEntityAttribute(String dbData) {

@@ -57,7 +57,7 @@ import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IGuiaService;
 
 /**
- * Clase para la generación de documentos DOCX
+ * Clase para la generación de documentos DOCX.
  * 
  * @author EZENTIS
  *
@@ -66,29 +66,36 @@ import es.mira.progesin.services.IGuiaService;
 public class WordGenerator {
     
     /**
-     * Constante que contiene la familia de fuentes que se usarán en los documentos
+     * Constante que contiene la familia de fuentes que se usarán en los documentos.
      */
-    public static final String FONT_FAMILY = "Arial";
+    public static final String FONTFAMILY = "Arial";
     
     /**
      * Color de fondo para las celdas. Azul claro en hexadecimal
      */
-    public static final String COLOR_CELDA_TABLA = "bbd2f7";
+    public static final String COLORCELDATABLA = "bbd2f7";
     
     /**
-     * Color de fondo. En hexadecimal
+     * Repositorio de preguntas cuestionario.
      */
-    public static final String BACKGROUND_COLOR_AREA_HEXADECIMAL = "cfd6d4";
-    
     @Autowired
     private IPreguntaCuestionarioRepository preguntasRepository;
     
+    /**
+     * Servicio de guías.
+     */
     @Autowired
     private IGuiaService guiaService;
     
+    /**
+     * Servicio de guías personalizadas.
+     */
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
+    /**
+     * Repositorio de tipos de pregunta.
+     */
     @Autowired
     private IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
     
@@ -97,10 +104,10 @@ public class WordGenerator {
      * aquellos casos donde el tipo de respuesta es de tipo TABLA o MATRIZ, dibujando las tablas/matrices de las
      * respuestas. En el caso de los tipo de respuesta RADIO, las opciones posibles se añaden al texto de la pregunta
      * 
-     * @param cuestionarioPersonalizado
+     * @param cuestionarioPersonalizado Cuestionario que se desea exportar
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException
-     * @throws IOException
+     * @throws InvalidFormatException Excepción de formato inválido
+     * @throws IOException Excepción de entrada/salida
      */
     public StreamedContent crearDocumentoCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado)
             throws InvalidFormatException, IOException {
@@ -116,12 +123,12 @@ public class WordGenerator {
     }
     
     /**
-     * Genera un documento DOCX a partir de una guia
+     * Genera un documento DOCX a partir de una guia.
      * 
      * @param guia Guía a partir de la cual se xdesea generar el documento word
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException
-     * @throws IOException
+     * @throws InvalidFormatException Excepción de formato inválido
+     * @throws IOException Excepción de entrada/salida
      */
     
     public StreamedContent crearDocumentoGuia(Guia guia) throws InvalidFormatException, IOException {
@@ -135,12 +142,12 @@ public class WordGenerator {
     
     /**
      * Genera un documento DOCX a partir de una guia personalizada mostrando el número de inspección que tiene asignado
-     * en el caso de existir y los pasos elegidos
+     * en el caso de existir y los pasos elegidos.
      * 
      * @param guia Guía a partir de la cual se xdesea generar el documento word
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException
-     * @throws IOException
+     * @throws InvalidFormatException Excepción de formato inválido
+     * @throws IOException Excepción de entrada/salida
      */
     
     public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws InvalidFormatException, IOException {
@@ -156,12 +163,12 @@ public class WordGenerator {
     }
     
     /**
-     * Crea la cabecera del documento
+     * Crea la cabecera del documento.
      * 
      * @see #crearDocumentoCuestionarioPersonalizado(CuestionarioPersonalizado)
      * @param doc XWPFDocument Documento donde se insertará la cabecera
-     * @throws InvalidFormatException
-     * @throws IOException
+     * @throws InvalidFormatException Excepción de formato inválido
+     * @throws IOException Excepción de entrada/salida
      */
     private void crearCabecera(XWPFDocument doc) throws InvalidFormatException, IOException {
         CTSectPr sectPr = doc.getDocument().getBody().addNewSectPr();
@@ -176,7 +183,7 @@ public class WordGenerator {
         
         ClassPathResource logo = new ClassPathResource(Constantes.LOGOMININISTERIOINTERIOR);
         XWPFPicture picture = run.addPicture(logo.getInputStream(), XWPFDocument.PICTURE_TYPE_PNG, logo.getPath(),
-                Units.toEMU(177 * 0.6), Units.toEMU(90 * 0.6));
+                Units.toEMU(177 * Constantes.ESCALA), Units.toEMU(90 * Constantes.ESCALA));
         
         String blipID = "";
         for (XWPFPictureData picturedata : header.getAllPackagePictures()) {
@@ -191,7 +198,7 @@ public class WordGenerator {
         run.addTab();
         logo = new ClassPathResource(Constantes.LOGOIPSS);
         XWPFPicture picture2 = run.addPicture(logo.getInputStream(), XWPFDocument.PICTURE_TYPE_PNG, logo.getPath(),
-                Units.toEMU(264 * 0.6), Units.toEMU(85 * 0.6));
+                Units.toEMU(264 * Constantes.ESCALA), Units.toEMU(85 * Constantes.ESCALA));
         blipID = "";
         for (XWPFPictureData picturedata : header.getAllPackagePictures()) {
             blipID = header.getRelationId(picturedata);
@@ -215,7 +222,7 @@ public class WordGenerator {
         texto.setBold(true);
         texto.setCapitalized(true);
         texto.setFontSize(16);
-        texto.setFontFamily(FONT_FAMILY);
+        texto.setFontFamily(FONTFAMILY);
         parrafo.setSpacingAfterLines(200);
         parrafo.setAlignment(ParagraphAlignment.CENTER);
         parrafo.addRun(texto);
@@ -240,7 +247,7 @@ public class WordGenerator {
         }
         texto.setBold(true);
         texto.setFontSize(12);
-        texto.setFontFamily(FONT_FAMILY);
+        texto.setFontFamily(FONTFAMILY);
         parrafo.addRun(texto);
         for (Inspeccion ins : inspecciones) {
             texto.addCarriageReturn();
@@ -255,8 +262,7 @@ public class WordGenerator {
     }
     
     /**
-     * 
-     * Genera el cuerpo de un cuestionario recibiendo como parámetro la lista de preguntas del cuestionario
+     * Genera el cuerpo de un cuestionario recibiendo como parámetro la lista de preguntas del cuestionario.
      * 
      * @param doc Documento al que se desea anexar el cuerpo con las preguntas
      * @param listaPreguntas Listado de las preguntas que se deben pintar en el documento
@@ -294,7 +300,7 @@ public class WordGenerator {
             texto.setBold(true);
             texto.setCapitalized(true);
             texto.setFontSize(14);
-            texto.setFontFamily(FONT_FAMILY);
+            texto.setFontFamily(FONTFAMILY);
             texto.setUnderline(UnderlinePatterns.SINGLE);
             parrafo.setAlignment(ParagraphAlignment.CENTER);
             parrafo.addRun(texto);
@@ -308,8 +314,7 @@ public class WordGenerator {
     }
     
     /**
-     * 
-     * Genera el cuerpo del documento a partir de una lista de pasos que recibe como parámetro
+     * Genera el cuerpo del documento a partir de una lista de pasos que recibe como parámetro.
      * 
      * @param doc Documento al que se desea anexar el cuerpo con las preguntas
      * @param listaPasos Listado de los pasos que se deben pintar en el documento
@@ -323,7 +328,7 @@ public class WordGenerator {
         texto.setText("Pasos");
         texto.setBold(true);
         texto.setFontSize(16);
-        texto.setFontFamily(FONT_FAMILY);
+        texto.setFontFamily(FONTFAMILY);
         parrafo.addRun(texto);
         
         for (GuiaPasos paso : listaPasos) {
@@ -331,7 +336,7 @@ public class WordGenerator {
             // Texto pregunta
             texto = parrafo.createRun();
             texto.setBold(true);
-            texto.setFontFamily(FONT_FAMILY);
+            texto.setFontFamily(FONTFAMILY);
             /* Comprobamos si hay saltos de línea */
             String textoPaso = paso.getPaso();
             if (textoPaso.contains("\n")) {
@@ -352,11 +357,11 @@ public class WordGenerator {
     }
     
     /**
-     * Esta función suple la incapacidad de POI para pintar textos que contengan saltos de línea (carácter '\n')
+     * Esta función suple la incapacidad de POI para pintar textos que contengan saltos de línea (carácter '\n').
      * 
      * @param parrafo Párrafo al que se añaden las nuevas líneas
      * @param texto Objeto de tipo XWPFRun donde se añade el texto
-     * @param nuevasLíneas Array que contiene las líneas acabando con el carácter ('\n')
+     * @param nuevasLineas Array que contiene las líneas acabando con el carácter ('\n')
      */
     private void textoConSalto(XWPFParagraph parrafo, XWPFRun texto, String[] nuevasLineas) {
         for (int i = 0; i < nuevasLineas.length; i++) {
@@ -368,7 +373,13 @@ public class WordGenerator {
             } else {
                 parrafo.insertNewRun(i);
                 XWPFRun newRun = parrafo.getRuns().get(i);
-                CTRPr rPr = newRun.getCTR().isSetRPr() ? newRun.getCTR().getRPr() : newRun.getCTR().addNewRPr();
+                
+                CTRPr rPr;
+                if (newRun.getCTR().isSetRPr()) {
+                    rPr = newRun.getCTR().getRPr();
+                } else {
+                    rPr = newRun.getCTR().addNewRPr();
+                }
                 rPr.set(texto.getCTR().getRPr());
                 newRun.setText(textoLinea);
                 newRun.addCarriageReturn();
@@ -379,12 +390,12 @@ public class WordGenerator {
     /**
      * 
      * Generación de un objeto StreamedContent que habilita la posibilidad de que el documento sea descargado desde el
-     * navegador
+     * navegador.
      * 
      * @param doc Documento a partir del cual se desea generar el fichero
      * @param titulo Título con el que se desea generar el fichero
      * @return StreamedContent Flujo generado a partir del fichero y que permitirá la descarga desde el navegador
-     * @throws IOException
+     * @throws IOException Excepción de entrada/salida
      */
     
     private StreamedContent exportarFichero(XWPFDocument doc, String titulo) throws IOException {
@@ -399,10 +410,10 @@ public class WordGenerator {
     }
     
     /**
-     * Añade tabulación en un párrafo
+     * Añade tabulación en un párrafo.
      * 
      * @see #crearCabeceraCuestionario(XWPFDocument, String, String)
-     * @param oParagraph
+     * @param oParagraph Párrafo al que se quiere añadir tabulación
      * @param oSTTabJc
      * @param oPos
      */
@@ -424,7 +435,7 @@ public class WordGenerator {
     }
     
     /**
-     * Inserta las preguntas relacionadas con un área en el documento
+     * Inserta las preguntas relacionadas con un área en el documento.
      * 
      * @see #crearDocumentoCuestionarioPersonalizado(CuestionarioPersonalizado)
      * @param listaPreguntasArea Lista de preguntas asociadas a un área
@@ -438,7 +449,7 @@ public class WordGenerator {
             // Texto pregunta
             texto = parrafo.createRun();
             texto.setBold(true);
-            texto.setFontFamily(FONT_FAMILY);
+            texto.setFontFamily(FONTFAMILY);
             if (pregunta.getTipoRespuesta().startsWith("RADIO")) {
                 texto.setText(pregunta.getPregunta() + " (valores posibles: " + getValoresRadioButton(pregunta) + ")");
             } else {
@@ -467,11 +478,11 @@ public class WordGenerator {
     }
     
     /**
-     * Crear la respuesta tabla o matriz asociada a una pregunta
+     * Crear la respuesta tabla o matriz asociada a una pregunta.
      * 
      * @see #crearPreguntasPorArea(List, XWPFDocument)
-     * @param doc
-     * @param pregunta
+     * @param doc Documento al que se añade la tabla
+     * @param pregunta Pregunta que se añade
      */
     private void crearRespuestaTablaMatriz(XWPFDocument doc, PreguntasCuestionario pregunta) {
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
@@ -498,10 +509,10 @@ public class WordGenerator {
                 parrafoCelda = filaCabecera.getCell(col).addParagraph();
             } else {
                 parrafoCelda = filaCabecera.getCell(col + 1).addParagraph();
-                filaCabecera.getCell(valoresColumnas.size()).setColor(COLOR_CELDA_TABLA);
+                filaCabecera.getCell(valoresColumnas.size()).setColor(COLORCELDATABLA);
             }
             setTextoYFormatoParrafoCelda(parrafoCelda, valoresColumnas.get(col).getConfig().getValor());
-            filaCabecera.getCell(col).setColor(COLOR_CELDA_TABLA);
+            filaCabecera.getCell(col).setColor(COLORCELDATABLA);
         }
         
         if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
@@ -512,7 +523,7 @@ public class WordGenerator {
                 XWPFTableRow row = table.createRow();
                 parrafoCelda = row.getCell(0).addParagraph();
                 setTextoYFormatoParrafoCelda(parrafoCelda, config.getConfig().getValor());
-                row.getCell(0).setColor(COLOR_CELDA_TABLA);
+                row.getCell(0).setColor(COLORCELDATABLA);
             }
         } else {
             // Creo una fila vacía
@@ -521,26 +532,27 @@ public class WordGenerator {
     }
     
     /**
-     * Crea el texto que se añadirá a un párrafo y se le da formato
+     * Crea el texto que se añadirá a un párrafo y se le da formato.
+     * 
      * @see #crearRespuestaTablaMatriz(XWPFDocument, PreguntasCuestionario)
-     * @param parrafoCelda
-     * @param valor
+     * @param parrafoCelda Párrafo
+     * @param valor Valor a añadir
      */
     private void setTextoYFormatoParrafoCelda(XWPFParagraph parrafoCelda, String valor) {
         XWPFRun texto = parrafoCelda.createRun();
         texto.setText(valor);
         texto.setBold(true);
-        texto.setFontFamily(FONT_FAMILY);
+        texto.setFontFamily(FONTFAMILY);
         parrafoCelda.addRun(texto);
         parrafoCelda.setAlignment(ParagraphAlignment.CENTER);
         parrafoCelda.setVerticalAlignment(TextAlignment.CENTER);
     }
     
     /**
-     * Obtiene un String con los posibles valores de un RADIO unidos por ", "
+     * Obtiene un String con los posibles valores de un RADIO unidos por ", ".
      * 
      * @see #crearPreguntasPorArea(List, XWPFDocument)
-     * @param pregunta
+     * @param pregunta Pregunta a añadir
      * @return String con los valores de un RADIO unidos por ", "
      */
     private String getValoresRadioButton(PreguntasCuestionario pregunta) {
