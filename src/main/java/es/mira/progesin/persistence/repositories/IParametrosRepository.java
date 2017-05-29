@@ -9,19 +9,21 @@ import org.springframework.data.repository.query.Param;
 import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.entities.ParametroId;
 
+/**
+ * Repositorio de operaciones de base de datos para la entidad Parametro.
+ * 
+ * @author EZENTIS
+ *
+ */
+
 public interface IParametrosRepository extends CrudRepository<Parametro, ParametroId> {
     
     /**
-     * 
-     * findValueForKey
-     * 
      * Devuelve el valor de una clave localizada en la tabla de Parámetros de BDD.
      * 
-     * @author Ezentis
-     * 
-     * @param clave
-     * @param seccion
-     * @return valor
+     * @param clave Clave que se desea consultar
+     * @param seccion Seccion para la que se desea consultar la clave
+     * @return valor Valor de la clave
      *
      */
     
@@ -30,14 +32,11 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
     
     /**
      * 
-     * findValuesForSeccion
-     * 
      * Devuelve los valores de una seccion localizada en la tabla de Parámetros de BDD.
      * 
-     * @author Ezentis
      * 
-     * @param seccion
-     * @return valor
+     * @param seccion Sección de la que se desea recuperar las claves
+     * @return Lista de las claves de la sección
      *
      */
     
@@ -45,23 +44,19 @@ public interface IParametrosRepository extends CrudRepository<Parametro, Paramet
     List<String> findValuesForSeccion(@Param("seccion") String seccion);
     
     /**
-     * 
-     * findParamByParamSeccion
-     * 
      * Devuelve una lista de objetos Parametro de una seccion localizada en la tabla de Parámetros de BDD.
      * 
-     * @author Ezentis
-     * 
-     * @param seccion
-     * @return Lista parámetros
+     * @param seccion Sección de la que se desean recuperar los parámetros
+     * @return Lista de parámetros de la sección consultada
      *
      */
     
     List<Parametro> findParamByParamSeccion(String seccion);
     
     /**
-     * Devuelve lista de secciones a las que pertenecen todos los parámetros
-     * @return secciones
+     * Devuelve lista de secciones.
+     * 
+     * @return Listado de secciones
      */
     @Query("select distinct param.seccion from Parametro")
     List<String> findSecciones();

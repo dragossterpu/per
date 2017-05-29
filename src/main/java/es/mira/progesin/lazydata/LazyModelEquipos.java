@@ -17,7 +17,7 @@ import lombok.Setter;
  * 
  * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -33,7 +33,7 @@ public class LazyModelEquipos extends LazyDataModel<Equipo> implements Serializa
     private EquipoBusqueda busqueda;
     
     /**
-     * Servicio.
+     * Servicio a usar.
      */
     private transient IEquipoService servicio;
     

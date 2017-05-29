@@ -21,9 +21,9 @@ import lombok.ToString;
 
 /**
  * 
- * Entity creada para almacenar las notificaciones
+ * Entity creada para almacenar las notificaciones.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -40,31 +40,54 @@ public class Notificacion implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de la notificación, generada por medio de una secuencia.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_NOTIFICACIONES")
     @SequenceGenerator(name = "SEQ_NOTIFICACIONES", sequenceName = "SEQ_NOTIFICACIONES", allocationSize = 1)
-    
     @Column(name = "ID_NOTIFICACION", length = 15)
     private Long idNotificacion;
     
+    /**
+     * Descripción de la notificación.
+     */
     @Column(name = "DESCRIPCION", length = 2000)
     private String descripcion;
     
+    /**
+     * Fecha en la que se da de alta la notificación.
+     */
     @Column(name = "FECHA_NOTIFICACION", nullable = false)
     private Date fechaAlta;
     
+    /**
+     * Username del usuario que registra la notificación.
+     */
     @Column(name = "USUARIO_REGISTRO")
     private String usernameNotificacion;
     
+    /**
+     * Tipo de la notificación.
+     */
     @Column(name = "TIPO_NOTIFICACION", length = 20)
     private String tipoNotificacion;
     
+    /**
+     * Sección en la que se produce la notificación.
+     */
     @Column(name = "NOMBRE_SECCION", length = 50)
     private String nombreSeccion;
     
+    /**
+     * Fecha en la que se da de baja la notificación.
+     */
     @Column(name = "FECHA_BAJA")
     private Date fechaBaja;
     
+    /**
+     * Username del usuario que da de baja la notificación.
+     */
     @Column(name = "USUARIO_BAJA")
     private String usernameBaja;
     

@@ -27,9 +27,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity para almacenar las guías en BDD
+ * Entity para almacenar las guías en BDD.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @AllArgsConstructor
@@ -43,29 +43,50 @@ import lombok.Setter;
 public class Guia extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de la guía. Generado mediante una secuencia.
+     */
     @Id
     @SequenceGenerator(name = "seq_guias", sequenceName = "seq_guias", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_guias")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Nombre de la guía.
+     */
     @Column(name = "nombre_guia", nullable = false)
     private String nombre;
     
+    /**
+     * Orden en que se mostrará la guía.
+     */
     @Column(name = "orden")
     private Integer orden;
     
+    /**
+     * Tipo de inspección a la que se adscribe la guía.
+     */
     @ManyToOne
     @JoinColumn(name = "tipo_inspeccion", foreignKey = @ForeignKey(name = "fk_g_tipo_inspeccion"), nullable = false)
     private TipoInspeccion tipoInspeccion;
     
+    /**
+     * Listado de los pasos contenidos en la guía.
+     */
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idGuia")
     private List<GuiaPasos> pasos;
     
+    /**
+     * Fecha en la que se da de baja la guía.
+     */
     @Column(name = "fecha_anulacion")
     private Date fechaAnulacion;
     
+    /**
+     * Username del usuario que da de baja la guía.
+     */
     @Column(name = "username_anulacion")
     private String usernameAnulacion;
     

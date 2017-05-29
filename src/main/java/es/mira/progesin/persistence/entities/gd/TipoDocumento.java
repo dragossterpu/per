@@ -17,9 +17,9 @@ import lombok.ToString;
 
 /**
  * 
- * Entity para almacenar los tipos posibles de documentos que se manejarán desde el gestor documental
+ * Entity para almacenar los tipos posibles de documentos que se manejarán desde el gestor documental.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @AllArgsConstructor
@@ -35,10 +35,16 @@ import lombok.ToString;
 public class TipoDocumento implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de la entidad.
+     */
     @Id
     @Column(name = "id")
     Long id;
     
+    /**
+     * Nombre del tipo de documento.
+     */
     @Column(name = "nombre")
     String nombre;
     

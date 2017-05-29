@@ -28,7 +28,7 @@ import lombok.ToString;
  * 
  * Entity creada para almacenar las alertas.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 

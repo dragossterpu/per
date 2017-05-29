@@ -19,7 +19,7 @@ import es.mira.progesin.persistence.entities.GuiaPasos;
  * 
  * Convierte objetos de tipo GuiaPasos para su uso con el control orderList
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  **/
 

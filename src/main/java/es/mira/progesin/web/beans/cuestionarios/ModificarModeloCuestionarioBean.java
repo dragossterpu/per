@@ -37,9 +37,9 @@ import lombok.Setter;
 
 /**
  * 
- * Bean para la creación y modificación de modelos de cuestionario
+ * Bean para la creación y modificación de modelos de cuestionario.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -49,70 +49,136 @@ import lombok.Setter;
 @Scope("session")
 
 public class ModificarModeloCuestionarioBean {
-    
+    /**
+     * Objeto modeloCuestionario.
+     */
     ModeloCuestionario modeloCuestionario;
     
+    /**
+     * Tabla de datos.
+     */
     private DataTableView datosTabla;
     
+    /**
+     * Tipo seleccionado.
+     */
     private String tipoSeleccionado;
     
+    /**
+     * Listado de preguntas apra la baja lógica.
+     */
     private List<PreguntasCuestionario> listaPreguntasBajaLogica;
     
+    /**
+     * Lista de áreas del cuestionario.
+     */
     private List<AreasCuestionario> listaAreasCuestionario;
     
-    // Lista para mostrar en pantalla las áreas y que el cebreado se visualice correctamente
+    /**
+     * Lista para mostrar en pantalla las áreas y que el cebreado se visualice correctamente.
+     */
     private List<AreasCuestionario> listaAreasCuestionarioVisualizar;
     
+    /**
+     * Listado de tipos de pregunta.
+     */
     private List<String> listaTipoPreguntas;
     
+    /**
+     * Listado de tipos de pregunta.
+     */
     private List<String> listaTipoPreguntasFinal;
     
+    /**
+     * Listado de tipos de pregunta para el selector.
+     */
     private DualListModel<String> listaTipoPreguntasPick;
     
+    /**
+     * Booleano para marcar si se trata de un nuevo modelo.
+     */
     private boolean esNuevoModelo;
     
-    @Autowired
-    private IModeloCuestionarioService modeloCuestionarioService;
-    
-    @Autowired
-    private INotificacionService notificacionesService;
-    
-    @Autowired
-    private IRegistroActividadService registroActividadService;
-    
-    @Autowired
-    private IConfiguracionRespuestasCuestionarioRepository configuracionRespuestasCuestionarioRepository;
-    
+    /**
+     * Area seleccionado.
+     */
     private AreasCuestionario areaSelec = new AreasCuestionario();
     
+    /**
+     * Pregunta seleccionada.
+     */
     private PreguntasCuestionario preguntaSelec;
     
-    // Nuevo tipo pregunta
+    /**
+     * Tipo personalizado.
+     */
     private String tipoPersonalizado = "";
     
+    /**
+     * Lista de tipos de pregunta que pueden personalizarse.
+     */
     private List<TiposRespuestasPersonalizables> listaTiposPersonalizables;
     
+    /**
+     * Listado de los nuevos valores para nuevo tipo de respuesta.
+     */
     private List<String> listadoValoresNuevaRespuesta;
     
+    /**
+     * Listado valores fila.
+     */
     private List<String> listadoValoresFila;
     
+    /**
+     * Valor seleccionado.
+     */
     private String valorSeleccionado;
     
+    /**
+     * Repositorio de areas de cuestionario.
+     */
     @Autowired
     private IAreaCuestionarioRepository areaCuestionarioRepository;
     
+    /**
+     * Repositorio de preguntas.
+     */
     @Autowired
     private IPreguntaCuestionarioRepository preguntasCuestionarioRepository;
     
     /**
-     * Incicia el proceso de edición de un modelo de cuestionario recibido como parámetro
-     * 
-     * @param modeloCuestionario seleccionado
-     * @return ruta de la vista del formulario
+     * Servicio de modelos de cuestionario.
      */
-    public String editarModelo(ModeloCuestionario modeloCuestionario) {
+    @Autowired
+    private IModeloCuestionarioService modeloCuestionarioService;
+    
+    /**
+     * Servicio de notificaciones.
+     */
+    @Autowired
+    private INotificacionService notificacionesService;
+    
+    /**
+     * Servicio de registro de actividad.
+     */
+    @Autowired
+    private IRegistroActividadService registroActividadService;
+    
+    /**
+     * Repositorio de configuración de preguntas.
+     */
+    @Autowired
+    private IConfiguracionRespuestasCuestionarioRepository configuracionRespuestasCuestionarioRepository;
+    
+    /**
+     * Incicia el proceso de edición de un modelo de cuestionario recibido como parámetro.
+     * 
+     * @param cuestionario Cuestionario seleccionado
+     * @return Ruta de la vista del formulario
+     */
+    public String editarModelo(ModeloCuestionario cuestionario) {
         this.esNuevoModelo = false;
-        this.modeloCuestionario = modeloCuestionario;
+        this.modeloCuestionario = cuestionario;
         listaAreasCuestionario = areaCuestionarioRepository
                 .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
         listaAreasCuestionarioVisualizar = areaCuestionarioRepository
@@ -135,9 +201,9 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Inicia el proceso de alta de un nuevo modelo de cuestionario
+     * Inicia el proceso de alta de un nuevo modelo de cuestionario.
      * 
-     * @return ruta de la vista del formulario
+     * @return Ruta de la vista del formulario
      */
     public String nuevoModelo() {
         this.esNuevoModelo = true;
@@ -161,7 +227,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Permite añadir áreas al modelo de cuestionario
+     * Permite añadir áreas al modelo de cuestionario.
      * 
      * @param nombreArea Nombre del área a añadir
      * 
@@ -179,8 +245,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * 
-     * Se guarda el área seleccionada por el usuario en la vista
+     * Se guarda el área seleccionada por el usuario en la vista.
      * 
      * @param event Se recibe un evento que contiene el área seleccionada
      */
@@ -248,9 +313,9 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Almacena el valor de la pregunta seleccionada por el usuario en la vista
+     * Almacena el valor de la pregunta seleccionada por el usuario en la vista.
      * 
-     * @param event evento asociado al desplegable con la pregunta elegida
+     * @param event Evento asociado al desplegable con la pregunta elegida
      */
     public void onSelectPregunta(SelectEvent event) {
         preguntaSelec = (PreguntasCuestionario) event.getObject();
@@ -344,11 +409,10 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
+     * Recupera el listado de valores posibles para un tipo de respuesta.
      * 
-     * Recupera el listado de valores posibles para un tipo de respuesta
-     * 
-     * @param tipo seleccionado
-     * @return List<String>
+     * @param tipo Tipo seleccionado
+     * @return Listado de valores posibles
      */
     public List<String> getValoresTipoRespuesta(String tipo) {
         return configuracionRespuestasCuestionarioRepository.findValoresPorSeccion(tipo);
@@ -356,10 +420,10 @@ public class ModificarModeloCuestionarioBean {
     
     /**
      * 
-     * Añade un nuevo valor a un tipo de respuesta
+     * Añade un nuevo valor a un tipo de respuesta.
      * 
-     * @param valor a añadir
-     * @param tipoRespuesta seleccionado
+     * @param valor Valor a añadir
+     * @param tipoRespuesta Tipo de respuesta seleccionado
      */
     public void aniadeValor(String valor, String tipoRespuesta) {
         if ((!valor.isEmpty() && Constantes.TIPORESPUESTARADIO.equals(tipoRespuesta))
@@ -382,8 +446,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * 
-     * Almacena en una variable el valor seleccionado por el usuario en la vista
+     * Almacena en una variable el valor seleccionado por el usuario en la vista.
      * 
      * @param event evento asociado al desplegable con el valor seleccionado
      */
@@ -392,7 +455,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Añade un nuevo valor a la lista de valores de fila (para matrices/tablas)
+     * Añade un nuevo valor a la lista de valores de fila (para matrices/tablas).
      * 
      * @param valorFila a añadir
      */
@@ -402,7 +465,7 @@ public class ModificarModeloCuestionarioBean {
     
     /**
      * Elimina un valor en la lista e valores de fila (para matrices/tablas) Elimina el valor que previamente se ha
-     * seleccionado
+     * seleccionado.
      * 
      * @see #onSelectValor
      */
@@ -474,7 +537,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Se almacena en base de datos el modelo de cuestionario modificado
+     * Se almacena en base de datos el modelo de cuestionario modificado.
      * 
      */
     public void guardaCuestionario() {
@@ -497,7 +560,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Se almacena en base de datos el nuevo modelo de cuestionario
+     * Se almacena en base de datos el nuevo modelo de cuestionario.
      * 
      */
     public void guardaNuevoCuestionario() {
@@ -518,10 +581,10 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Se asigna un valor de orden a las áreas según su posición dentro de la lista de áreas
+     * Se asigna un valor de orden a las áreas según su posición dentro de la lista de áreas.
      * 
-     * @param listado sin orden
-     * @return listado ordenado
+     * @param listado Listado sin orden
+     * @return Listado ordenado
      */
     public List<AreasCuestionario> ordenarAreas(List<AreasCuestionario> listado) {
         List<AreasCuestionario> listaNueva = new ArrayList<>();
@@ -534,6 +597,12 @@ public class ModificarModeloCuestionarioBean {
         }
         return listaNueva;
     }
+    
+    /**
+     * Se asigna un valor de orden a un área.
+     * 
+     * @param areaVisualizar Área a la que asignar orden
+     */
     
     private void ordenarListaGrabar(AreasCuestionario areaVisualizar) {
         if (areaVisualizar.getId() != null) {
@@ -550,7 +619,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Se asigna un valor de orden a las preguntas según su posición dentro de la lista de preguntas de su área
+     * Se asigna un valor de orden a las preguntas según su posición dentro de la lista de preguntas de su área.
      * 
      * @param area Área a la se le quieren ordenar las preguntas
      * 
@@ -566,7 +635,7 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * Se asigna un valor de orden a las preguntas según su posición dentro de la lista de preguntas de su área
+     * Se asigna un valor de orden a las preguntas según su posición dentro de la lista de preguntas de su área.
      * 
      * @param area Área a la se le quieren ordenar las preguntas
      * @param pregunta Pregunta modificada con el nuevo orden que hay que actualizar en la lista de preguntas a grabar
@@ -605,10 +674,11 @@ public class ModificarModeloCuestionarioBean {
     }
     
     /**
-     * 
-     * Construye una tabla o matriz vacía para su visualización
+     * Construye una tabla o matriz vacía para su visualización.
      * 
      * @see #onSelectTipo
+     * 
+     * @param tipo Tipo de respuesta a construir
      * 
      */
     private void construirTipoRespuestaTablaMatrizVacia(String tipo) {

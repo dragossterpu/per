@@ -8,7 +8,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumento;
  * 
  * Repositorio con las operaciones de BDD para la entidad TipoDocumento
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 public interface ITipoDocumentoRepository extends CrudRepository<TipoDocumento, Long> {

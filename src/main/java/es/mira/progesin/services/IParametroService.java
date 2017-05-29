@@ -3,7 +3,7 @@ package es.mira.progesin.services;
 import java.util.Map;
 
 /**
- * Interfaz del servicio de parámetros
+ * Interfaz del servicio de parámetros.
  * 
  * @author EZENTIS
  *
@@ -13,9 +13,9 @@ import java.util.Map;
 public interface IParametroService {
     
     /**
-     * Recupera en un mapa los parámetros de la aplicación que están cargados en base de datos
+     * Recupera en un mapa los parámetros de la aplicación que están cargados en base de datos.
      * 
-     * @return mapa con los parámetros de configuración
+     * @return Mapa con los parámetros de configuración
      */
     Map<String, Map<String, String>> getMapaParametros();
     

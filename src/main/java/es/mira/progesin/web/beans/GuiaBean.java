@@ -34,9 +34,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean de guías
+ * Bean de guías.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -45,61 +45,120 @@ import lombok.Setter;
 @Controller("guiaBean")
 @Scope("session")
 public class GuiaBean {
-    
+    /**
+     * Guía.
+     */
     private Guia guia;
     
+    /**
+     * Parámetro para controlar desde dónde se accede a la vista.
+     */
     private String vieneDe;
     
+    /**
+     * Objeto que almacena los criterios de búsquedad.
+     */
     private GuiaBusqueda busqueda;
     
+    /**
+     * Paso seleccionado.
+     */
     private GuiaPasos pasoSeleccionado;
     
+    /**
+     * Lista de booleanos para controlar la visualización de columnas en la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Lista de pasos contenidos en la guía.
+     */
     private List<GuiaPasos> listaPasos;
     
+    /**
+     * Lista de pasos que se grabarán en BDD.
+     */
     private List<GuiaPasos> listaPasosGrabar;
     
+    /**
+     * Lista de pasos seleccionados durante la personalización.
+     */
     private List<GuiaPasos> listaPasosSeleccionados;
     
+    /**
+     * Lista de inspecciones a las que se asgna la guía durante la personalización.
+     */
     private List<Inspeccion> listaInspecciones;
     
+    /**
+     * Fichero que contendrá la versión descargable de la guía.
+     */
     private StreamedContent file;
     
-    boolean alta = false;
+    /**
+     * Discriminador para diferenciar si se está dando de alta una guía.
+     */
+    boolean alta;
     
+    /**
+     * Constante que contiene el texto "La guía '".
+     */
     private static final String LAGUIA = "La guía '";
     
+    /**
+     * Constante que contiene el texto "ERROR".
+     */
     private static final String ERROR = "ERROR";
+    
+    /**
+     * LazyModel para la visualización paginada de guías.
+     */
     
     private LazyModelGuias model;
     
+    /**
+     * Lista de los posibles tipos de inspección.
+     */
     private List<TipoInspeccion> listaTiposInspeccion;
     
+    /**
+     * Generador de documentos word.
+     */
     @Autowired
     private WordGenerator wordGenerator;
     
+    /**
+     * Servicio de guías.
+     */
     @Autowired
     private IGuiaService guiaService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de guiías personalizadas.
+     */
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private IInspeccionesService inspeccionesService;
     
+    /**
+     * Servicio de tipos de inspección.
+     */
     @Autowired
     private ITipoInspeccionService tipoInspeccionService;
     
-    @Autowired
-    private IRegistroActividadService registroActividadService;
-    
     /**
-     * 
-     * Busca las guías según los filtros introducidos en el formulario de búsqueda
+     * Busca las guías según los filtros introducidos en el formulario de búsqueda.
      * 
      */
     public void buscarGuia() {
@@ -108,23 +167,21 @@ public class GuiaBean {
     }
     
     /**
+     * Visualiza la guía pasada como parámetro redirigiendo a la vista "visualizaGuía".
      * 
-     * Visualiza la guía pasada como parámetro redirigiendo a la vista "visualizaGuía"
-     * 
-     * @param guia Guia
-     * @return String
+     * @param guide Guia a visualizar
+     * @return Ruta de la vista donde se visualiza la guía
      * 
      */
     
-    public String visualizaGuia(Guia guia) {
-        this.guia = guia;
-        listaPasos = guiaService.listaPasos(guia);
+    public String visualizaGuia(Guia guide) {
+        this.guia = guide;
+        listaPasos = guiaService.listaPasos(guide);
         return "/guias/visualizaGuia?faces-redirect=true";
     }
     
     /**
-     * 
-     * Limpia los valores del objeto de búsqueda
+     * Limpia los valores del objeto de búsqueda.
      * 
      */
     
@@ -134,10 +191,9 @@ public class GuiaBean {
     }
     
     /**
+     * Inicia el proceso de creación de una nueva guía redirigiendo a la vista "editarGuia".
      * 
-     * Inicia el proceso de creación de una nueva guía redirigiendo a la vista "editarGuia"
-     * 
-     * @return String
+     * @return Ruta de la vista
      * 
      */
     
@@ -151,16 +207,16 @@ public class GuiaBean {
     
     /**
      * 
-     * Inicia el proceso de edición de una guía pasada como parámetro redirigiendo a la vista "editarGuia"
+     * Inicia el proceso de edición de una guía pasada como parámetro redirigiendo a la vista "editarGuia".
      * 
-     * @param guia Guia
-     * @return String
+     * @param guide Guia a editar
+     * @return Ruta de la vista
      * 
      */
     
-    public String editaGuia(Guia guia) {
+    public String editaGuia(Guia guide) {
         alta = false;
-        this.guia = guia;
+        this.guia = guide;
         listaPasosGrabar = guiaService.listaPasos(guia);
         listaPasos = guiaService.listaPasosNoNull(guia);
         
@@ -169,15 +225,15 @@ public class GuiaBean {
     
     /**
      * 
-     * Añade un nuevo paso a la guía
+     * Añade un nuevo paso a la guía.
      * 
-     * @param pregunta String
+     * @param paso Paso a añadir.
      * 
      */
     
-    public void aniadePaso(String pregunta) {
+    public void aniadePaso(String paso) {
         GuiaPasos nuevaPregunta = new GuiaPasos();
-        nuevaPregunta.setPaso(pregunta);
+        nuevaPregunta.setPaso(paso);
         nuevaPregunta.setIdGuia(guia);
         listaPasos.add(nuevaPregunta);
         listaPasosGrabar.add(nuevaPregunta);
@@ -218,10 +274,9 @@ public class GuiaBean {
     }
     
     /**
+     * Asigna a la variable "pasoSeleccionado" el valor seleccionado por el usuario en la vista.
      * 
-     * Asigna a la variable "pasoSeleccionado" el valor seleccionado por el usuario en la vista
-     * 
-     * @param event SelectEvent
+     * @param event Paso seleccionado
      * 
      */
     
@@ -230,8 +285,7 @@ public class GuiaBean {
     }
     
     /**
-     * 
-     * Inicializa el bean
+     * Inicializa el bean.
      * 
      */
     
@@ -247,16 +301,15 @@ public class GuiaBean {
     }
     
     /**
+     * Crea un documento Word a partir de una guía pasada como parámetro.
      * 
-     * Crea un documento Word a partir de una guía pasada como parámetro
-     * 
-     * @param guia Guia
+     * @param guide Guia de la que se desea crear la versión en Word.
      * 
      */
     
-    public void crearDocumentoWordGuia(Guia guia) {
+    public void crearDocumentoWordGuia(Guia guide) {
         try {
-            setFile(wordGenerator.crearDocumentoGuia(guia));
+            setFile(wordGenerator.crearDocumentoGuia(guide));
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error en la generación del documento Word");
@@ -293,8 +346,7 @@ public class GuiaBean {
     }
     
     /**
-     * 
-     * Almacena en base de datos la guía
+     * Almacena en base de datos la guía.
      * 
      */
     
@@ -326,10 +378,8 @@ public class GuiaBean {
     }
     
     /**
-     * 
      * Ordena los pasos de una lista pasada como parámetro almacenando el orden en los objetos GuiaPaso contenidos en la
-     * misma
-     *
+     * misma.
      * 
      */
     
@@ -358,8 +408,7 @@ public class GuiaBean {
     }
     
     /**
-     * 
-     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral
+     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral.
      * 
      */
     
@@ -372,30 +421,27 @@ public class GuiaBean {
     }
     
     /**
-     * 
-     * Inicia el proceso de creación de una guía personalizada y redirige a la vista de personalización
+     * Inicia el proceso de creación de una guía personalizada y redirige a la vista de personalización.
      *
-     * @param guia Guia
-     * @return String
+     * @param guide Modelo que se empleará para hacer una guía personalizada
+     * @return Ruta de la vista de personalización.
      * 
      */
     
-    public String creaPersonalizada(Guia guia) {
+    public String creaPersonalizada(Guia guide) {
         alta = false;
-        this.guia = guia;
+        this.guia = guide;
         listaPasosSeleccionados = new ArrayList<>();
         listaInspecciones = new ArrayList<>();
-        listaPasos = guiaService.listaPasosNoNull(guia);
+        listaPasos = guiaService.listaPasosNoNull(guide);
         
         return "/guias/personalizarGuia?faces-redirect=true";
     }
     
     /**
-     * 
-     * Almacena en BDD la guía personalizada
+     * Almacena en BDD la guía personalizada.
      *
-     * @param nombre String
-     * @param inspeccion Inspección a la que se asigna la guía
+     * @param nombre Nombre de la guía
      * 
      */
     
@@ -516,9 +562,9 @@ public class GuiaBean {
     
     /**
      * 
-     * Elimina la fecha de baja de la guía para volver a ponerla activa
+     * Elimina la fecha de baja de la guía para volver a ponerla activa.
      * 
-     * @param guiaActivar
+     * @param guiaActivar Guía que se desea activar
      */
     public void activa(Guia guiaActivar) {
         try {
@@ -549,14 +595,14 @@ public class GuiaBean {
             } catch (Exception e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
                         "Se ha producido un error al asignar una inspección al documento");
-                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+                regActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
             }
             
         }
     }
     
     /**
-     * Elimina una inspección de la lista del documento
+     * Elimina una inspección de la lista del documento.
      * 
      * @param inspeccion Inspección a desasociar
      */
@@ -566,7 +612,7 @@ public class GuiaBean {
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al desasociar una inspección del documento");
-            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
     }
     

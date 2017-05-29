@@ -2,17 +2,15 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import es.mira.progesin.persistence.entities.RegistroActividad;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * 
- * Bean para almacenar los criterios de búsqueda en el registro de actividad de la aplicación
+ * Bean para almacenar los criterios de búsqueda en el registro de actividad de la aplicación.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -22,25 +20,41 @@ public class RegActividadBusqueda implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Fecha desde la que se desea hacer la búsqueda.
+     */
     private Date fechaDesde;
     
+    /**
+     * Fecha hasta la que se desea hacer la búsqueda.
+     */
     private Date fechaHasta;
     
+    /**
+     * Sección para la que se desea hacer la búsqueda.
+     */
     private String nombreSeccion;
+    
+    /**
+     * Username del usuario para el que se desea hacer la búsqueda.
+     */
     
     private String usernameRegActividad;
     
+    /**
+     * Tipo de registro de la que se desea hacer la búsqueda.
+     */
     private String tipoRegActividad;
     
-    private List<RegistroActividad> listaRegActividad;
-    
+    /**
+     * Resetea los valores del objeto.
+     */
     public void resetValues() {
         this.setFechaDesde(null);
         this.setFechaHasta(null);
         this.setNombreSeccion(null);
         this.setUsernameRegActividad(null);
         this.setTipoRegActividad(null);
-        this.setListaRegActividad(null);
     }
     
 }

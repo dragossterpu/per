@@ -25,7 +25,7 @@ import lombok.Setter;
  * 
  * Entidad para el almacenamiento de pasos de guía.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 

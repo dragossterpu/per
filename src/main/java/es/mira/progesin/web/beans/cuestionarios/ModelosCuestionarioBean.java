@@ -18,7 +18,7 @@ import lombok.Setter;
 /**
  * Muestra la lista de modelos de cuestionarios cargados en el sistema.
  * 
- * @author Ezentis
+ * @author EZENTIS
  */
 @Setter
 @Getter
@@ -50,7 +50,7 @@ public class ModelosCuestionarioBean {
     /**
      * Carga la lista con todos los modelos de cuestionario de la bdd.
      * 
-     * @author Ezentis
+     * @author EZENTIS
      */
     public void cargarModelos() {
         setListadoCuestionarios(modeloCuestionarioService.findAll());

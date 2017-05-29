@@ -22,10 +22,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 
  * Bean para la gestión del registro de actividad.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -37,25 +36,46 @@ public class RegActividadBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Lista de booleanos para controlar la visualización de columnas en la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Objeto que se usará para visualizar los registros.
+     */
     private RegistroActividad error;
     
+    /**
+     * Número de columnas en la vista.
+     */
     private Integer numColListRegActividad = 5;
     
+    /**
+     * Objeto que contendrá el parámetros de búsqueda.
+     */
     private RegActividadBusqueda regActividadBusqueda;
     
+    /**
+     * Parámetro para controlar desde dónde se accede a la vista.
+     */
     private String vieneDe;
     
+    /**
+     * LazyModel para la visualización paginada de datos en la vista.
+     */
     private LazyModelRegistro model;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     transient IRegistroActividadService regActividadService;
     
     /**
      * 
      * Busca en el registro de actividad según los criterios elegidos por el usuario en la vista y carga los resultados
-     * en una lista para su visualización
+     * en una lista para su visualización.
      * 
      */
     
@@ -66,8 +86,7 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * 
-     * Controla las columnas visibles en la lista de resultados del buscador
+     * Controla las columnas visibles en la lista de resultados del buscador.
      * 
      * @param e Evento toggle
      * 
@@ -78,9 +97,7 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * 
-     * Limpia los parámetros de búsqueda y resultado si se accede a la página desde el menú lateral
-     * 
+     * Limpia los parámetros de búsqueda y resultado si se accede a la página desde el menú lateral.
      * 
      */
     
@@ -93,8 +110,7 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * 
-     * Limpia los parámetros de búsqueda y el resultado
+     * Limpia los parámetros de búsqueda y el resultado.
      * 
      */
     
@@ -104,8 +120,7 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * 
-     * Inicializa el bean
+     * Inicializa el bean.
      * 
      */
     @PostConstruct
@@ -119,11 +134,10 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
+     * Devuelve una lista con las secciones cuyo nombre contenga la cadena de texto que se recibe como parámetro.
      * 
-     * Devuelve una lista con las secciones cuyo nombre contenga la cadena de texto que se recibe como parámetro
-     * 
-     * @param infoSeccion
-     * @return List<String>
+     * @param infoSeccion Nombre de la sección por la que se busca
+     * @return Listado de resultados
      * 
      */
     
@@ -132,11 +146,10 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
+     * Devuelve una lista con las nombre de usuario que contengan la cadena de texto que se recibe como parámetro.
      * 
-     * Devuelve una lista con las nombre de usuario que contengan la cadena de texto que se recibe como parámetro
-     * 
-     * @param infoUsuario
-     * @return List<String>
+     * @param infoUsuario Usuario por el que se hace la consulta
+     * @return Listado de resultados
      * 
      */
     
@@ -145,11 +158,10 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * 
      * Guarda el registro de actividad seleccionado por el usuario en la vista en una variable para que se muestre en un
-     * dialog
+     * dialog.
      * 
-     * @param event
+     * @param event Registro a mostrar en detalle.
      * 
      */
     

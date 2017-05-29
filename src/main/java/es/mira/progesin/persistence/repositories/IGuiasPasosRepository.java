@@ -10,9 +10,9 @@ import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 
 /**
- * Repositorio de operaciones de base de datos para la entidad GuiasPasos
+ * Repositorio de operaciones de base de datos para la entidad GuiasPasos.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
@@ -30,7 +30,7 @@ public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
     List<GuiaPasos> findByIdGuiaAndFechaBajaIsNullOrderByOrdenAsc(Guia idGuia);
     
     /**
-     * Recupera una lista de los pasos contenidos en una guía pasada como parámetro en orden ascendente
+     * Recupera una lista de los pasos contenidos en una guía pasada como parámetro en orden ascendente.
      * 
      * @param idGuia Guía de la que se desea obtener el listado de pasos
      * @return List<GuiaPasos> Listado de pasos resultante
@@ -39,23 +39,20 @@ public interface IGuiasPasosRepository extends CrudRepository<GuiaPasos, Long> {
     List<GuiaPasos> findByIdGuiaOrderByOrdenAsc(Guia idGuia);
     
     /**
-     * 
      * Recupera una lista de los pasos elegidos en una guía personalizada cuyo id se pasa como parámetro.
      * 
-     * @return List<GuiaPasos>
-     * @param idGuiaPersonalizada
-     * 
+     * @param idGuiaPersonalizada Identificador de la guí de la que se quieren recuperar sus pasos
+     * @return Listado de los pasos contenidos en la guía
      */
     
     @Query(value = "select gp.* from Guia_Personalizada_pasos gpp, guia_pasos gp where gpp.id_paso_elegido=gp.id and gpp.id_guia_pers=:idGuiaPersonalizada order by gp.orden", nativeQuery = true)
     List<GuiaPasos> findPasosElegidosGuiaPersonalizada(@Param("idGuiaPersonalizada") Long idGuiaPersonalizada);
     
     /**
+     * Verifica si el paso existe en alguna guía personalizada.
      * 
-     * Verifica si el paso existe en alguna guía personalizada
-     * 
-     * @return GuiaPasos
-     * @param idPaso
+     * @param idPaso Identificador del paso que queremos verificar si está asociado
+     * @return Paso asociado
      * 
      */
     

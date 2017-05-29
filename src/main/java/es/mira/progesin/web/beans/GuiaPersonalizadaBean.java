@@ -28,9 +28,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean de guías personalizadas
+ * Bean de guías personalizadas.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -41,34 +41,66 @@ import lombok.Setter;
 
 public class GuiaPersonalizadaBean {
     
+    /**
+     * Objeto de tipo GuiaPersonalizada.
+     */
     private GuiaPersonalizada guiaPersonalizada;
     
+    /**
+     * Parámetro para controlar desde dónde se accede a la vista.
+     */
     private String vieneDe;
     
+    /**
+     * Objeto que contiene los criterios de búsqueda.
+     */
     private GuiaPersonalizadaBusqueda guiaPersonalizadaBusqueda;
     
+    /**
+     * Lista de booleanos para controlar la visualización de columnas en la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Lista de pasos.
+     */
     private List<GuiaPasos> listaPasos;
     
+    /**
+     * Fichero que contendrá la guía en formato Word para descargar.
+     */
     private StreamedContent file;
     
+    /**
+     * LazyModel para la visualización paginada de datos en la vista.
+     */
     private LazyModelGuiasPersonalizadas model;
     
+    /**
+     * Mapa con las inspecciones asociadas a las guías mostradas en la vista.
+     */
     private Map<Long, String> mapaInspecciones;
     
+    /**
+     * Generador de documentos Word.
+     */
     @Autowired
     private WordGenerator wordGenerator;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de guías personalizadas.
+     */
     @Autowired
     private IGuiaPersonalizadaService guiaPersonalizadaService;
     
     /**
-     * 
-     * Busca las guías según los filtros introducidos en el formulario de búsqueda
+     * Busca las guías según los filtros introducidos en el formulario de búsqueda.
      * 
      */
     public void buscarGuia() {
@@ -79,24 +111,22 @@ public class GuiaPersonalizadaBean {
     }
     
     /**
+     * Visualiza la guía personalizada pasada como parámetro redirigiendo a la vista "visualizaGuíaPersonalizada".
      * 
-     * Visualiza la guía personalizada pasada como parámetro redirigiendo a la vista "visualizaGuíaPersonalizada"
-     * 
-     * @param guiaPersonalizada
-     * @return String
+     * @param personalizada Guía a visualizar
+     * @return Ruta de la vista donde se visualizará
      * 
      */
     
-    public String visualizaGuia(GuiaPersonalizada guiaPersonalizada) {
-        this.guiaPersonalizada = guiaPersonalizada;
-        setListaPasos(guiaPersonalizadaService.listaPasos(guiaPersonalizada));
-        guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(guiaPersonalizada));
+    public String visualizaGuia(GuiaPersonalizada personalizada) {
+        this.guiaPersonalizada = personalizada;
+        setListaPasos(guiaPersonalizadaService.listaPasos(personalizada));
+        guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(personalizada));
         return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
     }
     
     /**
-     * 
-     * Limpia los valores del objeto de búsqueda
+     * Limpia los valores del objeto de búsqueda.
      * 
      */
     
@@ -106,34 +136,32 @@ public class GuiaPersonalizadaBean {
     }
     
     /**
-     * 
      * Anula una guía personalizada pasada como parámetro.
      * 
-     * @param guiaPersonalizada
+     * @param personalizada Guía a anular
      * 
      */
     
-    public void anular(GuiaPersonalizada guiaPersonalizada) {
-        guiaPersonalizadaService.anular(guiaPersonalizada);
+    public void anular(GuiaPersonalizada personalizada) {
+        guiaPersonalizadaService.anular(personalizada);
         
     }
     
     /**
      * 
-     * Borra de base de datos una guía personalizada pasada como parámetro
+     * Borra de base de datos una guía personalizada pasada como parámetro.
      * 
-     * @param guiaPersonalizada
+     * @param personalizada Guía a eliminar.
      * 
      */
     
-    public void eliminar(GuiaPersonalizada guiaPersonalizada) {
-        guiaPersonalizadaService.eliminar(guiaPersonalizada);
+    public void eliminar(GuiaPersonalizada personalizada) {
+        guiaPersonalizadaService.eliminar(personalizada);
         
     }
     
     /**
-     * 
-     * Inicializa el bean
+     * Inicializa el bean.
      * 
      */
     
@@ -151,9 +179,9 @@ public class GuiaPersonalizadaBean {
     
     /**
      * 
-     * Crea un documento Word a partir de una guía personalizada pasada como parámetro
+     * Crea un documento Word a partir de una guía personalizada pasada como parámetro.
      * 
-     * @param guia
+     * @param guia Guía de la que se desea generar el word.
      * 
      */
     
@@ -168,8 +196,7 @@ public class GuiaPersonalizadaBean {
     }
     
     /**
-     * 
-     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral
+     * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral.
      * 
      */
     
@@ -182,10 +209,9 @@ public class GuiaPersonalizadaBean {
     }
     
     /**
+     * Elimina la fecha de baja de la guía para volver a ponerla activa.
      * 
-     * Elimina la fecha de baja de la guía para volver a ponerla activa
-     * 
-     * @param guiaActivar
+     * @param guiaActivar Guía a activar
      */
     public void activa(GuiaPersonalizada guiaActivar) {
         try {
@@ -202,6 +228,9 @@ public class GuiaPersonalizadaBean {
         }
     }
     
+    /**
+     * Carga el mapa de inspecciones de los elementos mostrados en la vista.
+     */
     private void cargaMapaInspecciones() {
         
         for (GuiaPersonalizada guia : model.getDatasource()) {

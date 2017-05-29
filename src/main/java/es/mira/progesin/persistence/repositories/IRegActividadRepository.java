@@ -10,21 +10,20 @@ import es.mira.progesin.persistence.entities.RegistroActividad;
 
 /**
  * 
- * Repositorio de operaciones con base de datos para la entidad RegistroActividad
+ * Repositorio de operaciones con base de datos para la entidad RegistroActividad.
  * 
  * Es un repositorio de tipo CRUD
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 public interface IRegActividadRepository extends CrudRepository<RegistroActividad, Integer> {
     
     /**
+     * Devuelve una lista de nombre de seccion cuyo nombreSeccion incluya la cadena recibida como parámetro.
      * 
-     * Devuelve una lista de nombre de seccion cuyo nombreSeccion incluya la cadena recibida como parámetro
-     * 
-     * @param info
-     * @return List<String>
+     * @param info Nombre de la sección
+     * @return Listado de registros pertenecientes a esa sección
      * 
      */
     
@@ -32,11 +31,10 @@ public interface IRegActividadRepository extends CrudRepository<RegistroActivida
     public List<String> buscarPorNombreSeccion(@Param("info") String info);
     
     /**
+     * Devuelve una lista de nombres de usuario cuyo nombre incluya la cadena recibida como parámetro.
      * 
-     * Devuelve una lista de nombres de usuario cuyo nombre incluya la cadena recibida como parámetro
-     * 
-     * @param info
-     * @return List<String>
+     * @param info Username del usuario de registro
+     * @return Listado de registros pertenecientes a ese usuario
      * 
      */
     

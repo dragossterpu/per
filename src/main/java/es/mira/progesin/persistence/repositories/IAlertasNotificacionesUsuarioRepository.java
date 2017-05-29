@@ -4,7 +4,7 @@ import java.util.List;
 /**
  * Repositorio de alertas y notificaciones
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -25,22 +25,22 @@ public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<
     
     /**
      * 
-     * Recupera la lista de AlertasNotificacionesUsuario asignadas al usuario pasado como parámetro
+     * Recupera la lista de AlertasNotificacionesUsuario asignadas al usuario pasado como parámetro.
      * 
-     * @param usuario usuario para el que se desean recuperar los mensajes
-     * @return lista de mensajes (alertas o notificaciones) que tiene asiganadas el usuario
+     * @param usuario Usuario para el que se desean recuperar los mensajes
+     * @return Lista de mensajes (alertas o notificaciones) que tiene asiganadas el usuario
      * 
      */
     List<AlertasNotificacionesUsuario> findByUsuario(String usuario);
     
     /**
      * 
-     * Recupera una notificacion/alerta asignada a un usuario y con una id pasados como parámetros
+     * Recupera una notificacion/alerta asignada a un usuario y con una id pasados como parámetros.
      * 
-     * @param usuario usuario para el que se desean recuperar los mensajes
-     * @param tipo tipo de mensaje (alerta o notificación) que se desea recuperar
-     * @param id identificador del mensaje a recuperar
-     * @return AlertasNotificacionesUsuario mensaje recuperado
+     * @param usuario Usuario para el que se desean recuperar los mensajes
+     * @param tipo Tipo de mensaje (alerta o notificación) que se desea recuperar
+     * @param id Identificador del mensaje a recuperar
+     * @return Mensaje recuperado
      * 
      */
     
@@ -48,11 +48,11 @@ public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<
     
     /**
      * 
-     * Recupera una lista AlertasNotificacionesUsuario cuyo tipo y usuario asignado se reciben como parámetro
+     * Recupera una lista AlertasNotificacionesUsuario cuyo tipo y usuario asignado se reciben como parámetro.
      * 
-     * @param usuario usuario para el que se desean recuperar los mensajes
-     * @param tipo tipo de mensaje (alerta o notificación) que se desea recuperar
-     * @return lista de mensajes recuperados
+     * @param usuario Usuario para el que se desean recuperar los mensajes
+     * @param tipo Tipo de mensaje (alerta o notificación) que se desea recuperar
+     * @return Lista de mensajes recuperados
      * 
      */
     

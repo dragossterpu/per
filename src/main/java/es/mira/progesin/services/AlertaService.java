@@ -30,7 +30,7 @@ import es.mira.progesin.util.ICorreoElectronico;
  * 
  * Implementación del servicio de alertas.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 

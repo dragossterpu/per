@@ -14,7 +14,7 @@ import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
  * 
  * Interfaz del servicio de guías personalizadas.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 

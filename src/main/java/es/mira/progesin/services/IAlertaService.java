@@ -12,7 +12,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
  * 
  * Interfaz del servicio de Alertas.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 

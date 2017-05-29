@@ -26,7 +26,7 @@ import lombok.Setter;
 
 /**
  * 
- * Bean para las alertas
+ * Bean para las alertas.
  * 
  * @author EZENTIS
  */
@@ -37,25 +37,37 @@ import lombok.Setter;
 public class AlertasBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Servicio de alertas y notificaciones.
+     */
     @Autowired
     transient IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     transient IRegistroActividadService regActividad;
     
+    /**
+     * Lista de las alertas.
+     */
     private List<Alerta> listaAlertas = new ArrayList<>();
     
+    /**
+     * Lista de booleanos para el controlar las columnas visibles en la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Número de columnas de la vista.
+     */
     private int numColListAlert = 5;
     
     /**
+     * Realiza una eliminación lógico de la alerta (le pone fecha de baja).
      * 
-     * Realiza una eliminación lógico de la alerta (le pone fecha de baja)
-     * 
-     * @param alerta
-     * 
-     * @author EZENTIS
+     * @param alerta Alerta a eliminar
      */
     public void eliminarAlertas(Alerta alerta) {
         alerta.setFechaBaja(new Date());
@@ -78,7 +90,7 @@ public class AlertasBean implements Serializable {
     
     /**
      * 
-     * Inicializa el listado de alertas para el usuario logado
+     * Inicializa el listado de alertas para el usuario logado.
      * 
      */
     
@@ -89,9 +101,9 @@ public class AlertasBean implements Serializable {
     
     /**
      * 
-     * Controla las columnas visibles en la lista de resultados del buscador
+     * Controla las columnas visibles en la lista de resultados del buscador.
      * 
-     * @param e ToggleEvent
+     * @param e Evento ToggleEvent de la vista
      * 
      */
     
@@ -100,8 +112,7 @@ public class AlertasBean implements Serializable {
     }
     
     /**
-     * 
-     * Inicializa el bean
+     * Inicializa el bean.
      * 
      */
     

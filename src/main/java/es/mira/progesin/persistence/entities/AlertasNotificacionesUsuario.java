@@ -25,9 +25,9 @@ import lombok.ToString;
 
 /**
  * 
- * Entity creada para almacenar las alertas y notificaciones asignadas a un usuario
+ * Entity creada para almacenar las alertas y notificaciones asignadas a un usuario.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -46,22 +46,37 @@ public class AlertasNotificacionesUsuario implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Tipo de mensaje (Alerta o Notificación).
+     */
     @Id
     @Column(name = "TIPO_MENSAJE", length = 50)
     @Enumerated(EnumType.STRING)
     private TipoMensajeEnum tipo;
     
+    /**
+     * Username del usuario que tiene asignada la alerta/notificación.
+     */
     @Id
     @Column(name = "USUARIO")
     private String usuario;
     
+    /**
+     * Id de la alerta/notificación.
+     */
     @Id
     @Column(name = "ID_MENSAJE", length = 50)
     private Long idMensaje;
     
+    /**
+     * Sección a la que pertenece la alerta/notificación.
+     */
     @Column(name = "NOMBRE_SECCION", length = 50)
     private String nombreSeccion;
     
+    /**
+     * Fecha de alta de la alerta/notificación.
+     */
     @Column(name = "FECHA_ALTA")
     private Date fechaAlta;
 }

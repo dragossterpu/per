@@ -17,7 +17,7 @@ import lombok.Setter;
  * 
  * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 

@@ -12,7 +12,7 @@ import es.mira.progesin.persistence.entities.Alerta;
  * 
  * Es un repositorio de tipo CRUD
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 

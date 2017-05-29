@@ -23,7 +23,7 @@ import es.mira.progesin.persistence.repositories.IMiembrosRepository;
  * 
  * Implementación del servicio de alertas y notificaciones de usuario.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  *
  */

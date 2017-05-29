@@ -39,7 +39,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para el gestor documental
+ * Bean para el gestor documental.
  * 
  * @author EZENTIS
  * 
@@ -53,57 +53,93 @@ import lombok.Setter;
 public class GestorDocumentalBean {
     
     /**
-     * Objeto de tipo Documento para el alta de nuevos documentos
+     * Objeto de tipo Documento para el alta de nuevos documentos.
      */
     private Documento documento;
     
     /**
-     * Objeto que contiene los parámetros de búsqueda de documentos
+     * Objeto que contiene los parámetros de búsqueda de documentos.
      */
     private DocumentoBusqueda documentoBusqueda;
     
+    /**
+     * Objeto que contendrá el fichero a descargar.
+     */
     private StreamedContent file;
     
+    /**
+     * Nombre del documento.
+     */
     private String nombreDoc;
     
+    /**
+     * Parámetro para controlar desde dónde se accede a esta vista.
+     */
     private String vieneDe;
     
     /**
-     * Lista donde se almacenan las inspecciones que se van a asociar a un documento
+     * Lista donde se almacenan las inspecciones que se van a asociar a un documento.
      */
     private List<Inspeccion> listaInspecciones = new ArrayList<>();
     
     /**
-     * Mapa que relaciona los documentos y las inspecciones asociadas
+     * Mapa que relaciona los documentos y las inspecciones asociadas.
      */
     private Map<Long, String> mapaInspecciones;
     
+    /**
+     * Mapa que relaciona los documentos y las inspecciones asociadas.
+     */
     private Map<Long, Boolean> mapaEdicion;
     
+    /**
+     * Lista de valores booleanos para la visualización de las columnas de la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private IDocumentoService documentoService;
     
+    /**
+     * Servicio de alertas.
+     */
     @Autowired
     private IAlertaService alertaService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private INotificacionService notificacionService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService registroActividadService;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private IInspeccionesService inspeccionesService;
     
+    /**
+     * Repositorio de tipos de documento.
+     */
     @Autowired
     private ITipoDocumentoRepository tipoDocumentoRepository;
     
+    /**
+     * Lazy Model para la consulta paginada de documentos en base de datos.
+     */
     private LazyModelDocumentos model;
     
     /**
-     * Inicializa el objeto
+     * Inicializa el objeto.
      */
     @PostConstruct
     public void init() {
@@ -119,7 +155,7 @@ public class GestorDocumentalBean {
     
     /**
      * Resetea el objeto de búsqueda, limpia la lista de resultados y establece el booleano de eliminado a false para
-     * indicar que sólo se van a buscar documentos no eliminados
+     * indicar que sólo se van a buscar documentos no eliminados.
      */
     public void resetBusqueda() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -134,7 +170,7 @@ public class GestorDocumentalBean {
     
     /**
      * Resetea el objeto de búsqueda, limpia la lista de resultados y establece el booleano de eliminado a false para
-     * indicar que sólo se van a buscar documentos eliminados
+     * indicar que sólo se van a buscar documentos eliminados.
      */
     public void resetBusquedaEliminados() {
         listaInspecciones = new ArrayList<>();
@@ -144,7 +180,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Muestra/oculta las columnas de la tabla de resultados de la búsqueda
+     * Muestra/oculta las columnas de la tabla de resultados de la búsqueda.
      * 
      * @param e La columna a mostrar/ocultar
      */
@@ -153,7 +189,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Recarga la lista de resultados no eliminados
+     * Recarga la lista de resultados no eliminados.
      */
     public void recargaLista() {
         documentoBusqueda.setEliminado(false);
@@ -162,7 +198,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Recarga la lista de resultados eliminados
+     * Recarga la lista de resultados eliminados.
      */
     public void recargaListaEliminados() {
         documentoBusqueda.setEliminado(true);
@@ -170,13 +206,13 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Inicia la descarga del documento que se recibe como parámetro
+     * Inicia la descarga del documento que se recibe como parámetro.
      * 
-     * @param documento
+     * @param document Documento a descargar
      */
-    public void descargarFichero(Documento documento) {
+    public void descargarFichero(Documento document) {
         try {
-            setFile(documentoService.descargaDocumento(documento));
+            setFile(documentoService.descargaDocumento(document));
         } catch (Exception e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
@@ -215,17 +251,17 @@ public class GestorDocumentalBean {
     /**
      * Realiza la baja lógica del documento que podrá ser recuperado desde la papelera.
      * 
-     * @param documento Documento al que se dará de baja lógica
+     * @param document Documento al que se dará de baja lógica
      */
-    public void eliminarDocumento(Documento documento) {
+    public void eliminarDocumento(Documento document) {
         documento.setFechaBaja(new Date());
         documento.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-        documentoService.save(documento);
+        documentoService.save(document);
         buscaDocumento();
     }
     
     /**
-     * Reseteo del objeto de búsqueda y limpieza de la lista de resultados
+     * Reseteo del objeto de búsqueda y limpieza de la lista de resultados.
      */
     public void limpiarBusqueda() {
         documentoBusqueda.resetValues();
@@ -255,7 +291,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Inicia la creación de un nuevo documento
+     * Inicia la creación de un nuevo documento.
      */
     public void nuevoDocumento() {
         documento = new Documento();
@@ -265,7 +301,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Función para la implementación del autocompletado del input de inspecciones
+     * Función para la implementación del autocompletado del input de inspecciones.
      * 
      * @param infoInspeccion Cadena de búsqueda
      * @return Resultados coincidentes con la cadena de búsqueda
@@ -275,7 +311,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Graba un nuevo documento en la base de datos
+     * Graba un nuevo documento en la base de datos.
      * 
      * @param nombreDocumento Nombre del documento
      * @param tipoDocumento Tipo al que pertenece el documento
@@ -327,7 +363,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Graba el documento modificado
+     * Graba el documento modificado.
      */
     public void modificaDocumento() {
         try {
@@ -371,7 +407,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Elimina una inspección de la lista del documento
+     * Elimina una inspección de la lista del documento.
      * 
      * @param inspeccion Inspección a desasociar
      */
@@ -399,7 +435,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Elimina un documento definitivamente
+     * Elimina un documento definitivamente.
      * 
      * @param doc Documento a eliminar
      */
@@ -433,6 +469,9 @@ public class GestorDocumentalBean {
         }
     }
     
+    /**
+     * Carga un mapa con los documentos que se visualizan y las inspecciones que cada uno de ellos tiene asignadas.
+     */
     private void cargaMapaInspecciones() {
         
         for (Documento doc : model.getDatasource()) {
@@ -448,7 +487,7 @@ public class GestorDocumentalBean {
     }
     
     /**
-     * Vacía la papelera de reciclaje
+     * Vacía la papelera de reciclaje.
      */
     public void vaciarPapelera() {
         documentoService.vaciarPapelera();

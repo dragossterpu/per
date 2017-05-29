@@ -15,9 +15,9 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -27,24 +27,33 @@ public class LazyModelSolicitudes extends LazyDataModel<SolicitudDocumentacionPr
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private SolicitudDocPreviaBusqueda busqueda;
     
+    /**
+     * Servicio a usar.
+     */
     private transient ISolicitudDocumentacionService servicio;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private List<SolicitudDocumentacionPrevia> datasource;
     
     /**
-     * Constructor que recibe un SessionFactory
+     * Constructor que recibe un servicio.
      * 
-     * @param servicio Servicio de SolicitudDocumentacionPrevia
+     * @param service Servicio de SolicitudDocumentacionPrevia
      */
-    public LazyModelSolicitudes(ISolicitudDocumentacionService servicio) {
-        this.servicio = servicio;
+    public LazyModelSolicitudes(ISolicitudDocumentacionService service) {
+        this.servicio = service;
         this.busqueda = new SolicitudDocPreviaBusqueda();
     }
     
     /**
-     * Sobreescritura del método load que se ejecuta cada vez que se hace alguna acción sobre la datatable de la vista
+     * Sobreescritura del método load que se ejecuta cada vez que se hace alguna acción sobre la datatable de la vista.
      * 
      * @param first primer elemento que se desea recuperar
      * @param pageSize número máximo de registros que deseamos recuperar por página

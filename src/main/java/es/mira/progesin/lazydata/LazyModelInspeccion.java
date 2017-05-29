@@ -15,9 +15,9 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @Setter
@@ -26,29 +26,36 @@ public class LazyModelInspeccion extends LazyDataModel<Inspeccion> implements Se
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private InspeccionBusqueda busqueda;
     
+    /**
+     * Servicio a usar.
+     */
     private List<Inspeccion> datasource;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private transient IInspeccionesService inspeccionesService;
     
     /**
-     * 
-     * Constructor del modelo que recibe el servicio como parámetro
-     * @param inspeccionesService
-     * 
+     * Constructor del modelo que recibe el servicio como parámetro.
+     * @param inspeccionesServicio Servicio que se usará
      * 
      */
-    public LazyModelInspeccion(IInspeccionesService inspeccionesService) {
-        this.inspeccionesService = inspeccionesService;
+    public LazyModelInspeccion(IInspeccionesService inspeccionesServicio) {
+        this.inspeccionesService = inspeccionesServicio;
         this.busqueda = new InspeccionBusqueda();
     }
     
     /**
      * 
-     * Sobreescritura del método getRowData para que funcione con objetos de tipo Inspeccion
+     * Sobreescritura del método getRowData para que funcione con objetos de tipo Inspeccion.
      * 
-     * @param rowkey clave de la fila sobre la que se ha hecho click en la vista
+     * @param rowKey Clave de la fila sobre la que se ha hecho click en la vista
      * @return registro que se corresponde con la clave recibida por parámetro
      * 
      */
@@ -62,9 +69,9 @@ public class LazyModelInspeccion extends LazyDataModel<Inspeccion> implements Se
     }
     
     /**
-     * Sobrescritura del método getRowKey
+     * Sobrescritura del método getRowKey.
      * 
-     * @param objeto del que se desea obtener la clave
+     * @param inspeccion Objeto del que se desea obtener la clave
      * @return clave del objeto pasado como parámetro
      */
     

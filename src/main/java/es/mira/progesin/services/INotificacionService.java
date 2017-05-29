@@ -11,7 +11,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 /**
  * 
- * Interfaz del servicio de Notificaciones
+ * Interfaz del servicio de Notificaciones.
  * 
  * @author EZENTIS
  * 
@@ -21,10 +21,10 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 public interface INotificacionService {
     /**
      * 
-     * Recupera de la base de datos una notificación cuya id se pasa como parámetro
+     * Recupera de la base de datos una notificación cuya id se pasa como parámetro.
      * 
-     * @param id de la notificación a buscar
-     * @return notificación que corresponde al id recibido
+     * @param id Identificador de la notificación a buscar
+     * @return Notificación que corresponde al id recibido
      * 
      */
     
@@ -35,9 +35,9 @@ public interface INotificacionService {
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un usuario
      * pasado como parámetro.
      * 
-     * @param descripcion de la notificación
-     * @param seccion sobre la que se hace la notificación
-     * @param usuario al que se le dirige la notificación
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param usuario Usuario al que se le dirige la notificación
      * 
      */
     
@@ -48,9 +48,9 @@ public interface INotificacionService {
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un rol
      * pasado como parámetro.
      * 
-     * @param descripcion de la notificación
-     * @param seccion sobre la que se hace la notificación
-     * @param rol al que se le dirige la notificación
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param rol Rol al que se le dirige la notificación
      * 
      */
     
@@ -61,9 +61,9 @@ public interface INotificacionService {
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un listado
      * de roles pasado como parámetro.
      * 
-     * @param descripcion de la notificación
-     * @param seccion sobre la que se hace la notificación
-     * @param roles lista de roles a los que se dirige la notificación
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param roles Lista de roles a los que se dirige la notificación
      * 
      */
     
@@ -72,11 +72,11 @@ public interface INotificacionService {
     /**
      * 
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al equipo de
-     * una inspección
+     * una inspección.
      * 
-     * @param descripcion de la notificación
-     * @param seccion sobre la que se hace la notificación
-     * @param inspeccion a cuyo equipo se le dirige la notificación
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param inspeccion Inspección a cuyo equipo se le dirige la notificación
      * 
      */
     
@@ -87,9 +87,9 @@ public interface INotificacionService {
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al equipo
      * que se pasa como parámetro.
      * 
-     * @param descripcion de la notificación
-     * @param seccion sobre la que se hace la notificación
-     * @param equipo al que se le dirige la notificación
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param equipo Equipo al que se le dirige la notificación
      * 
      */
     
@@ -100,16 +100,16 @@ public interface INotificacionService {
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al jefe del
      * equipo de una inspección pasada como parámetro.
      * 
-     * @param descripcion de la notificación
-     * @param seccion sobre la que se hace la notificación
-     * @param inspeccion a cuyo jefe de equipo se le dirige la notificación
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param inspeccion Inspección a cuyo jefe de equipo se le dirige la notificación
      * 
      */
     
     void crearNotificacionJefeEquipo(String descripcion, String seccion, Inspeccion inspeccion);
     
     /**
-     * Devuelve un listado de notificaciones asignadas a un usuario. El resultado se devuelve paginado
+     * Devuelve un listado de notificaciones asignadas a un usuario. El resultado se devuelve paginado.
      * 
      * @param first Primer registro del listado
      * @param pageSize Número máximo de registros del listado
@@ -122,9 +122,9 @@ public interface INotificacionService {
             String usuario);
     
     /**
-     * Devuelve el número total de notificaciones asignadas a un usuario
+     * Devuelve el número total de notificaciones asignadas a un usuario.
      * 
-     * @param usuario usuario del que se desean recuperar las notificaciones
+     * @param usuario Usuario del que se desean recuperar las notificaciones
      * @return Número de registros coincidentes con la búsqueda
      */
     int getCounCriteria(String usuario);

@@ -1,13 +1,5 @@
 package es.mira.progesin.services;
 
-/**
- *
- * Intefaz para el servicio de documentos.
- * 
- * @author Ezentis
- * 
- */
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -31,8 +23,7 @@ import es.mira.progesin.web.beans.DocumentoBusqueda;
 public interface IDocumentoService {
     
     /**
-     *
-     * Elimina un documento de la base de datos. El documento se identifica por su id
+     * Elimina un documento de la base de datos. El documento se identifica por su id.
      *
      * @param id Identificador del documento a eliminar
      *
@@ -41,11 +32,7 @@ public interface IDocumentoService {
     void delete(Long id);
     
     /**
-     * 
-     * delete
-     * 
      * Elimina una serie de documentos de la base de datos. El documento a eliminar se pasa como parámetro.
-     * 
      * 
      * @param entity Documento a eliminar
      * 
@@ -54,12 +41,8 @@ public interface IDocumentoService {
     void delete(Documento entity);
     
     /**
-     * 
-     * save
-     * 
      * Guarda una serie de documentos en base de datos. Como parámetro recibe los documentos a guardar y devuelve los
      * documentos guardados.
-     * 
      * 
      * @param entities Documentos a salvar
      * @return Iterable<Documento> Documentos salvado
@@ -69,12 +52,8 @@ public interface IDocumentoService {
     Iterable<Documento> save(Iterable<Documento> entities);
     
     /**
-     * 
-     * save
-     * 
      * Guarda un documento en base de datos. Como parámetro recibe el documento a guardar y devuelve el documento
      * guardado.
-     * 
      * 
      * @param entity Documento Documento a guardar
      * @return Documento Documento guardado
@@ -83,11 +62,7 @@ public interface IDocumentoService {
     Documento save(Documento entity);
     
     /**
-     * 
-     * descargaDocumento
-     * 
      * Recibe un documento como parámetro y devuelve un stream para realizar la descarga.
-     * 
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
@@ -97,9 +72,6 @@ public interface IDocumentoService {
     DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException;
     
     /**
-     * 
-     * descargaDocumento
-     * 
      * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
      * 
      * 
@@ -111,11 +83,8 @@ public interface IDocumentoService {
     DefaultStreamedContent descargaDocumento(Long id) throws SQLException;
     
     /**
-     * 
-     * cargaDocumento
-     * 
      * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base de
-     * datos. Devuelve el documento almacenado
+     * datos. Devuelve el documento almacenado..
      * 
      * 
      * @param file fichero a cargar en BDD
@@ -132,7 +101,7 @@ public interface IDocumentoService {
     
     /**
      * Recibe un archivo UploadedFile y los datos necesarios para general un Documento pero no lo almacena en base de
-     * datos. Sólo deja el objeto preparado para guardarlo
+     * datos. Sólo deja el objeto preparado para guardarlo.
      * 
      * @param file fichero a cargar en BDD
      * @param tipo tipo de documentp
@@ -145,9 +114,6 @@ public interface IDocumentoService {
             throws SQLException, IOException;
     
     /**
-     * 
-     * findByFechaBajaIsNotNull
-     * 
      * Busca todos los documentos no eliminados.
      * 
      * 
@@ -158,9 +124,6 @@ public interface IDocumentoService {
     List<Documento> findByFechaBajaIsNull();
     
     /**
-     * 
-     * findByFechaBajaIsNotNull
-     * 
      * Busca todos los documentos eliminados.
      * 
      * 
@@ -171,9 +134,6 @@ public interface IDocumentoService {
     List<Documento> findByFechaBajaIsNotNull();
     
     /**
-     * 
-     * extensionCorrecta
-     * 
      * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión) se
      * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera).
      * 
@@ -186,7 +146,6 @@ public interface IDocumentoService {
     boolean extensionCorrecta(UploadedFile file);
     
     /**
-     * 
      * Consulta en base de datos en base a los parámetros recibidos. La consulta se hace paginada.
      * 
      * @param first Primer elemento a devolver de la búsqueda

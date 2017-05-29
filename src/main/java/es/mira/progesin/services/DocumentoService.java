@@ -47,9 +47,9 @@ import es.mira.progesin.web.beans.DocumentoBusqueda;
 
 /**
  * 
- * Implementación del servicio de documentos
+ * Implementación del servicio de documentos.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 

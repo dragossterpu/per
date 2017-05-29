@@ -15,9 +15,9 @@ import lombok.Setter;
 
 /**
  * 
- * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces
+ * Modelo para paginación desde servidor extendiendo el modelo LazyDataModel de Primefaces.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -27,29 +27,37 @@ public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implemen
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private RegActividadBusqueda busqueda;
     
+    /**
+     * Lista que sirve al modelo como fuente de datos.
+     */
     private List<RegistroActividad> datasource;
     
+    /**
+     * Servicio a usar.
+     */
     private transient IRegistroActividadService registroActividadService;
     
     /**
      * 
-     * Constructor del modelo que recibe el servicio como parámetro
+     * Constructor del modelo que recibe el servicio como parámetro.
      * 
-     * @param registroActividadService
+     * @param servicio Servicio a emplear
      */
-    public LazyModelRegistro(IRegistroActividadService registroActividadService) {
-        this.registroActividadService = registroActividadService;
+    public LazyModelRegistro(IRegistroActividadService servicio) {
+        this.registroActividadService = servicio;
         this.busqueda = new RegActividadBusqueda();
     }
     
     /**
+     * Sobreescritura del método getRowData para que funcione con objetos de tipo RegistroActividad.
      * 
-     * Sobreescritura del método getRowData para que funcione con objetos de tipo RegistroActividad
-     * 
-     * @param rowkey clave de la fila sobre la que se ha hecho click en la vista
-     * @return registro que se corresponde con la clave recibida por parámetro
+     * @param rowKey Clave de la fila sobre la que se ha hecho click en la vista
+     * @return Registro que se corresponde con la clave recibida por parámetro
      * 
      */
     @Override
@@ -62,10 +70,10 @@ public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implemen
     }
     
     /**
-     * Sobrescritura del método getRowKey
+     * Sobrescritura del método getRowKey.
      * 
-     * @param objeto del que se desea obtener la clave
-     * @return clave del objeto pasado como parámetro
+     * @param solicitud Objeto del que se desea obtener la clave
+     * @return Clave del objeto pasado como parámetro
      */
     
     @Override

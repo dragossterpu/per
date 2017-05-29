@@ -8,17 +8,17 @@ import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 
 /**
- * Repositorio de operaciones de base de datos para la clase Guias
+ * Repositorio de operaciones de base de datos para la clase Guias.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  **/
 public interface IGuiasRepository extends CrudRepository<Guia, Long> {
     
     /**
-     * Recupera todas las guías almacenadas en base de datos
+     * Recupera todas las guías almacenadas en base de datos.
      * 
-     * @return List<Guia>
+     * @return Listado de guías
      * 
      */
     
@@ -26,10 +26,10 @@ public interface IGuiasRepository extends CrudRepository<Guia, Long> {
     List<Guia> findAll();
     
     /**
-     * Comprueba si existen modelos de gías asociadas a un determinado tipo de inspección
+     * Comprueba si existen modelos de gías asociadas a un determinado tipo de inspección.
      * 
-     * @param tipo
-     * @return boolean
+     * @param tipo Tipo sobre el que se quiere consultar
+     * @return boolean Respuesta de la consulta
      */
     boolean existsByTipoInspeccion(TipoInspeccion tipo);
 }

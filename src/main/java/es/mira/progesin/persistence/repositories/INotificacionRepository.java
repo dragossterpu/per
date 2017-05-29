@@ -12,7 +12,7 @@ import es.mira.progesin.persistence.entities.Notificacion;
  * 
  * Es un repositorio de tipo CRUD
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
  */
 
@@ -20,9 +20,9 @@ public interface INotificacionRepository extends CrudRepository<Notificacion, Lo
     
     /**
      * 
-     * Devuelve una lista de notificaciones que no han sido dadas de baja
+     * Devuelve una lista de notificaciones que no han sido dadas de baja.
      * 
-     * @return List<Alerta>
+     * @return Listado de notificaciones no dadas de baja
      * 
      */
     

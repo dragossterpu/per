@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * POJO para almacenar los parámetros de búsqueda de documentos
+ * POJO para almacenar los parámetros de búsqueda de documentos.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @Setter
@@ -22,26 +22,50 @@ public class DocumentoBusqueda implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Fecha desde la que se desea hacer la búsqueda.
+     */
     private Date fechaDesde;
     
+    /**
+     * Fecha hasta la que se quiere hacer la búsqueda.
+     */
     private Date fechaHasta;
     
+    /**
+     * Nombre por el que se desea hacer la búsqueda.
+     */
     private String nombre;
     
+    /**
+     * Tipo de documento que se desea buscar.
+     */
     private TipoDocumento tipoDocumento;
     
+    /**
+     * Descripción por la que se desea hacer la búsqueda.
+     */
     private String descripcion;
     
+    /**
+     * Palabras claves por las que se desea hacer la búsqueda.
+     */
     private String materiaIndexada;
     
+    /**
+     * Inspección sobre la que se desea hacer la búsqueda.
+     */
     private Inspeccion inspeccion;
     
-    private boolean eliminado = false;
+    /**
+     * Discriminador de documentos eliminados/no eliminados en la búsqueda.
+     */
+    private boolean eliminado;
     
     /**
-     * Crea un objeto de búsqueda a partir de otro
+     * Crea un objeto de búsqueda a partir de otro.
      * 
-     * @param original el objeto a duplicar
+     * @param original El objeto a duplicar
      */
     public DocumentoBusqueda(DocumentoBusqueda original) {
         this.setFechaDesde(original.getFechaDesde());
@@ -55,7 +79,7 @@ public class DocumentoBusqueda implements Serializable {
     }
     
     /**
-     * Limpia los valores del objeto
+     * Limpia los valores del objeto.
      * 
      */
     public void resetValues() {

@@ -12,7 +12,7 @@ import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 
 /**
- * Servicio de modelos de cuestionario
+ * Servicio de modelos de cuestionario.
  * 
  * @author EZENTIS
  */

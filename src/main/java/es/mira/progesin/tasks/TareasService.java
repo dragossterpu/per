@@ -24,13 +24,13 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
 
-/********************
+/**
  * 
- * Servicio para la programación de tareas automáticas
+ * Servicio para la programación de tareas automáticas.
  * 
- * @author Ezentis
+ * @author EZENTIS
  * 
- ****************/
+ */
 
 @Service("tareasService")
 

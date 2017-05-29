@@ -27,41 +27,81 @@ import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
 
 /**
+ * Implementación de los métodos definidos en la interfaz IGuiaPersonalizadaService.
  * 
- * Implementación de los métodos definidos en la interfaz IGuiaPersonalizadaService
- * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
 @Service
 public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
-    
+    /**
+     * Formato de fecha.
+     */
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Factoría de sesion.
+     */
     @Autowired
     private SessionFactory sessionFactory;
+    
+    /**
+     * Repositorio de guías personalizadas.
+     */
     
     @Autowired
     private IGuiaPersonalizadaRepository guiaPersonalizadaRepository;
     
+    /**
+     * Repositorio de pasos de guía.
+     */
     @Autowired
     private IGuiasPasosRepository pasosRepository;
     
+    /**
+     * Repositorio de inspecciones.
+     */
     @Autowired
     private IInspeccionesRepository inspeccionRepository;
     
+    /**
+     * Elimina una guía personalizada de la base de datos.
+     * 
+     * @param guia que se desea eliminar
+     * 
+     */
     @Override
     public void eliminar(GuiaPersonalizada guia) {
         guiaPersonalizadaRepository.delete(guia);
         
     }
     
+    /**
+     * Almacena una guía personalizada en la base de datos.
+     * 
+     * @param guia guia a guardar
+     * @return guia guardada
+     * 
+     */
     @Override
     public GuiaPersonalizada save(GuiaPersonalizada guia) {
         return guiaPersonalizadaRepository.save(guia);
     }
     
+    /**
+     * Busca en base de datos los resultados que se ajustan a los parámetros recibidos en el objeto de tipo
+     * GuiaPersonalizadaBusqueda acotados por los parámetros first (primer resultado) y pageSize (máximo de resultados
+     * de la búsqueda).
+     * 
+     * @param first primer elemento de los resultados
+     * @param pageSize número máximo de resultados
+     * @param sortField campo de ordenación
+     * @param sortOrder sentido de la orientación
+     * @param busqueda objeto que contiene los parámetros de búsqueda
+     * @return lista de Guías personalizadas que corresponden a la búsqueda
+     * 
+     */
     @Override
     public List<GuiaPersonalizada> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             GuiaPersonalizadaBusqueda busqueda) {
@@ -87,6 +127,13 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         return listaGuias;
     }
     
+    /**
+     * Devuelve el número de registros de la base de datos que cumplen con los criterio pasados como parámetro.
+     * 
+     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * @return Número de registros que responden a los parámetros
+     * 
+     */
     @Override
     public int getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda) {
         Session session = sessionFactory.openSession();
@@ -102,8 +149,10 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     }
     
     /**
-     * @param busqueda
-     * @param criteria
+     * Añade los parámetros de búsqueda al criteria.
+     * 
+     * @param busqueda Objeto que contiene los criterios de búsqueda
+     * @param criteria Criteria al que se añadirán los parámetros
      */
     private void consultaCriteriaGuiasPersonalizadas(GuiaPersonalizadaBusqueda busqueda, Criteria criteria) {
         
@@ -148,11 +197,24 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         
     }
     
+    /**
+     * Devuelve una lista de pasos contenidos en una guía personalizada pasada como parámetro.
+     * 
+     * @param guia de la que se desea recuperar los pasos
+     * @return lista de los pasos
+     * 
+     */
     @Override
     public List<GuiaPasos> listaPasos(GuiaPersonalizada guia) {
         return pasosRepository.findPasosElegidosGuiaPersonalizada(guia.getId());
     }
     
+    /**
+     * Anula una guía personalizada de la base de datos.
+     * 
+     * @param guia que se desea eliminar
+     * 
+     */
     @Override
     public void anular(GuiaPersonalizada guia) {
         guia.setFechaAnulacion(new Date());
@@ -161,11 +223,25 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         
     }
     
+    /**
+     * Comprueba la existencia en base de datos de guías personalizadas cuya guía modelo corresponde a la recibida como
+     * parámetro.
+     * 
+     * @param guia Guía de la que quiere confirmarse si existen guías personalizadas
+     * @return Booleano correspondiendo a la respuesta
+     * 
+     */
     @Override
     public boolean buscarPorModeloGuia(Guia guia) {
         return guiaPersonalizadaRepository.findByIdGuia(guia);
     }
     
+    /**
+     * Lista las inspecciones asignadas a una guía personalizada.
+     * 
+     * @param guia Guía de la que se quiere recuperar las inspecciones
+     * @return respuesta
+     */
     @Override
     public List<Inspeccion> listaInspecciones(GuiaPersonalizada guia) {
         return inspeccionRepository.cargaInspeccionesGuia(guia.getId());

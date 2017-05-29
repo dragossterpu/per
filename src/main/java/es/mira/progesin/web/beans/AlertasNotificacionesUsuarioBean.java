@@ -25,7 +25,8 @@ import lombok.Setter;
 
 /**
  * 
- * Bean para los mensajes (Alertas y notificaciones)
+ * Bean para los mensajes (Alertas y notificaciones).
+ * 
  * @author EZENTIS
  * 
  */
@@ -37,26 +38,42 @@ import lombok.Setter;
 public class AlertasNotificacionesUsuarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Servicio de alertas y notificaciones.
+     */
     @Autowired
     private transient IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
     
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividad;
     
+    /**
+     * Servicio de alertas.
+     */
     @Autowired
     private transient IAlertaService alertaService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private transient INotificacionService notificacionService;
     
+    /**
+     * LazyModel para la visualización de las alertas.
+     */
     private LazyModelAlertas modelAlertas;
     
+    /**
+     * LazyModel para la visualización de las notificaciones.
+     */
     private LazyModelNotificaciones modelNotificaciones;
     
     /**
-     * 
-     * Inicializa el bean
-     * 
+     * Inicializa el bean.
      */
     
     @PostConstruct
@@ -69,9 +86,9 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     
     /**
      * 
-     * Elimina, para el usuario logado, la alerta pasada como parámetro
+     * Elimina, para el usuario logado, la alerta pasada como parámetro.
      * 
-     * @param alerta a eliminar
+     * @param alerta Alerta a eliminar
      * 
      */
     
@@ -89,9 +106,9 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     
     /**
      * 
-     * Elimina, para el usuario logado, la notificación pasada como parámetro
+     * Elimina, para el usuario logado, la notificación pasada como parámetro.
      * 
-     * @param notificacion a eliminar
+     * @param notificacion Notificación a eliminar
      * 
      */
     

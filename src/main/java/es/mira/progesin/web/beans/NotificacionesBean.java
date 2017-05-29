@@ -24,7 +24,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para las notificaciones
+ * Bean para las notificaciones.
  * @author EZENTIS
  */
 @Setter
@@ -34,19 +34,31 @@ import lombok.Setter;
 public class NotificacionesBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Lista de booleanos para controlar la visualziación de columnas en la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     transient INotificacionService notificacionService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     transient IRegistroActividadService regActividadService;
     
+    /**
+     * Número de columnas en la vista.
+     */
     private int numColListNotif = 4;
     
     /**
-     *
-     * Controla las columnas visibles en la lista de resultados del buscador
+     * 
+     * Controla las columnas visibles en la lista de resultados del buscador.
      *
      * @param e evento toggle de la vista
      *
@@ -57,10 +69,10 @@ public class NotificacionesBean implements Serializable {
     }
     
     /**
-     * @comment Realiza una eliminación lógico de la notificación (le pone fecha de baja)
-     * @comment La notificacion seleccionada de la tabla de notificaciones
-     * @param notificacion
-     * @author EZENTIS
+     * Realiza una eliminación lógico de la notificación (le pone fecha de baja) La notificacion seleccionada de la
+     * tabla de notificaciones.
+     * 
+     * @param notificacion Notificación a eliminar
      */
     public void eliminarNotificacion(Notificacion notificacion) {
         notificacion.setFechaBaja(new Date());
@@ -80,8 +92,7 @@ public class NotificacionesBean implements Serializable {
     }
     
     /**
-     *
-     * Inicializa el bean
+     * Inicializa el bean.
      *
      */
     
