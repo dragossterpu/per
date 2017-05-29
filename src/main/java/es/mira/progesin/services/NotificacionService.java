@@ -27,7 +27,7 @@ import es.mira.progesin.persistence.repositories.INotificacionRepository;
 
 /**
  * 
- * Servicio de notificaciones.
+ * Implementación del servicio de gestión de notificaciones.
  * 
  * @author EZENTIS
  * 

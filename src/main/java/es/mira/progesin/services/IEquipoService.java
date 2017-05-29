@@ -9,7 +9,7 @@ import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 /**
- * Interfaz del servicio de equipo.
+ * Interfaz del servicio que gestiona los equipos.
  * 
  * @author EZENTIS
  */
@@ -61,8 +61,8 @@ public interface IEquipoService {
     /**
      * Comprueba si existe algún equipo del tipo proporcionado.
      * 
-     * @param tipo
-     * @return boolean, si o no
+     * @param tipo de equipo
+     * @return boolean valor booleano
      */
     public boolean existsByTipoEquipo(TipoEquipo tipo);
     

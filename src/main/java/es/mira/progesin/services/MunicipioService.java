@@ -14,7 +14,7 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IMunicipioRepository;
 
 /**
- * Servicio para la entidad Municipio
+ * Implementación del servicio para la gestión de municipios.
  * @author EZENTIS
  *
  */

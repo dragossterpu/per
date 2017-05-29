@@ -11,7 +11,9 @@ import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
 /**
- * @author Ezentis
+ * Implementación del servicio de gestión de miembros.
+ * 
+ * @author EZENTIS
  *
  */
 @Service

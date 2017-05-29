@@ -5,36 +5,43 @@ import java.util.List;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 
 /**
- * Declaración de los métodos que se usarán para la persistencia de los cuerpos de estado
- * @author Ezentis
+ * Servicio para la gestión de los cuerpos de estado.
+ * 
+ * @author EZENTIS
  *
  */
 public interface ICuerpoEstadoService {
     
     /**
-     * @param cuerpo
+     * Guarada o actualiza un Cuerpo.
+     * 
+     * @param cuerpo a guardar
      * @return CuerpoEstado actualizado
      */
     CuerpoEstado save(CuerpoEstado cuerpo);
     
     /**
-     * Busca todos los cuerpos del estado dados de alta en la BBDD
-     * @return Iterable<CuerpoEstado>
+     * 
+     * Busca todos los cuerpos del estado existentes en la BBDD.
+     * 
+     * @return Iterable<CuerpoEstado> lista con todos los cuerpos
      */
     Iterable<CuerpoEstado> findAll();
     
     /**
-     * Cuerpos del estado sin fecha de baja, es decir activos
-     * @return List<CuerpoEstado>
+     * Cuerpos del estado sin fecha de baja, es decir activos o dados de alta.
+     * 
+     * @return List<CuerpoEstado> lista de cuerpos activos
      */
     List<CuerpoEstado> findByFechaBajaIsNull();
     
     /**
-     * Existe un Cuerpo que no coincide con un id pero coincide con un nombre corto
-     * @param nombreCorto
-     * @param id
+     * Existe un Cuerpo que no coincide con un id pero coincide con un nombre corto empleado para la modificación en
+     * caliente.
+     * @param nombreCorto del cuerpo
+     * @param id identificador del cuerpo
      * 
-     * @return
+     * @return valor booleano
      */
     boolean existeByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id);
     

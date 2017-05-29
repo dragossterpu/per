@@ -66,7 +66,7 @@ public interface IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException
+     * @throws SQLException excepción lanzada
      */
     
     DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException;
@@ -77,22 +77,22 @@ public interface IDocumentoService {
      * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException
+     * @throws SQLException excepción lanzada
      */
     
     DefaultStreamedContent descargaDocumento(Long id) throws SQLException;
     
     /**
      * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base de
-     * datos. Devuelve el documento almacenado..
+     * datos. Devuelve el documento almacenado.
      * 
      * 
      * @param file fichero a cargar en BDD
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return Documento documento cargado en base de datos
-     * @throws SQLException
-     * @throws IOException
+     * @throws SQLException excepción lanzada
+     * @throws IOException excepción lanzada
      * 
      */
     
@@ -106,15 +106,15 @@ public interface IDocumentoService {
      * @param file fichero a cargar en BDD
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
-     * @return Documento documento cargado en base de datos
-     * @throws SQLException
-     * @throws IOException
+     * @return documento cargado en base de datos
+     * @throws SQLException excepción lanzada
+     * @throws IOException excepción lanzada
      */
     public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException;
     
     /**
-     * Busca todos los documentos no eliminados.
+     * Busca todos los documentos no dados de baja lógica.
      * 
      * 
      * @return Iterable<Documento> Documentos seleccionados
@@ -124,7 +124,7 @@ public interface IDocumentoService {
     List<Documento> findByFechaBajaIsNull();
     
     /**
-     * Busca todos los documentos eliminados.
+     * Busca todos los documentos eliminados (dados de baja lógica).
      * 
      * 
      * @return Iterable<Documento> Documentos seleccionados

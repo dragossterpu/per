@@ -6,33 +6,35 @@ import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 
 /**
- * @author Ezentis
+ * Interfaz del servicio que gestiona los municipios.
+ * 
+ * @author EZENTIS
  *
  */
 public interface IMunicipioService {
     
     /**
-     * Comprueba si existe un municipio
+     * Comprueba si existe un municipio conociendo su nombre.
      * 
-     * @param name
-     * @param provincia
-     * @return
+     * @param name nombre del municipio
+     * @param provincia a la que pertenece el municipio
+     * @return valor booleano
      */
     boolean existeByNameIgnoreCaseAndProvincia(String name, Provincia provincia);
     
     /**
-     * Guarda un nuevo municipio
-     * @param nombre
-     * @param provincia
-     * @return municipio creado
+     * Guarda un nuevo municipio.
+     * @param nombre del municipio
+     * @param provincia a la que pertenece el municipio
+     * @return municipio creado (true si es guadado correctamente)
      */
     Municipio crearMunicipio(String nombre, Provincia provincia);
     
     /**
-     * Busca los municipios de una provincia
+     * Busca los municipios pertenecientes a una provincia.
      * 
-     * @param provincia
-     * @return lista de municipios
+     * @param provincia que queremos consultar
+     * @return lista de municipios por provincia
      */
     List<Municipio> findByProvincia(Provincia provincia);
 }

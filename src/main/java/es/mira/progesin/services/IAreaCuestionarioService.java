@@ -5,7 +5,7 @@ import java.util.List;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 
 /**
- * Servicio para Áreas de Cuestionario
+ * Interfaz del servicio de Áreas de Cuestionario.
  * 
  * @author EZENTIS
  *
@@ -13,7 +13,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 public interface IAreaCuestionarioService {
     
     /**
-     * Busca las áreas de un cuestionario ordenadas de manera ascendente por el campo orden
+     * Busca las áreas de un cuestionario ordenadas de manera ascendente por el campo orden.
      * 
      * @param idCuestionario Id del cuestionario del que se desea obtener las áreas
      * @return Lista de áreas
@@ -21,7 +21,7 @@ public interface IAreaCuestionarioService {
     List<AreasCuestionario> findAreasByIdCuestionarioByOrder(Integer idCuestionario);
     
     /**
-     * Busca un listado de áreas a partir de una lista de id recibida como parámetro
+     * Busca un listado de áreas a partir de una lista de id recibida como parámetro.
      * 
      * @param listaIdAreasElegidas lista de id de áreas a buscar
      * @return Listado de áreas localizadas
