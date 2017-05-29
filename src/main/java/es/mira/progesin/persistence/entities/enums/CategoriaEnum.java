@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Enum con las categorías de un usuario de IPSS
+ * Enumerado con las categorías de un usuario de IPSS.
  * 
  * @author EZENTIS
  *
@@ -15,7 +15,44 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @SuppressWarnings("javadoc")
 public enum CategoriaEnum {
-    A1, A2, B, C1, C2, D, E, LABORALES, OTROS;
-    
+    /**
+     * Funcionarios del grupo A1.
+     */
+    A1,
+    /**
+     * Funcionarios del grupo A2.
+     */
+    A2,
+    /**
+     * Funcionarios del grupo B.
+     */
+    B,
+    /**
+     * Funcionarios del grupo C1.
+     */
+    C1,
+    /**
+     * Funcionarios del grupo C2.
+     */
+    C2,
+    /**
+     * Funcionarios del grupo D.
+     */
+    D,
+    /**
+     * Funcionarios del grupo E.
+     */
+    E,
+    /**
+     * Personal laboral.
+     */
+    LABORALES,
+    /**
+     * Otro tipo de personal.
+     */
+    OTROS;
+    /**
+     * Descripción para la categoría.
+     */
     private String descripcion;
 }

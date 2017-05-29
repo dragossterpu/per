@@ -14,7 +14,7 @@ public class ProgesinException extends Exception {
     private static final long serialVersionUID = 1L;
     
     /**
-     * @param e
+     * @param e excepción general
      */
     public ProgesinException(Exception e) {
         super(e);

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Definición de contentType de ficheros
+ * Enumerado para la definición de contentType de ficheros.
  * 
  * @author EZENTIS
  *
@@ -15,7 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @SuppressWarnings("javadoc")
 public enum ContentTypeEnum {
-    DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document"), PDF("application/pdf");
-    
+    /**
+     * ContentType para la generación de un archivo DOCX.
+     */
+    DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+    /**
+     * ContentType para la generación de un archivo PDF.
+     */
+    PDF("application/pdf");
+    /**
+     * Descripción del contentType.
+     */
     String contentType;
 }

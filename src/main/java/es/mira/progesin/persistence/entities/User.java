@@ -39,8 +39,12 @@ import lombok.ToString;
 @Entity
 @Table(name = "USERS")
 public class User extends AbstractEntity implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Constante para usuarios provisionales.
+     */
     private static final String PROVISIONAL = "provisional";
     
     /**

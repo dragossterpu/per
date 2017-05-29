@@ -308,9 +308,7 @@ public class InspeccionBean {
             String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
-        } catch (
-        
-        Exception e) {
+        } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
         return null;

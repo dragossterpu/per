@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Enum con los cuatrimestres de un año
+ * Enumerado con los cuatrimestres de un año.
  * 
  * @author EZENTIS
  *
@@ -15,7 +15,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @SuppressWarnings("javadoc")
 public enum CuatrimestreEnum {
-    PRIMERO("Primer cuatrimestre"), SEGUNDO("Segundo cuatrimestre"), TERCERO("Tercer cuatrimestre");
-    
+    /**
+     * Primer cuatrimestre.
+     */
+    PRIMERO("Primer cuatrimestre"),
+    /**
+     * Segundo cuatrimestre.
+     */
+    SEGUNDO("Segundo cuatrimestre"),
+    /**
+     * Tercer cuatrimestre.
+     */
+    TERCERO("Tercer cuatrimestre");
+    /**
+     * Descripción de cuatrimestre.
+     */
     private String descripcion;
 }

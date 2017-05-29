@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Enum con los posibles ámbitos de una inspección
+ * Enumerado con los posibles ámbitos de una inspección.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 @Getter
@@ -15,7 +15,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @SuppressWarnings("javadoc")
 public enum AmbitoInspeccionEnum {
-    PN("Policía Nacional"), GC("Guardia Civil"), OTROS("Otros");
-    
+    /**
+     * Policía nacional.
+     */
+    PN("Policía Nacional"),
+    /**
+     * Guardia civil.
+     */
+    GC("Guardia Civil"),
+    /**
+     * Otros ámbitos.
+     */
+    OTROS("Otros");
+    /**
+     * Descripción del ámbito.
+     */
     String descripcion;
 }
