@@ -15,6 +15,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entidad para almacenar los tipos de unidad.
+ * 
+ * @author EZENTIS
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode()
@@ -26,15 +32,18 @@ import lombok.ToString;
 @Table(name = "tipos_unidad")
 public class TipoUnidad implements Serializable {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @Column(name = "id", length = 10, nullable = false)
     private Long id;
     
+    /**
+     * Descripción del tipo.
+     */
     @Column(name = "descripcion", length = 100)
     private String descripcion;
     

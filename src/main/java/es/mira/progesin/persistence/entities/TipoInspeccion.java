@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad para los modelos de inspecciones
+ * Entidad para almacenar los modelos de inspección.
  * 
  * @author EZENTIS
  *
@@ -33,13 +33,22 @@ import lombok.ToString;
 public class TipoInspeccion extends AbstractEntity implements Serializable, Comparable<TipoInspeccion> {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Código del tipo (primary key).
+     */
     @Id
     @Column(length = 10)
     private String codigo;
     
+    /**
+     * Descripción del tipo.
+     */
     @Column(length = 100)
     private String descripcion;
     
+    /**
+     * Sobreescritura del método para comparar tipos y así poder ordenar colecciones.
+     */
     @Override
     public int compareTo(TipoInspeccion o) {
         return this.descripcion.compareTo(o.descripcion);

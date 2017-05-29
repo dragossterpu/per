@@ -18,7 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad para la subarea de un informe
+ * Entidad para la subárea de un informe.
  * 
  * @author EZENTIS
  *
