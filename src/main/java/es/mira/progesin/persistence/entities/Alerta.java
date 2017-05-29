@@ -46,29 +46,50 @@ public class Alerta implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de la entidad. Generado por secuencia.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ALERTA")
     @SequenceGenerator(name = "SEQ_ALERTA", sequenceName = "SEQ_ALERTA", allocationSize = 1)
     @Column(name = "ID_ALERTA", length = 5)
     private Long idAlerta;
     
+    /**
+     * Nombre de la sección donde se produce la alerta.
+     */
     @Column(name = "NOMBRE_SECCION", length = 50)
     private String nombreSeccion;
     
+    /**
+     * Descripción de la alerta.
+     */
     @Column(name = "DESCRIPCION", length = 2000)
     private String descripcion;
     
+    /**
+     * Fecha en que se produce la alerta.
+     */
     @CreatedDate
     @Column(name = "FECHA_REGISTRO")
     private Date fechaAlta;
     
+    /**
+     * Usuario que registra la alerta.
+     */
     @CreatedBy
     @Column(name = "USUARIO_REGISTRO")
     private String usernameAlerta;
     
+    /**
+     * Fecha de baja de la alerta.
+     */
     @Column(name = "FECHA_BAJA")
     private Date fechaBaja;
     
+    /**
+     * Usuario que da de baja la alerta.
+     */
     @Column(name = "USUARIO_BAJA")
     private String usernameBaja;
     
