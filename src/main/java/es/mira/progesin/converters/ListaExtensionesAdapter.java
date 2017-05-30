@@ -14,11 +14,13 @@ import javax.persistence.Converter;
  */
 @Converter(autoApply = false)
 public class ListaExtensionesAdapter implements AttributeConverter<Object, String> {
-    
+    /**
+     * Constante separador.
+     */
     private static final String SEPARADOR = ", ";
     
     /**
-     * Convert object to a String
+     * Convert object to a String.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -27,7 +29,7 @@ public class ListaExtensionesAdapter implements AttributeConverter<Object, Strin
     }
     
     /**
-     * Convert a String to a object
+     * Convert a String to a object.
      */
     @Override
     public List<String> convertToEntityAttribute(String extensiones) {

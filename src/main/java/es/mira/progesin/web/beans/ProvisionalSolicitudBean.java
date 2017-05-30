@@ -37,6 +37,7 @@ import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.VerificadorExtensiones;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -96,6 +97,11 @@ public class ProvisionalSolicitudBean implements Serializable {
     
     private String vieneDe;
     
+    /**
+     * Verificador de extensiones
+     */
+    private VerificadorExtensiones verificadorExtensiones;
+    
     @Autowired
     private transient PdfGenerator pdfGenerator;
     
@@ -151,7 +157,7 @@ public class ProvisionalSolicitudBean implements Serializable {
         try {
             UploadedFile archivo = event.getFile();
             TipoDocumento tipo = tipoDocumentoRepository.findByNombre("DOCUMENTACIÓN SALIDA IPSS");
-            if (documentoService.extensionCorrecta(archivo)) {
+            if (verificadorExtensiones.extensionCorrecta(archivo)) {
                 if (esDocumentacionPrevia(archivo)) {
                     Documento documento = documentoService.cargaDocumento(archivo, tipo,
                             solicitudDocumentacionPrevia.getInspeccion());

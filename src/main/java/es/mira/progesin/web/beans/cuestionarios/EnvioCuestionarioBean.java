@@ -48,41 +48,74 @@ import lombok.Setter;
 public class EnvioCuestionarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Objeto para el envío de cuestionarios.
+     */
     private CuestionarioEnvio cuestionarioEnvio;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private transient IInspeccionesService inspeccionService;
     
+    /**
+     * Servicio de Solicitud de documentación.
+     */
     @Autowired
     private transient ISolicitudDocumentacionService solDocService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private transient IUserService userService;
     
-    @Autowired
-    private transient IInspeccionesService inspeccionesService;
-    
+    /**
+     * Encriptador de palabra clave.
+     */
     @Autowired
     private transient PasswordEncoder passwordEncoder;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @Autowired
     private ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Bean de configuración de la aplicación.
+     */
     @Autowired
     private ApplicationBean applicationBean;
     
+    /**
+     * Servicio de correo electrónico.
+     */
     @Autowired
     private transient ICorreoElectronico correoElectronico;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private transient INotificacionService notificacionService;
     
+    /**
+     * Repositorio de preguntas cuestionario.
+     */
     @Autowired
     private transient IPreguntaCuestionarioRepository preguntasRepository;
     
+    /**
+     * Repositorio de configuración de respuestas.
+     */
     @Autowired
     private transient IConfiguracionRespuestasCuestionarioRepository configRespuestas;
     
@@ -180,9 +213,11 @@ public class EnvioCuestionarioBean implements Serializable {
     }
     
     /**
-     * Construye el correo
+     * Construye el correo.
+     * 
      * @param password Password de entrada a la aplicación para los usuarios provisionales
-     * @param usuarios Lista de usuarios provisionales
+     * @param usuarios Lista de usuarios provisionales.
+     * @return Cuerpo del correo
      */
     private String getCuerpoCorreo(String password, List<User> usuarios) {
         String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")

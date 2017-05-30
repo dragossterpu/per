@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Clase utilizada para cargar datos en el contexto de la aplicación al arrarancar el servidor
+ * Clase utilizada para cargar datos en el contexto de la aplicación al arrarancar el servidor.
  * 
  * @author EZENTIS
  *
@@ -57,7 +57,7 @@ public class ApplicationBean implements Serializable {
     private List<TipoUnidad> listaTiposUnidad;
     
     /**
-     * Inicialización de datos
+     * Inicialización de datos.
      */
     @PostConstruct
     public void init() {

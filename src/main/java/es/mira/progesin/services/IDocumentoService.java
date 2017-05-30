@@ -133,17 +133,18 @@ public interface IDocumentoService {
     
     List<Documento> findByFechaBajaIsNotNull();
     
-    /**
-     * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión) se
-     * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera).
-     * 
-     * 
-     * @param file fichero para el cual se quiere comprobar la validez de la extensión
-     * @return boolean
-     *
-     */
-    
-    boolean extensionCorrecta(UploadedFile file);
+    // /**
+    // * Recibe un objeto de tipo UploadedFile y comprueba que el content-type dado por JSF (basándose en su extensión)
+    // se
+    // * corresponde con el content-type real obtenido a través de Tika (basándose en el contenido de la cabecera).
+    // *
+    // *
+    // * @param file fichero para el cual se quiere comprobar la validez de la extensión
+    // * @return boolean
+    // *
+    // */
+    //
+    // boolean extensionCorrecta(UploadedFile file);
     
     /**
      * Consulta en base de datos en base a los parámetros recibidos. La consulta se hace paginada.

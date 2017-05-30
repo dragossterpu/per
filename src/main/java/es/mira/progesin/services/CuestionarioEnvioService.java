@@ -53,11 +53,20 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Formato de fecha.
+     */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Factoría de sesiones.
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Repositorio de cuestionarios enviados.
+     */
     @Autowired
     private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
     
@@ -169,7 +178,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     }
     
     /**
-     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria
+     * Método que devuelve el número de cuestionarios enviados en una consulta basada en criteria.
      * 
      * @param cuestionarioEnviadoBusqueda objeto con parámetros de búsqueda
      * @return devuelve el número de registros de una consulta criteria.

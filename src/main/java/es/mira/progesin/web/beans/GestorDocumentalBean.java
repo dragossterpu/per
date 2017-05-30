@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.VerificadorExtensiones;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -96,6 +98,11 @@ public class GestorDocumentalBean {
      * Lista de valores booleanos para la visualización de las columnas de la vista.
      */
     private List<Boolean> list;
+    
+    /**
+     * Verificador de extensiones
+     */
+    private VerificadorExtensiones verificadorExtensiones;
     
     /**
      * Servicio de documentos.
@@ -213,7 +220,7 @@ public class GestorDocumentalBean {
     public void descargarFichero(Documento document) {
         try {
             setFile(documentoService.descargaDocumento(document));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
     }
@@ -231,7 +238,7 @@ public class GestorDocumentalBean {
             TipoDocumento tipo = tipoDocumentoRepository.findByNombre("OTROS");
             UploadedFile uFile = event.getFile();
             nombreDoc = uFile.getFileName();
-            if (documentoService.extensionCorrecta(uFile)) {
+            if (verificadorExtensiones.extensionCorrecta(uFile)) {
                 documento = documentoService.cargaDocumentoSinGuardar(uFile, tipo, null);
             } else {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",

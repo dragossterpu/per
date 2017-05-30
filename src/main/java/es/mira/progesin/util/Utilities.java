@@ -8,20 +8,22 @@ import java.util.Random;
 import es.mira.progesin.constantes.Constantes;
 
 /**
- * Métodos de utilidades
+ * Métodos de utilidades.
  * 
  * @author EZENTIS
  *
  */
 public class Utilities {
-    
+    /**
+     * Evitamos que se pueda instanciar la clase.
+     */
     private Utilities() {
         throw new IllegalAccessError("Utility class");
     }
     
     // ************* Generating new password Progesin ********************//
     /**
-     * Devuelve una contraseña basada en una combinación de letras y números
+     * Devuelve una contraseña basada en una combinación de letras y números.
      * 
      * @author EZENTIS
      * @return contraseña
@@ -31,7 +33,7 @@ public class Utilities {
     }
     
     /**
-     * Recupera una cadena de cuatro números al azar
+     * Recupera una cadena de cuatro números al azar.
      * 
      * @author EZENTIS
      * @return números
@@ -41,7 +43,7 @@ public class Utilities {
     }
     
     /**
-     * Recupera una cadena de cuatro letras al azar
+     * Recupera una cadena de cuatro letras al azar.
      * 
      * @author EZENTIS
      * @return letras
@@ -51,7 +53,7 @@ public class Utilities {
     }
     
     /**
-     * Recupera una cadena de caracteres aleatorios a partir de un conjunto de caracteres y una longitud determinada
+     * Recupera una cadena de caracteres aleatorios a partir de un conjunto de caracteres y una longitud determinada.
      * 
      * @author EZENTIS
      * @param key cadena de caracteres posibles
@@ -72,7 +74,7 @@ public class Utilities {
     // ************* Generating new password Progesin END ********************//
     
     /**
-     * Genera un mensaje de error a partir de una excepción
+     * Genera un mensaje de error a partir de una excepción.
      * 
      * @param e Excepción
      * @return Mensaje
@@ -86,7 +88,7 @@ public class Utilities {
     }
     
     /**
-     * Formatea una fecha según un patrón recibido como parámetro
+     * Formatea una fecha según un patrón recibido como parámetro.
      * 
      * @param date fecha a formatear
      * @param pattern patrón de fecha

@@ -32,6 +32,9 @@ import lombok.ToString;
 public class Parametro implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Parámetro.
+     */
     @EmbeddedId
     ParametroId param;
 }

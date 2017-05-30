@@ -169,7 +169,7 @@ public class RegistroActividadService implements IRegistroActividadService {
             registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
             registroActividad.setDescripcion(Throwables.getStackTraceAsString(e));
             regActividadRepository.save(registroActividad);
-        } catch (Exception e1) {
+        } catch (SQLException e1) {
             log.error(nombreSeccion, e1);
             
         }

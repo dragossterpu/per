@@ -24,10 +24,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author EZENTIS
  * 
  * Entidad para el almacenamiento de un Usuario.
  *
+ * @author EZENTIS
+ * 
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -143,7 +144,7 @@ public class User extends AbstractEntity implements Serializable {
     protected Empleo empleo;
     
     /**
-     * Puesto que tiene el usuario
+     * Puesto que tiene el usuario.
      */
     @ManyToOne
     @JoinColumn(name = "ID_PUESTO", foreignKey = @ForeignKey(name = "FK_U_PUESTO"))
@@ -157,7 +158,7 @@ public class User extends AbstractEntity implements Serializable {
     protected Departamento departamento;
     
     /**
-     * Nivel del usuario
+     * Nivel del usuario.
      */
     @Column(name = "nivel")
     private Integer nivel;
@@ -194,16 +195,16 @@ public class User extends AbstractEntity implements Serializable {
     protected Date fechaInactivo;
     
     /**
-     * Constructor de usuarios provisionales principales
+     * Constructor de usuarios provisionales principales.
      * 
-     * @param username id del usuario
-     * @param password contraseña cifrada
-     * @param role rol del usuario en la aplicación
+     * @param name id del usuario
+     * @param clave contraseña cifrada
+     * @param rol rol del usuario en la aplicación
      */
-    public User(String username, String password, RoleEnum role) {
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setRole(role);
+    public User(String name, String clave, RoleEnum rol) {
+        this.setUsername(name);
+        this.setPassword(clave);
+        this.setRole(rol);
         this.setEstado(EstadoEnum.ACTIVO);
         this.setNombre(PROVISIONAL);
         this.setApellido1(PROVISIONAL);
@@ -215,7 +216,7 @@ public class User extends AbstractEntity implements Serializable {
     
     /**
      * Constructor de usuarios provisionales secundarios para la cumplimentación de cuestionarios (inicialmente
-     * inactivos hasta que se les asigne un area)
+     * inactivos hasta que se les asigne un area).
      * 
      * @param username id del usuario
      * @param password contraseña cifrada

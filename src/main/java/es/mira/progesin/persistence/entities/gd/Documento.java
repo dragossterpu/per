@@ -59,46 +59,82 @@ import lombok.ToString;
 public class Documento implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de la entidad, generada por medio de secuencia.
+     */
     @Id
     @SequenceGenerator(name = "seq_documentos", sequenceName = "seq_documentos", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_documentos")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Fichero enlazado al documento.
+     */
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ID_FICHERO", foreignKey = @ForeignKey(name = "FK_D_FICHERO"))
     private DocumentoBlob fichero;
     
+    /**
+     * ContentType del fichero adjunto.
+     */
     @Column(name = "tipoContenido", nullable = false)
     private String tipoContenido;
     
+    /**
+     * Nombre del documento.
+     */
     @Column(name = "nombre")
     private String nombre;
     
+    /**
+     * Fecha en la que se da de baja el documento.
+     */
     @Column(name = "fecha_baja")
     private Date fechaBaja;
     
+    /**
+     * Username del usuario que da de baja el documento.
+     */
     @Column(name = "username_baja")
     private String usernameBaja;
     
+    /**
+     * Fecha de creación del documento.
+     */
     @CreatedDate
     @Column(name = "fecha_alta")
     private Date fechaAlta;
     
+    /**
+     * Username del usuario que crea el documento.
+     */
     @CreatedBy
     @Column(name = "username_alta")
     private String usernameAlta;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "descripcion", length = 2000)
     private String descripcion;
     
+    /**
+     * Palabras clave del documento.
+     */
     @Column(name = "materia_indexada", length = 2000)
     private String materiaIndexada;
     
+    /**
+     * Tipo de documento.
+     */
     @ManyToOne
     @JoinColumn(name = "tipoDocumento")
     private TipoDocumento tipoDocumento;
     
+    /**
+     * Inspecciones a las que está asignado el documento.
+     */
     @ManyToMany
     @JoinTable(name = "documentos_inspeccion", joinColumns = {
             @JoinColumn(name = "id_documento") }, inverseJoinColumns = { @JoinColumn(name = "id_inspeccion") })

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import es.mira.progesin.persistence.auditor.UsernameSecurityAuditorAwareImpl;
 
 /**
- * Clase para habilitar la auditoría de las entities y definir que implementación se va a utilizar para ello
+ * Clase para habilitar la auditoría de las entities y definir que implementación se va a utilizar para ello.
  * 
  * @author EZENTIS
  *
@@ -18,7 +18,7 @@ import es.mira.progesin.persistence.auditor.UsernameSecurityAuditorAwareImpl;
 public class AuditableJpaConfig {
     
     /**
-     * Definición de la implementación a usar en la auditaría para JPA
+     * Definición de la implementación a usar en la auditaría para JPA.
      * 
      * @return proveedor de la auditoría
      */

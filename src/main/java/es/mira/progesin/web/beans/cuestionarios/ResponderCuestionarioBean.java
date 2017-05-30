@@ -45,6 +45,7 @@ import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.VerificadorExtensiones;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -70,6 +71,11 @@ public class ResponderCuestionarioBean implements Serializable {
     private List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv;
     
     private Map<Long, String> mapaAreaUsuarioCuestEnv;
+    
+    /**
+     * Verificador de extensiones
+     */
+    private VerificadorExtensiones verificadorExtensiones;
     
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
@@ -277,7 +283,7 @@ public class ResponderCuestionarioBean implements Serializable {
     public void subirFichero(FileUploadEvent event) {
         UploadedFile archivoSubido = event.getFile();
         List<Documento> listaDocumentos;
-        if (documentoService.extensionCorrecta(archivoSubido)) {
+        if (verificadorExtensiones.extensionCorrecta(archivoSubido)) {
             
             try {
                 PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
