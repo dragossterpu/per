@@ -1,12 +1,5 @@
 package es.mira.progesin.web.beans;
 
-/**
- * Controlador de las operaciones relacionadas con el perfil.
- * Cambiar contraseña.
- * 
- * @author EZENTIS
- */
-
 import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +14,45 @@ import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Controlador de las operaciones relacionadas con el perfil. Cambiar contraseña.
+ * 
+ * @author EZENTIS
+ */
 @Getter
 @Setter
 @Controller("miPerfilBean")
 @Scope("session")
 public class MiPerfilBean {
+    /**
+     * Clave actual del usuario.
+     */
     private String claveActual;
     
+    /**
+     * Clave nueva del usuario.
+     */
     private String claveNueva;
     
+    /**
+     * Confirmación de la clave.
+     */
     private String claveConfirm;
     
+    /**
+     * Usuario a mostrar.
+     */
     @Autowired
     private UserBean user;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     IUserService userService;
     
     /**
-     * Método usado para que el usuario pueda cambiar su contraseña
+     * Método usado para que el usuario pueda cambiar su contraseña.
      */
     public void cambiarClave() {
         if (this.getClaveNueva().equals(this.getClaveConfirm()) == Boolean.FALSE) {

@@ -22,9 +22,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Gestiona la restauración del acceso al sistema por parte de un usuario que no recuerde su alias o contraseña
+ * Gestiona la restauración del acceso al sistema por parte de un usuario que no recuerde su alias o contraseña.
  * 
- * @author Ezentis
+ * @author EZENTIS
  */
 @Setter
 @Getter
@@ -34,27 +34,48 @@ public class RecoverBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Constante con el literal "Clave olvidada".
+     */
     private static final String NOMBRESECCION = "Clave olvidada";
     
+    /**
+     * Constante con el literal "Error".
+     */
     private static final String ERROR = "Error";
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Envío de correos electrónicos.
+     */
     @Autowired
     private transient CorreoElectronico correoElectronico;
     
+    /**
+     * Encriptador de palabra clave.
+     */
     @Autowired
     private transient PasswordEncoder passwordEncoder;
     
+    /**
+     * Lista de usuarios.
+     */
     private List<User> listaUsers = new ArrayList<>();
     
     /**
      * Busca un usuario en base a su dirección de correo o al NIF, y en caso de hayarlo genera una nueva contraseña y
-     * envía ésta junto al username al correo asociado a la cuenta
+     * envía ésta junto al username al correo asociado a la cuenta.
      * 
      * @author EZENTIS
      * @param correo electrónico

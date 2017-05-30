@@ -16,16 +16,26 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 
 /**
- * Servicio de login
+ * Servicio de login.
  * 
  * @author EZENTIS
  *
  */
 @Service
 public class LoginService implements UserDetailsService {
+    
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private IUserService userService;
     
+    /**
+     * Devuelve los datos de un usuario cuyo username se ha recibido como parámetro.
+     * 
+     * @param username Username del usuario a buscar.
+     * @return Detalles del usuario
+     */
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userService.findByUsernameIgnoreCase(username);
@@ -40,6 +50,11 @@ public class LoginService implements UserDetailsService {
         
         private static final long serialVersionUID = 1L;
         
+        /**
+         * Constructor que recibe como parámetro un usuario.
+         * 
+         * @param user Usuario del que se desean los detalles.
+         */
         private UserRepositoryUserDetails(User user) {
             super();
             username = user.getUsername();

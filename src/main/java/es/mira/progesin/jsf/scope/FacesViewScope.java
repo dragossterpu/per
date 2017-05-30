@@ -9,7 +9,7 @@ import org.springframework.beans.factory.config.Scope;
 
 /**
  * 
- * Permite simular el scope View en Spring
+ * Permite simular el scope View en Spring.
  * 
  * @author EZENTIS
  *
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.config.Scope;
 public class FacesViewScope implements Scope {
     
     /**
-     * Nombre del scope
+     * Nombre del scope.
      */
     public static final String NAME = "view";
     

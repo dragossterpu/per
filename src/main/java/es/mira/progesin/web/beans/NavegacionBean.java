@@ -17,7 +17,7 @@ import lombok.Setter;
 
 /**
  * Bean que mantiene un contról de las páginas que se visitan de modo que siempre se sepa dónde se encuentra el usuario
- * y éste pueda navegar hacia atrás a un menú superior hasta llegar al index
+ * y éste pueda navegar hacia atrás a un menú superior hasta llegar al index.
  * 
  * @author EZENTIS
  * 
@@ -31,12 +31,14 @@ public class NavegacionBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Variable para almacenar el camino de migas.
+     */
     private DynamicMenuModel caminoMigas;
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
@@ -44,9 +46,7 @@ public class NavegacionBean implements Serializable {
     }
     
     /**
-     * Crea el camino de migas de pan con la página principal como primer elemento del menú
-     * 
-     * @author EZENTIS
+     * Crea el camino de migas de pan con la página principal como primer elemento del menú.
      * 
      */
     public void iniciarCamino() {
@@ -59,9 +59,8 @@ public class NavegacionBean implements Serializable {
     }
     
     /**
-     * Añade un paso más al camino
+     * Añade un paso más al camino.
      * 
-     * @author EZENTIS
      * @param nombre de la vista
      * @param ruta de la vista
      */
@@ -77,9 +76,8 @@ public class NavegacionBean implements Serializable {
     }
     
     /**
-     * Recomienza el camino al acceder a una opción del menú
+     * Recomienza el camino al acceder a una opción del menú.
      * 
-     * @author EZENTIS
      * @param nombre de la vista
      * @param ruta de la vista
      */
@@ -89,9 +87,8 @@ public class NavegacionBean implements Serializable {
     }
     
     /**
-     * Elimina el último paso al pulsar un botón volver/cerrar en una vista
+     * Elimina el último paso al pulsar un botón volver/cerrar en una vista.
      * 
-     * @author EZENTIS
      */
     public void atras() {
         caminoMigas.getElements().remove(caminoMigas.getElements().size() - 1);

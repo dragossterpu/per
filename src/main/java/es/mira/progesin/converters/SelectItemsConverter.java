@@ -15,22 +15,34 @@ import es.mira.progesin.persistence.repositories.SelectFindOne;
 import es.mira.progesin.services.RegistroActividadService;
 
 /**
- * Componente que permite generar desplegables en formularios html donde las opciones están asociadas a objetos
+ * Componente que permite generar desplegables en formularios html donde las opciones están asociadas a objetos.
  * 
- * @author Ezentis
+ * @author EZENTIS
  */
 @Component("selectConverter")
 public class SelectItemsConverter implements Converter {
-    
+    /**
+     *  
+     */
     @Autowired
     private SelectFindOne target;
     
+    /**
+     * Factoria de entityManager.
+     */
     @PersistenceContext
     private EntityManager entityManagerFactory;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private RegistroActividadService registroActividadService;
     
+    /**
+     * Convierte el objeto devolviendo una cadena de texto.
+     * 
+     */
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object entity) {
         String value = null;
@@ -43,6 +55,9 @@ public class SelectItemsConverter implements Converter {
         return value;
     }
     
+    /**
+     * Devuelve el objeto que corresponde a la cadena recibida como parámetro.
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         Object entity = null;

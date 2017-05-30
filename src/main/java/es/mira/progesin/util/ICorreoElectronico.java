@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 
- * Clase para el envío de correos electrónicos
+ * Clase para el envío de correos electrónicos.
  * 
  * @author Ezentis
  * 
