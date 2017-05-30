@@ -12,15 +12,24 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.services.ITipoInspeccionService;
 
 /**
+ * Validador para tipos de inspección. Inpide que se puedan crear modelos de inspección con un nombre corto que ya
+ * existe.
  * @author EZENTIS
  *
  */
 @Component("codigoTipoInspeccionValidator")
 public class CodigoTipoInspeccionValidator implements Validator {
     
+    /**
+     * Variable utilizada para inyectar el servicio de tipos de inspección.
+     * 
+     */
     @Autowired
     private ITipoInspeccionService tipoInspeccionService;
     
+    /**
+     * Si existe el nombre corto de una inspección, lanza una excepción.
+     */
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) {
         

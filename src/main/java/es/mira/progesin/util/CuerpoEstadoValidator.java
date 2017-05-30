@@ -12,15 +12,24 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.services.ICuerpoEstadoService;
 
 /**
+ * Validador para cuerpos de estado. Inpide que se puedan crear cuerpos de estado con un nombre corto que ya existe.
  * @author EZENTIS
  *
  */
 @Component("cuerpoEstadoValidator")
 public class CuerpoEstadoValidator implements Validator {
     
+    /**
+     * Variable utilizada para inyectar el servicio de cuespos de estado.
+     * 
+     */
     @Autowired
     ICuerpoEstadoService cuerpoEstadoService;
     
+    /**
+     * Comprueba si el nombre corto de un cuerpo existe y no coincide con el mismo que se está modificando. Se emplea
+     * para la edición en caliente de cuerpos.
+     */
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) {
         
