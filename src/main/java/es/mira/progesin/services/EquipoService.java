@@ -1,8 +1,9 @@
 package es.mira.progesin.services;
 
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -72,23 +73,13 @@ public class EquipoService implements IEquipoService {
      * @param criteria objeto criteria
      */
     private void buscarCriteria(EquipoBusqueda equipoBusqueda, Criteria criteria) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         if (equipoBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(equipoBusqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, equipoBusqueda.getFechaDesde()));
         }
         if (equipoBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(equipoBusqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(equipoBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         String parametro;
         if (equipoBusqueda.getNombreJefe() != null && !equipoBusqueda.getNombreJefe().isEmpty()) {

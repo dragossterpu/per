@@ -4,9 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -47,6 +48,7 @@ import es.mira.progesin.web.beans.DocumentoBusqueda;
 
 @Service("documentoService")
 public class DocumentoService implements IDocumentoService {
+    
     /**
      * Factoría de sesiones.
      */
@@ -326,24 +328,15 @@ public class DocumentoService implements IDocumentoService {
      * @param criteria Criteria al que se añadirán los parámetros.
      */
     private void creaCriteria(DocumentoBusqueda busqueda, Criteria criteria) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
         if (busqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
         }
+        
         if (busqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
+        
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
                     String.format(Constantes.COMPARADORSINACENTOS, "this_.nombre", busqueda.getNombre())));

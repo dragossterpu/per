@@ -1,9 +1,10 @@
 package es.mira.progesin.services;
 
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -52,11 +53,6 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
     private static final long serialVersionUID = 1L;
-    
-    /**
-     * Formato de fecha.
-     */
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Factoría de sesiones.
@@ -203,7 +199,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     private void consultaCriteriaCuestionarioEnviado(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda,
             Criteria criteria) {
-        String campoFecha = "this_.fecha_envio";
         if (cuestionarioEnviadoBusqueda.getEstado() != null) {
             switch (cuestionarioEnviadoBusqueda.getEstado()) {
                 case CUMPLIMENTADO:
@@ -234,28 +229,18 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
         }
         if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(" + campoFecha + ") >= '" + sdf.format(cuestionarioEnviadoBusqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge("fechaEnvio", cuestionarioEnviadoBusqueda.getFechaDesde()));
         }
+        
         if (cuestionarioEnviadoBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(" + campoFecha + ") <= '" + sdf.format(cuestionarioEnviadoBusqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(
+                    cuestionarioEnviadoBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le("fechaEnvio", fechaHasta));
         }
         if (cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction("TRUNC(FECHA_LIMITE_CUESTIONARIO) <= '"
-                    + sdf.format(cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta()) + "'"));
+            Date fechaLimiteRespuesta = new Date(
+                    cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le("fechaLimiteCuestionario", fechaLimiteRespuesta));
         }
         
         String parametro;

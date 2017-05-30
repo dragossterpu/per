@@ -1,8 +1,9 @@
 package es.mira.progesin.services;
 
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -59,8 +60,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     
     @Autowired
     private ITipoDocumentacionService tipoDocumentacionService;
-    
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     @Override
     @Transactional(readOnly = false)
@@ -152,7 +151,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      */
     private void consultaCriteriaSolicitudesDoc(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda,
             Criteria criteria) {
-        String campoFecha = "this_.fecha_alta";
         if (solicitudDocPreviaBusqueda.getEstado() != null) {
             switch (solicitudDocPreviaBusqueda.getEstado()) {
                 case VALIDADA_APOYO:
@@ -197,20 +195,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
         }
         if (solicitudDocPreviaBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(" + campoFecha + ") >= '" + sdf.format(solicitudDocPreviaBusqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, solicitudDocPreviaBusqueda.getFechaDesde()));
         }
         if (solicitudDocPreviaBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(" + campoFecha + ") <= '" + sdf.format(solicitudDocPreviaBusqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(
+                    solicitudDocPreviaBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null) {
             criteria.add(

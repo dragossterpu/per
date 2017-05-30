@@ -1,7 +1,8 @@
 package es.mira.progesin.services;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -33,10 +34,6 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
 
 @Service
 public class GuiaService implements IGuiaService {
-    /**
-     * Formato de fecha.
-     */
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Factoría de sesiones.
@@ -66,20 +63,12 @@ public class GuiaService implements IGuiaService {
     private void creaCriteria(GuiaBusqueda busqueda, Criteria criteria) {
         
         if (busqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
         }
+        
         if (busqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
         if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {

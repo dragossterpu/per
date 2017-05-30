@@ -2,7 +2,9 @@ package es.mira.progesin.services;
 
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -176,21 +178,14 @@ public class InspeccionesService implements IInspeccionesService {
      */
     private void consultaCriteriaInspecciones(InspeccionBusqueda busqueda, Criteria criteria) {
         String parametro;
+        
         if (busqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) >= '" + sdf.format(busqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
         }
+        
         if (busqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(this_.fecha_alta) <= '" + sdf.format(busqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
         if (busqueda.getId() != null) {

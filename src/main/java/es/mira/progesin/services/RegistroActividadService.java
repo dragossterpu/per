@@ -1,8 +1,8 @@
 package es.mira.progesin.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.base.Throwables;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
@@ -36,8 +37,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
-    
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     @Autowired
     private IRegActividadRepository regActividadRepository;
@@ -119,20 +118,12 @@ public class RegistroActividadService implements IRegistroActividadService {
     private void creaCriteria(RegActividadBusqueda regActividadBusqueda, Criteria criteria) {
         
         if (regActividadBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(fecha_alta) >= '" + sdf.format(regActividadBusqueda.getFechaDesde()) + "'"));
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, regActividadBusqueda.getFechaDesde()));
         }
+        
         if (regActividadBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions
-                    .sqlRestriction("TRUNC(fecha_alta) <= '" + sdf.format(regActividadBusqueda.getFechaHasta()) + "'"));
+            Date fechaHasta = new Date(regActividadBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
             criteria.add(Restrictions.sqlRestriction(
@@ -169,7 +160,7 @@ public class RegistroActividadService implements IRegistroActividadService {
             registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
             registroActividad.setDescripcion(Throwables.getStackTraceAsString(e));
             regActividadRepository.save(registroActividad);
-        } catch (SQLException e1) {
+        } catch (Exception e1) {
             log.error(nombreSeccion, e1);
             
         }

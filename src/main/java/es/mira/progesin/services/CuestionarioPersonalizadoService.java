@@ -1,11 +1,14 @@
 package es.mira.progesin.services;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -36,8 +39,6 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    private static final String FECHA_CREACION = "fechaCreacion";
-    
     @Override
     @Transactional(readOnly = false)
     public void delete(CuestionarioPersonalizado entity) {
@@ -53,26 +54,16 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
     private void creaCriteria(CuestionarioPersonalizadoBusqueda cuestionarioBusqueda, Criteria criteria) {
         
         if (cuestionarioBusqueda.getFechaDesde() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(this_.fecha_creacion) >= '" + sdf.format(cuestionarioBusqueda.getFechaDesde())));
+            criteria.add(Restrictions.ge(Constantes.FECHACREACION, cuestionarioBusqueda.getFechaDesde()));
         }
         if (cuestionarioBusqueda.getFechaHasta() != null) {
-            /**
-             * Hace falta truncar la fecha para recuperar todos los registros de ese día sin importar la hora, sino
-             * compara con 0:00:00
-             */
-            criteria.add(Restrictions.sqlRestriction(
-                    "TRUNC(this_.fecha_creacion) <= '" + sdf.format(cuestionarioBusqueda.getFechaHasta())));
+            Date fechaHasta = new Date(cuestionarioBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHACREACION, fechaHasta));
         }
         
         if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    "upper(convert(replace(USERNAME_CREACION, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-                            + cuestionarioBusqueda.getUsername() + "', ' ', '') || '%', 'US7ASCII'))"));
+            criteria.add(
+                    Restrictions.ilike("usernameCreacion", cuestionarioBusqueda.getUsername(), MatchMode.ANYWHERE));
         }
         if (cuestionarioBusqueda.getModeloCuestionarioSeleccionado() != null) {
             criteria.add(
@@ -80,14 +71,12 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         }
         if (cuestionarioBusqueda.getNombreCuestionario() != null
                 && !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    "upper(convert(replace(NOMBRE_CUESTIONARIO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-                            + cuestionarioBusqueda.getNombreCuestionario() + "', ' ', '') || '%', 'US7ASCII'))"));
-            
+            criteria.add(Restrictions.ilike("nombreCuestionario", cuestionarioBusqueda.getNombreCuestionario(),
+                    MatchMode.ANYWHERE));
         }
         if (cuestionarioBusqueda.getEstado() == null || cuestionarioBusqueda.getEstado().equals(EstadoEnum.ACTIVO)) {
             criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
-            criteria.addOrder(Order.desc(FECHA_CREACION));
+            criteria.addOrder(Order.desc(Constantes.FECHACREACION));
         } else if (cuestionarioBusqueda.getEstado().equals(EstadoEnum.INACTIVO)) {
             criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
             criteria.addOrder(Order.desc(Constantes.FECHABAJA));
