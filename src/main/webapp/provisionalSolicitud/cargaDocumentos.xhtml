@@ -1,91 +1,72 @@
-<ui:composition template="/layouts/layoutInteriorProv.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	
-	<ui:define name="content">
-	
-	<ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
-	
-		<div class="bloqueVistaTitulo">	
-			<h3>Adjuntar documentos solicitud </h3>
-		</div>
-		
-		<div class="aclaraciones">
-			Sólo se aceptarán aquellos archivos que coincidan en nombre y extensión con los documentos expuestos a continuación.
-		</div>
-		
-		<div class="bloqueVista">
-			<p:dataTable  var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}">
-				<p:column headerText="DOCUMENTO" width="450">
-					<h:outputText value="#{documentoPrevio.descripcion}" />
-				</p:column>
-				<p:column headerText="NOMBRE" width="70">
-					<h:outputText value="#{documentoPrevio.nombre}" />
-				</p:column>
-				<p:column headerText="EXTENSIONES" width="100">
-					<h:outputText value="#{documentoPrevio.extensiones}" converter="#{listaExtensionesConverter}" />
-				</p:column>	
-			</p:dataTable>	
-		</div>
-		<br/>
-		<br/>
-		<div class="aclaraciones">
-			Se puede cargar uno o varios documentos a la vez. <strong>Si alguno de ellos se compone de dos o más partes, sus nombres deberán empezar por el nombre exigido para dicho documento</strong> (ej: organigrama_1.doc, organigramaParte2.ppt).
-		</div>
+<ui:composition template="/layouts/layoutInteriorProv.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 
-		<div class="bloqueVista">
-			<h:form id="formAlta">
-				 
-				 <p:fileUpload  width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS"  fileUploadListener="#{provisionalSolicitudBean.gestionarCargaDocumento}" mode="advanced" dragDropSupport="true"
-		         	sizelimit="20971520"
-		         	update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" 
-		         	disabled="#{yaCumplimentado}"/>			 			   					   		 
-		   		
-				
-				<p:outputPanel id="panelAdjuntos">
-					<p:dataTable id="tablaDocumentos" var="documento"
-						value="#{provisionalSolicitudBean.listadoDocumentosCargados}" editable="true"  onkeypress="if (event.keyCode == 13) {return false; }"
-						emptyMessage="No hay documentos cargados">
-						<p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}"
-							update=":formAlta:msgs" />
+    <ui:define name="content">
 
-						<p:column headerText="Documentos">
-							<h:outputText value="#{documento.nombreFichero}" />
-				       </p:column>
-						<p:column styleClass="botonTabla">
-							<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
-								<p:fileDownload value="#{provisionalSolicitudBean.file}" />
-							</p:commandButton>
-						</p:column>
-						<p:column styleClass="botonTabla" rendered="#{not yaCumplimentado}">
-							<p:commandButton title="Eliminar" icon="fa fa-trash"
-								actionListener="#{provisionalSolicitudBean.eliminarDocumento(documento)}"
-								update=":formAlta:panelAdjuntos tablaDocumentos">
-								<p:confirm header="Eliminar documento"
-									message="¿Está seguro que desea eliminar este documento?"
-									icon="fa fa-warning-sign" />
-							</p:commandButton>
-						</p:column>
-						
-					</p:dataTable>
-				</p:outputPanel>
-				<p:confirmDialog global="true">
-					<div class="centrarBotonesDialog">
-						<p:commandButton value="Aceptar" type="button"
-							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-						<p:commandButton value="Cancelar" type="button"
-							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-					</div>
-				</p:confirmDialog>
-				<div class="botonesFormulario">
-					<p:button outcome="/provisionalSolicitud/provisionalSolicitud" value="Volver" icon="fa fa-fw fa-undo"/>
-				</div>
+        <ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
 
-				<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
-		</h:form>
-	</div>
-	</ui:define>
+        <div class="bloqueVistaTitulo">
+            <h3>Adjuntar documentos solicitud</h3>
+        </div>
+
+        <div class="aclaraciones">Sólo se aceptarán aquellos archivos que coincidan en nombre y extensión con los documentos expuestos a continuación.</div>
+
+        <div class="bloqueVista">
+            <p:dataTable var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}">
+                <p:column headerText="DOCUMENTO" width="450">
+                    <h:outputText value="#{documentoPrevio.descripcion}" />
+                </p:column>
+                <p:column headerText="NOMBRE" width="70">
+                    <h:outputText value="#{documentoPrevio.nombre}" />
+                </p:column>
+                <p:column headerText="EXTENSIONES" width="100">
+                    <h:outputText value="#{documentoPrevio.extensiones}" converter="#{listaExtensionesConverter}" />
+                </p:column>
+            </p:dataTable>
+        </div>
+        <br />
+        <br />
+        <div class="aclaraciones">
+            Se puede cargar uno o varios documentos a la vez. <strong>Si alguno de ellos se compone de dos o más partes, sus nombres deberán empezar por el nombre exigido para dicho documento</strong> (ej: organigrama_1.doc, organigramaParte2.ppt).
+        </div>
+
+        <div class="bloqueVista">
+            <h:form id="formAlta">
+
+                <p:fileUpload width="100%" cancelLabel="CANCELAR" label="CARGAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS" fileUploadListener="#{provisionalSolicitudBean.gestionarCargaDocumento}" mode="advanced" dragDropSupport="true" sizelimit="20971520" update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" disabled="#{yaCumplimentado}" />
+
+
+                <p:outputPanel id="panelAdjuntos">
+                    <p:dataTable id="tablaDocumentos" var="documento" value="#{provisionalSolicitudBean.listadoDocumentosCargados}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }" emptyMessage="No hay documentos cargados">
+                        <p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}" update=":formAlta:msgs" />
+
+                        <p:column headerText="Documentos">
+                            <h:outputText value="#{documento.nombreFichero}" />
+                        </p:column>
+                        <p:column styleClass="botonTabla">
+                            <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
+                                <p:fileDownload value="#{provisionalSolicitudBean.file}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column styleClass="botonTabla" rendered="#{not yaCumplimentado}">
+                            <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{provisionalSolicitudBean.eliminarDocumento(documento)}" update=":formAlta:panelAdjuntos tablaDocumentos">
+                                <p:confirm header="Eliminar documento" message="¿Está seguro que desea eliminar este documento?" icon="fa fa-warning-sign" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+                <p:confirmDialog global="true">
+                    <div class="centrarBotonesDialog">
+                        <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
+                </p:confirmDialog>
+                <div class="botonesFormulario">
+                    <p:button outcome="/provisionalSolicitud/provisionalSolicitud" value="Volver" icon="fa fa-fw fa-undo" />
+                </div>
+
+                <p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+            </h:form>
+        </div>
+    </ui:define>
 </ui:composition>

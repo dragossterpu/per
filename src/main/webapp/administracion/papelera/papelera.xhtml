@@ -1,134 +1,111 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-		<ui:define name="content">
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="content">
 
-		<h2>Papelera</h2>
-			<f:metadata>
-			    <f:viewParam name="vieneDe" value="#{gestorDocumentalBean.vieneDe}" />
-			</f:metadata>
-			
-			<h:form>
-		    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.resetBusquedaEliminados}" autoRun="true" update=":form"/>
-			</h:form>
-				<h:form id="form">
-				
-					
-						
-						<p:outputPanel layout="block" id="panelDocumentos" >
-							
-							<p:outputPanel>
-				 				<h:commandLink>
-					               <p:graphicImage  value="/images/xls.png" />
-					               <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos"/>
-					            </h:commandLink>
-					            <h:commandLink>
-					               <p:graphicImage  value="/images/pdf.png" />
-					               <p:dataExporter type="pdf" target="tablaDocumentos" fileName="Documentos"/>
-					            </h:commandLink>
-					            <h:commandLink>
-					               <p:graphicImage  value="/images/csv.png" />
-					               <p:dataExporter type="csv" target="tablaDocumentos" fileName="Documentos"/>
-					            </h:commandLink>
-					            <h:commandLink>
-		                            <p:graphicImage  value="/images/imprimir.jpg" />
-		                            <p:printer target="tablaDocumentos" />
-		                        </h:commandLink>
-					            
-				            </p:outputPanel>
-							<p:dataTable id="tablaDocumentos" var="documento"
-								value="#{gestorDocumentalBean.model}"
-								emptyMessage="No se han encontrado resultados"
-								paginator="true"
-								lazy="true"
-								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-								rowsPerPageTemplate="5,10,15,20"
-								rows="20">
-								
-								 <f:facet name="header">
-								 	<h:outputText value="Documentos"/>
-									
-									 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
-				        			 <p:columnToggler datasource="tablaDocumentos" trigger="toggler">
-				        			 	  <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
-				        			 </p:columnToggler>
-								</f:facet>
-								
-								<p:column headerText="Fecha alta" sortBy="#{documento.fechaAlta}" style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
-									<h:outputText value="#{documento.fechaAlta}">
-										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
-									</h:outputText>
-								</p:column>
-								<p:column headerText="Fecha baja" sortBy="#{documento.fechaBaja}" style="width:70px" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
-									<h:outputText value="#{documento.fechaBaja}">
-										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
-									</h:outputText>
-								</p:column>
-								<p:column headerText="Usuario baja" sortBy="#{documento.usernameBaja}" visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
-									<h:outputText value="#{documento.usernameBaja}" />
-								</p:column>
-								<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
-									<h:outputText value="#{documento.nombre}" />
-								</p:column>
-								<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}"  visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
-									<h:outputText value="#{documento.tipoDocumento.nombre}" />	
-								</p:column>
-								<p:column headerText="Inspeccion"  width="100"  visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
-									<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
-	
-								</p:column>
-								<p:column styleClass="botonTabla" exportable="false" toggleable="false">
-									<p:commandButton title="Eliminar" icon="fa fa-trash"
-										actionListener="#{gestorDocumentalBean.borrarDocumento(documento)}"
-										update=":form:panelDocumentos" >
-										<p:confirm header="Eliminar documento"
-											message="¿Está seguro que desea eliminar este documento? La eliminación no podrá deshacerse"
-											icon="fa fa-warning-sign" />
-									</p:commandButton>
-								</p:column>
-								<p:column styleClass="botonTabla" exportable="false" toggleable="false" >
-									<p:commandButton title="Recuperar" icon="fa fa-fw fa-undo"  action="#{gestorDocumentalBean.recuperarDocumento(documento)}" update=":form:panelDocumentos" >
-										<p:confirm header="Recuperar documento"
-											message="¿Está seguro que desea sacar este documento de la papelera?"
-											icon="fa fa-warning-sign" />
-									</p:commandButton>
-								</p:column>
-								
-								
-								
-							</p:dataTable>
-						</p:outputPanel>
-						
-					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{gestorDocumentalBean.vaciarPapelera}" update=":form:panelDocumentos" value="Vaciar papelera"  icon="fa fa-eraser">
-							<p:confirm header="Vaciar papelera"
-							message="¿Está seguro que desea eliminar todos los documentos contenidos en la papelera? La eliminación no podrá deshacerse"
-							icon="fa fa-warning-sign" />
-						</p:commandButton> 			
-					</div>	
-					
-					<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-						</div>
-					</p:confirmDialog>
-					
-					<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-						<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-						<div class="centrarBotonesDialog">
-							<p:button value="Cerrar" outcome="/administracion/papelera/papelera?faces-redirect=true" />
-						</div>
-					</p:dialog> 
+        <h2>Papelera</h2>
+        <f:metadata>
+            <f:viewParam name="vieneDe" value="#{gestorDocumentalBean.vieneDe}" />
+        </f:metadata>
 
-					
-			</h:form>
-		
-		</ui:define>
-	</ui:composition>
+        <h:form>
+            <p:remoteCommand name="onload" action="#{gestorDocumentalBean.resetBusquedaEliminados}" autoRun="true" update=":form" />
+        </h:form>
+        <h:form id="form">
+
+
+
+            <p:outputPanel layout="block" id="panelDocumentos">
+
+                <p:outputPanel>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/xls.png" />
+                        <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaDocumentos" fileName="Documentos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/csv.png" />
+                        <p:dataExporter type="csv" target="tablaDocumentos" fileName="Documentos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaDocumentos" />
+                    </h:commandLink>
+
+                </p:outputPanel>
+                <p:dataTable id="tablaDocumentos" var="documento" value="#{gestorDocumentalBean.model}" emptyMessage="No se han encontrado resultados" paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15,20" rows="20">
+
+                    <f:facet name="header">
+                        <h:outputText value="Documentos" />
+
+                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                        <p:columnToggler datasource="tablaDocumentos" trigger="toggler">
+                            <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
+                        </p:columnToggler>
+                    </f:facet>
+
+                    <p:column headerText="Fecha alta" sortBy="#{documento.fechaAlta}" style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
+                        <h:outputText value="#{documento.fechaAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha baja" sortBy="#{documento.fechaBaja}" style="width:70px" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
+                        <h:outputText value="#{documento.fechaBaja}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Usuario baja" sortBy="#{documento.usernameBaja}" visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
+                        <h:outputText value="#{documento.usernameBaja}" />
+                    </p:column>
+                    <p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
+                        <h:outputText value="#{documento.nombre}" />
+                    </p:column>
+                    <p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}" visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
+                        <h:outputText value="#{documento.tipoDocumento.nombre}" />
+                    </p:column>
+                    <p:column headerText="Inspeccion" width="100" visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
+                        <h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}" />
+
+                    </p:column>
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{gestorDocumentalBean.borrarDocumento(documento)}" update=":form:panelDocumentos">
+                            <p:confirm header="Eliminar documento" message="¿Está seguro que desea eliminar este documento? La eliminación no podrá deshacerse" icon="fa fa-warning-sign" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <p:commandButton title="Recuperar" icon="fa fa-fw fa-undo" action="#{gestorDocumentalBean.recuperarDocumento(documento)}" update=":form:panelDocumentos">
+                            <p:confirm header="Recuperar documento" message="¿Está seguro que desea sacar este documento de la papelera?" icon="fa fa-warning-sign" />
+                        </p:commandButton>
+                    </p:column>
+
+
+
+                </p:dataTable>
+            </p:outputPanel>
+
+            <div class="botonesFormulario">
+                <p:commandButton actionListener="#{gestorDocumentalBean.vaciarPapelera}" update=":form:panelDocumentos" value="Vaciar papelera" icon="fa fa-eraser">
+                    <p:confirm header="Vaciar papelera" message="¿Está seguro que desea eliminar todos los documentos contenidos en la papelera? La eliminación no podrá deshacerse" icon="fa fa-warning-sign" />
+                </p:commandButton>
+            </div>
+
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
+
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:button value="Cerrar" outcome="/administracion/papelera/papelera?faces-redirect=true" />
+                </div>
+            </p:dialog>
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

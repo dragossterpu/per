@@ -1,49 +1,45 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	<ui:define name="content">
-	
-	<h:form id="formGuias">		
-	
-		<div class="tituloCuestionario">
-			<H2><h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}"/></H2>
-		</div>
-		
-		<p:messages autoUpdate="true" showSummary="true" closable="true"/> 
-		
-		<h:commandLink  actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}"
-			title="Descargar guía en formato Word">
-		   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
-		   <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
-		</h:commandLink>
-		
-		<div class="listaInspecciones">	
-			
-			<p:dataList value="#{guiaPersonalizadaBean.guiaPersonalizada.inspeccion}" var="inspeccion" type="unordered" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}">
-		        <f:facet name="header">
-		            <h:outputText value="Inspecciones asociadas:"/>
-		        </f:facet>
-		        <h:outputText value="#{inspeccion.numero}"/>
-		        
-		    </p:dataList>
-		</div>
-		
-		
-		<div class="bloqueVistaTitulo">	
-			<h3>Pasos</h3>
-			<p:dataList  var="paso" value="#{guiaPersonalizadaBean.listaPasos}"  type="ordered" styleClass="listaPaso">
-		    	<h:outputText value="#{paso.paso}"/>
-		    </p:dataList>
-		</div>
-		
-		<div class="botonesFormulario">
-			<p:button outcome="/guias/buscaGuiasPersonalizadas?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-		</div>
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
 
-	</h:form>	
-	
-	</ui:define>
+        <h:form id="formGuias">
+
+            <div class="tituloCuestionario">
+                <H2>
+                    <h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}" />
+                </H2>
+            </div>
+
+            <p:messages autoUpdate="true" showSummary="true" closable="true" />
+
+            <h:commandLink actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}" title="Descargar guía en formato Word">
+                <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
+                <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
+            </h:commandLink>
+
+            <div class="listaInspecciones">
+
+                <p:dataList value="#{guiaPersonalizadaBean.guiaPersonalizada.inspeccion}" var="inspeccion" type="unordered" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}">
+                    <f:facet name="header">
+                        <h:outputText value="Inspecciones asociadas:" />
+                    </f:facet>
+                    <h:outputText value="#{inspeccion.numero}" />
+
+                </p:dataList>
+            </div>
+
+
+            <div class="bloqueVistaTitulo">
+                <h3>Pasos</h3>
+                <p:dataList var="paso" value="#{guiaPersonalizadaBean.listaPasos}" type="ordered" styleClass="listaPaso">
+                    <h:outputText value="#{paso.paso}" />
+                </p:dataList>
+            </div>
+
+            <div class="botonesFormulario">
+                <p:button outcome="/guias/buscaGuiasPersonalizadas?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
+            </div>
+
+        </h:form>
+
+    </ui:define>
 </ui:composition>

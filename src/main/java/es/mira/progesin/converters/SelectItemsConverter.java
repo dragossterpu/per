@@ -11,8 +11,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.repositories.SelectFindOne;
 import es.mira.progesin.services.RegistroActividadService;
-import es.mira.progesin.services.SelectFindOne;
 
 /**
  * Componente que permite generar desplegables en formularios html donde las opciones están asociadas a objetos

@@ -1,26 +1,21 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	<ui:define name="content">
-    
-    <p:outputPanel styleClass="bloqueVistaTitulo">
-	      <h3>Error interno</h3>
-    </p:outputPanel>
-    
-    <p:outputPanel>
-        <div class="ui-messages ui-widget" aria-live="polite">
-            <div class="ui-messages-error ui-corner-all">
-                <span class="ui-messages-error-icon iconoError icono5xx"></span>
-                <ul>
-                    <li class="ui-messages-error-summary">Se ha producido un error interno en el servidor.</li>
-                    <li class="ui-messages-error-details">Inténtelo de nuevo más tarde o póngase en contacto con el administrador del sistema.</li>
-                </ul>
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <p:outputPanel styleClass="bloqueVistaTitulo">
+            <h3>Error interno</h3>
+        </p:outputPanel>
+
+        <p:outputPanel>
+            <div class="ui-messages ui-widget" aria-live="polite">
+                <div class="ui-messages-error ui-corner-all">
+                    <span class="ui-messages-error-icon iconoError icono5xx"></span>
+                    <ul>
+                        <li class="ui-messages-error-summary">Se ha producido un error interno en el servidor.</li>
+                        <li class="ui-messages-error-details">Inténtelo de nuevo más tarde o póngase en contacto con el administrador del sistema.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </p:outputPanel>
-    
-	</ui:define>
+        </p:outputPanel>
+
+    </ui:define>
 </ui:composition>

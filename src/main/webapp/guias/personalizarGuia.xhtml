@@ -1,81 +1,67 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:my="http://java.sun.com/jsf/composite/composites">
-	<ui:define name="content">
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:my="http://java.sun.com/jsf/composite/composites">
+    <ui:define name="content">
 
-		<div class="tituloCuestionario">
-			<h:outputText value="#{guiaBean.guia.nombre}"/>
-		</div>
+        <div class="tituloCuestionario">
+            <h:outputText value="#{guiaBean.guia.nombre}" />
+        </div>
 
-		<div class="bloqueFormulario" >
-			<h:form id="form">
-				<p:messages autoUpdate="true" closable="true" />
-				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputLabel for="inputNombre" value="Nombre (*):" />
-					<p:inputText id="inputNombre" binding="#{inputNombre}" />
-					<h:outputLabel for="inputNombre" value="Inspecciones asociadas:" />
-					<p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera"  value="#{guiaBean.listaInspecciones}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
-						<p:column headerText="Número de inspección">
-							<h:outputText value=" #{inspeccion.numero}" />
-						</p:column>
-						<p:column headerText="Unidad">
-							<h:outputText value=" #{inspeccion.nombreUnidad}" />
-						</p:column>
-						<p:column styleClass="botonTabla">
-							<p:commandButton title="Desasociar" icon="fa fa-trash" 
-								 actionListener="#{guiaBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
-								<p:confirm header="Desasociar inspección"
-									message="¿Está seguro que desea desasociar esta inspección?"
-									icon="fa fa-warning-sign" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-					<h:outputLabel  />
-					 <h:panelGrid columns="2" >
-						<p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}"
-								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-								queryDelay="1000">
-							</p:autoComplete>
-							<p:commandButton value="Asociar inspección" actionListener="#{guiaBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">
-								<p:resetInput target="infoInspeccion" />
-							</p:commandButton>
-					 </h:panelGrid>
-				</h:panelGrid>
-				<div id="pasos">
-					<my:selectManyCheckboxAll value="#{guiaBean.listaPasosSeleccionados}" >
-				        	<f:selectItems value="#{guiaBean.listaPasos}" var="paso" itemLabel="#{paso.paso}" 
-				        	itemValue="#{paso}"/>
-			    	</my:selectManyCheckboxAll>
-				</div>
-				
-			   
-			    <div class="botonesFormulario">
-					<p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo"/>
-					<p:commandButton value="Guardar" actionListener="#{guiaBean.guardarPersonalizada(inputNombre.value)}" icon="fa fa-fw fa-save"/>
-				</div>
-			    
-			    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-					<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-					<div class="centrarBotonesDialog">
-						<p:button value="Cerrar" outcome="/guias/buscaGuias?faces-redirect=true" />
-					</div>
-				</p:dialog> 
+        <div class="bloqueFormulario">
+            <h:form id="form">
+                <p:messages autoUpdate="true" closable="true" />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputLabel for="inputNombre" value="Nombre (*):" />
+                    <p:inputText id="inputNombre" binding="#{inputNombre}" />
+                    <h:outputLabel for="inputNombre" value="Inspecciones asociadas:" />
+                    <p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{guiaBean.listaInspecciones}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
+                        <p:column headerText="Número de inspección">
+                            <h:outputText value=" #{inspeccion.numero}" />
+                        </p:column>
+                        <p:column headerText="Unidad">
+                            <h:outputText value=" #{inspeccion.nombreUnidad}" />
+                        </p:column>
+                        <p:column styleClass="botonTabla">
+                            <p:commandButton title="Desasociar" icon="fa fa-trash" actionListener="#{guiaBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
+                                <p:confirm header="Desasociar inspección" message="¿Está seguro que desea desasociar esta inspección?" icon="fa fa-warning-sign" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <h:outputLabel />
+                    <h:panelGrid columns="2">
+                        <p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
+                        </p:autoComplete>
+                        <p:commandButton value="Asociar inspección" actionListener="#{guiaBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">
+                            <p:resetInput target="infoInspeccion" />
+                        </p:commandButton>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <div id="pasos">
+                    <my:selectManyCheckboxAll value="#{guiaBean.listaPasosSeleccionados}">
+                        <f:selectItems value="#{guiaBean.listaPasos}" var="paso" itemLabel="#{paso.paso}" itemValue="#{paso}" />
+                    </my:selectManyCheckboxAll>
+                </div>
 
-				<p:confirmDialog global="true">
-					<div class="centrarBotonesDialog">
-						<p:commandButton value="Aceptar" type="button"
-							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-						<p:commandButton value="Cancelar" type="button"
-							styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-					</div>
-				</p:confirmDialog>
-				
-			</h:form>
-		</div>
-		
-	</ui:define>
+
+                <div class="botonesFormulario">
+                    <p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
+                    <p:commandButton value="Guardar" actionListener="#{guiaBean.guardarPersonalizada(inputNombre.value)}" icon="fa fa-fw fa-save" />
+                </div>
+
+                <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                    <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                    <div class="centrarBotonesDialog">
+                        <p:button value="Cerrar" outcome="/guias/buscaGuias?faces-redirect=true" />
+                    </div>
+                </p:dialog>
+
+                <p:confirmDialog global="true">
+                    <div class="centrarBotonesDialog">
+                        <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
+                </p:confirmDialog>
+
+            </h:form>
+        </div>
+
+    </ui:define>
 </ui:composition>

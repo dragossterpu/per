@@ -1,27 +1,23 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
-	<p:graphicImage id="img" value="/images/cabecera_ministerio.png" />
-	<p:graphicImage id="img1" value="/images/cabecera_PROGESIN.png" />
-	<div id="headerDatos">
-			<div>
-				<p:outputLabel>#{request.remoteUser}</p:outputLabel>
-			</div>
-			
-			<h:form>
-				<h:commandLink action="#{userBean.getUserPerfil}" value="Mi perfil"  rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
+    <p:graphicImage id="img" value="/images/cabecera_ministerio.png" />
+    <p:graphicImage id="img1" value="/images/cabecera_PROGESIN.png" />
+    <div id="headerDatos">
+        <div>
+            <p:outputLabel>#{request.remoteUser}</p:outputLabel>
+        </div>
+
+        <h:form>
+            <h:commandLink action="#{userBean.getUserPerfil}" value="Mi perfil" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
 				|
-				<p:link href="/logout" value="Desconectar"/>
-			</h:form>
-	</div>
+				<p:link href="/logout" value="Desconectar" />
+        </h:form>
+    </div>
 
-	<div class="menu">
+    <div class="menu">
         <!-- <p:breadCrumb model="#{navegacionBean.caminoMigas}" id="caminoMigas"/> -->
-		<ul class="menu-lista">
-			<li><p:link outcome="/index" value="MENÚ PRINCIPAL" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/></li>
-		</ul>
-	</div>
+        <ul class="menu-lista">
+            <li><p:link outcome="/index" value="MENÚ PRINCIPAL" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" /></li>
+        </ul>
+    </div>
 </ui:composition>

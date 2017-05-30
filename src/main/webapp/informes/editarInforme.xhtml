@@ -1,14 +1,9 @@
-<ui:composition template="../layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	<ui:define name="content">
-	
-	<h:form id="informe">
+<ui:composition template="../layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
 
-<!-- 
+        <h:form id="informe">
+
+            <!-- 
 			<p:accordionPanel value="#{informeBean.areasInforme}" var="area" activeIndex="-1">
 				<p:tab title="#{area}">
 					<p:accordionPanel value="#{informeBean.mapaAreaSubareas[area]}" var="subarea" activeIndex="-1">
@@ -19,13 +14,13 @@
 				</p:tab>
 			</p:accordionPanel> -->
 
-		<p:textEditor widgetVar="editor1" value="#{informeBean.texto}" height="300" style="margin-bottom:10px"/>
- 
-	    <p:commandButton value="Submit" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
-	    <p:commandButton value="Clear" type="button" onclick="PF('editor1').clear();" icon="ui-icon-close" />
+            <p:textEditor widgetVar="editor1" value="#{informeBean.texto}" height="300" style="margin-bottom:10px" />
 
-		   
-	</h:form>	
-	
-	</ui:define>
+            <p:commandButton value="Submit" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
+            <p:commandButton value="Clear" type="button" onclick="PF('editor1').clear();" icon="ui-icon-close" />
+
+
+        </h:form>
+
+    </ui:define>
 </ui:composition>

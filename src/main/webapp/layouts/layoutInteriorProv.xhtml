@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <f:view>
-	<h:head>
-		<title><ui:insert name="title">Progesin</ui:insert></title>
- 		<link rel="stylesheet" href="#{request.contextPath}/css/bootstrap.min.css" />
-		<h:outputStylesheet library="primefaces-bluesky" name="theme.css" />
-		<link rel="stylesheet" href="#{request.contextPath}/css/progesin.css" />
-        <script src="#{request.contextPath}/js/primefaceslocale.js"/>
-	</h:head>
-	<h:body>
+    <h:head>
+        <title><ui:insert name="title">Progesin</ui:insert></title>
+        <link rel="stylesheet" href="#{request.contextPath}/css/bootstrap.min.css" />
+        <h:outputStylesheet library="primefaces-bluesky" name="theme.css" />
+        <link rel="stylesheet" href="#{request.contextPath}/css/progesin.css" />
+        <script src="#{request.contextPath}/js/primefaceslocale.js" />
+    </h:head>
+    <h:body>
 
-		<div class="container-fluid">
-			<div id="header">
-				<ui:include src="header.xhtml" />
-			</div>
-			<div id="contenidoProv">
-				<ui:insert name="content">Default content</ui:insert>
-			</div>
-		</div>
-	</h:body>
+        <div class="container-fluid">
+            <div id="header">
+                <ui:include src="header.xhtml" />
+            </div>
+            <div id="contenidoProv">
+                <ui:insert name="content">Default content</ui:insert>
+            </div>
+        </div>
+    </h:body>
 </f:view>
 </html>

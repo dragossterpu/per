@@ -1,4 +1,4 @@
-package es.mira.progesin.services;
+package es.mira.progesin.persistence.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,20 +18,6 @@ import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
-import es.mira.progesin.persistence.repositories.IClaseUsuarioRepository;
-import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
-import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
-import es.mira.progesin.persistence.repositories.IEmpleoRepository;
-import es.mira.progesin.persistence.repositories.IEquipoRepository;
-import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
-import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
-import es.mira.progesin.persistence.repositories.IMunicipioRepository;
-import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
-import es.mira.progesin.persistence.repositories.IProvinciaRepository;
-import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
-import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
-import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
-import es.mira.progesin.persistence.repositories.ITipoUnidadRepository;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 
 /**

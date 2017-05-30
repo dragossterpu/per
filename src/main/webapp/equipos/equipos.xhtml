@@ -1,203 +1,135 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <f:metadata>
         <f:viewParam name="vieneDe" value="#{equiposBean.vieneDe}" />
     </f:metadata>
-	<ui:define name="content">
+    <ui:define name="content">
 
-		<h3>Búsqueda de equipos</h3>
+        <h3>Búsqueda de equipos</h3>
 
-		<h:form>
-			<p:remoteCommand name="onload"
-				action="#{equiposBean.getFormularioBusquedaEquipos}"
-				update="busquedaEquipos" autoRun="true" />
-		</h:form>
+        <h:form>
+            <p:remoteCommand name="onload" action="#{equiposBean.getFormularioBusquedaEquipos}" update="busquedaEquipos" autoRun="true" />
+        </h:form>
 
-		<h:form id="busquedaEquipos">
+        <h:form id="busquedaEquipos">
 
-			<div class="bloqueFormulario">
-				<div class="columnaIzdaFormulario">
-					<h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
-					<p:inputText id="nombreJefe"
-						value="#{equiposBean.equipoBusqueda.nombreJefe}" />
+            <div class="bloqueFormulario">
+                <div class="columnaIzdaFormulario">
+                    <h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
+                    <p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" />
 
-					<h:outputLabel for="nombreMiembro"
-						value="Nombre de componente de equipo:" />
-					<p:inputText id="nombreMiembro"
-						value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
+                    <h:outputLabel for="nombreMiembro" value="Nombre de componente de equipo:" />
+                    <p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
 
-					<h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
-					<p:inputText id="nombreEquipo"
-						value="#{equiposBean.equipoBusqueda.nombreEquipo}" />
+                    <h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
+                    <p:inputText id="nombreEquipo" value="#{equiposBean.equipoBusqueda.nombreEquipo}" />
 
-					<h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección:" />
-					<p:selectOneMenu id="tipoEquipo"
-						value="#{equiposBean.equipoBusqueda.tipoEquipo}" effect="fold"
-						width="50" converter="#{selectConverter}">
-						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
-						<f:selectItems value="#{equiposBean.tiposEquipo}"
-							var="tipoEquipoSelect"
-							itemLabel="#{tipoEquipoSelect.descripcion}"
-							itemValue="#{tipoEquipoSelect}" />
-					</p:selectOneMenu>
+                    <h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección:" />
+                    <p:selectOneMenu id="tipoEquipo" value="#{equiposBean.equipoBusqueda.tipoEquipo}" effect="fold" width="50" converter="#{selectConverter}">
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                        <f:selectItems value="#{equiposBean.tiposEquipo}" var="tipoEquipoSelect" itemLabel="#{tipoEquipoSelect.descripcion}" itemValue="#{tipoEquipoSelect}" />
+                    </p:selectOneMenu>
 
-				</div>
+                </div>
 
-				<div class="columnaDchaFormulario">
-					<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-					<p:calendar value="#{equiposBean.equipoBusqueda.fechaDesde}"
-						id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}"/>
+                <div class="columnaDchaFormulario">
+                    <h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+                    <p:calendar value="#{equiposBean.equipoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
 
-					<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-					<p:calendar value="#{equiposBean.equipoBusqueda.fechaHasta}"
-						id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}"/>
-					<h:outputLabel for="estado" value="Estado:" />
-					<p:importEnum
-						type="es.mira.progesin.persistence.entities.enums.EstadoEnum"
-						var="estados" allSuffix="ALL_ENUM_VALUES" />
-					<p:selectOneMenu value="#{equiposBean.equipoBusqueda.estado}"
-						id="estado" effect="fold">
-						<f:selectItem itemLabel="Seleccione uno" itemValue="" />
-						<f:selectItems value="#{estados.ALL_ENUM_VALUES}"
-							var="estadoEquipo" itemLabel="#{estadoEquipo}"
-							itemValue="#{estadoEquipo}" />
-					</p:selectOneMenu>
-				</div>
-			</div>
-			<div class="botonesFormulario">
-				<p:commandButton actionListener="#{equiposBean.buscarEquipo}"
-					value="Buscar" update="panelEquipos" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-				<h:commandLink title="Limpiar"
-					action="#{equiposBean.limpiarBusqueda}" update="busquedaEquipos"
-					styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
-					<span class="ui-CommandLink-texto">Limpiar</span>
-				</h:commandLink>
-				<h:commandLink title="Nuevo equipo"
-					action="#{equiposBean.getFormAltaEquipo}"
-					rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"
-					styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
-					<span class="ui-CommandLink-texto">Nuevo equipo</span>
-				</h:commandLink>
-			</div>
-			
-			<p:separator styleClass="separator ui-state-disabled" />
+                    <h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+                    <p:calendar value="#{equiposBean.equipoBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
+                    <h:outputLabel for="estado" value="Estado:" />
+                    <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados" allSuffix="ALL_ENUM_VALUES" />
+                    <p:selectOneMenu value="#{equiposBean.equipoBusqueda.estado}" id="estado" effect="fold">
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                        <f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoEquipo" itemLabel="#{estadoEquipo}" itemValue="#{estadoEquipo}" />
+                    </p:selectOneMenu>
+                </div>
+            </div>
+            <div class="botonesFormulario">
+                <p:commandButton actionListener="#{equiposBean.buscarEquipo}" value="Buscar" update="panelEquipos" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+                <h:commandLink title="Limpiar" action="#{equiposBean.limpiarBusqueda}" update="busquedaEquipos" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
+                    <span class="ui-CommandLink-texto">Limpiar</span>
+                </h:commandLink>
+                <h:commandLink title="Nuevo equipo" action="#{equiposBean.getFormAltaEquipo}" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+                    <span class="ui-CommandLink-texto">Nuevo equipo</span>
+                </h:commandLink>
+            </div>
 
-			<p:outputPanel layout="block" id="panelEquipos">
-				<p:outputPanel styleClass="mensajeSinResultados" rendered="#{equiposBean.model.rowCount eq 0}">
+            <p:separator styleClass="separator ui-state-disabled" />
+
+            <p:outputPanel layout="block" id="panelEquipos">
+                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{equiposBean.model.rowCount eq 0}">
 					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
-				<p:outputPanel rendered="#{equiposBean.model.rowCount ne 0}">
-					<h:commandLink>
-						<p:graphicImage value="/images/xls.png" />
-						<p:dataExporter type="xls" target="tablaEquipos"
-							fileName="listaEquipos" pageOnly="true" />
-					</h:commandLink>
-					<h:commandLink>
-						<p:graphicImage value="/images/pdf.png" />
-						<p:dataExporter type="pdf" target="tablaEquipos"
-							fileName="listaEquipos" pageOnly="true" />
-					</h:commandLink>
-					<h:commandLink>
-						<p:graphicImage value="/images/csv.png" />
-						<p:dataExporter type="csv" target="tablaEquipos"
-							fileName="listaEquipos" pageOnly="true" />
-					</h:commandLink>
-				</p:outputPanel>
-				<p:dataTable var="equipo"
-							value="#{equiposBean.model}" 
-							rowsPerPageTemplate="5,10,15,20"
-						 	rows="20"
-						 	lazy="true"
-						 	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-							id="tablaEquipos" draggableColumns="true" paginator="true"
-							resizableColumns="true"
-							rendered="#{equiposBean.model.rowCount ne 0}"
-							rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
-					<f:facet name="header">
+                <p:outputPanel rendered="#{equiposBean.model.rowCount ne 0}">
+                    <h:commandLink>
+                        <p:graphicImage value="/images/xls.png" />
+                        <p:dataExporter type="xls" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/csv.png" />
+                        <p:dataExporter type="csv" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
+                    </h:commandLink>
+                </p:outputPanel>
+                <p:dataTable var="equipo" value="#{equiposBean.model}" rowsPerPageTemplate="5,10,15,20" rows="20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaEquipos" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{equiposBean.model.rowCount ne 0}" rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
+                    <f:facet name="header">
 						Equipos	
 					</f:facet>
-					
-					<p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}"
-						width="70" visible="#{equiposBean.columnasVisibles[0]}"
-						exportable="#{equiposBean.columnasVisibles[0]}">
-						<h:outputText value="#{equipo.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-						</h:outputText>
-					</p:column>
 
-					<p:column headerText="Nombre equipo"
-						sortBy="#{equipo.nombreEquipo}" width="70"
-						visible="#{equiposBean.columnasVisibles[1]}"
-						exportable="#{equiposBean.columnasVisibles[1]}">
-						<h:outputText value="#{equipo.nombreEquipo}" />
-					</p:column>
+                    <p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}" width="70" visible="#{equiposBean.columnasVisibles[0]}" exportable="#{equiposBean.columnasVisibles[0]}">
+                        <h:outputText value="#{equipo.fechaAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
 
-					<p:column headerText="tipo equipo"
-						sortBy="#{equipo.tipoEquipo.codigo}" width="70"
-						visible="#{equiposBean.columnasVisibles[2]}"
-						exportable="#{equiposBean.columnasVisibles[2]}">
-						<h:outputText value="#{equipo.tipoEquipo.codigo}" />
-					</p:column>
+                    <p:column headerText="Nombre equipo" sortBy="#{equipo.nombreEquipo}" width="70" visible="#{equiposBean.columnasVisibles[1]}" exportable="#{equiposBean.columnasVisibles[1]}">
+                        <h:outputText value="#{equipo.nombreEquipo}" />
+                    </p:column>
 
-					<p:column headerText="Usuario jefe de equipo"
-						sortBy="#{equipo.jefeEquipo}" width="90"
-						visible="#{equiposBean.columnasVisibles[3]}"
-						exportable="#{equiposBean.columnasVisibles[3]}">
-						<h:outputText value="#{equipo.jefeEquipo}" />
-					</p:column>
+                    <p:column headerText="tipo equipo" sortBy="#{equipo.tipoEquipo.codigo}" width="70" visible="#{equiposBean.columnasVisibles[2]}" exportable="#{equiposBean.columnasVisibles[2]}">
+                        <h:outputText value="#{equipo.tipoEquipo.codigo}" />
+                    </p:column>
 
-					<p:column headerText="Nombre jefe de equipo"
-						sortBy="#{equipo.nombreJefe}" width="90"
-						visible="#{equiposBean.columnasVisibles[4]}"
-						exportable="#{equiposBean.columnasVisibles[4]}">
-						<h:outputText value="#{equipo.nombreJefe}" />
-					</p:column>
+                    <p:column headerText="Usuario jefe de equipo" sortBy="#{equipo.jefeEquipo}" width="90" visible="#{equiposBean.columnasVisibles[3]}" exportable="#{equiposBean.columnasVisibles[3]}">
+                        <h:outputText value="#{equipo.jefeEquipo}" />
+                    </p:column>
 
-					<p:column width="20" exportable="false">
-						<h:commandLink title="Modificar Equipo" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"
-					 		action="#{equiposBean.getFormModificarEquipo(equipo)}" 
-					 		rendered="#{empty equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}"/>
-						<h:commandLink title="Ver Equipo" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono"
-					 		action="#{equiposBean.getFormModificarEquipo(equipo)}" 
-							rendered="#{not empty equipo.fechaBaja or p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
-					</p:column>
+                    <p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}" width="90" visible="#{equiposBean.columnasVisibles[4]}" exportable="#{equiposBean.columnasVisibles[4]}">
+                        <h:outputText value="#{equipo.nombreJefe}" />
+                    </p:column>
 
-					<p:column width="20" exportable="false"
-						rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
-						<p:commandButton title="Eliminar" icon="fa fa-trash"
-							actionListener="#{equiposBean.eliminarEquipo(equipo)}"
-							update=":busquedaEquipos:panelEquipos tablaEquipos "
-							disabled="#{not empty equipo.fechaBaja}">
-							<p:confirm header="Eliminar equipo"
-								message="¿Está seguro que desea eliminar este equipo?"
-								icon="fa fa-warning-sign" />
-						</p:commandButton>
-					</p:column>
+                    <p:column width="20" exportable="false">
+                        <h:commandLink title="Modificar Equipo" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{equiposBean.getFormModificarEquipo(equipo)}" rendered="#{empty equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
+                        <h:commandLink title="Ver Equipo" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{equiposBean.getFormModificarEquipo(equipo)}" rendered="#{not empty equipo.fechaBaja or p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
+                    </p:column>
 
-					<f:facet name="footer">
+                    <p:column width="20" exportable="false" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
+                        <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}" update=":busquedaEquipos:panelEquipos tablaEquipos " disabled="#{not empty equipo.fechaBaja}">
+                            <p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="fa fa-warning-sign" />
+                        </p:commandButton>
+                    </p:column>
+
+                    <f:facet name="footer">
 	       				 Resultado de la búsqueda: #{equiposBean.model.rowCount} equipos.
 	    			</f:facet>
 
-				</p:dataTable>
-                
-                <p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
-                
-			</p:outputPanel>
-			
-			<p:confirmDialog global="true">
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Sí" type="button"
-						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="No" type="button"
-						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-				</div>
-			</p:confirmDialog>
-		</h:form>
+                </p:dataTable>
 
-	</ui:define>
+                <p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
+
+            </p:outputPanel>
+
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
 </ui:composition>

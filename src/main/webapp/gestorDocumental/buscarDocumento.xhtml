@@ -1,165 +1,139 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-		
-		<ui:define name="content">
-			<h3>Búsqueda documentos</h3>
-			<f:metadata>
-			    <f:viewParam name="vieneDe" value="#{gestorDocumentalBean.vieneDe}" />
-			</f:metadata>
-			
-			<h:form>
-		    	<p:remoteCommand name="onload" action="#{gestorDocumentalBean.resetBusqueda}" autoRun="true" update=":form"/>
-			</h:form>
-			
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
-				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-				<div class="centrarBotonesDialog">
-					<p:button value="Cerrar" outcome="/gestorDocumental/buscarDocumento" />
-				</div>
-			</p:dialog>
-				<h:form id="form">
-				
-					<div class="bloqueFormulario">
-						<div class="columnaIzdaFormulario">
-							<h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
-							<p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documentoBusqueda.nombre}" />
-							<h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
-							<p:selectOneMenu
-								value="#{gestorDocumentalBean.documentoBusqueda.tipoDocumento}"
-								id="tipoDocumentoSelect" converter="#{selectConverter}">
-								<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-									<f:selectItems value="#{applicationBean.listaTipos}" var="tipo"
-										itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
-							</p:selectOneMenu>
-							<h:outputLabel for="autoInspeccion" value="Nombre Unidad - Número Inspección:" />
-							<p:autoComplete id="autoInspeccion" value="#{gestorDocumentalBean.documentoBusqueda.inspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}"
-								var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-								 queryDelay="1000">
-							</p:autoComplete>
-							
-							<h:outputLabel for="materiaIndexada" value="Materia indexada:" />
-							<h:outputText value="Para buscar por más de un término sepárelos por comas" styleClass="aclaraciones"/>
-							<p:inputText id="materiaIndexada"  value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}"/>
-							
-						</div>
-						<div class="columnaDchaFormulario">
-							<h:outputLabel for="descripcion" value="Descripción:" />
-							<p:inputText id="descripcion"  value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}"/>
-						
-							<h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
-							<p:calendar  id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}"/>
-			
-							<h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
-							<p:calendar  id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}"/>	
-							
-						</div>	
-					</div>
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-					<div class="botonesFormulario">
-						<p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar"  icon="fa fa-search"  oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-						<p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar"  icon="fa fa-eraser" />
-			            <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" icon="fa fa-upload"/>
-					</div>	
-					
-					<p:outputPanel layout="block" id="panelDocumentos" >
-						<p:outputPanel styleClass="mensajeSinResultados" rendered="#{gestorDocumentalBean.model.rowCount eq 0}">
+    <ui:define name="content">
+        <h3>Búsqueda documentos</h3>
+        <f:metadata>
+            <f:viewParam name="vieneDe" value="#{gestorDocumentalBean.vieneDe}" />
+        </f:metadata>
+
+        <h:form>
+            <p:remoteCommand name="onload" action="#{gestorDocumentalBean.resetBusqueda}" autoRun="true" update=":form" />
+        </h:form>
+
+        <p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
+            <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+            <div class="centrarBotonesDialog">
+                <p:button value="Cerrar" outcome="/gestorDocumental/buscarDocumento" />
+            </div>
+        </p:dialog>
+        <h:form id="form">
+
+            <div class="bloqueFormulario">
+                <div class="columnaIzdaFormulario">
+                    <h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
+                    <p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documentoBusqueda.nombre}" />
+                    <h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
+                    <p:selectOneMenu value="#{gestorDocumentalBean.documentoBusqueda.tipoDocumento}" id="tipoDocumentoSelect" converter="#{selectConverter}">
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                        <f:selectItems value="#{applicationBean.listaTipos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel for="autoInspeccion" value="Nombre Unidad - Número Inspección:" />
+                    <p:autoComplete id="autoInspeccion" value="#{gestorDocumentalBean.documentoBusqueda.inspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
+                    </p:autoComplete>
+
+                    <h:outputLabel for="materiaIndexada" value="Materia indexada:" />
+                    <h:outputText value="Para buscar por más de un término sepárelos por comas" styleClass="aclaraciones" />
+                    <p:inputText id="materiaIndexada" value="#{gestorDocumentalBean.documentoBusqueda.materiaIndexada}" converter="#{trimConverter}" />
+
+                </div>
+                <div class="columnaDchaFormulario">
+                    <h:outputLabel for="descripcion" value="Descripción:" />
+                    <p:inputText id="descripcion" value="#{gestorDocumentalBean.documentoBusqueda.descripcion}" converter="#{trimConverter}" />
+
+                    <h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+                    <p:calendar id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaDesde}" />
+
+                    <h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+                    <p:calendar id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{gestorDocumentalBean.documentoBusqueda.fechaHasta}" />
+
+                </div>
+            </div>
+
+            <div class="botonesFormulario">
+                <p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+                <p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar" icon="fa fa-eraser" />
+                <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" icon="fa fa-upload" />
+            </div>
+
+            <p:outputPanel layout="block" id="panelDocumentos">
+                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{gestorDocumentalBean.model.rowCount eq 0}">
 							No existe ningún resultado que cumpla los parámetros de su búsqueda.
 						</p:outputPanel>
-						<p:outputPanel rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
-			 				<h:commandLink>
-				               <p:graphicImage  value="/images/xls.png" />
-				               <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos"/>
-				            </h:commandLink>
-				            <h:commandLink>
-				               <p:graphicImage  value="/images/pdf.png" />
-				               <p:dataExporter type="pdf" target="tablaDocumentos" fileName="Documentos"/>
-				            </h:commandLink>
-				            <h:commandLink>
-				               <p:graphicImage  value="/images/csv.png" />
-				               <p:dataExporter type="csv" target="tablaDocumentos" fileName="Documentos"/>
-				            </h:commandLink>
-				            <h:commandLink>
-	                            <p:graphicImage  value="/images/imprimir.jpg" />
-	                            <p:printer target="tablaDocumentos" />
-	                        </h:commandLink>
-				            
-			            </p:outputPanel>
-						<p:dataTable id="tablaDocumentos" var="documento"
-							value="#{gestorDocumentalBean.model}"
-							emptyMessage="No se han encontrado resultados"
-							lazy="true"
-							paginator="true"
-							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							rowsPerPageTemplate="5,10,15,20"
-							rows="20"
-							rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
-							
-							 <f:facet name="header">
+                <p:outputPanel rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
+                    <h:commandLink>
+                        <p:graphicImage value="/images/xls.png" />
+                        <p:dataExporter type="xls" target="tablaDocumentos" fileName="Documentos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaDocumentos" fileName="Documentos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/csv.png" />
+                        <p:dataExporter type="csv" target="tablaDocumentos" fileName="Documentos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaDocumentos" />
+                    </h:commandLink>
+
+                </p:outputPanel>
+                <p:dataTable id="tablaDocumentos" var="documento" value="#{gestorDocumentalBean.model}" emptyMessage="No se han encontrado resultados" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15,20" rows="20" rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
+
+                    <f:facet name="header">
 								Documentos
-								 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
-			        			 <p:columnToggler datasource="tablaDocumentos" trigger="toggler">
-			        			 	  <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
-			        			 </p:columnToggler>
-							</f:facet>
-							 
-							
-							<p:column headerText="Fecha" sortBy="#{documento.fechaAlta}"  style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
-								<h:outputText value="#{documento.fechaAlta}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
-								</h:outputText>
-							</p:column>
-							
-							<p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
-								<h:outputText value="#{documento.nombre}" />
-							</p:column>
-							<p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}"  visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
-								<h:outputText value="#{documento.tipoDocumento.nombre}" />	
-							</p:column>
-							<p:column headerText="Inspeccion"   width="100"  visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
-								<h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}"/>
+								 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                        <p:columnToggler datasource="tablaDocumentos" trigger="toggler">
+                            <p:ajax event="toggle" listener="#{gestorDocumentalBean.onToggle}" />
+                        </p:columnToggler>
+                    </f:facet>
 
-							</p:column>
-							
-							<p:column styleClass="botonTabla" exportable="false" toggleable="false"  >
-								<p:commandButton title="Editar" icon="fa fa-fw fa-edit"  action="#{gestorDocumentalBean.editarDocumento(documento)}" rendered="#{gestorDocumentalBean.mapaEdicion[documento.id]}"/>
-									
-									
-							</p:column>
-							<p:column styleClass="botonTabla" exportable="false" toggleable="false">
-								<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{gestorDocumentalBean.descargarFichero(documento)}" title="Descargar documento">
-									<p:fileDownload value="#{gestorDocumentalBean.file}" />
-								</p:commandButton>
-							</p:column>
-							
-							<p:column styleClass="botonTabla" exportable="false" toggleable="false">
-								<p:commandButton title="Eliminar" icon="fa fa-trash"
-									actionListener="#{gestorDocumentalBean.eliminarDocumento(documento)}"
-									update=":form:panelDocumentos" 
-									rendered="#{gestorDocumentalBean.mapaEdicion[documento.id]}">
-									<p:confirm header="Eliminar documento"
-										message="¿Está seguro que desea eliminar este documento?"
-										icon="fa fa-warning-sign" />
-								</p:commandButton>
-							</p:column>
-						</p:dataTable>
-					</p:outputPanel>
-					<p:confirmDialog global="true">
-						<div class="centrarBotonesDialog">
-							<p:commandButton value="Aceptar" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-							<p:commandButton value="Cancelar" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-						</div>
-					</p:confirmDialog>
-					
 
-					<p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
-			</h:form>
-					
-		</ui:define>
-	</ui:composition>
+                    <p:column headerText="Fecha" sortBy="#{documento.fechaAlta}" style="width:70px" visible="#{gestorDocumentalBean.list[0]}" exportable="#{gestorDocumentalBean.list[0]}">
+                        <h:outputText value="#{documento.fechaAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Nombre" sortBy="#{documento.nombre}" visible="#{gestorDocumentalBean.list[1]}" exportable="#{gestorDocumentalBean.list[1]}">
+                        <h:outputText value="#{documento.nombre}" />
+                    </p:column>
+                    <p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}" visible="#{gestorDocumentalBean.list[2]}" exportable="#{gestorDocumentalBean.list[2]}">
+                        <h:outputText value="#{documento.tipoDocumento.nombre}" />
+                    </p:column>
+                    <p:column headerText="Inspeccion" width="100" visible="#{gestorDocumentalBean.list[3]}" exportable="#{gestorDocumentalBean.list[3]}">
+                        <h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}" />
+
+                    </p:column>
+
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <p:commandButton title="Editar" icon="fa fa-fw fa-edit" action="#{gestorDocumentalBean.editarDocumento(documento)}" rendered="#{gestorDocumentalBean.mapaEdicion[documento.id]}" />
+
+
+                    </p:column>
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{gestorDocumentalBean.descargarFichero(documento)}" title="Descargar documento">
+                            <p:fileDownload value="#{gestorDocumentalBean.file}" />
+                        </p:commandButton>
+                    </p:column>
+
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{gestorDocumentalBean.eliminarDocumento(documento)}" update=":form:panelDocumentos" rendered="#{gestorDocumentalBean.mapaEdicion[documento.id]}">
+                            <p:confirm header="Eliminar documento" message="¿Está seguro que desea eliminar este documento?" icon="fa fa-warning-sign" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
+
+
+            <p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

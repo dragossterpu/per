@@ -1,142 +1,112 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	<ui:define name="content">
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
 
-	<ui:param name="esJefeInspeccionesApoyo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,ADMIN')}"/>
-	<ui:param name="yaValidado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}"/>
-    <ui:param name="yaFinalizado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion}"/>
-	<ui:param name="yaAnulado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaBaja}"/>
-	
-	<h3>Modificar solicitud de documentación</h3>
-	<div class="aclaraciones">
-		Los campos marcados con (*) son obligatorios
-	</div>
-	
-	<h:form id="formAlta">
-	
-		<div class="bloqueFormulario">
-			<h4>Datos de la inspección</h4>
-			<div class="columnaIzdaFormulario">
-				<h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
-				<p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}"
-                    var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes"
-                    required="true" requiredMessage="Introduzca la unidad o el número de la inspección" queryDelay="1000"
-                    disabled="#{yaValidado or not esJefeInspeccionesApoyo}">
-                    <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
-                </p:autoComplete>
-				<p:messages for="infoInspeccion" autoUpdate="true" closable="true"/>
-                   
-				<h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
-				<p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" 
-					disabled="true"/>
-																				
-				<h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
-				<p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito.descripcion}" 
-					disabled="true"/>
-			</div>
-			<div class="columnaDchaFormulario">
-						
-				<h:outputLabel for="cuatrimestreInspeccion" value="Cuatrimestre inspección:" />
-				<p:inputText id="cuatrimestreInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion}" 
-					disabled="true"/>
-				
-				<h:outputLabel for="anioInspeccion" value="Año inspección:" />
-				<p:inputText id="anioInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}" 
-					disabled="true"/>
-			</div>
-		</div>
-		<div class="bloqueFormulario">
-				<div class="columnaIzdaFormulario">
-					
-					<h4>Datos solicitud</h4>
-					<h:outputLabel for="asunto" value="Asunto (*):" />
-					<p:inputText id="asunto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}"/>
-					<p:messages for="asunto" autoUpdate="true" closable="true"/>
-									
-					<h:outputLabel for="destinatario" value="Destinatario (*):" />
-					<p:inputText id="destinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" converter="#{trimConverter}"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}"/>
-					<p:messages for="destinatario" autoUpdate="true" closable="true"/>
-								
-					<h:outputLabel for="correoDestinatario" value="Correo destinatario (*):" />
-					<p:inputText id="correoDestinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" converter="#{trimConverter}"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}">
-						<f:attribute name="actualCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" />
-						<f:validator binding="#{correoDestinatarioValidator}" />
-					</p:inputText>
-					<p:messages for="correoDestinatario" autoUpdate="true" closable="true"/>
-			
-					<h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
-					<p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación"
-						disabled="#{yaAnulado or yaFinalizado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
-						<p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')"/>
-					</p:calendar>
-					<p:messages for="fechaLimiteEnvio" autoUpdate="true" closable="true"/>
-										
-					<h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):" />
-					<p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"/>
-					<p:messages for="fechaLimiteCumplimentar" autoUpdate="true" closable="true"/>
+        <ui:param name="esJefeInspeccionesApoyo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,ADMIN')}" />
+        <ui:param name="yaValidado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaValidApoyo}" />
+        <ui:param name="yaFinalizado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion}" />
+        <ui:param name="yaAnulado" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaBaja}" />
 
-					<h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
-					<p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" 
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}"/>
-						
-				</div>
+        <h3>Modificar solicitud de documentación</h3>
+        <div class="aclaraciones">Los campos marcados con (*) son obligatorios</div>
 
-				<div class="columnaDchaFormulario">
-					<h4>Datos persona de apoyo</h4>
-					
-					<h:outputLabel for="apoyoPuesto" value="Puesto (*):" />
-					<p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}"
-						required="true" requiredMessage="Es obligatorio un puesto persona apoyo"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
-					<p:messages for="apoyoPuesto" autoUpdate="true" closable="true"/>
-										
-					<h:outputLabel for="apoyoNombre" value="Nombre (*):" />
-					<p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}"
-						required="true" requiredMessage="Es obligatorio un nombre persona apoyo" converter="#{trimConverter}"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}"/>
-					<p:messages for="apoyoNombre" autoUpdate="true" closable="true"/>
-										
-					<h:outputLabel for="apoyoTelefono" value="Teléfono (*):" />
-					<p:inputText id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}"
-						required="true" requiredMessage="Es obligatorio un teléfono persona apoyo" converter="#{trimConverter}"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
-					<p:messages for="apoyoTelefono" autoUpdate="true" closable="true"/>
-										
-					<h:outputLabel for="apoyoCorreo" value=" Correo (*):" />
-					<p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}"
-						required="true" requiredMessage="Es obligatorio un correo persona apoyo" converter="#{trimConverter}"
-						disabled="#{yaValidado or not esJefeInspeccionesApoyo}"
-						validatorMessage="Formato de correo incorrecto o dominio no válido.">
-						<f:validateRegex
-							pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
-					</p:inputText>
-					<p:messages for="apoyoCorreo" autoUpdate="true" closable="true"/>
-																		
-				</div>
-		</div>
+        <h:form id="formAlta">
 
-		
-		<div class="botonesFormulario">
-			<p:commandButton actionListener="#{solicitudDocPreviaBean.modificarSolicitud}" value="Guardar cambios" icon="fa fa-fw fa-save" rendered="#{not yaAnulado and not yaFinalizado and esJefeInspeccionesApoyo}"/>
-			<p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo"/>
-		</div>
-		
-		<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-			<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-			<div class="centrarBotonesDialog">
-				<p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" />
-			</div>
-		</p:dialog>
-		
-	</h:form>
-	
-	</ui:define>
+            <div class="bloqueFormulario">
+                <h4>Datos de la inspección</h4>
+                <div class="columnaIzdaFormulario">
+                    <h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
+                    <p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" queryDelay="1000" disabled="#{yaValidado or not esJefeInspeccionesApoyo}">
+                        <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
+                    </p:autoComplete>
+                    <p:messages for="infoInspeccion" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
+                    <p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true" />
+
+                    <h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
+                    <p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito.descripcion}" disabled="true" />
+                </div>
+                <div class="columnaDchaFormulario">
+
+                    <h:outputLabel for="cuatrimestreInspeccion" value="Cuatrimestre inspección:" />
+                    <p:inputText id="cuatrimestreInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion}" disabled="true" />
+
+                    <h:outputLabel for="anioInspeccion" value="Año inspección:" />
+                    <p:inputText id="anioInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}" disabled="true" />
+                </div>
+            </div>
+            <div class="bloqueFormulario">
+                <div class="columnaIzdaFormulario">
+
+                    <h4>Datos solicitud</h4>
+                    <h:outputLabel for="asunto" value="Asunto (*):" />
+                    <p:inputText id="asunto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+                    <p:messages for="asunto" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="destinatario" value="Destinatario (*):" />
+                    <p:inputText id="destinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+                    <p:messages for="destinatario" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="correoDestinatario" value="Correo destinatario (*):" />
+                    <p:inputText id="correoDestinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}">
+                        <f:attribute name="actualCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" />
+                        <f:validator binding="#{correoDestinatarioValidator}" />
+                    </p:inputText>
+                    <p:messages for="correoDestinatario" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
+                    <p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" disabled="#{yaAnulado or yaFinalizado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
+                        <p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')" />
+                    </p:calendar>
+                    <p:messages for="fechaLimiteEnvio" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):" />
+                    <p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" />
+                    <p:messages for="fechaLimiteCumplimentar" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
+                    <p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+
+                </div>
+
+                <div class="columnaDchaFormulario">
+                    <h4>Datos persona de apoyo</h4>
+
+                    <h:outputLabel for="apoyoPuesto" value="Puesto (*):" />
+                    <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" required="true" requiredMessage="Es obligatorio un puesto persona apoyo" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+                    <p:messages for="apoyoPuesto" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="apoyoNombre" value="Nombre (*):" />
+                    <p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}" required="true" requiredMessage="Es obligatorio un nombre persona apoyo" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+                    <p:messages for="apoyoNombre" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="apoyoTelefono" value="Teléfono (*):" />
+                    <p:inputText id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" required="true" requiredMessage="Es obligatorio un teléfono persona apoyo" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+                    <p:messages for="apoyoTelefono" autoUpdate="true" closable="true" />
+
+                    <h:outputLabel for="apoyoCorreo" value=" Correo (*):" />
+                    <p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}" required="true" requiredMessage="Es obligatorio un correo persona apoyo" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" validatorMessage="Formato de correo incorrecto o dominio no válido.">
+                        <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
+                    </p:inputText>
+                    <p:messages for="apoyoCorreo" autoUpdate="true" closable="true" />
+
+                </div>
+            </div>
+
+
+            <div class="botonesFormulario">
+                <p:commandButton actionListener="#{solicitudDocPreviaBean.modificarSolicitud}" value="Guardar cambios" icon="fa fa-fw fa-save" rendered="#{not yaAnulado and not yaFinalizado and esJefeInspeccionesApoyo}" />
+                <p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo" />
+            </div>
+
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" />
+                </div>
+            </p:dialog>
+
+        </h:form>
+
+    </ui:define>
 </ui:composition>

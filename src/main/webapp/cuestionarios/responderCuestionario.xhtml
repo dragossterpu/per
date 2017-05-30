@@ -1,211 +1,163 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-	<ui:define name="content">
-	
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="content">
+
         <ui:param name="yaEnviado" value="#{not empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}" />
-		<ui:param name="yaCumplimentado" value="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion}" />
+        <ui:param name="yaCumplimentado" value="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion}" />
         <ui:param name="esUserProvPrincipal" value="#{request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}" />
-		
-		<h:form id="form">
-		
-			<div class="tituloCuestionario">
-				<h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}"/> 
-				<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado)}"
-					rendered="#{not yaEnviado}" title="Descargar documento word del cuestionario">
-				   <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
-				   <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
-				</h:commandLink>
-				<h:commandLink  actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" 
-					rendered="#{yaCumplimentado}" title="Descargar documento PDF del cuestionario cumplimentado">
-	               <p:graphicImage value="/images/pdf.png" styleClass="pdfImg"/>
-	               <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
-	            </h:commandLink>
-			</div>
-			<div style="clear:both;"/>				
-			
+
+        <h:form id="form">
+
+            <div class="tituloCuestionario">
+                <h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
+                <h:commandLink actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(responderCuestionarioBean.visualizarCuestionario.cuestionarioPersonalizado)}" rendered="#{not yaEnviado}" title="Descargar documento word del cuestionario">
+                    <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
+                    <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
+                </h:commandLink>
+                <h:commandLink actionListener="#{responderCuestionarioBean.visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado)}" rendered="#{yaCumplimentado}" title="Descargar documento PDF del cuestionario cumplimentado">
+                    <p:graphicImage value="/images/pdf.png" styleClass="pdfImg" />
+                    <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
+                </h:commandLink>
+            </div>
+            <div style="clear: both;" />
+
             <p:outputPanel rendered="#{yaEnviado}">
                 <p>
-            	    <span class="infoInspeccionFechaLimite">Número de inspección: #{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.numero}</span>
-                    <span class="infoInspeccionFechaLimite">Fecha límite de respuesta: <h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.fechaLimiteCuestionario}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/></h:outputText></span>
+                    <span class="infoInspeccionFechaLimite">Número de inspección: #{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.inspeccion.numero}</span> <span class="infoInspeccionFechaLimite">Fecha límite de respuesta: <h:outputText value="#{responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado.fechaLimiteCuestionario}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText></span>
                 </p>
             </p:outputPanel>
-            
-			<ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario">
-			<p:accordionPanel activeIndex="-1">
-				
-				<p:tab title="#{areaCuestionario.area}">
-					<ui:repeat value="#{responderCuestionarioBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
-						
-						<div class="prevPregCuest">
-						
-							<h:outputText value="#{preguntaArea.pregunta}" styleClass="preguntaCuestionario" escape="false"/>
-							
-							<div class="respuestaCuestionario">
-							
-								<p:inputText id="input" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
-											 rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" 
-											 size="10" maxlength="1000"
-											 required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"
-                                             disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}"/>
-								<p:messages for="input" autoUpdate="true"  closable="true"/>
-								
-								<p:inputTextarea id="textarea" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
-								   				rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000"
-												counter="contador" counterTemplate="Quedan {0} caracteres."
-								   				required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"
-                                                disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}"/>
-								<p:outputLabel id="contador"/>
-								<p:messages for="textarea" autoUpdate="true"  closable="true"/>
-								 				
-								<p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'RADIO')}" 
-											value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
-											required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo"
-                                            disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
-									<f:selectItems value="#{responderCuestionarioBean.visualizarCuestionario.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}"
-										var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
-								</p:selectOneRadio>
-								<p:messages for="radio" autoUpdate="true"  closable="true"/>
-								
-								<p:outputPanel id="panelAdjuntos" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
-									<p:inputTextarea id="adjunto" 
-											 rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTOINPUT'}"
-											 value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" 
-											 size="10" maxlength="2000"
-											 counter="contadorAdjuntoInput" counterTemplate="Quedan {0} caracteres."
-											 required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"
-                                             disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}"/>
-									<p:outputLabel id="contadorAdjuntoInput"/>		 
-								    <p:messages for="adjunto" autoUpdate="true"  closable="true"/>
-								    
-								    <p:selectOneRadio id="radioAdjunto" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTORADIOSINO'}" 
-											value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}"
-											required="#{param['form:enviar']!=null}" requiredMessage="Este campo no puede estar vacío"
-                                            disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
-											<f:selectItem itemLabel="Sí" itemValue="Sí" />
-        									<f:selectItem itemLabel="No" itemValue="No" />
-									</p:selectOneRadio>
-								<p:messages for="radioAdjunto" autoUpdate="true"  closable="true"/>
-								    
-								    <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" mode="advanced" dragDropSupport="false"
-								    	label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos"
-								    	sizelimit="20971520" multiple="true" 
-                                        disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
-								         <f:attribute name="pregunta" value="#{preguntaArea}" />
-									</p:fileUpload>    
-									
-									<p:dataTable id ="tablaDocumentos" var="documento" value="#{responderCuestionarioBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}" emptyMessage="No hay documentos">
-										<p:column headerText="Documentos">
-									        <h:outputText value="#{documento.nombre}" />
-									    </p:column>
-										<p:column styleClass="botonTabla">
-											<p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{responderCuestionarioBean.visualizarCuestionario.descargarFichero(documento)}" title="Descargar documento">
-												<p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
-											</p:commandButton>
-										</p:column>
-									    <p:column styleClass="botonTabla">
-											<p:commandButton title="Eliminar" icon="fa fa-trash"
-												actionListener="#{responderCuestionarioBean.eliminarDocumento(preguntaArea, documento)}"
-												update="tablaDocumentos" 
-                                                disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
-												<p:confirm header="Eliminar documento"
-													message="¿Está seguro que desea eliminar este documento?"
-													icon="fa fa-warning-sign" />
-											</p:commandButton>
-										</p:column>
-									</p:dataTable>         
-								</p:outputPanel>
-									
-								<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}" resizableColumns="true"
-											id="tablaPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
-							        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
-							            <f:facet name="header">
-							                <h:outputText value="#{column.header}" />
-							            </f:facet>
-							            <p:inputTextarea id="tabla" value="#{registroTabla[column.property]}" maxlength="1000" style="min-width: 100px;"
-							            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"
-                                            disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}"/>
-							        	<p:messages for="tabla" autoUpdate="true"  closable="true"/>
-							        	
-							        </p:columns>
-							        <f:facet name="footer">
-								        <p:commandButton value="Añadir fila" actionListener="#{responderCuestionarioBean.visualizarCuestionario.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" id="aniadirFila"
-                                            rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}"/>
-								        <p:commandButton value="Eliminar fila" actionListener="#{responderCuestionarioBean.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta"
-                                            rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}"/>
-								    </f:facet>
-				    			</p:dataTable>
-				    			
-				    			
-				    			<p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}" resizableColumns="true"
-											id="matrizPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}" >                    
-							        
-							        <p:column headerText="" styleClass="ui-widget-header" style="min-width:100px; width:100px; max-width:20%;">
-							        	<h:outputText value="#{registroTabla.nombreFila}"/>
-							        </p:column>
-							        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
-							            <f:facet name="header">
-							                <h:outputText value="#{column.header}" />
-							            </f:facet>
-							            <p:inputTextarea id="matriz" value="#{registroTabla[column.property]}" maxlength="1000" style="min-width: 100px;"
-							            	required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}"
-                                            disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}"/>
-							            <p:messages for="matriz" autoUpdate="true"  closable="true"/>
-							        </p:columns>
-				    			</p:dataTable>
-							</div>
-						</div>
-					</ui:repeat>
-				</p:tab>
-			</p:accordionPanel>
-			</ui:repeat>
-			
-		 	<p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}"> 
-				<div class="botonesFormulario">
-					<p:commandButton id="borrador" value="Guardar borrador" action="#{responderCuestionarioBean.guardarBorrador}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}"/>
+
+            <ui:repeat value="#{cuestionarioEnviadoBean.visualizarCuestionario.areas}" var="areaCuestionario">
+                <p:accordionPanel activeIndex="-1">
+
+                    <p:tab title="#{areaCuestionario.area}">
+                        <ui:repeat value="#{responderCuestionarioBean.visualizarCuestionario.mapaAreaPreguntas[areaCuestionario]}" var="preguntaArea">
+
+                            <div class="prevPregCuest">
+
+                                <h:outputText value="#{preguntaArea.pregunta}" styleClass="preguntaCuestionario" escape="false" />
+
+                                <div class="respuestaCuestionario">
+
+                                    <p:inputText id="input" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" size="10" maxlength="1000" required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" />
+                                    <p:messages for="input" autoUpdate="true" closable="true" />
+
+                                    <p:inputTextarea id="textarea" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" rendered="#{preguntaArea.tipoRespuesta eq 'TEXTAREA'}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" />
+                                    <p:outputLabel id="contador" />
+                                    <p:messages for="textarea" autoUpdate="true" closable="true" />
+
+                                    <p:selectOneRadio id="radio" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'RADIO')}" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
+                                        <f:selectItems value="#{responderCuestionarioBean.visualizarCuestionario.getValoresTipoRespuesta(preguntaArea.tipoRespuesta)}" var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
+                                    </p:selectOneRadio>
+                                    <p:messages for="radio" autoUpdate="true" closable="true" />
+
+                                    <p:outputPanel id="panelAdjuntos" rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'ADJUNTO')}">
+                                        <p:inputTextarea id="adjunto" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTOINPUT'}" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" size="10" maxlength="2000" counter="contadorAdjuntoInput" counterTemplate="Quedan {0} caracteres." required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" />
+                                        <p:outputLabel id="contadorAdjuntoInput" />
+                                        <p:messages for="adjunto" autoUpdate="true" closable="true" />
+
+                                        <p:selectOneRadio id="radioAdjunto" rendered="#{preguntaArea.tipoRespuesta eq 'ADJUNTORADIOSINO'}" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" required="#{param['form:enviar']!=null}" requiredMessage="Este campo no puede estar vacío" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
+                                            <f:selectItem itemLabel="Sí" itemValue="Sí" />
+                                            <f:selectItem itemLabel="No" itemValue="No" />
+                                        </p:selectOneRadio>
+                                        <p:messages for="radioAdjunto" autoUpdate="true" closable="true" />
+
+                                        <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" mode="advanced" dragDropSupport="false" label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos" sizelimit="20971520" multiple="true" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
+                                            <f:attribute name="pregunta" value="#{preguntaArea}" />
+                                        </p:fileUpload>
+
+                                        <p:dataTable id="tablaDocumentos" var="documento" value="#{responderCuestionarioBean.visualizarCuestionario.mapaDocumentos[preguntaArea]}" emptyMessage="No hay documentos">
+                                            <p:column headerText="Documentos">
+                                                <h:outputText value="#{documento.nombre}" />
+                                            </p:column>
+                                            <p:column styleClass="botonTabla">
+                                                <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{responderCuestionarioBean.visualizarCuestionario.descargarFichero(documento)}" title="Descargar documento">
+                                                    <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
+                                                </p:commandButton>
+                                            </p:column>
+                                            <p:column styleClass="botonTabla">
+                                                <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{responderCuestionarioBean.eliminarDocumento(preguntaArea, documento)}" update="tablaDocumentos" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
+                                                    <p:confirm header="Eliminar documento" message="¿Está seguro que desea eliminar este documento?" icon="fa fa-warning-sign" />
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:outputPanel>
+
+                                    <p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'TABLA')}" resizableColumns="true" id="tablaPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}">
+                                        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{column.header}" />
+                                            </f:facet>
+                                            <p:inputTextarea id="tabla" value="#{registroTabla[column.property]}" maxlength="1000" style="min-width: 100px;" required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" />
+                                            <p:messages for="tabla" autoUpdate="true" closable="true" />
+
+                                        </p:columns>
+                                        <f:facet name="footer">
+                                            <p:commandButton value="Añadir fila" actionListener="#{responderCuestionarioBean.visualizarCuestionario.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" id="aniadirFila" rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}" />
+                                            <p:commandButton value="Eliminar fila" actionListener="#{responderCuestionarioBean.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}" />
+                                        </f:facet>
+                                    </p:dataTable>
+
+
+                                    <p:dataTable rendered="#{fn:startsWith(preguntaArea.tipoRespuesta, 'MATRIZ')}" resizableColumns="true" id="matrizPregunta" var="registroTabla" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].listaDatosTabla}">
+
+                                        <p:column headerText="" styleClass="ui-widget-header" style="min-width:100px; width:100px; max-width:20%;">
+                                            <h:outputText value="#{registroTabla.nombreFila}" />
+                                        </p:column>
+                                        <p:columns value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestasTabla[preguntaArea].columns}" var="column" columnIndexVar="colIndex">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{column.header}" />
+                                            </f:facet>
+                                            <p:inputTextarea id="matriz" value="#{registroTabla[column.property]}" maxlength="1000" style="min-width: 100px;" required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" />
+                                            <p:messages for="matriz" autoUpdate="true" closable="true" />
+                                        </p:columns>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </p:tab>
+                </p:accordionPanel>
+            </ui:repeat>
+
+            <p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}">
+                <div class="botonesFormulario">
+                    <p:commandButton id="borrador" value="Guardar borrador" action="#{responderCuestionarioBean.guardarBorrador}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
                     <p:commandButton id="reasignar" value="Finalizar" action="#{responderCuestionarioBean.guardarYAsignarAreasAlPrincipal}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado and not esUserProvPrincipal}" />
-                    <p:commandButton id="enviar" value="Responder" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" icon="fa fa-envelope-o"
-                        rendered="#{not yaCumplimentado and esUserProvPrincipal}" update="form"/>
-                    <p:button id="asignar" value="Asignar areas" title="Asignar areas a otros usuarios" outcome="/cuestionarios/asignarAreasUsuarioProv" icon="fa fa-user-plus"
-                        rendered="#{not yaCumplimentado and esUserProvPrincipal}"/>
+                    <p:commandButton id="enviar" value="Responder" title="Enviar cuestionario cumplimentado" action="#{responderCuestionarioBean.enviarCuestionario}" icon="fa fa-envelope-o" rendered="#{not yaCumplimentado and esUserProvPrincipal}" update="form" />
+                    <p:button id="asignar" value="Asignar areas" title="Asignar areas a otros usuarios" outcome="/cuestionarios/asignarAreasUsuarioProv" icon="fa fa-user-plus" rendered="#{not yaCumplimentado and esUserProvPrincipal}" />
                 </div>
-			</p:outputPanel> 
-			
-			<p:outputPanel rendered="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
-				<div class="botonesFormulario">
-					<p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo"/>
-				</div>
-			</p:outputPanel>
-			
-			<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-				<p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true"/>
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button"/>
-				</div>
-			</p:dialog>	
-            
+            </p:outputPanel>
+
+            <p:outputPanel rendered="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
+                <div class="botonesFormulario">
+                    <p:button outcome="/cuestionarios/busquedaModelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo" />
+                </div>
+            </p:outputPanel>
+
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Cerrar" onclick="PF('dialogMessage').hide()" type="button" />
+                </div>
+            </p:dialog>
+
             <p:dialog id="dialogReasignar" widgetVar="dialogMessageReasignar" header="INFO" closable="false">
-                <p:messages for="dialogMessageReasignar" autoUpdate="true" showDetail="true" showSummary="true"/>
-                <div class="centrarBotonesDialog"> 
-                	<p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto"/>
+                <p:messages for="dialogMessageReasignar" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:link href="/logout" value="Cerrar" styleClass="ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" />
                 </div>
-            </p:dialog> 
-			
-			<p:confirmDialog global="true">
-				<div class="centrarBotonesDialog">
-					<p:commandButton value="Aceptar" type="button"
-						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-					<p:commandButton value="Cancelar" type="button"
-						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-				</div>
-			</p:confirmDialog>
+            </p:dialog>
 
-			<p:messages globalOnly="true" closable="true" autoUpdate="true" showDetail="true" showSummary="true"/>
-		</h:form>
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
 
-	</ui:define>
+            <p:messages globalOnly="true" closable="true" autoUpdate="true" showDetail="true" showSummary="true" />
+        </h:form>
+
+    </ui:define>
 </ui:composition>

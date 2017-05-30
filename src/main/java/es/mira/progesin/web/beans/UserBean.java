@@ -38,8 +38,8 @@ import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.CorreoElectronico;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,9 +57,6 @@ import lombok.Setter;
 @Scope("session")
 public class UserBean implements Serializable {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
     private User user;
@@ -112,7 +109,7 @@ public class UserBean implements Serializable {
     private transient PasswordEncoder passwordEncoder;
     
     @Autowired
-    private transient CorreoElectronico correo;
+    private transient ICorreoElectronico correo;
     
     @Autowired
     private transient IDepartamentoRepository departamentoRepository;
@@ -174,19 +171,19 @@ public class UserBean implements Serializable {
                 user.setEmpleo(getEmpleoSeleccionado());
                 user.setDepartamento(getDepartamentoSeleccionado());
                 String password = Utilities.getPassword();
-                
                 user.setPassword(passwordEncoder.encode(password));
+                
+                userService.save(user);
+                
                 correo.envioCorreo(user.getCorreo(), "Alta en la herramienta Progesin",
-                        "Ha sido dado de alta en la herramienta PROGESIN con usuario/clave " + user.getUsername() + "/"
-                                + password);
-                if (userService.save(user) != null) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                            "El usuario ha sido creado con éxito");
-                    String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
-                            + user.getApellido2();
-                    regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                            SeccionesEnum.USUARIOS.name());
-                }
+                        "Ha sido dado de alta en la herramienta PROGESIN con nombre de usuario '" + user.getUsername()
+                                + "' y clave '" + password + "'");
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                        "El usuario ha sido creado con éxito");
+                String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
+                        + user.getApellido2();
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                        SeccionesEnum.USUARIOS.name());
             } catch (Exception e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta",
                         "Se ha producido un error al dar de alta el usuario. Inténtelo de nuevo más tarde");
@@ -215,7 +212,7 @@ public class UserBean implements Serializable {
      * 
      * @author EZENTIS
      */
-    public void limpiarBusqueda() {
+    private void limpiarBusqueda() {
         userBusqueda.resetValues();
         model.setRowCount(0);
     }
@@ -275,24 +272,22 @@ public class UserBean implements Serializable {
     public void modificarUsuario() {
         try {
             
-            if (userService.save(user) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-                        "El usuario ha sido modificado con éxito");
-                
-                String descripcion = "Modificación del usuario :" + " " + user.getNombre() + " " + user.getApellido1()
-                        + " " + user.getApellido2();
-                
+            userService.save(user);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                    "El usuario ha sido modificado con éxito");
+            
+            String descripcion = "Modificación del usuario :" + " " + user.getNombre() + " " + user.getApellido1() + " "
+                    + user.getApellido2();
+            
+            if (estadoUsuario != user.getEstado().name()) {
                 String descripcionEstado = "Modificación del estado del usuario :" + " " + user.getNombre() + " "
                         + user.getApellido1() + " " + user.getApellido2();
-                
-                if (estadoUsuario != user.getEstado().name()) {
-                    regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
-                            SeccionesEnum.USUARIOS.name());
-                }
-                // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.USUARIOS.name());
             }
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.USUARIOS.name());
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");

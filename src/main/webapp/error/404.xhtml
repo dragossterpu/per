@@ -1,26 +1,22 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	<ui:define name="content">
-    
-    <p:outputPanel styleClass="bloqueVistaTitulo">
-	      <h3>Página no encontrada</h3>
-    </p:outputPanel>
-    
-    <p:outputPanel>
-        <div class="ui-messages ui-widget" aria-live="polite">
-            <div class="ui-messages-info ui-corner-all">
-                <span class="ui-messages-info-icon iconoError icono404"/>
-                <ul>
-                    <li class="ui-messages-info-summary">El recurso solicitado no ha sido encontrado, disculpe las molestias.</li>
-                    <li class="ui-messages-info-details">La página que ha solicitado no está disponible en <a href="#{request.contextPath}" >Progesin</a>. Puede que la página haya dejado de existir o que haya sido movida a otra localización.</li>
-                </ul>
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <p:outputPanel styleClass="bloqueVistaTitulo">
+            <h3>Página no encontrada</h3>
+        </p:outputPanel>
+
+        <p:outputPanel>
+            <div class="ui-messages ui-widget" aria-live="polite">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon iconoError icono404" />
+                    <ul>
+                        <li class="ui-messages-info-summary">El recurso solicitado no ha sido encontrado, disculpe las molestias.</li>
+                        <li class="ui-messages-info-details">La página que ha solicitado no está disponible en <a href="#{request.contextPath}">Progesin</a>. Puede que la página haya dejado de existir o que haya sido movida a otra localización.
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </p:outputPanel>
-	
-	</ui:define>
+        </p:outputPanel>
+
+    </ui:define>
 </ui:composition>

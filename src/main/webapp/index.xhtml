@@ -1,140 +1,120 @@
-<ui:composition template="layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-	<ui:define name="title">Progesin</ui:define>
-	<ui:define name="content">
-	
-    <ui:param name="usernameActual" value="#{request.remoteUser}"/>
-	<ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}"/>
-    <ui:param name="rolSugerencias" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') or (p:ifGranted('EQUIPO_INSPECCIONES') and miembroService.esJefeEquipo(usernameActual))}"/>
-	        
-    <!-- <h:form>
+<ui:composition template="layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="title">Progesin</ui:define>
+    <ui:define name="content">
+
+        <ui:param name="usernameActual" value="#{request.remoteUser}" />
+        <ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
+        <ui:param name="rolSugerencias" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') or (p:ifGranted('EQUIPO_INSPECCIONES') and miembroService.esJefeEquipo(usernameActual))}" />
+
+        <!-- <h:form>
         <p:remoteCommand name="onload" action="#{navegacionBean.iniciarCamino()}" update="caminoMigas" autoRun="true" />
     </h:form> -->
-        
-    <div class="textoDerecha">
-		<h:form>
-			<h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora" rendered="#{rolSugerencias}"/>
-		</h:form>
-	</div>
-	<h:form id="busquedaAlertas" rendered="#{rolPermitido}">
-	<div id="alertas">
-			<p:outputPanel layout="block" id="panelAlertas">
-				 <p:outputPanel>
-	 				<h:commandLink>
-		               <p:graphicImage  value="/images/xls.png" />
-		               <p:dataExporter type="xls" target="tablaAlertas" fileName="listaAlertas"/>
-		            </h:commandLink>
-		            <h:commandLink>
-		               <p:graphicImage  value="/images/pdf.png" />
-		               <p:dataExporter type="pdf" target="tablaAlertas" fileName="listaAlertas"/>
-		            </h:commandLink>
-		            <h:commandLink>
-		               <p:graphicImage  value="/images/csv.png" />
-		               <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas"/>
-		            </h:commandLink>
-	            </p:outputPanel>
-				 <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.modelAlertas}" 
-				id="tablaAlertas"
-				paginator="true" 
-				rowsPerPageTemplate="5,10,15,20"
-				rows="20"
-				lazy="true"
-				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-				emptyMessage="Ninguna">
-            	
-				<f:facet name="header">
+
+        <div class="textoDerecha">
+            <h:form>
+                <h:link outcome="/principal/crearSugerencia" value="Sugerencias de mejora" rendered="#{rolSugerencias}" />
+            </h:form>
+        </div>
+        <h:form id="busquedaAlertas" rendered="#{rolPermitido}">
+            <div id="alertas">
+                <p:outputPanel layout="block" id="panelAlertas">
+                    <p:outputPanel>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/xls.png" />
+                            <p:dataExporter type="xls" target="tablaAlertas" fileName="listaAlertas" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/pdf.png" />
+                            <p:dataExporter type="pdf" target="tablaAlertas" fileName="listaAlertas" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/csv.png" />
+                            <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas" />
+                        </h:commandLink>
+                    </p:outputPanel>
+                    <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.modelAlertas}" id="tablaAlertas" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Ninguna">
+
+                        <f:facet name="header">
 					Alertas
 				</f:facet>
-				<p:column headerText="Fecha alta" sortBy="#{alerta.fechaAlta}" width="70" visible="#{alertasBean.list[0]}" exportable="#{alertasBean.list[0]}">
-						<h:outputText value="#{alerta.fechaAlta}">
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Descripción" sortBy="#{alerta.descripcion}" width="250" visible="#{alertasBean.list[1]}" exportable="#{alertasBean.list[1]}">
-						<h:outputText value="#{alerta.descripcion}" />
-					</p:column>
-					<p:column headerText="Usuario" sortBy="#{alerta.usernameAlerta}" width="70" visible="#{alertasBean.list[2]}" exportable="#{alertasBean.list[2]}">
-						<h:outputText value="#{alerta.usernameAlerta}" />
-					</p:column>
-					<p:column headerText="Sección" sortBy="#{alerta.nombreSeccion}" width="70" visible="#{alertasBean.list[3]}" exportable="#{alertasBean.list[3]}">
-						<h:outputText value="#{alerta.nombreSeccion}" />
-					</p:column>
-					<p:column width="20" exportable="false">
-						<p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{AlertasNotificacionesUsuarioBean.eliminarAlertas(alerta)}" update="tablaAlertas">
-							<p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="fa fa-warning-sign"/>
-						</p:commandButton>
-					</p:column>
-				
-			</p:dataTable>
-		</p:outputPanel>
-			</div>
-		</h:form>			
-	<h:form id="busquedaNotificaciones" rendered="#{rolPermitido}">	
-	<div id="notificaciones">
-	<p:outputPanel layout="block" id="panelNotificaciones" >
-			<p:outputPanel>
- 				<h:commandLink>
-	               <p:graphicImage  value="/images/xls.png" />
-	               <p:dataExporter type="xls" target="tablaNotificaciones" fileName="listaNotificaciones"/>
-	            </h:commandLink>
-	            <h:commandLink>
-	               <p:graphicImage  value="/images/pdf.png" />
-	               <p:dataExporter type="pdf" target="tablaNotificaciones" fileName="listaNotificaciones"/>
-	            </h:commandLink>
-	            <h:commandLink>
-	               <p:graphicImage  value="/images/csv.png" />
-	               <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones"/>
-	            </h:commandLink>
-            </p:outputPanel>
-		<p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.modelNotificaciones}" 
-				paginator="true" 
-				rowsPerPageTemplate="5,10,15,20"
-				rows="20"
-				lazy="true"
-				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-				id="tablaNotificaciones" 
-				emptyMessage="Ninguna">
-            
-		      
-			<f:facet name="header">
+                        <p:column headerText="Fecha alta" sortBy="#{alerta.fechaAlta}" width="70" visible="#{alertasBean.list[0]}" exportable="#{alertasBean.list[0]}">
+                            <h:outputText value="#{alerta.fechaAlta}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{alerta.descripcion}" width="250" visible="#{alertasBean.list[1]}" exportable="#{alertasBean.list[1]}">
+                            <h:outputText value="#{alerta.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Usuario" sortBy="#{alerta.usernameAlerta}" width="70" visible="#{alertasBean.list[2]}" exportable="#{alertasBean.list[2]}">
+                            <h:outputText value="#{alerta.usernameAlerta}" />
+                        </p:column>
+                        <p:column headerText="Sección" sortBy="#{alerta.nombreSeccion}" width="70" visible="#{alertasBean.list[3]}" exportable="#{alertasBean.list[3]}">
+                            <h:outputText value="#{alerta.nombreSeccion}" />
+                        </p:column>
+                        <p:column width="20" exportable="false">
+                            <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{AlertasNotificacionesUsuarioBean.eliminarAlertas(alerta)}" update="tablaAlertas">
+                                <p:confirm header="Eliminar alerta" message="¿Está seguro que desea eliminar esta alerta?" icon="fa fa-warning-sign" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+            </div>
+        </h:form>
+        <h:form id="busquedaNotificaciones" rendered="#{rolPermitido}">
+            <div id="notificaciones">
+                <p:outputPanel layout="block" id="panelNotificaciones">
+                    <p:outputPanel>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/xls.png" />
+                            <p:dataExporter type="xls" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/pdf.png" />
+                            <p:dataExporter type="pdf" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/csv.png" />
+                            <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                        </h:commandLink>
+                    </p:outputPanel>
+                    <p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.modelNotificaciones}" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaNotificaciones" emptyMessage="Ninguna">
+
+
+                        <f:facet name="header">
 				Notificaciones
 			</f:facet>
-			<p:column headerText="Fecha alta" sortBy="#{notificacion.fechaAlta}" width="70" visible="#{notificacionesBean.list[0]}" exportable="#{notificacionesBean.list[0]}">
-					<h:outputText value="#{notificacion.fechaAlta}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="250" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
-					<h:outputText value="#{notificacion.descripcion}" />
-				</p:column>
-				<p:column headerText="Usuario" sortBy="#{notificacion.usernameNotificacion}" width="70" visible="#{notificacionesBean.list[2]}" exportable="#{notificacionesBean.list[2]}">
-					<h:outputText value="#{notificacion.usernameNotificacion}" />
-				</p:column>
-				<p:column headerText="Sección" sortBy="#{notificacion.nombreSeccion}" width="70" visible="#{notificacionesBean.list[3]}" exportable="#{notificacionesBean.list[3]}">
-					<h:outputText value="#{notificacion.nombreSeccion}" />
-				</p:column>
-				<p:column width="20" exportable="false">
-					<p:commandButton title="Eliminar" icon="fa fa-trash" action="#{AlertasNotificacionesUsuarioBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
-						<p:confirm header="Eliminar notificación" message="¿Está seguro que desea eliminar esta notificación?" icon="fa fa-warning-sign"/>
-					</p:commandButton>
-				</p:column>
-			
-		</p:dataTable>
-		
-	</p:outputPanel>
-	</div>
-    
-    <p:confirmDialog global="true">
-        <div class="centrarBotonesDialog">
-            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-        </div>
-    </p:confirmDialog>
-	</h:form>
-	</ui:define>
+                        <p:column headerText="Fecha alta" sortBy="#{notificacion.fechaAlta}" width="70" visible="#{notificacionesBean.list[0]}" exportable="#{notificacionesBean.list[0]}">
+                            <h:outputText value="#{notificacion.fechaAlta}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{notificacion.descripcion}" width="250" visible="#{notificacionesBean.list[1]}" exportable="#{notificacionesBean.list[1]}">
+                            <h:outputText value="#{notificacion.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Usuario" sortBy="#{notificacion.usernameNotificacion}" width="70" visible="#{notificacionesBean.list[2]}" exportable="#{notificacionesBean.list[2]}">
+                            <h:outputText value="#{notificacion.usernameNotificacion}" />
+                        </p:column>
+                        <p:column headerText="Sección" sortBy="#{notificacion.nombreSeccion}" width="70" visible="#{notificacionesBean.list[3]}" exportable="#{notificacionesBean.list[3]}">
+                            <h:outputText value="#{notificacion.nombreSeccion}" />
+                        </p:column>
+                        <p:column width="20" exportable="false">
+                            <p:commandButton title="Eliminar" icon="fa fa-trash" action="#{AlertasNotificacionesUsuarioBean.eliminarNotificacion(notificacion)}" update="tablaNotificaciones">
+                                <p:confirm header="Eliminar notificación" message="¿Está seguro que desea eliminar esta notificación?" icon="fa fa-warning-sign" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:outputPanel>
+            </div>
+
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
 </ui:composition>

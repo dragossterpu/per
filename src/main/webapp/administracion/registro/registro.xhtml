@@ -1,141 +1,118 @@
-<ui:composition template="/layouts/layoutInterior.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <f:metadata>
         <f:viewParam name="vieneDe" value="#{regActividadBean.vieneDe}" />
     </f:metadata>
-	<ui:define name="content">
+    <ui:define name="content">
 
-	<h3>Búsqueda de registro de actividad</h3>
-	
-	<h:form>
-	    <p:remoteCommand name="onload" action="#{regActividadBean.getFormularioRegActividad}" autoRun="true" update="busquedalistaRegActividad" />
-	</h:form>
+        <h3>Búsqueda de registro de actividad</h3>
 
-	<h:form id="busquedalistaRegActividad" >
-	
-		<div class="bloqueFormulario">
-				<div class="columnaIzdaFormulario">
-					<h:outputLabel for="nombreSeccion" value="Nombre de la sección:" />
-					<p:autoComplete id="nombreSeccion" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.nombreSeccion}" 
-						completeMethod="#{regActividadBean.autocompletarSeccion}" effect="fade" />
-					
-					<h:outputLabel for="usernameRegActividad" value="Usuario del registro:" />
-					<p:autoComplete id="usernameRegActividad" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.usernameRegActividad}" 
-						completeMethod="#{regActividadBean.autocompletarUsuario}" effect="fade" />
-					
-										        
-				</div>
+        <h:form>
+            <p:remoteCommand name="onload" action="#{regActividadBean.getFormularioRegActividad}" autoRun="true" update="busquedalistaRegActividad" />
+        </h:form>
 
-				<div class="columnaDchaFormulario">
-					<h:outputLabel for="fechaDesde" value="Fecha desde:" />
-					<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}"/>
-					<h:outputLabel for="fechaHasta" value="Fecha hasta:" />
-					<p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}"/>
-					
-					
-					<h:outputLabel for="tipo" value="Tipo de notificación" />
-			        <p:importEnum type="es.mira.progesin.persistence.entities.enums.TipoRegistroEnum" var="tipos"
-						allSuffix="ALL_ENUM_VALUES" />
-					<p:selectOneMenu value="#{regActividadBean.regActividadBusqueda.tipoRegActividad}" id="tipo">
-						<f:selectItem itemLabel="Seleccione uno" itemValue=""/>
-						<f:selectItems value="#{tipos.ALL_ENUM_VALUES}" var="tipoRegistro"
-							itemLabel="#{tipoRegistro}" itemValue="#{tipoRegistro}" />
-					</p:selectOneMenu> 
-					
-				</div>
-				
-		</div>
-		
-		<div class="botonesFormulario">
-		<p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search"  oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-		<p:commandButton actionListener="#{regActividadBean.limpiarBusqueda}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-eraser" />
+        <h:form id="busquedalistaRegActividad">
 
-		</div>
-		<p:outputPanel layout="block" id="panelRegActividad">
-			<p:outputPanel styleClass="mensajeSinResultados" rendered="#{regActividadBean.model.rowCount eq 0}">
+            <div class="bloqueFormulario">
+                <div class="columnaIzdaFormulario">
+                    <h:outputLabel for="nombreSeccion" value="Nombre de la sección:" />
+                    <p:autoComplete id="nombreSeccion" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.nombreSeccion}" completeMethod="#{regActividadBean.autocompletarSeccion}" effect="fade" />
+
+                    <h:outputLabel for="usernameRegActividad" value="Usuario del registro:" />
+                    <p:autoComplete id="usernameRegActividad" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.usernameRegActividad}" completeMethod="#{regActividadBean.autocompletarUsuario}" effect="fade" />
+
+
+                </div>
+
+                <div class="columnaDchaFormulario">
+                    <h:outputLabel for="fechaDesde" value="Fecha desde:" />
+                    <p:calendar value="#{regActividadBean.regActividadBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
+                    <h:outputLabel for="fechaHasta" value="Fecha hasta:" />
+                    <p:calendar value="#{regActividadBean.regActividadBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
+
+
+                    <h:outputLabel for="tipo" value="Tipo de notificación" />
+                    <p:importEnum type="es.mira.progesin.persistence.entities.enums.TipoRegistroEnum" var="tipos" allSuffix="ALL_ENUM_VALUES" />
+                    <p:selectOneMenu value="#{regActividadBean.regActividadBusqueda.tipoRegActividad}" id="tipo">
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                        <f:selectItems value="#{tipos.ALL_ENUM_VALUES}" var="tipoRegistro" itemLabel="#{tipoRegistro}" itemValue="#{tipoRegistro}" />
+                    </p:selectOneMenu>
+
+                </div>
+
+            </div>
+
+            <div class="botonesFormulario">
+                <p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+                <p:commandButton actionListener="#{regActividadBean.limpiarBusqueda}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-eraser" />
+
+            </div>
+            <p:outputPanel layout="block" id="panelRegActividad">
+                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{regActividadBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.
 			</p:outputPanel>
-			<p:outputPanel rendered="#{regActividadBean.model.rowCount ne 0}">
- 				<h:commandLink>
-	               <p:graphicImage  value="/images/xls.png" />
-	               <p:dataExporter type="xls" target="tablaRegActividad" fileName="listaRegActividad"/>
-	            </h:commandLink>
-	            <h:commandLink>
-	               <p:graphicImage  value="/images/pdf.png" />
-	               <p:dataExporter type="pdf" target="tablaRegActividad" fileName="listaRegActividad"/>
-	            </h:commandLink>
-	            <h:commandLink>
-	               <p:graphicImage  value="/images/csv.png" />
-	               <p:dataExporter type="csv" target="tablaRegActividad" fileName="listaRegActividad"/>
-	            </h:commandLink>
-            </p:outputPanel>
+                <p:outputPanel rendered="#{regActividadBean.model.rowCount ne 0}">
+                    <h:commandLink>
+                        <p:graphicImage value="/images/xls.png" />
+                        <p:dataExporter type="xls" target="tablaRegActividad" fileName="listaRegActividad" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaRegActividad" fileName="listaRegActividad" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/csv.png" />
+                        <p:dataExporter type="csv" target="tablaRegActividad" fileName="listaRegActividad" />
+                    </h:commandLink>
+                </p:outputPanel>
 
- 			<p:dataTable  var="regActividad" value="#{regActividadBean.model}"  
- 						 rowsPerPageTemplate="5,10,15,20"
-						 rows="20"
-						 id="tablaRegActividad"
-                         draggableColumns="true"
-                         paginator="true"
-                         lazy="true"
-						 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                         resizableColumns="true"
-                        selectionMode="single"
-                     	selection="#{regActividadBean.error}"
-                     	rowKey="#{regActividad.idRegActividad}"
-                     	emptyMessage="No se han encontrado resultados"
-                      	rendered="#{regActividadBean.model.rowCount ne 0}">
-                 
-			 <f:facet name="header">
+                <p:dataTable var="regActividad" value="#{regActividadBean.model}" rowsPerPageTemplate="5,10,15,20" rows="20" id="tablaRegActividad" draggableColumns="true" paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" resizableColumns="true" selectionMode="single" selection="#{regActividadBean.error}" rowKey="#{regActividad.idRegActividad}" emptyMessage="No se han encontrado resultados" rendered="#{regActividadBean.model.rowCount ne 0}">
+
+                    <f:facet name="header">
 				Registros de actividad
-				 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th"/>
-        			 <p:columnToggler datasource="tablaRegActividad" trigger="toggler">
-        			 	  <p:ajax event="toggle" listener="#{regActividadBean.onToggle}" />
-        			 </p:columnToggler>
-				</f:facet>
-				
-				<p:ajax event="rowSelect" listener="#{regActividadBean.onRowSelect}" update=":busquedalistaRegActividad:dialog"/> 
-				
-				<p:column headerText="Fecha" sortBy="#{regActividad.fechaAlta}" width="80" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
-					<h:outputText value="#{regActividad.fechaAlta}">
-						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Nombre Sección" sortBy="#{regActividad.nombreSeccion}" width="70" visible="#{regActividadBean.list[1]}" exportable="#{regActividadBean.list[1]}">
-					<h:outputText value="#{regActividad.nombreSeccion}" />
-				</p:column>
-				<p:column headerText="Usuario del registro" sortBy="#{regActividad.usernameRegActividad}"  width="70" visible="#{regActividadBean.list[2]}" exportable="#{regActividadBean.list[2]}">
-					<h:outputText value="#{regActividad.usernameRegActividad}" />
-				</p:column>
-				<p:column headerText="Descripción"  width="100"  visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
-					<h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,40)}..."></h:outputText>
-					<p:tooltip id="toolTipError" for="descripcionError" value="Hacer click para ampliar información" position="top"/>
-				</p:column>					
-				<p:column headerText="Tipo notificación" sortBy="#{regActividad.tipoRegActividad}" width="100" visible="#{regActividadBean.list[4]}" exportable="#{regActividadBean.list[4]}">
-					<h:outputText value="#{regActividad.tipoRegActividad}" />
-				</p:column>
-					
-				<f:facet name="footer">
+				 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                        <p:columnToggler datasource="tablaRegActividad" trigger="toggler">
+                            <p:ajax event="toggle" listener="#{regActividadBean.onToggle}" />
+                        </p:columnToggler>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" listener="#{regActividadBean.onRowSelect}" update=":busquedalistaRegActividad:dialog" />
+
+                    <p:column headerText="Fecha" sortBy="#{regActividad.fechaAlta}" width="80" visible="#{regActividadBean.list[0]}" exportable="#{regActividadBean.list[0]}">
+                        <h:outputText value="#{regActividad.fechaAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Nombre Sección" sortBy="#{regActividad.nombreSeccion}" width="70" visible="#{regActividadBean.list[1]}" exportable="#{regActividadBean.list[1]}">
+                        <h:outputText value="#{regActividad.nombreSeccion}" />
+                    </p:column>
+                    <p:column headerText="Usuario del registro" sortBy="#{regActividad.usernameRegActividad}" width="70" visible="#{regActividadBean.list[2]}" exportable="#{regActividadBean.list[2]}">
+                        <h:outputText value="#{regActividad.usernameRegActividad}" />
+                    </p:column>
+                    <p:column headerText="Descripción" width="100" visible="#{regActividadBean.list[3]}" exportable="#{regActividadBean.list[3]}">
+                        <h:outputText id="descripcionError" value="#{fn:substring(regActividad.descripcion,0,40)}..."></h:outputText>
+                        <p:tooltip id="toolTipError" for="descripcionError" value="Hacer click para ampliar información" position="top" />
+                    </p:column>
+                    <p:column headerText="Tipo notificación" sortBy="#{regActividad.tipoRegActividad}" width="100" visible="#{regActividadBean.list[4]}" exportable="#{regActividadBean.list[4]}">
+                        <h:outputText value="#{regActividad.tipoRegActividad}" />
+                    </p:column>
+
+                    <f:facet name="footer">
        				 Resultado de la búsqueda: #{regActividadBean.model.rowCount} registros.
     			</f:facet>
-			</p:dataTable>
-			<p:dialog id="dialog" header="Descripción de la actividad" widgetVar="dlg" modal="true" height="500" width="800">
-			    <h:outputText  id="textoError" value="#{regActividadBean.error.descripcion}"/>
-			</p:dialog> 
-		</p:outputPanel>
-        
-        <p:confirmDialog global="true">
-            <div class="centrarBotonesDialog">
-                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-            </div>
-        </p:confirmDialog>
-    </h:form>
+                </p:dataTable>
+                <p:dialog id="dialog" header="Descripción de la actividad" widgetVar="dlg" modal="true" height="500" width="800">
+                    <h:outputText id="textoError" value="#{regActividadBean.error.descripcion}" />
+                </p:dialog>
+            </p:outputPanel>
 
-	</ui:define>
-	
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+
 </ui:composition>
