@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -27,10 +29,8 @@ import lombok.Setter;
 
 /**
  * 
- * 
  * Controlador para la gestión de los tipos de inspección. Alta de tipo de inspección, modificar tipo de inspección,
  * eliminación de tipo de inspección y búsqueda de tipo de inspección.
- *
  *
  * @author EZENTIS
  *
@@ -46,22 +46,42 @@ public class TipoInspeccionBean implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Variable utilizada para alamcenar los tipos de inspección a gestionar.
+     * 
+     */
     private List<TipoInspeccion> listaTipoInspeccion;
     
+    /**
+     * Variable utilizada para inyectar el servicio de tipos inspección.
+     * 
+     */
     @Autowired
     private transient ITipoInspeccionService tipoInspeccionService;
     
+    /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
     @Autowired
     private transient IInspeccionesService inspeccionesService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de guías.
+     * 
+     */
     @Autowired
     private transient IGuiaService guiaService;
     
     /**
-     * Recarga la lista de tipos de inspeccion
+     * Recarga la lista de tipos de inspeccion.
      */
     @PostConstruct
     private void init() {
@@ -69,8 +89,7 @@ public class TipoInspeccionBean implements Serializable {
     }
     
     /**
-     * Elimina un tipo de inspección
-     * @author Ezentis
+     * Elimina un tipo de inspección.
      * 
      * @param tipo objeto a eliminar
      */
@@ -98,9 +117,10 @@ public class TipoInspeccionBean implements Serializable {
                 
             }
             
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                    "Error. Se ha producido un error al eliminar el tipo de inspección, inténtelo de nuevo más tarde",
+                    Constantes.ERRORMENSAJE
+                            + " Se ha producido un error al eliminar el tipo de inspección, inténtelo de nuevo más tarde",
                     "", "msgs");
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
@@ -108,9 +128,8 @@ public class TipoInspeccionBean implements Serializable {
     }
     
     /**
-     * Modificación en caliente desde la tabla de un tipo de inspección
+     * Modificación en caliente desde la tabla de un tipo de inspección.
      * 
-     * @author Ezentis
      * @param event evento lanzado al confirmar el cambio, lleva incluido el objeto TipoInspeccion
      */
     public void onRowEdit(RowEditEvent event) {
@@ -131,20 +150,20 @@ public class TipoInspeccionBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.INSPECCION.name());
             
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                    "Error. Se ha producido un error al modificar el tipo de inspección, inténtelo de nuevo más tarde",
+                    Constantes.ERRORMENSAJE
+                            + " Se ha producido un error al modificar el tipo de inspección, inténtelo de nuevo más tarde",
                     "", null);
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
     }
     
     /**
-     * Crea un tipo de inspección
+     * Crea un tipo de inspección.
      * 
-     * @author Ezentis
-     * @param codigo
-     * @param descripcion
+     * @param codigo del tipo
+     * @param descripcion del tipo
      */
     public void altaTipo(String codigo, String descripcion) {
         try {
@@ -164,12 +183,11 @@ public class TipoInspeccionBean implements Serializable {
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
             
-        } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el tipo de inspección, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
-        // setListaTipoInspeccion(tipoInspeccionService.buscaTodos());
     }
     
 }

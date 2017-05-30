@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
 
@@ -31,7 +32,7 @@ public class TipoInspeccionService implements ITipoInspeccionService {
      */
     @Override
     @Transactional(readOnly = false)
-    public void borrarTipo(TipoInspeccion tipo) {
+    public void borrarTipo(TipoInspeccion tipo) throws ProgesinException {
         tipoInspeccionRepository.delete(tipo);
     }
     
@@ -41,7 +42,7 @@ public class TipoInspeccionService implements ITipoInspeccionService {
      */
     @Override
     @Transactional(readOnly = false)
-    public TipoInspeccion guardarTipo(TipoInspeccion entity) {
+    public TipoInspeccion guardarTipo(TipoInspeccion entity) throws ProgesinException {
         return tipoInspeccionRepository.save(entity);
     }
     
