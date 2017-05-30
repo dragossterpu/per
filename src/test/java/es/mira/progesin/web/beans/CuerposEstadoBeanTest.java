@@ -136,12 +136,9 @@ public class CuerposEstadoBeanTest {
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         listaCuerposEstado.remove(cuerpo);
         
-        regActividadService.altaRegActividad(any(String.class), TipoRegistroEnum.ALTA.name(),
-                SeccionesEnum.ADMINISTRACION.name());
-        
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(1)).save(cuerpo);
-        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
         
     }
@@ -200,8 +197,8 @@ public class CuerposEstadoBeanTest {
         when(event.getObject()).thenReturn(cuerpo);
         
         cuerposEstadoBean.onRowEdit(event);
-        regActividadService.altaRegActividad(any(String.class), TipoRegistroEnum.MODIFICACION.name(),
-                SeccionesEnum.ADMINISTRACION.name());
+        regActividadService.altaRegActividad(any(String.class), eq(TipoRegistroEnum.MODIFICACION.name()),
+                eq(SeccionesEnum.ADMINISTRACION.name()));
         
         verify(cuerposEstadoService, times(1)).save(cuerpoCaptor.capture());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
