@@ -102,6 +102,7 @@ public class GestorDocumentalBean {
     /**
      * Verificador de extensiones
      */
+    @Autowired
     private VerificadorExtensiones verificadorExtensiones;
     
     /**
@@ -261,8 +262,8 @@ public class GestorDocumentalBean {
      * @param document Documento al que se dará de baja lógica
      */
     public void eliminarDocumento(Documento document) {
-        documento.setFechaBaja(new Date());
-        documento.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+        document.setFechaBaja(new Date());
+        document.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
         documentoService.save(document);
         buscaDocumento();
     }

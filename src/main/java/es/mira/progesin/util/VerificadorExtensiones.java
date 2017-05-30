@@ -13,6 +13,7 @@ import org.apache.tika.parser.microsoft.ooxml.OOXMLParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -25,7 +26,7 @@ import es.mira.progesin.services.IRegistroActividadService;
  * @author EZENTIS
  *
  */
-
+@Component("verificadorExtensiones")
 public class VerificadorExtensiones {
     /**
      * Servicio de registro de actividad.

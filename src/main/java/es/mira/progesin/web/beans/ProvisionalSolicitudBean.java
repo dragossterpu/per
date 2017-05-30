@@ -100,6 +100,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     /**
      * Verificador de extensiones
      */
+    @Autowired
     private VerificadorExtensiones verificadorExtensiones;
     
     @Autowired

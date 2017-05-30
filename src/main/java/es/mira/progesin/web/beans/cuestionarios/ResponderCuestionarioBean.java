@@ -75,6 +75,7 @@ public class ResponderCuestionarioBean implements Serializable {
     /**
      * Verificador de extensiones
      */
+    @Autowired
     private VerificadorExtensiones verificadorExtensiones;
     
     @Autowired
