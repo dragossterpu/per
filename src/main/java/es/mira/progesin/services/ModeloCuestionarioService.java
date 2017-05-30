@@ -19,18 +19,36 @@ import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 @Service
 public class ModeloCuestionarioService implements IModeloCuestionarioService {
     
+    /**
+     * Variable utilizada para inyectar el repositorio de modelos de cuestionario.
+     * 
+     */
     @Autowired
     IModeloCuestionarioRepository modeloCuestionarioRepository;
     
+    /**
+     * Variable utilizada para inyectar el repositorio de áreas de cuestionario.
+     * 
+     */
     @Autowired
     IAreaCuestionarioRepository areaCuestionarioRepository;
     
+    /**
+     * Guarda o actualiza un modelo de cuestionario.
+     * 
+     * @param modeloCuestionario a guardar o actualizar
+     */
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public ModeloCuestionario save(ModeloCuestionario modeloCuestionario) {
         return modeloCuestionarioRepository.save(modeloCuestionario);
     }
     
+    /**
+     * Busca todos los modelos de cuestionario que hay en BBDD.
+     * 
+     * @return List<ModeloCuestionario> lista de modelos en BBDD
+     */
     @Override
     public List<ModeloCuestionario> findAll() {
         return (List<ModeloCuestionario>) modeloCuestionarioRepository.findAll();
