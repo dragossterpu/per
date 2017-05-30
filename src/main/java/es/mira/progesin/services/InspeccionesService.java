@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
@@ -61,10 +62,11 @@ public class InspeccionesService implements IInspeccionesService {
      * Método que guarda una inspección.
      * @param inspeccion a guardar
      * @return devuelve la inspección guardada
+     * @throws ProgesinException problema al guardar municipio
      */
     @Override
     @Transactional(readOnly = false)
-    public Inspeccion save(Inspeccion inspeccion) {
+    public Inspeccion save(Inspeccion inspeccion) throws ProgesinException {
         return inspeccionesRepository.save(inspeccion);
     }
     

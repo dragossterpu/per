@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -55,24 +56,19 @@ public class MunicipioService implements IMunicipioService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Municipio crearMunicipio(String nombre, Provincia provincia) {
+    public Municipio crearMunicipio(String nombre, Provincia provincia) throws ProgesinException {
         Municipio nuevoMunicipio = null;
         
         String user = SecurityContextHolder.getContext().getAuthentication().getName();
-        try {
-            nuevoMunicipio = new Municipio();
-            nuevoMunicipio.setName(nombre);
-            nuevoMunicipio.setProvincia(provincia);
-            municipioRepository.save(nuevoMunicipio);
-            
-            String descripcion = "El usuario " + user + " ha creado el nuevo municipio " + nombre;
-            
-            registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                    SeccionesEnum.INSPECCION.name());
-            
-        } catch (Exception e) {
-            registroActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
-        }
+        nuevoMunicipio = new Municipio();
+        nuevoMunicipio.setName(nombre);
+        nuevoMunicipio.setProvincia(provincia);
+        municipioRepository.save(nuevoMunicipio);
+        
+        String descripcion = "El usuario " + user + " ha creado el nuevo municipio " + nombre;
+        
+        registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                SeccionesEnum.INSPECCION.name());
         return nuevoMunicipio;
         
     }

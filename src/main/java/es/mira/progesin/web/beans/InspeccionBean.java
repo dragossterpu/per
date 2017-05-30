@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -174,6 +175,13 @@ public class InspeccionBean {
     private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
+    @Autowired
+    private IRegistroActividadService registroActividadService;
+    
+    /**
      * 
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
      * de la tabla y con el orden por defecto.
@@ -302,7 +310,7 @@ public class InspeccionBean {
             String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
         }
         return null;
@@ -356,7 +364,7 @@ public class InspeccionBean {
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.INSPECCION.name());
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar la inspección. Inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd
@@ -420,7 +428,7 @@ public class InspeccionBean {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
             
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
     }
@@ -437,11 +445,19 @@ public class InspeccionBean {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Acción no permitida",
                     "Ya existe un municipio perteneciente a la misma provincia con ese nombre", "inputNombre");
         } else {
-            Municipio nuevoMunicipio = municipioService.crearMunicipio(nombre, provincia);
-            listaMunicipios.add(nuevoMunicipio);
-            Collections.sort(listaMunicipios);
-            inspeccion.setMunicipio(nuevoMunicipio);
-            RequestContext.getCurrentInstance().execute("PF('dialogMunicipio').hide()");
+            Municipio nuevoMunicipio;
+            try {
+                nuevoMunicipio = municipioService.crearMunicipio(nombre, provincia);
+                listaMunicipios.add(nuevoMunicipio);
+                Collections.sort(listaMunicipios);
+                inspeccion.setMunicipio(nuevoMunicipio);
+                RequestContext.getCurrentInstance().execute("PF('dialogMunicipio').hide()");
+            } catch (ProgesinException e) {
+                registroActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                        "Error al guardar municipio. Inténtelo de nuevo más tarde.", null, "inputNombre");
+            }
+            
         }
     }
     

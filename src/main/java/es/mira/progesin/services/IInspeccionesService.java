@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
@@ -20,8 +21,9 @@ public interface IInspeccionesService {
      * Método que guarda una inspección.
      * @param inspecciones a guardar
      * @return devuelve la inspección guardada
+     * @throws ProgesinException problema al guardar municipio
      */
-    public Inspeccion save(Inspeccion inspecciones);
+    public Inspeccion save(Inspeccion inspecciones) throws ProgesinException;
     
     /**
      * Borra una inspección pasada por parámetro.

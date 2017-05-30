@@ -19,4 +19,13 @@ public class ProgesinException extends Exception {
     public ProgesinException(Exception e) {
         super(e);
     }
+    
+    /**
+     * @param e excepción general sin parámetros
+     */
+    
+    public ProgesinException() {
+        super();
+    }
+    
 }
