@@ -2,6 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 
 /**
@@ -15,8 +16,9 @@ public interface IPuestoTrabajoService {
     /**
      * @param puesto a guardar.
      * @return PuestoTrabajo actualizado
+     * @throws ProgesinException error al guardar
      */
-    PuestoTrabajo save(PuestoTrabajo puesto);
+    PuestoTrabajo save(PuestoTrabajo puesto) throws ProgesinException;
     
     /**
      * Busca todos los puestos de trabajo dados de alta en la BBDD.

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 
@@ -37,10 +38,11 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     /**
      * @param puesto a guardar.
      * @return PuestoTrabajo actualizado
+     * @throws ProgesinException error al guardar
      */
     @Override
     @Transactional(readOnly = false)
-    public PuestoTrabajo save(PuestoTrabajo puesto) {
+    public PuestoTrabajo save(PuestoTrabajo puesto) throws ProgesinException {
         return puestoTrabajoRepository.save(puesto);
     }
     

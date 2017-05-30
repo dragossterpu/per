@@ -12,7 +12,7 @@ import org.primefaces.context.RequestContext;
 import org.springframework.stereotype.Component;
 
 /**
- * Clase con utilidades para usar con primefaces
+ * Clase con utilidades para usar con primefaces.
  * 
  * @author EZENTIS
  *
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class FacesUtilities {
     
     /**
-     * Redirige a la página pasada como parámetro
+     * Redirige a la página pasada como parámetro.
      * 
      * @author Ezentis
      * @param pagina deseada
@@ -40,7 +40,7 @@ public class FacesUtilities {
     }
     
     /**
-     * Redirige a la página pasada como parámetro añadiendo parámetros GET a evaluar en destino
+     * Redirige a la página pasada como parámetro añadiendo parámetros GET a evaluar en destino.
      * 
      * @author Ezentis
      * @param pagina deseada
@@ -60,7 +60,7 @@ public class FacesUtilities {
     }
     
     /**
-     * Muestra una cuadro de diálogo con información
+     * Muestra una cuadro de diálogo con información.
      * 
      * @author Ezentis
      * @param severity gravedad del aviso
@@ -75,7 +75,7 @@ public class FacesUtilities {
     }
     
     /**
-     * Muestra un mensaje por pantalla
+     * Muestra un mensaje por pantalla.
      * 
      * @author Ezentis
      * @param severity gravedad del aviso

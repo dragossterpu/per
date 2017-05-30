@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
@@ -72,18 +73,26 @@ public class PuestoTrabajoBean implements Serializable {
      * @param puesto de trabajo a eliminar
      */
     public void eliminarPuesto(PuestoTrabajo puesto) {
-        if (existenUsuariosCuerpo(puesto)) {
-            FacesContext.getCurrentInstance().addMessage("msgs",
-                    new FacesMessage(
-                            FacesMessage.SEVERITY_ERROR, "No se puede eliminar el puesto de trabajo '"
-                                    + puesto.getDescripcion() + "' al haber usuarios pertenecientes a dicho puesto",
-                            ""));
-        } else {
-            puesto.setFechaBaja(new Date());
-            puesto.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-            puestoTrabajoService.save(puesto);
-            listaPuestosTrabajo.remove(puesto);
+        try {
+            if (existenUsuariosCuerpo(puesto)) {
+                FacesUtilities
+                        .setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                                Constantes.ERRORMENSAJE, "No se puede eliminar el puesto de trabajo "
+                                        + puesto.getDescripcion() + " al haber usuarios pertenecientes a dicho puesto",
+                                "msgs");
+            } else {
+                puesto.setFechaBaja(new Date());
+                puesto.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+                puestoTrabajoService.save(puesto);
+                listaPuestosTrabajo.remove(puesto);
+            }
+        } catch (ProgesinException e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al eliminar el puesto de trabajo, inténtelo de nuevo más tarde", "msgs");
+            
         }
+        
     }
     
     /**
@@ -94,12 +103,8 @@ public class PuestoTrabajoBean implements Serializable {
      */
     
     public boolean existenUsuariosCuerpo(PuestoTrabajo puesto) {
-        boolean tieneUsuarios = false;
         List<User> usuarios = userService.findByPuestoTrabajo(puesto);
-        if (usuarios != null && usuarios.isEmpty() == Boolean.FALSE) {
-            tieneUsuarios = true;
-        }
-        return tieneUsuarios;
+        return usuarios != null && !usuarios.isEmpty();
     }
     
     /**
@@ -110,16 +115,14 @@ public class PuestoTrabajoBean implements Serializable {
         PuestoTrabajo puesto = new PuestoTrabajo();
         puesto.setDescripcion(puestoNuevo);
         try {
-            if (puestoTrabajoService.save(puesto) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El puesto de trabajo ha sido creado con éxito");
-            }
-        } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+            puestoTrabajoService.save(puesto);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El puesto de trabajo ha sido creado con éxito");
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el puesto de trabajo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
-        // TODO generar alerta / notificación
     }
     
     /**
@@ -128,19 +131,16 @@ public class PuestoTrabajoBean implements Serializable {
      */
     public void onRowEdit(RowEditEvent event) {
         PuestoTrabajo puesto = (PuestoTrabajo) event.getObject();
-        puestoTrabajoService.save(puesto);
-        FacesMessage msg = new FacesMessage("Puesto de trabajo modificado", puesto.getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
-    }
-    
-    /**
-     * Cancela la edición de un puesto de trabajo.
-     * @param event para obtener la descripción del mensaje
-     */
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Modificación cancelada",
-                ((PuestoTrabajo) event.getObject()).getDescripcion());
-        FacesContext.getCurrentInstance().addMessage("msgs", msg);
+        try {
+            puestoTrabajoService.save(puesto);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Puesto de trabajo modificado",
+                    puesto.getDescripcion(), "msgs");
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al editar el puesto de trabajo, inténtelo de nuevo más tarde.", "msgs");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+        }
+        
     }
     
     /**
