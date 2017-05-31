@@ -12,7 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Definición de la clave primaria que se usará en la entity ConfiguracionRespuestasCuestionario
+ * Definición de la clave primaria que se usará en la entity ConfiguracionRespuestasCuestionario.
  * 
  * @author EZENTIS
  *
@@ -27,9 +27,18 @@ import lombok.ToString;
 public class ConfiguracionRespuestasCuestionarioId implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Sección.
+     */
     String seccion;
     
+    /**
+     * Clave.
+     */
     String clave;
     
+    /**
+     * Valor.
+     */
     String valor;
 }

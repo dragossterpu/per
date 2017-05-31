@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entity para guardar los tipos de respuestas existentes en un cuestionario
+ * Entity para guardar los tipos de respuestas existentes en un cuestionario.
  * 
  * @author EZENTIS
  *
@@ -32,6 +32,9 @@ import lombok.ToString;
 public class ConfiguracionRespuestasCuestionario implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de la configuración respuestas.
+     */
     @EmbeddedId
     ConfiguracionRespuestasCuestionarioId config;
     
