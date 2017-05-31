@@ -29,7 +29,7 @@ import lombok.Setter;
  * Bean para la administración de los cuerpos de estado. Nuevo cuerpo de estado, modificar cuerpo de estado, y eliminar
  * cuerpo de estado.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 
@@ -40,19 +40,35 @@ import lombok.Setter;
 public class CuerposEstadoBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Variable utilizada para almacenar la lista de cuerpos mostrada en la tabla.
+     * 
+     */
     private List<CuerpoEstado> listaCuerposEstado;
     
+    /**
+     * Variable utilizada para inyectar el servicio de cuerpos de estado.
+     * 
+     */
     @Autowired
     private transient ICuerpoEstadoService cuerposEstadoService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de usuarios.
+     * 
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de registro de actividad.
+     * 
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Eliminación lógica (se pone fecha de baja) de un cuerpo del estado
+     * Eliminación lógica (se pone fecha de baja) de un cuerpo del estado.
      * @param cuerpo cuerpo del estado a eliminar
      */
     public void eliminarCuerpo(CuerpoEstado cuerpo) {
@@ -79,10 +95,10 @@ public class CuerposEstadoBean implements Serializable {
     }
     
     /**
-     * Alta un nuevo cuerpo del estado
+     * Alta un nuevo cuerpo del estado.
      * 
-     * @param nombreCorto
-     * @param descripcionCuerpo
+     * @param nombreCorto del cuerpo
+     * @param descripcionCuerpo del cuerpo
      */
     
     public void altaCuerpo(String nombreCorto, String descripcionCuerpo) {
@@ -110,8 +126,8 @@ public class CuerposEstadoBean implements Serializable {
     }
     
     /**
-     * Modificación de un cuerpo
-     * @param event
+     * Modificación de un cuerpo.
+     * @param event evento que se recoge al editar la tabla
      */
     public void onRowEdit(RowEditEvent event) {
         CuerpoEstado cuerpoEstado = (CuerpoEstado) event.getObject();
@@ -134,7 +150,7 @@ public class CuerposEstadoBean implements Serializable {
     }
     
     /**
-     * Médodo usado para inicializar la lista de cuerpos de estado que se mostrarán en la página
+     * Médodo usado para inicializar la lista de cuerpos de estado que se mostrarán en la página.
      */
     @PostConstruct
     public void init() {
