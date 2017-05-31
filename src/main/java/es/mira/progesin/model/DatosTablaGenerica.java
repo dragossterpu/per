@@ -10,15 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Entity donde se guardan las respuestas de tipo tabla o matriz de un cuestionario
+ * Entity donde se guardan las respuestas de tipo tabla o matriz de un cuestionario.
  * 
  * @author EZENTIS
  *
  */
+@EqualsAndHashCode(of = "id")
 @Getter
 @Setter
 @Entity
@@ -27,98 +29,118 @@ public class DatosTablaGenerica implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * clave de la tabla.
+     */
     @Id
     @SequenceGenerator(name = "seq_respuestatabla", sequenceName = "seq_respuestatabla", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_respuestatabla")
     @Column(name = "id", nullable = false)
     private Long id;
     
-    // Para cuando haya que dibujar matrices
+    /**
+     * nombre de la fila en caso de que sea una matriz.
+     */
     private String nombreFila;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo01;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo02;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo03;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo04;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo05;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo06;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo07;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo08;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo09;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo10;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo11;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo12;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo13;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo14;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo15;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo16;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo17;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo18;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo19;
     
+    /**
+     * columna de tabla o matriz.
+     */
     private String campo20;
-    
-    // @ManyToOne
-    // @JoinColumns(value = { @JoinColumn(name = "RESPUESTA_ID_CUEST_ENVIADO"),
-    // @JoinColumn(name = "RESPUESTA_ID_PREGUNTA") })
-    // private RespuestaCuestionario respuesta;
-    
-    @Override
-    public String toString() {
-        return "DatosTablaGenerica [id=" + id + ", nombreFila=" + nombreFila + ", campo01=" + campo01 + ", campo02="
-                + campo02 + ", campo03=" + campo03 + ", campo04=" + campo04 + ", campo05=" + campo05 + ", campo06="
-                + campo06 + ", campo07=" + campo07 + ", campo08=" + campo08 + ", campo09=" + campo09 + ", campo10="
-                + campo10 + ", campo11=" + campo11 + ", campo12=" + campo12 + ", campo13=" + campo13 + ", campo14="
-                + campo14 + ", campo15=" + campo15 + ", campo16=" + campo16 + ", campo17=" + campo17 + ", campo18="
-                + campo18 + ", campo19=" + campo19 + ", campo20=" + campo20 + "]";
-    }
-    
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        DatosTablaGenerica other = (DatosTablaGenerica) obj;
-        if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
-            return false;
-        }
-        return true;
-    }
     
 }
