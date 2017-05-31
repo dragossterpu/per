@@ -2,7 +2,6 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 
 /**
@@ -14,16 +13,14 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 public interface ICuerpoEstadoService {
     
     /**
-     * Guarada o actualiza un Cuerpo.
+     * Guarda o actualiza un Cuerpo.
      * 
      * @param cuerpo a guardar
      * @return CuerpoEstado actualizado
-     * @throws ProgesinException
      */
-    CuerpoEstado save(CuerpoEstado cuerpo) throws ProgesinException;
+    CuerpoEstado save(CuerpoEstado cuerpo);
     
     /**
-     * 
      * Busca todos los cuerpos del estado existentes en la BBDD.
      * 
      * @return Iterable<CuerpoEstado> lista con todos los cuerpos

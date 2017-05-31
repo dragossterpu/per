@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 
@@ -45,7 +44,7 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public CuerpoEstado save(CuerpoEstado cuerpo) throws ProgesinException {
+    public CuerpoEstado save(CuerpoEstado cuerpo) {
         return cuerpoEstadoRepository.save(cuerpo);
     }
     
