@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +28,11 @@ import es.mira.progesin.persistence.entities.gd.Documento;
 @TestPropertySource(locations = "classpath:test.properties")
 public class IDocumentoRepositoryTest {
     
+    /**
+     * Repositorio de documentos.
+     */
     @Autowired
     private IDocumentoRepository documentoRepository;
-    
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        
-    }
-    
-    //
-    // /**
-    // * @throws java.lang.Exception
-    // */
-    // @Before
-    // public void setUp() throws Exception {
-    // }
     
     /**
      * Test method for {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#findByFechaBajaIsNull()}.
@@ -82,7 +68,7 @@ public class IDocumentoRepositoryTest {
      */
     @Test
     public void testBuscaRespuestaDocumento() {
-        List<Long> resp = documentoRepository.buscaRespuestaDocumento(3L);
+        List<Long> resp = documentoRepository.buscaRespuestaDocumento(1L);
         assertThat(resp).hasSize(1);
     }
     
@@ -92,9 +78,9 @@ public class IDocumentoRepositoryTest {
      */
     @Test
     public void testDeleteByFechaBajaIsNotNull() {
-        // documentoRepository.deleteByFechaBajaIsNotNull();
-        // List<Documento> listDoc = documentoRepository.findByFechaBajaIsNotNull();
-        // assertThat(listDoc).hasSize(0);
+        documentoRepository.deleteByFechaBajaIsNotNull();
+        List<Documento> listDoc = documentoRepository.findByFechaBajaIsNotNull();
+        assertThat(listDoc).hasSize(0);
     }
     
 }

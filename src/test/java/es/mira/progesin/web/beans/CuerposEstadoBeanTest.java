@@ -76,19 +76,17 @@ public class CuerposEstadoBeanTest {
     
     /**
      * Comprueba que la clase existe.
-     * @throws Exception
      */
     @Test
-    public void type() throws Exception {
+    public void type() {
         assertThat(CuerposEstadoBean.class).isNotNull();
     }
     
     /**
      * Comprueba que la clase se puede instanciar.
-     * @throws Exception
      */
     @Test
-    public void instantiation() throws Exception {
+    public void instantiation() {
         CuerposEstadoBean target = new CuerposEstadoBean();
         assertThat(target).isNotNull();
     }
@@ -108,7 +106,7 @@ public class CuerposEstadoBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo(CuerpoEstado)}.
      */
     @Test
     public void eliminarCuerpo_conUsuarios() {
@@ -119,11 +117,12 @@ public class CuerposEstadoBeanTest {
         
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(0)).save(cuerpo);
-        
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+                any(Exception.class));
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo(CuerpoEstado)}.
      */
     @Test
     public void eliminarCuerpo_sinUsuarios() {
@@ -134,34 +133,34 @@ public class CuerposEstadoBeanTest {
         when(userService.existByCuerpoEstado(cuerpo)).thenReturn(false);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
-        listaCuerposEstado.remove(cuerpo);
         
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
-        
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+                any(Exception.class));
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo(CuerpoEstado)}.
      */
     @Test
     public void eliminarCuerpo_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
-        when(userService.existByCuerpoEstado(cuerpo)).thenThrow(Exception.class);
+        when(userService.existByCuerpoEstado(cuerpo)).thenThrow(SQLException.class);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(0)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                exceptionCaptor.capture());
+                any(SQLException.class));
         
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#altaCuerpo}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#altaCuerpo(String, String)}.
      */
     @Test
     public void altaCuerpo() {
@@ -173,14 +172,17 @@ public class CuerposEstadoBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+                any(Exception.class));
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#altaCuerpo}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#altaCuerpo(String, String)}.
      */
     @Test
     public void altaCuerpo_excepcion() {
         when(cuerposEstadoService.save(cuerpoCaptor.capture())).thenThrow(SQLException.class);
+        
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
@@ -188,7 +190,7 @@ public class CuerposEstadoBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#onRowEdit}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#onRowEdit(RowEditEvent)}.
      */
     @Test
     public void onRowEdit() {
@@ -197,39 +199,40 @@ public class CuerposEstadoBeanTest {
         when(event.getObject()).thenReturn(cuerpo);
         
         cuerposEstadoBean.onRowEdit(event);
-        regActividadService.altaRegActividad(any(String.class), eq(TipoRegistroEnum.MODIFICACION.name()),
-                eq(SeccionesEnum.ADMINISTRACION.name()));
         
-        verify(cuerposEstadoService, times(1)).save(cuerpoCaptor.capture());
+        verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+                any(Exception.class));
         
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#onRowEdit}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#onRowEdit(RowEditEvent)}.
      */
     @Test
     public void onRowEdit_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
         RowEditEvent event = mock(RowEditEvent.class);
+        when(event.getObject()).thenReturn(cuerpo);
+        when(cuerposEstadoService.save(cuerpo)).thenThrow(SQLException.class);
         
         cuerposEstadoBean.onRowEdit(event);
-        when(cuerposEstadoService.save(cuerpo)).thenThrow(Exception.class);
         
-        verify(cuerposEstadoService, times(0)).save(cuerpoCaptor.capture());
+        verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                exceptionCaptor.capture());
+                any(SQLException.class));
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#init}.
+     * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#init()}.
      */
     @Test
     public void init() {
         cuerposEstadoBean.init();
-        verify(cuerposEstadoService, times(1)).findByFechaBajaIsNull();
         
+        verify(cuerposEstadoService, times(1)).findByFechaBajaIsNull();
     }
     
 }
