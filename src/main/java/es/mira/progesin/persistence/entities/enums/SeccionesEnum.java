@@ -61,7 +61,7 @@ public enum SeccionesEnum {
     /**
      * Sección de sugerencias.
      */
-    NOMBRESECCIONSUGERENCIAS("Sugerencias de mejora");
+    SUGERENCIAS("Sugerencias de mejora");
     
     /**
      * Descripción de la sección.
