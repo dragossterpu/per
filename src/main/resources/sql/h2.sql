@@ -324,7 +324,7 @@ insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CU
 insert into respuestascuestionario (FECHA_VALIDACION, RESPUESTA_TEXTO, USERNAME_VALIDACION, ID_CUEST_ENVIADO, ID_PREGUNTA) VALUES (null, 'respuesta_test1', 'system', 1, 1);
 insert into respuestascuestionario (FECHA_VALIDACION, RESPUESTA_TEXTO, USERNAME_VALIDACION, ID_CUEST_ENVIADO, ID_PREGUNTA) VALUES (null, 'respuesta_test2', 'system', 1, 2);
 
-insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 1, 3);
+insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 1, 1);
 insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 2, 2);
 
 
