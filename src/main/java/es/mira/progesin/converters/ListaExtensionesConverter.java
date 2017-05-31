@@ -16,17 +16,32 @@ import org.springframework.stereotype.Component;
 @Component("listaExtensionesConverter")
 public class ListaExtensionesConverter implements Converter {
     
+    /**
+     * Delimitador de elementos en cadena de texto que contiene una lista.
+     */
     private static final String SEPARADOR = ", ";
     
+    /**
+     * Transforma una cadena de texto en lista de elementos.
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-        return (submittedValue != null) ? new ArrayList<>(Arrays.asList(submittedValue.split(SEPARADOR))) : null;
+        Object respuesta = null;
+        if (submittedValue != null)
+            respuesta = new ArrayList<>(Arrays.asList(submittedValue.split(SEPARADOR)));
+        return respuesta;
     }
     
+    /**
+     * Transforma una lista de elementos en una cadena de texto.
+     */
     @SuppressWarnings("unchecked")
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-        return (modelValue != null) ? String.join(SEPARADOR, (List<String>) modelValue) : null;
+        String respuesta = null;
+        if (modelValue != null)
+            respuesta = String.join(SEPARADOR, (List<String>) modelValue);
+        return respuesta;
     }
     
 }

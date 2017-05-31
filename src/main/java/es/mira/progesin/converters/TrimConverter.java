@@ -14,15 +14,30 @@ import org.springframework.stereotype.Component;
 @Component("trimConverter")
 public class TrimConverter implements Converter {
     
+    /**
+     * Elimina espacios antes y despues de un texto.
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-        String trimmed = (submittedValue != null) ? submittedValue.trim() : null;
-        return (trimmed == null || trimmed.isEmpty()) ? null : trimmed;
+        String trimmed = null;
+        if (submittedValue != null) {
+            trimmed = submittedValue.trim();
+            if (trimmed.isEmpty()) {
+                trimmed = null;
+            }
+        }
+        return trimmed;
     }
     
+    /**
+     * Recupera el texto.
+     */
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-        return (modelValue != null) ? modelValue.toString() : null;
+        String cadena = null;
+        if (modelValue != null)
+            cadena = modelValue.toString();
+        return cadena;
     }
     
 }

@@ -8,13 +8,25 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * Configuración de la resolución de rutas relativas a la página de login.
+ * 
+ * @author EZENTIS
+ */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+    
+    /**
+     * Activa el servlet por defecto.
+     */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
     
+    /**
+     * Establece /index.html como vista por defecto.
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:/index.xhtml");
@@ -22,6 +34,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         super.addViewControllers(registry);
     }
     
+    /**
+     * Configuración de resolución de ruta de acceso a la vista /acceso/login.xhtml al usar acciones /login.
+     * @return resolver
+     */
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();

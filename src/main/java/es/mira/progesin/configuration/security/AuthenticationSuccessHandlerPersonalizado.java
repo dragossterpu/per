@@ -16,18 +16,23 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 
 /**
- * Clase manejadora que gestiona los accesos exitosos a la aplicación. Registra en acceso para auditoría y redirige a la
- * vista Index.
+ * Clase que gestiona los accesos exitosos a la aplicación. Registra en acceso para auditoría y redirige a la vista
+ * Index.
  * 
  * @author EZENTIS
  *
  */
 @Component
 public class AuthenticationSuccessHandlerPersonalizado implements AuthenticationSuccessHandler {
-    
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService registroActividadService;
     
+    /**
+     * Auditoría de inicios de sesión satisfactorios.
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication autentication) throws IOException, ServletException {
