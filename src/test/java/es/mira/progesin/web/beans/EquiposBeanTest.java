@@ -336,7 +336,7 @@ public class EquiposBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#guardarMiembros(RolEquipoEnum)}.
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#cambiarJefeEquipo()}.
      */
     @Test
     public void cambiarJefeEquipo_validacionJefeNoSeleccionado() {
