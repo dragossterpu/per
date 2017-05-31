@@ -15,9 +15,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Gestiona peticiones HTTP relativas al inicio y finalización de sesiones en el sistema
+ * Gestiona peticiones HTTP relativas al inicio y finalización de sesiones en el sistema.
  * 
- * @author Ezentis
+ * @author EZENTIS
  */
 @Getter
 @Setter
@@ -26,7 +26,7 @@ public class LoginController {
     
     /**
      * Intercepta peticiones a la ruta de login "/login" y responde de manera distinta si es una petición normal o AJAX
-     * (útil en caso de caducar la sesión actual)
+     * (útil en caso de caducar la sesión actual).
      * 
      * @param request peticion http del cliente
      * @param response respuesta http del servidor
@@ -50,7 +50,7 @@ public class LoginController {
     }
     
     /**
-     * Intercepta peticiones a la ruta de login "/logout" e invalida la sesión actual del usuario
+     * Intercepta peticiones a la ruta de login "/logout" e invalida la sesión actual del usuario.
      * 
      * @param session sesión asociada a la petición actual
      * @return acción de login mapeada en el dispatcher
