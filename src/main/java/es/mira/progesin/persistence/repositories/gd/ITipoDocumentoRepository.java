@@ -6,7 +6,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 
 /**
  * 
- * Repositorio con las operaciones de BDD para la entidad TipoDocumento
+ * Repositorio con las operaciones de BDD para la entidad TipoDocumento.
  * 
  * @author EZENTIS
  *
@@ -14,7 +14,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 public interface ITipoDocumentoRepository extends CrudRepository<TipoDocumento, Long> {
     
     /**
-     * Devuelve desde la BDD un objeto TipoDocumento identificado por su nombre
+     * Devuelve desde la BDD un objeto TipoDocumento identificado por su nombre.
      * 
      * @param nombre Nombre del tipo de documento
      * @return El objeto almacenado en base de datos

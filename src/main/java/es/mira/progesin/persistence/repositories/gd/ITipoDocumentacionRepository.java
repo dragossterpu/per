@@ -8,7 +8,7 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 
 /**
- * Repositorio del tipo de documentación
+ * Repositorio del tipo de documentación.
  * 
  * @author EZENTIS
  *
@@ -16,7 +16,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 public interface ITipoDocumentacionRepository extends CrudRepository<TipoDocumentacion, Long> {
     
     /**
-     * @param ambito
+     * @param ambito pasado pro parámetro
      * @return lista de tipos de documentación por ámbito
      */
     List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito);

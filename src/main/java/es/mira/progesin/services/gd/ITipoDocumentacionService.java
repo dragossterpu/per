@@ -7,7 +7,7 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 
 /**
- * Servicio de tipos de documentación previa
+ * Servicio de tipos de documentación previa.
  * 
  * @author EZENTIS
  *
@@ -15,21 +15,21 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 public interface ITipoDocumentacionService {
     
     /**
-     * Devuelve un listado con todos los tipos de documentación previa
+     * Devuelve un listado con todos los tipos de documentación previa.
      * 
      * @return lista de tipos de documentación
      */
     List<TipoDocumentacion> findAll();
     
     /**
-     * Elimina un tipo de documentación previa
+     * Elimina un tipo de documentación previa.
      * 
      * @param id identificador de tipo de documentación
      */
     void delete(Long id);
     
     /**
-     * Guarda en base de datos un tipo de documentación previa
+     * Guarda en base de datos un tipo de documentación previa.
      * 
      * @param entity tipo a guardar
      * @return tipo guardado
@@ -37,7 +37,7 @@ public interface ITipoDocumentacionService {
     TipoDocumentacion save(TipoDocumentacion entity);
     
     /**
-     * Devuelve un listado con todos los tipos de documentación previa
+     * Devuelve un listado con todos los tipos de documentación previa.
      * 
      * @param ambito ámbito del que se buscan los tipos de documentación
      * @return lista de tipos de documentación
@@ -46,7 +46,7 @@ public interface ITipoDocumentacionService {
     List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito);
     
     /**
-     * Guarda una entidad tipo DocumentacionPrevia en base de datos
+     * Guarda una entidad tipo DocumentacionPrevia en base de datos.
      * 
      * @param entity documentación a guardar
      * @return documentación guardada
@@ -54,7 +54,7 @@ public interface ITipoDocumentacionService {
     DocumentacionPrevia save(DocumentacionPrevia entity);
     
     /**
-     * Recupera un listado de documentacione previa buscando por una solicitud
+     * Recupera un listado de documentacione previa buscando por una solicitud.
      * 
      * @param idSolicitud id de la solicitud
      * @return listado de documentaciones resultado de la búsqueda
