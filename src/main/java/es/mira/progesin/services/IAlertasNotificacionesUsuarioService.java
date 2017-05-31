@@ -71,11 +71,10 @@ public interface IAlertasNotificacionesUsuarioService {
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param user usuario al que se asigna el mensaje
-     * @return Mensaje (Alerta o Notificacion) grabado
      * 
      */
     
-    AlertasNotificacionesUsuario grabarMensajeUsuario(Object entidad, String user);
+    void grabarMensajeUsuario(Object entidad, String user);
     
     /**
      * 
@@ -83,11 +82,10 @@ public interface IAlertasNotificacionesUsuarioService {
      * 
      * @param entidad Alerta o Notificación a grabar
      * @param inspeccion Se asignará el mensaje al jefe del equipo que tiene asignada esta inspección
-     * @return Mensaje (Alerta o Notificacion) grabado
      * 
      */
     
-    AlertasNotificacionesUsuario grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion);
+    void grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion);
     
     /**
      * 

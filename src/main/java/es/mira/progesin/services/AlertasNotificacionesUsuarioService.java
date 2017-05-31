@@ -85,7 +85,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
     }
     
     @Override
-    public AlertasNotificacionesUsuario grabarMensajeUsuario(Object entidad, String user) {
+    public void grabarMensajeUsuario(Object entidad, String user) {
         AlertasNotificacionesUsuario men = new AlertasNotificacionesUsuario();
         String nombre = entidad.getClass().getName().substring(entidad.getClass().getName().lastIndexOf('.') + 1);
         switch (nombre) {
@@ -100,12 +100,11 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         men.setUsuario(user);
         men.setFechaAlta(new Date());
         mensajeRepo.save(men);
-        return null;
     }
     
     @Override
-    public AlertasNotificacionesUsuario grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion) {
-        return grabarMensajeUsuario(entidad, inspeccion.getEquipo().getJefeEquipo());
+    public void grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion) {
+        grabarMensajeUsuario(entidad, inspeccion.getEquipo().getJefeEquipo());
     }
     
     @Override
@@ -122,7 +121,6 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         for (RoleEnum rol : roles) {
             grabarMensajeRol(entidad, rol);
         }
-        
     }
     
     @Override
@@ -132,7 +130,6 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         for (Miembro miembro : miembrosEquipo) {
             grabarMensajeUsuario(entidad, miembro.getUsername());
         }
-        
     }
     
     private AlertasNotificacionesUsuario rellenarMensaje(Alerta entidad) {
