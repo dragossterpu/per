@@ -24,25 +24,35 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IUserRepository;
 
 /**
+ * 
+ * Test para la clase UserService.
+ *
  * @author EZENTIS
  * 
- * Test para la clase UserService
- *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
     
+    /**
+     * Simulación de un repositorio de usuarios.
+     */
     @Mock
     private IUserRepository userRepositoryMock;
     
+    /**
+     * Simulación del encriptador de claves.
+     */
     @Mock
     private PasswordEncoder passwordEncoderMock;
     
+    /**
+     * Inyección del servicio de usuarios.
+     */
     @InjectMocks
     private IUserService userService = new UserService();
     
     /**
-     * Comprueba que existe la clase
+     * Comprueba que existe la clase.
      */
     @Test
     public void type() {
@@ -50,7 +60,7 @@ public class UserServiceTest {
     }
     
     /**
-     * Comprueba que no es una clase abstracta
+     * Comprueba que no es una clase abstracta.
      */
     @Test
     public void instantiation() {

@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad que relaciona las areas de un cuestionario enviado con un usuario provisional que debe responderlas
+ * Entidad que relaciona las areas de un cuestionario enviado con un usuario provisional que debe responderlas.
  * 
  * @author EZENTIS
  * @see es.mira.progesin.web.beans.cuestionarios.ResponderCuestionarioBean
@@ -33,14 +33,23 @@ import lombok.ToString;
 public class AreaUsuarioCuestEnv implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Id del cuestionario enviado.
+     */
     @Id
     @Column
     private Long idCuestionarioEnviado;
     
+    /**
+     * Id del área.
+     */
     @Id
     @Column
     private Long idArea;
     
+    /**
+     * Username del usuario provisional.
+     */
     @Column
     private String usernameProv;
     

@@ -51,7 +51,8 @@ import lombok.Setter;
 
 /**
  * Bean que contiene los métodos necesarios para que los usuarios puedan responder las preguntas contenidas en los
- * cuestionarios
+ * cuestionarios.
+ * 
  * @author EZENTIS
  *
  */
@@ -64,60 +65,111 @@ public class ResponderCuestionarioBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Lista de usuarios provisionales.
+     */
     private List<User> usuariosProv;
     
+    /**
+     * Booleano usado para controlar si el usuario principal controla todas las áreas.
+     */
     private boolean principalControlaTodasAreas;
     
+    /**
+     * Lista de áreas/usuarios.
+     */
     private List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv;
     
+    /**
+     * Mapa de áreas/usuarios.
+     */
     private Map<Long, String> mapaAreaUsuarioCuestEnv;
     
     /**
-     * Verificador de extensiones
+     * Cuestionario enviado.
+     */
+    private CuestionarioEnvio cuestionarioEnviado;
+    
+    /**
+     * Verificador de extensiones.
      */
     @Autowired
     private transient VerificadorExtensiones verificadorExtensiones;
     
+    /**
+     * Visualizar cuestionario.
+     */
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
-    private CuestionarioEnvio cuestionarioEnviado;
-    
+    /**
+     * Repositorio de respuestas.
+     */
     @Autowired
     private transient IRespuestaCuestionarioRepository respuestaRepository;
     
+    /**
+     * Servicio de respuestas.
+     */
     @Autowired
     private transient IRespuestaCuestionarioService respuestaService;
     
+    /**
+     * Repositorio de tabla de datos.
+     */
     @Autowired
     private transient IDatosTablaGenericaRepository datosTablaRepository;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private transient IDocumentoService documentoService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private transient INotificacionService notificacionService;
     
+    /**
+     * Servicio de alertas.
+     */
     @Autowired
     private transient IAlertaService alertaService;
     
+    /**
+     * Servicio de areas/usuario de cuestionarios enviados.
+     */
     @Autowired
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
+    /**
+     * Servicio de areas cuestionario.
+     */
     @Autowired
     private transient IAreaCuestionarioService areaCuestionarioService;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private transient IUserService userService;
     
     /**
-     * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos
+     * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos.
      */
     public void guardarBorrador() {
         try {
@@ -141,9 +193,9 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Actualiza el mapa de respuestas de tipo tabla/matriz con los id obtenidos al guardar en BBDD
+     * Actualiza el mapa de respuestas de tipo tabla/matriz con los id obtenidos al guardar en BBDD.
      * 
-     * @param listaRespuestas
+     * @param listaRespuestas Lista de respuestas
      */
     private void actualizarIdRespuestasTabla(List<RespuestaCuestionario> listaRespuestas) {
         listaRespuestas.forEach(respuesta -> {
@@ -160,9 +212,8 @@ public class ResponderCuestionarioBean implements Serializable {
     
     /**
      * Guarda la fecha de cumplimentación y las respuestas introducidas por el usuario en BBDD, incluidos los documentos
-     * subidos
+     * subidos.
      * 
-     * @author EZENTIS
      */
     public void enviarCuestionario() {
         try {
@@ -201,12 +252,21 @@ public class ResponderCuestionarioBean implements Serializable {
         }
     }
     
+    /**
+     * Comprueba las asignaciones realizadas.
+     */
     private void comprobarAsignaciones() {
         principalControlaTodasAreas = true;
         listaAreasUsuarioCuestEnv.forEach(areaUsuario -> principalControlaTodasAreas = principalControlaTodasAreas
                 && visualizarCuestionario.getUsuarioActual().getUsername().equals(areaUsuario.getUsernameProv()));
     }
     
+    /**
+     * Crea una nueva respuesta a partir de una pregunta.
+     * 
+     * @param pregunta Pregunta que se desea usar como referencia.
+     * @return Respuesta creada.
+     */
     private RespuestaCuestionario crearRespuesta(PreguntasCuestionario pregunta) {
         RespuestaCuestionario respuestaCuestionario = new RespuestaCuestionario();
         RespuestaCuestionarioId idRespuesta = new RespuestaCuestionarioId();
@@ -217,7 +277,9 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Guarda las respuestas de las preguntas que no son de tipo TABLA o MATRIZ
+     * Guarda las respuestas de las preguntas que no son de tipo TABLA o MATRIZ.
+     * 
+     * @param listaRespuestas Lista de respuestas
      * @see guardarRespuestas
      *
      */
@@ -239,8 +301,9 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Guarda en BBDD las respuestas de tipo TABLA o MATRIZ
-     * @param listaRespuestas
+     * Guarda en BBDD las respuestas de tipo TABLA o MATRIZ.
+     * 
+     * @param listaRespuestas Lista de respuestas
      * @see guardarRespuestas
      * 
      */
@@ -262,7 +325,8 @@ public class ResponderCuestionarioBean implements Serializable {
     
     /**
      * Elimina una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
-     * empezar por TABLA
+     * empezar por TABLA.
+     * 
      * @param pregunta Pregunta de un cuestionario
      */
     public void eliminarFilaRespuestaTabla(PreguntasCuestionario pregunta) {
@@ -277,7 +341,7 @@ public class ResponderCuestionarioBean implements Serializable {
     
     /**
      * Se crea un objeto Documento a partir del fichero que sube el usuario y se añade al mapa de documentos que se
-     * visualiza en pantalla
+     * visualiza en pantalla.
      * 
      * @param event Evento que contiene el fichero que sube el usuario
      */
@@ -295,9 +359,12 @@ public class ResponderCuestionarioBean implements Serializable {
                 respuestaCuestionario.setRespuestaTexto(visualizarCuestionario.getMapaRespuestas().get(pregunta));
                 
                 Map<PreguntasCuestionario, List<Documento>> mapaDocumentos = visualizarCuestionario.getMapaDocumentos();
-                listaDocumentos = mapaDocumentos.get(pregunta) != null ? mapaDocumentos.get(pregunta)
-                        : new ArrayList<>();
                 
+                if (mapaDocumentos.get(pregunta) != null) {
+                    listaDocumentos = mapaDocumentos.get(pregunta);
+                } else {
+                    listaDocumentos = new ArrayList<>();
+                }
                 respuestaService.saveConDocumento(respuestaCuestionario, archivoSubido, listaDocumentos);
                 
                 mapaDocumentos.put(pregunta, listaDocumentos);
@@ -315,9 +382,10 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Elimina el documento pasado como parámetro de la pregunta
-     * @param pregunta a la que pertenece
-     * @param documento a eliminar
+     * Elimina el documento pasado como parámetro de la pregunta.
+     * 
+     * @param pregunta Pregunta a la que pertenece
+     * @param documento Documento a eliminar
      */
     public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
         
@@ -333,7 +401,7 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Obtiene el cuestionario a mostrar en función del usuario que se loguea
+     * Obtiene el cuestionario a mostrar en función del usuario que se loguea.
      */
     @PostConstruct
     public void init() {
@@ -367,9 +435,8 @@ public class ResponderCuestionarioBean implements Serializable {
     
     /**
      * Guarda los cambios realizados a la asignación de areas a usuarios provisionales secundarios por parte del
-     * principal
+     * principal.
      * 
-     * @author EZENTIS
      */
     public void asignarAreas() {
         try {
@@ -397,9 +464,7 @@ public class ResponderCuestionarioBean implements Serializable {
     
     /**
      * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos, desactiva el acceso
-     * de dicho usuario provisional secundario y reasigna las areas al usuario principal
-     * 
-     * @author EZENTIS
+     * de dicho usuario provisional secundario y reasigna las areas al usuario principal.
      */
     public void guardarYAsignarAreasAlPrincipal() {
         try {

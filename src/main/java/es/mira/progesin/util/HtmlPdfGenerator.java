@@ -100,7 +100,7 @@ public class HtmlPdfGenerator {
     }
     
     /**
-     * Limpia el html pasado como parámetro para cerrar todas las etiquetas que haya sin cerrar
+     * Limpia el html pasado como parámetro para cerrar todas las etiquetas que haya sin cerrar.
      * 
      * @param html html a limpiar
      * @return html limpio, con todas las etiquetas cerradas
