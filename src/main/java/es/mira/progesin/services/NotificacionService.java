@@ -35,23 +35,57 @@ import es.mira.progesin.persistence.repositories.INotificacionRepository;
 
 @Service
 public class NotificacionService implements INotificacionService {
+    
+    /**
+     * Variable utilizada para inyectar el repositorio de notificaciones.
+     * 
+     */
     @Autowired
     private INotificacionRepository notificacionRepository;
     
+    /**
+     * Variable utilizada para inyectar el repositorio de alertas y notificaciones de usuario.
+     * 
+     */
     @Autowired
     private IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
     
+    /**
+     * Variable utilizada para inyectar el repositorio de registro de acividad.
+     * 
+     */
     @Autowired
     private IRegistroActividadService registroActividadService;
     
+    /**
+     * Variable utilizada para inyectar la sesión de spring.
+     * 
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * 
+     * Recupera de la base de datos una notificación cuya id se pasa como parámetro.
+     * 
+     * @param id Identificador de la notificación a buscar
+     * @return Notificación que corresponde al id recibido
+     * 
+     */
     @Override
     public Notificacion findOne(Long id) {
         return notificacionRepository.findOne(id);
     }
     
+    /**
+     * 
+     * Recupera de la base de datos una notificación cuya id se pasa como parámetro.
+     * 
+     * @param descripcion Identificador de la notificación a buscar
+     * @param seccion de mensajes
+     * @return Notificación que corresponde al id recibido
+     * 
+     */
     private Notificacion crearNotificacion(String descripcion, String seccion) {
         try {
             Notificacion notificacion = new Notificacion();
@@ -68,6 +102,16 @@ public class NotificacionService implements INotificacionService {
         
     }
     
+    /**
+     * 
+     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un usuario
+     * pasado como parámetro.
+     * 
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param usuario Usuario al que se le dirige la notificación
+     * 
+     */
     @Override
     public void crearNotificacionUsuario(String descripcion, String seccion, String usuario) {
         try {
@@ -79,6 +123,16 @@ public class NotificacionService implements INotificacionService {
         
     }
     
+    /**
+     * 
+     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un rol
+     * pasado como parámetro.
+     * 
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param rol Rol al que se le dirige la notificación
+     * 
+     */
     @Override
     public void crearNotificacionRol(String descripcion, String seccion, RoleEnum rol) {
         try {
@@ -89,6 +143,16 @@ public class NotificacionService implements INotificacionService {
         }
     }
     
+    /**
+     * 
+     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un listado
+     * de roles pasado como parámetro.
+     * 
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param roles Lista de roles a los que se dirige la notificación
+     * 
+     */
     @Override
     public void crearNotificacionRol(String descripcion, String seccion, List<RoleEnum> roles) {
         try {
@@ -100,16 +164,16 @@ public class NotificacionService implements INotificacionService {
         
     }
     
-    @Override
-    public void crearNotificacionEquipo(String descripcion, String seccion, Inspeccion inspeccion) {
-        try {
-            Notificacion notificacion = crearNotificacion(descripcion, seccion);
-            alertasNotificacionesUsuarioService.grabarMensajeEquipo(notificacion, inspeccion);
-        } catch (Exception e) {
-            registroActividadService.altaRegActividadError(seccion, e);
-        }
-    }
-    
+    /**
+     * 
+     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al jefe del
+     * equipo de una inspección pasada como parámetro.
+     * 
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param inspeccion Inspección a cuyo jefe de equipo se le dirige la notificación
+     * 
+     */
     @Override
     public void crearNotificacionJefeEquipo(String descripcion, String seccion, Inspeccion inspeccion) {
         try {
@@ -120,6 +184,16 @@ public class NotificacionService implements INotificacionService {
         }
     }
     
+    /**
+     * 
+     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al equipo
+     * que se pasa como parámetro.
+     * 
+     * @param descripcion Descripción de la notificación
+     * @param seccion Sección sobre la que se hace la notificación
+     * @param equipo Equipo al que se le dirige la notificación
+     * 
+     */
     @Override
     public void crearNotificacionEquipo(String descripcion, String seccion, Equipo equipo) {
         try {
@@ -131,6 +205,16 @@ public class NotificacionService implements INotificacionService {
         
     }
     
+    /**
+     * Devuelve un listado de notificaciones asignadas a un usuario. El resultado se devuelve paginado.
+     * 
+     * @param first Primer registro del listado
+     * @param pageSize Número máximo de registros del listado
+     * @param sortField Campo de ordenación
+     * @param sortOrder Sentido de la ordenación
+     * @param usuario Usuario para el que se buscan las notificaciones
+     * @return Listado de notificaciones
+     */
     @Override
     public List<Notificacion> buscarPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
             String usuario) {
@@ -156,6 +240,12 @@ public class NotificacionService implements INotificacionService {
         return listado;
     }
     
+    /**
+     * Devuelve el número total de notificaciones asignadas a un usuario.
+     * 
+     * @param usuario Usuario del que se desean recuperar las notificaciones
+     * @return Número de registros coincidentes con la búsqueda
+     */
     @Override
     public int getCounCriteria(String usuario) {
         Session session = sessionFactory.openSession();
@@ -168,6 +258,12 @@ public class NotificacionService implements INotificacionService {
         return Math.toIntExact(cnt);
     }
     
+    /**
+     * Crea la consulta criteria.
+     * 
+     * @param usuario Usuario del que se desean recuperar las notificaciones
+     * @param criteria consulta criteria
+     */
     private void creaCriteria(String usuario, Criteria criteria) {
         
         DetachedCriteria usuarioMensaje = DetachedCriteria.forClass(AlertasNotificacionesUsuario.class, "mensaje");

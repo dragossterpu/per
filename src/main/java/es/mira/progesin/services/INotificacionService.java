@@ -19,6 +19,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
  * 
  */
 public interface INotificacionService {
+    
     /**
      * 
      * Recupera de la base de datos una notificación cuya id se pasa como parámetro.
@@ -27,7 +28,6 @@ public interface INotificacionService {
      * @return Notificación que corresponde al id recibido
      * 
      */
-    
     Notificacion findOne(Long id);
     
     /**
@@ -70,27 +70,14 @@ public interface INotificacionService {
     void crearNotificacionRol(String seccion, String descripcion, List<RoleEnum> roles);
     
     /**
-     * 
-     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al equipo de
-     * una inspección.
-     * 
-     * @param descripcion Descripción de la notificación
-     * @param seccion Sección sobre la que se hace la notificación
-     * @param inspeccion Inspección a cuyo equipo se le dirige la notificación
-     * 
-     */
-    
-    void crearNotificacionEquipo(String descripcion, String seccion, Inspeccion inspeccion);
-    
-    /**
-     * 
+     *
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna al equipo
      * que se pasa como parámetro.
-     * 
+     *
      * @param descripcion Descripción de la notificación
      * @param seccion Sección sobre la que se hace la notificación
      * @param equipo Equipo al que se le dirige la notificación
-     * 
+     *
      */
     
     void crearNotificacionEquipo(String descripcion, String seccion, Equipo equipo);

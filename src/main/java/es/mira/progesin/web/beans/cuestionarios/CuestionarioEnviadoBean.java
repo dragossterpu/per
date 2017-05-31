@@ -240,7 +240,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                         rolesANotificar);
                 notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                        cuestionario.getInspeccion());
+                        cuestionario.getInspeccion().getEquipo());
             }
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -293,7 +293,7 @@ public class CuestionarioEnviadoBean implements Serializable {
             notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                     RoleEnum.ROLE_SERVICIO_APOYO);
             notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                    cuestionario.getInspeccion());
+                    cuestionario.getInspeccion().getEquipo());
             
         } catch (Exception e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),

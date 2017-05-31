@@ -201,7 +201,7 @@ public class EnvioCuestionarioBean implements Serializable {
                             RoleEnum.ROLE_JEFE_INSPECCIONES);
                     
                     notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
-                            cuestionarioEnvio.getInspeccion());
+                            cuestionarioEnvio.getInspeccion().getEquipo());
                     
                 }
             }
