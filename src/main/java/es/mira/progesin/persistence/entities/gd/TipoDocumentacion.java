@@ -54,26 +54,26 @@ public class TipoDocumentacion implements Serializable {
     private Long id;
     
     /**
-     * DESCRIPCION.
+     * Descripción.
      */
     @Column(name = "DESCRIPCION", length = 255)
     private String descripcion;
     
     /**
-     * NOMBRE.
+     * Nombre.
      */
     @Column(name = "NOMBRE", length = 100)
     private String nombre;
     
     /**
-     * EXTENSIONES.
+     * Extensiones.
      */
     @Column(name = "EXTENSIONES")
     @Convert(converter = ListaExtensionesAdapter.class)
     private List<String> extensiones;
     
     /**
-     * AMBITO.
+     * Ámbito.
      */
     @Column(name = "ambito", length = 10)
     @Enumerated(EnumType.STRING)
