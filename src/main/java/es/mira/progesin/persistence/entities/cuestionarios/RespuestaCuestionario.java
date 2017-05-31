@@ -28,9 +28,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author EZENTIS
+ * Entidad para la respuesta asociada a un cuestionario.
  * 
- * Entidad para la respuesta asociada a un cuestionario
+ * @author EZENTIS
  *
  */
 @AllArgsConstructor
@@ -45,26 +45,44 @@ import lombok.ToString;
 public class RespuestaCuestionario implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID de la respuesta.
+     */
     @EmbeddedId
     RespuestaCuestionarioId respuestaId;
     
+    /**
+     * Lista con las respuestas de tipo tabla o matriz.
+     */
     @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumns(value = { @JoinColumn(name = "RESPUESTA_ID_CUEST_ENVIADO"),
             @JoinColumn(name = "RESPUESTA_ID_PREGUNTA") })
     @OrderBy("id")
     private List<DatosTablaGenerica> respuestaTablaMatriz;
     
+    /**
+     * Lista con las respuestas de tipo texto.
+     */
     @Column(name = "respuesta_texto", length = 2000)
     private String respuestaTexto;
     
+    /**
+     * Lista con los documentos asociados a la respuesta.
+     */
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "respuestas_cuest_docs", joinColumns = { @JoinColumn(name = "id_cuestionario_enviado"),
             @JoinColumn(name = "id_pregunta") }, inverseJoinColumns = @JoinColumn(name = "id_documento"))
     private List<Documento> documentos;
     
+    /**
+     * Login de usuario que valida la respuesta.
+     */
     @Column
     private String usernameValidacion;
     
+    /**
+     * Fecha de validación.
+     */
     @Column
     private Date fechaValidacion;
     

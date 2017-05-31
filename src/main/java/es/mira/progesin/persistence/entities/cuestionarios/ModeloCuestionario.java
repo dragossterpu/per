@@ -21,10 +21,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * 
+ * Entity para un modelo de cuestionario.
+ * 
  * @author EZENTIS
  * 
- * Entity para un modelo de cuestionario
- *
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,18 +38,30 @@ public class ModeloCuestionario implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_modeloscuestionarios", sequenceName = "seq_modeloscuestionarios", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_modeloscuestionarios")
     @Column(name = "id", nullable = false)
     private Integer id;
     
+    /**
+     * Código.
+     */
     @Column(name = "codigo", nullable = false)
     private String codigo;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
     
+    /**
+     * Listas de cuestionarios asociados.
+     */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idCuestionario")
     private List<AreasCuestionario> areas;

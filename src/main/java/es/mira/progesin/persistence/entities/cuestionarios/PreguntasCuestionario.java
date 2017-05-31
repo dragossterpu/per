@@ -41,27 +41,50 @@ public class PreguntasCuestionario implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_preguntascuestionario", sequenceName = "seq_preguntascuestionario", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_preguntascuestionario")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Pregunta.
+     */
     @Column(name = "pregunta", nullable = false, length = 2000)
     private String pregunta;
     
+    /**
+     * Área a la que pertenecen las preguntas.
+     */
     @ManyToOne
     @JoinColumn(name = "id_area", foreignKey = @ForeignKey(name = "fk_pc_area"))
     private AreasCuestionario area;
     
+    /**
+     * Orden de la pregunta dentro del área.
+     */
     @Column(name = "orden")
     private Integer orden;
     
+    /**
+     * Tipo de respuesta.
+     */
     @Column(name = "tipo_respuesta", nullable = true, length = 100)
     private String tipoRespuesta;
     
+    /**
+     * Fecha de baja.
+     */
+    @Column(name = "fecha_baja")
     private Date fechaBaja;
     
+    /**
+     * Usuario de baja.
+     */
+    @Column(name = "username_baja")
     private String usernameBaja;
     
 }

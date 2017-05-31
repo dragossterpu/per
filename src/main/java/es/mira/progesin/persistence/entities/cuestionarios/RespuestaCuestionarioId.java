@@ -11,6 +11,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @author EZENTIS
+ *
+ */
 @NoArgsConstructor
 @Getter
 @Setter
@@ -18,14 +22,23 @@ import lombok.Setter;
 public class RespuestaCuestionarioId implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID del cuestionario enviado.
+     */
     @OneToOne
     @JoinColumn(name = "id_cuest_enviado", foreignKey = @ForeignKey(name = "fk_rc_cuest_enviado"))
     private CuestionarioEnvio cuestionarioEnviado;
     
+    /**
+     * ID de la pregunta.
+     */
     @OneToOne
     @JoinColumn(name = "id_pregunta", foreignKey = @ForeignKey(name = "fk_rc_pregunta"))
     private PreguntasCuestionario pregunta;
     
+    /**
+     * Sobreescritura del método hasCode().
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -35,6 +48,9 @@ public class RespuestaCuestionarioId implements Serializable {
         return result;
     }
     
+    /**
+     * Sobreescritura del método equals().
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
