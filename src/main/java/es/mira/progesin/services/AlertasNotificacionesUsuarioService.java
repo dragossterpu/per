@@ -30,22 +30,45 @@ import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
 @Service
 public class AlertasNotificacionesUsuarioService implements IAlertasNotificacionesUsuarioService {
-    
+    /**
+     * Repositorio de Alertas y notificaciones.
+     */
     @Autowired
     private IAlertasNotificacionesUsuarioRepository mensajeRepo;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private IUserService userService;
     
+    /**
+     * Servicio de alertas.
+     */
     @Autowired
     private IAlertaService alertaService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private INotificacionService notificacionService;
     
+    /**
+     * Servicio de miembros.
+     */
     @Autowired
     private IMiembrosRepository miembrosRepository;
     
+    /**
+     * 
+     * Elimina un registro de base de datos. El registro se identifica por su tipo, el id y el usuario vinculado
+     * 
+     * @param user que tiene asignado el mensaje
+     * @param id identificador del mensaje
+     * @param tipo de Mensaje (Alerta o Notificacion)
+     * 
+     */
     @Override
     public void delete(String user, Long id, TipoMensajeEnum tipo) {
         AlertasNotificacionesUsuario men = mensajeRepo.findByUsuarioAndTipoAndIdMensaje(user, tipo, id);
@@ -53,11 +76,27 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         
     }
     
+    /**
+     * 
+     * Guarda un registro en base de datos.
+     * 
+     * @param entity Mensaje (Alerta o Notificacion) a guardar en base de datos
+     * @return Mensaje (Alerta o Notificacion)
+     * 
+     */
     @Override
     public AlertasNotificacionesUsuario save(AlertasNotificacionesUsuario entity) {
         return mensajeRepo.save(entity);
     }
     
+    /**
+     * 
+     * Devuelve un listado de alertas vinculadas al usuario.
+     * 
+     * @param user usuario para el que se busca el listado de alertas
+     * @return listado de alertas asignadas al usuario
+     * 
+     */
     @Override
     public List<Alerta> findAlertasByUser(String user) {
         List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipo(user,
@@ -71,6 +110,14 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         return respuesta;
     }
     
+    /**
+     * 
+     * Devuelve un listado de notificaciones vinculadas al usuario.
+     * 
+     * @param user usuario para el que se busca el listado de notificaciones
+     * @return listado de alertas asignadas al usuario
+     * 
+     */
     @Override
     public List<Notificacion> findNotificacionesByUser(String user) {
         List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipo(user,
@@ -84,6 +131,14 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         return respuesta;
     }
     
+    /**
+     * 
+     * Graba un mensaje (Alerta o Notificacion) vinculado a un usuario.
+     * 
+     * @param entidad Alerta o Notificación a grabar
+     * @param user usuario al que se asigna el mensaje
+     * 
+     */
     @Override
     public void grabarMensajeUsuario(Object entidad, String user) {
         AlertasNotificacionesUsuario men = new AlertasNotificacionesUsuario();
@@ -102,11 +157,27 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         mensajeRepo.save(men);
     }
     
+    /**
+     * 
+     * Graba un mensaje (Alerta o Notificacion) vinculado al jefe de un equipo.
+     * 
+     * @param entidad Alerta o Notificación a grabar
+     * @param inspeccion Se asignará el mensaje al jefe del equipo que tiene asignada esta inspección
+     * 
+     */
     @Override
     public void grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion) {
         grabarMensajeUsuario(entidad, inspeccion.getEquipo().getJefeEquipo());
     }
     
+    /**
+     * 
+     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a un mismo rol.
+     * 
+     * @param entidad Alerta o Notificación a grabar
+     * @param rol rol del los usuarios a los que se asignará el mensaje
+     * 
+     */
     @Override
     public void grabarMensajeRol(Object entidad, RoleEnum rol) {
         List<User> usuariosRol = userService.findByfechaBajaIsNullAndRole(rol);
@@ -116,6 +187,14 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         
     }
     
+    /**
+     * 
+     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes a una lista de roles.
+     * 
+     * @param entidad Alerta o Notificación a grabar
+     * @param roles lista de roles a los que pertenecen los usuarios a los que se asignará el mensaje
+     * 
+     */
     @Override
     public void grabarMensajeRol(Object entidad, List<RoleEnum> roles) {
         for (RoleEnum rol : roles) {
@@ -123,6 +202,15 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         }
     }
     
+    /**
+     * 
+     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
+     * inspección.
+     * 
+     * @param entidad Alerta o Notificación a grabar
+     * @param inspeccion Se asignará el mensaje a los miembros del equipo que tiene asignada esta inspección
+     * 
+     */
     @Override
     public void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion) {
         List<Miembro> miembrosEquipo = miembrosRepository.findByEquipo(inspeccion.getEquipo());
@@ -132,6 +220,12 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         }
     }
     
+    /**
+     * Crea el mensaje con los datos de la alerta.
+     * 
+     * @param entidad Alerta de la que se creará el AlertasNotificacionesUsuario
+     * @return AlertasNotificacionesUsuario generado.
+     */
     private AlertasNotificacionesUsuario rellenarMensaje(Alerta entidad) {
         AlertasNotificacionesUsuario men = new AlertasNotificacionesUsuario();
         men.setIdMensaje(entidad.getIdAlerta());
@@ -140,6 +234,12 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         return men;
     }
     
+    /**
+     * Crea el mensaje con los datos de la notificación.
+     * 
+     * @param entidad Notificación de la que se creará el AlertasNotificacionesUsuario
+     * @return AlertasNotificacionesUsuario generado.
+     */
     private AlertasNotificacionesUsuario rellenarMensaje(Notificacion entidad) {
         AlertasNotificacionesUsuario men = new AlertasNotificacionesUsuario();
         men.setIdMensaje(entidad.getIdNotificacion());
@@ -148,6 +248,15 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         return men;
     }
     
+    /**
+     * 
+     * Recupera la lista de notificaciones en función de una lista contenida en una lista de
+     * AlertasNotificacionesUsuario pasada como parámetro.
+     * 
+     * @param lista List<AlertasNotificacionesUsuario>
+     * @return List<Notificacion>
+     * 
+     */
     @Override
     public List<Notificacion> findNotificaciones(List<AlertasNotificacionesUsuario> lista) {
         List<Notificacion> listaNotificaciones = new ArrayList<>();
@@ -157,6 +266,15 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         return listaNotificaciones;
     }
     
+    /**
+     * 
+     * Recupera la lista de alertas en función de una lista contenida en una lista de AlertasNotificacionesUsuario
+     * pasada como parámetro.
+     * 
+     * @param lista List<AlertasNotificacionesUsuario>
+     * @return List<Alerta>
+     * 
+     */
     @Override
     public List<Alerta> findAlertas(List<AlertasNotificacionesUsuario> lista) {
         List<Alerta> listaAlertas = new ArrayList<>();
@@ -166,6 +284,15 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         return listaAlertas;
     }
     
+    /**
+     * 
+     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
+     * inspección.
+     * 
+     * @param entidad Alerta o Notificación
+     * @param equipo al que se desea enviar el Mensaje (Alerta o Notificacion)
+     * 
+     */
     @Override
     public void grabarMensajeEquipo(Object entidad, Equipo equipo) {
         List<Miembro> miembrosEquipo = miembrosRepository.findByEquipo(equipo);
