@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Modelo usado para poder pintar tablas y matrices de forma genérica en la vista con primefaces
+ * Modelo usado para poder pintar tablas y matrices de forma genérica en la vista con primefaces.
  * 
  * @author EZENTIS
  *
@@ -21,12 +21,18 @@ public class DataTableView implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Columnas de la tabla o matriz.
+     */
     private List<ColumnModel> columns;
     
+    /**
+     * Datos que almacena la tabla o matriz, incluido el nombre de la fila.
+     */
     private List<DatosTablaGenerica> listaDatosTabla;
     
     /**
-     * Constructor
+     * Constructor.
      */
     public DataTableView() {
         columns = new ArrayList<>();
@@ -34,7 +40,7 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * Crea una tabla con los valores pasados como parámetros
+     * Crea una tabla con los valores pasados como parámetros.
      * 
      * @param valoresColumnas
      */
@@ -44,7 +50,7 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * Crea una matriz con la información grabada por los usuarios al responder un cuestionario
+     * Crea una matriz con la información grabada por los usuarios al responder un cuestionario.
      * 
      * @param listaDatos
      */
@@ -53,13 +59,13 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * Crea una matriz vacía, sólo con los nombres de las columnas y las filas
+     * Crea una matriz vacía, sólo con los nombres de las columnas y las filas.
      * 
-     * @param valoresColumnas
+     * @param valoresColumnasyFilas lista de nombres.
      */
-    public void crearMatriz(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
+    public void crearMatriz(List<ConfiguracionRespuestasCuestionario> valoresColumnasyFilas) {
         // Inicializado la lista con un campo vacío para que muestre el datatable con una fila vacía de inputText
-        for (ConfiguracionRespuestasCuestionario config : valoresColumnas) {
+        for (ConfiguracionRespuestasCuestionario config : valoresColumnasyFilas) {
             if (config.getConfig().getClave().startsWith("nombreFila")) {
                 crearFilaMatriz(config.getConfig().getValor());
             } else {
@@ -68,12 +74,22 @@ public class DataTableView implements Serializable {
         }
     }
     
+    /**
+     * Agrega una fila a la matriz con el nombre dado.
+     * 
+     * @param nombreFila nombre que identifica la fila.
+     */
     private void crearFilaMatriz(String nombreFila) {
         DatosTablaGenerica dtg = new DatosTablaGenerica();
         dtg.setNombreFila(nombreFila);
         listaDatosTabla.add(dtg);
     }
     
+    /**
+     * Agrega una serie de columnas con los nombres proporcionados a una tabla o matriz.
+     * 
+     * @param valoresColumnas lista de nombres.
+     */
     private void crearColumnasDinamicamente(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
         String header;
         String property;
@@ -85,7 +101,7 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * Crea una fila vacía en una tabla
+     * Crea una fila vacía en una tabla.
      */
     public void crearFilaVacia() {
         DatosTablaGenerica dtg = new DatosTablaGenerica();
@@ -93,7 +109,7 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * Elimina el último registro de la tabla, siempre y cuando la tabla tenga más de una fila
+     * Elimina el último registro de la tabla, siempre y cuando la tabla tenga más de una fila.
      * @return datos de la tabla sin la última fila
      */
     public DatosTablaGenerica eliminarFila() {
@@ -106,24 +122,29 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * @author sperezp
-     *
+     * Definición de una columna de tabla o matriz.
      */
     public class ColumnModel implements Serializable {
         
         private static final long serialVersionUID = 1L;
         
+        /**
+         * Nombre de la columna.
+         */
         private String header;
         
+        /**
+         * Valor de la columna.
+         */
         private String property;
         
         /**
-         * @param header nombre de la columna
-         * @param property valor de la columna
+         * @param nombre nombre de la columna
+         * @param valor valor de la columna
          */
-        public ColumnModel(String header, String property) {
-            this.header = header;
-            this.property = property;
+        public ColumnModel(String nombre, String valor) {
+            this.header = nombre;
+            this.property = valor;
         }
         
         /**

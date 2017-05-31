@@ -7,40 +7,42 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 
 /**
- * 
- * Servicio para la gestión de las áreas de un cuestionario enviado a usuarios provisionales.
+ * Servicio para la gestión de la asignación de áreas de un cuestionario enviado a usuarios provisionales para que
+ * cumplimenten las preguntas de las mismas.
  * 
  * @author EZENTIS
  */
 public interface IAreaUsuarioCuestEnvService {
+    
     /**
-     * Guarda las áreas de un cuestionario asignadas a un usuario provisional.
+     * Guarda las asignaciones de áreas a usuarios provisionales de un cuestionario.
      * 
-     * @param listaAreasUsuarioCuestEnv areas de un cuestionario asignadas a un usuario provisional
-     * @return areas de un cuestionario asignadas a usuarios provisionales
+     * @param listaAreasUsuarioCuestEnv lista de asignaciones
+     * @return lista de asignaciones con id
      */
     @Transactional(readOnly = false)
     List<AreaUsuarioCuestEnv> save(List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv);
     
     /**
-     * Busca un determinado cuestionario enviado conociendo su identificador.
+     * Busca las asignaciones de áreas a usuarios provisionales de un cuestionario enviado conociendo su identificador.
      * 
      * @param idCuestionarioEnviado identificador del cuestionario enviado
-     * @return relacion de areas de un cuestionario enviado asignadas a usuarios provisionales
+     * @return lista de asignaciones
      */
     List<AreaUsuarioCuestEnv> findByIdCuestionarioEnviado(Long idCuestionarioEnviado);
     
     /**
-     * Busca un determinado cuestionario enviado conociendo el identificador del cuestionario y el usuario provisional.
+     * Busca las asignaciones de áreas a un usuario provisional de un cuestionario enviado conociendo el username y el
+     * identificador.
      * 
      * @param id identificador del cuestionario enviado.
-     * @param usernameUsuarioActual login del usuario provisional conectado
-     * @return lista de cuestionarios enviados
+     * @param usernameUsuarioActual username del usuario provisional conectado
+     * @return lista de asignaciones
      */
     List<AreaUsuarioCuestEnv> findByIdCuestionarioEnviadoAndUsuarioProv(Long id, String usernameUsuarioActual);
     
     /**
-     * Borra un cuestionario enviado conociendo su identificador.
+     * Borra todas las asignaciones de areas de un cuestionario enviado.
      * 
      * @param id identificador del cuestionario enviado.
      */

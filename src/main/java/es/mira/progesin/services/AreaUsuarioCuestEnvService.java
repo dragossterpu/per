@@ -11,12 +11,14 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 
 /**
- * Servicio de aéreas/usuario para cuestionarios enviados.
+ * Servicio para la gestión de la asignación de áreas de un cuestionario enviado a usuarios provisionales para que
+ * cumplimenten las preguntas de las mismas.
  * 
  * @author EZENTIS
  */
 @Service
 public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
+    
     /**
      * Repositorio de áreas/usuario de cuestionarios enviados.
      */
@@ -24,10 +26,10 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
     private IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
     /**
-     * Guarda las áreas de un cuestionario asignadas a un usuario provisional.
+     * Guarda las asignaciones de áreas a usuarios provisionales de un cuestionario.
      * 
-     * @param listaAreasUsuarioCuestEnv areas de un cuestionario asignadas a un usuario provisional
-     * @return areas de un cuestionario asignadas a usuarios provisionales
+     * @param listaAreasUsuarioCuestEnv lista de asignaciones
+     * @return lista de asignaciones con id
      */
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
@@ -36,10 +38,10 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
     }
     
     /**
-     * Busca un determinado cuestionario enviado conociendo su identificador.
+     * Busca las asignaciones de áreas a usuarios provisionales de un cuestionario enviado conociendo su identificador.
      * 
      * @param idCuestionarioEnviado identificador del cuestionario enviado
-     * @return relacion de areas de un cuestionario enviado asignadas a usuarios provisionales
+     * @return lista de asignaciones
      */
     @Override
     public List<AreaUsuarioCuestEnv> findByIdCuestionarioEnviado(Long idCuestionarioEnviado) {
@@ -47,11 +49,12 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
     }
     
     /**
-     * Busca un determinado cuestionario enviado conociendo el identificador del cuestionario y el usuario provisional.
+     * Busca las asignaciones de áreas a un usuario provisional de un cuestionario enviado conociendo el username y el
+     * identificador.
      * 
      * @param idCuestionarioEnviado identificador del cuestionario enviado.
-     * @param usernameProv login del usuario provisional conectado
-     * @return lista de cuestionarios enviados
+     * @param usernameProv username del usuario provisional conectado
+     * @return lista de asignaciones
      */
     @Override
     public List<AreaUsuarioCuestEnv> findByIdCuestionarioEnviadoAndUsuarioProv(Long idCuestionarioEnviado,
@@ -61,9 +64,9 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
     }
     
     /**
-     * Borra un cuestionario enviado conociendo su identificador.
+     * Borra todas las asignaciones de areas de un cuestionario enviado.
      * 
-     * @param id identificador del cuestionario enviado.
+     * @param idCuestionarioEnviado identificador del cuestionario enviado.
      */
     @Override
     public void deleteByIdCuestionarioEnviado(Long idCuestionarioEnviado) {
