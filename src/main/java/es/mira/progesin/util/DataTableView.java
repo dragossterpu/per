@@ -40,9 +40,9 @@ public class DataTableView implements Serializable {
     }
     
     /**
-     * Crea una tabla con los valores pasados como parámetros.
+     * Crea una tabla con los nombres de columna pasados como parámetros.
      * 
-     * @param valoresColumnas
+     * @param valoresColumnas lista nombres
      */
     public void crearTabla(List<ConfiguracionRespuestasCuestionario> valoresColumnas) {
         crearColumnasDinamicamente(valoresColumnas);
@@ -52,7 +52,7 @@ public class DataTableView implements Serializable {
     /**
      * Crea una matriz con la información grabada por los usuarios al responder un cuestionario.
      * 
-     * @param listaDatos
+     * @param listaDatos Datos que almacena la tabla o matriz, incluido el nombre de la fila
      */
     public void crearTablaMatriConDatos(List<DatosTablaGenerica> listaDatos) {
         setListaDatosTabla(listaDatos);
