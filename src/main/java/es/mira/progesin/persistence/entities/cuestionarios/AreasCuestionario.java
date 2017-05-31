@@ -26,10 +26,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @author EZENTIS
  * 
- * Entity para el área de un modelo de cuestionario
- *
+ * Entity para el área de un modelo de cuestionario.
+ * 
+ * @author EZENTIS
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,30 +43,54 @@ import lombok.Setter;
 public class AreasCuestionario implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de areascuestionario.
+     */
     @Id
     @SequenceGenerator(name = "seq_areascuestionarios", sequenceName = "seq_areascuestionarios", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_areascuestionarios")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Área.
+     */
     @Column(name = "nombre_area", nullable = false)
     private String area;
     
+    /**
+     * Identificador de cuestionario.
+     */
     private Integer idCuestionario;
     
+    /**
+     * Orden.
+     */
     @Column(name = "orden")
     private Integer orden;
     
+    /**
+     * Listado de preguntas.
+     */
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_area")
     private List<PreguntasCuestionario> preguntas;
     
+    /**
+     * Fecha de baja.
+     */
     @Column(name = "fecha_baja")
     private Date fechaBaja;
     
+    /**
+     * Usuario que da de baja.
+     */
     @Column(name = "username_baja")
     private String usernameBaja;
     
+    /**
+     * Sobreescritura del método toString.
+     */
     @Override
     public String toString() {
         return "AreasCuestionario [id=" + id + ", area=" + area + ", idCuestionario=" + idCuestionario + ", orden="

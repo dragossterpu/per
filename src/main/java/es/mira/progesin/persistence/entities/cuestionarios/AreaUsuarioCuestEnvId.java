@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad que define la clave compuesta de la entidad AreaUsuarioCuestEnv
+ * Entidad que define la clave compuesta de la entidad AreaUsuarioCuestEnv.
  * 
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv
@@ -26,8 +26,14 @@ import lombok.ToString;
 public class AreaUsuarioCuestEnvId implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador de cuestionario enviado.
+     */
     private Long idCuestionarioEnviado;
     
+    /**
+     * Identificador de área.
+     */
     private Long idArea;
     
 }
