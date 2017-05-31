@@ -22,7 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad para los documentos adjutos de la solicitud de documentación previa
+ * Entidad para los documentos adjutos de la solicitud de documentación previa.
  * 
  * @author EZENTIS
  *
@@ -40,40 +40,73 @@ public class GestDocSolicitudDocumentacion implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_gd_sol_doc", sequenceName = "seq_gd_sol_doc", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gd_sol_doc")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * ID de la solicitud.
+     */
     @Column(name = "idSolicitud")
     private Long idSolicitud;
     
+    /**
+     * Extensión.
+     */
     @Column(name = "extension", nullable = false, length = 4)
     private String extension;
     
+    /**
+     * Nombre del fichero.
+     */
     @Column(name = "nombre", nullable = false)
     private String nombreFichero;
     
+    /**
+     * ID del documento.
+     */
     @Column(name = "idDocumento", nullable = false)
     private Long idDocumento;
     
+    /**
+     * Fecha de alta.
+     */
     @Column(name = "fecha_alta", nullable = false)
     protected Date fechaAlta;
     
+    /**
+     * Fecga modificación.
+     */
     @LastModifiedDate
     @Column(name = "fecha_modificacion")
     protected Date fechaModificacion;
     
+    /**
+     * Fecha de baja.
+     */
     @Column(name = "fecha_baja")
     protected Date fechaBaja;
     
+    /**
+     * Usuario de alta.
+     */
     @Column(name = "username_alta", nullable = false)
     protected String usernameAlta;
     
+    /**
+     * Usuario de modificación.
+     */
     @Column(name = "username_modificacion")
     protected String usernameModificacion;
     
+    /**
+     * usuario de baja.
+     */
     @Column(name = "username_Baja")
     protected String usernameBaja;
     

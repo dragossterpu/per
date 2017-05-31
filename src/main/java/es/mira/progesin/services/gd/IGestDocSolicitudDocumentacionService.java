@@ -6,7 +6,7 @@ import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 
 /**
  * 
- * Implementación del servivio de Tipos de GestDocSolicitudDocumentacion.
+ * Intarfaz del servivio de Tipos de GestDocSolicitudDocumentacion.
  * 
  * @author EZENTIS
  *
