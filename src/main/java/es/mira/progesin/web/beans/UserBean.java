@@ -59,72 +59,153 @@ public class UserBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Usuario.
+     */
     private User user;
     
+    /**
+     * Lista de empleos.
+     */
     private List<Empleo> listaEmpleos;
     
+    /**
+     * Empleo seleccionado en la vista.
+     */
     private Empleo empleoSeleccionado;
     
+    /**
+     * Listado de clases de usuario.
+     */
     private List<ClaseUsuario> listadoClases;
     
+    /**
+     * Lista de departamentos.
+     */
     private List<Departamento> listaDepartamentos;
     
+    /**
+     * Departamento seleccionado en la vista.
+     */
     private Departamento departamentoSeleccionado;
     
+    /**
+     * Lista de cuerpos de estado.
+     */
     private List<CuerpoEstado> cuerposEstado;
     
+    /**
+     * Cuerpo de estado seleccionado en la vista.
+     */
     private CuerpoEstado cuerpoEstadoSeleccionado;
     
+    /**
+     * Lista de puestos de trabajo.
+     */
     private List<PuestoTrabajo> puestosTrabajo;
     
+    /**
+     * Puesto de trabajo seleccionado en la vista.
+     */
     private PuestoTrabajo puestoTrabajoSeleccionado;
     
+    /**
+     * Objeto de búsqueda de usuario.
+     */
     private UserBusqueda userBusqueda;
     
+    /**
+     * Lista de booleanos para el control de la visualización de columnas en la vista.
+     */
     private List<Boolean> list;
     
+    /**
+     * Número máximo de columnas visibles en la vista.
+     */
     private int numeroColumnasListadoUsarios = 9;
     
-    private String estadoUsuario = null;
+    /**
+     * Estado del usuario.
+     */
+    private String estadoUsuario;
     
+    /**
+     * Parámetro para llevar el control de desde dónde se accede a la vista.
+     */
     private String vieneDe;
     
+    /**
+     * Array que contiene los niveles seleccionables.
+     */
     private int[] nivelesSelect = IntStream.rangeClosed(12, 30).toArray();
     
+    /**
+     * LazyModel para la paginación desde servidor de los datos de la búsqueda de usuarios.
+     */
     private LazyModelUsuarios model;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Servicio de cuerpos de seguridad del estado.
+     */
     @Autowired
     private transient ICuerpoEstadoService cuerposEstadoService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private transient INotificacionService notificacionService;
     
+    /**
+     * Encriptador de palabras clave.
+     */
     @Autowired
     private transient PasswordEncoder passwordEncoder;
     
+    /**
+     * Envío de correos electrónicos.
+     */
     @Autowired
     private transient ICorreoElectronico correo;
     
+    /**
+     * Repositorio de departamentos.
+     */
     @Autowired
     private transient IDepartamentoRepository departamentoRepository;
     
+    /**
+     * Repositorio de clase de usuario.
+     */
     @Autowired
     private transient IClaseUsuarioRepository claseUsuarioRepository;
     
+    /**
+     * Repostitorio de empleos.
+     */
     @Autowired
     private transient IEmpleoRepository empleoRepository;
     
+    /**
+     * Repositorio de puestos de trabajo.
+     */
     @Autowired
     private transient IPuestoTrabajoRepository puestoTrabajoRepository;
     
     /**
-     * Muestra el perfil del usuario
+     * Muestra el perfil del usuario.
      * 
      * @return URL de la página donde se visualiza el perfil
      */
@@ -156,7 +237,7 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Método que recoge los valores introducidos en el formulario y da de alta al usuario en la BBDD
+     * Método que recoge los valores introducidos en el formulario y da de alta al usuario en la BBDD.
      * 
      */
     public void altaUsuario() {
@@ -218,7 +299,7 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Busca los usuarios según los filtros introducidos en el formulariod de búsqueda
+     * Busca los usuarios según los filtros introducidos en el formulariod de búsqueda.
      */
     public void buscarUsuario() {
         this.estadoUsuario = null;
@@ -229,18 +310,19 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Realiza una eliminación lógica del usuario (le pone fecha de baja)
-     * @param user El usuario seleccionado de la tabla del resultado de la búsqueda
+     * Realiza una eliminación lógica del usuario (le pone fecha de baja).
+     * 
+     * @param usuario El usuario seleccionado de la tabla del resultado de la búsqueda
      */
-    public void eliminarUsuario(User user) {
+    public void eliminarUsuario(User usuario) {
         
-        user.setFechaBaja(new Date());
-        user.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+        usuario.setFechaBaja(new Date());
+        usuario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
         try {
-            userService.save(user);
-            userBusqueda.getListaUsuarios().remove(user);
-            String descripcion = "Se ha eliminado el usuario " + user.getNombre() + " " + user.getApellido1() + " "
-                    + user.getApellido2();
+            userService.save(usuario);
+            userBusqueda.getListaUsuarios().remove(usuario);
+            String descripcion = "Se ha eliminado el usuario " + usuario.getNombre() + " " + usuario.getApellido1()
+                    + " " + usuario.getApellido2();
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.USUARIOS.name());
@@ -253,21 +335,22 @@ public class UserBean implements Serializable {
     
     /**
      * Pasa los datos del usuario que queremos modificar al formulario de modificación para que cambien los valores que
-     * quieran
-     * @param user usuario recuperado del formulario de búsqueda de usuarios
+     * quieran.
+     * 
+     * @param usuario usuario recuperado del formulario de búsqueda de usuarios
      * @return URL de la página de modificar usuario
      */
-    public String getFormModificarUsuario(User user) {
-        estadoUsuario = user.getEstado().name();
-        this.user = user;
+    public String getFormModificarUsuario(User usuario) {
+        estadoUsuario = usuario.getEstado().name();
+        this.user = usuario;
         
-        auditoriaVisualizacion(user);
+        auditoriaVisualizacion(usuario);
         buscarEmpleo();
         return "/users/modificarUsuario?faces-redirect=true";
     }
     
     /**
-     * Modifica los datos del usuario en función de los valores recuperados del formulario
+     * Modifica los datos del usuario en función de los valores recuperados del formulario.
      */
     public void modificarUsuario() {
         try {
@@ -298,7 +381,7 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Genera una contraseña nueva y se la envía por correo al usuario
+     * Genera una contraseña nueva y se la envía por correo al usuario.
      */
     public void restaurarClave() {
         try {
@@ -318,7 +401,7 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Activa/desactiva la visibilidad de las columnas de la tabla de resultados
+     * Activa/desactiva la visibilidad de las columnas de la tabla de resultados.
      * 
      * @param e checkbox de la columna seleccionada
      */
@@ -327,7 +410,7 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Inicializa el bean
+     * Inicializa el bean.
      */
     @PostConstruct
     public void init() {
@@ -351,37 +434,86 @@ public class UserBean implements Serializable {
     }
     
     /**
-     * Busca el objeto Empleo en base de datos a partir del seleccionado en el combo de la vista
+     * Busca el objeto Empleo en base de datos a partir del seleccionado en el combo de la vista.
      */
     public void buscarEmpleo() {
-        CuerpoEstado cuerpo = this.cuerpoEstadoSeleccionado != null ? this.cuerpoEstadoSeleccionado
-                : this.user.getCuerpoEstado();
+        CuerpoEstado cuerpo = new CuerpoEstado();
+        if (this.cuerpoEstadoSeleccionado != null) {
+            cuerpo = this.cuerpoEstadoSeleccionado;
+        } else {
+            cuerpo = this.user.getCuerpoEstado();
+        }
         setListaEmpleos(empleoRepository.findByCuerpo(cuerpo));
     }
     
+    /**
+     * Realiza una auditoría del uso de la búsqueda de usuarios.
+     * 
+     * @param usuario Objeto de búsqueda de usuario.
+     */
     private void auditoriaBusqueda(UserBusqueda usuario) {
         
-        String puesto = usuario.getPuestoTrabajo() != null ? usuario.getPuestoTrabajo().getDescripcion() : "";
-        String estado = usuario.getEstado() != null ? usuario.getEstado().name() : "";
-        
         DateFormat fecha = new SimpleDateFormat("dd-MM-yyyy");
+        String puesto = "";
+        String estado = "";
+        String fechaDesde = "";
+        String fechaHasta = "";
+        String rol = "";
+        String cuerpo = "";
+        if (usuario.getPuestoTrabajo() != null) {
+            puesto = usuario.getPuestoTrabajo().getDescripcion();
+        }
+        if (usuario.getEstado() != null) {
+            estado = usuario.getEstado().name();
+        }
+        if (usuario.getFechaDesde() != null) {
+            fechaDesde = fecha.format(usuario.getFechaDesde());
+        }
+        if (usuario.getFechaHasta() != null) {
+            fechaHasta = fecha.format(usuario.getFechaHasta());
+        }
+        if (usuario.getRole() != null) {
+            rol = usuario.getRole().name();
+        }
+        if (usuario.getCuerpoEstado() != null) {
+            cuerpo = usuario.getCuerpoEstado().getDescripcion();
+        }
         
-        String fechaDesde = usuario.getFechaDesde() != null ? fecha.format(usuario.getFechaDesde()) : "";
-        String fechaHasta = usuario.getFechaHasta() != null ? fecha.format(usuario.getFechaHasta()) : "";
-        String rol = usuario.getRole() != null ? usuario.getRole().name() : "";
-        String cuerpo = usuario.getCuerpoEstado() != null ? usuario.getCuerpoEstado().getDescripcion() : "";
+        StringBuilder descripcion = new StringBuilder();
+        descripcion.append("El usuario ");
+        descripcion.append(SecurityContextHolder.getContext().getAuthentication().getName());
+        descripcion.append(
+                " ha realizado una consulta de usuarios.\nLa consulta realizada ha sido la siguiente: \n Nombre de usuario: ");
+        descripcion.append(usuario.getUsername());
+        descripcion.append("\n Nombre: ");
+        descripcion.append(usuario.getNombre());
+        descripcion.append("\n Primer apellido: ");
+        descripcion.append(usuario.getApellido1());
+        descripcion.append("\n Segundo apellido: ");
+        descripcion.append(usuario.getApellido2());
+        descripcion.append("\n Puesto de trabajo: ");
+        descripcion.append(puesto);
+        descripcion.append("\n Estado: ");
+        descripcion.append(estado);
+        descripcion.append("\n Fecha alta desde: ");
+        descripcion.append(fechaDesde);
+        descripcion.append("\n Fecha alta desde: ");
+        descripcion.append(fechaHasta);
+        descripcion.append("\n Rol: ");
+        descripcion.append(rol);
+        descripcion.append("\n Cuerpo del estado: ");
+        descripcion.append(cuerpo);
         
-        String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()
-                + " ha realizado una consulta de usuarios." + "\nLa consulta realizada ha sido la siguiente: "
-                + "\n Nombre de usuario: " + usuario.getUsername() + "\n Nombre: " + usuario.getNombre()
-                + "\n Primer apellido: " + usuario.getApellido1() + "\n Segundo apellido: " + usuario.getApellido2()
-                + "\n Puesto de trabajo: " + puesto + "\n Estado: " + estado + "\n Fecha alta desde: " + fechaDesde
-                + "\n Fecha alta desde: " + fechaHasta + "\n Rol: " + rol + "\n Cuerpo del estado: " + cuerpo;
-        
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(),
+        regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.AUDITORIA.name(),
                 SeccionesEnum.USUARIOS.name());
         
     }
+    
+    /**
+     * Realiza una auditoría de la visualización de usuarios.
+     * 
+     * @param usuario Usuario que realiza la visualización.
+     */
     
     private void auditoriaVisualizacion(User usuario) {
         String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()

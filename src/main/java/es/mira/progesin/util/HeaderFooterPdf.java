@@ -13,27 +13,61 @@ import com.itextpdf.layout.element.Image;
 
 import lombok.Getter;
 
+/**
+ * Generador de cabeceras y pie para PDF.
+ * 
+ * @author EZENTIS
+ *
+ */
 @Getter
 public class HeaderFooterPdf implements IEventHandler {
-    
+    /**
+     * Dcoumento.
+     */
     protected Document doc;
     
+    /**
+     * Imagen de cabecera.
+     */
     protected Image headerRepetido;
     
+    /**
+     * Imagen de cabecera.
+     */
     protected Image header1;
     
+    /**
+     * Imagen de cabecera.
+     */
     protected Image header2;
     
+    /**
+     * Imagen de pie.
+     */
     protected Image footer1;
     
-    public HeaderFooterPdf(Document doc, Image imagen1, Image imagen2, Image headerRepetido, Image footer1) {
-        this.doc = doc;
-        this.headerRepetido = headerRepetido;
-        this.header1 = imagen1;
-        this.header2 = imagen2;
-        this.footer1 = footer1;
+    /**
+     * Constructor que recibe como parámetros el documento y las imágenes.
+     * 
+     * @param document Documento
+     * @param imagenUno Imagen 1
+     * @param imagenDos Imagen 2
+     * @param cabeceraRepetido Imagen
+     * @param pie1 Imagen de pie
+     */
+    public HeaderFooterPdf(Document document, Image imagenUno, Image imagenDos, Image cabeceraRepetido, Image pie1) {
+        this.doc = document;
+        this.headerRepetido = cabeceraRepetido;
+        this.header1 = imagenUno;
+        this.header2 = imagenDos;
+        this.footer1 = pie1;
     }
     
+    /**
+     * Crea una cabecera y un pie de solicitud de documentación.
+     * 
+     * @param event Evento que dispara la generación
+     */
     @Override
     public void handleEvent(Event event) {
         createHeaderSolicitudDocumentacion(event);
@@ -42,6 +76,11 @@ public class HeaderFooterPdf implements IEventHandler {
         }
     }
     
+    /**
+     * Crea una cabecera de un documento.
+     * 
+     * @param event Evento que dispara la generación
+     */
     private void createHeaderSolicitudDocumentacion(Event event) {
         PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
         PdfDocument pdfDoc = docEvent.getDocument();
@@ -75,6 +114,11 @@ public class HeaderFooterPdf implements IEventHandler {
         }
     }
     
+    /**
+     * Crea un pie de página de un documento.
+     * 
+     * @param event Evento que dispara la generación
+     */
     private void createFoterSolicitudDocumentacion(Event event) {
         PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
         PdfDocument pdfDoc = docEvent.getDocument();

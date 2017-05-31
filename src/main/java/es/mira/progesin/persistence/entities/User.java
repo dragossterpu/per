@@ -218,20 +218,20 @@ public class User extends AbstractEntity implements Serializable {
      * Constructor de usuarios provisionales secundarios para la cumplimentación de cuestionarios (inicialmente
      * inactivos hasta que se les asigne un area).
      * 
-     * @param username id del usuario
-     * @param password contraseña cifrada
-     * @param role rol del usuario en la aplicación
-     * @param correoPrincipal correo de envío del cuestionario
+     * @param name id del usuario
+     * @param clave contraseña cifrada
+     * @param rol rol del usuario en la aplicación
+     * @param correoP correo de envío del cuestionario
      */
-    public User(String username, String password, RoleEnum role, String correoPrincipal) {
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setRole(role);
+    public User(String name, String clave, RoleEnum rol, String correoP) {
+        this.setUsername(name);
+        this.setPassword(clave);
+        this.setRole(rol);
         this.setEstado(EstadoEnum.INACTIVO);
         this.setNombre(PROVISIONAL);
         this.setApellido1(PROVISIONAL);
         this.setDocIdentidad("000000000T");
-        this.setCorreo(correoPrincipal);
+        this.setCorreo(correoP);
         this.setFechaDestinoIPSS(new Date());
         this.setNivel(0);
     }
