@@ -49,55 +49,124 @@ public class EquiposBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Constante con el literal "jefeEquipo".
+     */
     private static final String JEFEEQUIPO = "jefeEquipo";
     
+    /**
+     * Constante con el literal "miembros".
+     */
     private static final String MIEMBROS = "miembros";
     
+    /**
+     * Número de columnas en el listado.
+     */
     private static final int NUMEROCOLUMNASLISTADOEQUIPOS = 4;
     
+    /**
+     * Parámetro para controlar desde dónde se accede a la vista.
+     */
     private String vieneDe;
     
+    /**
+     * Equipo.
+     */
     private Equipo equipo;
     
+    /**
+     * Jefe seleccionado en la vista.
+     */
     private User jefeSeleccionado;
     
+    /**
+     * Lista de miembros seleccionados.
+     */
     private List<User> miembrosSeleccionados;
     
+    /**
+     * Listado de booleanos para llevar el control de las columnas que son visibles en la vista.
+     */
     private List<Boolean> columnasVisibles;
     
+    /**
+     * Estado del equipo.
+     */
     private String estado;
     
+    /**
+     * Lista de usuarios.
+     */
     private List<User> listaUsuarios;
     
+    /**
+     * Lista de jefes potenciales.
+     */
     private List<User> listadoPotencialesJefes;
     
+    /**
+     * Listado de miembros potenciales.
+     */
     private List<User> listadoPotencialesMiembros;
     
+    /**
+     * Objeto que contiene los parámetros de búsqueda.
+     */
     private EquipoBusqueda equipoBusqueda;
     
+    /**
+     * Variable que controla que se salte o no un paso.
+     */
     private boolean skip;
     
+    /**
+     * Tipo de equipo.
+     */
     private TipoEquipo tipoEquipo;
     
+    /**
+     * Objeto iterable que contiene los tipos de equipo posibles.
+     */
     private transient Iterable<TipoEquipo> tiposEquipo;
     
+    /**
+     * LazyModel para la visualización paginada de datos en la vista.
+     */
     private LazyModelEquipos model;
     
+    /**
+     * Servicio de tipos de equipo.
+     */
     @Autowired
     transient ITipoEquipoService tipoEquipoService;
     
+    /**
+     * Servicio de equipos.
+     */
     @Autowired
     transient IEquipoService equipoService;
     
+    /**
+     * Servicio de miembros.
+     */
     @Autowired
     transient IMiembroService miembroService;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     transient IUserService userService;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     transient INotificacionService notificacionService;
     
@@ -105,7 +174,6 @@ public class EquiposBean implements Serializable {
      * Muestra formulario de alta de nuevos equipos, inicializando lo necesario para mostrar correctamente la página. Se
      * llama desde la página de búsqueda de equipos.
      * 
-     * @author EZENTIS
      * @return vista altaEquipo
      */
     public String getFormAltaEquipo() {
@@ -123,9 +191,7 @@ public class EquiposBean implements Serializable {
     }
     
     /**
-     * Recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD
-     * 
-     * @author EZENTIS
+     * Recoge los valores introducidos en el formulario y da de alta un equipo normal en la BBDD.
      */
     public void altaEquipo() {
         
@@ -165,7 +231,6 @@ public class EquiposBean implements Serializable {
      * Devuelve al formulario de búsqueda de equipos a su estado inicial y borra los resultados de búsquedas anteriores
      * si se navega desde el menú u otra sección.
      * 
-     * @author EZENTIS
      */
     public void getFormularioBusquedaEquipos() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -179,7 +244,6 @@ public class EquiposBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de equipos a su estado inicial y borra los resultados de búsquedas anteriores.
      * 
-     * @author EZENTIS
      */
     public void limpiarBusqueda() {
         equipoBusqueda.resetValues();
@@ -190,7 +254,6 @@ public class EquiposBean implements Serializable {
     /**
      * Busca equipos en base a los campos rellenados en el formulario tanto de equipo como de sus miembros.
      * 
-     * @author EZENTIS
      */
     public void buscarEquipo() {
         
@@ -201,21 +264,20 @@ public class EquiposBean implements Serializable {
     /**
      * Elimina un equipo. Se invoca desde la lista de resultados del buscador.
      * 
-     * @author EZENTIS
-     * @param equipo recuperado del formulario de búsqueda de equipos
+     * @param equip recuperado del formulario de búsqueda de equipos
      */
-    public void eliminarEquipo(Equipo equipo) {
+    public void eliminarEquipo(Equipo equip) {
         try {
             // TODO ¿comprobar si hay inspecciones sin finalizar?
-            equipo.setFechaBaja(new Date());
+            equip.setFechaBaja(new Date());
             
-            equipo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+            equip.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             
-            equipoService.save(equipo);
+            equipoService.save(equip);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
                     "Se ha dado de baja con éxito un equipo de inspecciones", null);
-            String descripcion = "Se ha eliminado el equipo inspecciones '" + equipo.getNombreEquipo() + "'.";
+            String descripcion = "Se ha eliminado el equipo inspecciones '" + equip.getNombreEquipo() + "'.";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
@@ -229,23 +291,22 @@ public class EquiposBean implements Serializable {
     
     /**
      * Pasa los datos del equipo que queremos modificar al formulario de modificación para que cambien los valores que
-     * quieran
+     * quieran.
      * 
-     * @author EZENTIS
-     * @param equipo recuperado del formulario de búsqueda de equipos
+     * @param equip recuperado del formulario de búsqueda de equipos
      * @return vista modificarEquipo
      */
-    public String getFormModificarEquipo(Equipo equipo) {
+    public String getFormModificarEquipo(Equipo equip) {
         this.miembrosSeleccionados = new ArrayList<>();
-        List<Miembro> miembrosEquipo = miembroService.findByEquipo(equipo);
+        List<Miembro> miembrosEquipo = miembroService.findByEquipo(equip);
         equipo.setMiembros(miembrosEquipo);
-        this.equipo = equipo;
+        this.equipo = equip;
         return "/equipos/modificarEquipo?faces-redirect=true";
     }
     
     /**
-     * Elimina un miembro de un equipo, ya sea componente o colaborador del equipo que está siendo modificado
-     * @author EZENTIS
+     * Elimina un miembro de un equipo, ya sea componente o colaborador del equipo que está siendo modificado.
+     * 
      * @param miembro seleccionado en la tabla de integrantes de un equipo
      */
     public void eliminarMiembro(Miembro miembro) {
@@ -277,8 +338,7 @@ public class EquiposBean implements Serializable {
     
     /**
      * Carga el formulario para cambiar el jefe del equipo que está siendo modificado.
-     * 
-     * @author EZENTIS
+     *
      * @return vista cambiarJefeEquipo
      */
     public String getFormCambiarJefeEquipo() {
@@ -290,8 +350,7 @@ public class EquiposBean implements Serializable {
     /**
      * Elimina el jefe anterior y agrega el nuevo seleccionado en el formulario cambiarJefeEquipo al equipo que está
      * siendo modificado.
-     * 
-     * @author EZENTIS
+     *
      */
     public void cambiarJefeEquipo() {
         
@@ -331,8 +390,7 @@ public class EquiposBean implements Serializable {
     
     /**
      * Carga el formulario para añadir un miembro al equipo que está siendo modificado.
-     * 
-     * @author EZENTIS
+     *
      * @return vista anadirMiembroEquipo
      */
     public String getFormAniadirMiembroEquipo() {
@@ -373,11 +431,10 @@ public class EquiposBean implements Serializable {
     }
     
     /**
-     * Crear un miembro a partir de los datos de un usuario
+     * Crear un miembro a partir de los datos de un usuario.
      * 
-     * @author EZENTIS
-     * @param posicion
-     * @param user
+     * @param posicion Posición del usuario
+     * @param user Usuario a partir de la que se crea el miembro
      * @return miembro nuevo
      */
     private Miembro crearMiembro(RolEquipoEnum posicion, User user) {
@@ -391,11 +448,10 @@ public class EquiposBean implements Serializable {
     }
     
     /**
-     * Añadir miembros con un rol específico a una lista a partir de los usuarios seleccionados en un formulario
+     * Añadir miembros con un rol específico a una lista a partir de los usuarios seleccionados en un formulario.
      * 
-     * @author EZENTIS
-     * @param posicion rol que ocupará en el equipo (componente o colaborador)
-     * @param miembros lista de miembros donde se van a instertar
+     * @param posicion Rol que ocupará en el equipo (componente o colaborador)
+     * @param miembros Lista de miembros donde se van a insertar
      * @return nombresCompletos nombre de los nuevos usuarios para generar un registro de actividad
      */
     private String aniadirMiembrosEquipo(RolEquipoEnum posicion, List<Miembro> miembros) {
@@ -409,9 +465,8 @@ public class EquiposBean implements Serializable {
     }
     
     /**
-     * Controla las columnas visibles en la lista de resultados del buscador
+     * Controla las columnas visibles en la lista de resultados del buscador.
      * 
-     * @author EZENTIS
      * @param e checkbox de la columna seleccionada
      */
     public void onToggle(ToggleEvent e) {
@@ -423,7 +478,6 @@ public class EquiposBean implements Serializable {
      * controla que se escoja al menos un miembro o se cornfirme que no se desea ninguno para este equipo antes de pasar
      * a una pestaña posterior.
      * 
-     * @author EZENTIS
      * @param event info de la pestaña actual y la siguente que se solicita
      * @return nombre de la siguente pestaña a mostrar
      */
@@ -458,13 +512,11 @@ public class EquiposBean implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
-        // para que en el select cargue por defecto la opción "Seleccione uno..."
         setEstado(null);
         setEquipo(null);
         setEquipoBusqueda(new EquipoBusqueda());

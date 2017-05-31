@@ -103,7 +103,7 @@ public class GestorDocumentalBean {
      * Verificador de extensiones
      */
     @Autowired
-    private VerificadorExtensiones verificadorExtensiones;
+    private transient VerificadorExtensiones verificadorExtensiones;
     
     /**
      * Servicio de documentos.

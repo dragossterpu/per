@@ -68,7 +68,7 @@ public class UserService implements IUserService {
     /**
      * Constructor usado para el test.
      * 
-     * @param sessionFact
+     * @param sessionFact Factoría de sesiones
      */
     public UserService(SessionFactory sessionFact) {
         this.sessionFactory = sessionFact;

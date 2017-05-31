@@ -33,23 +33,62 @@ import lombok.Getter;
 @Getter
 public class CorreoElectronico implements ICorreoElectronico {
     
+    /**
+     * Bean de configuración de la aplicación.
+     */
     @Autowired
     private ApplicationBean applicationBean;
     
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService registroActividad;
     
+    /**
+     * 
+     * Envío de correos electrónico sin adjuntos. La lista de destinatarios, asunto y cuerpo del mensaje se reciben como
+     * parámetros
+     * 
+     * @param paramDestino Lista de destinatarios
+     * @param paramAsunto Asunto del correo
+     * @param paramCuerpo Cuerpo del correo
+     * 
+     */
     @Override
     public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) {
         envioCorreoSinAdjuntos(paramDestino, null, paramAsunto, paramCuerpo);
     }
     
+    /**
+     * 
+     * Envío de correos electrónicos a una lista de destinatarios pasada como parámetros. El asunto, cuerpo del mensaje
+     * y los documentos adjuntos se reciben como parámetros
+     * 
+     * @param paramDestino Lista de destinatarios
+     * @param paramAsunto Asunto del correo
+     * @param paramCuerpo Cuerpo del correo
+     * @param paramAdjunto Lista de ficheros adjuntos
+     * 
+     */
     @Override
     public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo,
             List<File> paramAdjunto) {
         envioCorreoAdjuntos(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto);
     }
     
+    /**
+     * 
+     * Envío de correos electrónico. El destinatario, destinatario en copia, asunto, cuerpo del mensaje y los documentos
+     * adjuntos se reciben como parámetros.
+     * 
+     * @param paramDestino Destinatario
+     * @param paramCC Destinatario en copia
+     * @param paramAsunto Asunto del correo
+     * @param paramCuerpo Cuerpo del correo
+     * @param paramAdjunto Lista de ficheros adjuntos
+     * 
+     */
     @Override
     public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo,
             List<File> paramAdjunto) {
@@ -62,6 +101,17 @@ public class CorreoElectronico implements ICorreoElectronico {
         envioCorreoAdjuntos(lista, cc, paramAsunto, paramCuerpo, paramAdjunto);
     }
     
+    /**
+     * 
+     * Envío de correos electrónico. El destinatario, asunto, cuerpo del mensaje y los documentos adjuntos se reciben
+     * como parámetros
+     * 
+     * @param paramDestino Destinatario
+     * @param paramAsunto Asunto del correo
+     * @param paramCuerpo Cuerpo del correo
+     * @param paramAdjunto Lista de ficheros adjuntos
+     * 
+     */
     @Override
     public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) {
         List<String> lista = new ArrayList<>();
@@ -70,6 +120,16 @@ public class CorreoElectronico implements ICorreoElectronico {
         envioCorreoAdjuntos(lista, null, paramAsunto, paramCuerpo, paramAdjunto);
     }
     
+    /**
+     * 
+     * Envío de correos electrónico sin adjuntos. El destinatario, asunto y cuerpo del mensaje se reciben como
+     * parámetros
+     * 
+     * @param paramDestino Destinatario
+     * @param paramAsunto del correo
+     * @param paramCuerpo Cuerpo del correo
+     * 
+     */
     @Override
     public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) {
         List<String> lista = new ArrayList<>();
@@ -79,7 +139,12 @@ public class CorreoElectronico implements ICorreoElectronico {
         
     }
     
-    public JavaMailSenderImpl conexionServidor() {
+    /**
+     * Realiza la conexión con el servidor de correo.
+     * 
+     * @return Objeto sender para realizar operaciones con la conexión
+     */
+    private JavaMailSenderImpl conexionServidor() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         
         Map<String, String> parametrosMail = applicationBean.getMapaParametros().get("mail");
@@ -100,6 +165,14 @@ public class CorreoElectronico implements ICorreoElectronico {
         return mailSender;
     }
     
+    /**
+     * Envío de correos sin adjuntos.
+     * 
+     * @param destino Lista de destinatarios destinatario
+     * @param conCopia Lista de destinatario en copia
+     * @param asunto Asunto del correo
+     * @param cuerpo Cuerpo del correo
+     */
     private void envioCorreoSinAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo) {
         try {
             JavaMailSenderImpl mailSender = conexionServidor();
@@ -124,6 +197,15 @@ public class CorreoElectronico implements ICorreoElectronico {
         
     }
     
+    /**
+     * Envío de correos con adjuntos.
+     * 
+     * @param destino Lista de destinatarios destinatario
+     * @param conCopia Lista de destinatario en copia
+     * @param asunto Asunto del correo
+     * @param cuerpo Cuerpo del correo
+     * @param adjunto Lista de ficheros adjuntos
+     */
     private void envioCorreoAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo,
             List<File> adjunto) {
         JavaMailSenderImpl mailSender = conexionServidor();

@@ -38,9 +38,15 @@ import lombok.extern.slf4j.Slf4j;
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
     
+    /**
+     * Repositorio de registro de actividad.
+     */
     @Autowired
     private IRegActividadRepository regActividadRepository;
     
+    /**
+     * Factoría de sesiones.
+     */
     @Autowired
     private SessionFactory sessionFactory;
     

@@ -15,24 +15,32 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 
 /**
+ * 
+ * Test del servicio de cuerpos de estado.
+ * 
  * @author EZENTIS
  * 
- * Test del servicio de cuerpos de estado
  *
  */
 
 @RunWith(MockitoJUnitRunner.class)
 public class CuerpoEstadoServiceTest {
-    
+    /**
+     * Simulación de un repositorio de Cuerpo de estado.
+     */
     @Mock
     private ICuerpoEstadoRepository repository;
     
+    /**
+     * Servicio de cuerpo de estado.
+     */
     @InjectMocks
     private ICuerpoEstadoService service = new CuerpoEstadoService();
     
     /**
-     * Comprueba que la clase existe
-     * @throws Exception
+     * Comprueba que la clase existe.
+     * 
+     * @throws Exception Excepción lanzada
      */
     @Test
     public void type() throws Exception {
@@ -40,8 +48,9 @@ public class CuerpoEstadoServiceTest {
     }
     
     /**
-     * Comprueba que la clase se puede instanciar
-     * @throws Exception
+     * Comprueba que la clase se puede instanciar.
+     * 
+     * @throws Exception Excepción lanzada
      */
     @Test
     public void instantiation() throws Exception {

@@ -35,33 +35,60 @@ import es.mira.progesin.web.beans.ApplicationBean;
 @Service("tareasService")
 
 public class TareasService implements ITareasService {
-    
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @Autowired
     private ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Servicio de solicitud de documentación.
+     */
     @Autowired
     private ISolicitudDocumentacionService solicitudDocumentacionService;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private IDocumentoService documentoService;
     
+    /**
+     * Envío de correos electrónicos.
+     */
     @Autowired
     private ICorreoElectronico correoElectronico;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService registroActividad;
     
+    /**
+     * Bean de configuración de la aplciación.
+     */
     @Autowired
     private ApplicationBean applicationBean;
     
+    /**
+     * Propiedades de las tareas.
+     */
     private Properties tareasProperties = new Properties();
     
-    private Date hoy;
-    
+    /**
+     * Constante con literal para el final de mensaje.
+     */
     private static final String FINAL = "\n\nEste es un recordatorio automático.\nNo responda a este correo.";
     
+    /**
+     * Constante con literal para el inicio de mensaje.
+     */
     private static final String INICIO = "Se envía este correo como redordatorio\n";
     
+    /**
+     * Inicializa el servicio cargando los parámetros relativos a las tareas.
+     */
     @PostConstruct
     private void init() {
         Map<String, String> parametrosTareas = applicationBean.getMapaParametros().get("tareas");
@@ -75,10 +102,14 @@ public class TareasService implements ITareasService {
         
     }
     
+    /**
+     * Recordatorio de la necesidad de enviar un cuestionario.
+     */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     
     public void recordatorioEnvioCuestionario() {
+        Date hoy;
         try {
             hoy = new Date();
             List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
@@ -115,10 +146,14 @@ public class TareasService implements ITareasService {
         }
     }
     
+    /**
+     * Recordatorio de la necesidad de enviar la documentación solicitada.
+     */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     
     public void recordatorioEnvioDocumentacion() {
+        Date hoy;
         try {
             hoy = new Date();
             List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
@@ -156,11 +191,14 @@ public class TareasService implements ITareasService {
         }
     }
     
+    /**
+     * Limpia la papelera de documentos.
+     */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     
     public void limpiarPapelera() {
-        hoy = new Date();
+        Date hoy = new Date();
         List<Documento> listadoDocumentosPapelera = documentoService.findByFechaBajaIsNotNull();
         
         for (Documento documento : listadoDocumentosPapelera) {
