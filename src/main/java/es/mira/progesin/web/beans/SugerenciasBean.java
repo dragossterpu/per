@@ -14,8 +14,10 @@ import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISugerenciaService;
 import es.mira.progesin.services.IUserService;
@@ -39,32 +41,55 @@ public class SugerenciasBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private static final String NOMBRESECCION = "Sugerencias de mejora";
-    
-    private static final String ERROR = "Error";
-    
+    /**
+     * Variable utilizada para almacenar la sugerencia que se está gestionando.
+     * 
+     */
     private Sugerencia sugerencia;
     
+    /**
+     * Listado de sugerencias.
+     * 
+     */
     private List<Sugerencia> sugerenciasListado;
     
+    /**
+     * Formato de la fecha.
+     * 
+     */
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Variable utilizada para inyectar el servicio del correo.
+     * 
+     */
     @Autowired
     private transient CorreoElectronico correo;
     
+    /**
+     * Variable utilizada para inyectar el servicio de sugerencias.
+     * 
+     */
     @Autowired
     private transient ISugerenciaService sugerenciaService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de usuario.
+     * 
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de registro de actividad.
+     * 
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Guarda una nueva sugerencia con los datos del formulario
+     * Guarda una nueva sugerencia con los datos del formulario.
      * 
-     * @author EZENTIS
      * @param modulo o sección del sistema al que hace referencia
      * @param descripcion de la sugerencia
      * @return vista crearSugerencia
@@ -78,9 +103,9 @@ public class SugerenciasBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "Sugerencia guardada con éxito, cuando sea atendida recibirá un correo electrónico con la contestación.");
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar la sugerencia. Inténtelo de nuevo más tarde.");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.NOMBRESECCIONSUGERENCIAS.name(), e);
         }
         return "/principal/crearSugerencia?faces-redirect=true";
         
@@ -89,7 +114,6 @@ public class SugerenciasBean implements Serializable {
     /**
      * Método que nos lleva al listado de sugerencias Se llama desde el menu lateral.
      * 
-     * @author Ezentis
      */
     public void sugerenciasListado() {
         sugerencia = null;
@@ -99,7 +123,6 @@ public class SugerenciasBean implements Serializable {
     /**
      * Método que nos lleva al listado de sugerencias y donde se elimina la sugerencia selecionada.
      * 
-     * @author Ezentis
      * @param sugerenciaSeleccionada en la tabla
      */
     public void eliminarSugerencia(Sugerencia sugerenciaSeleccionada) {
@@ -109,16 +132,15 @@ public class SugerenciasBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                     "Se ha eliminado con éxito la sugerencia.", "msgs");
         } catch (Exception e) {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar la sugerencia. Inténtelo de nuevo más tarde.", "msgs");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.NOMBRESECCIONSUGERENCIAS.name(), e);
         }
     }
     
     /**
-     * Muestra el formulario para redactar y enviar la respuesta a una sugerencia
+     * Muestra el formulario para redactar y enviar la respuesta a una sugerencia.
      * 
-     * @author EZENTIS
      * @param sugerenciaSeleccionada en la tabla
      * @return vista contestarSugerencia
      */
@@ -128,9 +150,8 @@ public class SugerenciasBean implements Serializable {
     }
     
     /**
-     * Envía al correo electrónico de quien hizo la sugerencia el mensaje de respuesta
+     * Envía al correo electrónico de quien hizo la sugerencia el mensaje de respuesta.
      * 
-     * @author EZENTIS
      * @param sugerenciaSeleccionada en la tabla
      * @param contestacion mensaje a enviar
      * @return vista contestarSugerencia
@@ -154,27 +175,24 @@ public class SugerenciasBean implements Serializable {
                         "Mensaje de respuesta enviado correctamente.");
             }
         } catch (MailException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al enviar el correo electrónico.");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.NOMBRESECCIONSUGERENCIAS.name(), e);
         } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al contestar la sugerencia. Inténtelo de nuevo más tarde.");
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+            regActividadService.altaRegActividadError(SeccionesEnum.NOMBRESECCIONSUGERENCIAS.name(), e);
         }
         return "/administracion/sugerencias/contestarSugerencia?faces-redirect=true";
     }
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
-        
         sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
-        
     }
     
 }

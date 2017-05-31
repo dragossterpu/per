@@ -57,7 +57,12 @@ public enum SeccionesEnum {
     /**
      * Sección de notificaciones.
      */
-    NOTIFICACIONES("NOTIFICACIONES");
+    NOTIFICACIONES("NOTIFICACIONES"),
+    /**
+     * Sección de sugerencias.
+     */
+    NOMBRESECCIONSUGERENCIAS("Sugerencias de mejora");
+    
     /**
      * Descripción de la sección.
      */
