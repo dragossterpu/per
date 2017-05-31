@@ -31,26 +31,54 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqued
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {
     
+    /**
+     * Variable utilizada para inyectar el repositorio de cuestionarios personalizados.
+     * 
+     */
     @Autowired
     ICuestionarioPersonalizadoRepository cuestionarioPersRep;
     
+    /**
+     * Variable utilizada para inyectar la sesión de spring.
+     * 
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Variable para el formato de la fecha.
+     */
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Elimina un cuestionario personalizado a partir de su objeto.
+     * 
+     * @param entity cuestionario a eliminar
+     */
     @Override
     @Transactional(readOnly = false)
     public void delete(CuestionarioPersonalizado entity) {
         cuestionarioPersRep.delete(entity);
     }
     
+    /**
+     * Guarda la información de un modelo de cuestionario personalizado en la bdd.
+     * 
+     * @param entity cuestionario a guardar
+     * @return cuestionario guardado con id
+     */
     @Override
     @Transactional(readOnly = false)
     public CuestionarioPersonalizado save(CuestionarioPersonalizado entity) {
         return cuestionarioPersRep.save(entity);
     }
     
+    /**
+     * Crea la consulta criteria.
+     * 
+     * @param cuestionarioBusqueda cuestionario a guardar
+     * @param criteria cuestionario a guardar
+     */
     private void creaCriteria(CuestionarioPersonalizadoBusqueda cuestionarioBusqueda, Criteria criteria) {
         
         if (cuestionarioBusqueda.getFechaDesde() != null) {
@@ -85,6 +113,16 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         
     }
     
+    /**
+     * Método que devuelve la lista de modelos de cuestionario personalizados en una consulta basada en criteria.
+     * 
+     * @param cuestionarioBusqueda objeto con los criterios de búsqueda
+     * @param first primer elemento de la consulta
+     * @param pageSize tamaño de cada página de resultados
+     * @param sortField campo por el que se ordenan los resultados
+     * @param sortOrder sentido de la ordenacion (ascendente/descendente)
+     * @return la lista de modelos de cuestionario personalizados.
+     */
     @Override
     public List<CuestionarioPersonalizado> buscarCuestionarioPersonalizadoCriteria(int first, int pageSize,
             String sortField, SortOrder sortOrder, CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
@@ -108,6 +146,12 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         return listaCuestionarioEnvio;
     }
     
+    /**
+     * Método que devuelve el número de modelos de cuestionario personalizados en una consulta basada en criteria.
+     * 
+     * @param cuestionarioBusqueda objeto con parámetros de búsqueda
+     * @return devuelve el número de registros de la consulta criteria.
+     */
     @Override
     public int getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda cuestionarioBusqueda) {
         Session session = sessionFactory.openSession();
