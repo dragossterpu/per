@@ -154,7 +154,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Objeto de búsqueda de solicitudes.
      */
-    @Autowired
     private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
     /**
@@ -404,7 +403,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        solicitudDocPreviaBusqueda.resetValues();
+        setSolicitudDocPreviaBusqueda(new SolicitudDocPreviaBusqueda());
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
         model = new LazyModelSolicitudes(solicitudDocumentacionService);
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());

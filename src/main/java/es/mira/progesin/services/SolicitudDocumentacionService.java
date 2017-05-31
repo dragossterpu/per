@@ -203,26 +203,23 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null) {
-            criteria.add(
-                    Restrictions.eq("usernameAlta", solicitudDocPreviaBusqueda.getUsuarioCreacion().getUsername()));
+            criteria.add(Restrictions.ilike("usernameAlta", solicitudDocPreviaBusqueda.getUsuarioCreacion(),
+                    MatchMode.ANYWHERE));
         }
         criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
         criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
         String parametro;
-        if (solicitudDocPreviaBusqueda.getNombreUnidad() != null
-                && !solicitudDocPreviaBusqueda.getNombreUnidad().isEmpty()) {
+        if (solicitudDocPreviaBusqueda.getNombreUnidad() != null) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
                     .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
         }
-        if (solicitudDocPreviaBusqueda.getIdInspeccion() != null
-                && !solicitudDocPreviaBusqueda.getIdInspeccion().isEmpty()) {
+        if (solicitudDocPreviaBusqueda.getIdInspeccion() != null) {
             criteria.add(
                     Restrictions.eq("inspeccion.id", Long.parseLong(solicitudDocPreviaBusqueda.getIdInspeccion())));
         }
-        if (solicitudDocPreviaBusqueda.getAnioInspeccion() != null
-                && !solicitudDocPreviaBusqueda.getAnioInspeccion().isEmpty()) {
+        if (solicitudDocPreviaBusqueda.getAnioInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.anio",
                     Integer.parseInt(solicitudDocPreviaBusqueda.getAnioInspeccion())));
         }
