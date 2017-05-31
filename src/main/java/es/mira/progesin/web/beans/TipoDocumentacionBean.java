@@ -26,7 +26,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Controlador de las operaciones relacionadas con los tipos de documentación necesarios para las solicitudes de
+ * Bean controlador de las operaciones relacionadas con los tipos de documentación necesarios para las solicitudes de
  * documentación previas al envio de cuestionarios. Nuevo tipo de documentación, modificar tipo de documentación,
  * eliminar el tipo de documentación, búsqueda de tipo de documentación
  * 
@@ -41,34 +41,73 @@ public class TipoDocumentacionBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Lista de tipos de documentación para mostrar en tablas.
+     * 
+     */
     private List<TipoDocumentacion> listaTipoDocumentacion;
     
+    /**
+     * Lista de extensiones string para mostrar en tablas.
+     * 
+     */
     private List<String> listaExtensionesPosibles;
     
+    /**
+     * Variable que almacena la descripción de un tipo de documentación que se crea por primera vez.
+     * 
+     */
     private String descripcionNuevo;
     
+    /**
+     * Variable que almacena el nombre de un tipo de documentación que se crea por primera vez.
+     * 
+     */
     private String nombreNuevo;
     
+    /**
+     * Lista de extensiones nuevas.
+     * 
+     */
     private List<String> extensionesNuevo;
     
+    /**
+     * Variable utilizada para almacenar el valor del ámbito de una inspección.
+     * 
+     */
     private AmbitoInspeccionEnum ambitoNuevo;
     
+    /**
+     * Variable utilizada para inyectar el ApplicationBean.
+     * 
+     */
     @Autowired
     transient ApplicationBean applicationBean;
     
+    /**
+     * Variable utilizada para inyectar el servicio de tipo de documentación.
+     * 
+     */
     @Autowired
     transient ITipoDocumentacionService tipoDocumentacionService;
     
+    /**
+     * Variable utilizada para inyectar el servicio del registro de actividad.
+     * 
+     */
     @Autowired
     transient IRegistroActividadService regActividadService;
     
+    /**
+     * Variable utilizada para inyectar el servicio de notificaciones.
+     * 
+     */
     @Autowired
     transient INotificacionService notificacionService;
     
     /**
-     * Muestra el listado de tipos de documentación disponibles. Se llama desde el menu lateral
+     * Muestra el listado de tipos de documentación disponibles. Se llama desde el menu lateral.
      * 
-     * @author EZENTIS
      * @return vista documentacionPrevia
      */
     public String tipoDocumentacionListado() {
@@ -78,9 +117,8 @@ public class TipoDocumentacionBean implements Serializable {
     
     /**
      * Elimina un tipo de documentación. Elimina el tipo de documentación y actualiza la lista de la vista
-     * documentacionPrevia
+     * documentacionPrevia.
      * 
-     * @author EZENTIS
      * @param documentacion objeto tipo de documentacion a eliminar
      */
     public void eliminarDocumentacion(TipoDocumentacion documentacion) {
@@ -95,9 +133,8 @@ public class TipoDocumentacionBean implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
@@ -110,7 +147,6 @@ public class TipoDocumentacionBean implements Serializable {
      * Da de alta un nuevo tipo de documentación. Recupera del formulario altaTipoDocumentacion los campos descripción,
      * nombre y extensión, y muestra una ventana flotante con el mensaje resultado de la operación.
      * 
-     * @author EZENTIS
      */
     public void altaTipo() {
         TipoDocumentacion documentacion = new TipoDocumentacion();
@@ -136,9 +172,8 @@ public class TipoDocumentacionBean implements Serializable {
     }
     
     /**
-     * Guarda las modificaciones realizadas en caliente a un registro de la lista y cambia su estado a no editable
+     * Guarda las modificaciones realizadas en caliente a un registro de la lista y cambia su estado a no editable.
      * 
-     * @author EZENTIS
      * @param event evento disparado al pulsar el botón modificar edición
      */
     public void onRowEdit(RowEditEvent event) {

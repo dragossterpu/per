@@ -25,7 +25,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Entidad para los tipos de documentación previa
+ * Entidad para los tipos de documentación previa.
  * 
  * @author EZENTIS
  *
@@ -44,22 +44,37 @@ public class TipoDocumentacion implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @SequenceGenerator(name = "seq_tipodocumentacionprevia", sequenceName = "seq_tipodocumentacionprevia", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tipodocumentacionprevia")
     @Column(name = "ID", nullable = false)
     private Long id;
     
+    /**
+     * DESCRIPCION.
+     */
     @Column(name = "DESCRIPCION", length = 255)
     private String descripcion;
     
+    /**
+     * NOMBRE.
+     */
     @Column(name = "NOMBRE", length = 100)
     private String nombre;
     
+    /**
+     * EXTENSIONES.
+     */
     @Column(name = "EXTENSIONES")
     @Convert(converter = ListaExtensionesAdapter.class)
     private List<String> extensiones;
     
+    /**
+     * AMBITO.
+     */
     @Column(name = "ambito", length = 10)
     @Enumerated(EnumType.STRING)
     private AmbitoInspeccionEnum ambito;
