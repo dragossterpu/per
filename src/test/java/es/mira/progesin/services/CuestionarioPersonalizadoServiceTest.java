@@ -23,20 +23,28 @@ import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepos
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 /**
- * @author EZENTIS
  * 
- * Test del servicio Modelo de cuestionario personalizado
+ * Test del servicio Modelo de cuestionario personalizado.
  *
+ * @author EZENTIS
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CuestionarioPersonalizadoServiceTest {
-    
+    /**
+     * Simulación del repositorio de cuestionario personalizado.
+     */
     @Mock
-    ICuestionarioPersonalizadoRepository cuestionarioPersonalizadoRepository;
+    private ICuestionarioPersonalizadoRepository cuestionarioPersonalizadoRepository;
     
+    /**
+     * Simulación de la factoría de sesiones.
+     */
     @Mock
     private SessionFactory sessionFactory;
     
+    /**
+     * Servicio de cuestionario personalizado.
+     */
     @InjectMocks
     private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService();
     

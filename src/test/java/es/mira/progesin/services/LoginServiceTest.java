@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,23 +15,33 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import es.mira.progesin.persistence.entities.User;
 
 /**
+ * Test del servicio de login.
+ * 
  * @author Ezentis
  *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
-    
+    /**
+     * Simulación del servicio de usuarios.
+     */
     @Mock
     private IUserService userService;
     
+    /**
+     * Simulación del registro de actividad.
+     */
     @Mock
     private IRegistroActividadService registroActividadService;
     
+    /**
+     * Servicio de login.
+     */
     @InjectMocks
     private LoginService loginService;
     
     /**
-     * Comprobación clase existe.
+     * Comprobación de que la clase existe.
      */
     @Test
     public void type() {
@@ -41,7 +49,7 @@ public class LoginServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta.
+     * Comprobación de que la clase no es abstracta.
      */
     @Test
     public void instantiation() {

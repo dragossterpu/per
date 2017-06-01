@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,21 +20,29 @@ import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 
 /**
- * @author EZENTIS
  * 
- * Test del servicio Modelo Cuestionario
+ * Test del servicio Modelo Cuestionario.
  *
+ * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityContextHolder.class)
 public class ModeloCuestionarioServiceTest {
-    
+    /**
+     * Simulación del repositorio de modelos de cuestionario.
+     */
     @Mock
     private IModeloCuestionarioRepository modeloCuestionarioRepository;
     
+    /**
+     * Simulación del repositorio de áreas de cuestionario.
+     */
     @Mock
     private IAreaCuestionarioRepository areaCuestionarioRepository;
     
+    /**
+     * Servicio de modelos de cuestionario.
+     */
     @InjectMocks
     private IModeloCuestionarioService modeloCuestionarioService = new ModeloCuestionarioService();
     
@@ -48,7 +54,7 @@ public class ModeloCuestionarioServiceTest {
     }
     
     /**
-     * Comprobación clase existe.
+     * Comprobación de que la clase existe.
      */
     @Test
     public void type() {
@@ -56,7 +62,7 @@ public class ModeloCuestionarioServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta.
+     * Comprobación de que la clase no es abstracta.
      */
     @Test
     public void instantiation() {

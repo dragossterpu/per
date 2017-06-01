@@ -1,6 +1,3 @@
-/**
- * 
- */
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,22 +19,27 @@ import es.mira.progesin.persistence.entities.ParametroId;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
 
 /**
- * @author EZENTIS
  * 
- * Test del servicio Parametros
+ * Test del servicio Parametros.
  *
+ * @author EZENTIS
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ParametroServiceTest {
-    
+    /**
+     * Simulación del repositorio de parámetros.
+     */
     @Mock
     private IParametrosRepository paramRepository;
     
+    /**
+     * Servicio de parámetros.
+     */
     @InjectMocks
     private IParametroService parametroService = new ParametroService();
     
     /**
-     * Comprobación clase existe.
+     * Comprobación de que la clase existe.
      */
     @Test
     public void type() {
@@ -45,7 +47,7 @@ public class ParametroServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta.
+     * Comprobación de que la clase no es abstracta.
      */
     @Test
     public void instantiation() {

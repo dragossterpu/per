@@ -100,7 +100,7 @@ public class GestorDocumentalBean {
     private List<Boolean> list;
     
     /**
-     * Verificador de extensiones
+     * Verificador de extensiones.
      */
     @Autowired
     private transient VerificadorExtensiones verificadorExtensiones;

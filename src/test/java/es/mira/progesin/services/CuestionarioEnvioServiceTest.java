@@ -51,57 +51,101 @@ import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
 /**
+ * Test del servicio cuestionario enviado.
+ *
  * @author EZENTIS
- * 
- * Test del servicio cuestionario enviado
  *
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityContextHolder.class)
 public class CuestionarioEnvioServiceTest {
-    
+    /**
+     * Simulación del securityContext.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Simulación de la autenticación.
+     */
     @Mock
     private Authentication authentication;
     
+    /**
+     * Simulación de la factoría de sesiones.
+     */
     @Mock
     private SessionFactory sessionFactory;
     
+    /**
+     * Simulación del repositorio cuestionarios enviados.
+     */
     @Mock
     private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
     
+    /**
+     * Simulación del repositorio de respuestas.
+     */
     @Mock
     private transient IRespuestaCuestionarioRepository respuestaRepository;
     
+    /**
+     * Simulación del repositorio de tablas.
+     */
     @Mock
     private transient IDatosTablaGenericaRepository datosTablaRepository;
     
+    /**
+     * Simulación del repositorio de usuarios.
+     */
     @Mock
     private transient IUserRepository userRepository;
     
+    /**
+     * Simulación del servicio de usuarios.
+     */
     @Mock
     private transient IUserService userService;
     
+    /**
+     * Simulación del servicio de inspecciones.
+     */
     @Mock
     private transient IInspeccionesService inspeccionesService;
     
+    /**
+     * Simulación del repositorio de areas/usuarios.
+     */
     @Mock
     private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
+    /**
+     * Simulación objeto correoElectrónico.
+     */
     @Mock
     private transient ICorreoElectronico correoElectronico;
     
+    /**
+     * Simulación de repositorio de preguntas.
+     */
     @Mock
     private transient IPreguntaCuestionarioRepository preguntasRepository;
     
+    /**
+     * Simulación del servicio de áreas/usuario.
+     */
     @Mock
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @InjectMocks
     private ICuestionarioEnvioService cuestionarioEnvioService = new CuestionarioEnvioService();
     
+    /**
+     * Captor de tipo AreaUsuarioCuestEnv.
+     */
     @Captor
     ArgumentCaptor<List<AreaUsuarioCuestEnv>> areasUsuarioCuestEnvCaptor;
     

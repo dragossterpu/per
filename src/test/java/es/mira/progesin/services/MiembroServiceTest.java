@@ -17,22 +17,28 @@ import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
 /**
- * @author EZENTIS
  * 
- * Test del servicio Miembro
+ * Test del servicio Miembro.
+ * 
+ * @author EZENTIS
  *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class MiembroServiceTest {
-    
+    /**
+     * Simulación del repositorio de miembros.
+     */
     @Mock
     private IMiembrosRepository miembrosRepository;
     
+    /**
+     * Servicio de miembros.
+     */
     @InjectMocks
     private IMiembroService miembroService = new MiembroService();
     
     /**
-     * Comprobación clase existe.
+     * Comprobación de que la clase existe.
      */
     @Test
     public void type() {
@@ -40,7 +46,7 @@ public class MiembroServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta.
+     * Comprobación de que la clase no es abstracta.
      */
     @Test
     public void instantiation() {

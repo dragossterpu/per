@@ -35,7 +35,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.web.beans.UserBusqueda;
 
 /**
- * Test del servicio usuarios donde se usa critera de hibernate
+ * Test del servicio usuarios donde se usa criteria de hibernate.
  * 
  * @author EZENTIS
  *
@@ -47,13 +47,21 @@ import es.mira.progesin.web.beans.UserBusqueda;
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
 public class UserServiceCriteriaTest {
-    
+    /**
+     * Factoría de sesiones.
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Simulación del securityContext.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Simulación de la autenticación.
+     */
     @Mock
     private Authentication authentication;
     
@@ -69,7 +77,7 @@ public class UserServiceCriteriaTest {
     }
     
     /**
-     * Test method for
+     * Test method for.
      * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(int, int, String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.UserBusqueda)}
      */
     @Test
@@ -95,7 +103,7 @@ public class UserServiceCriteriaTest {
     }
     
     /**
-     * Test method for
+     * Test method for.
      * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(int, int, String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.UserBusqueda)}
      */
     @Test
@@ -121,7 +129,7 @@ public class UserServiceCriteriaTest {
     }
     
     /**
-     * Test method for
+     * Test method for.
      * {@link es.mira.progesin.services.UserService#buscarUsuarioCriteria(int, int, String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.UserBusqueda)}
      */
     @Test
@@ -150,7 +158,7 @@ public class UserServiceCriteriaTest {
     }
     
     /**
-     * Test method for
+     * Test method for.
      * {@link es.mira.progesin.services.UserService#contarRegistros(es.mira.progesin.web.beans.UserBusqueda)}.
      */
     @Test

@@ -27,9 +27,10 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
 /**
- * @author EZENTIS
+ * Test de buscadores con criteria.
  * 
- * Test de buscadores con criteria
+ * @author EZENTIS
+ *
  *
  */
 @Ignore
@@ -43,13 +44,21 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 // @ContextConfiguration // @SpringBootTest
 // @TestExecutionListeners(listeners = { WithSecurityContextTestExecutionListener.class })
 public class CuestionarioEnvioServiceCriteriaTests {
-    
+    /**
+     * Simulación del securityContext.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Simulación de la autenticación.
+     */
     @Mock
     private Authentication authentication;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @InjectMocks
     private transient ICuestionarioEnvioService cuestionarioEnvioService = new CuestionarioEnvioService();
     
