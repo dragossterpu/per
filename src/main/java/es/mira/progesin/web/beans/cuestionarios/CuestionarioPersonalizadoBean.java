@@ -45,22 +45,43 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * POJO con las opciones de búsqueda.
+     */
     private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
     
+    /**
+     * Variable para saber de dónde viene la navegación.
+     */
     private String vieneDe;
     
+    /**
+     * Servicio de cuestionarios personalizados.
+     */
     @Autowired
     private transient ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Bean de cuestionarios enviados.
+     */
     @Autowired
     private EnvioCuestionarioBean envioCuestionarioBean;
     
+    /**
+     * Servicio de registro de actividad.
+     */
     @Autowired
     transient IRegistroActividadService regActividadService;
     
+    /**
+     * LazyModel de cuestionarios personalizados para hacer la paginación por servidor.
+     */
     private LazyModelCuestionarioPersonalizado model;
     
     /**
@@ -90,7 +111,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     }
     
     /**
-     * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
+     * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda.
      * 
      * @author EZENTIS
      */
@@ -148,7 +169,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     }
     
     /**
-     * Muestra la pantalla de envío del cuestionario personalizado
+     * Muestra la pantalla de envío del cuestionario personalizado.
      *
      * @author EZENTIS
      * @param cuestionario Cuestionario a enviar
@@ -170,7 +191,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
+     * PostConstruct, inicializa el bean.
      * 
      * @author EZENTIS
      */

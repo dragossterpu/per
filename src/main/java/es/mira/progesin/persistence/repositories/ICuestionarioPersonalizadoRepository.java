@@ -6,9 +6,9 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 
 /**
  * 
- * Interfaz del repositorio de modelos de cuestionario personalizados
+ * Interfaz del repositorio de modelos de cuestionario personalizados.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 public interface ICuestionarioPersonalizadoRepository extends CrudRepository<CuestionarioPersonalizado, Long> {
