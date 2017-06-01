@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
-import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IModeloCuestionarioService;
-import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,37 +23,29 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("modelosCuestionarioBean")
-@Scope("session")
+@Scope(FacesViewScope.NAME)
 public class ModelosCuestionarioBean {
     
+    /**
+     * Listado con los modelos existentes.
+     */
     private List<ModeloCuestionario> listadoCuestionarios;
     
+    /**
+     * Servicio de modelos de cuestionario.
+     */
     @Autowired
     private IModeloCuestionarioService modeloCuestionarioService;
-    
-    @Autowired
-    private IDocumentoService documentoService;
-    
-    @Autowired
-    private IRegistroActividadService regActividadService;
-    
-    /**
-     * PostConstruct, inicializa el bean
-     * 
-     * @author EZENTIS
-     */
-    @PostConstruct
-    public void init() {
-        cargarModelos();
-    }
     
     /**
      * Carga la lista con todos los modelos de cuestionario de la bdd.
      * 
      * @author EZENTIS
      */
-    public void cargarModelos() {
+    @PostConstruct
+    public void init() {
         setListadoCuestionarios(modeloCuestionarioService.findAll());
+        Collections.sort(listadoCuestionarios, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
     }
     
 }

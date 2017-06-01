@@ -98,7 +98,7 @@
                         <p:panel id="personalizar">
 
                             <p:panel rendered="#{modificarModeloCuestionarioBean.tipoPersonalizado eq 'RADIO'}">
-                                <p:orderList id="orderListValoresRadio" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">
+                                <p:orderList id="orderListValoresRadio" value="#{modificarModeloCuestionarioBean.listadoValoresNuevaRespuesta}" var="valor" itemValue="#{valor}" controlsLocation="left" responsive="true">
                                     <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaRadio" />
                                     <f:facet name="caption">Valores</f:facet>
                                     <p:column>
@@ -146,7 +146,7 @@
                                 </p:commandButton>
                                 <p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraValor}" update="orderListColumnasMatriz" value="Eliminar columna" icon="fa fa-fw fa-minus" />
                                 <p:separator />
-                                <p:orderList id="orderListFilasMatriz" value="#{modificarModeloCuestionarioBean.listadoValoresFila}" var="valor" itemValue="#{valor}" converter="#{selectConverter}" controlsLocation="left" responsive="true">
+                                <p:orderList id="orderListFilasMatriz" value="#{modificarModeloCuestionarioBean.listadoValoresFila}" var="valor" itemValue="#{valor}" controlsLocation="left" responsive="true">
                                     <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectValor}" update="nuevoTipoRespuestaFila" />
                                     <f:facet name="caption">Filas</f:facet>
                                     <p:column>
@@ -184,7 +184,7 @@
                                     <p:outputLabel />
                                     <p:outputLabel id="contador" />
                                     <h:outputLabel for="nuevoTipoPregunta" value="Tipo de respuesta:" />
-                                    <p:selectOneMenu binding="#{tipoRespuesta}" id="nuevoTipoPregunta" converter="#{selectConverter}">
+                                    <p:selectOneMenu binding="#{tipoRespuesta}" id="nuevoTipoPregunta">
                                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                                         <f:selectItems value="#{modificarModeloCuestionarioBean.listaTipoPreguntasPick.target}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
                                     </p:selectOneMenu>
