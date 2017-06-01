@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,6 +24,7 @@ import lombok.ToString;
  * @author EZENTIS
  *
  */
+@EqualsAndHashCode(of = { "informe", "subarea" })
 @Builder
 @ToString
 @Getter
