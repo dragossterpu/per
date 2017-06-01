@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +29,7 @@ import lombok.Setter;
  * @author EZENTIS
  *
  */
-
+@EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -78,43 +79,5 @@ public class GuiaPasos implements Serializable {
      */
     @Column(name = "username_baja")
     private String usernameBaja;
-    
-    /**
-     * Implementación del método hashCode.
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        int i;
-        if (id == null) {
-            i = 0;
-        } else {
-            i = id.hashCode();
-        }
-        result = prime * result + i;
-        
-        return result;
-    }
-    
-    /**
-     * Implentación del método equals.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        GuiaPasos other = (GuiaPasos) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
     
 }
