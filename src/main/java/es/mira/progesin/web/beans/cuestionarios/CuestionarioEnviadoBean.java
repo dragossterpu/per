@@ -53,54 +53,103 @@ public class CuestionarioEnviadoBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Constante para mensaje repetitivo.
+     */
     private static final String DESCRIPCION = "Cuestionario para la inspección ";
     
+    /**
+     * Repositorio de respuestas de cuestionario.
+     */
     @Autowired
     private transient IRespuestaCuestionarioRepository respuestaRepository;
     
+    /**
+     * Objeto con parámetros de búsqueda de cuestionarios enviados.
+     */
     private CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda;
     
+    /**
+     * Bean para mostrar formulario del cuestionario.
+     */
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
     
+    /**
+     * Parámetro GET peticiones HTTP que indica si viene del menú.
+     */
     private String vieneDe;
     
+    /**
+     * Variable auxiliar para validar modificaciones de la fecha limite de cumplimentacion del cuestionario.
+     */
     private Date backupFechaLimiteCuestionario;
     
+    /**
+     * Formato de fechas.
+     */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @Autowired
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Bean para el envio de cuestionarios.
+     */
     @Autowired
     private EnvioCuestionarioBean envioCuestionarioBean;
     
+    /**
+     * Servicio de correos electrónicos.
+     */
     @Autowired
     private transient ICorreoElectronico correoElectronico;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private transient IInspeccionesService inspeccionesService;
     
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
-    transient IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
-    transient INotificacionService notificacionService;
+    private transient INotificacionService notificacionService;
     
+    /**
+     * Bean de datos comunes de la aplicación.
+     */
     @Autowired
-    transient ApplicationBean applicationBean;
+    private transient ApplicationBean applicationBean;
     
+    /**
+     * Servicio de tipos de inspección.
+     */
     @Autowired
-    transient ITipoInspeccionService tipoInspeccionService;
+    private transient ITipoInspeccionService tipoInspeccionService;
     
+    /**
+     * Objeto que define la tabla de resultados del buscador.
+     */
     private LazyModelCuestionarioEnviado model;
     
+    /**
+     * listado de tipos de inspección dados de alta.
+     */
     private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
-     * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario
-     * 
-     * @author EZENTIS
+     * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario.
      */
     public void buscarCuestionario() {
         model.setBusqueda(cuestionarioEnviadoBusqueda);
@@ -111,8 +160,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de modelos de cuestionario a su estado inicial y borra los resultados de
      * búsquedas anteriores si se navega desde el menú u otra sección.
-     * 
-     * @author EZENTIS
      */
     public void getFormBusquedaCuestionarios() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -122,9 +169,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     }
     
     /**
-     * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda
-     * 
-     * @author EZENTIS
+     * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda.
      */
     public void limpiar() {
         cuestionarioEnviadoBusqueda.limpiar();
@@ -135,7 +180,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      * Elimina un cuestionario seleccionado en los resultados de la búsqueda.
      * 
      * @param cuestionario a eliminar
-     * @author EZENTIS
      */
     public void eliminarCuestionario(CuestionarioEnvio cuestionario) {
         try {
@@ -169,9 +213,7 @@ public class CuestionarioEnviadoBean implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
-     * 
-     * @author EZENTIS
+     * PostConstruct, inicializa el bean.
      */
     @PostConstruct
     public void init() {
@@ -183,8 +225,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     /**
      * Guarda fecha validación de las respuestas de las preguntas marcadas por el usuario. En caso de haberse completado
      * la validación de todas las respuestas se da por finalizado el cuestionario.
-     * 
-     * @author EZENTIS
      */
     public void validarRespuestas() {
         try {
@@ -256,7 +296,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      * cumplimentación y reenvia el cuestionario al destinatario de la unidad con el motivo de dicha no conformidad.
      * Adicionalmente reactiva los usuarios provisinales que se usaron para llevarlo a cabo.
      * 
-     * @author EZENTIS
      * @param motivosNoConforme texto introducido por el usuario
      */
     public void noConformeCuestionario(String motivosNoConforme) {
@@ -306,7 +345,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      * Pasa los datos de envio del cuestionario que queremos modificar al formulario de envio para que cambien los
      * valores que quieran. En este caso sólo la fecha límite de cumplimentación y envio por parte de la unidad.
      * 
-     * @author EZENTIS
      * @param cuestionario recuperado del formulario
      * @return vista enviarCuestionario
      * 
@@ -320,8 +358,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     /**
      * Modifica los datos de envio de un cuestionario. En caso de que la fecha límite de envío por parte de la unidad
      * sea alterada, se notifica por correo electrónico dicho cambio.
-     * 
-     * @author EZENTIS
      */
     public void modificarCuestionario() {
         try {

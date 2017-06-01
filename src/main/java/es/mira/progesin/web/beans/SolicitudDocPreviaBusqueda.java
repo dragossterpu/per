@@ -62,7 +62,7 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
     private AmbitoInspeccionEnum ambitoInspeccion;
     
     /**
-     * Filtro nombre unidad encargada de la inspección a la que pertenece.
+     * Filtro nombre unidad inspeccionada a la que se envía la solicitud.
      */
     private String nombreUnidad;
     
