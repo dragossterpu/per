@@ -46,7 +46,6 @@ import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
-import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
@@ -94,12 +93,6 @@ public class CuestionarioEnvioServiceTest {
      */
     @Mock
     private transient IDatosTablaGenericaRepository datosTablaRepository;
-    
-    /**
-     * Simulación del repositorio de usuarios.
-     */
-    @Mock
-    private transient IUserRepository userRepository;
     
     /**
      * Simulación del servicio de usuarios.
@@ -202,9 +195,9 @@ public class CuestionarioEnvioServiceTest {
         cuestionarioEnvioService.crearYEnviarCuestionario(listadoUsuariosProvisionales, cuestionarioEnviado,
                 cuerpoCorreo);
         
-        verify(userRepository, times(1)).save(listadoUsuariosProvisionales);
+        verify(userService, times(1)).save(listadoUsuariosProvisionales);
         verify(cuestionarioEnvioRepository, times(1)).save(cuestionarioEnviado);
-        verify(areaUsuarioCuestEnvRepository, times(1)).save(areasUsuarioCuestEnvCaptor.capture());
+        verify(areaUsuarioCuestEnvService, times(1)).save(areasUsuarioCuestEnvCaptor.capture());
         assertThat(areasUsuarioCuestEnvCaptor.getValue()).hasSize(2);
         verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class), any(String.class));
         verify(inspeccionesService, times(1)).cambiarEstado(cuestionarioEnviado.getInspeccion(),

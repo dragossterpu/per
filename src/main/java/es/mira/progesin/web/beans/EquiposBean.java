@@ -299,7 +299,7 @@ public class EquiposBean implements Serializable {
     public String getFormModificarEquipo(Equipo equip) {
         this.miembrosSeleccionados = new ArrayList<>();
         List<Miembro> miembrosEquipo = miembroService.findByEquipo(equip);
-        equipo.setMiembros(miembrosEquipo);
+        equip.setMiembros(miembrosEquipo);
         this.equipo = equip;
         return "/equipos/modificarEquipo?faces-redirect=true";
     }
