@@ -13,14 +13,22 @@ import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.services.ITipoEquipoService;
 
 /**
+ * Validador del código de tipo de equipo.
+ * 
  * @author EZENTIS
  */
 @Component("codigoTipoEquipoValidator")
 public class CodigoTipoEquipoValidator implements Validator {
-    
+    /**
+     * Servicio de tipo de equipo.
+     */
     @Autowired
     private ITipoEquipoService tipoEquipoService;
     
+    /**
+     * Comprueba si el código de un tipo de equipo existe y no coincide con el mismo que se está modificando. Se emplea
+     * para la edición en caliente de cuerpos.
+     */
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) {
         

@@ -17,22 +17,39 @@ import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * Comprueba que el correo introducido en el formulario de modificación de una solicitud es válido y no se está usando
- * en otra solicitud o cuestionario
+ * en otra solicitud o cuestionario.
  * 
  * @author EZENTIS
  */
 @Component("correoDestinatarioValidator")
 public class CorreoDestinatarioValidator implements Validator {
-    
+    /**
+     * Servicio de solicitud de documentación.
+     */
     @Autowired
     ISolicitudDocumentacionService solicitudDocumentacionService;
     
+    /**
+     * Servicio de cuestionarios enviados.
+     */
     @Autowired
     ICuestionarioEnvioService cuestionarioEnvioService;
     
+    /**
+     * Bean de configuración de la aplicación.
+     */
     @Autowired
     ApplicationBean applicationBean;
     
+    /**
+     * Comprueba que el correo introducido en el formulario de modificación de una solicitud es válido y no se está
+     * usando en otra solicitud o cuestionario.
+     * 
+     * @param context Contexto en el que se produce la validación.
+     * @param component Componente de la vista en el que se produce la edición a validar
+     * @param value Objeto a validar
+     * 
+     */
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) {
         

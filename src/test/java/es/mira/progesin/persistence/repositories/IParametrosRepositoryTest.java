@@ -17,17 +17,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.mira.progesin.persistence.entities.Parametro;
 
 /**
+ * Test del repositorio Parametros.
+ * 
  * @author EZENTIS
  * 
- * Test del repositorio Parametros
  *
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-// @AutoConfigureTestDatabase(replace = Replace.NONE)
+
 public class IParametrosRepositoryTest {
-    
+    /**
+     * Repositorio de parámetros.
+     */
     @Autowired
     private IParametrosRepository repository;
     

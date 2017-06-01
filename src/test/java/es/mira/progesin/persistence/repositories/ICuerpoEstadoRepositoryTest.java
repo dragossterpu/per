@@ -14,9 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 
 /**
- * @author EZENTIS
  * 
- * Test del repositorio Cuerpos estado
+ * Test del repositorio Cuerpos estado.
+ * 
+ * @author EZENTIS
  *
  */
 
@@ -25,7 +26,9 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 @TestPropertySource(locations = "classpath:test.properties")
 
 public class ICuerpoEstadoRepositoryTest {
-    
+    /**
+     * Repositorio de cuerpos de estado.
+     */
     @Autowired
     private ICuerpoEstadoRepository repository;
     

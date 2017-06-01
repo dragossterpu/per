@@ -20,16 +20,19 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 /**
- * @author EZENTIS
  * 
- * Test del repositorio User
+ * Test del repositorio User.
+ * 
+ * @author EZENTIS
  *
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
 public class IUserRepositoryTest {
-    
+    /**
+     * Repositorio de usuarios.
+     */
     @Autowired
     private IUserRepository repository;
     

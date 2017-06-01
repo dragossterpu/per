@@ -17,15 +17,22 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import es.mira.progesin.services.ICuerpoEstadoService;
 
 /**
+ * Test del validador de cuerpo de estado.
+ * 
  * @author EZENTIS
  *
  */
 @RunWith(PowerMockRunner.class)
 public class CuerpoEstadoValidatorTest {
-    
+    /**
+     * Simulación del servicio de cuerpos de estado.
+     */
     @Mock
     private transient ICuerpoEstadoService cuerposEstadoService;
     
+    /**
+     * Objeto validador.
+     */
     @InjectMocks
     private CuerpoEstadoValidator validador;
     

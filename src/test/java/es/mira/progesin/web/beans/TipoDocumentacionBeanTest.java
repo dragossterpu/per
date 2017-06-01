@@ -36,35 +36,52 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
+ * Test del bean TipoDocumentacionBean.
+ * 
  * @author EZENTIS
  * 
- * Test del bean TipoDocumentacionBean
- *
  */
 
 @PrepareForTest(FacesUtilities.class)
 @RunWith(PowerMockRunner.class)
 public class TipoDocumentacionBeanTest {
-    
+    /**
+     * Simulación del servicio de tipo de documentación.
+     */
     @Mock
     private ITipoDocumentacionService tipoDocumentacionServiceMock;
     
+    /**
+     * Bean de tipo de documentación.
+     */
     @InjectMocks
     private TipoDocumentacionBean tipoDocumentacionBeanMock;
     
+    /**
+     * Simulación del servicio de registro de actividad.
+     */
     @Mock
     private IRegistroActividadService regActividadServiceMock;
     
+    /**
+     * Simulación del bean de configuración de la aplicación.
+     */
     @Mock
     private ApplicationBean applicationBeanMock;
     
+    /**
+     * Simulación del servicio de parámetros.
+     */
     @Mock
     private IParametroService parametroServiceMock;
     
+    /**
+     * Listado de extensiones.
+     */
     private List<String> exts;
     
     /**
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception Excepción
      */
     @Before
     public void setUp() throws Exception {

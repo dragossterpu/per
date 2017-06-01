@@ -37,9 +37,10 @@ import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
- * @author EZENTIS
  * 
- * Test del bean Cuerpos Estado
+ * Test del bean Cuerpos Estado.
+ *
+ * @author EZENTIS
  */
 
 @RunWith(PowerMockRunner.class)
@@ -47,30 +48,56 @@ import es.mira.progesin.util.FacesUtilities;
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
 
 public class CuerposEstadoBeanTest {
-    
+    /**
+     * Lista de cuerpos de estado.
+     */
     private List<CuerpoEstado> listaCuerposEstado;
     
+    /**
+     * Simulación del securityContext.
+     */
     @Mock
     private SecurityContext securityContext;
     
+    /**
+     * Simulación de la autenticación.
+     */
     @Mock
     private Authentication authentication;
     
+    /**
+     * Simulación del securityContext.
+     */
     @Mock
     private transient ICuerpoEstadoService cuerposEstadoService;
     
+    /**
+     * Simulación del servicio de usuarios.
+     */
     @Mock
     private transient IUserService userService;
     
+    /**
+     * Simulación del servicio de registro de actividad.
+     */
     @Mock
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Bean de cuerpos de estado.
+     */
     @InjectMocks
     private CuerposEstadoBean cuerposEstadoBean;
     
+    /**
+     * Captor de tipo CuerpoEstado.
+     */
     @Captor
     private ArgumentCaptor<CuerpoEstado> cuerpoCaptor;
     
+    /**
+     * Captor de excepciones.
+     */
     @Captor
     private ArgumentCaptor<Exception> exceptionCaptor;
     

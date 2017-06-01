@@ -19,7 +19,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentacionRepository;
 
 /**
- * Test del repositorio de tipo de documentación
+ * Test del repositorio de tipo de documentación.
  * 
  * @author EZENTIS
  *
@@ -29,7 +29,9 @@ import es.mira.progesin.persistence.repositories.gd.ITipoDocumentacionRepository
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
 public class ITipoDocumentacionRepositoryTest {
-    
+    /**
+     * Repositorio de tipo de documentación.
+     */
     @Autowired
     private ITipoDocumentacionRepository repository;
     

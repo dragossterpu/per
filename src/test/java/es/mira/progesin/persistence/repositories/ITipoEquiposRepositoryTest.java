@@ -14,17 +14,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 
 /**
+ * Test del repositorio TipoEquipos.
+ * 
  * @author EZENTIS
  * 
- * Test del repositorio TipoEquipos
  *
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-// @AutoConfigureTestDatabase(replace = Replace.NONE)
+
 public class ITipoEquiposRepositoryTest {
-    
+    /**
+     * Repositorio de tipos de equipo.
+     */
     @Autowired
     private ITipoEquiposRepository repository;
     

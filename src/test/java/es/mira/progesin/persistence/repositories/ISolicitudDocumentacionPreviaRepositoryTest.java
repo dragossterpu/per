@@ -15,17 +15,19 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 
 /**
- * @author EZENTIS
  * 
- * Test del repositorio Solicitud Documentación Previa
+ * Test del repositorio Solicitud Documentación Previa.
  *
+ * @author EZENTIS
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-// @AutoConfigureTestDatabase(replace = Replace.NONE)
+
 public class ISolicitudDocumentacionPreviaRepositoryTest {
-    
+    /**
+     * Repositorio de solicitud de documentación previa.
+     */
     @Autowired
     private ISolicitudDocumentacionPreviaRepository solicitudDocPreviaRepository;
     

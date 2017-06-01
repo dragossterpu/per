@@ -15,17 +15,20 @@ import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 
 /**
+ * 
+ * Test del repositorio Equipos.
  * @author EZENTIS
  * 
- * Test del repositorio Equipos
  *
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-// @AutoConfigureTestDatabase(replace = Replace.NONE)
+
 public class IEquipoRepositoryTest {
-    
+    /**
+     * Repositorio de equipos.
+     */
     @Autowired
     private IEquipoRepository repository;
     

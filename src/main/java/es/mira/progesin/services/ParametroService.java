@@ -11,17 +11,24 @@ import es.mira.progesin.persistence.entities.Parametro;
 import es.mira.progesin.persistence.repositories.IParametrosRepository;
 
 /**
- * @author EZENTIS
  * 
- * Sevicio para la clase Parametro
- *
+ * Sevicio para la clase Parametro.
+ * 
+ * @author EZENTIS
  */
 @Service
 public class ParametroService implements IParametroService {
-    
+    /**
+     * Repositorio de parámetros.
+     */
     @Autowired
     private IParametrosRepository parametrosRepo;
     
+    /**
+     * Construye un mapa de parámetros.
+     * 
+     * @return Mapa con los parámetros
+     */
     @Override
     public Map<String, Map<String, String>> getMapaParametros() {
         List<String> secciones = parametrosRepo.findSecciones();

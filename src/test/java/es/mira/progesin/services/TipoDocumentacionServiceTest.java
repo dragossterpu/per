@@ -23,25 +23,34 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.services.gd.TipoDocumentacionService;
 
 /**
+ * Test para la clase TipoDocumentacionService.
+ * 
  * @author EZENTIS
  * 
- * Test para la clase TipoDocumentacionService
  *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TipoDocumentacionServiceTest {
-    
+    /**
+     * Simulación del repositorio de tipo de documentación.
+     */
     @Mock
     private ITipoDocumentacionRepository tipoDocumentacionRepositoryMock;
     
+    /**
+     * Simulación del repositorio de documentación previa.
+     */
     @Mock
     private IDocumentacionPreviaRepository documentacionPreviaRepositoryMock;
     
+    /**
+     * Servicio de tipo de documentación.
+     */
     @InjectMocks
     private ITipoDocumentacionService tipoDocumentacionServiceMock = new TipoDocumentacionService();
     
     /**
-     * Comprobación clase existe.
+     * Comprobación de que la clase existe.
      */
     @Test
     public void type() {
@@ -49,7 +58,7 @@ public class TipoDocumentacionServiceTest {
     }
     
     /**
-     * Comprobación clase no abstracta.
+     * Comprobación de que la clase no es abstracta.
      */
     @Test
     public void instantiation() {

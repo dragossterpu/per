@@ -34,26 +34,53 @@ public class ApplicationBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Servicio de parámetros.
+     */
     @Autowired
     private transient IParametroService parametroService;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private transient IDocumentoService documentoService;
     
+    /**
+     * Repositorio de tipo de unidad.
+     */
     @Autowired
     private transient ITipoUnidadRepository tipoUnidadRepository;
     
+    /**
+     * Repositorio de provincia.
+     */
     @Autowired
     private transient IProvinciaRepository provinciaRepository;
     
+    /**
+     * Mapa que contendrá los parámetros de la aplicación.
+     */
     private Map<String, Map<String, String>> mapaParametros;
     
+    /**
+     * Dominios válidos para los correos electrónicos empleados en la aplicación.
+     */
     private String dominiosValidos;
     
+    /**
+     * Listado de provincias.
+     */
     private List<Provincia> listaProvincias;
     
+    /**
+     * Listado de tipos de documento.
+     */
     private List<TipoDocumento> listaTipos;
     
+    /**
+     * Listado de tipos de unidad.
+     */
     private List<TipoUnidad> listaTiposUnidad;
     
     /**
