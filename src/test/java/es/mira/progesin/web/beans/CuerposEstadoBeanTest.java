@@ -66,7 +66,7 @@ public class CuerposEstadoBeanTest {
     private Authentication authentication;
     
     /**
-     * Simulación del securityContext.
+     * Simulación del servicio de cuerpo de estado.
      */
     @Mock
     private transient ICuerpoEstadoService cuerposEstadoService;

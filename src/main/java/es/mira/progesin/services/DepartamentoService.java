@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Departamento;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 
 /**
@@ -23,6 +24,13 @@ public class DepartamentoService implements IDepartamentoService {
      */
     @Autowired
     IDepartamentoRepository departamentoRepository;
+    
+    /**
+     * Variable utilizada para inyectar el servicio de usuarios.
+     * 
+     */
+    @Autowired
+    private transient IUserService userService;
     
     /**
      * Guarda o actualiza un departamento.
@@ -53,4 +61,18 @@ public class DepartamentoService implements IDepartamentoService {
         return departamentoRepository.findByFechaBajaIsNull();
     }
     
+    /**
+     * Comprueba si existen usuarios asociados a un departamento.
+     * @param departamento a comprobar
+     * @return resultado booleano
+     */
+    @Override
+    public boolean existenUsuariosDepartamento(Departamento departamento) {
+        boolean tieneUsuarios = false;
+        List<User> usuarios = userService.findByDepartamento(departamento);
+        if (usuarios != null && usuarios.isEmpty() == Boolean.FALSE) {
+            tieneUsuarios = true;
+        }
+        return tieneUsuarios;
+    }
 }

@@ -32,4 +32,10 @@ public interface IDepartamentoService {
      */
     List<Departamento> findByFechaBajaIsNull();
     
+    /**
+     * Comprueba si existen usuarios asociados a un departamento.
+     * @param departamento a comprobar
+     * @return resultado booleano
+     */
+    boolean existenUsuariosDepartamento(Departamento departamento);
 }

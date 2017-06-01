@@ -13,13 +13,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Departamento;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,13 +55,6 @@ public class DepartamentoBean implements Serializable {
     private transient IDepartamentoService departamentoService;
     
     /**
-     * Variable utilizada para inyectar el servicio de usuarios.
-     * 
-     */
-    @Autowired
-    private transient IUserService userService;
-    
-    /**
      * Variable utilizada para inyectar el servicio de registro de actividad.
      * 
      */
@@ -74,7 +66,7 @@ public class DepartamentoBean implements Serializable {
      * @param departamento a eliminar
      */
     public void eliminarDepartamento(Departamento departamento) {
-        if (existenUsuariosDepartamento(departamento)) {
+        if (departamentoService.existenUsuariosDepartamento(departamento)) {
             FacesUtilities.setMensajeInformativo(
                     FacesMessage.SEVERITY_ERROR, "No se puede eliminar el departamento '"
                             + departamento.getDescripcion() + "' al haber usuarios pertenecientes a dicho departamento",
@@ -85,20 +77,6 @@ public class DepartamentoBean implements Serializable {
             departamentoService.save(departamento);
             listaDepartamentos.remove(departamento);
         }
-    }
-    
-    /**
-     * Comprueba si existen usuarios asociados a un departamento.
-     * @param departamento a comprobar
-     * @return resultado booleano
-     */
-    private boolean existenUsuariosDepartamento(Departamento departamento) {
-        boolean tieneUsuarios = false;
-        List<User> usuarios = userService.findByDepartamento(departamento);
-        if (usuarios != null && usuarios.isEmpty() == Boolean.FALSE) {
-            tieneUsuarios = true;
-        }
-        return tieneUsuarios;
     }
     
     /**
@@ -128,10 +106,17 @@ public class DepartamentoBean implements Serializable {
      * @param event evento que captura el departamento a editar
      */
     public void onRowEdit(RowEditEvent event) {
-        Departamento departamento = (Departamento) event.getObject();
-        departamentoService.save(departamento);
-        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
-                departamento.getDescripcion(), "msgs");
+        
+        try {
+            Departamento departamento = (Departamento) event.getObject();
+            departamentoService.save(departamento);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
+                    departamento.getDescripcion(), "msgs");
+        } catch (Exception e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al intentar modificar un departamento, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+        }
     }
     
     /**
