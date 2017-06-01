@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,15 +183,6 @@ public class SugerenciasBean implements Serializable {
             regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
         }
         return "/administracion/sugerencias/contestarSugerencia?faces-redirect=true";
-    }
-    
-    /**
-     * PostConstruct, inicializa el bean.
-     * 
-     */
-    @PostConstruct
-    public void init() {
-        sugerenciasListado = (List<Sugerencia>) sugerenciaService.findAll();
     }
     
 }
