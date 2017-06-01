@@ -24,27 +24,27 @@ public class HeaderFooterPdf implements IEventHandler {
     /**
      * Dcoumento.
      */
-    protected Document doc;
+    private Document doc;
     
     /**
      * Imagen de cabecera.
      */
-    protected Image headerRepetido;
+    private Image headerRepetido;
     
     /**
      * Imagen de cabecera.
      */
-    protected Image header1;
+    private Image header1;
     
     /**
      * Imagen de cabecera.
      */
-    protected Image header2;
+    private Image header2;
     
     /**
      * Imagen de pie.
      */
-    protected Image footer1;
+    private Image footer1;
     
     /**
      * Constructor que recibe como parámetros el documento y las imágenes.
