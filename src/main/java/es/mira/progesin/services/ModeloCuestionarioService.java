@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
-import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 
 /**
@@ -24,14 +23,7 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
      * 
      */
     @Autowired
-    IModeloCuestionarioRepository modeloCuestionarioRepository;
-    
-    /**
-     * Variable utilizada para inyectar el repositorio de áreas de cuestionario.
-     * 
-     */
-    @Autowired
-    IAreaCuestionarioRepository areaCuestionarioRepository;
+    private IModeloCuestionarioRepository modeloCuestionarioRepository;
     
     /**
      * Guarda o actualiza un modelo de cuestionario.

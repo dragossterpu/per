@@ -36,7 +36,7 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
      * 
      */
     @Autowired
-    ICuestionarioPersonalizadoRepository cuestionarioPersRep;
+    private ICuestionarioPersonalizadoRepository cuestionarioPersRep;
     
     /**
      * Variable utilizada para inyectar la sesión de spring.
@@ -89,7 +89,7 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
             criteria.add(Restrictions.le(Constantes.FECHACREACION, fechaHasta));
         }
         
-        if (cuestionarioBusqueda.getUsername() != null && !cuestionarioBusqueda.getUsername().isEmpty()) {
+        if (cuestionarioBusqueda.getUsername() != null) {
             criteria.add(
                     Restrictions.ilike("usernameCreacion", cuestionarioBusqueda.getUsername(), MatchMode.ANYWHERE));
         }
@@ -97,8 +97,7 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
             criteria.add(
                     Restrictions.eq("modeloCuestionario", cuestionarioBusqueda.getModeloCuestionarioSeleccionado()));
         }
-        if (cuestionarioBusqueda.getNombreCuestionario() != null
-                && !cuestionarioBusqueda.getNombreCuestionario().isEmpty()) {
+        if (cuestionarioBusqueda.getNombreCuestionario() != null) {
             criteria.add(Restrictions.ilike("nombreCuestionario", cuestionarioBusqueda.getNombreCuestionario(),
                     MatchMode.ANYWHERE));
         }
