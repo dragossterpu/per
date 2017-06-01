@@ -22,6 +22,7 @@ import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,7 @@ import lombok.ToString;
  * @author EZENTIS
  *
  */
+@EqualsAndHashCode(of = "respuestaId")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

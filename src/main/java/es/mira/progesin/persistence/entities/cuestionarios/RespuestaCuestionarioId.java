@@ -7,14 +7,18 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * Clave primera de RespuestaCuestionario.
+ * 
  * @author EZENTIS
  *
  */
+@EqualsAndHashCode(of = { "cuestionarioEnviado", "pregunta" })
 @NoArgsConstructor
 @Getter
 @Setter
@@ -35,42 +39,5 @@ public class RespuestaCuestionarioId implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_pregunta", foreignKey = @ForeignKey(name = "fk_rc_pregunta"))
     private PreguntasCuestionario pregunta;
-    
-    /**
-     * Sobreescritura del método hasCode().
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((cuestionarioEnviado == null) ? 0 : cuestionarioEnviado.hashCode());
-        result = prime * result + ((pregunta == null) ? 0 : pregunta.hashCode());
-        return result;
-    }
-    
-    /**
-     * Sobreescritura del método equals().
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RespuestaCuestionarioId other = (RespuestaCuestionarioId) obj;
-        if (cuestionarioEnviado == null) {
-            if (other.cuestionarioEnviado != null)
-                return false;
-        } else if (!cuestionarioEnviado.getId().equals(other.cuestionarioEnviado.getId()))
-            return false;
-        if (pregunta == null) {
-            if (other.pregunta != null)
-                return false;
-        } else if (!pregunta.getId().equals(other.pregunta.getId()))
-            return false;
-        return true;
-    }
     
 }

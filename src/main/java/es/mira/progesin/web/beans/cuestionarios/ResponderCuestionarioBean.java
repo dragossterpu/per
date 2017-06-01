@@ -33,7 +33,6 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
-import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.IAreaUsuarioCuestEnvService;
@@ -109,12 +108,6 @@ public class ResponderCuestionarioBean implements Serializable {
     private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
     /**
-     * Repositorio de respuestas.
-     */
-    @Autowired
-    private transient IRespuestaCuestionarioRepository respuestaRepository;
-    
-    /**
      * Servicio de respuestas.
      */
     @Autowired
@@ -169,7 +162,7 @@ public class ResponderCuestionarioBean implements Serializable {
     private transient IUserService userService;
     
     /**
-     * Guarda las respuestas introducidas por el usuario en BBDD, incluidos los documentos subidos.
+     * Guarda las respuestas introducidas por el usuario en BBDD.
      */
     public void guardarBorrador() {
         try {
@@ -211,8 +204,7 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Guarda la fecha de cumplimentación y las respuestas introducidas por el usuario en BBDD, incluidos los documentos
-     * subidos.
+     * Guarda la fecha de cumplimentación y las respuestas introducidas por el usuario en BBDD.
      * 
      */
     public void enviarCuestionario() {
@@ -324,8 +316,7 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Elimina una fila nueva a la pregunta pasada como parámetro. El tipo de respuesta de esta pregunta siempre deberá
-     * empezar por TABLA.
+     * Elimina la última fila de una respuesta tipo TABLA.
      * 
      * @param pregunta Pregunta de un cuestionario
      */
@@ -388,15 +379,11 @@ public class ResponderCuestionarioBean implements Serializable {
      * @param documento Documento a eliminar
      */
     public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
-        
         RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
         List<Documento> listaDocumentos = visualizarCuestionario.getMapaDocumentos().get(pregunta);
         listaDocumentos.remove(documento);
         respuestaCuestionario.setDocumentos(listaDocumentos);
-        respuestaRepository.save(respuestaCuestionario);
-        respuestaRepository.flush();
-        documentoService.delete(documento);
-        
+        respuestaService.eliminarDocumentoRespuesta(respuestaCuestionario, documento);
         visualizarCuestionario.getMapaDocumentos().put(pregunta, listaDocumentos);
     }
     

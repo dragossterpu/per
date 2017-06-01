@@ -13,43 +13,61 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
-import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 
+/**
+ * Implementación del servicio de respuestas de cuestionario.
+ * @author EZENTIS
+ *
+ */
 @Service
 public class RespuestaCuestionarioService implements IRespuestaCuestionarioService {
     
+    /**
+     * Repositorio de respuestas de cuestionario.
+     */
     @Autowired
     private IRespuestaCuestionarioRepository respuestaRepository;
     
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private IDocumentoService documentoService;
     
-    @Autowired
-    private ITipoDocumentoRepository tipoDocumentoRepository;
-    
-    @Override
-    @Transactional(readOnly = false)
-    public RespuestaCuestionario save(RespuestaCuestionario respuesta) {
-        return respuestaRepository.save(respuesta);
-    }
-    
-    @Override
-    @Transactional(readOnly = false)
-    public Iterable<RespuestaCuestionario> save(Iterable<RespuestaCuestionario> entities) {
-        return respuestaRepository.save(entities);
-    }
+    /**
+     * Guarda la respuesta de un cuestionario de tipo ADJUNTO y la lista de documentos en BBDD.
+     * 
+     * @param respuestaCuestionario respuesta que se quiere grabar
+     * @param archivoSubido fichero que se quiere cargar
+     * @param listaDocumentos listado de documentos que ya tenía la respuesta
+     * @throws SQLException posible excepción
+     * @throws IOException posible excepción
+     */
     
     @Override
     @Transactional(readOnly = false)
     public void saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile archivoSubido,
             List<Documento> listaDocumentos) throws SQLException, IOException {
-        TipoDocumento tipo = tipoDocumentoRepository.findByNombre("CUESTIONARIO");
+        TipoDocumento tipo = TipoDocumento.builder().id(6L).build();
         Documento documentoSubido = documentoService.cargaDocumento(archivoSubido, tipo,
                 respuestaCuestionario.getRespuestaId().getCuestionarioEnviado().getInspeccion());
         listaDocumentos.add(documentoSubido);
         respuestaCuestionario.setDocumentos(listaDocumentos);
         respuestaRepository.save(respuestaCuestionario);
         respuestaRepository.flush();
+    }
+    
+    /**
+     * Elimina de BBDD la respuesta y el documento pasados como parámetros.
+     * 
+     * @param respueta respuesta a eliminar
+     * @param documento documento a eliminar
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public void eliminarDocumentoRespuesta(RespuestaCuestionario respueta, Documento documento) {
+        respuestaRepository.save(respueta);
+        documentoService.delete(documento);
     }
     
 }
