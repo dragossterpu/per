@@ -161,18 +161,17 @@ public class SugerenciasBean implements Serializable {
             Date fecha = new Date();
             sugerenciaSeleccionada.setFechaContestacion(fecha);
             sugerenciaSeleccionada.setUsuarioContestacion(usuarioActual);
-            if (sugerenciaService.save(sugerenciaSeleccionada) != null) {
-                String asunto = "Respuesta a su sugerencia sobre PROGESIN";
-                String usuarioContestacion = sugerenciaSeleccionada.getUsuarioRegistro();
-                User user = userService.findOne(usuarioContestacion);
-                String fechaRegistro = sdf.format(sugerenciaSeleccionada.getFechaRegistro());
-                StringBuilder mensaje = new StringBuilder("Sugerencia realizada el ").append(fechaRegistro)
-                        .append(" sobre el módulo ").append(sugerencia.getModulo()).append("\r\n \"")
-                        .append(sugerencia.getDescripcion()).append("\" \r\n \r\n").append(contestacion);
-                correo.envioCorreo(user.getCorreo(), asunto, mensaje.toString());
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Contestación",
-                        "Mensaje de respuesta enviado correctamente.");
-            }
+            sugerenciaService.save(sugerenciaSeleccionada);
+            String asunto = "Respuesta a su sugerencia sobre PROGESIN";
+            String usuarioContestacion = sugerenciaSeleccionada.getUsuarioRegistro();
+            User user = userService.findOne(usuarioContestacion);
+            String fechaRegistro = sdf.format(sugerenciaSeleccionada.getFechaRegistro());
+            StringBuilder mensaje = new StringBuilder("Sugerencia realizada el ").append(fechaRegistro)
+                    .append(" sobre el módulo ").append(sugerencia.getModulo()).append("\r\n \"")
+                    .append(sugerencia.getDescripcion()).append("\" \r\n \r\n").append(contestacion);
+            correo.envioCorreo(user.getCorreo(), asunto, mensaje.toString());
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Contestación",
+                    "Mensaje de respuesta enviado correctamente.");
         } catch (MailException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al enviar el correo electrónico.");
