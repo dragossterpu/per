@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelGuias;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
@@ -310,7 +311,7 @@ public class GuiaBean {
     public void crearDocumentoWordGuia(Guia guide) {
         try {
             setFile(wordGenerator.crearDocumentoGuia(guide));
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error en la generación del documento Word");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);

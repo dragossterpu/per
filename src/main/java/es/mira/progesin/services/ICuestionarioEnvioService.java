@@ -90,9 +90,11 @@ public interface ICuestionarioEnvioService extends Serializable {
     CuestionarioEnvio findById(Long idCuestionarioEnviado);
     
     /**
-     * Recupera el cuestionario no finalizado perteneciente a un destinatario (no puede haber más de uno).
+     * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a una inspección (no puede haber más de
+     * uno).
      * 
-     * @param inspeccion que está asociada al cuestionario
+     * @author Ezentis
+     * @param inspeccion inspección a la que pertenece el cuestionario
      * @return cuestionario enviado
      */
     CuestionarioEnvio findNoFinalizadoPorInspeccion(Inspeccion inspeccion);

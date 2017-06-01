@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -418,7 +419,7 @@ public class VisualizarCuestionario implements Serializable {
     public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
         try {
             setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionario));
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
                     "Se ha producido un error en la generación del documento Word");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);

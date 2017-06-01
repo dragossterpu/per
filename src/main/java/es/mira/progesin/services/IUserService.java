@@ -166,4 +166,13 @@ public interface IUserService {
      * @return resultado de la consulta
      */
     boolean existByCuerpoEstado(CuerpoEstado cuerpo);
+    
+    /**
+     * Guarda en BBDD un listado de usuarios provisionales.
+     * 
+     * @param listadoUsuariosProvisionales listardo de usuarios provisionales
+     * @return lista de usuarios grabados
+     * 
+     */
+    List<User> save(List<User> listadoUsuariosProvisionales);
 }

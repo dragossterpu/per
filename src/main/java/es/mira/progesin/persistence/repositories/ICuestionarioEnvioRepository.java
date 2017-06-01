@@ -10,7 +10,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 
 /**
  * 
- * Interfaz del repositorio de cuestionarios enviados
+ * Interfaz del repositorio de cuestionarios enviados.
  * 
  * @author Ezentis
  *
@@ -18,34 +18,36 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 public interface ICuestionarioEnvioRepository extends CrudRepository<CuestionarioEnvio, Long> {
     
     /**
-     * Recupera el cuestionario enviado no finalizado perteneciente a un destinatario (no puede haber más de una)
+     * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a un destinatario (no puede haber más
+     * de uno).
      * 
      * @author Ezentis
-     * @param correo
+     * @param correo correo del destinario
      * @return cuestionario enviado
      */
     CuestionarioEnvio findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(String correo);
     
     /**
-     * Recupera el cuestionario no finalizado perteneciente a un destinatario (no puede haber más de uno)
+     * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a una inspección (no puede haber más de
+     * uno).
      * 
      * @author Ezentis
-     * @param inspeccion
+     * @param inspeccion inspección a la que pertenece el cuestionario
      * @return cuestionario enviado
      */
     CuestionarioEnvio findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndInspeccion(Inspeccion inspeccion);
     
     /**
-     * Comprueba si existe algún cuestionario enviado asociado a un modelo de cuestionario personalizado
+     * Comprueba si existe algún cuestionario enviado asociado a un modelo de cuestionario personalizado.
      * 
      * @author Ezentis
-     * @param cuestionario
+     * @param cuestionario cuestionario personalizado
      * @return boolean si o no
      */
     boolean existsByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario);
     
     /**
-     * Recupera los cuestionarios enviados que aún no han sido cumplimentados
+     * Recupera los cuestionarios enviados que aún no han sido cumplimentados.
      * 
      * @author Ezentis
      * @return lista de cuestionarios enviados

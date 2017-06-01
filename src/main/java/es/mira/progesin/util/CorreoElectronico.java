@@ -12,6 +12,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -172,6 +173,7 @@ public class CorreoElectronico implements ICorreoElectronico {
      * @param conCopia Lista de destinatario en copia
      * @param asunto Asunto del correo
      * @param cuerpo Cuerpo del correo
+     * @throws CorreoException excepción al enviar el correo
      */
     private void envioCorreoSinAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo) {
         try {
@@ -189,10 +191,9 @@ public class CorreoElectronico implements ICorreoElectronico {
             msg.setText(cuerpo);
             
             mailSender.send(msg);
-        } catch (Exception e) {
+        } catch (MailException e) {
             registroActividad.altaRegActividadError("Envio correo", e);
             throw new CorreoException(e);
-            
         }
         
     }

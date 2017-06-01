@@ -35,12 +35,10 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
-import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
-import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
@@ -66,42 +64,65 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     @Autowired
     private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
     
+    /**
+     * Repositorio de respuestas.
+     */
     @Autowired
     private transient IRespuestaCuestionarioRepository respuestaRepository;
     
+    /**
+     * Repositorio de respuestas tipo tabla/matriz.
+     */
     @Autowired
     private transient IDatosTablaGenericaRepository datosTablaRepository;
     
-    @Autowired
-    private transient IUserRepository userRepository;
-    
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private transient IUserService userService;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private transient IInspeccionesService inspeccionesService;
     
-    @Autowired
-    private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
-    
+    /**
+     * Interfaz para el envío de correos.
+     */
     @Autowired
     private transient ICorreoElectronico correoElectronico;
     
+    /**
+     * Repositorio de preguntas de un cuestionario.
+     */
     @Autowired
     private transient IPreguntaCuestionarioRepository preguntasRepository;
     
+    /**
+     * Servicio de areas asignadas a un usuario de cuestionario enviado.
+     */
     @Autowired
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
+    /**
+     * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo
+     * responderán y envía un correo al destinatario.
+     * 
+     * @param listadoUsuariosProvisionales remitentes del cuestionario
+     * @param cuestionarioEnvio enviado
+     * @param cuerpoCorreo correo electrónico de los remitentes
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void crearYEnviarCuestionario(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
             String cuerpoCorreo) {
-        userRepository.save(listadoUsuariosProvisionales);
+        userService.save(listadoUsuariosProvisionales);
         CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioRepository.save(cuestionarioEnvio);
         List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnviado,
                 listadoUsuariosProvisionales.get(0));
-        areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
+        areaUsuarioCuestEnvService.save(areasUsuarioCuestEnv);
         String cuerpo = cuestionarioEnviado.getMotivoCuestionario().concat("\r\n").concat(cuerpoCorreo);
         String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
         correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
@@ -111,10 +132,10 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     }
     
     /**
-     * Asignación por defecto de todas las áreas de un cuestionario recien creado al usuario provisional principal.
+     * Asignación por defecto de todas las áreas de un cuestionario recién creado al usuario provisional principal.
      * 
-     * @param cuestionarioEnviado
-     * @param usuarioProv
+     * @param cuestionarioEnviado cuestionario enviado
+     * @param usuarioProv usuario provisional principal al que se le asignan todas las áreas
      * @return lista de asignaciones
      */
     private List<AreaUsuarioCuestEnv> asignarAreasUsuarioProvPrincipal(CuestionarioEnvio cuestionarioEnviado,
@@ -134,6 +155,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         return areasUsuarioCuestEnv;
     }
     
+    /**
+     * Recupera el cuestionario enviado no finalizado perteneciente a un destinatario (no puede haber más de uno).
+     * 
+     * @param correo electrónico del remitente
+     * @return cuestionario a enviar
+     */
     @Override
     public CuestionarioEnvio findNoFinalizadoPorCorreoEnvio(String correo) {
         return cuestionarioEnvioRepository.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(correo);
@@ -228,6 +255,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         } else {
             criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
         }
+        
         if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge("fechaEnvio", cuestionarioEnviadoBusqueda.getFechaDesde()));
         }
@@ -244,8 +272,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         }
         
         String parametro;
-        if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null
-                && !cuestionarioEnviadoBusqueda.getUsernameEnvio().isEmpty()) {
+        if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getUsernameEnvio(), Normalizer.Form.NFKD)
                     .replaceAll(Constantes.ACENTOS, "");
@@ -253,20 +280,17 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         }
         
         criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null
-                && !cuestionarioEnviadoBusqueda.getNombreUnidad().isEmpty()) {
+        if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
                     .replaceAll(Constantes.ACENTOS, "");
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
         }
-        if (cuestionarioEnviadoBusqueda.getIdInspeccion() != null
-                && !cuestionarioEnviadoBusqueda.getIdInspeccion().isEmpty()) {
+        if (cuestionarioEnviadoBusqueda.getIdInspeccion() != null) {
             criteria.add(
                     Restrictions.eq("inspeccion.id", Long.parseLong(cuestionarioEnviadoBusqueda.getIdInspeccion())));
         }
-        if (cuestionarioEnviadoBusqueda.getAnioInspeccion() != null
-                && !cuestionarioEnviadoBusqueda.getAnioInspeccion().isEmpty()) {
+        if (cuestionarioEnviadoBusqueda.getAnioInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.anio",
                     Integer.parseInt(cuestionarioEnviadoBusqueda.getAnioInspeccion())));
         }
@@ -281,8 +305,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null
-                && !cuestionarioEnviadoBusqueda.getNombreEquipo().isEmpty()) {
+        if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD)
                     .replaceAll(Constantes.ACENTOS, "");
@@ -299,8 +322,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         }
         
         criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null
-                && !cuestionarioEnviadoBusqueda.getNombreCuestionario().isEmpty()) {
+        if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
             // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
             parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreCuestionario(), Normalizer.Form.NFKD)
                     .replaceAll(Constantes.ACENTOS, "");
@@ -316,12 +338,23 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         
     }
     
+    /**
+     * Guarda la información de un cuestionario enviado en la bdd.
+     * 
+     * @param cuestionario a enviar
+     */
     @Override
     @Transactional(readOnly = false)
     public void save(CuestionarioEnvio cuestionario) {
         cuestionarioEnvioRepository.save(cuestionario);
     }
     
+    /**
+     * Transacción que guarda los datos de las respuestas de un cuestionario enviado.
+     * 
+     * @param listaRespuestas para un cuestionario
+     * @return lista de respuestas guardadas con id
+     */
     @Override
     @Transactional(readOnly = false)
     public List<RespuestaCuestionario> transaccSaveConRespuestas(List<RespuestaCuestionario> listaRespuestas) {
@@ -331,6 +364,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         return listaRespuestasGuardadas;
     }
     
+    /**
+     * Guarda los datos de un cuestionario enviado y elimina los usuarios provisionales que lo han cumplimentado una vez
+     * finalizado o anulado.
+     * 
+     * @param cuestionario enviado
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario) {
@@ -352,6 +391,13 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
     }
     
+    /**
+     * Guarda los datos de un cuestionario enviado y sus respuestas, e inactiva los usuarios provisionales que lo han
+     * cumplimentado una vez finalizado o anulado.
+     * 
+     * @param cuestionario enviado
+     * @param listaRespuestas de un cuestionario
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
@@ -364,6 +410,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         cuestionarioEnvioRepository.save(cuestionario);
     }
     
+    /**
+     * Guarda los datos de un cuestionario enviado y activa los usuarios provisionales que debe cumplimentarlo de nuevo
+     * en caso de no conformidad.
+     * 
+     * @param cuestionario enviado
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveActivaUsuariosProv(CuestionarioEnvio cuestionario) {
@@ -372,22 +424,48 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         userService.cambiarEstado(correoPrincipal, EstadoEnum.ACTIVO);
     }
     
+    /**
+     * Recupera un cuestionario enviado a partir de su identificador.
+     * 
+     * @author Ezentis
+     * @param idCuestionarioEnviado identificador del cuestionario
+     * @return cuestionario enviado objeto
+     */
     @Override
     public CuestionarioEnvio findById(Long idCuestionarioEnviado) {
         return cuestionarioEnvioRepository.findOne(idCuestionarioEnviado);
     }
     
+    /**
+     * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a una inspección (no puede haber más de
+     * uno).
+     * 
+     * @author Ezentis
+     * @param inspeccion inspección a la que pertenece el cuestionario
+     * @return cuestionario enviado
+     */
     @Override
     public CuestionarioEnvio findNoFinalizadoPorInspeccion(Inspeccion inspeccion) {
         return cuestionarioEnvioRepository
                 .findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndInspeccion(inspeccion);
     }
     
+    /**
+     * Comprueba si existe algún cuestionario enviado asociado a un modelo de cuestionario personalizado.
+     * 
+     * @param cuestionario personalizado
+     * @return boolean valor booleano
+     */
     @Override
     public boolean existsByCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
         return cuestionarioEnvioRepository.existsByCuestionarioPersonalizado(cuestionario);
     }
     
+    /**
+     * Recupera los cuestionarios enviados que aún no han sido cumplimentados.
+     * 
+     * @return lista de cuestionarios enviados no cumplimentados
+     */
     @Override
     public List<CuestionarioEnvio> findNoCumplimentados() {
         return cuestionarioEnvioRepository

@@ -27,7 +27,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Bean para la edición de modelos de cuestionario
+ * Controlador para la creación de cuestionarios personalizados a partir de un modelo.
  * 
  * @author EZENTIS
  *
@@ -38,35 +38,56 @@ import lombok.Setter;
 @Scope("session")
 public class EdicionCuestionarioBean {
     
-    ModeloCuestionario modeloCuestionario;
+    /**
+     * Modelo de cuestionario que se va a editar.
+     */
+    private ModeloCuestionario modeloCuestionario;
     
-    List<AreasCuestionario> listaAreasCuestionario;
+    /**
+     * Lista de cuestionarios del modelo a editar.
+     */
+    private List<AreasCuestionario> listaAreasCuestionario;
     
+    /**
+     * Mapa que relaciona las áreas con sus respectivas preguntas.
+     */
     private Map<AreasCuestionario, PreguntasCuestionario[]> preguntasSelecciondas;
     
+    /**
+     * Repositorio para las áreas de un modelo cuestionario.
+     */
     @Autowired
     private IAreaCuestionarioRepository areaCuestionarioRepository;
     
+    /**
+     * Repositorio para las preguntas de un modelo de cuestionario.
+     */
     @Autowired
     private IPreguntaCuestionarioRepository pregunaCuestionarioRepository;
     
+    /**
+     * Servicio de cuestionario personalizado.
+     */
     @Autowired
     private ICuestionarioPersonalizadoService cuestionarioPersonalizadoService;
     
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
     private IRegistroActividadService regActividadService;
     
     /**
-     * Inicia la edición del modelo de cuestionario
+     * Inicia la edición del modelo de cuestionario.
      * 
-     * @param modeloCuestionario modelo de cuestionario a modificar
+     * @param modCuestionario modelo de cuestionario a modificar
      * @return ruta de la vista de edición a la que se redirigirá la aplicación
      */
-    public String editarCuestionario(ModeloCuestionario modeloCuestionario) {
-        this.modeloCuestionario = modeloCuestionario;
+    public String editarCuestionario(ModeloCuestionario modCuestionario) {
+        this.modeloCuestionario = modCuestionario;
         preguntasSelecciondas = new HashMap<>();
         listaAreasCuestionario = areaCuestionarioRepository
-                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
+                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modCuestionario.getId());
         for (AreasCuestionario area : listaAreasCuestionario) {
             area.setPreguntas(pregunaCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
         }
@@ -74,18 +95,7 @@ public class EdicionCuestionarioBean {
     }
     
     /**
-     * 
-     * Inicia el alta de un modelo de cuestionario
-     * 
-     * @return ruta de la vista de alta de modelo de cuestionario
-     * 
-     */
-    public String nuevoModeloCuestionario() {
-        return "/cuestionarios/nuevoModeloCuestionario?faces-redirect=true";
-    }
-    
-    /**
-     * Previsualiza el modelo de cuestionario
+     * Previsualiza el modelo de cuestionario.
      * 
      * @return url de la vista a la que se redirige
      */
@@ -111,7 +121,7 @@ public class EdicionCuestionarioBean {
     }
     
     /**
-     * Guarda el cuestionario en base de datos
+     * Guarda el cuestionario en base de datos.
      * 
      * @param nombreCuestionario a guardar
      */

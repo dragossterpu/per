@@ -42,6 +42,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
@@ -106,19 +107,22 @@ public class WordGenerator {
      * 
      * @param cuestionarioPersonalizado Cuestionario que se desea exportar
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException Excepción de formato inválido
-     * @throws IOException Excepción de entrada/salida
+     * @throws ProgesinException excepción lanzada
      */
     public StreamedContent crearDocumentoCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado)
-            throws InvalidFormatException, IOException {
-        XWPFDocument doc = new XWPFDocument();
-        crearCabecera(doc);
-        crearTitulo(doc, cuestionarioPersonalizado.getNombreCuestionario());
-        List<PreguntasCuestionario> listaPreguntas = preguntasRepository
-                .findPreguntasElegidasCuestionarioPersonalizado(cuestionarioPersonalizado.getId());
-        
-        creaCuerpoCuestionario(doc, listaPreguntas);
-        return exportarFichero(doc, cuestionarioPersonalizado.getNombreCuestionario());
+            throws ProgesinException {
+        try {
+            XWPFDocument doc = new XWPFDocument();
+            crearCabecera(doc);
+            crearTitulo(doc, cuestionarioPersonalizado.getNombreCuestionario());
+            List<PreguntasCuestionario> listaPreguntas = preguntasRepository
+                    .findPreguntasElegidasCuestionarioPersonalizado(cuestionarioPersonalizado.getId());
+            
+            creaCuerpoCuestionario(doc, listaPreguntas);
+            return exportarFichero(doc, cuestionarioPersonalizado.getNombreCuestionario());
+        } catch (InvalidFormatException | IOException e) {
+            throw new ProgesinException(e);
+        }
         
     }
     
@@ -127,17 +131,20 @@ public class WordGenerator {
      * 
      * @param guia Guía a partir de la cual se xdesea generar el documento word
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException Excepción de formato inválido
-     * @throws IOException Excepción de entrada/salida
+     * @throws ProgesinException excepción lanzada
      */
     
-    public StreamedContent crearDocumentoGuia(Guia guia) throws InvalidFormatException, IOException {
-        XWPFDocument doc = new XWPFDocument();
-        crearCabecera(doc);
-        crearTitulo(doc, guia.getNombre());
-        List<GuiaPasos> listaPasos = guiaService.listaPasos(guia);
-        creaCuerpoGuia(doc, listaPasos);
-        return exportarFichero(doc, guia.getNombre());
+    public StreamedContent crearDocumentoGuia(Guia guia) throws ProgesinException {
+        try {
+            XWPFDocument doc = new XWPFDocument();
+            crearCabecera(doc);
+            crearTitulo(doc, guia.getNombre());
+            List<GuiaPasos> listaPasos = guiaService.listaPasos(guia);
+            creaCuerpoGuia(doc, listaPasos);
+            return exportarFichero(doc, guia.getNombre());
+        } catch (InvalidFormatException | IOException e) {
+            throw new ProgesinException(e);
+        }
     }
     
     /**
@@ -146,20 +153,23 @@ public class WordGenerator {
      * 
      * @param guia Guía a partir de la cual se xdesea generar el documento word
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException Excepción de formato inválido
-     * @throws IOException Excepción de entrada/salida
+     * @throws ProgesinException excepción lanzada
      */
     
-    public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws InvalidFormatException, IOException {
-        XWPFDocument doc = new XWPFDocument();
-        crearCabecera(doc);
-        crearTitulo(doc, guia.getNombreGuiaPersonalizada());
-        if (guia.getInspeccion() != null) {
-            creaNumeroInspeccion(doc, guia.getInspeccion());
+    public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws ProgesinException {
+        try {
+            XWPFDocument doc = new XWPFDocument();
+            crearCabecera(doc);
+            crearTitulo(doc, guia.getNombreGuiaPersonalizada());
+            if (guia.getInspeccion() != null) {
+                creaNumeroInspeccion(doc, guia.getInspeccion());
+            }
+            List<GuiaPasos> listaPasos = guiaPersonalizadaService.listaPasos(guia);
+            creaCuerpoGuia(doc, listaPasos);
+            return exportarFichero(doc, guia.getNombreGuiaPersonalizada());
+        } catch (InvalidFormatException | IOException e) {
+            throw new ProgesinException(e);
         }
-        List<GuiaPasos> listaPasos = guiaPersonalizadaService.listaPasos(guia);
-        creaCuerpoGuia(doc, listaPasos);
-        return exportarFichero(doc, guia.getNombreGuiaPersonalizada());
     }
     
     /**
@@ -414,8 +424,8 @@ public class WordGenerator {
      * 
      * @see #crearCabeceraCuestionario(XWPFDocument, String, String)
      * @param oParagraph Párrafo al que se quiere añadir tabulación
-     * @param oSTTabJc
-     * @param oPos
+     * @param oSTTabJc tabulación a añadir
+     * @param oPos posición donde se añade
      */
     private void setTabStop(XWPFParagraph oParagraph, STTabJc.Enum oSTTabJc, BigInteger oPos) {
         CTP oCTP = oParagraph.getCTP();

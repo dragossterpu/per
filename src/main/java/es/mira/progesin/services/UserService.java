@@ -375,4 +375,16 @@ public class UserService implements IUserService {
         return userRepository.existsByCuerpoEstado(cuerpo);
     }
     
+    /**
+     * Guarda en BBDD un listado de usuarios provisionales.
+     * 
+     * @param listadoUsuariosProvisionales listardo de usuarios provisionales
+     * @return lista de usuarios grabados
+     * 
+     */
+    @Override
+    public List<User> save(List<User> listadoUsuariosProvisionales) {
+        return (List<User>) userRepository.save(listadoUsuariosProvisionales);
+    }
+    
 }
