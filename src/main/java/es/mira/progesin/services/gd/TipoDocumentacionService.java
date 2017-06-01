@@ -27,14 +27,14 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
      * 
      */
     @Autowired
-    ITipoDocumentacionRepository tipoDocumentacionRepository;
+    private ITipoDocumentacionRepository tipoDocumentacionRepository;
     
     /**
      * Variable utilizada para inyectar el repositorio de documentación previa.
      * 
      */
     @Autowired
-    IDocumentacionPreviaRepository documentacionPreviaRepository;
+    private IDocumentacionPreviaRepository documentacionPreviaRepository;
     
     /**
      * Devuelve un listado con todos los tipos de documentación previa.

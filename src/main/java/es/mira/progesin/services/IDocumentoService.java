@@ -221,4 +221,12 @@ public interface IDocumentoService {
      */
     public void vaciarPapelera();
     
+    /**
+     * Recupera un tipo de documento a partir de su nombre.
+     * 
+     * @param nombre nombre del tipo
+     * @return tipo de documento
+     */
+    public TipoDocumento buscaTipoDocumentoPorNombre(String nombre);
+    
 }

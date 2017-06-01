@@ -24,7 +24,7 @@ public class GestDocSolicitudDocumentacionService implements IGestDocSolicitudDo
      * 
      */
     @Autowired
-    IGestDocSolicitudDocumentacionRepository gestSolicitudDocumentacionRepository;
+    private IGestDocSolicitudDocumentacionRepository gestSolicitudDocumentacionRepository;
     
     /**
      * Guarda un documento.

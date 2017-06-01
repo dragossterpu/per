@@ -27,7 +27,6 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
-import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
@@ -56,61 +55,104 @@ public class ProvisionalSolicitudBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Bean de datos comunes de la aplicación.
+     */
     @Autowired
     private transient ApplicationBean applicationBean;
     
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
     private transient IRegistroActividadService regActividadService;
     
+    /**
+     * Servicio de solicitudes de documentación.
+     */
     @Autowired
     private transient ISolicitudDocumentacionService solicitudDocumentacionService;
     
+    /**
+     * Servicio de notificaciones.
+     */
     @Autowired
     private transient INotificacionService notificacionService;
     
+    /**
+     * Servicio de alertas.
+     */
     @Autowired
     private transient IAlertaService alertaService;
     
+    /**
+     * Servicio de tipos de documentación.
+     */
     @Autowired
     private transient ITipoDocumentacionService tipoDocumentacionService;
     
+    /**
+     * Servicio de tipos de documentación asociados a solicitudes.
+     */
     @Autowired
     private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
     
-    @Autowired
-    private transient ITipoDocumentoRepository tipoDocumentoRepository;
-    
+    /**
+     * Servicio de documentos.
+     */
     @Autowired
     private transient IDocumentoService documentoService;
     
+    /**
+     * Lista de tipos de documentación asociados a la solicitud.
+     */
     private List<DocumentacionPrevia> listadoDocumentosPrevios;
     
+    /**
+     * Lista de documentos subidos asociados a la solicitud.
+     */
     private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados;
     
+    /**
+     * lista de archivos de plantillas presentes en el sistema por ambito de la solicitud.
+     */
     private transient List<Entry<String, String>> listaPlantillasAmbito;
     
+    /**
+     * Solicitud que se muestra al usuario provisional para ser cumplimentada.
+     */
     private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia;
     
+    /**
+     * Archivo siendo subido o descargado.
+     */
     private transient StreamedContent file;
     
+    /**
+     * Mapa con las extensiones de archivo aceptadas en el sistema.
+     */
     private Map<String, String> extensiones;
     
+    /**
+     * Parámetro GET peticiones HTTP que indica si viene del menú.
+     */
     private String vieneDe;
     
     /**
-     * Verificador de extensiones
+     * Verificador de extensiones.
      */
     @Autowired
     private transient VerificadorExtensiones verificadorExtensiones;
     
+    /**
+     * Generador de archivos PDF con la información de la solicitud cumplimentada.
+     */
     @Autowired
     private transient PdfGenerator pdfGenerator;
     
     /**
      * Carga los datos relativos a la solicitud de documentación previa en curso para el usuario provisional logueado
      * con su correo como username.
-     * 
-     * @author Ezentis
      */
     public void visualizarSolicitud() {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
@@ -130,7 +172,8 @@ public class ProvisionalSolicitudBean implements Serializable {
     }
     
     /**
-     * Comprueba si un archivo se corresponde con alguno de los documentos solicitados tanto en nombre como en extensión
+     * Comprueba si un archivo se corresponde con alguno de los documentos solicitados tanto en nombre como en
+     * extensión.
      * 
      * @param archivo subido
      * @return booleano si o no
@@ -157,7 +200,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     public String gestionarCargaDocumento(FileUploadEvent event) {
         try {
             UploadedFile archivo = event.getFile();
-            TipoDocumento tipo = tipoDocumentoRepository.findByNombre("DOCUMENTACIÓN SALIDA IPSS");
+            TipoDocumento tipo = documentoService.buscaTipoDocumentoPorNombre("DOCUMENTACIÓN SALIDA IPSS");
             if (verificadorExtensiones.extensionCorrecta(archivo)) {
                 if (esDocumentacionPrevia(archivo)) {
                     Documento documento = documentoService.cargaDocumento(archivo, tipo,
@@ -193,9 +236,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     }
     
     /**
-     * PostConstruct, inicializa el bean
-     * 
-     * @author EZENTIS
+     * PostConstruct, inicializa el bean.
      */
     @PostConstruct
     public void init() {
@@ -208,9 +249,8 @@ public class ProvisionalSolicitudBean implements Serializable {
     }
     
     /**
-     * Eliminación fisica de un documento cargado
+     * Eliminación fisica de un documento cargado.
      * 
-     * @author Ezentis
      * @param gestDocumento documento a eliminar
      */
     public void eliminarDocumento(GestDocSolicitudDocumentacion gestDocumento) {
@@ -220,9 +260,8 @@ public class ProvisionalSolicitudBean implements Serializable {
     }
     
     /**
-     * Descarga de un documento subido por el usuario provisional o una plantilla
+     * Descarga de un documento subido por el usuario provisional o una plantilla.
      * 
-     * @author Ezentis
      * @param idDocumento seleccionado
      */
     public void descargarFichero(Long idDocumento) {
@@ -237,7 +276,6 @@ public class ProvisionalSolicitudBean implements Serializable {
      * Envia la solicitud de documentación previa cumplimentada por el usuario provisional, guarda registro del hecho y
      * alerta al jefe del equipo que gestiona la inspección y al servicio de apoyo.
      * 
-     * @author Ezentis
      */
     public void enviarDocumentacionPrevia() {
         try {
@@ -268,7 +306,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     }
     
     /**
-     * Guarda el estado actual de la solicitud sin validar su grado de cumplimentación
+     * Guarda el estado actual de la solicitud sin validar su grado de cumplimentación.
      */
     public void guardarBorrardor() {
         try {
@@ -290,8 +328,6 @@ public class ProvisionalSolicitudBean implements Serializable {
     
     /**
      * Carga las plantillas existentes para el ámbito de la solicitud en curso para el usuario provisional actual.
-     * 
-     * @author Ezentis
      */
     public void plantillasAmbitoSolicitud() {
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -324,9 +360,7 @@ public class ProvisionalSolicitudBean implements Serializable {
     }
     
     /**
-     * Imprime la vista en formato PDF
-     * 
-     * @author EZENTIS
+     * Imprime la vista en formato PDF.
      */
     public void imprimirPdf() {
         try {
