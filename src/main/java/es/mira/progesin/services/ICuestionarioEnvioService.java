@@ -83,7 +83,6 @@ public interface ICuestionarioEnvioService extends Serializable {
     /**
      * Recupera un cuestionario enviado a partir de su identificador.
      * 
-     * @author Ezentis
      * @param idCuestionarioEnviado identificador del cuestionario
      * @return cuestionario enviado objeto
      */
@@ -93,7 +92,6 @@ public interface ICuestionarioEnvioService extends Serializable {
      * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a una inspección (no puede haber más de
      * uno).
      * 
-     * @author Ezentis
      * @param inspeccion inspección a la que pertenece el cuestionario
      * @return cuestionario enviado
      */

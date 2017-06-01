@@ -43,41 +43,82 @@ import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 @Service
 public class SolicitudDocumentacionService implements ISolicitudDocumentacionService {
     
+    /**
+     * Factoría de sesiones.
+     */
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
+     * Repositorio de solicitudes.
+     */
     @Autowired
     private ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
     
+    /**
+     * Servicio de usuarios.
+     */
     @Autowired
     private IUserService userService;
     
+    /**
+     * Servicio de inspecciones.
+     */
     @Autowired
     private IInspeccionesService inspeccionesService;
     
+    /**
+     * Servicio de tipos de documentación asociados a la solicitud.
+     */
     @Autowired
     private IDocumentacionPreviaRepository documentacionPreviaRepository;
     
+    /**
+     * Servicio de tipos de documentación.
+     */
     @Autowired
     private ITipoDocumentacionService tipoDocumentacionService;
     
+    /**
+     * Guarda la información de una solicitud en la bdd.
+     * 
+     * @param solicitudDocumentacionPrevia solicitud creada o modificada
+     * @return solicitud
+     */
     @Override
     @Transactional(readOnly = false)
     public SolicitudDocumentacionPrevia save(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia) {
         return solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
     }
     
+    /**
+     * Recupera todas las solicitudes existentes.
+     * 
+     * @return lista
+     */
     @Override
     public List<SolicitudDocumentacionPrevia> findAll() {
         return (List<SolicitudDocumentacionPrevia>) solicitudDocumentacionPreviaRepository.findAll();
     }
     
+    /**
+     * Recupera la solicitud no finalizada perteneciente a un destinatario (no puede haber más de una).
+     * 
+     * @param correo destinatario de la solicitud
+     * @return solicitud
+     */
     @Override
     public SolicitudDocumentacionPrevia findNoFinalizadaPorCorreoDestinatario(String correo) {
         return solicitudDocumentacionPreviaRepository
                 .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndCorreoDestinatarioIgnoreCase(correo);
     }
     
+    /**
+     * Recupera la solicitud ya enviada pero sin finalizar perteneciente a un destinatario (no puede haber más de una).
+     * 
+     * @param correo destinatario de la solicitud
+     * @return solicitud
+     */
     @Override
     public SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(String correo) {
         return solicitudDocumentacionPreviaRepository
@@ -85,6 +126,11 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                         correo);
     }
     
+    /**
+     * Elimina una solicitud a partir de su id.
+     * 
+     * @param id clave de la solicitud
+     */
     @Override
     @Transactional(readOnly = false)
     public void delete(Long id) {
@@ -94,9 +140,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     /**
      * Método que devuelve la lista de solicitudes previas en una consulta basada en criteria.
      * 
-     * @param solicitudDocPreviaBusqueda objeto con los parámetros de búsqueda
-     * @return devuelve la lista de registros tipo SolicitudDocPreviaBusqueda.
-     * @author EZENTIS
+     * @param solicitudDocPreviaBusqueda objeto con los criterios de búsqueda
+     * @param first primer elemento
+     * @param pageSize tamaño de cada página de resultados
+     * @param sortField campo por el que se ordenan los resultados
+     * @param sortOrder sentido de la ordenacion (ascendente/descendente)
+     * @return la lista de solicitudes.
      */
     @Override
     public List<SolicitudDocumentacionPrevia> buscarSolicitudDocPreviaCriteria(int first, int pageSize,
@@ -126,9 +175,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     /**
      * Método que devuelve el número de solicitudes previas totales en una consulta basada en criteria.
      * 
-     * @param solicitudDocPreviaBusqueda objeto con los parámetros de búsqueda
+     * @param solicitudDocPreviaBusqueda objeto con los criterios de búsqueda
      * @return número de registros
-     * @author EZENTIS
      */
     @Override
     public int getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
@@ -146,8 +194,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     /**
      * Construye la consulta criteria dependiendo de los valores de un bean de tipo SolicitudDocPreviaBusqueda.
      * 
-     * @param solicitudDocPreviaBusqueda
-     * @param criteria
+     * @param solicitudDocPreviaBusqueda objeto con los parámetros de búsqueda
+     * @param criteria consulta con las restricciones de búsqueda
      */
     private void consultaCriteriaSolicitudesDoc(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda,
             Criteria criteria) {
@@ -243,6 +291,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         
     }
     
+    /**
+     * Guarda los datos de una solicitud y crea el usuario provisional que debe cumplimentarla una vez enviada.
+     * 
+     * @param solicitudDocumentacionPrevia solicitud modificada
+     * @param usuarioProv objeto usuario
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
@@ -253,6 +307,13 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                 EstadoInspeccionEnum.PEND_RECIBIR_DOC_PREVIA);
     }
     
+    /**
+     * Guarda los datos de una solicitud y elimina el usuario provisional que la ha cumplimentado una vez finalizada o
+     * anulada.
+     * 
+     * @param solicitudDocumentacionPrevia solicitud modificada
+     * @param usuarioProv nombre usuario
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
@@ -265,6 +326,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                 EstadoInspeccionEnum.PEND_ENVIAR_CUESTIONARIO);
     }
     
+    /**
+     * Guarda los datos de una solicitud e inactiva el usuario provisional que la ha cumplimentado.
+     * 
+     * @param solicitudDocumentacionPrevia solicitud modificada
+     * @param usuarioProv nombre usuario
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
@@ -273,6 +340,13 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         userService.cambiarEstado(usuarioProv, EstadoEnum.INACTIVO);
     }
     
+    /**
+     * Guarda los datos de una solicitud y activa el usuario provisional que debe cumplimentarla de nuevo en caso de no
+     * conformidad.
+     * 
+     * @param solicitudDocumentacionPrevia solicitud modificada
+     * @param usuarioProv nombre usuario
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
@@ -281,6 +355,11 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO);
     }
     
+    /**
+     * Elimina una solicitud y todos los documentos subidos por el usuario asociados a la misma.
+     * 
+     * @param idSolicitud clave de la solicitud
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccDeleteElimDocPrevia(Long idSolicitud) {
@@ -288,6 +367,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         solicitudDocumentacionPreviaRepository.delete(idSolicitud);
     }
     
+    /**
+     * Recupera las solicitudes ya finalizadas asociadas a una inspección.
+     * 
+     * @param inspeccion inspección de la solicitud
+     * @return lista
+     */
     @Override
     public List<SolicitudDocumentacionPrevia> findFinalizadasPorInspeccion(Inspeccion inspeccion) {
         return solicitudDocumentacionPreviaRepository
@@ -295,18 +380,36 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
                         inspeccion);
     }
     
+    /**
+     * Recupera la solicitud no finalizada asociada a una inspección (no puede haber más de una).
+     * 
+     * @param inspeccion inspección de la solicitud
+     * @return lista
+     */
     @Override
     public SolicitudDocumentacionPrevia findNoFinalizadaPorInspeccion(Inspeccion inspeccion) {
         return solicitudDocumentacionPreviaRepository
                 .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndInspeccion(inspeccion);
     }
     
+    /**
+     * Recupera las solicitudes enviadas pero aún no cumplimentadas.
+     * 
+     * @return lista
+     */
     @Override
     public List<SolicitudDocumentacionPrevia> findEnviadasNoCumplimentadas() {
         return solicitudDocumentacionPreviaRepository
                 .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
     }
     
+    /**
+     * Crea una solicitud de documentación y da de alta los documentos seleccionados. Colección de documentos de entre
+     * los disponibles en TipoDocumentación que se asignan a la solicitud.
+     * 
+     * @param solicitudDocumentacionPrevia creada
+     * @param documentosSeleccionados asociados a la solicitud
+     */
     @Override
     @Transactional(readOnly = false)
     public void transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,

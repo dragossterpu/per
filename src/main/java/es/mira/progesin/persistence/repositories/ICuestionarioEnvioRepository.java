@@ -12,7 +12,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
  * 
  * Interfaz del repositorio de cuestionarios enviados.
  * 
- * @author Ezentis
+ * @author EZENTIS
  *
  */
 public interface ICuestionarioEnvioRepository extends CrudRepository<CuestionarioEnvio, Long> {
@@ -21,7 +21,6 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
      * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a un destinatario (no puede haber más
      * de uno).
      * 
-     * @author Ezentis
      * @param correo correo del destinario
      * @return cuestionario enviado
      */
@@ -31,7 +30,6 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
      * Recupera el cuestionario enviado no finalizado y no anulado perteneciente a una inspección (no puede haber más de
      * uno).
      * 
-     * @author Ezentis
      * @param inspeccion inspección a la que pertenece el cuestionario
      * @return cuestionario enviado
      */
@@ -40,7 +38,6 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
     /**
      * Comprueba si existe algún cuestionario enviado asociado a un modelo de cuestionario personalizado.
      * 
-     * @author Ezentis
      * @param cuestionario cuestionario personalizado
      * @return boolean si o no
      */
@@ -49,7 +46,6 @@ public interface ICuestionarioEnvioRepository extends CrudRepository<Cuestionari
     /**
      * Recupera los cuestionarios enviados que aún no han sido cumplimentados.
      * 
-     * @author Ezentis
      * @return lista de cuestionarios enviados
      */
     List<CuestionarioEnvio> findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndFechaCumplimentacionIsNull();

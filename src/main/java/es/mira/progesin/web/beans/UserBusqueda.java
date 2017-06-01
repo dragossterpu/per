@@ -30,12 +30,12 @@ public class UserBusqueda implements Serializable {
     private static final long serialVersionUID = 1L;
     
     /**
-     * Fecha desde la que la búsqueda incluye inspecciones.
+     * Fecha alta de usuarios desde la que busca.
      */
     private Date fechaDesde;
     
     /**
-     * Fecha hasta la que la búsqueda incluye inspecciones.
+     * Fecha alta de usuarios hasta la que busca.
      */
     private Date fechaHasta;
     
