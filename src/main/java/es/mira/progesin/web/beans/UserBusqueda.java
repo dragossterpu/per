@@ -84,21 +84,4 @@ public class UserBusqueda implements Serializable {
      */
     private List<User> listaUsuarios;
     
-    /**
-     * Resetea los valores del formulario de búsqueda de usuarios.
-     */
-    public void resetValues() {
-        setFechaDesde(null);
-        setFechaHasta(null);
-        setUsername(null);
-        setNombre(null);
-        setApellido1(null);
-        setApellido2(null);
-        setRole(null);
-        setCuerpoEstado(null);
-        setPuestoTrabajo(null);
-        setListaUsuarios(null);
-        setEstado(null);
-    }
-    
 }

@@ -1,5 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-    <h:form>
+    <h:form id="mLateral">
         <p:menu rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}">
             <p:submenu label="Administración" rendered="#{p:ifGranted('ADMIN')}">
                 <p:menuitem value="Cuerpos" outcome="/administracion/cuerpos/cuerpos" />
@@ -14,10 +14,8 @@
                 <p:menuitem value="Puestos de trabajo" outcome="/administracion/puestosTrabajo/puestosTrabajo" />
                 <p:menuitem value="Departamentos" outcome="/administracion/departamentos/departamentos" />
             </p:submenu>
-            <p:submenu label="Usuarios">
-                <p:menuitem value="Administrar usuarios" outcome="/users/usuarios">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+            <p:submenu label="Usuarios" id="menuUsuarios">
+                <p:menuitem value="Administrar usuarios" action="#{userBean.getFormularioBusquedaUsuarios}" />
             </p:submenu>
             <p:submenu label="Solicitudes previas cuestionario">
                 <p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,GABINETE,ADMIN')}" />

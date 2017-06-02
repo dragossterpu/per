@@ -130,11 +130,6 @@ public class UserBean implements Serializable {
     private String estadoUsuario;
     
     /**
-     * Parámetro para llevar el control de desde dónde se accede a la vista.
-     */
-    private String vieneDe;
-    
-    /**
      * Array que contiene los niveles seleccionables.
      */
     private int[] nivelesSelect = IntStream.rangeClosed(12, 30).toArray();
@@ -278,23 +273,20 @@ public class UserBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de usuarios a su estado inicial y borra los resultados de búsquedas anteriores
      * si se navega desde el menú u otra sección.
-     * 
-     * @author EZENTIS
+     *
+     * @return página del buscador de usuarios
      */
-    public void getFormularioBusquedaUsuarios() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-        }
+    public String getFormularioBusquedaUsuarios() {
+        limpiarBusqueda();
+        return "/users/usuarios.xhtml?faces-redirect=true";
     }
     
     /**
      * Borra los resultados de búsquedas anteriores.
      * 
-     * @author EZENTIS
      */
-    private void limpiarBusqueda() {
-        userBusqueda.resetValues();
+    public void limpiarBusqueda() {
+        userBusqueda = new UserBusqueda();
         model.setRowCount(0);
     }
     
@@ -437,7 +429,7 @@ public class UserBean implements Serializable {
      * Busca el objeto Empleo en base de datos a partir del seleccionado en el combo de la vista.
      */
     public void buscarEmpleo() {
-        CuerpoEstado cuerpo = null;
+        CuerpoEstado cuerpo;
         if (this.cuerpoEstadoSeleccionado != null) {
             cuerpo = this.cuerpoEstadoSeleccionado;
         } else {

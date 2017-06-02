@@ -1,20 +1,13 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <f:metadata>
-        <f:viewParam name="vieneDe" value="#{userBean.vieneDe}" />
-    </f:metadata>
     <ui:define name="title">Búsqueda de usuarios - Progesin</ui:define>
     <ui:define name="content">
 
         <ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}" />
 
         <h3>Búsqueda de usuarios</h3>
-        <h:form>
-            <p:remoteCommand name="onload" action="#{userBean.getFormularioBusquedaUsuarios()}" update="busquedaUsers" autoRun="true" />
-        </h:form>
 
         <h:form id="busquedaUsers">
-
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="username" value="Nombre de usuario:" />
@@ -65,15 +58,11 @@
                     </p:selectOneMenu>
                 </div>
             </div>
+            
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{userBean.buscarUsuario}" value="Buscar" update="panelUsuarios" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-                <h:commandLink title="Limpiar" action="#{userBean.limpiarBusqueda}" update="busquedaUsers" styleClass="fa fa-eraser ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto">
-                    <span class="ui-CommandLink-texto">Limpiar</span>
-                </h:commandLink>
-                <h:commandLink title="Nuevo usuario" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" action="#{userBean.nuevoUsuario}" rendered="#{esAdmin}">
-                    <span class="ui-CommandLink-texto">Nuevo usuario</span>
-                </h:commandLink>
-
+                <p:commandButton actionListener="#{userBean.limpiarBusqueda}" value="Limpiar" update="busquedaUsers" icon="fa fa-eraser" />
+                <p:commandButton value="Nuevo usuario" action="#{userBean.nuevoUsuario}" rendered="#{esAdmin}" icon="fa fa-user-plus"/>
             </div>
 
             <p:separator styleClass="separator ui-state-disabled" />

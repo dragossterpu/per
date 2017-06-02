@@ -34,6 +34,11 @@ import es.mira.progesin.jsf.scope.FacesViewScope;
 public class ProgesinApplication {
     
     /**
+     * Litera "true".
+     */
+    private static final String TRUE = "true";
+    
+    /**
      * Punto de entrada de la aplicación para Spring Boot.
      * @param args parámetros de entrada del método main
      */
@@ -88,14 +93,14 @@ public class ProgesinApplication {
         @Override
         public void onStartup(ServletContext servletContext) throws ServletException {
             servletContext.setInitParameter("javax.faces.DEFAULT_SUFFIX", ".xhtml");
-            servletContext.setInitParameter("javax.faces.PARTIAL_STATE_SAVING_METHOD", "true");
+            servletContext.setInitParameter("javax.faces.PARTIAL_STATE_SAVING_METHOD", TRUE);
             servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
-            servletContext.setInitParameter("facelets.DEVELOPMENT", "true");
+            servletContext.setInitParameter("facelets.DEVELOPMENT", TRUE);
             servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "1");
-            servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
+            servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", TRUE);
             servletContext.setInitParameter("primefaces.THEME", "bluesky");
             servletContext.setInitParameter("encoding", "UTF-8");
-            servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
+            servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, TRUE);
         }
     }
     
@@ -107,14 +112,14 @@ public class ProgesinApplication {
         public void onStartup(ServletContext servletContext) throws ServletException {
             
             servletContext.setInitParameter("javax.faces.DEFAULT_SUFFIX", ".xhtml");
-            servletContext.setInitParameter("javax.faces.PARTIAL_STATE_SAVING_METHOD", "true");
+            servletContext.setInitParameter("javax.faces.PARTIAL_STATE_SAVING_METHOD", TRUE);
             servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Production");
             servletContext.setInitParameter("facelets.DEVELOPMENT", "false");
             servletContext.setInitParameter("javax.faces.FACELETS_REFRESH_PERIOD", "-1");
-            servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
+            servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", TRUE);
             servletContext.setInitParameter("primefaces.THEME", "bluesky");
             servletContext.setInitParameter("encoding", "UTF-8");
-            servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
+            servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, TRUE);
         }
     }
     

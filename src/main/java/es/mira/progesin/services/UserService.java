@@ -164,19 +164,19 @@ public class UserService implements IUserService {
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (userBusqueda.getNombre() != null && !userBusqueda.getNombre().isEmpty()) {
+        if (userBusqueda.getNombre() != null) {
             criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
         }
         
-        if (userBusqueda.getApellido1() != null && !userBusqueda.getApellido1().isEmpty()) {
+        if (userBusqueda.getApellido1() != null) {
             criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
         }
         
-        if (userBusqueda.getApellido2() != null && !userBusqueda.getApellido2().isEmpty()) {
+        if (userBusqueda.getApellido2() != null) {
             criteria.add(Restrictions.ilike("apellido2", userBusqueda.getApellido2(), MatchMode.ANYWHERE));
         }
         
-        if (userBusqueda.getUsername() != null && userBusqueda.getUsername().isEmpty() == Boolean.FALSE) {
+        if (userBusqueda.getUsername() != null) {
             criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
         }
         if (userBusqueda.getCuerpoEstado() != null) {

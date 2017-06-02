@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     /**
      * Configuramos el UserDetailsService y el PasswordEncoder que vamos a usar.
+     * @throws Exception
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
