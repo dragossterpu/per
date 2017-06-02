@@ -59,7 +59,6 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
@@ -129,12 +128,6 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Mock
     private transient IInspeccionesService inspeccionesService;
-    
-    /**
-     * Mock del servicio de documentación adjunta de solicitudes.
-     */
-    @Mock
-    private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
     
     /**
      * Mock del servicio de usuarios.
@@ -338,11 +331,12 @@ public class SolicitudDocPreviaBeanTest {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
+        when(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId())).thenReturn(solicitud);
         
         String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
         assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getInspeccion().getNumero())
                 .isEqualTo("1/2017");
-        verify(gestDocumentacionService, times(1)).findByIdSolicitud(1L);
+        verify(solicitudDocumentacionService, times(1)).findByIdConDocumentos(1L);
         verify(tipoDocumentacionService, times(1)).findByIdSolicitud(1L);
         assertThat(ruta_vista).isEqualTo("/solicitudesPrevia/vistaSolicitud?faces-redirect=true");
         verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
@@ -358,7 +352,7 @@ public class SolicitudDocPreviaBeanTest {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
-        when(gestDocumentacionService.findByIdSolicitud(1L)).thenThrow(SQLException.class);
+        when(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId())).thenThrow(SQLException.class);
         
         String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
         assertThat(ruta_vista).isEqualTo(null);

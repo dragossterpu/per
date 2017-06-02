@@ -25,14 +25,12 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
-import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
-import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGenerator;
@@ -92,12 +90,6 @@ public class ProvisionalSolicitudBean implements Serializable {
     private transient ITipoDocumentacionService tipoDocumentacionService;
     
     /**
-     * Servicio de tipos de documentación asociados a solicitudes.
-     */
-    @Autowired
-    private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
-    
-    /**
      * Servicio de documentos.
      */
     @Autowired
@@ -107,11 +99,6 @@ public class ProvisionalSolicitudBean implements Serializable {
      * Lista de tipos de documentación asociados a la solicitud.
      */
     private List<DocumentacionPrevia> listadoDocumentosPrevios;
-    
-    /**
-     * Lista de documentos subidos asociados a la solicitud.
-     */
-    private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados;
     
     /**
      * lista de archivos de plantillas presentes en el sistema por ambito de la solicitud.
@@ -163,8 +150,6 @@ public class ProvisionalSolicitudBean implements Serializable {
                         .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
                 listadoDocumentosPrevios = tipoDocumentacionService
                         .findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-                listadoDocumentosCargados = gestDocumentacionService
-                        .findByIdSolicitud(solicitudDocumentacionPrevia.getId());
             } catch (Exception e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
             }
@@ -200,20 +185,15 @@ public class ProvisionalSolicitudBean implements Serializable {
     public String gestionarCargaDocumento(FileUploadEvent event) {
         try {
             UploadedFile archivo = event.getFile();
-            TipoDocumento tipo = documentoService.buscaTipoDocumentoPorNombre("DOCUMENTACIÓN SALIDA IPSS");
+            // 9 es el id del tipodocumento para "DOCUMENTACIÓN SALIDA IPSS"
+            TipoDocumento tipo = TipoDocumento.builder().id(9L).build();
             if (verificadorExtensiones.extensionCorrecta(archivo)) {
                 if (esDocumentacionPrevia(archivo)) {
                     Documento documento = documentoService.cargaDocumento(archivo, tipo,
                             solicitudDocumentacionPrevia.getInspeccion());
+                    solicitudDocumentacionPrevia.getDocumentos().add(documento);
+                    solicitudDocumentacionPrevia = solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
                     
-                    GestDocSolicitudDocumentacion gestDocumento = new GestDocSolicitudDocumentacion();
-                    gestDocumento.setFechaAlta(new Date());
-                    gestDocumento.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
-                    gestDocumento.setIdSolicitud(solicitudDocumentacionPrevia.getId());
-                    gestDocumento.setIdDocumento(documento.getId());
-                    gestDocumento.setNombreFichero(documento.getNombre());
-                    gestDocumento.setExtension(extensiones.get(documento.getTipoContenido()));
-                    gestDocumentacionService.save(gestDocumento);
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                             "Documento/s subidos con éxito");
                 } else {
@@ -231,7 +211,6 @@ public class ProvisionalSolicitudBean implements Serializable {
                     "Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
-        listadoDocumentosCargados = gestDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
         return "/provisionalSolicitud/cargaDocumentos";
     }
     
@@ -251,12 +230,12 @@ public class ProvisionalSolicitudBean implements Serializable {
     /**
      * Eliminación fisica de un documento cargado.
      * 
-     * @param gestDocumento documento a eliminar
+     * @param documento documento a eliminar
      */
-    public void eliminarDocumento(GestDocSolicitudDocumentacion gestDocumento) {
-        documentoService.delete(gestDocumento.getIdDocumento());
-        gestDocumentacionService.delete(gestDocumento);
-        listadoDocumentosCargados.remove(gestDocumento);
+    public void eliminarDocumento(Documento documento) {
+        solicitudDocumentacionPrevia.getDocumentos().remove(documento);
+        solicitudDocumentacionPrevia = solicitudDocumentacionService
+                .eliminarDocumentoSolicitud(solicitudDocumentacionPrevia, documento);
     }
     
     /**

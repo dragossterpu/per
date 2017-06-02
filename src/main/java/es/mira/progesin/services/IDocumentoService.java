@@ -10,7 +10,6 @@ import org.primefaces.model.UploadedFile;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.gd.Documento;
-import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.web.beans.DocumentoBusqueda;
 
@@ -200,8 +199,7 @@ public interface IDocumentoService {
      * @param documento del que se desean recuperar las solicitudes
      * @return lista de solicitudes
      */
-    
-    public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento);
+    public List<Long> buscaDocumentoEnSolicitudes(Documento documento);
     
     /**
      * Elimina todos los documentos almacenados en la papelera.

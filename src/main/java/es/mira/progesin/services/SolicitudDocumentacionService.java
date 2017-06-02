@@ -29,6 +29,7 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
@@ -60,6 +61,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      */
     @Autowired
     private IUserService userService;
+    
+    /**
+     * Servicio de documentos.
+     */
+    @Autowired
+    private IDocumentoService documentoService;
     
     /**
      * Servicio de inspecciones.
@@ -415,15 +422,40 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     public void transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
             List<TipoDocumentacion> documentosSeleccionados) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
-        documentosSeleccionados.forEach(documento -> {
+        documentosSeleccionados.forEach(tipodocumento -> {
             DocumentacionPrevia docPrevia = new DocumentacionPrevia();
             docPrevia.setIdSolicitud(solicitudDocumentacionPrevia.getId());
-            docPrevia.setDescripcion(documento.getDescripcion());
-            docPrevia.setExtensiones(documento.getExtensiones());
-            docPrevia.setNombre(documento.getNombre());
+            docPrevia.setDescripcion(tipodocumento.getDescripcion());
+            docPrevia.setExtensiones(tipodocumento.getExtensiones());
+            docPrevia.setNombre(tipodocumento.getNombre());
             tipoDocumentacionService.save(docPrevia);
         });
         
     }
     
+    /**
+     * Recupera una solicitud y los documentos subidos al cumplimentarla a partir de su identificador.
+     * 
+     * @param id clave de la solicitud
+     * @return solicitud con documentos cargados
+     */
+    @Override
+    public SolicitudDocumentacionPrevia findByIdConDocumentos(Long id) {
+        return solicitudDocumentacionPreviaRepository.findById(id);
+    }
+    
+    /**
+     * Elimina de BBDD el documento de una solicitud pasados como parámetros.
+     * 
+     * @param solicitud solicitud a eliminar
+     * @param documento documento a eliminar
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public SolicitudDocumentacionPrevia eliminarDocumentoSolicitud(SolicitudDocumentacionPrevia solicitud,
+            Documento documento) {
+        solicitud = solicitudDocumentacionPreviaRepository.save(solicitud);
+        documentoService.delete(documento);
+        return solicitud;
+    }
 }

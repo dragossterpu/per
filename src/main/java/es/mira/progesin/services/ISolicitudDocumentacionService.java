@@ -7,6 +7,7 @@ import org.primefaces.model.SortOrder;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
@@ -149,5 +150,23 @@ public interface ISolicitudDocumentacionService {
      */
     void transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
             List<TipoDocumentacion> documentosSeleccionados);
+    
+    /**
+     * Recupera una solicitud y los documentos subidos al cumplimentarla a partir de su identificador.
+     * 
+     * @param id clave de la solicitud
+     * @return solicitud con documentos cargados
+     */
+    SolicitudDocumentacionPrevia findByIdConDocumentos(Long id);
+    
+    /**
+     * Elimina de BBDD el documento de una solicitud pasados como parámetros.
+     * 
+     * @param solicitud solicitud a eliminar
+     * @param documento documento a eliminar
+     * @return solicitud actualizada
+     */
+    SolicitudDocumentacionPrevia eliminarDocumentoSolicitud(SolicitudDocumentacionPrevia solicitud,
+            Documento documento);
     
 }

@@ -36,14 +36,14 @@
 
 
                 <p:outputPanel id="panelAdjuntos">
-                    <p:dataTable id="tablaDocumentos" var="documento" value="#{provisionalSolicitudBean.listadoDocumentosCargados}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }" emptyMessage="No hay documentos cargados">
+                    <p:dataTable id="tablaDocumentos" var="documento" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.documentos}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }" emptyMessage="No hay documentos cargados">
                         <p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}" update=":formAlta:msgs" />
 
                         <p:column headerText="Documentos">
-                            <h:outputText value="#{documento.nombreFichero}" />
+                            <h:outputText value="#{documento.nombre}" />
                         </p:column>
                         <p:column styleClass="botonTabla">
-                            <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
+                            <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{provisionalSolicitudBean.descargarFichero(documento.id)}" title="Descargar documento">
                                 <p:fileDownload value="#{provisionalSolicitudBean.file}" />
                             </p:commandButton>
                         </p:column>

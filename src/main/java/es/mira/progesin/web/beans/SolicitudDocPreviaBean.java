@@ -32,7 +32,6 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.ICuestionarioEnvioService;
@@ -43,7 +42,6 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.services.gd.IGestDocSolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
@@ -99,6 +97,9 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     private Date backupFechaLimiteEnvio;
     
+    /**
+     * Casilla para saltar pestaña de selección de tipos de documentación en formulario crearsolicitud.
+     */
     private boolean skip;
     
     /**
@@ -110,11 +111,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Lista de documentos.
      */
     private List<DocumentacionPrevia> listadoDocumentosPrevios;
-    
-    /**
-     * Listado de documentos cargados.
-     */
-    private List<GestDocSolicitudDocumentacion> listadoDocumentosCargados;
     
     /**
      * Lista de documentos seleccionados.
@@ -191,12 +187,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     @Autowired
     private transient IInspeccionesService inspeccionesService;
-    
-    /**
-     * Servicio de gestor de documentación de solicitudes.
-     */
-    @Autowired
-    private transient IGestDocSolicitudDocumentacionService gestDocumentacionService;
     
     /**
      * Servicio de usuarios.
@@ -311,9 +301,8 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
         try {
-            setListadoDocumentosCargados(gestDocumentacionService.findByIdSolicitud(solicitud.getId()));
             setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
-            setSolicitudDocumentacionPrevia(solicitud);
+            setSolicitudDocumentacionPrevia(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId()));
             return "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
         } catch (Exception e) {
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);

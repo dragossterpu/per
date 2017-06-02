@@ -46,7 +46,7 @@ public interface ITipoDocumentacionService {
     List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito);
     
     /**
-     * Guarda una entidad tipo DocumentacionPrevia en base de datos.
+     * Guarda una asociación entre un tipo de documentación y una solicitud.
      * 
      * @param entity documentación a guardar
      * @return documentación guardada
@@ -54,10 +54,10 @@ public interface ITipoDocumentacionService {
     DocumentacionPrevia save(DocumentacionPrevia entity);
     
     /**
-     * Recupera un listado de documentacione previa buscando por una solicitud.
+     * Recupera un listado de tipos de documentación asociados a una solicitud.
      * 
      * @param idSolicitud id de la solicitud
-     * @return listado de documentaciones resultado de la búsqueda
+     * @return listado de documentaciones
      */
     List<DocumentacionPrevia> findByIdSolicitud(Long idSolicitud);
     

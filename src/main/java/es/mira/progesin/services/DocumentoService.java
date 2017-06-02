@@ -30,11 +30,9 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.DocumentoBlob;
-import es.mira.progesin.persistence.entities.gd.GestDocSolicitudDocumentacion;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.IDocumentoRepository;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
-import es.mira.progesin.persistence.repositories.gd.IGestDocSolicitudDocumentacionRepository;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 import es.mira.progesin.web.beans.DocumentoBusqueda;
 
@@ -78,12 +76,6 @@ public class DocumentoService implements IDocumentoService {
      */
     @Autowired
     private ITipoDocumentoRepository tipoDocumentoRepository;
-    
-    /**
-     * Repositorio de gestor documental de solicitud de documentación.
-     */
-    @Autowired
-    IGestDocSolicitudDocumentacionRepository gestDocSolicitudDocumentacionRepository;
     
     /**
      * Elimina un documento de la base de datos. El documento se identifica por su id.
@@ -440,8 +432,8 @@ public class DocumentoService implements IDocumentoService {
      * @return lista de solicitudes
      */
     @Override
-    public List<GestDocSolicitudDocumentacion> buscaDocumentoEnSolicitudes(Documento documento) {
-        return gestDocSolicitudDocumentacionRepository.findByIdDocumento(documento.getId());
+    public List<Long> buscaDocumentoEnSolicitudes(Documento documento) {
+        return documentoRepository.buscaSolicitudDocumento(documento.getId());
     }
     
     /**

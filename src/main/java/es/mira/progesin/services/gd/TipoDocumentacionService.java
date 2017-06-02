@@ -14,7 +14,7 @@ import es.mira.progesin.persistence.repositories.gd.ITipoDocumentacionRepository
 
 /**
  * 
- * Implementación del servivio de Tipos de documentación previa.
+ * Implementación del servicio de Tipos de documentación previa.
  * 
  * @author EZENTIS
  *
@@ -81,7 +81,7 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
     }
     
     /**
-     * Guarda una entidad tipo DocumentacionPrevia en base de datos.
+     * Guarda una asociación entre un tipo de documentación y una solicitud.
      * 
      * @param entity documentación a guardar
      * @return documentación guardada
@@ -93,10 +93,10 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
     }
     
     /**
-     * Recupera un listado de documentacione previa buscando por una solicitud.
+     * Recupera un listado de tipos de documentación asociados a una solicitud.
      * 
      * @param idSolicitud id de la solicitud
-     * @return listado de documentaciones resultado de la búsqueda
+     * @return listado de documentaciones
      */
     @Override
     public List<DocumentacionPrevia> findByIdSolicitud(Long idSolicitud) {

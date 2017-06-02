@@ -2,16 +2,22 @@ package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,6 +25,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import es.mira.progesin.persistence.entities.gd.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -49,6 +56,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @Table(name = "SOLICITUD_DOC_PREVIA")
+@NamedEntityGraph(name = "SolicitudDocumentacionPrevia.documentos", attributeNodes = @NamedAttributeNode("documentos"))
 public class SolicitudDocumentacionPrevia implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -256,4 +264,11 @@ public class SolicitudDocumentacionPrevia implements Serializable {
      */
     @Column(name = "usernameBaja")
     private String usernameBaja;
+    
+    /**
+     * Lista con los documentos asociados a la solicitud.
+     */
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "solicitud_previa_docs", joinColumns = @JoinColumn(name = "id_solicitud_previa"), inverseJoinColumns = @JoinColumn(name = "id_documento"))
+    private List<Documento> documentos;
 }

@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  08/05/2017    
+prompt    Actualización:  01/06/2017    
 prompt =========================================================================
 
 
@@ -265,21 +265,12 @@ prompt =========================================================================
    ) ;
 /
 prompt =========================================================================
-prompt  Creacion tabla  GESTDOCSOLICITUDDOCUMENTACION
+prompt  Creacion tabla  SOLICITUD_PREVIA_DOCS
 prompt =========================================================================
 
-  CREATE TABLE GESTDOCSOLICITUDDOCUMENTACION 
-   (    ID NUMBER(19,0), 
-    EXTENSION VARCHAR2(4 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    ID_DOCUMENTO NUMBER(19,0), 
-    ID_SOLICITUD NUMBER(19,0), 
-    NOMBRE VARCHAR2(255 CHAR), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIFICACION VARCHAR2(255 CHAR)
+  CREATE TABLE SOLICITUD_PREVIA_DOCS 
+   (    ID_SOLICITUD_PREVIA NUMBER(19,0), 
+    ID_DOCUMENTO NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -692,6 +683,12 @@ prompt =========================================================================
 prompt Ejecutando creación de index y Constraints...
 
 prompt =========================================================================
+prompt  Creacion índice  INDICE_SOLICITUD_PREVIA
+prompt =========================================================================
+
+  CREATE UNIQUE INDEX INDICE_SOLICITUD_PREVIA ON SOLICITUD_PREVIA_DOCS (ID_DOCUMENTO);
+/
+prompt =========================================================================
 prompt  Creacion índice  INDICE_RESPUESTAS_CUEST
 prompt =========================================================================
 
@@ -972,17 +969,13 @@ prompt =========================================================================
   ALTER TABLE PARAMETROS MODIFY (CLAVE NOT NULL ENABLE);
 /
 prompt =========================================================================
-prompt  Constraints para la tabla  GESTDOCSOLICITUDDOCUMENTACION
+prompt  Constraints para la tabla  SOLICITUD_PREVIA_DOCS
 prompt =========================================================================
 
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION ADD PRIMARY KEY (ID)
+  ALTER TABLE SOLICITUD_PREVIA_DOCS ADD CONSTRAINT INDICE_SOLICITUD_PREVIA UNIQUE (ID_DOCUMENTO)
   USING INDEX  ENABLE;
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION MODIFY (NOMBRE NOT NULL ENABLE);
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION MODIFY (ID_DOCUMENTO NOT NULL ENABLE);
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION MODIFY (EXTENSION NOT NULL ENABLE);
-  ALTER TABLE GESTDOCSOLICITUDDOCUMENTACION MODIFY (ID NOT NULL ENABLE);
+  ALTER TABLE SOLICITUD_PREVIA_DOCS MODIFY (ID_DOCUMENTO NOT NULL ENABLE);
+  ALTER TABLE SOLICITUD_PREVIA_DOCS MODIFY (ID_SOLICITUD_PREVIA NOT NULL ENABLE);
 /
 prompt =========================================================================
 prompt  Constraints para la tabla  NOTIFICACIONES

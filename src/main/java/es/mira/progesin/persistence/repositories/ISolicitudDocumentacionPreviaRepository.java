@@ -2,6 +2,8 @@ package es.mira.progesin.persistence.repositories;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -24,11 +26,13 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
             String correo);
     
     /**
-     * Recupera la solicitud ya enviada pero sin finalizar perteneciente a un destinatario (no puede haber más de una).
+     * Recupera la solicitud y sus documentos subidos ya enviada pero sin finalizar perteneciente a un destinatario (no
+     * puede haber más de una).
      * 
      * @param correo correo destinatario
-     * @return solicitud
+     * @return solicitud con documentos
      */
+    @EntityGraph(value = "SolicitudDocumentacionPrevia.documentos", type = EntityGraphType.LOAD)
     SolicitudDocumentacionPrevia findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
             String correo);
     
@@ -55,5 +59,14 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
      * @return lista solicitudes
      */
     List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
+    
+    /**
+     * Recupera una solicitud y sus documentos subidos a partir de la clave
+     * 
+     * @param id
+     * @return solicitud con documentos
+     */
+    @EntityGraph(value = "SolicitudDocumentacionPrevia.documentos", type = EntityGraphType.LOAD)
+    SolicitudDocumentacionPrevia findById(Long id);
     
 }

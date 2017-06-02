@@ -104,18 +104,15 @@
 
             </p:outputPanel>
 
-            <p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosCargados and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
+            <p:outputPanel rendered="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.documentos and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
 
                 <div class="bloqueDocumentos">
-                    <p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.listadoDocumentosCargados}">
+                    <p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.documentos}">
                         <p:column headerText="Nombre">
-                            <h:outputText value="#{documento.nombreFichero}" />
-                        </p:column>
-                        <p:column headerText="Extensión" width="100">
-                            <h:outputText value="#{documento.extension}" />
+                            <h:outputText value="#{documento.nombre}" />
                         </p:column>
                         <p:column styleClass="botonTabla">
-                            <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(documento.idDocumento)}" title="Descargar documento">
+                            <p:commandButton icon="fa fa-fw fa-download" ajax="false" actionListener="#{solicitudDocPreviaBean.descargarFichero(documento.id)}" title="Descargar documento">
                                 <p:fileDownload value="#{solicitudDocPreviaBean.file}" />
                             </p:commandButton>
                         </p:column>

@@ -54,4 +54,13 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
      */
     @Transactional(readOnly = false)
     void deleteByFechaBajaIsNotNull();
+    
+    /**
+     * Devuelve una lista con los id de las solicitudes que tengan adjunto el documento recibido como parámetro.
+     * 
+     * @param idDocumento Id del documento a buscar
+     * @return Lista de los id de las solicitudes que tienen adjunto este documento
+     */
+    @Query(value = "select id_cuestionario_enviado from solicitud_previa_docs where id_documento=?1", nativeQuery = true)
+    List<Long> buscaSolicitudDocumento(Long idDocumento);
 }
