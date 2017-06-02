@@ -196,9 +196,8 @@ public class InspeccionesService implements IInspeccionesService {
             criteria.add(Restrictions.eq("anio", Integer.parseInt(busqueda.getAnio())));
         }
         
-        if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(String.format(Constantes.COMPARADORSINACENTOS,
-                    "this_.username_alta", busqueda.getUsuarioCreacion())));
+        if (busqueda.getUsuarioCreacion() != null) {
+            criteria.add(Restrictions.ilike("usernameAlta", busqueda.getUsuarioCreacion(), MatchMode.ANYWHERE));
         }
         
         if (busqueda.getTipoInspeccion() != null) {
@@ -209,9 +208,8 @@ public class InspeccionesService implements IInspeccionesService {
             criteria.add(Restrictions.eq("ambito", busqueda.getAmbito()));
         }
         
-        if (busqueda.getNombreUnidad() != null && !busqueda.getNombreUnidad().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "this_.nombre_unidad", busqueda.getNombreUnidad())));
+        if (busqueda.getNombreUnidad() != null) {
+            criteria.add(Restrictions.ilike("nombreUnidad", busqueda.getNombreUnidad(), MatchMode.ANYWHERE));
         }
         
         if (busqueda.getCuatrimestre() != null) {

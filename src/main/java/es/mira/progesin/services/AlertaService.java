@@ -338,7 +338,7 @@ public class AlertaService implements IAlertaService {
         
         DetachedCriteria usuarioMensaje = DetachedCriteria.forClass(AlertasNotificacionesUsuario.class, "mensaje");
         usuarioMensaje.add(Restrictions.ilike("mensaje.usuario", usuario, MatchMode.ANYWHERE));
-        usuarioMensaje.add(Restrictions.sqlRestriction("TIPO_MENSAJE = '" + TipoMensajeEnum.ALERTA + "'"));
+        usuarioMensaje.add(Restrictions.eq("mensaje.tipo", TipoMensajeEnum.ALERTA));
         usuarioMensaje.setProjection(Property.forName("mensaje.idMensaje"));
         
         criteria.add(Property.forName("alerta.idAlerta").in(usuarioMensaje));

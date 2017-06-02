@@ -329,9 +329,8 @@ public class DocumentoService implements IDocumentoService {
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "this_.nombre", busqueda.getNombre())));
+        if (busqueda.getNombre() != null) {
+            criteria.add(Restrictions.ilike("nombre", busqueda.getNombre(), MatchMode.ANYWHERE));
         }
         
         if (busqueda.getTipoDocumento() != null) {
@@ -361,8 +360,7 @@ public class DocumentoService implements IDocumentoService {
         }
         
         if (busqueda.getDescripcion() != null) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "this_.descripcion", busqueda.getDescripcion())));
+            criteria.add(Restrictions.ilike("descripcion", busqueda.getDescripcion(), MatchMode.ANYWHERE));
         }
         
     }

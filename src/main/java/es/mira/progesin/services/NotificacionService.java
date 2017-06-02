@@ -268,7 +268,7 @@ public class NotificacionService implements INotificacionService {
         
         DetachedCriteria usuarioMensaje = DetachedCriteria.forClass(AlertasNotificacionesUsuario.class, "mensaje");
         usuarioMensaje.add(Restrictions.ilike("mensaje.usuario", usuario, MatchMode.ANYWHERE));
-        usuarioMensaje.add(Restrictions.sqlRestriction("TIPO_MENSAJE = '" + TipoMensajeEnum.NOTIFICACION + "'"));
+        usuarioMensaje.add(Restrictions.eq("mensaje.tipo", TipoMensajeEnum.NOTIFICACION));
         usuarioMensaje.add(Restrictions.eqProperty("notificacion.idNotificacion", "mensaje.idMensaje"));
         usuarioMensaje.setProjection(Property.forName("mensaje.idMensaje"));
         

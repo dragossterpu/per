@@ -82,15 +82,11 @@ public class EquipoService implements IEquipoService {
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         String parametro;
-        if (equipoBusqueda.getNombreJefe() != null && !equipoBusqueda.getNombreJefe().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    "upper(convert(replace(NOMBRE_JEFE, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-                            + equipoBusqueda.getNombreJefe() + "', ' ', '') || '%', 'US7ASCII'))"));
+        if (equipoBusqueda.getNombreJefe() != null) {
+            criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
         }
-        if (equipoBusqueda.getNombreEquipo() != null && !equipoBusqueda.getNombreEquipo().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    "upper(convert(replace(NOMBRE_EQUIPO, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-                            + equipoBusqueda.getNombreEquipo() + "', ' ', '') || '%', 'US7ASCII'))"));
+        if (equipoBusqueda.getNombreEquipo() != null) {
+            criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
         }
         criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
         if (equipoBusqueda.getTipoEquipo() != null) {

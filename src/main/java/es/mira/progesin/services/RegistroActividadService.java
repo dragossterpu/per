@@ -131,18 +131,15 @@ public class RegistroActividadService implements IRegistroActividadService {
             Date fechaHasta = new Date(regActividadBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
-        if (regActividadBusqueda.getNombreSeccion() != null && !regActividadBusqueda.getNombreSeccion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    "upper(convert(replace(nombre_seccion, ' ', ''), 'US7ASCII')) LIKE upper(convert('%' || replace('"
-                            + regActividadBusqueda.getNombreSeccion() + "', ' ', '') || '%', 'US7ASCII'))"));
+        if (regActividadBusqueda.getNombreSeccion() != null) {
+            criteria.add(
+                    Restrictions.ilike("nombreSeccion", regActividadBusqueda.getNombreSeccion(), MatchMode.ANYWHERE));
         }
-        if (regActividadBusqueda.getTipoRegActividad() != null
-                && !regActividadBusqueda.getTipoRegActividad().isEmpty()) {
+        if (regActividadBusqueda.getTipoRegActividad() != null) {
             criteria.add(Restrictions.ilike("tipoRegActividad", regActividadBusqueda.getTipoRegActividad(),
                     MatchMode.ANYWHERE));
         }
-        if (regActividadBusqueda.getUsernameRegActividad() != null
-                && !regActividadBusqueda.getUsernameRegActividad().isEmpty()) {
+        if (regActividadBusqueda.getUsernameRegActividad() != null) {
             criteria.add(Restrictions.ilike("usernameRegActividad", regActividadBusqueda.getUsernameRegActividad(),
                     MatchMode.ANYWHERE));
         }
