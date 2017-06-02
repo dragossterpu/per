@@ -448,12 +448,11 @@ public class GestorDocumentalBean {
      */
     public void borrarDocumento(Documento doc) {
         String error = "";
-        if (!documentoService.buscaDocumentoEnCuestionarios(doc).isEmpty()) {
+        if (documentoService.perteneceACuestionario(doc) != null) {
             error = "No es posible eliminar este documento ya que está asociado a un cuestionario\nElimine el cuestionario antes de proseguir con la eliminación de este documento";
         }
-        if (!documentoService.buscaDocumentoEnSolicitudes(doc).isEmpty()) {
+        if (documentoService.perteneceASolicitud(doc) != null) {
             error = "No es posible eliminar este documento ya que está asociado a una solicitud de documentación previa\nElimine la solicitud antes de proseguir con la eliminación de este documento";
-            
         }
         if (error.isEmpty()) {
             try {
@@ -488,8 +487,8 @@ public class GestorDocumentalBean {
             }
             mapaInspecciones.put(doc.getId(), cadenaInspecciones);
             
-            mapaEdicion.put(doc.getId(), documentoService.buscaDocumentoEnCuestionarios(doc).isEmpty()
-                    && documentoService.buscaDocumentoEnSolicitudes(doc).isEmpty());
+            mapaEdicion.put(doc.getId(), documentoService.perteneceACuestionario(doc) == null
+                    && documentoService.perteneceASolicitud(doc) == null);
         }
     }
     

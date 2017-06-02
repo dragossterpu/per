@@ -40,7 +40,7 @@ public class IDocumentoRepositoryTest {
     @Test
     public void testFindByFechaBajaIsNull() {
         List<Documento> listDoc = documentoRepository.findByFechaBajaIsNull();
-        assertThat(listDoc).hasSize(2);
+        assertThat(listDoc).hasSize(3);
     }
     
     /**
@@ -54,7 +54,7 @@ public class IDocumentoRepositoryTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#findById(java.lang.Long)}.
+     * Test method for {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#findById(Long)}.
      */
     @Test
     public void testFindById() {
@@ -64,12 +64,21 @@ public class IDocumentoRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#buscaRespuestaDocumento(java.lang.Long)}.
+     * {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#perteneceACuestionario(Long)}.
      */
     @Test
-    public void testBuscaRespuestaDocumento() {
-        List<Long> resp = documentoRepository.buscaRespuestaDocumento(1L);
-        assertThat(resp).hasSize(1);
+    public void testPerteneceACuestionario() {
+        Long resp = documentoRepository.perteneceACuestionario(1L);
+        assertThat(resp).isEqualTo(1L);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#perteneceASolicitud(Long)}.
+     */
+    @Test
+    public void testPerteneceASolicitud() {
+        Long resp = documentoRepository.perteneceASolicitud(4L);
+        assertThat(resp).isEqualTo(6L);
     }
     
     /**

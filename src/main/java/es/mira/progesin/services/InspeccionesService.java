@@ -58,7 +58,7 @@ public class InspeccionesService implements IInspeccionesService {
      * 
      */
     @Autowired
-    IInspeccionesRepository inspeccionesRepository;
+    private IInspeccionesRepository inspeccionesRepository;
     
     /**
      * Método que guarda una inspección.

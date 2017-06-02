@@ -41,26 +41,26 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
     Documento findById(Long id);
     
     /**
-     * Devuelve una lista con los id de los cuestionarios que tengan adjunto el documento recibido como parámetro.
-     * 
-     * @param idDocumento Id del documento a buscar
-     * @return Lista de los id de los cuestionarios que tienen adjunto este documento
-     */
-    @Query(value = "select id_cuestionario_enviado from respuestas_cuest_docs where id_documento=?1", nativeQuery = true)
-    List<Long> buscaRespuestaDocumento(Long idDocumento);
-    
-    /**
      * Elimina todos los registros cuya fecha de baja no sea null.
      */
     @Transactional(readOnly = false)
     void deleteByFechaBajaIsNotNull();
     
     /**
-     * Devuelve una lista con los id de las solicitudes que tengan adjunto el documento recibido como parámetro.
+     * Devuelve el id del cuestionario que tenga adjunto a una respuesta el documento recibido como parámetro.
      * 
      * @param idDocumento Id del documento a buscar
-     * @return Lista de los id de las solicitudes que tienen adjunto este documento
+     * @return id del cuestionario si existe
      */
-    @Query(value = "select id_cuestionario_enviado from solicitud_previa_docs where id_documento=?1", nativeQuery = true)
-    List<Long> buscaSolicitudDocumento(Long idDocumento);
+    @Query(value = "select id_cuestionario_enviado from respuestas_cuest_docs where id_documento=?1", nativeQuery = true)
+    Long perteneceACuestionario(Long idDocumento);
+    
+    /**
+     * Devuelve el id de la solicitud que tenga adjunto el documento recibido como parámetro.
+     * 
+     * @param idDocumento Id del documento a buscar
+     * @return id de la solicitud si existe
+     */
+    @Query(value = "select id_solicitud_previa from solicitud_previa_docs where id_documento=?1", nativeQuery = true)
+    Long perteneceASolicitud(Long idDocumento);
 }

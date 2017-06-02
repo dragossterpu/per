@@ -415,25 +415,25 @@ public class DocumentoService implements IDocumentoService {
     }
     
     /**
-     * Devuelve una lista de id de Cuestionarios que tienen asociado el documento pasado como parámetro.
+     * Devuelve el id del Cuestionarios que tiene asociado a una respuesta el documento pasado como parámetro.
      * 
-     * @param documento del que se desean recuperar los cuestionarios
-     * @return lista de cuestionarios
+     * @param documento del que se desea recuperar el cuestionario
+     * @return id del cuestionario
      */
     @Override
-    public List<Long> buscaDocumentoEnCuestionarios(Documento documento) {
-        return documentoRepository.buscaRespuestaDocumento(documento.getId());
+    public Long perteneceACuestionario(Documento documento) {
+        return documentoRepository.perteneceACuestionario(documento.getId());
     }
     
     /**
-     * Devuelve una lista de solicitudes de documentación que tienen asociado el documento pasado como parámetro.
+     * Devuelve el id de la solicitud de documentación que tiene asociado el documento pasado como parámetro.
      * 
-     * @param documento del que se desean recuperar las solicitudes
-     * @return lista de solicitudes
+     * @param documento del que se desea recuperar la solicitud
+     * @return id de la solicitud
      */
     @Override
-    public List<Long> buscaDocumentoEnSolicitudes(Documento documento) {
-        return documentoRepository.buscaSolicitudDocumento(documento.getId());
+    public Long perteneceASolicitud(Documento documento) {
+        return documentoRepository.perteneceASolicitud(documento.getId());
     }
     
     /**

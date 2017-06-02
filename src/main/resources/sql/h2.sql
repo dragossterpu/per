@@ -281,10 +281,12 @@ insert into tipo_documento (id, nombre) values (3,'tipoDoc3');
 insert into documentos_blob (id, nombre_fichero) VALUES (1, 'fichero1.xlsx');
 insert into documentos_blob (id, nombre_fichero) VALUES (2, 'fichero2.xlsx');
 insert into documentos_blob (id, nombre_fichero) VALUES (3, 'fichero3.xlsx');
+insert into documentos_blob (id, nombre_fichero) VALUES (4, 'fichero4.xlsx');
 
 insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (1, 1,'contenido_docx1','documento1.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 3);
-insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (2, 3,'contenido_docx2','documento2.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 2);
-insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento,fecha_baja) values (3, 2,'contenido_docx3','documento3.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 1, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'));
+insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (2, 2,'contenido_docx2','documento2.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 2);
+insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento,fecha_baja) values (3, 3,'contenido_docx3','documento3.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 1, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'));
+insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (4, 4,'contenido_docx4','documento4.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 3);
 
 --Cuestionarios
 
@@ -326,6 +328,8 @@ insert into respuestascuestionario (FECHA_VALIDACION, RESPUESTA_TEXTO, USERNAME_
 
 insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 1, 1);
 insert into respuestas_cuest_docs (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA, ID_DOCUMENTO) VALUES (1, 2, 2);
+
+insert into solicitud_previa_docs (ID_SOLICITUD_PREVIA, ID_DOCUMENTO) VALUES (6, 4);
 
 
 COMMIT;
