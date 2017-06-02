@@ -9,11 +9,11 @@ import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -172,7 +172,7 @@ public class SugerenciasBean implements Serializable {
             correo.envioCorreo(user.getCorreo(), asunto, mensaje.toString());
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Contestación",
                     "Mensaje de respuesta enviado correctamente.");
-        } catch (MailException e) {
+        } catch (CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al enviar el correo electrónico.");
             regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
