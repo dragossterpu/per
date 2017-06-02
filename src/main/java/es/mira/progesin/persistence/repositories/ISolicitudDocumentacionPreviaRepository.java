@@ -61,9 +61,9 @@ public interface ISolicitudDocumentacionPreviaRepository extends CrudRepository<
     List<SolicitudDocumentacionPrevia> findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndFechaCumplimentacionIsNull();
     
     /**
-     * Recupera una solicitud y sus documentos subidos a partir de la clave
+     * Recupera una solicitud y sus documentos subidos a partir de la clave.
      * 
-     * @param id
+     * @param id identificador de la solicitud
      * @return solicitud con documentos
      */
     @EntityGraph(value = "SolicitudDocumentacionPrevia.documentos", type = EntityGraphType.LOAD)

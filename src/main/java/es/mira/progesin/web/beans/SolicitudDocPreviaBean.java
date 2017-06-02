@@ -344,8 +344,7 @@ public class SolicitudDocPreviaBean implements Serializable {
     }
     
     /**
-     * Permite al jefe del equipo de apoyo validar la solicitud de documentación
-     * 
+     * Permite al jefe del equipo de apoyo validar la solicitud de documentación.
      */
     public void validacionJefeEquipo() {
         try {
