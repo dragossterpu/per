@@ -296,13 +296,11 @@ public class InspeccionBean {
         try {
             inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SIN_INICIAR);
             
-            inspeccionesService.save(inspeccion);
-            
             if (inspeccionesAsignadasActuales != null) {
                 inspeccion.setInspecciones(inspeccionesAsignadasActuales);
-                inspeccionesService.save(inspeccion);
             }
             
+            inspeccion = inspeccionesService.save(inspeccion);
             inspeccionBusqueda.resetValues();
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",

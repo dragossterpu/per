@@ -5,28 +5,38 @@ import java.util.List;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
 
+/**
+ * Repositorio de respuestas de cuestionario.
+ * 
+ * @author EZENTIS
+ *
+ */
 public interface IRespuestaCuestionarioRepository
         extends JpaRepository<RespuestaCuestionario, RespuestaCuestionarioId> {
     
-    @Query("select r from RespuestaCuestionario r where r.respuestaId.cuestionarioEnviado = :cuestionarioEnviado and (r.respuestaId.pregunta.tipoRespuesta like 'TABLA%' or r.respuestaId.pregunta.tipoRespuesta like 'MATRIZ%')")
-    List<RespuestaCuestionario> findRespuestasTablaMatrizByCuestionarioEnviado(
-            @Param("cuestionarioEnviado") CuestionarioEnvio cuestionarioEnviado);
-    
+    /**
+     * Busca las respuestas asociadas a un cuestionario enviado.
+     * 
+     * @param cuestionarioEnviado cuestionario enviado
+     * @return lista de respuestas
+     */
     @EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
     List<RespuestaCuestionario> findDistinctByRespuestaIdCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
     
-    @EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
-    List<RespuestaCuestionario> findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNull(
-            CuestionarioEnvio cuestionarioEnviado);
-    
+    /**
+     * Busca las respuestas asociadas a un cuestionario enviado que no tienen fecha de validación y que son de unas
+     * áreas concretas.
+     * 
+     * @param cuestionarioEnviado cuestionario enviado
+     * @param listaAreasCuestionario lista de áreas
+     * @return lista de respuestas
+     */
     @EntityGraph(value = "RespuestaCuestionario.documentos", type = EntityGraphType.LOAD)
     List<RespuestaCuestionario> findDistinctByRespuestaIdCuestionarioEnviadoAndFechaValidacionIsNullAndRespuestaIdPreguntaAreaIn(
             CuestionarioEnvio cuestionarioEnviado, List<AreasCuestionario> listaAreasCuestionario);
