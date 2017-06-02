@@ -20,8 +20,8 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISugerenciaService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.CorreoElectronico;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,7 +63,7 @@ public class SugerenciasBean implements Serializable {
      * 
      */
     @Autowired
-    private transient CorreoElectronico correo;
+    private transient ICorreoElectronico correo;
     
     /**
      * Variable utilizada para inyectar el servicio de sugerencias.
