@@ -36,9 +36,23 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Informe;
 import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
 
+/**
+ * Genera archivos PDF de informes de inspecciones compuestos por bloques de texto recogidos por la aplicación a partir
+ * de código HTML proviniente del editor de texto de PrimeFaces con estilos propios.
+ * 
+ * @author EZENTIS
+ */
 @Component("htmlPdfGenerator")
 public class HtmlPdfGenerator {
     
+    /**
+     * Genera archivo PDF del informe de una inspección.
+     * 
+     * @param informe informe seleccionado.
+     * @return archivo
+     * @throws IOException al manejar archivos
+     * @throws DocumentException al generar el PDF
+     */
     public StreamedContent generarInformePdf(Informe informe) throws IOException, DocumentException {
         File file = File.createTempFile("informe", ".pdf");
         OutputStream fileOS = new FileOutputStream(file);
@@ -81,11 +95,23 @@ public class HtmlPdfGenerator {
         return new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(), "informe.pdf");
     }
     
+    /**
+     * 
+     * @param resource
+     * @return
+     * @throws IOException
+     */
     private InputStream getCSSInputStream(String resource) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource(resource);
         return classPathResource.getInputStream();
     }
     
+    /**
+     * 
+     * @param informe
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     private String obtenerDatosInformeConEstilo(Informe informe) throws UnsupportedEncodingException {
         String textoInforme;
         StringBuilder informeFormateado = new StringBuilder();

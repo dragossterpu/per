@@ -252,7 +252,7 @@ public class EquiposBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(Equip)}.
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(Equipo)}.
      */
     @Test
     public void getFormModificarEquipo() {

@@ -437,7 +437,7 @@ public class UserBean implements Serializable {
      * Busca el objeto Empleo en base de datos a partir del seleccionado en el combo de la vista.
      */
     public void buscarEmpleo() {
-        CuerpoEstado cuerpo = new CuerpoEstado();
+        CuerpoEstado cuerpo = null;
         if (this.cuerpoEstadoSeleccionado != null) {
             cuerpo = this.cuerpoEstadoSeleccionado;
         } else {

@@ -232,7 +232,6 @@ public class GestorDocumentalBean {
      * corresponde a la realidad.
      * 
      * @param event Evento que se lanza en la carga del documento y que contiene el mismo
-     * @throws Exception Se genera una excepción
      */
     public void cargaFichero(FileUploadEvent event) {
         try {

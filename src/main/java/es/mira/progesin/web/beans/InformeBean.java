@@ -35,55 +35,95 @@ public class InformeBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Contenido del editor de texto.
+     */
     private String texto;
     
+    /**
+     * Informe completo con los textos de cada area y subarea.
+     */
     private Informe informe;
     
+    /**
+     * Estructura interna de las areas.
+     */
     private Map<String, List<String>> mapaAreaSubareas;
     
+    /**
+     * Areas de un informe.
+     */
     private List<String> areasInforme;
     
+    /**
+     * Repositorio de informes.
+     */
     @Autowired
     private transient IInformeRepository informeRepository;
     
+    /**
+     * Generador de PDFs a partir de código html.
+     */
     @Autowired
     private transient HtmlPdfGenerator htmlPdfGenerator;
     
     // @Autowired
     // private transient HtmlDocGenerator htmlDocGenerator;
     
+    /**
+     * Servicio del registro de actividad.
+     */
     @Autowired
     private transient RegistroActividadService regActividadService;
     
+    /**
+     * Archivo descargable generado a partir del informe.
+     */
     private transient StreamedContent file;
     
+    /**
+     * Guarda el informe actual.
+     */
     public void guardarInforme() {
         informe = Informe.builder().texto(texto.getBytes()).build();
         informeRepository.save(informe);
     }
     
-    public void crearInformePDF(Informe informe) {
+    /**
+     * Crea un archivo PDF con los datos del informe.
+     * 
+     * @param inform cumplimentado por los inspectores
+     */
+    public void crearInformePDF(Informe inform) {
         try {
-            setFile(htmlPdfGenerator.generarInformePdf(informe));
+            setFile(htmlPdfGenerator.generarInformePdf(inform));
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
             // "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
         }
     }
     
-    public void crearInformeDOC(Informe informe) {
+    /**
+     * Crea un archivo DOC con los datos del informe.
+     * 
+     * @param inform cumplimentado por los inspectores
+     */
+    public void crearInformeDOC(Informe inform) {
         try {
-            // setFile(htmlDocGenerator.generarInformeDoc(informe));
+            // setFile(htmlDocGenerator.generarInformeDoc(inform));
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-            // "Se ha producido un error en la generación del PDF");
+            // "Se ha producido un error en la generación del DOC");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
         }
     }
     
+    /**
+     * Inicializa el bean.
+     */
     @PostConstruct
     public void init() {
         setAreasInforme(crearAreasInforme());
@@ -94,16 +134,27 @@ public class InformeBean implements Serializable {
                 texto = new String(informe.getTexto(), "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                // e.printStackTrace();
+                // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+                // "Se ha producido un error en la recuperación del texto");
+                regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
             }
         }
     }
     
+    /**
+     * 
+     * @return areas del informe
+     */
     public List<String> crearAreasInforme() {
         return Arrays.asList("1.- ÁMBITO Y ORIGEN DE LA INSPECCIÓN", "2.- REUNIONES Y VISITAS INSTITUCIONALES",
                 "3.-INFRAESTRUCTURAS E INSTALACIONES");
     }
     
+    /**
+     * 
+     * @return mapa de areas y sus subareas
+     */
     public Map<String, List<String>> crearMapaAreasSubareas() {
         Map<String, List<String>> estructuraInforme = new HashMap<>();
         estructuraInforme.put("1.- ÁMBITO Y ORIGEN DE LA INSPECCIÓN",

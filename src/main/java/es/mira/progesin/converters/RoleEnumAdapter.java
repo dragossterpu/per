@@ -8,7 +8,7 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 /**
  * Adaptador para el enum RoleEnum.
  * 
- * @see es.mira.progesin.persistence.entities.enums.RoleElum
+ * @see es.mira.progesin.persistence.entities.enums.RoleEnum
  * 
  * @author EZENTIS
  *

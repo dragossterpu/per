@@ -454,8 +454,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     @Transactional(readOnly = false)
     public SolicitudDocumentacionPrevia eliminarDocumentoSolicitud(SolicitudDocumentacionPrevia solicitud,
             Documento documento) {
-        solicitud = solicitudDocumentacionPreviaRepository.save(solicitud);
+        SolicitudDocumentacionPrevia solicitudSincronizada = solicitudDocumentacionPreviaRepository.save(solicitud);
         documentoService.delete(documento);
-        return solicitud;
+        return solicitudSincronizada;
     }
 }
