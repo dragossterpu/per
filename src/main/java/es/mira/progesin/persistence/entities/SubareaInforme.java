@@ -20,7 +20,6 @@ import lombok.ToString;
  * Entidad para la subarea de un informe.
  * 
  * @author EZENTIS
- *
  */
 @EqualsAndHashCode(of = "id")
 @Builder
@@ -33,13 +32,22 @@ public class SubareaInforme implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * ID.
+     */
     @Id
     @Column(name = "ID")
     private Long id;
     
+    /**
+     * Descripción.
+     */
     @Column(name = "DESCRIPCION", length = 1000, nullable = false)
     private String descripcion;
     
+    /**
+     * Area a la que pertenece.
+     */
     @ManyToOne
     @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
     private AreaInforme area;

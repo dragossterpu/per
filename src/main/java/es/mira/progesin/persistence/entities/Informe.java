@@ -24,10 +24,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @author EZENTIS
+ * Entity asociada a un informe.
  * 
- * Entity asociada a un informe
- *
+ * @author EZENTIS
  */
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor
@@ -38,22 +37,35 @@ import lombok.Setter;
 @Entity
 @Table(name = "INFORME")
 public class Informe implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Identificador del informe. Generada por secuencia.
+     */
     @Id
     @SequenceGenerator(name = "seq_informe", sequenceName = "seq_informe", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_informe")
     @Column(name = "id", nullable = false)
     private Long id;
     
+    /**
+     * Inspección a la que pertenece el informe.
+     */
     @OneToOne
     @JoinColumn(name = "inspeccion_id", foreignKey = @ForeignKey(name = "fk_insp_informe"))
     private Inspeccion inspeccion;
     
+    /**
+     * Respuestas a las subareas del informe.
+     */
     @OneToMany(mappedBy = "informe")
     private List<RespuestaInforme> respuestas;
     
     // TODO Quitar esto de abajo, era para probar la visualización entre lo que graba el editor y la generación de pdf
+    /**
+     * 
+     */
     @Lob
     @Column(name = "texto")
     private byte[] texto;

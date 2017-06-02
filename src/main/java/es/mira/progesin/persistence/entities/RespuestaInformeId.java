@@ -23,8 +23,14 @@ public class RespuestaInformeId implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Informe al que pertenece la respuesta.
+     */
     private Informe informe;
     
+    /**
+     * Subarea respondida.
+     */
     private SubareaInforme subarea;
     
 }

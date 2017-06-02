@@ -97,9 +97,9 @@ public class HtmlPdfGenerator {
     
     /**
      * 
-     * @param resource
-     * @return
-     * @throws IOException
+     * @param resource ruta de los estilos
+     * @return estilos de primefaces
+     * @throws IOException al acceder al CSS
      */
     private InputStream getCSSInputStream(String resource) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource(resource);
@@ -108,9 +108,9 @@ public class HtmlPdfGenerator {
     
     /**
      * 
-     * @param informe
-     * @return
-     * @throws UnsupportedEncodingException
+     * @param informe informe actual
+     * @return texto completo del informe
+     * @throws UnsupportedEncodingException al recuperar el texto en UTF-8
      */
     private String obtenerDatosInformeConEstilo(Informe informe) throws UnsupportedEncodingException {
         String textoInforme;
