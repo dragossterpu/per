@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -71,14 +72,12 @@ public class GuiaService implements IGuiaService {
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "nombre_guia", busqueda.getNombre())));
+        if (busqueda.getNombre() != null) {
+            criteria.add(Restrictions.ilike("nombre", busqueda.getNombre(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "username_alta", busqueda.getUsuarioCreacion())));
+        if (busqueda.getUsuarioCreacion() != null) {
+            criteria.add(Restrictions.ilike("usernameAlta", busqueda.getUsuarioCreacion(), MatchMode.ANYWHERE));
         }
         
         if (busqueda.getTipoInspeccion() != null) {

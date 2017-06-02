@@ -9,7 +9,7 @@ import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
-import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
+import es.mira.progesin.web.beans.GuiaBusqueda;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +30,7 @@ public class LazyModelGuiasPersonalizadas extends LazyDataModel<GuiaPersonalizad
     /**
      * Objeto que contiene los parámetros de búsqueda.
      */
-    private GuiaPersonalizadaBusqueda busqueda;
+    private GuiaBusqueda busqueda;
     
     /**
      * Servicio a utilizar.
@@ -49,7 +49,7 @@ public class LazyModelGuiasPersonalizadas extends LazyDataModel<GuiaPersonalizad
      */
     public LazyModelGuiasPersonalizadas(IGuiaPersonalizadaService service) {
         this.servicio = service;
-        this.busqueda = new GuiaPersonalizadaBusqueda();
+        this.busqueda = new GuiaBusqueda();
     }
     
     /**

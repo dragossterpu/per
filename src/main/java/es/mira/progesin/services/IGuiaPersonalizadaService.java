@@ -8,7 +8,7 @@ import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
+import es.mira.progesin.web.beans.GuiaBusqueda;
 
 /**
  * 
@@ -69,7 +69,7 @@ public interface IGuiaPersonalizadaService {
      * @return Número de registros que responden a los parámetros
      * 
      */
-    int getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda);
+    int getCountGuiaCriteria(GuiaBusqueda busqueda);
     
     /**
      * Busca en base de datos los resultados que se ajustan a los parámetros recibidos en el objeto de tipo
@@ -85,7 +85,7 @@ public interface IGuiaPersonalizadaService {
      * 
      */
     List<GuiaPersonalizada> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
-            GuiaPersonalizadaBusqueda busqueda);
+            GuiaBusqueda busqueda);
     
     /**
      * Comprueba la existencia en base de datos de guías personalizadas cuya guía modelo corresponde a la recibida como

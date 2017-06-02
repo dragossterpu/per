@@ -55,7 +55,7 @@ public class GuiaPersonalizadaBean {
     /**
      * Objeto que contiene los criterios de búsqueda.
      */
-    private GuiaPersonalizadaBusqueda guiaPersonalizadaBusqueda;
+    private GuiaBusqueda guiaPersonalizadaBusqueda;
     
     /**
      * Lista de booleanos para controlar la visualización de columnas en la vista.
@@ -168,7 +168,7 @@ public class GuiaPersonalizadaBean {
     
     @PostConstruct
     public void init() {
-        guiaPersonalizadaBusqueda = new GuiaPersonalizadaBusqueda();
+        guiaPersonalizadaBusqueda = new GuiaBusqueda();
         List<Boolean> lista = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {
             lista.add(Boolean.TRUE);

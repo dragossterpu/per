@@ -42,7 +42,7 @@ public class GuiaBusqueda implements Serializable {
     private String nombre;
     
     /**
-     * Tipo de inspección sobree la que se desea hacer la búsqueda.
+     * Tipo de inspección sobre la que se desea hacer la búsqueda.
      */
     private TipoInspeccion tipoInspeccion;
     

@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -25,7 +26,7 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
-import es.mira.progesin.web.beans.GuiaPersonalizadaBusqueda;
+import es.mira.progesin.web.beans.GuiaBusqueda;
 
 /**
  * Implementación de los métodos definidos en la interfaz IGuiaPersonalizadaService.
@@ -105,7 +106,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      */
     @Override
     public List<GuiaPersonalizada> buscarGuiaPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
-            GuiaPersonalizadaBusqueda busqueda) {
+            GuiaBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
@@ -136,7 +137,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      * 
      */
     @Override
-    public int getCountGuiaCriteria(GuiaPersonalizadaBusqueda busqueda) {
+    public int getCountGuiaCriteria(GuiaBusqueda busqueda) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
@@ -155,7 +156,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      * @param busqueda Objeto que contiene los criterios de búsqueda
      * @param criteria Criteria al que se añadirán los parámetros
      */
-    private void consultaCriteriaGuiasPersonalizadas(GuiaPersonalizadaBusqueda busqueda, Criteria criteria) {
+    private void consultaCriteriaGuiasPersonalizadas(GuiaBusqueda busqueda, Criteria criteria) {
         
         if (busqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge(Constantes.FECHACREACION, busqueda.getFechaDesde()));
@@ -165,14 +166,12 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
             criteria.add(Restrictions.le(Constantes.FECHACREACION, fechaHasta));
         }
         
-        if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(
-                    String.format(Constantes.COMPARADORSINACENTOS, "nombre_guia_personalizada", busqueda.getNombre())));
+        if (busqueda.getNombre() != null) {
+            criteria.add(Restrictions.ilike("nombreGuiaPersonalizada", busqueda.getNombre(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getUsuarioCreacion() != null && !busqueda.getUsuarioCreacion().isEmpty()) {
-            criteria.add(Restrictions.sqlRestriction(String.format(Constantes.COMPARADORSINACENTOS, "USERNAME_CREACION",
-                    busqueda.getUsuarioCreacion())));
+        if (busqueda.getUsuarioCreacion() != null) {
+            criteria.add(Restrictions.ilike("usernameCreacion", busqueda.getUsuarioCreacion(), MatchMode.ANYWHERE));
         }
         criteria.createAlias("guiaPersonalizada.guia", "guia"); // inner join
         if (busqueda.getTipoInspeccion() != null) {
