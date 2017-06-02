@@ -447,32 +447,23 @@ public class GestorDocumentalBean {
      * @param doc Documento a eliminar
      */
     public void borrarDocumento(Documento doc) {
-        String error = "";
-        if (documentoService.perteneceACuestionario(doc) != null) {
-            error = "No es posible eliminar este documento ya que está asociado a un cuestionario\nElimine el cuestionario antes de proseguir con la eliminación de este documento";
-        }
-        if (documentoService.perteneceASolicitud(doc) != null) {
-            error = "No es posible eliminar este documento ya que está asociado a una solicitud de documentación previa\nElimine la solicitud antes de proseguir con la eliminación de este documento";
-        }
-        if (error.isEmpty()) {
-            try {
-                
-                if (doc.getInspeccion() == null) {
-                    documentoService.delete(doc);
-                } else {
-                    doc.setInspeccion(null);
-                    documentoService.delete(doc);
-                    registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
-                            TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
-                }
-                
-                buscaDocumento();
-            } catch (Exception e) {
-                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+        
+        try {
+            
+            if (doc.getInspeccion() == null) {
+                documentoService.delete(doc);
+            } else {
+                doc.setInspeccion(null);
+                documentoService.delete(doc);
+                registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
             }
-        } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", error);
+            
+            buscaDocumento();
+        } catch (Exception e) {
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
+        
     }
     
     /**
