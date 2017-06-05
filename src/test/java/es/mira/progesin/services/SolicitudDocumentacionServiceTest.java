@@ -182,16 +182,6 @@ public class SolicitudDocumentacionServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.SolicitudDocumentacionService#delete(Long)}.
-     */
-    @Test
-    public void delete() {
-        solicitudDocPreviaService.delete(1L);
-        
-        verify(solicitudDocumentacionPreviaRepository, times(1)).delete(1L);
-    }
-    
-    /**
      * Test method for
      * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, String, org.primefaces.model.SortOrder, SolicitudDocPreviaBusqueda)}.
      */

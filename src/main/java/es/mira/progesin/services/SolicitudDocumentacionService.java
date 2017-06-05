@@ -134,17 +134,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     }
     
     /**
-     * Elimina una solicitud a partir de su id.
-     * 
-     * @param id clave de la solicitud
-     */
-    @Override
-    @Transactional(readOnly = false)
-    public void delete(Long id) {
-        solicitudDocumentacionPreviaRepository.delete(id);
-    }
-    
-    /**
      * Método que devuelve la lista de solicitudes previas en una consulta basada en criteria.
      * 
      * @param solicitudDocPreviaBusqueda objeto con los criterios de búsqueda

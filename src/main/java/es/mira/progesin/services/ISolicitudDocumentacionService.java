@@ -50,13 +50,6 @@ public interface ISolicitudDocumentacionService {
     SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(String correo);
     
     /**
-     * Elimina una solicitud a partir de su id.
-     * 
-     * @param id clave de la solicitud
-     */
-    void delete(Long id);
-    
-    /**
      * Guarda los datos de una solicitud y crea el usuario provisional que debe cumplimentarla una vez enviada.
      * 
      * @param solicitudDocumentacionPrevia solicitud modificada
