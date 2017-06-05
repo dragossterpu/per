@@ -42,7 +42,7 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
      */
     @Override
     @Transactional(readOnly = false)
-    public PuestoTrabajo save(PuestoTrabajo puesto) throws ProgesinException {
+    public PuestoTrabajo save(PuestoTrabajo puesto) {
         return puestoTrabajoRepository.save(puesto);
     }
     

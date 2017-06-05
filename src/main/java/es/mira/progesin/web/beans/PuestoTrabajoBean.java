@@ -10,11 +10,11 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
-import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
@@ -86,7 +86,7 @@ public class PuestoTrabajoBean implements Serializable {
                 puestoTrabajoService.save(puesto);
                 listaPuestosTrabajo.remove(puesto);
             }
-        } catch (ProgesinException e) {
+        } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar el puesto de trabajo, inténtelo de nuevo más tarde", "msgs");
@@ -118,7 +118,7 @@ public class PuestoTrabajoBean implements Serializable {
             puestoTrabajoService.save(puesto);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El puesto de trabajo ha sido creado con éxito");
-        } catch (ProgesinException e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el puesto de trabajo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
@@ -135,7 +135,7 @@ public class PuestoTrabajoBean implements Serializable {
             puestoTrabajoService.save(puesto);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Puesto de trabajo modificado",
                     puesto.getDescripcion(), "msgs");
-        } catch (ProgesinException e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al editar el puesto de trabajo, inténtelo de nuevo más tarde.", "msgs");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);

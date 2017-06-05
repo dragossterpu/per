@@ -2,7 +2,6 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 
@@ -28,7 +27,6 @@ public interface IMunicipioService {
      * @param nombre del municipio
      * @param provincia a la que pertenece el municipio
      * @return municipio creado (true si es guardado correctamente)
-     * @throws ProgesinException excepción progesin
      */
     Municipio crearMunicipio(String nombre, Provincia provincia);
     

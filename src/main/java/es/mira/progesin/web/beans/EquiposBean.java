@@ -14,6 +14,7 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -218,7 +219,7 @@ public class EquiposBean implements Serializable {
                     SeccionesEnum.INSPECCION.name());
             notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el equipo, inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd
@@ -282,7 +283,7 @@ public class EquiposBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el equipo, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
@@ -328,7 +329,7 @@ public class EquiposBean implements Serializable {
                     SeccionesEnum.INSPECCION.name());
             notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar un componente o colaborador del equipo de inspecciones, inténtelo de nuevo más tarde",
                     null);
@@ -381,7 +382,7 @@ public class EquiposBean implements Serializable {
                         SeccionesEnum.INSPECCION.name());
                 notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al cambiar el jefe del equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
@@ -423,7 +424,7 @@ public class EquiposBean implements Serializable {
                     SeccionesEnum.INSPECCION.name());
             notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al añadir nuevos componentes o colaboradores al equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);

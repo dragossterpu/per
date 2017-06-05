@@ -18,7 +18,7 @@ public interface IPuestoTrabajoService {
      * @return PuestoTrabajo actualizado
      * @throws ProgesinException error al guardar
      */
-    PuestoTrabajo save(PuestoTrabajo puesto) throws ProgesinException;
+    PuestoTrabajo save(PuestoTrabajo puesto);
     
     /**
      * Busca todos los puestos de trabajo dados de alta en la BBDD.
