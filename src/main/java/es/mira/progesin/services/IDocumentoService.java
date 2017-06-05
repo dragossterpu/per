@@ -92,7 +92,6 @@ public interface IDocumentoService {
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return documento cargado en base de datos
-     * @return Documento documento cargado en base de datos
      * @throws ProgesinException Excepción lanzada
      */
     public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)

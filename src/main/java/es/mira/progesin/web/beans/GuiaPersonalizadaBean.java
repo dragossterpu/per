@@ -44,6 +44,8 @@ import lombok.Setter;
 
 public class GuiaPersonalizadaBean implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Objeto de tipo GuiaPersonalizada.
      */
