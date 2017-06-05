@@ -5,7 +5,6 @@ import java.util.List;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
-import org.springframework.dao.DataAccessException;
 
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -56,10 +55,9 @@ public interface IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamed Content Flujo de descarga
-     * @throws DataAccessException Excepción lanzada
      */
     
-    DefaultStreamedContent descargaDocumento(Documento entity) throws DataAccessException;
+    DefaultStreamedContent descargaDocumento(Documento entity);
     
     /**
      * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
@@ -67,10 +65,9 @@ public interface IDocumentoService {
      * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws DataAccessException Excepción lanzada
      */
     
-    DefaultStreamedContent descargaDocumento(Long id) throws DataAccessException;
+    DefaultStreamedContent descargaDocumento(Long id);
     
     /**
      * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base de
