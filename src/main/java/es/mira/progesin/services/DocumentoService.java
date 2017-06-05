@@ -184,10 +184,11 @@ public class DocumentoService implements IDocumentoService {
     public Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws SQLException, IOException {
         try {
+            Documento documento = documentoRepository.save(crearDocumento(file, tipo, inspeccion));
             registroActividadService.altaRegActividad("cargaFichero", TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.GESTOR.getDescripcion());
             
-            return documentoRepository.save(crearDocumento(file, tipo, inspeccion));
+            return documento;
         } catch (SQLException | IOException ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
             throw ex;
