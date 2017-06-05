@@ -13,9 +13,11 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
@@ -84,11 +86,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      * Variable auxiliar para validar modificaciones de la fecha limite de cumplimentacion del cuestionario.
      */
     private Date backupFechaLimiteCuestionario;
-    
-    /**
-     * Formato de fechas.
-     */
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Servicio de cuestionarios enviados.
@@ -205,7 +202,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
                         "Ya ha sido anulado con anterioridad o no tiene permisos para realizar esta acción", null);
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el cuestionario, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -282,7 +279,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                         cuestionario.getInspeccion().getEquipo());
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar las respuestas, inténtelo de nuevo más tarde.");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -334,10 +331,14 @@ public class CuestionarioEnviadoBean implements Serializable {
             notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
                     cuestionario.getInspeccion().getEquipo());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme el cuestionario, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+        } catch (CorreoException e2) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    "Se ha producido un error al enviar el correo electrónico de aviso al usuario provisional");
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
         }
     }
     
@@ -361,6 +362,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void modificarCuestionario() {
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             CuestionarioEnvio cuestionario = envioCuestionarioBean.getCuestionarioEnvio();
             cuestionarioEnvioService.save(cuestionario);
             String mensajeCorreoEnviado = "";
@@ -388,10 +390,14 @@ public class CuestionarioEnviadoBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.CUESTIONARIO.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e1) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al modificar el cuestionario, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e1);
+        } catch (CorreoException e2) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    "Se ha producido un error al enviar el correo electrónico de aviso al usuario provisional");
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
         }
     }
     

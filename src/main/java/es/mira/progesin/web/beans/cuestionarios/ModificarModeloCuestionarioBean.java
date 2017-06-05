@@ -12,6 +12,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DualListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -482,7 +483,7 @@ public class ModificarModeloCuestionarioBean {
         try {
             String textoError = "";
             if (nombreTipoPregunta.isEmpty()) {
-                textoError = "Introdzca el nombre de la respuesta";
+                textoError = "Introduzca el nombre de la respuesta";
             } else if (listadoValoresNuevaRespuesta.isEmpty()) {
                 textoError = "Introduzca los valores del tipo de respuesta";
             } else if (Constantes.TIPORESPUESTAMATRIZ.equals(tipoPersonalizado) && listadoValoresFila.isEmpty()) {
@@ -529,7 +530,7 @@ public class ModificarModeloCuestionarioBean {
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, null, null);
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
                     "Se ha producido un error al guardar el tipo de respuesta", e.getMessage());
@@ -552,7 +553,7 @@ public class ModificarModeloCuestionarioBean {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                     "El cuestionario se ha modificado con éxito");
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
                     "Se ha producido un error al guardar el cuestionario", e.getMessage());
@@ -573,7 +574,7 @@ public class ModificarModeloCuestionarioBean {
                     SeccionesEnum.CUESTIONARIO.getDescripcion());
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                     "El cuestionario se ha creado con éxito");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
                     "Se ha producido un error al crear el cuestionario", e.getMessage());

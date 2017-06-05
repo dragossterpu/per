@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -145,24 +146,20 @@ public class EnvioCuestionarioBean implements Serializable {
      * @author EZENTIS
      */
     public void completarDatosSolicitudPrevia() {
-        try {
-            if ("I.G.P.".equals(cuestionarioEnvio.getInspeccion().getTipoInspeccion().getCodigo())) {
-                List<SolicitudDocumentacionPrevia> listaSolicitudes = solDocService
-                        .findFinalizadasPorInspeccion(this.cuestionarioEnvio.getInspeccion());
-                if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE) {
-                    // Como está ordenado en orden descendente por fecha finalización, recupero la más reciente
-                    SolicitudDocumentacionPrevia solDocPrevia = listaSolicitudes.get(0);
-                    this.cuestionarioEnvio.setCorreoEnvio(solDocPrevia.getCorreoCorporativoInterlocutor());
-                    this.cuestionarioEnvio.setNombreUsuarioEnvio(solDocPrevia.getNombreCompletoInterlocutor());
-                    this.cuestionarioEnvio.setCargo(solDocPrevia.getCargoInterlocutor());
-                    this.cuestionarioEnvio.setFechaLimiteCuestionario(solDocPrevia.getFechaLimiteCumplimentar());
-                } else {
-                    String mensaje = "No existe o no ha sido finalizada la solicitud de documentación previa para esta inspección general periódica. Debería tramitarla antes de enviar el cuestionario.";
-                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, mensaje, "", null);
-                }
+        if ("I.G.P.".equals(cuestionarioEnvio.getInspeccion().getTipoInspeccion().getCodigo())) {
+            List<SolicitudDocumentacionPrevia> listaSolicitudes = solDocService
+                    .findFinalizadasPorInspeccion(this.cuestionarioEnvio.getInspeccion());
+            if (listaSolicitudes != null && listaSolicitudes.isEmpty() == Boolean.FALSE) {
+                // Como está ordenado en orden descendente por fecha finalización, recupero la más reciente
+                SolicitudDocumentacionPrevia solDocPrevia = listaSolicitudes.get(0);
+                this.cuestionarioEnvio.setCorreoEnvio(solDocPrevia.getCorreoCorporativoInterlocutor());
+                this.cuestionarioEnvio.setNombreUsuarioEnvio(solDocPrevia.getNombreCompletoInterlocutor());
+                this.cuestionarioEnvio.setCargo(solDocPrevia.getCargoInterlocutor());
+                this.cuestionarioEnvio.setFechaLimiteCuestionario(solDocPrevia.getFechaLimiteCumplimentar());
+            } else {
+                String mensaje = "No existe o no ha sido finalizada la solicitud de documentación previa para esta inspección general periódica. Debería tramitarla antes de enviar el cuestionario.";
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, mensaje, "", null);
             }
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
     }
     
@@ -205,7 +202,7 @@ public class EnvioCuestionarioBean implements Serializable {
                     
                 }
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Se ha produdico un error en el envio del cuestionario", e.getMessage(), null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);

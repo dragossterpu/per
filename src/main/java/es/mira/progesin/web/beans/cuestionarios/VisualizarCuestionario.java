@@ -403,11 +403,7 @@ public class VisualizarCuestionario implements Serializable {
      * @param documento seleccionado
      */
     public void descargarFichero(Documento documento) {
-        try {
-            setFile(documentoService.descargaDocumento(documento));
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(NOMBRESECCION, e);
-        }
+        setFile(documentoService.descargaDocumento(documento));
     }
     
     /**
@@ -436,7 +432,7 @@ public class VisualizarCuestionario implements Serializable {
     public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionario) {
         try {
             setFile(pdfGenerator.crearCuestionarioEnviado(cuestionario));
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
                     "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(NOMBRESECCION, e);

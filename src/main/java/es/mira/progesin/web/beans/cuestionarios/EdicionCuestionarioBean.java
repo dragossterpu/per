@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -143,7 +144,7 @@ public class EdicionCuestionarioBean {
             cuestionarioPersonalizadoService.save(cp);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cuestionario",
                     "Se ha guardado su cuestionario con éxito");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el cuestionario");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);

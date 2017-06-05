@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,7 +42,7 @@ import lombok.Setter;
 @Controller("guiaPersonalizadaBean")
 @Scope("session")
 
-public class GuiaPersonalizadaBean {
+public class GuiaPersonalizadaBean implements Serializable {
     
     /**
      * Objeto de tipo GuiaPersonalizada.

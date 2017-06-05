@@ -1,7 +1,5 @@
 package es.mira.progesin.services;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.primefaces.model.UploadedFile;
@@ -9,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
@@ -40,14 +39,13 @@ public class RespuestaCuestionarioService implements IRespuestaCuestionarioServi
      * @param respuestaCuestionario respuesta que se quiere grabar
      * @param archivoSubido fichero que se quiere cargar
      * @param listaDocumentos listado de documentos que ya tenía la respuesta
-     * @throws SQLException posible excepción
-     * @throws IOException posible excepción
+     * @throws ProgesinException posible excepción
      */
     
     @Override
     @Transactional(readOnly = false)
     public void saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile archivoSubido,
-            List<Documento> listaDocumentos) throws SQLException, IOException {
+            List<Documento> listaDocumentos) throws ProgesinException {
         TipoDocumento tipo = TipoDocumento.builder().id(6L).build();
         Documento documentoSubido = documentoService.cargaDocumento(archivoSubido, tipo,
                 respuestaCuestionario.getRespuestaId().getCuestionarioEnviado().getInspeccion());

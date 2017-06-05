@@ -16,10 +16,12 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
@@ -178,7 +180,7 @@ public class ResponderCuestionarioBean implements Serializable {
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
                     "El borrador se ha guardado con éxito");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar las respuestas. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -237,7 +239,7 @@ public class ResponderCuestionarioBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Cumplimentación abortada",
                         "Aún hay areas asignadas a otros usuarios. ", null);
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al enviar el cuestionario cumplimentado. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -361,7 +363,7 @@ public class ResponderCuestionarioBean implements Serializable {
                 mapaDocumentos.put(pregunta, listaDocumentos);
                 visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
                 
-            } catch (Exception e) {
+            } catch (DataAccessException | ProgesinException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                         "Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.");
                 regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -442,7 +444,7 @@ public class ResponderCuestionarioBean implements Serializable {
                         "Areas asignadas con éxito, cuando los usuarios elegidos completen su parte volverá a tener asignadas dichas areas y podrá enviar el cuestionario.");
                 generarMapaAreaUsuarioCuestEnv();
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al asignar areas del cuestionario. ");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
@@ -479,7 +481,7 @@ public class ResponderCuestionarioBean implements Serializable {
                 context.execute("PF('dialogMessageReasignar').show()");
                 generarMapaAreaUsuarioCuestEnv();
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar su parte.");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);

@@ -1,5 +1,6 @@
 package es.mira.progesin.converters;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.faces.component.UIComponent;
@@ -66,10 +67,11 @@ public class SelectItemsConverter implements Converter {
                 String[] idNombreEntity = value.split("#");
                 String id = idNombreEntity[0];
                 String nombreMetodo = "findOne" + idNombreEntity[1];
-                Method metodo = SelectFindOne.class.getMethod(nombreMetodo, String.class);
+                Method metodo;
+                metodo = SelectFindOne.class.getMethod(nombreMetodo, String.class);
                 metodo.setAccessible(true);
                 entity = metodo.invoke(target, id);
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 registroActividadService.altaRegActividadError("SELECT CONVERTER", e);
             }
         }

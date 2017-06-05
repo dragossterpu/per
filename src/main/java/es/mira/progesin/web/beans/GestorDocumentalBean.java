@@ -220,11 +220,7 @@ public class GestorDocumentalBean {
      * @param document Documento a descargar
      */
     public void descargarFichero(Documento document) {
-        try {
-            setFile(documentoService.descargaDocumento(document));
-        } catch (ProgesinException e) {
-            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
-        }
+        setFile(documentoService.descargaDocumento(document));
     }
     
     /**
