@@ -1,13 +1,12 @@
 package es.mira.progesin.services;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
@@ -55,11 +54,11 @@ public interface IDocumentoService {
      * Recibe un documento como parámetro y devuelve un stream para realizar la descarga.
      * 
      * @param entity Documento a descargar
-     * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException excepción lanzada
+     * @return DefaultStreamed Content Flujo de descarga
+     * @throws ProgesinException Excepción lanzada
      */
     
-    DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException;
+    DefaultStreamedContent descargaDocumento(Documento entity) throws ProgesinException;
     
     /**
      * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
@@ -67,10 +66,10 @@ public interface IDocumentoService {
      * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException excepción lanzada
+     * @throws ProgesinException Excepción lanzada
      */
     
-    DefaultStreamedContent descargaDocumento(Long id) throws SQLException;
+    DefaultStreamedContent descargaDocumento(Long id) throws ProgesinException;
     
     /**
      * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base de
@@ -81,13 +80,11 @@ public interface IDocumentoService {
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return Documento documento cargado en base de datos
-     * @throws SQLException excepción lanzada
-     * @throws IOException excepción lanzada
+     * @throws ProgesinException Excepción lanzada
      * 
      */
     
-    Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
-            throws SQLException, IOException;
+    Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion) throws ProgesinException;
     
     /**
      * Recibe un archivo UploadedFile y los datos necesarios para general un Documento pero no lo almacena en base de
@@ -97,11 +94,11 @@ public interface IDocumentoService {
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return documento cargado en base de datos
-     * @throws SQLException excepción lanzada
-     * @throws IOException excepción lanzada
+     * @return Documento documento cargado en base de datos
+     * @throws ProgesinException Excepción lanzada
      */
     public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
-            throws SQLException, IOException;
+            throws ProgesinException;
     
     /**
      * Busca todos los documentos no dados de baja lógica.
