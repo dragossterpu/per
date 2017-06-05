@@ -153,21 +153,23 @@ public class WordGenerator {
      * 
      * @param guia Guía a partir de la cual se xdesea generar el documento word
      * @return StreamedContent Stream para descargar el fichero en la ventana del navegador
-     * @throws InvalidFormatException excepción lanzada
-     * @throws IOException excepción lanzada
+     * @throws ProgesinException excepción lanzada
      */
     
-    public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws InvalidFormatException, IOException {
-        XWPFDocument doc = new XWPFDocument();
-        crearCabecera(doc);
-        crearTitulo(doc, guia.getNombreGuiaPersonalizada());
-        if (guia.getInspeccion() != null) {
-            creaNumeroInspeccion(doc, guia.getInspeccion());
+    public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws ProgesinException {
+        try {
+            XWPFDocument doc = new XWPFDocument();
+            crearCabecera(doc);
+            crearTitulo(doc, guia.getNombreGuiaPersonalizada());
+            if (guia.getInspeccion() != null) {
+                creaNumeroInspeccion(doc, guia.getInspeccion());
+            }
+            List<GuiaPasos> listaPasos = guiaPersonalizadaService.listaPasos(guia);
+            creaCuerpoGuia(doc, listaPasos);
+            return exportarFichero(doc, guia.getNombreGuiaPersonalizada());
+        } catch (InvalidFormatException | IOException e) {
+            throw new ProgesinException(e);
         }
-        List<GuiaPasos> listaPasos = guiaPersonalizadaService.listaPasos(guia);
-        creaCuerpoGuia(doc, listaPasos);
-        return exportarFichero(doc, guia.getNombreGuiaPersonalizada());
-        
     }
     
     /**

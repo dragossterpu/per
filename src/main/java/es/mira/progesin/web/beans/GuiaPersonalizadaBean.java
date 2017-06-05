@@ -1,6 +1,5 @@
 package es.mira.progesin.web.beans;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelGuiasPersonalizadas;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
@@ -191,7 +190,7 @@ public class GuiaPersonalizadaBean {
     public void crearDocumentoWordGuia(GuiaPersonalizada guia) {
         try {
             setFile(wordGenerator.crearDocumentoGuia(guia));
-        } catch (InvalidFormatException | IOException e) {
+        } catch (ProgesinException e) {
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Se ha producido un error en la generación del documento Word", "", "message");
