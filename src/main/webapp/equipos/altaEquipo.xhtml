@@ -17,7 +17,7 @@
                                 <h:panelGrid columns="2" columnClasses="label, value">
 
                                     <h:outputLabel for="nombreEquipo" value="Nombre equipo de inspecciones (*):" />
-                                    <p:inputText id="nombreEquipo" value="#{equiposBean.equipo.nombreEquipo}" required="true" requiredMessage="Es obligatorio un nombre de equipo" label="Nombre equipo de inspecciones: *" />
+                                    <p:inputText id="nombreEquipo" value="#{equiposBean.equipo.nombreEquipo}" required="true" requiredMessage="Es obligatorio un nombre de equipo" label="Nombre equipo de inspecciones: *" converter="#{trimConverter}"/>
 
                                     <h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección (*):" />
                                     <p:selectOneMenu id="tipoEquipo" value="#{equiposBean.tipoEquipo}" effect="fold" width="50" required="true" requiredMessage="Seleccione un tipo de equipo de inspecciones" converter="#{selectConverter}">

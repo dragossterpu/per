@@ -41,14 +41,14 @@
                     <p:inputText id="nombreUnidad" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUnidad}" converter="#{trimConverter}" />
 
                     <h:outputLabel for="usernameEnvio" value="Usuario creación:" />
-                    <p:inputText id="usernameEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.usernameEnvio}" />
+                    <p:inputText id="usernameEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.usernameEnvio}" converter="#{trimConverter}"/>
 
                 </div>
 
                 <div class="columnaDchaFormulario">
 
                     <h:outputLabel for="nombreCuestionario" value="Nombre del cuestionario:" />
-                    <p:inputText id="nombreCuestionario" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreCuestionario}" />
+                    <p:inputText id="nombreCuestionario" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreCuestionario}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
                     <p:selectOneMenu value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" converter="#{selectConverter}">

@@ -73,7 +73,7 @@
                     <h4>Datos persona de apoyo</h4>
 
                     <h:outputLabel for="apoyoPuesto" value="Puesto (*):" />
-                    <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" required="true" requiredMessage="Es obligatorio un puesto persona apoyo" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
+                    <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" required="true" requiredMessage="Es obligatorio un puesto persona apoyo" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" converter="#{trimConverter}" />
                     <p:messages for="apoyoPuesto" autoUpdate="true" closable="true" />
 
                     <h:outputLabel for="apoyoNombre" value="Nombre (*):" />

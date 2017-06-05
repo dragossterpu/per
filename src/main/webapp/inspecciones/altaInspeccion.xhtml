@@ -178,7 +178,7 @@
 		
 		<p:dialog id="crearMunicipio" widgetVar="dialogMunicipio" header="Alta municipio" position="center" resizable="false" onShow="$('[id*=inputNombre]').val('');" modal="true" width="30%" >
 			<h:outputLabel for="inputNombre" value="Nombre (*):" />
-			<p:inputText id="inputNombre" binding="#{nombreMunicipio}"
+			<p:inputText id="inputNombre" binding="#{nombreMunicipio}" 
 				required="#{param['formAlta:guardar']!=null}" requiredMessage="El nombre del municipio no puede estar vacío" converter="#{trimConverter}" />
 			<p:messages for="inputNombre" autoUpdate="true" closable="true" showSummary="true"/>
 			<div class="centrarBotonesDialog">

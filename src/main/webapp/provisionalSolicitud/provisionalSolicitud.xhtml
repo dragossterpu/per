@@ -98,20 +98,20 @@
                 <h4>Datos Interlocutor</h4>
 
                 <h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
-                <p:inputText id="nombreCompletoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el nombre completo del interlocutor " />
+                <p:inputText id="nombreCompletoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el nombre completo del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="nombreCompletoInterlocutor" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
-                <p:inputText id="categoriaInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca la categoría del interlocutor " />
+                <p:inputText id="categoriaInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca la categoría del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="categoriaInterlocutor" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
-                <p:inputText id="cargoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el cargo del interlocutor " />
+                <p:inputText id="cargoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el cargo del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="cargoInterlocutor" autoUpdate="true" closable="true" />
 
 
                 <h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
-                <p:inputText id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " />
+                <p:inputText id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="telefonoInterlocutor" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />

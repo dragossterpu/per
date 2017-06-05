@@ -16,7 +16,7 @@
                 <p:messages autoUpdate="true" closable="true" />
                 <h:panelGrid columns="2" columnClasses="label, value">
                     <h:outputLabel for="inputNombre" value="Nombre (*):" />
-                    <p:inputText id="inputNombre" binding="#{inputNombre}" />
+                    <p:inputText id="inputNombre" binding="#{inputNombre}" converter="#{trimConverter}"/>
                     <h:outputLabel for="inputNombre" value="Inspecciones asociadas:" />
                     <p:dataTable id="tablaInspecciones" styleClass="tablaSinCabecera" value="#{guiaBean.listaInspecciones}" var="inspeccion" emptyMessage="No hay asociadas inspecciones">
                         <p:column headerText="Número de inspección">

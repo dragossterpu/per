@@ -22,8 +22,8 @@
                         <p:inputText id="nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="Introduzca el nombre" converter="#{trimConverter}" disabled="#{noEsAdmin}" />
                         <p:messages for="nombre" autoUpdate="true" closable="true" />
 
-                        <h:outputLabel for="apellido1" value="Primer apellido (*):" converter="#{trimConverter}" />
-                        <p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="true" requiredMessage="Introduzca el primer apellido" disabled="#{not esAdmin}" />
+                        <h:outputLabel for="apellido1" value="Primer apellido (*):" />
+                        <p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="true" requiredMessage="Introduzca el primer apellido" disabled="#{not esAdmin}" converter="#{trimConverter}"/>
                         <p:messages for="apellido1" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="apellido2" value="Segundo apellido:" />

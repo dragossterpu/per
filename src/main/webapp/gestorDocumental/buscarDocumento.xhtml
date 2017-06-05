@@ -21,7 +21,7 @@
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombreDocumento" value="Nombre del documento:" />
-                    <p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documentoBusqueda.nombre}" />
+                    <p:inputText id="nombreDocumento" value="#{gestorDocumentalBean.documentoBusqueda.nombre}" converter="#{trimConverter}"/>
                     <h:outputLabel for="tipoDocumentoSelect" value="Tipo de documento:" />
                     <p:selectOneMenu value="#{gestorDocumentalBean.documentoBusqueda.tipoDocumento}" id="tipoDocumentoSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />

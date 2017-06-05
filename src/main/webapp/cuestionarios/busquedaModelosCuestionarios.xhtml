@@ -18,10 +18,10 @@
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="username" value="Usuario de creación:" />
-                    <p:inputText id="username" value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.username}" />
+                    <p:inputText id="username" value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.username}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="nombreCuestionario" value="Nombre del cuestionario:" />
-                    <p:inputText id="nombreCuestionario" value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.nombreCuestionario}" />
+                    <p:inputText id="nombreCuestionario" value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.nombreCuestionario}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="modeloCuestionarioSelect" value="Modelo de cuestionario:" />
                     <p:selectOneMenu value="#{cuestionarioPersonalizadoBean.cuestionarioBusqueda.modeloCuestionarioSeleccionado}" id="modeloCuestionarioSelect" converter="#{selectConverter}">

@@ -217,7 +217,7 @@
 
             <p:dialog header="Guardar tipo de respuesta" widgetVar="dialogTipoRespuesta" modal="true">
                 <h:outputLabel for="nombreTipoPregunta" value="Nombre (*):" />
-                <p:inputText id="nombreTipoPregunta" binding="#{nombreTipoPregunta}" />
+                <p:inputText id="nombreTipoPregunta" binding="#{nombreTipoPregunta}" converter="#{trimConverter}"/>
                 <div class="centrarBotonesDialog">
                     <p:commandButton id="botonGuardarTipoRespuesta" ajax="false" actionListener="#{modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta.value)}" value="Añadir tipo de respuesta" update="pickList,nombreTipoPregunta,personalizar,tipoPregunta,orderListValoresRadio,orderListColumnasTabla,orderListColumnasMatriz,orderListFilasMatriz">
                         <p:resetInput target="nombreTipoPregunta" />

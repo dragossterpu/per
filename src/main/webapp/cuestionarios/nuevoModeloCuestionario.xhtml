@@ -28,7 +28,7 @@
                     </p:orderList>
                     <p:panel>
                         <!-- <p:inputText  id="nombreArea" binding="#{modificarModeloCuestionarioBean.nombreArea}"  converter="#{trimConverter}" maxlength="255"/> -->
-                        <p:inputText id="inputArea" binding="#{nombreArea}" required="true" requiredMessage="Introduzca un nombre para el cuestionario" />
+                        <p:inputText id="inputArea" binding="#{nombreArea}" required="true" requiredMessage="Introduzca un nombre para el cuestionario" converter="#{trimConverter}"/>
                         <p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeArea(nombreArea.value)}" update="orderListAreas2" value="Añadir area" icon="fa fa-fw fa-plus">
                         </p:commandButton>
                         <p:commandButton actionListener="#{modificarModeloCuestionarioBean.borraArea}" update="orderListAreas2" value="Eliminar area" icon="fa fa-fw fa-minus" />
@@ -109,7 +109,7 @@
                             <p:dialog header="Modal Dialog" widgetVar="dialog" modal="true">
                                 <p:panel>
                                     <h:outputLabel for="nombreTipoPregunta" value="Nombre" />
-                                    <p:inputText binding="#{modificarModeloCuestionarioBean.nombreTipoPregunta}"></p:inputText>
+                                    <p:inputText binding="#{modificarModeloCuestionarioBean.nombreTipoPregunta}" converter="#{trimConverter}"></p:inputText>
                                     <p:commandButton actionListener="#{modificarModeloCuestionarioBean.guardaTipoRespuesta}" value="Añadir tipo de respuesta" update="listPick" oncomplete="PF('dialog').hide();" />
                                 </p:panel>
                             </p:dialog>

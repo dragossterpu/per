@@ -17,7 +17,7 @@
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombreGuia" value="Nombre de la guia:" />
-                    <p:inputText id="nombreGuia" value="#{guiaBean.busqueda.nombre}" />
+                    <p:inputText id="nombreGuia" value="#{guiaBean.busqueda.nombre}" converter="#{trimConverter}"/>
                     <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
                     <p:selectOneMenu value="#{guiaBean.busqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
@@ -32,7 +32,7 @@
                 </div>
                 <div class="columnaDchaFormulario">
                     <h:outputLabel for="username" value="Nombre de usuario:" />
-                    <p:inputText id="username" value="#{guiaBean.busqueda.usuarioCreacion}" />
+                    <p:inputText id="username" value="#{guiaBean.busqueda.usuarioCreacion}" converter="#{trimConverter}"/>
                     <h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
                     <p:calendar id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{guiaBean.busqueda.fechaDesde}" />
 

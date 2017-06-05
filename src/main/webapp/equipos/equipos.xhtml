@@ -15,13 +15,13 @@
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
-                    <p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" />
+                    <p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="nombreMiembro" value="Nombre de componente de equipo:" />
-                    <p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" />
+                    <p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
-                    <p:inputText id="nombreEquipo" value="#{equiposBean.equipoBusqueda.nombreEquipo}" />
+                    <p:inputText id="nombreEquipo" value="#{equiposBean.equipoBusqueda.nombreEquipo}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección:" />
                     <p:selectOneMenu id="tipoEquipo" value="#{equiposBean.equipoBusqueda.tipoEquipo}" effect="fold" width="50" converter="#{selectConverter}">
