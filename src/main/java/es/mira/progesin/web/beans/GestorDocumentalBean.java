@@ -1,6 +1,5 @@
 package es.mira.progesin.web.beans;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,9 +19,11 @@ import org.primefaces.model.UploadedFile;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelDocumentos;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -221,7 +222,7 @@ public class GestorDocumentalBean {
     public void descargarFichero(Documento document) {
         try {
             setFile(documentoService.descargaDocumento(document));
-        } catch (SQLException e) {
+        } catch (ProgesinException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
     }
@@ -248,7 +249,7 @@ public class GestorDocumentalBean {
                         TipoRegistroEnum.ERROR.name(), SeccionesEnum.GESTOR.getDescripcion());
             }
             
-        } catch (Exception ex) {
+        } catch (ProgesinException ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
                     "Se ha producido un error en la cargad el fichero");
@@ -344,7 +345,7 @@ public class GestorDocumentalBean {
                 }
                 nombreDoc = "";
                 listaInspecciones = new ArrayList<>();
-            } catch (Exception e) {
+            } catch (DataAccessException e) {
                 documentoService.delete(documento);
                 registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
             }
@@ -382,7 +383,7 @@ public class GestorDocumentalBean {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
                         SeccionesEnum.GESTOR.getDescripcion(), "Se ha producido un error al modificar el documento");
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
     }
@@ -405,7 +406,7 @@ public class GestorDocumentalBean {
                     listaInspecciones.add(inspeccion);
                     documento.setInspeccion(listaInspecciones);
                 }
-            } catch (Exception e) {
+            } catch (DataAccessException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
                         "Se ha producido un error al asignar una inspección al documento");
                 registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
@@ -424,7 +425,7 @@ public class GestorDocumentalBean {
             inspecciones.remove(inspeccion);
             documento.setInspeccion(inspecciones);
             listaInspecciones.remove(inspeccion);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
                     "Se ha producido un error al desasociar una inspección del documento");
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
@@ -453,7 +454,7 @@ public class GestorDocumentalBean {
             registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
                     TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
             buscaDocumento();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
     }

@@ -14,6 +14,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +96,7 @@ public class NotificacionService implements INotificacionService {
             notificacion.setDescripcion(descripcion);
             
             return notificacionRepository.save(notificacion);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         return null;
@@ -117,7 +118,7 @@ public class NotificacionService implements INotificacionService {
         try {
             Notificacion notificacion = crearNotificacion(descripcion, seccion);
             alertasNotificacionesUsuarioService.grabarMensajeUsuario(notificacion, usuario);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -138,7 +139,7 @@ public class NotificacionService implements INotificacionService {
         try {
             Notificacion notificacion = crearNotificacion(descripcion, seccion);
             alertasNotificacionesUsuarioService.grabarMensajeRol(notificacion, rol);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
     }
@@ -158,7 +159,7 @@ public class NotificacionService implements INotificacionService {
         try {
             Notificacion notificacion = crearNotificacion(descripcion, seccion);
             alertasNotificacionesUsuarioService.grabarMensajeRol(notificacion, roles);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -179,7 +180,7 @@ public class NotificacionService implements INotificacionService {
         try {
             Notificacion notificacion = crearNotificacion(descripcion, seccion);
             alertasNotificacionesUsuarioService.grabarMensajeJefeEquipo(notificacion, inspeccion);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
     }
@@ -199,7 +200,7 @@ public class NotificacionService implements INotificacionService {
         try {
             Notificacion notificacion = crearNotificacion(descripcion, seccion);
             alertasNotificacionesUsuarioService.grabarMensajeEquipo(notificacion, equipo);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         

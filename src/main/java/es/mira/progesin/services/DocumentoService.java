@@ -3,7 +3,6 @@ package es.mira.progesin.services;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +20,12 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -142,10 +143,10 @@ public class DocumentoService implements IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException excepción lanzada
+     * @throws DataAccessException excepción lanzada
      */
     @Override
-    public DefaultStreamedContent descargaDocumento(Documento entity) throws SQLException {
+    public DefaultStreamedContent descargaDocumento(Documento entity) throws DataAccessException {
         Documento docu = documentoRepository.findById(entity.getId());
         DocumentoBlob doc = docu.getFichero();
         InputStream stream = new ByteArrayInputStream(doc.getFichero());
@@ -158,10 +159,10 @@ public class DocumentoService implements IDocumentoService {
      * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws SQLException excepción lanzada
+     * @throws DataAccessException excepción lanzada
      */
     @Override
-    public DefaultStreamedContent descargaDocumento(Long id) throws SQLException {
+    public DefaultStreamedContent descargaDocumento(Long id) throws DataAccessException {
         Documento entity = documentoRepository.findById(id);
         InputStream stream = new ByteArrayInputStream(entity.getFichero().getFichero());
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
@@ -176,22 +177,22 @@ public class DocumentoService implements IDocumentoService {
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return Documento documento cargado en base de datos
-     * @throws SQLException excepción lanzada
-     * @throws IOException excepción lanzada
+     * @throws DataAccessException excepción lanzada
+     * @throws ProgesinException Excepción lanzada
      * 
      */
     @Override
     public Documento cargaDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
-            throws SQLException, IOException {
+            throws ProgesinException {
         try {
             Documento documento = documentoRepository.save(crearDocumento(file, tipo, inspeccion));
             registroActividadService.altaRegActividad("cargaFichero", TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.GESTOR.getDescripcion());
             
             return documento;
-        } catch (SQLException | IOException ex) {
+        } catch (DataAccessException | IOException ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
-            throw ex;
+            throw new ProgesinException(ex);
         }
     }
     
@@ -203,18 +204,18 @@ public class DocumentoService implements IDocumentoService {
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return documento cargado en base de datos
-     * @throws SQLException excepción lanzada
+     * @throws DataAccessException excepción lanzada
      * @throws IOException excepción lanzada
      */
     @Override
     public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
-            throws SQLException, IOException {
+            throws ProgesinException {
         try {
             
             return crearDocumento(file, tipo, inspeccion);
-        } catch (SQLException | IOException ex) {
+        } catch (DataAccessException | IOException ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
-            throw ex;
+            throw new ProgesinException(ex);
         }
     }
     
@@ -225,11 +226,11 @@ public class DocumentoService implements IDocumentoService {
      * @param tipo Tipo de documento.
      * @param inspeccion Inspección a la que se asocia.
      * @return Documento generado
-     * @throws SQLException Excepción SQL
+     * @throws DataAccessException Excepción SQL
      * @throws IOException Excepción entrada/salida
      */
     private Documento crearDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
-            throws SQLException, IOException {
+            throws DataAccessException, IOException {
         Documento docu = new Documento();
         docu.setNombre(file.getFileName());
         docu.setTipoDocumento(tipo);

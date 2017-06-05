@@ -11,6 +11,7 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -81,7 +82,7 @@ public class AlertasBean implements Serializable {
             
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.ALERTAS.getDescripcion());
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             // Guardamos los posibles errores en bbdd
             regActividad.altaRegActividadError(SeccionesEnum.ALERTAS.getDescripcion(), e);
         }

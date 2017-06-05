@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -163,7 +164,7 @@ public class RegistroActividadService implements IRegistroActividadService {
             registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
             registroActividad.setDescripcion(Throwables.getStackTraceAsString(e));
             regActividadRepository.save(registroActividad);
-        } catch (Exception e1) {
+        } catch (DataAccessException e1) {
             log.error(nombreSeccion, e1);
             
         }
@@ -191,7 +192,7 @@ public class RegistroActividadService implements IRegistroActividadService {
             registroActividad.setNombreSeccion(seccion);
             registroActividad.setDescripcion(descripcion);
             regActividadRepository.save(registroActividad);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             altaRegActividadError(seccion, e);
         }
         

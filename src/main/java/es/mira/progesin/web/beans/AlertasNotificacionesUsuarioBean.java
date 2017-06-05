@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -98,7 +99,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
                     alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
             String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Alertas");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Alertas", e);
         }
         
@@ -118,7 +119,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
                     notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
             String descripcion = "Se ha eliminado la notificación :" + notificacion.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Notificaciones");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Notificaciones", e);
         }
         

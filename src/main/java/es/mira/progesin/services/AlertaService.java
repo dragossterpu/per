@@ -13,9 +13,11 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -156,7 +158,7 @@ public class AlertaService implements IAlertaService {
             alerta.setDescripcion(descripcion);
             alerta.setNombreSeccion(seccion);
             return alertaRepository.save(alerta);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         return null;
@@ -181,7 +183,7 @@ public class AlertaService implements IAlertaService {
             correo.envioCorreo(usu.getCorreo(), "Nueva alerta PROGESIN",
                     "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
             
-        } catch (Exception e) {
+        } catch (DataAccessException | CorreoException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -204,7 +206,7 @@ public class AlertaService implements IAlertaService {
             for (User usuario : usuariosRol) {
                 crearAlertaUsuario(seccion, descripcion, usuario.getUsername());
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -247,7 +249,7 @@ public class AlertaService implements IAlertaService {
                 crearAlertaUsuario(seccion, descripcion, miembro.getUsername());
             }
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -268,7 +270,7 @@ public class AlertaService implements IAlertaService {
         try {
             crearAlertaUsuario(seccion, descripcion, inspeccion.getEquipo().getJefeEquipo());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         

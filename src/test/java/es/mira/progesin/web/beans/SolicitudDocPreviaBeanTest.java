@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -469,9 +470,11 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
      * @throws SQLException error al recuperar el blob
+     * @throws IOException
+     * @throws ProgesinException
      */
     @Test
-    public void descargarFichero() throws SQLException {
+    public void descargarFichero() throws ProgesinException {
         Long idDocumento = null;
         
         solicitudDocPreviaBean.descargarFichero(idDocumento);
@@ -483,10 +486,10 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
-     * @throws SQLException error al recuperar el blob
+     * @throws ProgesinException error al recuperar el blob
      */
     @Test
-    public void descargarFichero_Excepcion() throws SQLException {
+    public void descargarFichero_Excepcion() throws ProgesinException {
         Long idDocumento = null;
         when(documentoService.descargaDocumento(idDocumento)).thenThrow(SQLException.class);
         
