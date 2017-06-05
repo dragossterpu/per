@@ -143,10 +143,9 @@ public class DocumentoService implements IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws DataAccessException excepción lanzada
      */
     @Override
-    public DefaultStreamedContent descargaDocumento(Documento entity) throws DataAccessException {
+    public DefaultStreamedContent descargaDocumento(Documento entity) {
         Documento docu = documentoRepository.findById(entity.getId());
         DocumentoBlob doc = docu.getFichero();
         InputStream stream = new ByteArrayInputStream(doc.getFichero());
@@ -159,10 +158,9 @@ public class DocumentoService implements IDocumentoService {
      * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws DataAccessException excepción lanzada
      */
     @Override
-    public DefaultStreamedContent descargaDocumento(Long id) throws DataAccessException {
+    public DefaultStreamedContent descargaDocumento(Long id) {
         Documento entity = documentoRepository.findById(id);
         InputStream stream = new ByteArrayInputStream(entity.getFichero().getFichero());
         return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
