@@ -447,11 +447,8 @@ public class GestorDocumentalBean {
      * @param doc Documento a eliminar
      */
     public void borrarDocumento(Documento doc) {
-        
         try {
-            if (doc.getInspeccion() != null) {
-                doc.setInspeccion(null);
-            }
+            doc.setInspeccion(null);
             documentoService.delete(doc);
             registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
                     TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
@@ -459,7 +456,6 @@ public class GestorDocumentalBean {
         } catch (Exception e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
-        
     }
     
     /**
