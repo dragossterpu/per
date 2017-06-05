@@ -12,6 +12,7 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -352,7 +353,6 @@ public class GuiaBean {
      */
     
     private void grabaGuia() {
-        
         try {
             
             if (guiaService.guardaGuia(guia) != null) {
@@ -371,7 +371,7 @@ public class GuiaBean {
                 
             }
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al grabar la guía");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
@@ -473,7 +473,7 @@ public class GuiaBean {
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensajeError, "", "message");
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
                     "Se ha producido un error al guardar la guía personalizada");
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
@@ -508,7 +508,7 @@ public class GuiaBean {
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
     }
@@ -530,7 +530,7 @@ public class GuiaBean {
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
     }
@@ -556,7 +556,7 @@ public class GuiaBean {
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
     }
@@ -577,7 +577,7 @@ public class GuiaBean {
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
     }
@@ -590,15 +590,7 @@ public class GuiaBean {
      */
     public void asignarNuevaInspeccion(Inspeccion inspeccion) {
         if (inspeccion != null && !listaInspecciones.contains(inspeccion)) {
-            try {
-                listaInspecciones.add(inspeccion);
-                
-            } catch (Exception e) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
-                        "Se ha producido un error al asignar una inspección al documento");
-                regActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
-            }
-            
+            listaInspecciones.add(inspeccion);
         }
     }
     
@@ -608,13 +600,7 @@ public class GuiaBean {
      * @param inspeccion Inspección a desasociar
      */
     public void desAsociarInspeccion(Inspeccion inspeccion) {
-        try {
-            listaInspecciones.remove(inspeccion);
-        } catch (Exception e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
-                    "Se ha producido un error al desasociar una inspección del documento");
-            regActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
-        }
+        listaInspecciones.remove(inspeccion);
     }
     
 }

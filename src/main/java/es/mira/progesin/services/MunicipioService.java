@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -56,7 +55,7 @@ public class MunicipioService implements IMunicipioService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Municipio crearMunicipio(String nombre, Provincia provincia) throws ProgesinException {
+    public Municipio crearMunicipio(String nombre, Provincia provincia) {
         Municipio nuevoMunicipio = null;
         
         String user = SecurityContextHolder.getContext().getAuthentication().getName();

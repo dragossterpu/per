@@ -30,7 +30,7 @@ public interface IMunicipioService {
      * @return municipio creado (true si es guardado correctamente)
      * @throws ProgesinException excepción progesin
      */
-    Municipio crearMunicipio(String nombre, Provincia provincia) throws ProgesinException;
+    Municipio crearMunicipio(String nombre, Provincia provincia);
     
     /**
      * Busca los municipios pertenecientes a una provincia.

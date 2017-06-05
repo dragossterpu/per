@@ -10,11 +10,11 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
-import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -117,7 +117,7 @@ public class TipoInspeccionBean implements Serializable {
                 
             }
             
-        } catch (ProgesinException e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     Constantes.ERRORMENSAJE
                             + " Se ha producido un error al eliminar el tipo de inspección, inténtelo de nuevo más tarde",
@@ -150,7 +150,7 @@ public class TipoInspeccionBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.INSPECCION.name());
             
-        } catch (ProgesinException e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     Constantes.ERRORMENSAJE
                             + " Se ha producido un error al modificar el tipo de inspección, inténtelo de nuevo más tarde",
@@ -183,7 +183,7 @@ public class TipoInspeccionBean implements Serializable {
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
             
-        } catch (ProgesinException e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el tipo de inspección, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);

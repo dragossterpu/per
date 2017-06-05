@@ -23,7 +23,7 @@ public interface IInspeccionesService {
      * @return devuelve la inspección guardada
      * @throws ProgesinException problema al guardar municipio
      */
-    public Inspeccion save(Inspeccion inspecciones) throws ProgesinException;
+    public Inspeccion save(Inspeccion inspecciones);
     
     /**
      * Borra una inspección pasada por parámetro.
