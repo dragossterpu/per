@@ -16,6 +16,7 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -260,7 +261,7 @@ public class UserBean implements Serializable {
                         + user.getApellido2();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.USUARIOS.name());
-            } catch (Exception e) {
+            } catch (DataAccessException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta",
                         "Se ha producido un error al dar de alta el usuario. Inténtelo de nuevo más tarde");
                 regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
@@ -312,13 +313,12 @@ public class UserBean implements Serializable {
         usuario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
         try {
             userService.save(usuario);
-            userBusqueda.getListaUsuarios().remove(usuario);
             String descripcion = "Se ha eliminado el usuario " + usuario.getNombre() + " " + usuario.getApellido1()
                     + " " + usuario.getApellido2();
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.USUARIOS.name());
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
         }
@@ -363,7 +363,7 @@ public class UserBean implements Serializable {
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.USUARIOS.name());
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
             // Guardamos loe posibles errores en bbdd
@@ -384,7 +384,7 @@ public class UserBean implements Serializable {
             correo.envioCorreo(user.getCorreo(), "Restauración de la contraseña", cuerpoCorreo);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
                     "Se ha enviado un correo al usuario con la nueva contraseña");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
                     "Se ha producido un error en la regeneración o envío de la contraseña");
             // Guardamos loe posibles errores en bbdd

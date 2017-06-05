@@ -2,11 +2,9 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import lombok.AllArgsConstructor;
@@ -78,10 +76,5 @@ public class UserBusqueda implements Serializable {
      * Filtro puesto user.
      */
     private PuestoTrabajo puestoTrabajo;
-    
-    /**
-     * Lista de usuarios de la búsqueda.
-     */
-    private List<User> listaUsuarios;
     
 }
