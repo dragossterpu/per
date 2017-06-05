@@ -449,16 +449,12 @@ public class GestorDocumentalBean {
     public void borrarDocumento(Documento doc) {
         
         try {
-            
-            if (doc.getInspeccion() == null) {
-                documentoService.delete(doc);
-            } else {
+            if (doc.getInspeccion() != null) {
                 doc.setInspeccion(null);
-                documentoService.delete(doc);
-                registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
             }
-            
+            documentoService.delete(doc);
+            registroActividadService.altaRegActividad("Se ha eliminado el documento ".concat(doc.getNombre()),
+                    TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
             buscaDocumento();
         } catch (Exception e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
