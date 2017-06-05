@@ -22,15 +22,6 @@ import es.mira.progesin.web.beans.DocumentoBusqueda;
 public interface IDocumentoService {
     
     /**
-     * Elimina un documento de la base de datos. El documento se identifica por su id.
-     *
-     * @param id Identificador del documento a eliminar
-     *
-     */
-    
-    void delete(Long id);
-    
-    /**
      * Elimina una serie de documentos de la base de datos. El documento a eliminar se pasa como parámetro.
      * 
      * @param entity Documento a eliminar

@@ -78,17 +78,6 @@ public class DocumentoService implements IDocumentoService {
     private ITipoDocumentoRepository tipoDocumentoRepository;
     
     /**
-     * Elimina un documento de la base de datos. El documento se identifica por su id.
-     *
-     * @param id Identificador del documento a eliminar
-     *
-     */
-    @Override
-    public void delete(Long id) {
-        documentoRepository.delete(id);
-    }
-    
-    /**
      * Elimina una serie de documentos de la base de datos. El documento a eliminar se pasa como parámetro.
      * 
      * @param entity Documento a eliminar
