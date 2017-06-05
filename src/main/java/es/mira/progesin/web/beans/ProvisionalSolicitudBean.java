@@ -16,9 +16,11 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -145,14 +147,9 @@ public class ProvisionalSolicitudBean implements Serializable {
         if ("menu".equalsIgnoreCase(this.vieneDe)) {
             this.vieneDe = null;
             String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-            try {
-                solicitudDocumentacionPrevia = solicitudDocumentacionService
-                        .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
-                listadoDocumentosPrevios = tipoDocumentacionService
-                        .findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-            } catch (Exception e) {
-                regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
-            }
+            solicitudDocumentacionPrevia = solicitudDocumentacionService
+                    .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
+            listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
         }
     }
     
@@ -206,7 +203,7 @@ public class ProvisionalSolicitudBean implements Serializable {
                         "La extensión del archivo '" + event.getFile().getFileName()
                                 + "' no corresponde a su tipo real");
             }
-        } catch (Exception e) {
+        } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -233,9 +230,13 @@ public class ProvisionalSolicitudBean implements Serializable {
      * @param documento documento a eliminar
      */
     public void eliminarDocumento(Documento documento) {
-        solicitudDocumentacionPrevia.getDocumentos().remove(documento);
-        solicitudDocumentacionPrevia = solicitudDocumentacionService
-                .eliminarDocumentoSolicitud(solicitudDocumentacionPrevia, documento);
+        try {
+            solicitudDocumentacionPrevia.getDocumentos().remove(documento);
+            solicitudDocumentacionPrevia = solicitudDocumentacionService
+                    .eliminarDocumentoSolicitud(solicitudDocumentacionPrevia, documento);
+        } catch (DataAccessException e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+        }
     }
     
     /**
@@ -244,11 +245,7 @@ public class ProvisionalSolicitudBean implements Serializable {
      * @param idDocumento seleccionado
      */
     public void descargarFichero(Long idDocumento) {
-        try {
-            setFile(documentoService.descargaDocumento(idDocumento));
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
-        }
+        setFile(documentoService.descargaDocumento(idDocumento));
     }
     
     /**
@@ -276,7 +273,7 @@ public class ProvisionalSolicitudBean implements Serializable {
             
             alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion, RoleEnum.ROLE_SERVICIO_APOYO);
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -298,7 +295,7 @@ public class ProvisionalSolicitudBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -310,31 +307,27 @@ public class ProvisionalSolicitudBean implements Serializable {
      */
     public void plantillasAmbitoSolicitud() {
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-        try {
-            solicitudDocumentacionPrevia = solicitudDocumentacionService
-                    .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
-            if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
-                String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
-                setListaPlantillasAmbito(new ArrayList<>());
-                if ("GC".equals(ambito) || "PN".equals(ambito)) {
-                    Map<String, String> mapaPlantillas = applicationBean.getMapaParametros().get("plantillas" + ambito);
-                    if (mapaPlantillas != null) {
-                        listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
-                    }
-                } else {
-                    // OTROS se muestran todas las de GC y PN
-                    Map<String, String> mapaPlantillasGC = applicationBean.getMapaParametros().get("plantillasGC");
-                    Map<String, String> mapaPlantillasPN = applicationBean.getMapaParametros().get("plantillasPN");
-                    if (mapaPlantillasGC != null) {
-                        listaPlantillasAmbito.addAll(mapaPlantillasGC.entrySet());
-                    }
-                    if (mapaPlantillasPN != null) {
-                        listaPlantillasAmbito.addAll(mapaPlantillasPN.entrySet());
-                    }
+        solicitudDocumentacionPrevia = solicitudDocumentacionService
+                .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
+        if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
+            String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
+            setListaPlantillasAmbito(new ArrayList<>());
+            if ("GC".equals(ambito) || "PN".equals(ambito)) {
+                Map<String, String> mapaPlantillas = applicationBean.getMapaParametros().get("plantillas" + ambito);
+                if (mapaPlantillas != null) {
+                    listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
+                }
+            } else {
+                // OTROS se muestran todas las de GC y PN
+                Map<String, String> mapaPlantillasGC = applicationBean.getMapaParametros().get("plantillasGC");
+                Map<String, String> mapaPlantillasPN = applicationBean.getMapaParametros().get("plantillasPN");
+                if (mapaPlantillasGC != null) {
+                    listaPlantillasAmbito.addAll(mapaPlantillasGC.entrySet());
+                }
+                if (mapaPlantillasPN != null) {
+                    listaPlantillasAmbito.addAll(mapaPlantillasPN.entrySet());
                 }
             }
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
         }
     }
     
@@ -345,7 +338,7 @@ public class ProvisionalSolicitudBean implements Serializable {
         try {
             setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
                     listadoDocumentosPrevios));
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);

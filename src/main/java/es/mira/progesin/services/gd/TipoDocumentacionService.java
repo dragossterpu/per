@@ -77,7 +77,13 @@ public class TipoDocumentacionService implements ITipoDocumentacionService {
      */
     @Override
     public List<TipoDocumentacion> findByAmbito(AmbitoInspeccionEnum ambito) {
-        return tipoDocumentacionRepository.findByAmbito(ambito);
+        List<TipoDocumentacion> respuesta;
+        if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
+            respuesta = (List<TipoDocumentacion>) tipoDocumentacionRepository.findAll();
+        } else {
+            respuesta = tipoDocumentacionRepository.findByAmbito(ambito);
+        }
+        return respuesta;
     }
     
     /**

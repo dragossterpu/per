@@ -17,10 +17,13 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.CorreoException;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelSolicitudes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -256,7 +259,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.DOCUMENTACION.name());
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al crear la solicitud, inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd
@@ -300,15 +303,9 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return vista vistaSolicitud
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
-        try {
-            setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
-            setSolicitudDocumentacionPrevia(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId()));
-            return "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
-            return null;
-        }
-        
+        setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
+        setSolicitudDocumentacionPrevia(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId()));
+        return "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
     }
     
     /**
@@ -336,7 +333,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
                     solicitudDocumentacionPrevia.getInspeccion());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar apoyo la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -367,7 +364,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion,
                     RoleEnum.ROLE_JEFE_INSPECCIONES);
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar el jefe del equipo la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -405,11 +402,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @param idDocumento clave del documento a descargar
      */
     public void descargarFichero(Long idDocumento) {
-        try {
-            setFile(documentoService.descargaDocumento(idDocumento));
-        } catch (Exception e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
-        }
+        setFile(documentoService.descargaDocumento(idDocumento));
     }
     
     /**
@@ -423,25 +416,21 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return nombre de la siguente pestaña a mostrar
      */
     public String onFlowProcess(FlowEvent event) {
-        
+        String siguientePaso = event.getNewStep();
         if ("general".equals(event.getOldStep()) && "documentacion".equals(event.getNewStep())) {
-            if (inspeccionSinTareasPendientes() == Boolean.FALSE || usuarioSinTareasPendientes() == Boolean.FALSE) {
-                return event.getOldStep();
-            } else {
+            if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
                 AmbitoInspeccionEnum ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito();
-                if (AmbitoInspeccionEnum.OTROS.equals(ambito)) {
-                    setListadoDocumentos(tipoDocumentacionService.findAll());
-                } else {
-                    setListadoDocumentos(tipoDocumentacionService.findByAmbito(ambito));
-                }
+                setListadoDocumentos(tipoDocumentacionService.findByAmbito(ambito));
+            } else {
+                siguientePaso = event.getOldStep();
             }
         } else if ("documentacion".equals(event.getOldStep()) && "apoyo".equals(event.getNewStep())
                 && documentosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Debe elegir uno o más documentos o confirmar que no desea ninguno", "", "");
-            return event.getOldStep();
+            siguientePaso = event.getOldStep();
         }
-        return event.getNewStep();
+        return siguientePaso;
     }
     
     /**
@@ -495,7 +484,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
                         "Ya ha sido anulada con anterioridad o no tiene permisos para realizar esta acción", null);
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar la solicitud, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -536,7 +525,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -594,7 +583,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
                 notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.name(), listRoles);
             }
-        } catch (Exception e) {
+        } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al enviar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -609,7 +598,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void finalizarSolicitud() {
         try {
-            
             solicitudDocumentacionPrevia.setFechaFinalizacion(new Date());
             solicitudDocumentacionPrevia.setFechaNoConforme(null);
             String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -626,7 +614,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -678,7 +666,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
@@ -715,7 +703,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * 
      */
     public void buscarSolicitudDocPrevia() {
-        
         model.setBusqueda(solicitudDocPreviaBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
     }
@@ -740,7 +727,7 @@ public class SolicitudDocPreviaBean implements Serializable {
         try {
             setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
                     listadoDocumentosPrevios));
-        } catch (Exception e) {
+        } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);

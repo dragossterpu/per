@@ -10,8 +10,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +34,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -233,8 +232,6 @@ public class SolicitudDocPreviaBeanTest {
                 documentosSeleccionados);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -256,8 +253,6 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(solicitudDocumentacionService, times(0)).transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
                 documentosSeleccionados);
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -280,8 +275,6 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(solicitudDocumentacionService, times(0)).transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
                 documentosSeleccionados);
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -296,7 +289,7 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
-        doThrow(SQLException.class).when(solicitudDocumentacionService)
+        doThrow(TransientDataAccessResourceException.class).when(solicitudDocumentacionService)
                 .transaccSaveAltaDocumentos(solicitudDocumentacionPrevia, documentosSeleccionados);
         
         solicitudDocPreviaBean.crearSolicitud();
@@ -304,7 +297,7 @@ public class SolicitudDocPreviaBeanTest {
         verify(regActividadService, times(0)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
@@ -340,25 +333,6 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).findByIdConDocumentos(1L);
         verify(tipoDocumentacionService, times(1)).findByIdSolicitud(1L);
         assertThat(ruta_vista).isEqualTo("/solicitudesPrevia/vistaSolicitud?faces-redirect=true");
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#visualizarSolicitud(SolicitudDocumentacionPrevia)}.
-     */
-    @Test
-    public void visualizarSolicitud_Excepcion() {
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .build();
-        when(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId())).thenThrow(SQLException.class);
-        
-        String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
-        assertThat(ruta_vista).isEqualTo(null);
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(SQLException.class));
     }
     
     /**
@@ -380,8 +354,6 @@ public class SolicitudDocPreviaBeanTest {
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(alertaService, times(1)).crearAlertaJefeEquipo(eq(SeccionesEnum.DOCUMENTACION.name()), any(String.class),
                 eq(inspeccion));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -393,14 +365,13 @@ public class SolicitudDocPreviaBeanTest {
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(solicitudDocumentacionService.save(solicitudCaptor.capture())).thenThrow(SQLException.class);
+        when(solicitudDocumentacionService.save(solicitudCaptor.capture()))
+                .thenThrow(TransientDataAccessResourceException.class);
         
         solicitudDocPreviaBean.validacionApoyo();
         
-        verify(regActividadService, times(0)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
@@ -422,8 +393,6 @@ public class SolicitudDocPreviaBeanTest {
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(alertaService, times(1)).crearAlertaRol(eq(SeccionesEnum.DOCUMENTACION.name()), any(String.class),
                 eq(RoleEnum.ROLE_JEFE_INSPECCIONES));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -435,14 +404,13 @@ public class SolicitudDocPreviaBeanTest {
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(solicitudDocumentacionService.save(solicitudCaptor.capture())).thenThrow(SQLException.class);
+        when(solicitudDocumentacionService.save(solicitudCaptor.capture()))
+                .thenThrow(TransientDataAccessResourceException.class);
         
         solicitudDocPreviaBean.validacionJefeEquipo();
         
-        verify(regActividadService, times(0)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
@@ -469,34 +437,14 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
-     * @throws SQLException error al recuperar el blob
-     * @throws IOException
-     * @throws ProgesinException
      */
     @Test
-    public void descargarFichero() throws ProgesinException {
+    public void descargarFichero() {
         Long idDocumento = null;
         
         solicitudDocPreviaBean.descargarFichero(idDocumento);
         
         verify(documentoService).descargaDocumento(idDocumento);
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
-     * @throws ProgesinException error al recuperar el blob
-     */
-    @Test
-    public void descargarFichero_Excepcion() throws ProgesinException {
-        Long idDocumento = null;
-        when(documentoService.descargaDocumento(idDocumento)).thenThrow(SQLException.class);
-        
-        solicitudDocPreviaBean.descargarFichero(idDocumento);
-        
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(SQLException.class));
     }
     
     /**
@@ -532,23 +480,6 @@ public class SolicitudDocPreviaBeanTest {
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
         assertThat(nombre_paso).isEqualTo("general");
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(FlowEvent)}.
-     */
-    @Test
-    public void onFlowProcess_pasoGeneralADocumentacionAmbitoOtros() {
-        AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.OTROS;
-        Inspeccion inspeccion = Inspeccion.builder().ambito(ambito).build();
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
-        solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "general", "documentacion");
-        
-        String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
-        
-        verify(tipoDocumentacionService, times(1)).findAll();
-        assertThat(nombre_paso).isEqualTo("documentacion");
     }
     
     /**
@@ -665,8 +596,6 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
         verify(solicitudDocumentacionService, times(1)).transaccDeleteElimDocPrevia(1L);
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -685,8 +614,6 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(solicitud, "correoDestinatario");
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -709,8 +636,6 @@ public class SolicitudDocPreviaBeanTest {
         verify(correoElectronico, times(0)).envioCorreo(eq("correoDestinatario"), any(String.class), any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -733,8 +658,6 @@ public class SolicitudDocPreviaBeanTest {
         verify(correoElectronico, times(1)).envioCorreo(eq("correoDestinatario"), any(String.class), any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -789,8 +712,6 @@ public class SolicitudDocPreviaBeanTest {
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
                 eq(SeccionesEnum.DOCUMENTACION.name()), eq(listRoles));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -808,8 +729,8 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(eq(solicitud),
                 eq(correoDestinatario));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
     }
     
     /**
@@ -840,9 +761,6 @@ public class SolicitudDocPreviaBeanTest {
                 contains(motivosNoConforme));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
-                any(Exception.class));
-        
     }
     
     /**
@@ -885,7 +803,6 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.autocompletarInspeccion(infoInspeccion);
         
         verify(inspeccionesService, times(1)).buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
-        
     }
     
     /**
@@ -899,10 +816,10 @@ public class SolicitudDocPreviaBeanTest {
         @SuppressWarnings("unchecked")
         List<DocumentacionPrevia> listDoc = mock(List.class);
         solicitudDocPreviaBean.setListadoDocumentosPrevios(listDoc);
+        
         solicitudDocPreviaBean.imprimirPdf();
         
         verify(pdfGenerator, times(1)).imprimirSolicitudDocumentacionPrevia(eq(solicitud), eq(listDoc));
-        
     }
     
 }
