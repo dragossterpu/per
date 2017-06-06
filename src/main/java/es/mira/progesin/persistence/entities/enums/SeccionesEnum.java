@@ -61,7 +61,12 @@ public enum SeccionesEnum {
     /**
      * Sección de sugerencias.
      */
-    SUGERENCIAS("Sugerencias de mejora");
+    SUGERENCIAS("SUGERENCIA DE MEJORA"),
+    
+    /**
+     * Sección clave olvidada.
+     */
+    CLAVE_OLVIDADA("RECORDATORIO CLAVE");
     
     /**
      * Descripción de la sección.

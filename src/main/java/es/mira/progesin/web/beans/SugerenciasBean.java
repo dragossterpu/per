@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -53,12 +54,6 @@ public class SugerenciasBean implements Serializable {
     private List<Sugerencia> sugerenciasListado;
     
     /**
-     * Formato de la fecha.
-     * 
-     */
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    /**
      * Variable utilizada para inyectar el servicio del correo.
      * 
      */
@@ -101,7 +96,7 @@ public class SugerenciasBean implements Serializable {
             sugerenciaService.save(sugerenciaNueva);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "Sugerencia guardada con éxito, cuando sea atendida recibirá un correo electrónico con la contestación.");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar la sugerencia. Inténtelo de nuevo más tarde.");
             regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
@@ -130,7 +125,7 @@ public class SugerenciasBean implements Serializable {
             sugerenciasListado.remove(sugerenciaSeleccionada);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Eliminación",
                     "Se ha eliminado con éxito la sugerencia.", "msgs");
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar la sugerencia. Inténtelo de nuevo más tarde.", "msgs");
             regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
@@ -165,7 +160,7 @@ public class SugerenciasBean implements Serializable {
             String asunto = "Respuesta a su sugerencia sobre PROGESIN";
             String usuarioContestacion = sugerenciaSeleccionada.getUsuarioRegistro();
             User user = userService.findOne(usuarioContestacion);
-            String fechaRegistro = sdf.format(sugerenciaSeleccionada.getFechaRegistro());
+            String fechaRegistro = new SimpleDateFormat("dd/MM/yyyy").format(sugerenciaSeleccionada.getFechaRegistro());
             StringBuilder mensaje = new StringBuilder("Sugerencia realizada el ").append(fechaRegistro)
                     .append(" sobre el módulo ").append(sugerencia.getModulo()).append("\r\n \"")
                     .append(sugerencia.getDescripcion()).append("\" \r\n \r\n").append(contestacion);
@@ -176,7 +171,7 @@ public class SugerenciasBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al enviar el correo electrónico.");
             regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al contestar la sugerencia. Inténtelo de nuevo más tarde.");
             regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);

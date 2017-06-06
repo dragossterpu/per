@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
@@ -84,7 +85,7 @@ public class TipoEquipoBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.ADMINISTRACION.name());
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
             // Guardamos los posibles errores en bbdd
@@ -120,7 +121,7 @@ public class TipoEquipoBean implements Serializable {
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.ADMINISTRACION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
@@ -149,7 +150,7 @@ public class TipoEquipoBean implements Serializable {
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.ADMINISTRACION.name());
             
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);

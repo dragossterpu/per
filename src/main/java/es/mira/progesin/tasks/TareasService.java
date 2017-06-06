@@ -11,11 +11,14 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IDocumentoService;
@@ -35,6 +38,12 @@ import es.mira.progesin.web.beans.ApplicationBean;
 @Service("tareasService")
 
 public class TareasService implements ITareasService {
+    
+    /**
+     * Un día en milisegundos.
+     */
+    private static final int DIAMILISEGUNDOS = 86400000;
+    
     /**
      * Servicio de cuestionarios enviados.
      */
@@ -93,11 +102,12 @@ public class TareasService implements ITareasService {
     private void init() {
         Map<String, String> parametrosTareas = applicationBean.getMapaParametros().get("tareas");
         
-        Iterator<Entry<String, String>> it = parametrosTareas.entrySet().iterator();
-        
-        while (it.hasNext()) {
-            Map.Entry<String, String> param = it.next();
-            tareasProperties.put(param.getKey(), param.getValue());
+        if (parametrosTareas != null) {
+            Iterator<Entry<String, String>> it = parametrosTareas.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, String> param = it.next();
+                tareasProperties.put(param.getKey(), param.getValue());
+            }
         }
         
     }
@@ -109,17 +119,18 @@ public class TareasService implements ITareasService {
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     
     public void recordatorioEnvioCuestionario() {
-        Date hoy;
+        Date hoy = new Date();
+        List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
         try {
-            hoy = new Date();
-            List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
-            
             for (int i = 0; i < lista.size(); i++) {
                 CuestionarioEnvio cuestionario = lista.get(i);
                 long milis = cuestionario.getFechaLimiteCuestionario().getTime() - hoy.getTime();
-                int dias = (int) (milis / 86400000);
-                
-                if (dias == Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"))) {
+                int dias = (int) (milis / DIAMILISEGUNDOS);
+                int plazoDiasCuestionario = 0;
+                if (tareasProperties.getProperty("plazoDiasCuestionario") != null) {
+                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"));
+                }
+                if (dias == plazoDiasCuestionario) {
                     StringBuilder cuerpo = new StringBuilder().append("Faltan ").append(dias)
                             .append(" dia/s para la fecha límite de envío del cuestionario de la inspección ")
                             .append(cuestionario.getInspeccion().getNumero()).append(FINAL);
@@ -141,8 +152,8 @@ public class TareasService implements ITareasService {
                             "Recordatorio Fin de plazo para el envío del cuestionario", cuerpo.toString());
                 }
             }
-        } catch (Exception e) {
-            registroActividad.altaRegActividadError("Batch envio recordatorio", e);
+        } catch (CorreoException ce) {
+            registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.name(), ce);
         }
     }
     
@@ -153,17 +164,19 @@ public class TareasService implements ITareasService {
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     
     public void recordatorioEnvioDocumentacion() {
-        Date hoy;
+        Date hoy = new Date();
+        List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
         try {
-            hoy = new Date();
-            List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
-            
             for (int i = 0; i < lista.size(); i++) {
                 
                 SolicitudDocumentacionPrevia solicitud = lista.get(i);
                 long milis = solicitud.getFechaLimiteCumplimentar().getTime() - hoy.getTime();
-                int dias = (int) (milis / 86400000);
-                if (dias == Integer.parseInt(tareasProperties.getProperty("plazoDiasDocumentacion"))) {
+                int dias = (int) (milis / DIAMILISEGUNDOS);
+                int plazoDiasCuestionario = 0;
+                if (tareasProperties.getProperty("plazoDiasCuestionario") != null) {
+                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"));
+                }
+                if (dias == plazoDiasCuestionario) {
                     
                     StringBuilder cuerpo = new StringBuilder().append("INICIO").append("Faltan ").append(dias)
                             .append(" dia/s para la fecha límite de envío de la documentación para la inspección número ")
@@ -186,8 +199,8 @@ public class TareasService implements ITareasService {
                             "Recordatorio Fin de plazo para el envío de documentación previa", cuerpo.toString());
                 }
             }
-        } catch (Exception e) {
-            registroActividad.altaRegActividadError("Batch envio documentación previa", e);
+        } catch (CorreoException ce) {
+            registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.name(), ce);
         }
     }
     
@@ -203,9 +216,13 @@ public class TareasService implements ITareasService {
         
         for (Documento documento : listadoDocumentosPapelera) {
             Long milis = hoy.getTime() - documento.getFechaBaja().getTime();
-            int dias = (int) (milis / 86400000);
+            int dias = (int) (milis / DIAMILISEGUNDOS);
             if (dias >= 90) {
-                documentoService.delete(documento);
+                try {
+                    documentoService.delete(documento);
+                } catch (DataAccessException e) {
+                    registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.name(), e);
+                }
             }
         }
     }
