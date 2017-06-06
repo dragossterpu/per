@@ -217,7 +217,7 @@ public class InspeccionBean {
      * @return devuelve la ruta de la vista donde asociamos las inspecciones
      */
     public String getAsociarInspecciones() {
-        inspeccionBusqueda.resetValues();
+        inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionBusqueda.setAsociar(true);
         setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
         setProvinciSelec(null);
@@ -247,6 +247,7 @@ public class InspeccionBean {
             
         }
         inspeccionBusqueda.setAsociar(false);
+        setVieneDe("distinta");
         
         return rutaSiguiente;
     }
@@ -258,8 +259,12 @@ public class InspeccionBean {
      */
     
     public void limpiarBusqueda() {
-        inspeccionBusqueda.resetValues();
+        inspeccionBusqueda = new InspeccionBusqueda();
+        setProvinciSelec(null);
         model.setRowCount(0);
+        if ("asociarAlta".equals(vieneDe) || "asociarEditar".equals(vieneDe)) {
+            inspeccionBusqueda.setAsociar(true);
+        }
     }
     
     /**
@@ -273,7 +278,6 @@ public class InspeccionBean {
         inspeccionesAsignadasActuales = new ArrayList<>();
         inspeccion = new Inspeccion();
         inspeccion.setInspecciones(new ArrayList<>());
-        inspeccionBusqueda.setInspeccionModif(inspeccion);
         setProvinciSelec(null);
         
         Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
@@ -295,13 +299,9 @@ public class InspeccionBean {
     public String altaInspeccion() {
         try {
             inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SIN_INICIAR);
-            
-            if (inspeccionesAsignadasActuales != null) {
-                inspeccion.setInspecciones(inspeccionesAsignadasActuales);
-            }
+            inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             
             inspeccion = inspeccionesService.save(inspeccion);
-            inspeccionBusqueda.resetValues();
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "La inspección " + inspeccion.getNumero() + " ha sido creada con éxito");
@@ -334,8 +334,11 @@ public class InspeccionBean {
         
         this.inspeccion = insp;
         setProvinciSelec(insp.getMunicipio().getProvincia());
-        inspeccionBusqueda.setInspeccionModif(insp);
+        setInspeccion(insp);
         inspeccionesAsignadasActuales = inspeccionesService.listaInspeccionesAsociadas(this.inspeccion);
+        if (inspeccionesAsignadasActuales == null) {
+            inspeccionesAsignadasActuales = new ArrayList<>();
+        }
         
         return "/inspecciones/modificarInspeccion?faces-redirect=true";
     }
@@ -348,12 +351,9 @@ public class InspeccionBean {
     public void modificarInspeccion() {
         try {
             
-            if (inspeccionesAsignadasActuales != null) {
-                inspeccion.setInspecciones(inspeccionesAsignadasActuales);
-            }
-            
+            inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             inspeccionesService.save(inspeccion);
-            inspeccionBusqueda.resetValues();
+            limpiarBusqueda();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
@@ -394,16 +394,15 @@ public class InspeccionBean {
     /**
      * 
      * Limpia el menú de búsqueda si se accede a través del menú lateral.
+     * @return ruta siguiente
      * 
      */
     
-    public void getFormularioBusqueda() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            inspeccionBusqueda.setAsociar(false);
-            limpiarBusqueda();
-            this.vieneDe = null;
-            listaEquipos = equipoService.findAll();
-        }
+    public String getFormularioBusqueda() {
+        inspeccionBusqueda.setAsociar(false);
+        listaEquipos = equipoService.findAll();
+        limpiarBusqueda();
+        return "/inspecciones/inspecciones?faces-redirect=true";
     }
     
     /**

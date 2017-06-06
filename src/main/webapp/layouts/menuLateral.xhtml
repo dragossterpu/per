@@ -53,9 +53,7 @@
                 <p:menuitem value="Administrar equipos" outcome="/equipos/equipos">
                     <f:param name="vieneDe" value="menu" />
                 </p:menuitem>
-                <p:menuitem value="Búsqueda de inspecciones" outcome="/inspecciones/inspecciones">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+                <p:menuitem value="Búsqueda de inspecciones" action="#{inspeccionBean.getFormularioBusqueda}"/>
 
                 <p:menuitem value="Modelos de inspección" outcome="/inspecciones/modeloInspeccion/tiposInspeccion" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
 

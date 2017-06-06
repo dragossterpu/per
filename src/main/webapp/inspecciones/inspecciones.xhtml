@@ -4,7 +4,6 @@
         <f:metadata>
             <f:viewParam name="vieneDe" value="#{inspeccionBean.vieneDe}" />
         </f:metadata>
-
         <ui:param name="usernameActual" value="#{request.remoteUser}" />
         <ui:param name="esJefeIspeccOapoyo" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}" />
         <ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}" />
@@ -16,10 +15,6 @@
         <h3>
             <h:outputText for="id" value="Asociar inspecciones" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" />
         </h3>
-
-        <h:form>
-            <p:remoteCommand name="onload" action="#{inspeccionBean.getFormularioBusqueda}" autoRun="true" update="busquedaInspecciones" />
-        </h:form>
 
         <h:form id="busquedaInspecciones">
             <div class="bloqueFormulario">

@@ -125,26 +125,4 @@ public class InspeccionBusqueda implements Serializable {
      */
     private boolean asociar;
     
-    /**
-     * Limpia los valores del objeto de búsqueda.
-     * 
-     */
-    public void resetValues() {
-        this.setFechaDesde(null);
-        this.setFechaHasta(null);
-        this.setUsuarioCreacion(null);
-        this.setAnio(null);
-        this.setTipoInspeccion(null);
-        this.setNombreUnidad(null);
-        this.setId(null);
-        this.setAmbito(null);
-        this.setCuatrimestre(null);
-        this.setEstado(null);
-        this.setProvincia(null);
-        this.setMunicipio(null);
-        this.setTipoUnidad(null);
-        this.setEquipo(null);
-        this.setJefeEquipo(null);
-    }
-    
 }
