@@ -8,7 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.RowEditEvent;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -153,11 +153,12 @@ public class DepartamentoBeanTest {
      */
     @Test
     public void altaDepartamento_excepcion() {
-        when(departamentoService.save(departamentoCaptor.capture())).thenThrow(SQLException.class);
+        when(departamentoService.save(departamentoCaptor.capture()))
+                .thenThrow(TransientDataAccessResourceException.class);
         
         departamentoBean.altaDepartamento("Departamento test");
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(Exception.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
@@ -182,12 +183,12 @@ public class DepartamentoBeanTest {
         Departamento departamento = Departamento.builder().id(1L).descripcion("DepartamentoTest").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(departamento);
-        when(departamentoService.save(departamento)).thenThrow(SQLException.class);
+        when(departamentoService.save(departamento)).thenThrow(TransientDataAccessResourceException.class);
         
         departamentoBean.onRowEdit(event);
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
