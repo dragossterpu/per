@@ -12,7 +12,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +27,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -167,7 +167,7 @@ public class SugerenciasBeanTest {
         
         Sugerencia sugerencia = Sugerencia.builder().modulo(modulo).descripcion(descripcion).build();
         
-        when(sugerenciasServiceMock.save(sugerencia)).thenThrow(SQLException.class);
+        when(sugerenciasServiceMock.save(sugerencia)).thenThrow(TransientDataAccessResourceException.class);
         String ruta = sugerenciasBeanMock.guardarSugerencia(modulo, descripcion);
         
         verify(sugerenciasServiceMock, times(1)).save(sugerencia);
@@ -198,7 +198,8 @@ public class SugerenciasBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SugerenciasBean#eliminarSugerencia(es.mira.progesin.persistence.entities.Sugerencia)}.
+     * {@link es.mira.progesin.web.beans.SugerenciasBean#eliminarSugerencia(es.mira.progesin.persistence.entities.Sugerencia)}
+     * .
      */
     @Test
     public final void testEliminarSugerencia() {
@@ -225,7 +226,8 @@ public class SugerenciasBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SugerenciasBean#eliminarSugerencia(es.mira.progesin.persistence.entities.Sugerencia)}.
+     * {@link es.mira.progesin.web.beans.SugerenciasBean#eliminarSugerencia(es.mira.progesin.persistence.entities.Sugerencia)}
+     * .
      */
     @Test
     public final void testEliminarSugerencia_excepcion() {
@@ -237,7 +239,7 @@ public class SugerenciasBeanTest {
         List<Sugerencia> sugerencias = new ArrayList<>();
         sugerencias.add(sugerencia);
         sugerenciasBeanMock.setSugerenciasListado(sugerencias);
-        doThrow(SQLException.class).when(sugerenciasServiceMock).delete(3);
+        doThrow(TransientDataAccessResourceException.class).when(sugerenciasServiceMock).delete(3);
         
         sugerenciasBeanMock.eliminarSugerencia(sugerencia);
         
@@ -253,7 +255,8 @@ public class SugerenciasBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestarSugerencia(es.mira.progesin.persistence.entities.Sugerencia)}.
+     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestarSugerencia(es.mira.progesin.persistence.entities.Sugerencia)}
+     * .
      */
     @Test
     public final void testContestarSugerencia() {
@@ -272,7 +275,8 @@ public class SugerenciasBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestar(es.mira.progesin.persistence.entities.Sugerencia, java.lang.String)}.
+     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestar(es.mira.progesin.persistence.entities.Sugerencia, java.lang.String)}
+     * .
      */
     @Test
     public final void testContestar() {
@@ -304,7 +308,8 @@ public class SugerenciasBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestar(es.mira.progesin.persistence.entities.Sugerencia, java.lang.String)}.
+     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestar(es.mira.progesin.persistence.entities.Sugerencia, java.lang.String)}
+     * .
      */
     @Test
     public final void testContestar_correoException() {
@@ -337,7 +342,8 @@ public class SugerenciasBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestar(es.mira.progesin.persistence.entities.Sugerencia, java.lang.String)}.
+     * {@link es.mira.progesin.web.beans.SugerenciasBean#contestar(es.mira.progesin.persistence.entities.Sugerencia, java.lang.String)}
+     * .
      */
     @Test
     public final void testContestar_otraException() {
@@ -350,7 +356,7 @@ public class SugerenciasBeanTest {
         sugerenciasBeanMock.setSugerencia(sugerenciaSeleccionada);
         
         String contestacion = "contestación_test";
-        doThrow(SQLException.class).when(sugerenciasServiceMock).save(sugerenciaSeleccionada);
+        doThrow(TransientDataAccessResourceException.class).when(sugerenciasServiceMock).save(sugerenciaSeleccionada);
         
         String ruta = sugerenciasBeanMock.contestar(sugerenciaSeleccionada, contestacion);
         
