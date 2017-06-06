@@ -41,12 +41,8 @@
             </div>
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{equiposBean.buscarEquipo}" value="Buscar" update="panelEquipos" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-                <h:commandLink title="Limpiar" action="#{equiposBean.limpiarBusqueda}" update="busquedaEquipos" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
-                    <span class="ui-CommandLink-texto">Limpiar</span>
-                </h:commandLink>
-                <h:commandLink title="Nuevo equipo" action="#{equiposBean.getFormAltaEquipo}" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
-                    <span class="ui-CommandLink-texto">Nuevo equipo</span>
-                </h:commandLink>
+                <p:commandButton actionListener="#{equiposBean.limpiarBusqueda}" value="Limpiar" update="busquedaEquipos" icon="fa fa-eraser" />
+                <p:commandButton value="Nuevo equipo" action="#{equiposBean.getFormAltaEquipo}" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" icon="fa fa-user-plus"/>
             </div>
 
             <p:separator styleClass="separator ui-state-disabled" />
