@@ -8,7 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.RowEditEvent;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -175,14 +175,14 @@ public class CuerposEstadoBeanTest {
     @Test
     public void eliminarCuerpo_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
-        when(userService.existByCuerpoEstado(cuerpo)).thenThrow(SQLException.class);
+        when(userService.existByCuerpoEstado(cuerpo)).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
         verify(userService, times(1)).existByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(0)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
         
     }
     
@@ -208,12 +208,12 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void altaCuerpo_excepcion() {
-        when(cuerposEstadoService.save(cuerpoCaptor.capture())).thenThrow(SQLException.class);
+        when(cuerposEstadoService.save(cuerpoCaptor.capture())).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
@@ -243,13 +243,13 @@ public class CuerposEstadoBeanTest {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(cuerpo);
-        when(cuerposEstadoService.save(cuerpo)).thenThrow(SQLException.class);
+        when(cuerposEstadoService.save(cuerpo)).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.onRowEdit(event);
         
         verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(SQLException.class));
+                any(TransientDataAccessResourceException.class));
     }
     
     /**
