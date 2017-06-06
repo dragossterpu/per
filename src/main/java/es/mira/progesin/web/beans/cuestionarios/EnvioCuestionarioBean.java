@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
@@ -202,9 +203,9 @@ public class EnvioCuestionarioBean implements Serializable {
                     
                 }
             }
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                    "Se ha produdico un error en el envio del cuestionario", e.getMessage(), null);
+                    "Se ha produdico un error en el envio del cuestionario", "", null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         }
     }

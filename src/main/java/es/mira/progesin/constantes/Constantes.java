@@ -116,6 +116,11 @@ public final class Constantes {
     public static final double ESCALA = 0.6;
     
     /**
+     * Mensaje fallo envío correo
+     */
+    public static final String FALLOCORREO = "Se ha producido un error al enviar el correo electrónico de aviso";
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

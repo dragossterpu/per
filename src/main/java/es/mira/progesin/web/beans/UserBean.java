@@ -21,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelUsuarios;
 import es.mira.progesin.persistence.entities.ClaseUsuario;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
@@ -261,10 +263,14 @@ public class UserBean implements Serializable {
                         + user.getApellido2();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.USUARIOS.name());
-            } catch (DataAccessException e) {
+            } catch (DataAccessException e1) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta",
                         "Se ha producido un error al dar de alta el usuario. Inténtelo de nuevo más tarde");
-                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
+                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e1);
+            } catch (CorreoException e2) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                        Constantes.FALLOCORREO);
+                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e2);
             }
             
         }

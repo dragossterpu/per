@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelSolicitudes;
@@ -525,10 +526,14 @@ public class SolicitudDocPreviaBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.name());
             
-        } catch (DataAccessException | CorreoException e) {
+        } catch (DataAccessException e1) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al modificar la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e1);
+        } catch (CorreoException e2) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    Constantes.FALLOCORREO);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e2);
         }
     }
     
@@ -666,10 +671,14 @@ public class SolicitudDocPreviaBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.name());
             
-        } catch (DataAccessException | CorreoException e) {
+        } catch (DataAccessException e1) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e1);
+        } catch (CorreoException e2) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    Constantes.FALLOCORREO);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e2);
         }
     }
     

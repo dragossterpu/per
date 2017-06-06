@@ -533,7 +533,7 @@ public class ModificarModeloCuestionarioBean {
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-                    "Se ha producido un error al guardar el tipo de respuesta", e.getMessage());
+                    "Se ha producido un error al guardar el tipo de respuesta", "");
         }
     }
     
@@ -556,7 +556,7 @@ public class ModificarModeloCuestionarioBean {
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-                    "Se ha producido un error al guardar el cuestionario", e.getMessage());
+                    "Se ha producido un error al guardar el cuestionario", "");
         }
     }
     
@@ -577,7 +577,7 @@ public class ModificarModeloCuestionarioBean {
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-                    "Se ha producido un error al crear el cuestionario", e.getMessage());
+                    "Se ha producido un error al crear el cuestionario", "");
         }
     }
     

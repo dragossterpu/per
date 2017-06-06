@@ -17,6 +17,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -337,7 +338,7 @@ public class CuestionarioEnviadoBean implements Serializable {
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
         } catch (CorreoException e2) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
-                    "Se ha producido un error al enviar el correo electrónico de aviso al usuario provisional");
+                    Constantes.FALLOCORREO);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
         }
     }
@@ -396,7 +397,7 @@ public class CuestionarioEnviadoBean implements Serializable {
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e1);
         } catch (CorreoException e2) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
-                    "Se ha producido un error al enviar el correo electrónico de aviso al usuario provisional");
+                    Constantes.FALLOCORREO);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
         }
     }
