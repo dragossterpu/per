@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -271,20 +270,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             criteria.add(Restrictions.le("fechaLimiteCuestionario", fechaLimiteRespuesta));
         }
         
-        String parametro;
         if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getUsernameEnvio(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            criteria.add(Restrictions.ilike("usernameEnvio", parametro, MatchMode.ANYWHERE));
+            criteria.add(Restrictions.ilike("usernameEnvio", cuestionarioEnviadoBusqueda.getUsernameEnvio(),
+                    MatchMode.ANYWHERE));
         }
         
         criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
+            criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", cuestionarioEnviadoBusqueda.getNombreUnidad(),
+                    MatchMode.ANYWHERE));
         }
         if (cuestionarioEnviadoBusqueda.getIdInspeccion() != null) {
             criteria.add(
@@ -306,10 +300,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreEquipo(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            criteria.add(Restrictions.ilike("equipo.nombreEquipo", parametro, MatchMode.ANYWHERE));
+            criteria.add(Restrictions.ilike("equipo.nombreEquipo", cuestionarioEnviadoBusqueda.getNombreEquipo(),
+                    MatchMode.ANYWHERE));
         }
         
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -323,11 +315,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         
         criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(cuestionarioEnviadoBusqueda.getNombreCuestionario(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            criteria.add(
-                    Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario", parametro, MatchMode.ANYWHERE));
+            criteria.add(Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario",
+                    cuestionarioEnviadoBusqueda.getNombreCuestionario(), MatchMode.ANYWHERE));
         }
         
         criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join

@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,15 +46,14 @@ import lombok.Setter;
  * Bean para el gestor documental.
  * 
  * @author EZENTIS
- * 
  */
-
 @Setter
 @Getter
 @Controller("gestorDocumentalBean")
 @Scope("session")
-
-public class GestorDocumentalBean {
+public class GestorDocumentalBean implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     /**
      * Objeto de tipo Documento para el alta de nuevos documentos.

@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -81,7 +80,6 @@ public class EquipoService implements IEquipoService {
             Date fechaHasta = new Date(equipoBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
-        String parametro;
         if (equipoBusqueda.getNombreJefe() != null) {
             criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
         }
@@ -92,12 +90,10 @@ public class EquipoService implements IEquipoService {
         if (equipoBusqueda.getTipoEquipo() != null) {
             criteria.add(Restrictions.eq("tipoEquipo.id", equipoBusqueda.getTipoEquipo().getId()));
         }
-        if (equipoBusqueda.getNombreMiembro() != null && !equipoBusqueda.getNombreMiembro().isEmpty()) {
+        if (equipoBusqueda.getNombreMiembro() != null) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-            
-            parametro = Normalizer.normalize(equipoBusqueda.getNombreMiembro(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            subquery.add(Restrictions.ilike("miembro.nombreCompleto", parametro, MatchMode.ANYWHERE));
+            subquery.add(Restrictions.ilike("miembro.nombreCompleto", equipoBusqueda.getNombreMiembro(),
+                    MatchMode.ANYWHERE));
             subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));

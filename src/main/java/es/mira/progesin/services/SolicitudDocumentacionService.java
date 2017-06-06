@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -252,12 +251,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         }
         criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
         criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
-        String parametro;
         if (solicitudDocPreviaBusqueda.getNombreUnidad() != null) {
-            // TODO: Cambiar esta condición para que busque sin tildes/espacios por la parte de BDD
-            parametro = Normalizer.normalize(solicitudDocPreviaBusqueda.getNombreUnidad(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", parametro, MatchMode.ANYWHERE));
+            criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", solicitudDocPreviaBusqueda.getNombreUnidad(),
+                    MatchMode.ANYWHERE));
         }
         if (solicitudDocPreviaBusqueda.getIdInspeccion() != null) {
             criteria.add(

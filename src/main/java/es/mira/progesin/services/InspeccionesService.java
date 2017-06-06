@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -175,7 +174,6 @@ public class InspeccionesService implements IInspeccionesService {
      * @param criteria objeto criteria
      */
     private void consultaCriteriaInspecciones(InspeccionBusqueda busqueda, Criteria criteria) {
-        String parametro;
         
         if (busqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
@@ -219,10 +217,8 @@ public class InspeccionesService implements IInspeccionesService {
             criteria.add(Restrictions.eq("equipo", busqueda.getEquipo()));
         }
         
-        if (busqueda.getJefeEquipo() != null && !busqueda.getJefeEquipo().isEmpty()) {
-            parametro = Normalizer.normalize(busqueda.getJefeEquipo(), Normalizer.Form.NFKD)
-                    .replaceAll(Constantes.ACENTOS, "");
-            criteria.add(Restrictions.ilike("equipo.jefeEquipo", parametro, MatchMode.ANYWHERE));
+        if (busqueda.getJefeEquipo() != null) {
+            criteria.add(Restrictions.ilike("equipo.jefeEquipo", busqueda.getJefeEquipo(), MatchMode.ANYWHERE));
         }
         
         if (busqueda.getEstado() != null) {

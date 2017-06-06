@@ -74,7 +74,7 @@ public class GuiaPersonalizadaBean implements Serializable {
     /**
      * Fichero que contendrá la guía en formato Word para descargar.
      */
-    private StreamedContent file;
+    private transient StreamedContent file;
     
     /**
      * LazyModel para la visualización paginada de datos en la vista.
@@ -90,19 +90,19 @@ public class GuiaPersonalizadaBean implements Serializable {
      * Generador de documentos Word.
      */
     @Autowired
-    private WordGenerator wordGenerator;
+    private transient WordGenerator wordGenerator;
     
     /**
      * Servicio de registro de actividad.
      */
     @Autowired
-    private IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Servicio de guías personalizadas.
      */
     @Autowired
-    private IGuiaPersonalizadaService guiaPersonalizadaService;
+    private transient IGuiaPersonalizadaService guiaPersonalizadaService;
     
     /**
      * Busca las guías según los filtros introducidos en el formulario de búsqueda.
