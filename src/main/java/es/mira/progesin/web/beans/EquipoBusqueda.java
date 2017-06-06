@@ -81,23 +81,4 @@ public class EquipoBusqueda implements Serializable {
      */
     private RolEquipoEnum role;
     
-    /**
-     * Limpia valores seleccionados en anteriores búsquedas.
-     * 
-     * @author EZENTIS
-     */
-    public void resetValues() {
-        setFechaDesde(null);
-        setFechaHasta(null);
-        setNombreEquipo(null);
-        setTipoEquipo(null);
-        setJefeEquipo(null);
-        setMiembros(null);
-        setEstado(null);
-        setRole(null);
-        setNombreJefe(null);
-        setNombreMiembro(null);
-        setListaEquipos(null);
-    }
-    
 }

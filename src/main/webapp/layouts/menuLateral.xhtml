@@ -37,9 +37,8 @@
 
             </p:submenu>
             <p:submenu label="Inspecciones">
-                <p:menuitem value="Administrar equipos" outcome="/equipos/equipos">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+                <p:menuitem value="Administrar equipos" action="#{equiposBean.getFormularioBusquedaEquipos}"/>
+                  
                 <p:menuitem value="Búsqueda de inspecciones" action="#{inspeccionBean.getFormularioBusqueda}"/>
 
                 <p:menuitem value="Modelos de inspección" outcome="/inspecciones/modeloInspeccion/tiposInspeccion" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />

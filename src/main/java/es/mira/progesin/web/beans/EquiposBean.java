@@ -66,11 +66,6 @@ public class EquiposBean implements Serializable {
     private static final int NUMEROCOLUMNASLISTADOEQUIPOS = 4;
     
     /**
-     * Parámetro para controlar desde dónde se accede a la vista.
-     */
-    private String vieneDe;
-    
-    /**
      * Equipo.
      */
     private Equipo equipo;
@@ -231,15 +226,13 @@ public class EquiposBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de equipos a su estado inicial y borra los resultados de búsquedas anteriores
      * si se navega desde el menú u otra sección.
+     * @return ruta siguiente
      * 
      */
-    public void getFormularioBusquedaEquipos() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-            setTiposEquipo(tipoEquipoService.findAll());
-        }
-        
+    public String getFormularioBusquedaEquipos() {
+        setTiposEquipo(tipoEquipoService.findAll());
+        limpiarBusqueda();
+        return "/equipos/equipos?faces-redirect=true";
     }
     
     /**
@@ -247,7 +240,7 @@ public class EquiposBean implements Serializable {
      * 
      */
     public void limpiarBusqueda() {
-        equipoBusqueda.resetValues();
+        equipoBusqueda = new EquipoBusqueda();
         setEstado(null);
         model.setRowCount(0);
     }
