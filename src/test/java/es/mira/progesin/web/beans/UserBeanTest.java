@@ -36,8 +36,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelUsuarios;
+import es.mira.progesin.persistence.entities.ClaseUsuario;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Empleo;
+import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -288,12 +291,24 @@ public class UserBeanTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.web.beans.UserBean#limpiarBusqueda()}.
+     */
+    @Test
+    public void limpiarBusqueda() {
+        userBean.setModel(mock(LazyModelUsuarios.class));
+        userBean.limpiarBusqueda();
+        
+        assertThat(userBean.getUserBusqueda()).isNotNull();
+        assertThat(userBean.getModel().getRowCount()).isEqualTo(0);
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.UserBean#getFormularioBusquedaUsuarios()}.
      */
     @Test
     public void buscarUsuario() {
-        UserBusqueda userBusqueda = mock(UserBusqueda.class);
-        LazyModelUsuarios model = mock(LazyModelUsuarios.class);
+        UserBusqueda userBusqueda = new UserBusqueda();
+        LazyModelUsuarios model = new LazyModelUsuarios(userService);
         
         userBean.setUserBusqueda(userBusqueda);
         userBean.setModel(model);
@@ -302,6 +317,7 @@ public class UserBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.AUDITORIA.name()),
                 eq(SeccionesEnum.USUARIOS.name()));
+        assertThat(userBean.getEstadoUsuario()).isNull();
     }
     
     /**
@@ -368,7 +384,7 @@ public class UserBeanTest {
         verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del usuario"),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
         
-        assertThat(user.getFechaInactivo()).isNotNull();
+        assertThat(userBean.getUser().getFechaInactivo()).isNotNull();
     }
     
     /**
@@ -424,12 +440,27 @@ public class UserBeanTest {
      */
     @Test
     public void init() {
+        List<CuerpoEstado> listaCuerposEstado = new ArrayList<>();
+        List<PuestoTrabajo> listaPuestosTrabajo = new ArrayList<>();
+        List<Departamento> listaDepartamentos = new ArrayList<>();
+        List<ClaseUsuario> listaClases = new ArrayList<>();
+        
+        when(cuerpoEstadoService.findAll()).thenReturn(listaCuerposEstado);
+        when(puestoTrabajoRepository.findAll()).thenReturn(listaPuestosTrabajo);
+        when(departamentoRepository.findAll()).thenReturn(listaDepartamentos);
+        when(claseUsuarioRepository.findAll()).thenReturn(listaClases);
+        
         userBean.init();
         
-        verify(cuerpoEstadoService, times(1)).findAll();
-        verify(puestoTrabajoRepository, times(1)).findAll();
-        verify(departamentoRepository, times(1)).findAll();
-        verify(claseUsuarioRepository, times(1)).findAll();
+        assertThat(userBean.getPuestosTrabajo()).isNotNull();
+        assertThat(userBean.getCuerposEstado()).isNotNull();
+        assertThat(userBean.getListaDepartamentos()).isNotNull();
+        assertThat(userBean.getListadoClases()).isNotNull();
+        
+        assertThat(userBean.getPuestoTrabajoSeleccionado()).isNull();
+        assertThat(userBean.getCuerpoEstadoSeleccionado()).isNull();
+        assertThat(userBean.getEmpleoSeleccionado()).isNull();
+        assertThat(userBean.getDepartamentoSeleccionado()).isNull();
     }
     
     /**
