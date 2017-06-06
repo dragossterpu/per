@@ -57,11 +57,6 @@ public class RegActividadBean implements Serializable {
     private RegActividadBusqueda regActividadBusqueda;
     
     /**
-     * Parámetro para controlar desde dónde se accede a la vista.
-     */
-    private String vieneDe;
-    
-    /**
      * LazyModel para la visualización paginada de datos en la vista.
      */
     private LazyModelRegistro model;
@@ -98,15 +93,13 @@ public class RegActividadBean implements Serializable {
     
     /**
      * Limpia los parámetros de búsqueda y resultado si se accede a la página desde el menú lateral.
+     * @return ruta siguiente
      * 
      */
     
-    public void getFormularioRegActividad() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-        }
-        
+    public String getFormularioRegActividad() {
+        limpiarBusqueda();
+        return "/administracion/registro/registro?faces-redirect=true";
     }
     
     /**
@@ -115,7 +108,7 @@ public class RegActividadBean implements Serializable {
      */
     
     public void limpiarBusqueda() {
-        regActividadBusqueda.resetValues();
+        regActividadBusqueda = new RegActividadBusqueda();
         model.setRowCount(0);
     }
     

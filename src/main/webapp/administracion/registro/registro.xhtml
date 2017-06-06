@@ -1,14 +1,8 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-    <f:metadata>
-        <f:viewParam name="vieneDe" value="#{regActividadBean.vieneDe}" />
-    </f:metadata>
+
     <ui:define name="content">
 
         <h3>Búsqueda de registro de actividad</h3>
-
-        <h:form>
-            <p:remoteCommand name="onload" action="#{regActividadBean.getFormularioRegActividad}" autoRun="true" update="busquedalistaRegActividad" />
-        </h:form>
 
         <h:form id="busquedalistaRegActividad">
 
@@ -19,7 +13,6 @@
 
                     <h:outputLabel for="usernameRegActividad" value="Usuario del registro:" />
                     <p:autoComplete id="usernameRegActividad" minQueryLength="1" value="#{regActividadBean.regActividadBusqueda.usernameRegActividad}" completeMethod="#{regActividadBean.autocompletarUsuario}" effect="fade" />
-
 
                 </div>
 

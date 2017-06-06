@@ -46,15 +46,4 @@ public class RegActividadBusqueda implements Serializable {
      */
     private String tipoRegActividad;
     
-    /**
-     * Resetea los valores del objeto.
-     */
-    public void resetValues() {
-        this.setFechaDesde(null);
-        this.setFechaHasta(null);
-        this.setNombreSeccion(null);
-        this.setUsernameRegActividad(null);
-        this.setTipoRegActividad(null);
-    }
-    
 }

@@ -4,9 +4,7 @@
             <p:submenu label="Administración" rendered="#{p:ifGranted('ADMIN')}">
                 <p:menuitem value="Cuerpos" outcome="/administracion/cuerpos/cuerpos" />
                 <p:menuitem value="Tipos de equipo" outcome="/administracion/tipoequipo/tiposEquipo" />
-                <p:menuitem value="Registro de actividad" outcome="/administracion/registro/registro">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+                <p:menuitem value="Registro de actividad" action="#{regActividadBean.getFormularioRegActividad}"/>
                 <p:menuitem value="Sugerencias de mejora" outcome="/administracion/sugerencias/sugerenciasListado" />
                 <p:menuitem value="Papelera" outcome="/administracion/papelera/papelera">
                     <f:param name="vieneDe" value="menu" />
