@@ -82,11 +82,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     private static final String ASUNTO = "Asunto: ";
     
     /**
-     * Parámetro para controlar desde dónde se accede a la vista.
-     */
-    private String vieneDe;
-    
-    /**
      * Lista de booleanos para controlar la visibilidad de las columnas en la vista.
      */
     private List<Boolean> listaColumnToggler;
@@ -685,14 +680,13 @@ public class SolicitudDocPreviaBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de solicitudes de documentación previa a su estado inicial y borra los
      * resultados de búsquedas anteriores si se navega desde el menú u otra sección.
+     * @return ruta siguiente
      * 
      * 
      */
-    public void getFormBusquedaSolicitudes() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-        }
+    public String getFormBusquedaSolicitudes() {
+        limpiarBusqueda();
+        return "/solicitudesPrevia/busquedaSolicitudesDocPrevia?faces-redirect=true";
         
     }
     
@@ -702,7 +696,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      * 
      */
     public void limpiarBusqueda() {
-        solicitudDocPreviaBusqueda.resetValues();
+        solicitudDocPreviaBusqueda = new SolicitudDocPreviaBusqueda();
         model.setRowCount(0);
     }
     

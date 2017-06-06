@@ -66,19 +66,4 @@ public class SolicitudDocPreviaBusqueda implements Serializable {
      */
     private String nombreUnidad;
     
-    /**
-     * Limpia valores seleccionados en anteriores búsquedas.
-     */
-    public void resetValues() {
-        setFechaDesde(null);
-        setFechaHasta(null);
-        setEstado(null);
-        setUsuarioCreacion(null);
-        setIdInspeccion(null);
-        setAnioInspeccion(null);
-        setTipoInspeccion(null);
-        setAmbitoInspeccion(null);
-        setNombreUnidad(null);
-    }
-    
 }
