@@ -206,10 +206,10 @@ public class EquiposBeanTest {
      */
     @Test
     public void getFormularioBusquedaEquipos() {
-        equipoBean.setVieneDe("menu");
         equipoBean.setModel(mock(LazyModelEquipos.class));
-        equipoBean.getFormularioBusquedaEquipos();
+        String ruta = equipoBean.getFormularioBusquedaEquipos();
         verify(tipoEquipoService, times(1)).findAll();
+        assertThat(ruta).isEqualTo("/equipos/equipos?faces-redirect=true");
     }
     
     /**
@@ -219,7 +219,9 @@ public class EquiposBeanTest {
     public void limpiarBusqueda() {
         equipoBean.setModel(mock(LazyModelEquipos.class));
         equipoBean.limpiarBusqueda();
-        verify(equipoBusqueda, times(1)).resetValues();
+        assertThat(equipoBean.getEquipoBusqueda()).isNotNull();
+        assertThat(equipoBean.getEstado()).isNull();
+        assertThat(equipoBean.getModel().getRowCount()).isEqualTo(0);
     }
     
     /**
