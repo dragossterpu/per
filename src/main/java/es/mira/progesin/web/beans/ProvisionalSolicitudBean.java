@@ -123,11 +123,6 @@ public class ProvisionalSolicitudBean implements Serializable {
     private Map<String, String> extensiones;
     
     /**
-     * Parámetro GET peticiones HTTP que indica si viene del menú.
-     */
-    private String vieneDe;
-    
-    /**
      * Verificador de extensiones.
      */
     @Autowired
@@ -142,15 +137,14 @@ public class ProvisionalSolicitudBean implements Serializable {
     /**
      * Carga los datos relativos a la solicitud de documentación previa en curso para el usuario provisional logueado
      * con su correo como username.
+     * @return ruta siguiente
      */
-    public void visualizarSolicitud() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            this.vieneDe = null;
-            String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-            solicitudDocumentacionPrevia = solicitudDocumentacionService
-                    .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
-            listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
-        }
+    public String visualizarSolicitud() {
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        solicitudDocumentacionPrevia = solicitudDocumentacionService
+                .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
+        listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+        return "/provisionalSolicitud/provisionalSolicitud?faces-redirect=true";
     }
     
     /**

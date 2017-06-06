@@ -1,15 +1,7 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
-    <f:metadata>
-        <f:viewParam name="vieneDe" value="#{provisionalSolicitudBean.vieneDe}" />
-    </f:metadata>
-    <ui:define name="content">
-
+      
+       <ui:define name="content">
         <ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
-
-        <h:form>
-            <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.visualizarSolicitud}" update="form" autoRun="true" />
-        </h:form>
-
         <h:form id="form">
 
             <div class="bloqueVistaTitulo">
@@ -35,9 +27,11 @@
                     <strong>DESTINATARIO: #{provisionalSolicitudBean.solicitudDocumentacionPrevia.destinatario}</strong>
                 </p>
                 <p>
-                    <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
+                    <strong>
+                        <h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-                        </h:outputText></strong>
+                        </h:outputText>
+                    </strong>
                 </p>
             </div>
             <div class="bloqueVista">
