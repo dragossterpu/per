@@ -268,7 +268,7 @@ public class UserBean implements Serializable {
                         "Se ha producido un error al dar de alta el usuario. Inténtelo de nuevo más tarde");
                 regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e1);
             } catch (CorreoException e2) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         Constantes.FALLOCORREO);
                 regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e2);
             }
@@ -361,10 +361,7 @@ public class UserBean implements Serializable {
                     + user.getApellido2();
             
             if (estadoUsuario != user.getEstado().name()) {
-                String descripcionEstado = "Modificación del estado del usuario :" + " " + user.getNombre() + " "
-                        + user.getApellido1() + " " + user.getApellido2();
-                regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.USUARIOS.name());
+                cambiarEstado(user);
             }
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
@@ -379,6 +376,23 @@ public class UserBean implements Serializable {
     }
     
     /**
+     * Cambia el estado de un usuario.
+     * 
+     * @param usuario usuario a modificar
+     */
+    private void cambiarEstado(User usuario) {
+        String descripcionEstado = "Modificación del estado del usuario :" + " " + usuario.getNombre() + " "
+                + usuario.getApellido1() + " " + usuario.getApellido2();
+        regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
+                SeccionesEnum.USUARIOS.name());
+        if (EstadoEnum.INACTIVO.equals(usuario.getEstado())) {
+            usuario.setFechaInactivo(new Date());
+        } else {
+            usuario.setFechaInactivo(null);
+        }
+    }
+    
+    /**
      * Genera una contraseña nueva y se la envía por correo al usuario.
      */
     public void restaurarClave() {
@@ -390,7 +404,7 @@ public class UserBean implements Serializable {
             correo.envioCorreo(user.getCorreo(), "Restauración de la contraseña", cuerpoCorreo);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
                     "Se ha enviado un correo al usuario con la nueva contraseña");
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
                     "Se ha producido un error en la regeneración o envío de la contraseña");
             // Guardamos loe posibles errores en bbdd

@@ -542,12 +542,17 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onToggle(ToggleEvent)}.
      */
-    @Ignore
     @Test
     public void onToggle() {
-        // ToggleEvent e = mock(ToggleEvent.class);
-        //
-        // solicitudDocPreviaBean.onToggle(e);
+        ToggleEvent eventMock = mock(ToggleEvent.class);
+        when(eventMock.getData()).thenReturn(0);
+        List<Boolean> listaToogle = new ArrayList<>();
+        listaToogle.add(Boolean.FALSE);
+        solicitudDocPreviaBean.setListaColumnToggler(listaToogle);
+        
+        solicitudDocPreviaBean.onToggle(eventMock);
+        
+        assertThat(listaToogle.get(0)).isFalse();
         
     }
     

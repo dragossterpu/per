@@ -5,7 +5,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -216,5 +218,18 @@ public class UserServiceTest {
         userService.existByCuerpoEstado(cuerpo);
         verify(userRepositoryMock, times(1)).existsByCuerpoEstado(cuerpo);
         
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#save(java.util.List)}.
+     */
+    @Test
+    public void save_listaUsers() {
+        List<User> listaUsuarios = new ArrayList<>();
+        User user = User.builder().username("ezentis").build();
+        listaUsuarios.add(user);
+        userService.save(listaUsuarios);
+        
+        verify(userRepositoryMock, times(1)).save(listaUsuarios);
     }
 }

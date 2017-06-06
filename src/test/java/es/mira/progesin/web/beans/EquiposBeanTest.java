@@ -397,14 +397,17 @@ public class EquiposBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#onToggle(ToggleEvent)}.
      */
-    @Ignore
     @Test
     public void onToggle() {
+        ToggleEvent eventMock = mock(ToggleEvent.class);
+        when(eventMock.getData()).thenReturn(0);
+        List<Boolean> listaToogle = new ArrayList<>();
+        listaToogle.add(Boolean.FALSE);
+        equipoBean.setColumnasVisibles(listaToogle);
         
-        // equipoBean.setColumnasVisibles(new ArrayList<>());
-        // ToggleEvent e = mock(ToggleEvent.class);
-        //
-        // equipoBean.onToggle(e);
+        equipoBean.onToggle(eventMock);
+        
+        assertThat(listaToogle.get(0)).isFalse();
     }
     
     /**
