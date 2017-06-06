@@ -6,9 +6,7 @@
                 <p:menuitem value="Tipos de equipo" outcome="/administracion/tipoequipo/tiposEquipo" />
                 <p:menuitem value="Registro de actividad" action="#{regActividadBean.getFormularioRegActividad}"/>
                 <p:menuitem value="Sugerencias de mejora" outcome="/administracion/sugerencias/sugerenciasListado" />
-                <p:menuitem value="Papelera" outcome="/administracion/papelera/papelera">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+                <p:menuitem value="Papelera" action="#{gestorDocumentalBean.resetBusquedaEliminados}"/>
                 <p:menuitem value="Puestos de trabajo" outcome="/administracion/puestosTrabajo/puestosTrabajo" />
                 <p:menuitem value="Departamentos" outcome="/administracion/departamentos/departamentos" />
             </p:submenu>
@@ -34,9 +32,7 @@
             </p:submenu>
 
             <p:submenu label="Gestor Documental">
-                <p:menuitem value="Búsqueda de documentos" outcome="/gestorDocumental/buscarDocumento">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+                <p:menuitem value="Búsqueda de documentos" action="#{gestorDocumentalBean.resetBusqueda}"/>
             </p:submenu>
             <p:submenu label="Guías">
                 <p:menuitem value="Modelos de guía" outcome="/guias/buscaGuias">

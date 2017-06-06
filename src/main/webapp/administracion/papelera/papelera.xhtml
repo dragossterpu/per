@@ -2,16 +2,8 @@
     <ui:define name="content">
 
         <h2>Papelera</h2>
-        <f:metadata>
-            <f:viewParam name="vieneDe" value="#{gestorDocumentalBean.vieneDe}" />
-        </f:metadata>
 
-        <h:form>
-            <p:remoteCommand name="onload" action="#{gestorDocumentalBean.resetBusquedaEliminados}" autoRun="true" update=":form" />
-        </h:form>
         <h:form id="form">
-
-
 
             <p:outputPanel layout="block" id="panelDocumentos">
 
@@ -79,8 +71,6 @@
                         </p:commandButton>
                     </p:column>
 
-
-
                 </p:dataTable>
             </p:outputPanel>
 
@@ -103,8 +93,6 @@
                     <p:button value="Cerrar" outcome="/administracion/papelera/papelera?faces-redirect=true" />
                 </div>
             </p:dialog>
-
-
         </h:form>
 
     </ui:define>

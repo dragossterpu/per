@@ -78,18 +78,4 @@ public class DocumentoBusqueda implements Serializable {
         this.setDescripcion(original.getDescripcion());
     }
     
-    /**
-     * Limpia los valores del objeto.
-     * 
-     */
-    public void resetValues() {
-        this.setFechaDesde(null);
-        this.setFechaHasta(null);
-        this.setNombre(null);
-        this.setTipoDocumento(null);
-        this.setMateriaIndexada(null);
-        this.setDescripcion(null);
-        this.setInspeccion(null);
-    }
-    
 }

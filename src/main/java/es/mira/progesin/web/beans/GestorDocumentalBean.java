@@ -46,11 +46,14 @@ import lombok.Setter;
  * Bean para el gestor documental.
  * 
  * @author EZENTIS
+ * 
  */
+
 @Setter
 @Getter
 @Controller("gestorDocumentalBean")
 @Scope("session")
+
 public class GestorDocumentalBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -68,17 +71,12 @@ public class GestorDocumentalBean implements Serializable {
     /**
      * Objeto que contendrá el fichero a descargar.
      */
-    private StreamedContent file;
+    private transient StreamedContent file;
     
     /**
      * Nombre del documento.
      */
     private String nombreDoc;
-    
-    /**
-     * Parámetro para controlar desde dónde se accede a esta vista.
-     */
-    private String vieneDe;
     
     /**
      * Lista donde se almacenan las inspecciones que se van a asociar a un documento.
@@ -110,37 +108,37 @@ public class GestorDocumentalBean implements Serializable {
      * Servicio de documentos.
      */
     @Autowired
-    private IDocumentoService documentoService;
+    private transient IDocumentoService documentoService;
     
     /**
      * Servicio de alertas.
      */
     @Autowired
-    private IAlertaService alertaService;
+    private transient IAlertaService alertaService;
     
     /**
      * Servicio de notificaciones.
      */
     @Autowired
-    private INotificacionService notificacionService;
+    private transient INotificacionService notificacionService;
     
     /**
      * Servicio de registro de actividad.
      */
     @Autowired
-    private IRegistroActividadService registroActividadService;
+    private transient IRegistroActividadService registroActividadService;
     
     /**
      * Servicio de inspecciones.
      */
     @Autowired
-    private IInspeccionesService inspeccionesService;
+    private transient IInspeccionesService inspeccionesService;
     
     /**
      * Repositorio de tipos de documento.
      */
     @Autowired
-    private ITipoDocumentoRepository tipoDocumentoRepository;
+    private transient ITipoDocumentoRepository tipoDocumentoRepository;
     
     /**
      * Lazy Model para la consulta paginada de documentos en base de datos.
@@ -165,27 +163,29 @@ public class GestorDocumentalBean implements Serializable {
     /**
      * Resetea el objeto de búsqueda, limpia la lista de resultados y establece el booleano de eliminado a false para
      * indicar que sólo se van a buscar documentos no eliminados.
+     * @return ruta siguiente
      */
-    public void resetBusqueda() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            documentoBusqueda.resetValues();
-            model.setRowCount(0);
-            this.vieneDe = null;
-        }
+    public String resetBusqueda() {
+        documentoBusqueda = new DocumentoBusqueda();
+        model.setRowCount(0);
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";
         documentoBusqueda.setEliminado(false);
+        return "/gestorDocumental/buscarDocumento?faces-redirect=true";
     }
     
     /**
      * Resetea el objeto de búsqueda, limpia la lista de resultados y establece el booleano de eliminado a false para
      * indicar que sólo se van a buscar documentos eliminados.
+     * @return ruta
      */
-    public void resetBusquedaEliminados() {
+    public String resetBusquedaEliminados() {
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";
         documentoBusqueda.setEliminado(true);
         buscaDocumento();
+        return "/administracion/papelera/papelera?faces-redirect=true";
+        
     }
     
     /**
@@ -268,7 +268,7 @@ public class GestorDocumentalBean implements Serializable {
      * Reseteo del objeto de búsqueda y limpieza de la lista de resultados.
      */
     public void limpiarBusqueda() {
-        documentoBusqueda.resetValues();
+        documentoBusqueda = new DocumentoBusqueda();
         model.setRowCount(0);
     }
     
@@ -301,7 +301,6 @@ public class GestorDocumentalBean implements Serializable {
         documento = new Documento();
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";
-        
     }
     
     /**
