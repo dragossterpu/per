@@ -10,8 +10,10 @@ import javax.faces.application.FacesMessage;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -525,6 +527,15 @@ public class InspeccionBean {
      */
     public void desAsociarInspeccion(Inspeccion insp) {
         inspeccionesAsignadasActuales.remove(insp);
+    }
+    
+    /**
+     * Controla las columnas visibles en la lista de resultados del buscador.
+     * 
+     * @param e checkbox de la columna seleccionada
+     */
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
 }
