@@ -121,6 +121,11 @@ public final class Constantes {
     public static final String FALLOCORREO = "Se ha producido un error al enviar el correo electrónico de aviso";
     
     /**
+     * Constante que contiene el texto "La guía '".
+     */
+    public static final String LAGUIA = "La guía '";
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

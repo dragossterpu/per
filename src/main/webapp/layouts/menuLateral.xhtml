@@ -10,14 +10,17 @@
                 <p:menuitem value="Puestos de trabajo" outcome="/administracion/puestosTrabajo/puestosTrabajo" />
                 <p:menuitem value="Departamentos" outcome="/administracion/departamentos/departamentos" />
             </p:submenu>
+            
             <p:submenu label="Usuarios" id="menuUsuarios">
                 <p:menuitem value="Administrar usuarios" action="#{userBean.getFormularioBusquedaUsuarios}" />
             </p:submenu>
+            
             <p:submenu label="Solicitudes previas cuestionario">
                 <p:menuitem value="Tipos documentación previa" outcome="/documentacionPrevia/documentacionPrevia" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,GABINETE,ADMIN')}" />
                 <p:menuitem value="Crear solicitud documentación" outcome="/solicitudesPrevia/crearSolicitud" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,ADMIN')}" />
                 <p:menuitem value="Búsqueda de solicitudes" action="#{solicitudDocPreviaBean.getFormBusquedaSolicitudes}"/>
             </p:submenu>
+            
             <p:submenu label="Cuestionarios">
                 <p:menuitem value="Modelos de cuestionario" outcome="/cuestionarios/modelosCuestionarios" />
                 <p:menuitem value="Búsqueda cuest. personalizados" action="#{cuestionarioPersonalizadoBean.getFormBusquedaModelosCuestionario}"/>
@@ -27,22 +30,16 @@
             <p:submenu label="Gestor Documental">
                 <p:menuitem value="Búsqueda de documentos" action="#{gestorDocumentalBean.resetBusqueda}"/>
             </p:submenu>
+            
             <p:submenu label="Guías">
-                <p:menuitem value="Modelos de guía" outcome="/guias/buscaGuias">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
-                <p:menuitem value="Búsqueda guías personalizadas" outcome="/guias/buscaGuiasPersonalizadas">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
-
+                <p:menuitem value="Modelos de guía" action="#{guiaBean.getFormularioBusqueda}"/>
+                <p:menuitem value="Búsqueda guías personalizadas" action="#{guiaPersonalizadaBean.getFormularioBusqueda}"/>
             </p:submenu>
+            
             <p:submenu label="Inspecciones">
                 <p:menuitem value="Administrar equipos" action="#{equiposBean.getFormularioBusquedaEquipos}"/>
-                  
                 <p:menuitem value="Búsqueda de inspecciones" action="#{inspeccionBean.getFormularioBusqueda}"/>
-
                 <p:menuitem value="Modelos de inspección" outcome="/inspecciones/modeloInspeccion/tiposInspeccion" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
-
                 <p:menuitem value="Estadísticas" outcome="/enConstruccion" />
             </p:submenu>
 
@@ -52,7 +49,6 @@
                 <p:menuitem value="Búsqueda modelos de informe" outcome="/enConstruccion" />
             </p:submenu>
         </p:menu>
-
 
         <p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}">
             <p:submenu label="Solicitud previa cuestionario">

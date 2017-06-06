@@ -51,15 +51,4 @@ public class GuiaBusqueda implements Serializable {
      */
     private EstadoEnum estado;
     
-    /**
-     * Limpia los valores del objeto.
-     */
-    public void resetValues() {
-        this.setFechaDesde(null);
-        this.setFechaHasta(null);
-        this.setUsuarioCreacion(null);
-        this.setNombre(null);
-        this.setTipoInspeccion(null);
-        this.setEstado(null);
-    }
 }

@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelGuias;
 import es.mira.progesin.persistence.entities.Guia;
@@ -51,11 +52,6 @@ public class GuiaBean {
      * Guía.
      */
     private Guia guia;
-    
-    /**
-     * Parámetro para controlar desde dónde se accede a la vista.
-     */
-    private String vieneDe;
     
     /**
      * Objeto que almacena los criterios de búsquedad.
@@ -101,16 +97,6 @@ public class GuiaBean {
      * Discriminador para diferenciar si se está dando de alta una guía.
      */
     boolean alta;
-    
-    /**
-     * Constante que contiene el texto "La guía '".
-     */
-    private static final String LAGUIA = "La guía '";
-    
-    /**
-     * Constante que contiene el texto "ERROR".
-     */
-    private static final String ERROR = "ERROR";
     
     /**
      * LazyModel para la visualización paginada de guías.
@@ -188,7 +174,7 @@ public class GuiaBean {
      */
     
     public void limpiarBusqueda() {
-        busqueda.resetValues();
+        busqueda = new GuiaBusqueda();
         model.setRowCount(0);
     }
     
@@ -313,7 +299,7 @@ public class GuiaBean {
         try {
             setFile(wordGenerator.crearDocumentoGuia(guide));
         } catch (ProgesinException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del documento Word");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
         }
@@ -342,7 +328,8 @@ public class GuiaBean {
             guia.setPasos(listaPasosGrabar);
             grabaGuia();
         } else {
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, ERROR, mensajeError, null);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE, mensajeError,
+                    null);
             
         }
     }
@@ -365,14 +352,15 @@ public class GuiaBean {
                 } else {
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
                             "La guía ha sido modificada con éxito ");
-                    regActividadService.altaRegActividad(LAGUIA.concat(guia.getNombre().concat("' ha sido modificada")),
+                    regActividadService.altaRegActividad(
+                            Constantes.LAGUIA.concat(guia.getNombre().concat("' ha sido modificada")),
                             TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
                 }
                 
             }
             
         } catch (DataAccessException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al grabar la guía");
             regActividadService.altaRegActividadError(TipoRegistroEnum.ERROR.name(), e);
         }
@@ -410,15 +398,13 @@ public class GuiaBean {
     
     /**
      * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral.
+     * @return ruta siguiente
      * 
      */
     
-    public void getFormularioBusqueda() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-        }
-        
+    public String getFormularioBusqueda() {
+        limpiarBusqueda();
+        return "/guias/buscaGuias?faces-redirect=true";
     }
     
     /**
@@ -474,7 +460,7 @@ public class GuiaBean {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensajeError, "", "message");
             }
         } catch (DataAccessException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, ERROR,
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar la guía personalizada");
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
@@ -525,7 +511,7 @@ public class GuiaBean {
             guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             if (guiaService.guardaGuia(guiaBaja) != null) {
                 regActividadService.altaRegActividad(
-                        LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
+                        Constantes.LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
@@ -551,7 +537,7 @@ public class GuiaBean {
             } else {
                 guiaService.eliminar(guiaEliminar);
                 regActividadService.altaRegActividad(
-                        LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
+                        Constantes.LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
                                 .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
@@ -573,7 +559,7 @@ public class GuiaBean {
             guiaActivar.setUsernameAnulacion(null);
             if (guiaService.guardaGuia(guiaActivar) != null) {
                 regActividadService.altaRegActividad(
-                        LAGUIA.concat(guiaActivar.getNombre().concat("' ha sido activada")),
+                        Constantes.LAGUIA.concat(guiaActivar.getNombre().concat("' ha sido activada")),
                         TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             

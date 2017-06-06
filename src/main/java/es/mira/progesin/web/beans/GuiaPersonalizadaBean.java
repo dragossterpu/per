@@ -52,11 +52,6 @@ public class GuiaPersonalizadaBean implements Serializable {
     private GuiaPersonalizada guiaPersonalizada;
     
     /**
-     * Parámetro para controlar desde dónde se accede a la vista.
-     */
-    private String vieneDe;
-    
-    /**
      * Objeto que contiene los criterios de búsqueda.
      */
     private GuiaBusqueda guiaPersonalizadaBusqueda;
@@ -109,7 +104,6 @@ public class GuiaPersonalizadaBean implements Serializable {
      * 
      */
     public void buscarGuia() {
-        
         model.setBusqueda(guiaPersonalizadaBusqueda);
         model.load(0, 20, "fechaCreacion", SortOrder.DESCENDING, null);
         cargaMapaInspecciones();
@@ -136,7 +130,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     
     public void limpiarBusqueda() {
-        guiaPersonalizadaBusqueda.resetValues();
+        guiaPersonalizadaBusqueda = new GuiaBusqueda();
         model.setRowCount(0);
     }
     
@@ -202,15 +196,13 @@ public class GuiaPersonalizadaBean implements Serializable {
     
     /**
      * Limpia el menú de búsqueda si se accede a la vista desde el menú lateral.
+     * @return ruta siguiente
      * 
      */
     
-    public void getFormularioBusqueda() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiarBusqueda();
-            this.vieneDe = null;
-        }
-        
+    public String getFormularioBusqueda() {
+        limpiarBusqueda();
+        return "/guias/buscaGuiasPersonalizadas?faces-redirect=true";
     }
     
     /**
