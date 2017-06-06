@@ -88,23 +88,4 @@ public class CuestionarioEnviadoBusqueda implements Serializable {
      */
     private ModeloCuestionario modeloCuestionarioSeleccionado;
     
-    /**
-     * Reseteo de los campos del buscador.
-     */
-    public void limpiar() {
-        setFechaDesde(null);
-        setFechaHasta(null);
-        setFechaLimiteRespuesta(null);
-        setEstado(null);
-        setUsernameEnvio(null);
-        setIdInspeccion(null);
-        setAnioInspeccion(null);
-        setTipoInspeccion(null);
-        setAmbitoInspeccion(null);
-        setNombreEquipo(null);
-        setNombreUnidad(null);
-        setNombreCuestionario(null);
-        setModeloCuestionarioSeleccionado(null);
-    }
-    
 }

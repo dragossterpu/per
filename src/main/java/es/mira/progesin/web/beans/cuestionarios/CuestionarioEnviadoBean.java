@@ -79,11 +79,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     private VisualizarCuestionario visualizarCuestionario;
     
     /**
-     * Parámetro GET peticiones HTTP que indica si viene del menú.
-     */
-    private String vieneDe;
-    
-    /**
      * Variable auxiliar para validar modificaciones de la fecha limite de cumplimentacion del cuestionario.
      */
     private Date backupFechaLimiteCuestionario;
@@ -158,19 +153,18 @@ public class CuestionarioEnviadoBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de modelos de cuestionario a su estado inicial y borra los resultados de
      * búsquedas anteriores si se navega desde el menú u otra sección.
+     * @return ruta siguiente
      */
-    public void getFormBusquedaCuestionarios() {
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiar();
-            this.vieneDe = null;
-        }
+    public String getFormBusquedaCuestionarios() {
+        limpiar();
+        return "/cuestionarios/busquedaCuestionarios?faces-redirect=true";
     }
     
     /**
      * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda.
      */
     public void limpiar() {
-        cuestionarioEnviadoBusqueda.limpiar();
+        cuestionarioEnviadoBusqueda = new CuestionarioEnviadoBusqueda();
         model.setRowCount(0);
     }
     

@@ -52,11 +52,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     private CuestionarioPersonalizadoBusqueda cuestionarioBusqueda;
     
     /**
-     * Variable para saber de dónde viene la navegación.
-     */
-    private String vieneDe;
-    
-    /**
      * Servicio de cuestionarios personalizados.
      */
     @Autowired
@@ -101,14 +96,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * búsquedas anteriores si se navega desde el menú u otra sección.
      * 
      * @author EZENTIS
+     * @return siguiente ruta
      */
-    public void getFormBusquedaModelosCuestionario() {
-        
-        if ("menu".equalsIgnoreCase(this.vieneDe)) {
-            limpiar();
-            this.vieneDe = null;
-        }
-        
+    public String getFormBusquedaModelosCuestionario() {
+        limpiar();
+        return "/cuestionarios/busquedaModelosCuestionarios?faces-redirect=true";
     }
     
     /**

@@ -20,13 +20,8 @@
             </p:submenu>
             <p:submenu label="Cuestionarios">
                 <p:menuitem value="Modelos de cuestionario" outcome="/cuestionarios/modelosCuestionarios" />
-                <p:menuitem value="Búsqueda cuest. personalizados" outcome="/cuestionarios/busquedaModelosCuestionarios">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
-
-                <p:menuitem value="Búsqueda cuest. enviados" outcome="/cuestionarios/busquedaCuestionarios">
-                    <f:param name="vieneDe" value="menu" />
-                </p:menuitem>
+                <p:menuitem value="Búsqueda cuest. personalizados" action="#{cuestionarioPersonalizadoBean.getFormBusquedaModelosCuestionario}"/>
+                <p:menuitem value="Búsqueda cuest. enviados" action="#{cuestionarioEnviadoBean.getFormBusquedaCuestionarios}"/>
             </p:submenu>
 
             <p:submenu label="Gestor Documental">

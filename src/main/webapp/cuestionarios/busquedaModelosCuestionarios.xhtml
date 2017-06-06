@@ -1,17 +1,11 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-    <f:metadata>
-        <f:viewParam name="vieneDe" value="#{cuestionarioPersonalizadoBean.vieneDe}" />
-    </f:metadata>
+   
     <ui:define name="content">
 
         <ui:param name="esJefeInspeccion" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="esEquipo" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,ADMIN')}" />
 
         <h3>Búsqueda de modelos de cuestionarios personalizados</h3>
-
-        <h:form>
-            <p:remoteCommand name="onload" action="#{cuestionarioPersonalizadoBean.getFormBusquedaModelosCuestionario}" update="busquedaCuestionario" autoRun="true" />
-        </h:form>
 
         <h:form id="busquedaCuestionario">
 
