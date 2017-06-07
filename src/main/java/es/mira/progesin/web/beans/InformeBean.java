@@ -17,9 +17,11 @@ import com.itextpdf.text.DocumentException;
 
 import es.mira.progesin.persistence.entities.AreaInforme;
 import es.mira.progesin.persistence.entities.Informe;
+import es.mira.progesin.persistence.entities.ModeloInforme;
 import es.mira.progesin.persistence.entities.RespuestaInforme;
 import es.mira.progesin.persistence.entities.SubareaInforme;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.services.RegistroActividadService;
@@ -71,6 +73,10 @@ public class InformeBean implements Serializable {
      */
     @Autowired
     private transient IModeloInformeService modeloInformeService;
+    
+    // BORRAR SOLO PRUEBAS
+    @Autowired
+    private transient IModeloInformeRepository modeloInformeRepository;
     
     /**
      * Generador de PDFs a partir de código html.
@@ -138,9 +144,8 @@ public class InformeBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        // informe = informeService.findOne(1L);
-        // setAreasInforme(crearAreasInforme(informe.getModelo()));
-        // setMapaAreaSubareas(crearMapaAreasSubareas());
+        ModeloInforme modelo = modeloInformeRepository.findDistinctById(1L);
+        informe = Informe.builder().modelo(modelo).build();
         // if (informe != null) {
         // try {
         // texto = new String(informe.getRespuestas().get(0).getRespuesta(), "UTF-8");

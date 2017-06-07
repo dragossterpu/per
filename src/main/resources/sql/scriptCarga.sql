@@ -7,14 +7,14 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  01/06/2017    
+prompt    Actualización:  07/06/2017    
 prompt =========================================================================
 
 
 prompt =========================================================================
 prompt + Tarea1
 prompt =========================================================================
-prompt Ejecutando borrado de secuencias...
+prompt Ejecutando borrado de tablas y secuencias...
 
 BEGIN
   FOR cur_rec IN (SELECT object_name, object_type 
@@ -77,6 +77,16 @@ prompt =========================================================================
     ID_CUESTIONARIO NUMBER(10,0), 
     ORDEN NUMBER(10,0), 
     USERNAME_BAJA VARCHAR2(255 CHAR)
+   ) ;
+/
+prompt =========================================================================
+prompt  Creacion tabla  AREAS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE AREAS_INFORME 
+   (	ID NUMBER(19,0), 
+	DESCRIPCION VARCHAR2(1000 CHAR), 
+	MODELO_INFORME_ID NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -332,6 +342,16 @@ prompt =========================================================================
    ) ;
 /
 prompt =========================================================================
+prompt  Creacion tabla  INFORMES
+prompt =========================================================================
+
+  CREATE TABLE INFORMES 
+   (   ID NUMBER(19,0), 
+	INSPECCION_ID NUMBER(19,0), 
+	MODELO_INFORME_ID NUMBER(19,0) 
+   ) ;
+/
+prompt =========================================================================
 prompt  Creacion tabla  INSPECCIONES
 prompt =========================================================================
 
@@ -389,6 +409,15 @@ prompt =========================================================================
    (    ID NUMBER(10,0), 
     CODIGO VARCHAR2(255 CHAR), 
     DESCRIPCION VARCHAR2(255 CHAR)
+   ) ;
+/
+prompt =========================================================================
+prompt  Creacion tabla  MODELOS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE MODELOS_INFORME 
+   (    ID NUMBER(19,0), 
+	NOMBRE VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -532,6 +561,16 @@ prompt =========================================================================
    ) ;
 /
 prompt =========================================================================
+prompt  Creacion tabla  RESPUESTAS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE RESPUESTAS_INFORME 
+   (    RESPUESTA BLOB, 
+	INFORME_ID NUMBER(19,0), 
+	SUBAREA_ID NUMBER(19,0)
+   ) ;
+/
+prompt =========================================================================
 prompt  Creacion tabla  SOLICITUD_DOC_PREVIA
 prompt =========================================================================
 
@@ -569,6 +608,16 @@ prompt =========================================================================
     USUARIO_FINALIZACION VARCHAR2(255 CHAR), 
     USUARIO_NO_CONFORME VARCHAR2(255 CHAR), 
     ID_INSPECCION NUMBER(19,0)
+   ) ;
+/
+prompt =========================================================================
+prompt  Creacion tabla  SUBAREAS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE SUBAREAS_INFORME 
+   (    ID NUMBER(19,0), 
+	DESCRIPCION VARCHAR2(1000 CHAR), 
+	AREA_ID NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -1305,6 +1354,61 @@ prompt =========================================================================
   ALTER TABLE USERS ADD CONSTRAINT FK_U_PUESTO FOREIGN KEY (ID_PUESTO)
       REFERENCES PUESTOSTRABAJO (ID) ENABLE;
 /
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  MODELOS_INFORME
+prompt =========================================================================
+
+  ALTER TABLE MODELOS_INFORME MODIFY (ID NOT NULL ENABLE);
+  ALTER TABLE MODELOS_INFORME MODIFY (NOMBRE NOT NULL ENABLE);
+  ALTER TABLE MODELOS_INFORME ADD PRIMARY KEY (ID)
+      USING INDEX  ENABLE;
+/
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  AREAS_INFORME
+prompt =========================================================================
+
+  ALTER TABLE AREAS_INFORME MODIFY (ID NOT NULL ENABLE);
+  ALTER TABLE AREAS_INFORME MODIFY (DESCRIPCION NOT NULL ENABLE);
+  ALTER TABLE AREAS_INFORME ADD PRIMARY KEY (ID)
+      USING INDEX  ENABLE;
+  ALTER TABLE AREAS_INFORME ADD CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (MODELO_INFORME_ID)
+	  REFERENCES MODELOS_INFORME (ID) ENABLE;
+/
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  SUBAREAS_INFORME
+prompt =========================================================================
+
+  ALTER TABLE SUBAREAS_INFORME MODIFY (ID NOT NULL ENABLE);
+  ALTER TABLE SUBAREAS_INFORME MODIFY (DESCRIPCION NOT NULL ENABLE);
+  ALTER TABLE SUBAREAS_INFORME ADD PRIMARY KEY (ID)
+      USING INDEX  ENABLE;
+  ALTER TABLE SUBAREAS_INFORME ADD CONSTRAINT FK_AREA_INFORME FOREIGN KEY (AREA_ID)
+	  REFERENCES AREAS_INFORME (ID) ENABLE;
+/
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  INFORMES
+prompt =========================================================================
+
+  ALTER TABLE INFORMES MODIFY (ID NOT NULL ENABLE);
+  ALTER TABLE INFORMES ADD PRIMARY KEY (ID)
+      USING INDEX  ENABLE;
+  ALTER TABLE INFORMES ADD CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
+	  REFERENCES INSPECCIONES (ID) ENABLE;
+/
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  RESPUESTAS_INFORME
+prompt =========================================================================
+
+  ALTER TABLE RESPUESTAS_INFORME MODIFY (INFORME_ID NOT NULL ENABLE);
+  ALTER TABLE RESPUESTAS_INFORME MODIFY (SUBAREA_ID NOT NULL ENABLE);
+  ALTER TABLE RESPUESTAS_INFORME ADD PRIMARY KEY (INFORME_ID, SUBAREA_ID)
+      USING INDEX  ENABLE;
+  ALTER TABLE RESPUESTAS_INFORME ADD CONSTRAINT FK_INFORME FOREIGN KEY (INFORME_ID)
+	  REFERENCES INFORMES (ID) ENABLE;
+  ALTER TABLE RESPUESTAS_INFORME ADD CONSTRAINT FK_SUBAREA_INF FOREIGN KEY (SUBAREA_ID)
+	  REFERENCES SUBAREAS_INFORME (ID) ENABLE;
+/
+
 
 prompt =========================================================================
 prompt + Tarea4
@@ -1715,11 +1819,13 @@ begin
 
   --secuencia   SEQ_MUNICIPIO
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_MUNICIPIO  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
-      
-  EXECUTE IMMEDIATE 'CREATE SEQUENCE  seq_gd_sol_doc  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
-  
-  EXECUTE IMMEDIATE 'CREATE SEQUENCE  seq_sugerencias  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
 
+  --secuencia   SEQ_SUGERENCIAS
+  EXECUTE IMMEDIATE 'CREATE SEQUENCE  seq_sugerencias  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
+  
+  --secuencia   SEQ_INFORME
+  EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_INFORME  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION';
+  
 end;
 
 

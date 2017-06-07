@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -56,12 +57,12 @@ public class AreaInforme implements Serializable {
      * Modelo al que pertenece el area.
      */
     @ManyToOne
-    @JoinColumn(name = "modelo_informe", foreignKey = @ForeignKey(name = "fk_modelo_informe"))
+    @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_modelo_informe"))
     private ModeloInforme modeloInforme;
     
     /**
      * Lista de subáreas.
      */
-    @OneToMany(mappedBy = "area")
+    @OneToMany(mappedBy = "area", fetch = FetchType.EAGER)
     private List<SubareaInforme> subareas;
 }

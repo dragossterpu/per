@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,6 +32,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "MODELOS_INFORME")
+@NamedEntityGraph(name = "ModeloInforme.areas", attributeNodes = @NamedAttributeNode("areas"))
 public class ModeloInforme implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -49,6 +53,6 @@ public class ModeloInforme implements Serializable {
     /**
      * Areas que conforman el modelo de informe.
      */
-    @OneToMany(mappedBy = "modeloInforme")
+    @OneToMany(mappedBy = "modeloInforme", fetch = FetchType.LAZY)
     private List<AreaInforme> areas;
 }
