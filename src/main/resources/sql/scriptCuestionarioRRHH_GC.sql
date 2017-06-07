@@ -191,7 +191,7 @@ Por su responsable se elaborará informe expresivo sobre:
 -Efectivos pendientes de pasar Juntas Médicos Periciales.
 -Desarrollo de funciones administrativas-burocráticas. Herramientas ofimáticas disponibles.
 -Necesidades materiales o de infraestructuras.
--Otras cuestiones de interés.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 9);
+-Otras cuestiones de interés.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Servicio de Sanidad. Actividad.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTSANIDAD', 10);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Gabinete de Psicología.
 La información que se solicita podrá presentarse de manera unitaria, solicitándose del órgano de personal de la Comandancia la aportación de aquellos datos que sean precisos. Determinados apartados podrá obviarse su cumplimentación siendo sustituidos en este caso por informes o memorias de actividad ya confeccionados. 
@@ -202,7 +202,7 @@ Por su responsable se elaborará informe expresivo sobre:
 -Detalle del procedimiento seguido ante bajas médicas de base psíquica. Propuesta de adopción de medidas cautelares.
 -Seguimiento de procesos de personal de otras unidades y autorizados para residir en ámbito esta Zona. Número de efectivos existentes, duración situaciones.
 -Desarrollo de funciones administrativas-burocráticas. Herramientas ofimáticas disponibles.
--Necesidades materiales o de infraestructuras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTO', 11);
+-Necesidades materiales o de infraestructuras.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El año anterior se  prestó tratamiento al personal que se indica.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZTRATAMIENTOGC' , 12);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Absentismo (año anterior)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZABSENTISMOGC', 13);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Absentismo (2 años antes)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZABSENTISMOGC', 14);
