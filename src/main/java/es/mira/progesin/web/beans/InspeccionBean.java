@@ -266,6 +266,8 @@ public class InspeccionBean {
         model.setRowCount(0);
         if ("asociarAlta".equals(vieneDe) || "asociarEditar".equals(vieneDe)) {
             inspeccionBusqueda.setAsociar(true);
+        } else {
+            inspeccionBusqueda.setAsociar(false);
         }
     }
     
@@ -401,9 +403,10 @@ public class InspeccionBean {
      */
     
     public String getFormularioBusqueda() {
-        inspeccionBusqueda.setAsociar(false);
+        setVieneDe("menu");
         listaEquipos = equipoService.findAll();
         limpiarBusqueda();
+        
         return "/inspecciones/inspecciones?faces-redirect=true";
     }
     

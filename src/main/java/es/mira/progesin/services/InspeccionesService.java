@@ -241,7 +241,8 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        if (busqueda.isAsociar() && busqueda.getInspeccionModif().getId() != null) {
+        if (busqueda.isAsociar() && busqueda.getInspeccionModif() != null
+                && busqueda.getInspeccionModif().getId() != null) {
             criteria.add(Restrictions.ne("id", busqueda.getInspeccionModif().getId()));
         } else if (!busqueda.isAsociar()) {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
