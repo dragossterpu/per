@@ -33,8 +33,8 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 
 import es.mira.progesin.constantes.Constantes;
-import es.mira.progesin.persistence.entities.Informe;
 import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
+import es.mira.progesin.persistence.entities.informes.Informe;
 
 /**
  * Genera archivos PDF de informes de inspecciones compuestos por bloques de texto recogidos por la aplicación a partir
