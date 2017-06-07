@@ -61,11 +61,12 @@ public class LazyModelInspeccion extends LazyDataModel<Inspeccion> implements Se
      */
     @Override
     public Inspeccion getRowData(String rowKey) {
+        Inspeccion ins = null;
         for (Inspeccion inspeccion : datasource) {
             if (inspeccion.getId().toString().equals(rowKey))
-                return inspeccion;
+                ins = inspeccion;
         }
-        return null;
+        return ins;
     }
     
     /**

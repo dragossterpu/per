@@ -1,7 +1,8 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <ui:define name="content">
 
-        <ui:param name="esAdmin" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,JEFE_INSPECCIONES,ADMIN')}" />
+
+        <ui:param name="esEquipoInspeccion" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,JEFE_INSPECCIONES,ADMIN')}" />
 
         <h3>Búsqueda de guías personalizadas</h3>
 
@@ -90,13 +91,13 @@
                         <h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaPersonalizadaBean.visualizaGuia(guia)}" rendered="#{empty guia.fechaAnulacion}" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-                        <p:commandButton title="Anular guía personalizada" icon="fa fa-toggle-on" actionListener="#{guiaPersonalizadaBean.anular(guia)}" update="tablaGuias" rendered="#{esAdmin and empty guia.fechaAnulacion}">
+                        <p:commandButton title="Anular guía personalizada" icon="fa fa-toggle-on" actionListener="#{guiaPersonalizadaBean.anular(guia)}" update="tablaGuias" rendered="#{esEquipoInspeccion and empty guia.fechaAnulacion}">
                             <p:confirm header="Anular guía personalizada" message="¿Está seguro que desea anular la guía?" icon="fa fa-warning-sign" />
                         </p:commandButton>
-                        <p:commandButton title="Activar guía" icon="fa fa-toggle-off" actionListener="#{guiaPersonalizadaBean.activa(guia)}" update="tablaGuias" rendered="#{esAdmin and not empty guia.fechaAnulacion}" />
+                        <p:commandButton title="Activar guía" icon="fa fa-toggle-off" actionListener="#{guiaPersonalizadaBean.activa(guia)}" update="tablaGuias" rendered="#{esEquipoInspeccion and not empty guia.fechaAnulacion}" />
 
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esEquipoInspeccion}">
                         <p:commandButton title="Eliminar guía personalizada" icon="fa fa-trash" actionListener="#{guiaPersonalizadaBean.eliminar(guia)}" update="tablaGuias">
                             <p:confirm header="Eliminar guía personalizada" message="¿Está seguro que desea eliminar la guía?" icon="fa fa-warning-sign" />
                         </p:commandButton>

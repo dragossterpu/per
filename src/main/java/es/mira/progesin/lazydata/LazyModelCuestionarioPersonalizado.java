@@ -61,11 +61,12 @@ public class LazyModelCuestionarioPersonalizado extends LazyDataModel<Cuestionar
      */
     @Override
     public CuestionarioPersonalizado getRowData(String rowKey) {
-        for (CuestionarioPersonalizado solicitud : datasource) {
-            if (solicitud.getId().toString().equals(rowKey))
-                return solicitud;
+        CuestionarioPersonalizado personalizado = null;
+        for (CuestionarioPersonalizado cuestionario : datasource) {
+            if (cuestionario.getId().toString().equals(rowKey))
+                personalizado = cuestionario;
         }
-        return null;
+        return personalizado;
     }
     
     /**

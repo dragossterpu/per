@@ -161,9 +161,6 @@ insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (S
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Personal que atiende estos cometidos. Relación numérica de las actividades realizadas durante los dos últimos años naturales completos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 
-insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'QUEJAS Y SUGERENCIAS', SEQ_AREASCUESTIONARIOS.NEXTVAL, 8);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Quejas y sugerencias correspondiente a los dos últimos años naturales completos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZQUEJAS', 0);
 
 
 

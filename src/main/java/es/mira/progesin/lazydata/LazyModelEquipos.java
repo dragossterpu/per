@@ -60,11 +60,12 @@ public class LazyModelEquipos extends LazyDataModel<Equipo> implements Serializa
      */
     @Override
     public Equipo getRowData(String rowKey) {
-        for (Equipo solicitud : datasource) {
-            if (solicitud.getId().toString().equals(rowKey))
-                return solicitud;
+        Equipo equ = null;
+        for (Equipo equipo : datasource) {
+            if (equipo.getId().toString().equals(rowKey))
+                equ = equipo;
         }
-        return null;
+        return equ;
     }
     
     /**

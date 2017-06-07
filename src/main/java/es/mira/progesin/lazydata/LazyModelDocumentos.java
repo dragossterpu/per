@@ -61,11 +61,12 @@ public class LazyModelDocumentos extends LazyDataModel<Documento> implements Ser
      */
     @Override
     public Documento getRowData(String rowKey) {
-        for (Documento solicitud : datasource) {
-            if (solicitud.getId().toString().equals(rowKey))
-                return solicitud;
+        Documento doc = null;
+        for (Documento docu : datasource) {
+            if (docu.getId().toString().equals(rowKey))
+                doc = docu;
         }
-        return null;
+        return doc;
     }
     
     /**

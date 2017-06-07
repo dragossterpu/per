@@ -61,11 +61,12 @@ public class LazyModelAlertas extends LazyDataModel<Alerta> implements Serializa
      */
     @Override
     public Alerta getRowData(String rowKey) {
+        Alerta alerta = null;
         for (Alerta mensaje : datasource) {
             if (mensaje.getIdAlerta().toString().equals(rowKey))
-                return mensaje;
+                alerta = mensaje;
         }
-        return null;
+        return alerta;
     }
     
     /**

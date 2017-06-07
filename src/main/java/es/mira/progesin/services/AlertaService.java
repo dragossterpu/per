@@ -153,15 +153,16 @@ public class AlertaService implements IAlertaService {
      * @return Alerta creada.
      */
     private Alerta crearAlerta(String seccion, String descripcion) {
+        Alerta alertaCreada = null;
         try {
             Alerta alerta = new Alerta();
             alerta.setDescripcion(descripcion);
             alerta.setNombreSeccion(seccion);
-            return alertaRepository.save(alerta);
+            alertaCreada = alertaRepository.save(alerta);
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
-        return null;
+        return alertaCreada;
     }
     
     /**

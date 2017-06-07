@@ -177,8 +177,5 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación de extranjeros: Dotación de personal, material e infraestructuras. Problemáticas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
 
 
-insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'Quejas y sugerencias', SEQ_AREASCUESTIONARIOS.NEXTVAL, 8);
-
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Quejas y sugerencias correspondientes a los dos últimos años naturales completos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZQUEJAS', 0);
 
 commit;

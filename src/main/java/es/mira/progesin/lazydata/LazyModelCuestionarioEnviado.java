@@ -60,11 +60,12 @@ public class LazyModelCuestionarioEnviado extends LazyDataModel<CuestionarioEnvi
      */
     @Override
     public CuestionarioEnvio getRowData(String rowKey) {
-        for (CuestionarioEnvio solicitud : datasource) {
-            if (solicitud.getId().toString().equals(rowKey))
-                return solicitud;
+        CuestionarioEnvio envio = null;
+        for (CuestionarioEnvio cuestionario : datasource) {
+            if (cuestionario.getId().toString().equals(rowKey))
+                envio = cuestionario;
         }
-        return null;
+        return envio;
     }
     
     /**

@@ -61,11 +61,12 @@ public class LazyModelNotificaciones extends LazyDataModel<Notificacion> impleme
      */
     @Override
     public Notificacion getRowData(String rowKey) {
+        Notificacion notificacion = null;
         for (Notificacion mensaje : datasource) {
             if (mensaje.getIdNotificacion().toString().equals(rowKey))
-                return mensaje;
+                notificacion = mensaje;
         }
-        return null;
+        return notificacion;
     }
     
     /**

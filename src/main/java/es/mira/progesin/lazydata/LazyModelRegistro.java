@@ -62,11 +62,12 @@ public class LazyModelRegistro extends LazyDataModel<RegistroActividad> implemen
      */
     @Override
     public RegistroActividad getRowData(String rowKey) {
+        RegistroActividad reg = null;
         for (RegistroActividad registro : datasource) {
             if (registro.getIdRegActividad().toString().equals(rowKey))
-                return registro;
+                reg = registro;
         }
-        return null;
+        return reg;
     }
     
     /**

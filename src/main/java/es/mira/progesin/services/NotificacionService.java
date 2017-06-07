@@ -88,6 +88,7 @@ public class NotificacionService implements INotificacionService {
      * 
      */
     private Notificacion crearNotificacion(String descripcion, String seccion) {
+        Notificacion notificacionCreada = null;
         try {
             Notificacion notificacion = new Notificacion();
             notificacion.setUsernameNotificacion(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -95,11 +96,11 @@ public class NotificacionService implements INotificacionService {
             notificacion.setFechaAlta(new Date());
             notificacion.setDescripcion(descripcion);
             
-            return notificacionRepository.save(notificacion);
+            notificacionCreada = notificacionRepository.save(notificacion);
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
-        return null;
+        return notificacionCreada;
         
     }
     

@@ -45,7 +45,7 @@ public enum EstadoInspeccionEnum {
      * requeridos.
      * 
      */
-    PENDIENTE_VISITA_INSPECCION("6. Pediente visita inspección"),
+    PENDIENTE_VISITA_INSPECCION("6. Pendiente visita inspección"),
     /**
      * Estado en el que se encuentra una inspección cuando ya se está realizando la visita.
      * 
