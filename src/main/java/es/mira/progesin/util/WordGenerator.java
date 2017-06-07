@@ -28,6 +28,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageMar;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTabStop;
@@ -111,8 +112,15 @@ public class WordGenerator {
      */
     public StreamedContent crearDocumentoCuestionarioPersonalizado(CuestionarioPersonalizado cuestionarioPersonalizado)
             throws ProgesinException {
-        try {
-            XWPFDocument doc = new XWPFDocument();
+        try (XWPFDocument doc = new XWPFDocument()) {
+            // Márgenes del documento
+            CTSectPr sectPr = doc.getDocument().getBody().addNewSectPr();
+            CTPageMar pageMar = sectPr.addNewPgMar();
+            pageMar.setLeft(BigInteger.valueOf(800));
+            pageMar.setTop(BigInteger.valueOf(1440));
+            pageMar.setRight(BigInteger.valueOf(720));
+            pageMar.setBottom(BigInteger.valueOf(1440));
+            
             crearCabecera(doc);
             crearTitulo(doc, cuestionarioPersonalizado.getNombreCuestionario());
             List<PreguntasCuestionario> listaPreguntas = preguntasRepository
@@ -135,8 +143,7 @@ public class WordGenerator {
      */
     
     public StreamedContent crearDocumentoGuia(Guia guia) throws ProgesinException {
-        try {
-            XWPFDocument doc = new XWPFDocument();
+        try (XWPFDocument doc = new XWPFDocument()) {
             crearCabecera(doc);
             crearTitulo(doc, guia.getNombre());
             List<GuiaPasos> listaPasos = guiaService.listaPasos(guia);
@@ -157,8 +164,7 @@ public class WordGenerator {
      */
     
     public StreamedContent crearDocumentoGuia(GuiaPersonalizada guia) throws ProgesinException {
-        try {
-            XWPFDocument doc = new XWPFDocument();
+        try (XWPFDocument doc = new XWPFDocument()) {
             crearCabecera(doc);
             crearTitulo(doc, guia.getNombreGuiaPersonalizada());
             if (guia.getInspeccion() != null) {
@@ -460,6 +466,7 @@ public class WordGenerator {
             texto = parrafo.createRun();
             texto.setBold(true);
             texto.setFontFamily(FONTFAMILY);
+            texto.setFontSize(10);
             if (pregunta.getTipoRespuesta().startsWith("RADIO")) {
                 texto.setText(pregunta.getPregunta() + " (valores posibles: " + getValoresRadioButton(pregunta) + ")");
             } else {
@@ -508,7 +515,7 @@ public class WordGenerator {
         // Fijar el ancho de la tabla
         CTTblWidth width = table.getCTTbl().addNewTblPr().addNewTblW();
         width.setType(STTblWidth.DXA);
-        width.setW(BigInteger.valueOf(9072));
+        width.setW(BigInteger.valueOf(10300));
         
         // Añado las cabeceras en la fila 1
         XWPFTableRow filaCabecera = table.getRow(0);
@@ -553,6 +560,7 @@ public class WordGenerator {
         texto.setText(valor);
         texto.setBold(true);
         texto.setFontFamily(FONTFAMILY);
+        texto.setFontSize(8);
         parrafoCelda.addRun(texto);
         parrafoCelda.setAlignment(ParagraphAlignment.CENTER);
         parrafoCelda.setVerticalAlignment(TextAlignment.CENTER);

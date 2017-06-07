@@ -294,6 +294,7 @@ public class PdfGenerator {
                 p.setBold();
                 p.setTextAlignment(TextAlignment.CENTER);
                 p.setPadding(20);
+                p.setFontSize(14);
                 document.add(p);
                 
                 p = new Paragraph();
@@ -302,6 +303,7 @@ public class PdfGenerator {
                 p.add(cuestionarioEnviado.getInspeccion().getTipoInspeccion().getCodigo() + " "
                         + cuestionarioEnviado.getInspeccion().getNumero());
                 p.setPaddingBottom(10);
+                p.setFontSize(14);
                 document.add(p);
                 
                 List<RespuestaCuestionario> listaRespuestas = respuestaCuestionarioRepository
@@ -337,6 +339,7 @@ public class PdfGenerator {
                     pa.setBackgroundColor(Color.LIGHT_GRAY);
                     pa.setTextAlignment(TextAlignment.CENTER);
                     pa.setBold();
+                    pa.setPaddingBottom(10);
                     document.add(pa);
                     
                     // Ordeno las preguntas por su orden
@@ -378,6 +381,10 @@ public class PdfGenerator {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             Paragraph p = new Paragraph(pregunta.getPregunta());
             p.setBold();
+            p.setFontSize(10);
+            p.setTextAlignment(TextAlignment.JUSTIFIED);
+            p.setPaddingTop(10);
+            p.setPaddingBottom(10);
             document.add(p);
             
             if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)
@@ -411,6 +418,7 @@ public class PdfGenerator {
         tabla.setWidthPercent(100);
         tabla.setPaddingBottom(30);
         tabla.setPaddingTop(30);
+        tabla.setFontSize(8);
         
         try {
             if (tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
@@ -425,6 +433,7 @@ public class PdfGenerator {
                 Cell cell = new Cell();
                 cell.add(columna.getConfig().getValor());
                 cell.setTextAlignment(TextAlignment.CENTER);
+                cell.setFontSize(8);
                 tabla.addHeaderCell(cell);
             }
             tabla.getHeader().setBackgroundColor(Color.LIGHT_GRAY);
@@ -436,6 +445,7 @@ public class PdfGenerator {
                     cell.add(datosTabla.getNombreFila());
                     cell.setBackgroundColor(Color.LIGHT_GRAY);
                     cell.setTextAlignment(TextAlignment.LEFT);
+                    cell.setFontSize(8);
                     tabla.addCell(cell);
                 }
                 for (ConfiguracionRespuestasCuestionario columna : valoresColumnas) {
@@ -459,8 +469,8 @@ public class PdfGenerator {
     private Table crearTablaDocumentos(RespuestaCuestionario respuesta) {
         Table tabla = new Table(1);
         tabla.setWidthPercent(100);
-        tabla.setPaddingBottom(10);
         tabla.setPaddingTop(10);
+        tabla.setFontSize(8);
         
         tabla.addHeaderCell("DOCUMENTOS ADJUNTADOS");
         tabla.getHeader().setBackgroundColor(Color.LIGHT_GRAY);
