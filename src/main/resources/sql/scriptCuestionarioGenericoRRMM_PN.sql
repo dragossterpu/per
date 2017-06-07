@@ -142,30 +142,6 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08', 'MATRIZMATANTIDIST', 'Botes Fumígenos');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09', 'MATRIZMATANTIDIST', 'Botes Lacrimógenos');
 
---Nueva matriz
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZOTROMATERIAL', 'TOTAL');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZOTROMATERIAL', 'Buen estado');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZOTROMATERIAL', 'Regular');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZOTROMATERIAL', 'Malo');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'MATRIZOTROMATERIAL', 'Necesidades (Nueva adjud.)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'MATRIZOTROMATERIAL', 'Necesidades (Reposición)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZOTROMATERIAL', 'Miras Telescópicas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZOTROMATERIAL', 'Gafas visión nocturna');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZOTROMATERIAL', 'Visores visión nocturna');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZOTROMATERIAL', 'Cámaras termovisión');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZOTROMATERIAL', 'Prismáticos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZOTROMATERIAL', 'Iluminación pequeña potencia');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07', 'MATRIZOTROMATERIAL', 'Iluminación mediana potencia');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08', 'MATRIZOTROMATERIAL', 'Cañones de iluminación');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09', 'MATRIZOTROMATERIAL', 'Generadores de corriente');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila10', 'MATRIZOTROMATERIAL', 'Grilletes Star');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila11', 'MATRIZOTROMATERIAL', 'Grilletes de bisagra');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZOTROMATERIAL', 'Grilletes otros');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZOTROMATERIAL', 'Grilletes de un solo uso');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZOTROMATERIAL', 'Equipos de rayos X');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZOTROMATERIAL', 'Guantes anticorte');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16', 'MATRIZOTROMATERIAL', 'Detectores de metales');
-
 --Nueva tabla
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAARMASLICENA', 'Marca y modelo');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAARMASLICENA', 'Titular');
@@ -304,16 +280,15 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Armamento: Relación de las armas particulares depositadas, con expresión del motivo (intervención judicial, jubilación del titular, baja motivo psíquico, etc.),  fecha del depósito y situación en la que se encuentra.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 16);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Dotación de armas (Fusil, Revolver, Escopeta, Subfusil, Pistolas, etc.) y municiones (7.62, 38 SPL., 12/70, 9MM. PARABELLUM).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMAMENTO', 17);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Dotación de material antidisturbios.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZMATANTIDIST', 18);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Otro material.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZOTROMATERIAL', 19);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Respecto de los dos cuadros anteriores, si en algunos de los casos se ha considerado que el estado de determinado material es malo, indicar las causas y las gestiones realizadas para solucionar el problema .', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Asignados individualmente (indicar externos e internos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 21);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: De uso colectivo (indicar externos e internos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 22);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Nº de funcionarios pendientes de que se les asignen chalecos individuales, con arreglo a las directrices marcadas por la Dirección Adjunta Operativa.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 23);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Nº y tipo de chalecos en stock.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 24);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas amparadas por Licencia tipo “A” depositadas en la plantilla.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 25);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas, amparadas por Licencia tipo “A”, subastadas, destruidas o remitidas al Servicio Central de Armamento de la PN.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 26);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Actividades de armería realizadas en los dos últimos años.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVARMERIA', 27);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Vestuario (datos relativos a los dos últimos años naturales completos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVESTUARIO', 28);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Respecto de los dos cuadros anteriores, si en algunos de los casos se ha considerado que el estado de determinado material es malo, indicar las causas y las gestiones realizadas para solucionar el problema .', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Asignados individualmente (indicar externos e internos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 20);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: De uso colectivo (indicar externos e internos).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 21);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Nº de funcionarios pendientes de que se les asignen chalecos individuales, con arreglo a las directrices marcadas por la Dirección Adjunta Operativa.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 22);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial - Chalecos antibalas: Nº y tipo de chalecos en stock.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 23);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas amparadas por Licencia tipo “A” depositadas en la plantilla.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 24);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Relación de armas, amparadas por Licencia tipo “A”, subastadas, destruidas o remitidas al Servicio Central de Armamento de la PN.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAARMASLICENA', 25);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Actividades de armería realizadas en los dos últimos años.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTIVARMERIA', 26);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipamiento policial: Vestuario (datos relativos a los dos últimos años naturales completos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVESTUARIO', 27);
 
 
 --Insert area INFORMÁTICA Y TELECOMUNICACIONES
