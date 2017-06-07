@@ -725,6 +725,14 @@ prompt =========================================================================
     ID_PUESTO NUMBER(19,0)
    ) ;
 /
+prompt =========================================================================
+prompt  Creacion tabla  GUIA_INSPECCION
+prompt =========================================================================
+	CREATE TABLE GUIA_INSPECCION
+	(	ID_GUIA NUMBER(19,0), 
+		ID_INSPECCION NUMBER(19,0)
+	);
+/
 
 prompt =========================================================================
 prompt + Tarea3
@@ -1168,6 +1176,15 @@ prompt =========================================================================
   ALTER TABLE CUEST_PER_PREGUNTAS MODIFY (ID_PREG_ELEGIDA NOT NULL ENABLE);
   ALTER TABLE CUEST_PER_PREGUNTAS MODIFY (ID_CUEST_PERS NOT NULL ENABLE);
 /
+
+prompt =========================================================================
+prompt  Constraints para la tabla  GUIA_INSPECCION
+prompt =========================================================================
+
+  ALTER TABLE GUIA_INSPECCION MODIFY (ID_GUIA NOT NULL ENABLE);
+  ALTER TABLE GUIA_INSPECCION MODIFY (ID_INSPECCION NOT NULL ENABLE);
+/
+
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  AREASCUESTIONARIO
 prompt =========================================================================
@@ -1409,6 +1426,15 @@ prompt =========================================================================
 	  REFERENCES SUBAREAS_INFORME (ID) ENABLE;
 /
 
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  GUIA_INSPECCION
+prompt =========================================================================
+
+  ALTER TABLE GUIA_INSPECCION ADD CONSTRAINT FK_GUIA_INSPECCION FOREIGN KEY (ID_INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE;
+  ALTER TABLE GUIA_INSPECCION ADD CONSTRAINT FK_GUIA FOREIGN KEY (ID_GUIA)
+	  REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
+/
 
 prompt =========================================================================
 prompt + Tarea4
