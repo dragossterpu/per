@@ -225,8 +225,7 @@ public class DocumentoService implements IDocumentoService {
      * @throws DataAccessException Excepción SQL
      * @throws IOException Excepción entrada/salida
      */
-    private Documento crearDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
-            throws DataAccessException, IOException {
+    private Documento crearDocumento(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion) throws IOException {
         Documento docu = new Documento();
         docu.setNombre(file.getFileName());
         docu.setTipoDocumento(tipo);
