@@ -303,7 +303,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZCONSULTASMEDPN', 'Consultas de enfermería (Inyectables)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZCONSULTASMEDPN', 'Consultas de enfermería (Tensión arterial)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZCONSULTASMEDPN', 'Consultas de enfermería (Electrocardiogramas)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZCONSULTASMEDPN', 'Consultas de enfermería (especificar otras)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZCONSULTASMEDPN', 'Consultas de enfermería. Otras (especificar)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila07', 'MATRIZCONSULTASMEDPN', 'Consultas psicología clínica');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila08', 'MATRIZCONSULTASMEDPN', 'Prescripciones y tratamientos médicos');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila09', 'MATRIZCONSULTASMEDPN', 'Reconocimientos y asistencias a detenidos en calabozos');
@@ -312,13 +312,13 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Periódicos)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Deportivos)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (Certificados médicos)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios (especificar otras)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZCONSULTASMEDPN', 'Reconocimientos a funcionarios. Otras (especificar)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16', 'MATRIZCONSULTASMEDPN', 'Recetas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal (Visitas Hospitalarias)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal (Visitas domiciliarias)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal (Reconocimientos IT)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal (Citaciones funcionarios)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal (especificar otras)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21', 'MATRIZCONSULTASMEDPN', 'Control Incapacidad Temporal. Otras (especificar)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22', 'MATRIZCONSULTASMEDPN', 'Informes (Médicos)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23', 'MATRIZCONSULTASMEDPN', 'Informes (Clínicos laborales)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila24', 'MATRIZCONSULTASMEDPN', 'Informes (Accidentes servicio)');
@@ -327,7 +327,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila27', 'MATRIZCONSULTASMEDPN', 'Informes (Retirada de armas)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila28', 'MATRIZCONSULTASMEDPN', 'Informes (Autorización residencia)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila29', 'MATRIZCONSULTASMEDPN', 'Informes (Expedientes de incapacidad)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila30', 'MATRIZCONSULTASMEDPN', 'Informes (especificar otras)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila30', 'MATRIZCONSULTASMEDPN', 'Informes. Otras (especificar)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila31', 'MATRIZCONSULTASMEDPN', 'Acompañamiento ejercicios de tiro');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila32', 'MATRIZCONSULTASMEDPN', 'Vacunaciones');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila33', 'MATRIZCONSULTASMEDPN', 'Control higiénico sanitario en vehículos policiales');
