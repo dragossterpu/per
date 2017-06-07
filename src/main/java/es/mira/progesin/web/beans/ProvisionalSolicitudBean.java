@@ -157,13 +157,15 @@ public class ProvisionalSolicitudBean implements Serializable {
     private boolean esDocumentacionPrevia(UploadedFile archivo) {
         String nombreArchivo = archivo.getFileName();
         String extensionArchivo = extensiones.get(archivo.getContentType());
+        boolean respuesta = false;
         for (DocumentacionPrevia dp : listadoDocumentosPrevios) {
             if (nombreArchivo.toLowerCase().startsWith(dp.getNombre().toLowerCase())
                     && dp.getExtensiones().contains(extensionArchivo)) {
-                return true;
+                respuesta = true;
+                break;
             }
         }
-        return false;
+        return respuesta;
     }
     
     /**

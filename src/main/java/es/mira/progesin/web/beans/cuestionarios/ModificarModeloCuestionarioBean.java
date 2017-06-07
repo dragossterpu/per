@@ -401,12 +401,14 @@ public class ModificarModeloCuestionarioBean {
             modeloCuestionario.setAreas(listaAreasCuestionario);
         }
         
+        String siguentePaso;
         if (correcto) {
-            return event.getNewStep();
+            siguentePaso = event.getNewStep();
         } else {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, textoError, null, null);
-            return event.getOldStep();
+            siguentePaso = event.getOldStep();
         }
+        return siguentePaso;
     }
     
     /**

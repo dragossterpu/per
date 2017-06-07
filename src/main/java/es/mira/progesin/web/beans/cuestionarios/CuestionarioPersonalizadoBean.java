@@ -169,18 +169,19 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * @return Nombre de la vista del formulario de envío
      */
     public String mostrarFormularioEnvio(CuestionarioPersonalizado cuestionario) {
+        String ruta_vista = null;
         if (cuestionario.getFechaBaja() == null) {
             CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
             cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
             Inspeccion inspeccion = new Inspeccion();
             cuestionarioEnvio.setInspeccion(inspeccion);
             envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-            return "/cuestionarios/enviarCuestionario?faces-redirect=true";
+            ruta_vista = "/cuestionarios/enviarCuestionario?faces-redirect=true";
         } else {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Acción no permitida",
                     "No puede enviar un nuevo cuestionario de un modelo personalizado anulado", null);
-            return null;
         }
+        return ruta_vista;
     }
     
     /**

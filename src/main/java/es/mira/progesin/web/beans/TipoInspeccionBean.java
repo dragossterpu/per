@@ -84,7 +84,7 @@ public class TipoInspeccionBean implements Serializable {
      * Recarga la lista de tipos de inspeccion.
      */
     @PostConstruct
-    private void init() {
+    public void init() {
         listaTipoInspeccion = tipoInspeccionService.buscaTodos();
     }
     

@@ -476,6 +476,7 @@ public class EquiposBean implements Serializable {
      * @return nombre de la siguente pestaña a mostrar
      */
     public String onFlowProcess(FlowEvent event) {
+        String siguientePaso = event.getNewStep();
         if (JEFEEQUIPO.equals(event.getOldStep()) && MIEMBROS.equals(event.getNewStep())) {
             if (jefeSeleccionado != null) {
                 
@@ -487,7 +488,7 @@ public class EquiposBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Debe elegir un jefe de equipo", "",
                         "");
                 
-                return event.getOldStep();
+                siguientePaso = event.getOldStep();
             }
         } else if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep())
                 && miembrosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
@@ -495,14 +496,14 @@ public class EquiposBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Debe elegir uno o más componentes o confirmar que no desea ninguno aparte del jefe", "", "");
             
-            return event.getOldStep();
+            siguientePaso = event.getOldStep();
             
         } else if (MIEMBROS.equals(event.getOldStep()) && JEFEEQUIPO.equals(event.getNewStep())) {
             
             listadoPotencialesMiembros.add(jefeSeleccionado);
             
         }
-        return event.getNewStep();
+        return siguientePaso;
     }
     
     /**

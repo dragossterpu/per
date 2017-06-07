@@ -36,17 +36,18 @@ public class LoginController {
      */
     @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTALOGIN)
     public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String respuesta = null;
         if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
             // JSF ajax request. Return special XML response which instructs JavaScript that it should in turn perform a
             // redirect.
             response.setContentType("text/xml");
             response.getWriter().append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
                     .printf("<partial-response><redirect url=\"%s\"></redirect></partial-response>", Constantes.LOGIN);
-            return null;
         } else {
             // Normal request. Perform redirect as usual.
-            return Constantes.LOGIN;
+            respuesta = Constantes.LOGIN;
         }
+        return respuesta;
     }
     
     /**

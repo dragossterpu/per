@@ -132,12 +132,14 @@ public class EnvioCuestionarioBean implements Serializable {
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Inspeccion> resultadosBusqueda;
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
+            resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
                     usuarioActual.getUsername());
         } else {
-            return inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+            resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
         }
+        return resultadosBusqueda;
     }
     
     /**

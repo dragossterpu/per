@@ -254,11 +254,9 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         } else {
             criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
         }
-        
         if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge("fechaEnvio", cuestionarioEnviadoBusqueda.getFechaDesde()));
         }
-        
         if (cuestionarioEnviadoBusqueda.getFechaHasta() != null) {
             Date fechaHasta = new Date(
                     cuestionarioEnviadoBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
@@ -269,12 +267,10 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                     cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le("fechaLimiteCuestionario", fechaLimiteRespuesta));
         }
-        
         if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null) {
             criteria.add(Restrictions.ilike("usernameEnvio", cuestionarioEnviadoBusqueda.getUsernameEnvio(),
                     MatchMode.ANYWHERE));
         }
-        
         criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null) {
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", cuestionarioEnviadoBusqueda.getNombreUnidad(),
@@ -291,19 +287,16 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         if (cuestionarioEnviadoBusqueda.getAmbitoInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.ambito", cuestionarioEnviadoBusqueda.getAmbitoInspeccion()));
         }
-        
         criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
         if (cuestionarioEnviadoBusqueda.getTipoInspeccion() != null) {
             criteria.add(Restrictions.eq("tipoInspeccion.codigo",
                     cuestionarioEnviadoBusqueda.getTipoInspeccion().getCodigo()));
         }
-        
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null) {
             criteria.add(Restrictions.ilike("equipo.nombreEquipo", cuestionarioEnviadoBusqueda.getNombreEquipo(),
                     MatchMode.ANYWHERE));
         }
-        
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
@@ -312,19 +305,16 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));
         }
-        
         criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
             criteria.add(Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario",
                     cuestionarioEnviadoBusqueda.getNombreCuestionario(), MatchMode.ANYWHERE));
         }
-        
         criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join
         if (cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado() != null) {
             criteria.add(Restrictions.eq("modeloCuestionario.id",
                     cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
         }
-        
     }
     
     /**

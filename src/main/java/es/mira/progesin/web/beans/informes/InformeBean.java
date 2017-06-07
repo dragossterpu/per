@@ -74,7 +74,9 @@ public class InformeBean implements Serializable {
     @Autowired
     private transient IModeloInformeService modeloInformeService;
     
-    // BORRAR SOLO PRUEBAS
+    /**
+     * BORRAR SOLO PRUEBAS.
+     */
     @Autowired
     private transient IModeloInformeRepository modeloInformeRepository;
     

@@ -19,9 +19,10 @@ public class UsernameSecurityAuditorAwareImpl implements AuditorAware<String> {
     public String getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
+        String nombre = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            nombre = authentication.getName();
         }
-        return authentication.getName();
+        return nombre;
     }
 }

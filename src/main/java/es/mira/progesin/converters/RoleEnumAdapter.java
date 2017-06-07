@@ -21,10 +21,11 @@ public class RoleEnumAdapter implements AttributeConverter<RoleEnum, String> {
      */
     @Override
     public String convertToDatabaseColumn(RoleEnum role) {
+        String nombre = null;
         if (role != null) {
-            return role.name();
+            nombre = role.name();
         }
-        return null;
+        return nombre;
     }
     
     /**

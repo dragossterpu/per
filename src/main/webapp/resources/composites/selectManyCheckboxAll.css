@@ -2,8 +2,7 @@
     text-align: justify;
 }
 
-.checkboxes-all .all .ui-chkbox, .checkboxes-all .ui-selectmanycheckbox .ui-chkbox
-    {
+.checkboxes-all .all .ui-chkbox, .checkboxes-all .ui-selectmanycheckbox .ui-chkbox {
     margin: 1px 4px 0 0;
     vertical-align: top;
 }

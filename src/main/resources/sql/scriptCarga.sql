@@ -84,9 +84,9 @@ prompt  Creacion tabla  AREAS_INFORME
 prompt =========================================================================
 
   CREATE TABLE AREAS_INFORME 
-   (	ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(1000 CHAR), 
-	MODELO_INFORME_ID NUMBER(19,0)
+   (    ID NUMBER(19,0), 
+    DESCRIPCION VARCHAR2(1000 CHAR), 
+    MODELO_INFORME_ID NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -347,8 +347,8 @@ prompt =========================================================================
 
   CREATE TABLE INFORMES 
    (   ID NUMBER(19,0), 
-	INSPECCION_ID NUMBER(19,0), 
-	MODELO_INFORME_ID NUMBER(19,0) 
+    INSPECCION_ID NUMBER(19,0), 
+    MODELO_INFORME_ID NUMBER(19,0) 
    ) ;
 /
 prompt =========================================================================
@@ -417,7 +417,7 @@ prompt =========================================================================
 
   CREATE TABLE MODELOS_INFORME 
    (    ID NUMBER(19,0), 
-	NOMBRE VARCHAR2(100 CHAR)
+    NOMBRE VARCHAR2(100 CHAR)
    ) ;
 /
 prompt =========================================================================
@@ -566,8 +566,8 @@ prompt =========================================================================
 
   CREATE TABLE RESPUESTAS_INFORME 
    (    RESPUESTA BLOB, 
-	INFORME_ID NUMBER(19,0), 
-	SUBAREA_ID NUMBER(19,0)
+    INFORME_ID NUMBER(19,0), 
+    SUBAREA_ID NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -616,8 +616,8 @@ prompt =========================================================================
 
   CREATE TABLE SUBAREAS_INFORME 
    (    ID NUMBER(19,0), 
-	DESCRIPCION VARCHAR2(1000 CHAR), 
-	AREA_ID NUMBER(19,0)
+    DESCRIPCION VARCHAR2(1000 CHAR), 
+    AREA_ID NUMBER(19,0)
    ) ;
 /
 prompt =========================================================================
@@ -728,10 +728,10 @@ prompt =========================================================================
 prompt =========================================================================
 prompt  Creacion tabla  GUIA_INSPECCION
 prompt =========================================================================
-	CREATE TABLE GUIA_INSPECCION
-	(	ID_GUIA NUMBER(19,0), 
-		ID_INSPECCION NUMBER(19,0)
-	);
+    CREATE TABLE GUIA_INSPECCION
+    (   ID_GUIA NUMBER(19,0), 
+       ID_INSPECCION NUMBER(19,0)
+    );
 /
 
 prompt =========================================================================
@@ -1389,7 +1389,7 @@ prompt =========================================================================
   ALTER TABLE AREAS_INFORME ADD PRIMARY KEY (ID)
       USING INDEX  ENABLE;
   ALTER TABLE AREAS_INFORME ADD CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (MODELO_INFORME_ID)
-	  REFERENCES MODELOS_INFORME (ID) ENABLE;
+      REFERENCES MODELOS_INFORME (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  SUBAREAS_INFORME
@@ -1400,7 +1400,7 @@ prompt =========================================================================
   ALTER TABLE SUBAREAS_INFORME ADD PRIMARY KEY (ID)
       USING INDEX  ENABLE;
   ALTER TABLE SUBAREAS_INFORME ADD CONSTRAINT FK_AREA_INFORME FOREIGN KEY (AREA_ID)
-	  REFERENCES AREAS_INFORME (ID) ENABLE;
+      REFERENCES AREAS_INFORME (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  INFORMES
@@ -1410,7 +1410,7 @@ prompt =========================================================================
   ALTER TABLE INFORMES ADD PRIMARY KEY (ID)
       USING INDEX  ENABLE;
   ALTER TABLE INFORMES ADD CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  RESPUESTAS_INFORME
@@ -1421,9 +1421,9 @@ prompt =========================================================================
   ALTER TABLE RESPUESTAS_INFORME ADD PRIMARY KEY (INFORME_ID, SUBAREA_ID)
       USING INDEX  ENABLE;
   ALTER TABLE RESPUESTAS_INFORME ADD CONSTRAINT FK_INFORME FOREIGN KEY (INFORME_ID)
-	  REFERENCES INFORMES (ID) ENABLE;
+      REFERENCES INFORMES (ID) ENABLE;
   ALTER TABLE RESPUESTAS_INFORME ADD CONSTRAINT FK_SUBAREA_INF FOREIGN KEY (SUBAREA_ID)
-	  REFERENCES SUBAREAS_INFORME (ID) ENABLE;
+      REFERENCES SUBAREAS_INFORME (ID) ENABLE;
 /
 
 prompt =========================================================================
@@ -1431,9 +1431,9 @@ prompt  Reference Constraints para la tabla  GUIA_INSPECCION
 prompt =========================================================================
 
   ALTER TABLE GUIA_INSPECCION ADD CONSTRAINT FK_GUIA_INSPECCION FOREIGN KEY (ID_INSPECCION)
-	  REFERENCES INSPECCIONES (ID) ENABLE;
+      REFERENCES INSPECCIONES (ID) ENABLE;
   ALTER TABLE GUIA_INSPECCION ADD CONSTRAINT FK_GUIA FOREIGN KEY (ID_GUIA)
-	  REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
+      REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
 /
 
 prompt =========================================================================

@@ -33,14 +33,16 @@ public class FacesViewScope implements Scope {
         
         Map<String, Object> viewMap = FacesContext.getCurrentInstance().getViewRoot().getViewMap();
         
+        Object respuesta;
         if (viewMap.containsKey(name)) {
-            return viewMap.get(name);
+            respuesta = viewMap.get(name);
         } else {
             Object object = objectFactory.getObject();
             viewMap.put(name, object);
             
-            return object;
+            respuesta = object;
         }
+        return respuesta;
     }
     
     /**

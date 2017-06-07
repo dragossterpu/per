@@ -309,12 +309,13 @@ public class VisualizarCuestionario implements Serializable {
         
         // Ordeno las áreas por su campo orden
         Collections.sort(areas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
-        
+        String ruta_vista;
         if (cuestionarioEnviado == null) {
-            return "/cuestionarios/responderCuestionario?faces-redirect=true";
+            ruta_vista = "/cuestionarios/responderCuestionario?faces-redirect=true";
         } else {
-            return "/cuestionarios/validarCuestionario?faces-redirect=true";
+            ruta_vista = "/cuestionarios/validarCuestionario?faces-redirect=true";
         }
+        return ruta_vista;
     }
     
     /**
