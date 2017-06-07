@@ -1793,11 +1793,11 @@ begin
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_PUESTO_TRABAJO  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH ' || maximo || ' CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
   
   --secuencia   SEQ_DOCUMENTOS
-  select max(id)+1 into maximo from documentos;
+  select decode(max(id), null, 1, max(id)+1) into maximo from documentos;
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_DOCUMENTOS  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH ' || maximo || ' CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
     
   --secuencia SEQ_DOCUMENTOSBLOB  
-  select max(id)+1 into maximo from documentos_blob;
+  select decode(max(id), null, 1, max(id)+1) into maximo from documentos_blob;
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_DOCUMENTOSBLOB  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH ' || maximo || ' CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
     
   --secuencia SEQ_EQUIPO  
