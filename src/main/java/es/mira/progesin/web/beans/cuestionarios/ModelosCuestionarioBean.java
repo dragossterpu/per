@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +25,9 @@ import lombok.Setter;
 @Getter
 @Controller("modelosCuestionarioBean")
 @Scope(FacesViewScope.NAME)
-public class ModelosCuestionarioBean {
+public class ModelosCuestionarioBean implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     /**
      * Listado con los modelos existentes.
@@ -35,12 +38,10 @@ public class ModelosCuestionarioBean {
      * Servicio de modelos de cuestionario.
      */
     @Autowired
-    private IModeloCuestionarioService modeloCuestionarioService;
+    private transient IModeloCuestionarioService modeloCuestionarioService;
     
     /**
      * Carga la lista con todos los modelos de cuestionario de la bdd.
-     * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
