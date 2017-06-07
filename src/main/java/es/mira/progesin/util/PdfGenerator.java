@@ -339,7 +339,6 @@ public class PdfGenerator {
                     pa.setBackgroundColor(Color.LIGHT_GRAY);
                     pa.setTextAlignment(TextAlignment.CENTER);
                     pa.setBold();
-                    pa.setPaddingBottom(10);
                     document.add(pa);
                     
                     // Ordeno las preguntas por su orden
