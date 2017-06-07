@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -35,7 +35,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "INFORME")
+@Table(name = "INFORMES")
 public class Informe implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -50,6 +50,13 @@ public class Informe implements Serializable {
     private Long id;
     
     /**
+     * Modelo en que está basado el informe.
+     */
+    @ManyToOne
+    @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_modelo_informe"))
+    private ModeloInforme modelo;
+    
+    /**
      * Inspección a la que pertenece el informe.
      */
     @OneToOne
@@ -62,11 +69,4 @@ public class Informe implements Serializable {
     @OneToMany(mappedBy = "informe")
     private List<RespuestaInforme> respuestas;
     
-    // TODO Quitar esto de abajo, era para probar la visualización entre lo que graba el editor y la generación de pdf
-    /**
-     * 
-     */
-    @Lob
-    @Column(name = "texto")
-    private byte[] texto;
 }

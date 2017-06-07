@@ -115,9 +115,9 @@ public class HtmlPdfGenerator {
     private String obtenerDatosInformeConEstilo(Informe informe) throws UnsupportedEncodingException {
         String textoInforme;
         StringBuilder informeFormateado = new StringBuilder();
-        if (informe != null && informe.getTexto() != null) {
+        if (informe != null && informe.getRespuestas().get(0).getRespuesta() != null) {
             informeFormateado.append("<div class=\"ql-editor\">");
-            textoInforme = new String(informe.getTexto(), "UTF-8");
+            textoInforme = new String(informe.getRespuestas().get(0).getRespuesta(), "UTF-8");
             informeFormateado.append(textoInforme);
             informeFormateado.append("</div>");
         }

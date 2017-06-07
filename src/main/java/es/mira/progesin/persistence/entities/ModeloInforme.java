@@ -1,13 +1,12 @@
 package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -16,10 +15,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * Entidad para la subarea de un informe.
+ * Entity asociada a un modelo de informe.
  * 
  * @author EZENTIS
  */
@@ -27,33 +25,30 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
-@Table(name = "SUBAREAS_INFORME")
-public class SubareaInforme implements Serializable {
+@Table(name = "MODELOS_INFORME")
+public class ModeloInforme implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     /**
-     * ID.
+     * Identificador del modelo de informe. Generada por secuencia.
      */
     @Id
-    @Column(name = "ID")
+    @Column(name = "id", nullable = false)
     private Long id;
     
     /**
-     * Descripción.
+     * Nombre del modelo.
      */
-    @Column(name = "DESCRIPCION", length = 1000, nullable = false)
-    private String descripcion;
+    @Column(name = "nombre", length = 100, nullable = false)
+    private String nombre;
     
     /**
-     * Area a la que pertenece.
+     * Areas que conforman el modelo de informe.
      */
-    @ManyToOne
-    @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
-    private AreaInforme area;
-    
+    @OneToMany(mappedBy = "modeloInforme")
+    private List<AreaInforme> areas;
 }
