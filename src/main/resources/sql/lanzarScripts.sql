@@ -7,7 +7,7 @@ prompt    LANZADOR SCRIPTS CARGA PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Fecha creación: 08/05/2017
+prompt    Fecha creación: 07/06/2017
 prompt =========================================================================
 
 
