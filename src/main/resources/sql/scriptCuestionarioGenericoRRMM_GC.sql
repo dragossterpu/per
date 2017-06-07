@@ -20,17 +20,18 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila12', 'MATRIZAUTOMOCIONGC', 'Transporte de perros');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila13', 'MATRIZAUTOMOCIONGC', 'Moto. T/T Seprona');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila14', 'MATRIZAUTOMOCIONGC', 'Moto. Scooter');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZAUTOMOCIONGC', 'Moto. Investigación');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16', 'MATRIZAUTOMOCIONGC', 'SUMAN');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Turismos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Todoterreno largo');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Trasn. de carga');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Motocicletas');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21', 'MATRIZAUTOMOCIONGC', 'SUMAN VEH. DECOMISADOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21', 'MATRIZAUTOMOCIONGC', 'Otros');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22', 'MATRIZAUTOMOCIONGC', 'SUMAN VEHÍCULOS');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23', 'MATRIZAUTOMOCIONGC', 'Remolques');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila24', 'MATRIZAUTOMOCIONGC', 'TOTAL');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila15', 'MATRIZAUTOMOCIONGC', 'Moto. Ciclomotores');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila16', 'MATRIZAUTOMOCIONGC', 'Moto. Investigación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila17', 'MATRIZAUTOMOCIONGC', 'SUMAN');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila18', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Turismos');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila19', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Todoterreno largo');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila20', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Trasn. de carga');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila21', 'MATRIZAUTOMOCIONGC', 'Veh. decomisados - Motocicletas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila22', 'MATRIZAUTOMOCIONGC', 'SUMAN VEH. DECOMISADOS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila23', 'MATRIZAUTOMOCIONGC', 'Otros');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila24', 'MATRIZAUTOMOCIONGC', 'SUMAN VEHÍCULOS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila25', 'MATRIZAUTOMOCIONGC', 'Remolques');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila26', 'MATRIZAUTOMOCIONGC', 'TOTAL');
 
 
 --Nueva tabla
@@ -40,7 +41,6 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAAUTOGCXUNID', 'Investigación');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAAUTOGCXUNID', 'Motocicletas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAAUTOGCXUNID', 'Otros');
-
 
 --Nueva tabla
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLARELVEHICMALGC', 'Marca/Modelo');
@@ -69,6 +69,16 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLARELVEHICGC', 'Fecha de recepción');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLARELVEHICGC', 'Kms. recorridos Último año');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLARELVEHICGC', 'Total Kilómetros recorridos');
+
+--Nueva matriz
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZACTMECANICOSGC', 'Nº Reparaciones');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZACTMECANICOSGC', 'Nº cambios de aceite');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZACTMECANICOSGC', 'Nº cambios de ruedas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZACTMECANICOSGC', 'Nº puestas a punto');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZACTMECANICOSGC', 'Otros trabajos (especificar)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila06', 'MATRIZACTMECANICOSGC', 'Total actividades');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZACTMECANICOSGC', 'Penúltimo año');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZACTMECANICOSGC', 'Último año');
 
 --Nueva matriz
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZVEHICACCIDENTGC', 'Penúltimo año');
@@ -158,22 +168,32 @@ insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Necesidades de adjudicación  y de reposición (justificar debidamente).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 0);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Celulares que no reúnen requisitos conforme Orden INT/2573/2015 de 30 de noviembre.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 1);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Reposición de cubiertas, baterías, etc. De existir, problemas de carburante.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 2);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos en sistema “renting”. Existencia de problemática al respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos intervenidos. Distribución. Problemática.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipos de control y barreamiento: Existencias, estado y necesidades (Justificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Extintores. Dotación y revisiones periódicas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación oficial que portan los vehículos (tanto los adjudicados al Servicio Peculiar como a las  Especialidades). ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 7);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cualquier otra problemática que debiera mejorarse.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de vehículos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZAUTOMOCIONGC', 9);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de vehículos: Caso de no disponer de los datos para rellenar la anterior tabla, se sustituirá por una relación detallada de todos los vehículos adjudicados a la Compañía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de vehículos por Unidades: Añadir  como unidades Mando y Plana Mayor, Puestos, Total compañía, Intervención de Armas, Policía Judicial, Seprona, Patrullas Fiscales u Otros (especificar vehículo).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAAUTOGCXUNID', 11);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos en mal estado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICMALGC', 12);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos en mal estado: Se detallarán los propuestos para reposición, con expresión de la fecha y número del escrito enviado a estos efectos, así como a qué Autoridad. ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 13);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Inspección Técnica de Vehículos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZITV', 14);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos sistema RENTING (alquiler concertado).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICRENTGC', 15);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos propiedad de la DGGC.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICGC', 16);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos intervenidos por la Autoridad judicial a disposición de la DGGC.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICGC', 17);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVEHICACCIDENTGC', 18);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Retirada de residuos (aceites, filtros, baterías, etc.). Libro Registro como productor.  Empresa adjudicataria de la retirada. Frecuencia.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 3);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos en sistema “renting”. Existencia de problemática al respecto.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 4);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos intervenidos. Distribución. Problemática.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 5);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Equipos de control y barreamiento: Existencias, estado y necesidades (Justificar).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 6);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Extintores. Dotación y revisiones periódicas.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 7);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Documentación oficial que portan los vehículos (tanto los adjudicados al Servicio Peculiar como a las  Especialidades). ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 8);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Cualquier otra problemática que debiera mejorarse.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 9);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de vehículos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZAUTOMOCIONGC', 10);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de vehículos: Caso de no disponer de los datos para rellenar la anterior tabla, se sustituirá por una relación detallada de todos los vehículos adjudicados a la Compañía.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 11);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Dotación de vehículos por Unidades: Añadir  como unidades Mando y Plana Mayor, Puestos, Total compañía, Intervención de Armas, Policía Judicial, Seprona, Patrullas Fiscales u Otros (especificar vehículo).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAAUTOGCXUNID', 12);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos en mal estado.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICMALGC', 13);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos en mal estado: Se detallarán los propuestos para reposición, con expresión de la fecha y número del escrito enviado a estos efectos, así como a qué Autoridad. ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 14);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Inspección Técnica de Vehículos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZITV', 15);
+
+
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos sistema RENTING (alquiler concertado).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICRENTGC', 16);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos propiedad de la DGGC.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICGC', 17);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos intervenidos por la Autoridad judicial a disposición de la DGGC.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICGC', 18);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividades de los mecánicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTMECANICOSGC', 16);
+
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes. El responsable de Automovilismo elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:
+- Causas más comunes de los accidentes. Medidas adoptadas para prevenirlos.
+- Determinación de responsabilidad del siniestro.
+- Resultado de las informaciones verbales, especificando aquellas en las que se adoptaron medidas disciplinarias y/o de resarcimiento. 
+- Servicios renting: Respuesta en reparación y/o sustitución vehículos accidentados/ averiados.
+', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVEHICACCIDENTGC', 19);
 
 
 --Insert area ARMAMENTO, EQUIPACIÓN POLICIAL Y VESTUARIO
