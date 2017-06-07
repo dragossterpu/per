@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.informes;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.persistence.entities.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.services.IModeloInformeService;
 import lombok.Getter;
 import lombok.Setter;

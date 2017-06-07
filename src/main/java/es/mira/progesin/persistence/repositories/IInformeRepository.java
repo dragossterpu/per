@@ -2,7 +2,7 @@ package es.mira.progesin.persistence.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import es.mira.progesin.persistence.entities.Informe;
+import es.mira.progesin.persistence.entities.informes.Informe;
 
 /**
  * Repositorio de informes de inspecciones.

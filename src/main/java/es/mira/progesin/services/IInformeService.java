@@ -1,6 +1,6 @@
 package es.mira.progesin.services;
 
-import es.mira.progesin.persistence.entities.Informe;
+import es.mira.progesin.persistence.entities.informes.Informe;
 
 /**
  * Servicio de informes de inspección.

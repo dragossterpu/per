@@ -1,4 +1,4 @@
-package es.mira.progesin.persistence.entities;
+package es.mira.progesin.persistence.entities.informes;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

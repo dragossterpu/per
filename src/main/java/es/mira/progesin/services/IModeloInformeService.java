@@ -2,7 +2,7 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import es.mira.progesin.persistence.entities.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 
 /**
  * Interfaz del servicio de modelos de informe.

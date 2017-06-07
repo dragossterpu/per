@@ -3,7 +3,7 @@ package es.mira.progesin.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.mira.progesin.persistence.entities.Informe;
+import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.repositories.IInformeRepository;
 
 /**

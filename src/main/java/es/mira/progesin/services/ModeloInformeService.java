@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.mira.progesin.persistence.entities.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 
 /**

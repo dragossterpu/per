@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.informes;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Controller;
 
 import com.itextpdf.text.DocumentException;
 
-import es.mira.progesin.persistence.entities.AreaInforme;
-import es.mira.progesin.persistence.entities.Informe;
-import es.mira.progesin.persistence.entities.ModeloInforme;
-import es.mira.progesin.persistence.entities.RespuestaInforme;
-import es.mira.progesin.persistence.entities.SubareaInforme;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IModeloInformeService;
