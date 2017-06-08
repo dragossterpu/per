@@ -22,9 +22,10 @@ public interface IRespuestaCuestionarioService {
      * @param respuestaCuestionario respuesta que se quiere grabar
      * @param file fichero que se quiere cargar
      * @param listaDocumentos listado de documentos que ya tenía la respuesta
+     * @return respuesta actualizada
      * @throws ProgesinException posible excepción
      */
-    public void saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile file,
+    public RespuestaCuestionario saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile file,
             List<Documento> listaDocumentos) throws ProgesinException;
     
     /**
@@ -32,6 +33,7 @@ public interface IRespuestaCuestionarioService {
      * 
      * @param respueta respuesta a eliminar
      * @param documento documento a eliminar
+     * @return respuesta actualizada
      */
-    public void eliminarDocumentoRespuesta(RespuestaCuestionario respueta, Documento documento);
+    public RespuestaCuestionario eliminarDocumentoRespuesta(RespuestaCuestionario respueta, Documento documento);
 }

@@ -39,20 +39,20 @@ public class RespuestaCuestionarioService implements IRespuestaCuestionarioServi
      * @param respuestaCuestionario respuesta que se quiere grabar
      * @param archivoSubido fichero que se quiere cargar
      * @param listaDocumentos listado de documentos que ya tenía la respuesta
+     * @return respuesta actualizada
      * @throws ProgesinException posible excepción
      */
     
     @Override
     @Transactional(readOnly = false)
-    public void saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile archivoSubido,
-            List<Documento> listaDocumentos) throws ProgesinException {
+    public RespuestaCuestionario saveConDocumento(RespuestaCuestionario respuestaCuestionario,
+            UploadedFile archivoSubido, List<Documento> listaDocumentos) throws ProgesinException {
         TipoDocumento tipo = TipoDocumento.builder().id(6L).build();
         Documento documentoSubido = documentoService.cargaDocumento(archivoSubido, tipo,
                 respuestaCuestionario.getRespuestaId().getCuestionarioEnviado().getInspeccion());
         listaDocumentos.add(documentoSubido);
         respuestaCuestionario.setDocumentos(listaDocumentos);
-        respuestaRepository.save(respuestaCuestionario);
-        respuestaRepository.flush();
+        return respuestaRepository.save(respuestaCuestionario);
     }
     
     /**
@@ -60,12 +60,14 @@ public class RespuestaCuestionarioService implements IRespuestaCuestionarioServi
      * 
      * @param respueta respuesta a eliminar
      * @param documento documento a eliminar
+     * @return respuesta actualizada
      */
     @Override
     @Transactional(readOnly = false)
-    public void eliminarDocumentoRespuesta(RespuestaCuestionario respueta, Documento documento) {
-        respuestaRepository.save(respueta);
+    public RespuestaCuestionario eliminarDocumentoRespuesta(RespuestaCuestionario respueta, Documento documento) {
+        RespuestaCuestionario respuestaActualizada = respuestaRepository.save(respueta);
         documentoService.delete(documento);
+        return respuestaActualizada;
     }
     
 }

@@ -175,7 +175,7 @@ public class ResponderCuestionarioBean implements Serializable {
             listaRespuestas = cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
             
             // Para que cuando guardemos las respuestas tipo tabla/matriz tengan id, sino da problemas el mapeo con las
-            // respuestas de tipo tabla, ya que no encuantra el id cuando añaden filas y siguen con la misma sesión
+            // respuestas de tipo tabla, ya que no encuentra el id cuando añaden filas y siguen con la misma sesión
             actualizarIdRespuestasTabla(listaRespuestas);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
@@ -358,9 +358,10 @@ public class ResponderCuestionarioBean implements Serializable {
                 } else {
                     listaDocumentos = new ArrayList<>();
                 }
-                respuestaService.saveConDocumento(respuestaCuestionario, archivoSubido, listaDocumentos);
+                respuestaCuestionario = respuestaService.saveConDocumento(respuestaCuestionario, archivoSubido,
+                        listaDocumentos);
                 
-                mapaDocumentos.put(pregunta, listaDocumentos);
+                mapaDocumentos.put(pregunta, respuestaCuestionario.getDocumentos());
                 visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
                 
             } catch (DataAccessException | ProgesinException e) {
@@ -381,12 +382,18 @@ public class ResponderCuestionarioBean implements Serializable {
      * @param documento Documento a eliminar
      */
     public void eliminarDocumento(PreguntasCuestionario pregunta, Documento documento) {
-        RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
-        List<Documento> listaDocumentos = visualizarCuestionario.getMapaDocumentos().get(pregunta);
-        listaDocumentos.remove(documento);
-        respuestaCuestionario.setDocumentos(listaDocumentos);
-        respuestaService.eliminarDocumentoRespuesta(respuestaCuestionario, documento);
-        visualizarCuestionario.getMapaDocumentos().put(pregunta, listaDocumentos);
+        try {
+            RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
+            List<Documento> listaDocumentos = visualizarCuestionario.getMapaDocumentos().get(pregunta);
+            listaDocumentos.remove(documento);
+            respuestaCuestionario.setDocumentos(listaDocumentos);
+            respuestaCuestionario = respuestaService.eliminarDocumentoRespuesta(respuestaCuestionario, documento);
+            visualizarCuestionario.getMapaDocumentos().put(pregunta, respuestaCuestionario.getDocumentos());
+        } catch (DataAccessException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    "Se ha producido un error al eliminar el fichero. Inténtelo de nuevo más tarde.");
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+        }
     }
     
     /**
