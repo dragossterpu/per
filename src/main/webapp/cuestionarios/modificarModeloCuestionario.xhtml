@@ -123,7 +123,7 @@
                                         <h:outputText value="#{valor}" />
                                     </p:column>
                                 </p:orderList>
-                                <p:outputLabel value="El máximo numero de columnas permitidas es 9" />
+                                <p:outputLabel value="El máximo numero de columnas permitidas es 20" />
                                 <p:inputText id="nuevoTipoRespuestaTabla" binding="#{nuevoValorTabla}" converter="#{trimConverter}" />
                                 <p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValor(nuevoValorTabla.value, 'TABLA')}" update="orderListColumnasTabla,nuevoTipoRespuestaTabla" value="Añadir columna" icon="fa fa-fw fa-plus">
                                     <p:resetInput target="nuevoTipoRespuestaTabla" />
@@ -139,7 +139,7 @@
                                         <h:outputText value="#{valor}" />
                                     </p:column>
                                 </p:orderList>
-                                <p:outputLabel value="El máximo numero de columnas permitidas es 9" />
+                                <p:outputLabel value="El máximo numero de columnas permitidas es 20" />
                                 <p:inputText id="nuevoTipoRespuestaColumna" binding="#{valorColumna}" converter="#{trimConverter}" />
                                 <p:commandButton actionListener="#{modificarModeloCuestionarioBean.aniadeValor(valorColumna.value, 'MATRIZ')}" update="orderListColumnasMatriz,nuevoTipoRespuestaColumna" value="Añadir columna" icon="fa fa-fw fa-plus">
                                     <p:resetInput target="nuevoTipoRespuestaColumna"></p:resetInput>

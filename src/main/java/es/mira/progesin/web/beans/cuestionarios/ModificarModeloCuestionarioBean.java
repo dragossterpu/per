@@ -430,7 +430,7 @@ public class ModificarModeloCuestionarioBean {
      */
     public void aniadeValor(String valor, String tipoRespuesta) {
         if ((!valor.isEmpty() && Constantes.TIPORESPUESTARADIO.equals(tipoRespuesta))
-                || (!valor.isEmpty() && listadoValoresNuevaRespuesta.size() <= 20)) {
+                || (!valor.isEmpty() && listadoValoresNuevaRespuesta.size() < 20)) {
             listadoValoresNuevaRespuesta.add(valor);
         }
         
