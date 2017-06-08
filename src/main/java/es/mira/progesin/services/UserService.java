@@ -376,4 +376,14 @@ public class UserService implements IUserService {
         return userRepository.existsByDepartamento(departamento);
     }
     
+    /**
+     * Devuelve una lista de usuarios que pertenecen al equipo recibido como parámetro.
+     * 
+     * @param equipo Equipo del que se desean extraer sus usuarios
+     * @return Lista de usuarios.
+     */
+    @Override
+    public List<User> usuariosEquipo(Equipo equipo) {
+        return userRepository.usuariosEnEquipo(equipo);
+    }
 }

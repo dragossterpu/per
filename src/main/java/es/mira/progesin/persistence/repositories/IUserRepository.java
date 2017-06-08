@@ -105,4 +105,13 @@ public interface IUserRepository extends CrudRepository<User, String> {
      * @return resultado de la comprobación
      */
     boolean existsByCuerpoEstado(CuerpoEstado cuerpo);
+    
+    /**
+     * Devuelve una lista de usuarios que pertenecen al equipo recibido como parámetro.
+     * 
+     * @param equipo Equipo del que se desean extraer sus usuarios
+     * @return Lista de usuarios.
+     */
+    @Query("Select a from User a, Miembro b where a.username=b.username and b.equipo=:equipo")
+    List<User> usuariosEnEquipo(@Param("equipo") Equipo equipo);
 }

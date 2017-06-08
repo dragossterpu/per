@@ -167,4 +167,13 @@ public interface IUserService {
      * 
      */
     List<User> save(List<User> listadoUsuariosProvisionales);
+    
+    /**
+     * Devuelve una lista de usuarios que pertenecen al equipo recibido como parámetro.
+     * 
+     * @param equipo Equipo del que se desean extraer sus usuarios
+     * @return Lista de usuarios.
+     */
+    
+    List<User> usuariosEquipo(Equipo equipo);
 }

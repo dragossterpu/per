@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +40,7 @@ public class CuerpoEstadoValidatorTest {
     /**
      * Test method for {@link es.mira.progesin.util.CuerpoEstadoValidator#validate(FacesContext, UIComponent, Object)}.
      */
-    @Test(expected = Exception.class)
+    @Test(expected = ValidatorException.class)
     public void validate() {
         
         FacesContext context = mock(FacesContext.class);

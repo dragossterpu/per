@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -21,7 +22,6 @@ import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.AlertasNotificacionesUsuario;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
@@ -61,12 +61,6 @@ public class AlertaService implements IAlertaService {
      */
     @Autowired
     private IUserService userService;
-    
-    /**
-     * Servicio de miembro.
-     */
-    @Autowired
-    private IMiembroService miembroService;
     
     /**
      * Servicio del registro de actividad.
@@ -170,24 +164,50 @@ public class AlertaService implements IAlertaService {
      * Crea una alerta y se asigna a u usuario. Se crea a partir de la sección, la descripción y el usuario que se
      * reciben como parámetros.
      * 
-     * @param seccion para la que se crea la alerta
-     * @param descripcion de la alerta
-     * @param usuario al que se envía la alerta
+     * @param seccion Sección para la que se crea la alerta
+     * @param descripcion Descripción de la alerta
+     * @param usuario Usuario al que se envía la alerta
      * 
      */
     @Override
-    public void crearAlertaUsuario(String seccion, String descripcion, String usuario) {
+    public void crearAlertaUsuario(String seccion, String descripcion, User usuario) {
         try {
             Alerta alerta = crearAlerta(seccion, descripcion);
-            User usu = userService.findOne(usuario);
-            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario);
-            correo.envioCorreo(usu.getCorreo(), "Nueva alerta PROGESIN",
+            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getNombre());
+            correo.envioCorreo(usuario.getCorreo(), "Nueva alerta PROGESIN",
                     "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
             
         } catch (DataAccessException | CorreoException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
+    }
+    
+    /**
+     * 
+     * Crea una alerta y se asigna a una lista de usuarios.
+     * 
+     * @param seccion Sección para la que se crea la alerta
+     * @param descripcion Descripción de la alerta
+     * @param listaUsuarios Listado de usuarios a los que se debe enviar la alerta
+     * 
+     */
+    @Override
+    public void crearAlertaMultiplesUsuarios(String seccion, String descripcion, List<User> listaUsuarios) {
+        try {
+            List<String> listaCorreos = new ArrayList<>();
+            Alerta alerta = crearAlerta(seccion, descripcion);
+            
+            for (User usuario : listaUsuarios) {
+                alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
+                listaCorreos.add(usuario.getCorreo());
+            }
+            correo.envioCorreo(listaCorreos, "Nueva alerta PROGESIN",
+                    "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
+            
+        } catch (DataAccessException | CorreoException e) {
+            registroActividadService.altaRegActividadError(seccion, e);
+        }
     }
     
     /**
@@ -204,9 +224,7 @@ public class AlertaService implements IAlertaService {
     public void crearAlertaRol(String seccion, String descripcion, RoleEnum rol) {
         try {
             List<User> usuariosRol = userService.findByfechaBajaIsNullAndRole(rol);
-            for (User usuario : usuariosRol) {
-                crearAlertaUsuario(seccion, descripcion, usuario.getUsername());
-            }
+            crearAlertaMultiplesUsuarios(seccion, descripcion, usuariosRol);
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
@@ -245,11 +263,8 @@ public class AlertaService implements IAlertaService {
     @Override
     public void crearAlertaEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
         try {
-            List<Miembro> miembrosEquipo = miembroService.findByEquipo(inspeccion.getEquipo());
-            for (Miembro miembro : miembrosEquipo) {
-                crearAlertaUsuario(seccion, descripcion, miembro.getUsername());
-            }
-            
+            List<User> listausuarios = userService.usuariosEquipo(inspeccion.getEquipo());
+            crearAlertaMultiplesUsuarios(seccion, descripcion, listausuarios);
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
@@ -269,7 +284,8 @@ public class AlertaService implements IAlertaService {
     @Override
     public void crearAlertaJefeEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
         try {
-            crearAlertaUsuario(seccion, descripcion, inspeccion.getEquipo().getJefeEquipo());
+            User usuario = userService.findOne(inspeccion.getEquipo().getJefeEquipo());
+            crearAlertaUsuario(seccion, descripcion, usuario);
             
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(seccion, e);
