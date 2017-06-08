@@ -89,4 +89,13 @@ public class CuerpoEstadoServiceTest {
         assertThat(actual).isEqualTo(false);
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#delete(Integer)}.
+     */
+    @Test
+    public void delete() {
+        service.delete(1);
+        verify(repository, times(1)).delete(1);
+    }
+    
 }

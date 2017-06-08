@@ -76,8 +76,8 @@ public class CuerposEstadoBean implements Serializable {
         try {
             boolean tieneUsuarios = userService.existsByCuerpoEstado(cuerpo);
             if (tieneUsuarios) {
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo "
-                        + cuerpo.getDescripcion() + " al haber usuarios pertenecientes a dicho cuerpo", "", "msgs");
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
+                        + cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo", "", null);
             } else {
                 cuerposEstadoService.delete(cuerpo.getId());
                 listaCuerposEstado.remove(cuerpo);
@@ -140,7 +140,7 @@ public class CuerposEstadoBean implements Serializable {
             regActividadService.altaRegActividad("Se ha modificado " + cuerpoEstado,
                     TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.ADMINISTRACION.name());
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",
-                    cuerpoEstado.getDescripcion(), "msgs");
+                    cuerpoEstado.getDescripcion(), null);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar modificar un cuerpo, inténtelo de nuevo más tarde");

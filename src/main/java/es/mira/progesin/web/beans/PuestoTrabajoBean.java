@@ -73,11 +73,10 @@ public class PuestoTrabajoBean implements Serializable {
         try {
             boolean tieneUsuarios = userService.existsByPuestoTrabajo(puesto);
             if (tieneUsuarios) {
-                FacesUtilities
-                        .setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
-                                Constantes.ERRORMENSAJE, "No se puede eliminar el puesto de trabajo "
-                                        + puesto.getDescripcion() + " al haber usuarios pertenecientes a dicho puesto",
-                                null);
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                        "No se puede eliminar el puesto de trabajo '" + puesto.getDescripcion()
+                                + "' al haber usuarios pertenecientes a dicho puesto.",
+                        null);
             } else {
                 puestoTrabajoService.delete(puesto.getId());
                 listaPuestosTrabajo.remove(puesto);

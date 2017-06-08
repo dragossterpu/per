@@ -7,7 +7,7 @@
             <h:form id="form">
 
                 <p:dataTable id="tablaDepartamentos" var="departamento" rowIndexVar="rowIndex" value="#{departamentosBean.listaDepartamentos}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
-                    <p:ajax event="rowEdit" listener="#{departamentosBean.onRowEdit}" update=":form:msgs" />
+                    <p:ajax event="rowEdit" listener="#{departamentosBean.onRowEdit}" />
 
                     <p:column headerText="Departamentos">
                         <p:cellEditor>
