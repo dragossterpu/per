@@ -41,7 +41,7 @@ import lombok.ToString;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "municipios")
-public class Municipio implements Serializable, Comparable<Municipio> {
+public class Municipio implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -66,13 +66,5 @@ public class Municipio implements Serializable, Comparable<Municipio> {
     @ManyToOne
     @JoinColumn(name = "code_province", foreignKey = @ForeignKey(name = "FK_PROVINCIA"), nullable = false)
     private Provincia provincia;
-    
-    /**
-     * Sobreescritura del método para porder realizar la ordenación de listas.
-     */
-    @Override
-    public int compareTo(Municipio m) {
-        return this.name.toLowerCase().compareTo(m.name.toLowerCase());
-    }
     
 }

@@ -451,7 +451,7 @@ public class InspeccionBean {
             try {
                 nuevoMunicipio = municipioService.crearMunicipio(nombre, provincia);
                 listaMunicipios.add(nuevoMunicipio);
-                Collections.sort(listaMunicipios);
+                Collections.sort(listaMunicipios, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
                 inspeccion.setMunicipio(nuevoMunicipio);
                 RequestContext.getCurrentInstance().execute("PF('dialogMunicipio').hide()");
             } catch (DataAccessException e) {
@@ -509,6 +509,7 @@ public class InspeccionBean {
                     inspeccionBusqueda));
             setSelectedAll(true);
         } else {
+            setInspeccionesSeleccionadas(null);
             setInspeccionesAsignadasActuales(null);
             setSelectedAll(false);
         }

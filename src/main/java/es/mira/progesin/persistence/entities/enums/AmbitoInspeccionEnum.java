@@ -15,17 +15,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum AmbitoInspeccionEnum {
     /**
-     * Policía nacional.
-     */
-    PN("Policía Nacional"),
-    /**
      * Guardia civil.
      */
     GC("Guardia Civil"),
     /**
      * Otros ámbitos.
      */
-    OTROS("Otros");
+    OTROS("Otros"),
+    /**
+     * Policía nacional.
+     */
+    PN("Policía Nacional");
     /**
      * Descripción del ámbito.
      */

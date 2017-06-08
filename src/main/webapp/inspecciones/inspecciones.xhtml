@@ -185,11 +185,11 @@
                         <h:outputText value="#{inspeccion.tipoInspeccion.codigo}" />
                     </p:column>
 
-                    <p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion.descripcion}" width="70" visible="#{inspeccionBean.list[9]}" exportable="#{inspeccionBean.list[9]}">
+                    <p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion}" width="70" visible="#{inspeccionBean.list[9]}" exportable="#{inspeccionBean.list[9]}">
                         <h:outputText value="#{inspeccion.estadoInspeccion.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Tipo unid." sortBy="#{inspeccion.tipoUnidad.descripcion}" width="70" visible="#{inspeccionBean.list[10]}" exportable="#{inspeccionBean.list[10]}">
+                    <p:column headerText="Tipo unid." sortBy="#{inspeccion.tipoUnidad}" width="70" visible="#{inspeccionBean.list[10]}" exportable="#{inspeccionBean.list[10]}">
                         <h:outputText value="#{inspeccion.tipoUnidad.descripcion}" />
                     </p:column>
 
@@ -201,7 +201,7 @@
                         <h:outputText value="#{inspeccion.municipio.name}" />
                     </p:column>
 
-                    <p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia.nombre}" width="70" visible="#{inspeccionBean.list[13]}" exportable="#{inspeccionBean.list[13]}">
+                    <p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia}" width="70" visible="#{inspeccionBean.list[13]}" exportable="#{inspeccionBean.list[13]}">
                         <h:outputText value="#{inspeccion.municipio.provincia.nombre}" />
                     </p:column>
 
