@@ -105,7 +105,7 @@
 
 
                 <h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
-                <p:inputText id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " converter="#{trimConverter}"/>
+                <p:inputNumber id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="telefonoInterlocutor" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
