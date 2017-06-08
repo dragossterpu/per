@@ -71,6 +71,12 @@ public class InspeccionBean {
     private InspeccionBusqueda inspeccionBusqueda;
     
     /**
+     * Variable utilizada para almacenar provisionalmente la búsqueda del buscador y así distinguir del de asociación.
+     * 
+     */
+    private InspeccionBusqueda busquedaBuscador;
+    
+    /**
      * Variable utilizada para almacenar la inspección cargada en memoria en ese momento. Puede ser una a modificar, una
      * nueva inspección...
      * 
@@ -185,6 +191,8 @@ public class InspeccionBean {
         inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        busquedaBuscador = new InspeccionBusqueda();
+        setBusquedaBuscador(inspeccionBusqueda);
     }
     
     /**
@@ -481,6 +489,7 @@ public class InspeccionBean {
     public void onRowUnSelected(UnselectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
         inspeccionesAsignadasActuales.remove(i);
+        inspeccionBusqueda.setSelectedAll(false);
     }
     
     /**
@@ -491,6 +500,9 @@ public class InspeccionBean {
     public void onRowSelected(SelectEvent event) {
         Inspeccion i = (Inspeccion) event.getObject();
         inspeccionesAsignadasActuales.add(i);
+        if (model.getRowCount() == inspeccionesAsignadasActuales.size()) {
+            inspeccionBusqueda.setSelectedAll(true);
+        }
     }
     
     /**
@@ -499,9 +511,8 @@ public class InspeccionBean {
      * 
      */
     public void onToggleSelect() {
-        int numRegistros = inspeccionesService.getCountInspeccionCriteria(inspeccionBusqueda);
-        List<Inspeccion> inspeccionesBusqueda = inspeccionesService.buscarInspeccionPorCriteria(0, numRegistros, null,
-                null, inspeccionBusqueda);
+        List<Inspeccion> inspeccionesBusqueda = inspeccionesService.buscarInspeccionPorCriteria(0, model.getRowCount(),
+                null, null, inspeccionBusqueda);
         
         if (!inspeccionBusqueda.isSelectedAll()) {
             for (Inspeccion i : inspeccionesBusqueda) {
@@ -548,6 +559,13 @@ public class InspeccionBean {
      */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+    }
+    
+    /**
+     * Guarada el objeto búsqueda.
+     */
+    public void recuperarBusqueda() {
+        setInspeccionBusqueda(busquedaBuscador);
     }
     
 }
