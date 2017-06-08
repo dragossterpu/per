@@ -1,7 +1,6 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +10,6 @@ import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
@@ -20,6 +18,7 @@ import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,6 +55,13 @@ public class DepartamentoBean implements Serializable {
     private transient IDepartamentoService departamentoService;
     
     /**
+     * Variable utilizada para inyectar el servicio de departamentos.
+     * 
+     */
+    @Autowired
+    private transient IUserService userService;
+    
+    /**
      * Variable utilizada para inyectar el servicio de registro de actividad.
      * 
      */
@@ -63,20 +69,25 @@ public class DepartamentoBean implements Serializable {
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Eliminación lógica (se pone fecha de baja) de un departamento.
+     * Eliminación de un departamento.
      * @param departamento a eliminar
      */
     public void eliminarDepartamento(Departamento departamento) {
-        if (departamentoService.existenUsuariosDepartamento(departamento)) {
-            FacesUtilities.setMensajeInformativo(
-                    FacesMessage.SEVERITY_ERROR, "No se puede eliminar el departamento '"
-                            + departamento.getDescripcion() + "' al haber usuarios pertenecientes a dicho departamento",
-                    "", "msgs");
-        } else {
-            departamento.setFechaBaja(new Date());
-            departamento.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-            departamentoService.save(departamento);
-            listaDepartamentos.remove(departamento);
+        try {
+            boolean tieneUsuarios = userService.existsByDepartamento(departamento);
+            if (tieneUsuarios) {
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                        "No se puede eliminar el departamento '" + departamento.getDescripcion()
+                                + "' al haber usuarios pertenecientes a dicho departamento",
+                        "", null);
+            } else {
+                departamentoService.delete(departamento.getId());
+                listaDepartamentos.remove(departamento);
+            }
+        } catch (DataAccessException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
+                    "Se ha producido un error al eliminar el departamento, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
     }
     
@@ -112,7 +123,7 @@ public class DepartamentoBean implements Serializable {
             Departamento departamento = (Departamento) event.getObject();
             departamentoService.save(departamento);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
-                    departamento.getDescripcion(), "msgs");
+                    departamento.getDescripcion(), null);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar modificar un departamento, inténtelo de nuevo más tarde");
@@ -125,7 +136,7 @@ public class DepartamentoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        listaDepartamentos = departamentoService.findByFechaBajaIsNull();
+        listaDepartamentos = departamentoService.findAll();
     }
     
 }

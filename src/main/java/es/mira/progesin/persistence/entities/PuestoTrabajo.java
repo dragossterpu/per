@@ -89,16 +89,4 @@ public class PuestoTrabajo implements Serializable {
     @Column(name = "username_modif")
     private String usernameModif;
     
-    /**
-     * Fecha de baja.
-     */
-    @Column(name = "fecha_baja")
-    private Date fechaBaja;
-    
-    /**
-     * Usuario de baja.
-     */
-    @Column(name = "username_baja", length = 12)
-    private String usernameBaja;
-    
 }

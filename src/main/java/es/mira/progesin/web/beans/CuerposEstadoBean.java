@@ -69,22 +69,21 @@ public class CuerposEstadoBean implements Serializable {
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Eliminación lógica (se pone fecha de baja) de un cuerpo del estado.
+     * Eliminación física de un cuerpo del estado.
      * @param cuerpo cuerpo del estado a eliminar
      */
     public void eliminarCuerpo(CuerpoEstado cuerpo) {
         try {
-            if (userService.existByCuerpoEstado(cuerpo)) {
+            boolean tieneUsuarios = userService.existsByCuerpoEstado(cuerpo);
+            if (tieneUsuarios) {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo "
                         + cuerpo.getDescripcion() + " al haber usuarios pertenecientes a dicho cuerpo", "", "msgs");
             } else {
-                cuerpo.setFechaBaja(new Date());
-                cuerpo.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                cuerposEstadoService.save(cuerpo);
+                cuerposEstadoService.delete(cuerpo.getId());
                 listaCuerposEstado.remove(cuerpo);
-                
                 String user = SecurityContextHolder.getContext().getAuthentication().getName();
-                String descripcion = "El usuario " + user + " ha eliminado la inspección " + cuerpo.getNombreCorto();
+                String descripcion = "El usuario " + user + " ha eliminado el cuerpo de estado "
+                        + cuerpo.getNombreCorto();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.ADMINISTRACION.name());
             }
@@ -155,6 +154,6 @@ public class CuerposEstadoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        listaCuerposEstado = cuerposEstadoService.findByFechaBajaIsNull();
+        listaCuerposEstado = cuerposEstadoService.findAll();
     }
 }

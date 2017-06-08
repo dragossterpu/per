@@ -93,14 +93,6 @@ public interface IUserService {
     int contarRegistros(UserBusqueda userBusqueda);
     
     /**
-     * Busca los usuarios que estén asignados a un cuerpo de estado.
-     * 
-     * @param cuerpo Cuerpo por el que se desea buscar
-     * @return Lista de usuarios
-     */
-    List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
-    
-    /**
      * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol no esté en el listado que se recibe como
      * parámetro.
      * 
@@ -144,28 +136,28 @@ public interface IUserService {
     List<User> crearUsuariosProvisionalesCuestionario(String correoPrincipal, String rawPassword);
     
     /**
-     * Recupera un listado de usuarios cuyo puesto de trabajo corresponde con el recibido como parámetro.
+     * Comprueba la existencia de usuarios que tengan asignado un puesto de trabajo.
      * 
-     * @param puesto sobre el que se hace la consulta
-     * @return resultado de la búsqueda
+     * @param puesto puesto que se desea verificar
+     * @return verdadero o falso
      */
-    List<User> findByPuestoTrabajo(PuestoTrabajo puesto);
+    boolean existsByPuestoTrabajo(PuestoTrabajo puesto);
     
     /**
-     * Recupera un listado de todos los usuarios que pertenecen a un departamento.
+     * Recupera un listado de todos los usuarios que tengan asignado un departamento.
      * 
      * @param departamento sobre el que se hace la consulta
      * @return resultado de la búsqueda
      */
-    List<User> findByDepartamento(Departamento departamento);
+    boolean existsByDepartamento(Departamento departamento);
     
     /**
      * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado.
      * 
      * @param cuerpo cuerpo que se desea verificar
-     * @return resultado de la consulta
+     * @return verdadero o falso
      */
-    boolean existByCuerpoEstado(CuerpoEstado cuerpo);
+    boolean existsByCuerpoEstado(CuerpoEstado cuerpo);
     
     /**
      * Guarda en BBDD un listado de usuarios provisionales.

@@ -129,16 +129,6 @@ public class UserServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.UserService#findByCuerpoEstado(CuerpoEstado)}.
-     */
-    @Test
-    public void findByCuerpoEstado() {
-        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).build();
-        userService.findByCuerpoEstado(cuerpo);
-        verify(userRepositoryMock, times(1)).findByCuerpoEstado(cuerpo);
-    }
-    
-    /**
      * Test method for {@link es.mira.progesin.services.UserService#findByfechaBajaIsNullAndRoleNotIn(java.util.List)}.
      */
     @Test
@@ -190,32 +180,32 @@ public class UserServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.UserService#findByPuestoTrabajo(PuestoTrabajo)}.
+     * Test method for {@link es.mira.progesin.services.UserService#existsByPuestoTrabajo(PuestoTrabajo)}.
      */
     @Test
-    public void findByPuestoTrabajo() {
+    public void existsByPuestoTrabajo() {
         PuestoTrabajo puesto = PuestoTrabajo.builder().id(1L).build();
-        userService.findByPuestoTrabajo(puesto);
-        verify(userRepositoryMock, times(1)).findByPuestoTrabajo(puesto);
+        userService.existsByPuestoTrabajo(puesto);
+        verify(userRepositoryMock, times(1)).existsByPuestoTrabajo(puesto);
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.UserService#findByDepartamento(Departamento)}.
+     * Test method for {@link es.mira.progesin.services.UserService#existsByDepartamento(Departamento)}.
      */
     @Test
-    public void findByDepartamento() {
+    public void existsByDepartamento() {
         Departamento departamento = Departamento.builder().id(1L).build();
-        userService.findByDepartamento(departamento);
-        verify(userRepositoryMock, times(1)).findByDepartamento(departamento);
+        userService.existsByDepartamento(departamento);
+        verify(userRepositoryMock, times(1)).existsByDepartamento(departamento);
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.UserService#existByCuerpoEstado(CuerpoEstado)}.
+     * Test method for {@link es.mira.progesin.services.UserService#existsByCuerpoEstado(CuerpoEstado)}.
      */
     @Test
-    public void existByCuerpoEstado() {
+    public void existsByCuerpoEstado() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).build();
-        userService.existByCuerpoEstado(cuerpo);
+        userService.existsByCuerpoEstado(cuerpo);
         verify(userRepositoryMock, times(1)).existsByCuerpoEstado(cuerpo);
         
     }

@@ -13,20 +13,25 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 public interface IPuestoTrabajoService {
     
     /**
+     * Guarda la información de un puesto de trabajo en la bbdd.
+     * 
      * @param puesto a guardar.
      * @return PuestoTrabajo actualizado
      */
     PuestoTrabajo save(PuestoTrabajo puesto);
     
     /**
-     * Busca todos los puestos de trabajo dados de alta en la BBDD.
-     * @return Iterable<PuestoTrabajo> lista de puestos existentes
+     * Elimina un puesto de trabajo.
+     * 
+     * @param idPuesto clave del puesto a eliminar.
      */
-    Iterable<PuestoTrabajo> findAll();
+    void delete(Long idPuesto);
     
     /**
-     * puestos de trabajo sin fecha de baja, es decir activos.
-     * @return List<PuestoTrabajo> lista de puestos no dados de baja
+     * Busca todos los puestos de trabajo dados de alta en la BBDD.
+     * 
+     * @return lista de puestos existentes
      */
-    List<PuestoTrabajo> findByFechaBajaIsNull();
+    List<PuestoTrabajo> findAll();
+    
 }

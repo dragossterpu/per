@@ -32,6 +32,7 @@ import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
@@ -56,6 +57,12 @@ public class DepartamentoBeanTest {
      */
     @Mock
     private IDepartamentoService departamentoService;
+    
+    /**
+     * Simulación del servicio de usuarios.
+     */
+    @Mock
+    private IUserService userService;
     
     /**
      * Simulación del servicio de registro de actividad.
@@ -107,12 +114,12 @@ public class DepartamentoBeanTest {
     @Test
     public void eliminarDepartamento_conUsuarios() {
         Departamento departamento = Departamento.builder().id(1L).descripcion("DepartamentoTest").build();
-        when(departamentoService.existenUsuariosDepartamento(departamento)).thenReturn(true);
+        when(userService.existsByDepartamento(departamento)).thenReturn(true);
         
         departamentoBean.eliminarDepartamento(departamento);
         
-        verify(departamentoService, times(1)).existenUsuariosDepartamento(departamento);
-        verify(departamentoService, times(0)).save(departamento);
+        verify(userService, times(1)).existsByDepartamento(departamento);
+        verify(departamentoService, times(0)).delete(1L);
         
     }
     
@@ -125,12 +132,12 @@ public class DepartamentoBeanTest {
         Departamento departamento = Departamento.builder().id(1L).descripcion("DepartamentoTest").build();
         listaDepartamentos.add(departamento);
         departamentoBean.setListaDepartamentos(listaDepartamentos);
-        when(departamentoService.existenUsuariosDepartamento(departamento)).thenReturn(false);
+        when(userService.existsByDepartamento(departamento)).thenReturn(false);
         
         departamentoBean.eliminarDepartamento(departamento);
         
-        verify(departamentoService, times(1)).existenUsuariosDepartamento(departamento);
-        verify(departamentoService, times(1)).save(departamento);
+        verify(userService, times(1)).existsByDepartamento(departamento);
+        verify(departamentoService, times(1)).delete(1L);
     }
     
     /**
@@ -143,9 +150,6 @@ public class DepartamentoBeanTest {
         
         verify(departamentoService, times(1)).save(departamentoCaptor.capture());
         assertThat(departamentoCaptor.getValue().getDescripcion()).isEqualTo("Departamento test");
-        
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -197,6 +201,6 @@ public class DepartamentoBeanTest {
     @Test
     public void init() {
         departamentoBean.init();
-        verify(departamentoService, times(1)).findByFechaBajaIsNull();
+        verify(departamentoService, times(1)).findAll();
     }
 }

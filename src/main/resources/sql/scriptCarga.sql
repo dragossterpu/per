@@ -487,10 +487,8 @@ prompt =========================================================================
    (    ID NUMBER(19,0), 
     DESCRIPCION VARCHAR2(100 CHAR), 
     FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
     FECHA_MODIF TIMESTAMP (6), 
     USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(12 CHAR), 
     USERNAME_MODIF VARCHAR2(255 CHAR)
    ) ;
 /
@@ -1711,18 +1709,18 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos PUESTOSTRABAJO...
 prompt =========================================================================
 
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (1,'Subdirector General',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (2,'Secretario Técnico',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (3,'Jefe de Servicios de Inspección',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (4,'Responsable Estudios y Programas',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (5,'Jefe de Equipo Inspecciones',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (6,'Inspector-Auditor',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (7,'Jefe de Apoyo',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (8,'Jefe de Sección',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (9,'Personal de Apoyo',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (10,'Jefe de Negociado',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (11,'Fuera de Catálogo (Conductores)',SYSDATE,null,null,'system',null,null);
-Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values (12,'Secretaria de N30',SYSDATE,null,null,'system',null,null);
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (1,'Subdirector General',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (2,'Secretario Técnico',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (3,'Jefe de Servicios de Inspección',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (4,'Responsable Estudios y Programas',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (5,'Jefe de Equipo Inspecciones',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (6,'Inspector-Auditor',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (7,'Jefe de Apoyo',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (8,'Jefe de Sección',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (9,'Personal de Apoyo',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (10,'Jefe de Negociado',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (11,'Fuera de Catálogo (Conductores)',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (12,'Secretaria de N30',SYSDATE,'system');
 COMMIT;
 
 

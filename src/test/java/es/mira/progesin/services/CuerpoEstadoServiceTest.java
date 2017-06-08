@@ -64,7 +64,7 @@ public class CuerpoEstadoServiceTest {
     @Test
     public void findAll() {
         service.findAll();
-        verify(repository, times(1)).findAllByOrderByIdAsc();
+        verify(repository, times(1)).findAll();
     }
     
     /**
@@ -75,15 +75,6 @@ public class CuerpoEstadoServiceTest {
         CuerpoEstado cuerpo = mock(CuerpoEstado.class);
         service.save(cuerpo);
         verify(repository, times(1)).save(cuerpo);
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#findByFechaBajaIsNull()}.
-     */
-    @Test
-    public void findByFechaBajaIsNull() {
-        service.findByFechaBajaIsNull();
-        verify(repository, times(1)).findByFechaBajaIsNullOrderByIdAsc();
     }
     
     /**

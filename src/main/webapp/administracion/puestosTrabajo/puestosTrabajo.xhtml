@@ -7,7 +7,7 @@
             <h:form id="form">
 
                 <p:dataTable id="tablaPuestos" var="puesto" rowIndexVar="rowIndex" value="#{puestosTrabajoBean.listaPuestosTrabajo}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
-                    <p:ajax event="rowEdit" listener="#{puestosTrabajoBean.onRowEdit}" update=":form:msgs" />
+                    <p:ajax event="rowEdit" listener="#{puestosTrabajoBean.onRowEdit}" />
 
                     <p:column headerText="Puesto de trabajo">
                         <p:cellEditor>
@@ -44,7 +44,7 @@
                     </div>
                 </p:confirmDialog>
 
-                <p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true" />
+                <p:messages  globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
             </h:form>
         </div>
 

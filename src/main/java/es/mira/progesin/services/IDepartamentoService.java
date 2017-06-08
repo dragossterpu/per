@@ -22,20 +22,15 @@ public interface IDepartamentoService {
     
     /**
      * Busca todos los departamentos de trabajo dados de alta en la BBDD.
-     * @return Iterable<Departamento> iterable con todos los departamentos en BBDD
+     * @return lista con todos los departamentos en BBDD
      */
-    Iterable<Departamento> findAll();
+    List<Departamento> findAll();
     
     /**
-     * Busca todos los departamentos sin fecha de baja, es decir activos.
-     * @return List<Departamento> lista departamentos en alta
+     * Elimina un departamento.
+     * 
+     * @param id clave del departamento
      */
-    List<Departamento> findByFechaBajaIsNull();
+    void delete(Long id);
     
-    /**
-     * Comprueba si existen usuarios asociados a un departamento.
-     * @param departamento a comprobar
-     * @return resultado booleano
-     */
-    boolean existenUsuariosDepartamento(Departamento departamento);
 }

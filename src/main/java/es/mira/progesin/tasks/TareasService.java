@@ -45,6 +45,11 @@ public class TareasService implements ITareasService {
     private static final int DIAMILISEGUNDOS = 86400000;
     
     /**
+     * Nombre del parámetro que define número de días para responder cuestionario.
+     */
+    private static final String PLAZODIASCUESTIONARIO = "plazoDiasCuestionario";
+    
+    /**
      * Servicio de cuestionarios enviados.
      */
     @Autowired
@@ -99,7 +104,7 @@ public class TareasService implements ITareasService {
      * Inicializa el servicio cargando los parámetros relativos a las tareas.
      */
     @PostConstruct
-    private void init() {
+    public void init() {
         Map<String, String> parametrosTareas = applicationBean.getMapaParametros().get("tareas");
         
         if (parametrosTareas != null) {
@@ -127,8 +132,8 @@ public class TareasService implements ITareasService {
                 long milis = cuestionario.getFechaLimiteCuestionario().getTime() - hoy.getTime();
                 int dias = (int) (milis / DIAMILISEGUNDOS);
                 int plazoDiasCuestionario = 0;
-                if (tareasProperties.getProperty("plazoDiasCuestionario") != null) {
-                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"));
+                if (tareasProperties.getProperty(PLAZODIASCUESTIONARIO) != null) {
+                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty(PLAZODIASCUESTIONARIO));
                 }
                 if (dias == plazoDiasCuestionario) {
                     StringBuilder cuerpo = new StringBuilder().append("Faltan ").append(dias)
@@ -173,8 +178,8 @@ public class TareasService implements ITareasService {
                 long milis = solicitud.getFechaLimiteCumplimentar().getTime() - hoy.getTime();
                 int dias = (int) (milis / DIAMILISEGUNDOS);
                 int plazoDiasCuestionario = 0;
-                if (tareasProperties.getProperty("plazoDiasCuestionario") != null) {
-                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty("plazoDiasCuestionario"));
+                if (tareasProperties.getProperty(PLAZODIASCUESTIONARIO) != null) {
+                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty(PLAZODIASCUESTIONARIO));
                 }
                 if (dias == plazoDiasCuestionario) {
                     

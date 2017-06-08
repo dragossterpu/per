@@ -48,14 +48,6 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByCorreoOrDocIdentidad(String correo, String docIdentidad);
     
     /**
-     * Recupera un listado de usuarios que pertenezcan a un cuerpo recibido como parámetro.
-     * 
-     * @param cuerpo al que pertenecen los usuarios
-     * @return resultado de la búsqueda
-     */
-    List<User> findByCuerpoEstado(CuerpoEstado cuerpo);
-    
-    /**
      * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol no esté en el listado que se recibe como
      * parámetro.
      * 
@@ -91,25 +83,25 @@ public interface IUserRepository extends CrudRepository<User, String> {
     User findByUsernameIgnoreCase(String id);
     
     /**
-     * Recupera un listado de usuarios cuyo puesto de trabajo corresponde con el recibido como parámetro.
+     * Comprueba la existencia de usuarios que tengan asignado un puesto de trabajo recibido como parámetro.
      * 
-     * @param puesto sobre el que se hace la consulta
-     * @return resultado de la búsqueda
+     * @param puesto puesto de trabajo que se desea verificar
+     * @return resultado de la comprobación
      */
-    List<User> findByPuestoTrabajo(PuestoTrabajo puesto);
+    boolean existsByPuestoTrabajo(PuestoTrabajo puesto);
     
     /**
-     * Recupera un listado de todos los usuarios que pertenecen a un departamento.
+     * Comprueba la existencia de usuarios que tengan asignado un departamento recibido como parámetro.
      * 
-     * @param departamento sobre el que se hace la consulta
-     * @return resultado de la búsqueda
+     * @param departamento departamento que se desea verificar
+     * @return resultado de la comprobación
      */
-    List<User> findByDepartamento(Departamento departamento);
+    boolean existsByDepartamento(Departamento departamento);
     
     /**
      * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado recibido como parámetro.
      * 
-     * @param cuerpo que se desea verificar
+     * @param cuerpo cuerpo de estado que se desea verificar
      * @return resultado de la comprobación
      */
     boolean existsByCuerpoEstado(CuerpoEstado cuerpo);

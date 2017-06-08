@@ -1,7 +1,6 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,13 +10,11 @@ import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IPuestoTrabajoService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -68,43 +65,29 @@ public class PuestoTrabajoBean implements Serializable {
     private transient IRegistroActividadService regActividadService;
     
     /**
-     * Eliminación lógica (se pone fecha de baja) de un puesto.
+     * Eliminación física de un puesto.
      * 
      * @param puesto de trabajo a eliminar
      */
     public void eliminarPuesto(PuestoTrabajo puesto) {
         try {
-            if (existenUsuariosCuerpo(puesto)) {
+            boolean tieneUsuarios = userService.existsByPuestoTrabajo(puesto);
+            if (tieneUsuarios) {
                 FacesUtilities
                         .setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                                 Constantes.ERRORMENSAJE, "No se puede eliminar el puesto de trabajo "
                                         + puesto.getDescripcion() + " al haber usuarios pertenecientes a dicho puesto",
-                                "msgs");
+                                null);
             } else {
-                puesto.setFechaBaja(new Date());
-                puesto.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-                puestoTrabajoService.save(puesto);
+                puestoTrabajoService.delete(puesto.getId());
                 listaPuestosTrabajo.remove(puesto);
             }
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al eliminar el puesto de trabajo, inténtelo de nuevo más tarde", "msgs");
-            
+                    "Se ha producido un error al eliminar el puesto de trabajo, inténtelo de nuevo más tarde", null);
         }
         
-    }
-    
-    /**
-     * Método que comprueba que no hay usuarios asignados al puesto que se desea eliminar.
-     * 
-     * @param puesto a comprobar
-     * @return Devuelve true si existen usuarios asignados al puesto de trabajo, false en caso contrario
-     */
-    
-    public boolean existenUsuariosCuerpo(PuestoTrabajo puesto) {
-        List<User> usuarios = userService.findByPuestoTrabajo(puesto);
-        return usuarios != null && !usuarios.isEmpty();
     }
     
     /**
@@ -134,10 +117,10 @@ public class PuestoTrabajoBean implements Serializable {
         try {
             puestoTrabajoService.save(puesto);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Puesto de trabajo modificado",
-                    puesto.getDescripcion(), "msgs");
+                    puesto.getDescripcion(), null);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al editar el puesto de trabajo, inténtelo de nuevo más tarde.", "msgs");
+                    "Se ha producido un error al editar el puesto de trabajo, inténtelo de nuevo más tarde.", null);
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
         
@@ -148,7 +131,7 @@ public class PuestoTrabajoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        listaPuestosTrabajo = puestoTrabajoService.findByFechaBajaIsNull();
+        listaPuestosTrabajo = puestoTrabajoService.findAll();
     }
     
 }

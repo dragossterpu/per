@@ -203,17 +203,6 @@ public class UserService implements IUserService {
     }
     
     /**
-     * Busca los usuarios que estén asignados a un cuerpo de estado.
-     * 
-     * @param cuerpo Cuerpo por el que se desea buscar
-     * @return Lista de usuarios
-     */
-    @Override
-    public List<User> findByCuerpoEstado(CuerpoEstado cuerpo) {
-        return userRepository.findByCuerpoEstado(cuerpo);
-    }
-    
-    /**
      * Recupera un listado de usuarios que no hayan sido de baja y que cuyo rol no esté en el listado que se recibe como
      * parámetro.
      * 
@@ -286,28 +275,6 @@ public class UserService implements IUserService {
     }
     
     /**
-     * Recupera un listado de usuarios cuyo puesto de trabajo corresponde con el recibido como parámetro.
-     * 
-     * @param puesto sobre el que se hace la consulta
-     * @return resultado de la búsqueda
-     */
-    @Override
-    public List<User> findByPuestoTrabajo(PuestoTrabajo puesto) {
-        return userRepository.findByPuestoTrabajo(puesto);
-    }
-    
-    /**
-     * Recupera un listado de todos los usuarios que pertenecen a un departamento.
-     * 
-     * @param departamento sobre el que se hace la consulta
-     * @return resultado de la búsqueda
-     */
-    @Override
-    public List<User> findByDepartamento(Departamento departamento) {
-        return userRepository.findByDepartamento(departamento);
-    }
-    
-    /**
      * Devuelve una lista de usuarios en función de los criterios de búsqueda recibidos como parámetro. El listado se
      * devuelve paginado.
      * 
@@ -365,17 +332,6 @@ public class UserService implements IUserService {
     }
     
     /**
-     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado.
-     * 
-     * @param cuerpo cuerpo que se desea verificar
-     * @return resultado de la consulta
-     */
-    @Override
-    public boolean existByCuerpoEstado(CuerpoEstado cuerpo) {
-        return userRepository.existsByCuerpoEstado(cuerpo);
-    }
-    
-    /**
      * Guarda en BBDD un listado de usuarios provisionales.
      * 
      * @param listadoUsuariosProvisionales listardo de usuarios provisionales
@@ -385,6 +341,39 @@ public class UserService implements IUserService {
     @Override
     public List<User> save(List<User> listadoUsuariosProvisionales) {
         return (List<User>) userRepository.save(listadoUsuariosProvisionales);
+    }
+    
+    /**
+     * Comprueba la existencia de usuarios que tengan asignado un cuerpo de estado.
+     * 
+     * @param cuerpo cuerpo que se desea verificar
+     * @return resultado de la consulta
+     */
+    @Override
+    public boolean existsByCuerpoEstado(CuerpoEstado cuerpo) {
+        return userRepository.existsByCuerpoEstado(cuerpo);
+    }
+    
+    /**
+     * Comprueba la existencia de usuarios que tengan asignado un puesto de trabajo.
+     * 
+     * @param puesto puesto de trabajo que se desea verificar
+     * @return resultado de la consulta
+     */
+    @Override
+    public boolean existsByPuestoTrabajo(PuestoTrabajo puesto) {
+        return userRepository.existsByPuestoTrabajo(puesto);
+    }
+    
+    /**
+     * Comprueba la existencia de usuarios que tengan asignado un departamento.
+     * 
+     * @param departamento departamento que se desea verificar
+     * @return resultado de la consulta
+     */
+    @Override
+    public boolean existsByDepartamento(Departamento departamento) {
+        return userRepository.existsByDepartamento(departamento);
     }
     
 }

@@ -23,16 +23,9 @@ public interface ICuerpoEstadoService {
     /**
      * Busca todos los cuerpos del estado existentes en la BBDD.
      * 
-     * @return Iterable<CuerpoEstado> lista con todos los cuerpos
+     * @return lista con todos los cuerpos
      */
-    Iterable<CuerpoEstado> findAll();
-    
-    /**
-     * Cuerpos del estado sin fecha de baja, es decir activos o dados de alta.
-     * 
-     * @return List<CuerpoEstado> lista de cuerpos activos
-     */
-    List<CuerpoEstado> findByFechaBajaIsNull();
+    List<CuerpoEstado> findAll();
     
     /**
      * Existe un Cuerpo que no coincide con un id pero coincide con un nombre corto empleado para la modificación en
@@ -43,5 +36,12 @@ public interface ICuerpoEstadoService {
      * @return valor booleano
      */
     boolean existeByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id);
+    
+    /**
+     * Elimina un cuerpo de estado.
+     * 
+     * @param id clave del cuerpo
+     */
+    void delete(Integer id);
     
 }

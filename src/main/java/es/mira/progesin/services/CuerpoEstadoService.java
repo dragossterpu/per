@@ -23,17 +23,17 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
      * 
      */
     @Autowired
-    ICuerpoEstadoRepository cuerpoEstadoRepository;
+    private ICuerpoEstadoRepository cuerpoEstadoRepository;
     
     /**
      * 
      * Busca todos los cuerpos del estado existentes en la BBDD.
      * 
-     * @return Iterable<CuerpoEstado> lista con todos los cuerpos
+     * @return lista con todos los cuerpos
      */
     @Override
-    public Iterable<CuerpoEstado> findAll() {
-        return cuerpoEstadoRepository.findAllByOrderByIdAsc();
+    public List<CuerpoEstado> findAll() {
+        return (List<CuerpoEstado>) cuerpoEstadoRepository.findAll();
     }
     
     /**
@@ -49,16 +49,6 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     }
     
     /**
-     * Cuerpos del estado sin fecha de baja, es decir activos o dados de alta.
-     * 
-     * @return List<CuerpoEstado> lista de cuerpos activos
-     */
-    @Override
-    public List<CuerpoEstado> findByFechaBajaIsNull() {
-        return cuerpoEstadoRepository.findByFechaBajaIsNullOrderByIdAsc();
-    }
-    
-    /**
      * Existe un Cuerpo que no coincide con un id pero coincide con un nombre corto empleado para la modificación en
      * caliente.
      * @param nombreCorto del cuerpo
@@ -69,6 +59,16 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     @Override
     public boolean existeByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id) {
         return cuerpoEstadoRepository.existsByNombreCortoIgnoreCaseAndIdNotIn(nombreCorto, id);
+    }
+    
+    /**
+     * Elimina un cuerpo de estado.
+     * 
+     * @param id clave del cuerpo
+     */
+    @Override
+    public void delete(Integer id) {
+        cuerpoEstadoRepository.delete(id);
     }
     
 }

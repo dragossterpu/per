@@ -138,14 +138,12 @@ public class CuerposEstadoBeanTest {
     @Test
     public void eliminarCuerpo_conUsuarios() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
-        when(userService.existByCuerpoEstado(cuerpo)).thenReturn(true);
+        when(userService.existsByCuerpoEstado(cuerpo)).thenReturn(true);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
-        verify(userService, times(1)).existByCuerpoEstado(cuerpo);
-        verify(cuerposEstadoService, times(0)).save(cuerpo);
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(Exception.class));
+        verify(userService, times(1)).existsByCuerpoEstado(cuerpo);
+        verify(cuerposEstadoService, times(0)).delete(1);
     }
     
     /**
@@ -157,16 +155,14 @@ public class CuerposEstadoBeanTest {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
         listaCuerposEstado.add(cuerpo);
         cuerposEstadoBean.setListaCuerposEstado(listaCuerposEstado);
-        when(userService.existByCuerpoEstado(cuerpo)).thenReturn(false);
+        when(userService.existsByCuerpoEstado(cuerpo)).thenReturn(false);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
-        verify(userService, times(1)).existByCuerpoEstado(cuerpo);
-        verify(cuerposEstadoService, times(1)).save(cuerpo);
+        verify(userService, times(1)).existsByCuerpoEstado(cuerpo);
+        verify(cuerposEstadoService, times(1)).delete(1);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -175,11 +171,11 @@ public class CuerposEstadoBeanTest {
     @Test
     public void eliminarCuerpo_excepcion() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
-        when(userService.existByCuerpoEstado(cuerpo)).thenThrow(TransientDataAccessResourceException.class);
+        when(userService.existsByCuerpoEstado(cuerpo)).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
-        verify(userService, times(1)).existByCuerpoEstado(cuerpo);
+        verify(userService, times(1)).existsByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(0)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
                 any(TransientDataAccessResourceException.class));
@@ -199,8 +195,6 @@ public class CuerposEstadoBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(Exception.class));
     }
     
     /**
@@ -230,8 +224,6 @@ public class CuerposEstadoBeanTest {
         verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
-                any(Exception.class));
         
     }
     
@@ -259,7 +251,7 @@ public class CuerposEstadoBeanTest {
     public void init() {
         cuerposEstadoBean.init();
         
-        verify(cuerposEstadoService, times(1)).findByFechaBajaIsNull();
+        verify(cuerposEstadoService, times(1)).findAll();
     }
     
 }

@@ -20,21 +20,23 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     
     /**
      * Variable utilizada para inyectar el repositorio de puestos de trabajo.
-     * 
      */
     @Autowired
-    IPuestoTrabajoRepository puestoTrabajoRepository;
+    private IPuestoTrabajoRepository puestoTrabajoRepository;
     
     /**
      * Busca todos los puestos de trabajo dados de alta en la BBDD.
-     * @return Iterable<PuestoTrabajo> lista de puestos existentes
+     * 
+     * @return lista de puestos existentes
      */
     @Override
-    public Iterable<PuestoTrabajo> findAll() {
-        return puestoTrabajoRepository.findAll();
+    public List<PuestoTrabajo> findAll() {
+        return (List<PuestoTrabajo>) puestoTrabajoRepository.findAll();
     }
     
     /**
+     * Guarda la información de un puesto de trabajo en la bbdd.
+     * 
      * @param puesto a guardar.
      * @return PuestoTrabajo actualizado
      */
@@ -45,12 +47,13 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     }
     
     /**
-     * puestos de trabajo sin fecha de baja, es decir activos.
-     * @return List<PuestoTrabajo> lista de puestos no dados de baja
+     * Elimina un puesto de trabajo.
+     * 
+     * @param idPuesto clave del puesto a eliminar.
      */
     @Override
-    public List<PuestoTrabajo> findByFechaBajaIsNull() {
-        return puestoTrabajoRepository.findByFechaBajaIsNullOrderByIdAsc();
+    public void delete(Long idPuesto) {
+        puestoTrabajoRepository.delete(idPuesto);
     }
     
 }

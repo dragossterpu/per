@@ -68,18 +68,6 @@ public class IUserRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByCuerpoEstado(CuerpoEstado)}.
-     */
-    @Test
-    public final void testFindByCuerpoEstado() {
-        CuerpoEstado cuerpo = new CuerpoEstado();
-        cuerpo.setId(1);
-        List<User> userList = this.repository.findByCuerpoEstado(cuerpo);
-        assertThat(userList.size()).isEqualTo(15);
-    }
-    
-    /**
-     * Test method for
      * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByfechaBajaIsNullAndRoleNotIn(List)}.
      */
     @Test
@@ -121,24 +109,22 @@ public class IUserRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByPuestoTrabajo(PuestoTrabajo)}.
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#existsByPuestoTrabajo(PuestoTrabajo)}.
      */
     @Test
-    public final void testFindByPuestoTrabajo() {
+    public final void testExistsByPuestoTrabajo() {
         PuestoTrabajo puesto = PuestoTrabajo.builder().id(1L).build();
-        List<User> userList = this.repository.findByPuestoTrabajo(puesto);
-        assertThat(userList.size()).isEqualTo(2);
+        assertThat(this.repository.existsByPuestoTrabajo(puesto)).isTrue();
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IUserRepository#findByDepartamento(Departamento)}.
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#existsByDepartamento(Departamento)}.
      */
     @Test
-    public final void testFindByDepartamento() {
-        Departamento departamento = Departamento.builder().id(1L).build();
-        List<User> userList = this.repository.findByDepartamento(departamento);
-        assertThat(userList).isNullOrEmpty();
+    public final void testExistsByDepartamento() {
+        Departamento departamento = Departamento.builder().id(8L).build();
+        assertThat(this.repository.existsByDepartamento(departamento)).isTrue();
     }
     
     /**

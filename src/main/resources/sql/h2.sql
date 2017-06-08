@@ -1,10 +1,9 @@
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('1','Policía Nacional',TODAY,null,null,'PN','system',null,null);
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('2','Guardia Civil',TODAY,null,null,'GC','system',null,null);
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('3','Cuerpo General de la Administración',TODAY,null,null,'CGA','system',null,null);
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('4','Cuerpos Comunes de la Defensa',TODAY,null,null,'CCD','system',null,null);
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('5','Contratados',TODAY,null,null,'CONTR','system',null,null);
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('6','Correos y Telégrafos',TODAY,null,null,'CT','system',null,null);
-insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,fecha_modificacion,NOMBRE_CORTO,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('7','Correos y Telégrafos',TODAY,TODAY,null,'CT','system','system',null);
+insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,NOMBRE_CORTO,USERNAME_ALTA) values ('1','Policía Nacional',TODAY,'PN','system');
+insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,NOMBRE_CORTO,USERNAME_ALTA) values ('2','Guardia Civil',TODAY,'GC','system');
+insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,NOMBRE_CORTO,USERNAME_ALTA) values ('3','Cuerpo General de la Administración',TODAY,'CGA','system');
+insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,NOMBRE_CORTO,USERNAME_ALTA) values ('4','Cuerpos Comunes de la Defensa',TODAY,'CCD','system');
+insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,NOMBRE_CORTO,USERNAME_ALTA) values ('5','Contratados',TODAY,'CONTR','system');
+insert into CUERPOSESTADO (ID,DESCRIPCION,FECHA_ALTA,NOMBRE_CORTO,USERNAME_ALTA) values ('6','Correos y Telégrafos',TODAY,'CT','system');
 
 insert into CLASE_USUARIO (ID_CLASE,CLASE) values ('1','FCSE');
 insert into CLASE_USUARIO (ID_CLASE,CLASE) values ('2','FCSE-FC');
@@ -146,18 +145,18 @@ insert into parametros(seccion, clave, valor) values ('plantillasGC','Zona', '3'
 insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas','5');
 insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas','5');
 
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('1','Subdirector General',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('2','Secretario Técnico',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('3','Jefe de Servicios de Inspección',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('4','Responsable Estudios y Programas',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('5','Jefe de Equipo Inspecciones',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('6','Inspector-Auditor',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('7','Jefe de Apoyo',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('8','Jefe de Sección',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('9','Personal de Apoyo',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('10','Jefe de Negociado',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('11','Fuera de Catálogo (Conductores)',TODAY,null,null,'system',null,null);
-insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,FECHA_BAJA,FECHA_MODIF,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF) values ('12','Secretaria de N30',TODAY,null,null,'system',null,null);
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (1,'Subdirector General',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (2,'Secretario Técnico',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (3,'Jefe de Servicios de Inspección',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (4,'Responsable Estudios y Programas',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (5,'Jefe de Equipo Inspecciones',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (6,'Inspector-Auditor',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (7,'Jefe de Apoyo',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (8,'Jefe de Sección',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (9,'Personal de Apoyo',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (10,'Jefe de Negociado',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (11,'Fuera de Catálogo (Conductores)',SYSDATE,'system');
+Insert into PUESTOSTRABAJO (ID,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA) values (12,'Secretaria de N30',SYSDATE,'system');
 
 
 insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('acabrero','CABRERO','GARCIA','correo@guardiacivil.es','n16716','A1',null,'ACTIVO',to_timestamp('15/01/17 04:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('01/09/20 04:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','ANDRES','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_ADMIN','665566544',null,null,'system',null,null,'2','8','17','6','1');

@@ -55,7 +55,7 @@ public class LoginService implements UserDetailsService {
          * 
          * @param user Usuario del que se desean los detalles.
          */
-        private UserRepositoryUserDetails(User user) {
+        public UserRepositoryUserDetails(User user) {
             super();
             username = user.getUsername();
             password = user.getPassword();
