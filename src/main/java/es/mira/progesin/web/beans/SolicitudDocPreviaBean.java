@@ -497,8 +497,8 @@ public class SolicitudDocPreviaBean implements Serializable {
             solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
             String mensajeCorreoEnviado = "";
             // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
-            if (solicitudDocumentacionPrevia.getFechaEnvio() != null
-                    && !backupFechaLimiteEnvio.equals(solicitudDocumentacionPrevia.getFechaLimiteEnvio())) {
+            if (solicitudDocumentacionPrevia.getFechaEnvio() != null && !sdf.format(backupFechaLimiteEnvio)
+                    .equals(sdf.format(solicitudDocumentacionPrevia.getFechaLimiteEnvio()))) {
                 StringBuilder asunto = new StringBuilder(DESCRIPCION)
                         .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
