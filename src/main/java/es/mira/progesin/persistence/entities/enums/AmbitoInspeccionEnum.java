@@ -18,14 +18,16 @@ public enum AmbitoInspeccionEnum {
      * Guardia civil.
      */
     GC("Guardia Civil"),
-    /**
-     * Otros ámbitos.
-     */
-    OTROS("Otros"),
+    
     /**
      * Policía nacional.
      */
-    PN("Policía Nacional");
+    PN("Policía Nacional"),
+    
+    /**
+     * Otros ámbitos.
+     */
+    OTROS("Otros");
     /**
      * Descripción del ámbito.
      */

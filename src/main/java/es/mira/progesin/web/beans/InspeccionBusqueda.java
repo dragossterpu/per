@@ -1,7 +1,9 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.primefaces.model.SortOrder;
 
@@ -124,5 +126,18 @@ public class InspeccionBusqueda implements Serializable {
      * para ambas.
      */
     private boolean asociar;
+    
+    /**
+     * Variable utilizada para almacenar la lista de inspecciones seleccionadas en la tabla de búsqueda. Es inicializada
+     * y controlada por Primefaces.
+     * 
+     */
+    private List<Inspeccion> inspeccionesSeleccionadas = new ArrayList<>();
+    
+    /**
+     * Variable booleana utilizada para controlar la selección total de inspecciones asociadas.
+     * 
+     */
+    private boolean selectedAll;
     
 }

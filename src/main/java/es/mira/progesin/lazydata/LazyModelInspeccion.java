@@ -100,9 +100,17 @@ public class LazyModelInspeccion extends LazyDataModel<Inspeccion> implements Se
             Map<String, Object> filters) {
         List<Inspeccion> listado = null;
         if (busqueda != null) {
+            
             this.setRowCount(inspeccionesService.getCountInspeccionCriteria(busqueda));
             listado = inspeccionesService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
             this.datasource = listado;
+            
+            if (busqueda.isAsociar() && busqueda.getInspeccionesSeleccionadas() != null
+                    && busqueda.getInspeccionesSeleccionadas().size() == this.getRowCount()) {
+                busqueda.setSelectedAll(true);
+            } else {
+                busqueda.setSelectedAll(false);
+            }
         } else {
             this.setRowCount(0);
         }

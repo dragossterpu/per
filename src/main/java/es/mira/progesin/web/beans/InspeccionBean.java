@@ -92,13 +92,6 @@ public class InspeccionBean {
     private List<Inspeccion> inspeccionesAsignadasActuales;
     
     /**
-     * Variable utilizada para almacenar la lista de inspecciones seleccionadas en la tabla de búsqueda. Es inicializada
-     * y controlada por Primefaces.
-     * 
-     */
-    private List<Inspeccion> inspeccionesSeleccionadas;
-    
-    /**
      * Variable utilizada para inyectar el servicio del registro de actividad.
      * 
      */
@@ -159,12 +152,6 @@ public class InspeccionBean {
     private Provincia provinciSelec;
     
     /**
-     * Variable booleana utilizada para controlar la selección total de inspecciones asociadas.
-     * 
-     */
-    private boolean selectedAll;
-    
-    /**
      * Declaración del modelo lazy de inspecciones utilizada para la paginación del servidor.
      * 
      */
@@ -182,6 +169,11 @@ public class InspeccionBean {
      */
     @Autowired
     private IRegistroActividadService registroActividadService;
+    
+    /**
+     * Número de columnas de la vista.
+     */
+    private static final int NUMCOLSTABLA = 17;
     
     /**
      * 
@@ -221,7 +213,11 @@ public class InspeccionBean {
     public String getAsociarInspecciones() {
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionBusqueda.setAsociar(true);
-        setInspeccionesSeleccionadas(inspeccionesAsignadasActuales);
+        
+        List<Inspeccion> listInspecciones = new ArrayList<>();
+        listInspecciones.addAll(inspeccionesAsignadasActuales);
+        inspeccionBusqueda.setInspeccionesSeleccionadas(listInspecciones);
+        
         setProvinciSelec(null);
         buscarInspeccion();
         
@@ -240,7 +236,9 @@ public class InspeccionBean {
         if (inspeccion.getMunicipio() != null) {
             setProvinciSelec(inspeccion.getMunicipio().getProvincia());
         }
-        Collections.sort(inspeccionesAsignadasActuales, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+        if (!inspeccionesAsignadasActuales.isEmpty()) {
+            Collections.sort(inspeccionesAsignadasActuales, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+        }
         if ("asociarAlta".equals(vaHacia)) {
             rutaSiguiente = "/inspecciones/altaInspeccion?faces-redirect=true";
             
@@ -384,11 +382,9 @@ public class InspeccionBean {
     @PostConstruct
     public void init() {
         inspeccionBusqueda = new InspeccionBusqueda();
-        inspeccionBusqueda.setAsociar(false);
         listaMunicipios = new ArrayList<>();
-        inspeccionesSeleccionadas = new ArrayList<>();
         setList(new ArrayList<>());
-        for (int i = 0; i <= 13; i++) {
+        for (int i = 0; i <= NUMCOLSTABLA; i++) {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelInspeccion(inspeccionesService);
@@ -503,15 +499,25 @@ public class InspeccionBean {
      * 
      */
     public void onToggleSelect() {
-        if (!isSelectedAll()) {
-            setInspeccionesAsignadasActuales(inspeccionesService.buscarInspeccionPorCriteria(0,
-                    inspeccionesService.getCountInspeccionCriteria(inspeccionBusqueda), null, null,
-                    inspeccionBusqueda));
-            setSelectedAll(true);
+        int numRegistros = inspeccionesService.getCountInspeccionCriteria(inspeccionBusqueda);
+        List<Inspeccion> inspeccionesBusqueda = inspeccionesService.buscarInspeccionPorCriteria(0, numRegistros, null,
+                null, inspeccionBusqueda);
+        
+        if (!inspeccionBusqueda.isSelectedAll()) {
+            for (Inspeccion i : inspeccionesBusqueda) {
+                if (!inspeccionesAsignadasActuales.contains(i)) {
+                    inspeccionesAsignadasActuales.add(i);
+                }
+            }
+            
+            inspeccionBusqueda.setSelectedAll(true);
         } else {
-            setInspeccionesSeleccionadas(null);
-            setInspeccionesAsignadasActuales(null);
-            setSelectedAll(false);
+            for (Inspeccion i : inspeccionesBusqueda) {
+                if (inspeccionesAsignadasActuales.contains(i)) {
+                    inspeccionesAsignadasActuales.remove(i);
+                }
+            }
+            inspeccionBusqueda.setSelectedAll(false);
         }
     }
     
@@ -521,7 +527,9 @@ public class InspeccionBean {
      * 
      */
     public void paginator() {
-        inspeccionesSeleccionadas = inspeccionesAsignadasActuales;
+        List<Inspeccion> listInspecciones = new ArrayList<>();
+        listInspecciones.addAll(inspeccionesAsignadasActuales);
+        inspeccionBusqueda.setInspeccionesSeleccionadas(listInspecciones);
     }
     
     /**

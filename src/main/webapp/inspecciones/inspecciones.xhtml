@@ -127,11 +127,12 @@
                         <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones" />
                     </h:commandLink>
                 </p:outputPanel>
-                <p:dataTable var="inspeccion" value="#{inspeccionBean.model}" rows="20" id="tablaInspecciones" rowsPerPageTemplate="5,10,15,20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{inspeccionBean.model.rowCount ne 0}" selection="#{inspeccionBean.inspeccionesSeleccionadas}" rowKey="#{inspeccion.id}" rowSelectMode="checkbox">
+                <p:dataTable var="inspeccion" value="#{inspeccionBean.model}" rows="20" id="tablaInspecciones" rowsPerPageTemplate="5,10,15,20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{inspeccionBean.model.rowCount ne 0}" selection="#{inspeccionBean.inspeccionBusqueda.inspeccionesSeleccionadas}" rowKey="#{inspeccion.id}" rowSelectMode="checkbox">
 
                     <p:ajax event="rowUnselectCheckbox" listener="#{inspeccionBean.onRowUnSelected}" />
                     <p:ajax event="rowSelectCheckbox" listener="#{inspeccionBean.onRowSelected}" />
                     <p:ajax event="page" listener="#{inspeccionBean.paginator}" />
+                    <p:ajax event="sort" listener="#{inspeccionBean.paginator}" />
                     <p:ajax event="toggleSelect" listener="#{inspeccionBean.onToggleSelect}" global="true" />
 
 
@@ -143,7 +144,7 @@
                         </p:columnToggler>
                     </f:facet>
 
-                    <p:column selectionMode="multiple" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" style="width:16px;text-align:center">
+                    <p:column selectionMode="multiple" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" style="width:16px;text-align:center" >
 
                     </p:column>
 
