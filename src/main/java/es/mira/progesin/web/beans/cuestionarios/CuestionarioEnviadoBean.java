@@ -362,8 +362,8 @@ public class CuestionarioEnviadoBean implements Serializable {
             cuestionarioEnvioService.save(cuestionario);
             String mensajeCorreoEnviado = "";
             // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
-            if (cuestionario.getFechaEnvio() != null
-                    && !backupFechaLimiteCuestionario.equals(cuestionario.getFechaLimiteCuestionario())) {
+            if (cuestionario.getFechaEnvio() != null && !sdf.format(backupFechaLimiteCuestionario)
+                    .equals(sdf.format(cuestionario.getFechaLimiteCuestionario()))) {
                 
                 StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
