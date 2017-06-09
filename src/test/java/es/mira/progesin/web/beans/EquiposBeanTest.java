@@ -208,7 +208,6 @@ public class EquiposBeanTest {
     public void getFormularioBusquedaEquipos() {
         equipoBean.setModel(mock(LazyModelEquipos.class));
         String ruta = equipoBean.getFormularioBusquedaEquipos();
-        verify(tipoEquipoService, times(1)).findAll();
         assertThat(ruta).isEqualTo("/equipos/equipos?faces-redirect=true");
     }
     
