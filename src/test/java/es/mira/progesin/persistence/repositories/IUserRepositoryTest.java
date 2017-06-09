@@ -136,4 +136,13 @@ public class IUserRepositoryTest {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).build();
         assertThat(this.repository.existsByCuerpoEstado(cuerpo)).isTrue();
     }
+    
+    /**
+     * Test method for {@link es.mira.progesin.persistence.repositories.IUserRepository#usuariosEnEquipo(Equipo)}.
+     */
+    @Test
+    public final void usuariosEnEquipo() {
+        Equipo equipo = Equipo.builder().id(1L).build();
+        assertThat(this.repository.usuariosEnEquipo(equipo)).hasSize(4);
+    }
 }

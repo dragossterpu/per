@@ -390,6 +390,30 @@ public class UserBeanTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.web.beans.UserBean#modificarUsuario()}.
+     */
+    @Test
+    public void modificarUsuario_activar() {
+        userBean.setEstadoUsuario("INACTIVO");
+        User user = User.builder().estado(EstadoEnum.ACTIVO).build();
+        userBean.setUser(user);
+        
+        userBean.modificarUsuario();
+        
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
+                any(String.class));
+        
+        verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del estado"),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
+        
+        verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del usuario"),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
+        
+        assertThat(userBean.getUser().getFechaInactivo()).isNull();
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.UserBean#restaurarClave()}.
      */
     @Test

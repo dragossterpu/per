@@ -201,7 +201,7 @@ public class DocumentoService implements IDocumentoService {
      * @param tipo tipo de documentp
      * @param inspeccion inspección asociada al documento
      * @return documento cargado en base de datos
-     * @throws DataAccessException excepción lanzada
+     * @throws ProgesinException excepción lanzada
      */
     @Override
     public Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)

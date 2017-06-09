@@ -1,6 +1,7 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -221,5 +222,15 @@ public class UserServiceTest {
         userService.save(listaUsuarios);
         
         verify(userRepositoryMock, times(1)).save(listaUsuarios);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#usuariosEquipo(Equipo)}.
+     */
+    @Test
+    public void usuariosEquipo() {
+        Equipo equipo = mock(Equipo.class);
+        userService.usuariosEquipo(equipo);
+        verify(userRepositoryMock, times(1)).usuariosEnEquipo(equipo);
     }
 }
