@@ -186,14 +186,14 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos sistema RENTING (alquiler concertado).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICRENTGC', 16);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos propiedad de la DGGC.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICGC', 17);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Vehículos intervenidos por la Autoridad judicial a disposición de la DGGC.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLARELVEHICGC', 18);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividades de los mecánicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTMECANICOSGC', 16);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Actividades de los mecánicos.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACTMECANICOSGC', 19);
 
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes. El responsable de Automovilismo elaborará informe propio en el que se desarrollen, al menos, los siguientes aspectos:
 - Causas más comunes de los accidentes. Medidas adoptadas para prevenirlos.
 - Determinación de responsabilidad del siniestro.
 - Resultado de las informaciones verbales, especificando aquellas en las que se adoptaron medidas disciplinarias y/o de resarcimiento. 
 - Servicios renting: Respuesta en reparación y/o sustitución vehículos accidentados/ averiados.
-', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVEHICACCIDENTGC', 19);
+', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZVEHICACCIDENTGC', 20);
 
 
 --Insert area ARMAMENTO, EQUIPACIÓN POLICIAL Y VESTUARIO
