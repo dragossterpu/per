@@ -36,11 +36,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelUsuarios;
-import es.mira.progesin.persistence.entities.ClaseUsuario;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Empleo;
-import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -185,8 +182,13 @@ public class UserBeanTest {
     @Test
     public void nuevoUsuario() {
         userBean.nuevoUsuario();
-        verify(cuerpoEstadoService, times(1)).findAll();
-        verify(puestoTrabajoRepository, times(1)).findAll();
+        
+        assertThat(userBean.getPuestoTrabajoSeleccionado()).isNull();
+        assertThat(userBean.getCuerpoEstadoSeleccionado()).isNull();
+        assertThat(userBean.getEmpleoSeleccionado()).isNull();
+        assertThat(userBean.getDepartamentoSeleccionado()).isNull();
+        assertThat(userBean.getUser().getFechaAlta()).isNotNull();
+        assertThat(userBean.getUser().getEstado()).isEqualTo(EstadoEnum.ACTIVO);
     }
     
     /**
@@ -440,22 +442,8 @@ public class UserBeanTest {
      */
     @Test
     public void init() {
-        List<CuerpoEstado> listaCuerposEstado = new ArrayList<>();
-        List<PuestoTrabajo> listaPuestosTrabajo = new ArrayList<>();
-        List<Departamento> listaDepartamentos = new ArrayList<>();
-        List<ClaseUsuario> listaClases = new ArrayList<>();
-        
-        when(cuerpoEstadoService.findAll()).thenReturn(listaCuerposEstado);
-        when(puestoTrabajoRepository.findAll()).thenReturn(listaPuestosTrabajo);
-        when(departamentoRepository.findAll()).thenReturn(listaDepartamentos);
-        when(claseUsuarioRepository.findAll()).thenReturn(listaClases);
         
         userBean.init();
-        
-        assertThat(userBean.getPuestosTrabajo()).isNotNull();
-        assertThat(userBean.getCuerposEstado()).isNotNull();
-        assertThat(userBean.getListaDepartamentos()).isNotNull();
-        assertThat(userBean.getListadoClases()).isNotNull();
         
         assertThat(userBean.getPuestoTrabajoSeleccionado()).isNull();
         assertThat(userBean.getCuerpoEstadoSeleccionado()).isNull();

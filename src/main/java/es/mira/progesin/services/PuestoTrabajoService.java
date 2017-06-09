@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * Implemenatación del servicio para la administración de puestos de trabajo.
@@ -25,6 +27,12 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     private IPuestoTrabajoRepository puestoTrabajoRepository;
     
     /**
+     * Variable usada para actualizar la lista cargada en el contexto de la aplicación.
+     */
+    @Autowired
+    private ApplicationBean applicationBean;
+    
+    /**
      * Busca todos los puestos de trabajo dados de alta en la BBDD.
      * 
      * @return lista de puestos existentes
@@ -38,22 +46,28 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
      * Guarda la información de un puesto de trabajo en la bbdd.
      * 
      * @param puesto a guardar.
+     * @param accion alta/baja/modificación
      * @return PuestoTrabajo actualizado
      */
     @Override
     @Transactional(readOnly = false)
-    public PuestoTrabajo save(PuestoTrabajo puesto) {
-        return puestoTrabajoRepository.save(puesto);
+    public PuestoTrabajo save(PuestoTrabajo puesto, AdministracionAccionEnum accion) {
+        PuestoTrabajo puestoTrabajoActualizado = puestoTrabajoRepository.save(puesto);
+        applicationBean.actualizarApplicationBean(puestoTrabajoActualizado, applicationBean.getListaPuestosTrabajo(),
+                accion);
+        return puestoTrabajoActualizado;
     }
     
     /**
      * Elimina un puesto de trabajo.
      * 
-     * @param idPuesto clave del puesto a eliminar.
+     * @param puesto puesto a eliminar.
      */
     @Override
-    public void delete(Long idPuesto) {
-        puestoTrabajoRepository.delete(idPuesto);
+    public void delete(PuestoTrabajo puesto) {
+        puestoTrabajoRepository.delete(puesto);
+        applicationBean.actualizarApplicationBean(puesto, applicationBean.getListaPuestosTrabajo(),
+                AdministracionAccionEnum.BAJA);
     }
     
 }

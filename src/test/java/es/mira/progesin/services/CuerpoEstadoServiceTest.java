@@ -12,7 +12,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * 
@@ -30,6 +32,12 @@ public class CuerpoEstadoServiceTest {
      */
     @Mock
     private ICuerpoEstadoRepository repository;
+    
+    /**
+     * Simulación del application bean.
+     */
+    @Mock
+    private ApplicationBean applicationBean;
     
     /**
      * Servicio de cuerpo de estado.
@@ -68,12 +76,13 @@ public class CuerpoEstadoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#save(CuerpoEstado)}.
+     * Test method for
+     * {@link es.mira.progesin.services.CuerpoEstadoService#save(CuerpoEstado, AdministracionAccionEnum)}.
      */
     @Test
     public void save() {
         CuerpoEstado cuerpo = mock(CuerpoEstado.class);
-        service.save(cuerpo);
+        service.save(cuerpo, AdministracionAccionEnum.ALTA);
         verify(repository, times(1)).save(cuerpo);
     }
     
@@ -90,12 +99,13 @@ public class CuerpoEstadoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#delete(Integer)}.
+     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#delete(CuerpoEstado)}.
      */
     @Test
     public void delete() {
-        service.delete(1);
-        verify(repository, times(1)).delete(1);
+        CuerpoEstado cuerpo = mock(CuerpoEstado.class);
+        service.delete(cuerpo);
+        verify(repository, times(1)).delete(cuerpo);
     }
     
 }

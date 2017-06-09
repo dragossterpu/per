@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -77,7 +78,7 @@ public class TipoEquipoBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Eliminación abortada",
                         "No se puede eliminar, existen equipos de este tipo", null);
             } else {
-                tipoEquipoService.delete(tipo.getId());
+                tipoEquipoService.delete(tipo);
                 listaTipoEquipo.remove(tipo);
                 String descripcion = "Se ha eliminado el tipo de equipo: " + tipo.getCodigo() + "("
                         + tipo.getDescripcion() + ")";
@@ -111,7 +112,7 @@ public class TipoEquipoBean implements Serializable {
         try {
             TipoEquipo tipoEquipoNuevo = new TipoEquipo(null, codigo, descripcion);
             
-            tipoEquipoService.save(tipoEquipoNuevo);
+            tipoEquipoService.save(tipoEquipoNuevo, AdministracionAccionEnum.ALTA);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El tipo de equipo ha sido creado con éxito");
@@ -126,7 +127,6 @@ public class TipoEquipoBean implements Serializable {
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
-        listaTipoEquipo = tipoEquipoService.findAll();
         // TODO generar alerta / notificación
     }
     
@@ -139,7 +139,7 @@ public class TipoEquipoBean implements Serializable {
         try {
             TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
             
-            tipoEquipoService.save(tipoEquipo);
+            tipoEquipoService.save(tipoEquipo, AdministracionAccionEnum.MODIFICACION);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
                     "Tipo de equipo modificado con éxito", null);

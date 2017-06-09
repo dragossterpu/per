@@ -1,5 +1,7 @@
 package es.mira.progesin.persistence.repositories;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * Clase utilizada para usar el converter "SelectItemsConverter" de forma genérica en todas las vistas de primefaces.
@@ -36,59 +39,10 @@ public class SelectFindOne {
     private IInspeccionesRepository inspeccionRepository;
     
     /**
-     * Repositorio del cuerpo de estado.
-     */
-    @Autowired
-    private ICuerpoEstadoRepository cuerpoRepository;
-    
-    /**
-     * Repositorio de los puestos de trabajo.
-     */
-    @Autowired
-    private IPuestoTrabajoRepository puestoTrabajoRepository;
-    
-    /**
-     * Repositorio de departamentos.
-     */
-    @Autowired
-    private IDepartamentoRepository departamentoRepository;
-    
-    /**
-     * Repositorio de las clases.
-     */
-    
-    @Autowired
-    private IClaseUsuarioRepository claseUsuarioRepository;
-    
-    /**
-     * Repositorio de empleos.
-     */
-    @Autowired
-    private IEmpleoRepository empleoRepository;
-    
-    /**
-     * Repositorio de tipos de inspección.
-     */
-    @Autowired
-    private ITipoInspeccionRepository tipoInspeccionRepository;
-    
-    /**
      * Repositorio de equipos.
      */
     @Autowired
     private IEquipoRepository equipoRepository;
-    
-    /**
-     * Repositorio de tipos de unidad.
-     */
-    @Autowired
-    private ITipoUnidadRepository tipoUnidadRepository;
-    
-    /**
-     * Repositorio de provincias.
-     */
-    @Autowired
-    private IProvinciaRepository provinciaRepository;
     
     /**
      * Repositorio de municipios.
@@ -115,10 +69,10 @@ public class SelectFindOne {
     private IGuiasPasosRepository guiasPasosRepository;
     
     /**
-     * Repositorio de tipos de equipo.
+     * Variable usada para actualizar la lista cargada en el contexto de la aplicación.
      */
     @Autowired
-    private ITipoEquiposRepository tipoEquiposRepository;
+    private ApplicationBean applicationBean;
     
     /**
      * Busca una inspección por su id.
@@ -137,7 +91,13 @@ public class SelectFindOne {
      * @return cuerpo de estado
      */
     public CuerpoEstado findOneCuerpoEstado(String id) {
-        return cuerpoRepository.findOne(Integer.valueOf(id));
+        CuerpoEstado cuerpo = null;
+        Optional<CuerpoEstado> optional = applicationBean.getListaCuerpos().stream()
+                .filter(c -> c.getId().equals(Integer.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            cuerpo = optional.get();
+        }
+        return cuerpo;
     }
     
     /**
@@ -147,7 +107,13 @@ public class SelectFindOne {
      * @return puesto de trabajo
      */
     public PuestoTrabajo findOnePuestoTrabajo(String id) {
-        return puestoTrabajoRepository.findOne(Long.valueOf(id));
+        PuestoTrabajo puesto = null;
+        Optional<PuestoTrabajo> optional = applicationBean.getListaPuestosTrabajo().stream()
+                .filter(c -> c.getId().equals(Long.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            puesto = optional.get();
+        }
+        return puesto;
     }
     
     /**
@@ -157,7 +123,13 @@ public class SelectFindOne {
      * @return departamento
      */
     public Departamento findOneDepartamento(String id) {
-        return departamentoRepository.findOne(Long.valueOf(id));
+        Departamento departamento = null;
+        Optional<Departamento> optional = applicationBean.getListaDepartamentos().stream()
+                .filter(c -> c.getId().equals(Long.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            departamento = optional.get();
+        }
+        return departamento;
     }
     
     /**
@@ -167,7 +139,13 @@ public class SelectFindOne {
      * @return clase a la que pertenece el usuario
      */
     public ClaseUsuario findOneClaseUsuario(String id) {
-        return claseUsuarioRepository.findOne(Long.valueOf(id));
+        ClaseUsuario clase = null;
+        Optional<ClaseUsuario> optional = applicationBean.getListaClaseUsuario().stream()
+                .filter(c -> c.getId().equals(Long.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            clase = optional.get();
+        }
+        return clase;
     }
     
     /**
@@ -177,7 +155,13 @@ public class SelectFindOne {
      * @return empleo
      */
     public Empleo findOneEmpleo(String id) {
-        return empleoRepository.findOne(Long.valueOf(id));
+        Empleo empleo = null;
+        Optional<Empleo> optional = applicationBean.getListaEmpleos().stream()
+                .filter(c -> c.getId().equals(Long.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            empleo = optional.get();
+        }
+        return empleo;
     }
     
     /**
@@ -187,7 +171,13 @@ public class SelectFindOne {
      * @return tipo de inspección
      */
     public TipoInspeccion findOneTipoInspeccion(String id) {
-        return tipoInspeccionRepository.findOne(id);
+        TipoInspeccion tipoInspeccion = null;
+        Optional<TipoInspeccion> optional = applicationBean.getListaTiposInspeccion().stream()
+                .filter(c -> c.getCodigo().equals(id)).findFirst();
+        if (optional.isPresent()) {
+            tipoInspeccion = optional.get();
+        }
+        return tipoInspeccion;
     }
     
     /**
@@ -207,7 +197,13 @@ public class SelectFindOne {
      * @return provincia
      */
     public Provincia findOneProvincia(String id) {
-        return provinciaRepository.findOne(id);
+        Provincia provincia = null;
+        Optional<Provincia> optional = applicationBean.getListaProvincias().stream()
+                .filter(c -> c.getCodigo().equals(id)).findFirst();
+        if (optional.isPresent()) {
+            provincia = optional.get();
+        }
+        return provincia;
     }
     
     /**
@@ -227,7 +223,13 @@ public class SelectFindOne {
      * @return tipo de unidad
      */
     public TipoUnidad findOneTipoUnidad(String id) {
-        return tipoUnidadRepository.findOne(Long.valueOf(id));
+        TipoUnidad tipoUnidad = null;
+        Optional<TipoUnidad> optional = applicationBean.getListaTiposUnidad().stream()
+                .filter(c -> c.getId().equals(Long.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            tipoUnidad = optional.get();
+        }
+        return tipoUnidad;
     }
     
     /**
@@ -267,6 +269,12 @@ public class SelectFindOne {
      * @return tipo de equipo
      */
     public TipoEquipo findOneTipoEquipo(String id) {
-        return tipoEquiposRepository.findOne(Long.valueOf(id));
+        TipoEquipo tipoEquipo = null;
+        Optional<TipoEquipo> optional = applicationBean.getListaTiposEquipo().stream()
+                .filter(c -> c.getId().equals(Long.valueOf(id))).findFirst();
+        if (optional.isPresent()) {
+            tipoEquipo = optional.get();
+        }
+        return tipoEquipo;
     }
 }

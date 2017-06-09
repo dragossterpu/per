@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Departamento;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -81,7 +82,7 @@ public class DepartamentoBean implements Serializable {
                                 + "' al haber usuarios pertenecientes a dicho departamento",
                         "", null);
             } else {
-                departamentoService.delete(departamento.getId());
+                departamentoService.delete(departamento);
                 listaDepartamentos.remove(departamento);
             }
         } catch (DataAccessException e) {
@@ -101,7 +102,7 @@ public class DepartamentoBean implements Serializable {
             Departamento departamento = new Departamento();
             departamento.setDescripcion(departamentoNuevo);
             
-            departamentoService.save(departamento);
+            departamentoService.save(departamento, AdministracionAccionEnum.ALTA);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El departamento ha sido creado con éxito");
@@ -110,7 +111,6 @@ public class DepartamentoBean implements Serializable {
                     "Se ha producido un error al dar de alta el departamento, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
         }
-        // TODO generar alerta / notificación
     }
     
     /**
@@ -121,7 +121,7 @@ public class DepartamentoBean implements Serializable {
         
         try {
             Departamento departamento = (Departamento) event.getObject();
-            departamentoService.save(departamento);
+            departamentoService.save(departamento, AdministracionAccionEnum.MODIFICACION);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
                     departamento.getDescripcion(), null);
         } catch (DataAccessException e) {

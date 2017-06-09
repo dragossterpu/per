@@ -26,7 +26,6 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
@@ -37,7 +36,6 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -133,13 +131,6 @@ public class InspeccionBean {
     private IMiembroService miembroService;
     
     /**
-     * Variable utilizada para inyectar el servicio de los tipos de inspección.
-     * 
-     */
-    @Autowired
-    private ITipoInspeccionService tipoInspeccionService;
-    
-    /**
      * Variable utilizada para almacenar la lista de municipios asociados a una inspección.
      * 
      */
@@ -162,12 +153,6 @@ public class InspeccionBean {
      * 
      */
     private LazyModelInspeccion model;
-    
-    /**
-     * Lista de tipos de inspecciones precargadas para utilizar en los combos de selección.
-     * 
-     */
-    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * Variable utilizada para inyectar el servicio del registro de actividad.
@@ -400,7 +385,6 @@ public class InspeccionBean {
             list.add(Boolean.TRUE);
         }
         model = new LazyModelInspeccion(inspeccionesService);
-        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**

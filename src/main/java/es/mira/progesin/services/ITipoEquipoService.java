@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 
 /**
  * Servicio de Tipos de equipo.
@@ -22,17 +23,18 @@ public interface ITipoEquipoService {
     /**
      * Elimina un tipo de equipo.
      * 
-     * @param id identificador del tipo de equipo a eliminar
+     * @param entity tipo de equipo a eliminar
      */
-    void delete(Long id);
+    void delete(TipoEquipo entity);
     
     /**
      * Guarda en base de datos un nuevo tipo de equipo.
      * 
      * @param entity tipo de equipo a guardar
+     * @param accion alta/baja/modificación
      * @return tipo de equipo guardado
      */
-    TipoEquipo save(TipoEquipo entity);
+    TipoEquipo save(TipoEquipo entity, AdministracionAccionEnum accion);
     
     /**
      * Busca un tipo de equipo a partir de su código.

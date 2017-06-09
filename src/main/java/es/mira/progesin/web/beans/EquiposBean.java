@@ -121,11 +121,6 @@ public class EquiposBean implements Serializable {
     private TipoEquipo tipoEquipo;
     
     /**
-     * Objeto iterable que contiene los tipos de equipo posibles.
-     */
-    private transient Iterable<TipoEquipo> tiposEquipo;
-    
-    /**
      * LazyModel para la visualización paginada de datos en la vista.
      */
     private LazyModelEquipos model;
@@ -134,31 +129,31 @@ public class EquiposBean implements Serializable {
      * Servicio de tipos de equipo.
      */
     @Autowired
-    transient ITipoEquipoService tipoEquipoService;
+    private transient ITipoEquipoService tipoEquipoService;
     
     /**
      * Servicio de equipos.
      */
     @Autowired
-    transient IEquipoService equipoService;
+    private transient IEquipoService equipoService;
     
     /**
      * Servicio de miembros.
      */
     @Autowired
-    transient IMiembroService miembroService;
+    private transient IMiembroService miembroService;
     
     /**
      * Servicio de usuarios.
      */
     @Autowired
-    transient IUserService userService;
+    private transient IUserService userService;
     
     /**
      * Servicio de registro de actividad.
      */
     @Autowired
-    transient IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Servicio de notificaciones.
@@ -230,7 +225,6 @@ public class EquiposBean implements Serializable {
      * 
      */
     public String getFormularioBusquedaEquipos() {
-        setTiposEquipo(tipoEquipoService.findAll());
         limpiarBusqueda();
         return "/equipos/equipos?faces-redirect=true";
     }
@@ -481,7 +475,7 @@ public class EquiposBean implements Serializable {
             if (jefeSeleccionado != null) {
                 
                 listadoPotencialesMiembros.remove(jefeSeleccionado);
-                miembrosSeleccionados.removeIf(m -> jefeSeleccionado.equals(m));
+                miembrosSeleccionados.removeIf(m -> m.equals(jefeSeleccionado));
                 
             } else {
                 

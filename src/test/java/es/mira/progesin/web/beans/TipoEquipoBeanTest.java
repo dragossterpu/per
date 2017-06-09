@@ -23,6 +23,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.RowEditEvent;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -102,7 +103,7 @@ public class TipoEquipoBeanTest {
         tipoEquipoBean.eliminarTipo(tEquipo);
         
         verify(equipoService, times(1)).existsByTipoEquipo(tEquipo);
-        verify(tipoEquipoService, times(1)).delete(tEquipo.getId());
+        verify(tipoEquipoService, times(1)).delete(tEquipo);
         assertThat(tipoEquipoBean.getListaTipoEquipo().size()).isEqualTo(0);
     }
     
@@ -120,7 +121,7 @@ public class TipoEquipoBeanTest {
         tipoEquipoBean.eliminarTipo(tEquipo);
         
         verify(equipoService, times(1)).existsByTipoEquipo(tEquipo);
-        verify(tipoEquipoService, times(0)).delete(tEquipo.getId());
+        verify(tipoEquipoService, times(0)).delete(tEquipo);
         assertThat(tipoEquipoBean.getListaTipoEquipo().size()).isEqualTo(1);
     }
     
@@ -141,11 +142,10 @@ public class TipoEquipoBeanTest {
     @Test
     public void altaTipo() {
         TipoEquipo tEquipo = TipoEquipo.builder().codigo("TEST").descripcion("Tipo Equipo Test").build();
-        when(tipoEquipoService.save(tEquipo)).thenReturn(tEquipo);
         
         tipoEquipoBean.altaTipo("TEST", "Tipo Equipo Test");
         
-        verify(tipoEquipoService, times(1)).save(tEquipo);
+        verify(tipoEquipoService, times(1)).save(tEquipo, AdministracionAccionEnum.ALTA);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
     }
@@ -158,11 +158,10 @@ public class TipoEquipoBeanTest {
         TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("TEST").descripcion("Tipo Equipo Test").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(tEquipo);
-        when(tipoEquipoService.save(tEquipo)).thenReturn(tEquipo);
         
         tipoEquipoBean.onRowEdit(event);
         
-        verify(tipoEquipoService, times(1)).save(tEquipo);
+        verify(tipoEquipoService, times(1)).save(tEquipo, AdministracionAccionEnum.MODIFICACION);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
     }

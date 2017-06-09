@@ -24,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelUsuarios;
-import es.mira.progesin.persistence.entities.ClaseUsuario;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Empleo;
@@ -33,11 +32,7 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.persistence.repositories.IClaseUsuarioRepository;
-import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.persistence.repositories.IEmpleoRepository;
-import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
-import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
@@ -78,34 +73,14 @@ public class UserBean implements Serializable {
     private Empleo empleoSeleccionado;
     
     /**
-     * Listado de clases de usuario.
-     */
-    private List<ClaseUsuario> listadoClases;
-    
-    /**
-     * Lista de departamentos.
-     */
-    private List<Departamento> listaDepartamentos;
-    
-    /**
      * Departamento seleccionado en la vista.
      */
     private Departamento departamentoSeleccionado;
     
     /**
-     * Lista de cuerpos de estado.
-     */
-    private List<CuerpoEstado> cuerposEstado;
-    
-    /**
      * Cuerpo de estado seleccionado en la vista.
      */
     private CuerpoEstado cuerpoEstadoSeleccionado;
-    
-    /**
-     * Lista de puestos de trabajo.
-     */
-    private List<PuestoTrabajo> puestosTrabajo;
     
     /**
      * Puesto de trabajo seleccionado en la vista.
@@ -149,12 +124,6 @@ public class UserBean implements Serializable {
     private transient IUserService userService;
     
     /**
-     * Servicio de cuerpos de seguridad del estado.
-     */
-    @Autowired
-    private transient ICuerpoEstadoService cuerposEstadoService;
-    
-    /**
      * Servicio de registro de actividad.
      */
     @Autowired
@@ -179,28 +148,10 @@ public class UserBean implements Serializable {
     private transient ICorreoElectronico correo;
     
     /**
-     * Repositorio de departamentos.
-     */
-    @Autowired
-    private transient IDepartamentoRepository departamentoRepository;
-    
-    /**
-     * Repositorio de clase de usuario.
-     */
-    @Autowired
-    private transient IClaseUsuarioRepository claseUsuarioRepository;
-    
-    /**
      * Repostitorio de empleos.
      */
     @Autowired
     private transient IEmpleoRepository empleoRepository;
-    
-    /**
-     * Repositorio de puestos de trabajo.
-     */
-    @Autowired
-    private transient IPuestoTrabajoRepository puestoTrabajoRepository;
     
     /**
      * Muestra el perfil del usuario.
@@ -224,8 +175,6 @@ public class UserBean implements Serializable {
         user = new User();
         user.setFechaAlta(new Date());
         user.setEstado(EstadoEnum.ACTIVO);
-        setCuerposEstado((List<CuerpoEstado>) cuerposEstadoService.findAll());
-        setPuestosTrabajo((List<PuestoTrabajo>) puestoTrabajoRepository.findAll());
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         puestoTrabajoSeleccionado = null;
         cuerpoEstadoSeleccionado = null;
@@ -427,10 +376,6 @@ public class UserBean implements Serializable {
     @PostConstruct
     public void init() {
         userBusqueda = new UserBusqueda();
-        setCuerposEstado((List<CuerpoEstado>) cuerposEstadoService.findAll());
-        setPuestosTrabajo((List<PuestoTrabajo>) puestoTrabajoRepository.findAll());
-        setListaDepartamentos((List<Departamento>) departamentoRepository.findAll());
-        setListadoClases((List<ClaseUsuario>) claseUsuarioRepository.findAll());
         
         // para que en el select cargue por defecto la opción "Seleccine uno..."
         this.puestoTrabajoSeleccionado = null;

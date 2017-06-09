@@ -38,7 +38,7 @@
                     <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
                     <p:selectOneMenu value="#{inspeccionBean.inspeccionBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
-                        <f:selectItems value="#{inspeccionBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                        <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección:" />

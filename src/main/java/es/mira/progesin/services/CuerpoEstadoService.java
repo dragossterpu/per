@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * Implementación de los métodos definidos en la interfaz ICuerpoEstadoService.
@@ -26,6 +28,12 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     private ICuerpoEstadoRepository cuerpoEstadoRepository;
     
     /**
+     * Variable usada para actualizar la lista cargada en el contexto de la aplicación.
+     */
+    @Autowired
+    private ApplicationBean applicationBean;
+    
+    /**
      * 
      * Busca todos los cuerpos del estado existentes en la BBDD.
      * 
@@ -37,15 +45,18 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     }
     
     /**
-     * Guarada o actualiza un Cuerpo.
+     * Guarda o actualiza un Cuerpo.
      * 
      * @param cuerpo a guardar
+     * @param accion alta/baja/modificación
      * @return CuerpoEstado actualizado
      */
     @Override
     @Transactional(readOnly = false)
-    public CuerpoEstado save(CuerpoEstado cuerpo) {
-        return cuerpoEstadoRepository.save(cuerpo);
+    public CuerpoEstado save(CuerpoEstado cuerpo, AdministracionAccionEnum accion) {
+        CuerpoEstado cuerpoActualizado = cuerpoEstadoRepository.save(cuerpo);
+        applicationBean.actualizarApplicationBean(cuerpoActualizado, applicationBean.getListaCuerpos(), accion);
+        return cuerpo;
     }
     
     /**
@@ -64,11 +75,13 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     /**
      * Elimina un cuerpo de estado.
      * 
-     * @param id clave del cuerpo
+     * @param cuerpo a eliminar
      */
     @Override
-    public void delete(Integer id) {
-        cuerpoEstadoRepository.delete(id);
+    public void delete(CuerpoEstado cuerpo) {
+        cuerpoEstadoRepository.delete(cuerpo);
+        applicationBean.actualizarApplicationBean(cuerpo, applicationBean.getListaCuerpos(),
+                AdministracionAccionEnum.BAJA);
     }
     
 }

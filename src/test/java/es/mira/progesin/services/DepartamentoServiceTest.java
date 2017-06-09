@@ -12,7 +12,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.Departamento;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * Test de servicio de departamentos.
@@ -33,6 +35,12 @@ public class DepartamentoServiceTest {
      */
     @Mock
     private IUserService userService;
+    
+    /**
+     * Simulación del application bean.
+     */
+    @Mock
+    private ApplicationBean applicationBean;
     
     /**
      * Servicio de departamentos.
@@ -62,12 +70,13 @@ public class DepartamentoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.DepartamentoService#save(Departamento)}.
+     * Test method for
+     * {@link es.mira.progesin.services.DepartamentoService#save(Departamento, AdministracionAccionEnum)}.
      */
     @Test
     public void save() {
         Departamento departamentoMock = mock(Departamento.class);
-        service.save(departamentoMock);
+        service.save(departamentoMock, AdministracionAccionEnum.ALTA);
         verify(repository, times(1)).save(departamentoMock);
     }
     
@@ -81,12 +90,13 @@ public class DepartamentoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.DepartamentoService#delete(Long)}.
+     * Test method for {@link es.mira.progesin.services.DepartamentoService#delete(Departamento)}.
      */
     @Test
     public void delete() {
-        service.delete(1L);
-        verify(repository, times(1)).delete(1L);
+        Departamento departamentoMock = mock(Departamento.class);
+        service.delete(departamentoMock);
+        verify(repository, times(1)).delete(departamentoMock);
     }
     
 }

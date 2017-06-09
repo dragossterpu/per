@@ -31,6 +31,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaService;
@@ -214,7 +215,7 @@ public class TipoInspeccionBeanTest {
         
         tipoInspeccionBean.onRowEdit(evento);
         
-        verify(tipoInspeccionService, times(1)).guardarTipo(tipo);
+        verify(tipoInspeccionService, times(1)).guardarTipo(tipo, AdministracionAccionEnum.MODIFICACION);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.name()));
     };
@@ -227,7 +228,8 @@ public class TipoInspeccionBeanTest {
         TipoInspeccion tipo = mock(TipoInspeccion.class);
         RowEditEvent evento = mock(RowEditEvent.class);
         when(evento.getObject()).thenReturn(tipo);
-        when(tipoInspeccionService.guardarTipo(tipo)).thenThrow(TransientDataAccessResourceException.class);
+        when(tipoInspeccionService.guardarTipo(tipo, AdministracionAccionEnum.MODIFICACION))
+                .thenThrow(TransientDataAccessResourceException.class);
         
         tipoInspeccionBean.onRowEdit(evento);
         
@@ -236,7 +238,7 @@ public class TipoInspeccionBeanTest {
     };
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#altaTipo()}.
+     * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#altaTipo(String, String)}.
      */
     @Test
     public void altaTipo() {
@@ -248,11 +250,11 @@ public class TipoInspeccionBeanTest {
     };
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#altaTipo()}.
+     * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#altaTipo(String, String)}.
      */
     @Test
     public void altaTipo_excepcion() {
-        when(tipoInspeccionService.guardarTipo(tipoCaptor.capture()))
+        when(tipoInspeccionService.guardarTipo(tipoCaptor.capture(), eq(AdministracionAccionEnum.ALTA)))
                 .thenThrow(TransientDataAccessResourceException.class);
         
         tipoInspeccionBean.altaTipo("codigo", "descripcion");

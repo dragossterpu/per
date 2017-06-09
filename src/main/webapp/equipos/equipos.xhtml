@@ -20,7 +20,7 @@
                     <h:outputLabel for="tipoEquipo" value="Tipo equipo de inspección:" />
                     <p:selectOneMenu id="tipoEquipo" value="#{equiposBean.equipoBusqueda.tipoEquipo}" effect="fold" width="50" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                        <f:selectItems value="#{equiposBean.tiposEquipo}" var="tipoEquipoSelect" itemLabel="#{tipoEquipoSelect.descripcion}" itemValue="#{tipoEquipoSelect}" />
+                        <f:selectItems value="#{applicationBean.listaTiposEquipo}" var="tipoEquipoSelect" itemLabel="#{tipoEquipoSelect.descripcion}" itemValue="#{tipoEquipoSelect}" />
                     </p:selectOneMenu>
 
                 </div>

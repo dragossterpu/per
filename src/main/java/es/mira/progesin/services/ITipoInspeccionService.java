@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 
 /**
  * Interfaz del servicio para la gestión de tipos de inspecciones.
@@ -20,10 +21,13 @@ public interface ITipoInspeccionService {
     void borrarTipo(TipoInspeccion tipo);
     
     /**
+     * Guarda el tipo de inspección en BBDD.
+     * 
      * @param entity tipo a guaradar
+     * @param accion alta/baja/modificación
      * @return boolean (alta correcta)
      */
-    TipoInspeccion guardarTipo(TipoInspeccion entity);
+    TipoInspeccion guardarTipo(TipoInspeccion entity, AdministracionAccionEnum accion);
     
     /**
      * Comprueba si existe un tipo de inspección comparando por su código.
@@ -35,6 +39,7 @@ public interface ITipoInspeccionService {
     
     /**
      * Busca todos los tipos de inspección.
+     * 
      * @return lista tipos isnpecciones
      */
     List<TipoInspeccion> buscaTodos();

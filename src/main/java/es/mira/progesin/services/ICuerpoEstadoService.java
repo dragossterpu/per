@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.List;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 
 /**
  * Servicio para la gestión de los cuerpos de estado.
@@ -16,9 +17,10 @@ public interface ICuerpoEstadoService {
      * Guarda o actualiza un Cuerpo.
      * 
      * @param cuerpo a guardar
+     * @param accion alta/baja/modificación
      * @return CuerpoEstado actualizado
      */
-    CuerpoEstado save(CuerpoEstado cuerpo);
+    CuerpoEstado save(CuerpoEstado cuerpo, AdministracionAccionEnum accion);
     
     /**
      * Busca todos los cuerpos del estado existentes en la BBDD.
@@ -40,8 +42,8 @@ public interface ICuerpoEstadoService {
     /**
      * Elimina un cuerpo de estado.
      * 
-     * @param id clave del cuerpo
+     * @param cuerpo a eliminar
      */
-    void delete(Integer id);
+    void delete(CuerpoEstado cuerpo);
     
 }

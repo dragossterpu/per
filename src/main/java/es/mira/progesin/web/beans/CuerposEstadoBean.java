@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.ICuerpoEstadoService;
@@ -79,7 +80,7 @@ public class CuerposEstadoBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
                         + cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo", "", null);
             } else {
-                cuerposEstadoService.delete(cuerpo.getId());
+                cuerposEstadoService.delete(cuerpo);
                 listaCuerposEstado.remove(cuerpo);
                 String user = SecurityContextHolder.getContext().getAuthentication().getName();
                 String descripcion = "El usuario " + user + " ha eliminado el cuerpo de estado "
@@ -109,7 +110,7 @@ public class CuerposEstadoBean implements Serializable {
             cuerpoEstado.setNombreCorto(nombreCorto);
             cuerpoEstado.setFechaAlta(new Date());
             cuerpoEstado.setUsernameAlta(user);
-            cuerposEstadoService.save(cuerpoEstado);
+            cuerposEstadoService.save(cuerpoEstado, AdministracionAccionEnum.ALTA);
             
             String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCorto;
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
@@ -136,7 +137,7 @@ public class CuerposEstadoBean implements Serializable {
         try {
             cuerpoEstado.setFechaModificacion(new Date());
             cuerpoEstado.setUsernameModif(user);
-            cuerposEstadoService.save(cuerpoEstado);
+            cuerposEstadoService.save(cuerpoEstado, AdministracionAccionEnum.MODIFICACION);
             regActividadService.altaRegActividad("Se ha modificado " + cuerpoEstado,
                     TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.ADMINISTRACION.name());
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",

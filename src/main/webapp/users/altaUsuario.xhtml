@@ -89,7 +89,7 @@
                     <h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
                     <p:selectOneMenu value="#{userBean.puestoTrabajoSeleccionado}" id="puestoTrabajoSelect" converter="#{selectConverter}" required="true" requiredMessage="Seleccione un puesto de trabajo para el usuario" style="width:100%;">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                        <f:selectItems value="#{userBean.puestosTrabajo}" var="puestoTrabajo" itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
+                        <f:selectItems value="#{applicationBean.listaPuestosTrabajo}" var="puestoTrabajo" itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
                     </p:selectOneMenu>
                     <p:messages for="puestoTrabajoSelect" autoUpdate="true" closable="true" />
 
@@ -107,13 +107,13 @@
                     <h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo (*):" />
                     <p:selectOneMenu value="#{userBean.cuerpoEstadoSeleccionado}" id="cuerpoEstadoSelect" required="#{param['formAlta:crear']!=null}" requiredMessage="Seleccione un cuerpo" converter="#{selectConverter}" style="width:100%;">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                        <f:selectItems value="#{userBean.cuerposEstado}" var="cuerpoEstado" itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
+                        <f:selectItems value="#{applicationBean.listaCuerpos}" var="cuerpoEstado" itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
                         <p:ajax partialSubmit="true" listener="#{userBean.buscarEmpleo()}" update=":formAlta:empleoSelect" />
                     </p:selectOneMenu>
                     <p:messages for="cuerpoEstadoSelect" autoUpdate="true" closable="true" />
 
-                    <h:outputLabel for="empleoSelect" value="Empleo (*):" />
-                    <p:selectOneMenu value="#{userBean.empleoSeleccionado}" id="empleoSelect" required="true" requiredMessage="Seleccione un empleo" converter="#{selectConverter}" style="width:100%;">
+                    <h:outputLabel for="empleoSelect" value="Empleo:" />
+                    <p:selectOneMenu value="#{userBean.empleoSeleccionado}" id="empleoSelect" converter="#{selectConverter}" style="width:100%;">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                         <f:selectItems value="#{userBean.listaEmpleos}" var="empleo" itemLabel="#{empleo.descripcion}" itemValue="#{empleo}" />
                     </p:selectOneMenu>
@@ -122,7 +122,7 @@
                     <h:outputLabel for="departamentoSelect" value="Departamento (*):" />
                     <p:selectOneMenu value="#{userBean.departamentoSeleccionado}" id="departamentoSelect" required="true" requiredMessage="Seleccione un departamento" converter="#{selectConverter}" style="width:100%;">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                        <f:selectItems value="#{userBean.listaDepartamentos}" var="departamento" itemLabel="#{departamento.descripcion}" itemValue="#{departamento}" />
+                        <f:selectItems value="#{applicationBean.listaDepartamentos}" var="departamento" itemLabel="#{departamento.descripcion}" itemValue="#{departamento}" />
                     </p:selectOneMenu>
                     <p:messages for="departamentoSelect" autoUpdate="true" closable="true" />
 
@@ -137,7 +137,7 @@
                     <h:outputLabel for="clase" value="Clase: (*)" />
                     <p:selectOneMenu value="#{userBean.user.claseUsuario}" id="clase" required="true" requiredMessage="Seleccione una clase para el usuario" panelStyleClass="hideDisabled" converter="#{selectConverter}" style="width:100%;">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                        <f:selectItems value="#{userBean.listadoClases}" var="claseUser" itemLabel="#{claseUser.clase}" itemValue="#{claseUser}" />
+                        <f:selectItems value="#{applicationBean.listaClaseUsuario}" var="claseUser" itemLabel="#{claseUser.clase}" itemValue="#{claseUser}" />
                     </p:selectOneMenu>
                     <p:messages for="clase" autoUpdate="true" closable="true" />
                 </div>

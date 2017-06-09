@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Departamento;
+import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
+import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * Implementación del servicio de departamentos.
@@ -23,14 +25,25 @@ public class DepartamentoService implements IDepartamentoService {
     private IDepartamentoRepository departamentoRepository;
     
     /**
+     * Variable usada para actualizar la lista cargada en el contexto de la aplicación.
+     */
+    @Autowired
+    private ApplicationBean applicationBean;
+    
+    /**
      * Guarda o actualiza un departamento.
      * 
      * @param departamento a guardar
+     * @param accion alta/baja/modificación
      * @return Departamento actualizado
      */
     @Override
-    public Departamento save(Departamento departamento) {
-        return departamentoRepository.save(departamento);
+    public Departamento save(Departamento departamento, AdministracionAccionEnum accion) {
+        Departamento departamentoActualizado = departamentoRepository.save(departamento);
+        applicationBean.actualizarApplicationBean(departamentoActualizado, applicationBean.getListaDepartamentos(),
+                accion);
+        return departamentoActualizado;
+        
     }
     
     /**
@@ -45,11 +58,13 @@ public class DepartamentoService implements IDepartamentoService {
     /**
      * Elimina un departamento.
      * 
-     * @param id clave de departamento
+     * @param departamento departamento a eliminar
      */
     @Override
-    public void delete(Long id) {
-        departamentoRepository.delete(id);
+    public void delete(Departamento departamento) {
+        departamentoRepository.delete(departamento);
+        applicationBean.actualizarApplicationBean(departamento, applicationBean.getListaDepartamentos(),
+                AdministracionAccionEnum.BAJA);
     }
     
 }
