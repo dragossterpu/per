@@ -95,9 +95,12 @@
             </div>
 
             <div class="botonesFormulario">
-                <p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo">
+<!--                 <p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" > -->
+<!--                     <f:param name="vieneDe" value="visualizar" /> -->
+<!--                 </p:button> -->
+                <p:commandButton  action="#{inspeccionBean.recuperarBusqueda}" value="Volver" icon="fa fa-fw fa-undo">
                     <f:param name="vieneDe" value="visualizar" />
-                </p:button>
+                </p:commandButton>
             </div>
 
         </h:form>

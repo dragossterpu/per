@@ -191,8 +191,10 @@ public class InspeccionBean {
         inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
-        busquedaBuscador = new InspeccionBusqueda();
-        setBusquedaBuscador(inspeccionBusqueda);
+        if (!inspeccionBusqueda.isAsociar()) {
+            busquedaBuscador = new InspeccionBusqueda();
+            setBusquedaBuscador(inspeccionBusqueda);
+        }
     }
     
     /**
@@ -219,6 +221,8 @@ public class InspeccionBean {
      * @return devuelve la ruta de la vista donde asociamos las inspecciones
      */
     public String getAsociarInspecciones() {
+        limpiarBusqueda();
+        
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionBusqueda.setAsociar(true);
         
@@ -562,10 +566,16 @@ public class InspeccionBean {
     }
     
     /**
-     * Guarada el objeto búsqueda.
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     * @return ruta siguiente
      */
-    public void recuperarBusqueda() {
+    public String recuperarBusqueda() {
+        inspeccionBusqueda = new InspeccionBusqueda();
+        setProvinciSelec(busquedaBuscador.getProvincia());
         setInspeccionBusqueda(busquedaBuscador);
+        model.setBusqueda(inspeccionBusqueda);
+        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        return "/inspecciones/inspecciones?faces-redirect=true";
     }
     
 }

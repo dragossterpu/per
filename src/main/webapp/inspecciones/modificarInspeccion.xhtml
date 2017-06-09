@@ -174,9 +174,13 @@
 				<f:param name="vieneDe" value="asociarEditar" />
 			</p:commandButton>
 			<p:commandButton actionListener="#{inspeccionBean.modificarInspeccion}" id="modificar" value="Guardar cambios" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo">
-				<f:param name="vieneDe" value="editar" />
-			</p:button>
+<!-- 			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo"> -->
+<!-- 				<f:param name="vieneDe" value="editar" /> -->
+<!-- 			</p:button> -->
+            
+            <p:commandButton  action="#{inspeccionBean.recuperarBusqueda}" value="Cancelar" icon="fa fa-fw fa-undo">
+                <f:param name="vieneDe" value="editar" />
+            </p:commandButton>
 		</div>
 		
 		<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">

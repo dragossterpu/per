@@ -160,9 +160,9 @@
 				<f:param name="vieneDe" value="asociarAlta" />
 			</p:commandButton>
 			<p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="formAlta"/>
-			<p:button outcome="/inspecciones/inspecciones?faces-redirect=true" value="Cancelar" icon="fa fa-fw fa-undo" >
-                <f:param name="vieneDe" value="alta" />
-            </p:button>
+			<p:commandButton  action="#{inspeccionBean.recuperarBusqueda}" value="Cancelar" icon="fa fa-fw fa-undo">
+				<f:param name="vieneDe" value="alta" />
+			</p:commandButton>
 		</div>
 		
 		<p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
