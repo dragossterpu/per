@@ -118,7 +118,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     
     public String visualizaGuia(GuiaPersonalizada personalizada) {
-        this.guiaPersonalizada = personalizada;
+        setGuiaPersonalizada(personalizada);
         setListaPasos(guiaPersonalizadaService.listaPasos(personalizada));
         guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(personalizada));
         return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
