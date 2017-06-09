@@ -209,7 +209,7 @@ public class DocumentoService implements IDocumentoService {
         try {
             
             return crearDocumento(file, tipo, inspeccion);
-        } catch (DataAccessException | IOException ex) {
+        } catch (IOException ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
             throw new ProgesinException(ex);
         }
