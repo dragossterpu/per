@@ -32,7 +32,7 @@ prompt =========================================================================
 prompt Ejecutando SCRIPT CARGA DE CUESTIONARIOS...
 prompt =========================================================================
 
-@scriptCuestionarios.sql
+--@scriptCuestionarios.sql
 
 prompt =========================================================================
 prompt Ejecutando SCRIPT CARGA DE GUIAS...
