@@ -61,7 +61,7 @@ public class TipoInspeccionServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#borrarTipo(TipoInspeccion)}.
+     * Test method for {@link es.mira.progesin.services.TipoInspeccionService#borrarTipo(TipoInspeccion)}.
      */
     @Test
     public void borrarTipo() {
@@ -72,7 +72,8 @@ public class TipoInspeccionServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#guardarTipo(TipoInspeccion)}.
+     * Test method for
+     * {@link es.mira.progesin.services.TipoInspeccionService#guardarTipo(TipoInspeccion, AdministracionAccionEnum)}.
      */
     @Test
     public void guardarTipo() {
@@ -82,8 +83,7 @@ public class TipoInspeccionServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#existeByCodigoIgnoreCase(TipoInspeccion)}.
+     * Test method for {@link es.mira.progesin.services.TipoInspeccionService#existeByCodigoIgnoreCase(String)}.
      */
     @Test
     public void existeByCodigoIgnoreCase() {
@@ -92,7 +92,7 @@ public class TipoInspeccionServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscaTodos()}.
+     * Test method for {@link es.mira.progesin.services.TipoInspeccionService#buscaTodos()}.
      */
     @Test
     public void buscaTodos() {
