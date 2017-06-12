@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -144,9 +143,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
                 
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.CUESTIONARIO.getDescripcion());
-                
-                RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("PF('dialogCierre').show();");
                 
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
