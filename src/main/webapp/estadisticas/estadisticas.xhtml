@@ -1,0 +1,142 @@
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:my="http://java.sun.com/jsf/composite/composites">
+    <ui:define name="content">
+
+        
+        <div class="tituloCuestionario">
+            Estadisticas
+        </div>
+        <h:form id="formEstadisticas">
+           
+             <p:panel id="camposBusqueda">
+                <div class="bloqueFormulario">
+                 <div class="columnaIzdaFormulario">
+                      <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+                      <p:selectOneMenu value="#{tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
+                          <f:selectItem itemLabel="Todos" itemValue="" />
+                          <f:selectItems value="#{estadisticaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                      </p:selectOneMenu>
+                      <h:outputLabel for="provinciasSelect" value="Provincia:" />
+                      <p:selectOneMenu value="#{provincia}" id="provinciasSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
+                          <f:selectItem itemLabel="Todos" itemValue="" />
+                          <f:selectItems value="#{applicationBean.listaProvincias}" var="provincia" itemLabel="#{provincia.nombre}" itemValue="#{provincia}" />
+                      </p:selectOneMenu>
+                  </div>
+                     <div class="columnaDchaFormulario">
+                         <h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
+                         <p:calendar id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{fechaDesde}" />
+     
+                         <h:outputLabel for="fechaHasta" value="Fecha alta hasta:" />
+                         <p:calendar id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" value="#{fechaHasta}" />
+                     </div>
+                 </div>
+                 <div class="botonesFormulario">
+                     <p:commandButton  value="Ver estadísticas" actionListener="#{estadisticaBean.filtrar(tipoInspeccion,provincia,fechaDesde,fechaHasta)}" icon="fa fa-search"  update="panelEstadisticas"/>
+                     <p:commandButton  value="Limpiar" icon="fa fa-eraser" actionListener="#{estadisticaBean.limpiarBusqueda}" update="panelEstadisticas" >
+                        <p:ajax update="camposBusqueda" resetValues="true" />
+                     </p:commandButton>
+     
+                 </div>
+             </p:panel>    
+             <p:outputPanel layout="block" id="panelEstadisticas">
+                 
+                        <p:outputPanel >
+                            <h:commandLink>
+                                <p:graphicImage value="/images/xls.png" />
+                                <p:dataExporter type="xls" target="tablaEstadisticas" fileName="estadisticas" />
+                            </h:commandLink>
+                            <h:commandLink>
+                                <p:graphicImage value="/images/pdf.png" />
+                                <p:dataExporter type="pdf" target="tablaEstadisticas" fileName="estadisticas" />
+                            </h:commandLink>
+                            <h:commandLink>
+                                <p:graphicImage value="/images/csv.png" />
+                                <p:dataExporter type="csv" target="tablaEstadisticas" fileName="estadisticas" />
+                            </h:commandLink>
+                            
+                            <p:graphicImage ajax="false" value="/images/statistics.png" onclick="PF('dialogG').show()"/>
+                            
+                        </p:outputPanel>
+                        <p:dataTable  id="tablaEstadisticas"  value="#{estadisticaBean.listaEstados}" var="estado"
+                         selection="#{estadisticaBean.estadosSeleccionados}" rowKey="#{estado.descripcion}">
+        
+                            <f:facet name="header">
+                                 Estadisticas
+                            </f:facet>
+                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                           <p:column  width="10" >
+                               <p:rowToggler />
+                           </p:column>
+                            <p:column headerText="Estado"  width="200"  >
+                                <h:outputText value="#{estado.descripcion}" />
+                            </p:column>
+                            <p:column headerText="Numero" width="50">
+                                <h:outputText value="#{estadisticaBean.mapaResultados[estado]}" />
+                            </p:column>
+                            
+                            <p:rowExpansion>                       
+                                   <p:dataTable  id="tablaDetalle"  emptyMessage="No se han inspecciones en estado" value="#{estadisticaBean.verDetalles(estado)}" var="detalle">
+                                     <p:column headerText="Expediente" width="70">
+                                         <h:outputText value="#{detalle.numero}" />
+                                     </p:column>
+                                     <p:column headerText="Tipo de inspección"  width="80">
+                                         <h:outputText value="#{detalle.tipoInspeccion.codigo}" />
+                                     </p:column>
+                                     <p:column headerText="Equipo"  width="80">
+                                         <h:outputText value="#{detalle.equipo.nombreEquipo}" />
+                                     </p:column>
+                                     <p:column headerText="Cuerpo"  width="80">
+                                         <h:outputText value="#{detalle.ambito.descripcion}"/>
+                                     </p:column>
+                                     <p:column headerText="Unidad"  width="80">
+                                         <h:outputText value="#{detalle.nombreUnidad}" />
+                                     </p:column>
+                                     <p:column headerText="Provincia"  width="80">
+                                         <h:outputText value="#{detalle.municipio.provincia.nombre}" />
+                                     </p:column>
+                                     <p:summaryRow>
+                                 <p:column colspan="2" style="text-align:right">
+                                    <h:outputText value="Total:" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="0" />
+                                </p:column>
+                            </p:summaryRow>
+                                   </p:dataTable>
+                           </p:rowExpansion>
+                           
+                        </p:dataTable>
+                        <p:dialog id="dialogGrafica" widgetVar="dialogG" header="Distribución de las inspecciones en función de su estado">
+                             <p:chart type="pie" widgetVar="graficaImagen" model="#{estadisticaBean.grafica}" style="width:700px;height:500px"/>
+                             <div class="centrarBotonesDialog">
+                                 <p:commandButton value="Cerrar" onclick="PF('dialogG').hide()" />
+                             </div>
+                        </p:dialog>
+                        
+                        
+                        
+                        
+                
+             </p:outputPanel>
+             <p:messages id="message" />
+              <div class="botonesFormulario">
+             
+                  <p:commandButton  value="Generar informe estadístico"  update="message" ajax="false" 
+                  onclick="exportarGrafica()"
+                  actionListener="#{estadisticaBean.filtraPDF(tipoInspeccion,provincia,fechaDesde,fechaHasta, graficaExportar)}" icon="fa fa-file-pdf-o" >
+                      <p:fileDownload value="#{estadisticaBean.file}" />
+                  </p:commandButton>
+              </div>
+              <h:inputHidden id="b64" value="#{graficaExportar}" />
+              <script type="text/javascript">
+                  function exportarGrafica() {
+                  // exportAsImage() will return a base64 png encoded string
+                  	PF('dialogG').show();
+                  	img =  PF('graficaImagen').exportAsImage();
+                  	document.getElementById('formEstadisticas:b64').value = img.src;
+                  	PF('dialogG').hide();
+                  }
+              </script>
+            
+         </h:form>    
+    </ui:define>
+</ui:composition>

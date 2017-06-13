@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 
 /**
  * Repositorio de inspecciones.
@@ -70,4 +71,12 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * @return valor booleano dependiendo de si existe una inspección del tipo pasado por parámetro
      */
     public boolean existsByTipoInspeccion(TipoInspeccion tipo);
+    
+    /**
+     * Devuelve un listado de inspecciones que están en un estado recibido como parámetro.
+     * 
+     * @param estado Estado de inspección a buscar
+     * @return Resultado de la búsqueda
+     */
+    public List<Inspeccion> findByEstadoInspeccion(EstadoInspeccionEnum estado);
 }

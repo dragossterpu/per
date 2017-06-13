@@ -100,6 +100,18 @@ public interface IInspeccionesService {
             InspeccionBusqueda busqueda);
     
     /**
+     * Método que realiza una consulta de inspecciones, usando criteria, coincidente con determinados parámetros. No se
+     * pagina.
+     * 
+     * @param sortField campo por el que ordenamos
+     * @param sortOrder si la ordenación es ascendente o descendente
+     * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
+     * @return lista de inspecciones resultado de la consulta
+     */
+    public List<Inspeccion> buscarInspeccionPorCriteriaNoPaginado(String sortField, SortOrder sortOrder,
+            InspeccionBusqueda busqueda);
+    
+    /**
      * Cambia el estado de una inspección.
      * 
      * @param inspeccion a cambiar
@@ -107,4 +119,11 @@ public interface IInspeccionesService {
      */
     void cambiarEstado(Inspeccion inspeccion, EstadoInspeccionEnum estado);
     
+    /**
+     * Devuelve un listado de inspecciones que están en un estado recibido como parámetro.
+     * 
+     * @param estado Estado de inspección a buscar
+     * @return Resultado de la búsqueda
+     */
+    public List<Inspeccion> findByEstadoInspeccion(EstadoInspeccionEnum estado);
 }

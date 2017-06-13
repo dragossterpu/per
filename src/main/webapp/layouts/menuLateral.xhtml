@@ -40,7 +40,7 @@
                 <p:menuitem value="Administrar equipos" action="#{equiposBean.getFormularioBusquedaEquipos}"/>
                 <p:menuitem value="Búsqueda de inspecciones" action="#{inspeccionBean.getFormularioBusqueda}"/>
                 <p:menuitem value="Modelos de inspección" outcome="/inspecciones/modeloInspeccion/tiposInspeccion" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
-                <p:menuitem value="Estadísticas" outcome="/enConstruccion" />
+                <p:menuitem value="Estadísticas" action="#{estadisticaBean.getEstadisticas}" />
             </p:submenu>
 
             <p:submenu label="Informes">

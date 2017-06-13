@@ -6,8 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,11 +23,13 @@ import org.springframework.stereotype.Component;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.color.DeviceRgb;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
@@ -45,6 +49,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.model.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
@@ -52,9 +57,11 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
+import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 /**
  * Clase para la generación de documentos PDF de la aplicación.
@@ -89,6 +96,11 @@ public class PdfGenerator {
      * Nombre del pdf del cuestionario.
      */
     private static final String NOMBREPDFCUESTIONARIO = "Cuestionario.pdf";
+    
+    /**
+     * Nombre del pdf de estadisticas.
+     */
+    private static final String NOMBREPDFESTADISTICAS = "Estadisticas.pdf";
     
     /**
      * Repositorio de respuestas de cuestionario.
@@ -517,4 +529,216 @@ public class PdfGenerator {
         }
     }
     
+    /**
+     * Genera el PDF con el informe estadístico de inspecciones.
+     * 
+     * @param mapaEstados Mapa de las inspecciones a exportar
+     * @param filtro Filtros aplicados para recuperar las inspecciones
+     * @param fileImg Fichero con la imagen que se incrustará en el PDF.
+     * @return Stream con el fichero a descargar
+     * @throws ProgesinException Excepción generada al crear/exportar el fichero
+     */
+    public StreamedContent generarInformeEstadisticas(Map<EstadoInspeccionEnum, List<Inspeccion>> mapaEstados,
+            InspeccionBusqueda filtro, File fileImg) throws ProgesinException {
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        StreamedContent pdfStream = null;
+        try {
+            File file = File.createTempFile(NOMBREPDFESTADISTICAS, ".pdf");
+            try (PdfWriter writer = new PdfWriter(file.getAbsolutePath()); PdfDocument pdf = new PdfDocument(writer)) {
+                Document document = new Document(pdf, PageSize.A4);
+                document.setMargins(100, 36, 70, 36);
+                crearCabeceraFooter(pdf, document, false);
+                // Título
+                Paragraph titulo = new Paragraph("Informe estadístico");
+                titulo.setBold();
+                titulo.setFontSize(16);
+                titulo.setTextAlignment(TextAlignment.CENTER);
+                titulo.setPadding(5);
+                document.add(titulo);
+                // Fecha
+                Paragraph fecha = new Paragraph("Fecha emisión documento : " + sdf.format(new Date()));
+                fecha.setTextAlignment(TextAlignment.RIGHT);
+                fecha.setPadding(5);
+                document.add(fecha);
+                // Datos del informe
+                document.add(creaTitulo("Parámetros del informe"));
+                // Filtros usados
+                document.add(creaSubtitulo("Filtros aplicados"));
+                creaInfoFiltros(document, filtro);
+                List<EstadoInspeccionEnum> listaEstadosSeleccionados = new ArrayList<>(mapaEstados.keySet());
+                document.add(creaSubtitulo("Estados seleccionados"));
+                creaInfoSeleccion(document, listaEstadosSeleccionados);
+                document.add(new AreaBreak()); // Salto de página
+                // Gráfica
+                document.add(creaSubtitulo("Gráfica"));
+                document.add(new Image(ImageDataFactory.create(fileImg.getPath())));
+                document.add(new AreaBreak()); // Salto de página
+                // Datos
+                document.add(creaSubtitulo("Desglose"));
+                for (EstadoInspeccionEnum estado : listaEstadosSeleccionados) {
+                    List<Inspeccion> listaInspecciones = mapaEstados.get(estado);
+                    float[] columnWidths = { 1, 2, 1, 1, 1, 1 }; // 6 columnas
+                    Table tabla = new Table(columnWidths);
+                    if (!listaInspecciones.isEmpty()) {
+                        Paragraph descripcionEstado = new Paragraph(estado.getDescripcion());
+                        descripcionEstado.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(153, 201, 255)));
+                        descripcionEstado.setMarginTop(20);
+                        descripcionEstado.setFontSize(10);
+                        document.add(descripcionEstado);
+                        tabla.setWidthPercent(100);
+                        tabla.addHeaderCell("EXPEDIENTE");
+                        tabla.addHeaderCell("TIPO DE INSPECCION");
+                        tabla.addHeaderCell("EQUIPO");
+                        tabla.addHeaderCell("CUERPO");
+                        tabla.addHeaderCell("UNIDAD");
+                        tabla.addHeaderCell("PROVINCIA");
+                        tabla.getHeader().setBackgroundColor(new DeviceRgb(204, 228, 255));
+                        tabla.getHeader().setPaddingTop(20);
+                        tabla.getHeader().setHorizontalAlignment(HorizontalAlignment.CENTER);
+                        tabla.getHeader().setFontSize(9);
+                    }
+                    Cell celda;
+                    for (Inspeccion ins : listaInspecciones) {
+                        celda = new Cell();
+                        celda.setFontSize(9);
+                        celda.add(ins.getNumero());
+                        tabla.addCell(celda);
+                        celda = new Cell();
+                        celda.setFontSize(9);
+                        celda.add(ins.getTipoInspeccion().getDescripcion());
+                        tabla.addCell(celda);
+                        celda = new Cell();
+                        celda.setFontSize(9);
+                        celda.add(ins.getEquipo().getNombreEquipo());
+                        tabla.addCell(celda);
+                        celda = new Cell();
+                        celda.setFontSize(9);
+                        celda.add(ins.getAmbito().getDescripcion());
+                        tabla.addCell(celda);
+                        celda = new Cell();
+                        celda.setFontSize(9);
+                        celda.add(ins.getNombreUnidad());
+                        tabla.addCell(celda);
+                        celda = new Cell();
+                        celda.setFontSize(9);
+                        celda.add(ins.getMunicipio().getProvincia().getNombre());
+                        tabla.addCell(celda);
+                    }
+                    document.add(tabla);
+                }
+                
+                document.close();
+                File fileDest = File.createTempFile(NOMBREPDFESTADISTICAS, ".pdf");
+                insertarNumeroPagina(file.getAbsolutePath(), fileDest.getAbsolutePath(), document);
+                InputStream inputStream = new FileInputStream(fileDest);
+                pdfStream = new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
+                        NOMBREPDFESTADISTICAS);
+                
+            }
+        } catch (IOException e) {
+            throw new ProgesinException(e);
+        }
+        
+        return pdfStream;
+    }
+    
+    /**
+     * Crea un párrafo formateado para servir como título.
+     * 
+     * @param texto Texto del título a generar
+     * @return Párrafo formateado como título.
+     */
+    private Paragraph creaTitulo(String texto) {
+        Paragraph titulo = new Paragraph(texto);
+        titulo = new Paragraph("Parámetros del informe");
+        titulo.setBold();
+        titulo.setFontSize(12);
+        titulo.setTextAlignment(TextAlignment.CENTER);
+        titulo.setPadding(10);
+        return titulo;
+    }
+    
+    /**
+     * Crea un párrafo formateado para servir como título secundario.
+     * 
+     * @param texto Texto del subtítulo a generar
+     * @return Párrafo formateado como título secundario.
+     */
+    private Paragraph creaSubtitulo(String texto) {
+        Paragraph subTitulo = new Paragraph(texto);
+        subTitulo.setFontSize(12);
+        subTitulo.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(153, 201, 255)));
+        subTitulo.setMarginTop(20);
+        subTitulo.setMarginBottom(10);
+        return subTitulo;
+    }
+    
+    /**
+     * Inserta en el informe de estadísticas la información relativa a los filtros empleados para generar la
+     * información.
+     * 
+     * @param doc Documento al que se adjunta la información
+     * @param filtro Objeto que contiene los filtros usados
+     */
+    private void creaInfoFiltros(Document doc, InspeccionBusqueda filtro) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        float[] columnas = { 2, 1 };
+        Table tabla;
+        Cell celdaFiltro;
+        if (filtro.getTipoInspeccion() != null || filtro.getProvincia() != null || filtro.getFechaDesde() != null
+                || filtro.getFechaHasta() != null) {
+            tabla = new Table(columnas);
+            tabla.setWidthPercent(50);
+            
+            tabla.addHeaderCell("Filtro");
+            tabla.addHeaderCell("Valor");
+            tabla.getHeader().setFontSize(10);
+            tabla.getHeader().setBackgroundColor(new DeviceRgb(204, 228, 255));
+            if (filtro.getTipoInspeccion() != null) {
+                celdaFiltro = new Cell().setFontSize(10).add("Tipo de inspección");
+                tabla.addCell(celdaFiltro);
+                celdaFiltro = new Cell().setFontSize(9).add(filtro.getTipoInspeccion().getDescripcion());
+                tabla.addCell(celdaFiltro);
+            }
+            if (filtro.getProvincia() != null) {
+                celdaFiltro = new Cell().setFontSize(10).add("Provincia");
+                tabla.addCell(celdaFiltro);
+                celdaFiltro = new Cell().setFontSize(9).add(filtro.getProvincia().getNombre());
+                tabla.addCell(celdaFiltro);
+            }
+            if (filtro.getFechaDesde() != null) {
+                celdaFiltro = new Cell().setFontSize(10).add("Fecha desde");
+                tabla.addCell(celdaFiltro);
+                celdaFiltro = new Cell().setFontSize(9).add(sdf.format(filtro.getFechaDesde()));
+                tabla.addCell(celdaFiltro);
+            }
+            if (filtro.getFechaHasta() != null) {
+                celdaFiltro = new Cell().setFontSize(10).add("Fecha hasta");
+                tabla.addCell(celdaFiltro);
+                celdaFiltro = new Cell().setFontSize(9).add(sdf.format(filtro.getFechaHasta()));
+                tabla.addCell(celdaFiltro);
+            }
+            doc.add(tabla);
+        } else {
+            Paragraph texto = new Paragraph("No se han aplicado filtros");
+            texto.setFontSize(9);
+            texto.setPadding(5);
+            doc.add(texto);
+        }
+    }
+    
+    /**
+     * Inserta en el informe de estadísticas los estados seleccionados para la generación del informe.
+     * 
+     * @param doc Documento al que se adjunta la información
+     * @param listado Listado de los estados seleccionados
+     */
+    private void creaInfoSeleccion(Document doc, List<EstadoInspeccionEnum> listado) {
+        for (EstadoInspeccionEnum estado : listado) {
+            Paragraph texto = new Paragraph(estado.getDescripcion());
+            texto.setFontSize(9);
+            doc.add(texto);
+        }
+    }
 }
