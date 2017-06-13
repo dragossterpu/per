@@ -18,17 +18,22 @@ public enum EstadoInspeccionEnum {
     /**
      * Estado en el que se encuentra una inspección desde el momento en el que se crea.
      */
-    SIN_INICIAR("1. Sin iniciar"),
+    SIN_INICIAR("0. Sin iniciar"),
     
     /**
      * Estado en el que se encuentra una inspección desde el momento en el que se comunica su realización.
      */
-    COMUNICACION_REALIZACION("2. Comunicación realización inspección"),
+    COMUNICACION_REALIZACION("1. Comunicación realización inspección"),
     
     /**
      * Estado en el que se encuentra una inspección cuando aún no se ha solicitado documentación previa.
      */
-    PEND_SOLICITAR_DOC_PREVIA("3. Pendiente solicitar documentación previa"),
+    PEND_SOLICITAR_DOC_PREVIA("2. Pendiente solicitar documentación previa"),
+    
+    /**
+     * Estado en el que se encuentra una inspección cuando aún no se ha solicitado documentación previa.
+     */
+    PEND_RECIBIR_DOC_PREVIA("3. Pendiente recibir documentación previa"),
     
     /**
      * Estado en el que se encuentra una inspección cuando se ha solicitado la rspuesta de ningún cuestionario.
