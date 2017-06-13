@@ -1,6 +1,7 @@
 package es.mira.progesin.lazydata;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,16 +101,28 @@ public class LazyModelInspeccion extends LazyDataModel<Inspeccion> implements Se
             Map<String, Object> filters) {
         List<Inspeccion> listado = null;
         if (busqueda != null) {
+            busqueda.setSelectedAll(false);
             
             this.setRowCount(inspeccionesService.getCountInspeccionCriteria(busqueda));
             listado = inspeccionesService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
             this.datasource = listado;
             
-            if (busqueda.isAsociar() && busqueda.getInspeccionesSeleccionadas() != null
-                    && busqueda.getInspeccionesSeleccionadas().size() == this.getRowCount()) {
-                busqueda.setSelectedAll(true);
-            } else {
-                busqueda.setSelectedAll(false);
+            // List<Inspeccion> inspeccionesSeleccionadas = new ArrayList<>();
+            // inspeccionesSeleccionadas.addAll(busqueda.getInspeccionesSeleccionadas());
+            // List<Inspeccion> inspeccionesBuscadas = new ArrayList<>();
+            // inspeccionesBuscadas.addAll(this.datasource);
+            // inspeccionesBuscadas.removeAll(inspeccionesSeleccionadas);
+            
+            if (busqueda.isAsociar() && busqueda.getInspeccionesSeleccionadas() != null) {
+                List<Inspeccion> inspeccionesSeleccionadas = new ArrayList<>();
+                inspeccionesSeleccionadas.addAll(busqueda.getInspeccionesSeleccionadas());
+                List<Inspeccion> inspeccionesBuscadas = new ArrayList<>();
+                inspeccionesBuscadas.addAll(this.datasource);
+                inspeccionesBuscadas.removeAll(inspeccionesSeleccionadas);
+                
+                if (inspeccionesBuscadas.isEmpty()) {
+                    busqueda.setSelectedAll(true);
+                }
             }
         } else {
             this.setRowCount(0);

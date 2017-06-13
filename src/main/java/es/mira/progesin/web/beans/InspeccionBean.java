@@ -167,11 +167,17 @@ public class InspeccionBean {
     private static final int NUMCOLSTABLA = 17;
     
     /**
+     * Ruta buscador de isnpecciones.
+     */
+    private static final String RUTABUSCAINSPECCIONES = "/inspecciones/inspecciones?faces-redirect=true";
+    
+    /**
      * 
      * Busca las inspeccions según los filtros introducidos en el formulario de búsqueda situandose en la primera página
      * de la tabla y con el orden por defecto.
      * 
      */
+    
     public void buscarInspeccion() {
         inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
@@ -179,6 +185,10 @@ public class InspeccionBean {
         if (!inspeccionBusqueda.isAsociar()) {
             busquedaBuscador = new InspeccionBusqueda();
             setBusquedaBuscador(inspeccionBusqueda);
+        } else {
+            List<Inspeccion> listInspecciones = new ArrayList<>();
+            listInspecciones.addAll(inspeccionesAsignadasActuales);
+            inspeccionBusqueda.setInspeccionesSeleccionadas(listInspecciones);
         }
     }
     
@@ -210,15 +220,10 @@ public class InspeccionBean {
         
         inspeccionBusqueda.setInspeccionModif(inspeccion);
         inspeccionBusqueda.setAsociar(true);
-        
-        List<Inspeccion> listInspecciones = new ArrayList<>();
-        listInspecciones.addAll(inspeccionesAsignadasActuales);
-        inspeccionBusqueda.setInspeccionesSeleccionadas(listInspecciones);
-        
         setProvinciSelec(null);
         buscarInspeccion();
         
-        return "/inspecciones/inspecciones?faces-redirect=true";
+        return RUTABUSCAINSPECCIONES;
     }
     
     /**
@@ -400,7 +405,7 @@ public class InspeccionBean {
         listaEquipos = equipoService.findAll();
         limpiarBusqueda();
         
-        return "/inspecciones/inspecciones?faces-redirect=true";
+        return RUTABUSCAINSPECCIONES;
     }
     
     /**
@@ -561,7 +566,7 @@ public class InspeccionBean {
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
         listaEquipos = equipoService.findByFechaBajaIsNull();
-        return "/inspecciones/inspecciones?faces-redirect=true";
+        return RUTABUSCAINSPECCIONES;
     }
     
 }
