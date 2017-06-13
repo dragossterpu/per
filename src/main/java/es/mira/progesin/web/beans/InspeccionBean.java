@@ -280,7 +280,7 @@ public class InspeccionBean {
         setProvinciSelec(null);
         
         Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
-        
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
             listaEquipos = new ArrayList<>();
             listaEquipos.add(miembro.getEquipo());
@@ -325,7 +325,7 @@ public class InspeccionBean {
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
-        
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
             listaEquipos = new ArrayList<>();
             listaEquipos.add(miembro.getEquipo());
@@ -378,6 +378,7 @@ public class InspeccionBean {
     
     @PostConstruct
     public void init() {
+        inspeccionesAsignadasActuales = new ArrayList<>();
         inspeccionBusqueda = new InspeccionBusqueda();
         listaMunicipios = new ArrayList<>();
         setList(new ArrayList<>());
@@ -559,6 +560,7 @@ public class InspeccionBean {
         setInspeccionBusqueda(busquedaBuscador);
         model.setBusqueda(inspeccionBusqueda);
         model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         return "/inspecciones/inspecciones?faces-redirect=true";
     }
     
