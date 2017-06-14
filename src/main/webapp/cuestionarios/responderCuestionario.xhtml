@@ -63,7 +63,7 @@
                                         </p:selectOneRadio>
                                         <p:messages for="radioAdjunto" autoUpdate="true" closable="true" />
 
-                                        <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" sequential="true" mode="advanced" dragDropSupport="false" label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos" sizelimit="20971520" multiple="true" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
+                                        <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" sequential="true" mode="advanced" dragDropSupport="false" label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos" sizelimit="20971520" multiple="true" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" rendered="#{not yaCumplimentado}">
                                             <f:attribute name="pregunta" value="#{preguntaArea}" />
                                         </p:fileUpload>
 
@@ -76,7 +76,7 @@
                                                     <p:fileDownload value="#{responderCuestionarioBean.visualizarCuestionario.file}" />
                                                 </p:commandButton>
                                             </p:column>
-                                            <p:column styleClass="botonTabla">
+                                            <p:column styleClass="botonTabla" rendered="#{not yaCumplimentado}">
                                                 <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{responderCuestionarioBean.eliminarDocumento(preguntaArea, documento)}" update="tablaDocumentos" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
                                                     <p:confirm header="Eliminar documento" message="¿Está seguro que desea eliminar este documento?" icon="fa fa-warning-sign" />
                                                 </p:commandButton>
