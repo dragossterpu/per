@@ -22,6 +22,7 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StreamUtils;
 
 import es.mira.progesin.constantes.Constantes;
@@ -134,6 +135,7 @@ public class DocumentoService implements IDocumentoService {
      * @return Documento Documento guardado
      */
     @Override
+    @Transactional(readOnly = false)
     public Documento save(Documento entity) {
         return documentoRepository.save(entity);
     }
@@ -143,13 +145,20 @@ public class DocumentoService implements IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
+     * @throws ProgesinException
      */
     @Override
-    public DefaultStreamedContent descargaDocumento(Documento entity) {
+    public DefaultStreamedContent descargaDocumento(Documento entity) throws ProgesinException {
         Documento docu = documentoRepository.findById(entity.getId());
-        DocumentoBlob doc = docu.getFichero();
-        InputStream stream = new ByteArrayInputStream(doc.getFichero());
-        return new DefaultStreamedContent(stream, entity.getTipoContenido(), doc.getNombreFichero());
+        DefaultStreamedContent streamDocumento = null;
+        if (docu != null) {
+            DocumentoBlob doc = docu.getFichero();
+            InputStream stream = new ByteArrayInputStream(doc.getFichero());
+            streamDocumento = new DefaultStreamedContent(stream, entity.getTipoContenido(), doc.getNombreFichero());
+        } else {
+            throw new ProgesinException(new Exception("Se ha producido un error al descargar el documento"));
+        }
+        return streamDocumento;
     }
     
     /**
@@ -160,10 +169,18 @@ public class DocumentoService implements IDocumentoService {
      * @return DefaultStreamedContent Flujo de descarga
      */
     @Override
-    public DefaultStreamedContent descargaDocumento(Long id) {
+    public DefaultStreamedContent descargaDocumento(Long id) throws ProgesinException {
         Documento entity = documentoRepository.findById(id);
-        InputStream stream = new ByteArrayInputStream(entity.getFichero().getFichero());
-        return new DefaultStreamedContent(stream, entity.getTipoContenido(), entity.getNombre());
+        DefaultStreamedContent streamDocumento = null;
+        if (entity != null) {
+            DocumentoBlob doc = entity.getFichero();
+            InputStream stream = new ByteArrayInputStream(entity.getFichero().getFichero());
+            streamDocumento = new DefaultStreamedContent(stream, entity.getTipoContenido(), doc.getNombreFichero());
+        } else {
+            throw new ProgesinException(new Exception("Se ha producido un error al descargar el documento"));
+        }
+        return streamDocumento;
+        
     }
     
     /**

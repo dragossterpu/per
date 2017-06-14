@@ -55,9 +55,10 @@ public interface IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamed Content Flujo de descarga
+     * @throws ProgesinException Posible excepción
      */
     
-    DefaultStreamedContent descargaDocumento(Documento entity);
+    DefaultStreamedContent descargaDocumento(Documento entity) throws ProgesinException;
     
     /**
      * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
@@ -65,9 +66,10 @@ public interface IDocumentoService {
      * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
+     * @throws ProgesinException Posible excepción
      */
     
-    DefaultStreamedContent descargaDocumento(Long id);
+    DefaultStreamedContent descargaDocumento(Long id) throws ProgesinException;
     
     /**
      * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base de

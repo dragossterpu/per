@@ -13,6 +13,8 @@ public class ProgesinException extends Exception {
      */
     private static final long serialVersionUID = 1L;
     
+    String mensaje;
+    
     /**
      * Excepción general.
      * 
@@ -20,6 +22,7 @@ public class ProgesinException extends Exception {
      */
     public ProgesinException(Exception e) {
         super(e);
+        mensaje = e.getMessage();
     }
     
     /**
@@ -28,6 +31,11 @@ public class ProgesinException extends Exception {
     
     public ProgesinException() {
         super();
+    }
+    
+    @Override
+    public String getMessage() {
+        return mensaje;
     }
     
 }

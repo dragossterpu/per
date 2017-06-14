@@ -241,7 +241,13 @@ public class ProvisionalSolicitudBean implements Serializable {
      * @param idDocumento seleccionado
      */
     public void descargarFichero(Long idDocumento) {
-        setFile(documentoService.descargaDocumento(idDocumento));
+        setFile(null);
+        try {
+            setFile(documentoService.descargaDocumento(idDocumento));
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+        }
     }
     
     /**

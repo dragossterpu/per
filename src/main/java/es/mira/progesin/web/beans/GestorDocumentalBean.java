@@ -220,7 +220,13 @@ public class GestorDocumentalBean implements Serializable {
      * @param document Documento a descargar
      */
     public void descargarFichero(Documento document) {
-        setFile(documentoService.descargaDocumento(document));
+        setFile(null);
+        try {
+            setFile(documentoService.descargaDocumento(document));
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.name(), e);
+        }
     }
     
     /**
@@ -466,8 +472,8 @@ public class GestorDocumentalBean implements Serializable {
             }
             mapaInspecciones.put(doc.getId(), cadenaInspecciones);
             
-            mapaEdicion.put(doc.getId(), documentoService.perteneceACuestionario(doc) == null
-                    && documentoService.perteneceASolicitud(doc) == null);
+            mapaEdicion.put(doc.getId(), !(documentoService.perteneceACuestionario(doc) == null
+                    && documentoService.perteneceASolicitud(doc) == null));
         }
     }
     

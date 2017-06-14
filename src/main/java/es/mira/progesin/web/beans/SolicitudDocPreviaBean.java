@@ -398,7 +398,13 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @param idDocumento clave del documento a descargar
      */
     public void descargarFichero(Long idDocumento) {
-        setFile(documentoService.descargaDocumento(idDocumento));
+        setFile(null);
+        try {
+            setFile(documentoService.descargaDocumento(idDocumento));
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+        }
     }
     
     /**

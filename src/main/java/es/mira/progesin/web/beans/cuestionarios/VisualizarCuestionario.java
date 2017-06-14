@@ -404,7 +404,13 @@ public class VisualizarCuestionario implements Serializable {
      * @param documento seleccionado
      */
     public void descargarFichero(Documento documento) {
-        setFile(documentoService.descargaDocumento(documento));
+        setFile(null);
+        try {
+            setFile(documentoService.descargaDocumento(documento));
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+            regActividadService.altaRegActividadError(NOMBRESECCION, e);
+        }
     }
     
     /**
