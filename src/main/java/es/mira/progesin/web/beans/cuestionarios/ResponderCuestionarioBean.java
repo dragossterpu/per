@@ -340,29 +340,24 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void subirFichero(FileUploadEvent event) {
         UploadedFile archivoSubido = event.getFile();
-        List<Documento> listaDocumentos;
         if (verificadorExtensiones.extensionCorrecta(archivoSubido)) {
             
             try {
                 PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
                         .get("pregunta");
                 
-                // Grabamos la respuesta con el documento subido
                 RespuestaCuestionario respuestaCuestionario = crearRespuesta(pregunta);
                 respuestaCuestionario.setRespuestaTexto(visualizarCuestionario.getMapaRespuestas().get(pregunta));
                 
                 Map<PreguntasCuestionario, List<Documento>> mapaDocumentos = visualizarCuestionario.getMapaDocumentos();
-                
                 if (mapaDocumentos.get(pregunta) != null) {
-                    listaDocumentos = mapaDocumentos.get(pregunta);
+                    respuestaCuestionario.setDocumentos(mapaDocumentos.get(pregunta));
                 } else {
-                    listaDocumentos = new ArrayList<>();
+                    respuestaCuestionario.setDocumentos(new ArrayList<>());
                 }
-                respuestaCuestionario = respuestaService.saveConDocumento(respuestaCuestionario, archivoSubido,
-                        listaDocumentos);
+                respuestaCuestionario = respuestaService.saveConDocumento(respuestaCuestionario, archivoSubido);
                 
-                mapaDocumentos.put(pregunta, respuestaCuestionario.getDocumentos());
-                visualizarCuestionario.setMapaDocumentos(mapaDocumentos);
+                visualizarCuestionario.getMapaDocumentos().put(pregunta, respuestaCuestionario.getDocumentos());
                 
             } catch (DataAccessException | ProgesinException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -425,7 +420,6 @@ public class ResponderCuestionarioBean implements Serializable {
             visualizarCuestionario.generarMapaAreasVisualizarUsuario();
             
             visualizarCuestionario.visualizarRespuestasCuestionario(cuestionarioEnviado);
-            
         }
     }
     

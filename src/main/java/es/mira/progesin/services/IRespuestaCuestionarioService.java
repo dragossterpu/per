@@ -1,7 +1,5 @@
 package es.mira.progesin.services;
 
-import java.util.List;
-
 import org.primefaces.model.UploadedFile;
 
 import es.mira.progesin.exceptions.ProgesinException;
@@ -21,12 +19,11 @@ public interface IRespuestaCuestionarioService {
      * 
      * @param respuestaCuestionario respuesta que se quiere grabar
      * @param file fichero que se quiere cargar
-     * @param listaDocumentos listado de documentos que ya tenía la respuesta
      * @return respuesta actualizada
      * @throws ProgesinException posible excepción
      */
-    public RespuestaCuestionario saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile file,
-            List<Documento> listaDocumentos) throws ProgesinException;
+    public RespuestaCuestionario saveConDocumento(RespuestaCuestionario respuestaCuestionario, UploadedFile file)
+            throws ProgesinException;
     
     /**
      * Elimina de BBDD la respuesta y el documento pasados como parámetros.

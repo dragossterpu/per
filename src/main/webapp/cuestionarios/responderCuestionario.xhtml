@@ -63,7 +63,7 @@
                                         </p:selectOneRadio>
                                         <p:messages for="radioAdjunto" autoUpdate="true" closable="true" />
 
-                                        <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" mode="advanced" dragDropSupport="false" label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos" sizelimit="20971520" multiple="true" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
+                                        <p:fileUpload fileUploadListener="#{responderCuestionarioBean.subirFichero}" sequential="true" mode="advanced" dragDropSupport="false" label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" update="tablaDocumentos" sizelimit="20971520" multiple="true" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}">
                                             <f:attribute name="pregunta" value="#{preguntaArea}" />
                                         </p:fileUpload>
 

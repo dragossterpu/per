@@ -13,6 +13,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -152,8 +153,8 @@ public class UserService implements IUserService {
      */
     private void creaCriteria(UserBusqueda userBusqueda, Criteria criteria) {
         
-        criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado");
-        criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo");
+        criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo", JoinType.LEFT_OUTER_JOIN);
         
         if (userBusqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge(Constantes.FECHAALTA, userBusqueda.getFechaDesde()));

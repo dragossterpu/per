@@ -1,7 +1,5 @@
 package es.mira.progesin.services;
 
-import java.util.List;
-
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,6 @@ public class RespuestaCuestionarioService implements IRespuestaCuestionarioServi
      * 
      * @param respuestaCuestionario respuesta que se quiere grabar
      * @param archivoSubido fichero que se quiere cargar
-     * @param listaDocumentos listado de documentos que ya tenía la respuesta
      * @return respuesta actualizada
      * @throws ProgesinException posible excepción
      */
@@ -46,12 +43,11 @@ public class RespuestaCuestionarioService implements IRespuestaCuestionarioServi
     @Override
     @Transactional(readOnly = false)
     public RespuestaCuestionario saveConDocumento(RespuestaCuestionario respuestaCuestionario,
-            UploadedFile archivoSubido, List<Documento> listaDocumentos) throws ProgesinException {
+            UploadedFile archivoSubido) throws ProgesinException {
         TipoDocumento tipo = TipoDocumento.builder().id(6L).build();
         Documento documentoSubido = documentoService.cargaDocumento(archivoSubido, tipo,
                 respuestaCuestionario.getRespuestaId().getCuestionarioEnviado().getInspeccion());
-        listaDocumentos.add(documentoSubido);
-        respuestaCuestionario.setDocumentos(listaDocumentos);
+        respuestaCuestionario.getDocumentos().add(documentoSubido);
         return respuestaRepository.save(respuestaCuestionario);
     }
     

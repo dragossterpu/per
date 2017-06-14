@@ -47,7 +47,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Builder
-@ToString
+@ToString(of = { "id", "nombre" })
 @Getter
 @Setter
 @Entity
