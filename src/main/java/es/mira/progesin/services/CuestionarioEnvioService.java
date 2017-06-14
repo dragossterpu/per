@@ -127,7 +127,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
         
         inspeccionesService.cambiarEstado(cuestionarioEnvio.getInspeccion(),
-                EstadoInspeccionEnum.PEND_RECIBIR_CUESTIONARIO);
+                EstadoInspeccionEnum.F_PEND_RECIBIR_CUESTIONARIO);
     }
     
     /**
@@ -367,7 +367,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         areaUsuarioCuestEnvService.deleteByIdCuestionarioEnviado(cuestionario.getId());
         
         inspeccionesService.cambiarEstado(cuestionario.getInspeccion(),
-                EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
+                EstadoInspeccionEnum.G_PENDIENTE_VISITA_INSPECCION);
     }
     
     /**

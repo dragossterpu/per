@@ -296,7 +296,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         userService.save(usuarioProv);
         inspeccionesService.cambiarEstado(solicitudDocumentacionPrevia.getInspeccion(),
-                EstadoInspeccionEnum.PEND_RECIBIR_DOC_PREVIA);
+                EstadoInspeccionEnum.D_PEND_RECIBIR_DOC_PREVIA);
     }
     
     /**
@@ -315,7 +315,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             userService.delete(usuarioProv);
         }
         inspeccionesService.cambiarEstado(solicitudDocumentacionPrevia.getInspeccion(),
-                EstadoInspeccionEnum.PEND_ENVIAR_CUESTIONARIO);
+                EstadoInspeccionEnum.E_PEND_ENVIAR_CUESTIONARIO);
     }
     
     /**

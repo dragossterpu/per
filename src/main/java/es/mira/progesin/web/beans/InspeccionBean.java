@@ -302,7 +302,7 @@ public class InspeccionBean {
      */
     public String altaInspeccion() {
         try {
-            inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.SIN_INICIAR);
+            inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.A_SIN_INICIAR);
             inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             
             inspeccion = inspeccionesService.save(inspeccion);
@@ -505,8 +505,7 @@ public class InspeccionBean {
      * 
      */
     public void onToggleSelect() {
-        List<Inspeccion> inspeccionesBusqueda = inspeccionesService.buscarInspeccionPorCriteria(0, model.getRowCount(),
-                null, null, inspeccionBusqueda);
+        List<Inspeccion> inspeccionesBusqueda = model.getDatasource();
         
         if (!inspeccionBusqueda.isSelectedAll()) {
             for (Inspeccion i : inspeccionesBusqueda) {

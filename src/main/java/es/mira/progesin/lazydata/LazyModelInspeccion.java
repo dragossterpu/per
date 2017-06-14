@@ -107,12 +107,6 @@ public class LazyModelInspeccion extends LazyDataModel<Inspeccion> implements Se
             listado = inspeccionesService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
             this.datasource = listado;
             
-            // List<Inspeccion> inspeccionesSeleccionadas = new ArrayList<>();
-            // inspeccionesSeleccionadas.addAll(busqueda.getInspeccionesSeleccionadas());
-            // List<Inspeccion> inspeccionesBuscadas = new ArrayList<>();
-            // inspeccionesBuscadas.addAll(this.datasource);
-            // inspeccionesBuscadas.removeAll(inspeccionesSeleccionadas);
-            
             if (busqueda.isAsociar() && busqueda.getInspeccionesSeleccionadas() != null) {
                 List<Inspeccion> inspeccionesSeleccionadas = new ArrayList<>();
                 inspeccionesSeleccionadas.addAll(busqueda.getInspeccionesSeleccionadas());
