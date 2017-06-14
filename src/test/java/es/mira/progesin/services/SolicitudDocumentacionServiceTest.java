@@ -227,7 +227,7 @@ public class SolicitudDocumentacionServiceTest {
         verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).save(usuarioProv);
         verify(inspeccionesService, times(1)).cambiarEstado(solicitud.getInspeccion(),
-                EstadoInspeccionEnum.PEND_RECIBIR_DOC_PREVIA);
+                EstadoInspeccionEnum.D_PEND_RECIBIR_DOC_PREVIA);
         
     }
     
@@ -247,7 +247,7 @@ public class SolicitudDocumentacionServiceTest {
         verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).delete(usuarioProv);
         verify(inspeccionesService, times(1)).cambiarEstado(solicitud.getInspeccion(),
-                EstadoInspeccionEnum.PEND_ENVIAR_CUESTIONARIO);
+                EstadoInspeccionEnum.E_PEND_ENVIAR_CUESTIONARIO);
     }
     
     /**

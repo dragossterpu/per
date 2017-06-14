@@ -437,14 +437,29 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
+     * @throws ProgesinException lanza excepción
      */
     @Test
-    public void descargarFichero() {
-        Long idDocumento = null;
+    public void descargarFichero_ficheroNulo() throws ProgesinException {
+        when(documentoService.descargaDocumento(1L)).thenThrow(ProgesinException.class);
         
-        solicitudDocPreviaBean.descargarFichero(idDocumento);
+        solicitudDocPreviaBean.descargarFichero(1L);
         
-        verify(documentoService).descargaDocumento(idDocumento);
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                any(ProgesinException.class));
+        
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#descargarFichero(Long)}.
+     * @throws ProgesinException lanza excepción
+     */
+    @Test
+    public void descargarFichero_ficheroNoNulo() throws ProgesinException {
+        solicitudDocPreviaBean.descargarFichero(1L);
+        
+        verify(documentoService, times(1)).descargaDocumento(1L);
+        
     }
     
     /**
