@@ -55,7 +55,7 @@ public class EstadisticaService implements IEstadisticaService {
             estadistica.put(estado, 0);
         }
         
-        List<Inspeccion> listaInspeccionesFiltrada = inspeccionesService.buscarInspeccionPorCriteriaNoPaginado("id",
+        List<Inspeccion> listaInspeccionesFiltrada = inspeccionesService.buscarInspeccionPorCriteria(0, 0, "id",
                 SortOrder.ASCENDING, filtro);
         
         for (Inspeccion ins : listaInspeccionesFiltrada) {
@@ -81,7 +81,7 @@ public class EstadisticaService implements IEstadisticaService {
     @Override
     public List<Inspeccion> verListaEstado(InspeccionBusqueda filtro, EstadoInspeccionEnum estado) {
         filtro.setEstado(estado);
-        return inspeccionesService.buscarInspeccionPorCriteriaNoPaginado("id", SortOrder.ASCENDING, filtro);
+        return inspeccionesService.buscarInspeccionPorCriteria(0, 0, "id", SortOrder.ASCENDING, filtro);
     }
     
     /**
@@ -100,7 +100,7 @@ public class EstadisticaService implements IEstadisticaService {
         
         for (EstadoInspeccionEnum estado : listaEstadosSeleccionados) {
             filtro.setEstado(estado);
-            List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteriaNoPaginado("id",
+            List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(0, 0, "id",
                     SortOrder.ASCENDING, filtro);
             mapaEstados.put(estado, listaInspecciones);
         }

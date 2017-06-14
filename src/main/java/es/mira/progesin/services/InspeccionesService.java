@@ -134,38 +134,9 @@ public class InspeccionesService implements IInspeccionesService {
         consultaCriteriaInspecciones(busqueda, criteria);
         
         criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
-        
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.desc("fechaAlta"));
+        if (pageSize > 0) {
+            criteria.setMaxResults(pageSize);
         }
-        
-        @SuppressWarnings("unchecked")
-        List<Inspeccion> listaInspecciones = criteria.list();
-        session.close();
-        
-        return listaInspecciones;
-    }
-    
-    /**
-     * Método que realiza una consulta de inspecciones, usando criteria, coincidente con determinados parámetros. No se
-     * pagina.
-     * 
-     * @param sortField campo por el que ordenamos
-     * @param sortOrder si la ordenación es ascendente o descendente
-     * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
-     * @return lista de inspecciones resultado de la consulta
-     */
-    @Override
-    public List<Inspeccion> buscarInspeccionPorCriteriaNoPaginado(String sortField, SortOrder sortOrder,
-            InspeccionBusqueda busqueda) {
-        Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
-        consultaCriteriaInspecciones(busqueda, criteria);
         
         if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
             criteria.addOrder(Order.asc(sortField));
