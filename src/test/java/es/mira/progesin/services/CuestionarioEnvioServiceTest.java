@@ -172,7 +172,8 @@ public class CuestionarioEnvioServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List, CuestionarioEnvio, String)}.
+     * {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List, CuestionarioEnvio, String)}
+     * .
      */
     @Test
     public void crearYEnviarCuestionario() {
@@ -201,12 +202,12 @@ public class CuestionarioEnvioServiceTest {
         assertThat(areasUsuarioCuestEnvCaptor.getValue()).hasSize(2);
         verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class), any(String.class));
         verify(inspeccionesService, times(1)).cambiarEstado(cuestionarioEnviado.getInspeccion(),
-                EstadoInspeccionEnum.PEND_RECIBIR_CUESTIONARIO);
+                EstadoInspeccionEnum.F_PEND_RECIBIR_CUESTIONARIO);
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#findNoFinalizadoPorCorreoEnvio(String)}.
+     * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#findNoFinalizadoPorCorreoEnvio(String)}
+     * .
      */
     @Test
     public void findNoFinalizadoPorCorreoEnvio() {
@@ -220,7 +221,8 @@ public class CuestionarioEnvioServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#buscarCuestionarioEnviadoCriteria(int, int, String, SortOrder, CuestionarioEnviadoBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioEnvioService#buscarCuestionarioEnviadoCriteria(int, int, String, SortOrder, CuestionarioEnviadoBusqueda)}
+     * .
      */
     @Ignore
     @Test
@@ -233,7 +235,8 @@ public class CuestionarioEnvioServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioEnvioService#getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda)}
+     * .
      */
     @Ignore
     @Test
@@ -288,12 +291,13 @@ public class CuestionarioEnvioServiceTest {
         verify(userService, times(9)).delete(any(String.class));
         verify(areaUsuarioCuestEnvService, times(1)).deleteByIdCuestionarioEnviado(cuestionario.getId());
         verify(inspeccionesService, times(1)).cambiarEstado(cuestionario.getInspeccion(),
-                EstadoInspeccionEnum.PENDIENTE_VISITA_INSPECCION);
+                EstadoInspeccionEnum.G_PENDIENTE_VISITA_INSPECCION);
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio, List)}.
+     * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio, List)}
+     * .
      */
     @Test
     public void transaccSaveConRespuestasInactivaUsuariosProv() {
@@ -352,7 +356,8 @@ public class CuestionarioEnvioServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#existsByCuestionarioPersonalizado(CuestionarioPersonalizado)}.
+     * {@link es.mira.progesin.services.CuestionarioEnvioService#existsByCuestionarioPersonalizado(CuestionarioPersonalizado)}
+     * .
      */
     @Test
     public void existsByCuestionarioPersonalizado() {
