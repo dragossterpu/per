@@ -243,12 +243,11 @@ public class UserService implements IUserService {
     /**
      * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo.
      * 
-     * @param equipo equipo para el que se hace la consulta
      * @return resultado de la búsqueda
      */
     @Override
-    public List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo) {
-        return userRepository.buscarNoJefeNoMiembroEquipo(equipo);
+    public List<User> buscarUserSinEquipo() {
+        return userRepository.buscarNoMiembro();
     }
     
     /**
@@ -386,5 +385,17 @@ public class UserService implements IUserService {
     @Override
     public List<User> usuariosEquipo(Equipo equipo) {
         return userRepository.usuariosEnEquipo(equipo);
+    }
+    
+    /**
+     * Buscar todos aquellos usuarios con rol 'ROLE_EQUIPO_INSPECCIONES' que no son miembros del equipo pasado por
+     * parámetro ni jefe de ningun equipo.
+     * @param idEquipo equipo al que no pertenecen
+     * 
+     * @return resultado de la búsqueda
+     */
+    @Override
+    public List<User> buscarNoMiembroEquipoNoJefe(Long idEquipo) {
+        return userRepository.buscarPosibleMiembroEquipoNoJefe(idEquipo);
     }
 }

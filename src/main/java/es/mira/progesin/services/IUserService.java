@@ -119,12 +119,21 @@ public interface IUserService {
     List<User> findByfechaBajaIsNullAndRole(RoleEnum rol);
     
     /**
-     * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo.
+     * Buscar todos aquellos usuarios con rol 'ROLE_EQUIPO_INSPECCIONES' que no son miembros de ningún equipo (ni como
+     * jefe ni como componente).
      * 
-     * @param equipo equipo para el que se hace la consulta
      * @return resultado de la búsqueda
      */
-    List<User> buscarNoJefeNoMiembroEquipo(Equipo equipo);
+    List<User> buscarUserSinEquipo();
+    
+    /**
+     * Buscar todos aquellos usuarios con rol 'ROLE_EQUIPO_INSPECCIONES' que no son miembros del equipo pasado por
+     * parámetro ni jefe de ningun equipo.
+     * @param idEquipo equipo al que no pertenecen
+     * 
+     * @return resultado de la búsqueda
+     */
+    List<User> buscarNoMiembroEquipoNoJefe(Long idEquipo);
     
     /**
      * Crea usuario provisionales.
@@ -176,4 +185,5 @@ public interface IUserService {
      */
     
     List<User> usuariosEquipo(Equipo equipo);
+    
 }

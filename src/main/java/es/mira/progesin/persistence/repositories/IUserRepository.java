@@ -66,13 +66,22 @@ public interface IUserRepository extends CrudRepository<User, String> {
     List<User> findByfechaBajaIsNullAndRole(RoleEnum rol);
     
     /**
-     * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de este equipo.
+     * Buscar todos aquellos usuarios que no son miembros de algún equipo dado de alta (componente o miembro).
      * 
-     * @param equipo equipo para el que se hace la consulta
      * @return resultado de la búsqueda
      */
-    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND NOT EXISTS (SELECT m FROM Miembro m WHERE m.username=u.username AND (m.posicion='JEFE_EQUIPO' OR m.equipo = :equipo)) ")
-    List<User> buscarNoJefeNoMiembroEquipo(@Param("equipo") Equipo equipo);
+    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND u.fechaBaja is null AND NOT EXISTS (SELECT m FROM Miembro m, Equipo e WHERE e.id=m.equipo AND m.username=u.username AND e.fechaBaja is null)")
+    List<User> buscarNoMiembro();
+    
+    /**
+     * Buscar todos aquellos usuarios que no son jefe de algún equipo o miembros de algún equipo en alta (componente o
+     * miembro).
+     * @param idEquipo del equipo editado
+     * 
+     * @return resultado de la búsqueda
+     */
+    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND u.fechaBaja is null AND NOT EXISTS (SELECT m FROM Miembro m, Equipo e WHERE m.username=u.username AND e.id=m.equipo AND (m.posicion='JEFE_EQUIPO'AND e.fechaBaja is null OR e.id = :idEquipo))")
+    List<User> buscarPosibleMiembroEquipoNoJefe(@Param("idEquipo") Long idEquipo);
     
     /**
      * Recupera un usuario a partir del id recibido como parámetro ignorando mayúsculas.

@@ -174,8 +174,8 @@ public class EquiposBean implements Serializable {
         this.setListadoPotencialesMiembros(new ArrayList<>());
         this.setEquipo(new Equipo());
         this.setTipoEquipo(null);
-        listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(null);
-        listadoPotencialesJefes.addAll(listaUsuarios);
+        listaUsuarios = userService.buscarNoMiembroEquipoNoJefe(null);
+        listadoPotencialesJefes.addAll(userService.buscarUserSinEquipo());
         listadoPotencialesMiembros.addAll(listaUsuarios);
         skip = false;
         return "/equipos/altaEquipo?faces-redirect=true";
@@ -331,7 +331,7 @@ public class EquiposBean implements Serializable {
      */
     public String getFormCambiarJefeEquipo() {
         this.jefeSeleccionado = null;
-        listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(equipo);
+        listaUsuarios = userService.buscarUserSinEquipo();
         return "/equipos/cambiarJefeEquipo?faces-redirect=true";
     }
     
@@ -383,7 +383,7 @@ public class EquiposBean implements Serializable {
      */
     public String getFormAniadirMiembroEquipo() {
         this.miembrosSeleccionados = new ArrayList<>();
-        listaUsuarios = userService.buscarNoJefeNoMiembroEquipo(equipo);
+        listaUsuarios = userService.buscarNoMiembroEquipoNoJefe(equipo.getId());
         return "/equipos/anadirMiembroEquipo?faces-redirect=true";
     }
     

@@ -160,13 +160,22 @@ public class UserServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.UserService#buscarNoJefeNoMiembroEquipo(Equipo)}.
+     * Test method for {@link es.mira.progesin.services.UserService#buscarNoMiembroEquipoNoJefe(Long)}.
      */
     @Test
     public void buscarNoJefeNoMiembroEquipo() {
         Equipo equipo = Equipo.builder().id(2L).build();
-        userService.buscarNoJefeNoMiembroEquipo(equipo);
-        verify(userRepositoryMock, times(1)).buscarNoJefeNoMiembroEquipo(equipo);
+        userService.buscarNoMiembroEquipoNoJefe(equipo.getId());
+        verify(userRepositoryMock, times(1)).buscarPosibleMiembroEquipoNoJefe(equipo.getId());
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#buscarUserSinEquipo()}.
+     */
+    @Test
+    public void buscarNoMiembro() {
+        userService.buscarUserSinEquipo();
+        verify(userRepositoryMock, times(1)).buscarNoMiembro();
     }
     
     /**

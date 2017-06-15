@@ -88,13 +88,22 @@ public class IUserRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IUserRepository#buscarNoJefeNoMiembroEquipo(Equipo)}.
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#buscarPosibleMiembroEquipoNoJefe(Long)}.
      */
     @Test
-    public final void testBuscarNoJefeNoMiembroEquipo() {
+    public final void buscarPosibleMiembroEquipoNoJefe() {
         Equipo equipo = Equipo.builder().id(2L).jefeEquipo("cgonzalez").build();
-        List<User> userList = this.repository.buscarNoJefeNoMiembroEquipo(equipo);
-        assertThat(userList.size()).isEqualTo(33);
+        List<User> userList = this.repository.buscarPosibleMiembroEquipoNoJefe(equipo.getId());
+        assertThat(userList.size()).isEqualTo(34);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.persistence.repositories.IUserRepository#buscarNoMiembro()}.
+     */
+    @Test
+    public final void buscarNoMiembro() {
+        List<User> userList = this.repository.buscarNoMiembro();
+        assertThat(userList.size()).isEqualTo(31);
     }
     
     /**
