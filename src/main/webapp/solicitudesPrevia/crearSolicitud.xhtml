@@ -103,8 +103,8 @@
                                 <h:outputLabel for="apoyoNombre" value="Nombre persona apoyo (*):" />
                                 <p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un nombre persona apoyo" />
 
-                                <h:outputLabel for="apoyoTelefono" value="Teléfono persona apoyo (*):" />
-                                <p:inputText id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un teléfono persona apoyo" />
+                                <h:outputLabel for="apoyoTelefono" value="Teléfono persona apoyo (*):" />                                
+                                <p:inputNumber id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" converter="#{trimConverter}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="true" requiredMessage="Es obligatorio un teléfono persona apoyo" />
 
                                 <h:outputLabel for="apoyoCorreo" value=" Correo persona apoyo (*):" />
                                 <p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un correo persona apoyo">
