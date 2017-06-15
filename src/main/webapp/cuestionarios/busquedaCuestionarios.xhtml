@@ -98,57 +98,61 @@
 
                     <f:facet name="header">
 					Cuestionarios enviados
-				</f:facet>
-                    <p:column headerText="Número Inspección" sortBy="#{cuestionario.inspeccion.id}" width="60">
+                    <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                        <p:columnToggler datasource="tablaCuestionarios" trigger="toggler">
+                            <p:ajax event="toggle" listener="#{cuestionarioEnviadoBean.onToggle}" />
+                        </p:columnToggler>
+				    </f:facet>
+                    <p:column headerText="Número Inspección" sortBy="#{cuestionario.inspeccion.id}" width="60" visible="#{cuestionarioEnviadoBean.list[0]}" exportable="#{cuestionarioEnviadoBean.list[0]}">
                         <h:outputText value="#{cuestionario.inspeccion.numero}" />
                     </p:column>
-                    <p:column headerText="Ámbito Inspección" sortBy="#{cuestionario.inspeccion.ambito}" width="60">
+                    <p:column headerText="Ámbito Inspección" sortBy="#{cuestionario.inspeccion.ambito}" width="60" visible="#{cuestionarioEnviadoBean.list[1]}" exportable="#{cuestionarioEnviadoBean.list[1]}">
                         <h:outputText value="#{cuestionario.inspeccion.ambito}" />
                     </p:column>
-                    <p:column headerText="Tipo Inspección" sortBy="#{cuestionario.inspeccion.tipoInspeccion}" width="100">
+                    <p:column headerText="Tipo Inspección" sortBy="#{cuestionario.inspeccion.tipoInspeccion}" width="100" visible="#{cuestionarioEnviadoBean.list[2]}" exportable="#{cuestionarioEnviadoBean.list[2]}">
                         <h:outputText value="#{cuestionario.inspeccion.tipoInspeccion.descripcion}" />
                     </p:column>
-                    <p:column headerText="Unidad" sortBy="#{cuestionario.inspeccion.nombreUnidad}" width="100">
+                    <p:column headerText="Unidad" sortBy="#{cuestionario.inspeccion.nombreUnidad}" width="100" visible="#{cuestionarioEnviadoBean.list[3]}" exportable="#{cuestionarioEnviadoBean.list[3]}">
                         <h:outputText value="#{cuestionario.inspeccion.nombreUnidad}" />
                     </p:column>
-                    <p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" width="100">
+                    <p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" width="100" visible="#{cuestionarioEnviadoBean.list[4]}" exportable="#{cuestionarioEnviadoBean.list[4]}">
                         <h:outputText value="#{cuestionario.cuestionarioPersonalizado.nombreCuestionario}" />
                     </p:column>
-                    <p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario}" width="100">
+                    <p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario}" width="100" visible="#{cuestionarioEnviadoBean.list[5]}" exportable="#{cuestionarioEnviadoBean.list[5]}">
                         <h:outputText value="#{cuestionario.cuestionarioPersonalizado.modeloCuestionario.descripcion}" />
                     </p:column>
-                    <p:column headerText="Fecha envío" sortBy="#{cuestionario.fechaEnvio}" width="70">
+                    <p:column headerText="Fecha envío" sortBy="#{cuestionario.fechaEnvio}" width="70" visible="#{cuestionarioEnviadoBean.list[6]}" exportable="#{cuestionarioEnviadoBean.list[6]}">
                         <h:outputText value="#{cuestionario.fechaEnvio}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Cumplimentado" sortBy="#{cuestionario.fechaCumplimentacion}" width="90">
+                    <p:column headerText="Cumplimentado" sortBy="#{cuestionario.fechaCumplimentacion}" width="90" visible="#{cuestionarioEnviadoBean.list[7]}" exportable="#{cuestionarioEnviadoBean.list[7]}">
                         <h:outputText value="#{cuestionario.fechaCumplimentacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="No conforme" sortBy="#{cuestionario.fechaNoConforme}" width="90">
+                    <p:column headerText="No conforme" sortBy="#{cuestionario.fechaNoConforme}" width="90" visible="#{cuestionarioEnviadoBean.list[8]}" exportable="#{cuestionarioEnviadoBean.list[8]}">
                         <h:outputText value="#{cuestionario.fechaNoConforme}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Finalizado" sortBy="#{cuestionario.fechaFinalizacion}" width="70">
+                    <p:column headerText="Finalizado" sortBy="#{cuestionario.fechaFinalizacion}" width="70" visible="#{cuestionarioEnviadoBean.list[9]}" exportable="#{cuestionarioEnviadoBean.list[9]}">
                         <h:outputText value="#{cuestionario.fechaFinalizacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Anulado" sortBy="#{cuestionario.fechaAnulacion}" width="70">
+                    <p:column headerText="Anulado" sortBy="#{cuestionario.fechaAnulacion}" width="70" visible="#{cuestionarioEnviadoBean.list[10]}" exportable="#{cuestionarioEnviadoBean.list[10]}">
                         <h:outputText value="#{cuestionario.fechaAnulacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Ver" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Modificar datos envio" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{cuestionarioEnviadoBean.getFormModificarCuestionario(cuestionario)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <p:commandButton title="Eliminar: se dará de baja y se mantendrá en el registro." icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios">
                             <p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign" />
                         </p:commandButton>

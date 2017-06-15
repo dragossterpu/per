@@ -10,7 +10,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -84,6 +86,13 @@ public class CuestionarioEnviadoBean implements Serializable {
     private Date backupFechaLimiteCuestionario;
     
     /**
+     * Variable utilizada para almacenar el resultado de mostrar una columna o no en la tabla de búsqueda de
+     * inspecciones.
+     * 
+     */
+    private List<Boolean> list;
+    
+    /**
      * Servicio de cuestionarios enviados.
      */
     @Autowired
@@ -140,6 +149,11 @@ public class CuestionarioEnviadoBean implements Serializable {
      * listado de tipos de inspección dados de alta.
      */
     private List<TipoInspeccion> listaTiposInspeccion;
+    
+    /**
+     * Número de columnas de la vista.
+     */
+    private static final int NUMCOLSTABLA = 14;
     
     /**
      * Busca un cuestionario enviado a partir de los parámetros seleccionados por el usuario en el formulario.
@@ -209,6 +223,10 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
+        setList(new ArrayList<>());
+        for (int i = 0; i <= NUMCOLSTABLA; i++) {
+            list.add(Boolean.TRUE);
+        }
         setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
         setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
@@ -394,6 +412,15 @@ public class CuestionarioEnviadoBean implements Serializable {
                     Constantes.FALLOCORREO);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
         }
+    }
+    
+    /**
+     * Controla las columnas visibles en la lista de resultados del buscador.
+     * 
+     * @param e checkbox de la columna seleccionada
+     */
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
 }
