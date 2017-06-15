@@ -97,7 +97,7 @@ public class TipoInspeccionServiceTest {
     @Test
     public void buscaTodos() {
         tipoInspeccionService.buscaTodos();
-        verify(tipoInspeccionRepository, times(1)).findAll();
+        verify(tipoInspeccionRepository, times(1)).findAllByOrderByDescripcionAsc();
     }
     
 }

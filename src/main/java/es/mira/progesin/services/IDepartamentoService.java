@@ -35,4 +35,10 @@ public interface IDepartamentoService {
      */
     void delete(Departamento departamento);
     
+    /**
+     * Busca todos los departamentos de trabajo dados de alta en la BBDD ordenados por su descripción.
+     * 
+     * @return lista con todos los departamentos en BBDD
+     */
+    List<Departamento> findAllByOrderByDescripcionAsc();
 }

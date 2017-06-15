@@ -53,8 +53,7 @@ public class TipoEquipoService implements ITipoEquipoService {
     @Transactional(readOnly = false)
     public void delete(TipoEquipo entity) {
         tipoEquiposRepository.delete(entity);
-        applicationBean.actualizarApplicationBean(entity, applicationBean.getListaTiposEquipo(),
-                AdministracionAccionEnum.BAJA);
+        applicationBean.setListaTiposEquipo(findAllByOrderByDescripcionAsc());
     }
     
     /**
@@ -68,7 +67,7 @@ public class TipoEquipoService implements ITipoEquipoService {
     @Transactional(readOnly = false)
     public TipoEquipo save(TipoEquipo entity, AdministracionAccionEnum accion) {
         TipoEquipo tipoEquipoActualizado = tipoEquiposRepository.save(entity);
-        applicationBean.actualizarApplicationBean(tipoEquipoActualizado, applicationBean.getListaTiposEquipo(), accion);
+        applicationBean.setListaTiposEquipo(findAllByOrderByDescripcionAsc());
         return tipoEquipoActualizado;
     }
     
@@ -81,6 +80,16 @@ public class TipoEquipoService implements ITipoEquipoService {
     @Override
     public TipoEquipo findByCodigoIgnoreCase(String codigo) {
         return tipoEquiposRepository.findByCodigoIgnoreCase(codigo);
+    }
+    
+    /**
+     * Recupera todos los objetos ordenados ascendentemente por su descripción.
+     * 
+     * @return lista de objetos
+     */
+    @Override
+    public List<TipoEquipo> findAllByOrderByDescripcionAsc() {
+        return tipoEquiposRepository.findAllByOrderByDescripcionAsc();
     }
     
 }

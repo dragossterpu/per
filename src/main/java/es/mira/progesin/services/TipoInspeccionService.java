@@ -41,8 +41,7 @@ public class TipoInspeccionService implements ITipoInspeccionService {
     @Transactional(readOnly = false)
     public void borrarTipo(TipoInspeccion tipo) {
         tipoInspeccionRepository.delete(tipo);
-        applicationBean.actualizarApplicationBean(tipo, applicationBean.getListaTiposInspeccion(),
-                AdministracionAccionEnum.BAJA);
+        applicationBean.setListaTiposInspeccion(buscaTodos());
     }
     
     /**
@@ -56,8 +55,7 @@ public class TipoInspeccionService implements ITipoInspeccionService {
     @Transactional(readOnly = false)
     public TipoInspeccion guardarTipo(TipoInspeccion entity, AdministracionAccionEnum accion) {
         TipoInspeccion tipoInspeccionActualizada = tipoInspeccionRepository.save(entity);
-        applicationBean.actualizarApplicationBean(tipoInspeccionActualizada, applicationBean.getListaTiposInspeccion(),
-                accion);
+        applicationBean.setListaTiposInspeccion(buscaTodos());
         return tipoInspeccionActualizada;
     }
     
@@ -73,12 +71,12 @@ public class TipoInspeccionService implements ITipoInspeccionService {
     }
     
     /**
-     * Busca todos los tipos de inspección.
+     * Busca todos los tipos de inspección ordenados por descripción.
      * @return lista tipos isnpecciones
      */
     @Override
     public List<TipoInspeccion> buscaTodos() {
-        return (List<TipoInspeccion>) tipoInspeccionRepository.findAll();
+        return tipoInspeccionRepository.findAllByOrderByDescripcionAsc();
     }
     
 }

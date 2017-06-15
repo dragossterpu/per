@@ -1,5 +1,7 @@
 package es.mira.progesin.persistence.repositories;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
@@ -21,5 +23,13 @@ public interface ICuerpoEstadoRepository extends CrudRepository<CuerpoEstado, In
      * @return booleano con el valor de la respuesta
      */
     boolean existsByNombreCortoIgnoreCaseAndIdNotIn(String nombreCorto, int id);
+    
+    /**
+     * 
+     * Busca todos los cuerpos del estado existentes en la BBDD ordenados por descripción.
+     * 
+     * @return lista con todos los cuerpos
+     */
+    List<CuerpoEstado> findAllByOrderByDescripcionAsc();
     
 }

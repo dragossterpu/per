@@ -37,7 +37,7 @@
                             <div class="prevPregCuest">
 
                                 <h:outputText value="#{preguntaArea.pregunta}" styleClass="preguntaCuestionario" escape="false" />
-
+    
                                 <div class="respuestaCuestionario">
 
                                     <p:inputText id="input" value="#{responderCuestionarioBean.visualizarCuestionario.mapaRespuestas[preguntaArea]}" rendered="#{(preguntaArea.tipoRespuesta eq 'INPUT') or (empty preguntaArea.tipoRespuesta)}" size="10" maxlength="1000" required="#{param['form:enviar']!=null}" requiredMessage="Debe rellenar este campo" converter="#{trimConverter}" disabled="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] ne request.remoteUser}" />
@@ -125,7 +125,7 @@
                     <p:commandButton id="borrador" value="Guardar borrador" actionListener="#{responderCuestionarioBean.guardarBorrador}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
                     <p:commandButton id="reasignar" value="Finalizar" action="#{responderCuestionarioBean.guardarYAsignarAreasAlPrincipal}" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado and not esUserProvPrincipal}" />
                     <p:commandButton id="enviar" value="Responder" title="Enviar cuestionario cumplimentado" actionListener="#{responderCuestionarioBean.enviarCuestionario}" icon="fa fa-envelope-o" rendered="#{not yaCumplimentado and esUserProvPrincipal}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"  update="form"/>
-                    <p:button id="asignar" value="Asignar areas" title="Asignar areas a otros usuarios" outcome="/cuestionarios/asignarAreasUsuarioProv" icon="fa fa-user-plus" rendered="#{not yaCumplimentado and esUserProvPrincipal}" />
+                    <p:button id="asignar" value="Asignar áreas" title="Asignar áreas a otros usuarios" outcome="/cuestionarios/asignarAreasUsuarioProv" icon="fa fa-user-plus" rendered="#{not yaCumplimentado and esUserProvPrincipal}" />
                 </div>
             </p:outputPanel>
 

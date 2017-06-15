@@ -150,7 +150,7 @@ public class DocumentoService implements IDocumentoService {
     @Override
     public DefaultStreamedContent descargaDocumento(Documento entity) throws ProgesinException {
         Documento docu = documentoRepository.findById(entity.getId());
-        DefaultStreamedContent streamDocumento = null;
+        DefaultStreamedContent streamDocumento;
         if (docu != null) {
             DocumentoBlob doc = docu.getFichero();
             InputStream stream = new ByteArrayInputStream(doc.getFichero());
@@ -171,7 +171,7 @@ public class DocumentoService implements IDocumentoService {
     @Override
     public DefaultStreamedContent descargaDocumento(Long id) throws ProgesinException {
         Documento entity = documentoRepository.findById(id);
-        DefaultStreamedContent streamDocumento = null;
+        DefaultStreamedContent streamDocumento;
         if (entity != null) {
             DocumentoBlob doc = entity.getFichero();
             InputStream stream = new ByteArrayInputStream(entity.getFichero().getFichero());

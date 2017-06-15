@@ -40,8 +40,7 @@ public class DepartamentoService implements IDepartamentoService {
     @Override
     public Departamento save(Departamento departamento, AdministracionAccionEnum accion) {
         Departamento departamentoActualizado = departamentoRepository.save(departamento);
-        applicationBean.actualizarApplicationBean(departamentoActualizado, applicationBean.getListaDepartamentos(),
-                accion);
+        applicationBean.setListaDepartamentos(findAllByOrderByDescripcionAsc());
         return departamentoActualizado;
         
     }
@@ -63,8 +62,17 @@ public class DepartamentoService implements IDepartamentoService {
     @Override
     public void delete(Departamento departamento) {
         departamentoRepository.delete(departamento);
-        applicationBean.actualizarApplicationBean(departamento, applicationBean.getListaDepartamentos(),
-                AdministracionAccionEnum.BAJA);
+        applicationBean.setListaDepartamentos(findAllByOrderByDescripcionAsc());
+    }
+    
+    /**
+     * Busca todos los departamentos de trabajo dados de alta en la BBDD ordenados por su descripción.
+     * 
+     * @return lista con todos los departamentos en BBDD
+     */
+    @Override
+    public List<Departamento> findAllByOrderByDescripcionAsc() {
+        return departamentoRepository.findAllByOrderByDescripcionAsc();
     }
     
 }

@@ -18,7 +18,6 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.IClaseUsuarioRepository;
 import es.mira.progesin.persistence.repositories.IEmpleoRepository;
@@ -183,36 +182,15 @@ public class ApplicationBean implements Serializable {
         setMapaParametros(parametroService.getMapaParametros());
         setDominiosValidos(mapaParametros.get("dominiosCorreo").get("dominiosCorreo"));
         setListaTipos(documentoService.listaTiposDocumento());
-        setListaProvincias((List<Provincia>) provinciaRepository.findAll());
-        setListaTiposUnidad((List<TipoUnidad>) tipoUnidadRepository.findAll());
-        setListaCuerpos(cuerposService.findAll());
-        setListaPuestosTrabajo(puestosTrabajoService.findAll());
-        setListaDepartamentos(departamentoService.findAll());
-        setListaClaseUsuario((List<ClaseUsuario>) claseUsuarioRepository.findAll());
+        setListaProvincias(provinciaRepository.findAllByOrderByNombreAsc());
+        setListaTiposUnidad(tipoUnidadRepository.findAllByOrderByDescripcionAsc());
+        setListaCuerpos(cuerposService.findAllByOrderByDescripcionAsc());
+        setListaPuestosTrabajo(puestosTrabajoService.findAllByOrderByDescripcionAsc());
+        setListaDepartamentos(departamentoService.findAllByOrderByDescripcionAsc());
+        setListaClaseUsuario(claseUsuarioRepository.findAllByOrderByClaseAsc());
         setListaEmpleos((List<Empleo>) empleoRepository.findAll());
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
-        setListaTiposEquipo(tipoEquipoService.findAll());
-    }
-    
-    /**
-     * @param objeto Objeto a actualizar
-     * @param lista Lista donde se va actualizar el objeto
-     * @param accion Alta/Baja/Modificación
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void actualizarApplicationBean(Object objeto, List lista, AdministracionAccionEnum accion) {
-        switch (accion) {
-            case ALTA:
-                lista.add(objeto);
-                break;
-            case BAJA:
-                lista.removeIf(o -> o.equals(objeto));
-                break;
-            case MODIFICACION:
-                lista.removeIf(o -> o.equals(objeto));
-                lista.add(objeto);
-                break;
-        }
+        setListaTiposEquipo(tipoEquipoService.findAllByOrderByDescripcionAsc());
     }
     
 }

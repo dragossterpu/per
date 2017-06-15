@@ -53,8 +53,7 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     @Transactional(readOnly = false)
     public PuestoTrabajo save(PuestoTrabajo puesto, AdministracionAccionEnum accion) {
         PuestoTrabajo puestoTrabajoActualizado = puestoTrabajoRepository.save(puesto);
-        applicationBean.actualizarApplicationBean(puestoTrabajoActualizado, applicationBean.getListaPuestosTrabajo(),
-                accion);
+        applicationBean.setListaPuestosTrabajo(findAllByOrderByDescripcionAsc());
         return puestoTrabajoActualizado;
     }
     
@@ -66,8 +65,17 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
     @Override
     public void delete(PuestoTrabajo puesto) {
         puestoTrabajoRepository.delete(puesto);
-        applicationBean.actualizarApplicationBean(puesto, applicationBean.getListaPuestosTrabajo(),
-                AdministracionAccionEnum.BAJA);
+        applicationBean.setListaPuestosTrabajo(findAllByOrderByDescripcionAsc());
+    }
+    
+    /**
+     * Busca todos los puestos de trabajo dados de alta en la BBDD ordenados por descripción.
+     * 
+     * @return lista de puestos existentes
+     */
+    @Override
+    public List<PuestoTrabajo> findAllByOrderByDescripcionAsc() {
+        return puestoTrabajoRepository.findAllByOrderByDescripcionAsc();
     }
     
 }

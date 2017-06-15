@@ -400,7 +400,7 @@ public class UserBean implements Serializable {
         } else {
             cuerpo = this.user.getCuerpoEstado();
         }
-        setListaEmpleos(empleoRepository.findByCuerpo(cuerpo));
+        setListaEmpleos(empleoRepository.findByCuerpoOrderByDescripcionAsc(cuerpo));
     }
     
     /**

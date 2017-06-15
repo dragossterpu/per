@@ -36,4 +36,11 @@ public interface IPuestoTrabajoService {
      */
     List<PuestoTrabajo> findAll();
     
+    /**
+     * Busca todos los puestos de trabajo dados de alta en la BBDD ordenados por descripción.
+     * 
+     * @return lista de puestos existentes
+     */
+    List<PuestoTrabajo> findAllByOrderByDescripcionAsc();
+    
 }

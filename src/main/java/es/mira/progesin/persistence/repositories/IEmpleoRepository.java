@@ -21,5 +21,14 @@ public interface IEmpleoRepository extends CrudRepository<Empleo, Long> {
      * @param cuerpo seleccionado
      * @return lista de empleos por cuerpo
      */
-    public List<Empleo> findByCuerpo(CuerpoEstado cuerpo);
+    public List<Empleo> findByCuerpoOrderByDescripcionAsc(CuerpoEstado cuerpo);
+    
+    /**
+     * Comprueba si existe un empleo para un cuerpo.
+     * 
+     * @param cuerpo Cuerpo del que se desea consultar si tiene empleo
+     * @return true si existe cuerpo, false en caso contrario
+     */
+    public boolean existsByCuerpo(CuerpoEstado cuerpo);
+    
 }

@@ -32,6 +32,7 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.repositories.IEmpleoRepository;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
@@ -83,6 +84,12 @@ public class CuerposEstadoBeanTest {
      */
     @Mock
     private transient IRegistroActividadService regActividadService;
+    
+    /**
+     * Simulación del repositorio de empleos.
+     */
+    @Mock
+    private transient IEmpleoRepository empleoRepository;
     
     /**
      * Bean de cuerpos de estado.
@@ -137,13 +144,15 @@ public class CuerposEstadoBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo(CuerpoEstado)}.
      */
     @Test
-    public void eliminarCuerpo_conUsuarios() {
+    public void eliminarCuerpo_conUsuariosYEmpleos() {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
         when(userService.existsByCuerpoEstado(cuerpo)).thenReturn(true);
+        when(empleoRepository.existsByCuerpo(cuerpo)).thenReturn(true);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
         verify(userService, times(1)).existsByCuerpoEstado(cuerpo);
+        verify(empleoRepository, times(1)).existsByCuerpo(cuerpo);
         verify(cuerposEstadoService, times(0)).delete(cuerpo);
     }
     
@@ -151,16 +160,18 @@ public class CuerposEstadoBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.CuerposEstadoBean#eliminarCuerpo(CuerpoEstado)}.
      */
     @Test
-    public void eliminarCuerpo_sinUsuarios() {
+    public void eliminarCuerpo_sinUsuariosNiEmpleos() {
         listaCuerposEstado = new ArrayList<>();
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
         listaCuerposEstado.add(cuerpo);
         cuerposEstadoBean.setListaCuerposEstado(listaCuerposEstado);
         when(userService.existsByCuerpoEstado(cuerpo)).thenReturn(false);
+        when(empleoRepository.existsByCuerpo(cuerpo)).thenReturn(false);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
         
         verify(userService, times(1)).existsByCuerpoEstado(cuerpo);
+        verify(empleoRepository, times(1)).existsByCuerpo(cuerpo);
         verify(cuerposEstadoService, times(1)).delete(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));

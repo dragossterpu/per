@@ -44,4 +44,11 @@ public interface ITipoEquipoService {
      */
     TipoEquipo findByCodigoIgnoreCase(String codigo);
     
+    /**
+     * Recupera todos los objetos ordenados ascendentemente por su descripción.
+     * 
+     * @return lista de objetos
+     */
+    List<TipoEquipo> findAllByOrderByDescripcionAsc();
+    
 }

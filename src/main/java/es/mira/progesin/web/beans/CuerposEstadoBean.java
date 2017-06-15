@@ -20,6 +20,7 @@ import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.repositories.IEmpleoRepository;
 import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
@@ -70,15 +71,23 @@ public class CuerposEstadoBean implements Serializable {
     private transient IRegistroActividadService regActividadService;
     
     /**
+     * Respositorio de empleos.
+     */
+    @Autowired
+    private transient IEmpleoRepository empleoRepository;
+    
+    /**
      * Eliminación física de un cuerpo del estado.
      * @param cuerpo cuerpo del estado a eliminar
      */
     public void eliminarCuerpo(CuerpoEstado cuerpo) {
         try {
             boolean tieneUsuarios = userService.existsByCuerpoEstado(cuerpo);
-            if (tieneUsuarios) {
+            boolean tieneEmpleos = empleoRepository.existsByCuerpo(cuerpo);
+            if (tieneUsuarios || tieneEmpleos) {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "No se puede eliminar el cuerpo '"
-                        + cuerpo.getDescripcion() + "' al haber usuarios pertenecientes a dicho cuerpo", "", null);
+                        + cuerpo.getDescripcion() + "' al haber usuarios o empleos pertenecientes a dicho cuerpo", "",
+                        null);
             } else {
                 cuerposEstadoService.delete(cuerpo);
                 listaCuerposEstado.remove(cuerpo);

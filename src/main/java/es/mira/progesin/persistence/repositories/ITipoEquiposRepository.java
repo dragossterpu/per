@@ -29,4 +29,10 @@ public interface ITipoEquiposRepository extends CrudRepository<TipoEquipo, Long>
      */
     List<TipoEquipo> findAllByOrderByIdAsc();
     
+    /**
+     * Recupera todos los objetos ordenados ascendentemente por su descripción.
+     * 
+     * @return lista de objetos
+     */
+    List<TipoEquipo> findAllByOrderByDescripcionAsc();
 }

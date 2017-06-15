@@ -46,4 +46,12 @@ public interface ICuerpoEstadoService {
      */
     void delete(CuerpoEstado cuerpo);
     
+    /**
+     * 
+     * Busca todos los cuerpos del estado existentes en la BBDD ordenados por descripción.
+     * 
+     * @return lista con todos los cuerpos
+     */
+    List<CuerpoEstado> findAllByOrderByDescripcionAsc();
+    
 }

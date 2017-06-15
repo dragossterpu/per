@@ -327,23 +327,11 @@ public class PdfGenerator {
                                 o2.getRespuestaId().getPregunta().getArea().getOrden()));
                 
                 // Construyo un mapa con las respuestas asociadas a cada área
-                Map<AreasCuestionario, List<RespuestaCuestionario>> mapaAreaRespuesta = new LinkedHashMap<>();
-                AreasCuestionario area;
-                List<RespuestaCuestionario> listaRtasArea;
-                for (RespuestaCuestionario rta : listaRespuestas) {
-                    area = rta.getRespuestaId().getPregunta().getArea();
-                    if (mapaAreaRespuesta.get(area) == null) {
-                        listaRtasArea = new ArrayList<>();
-                    } else {
-                        listaRtasArea = mapaAreaRespuesta.get(area);
-                    }
-                    
-                    listaRtasArea.add(rta);
-                    
-                    mapaAreaRespuesta.put(area, listaRtasArea);
-                }
+                Map<AreasCuestionario, List<RespuestaCuestionario>> mapaAreaRespuesta = construirMapaAreaRespuestas(
+                        listaRespuestas);
                 
                 Iterator<AreasCuestionario> areasSet = mapaAreaRespuesta.keySet().iterator();
+                AreasCuestionario area;
                 while (areasSet.hasNext()) {
                     area = areasSet.next();
                     List<RespuestaCuestionario> listaRespuestasArea = mapaAreaRespuesta.get(area);
@@ -376,6 +364,32 @@ public class PdfGenerator {
         }
         
         return pdfStream;
+    }
+    
+    /**
+     * Construye un mapa con las respuestas asociadas a cada área.
+     * 
+     * @param listaRespuestas lista usada para contruir el mapa
+     * @return mapa de lista de repuestas por área
+     */
+    private Map<AreasCuestionario, List<RespuestaCuestionario>> construirMapaAreaRespuestas(
+            List<RespuestaCuestionario> listaRespuestas) {
+        Map<AreasCuestionario, List<RespuestaCuestionario>> mapaAreaRespuesta = new LinkedHashMap<>();
+        AreasCuestionario area;
+        List<RespuestaCuestionario> listaRtasArea;
+        for (RespuestaCuestionario rta : listaRespuestas) {
+            area = rta.getRespuestaId().getPregunta().getArea();
+            if (mapaAreaRespuesta.get(area) == null) {
+                listaRtasArea = new ArrayList<>();
+            } else {
+                listaRtasArea = mapaAreaRespuesta.get(area);
+            }
+            
+            listaRtasArea.add(rta);
+            
+            mapaAreaRespuesta.put(area, listaRtasArea);
+        }
+        return mapaAreaRespuesta;
     }
     
     /**
@@ -651,7 +665,6 @@ public class PdfGenerator {
      */
     private Paragraph creaTitulo(String texto) {
         Paragraph titulo = new Paragraph(texto);
-        titulo = new Paragraph("Parámetros del informe");
         titulo.setBold();
         titulo.setFontSize(12);
         titulo.setTextAlignment(TextAlignment.CENTER);

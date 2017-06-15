@@ -358,7 +358,7 @@ public class UserBeanTest {
         User user = User.builder().estado(EstadoEnum.ACTIVO).build();
         @SuppressWarnings("unchecked")
         List<Empleo> listaEmpleos = mock(List.class);
-        when(empleoRepository.findByCuerpo(any(CuerpoEstado.class))).thenReturn(listaEmpleos);
+        when(empleoRepository.findByCuerpoOrderByDescripcionAsc(any(CuerpoEstado.class))).thenReturn(listaEmpleos);
         
         String formulario = userBean.getFormModificarUsuario(user);
         
@@ -485,7 +485,7 @@ public class UserBeanTest {
         
         userBean.buscarEmpleo();
         
-        verify(empleoRepository, times(1)).findByCuerpo(cuerpo);
+        verify(empleoRepository, times(1)).findByCuerpoOrderByDescripcionAsc(cuerpo);
     }
     
 }

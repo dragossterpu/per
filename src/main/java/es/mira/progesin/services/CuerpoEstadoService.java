@@ -55,8 +55,8 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     @Transactional(readOnly = false)
     public CuerpoEstado save(CuerpoEstado cuerpo, AdministracionAccionEnum accion) {
         CuerpoEstado cuerpoActualizado = cuerpoEstadoRepository.save(cuerpo);
-        applicationBean.actualizarApplicationBean(cuerpoActualizado, applicationBean.getListaCuerpos(), accion);
-        return cuerpo;
+        applicationBean.setListaCuerpos(findAllByOrderByDescripcionAsc());
+        return cuerpoActualizado;
     }
     
     /**
@@ -80,8 +80,18 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
     @Override
     public void delete(CuerpoEstado cuerpo) {
         cuerpoEstadoRepository.delete(cuerpo);
-        applicationBean.actualizarApplicationBean(cuerpo, applicationBean.getListaCuerpos(),
-                AdministracionAccionEnum.BAJA);
+        applicationBean.setListaCuerpos(findAllByOrderByDescripcionAsc());
+    }
+    
+    /**
+     * 
+     * Busca todos los cuerpos del estado existentes en la BBDD ordenados por descripción.
+     * 
+     * @return lista con todos los cuerpos
+     */
+    @Override
+    public List<CuerpoEstado> findAllByOrderByDescripcionAsc() {
+        return cuerpoEstadoRepository.findAllByOrderByDescripcionAsc();
     }
     
 }
