@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IPuestoTrabajoService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -98,7 +97,7 @@ public class PuestoTrabajoBean implements Serializable {
         PuestoTrabajo puesto = new PuestoTrabajo();
         puesto.setDescripcion(puestoNuevo);
         try {
-            puestoTrabajoService.save(puesto, AdministracionAccionEnum.ALTA);
+            puestoTrabajoService.save(puesto);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El puesto de trabajo ha sido creado con éxito");
         } catch (DataAccessException e) {
@@ -115,7 +114,7 @@ public class PuestoTrabajoBean implements Serializable {
     public void onRowEdit(RowEditEvent event) {
         PuestoTrabajo puesto = (PuestoTrabajo) event.getObject();
         try {
-            puestoTrabajoService.save(puesto, AdministracionAccionEnum.MODIFICACION);
+            puestoTrabajoService.save(puesto);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Puesto de trabajo modificado",
                     puesto.getDescripcion(), null);
         } catch (DataAccessException e) {

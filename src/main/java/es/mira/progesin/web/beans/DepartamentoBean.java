@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Departamento;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -102,7 +101,7 @@ public class DepartamentoBean implements Serializable {
             Departamento departamento = new Departamento();
             departamento.setDescripcion(departamentoNuevo);
             
-            departamentoService.save(departamento, AdministracionAccionEnum.ALTA);
+            departamentoService.save(departamento);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El departamento ha sido creado con éxito");
@@ -121,7 +120,7 @@ public class DepartamentoBean implements Serializable {
         
         try {
             Departamento departamento = (Departamento) event.getObject();
-            departamentoService.save(departamento, AdministracionAccionEnum.MODIFICACION);
+            departamentoService.save(departamento);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
                     departamento.getDescripcion(), null);
         } catch (DataAccessException e) {

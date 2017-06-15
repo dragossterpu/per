@@ -1,7 +1,6 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import es.mira.progesin.persistence.entities.TipoInspeccion;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -72,13 +70,12 @@ public class TipoInspeccionServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.TipoInspeccionService#guardarTipo(TipoInspeccion, AdministracionAccionEnum)}.
+     * Test method for {@link es.mira.progesin.services.TipoInspeccionService#guardarTipo(TipoInspeccion)}.
      */
     @Test
     public void guardarTipo() {
         TipoInspeccion tipo = mock(TipoInspeccion.class);
-        tipoInspeccionService.guardarTipo(tipo, eq(AdministracionAccionEnum.ALTA));
+        tipoInspeccionService.guardarTipo(tipo);
         verify(tipoInspeccionRepository, times(1)).save(tipo);
     }
     

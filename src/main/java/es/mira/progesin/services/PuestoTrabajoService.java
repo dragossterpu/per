@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.PuestoTrabajo;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -46,12 +45,11 @@ public class PuestoTrabajoService implements IPuestoTrabajoService {
      * Guarda la información de un puesto de trabajo en la bbdd.
      * 
      * @param puesto a guardar.
-     * @param accion alta/baja/modificación
      * @return PuestoTrabajo actualizado
      */
     @Override
     @Transactional(readOnly = false)
-    public PuestoTrabajo save(PuestoTrabajo puesto, AdministracionAccionEnum accion) {
+    public PuestoTrabajo save(PuestoTrabajo puesto) {
         PuestoTrabajo puestoTrabajoActualizado = puestoTrabajoRepository.save(puesto);
         applicationBean.setListaPuestosTrabajo(findAllByOrderByDescripcionAsc());
         return puestoTrabajoActualizado;

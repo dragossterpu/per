@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IEmpleoRepository;
@@ -119,7 +118,7 @@ public class CuerposEstadoBean implements Serializable {
             cuerpoEstado.setNombreCorto(nombreCorto);
             cuerpoEstado.setFechaAlta(new Date());
             cuerpoEstado.setUsernameAlta(user);
-            cuerposEstadoService.save(cuerpoEstado, AdministracionAccionEnum.ALTA);
+            cuerposEstadoService.save(cuerpoEstado);
             
             String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCorto;
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
@@ -146,7 +145,7 @@ public class CuerposEstadoBean implements Serializable {
         try {
             cuerpoEstado.setFechaModificacion(new Date());
             cuerpoEstado.setUsernameModif(user);
-            cuerposEstadoService.save(cuerpoEstado, AdministracionAccionEnum.MODIFICACION);
+            cuerposEstadoService.save(cuerpoEstado);
             regActividadService.altaRegActividad("Se ha modificado " + cuerpoEstado,
                     TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.ADMINISTRACION.name());
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -48,12 +47,11 @@ public class CuerpoEstadoService implements ICuerpoEstadoService {
      * Guarda o actualiza un Cuerpo.
      * 
      * @param cuerpo a guardar
-     * @param accion alta/baja/modificación
      * @return CuerpoEstado actualizado
      */
     @Override
     @Transactional(readOnly = false)
-    public CuerpoEstado save(CuerpoEstado cuerpo, AdministracionAccionEnum accion) {
+    public CuerpoEstado save(CuerpoEstado cuerpo) {
         CuerpoEstado cuerpoActualizado = cuerpoEstadoRepository.save(cuerpo);
         applicationBean.setListaCuerpos(findAllByOrderByDescripcionAsc());
         return cuerpoActualizado;

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.TipoInspeccion;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ITipoInspeccionRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -48,12 +47,11 @@ public class TipoInspeccionService implements ITipoInspeccionService {
      * Guarda el tipo de inspección en BBDD.
      * 
      * @param entity tipo a guardar
-     * @param accion alta/baja/modificación
      * @return boolean (alta correcta)
      */
     @Override
     @Transactional(readOnly = false)
-    public TipoInspeccion guardarTipo(TipoInspeccion entity, AdministracionAccionEnum accion) {
+    public TipoInspeccion guardarTipo(TipoInspeccion entity) {
         TipoInspeccion tipoInspeccionActualizada = tipoInspeccionRepository.save(entity);
         applicationBean.setListaTiposInspeccion(buscaTodos());
         return tipoInspeccionActualizada;

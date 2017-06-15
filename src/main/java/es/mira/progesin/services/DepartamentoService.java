@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Departamento;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -34,11 +33,10 @@ public class DepartamentoService implements IDepartamentoService {
      * Guarda o actualiza un departamento.
      * 
      * @param departamento a guardar
-     * @param accion alta/baja/modificación
      * @return Departamento actualizado
      */
     @Override
-    public Departamento save(Departamento departamento, AdministracionAccionEnum accion) {
+    public Departamento save(Departamento departamento) {
         Departamento departamentoActualizado = departamentoRepository.save(departamento);
         applicationBean.setListaDepartamentos(findAllByOrderByDescripcionAsc());
         return departamentoActualizado;

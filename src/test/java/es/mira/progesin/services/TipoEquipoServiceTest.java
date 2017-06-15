@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -82,12 +81,12 @@ public class TipoEquipoServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.TipoEquipoService#save(TipoEquipo, AdministracionAccionEnum)}.
+     * Test method for {@link es.mira.progesin.services.TipoEquipoService#save(TipoEquipo)}.
      */
     @Test
     public void save() {
         TipoEquipo tEquipo = mock(TipoEquipo.class);
-        tipoEquipoService.save(tEquipo, AdministracionAccionEnum.ALTA);
+        tipoEquipoService.save(tEquipo);
         verify(tipoEquipoRepository, times(1)).save(tEquipo);
     }
     

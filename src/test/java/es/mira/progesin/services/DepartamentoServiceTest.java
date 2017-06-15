@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.Departamento;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -70,13 +69,12 @@ public class DepartamentoServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.DepartamentoService#save(Departamento, AdministracionAccionEnum)}.
+     * Test method for {@link es.mira.progesin.services.DepartamentoService#save(Departamento)}.
      */
     @Test
     public void save() {
         Departamento departamentoMock = mock(Departamento.class);
-        service.save(departamentoMock, AdministracionAccionEnum.ALTA);
+        service.save(departamentoMock);
         verify(repository, times(1)).save(departamentoMock);
     }
     

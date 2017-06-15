@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ICuerpoEstadoRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -76,13 +75,12 @@ public class CuerpoEstadoServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuerpoEstadoService#save(CuerpoEstado, AdministracionAccionEnum)}.
+     * Test method for {@link es.mira.progesin.services.CuerpoEstadoService#save(CuerpoEstado)}.
      */
     @Test
     public void save() {
         CuerpoEstado cuerpo = mock(CuerpoEstado.class);
-        service.save(cuerpo, AdministracionAccionEnum.ALTA);
+        service.save(cuerpo);
         verify(repository, times(1)).save(cuerpo);
     }
     

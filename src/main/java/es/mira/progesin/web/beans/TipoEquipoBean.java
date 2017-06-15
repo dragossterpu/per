@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoEquipo;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -112,7 +111,7 @@ public class TipoEquipoBean implements Serializable {
         try {
             TipoEquipo tipoEquipoNuevo = new TipoEquipo(null, codigo, descripcion);
             
-            tipoEquipoService.save(tipoEquipoNuevo, AdministracionAccionEnum.ALTA);
+            tipoEquipoService.save(tipoEquipoNuevo);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El tipo de equipo ha sido creado con éxito");
@@ -139,7 +138,7 @@ public class TipoEquipoBean implements Serializable {
         try {
             TipoEquipo tipoEquipo = (TipoEquipo) event.getObject();
             
-            tipoEquipoService.save(tipoEquipo, AdministracionAccionEnum.MODIFICACION);
+            tipoEquipoService.save(tipoEquipo);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Modificación",
                     "Tipo de equipo modificado con éxito", null);

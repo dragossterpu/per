@@ -29,7 +29,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.CuerpoEstado;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IEmpleoRepository;
@@ -202,7 +201,7 @@ public class CuerposEstadoBeanTest {
         
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
         
-        verify(cuerposEstadoService, times(1)).save(cuerpoCaptor.capture(), eq(AdministracionAccionEnum.ALTA));
+        verify(cuerposEstadoService, times(1)).save(cuerpoCaptor.capture());
         assertThat(cuerpoCaptor.getValue().getDescripcion()).isEqualTo("Cuerpo Test");
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
@@ -214,8 +213,7 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void altaCuerpo_excepcion() {
-        when(cuerposEstadoService.save(cuerpoCaptor.capture(), eq(AdministracionAccionEnum.ALTA)))
-                .thenThrow(TransientDataAccessResourceException.class);
+        when(cuerposEstadoService.save(cuerpoCaptor.capture())).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
         
@@ -234,7 +232,7 @@ public class CuerposEstadoBeanTest {
         
         cuerposEstadoBean.onRowEdit(event);
         
-        verify(cuerposEstadoService, times(1)).save(cuerpo, AdministracionAccionEnum.MODIFICACION);
+        verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
         
@@ -248,12 +246,11 @@ public class CuerposEstadoBeanTest {
         CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(cuerpo);
-        when(cuerposEstadoService.save(cuerpo, AdministracionAccionEnum.MODIFICACION))
-                .thenThrow(TransientDataAccessResourceException.class);
+        when(cuerposEstadoService.save(cuerpo)).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.onRowEdit(event);
         
-        verify(cuerposEstadoService, times(1)).save(cuerpo, AdministracionAccionEnum.MODIFICACION);
+        verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
                 any(TransientDataAccessResourceException.class));
     }

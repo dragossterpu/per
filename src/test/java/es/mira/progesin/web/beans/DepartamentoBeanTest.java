@@ -29,7 +29,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.Departamento;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -149,7 +148,7 @@ public class DepartamentoBeanTest {
         
         departamentoBean.altaDepartamento("Departamento test");
         
-        verify(departamentoService, times(1)).save(departamentoCaptor.capture(), eq(AdministracionAccionEnum.ALTA));
+        verify(departamentoService, times(1)).save(departamentoCaptor.capture());
         assertThat(departamentoCaptor.getValue().getDescripcion()).isEqualTo("Departamento test");
     }
     
@@ -158,7 +157,7 @@ public class DepartamentoBeanTest {
      */
     @Test
     public void altaDepartamento_excepcion() {
-        when(departamentoService.save(departamentoCaptor.capture(), eq(AdministracionAccionEnum.ALTA)))
+        when(departamentoService.save(departamentoCaptor.capture()))
                 .thenThrow(TransientDataAccessResourceException.class);
         
         departamentoBean.altaDepartamento("Departamento test");
@@ -177,8 +176,7 @@ public class DepartamentoBeanTest {
         
         departamentoBean.onRowEdit(event);
         
-        verify(departamentoService, times(1)).save(departamentoCaptor.capture(),
-                eq(AdministracionAccionEnum.MODIFICACION));
+        verify(departamentoService, times(1)).save(departamentoCaptor.capture());
     }
     
     /**
@@ -189,8 +187,7 @@ public class DepartamentoBeanTest {
         Departamento departamento = Departamento.builder().id(1L).descripcion("DepartamentoTest").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(departamento);
-        when(departamentoService.save(departamento, AdministracionAccionEnum.MODIFICACION))
-                .thenThrow(TransientDataAccessResourceException.class);
+        when(departamentoService.save(departamento)).thenThrow(TransientDataAccessResourceException.class);
         
         departamentoBean.onRowEdit(event);
         

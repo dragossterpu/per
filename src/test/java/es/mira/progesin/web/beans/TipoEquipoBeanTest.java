@@ -23,7 +23,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.RowEditEvent;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -145,7 +144,7 @@ public class TipoEquipoBeanTest {
         
         tipoEquipoBean.altaTipo("TEST", "Tipo Equipo Test");
         
-        verify(tipoEquipoService, times(1)).save(tEquipo, AdministracionAccionEnum.ALTA);
+        verify(tipoEquipoService, times(1)).save(tEquipo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.ADMINISTRACION.name()));
     }
@@ -161,7 +160,7 @@ public class TipoEquipoBeanTest {
         
         tipoEquipoBean.onRowEdit(event);
         
-        verify(tipoEquipoService, times(1)).save(tEquipo, AdministracionAccionEnum.MODIFICACION);
+        verify(tipoEquipoService, times(1)).save(tEquipo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
     }

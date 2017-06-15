@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.TipoEquipo;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.repositories.ITipoEquiposRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -60,12 +59,11 @@ public class TipoEquipoService implements ITipoEquipoService {
      * Guarda en base de datos un nuevo tipo de equipo.
      * 
      * @param entity tipo de equipo a guardar
-     * @param accion alta/baja/modificación
      * @return tipo de equipo guardado
      */
     @Override
     @Transactional(readOnly = false)
-    public TipoEquipo save(TipoEquipo entity, AdministracionAccionEnum accion) {
+    public TipoEquipo save(TipoEquipo entity) {
         TipoEquipo tipoEquipoActualizado = tipoEquiposRepository.save(entity);
         applicationBean.setListaTiposEquipo(findAllByOrderByDescripcionAsc());
         return tipoEquipoActualizado;

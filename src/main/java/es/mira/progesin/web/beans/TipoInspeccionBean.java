@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
-import es.mira.progesin.persistence.entities.enums.AdministracionAccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaService;
@@ -139,7 +138,7 @@ public class TipoInspeccionBean implements Serializable {
             tipo.setFechaModificacion(new Date());
             tipo.setUsernameModif(SecurityContextHolder.getContext().getAuthentication().getName());
             
-            tipoInspeccionService.guardarTipo(tipo, AdministracionAccionEnum.MODIFICACION);
+            tipoInspeccionService.guardarTipo(tipo);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
                     "Modificación. Tipo de inspección modificado con éxito. Los cambios surtirán efecto al iniciar sesión.",
@@ -173,7 +172,7 @@ public class TipoInspeccionBean implements Serializable {
             tipoNuevo.setFechaAlta(new Date());
             tipoNuevo.setUsernameAlta(SecurityContextHolder.getContext().getAuthentication().getName());
             
-            tipoInspeccionService.guardarTipo(tipoNuevo, AdministracionAccionEnum.ALTA);
+            tipoInspeccionService.guardarTipo(tipoNuevo);
             listaTipoInspeccion.add(tipoNuevo);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
