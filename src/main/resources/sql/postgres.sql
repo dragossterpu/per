@@ -675,7 +675,7 @@ INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('mail','mail.smtp.starttls
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoCorreo','mmayo@interior.es');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoNombre','Manuel Mayo Rodríguez');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoPuesto','Inspector Auditor, Jefe del Servicio de Apoyo');
-INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoTelefono','91.537.25.41');
+INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('datosApoyo','ApoyoTelefono','915372541');
 
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','DOC','application/msword');
 INSERT INTO PARAMETROS(seccion, clave, valor) VALUES ('extensiones','DOCX','application/vnd.openxmlformats-officedocument.wordprocessingml.document');

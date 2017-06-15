@@ -1679,7 +1679,7 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable'
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','mmayo@interior.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoNombre','datosApoyo','Manuel Mayo Rodríguez');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspector Auditor, Jefe del Servicio de Apoyo');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','91.537.25.41');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372541');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOC','extensiones','application/msword');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOCX','extensiones','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPT','extensiones','application/vnd.ms-powerpoint');
