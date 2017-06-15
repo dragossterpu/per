@@ -208,8 +208,7 @@ public class UserBean implements Serializable {
                                 + "' y clave '" + password + "'");
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "El usuario ha sido creado con éxito");
-                String descripcion = "Alta nuevo usuario " + user.getNombre() + " " + user.getApellido1() + " "
-                        + user.getApellido2();
+                String descripcion = "Alta nuevo usuario " + user.getUsername();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                         SeccionesEnum.USUARIOS.name());
             } catch (DataAccessException e1) {
@@ -268,8 +267,7 @@ public class UserBean implements Serializable {
         usuario.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
         try {
             userService.save(usuario);
-            String descripcion = "Se ha eliminado el usuario " + usuario.getNombre() + " " + usuario.getApellido1()
-                    + " " + usuario.getApellido2();
+            String descripcion = "Se ha eliminado el usuario " + usuario.getUsername();
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.USUARIOS.name());
@@ -306,8 +304,7 @@ public class UserBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El usuario ha sido modificado con éxito");
             
-            String descripcion = "Modificación del usuario :" + " " + user.getNombre() + " " + user.getApellido1() + " "
-                    + user.getApellido2();
+            String descripcion = "Modificación del usuario :" + " " + user.getUsername();
             
             if (estadoUsuario != user.getEstado().name()) {
                 cambiarEstado(user);
@@ -330,8 +327,7 @@ public class UserBean implements Serializable {
      * @param usuario usuario a modificar
      */
     private void cambiarEstado(User usuario) {
-        String descripcionEstado = "Modificación del estado del usuario :" + " " + usuario.getNombre() + " "
-                + usuario.getApellido1() + " " + usuario.getApellido2();
+        String descripcionEstado = "Modificación del estado del usuario :" + " " + usuario.getUsername();
         regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
                 SeccionesEnum.USUARIOS.name());
         if (EstadoEnum.INACTIVO.equals(usuario.getEstado())) {
