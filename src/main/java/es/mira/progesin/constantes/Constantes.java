@@ -126,6 +126,12 @@ public final class Constantes {
     public static final String LAGUIA = "La guía '";
     
     /**
+     * Constante con el literal correspondiente a la extensión de los documentos PDF.
+     */
+    
+    public static final String EXTENSIONPDF = ".PDF";
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

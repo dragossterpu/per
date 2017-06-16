@@ -343,9 +343,20 @@ public class UserBean implements Serializable {
     public void restaurarClave() {
         try {
             String password = Utilities.getPassword();
-            this.user.setPassword(passwordEncoder.encode(password));
+            
+            List<User> lista = userService.listaUsuariosProvisionalesCorreo(this.user.getCorreo());
+            
+            if (lista.isEmpty()) {
+                this.user.setPassword(passwordEncoder.encode(password));
+                userService.save(user);
+            } else {
+                for (User usu : lista) {
+                    usu.setPassword(passwordEncoder.encode(password));
+                    userService.save(usu);
+                }
+            }
             String cuerpoCorreo = "Su nueva contraseña es: " + password;
-            userService.save(user);
+            
             correo.envioCorreo(user.getCorreo(), "Restauración de la contraseña", cuerpoCorreo);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
                     "Se ha enviado un correo al usuario con la nueva contraseña");

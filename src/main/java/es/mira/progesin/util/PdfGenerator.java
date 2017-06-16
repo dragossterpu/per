@@ -126,7 +126,7 @@ public class PdfGenerator {
             List<DocumentacionPrevia> listadoDocumentosPrevios) throws ProgesinException {
         StreamedContent pdfStream = null;
         try {
-            File file = File.createTempFile(NOMBREFICHEROSOLICITUD, ".pdf");
+            File file = File.createTempFile(NOMBREFICHEROSOLICITUD, Constantes.EXTENSIONPDF);
             
             try (PdfWriter writer = new PdfWriter(file.getAbsolutePath()); PdfDocument pdf = new PdfDocument(writer)) {
                 Document document = new Document(pdf, PageSize.A4);
@@ -290,7 +290,7 @@ public class PdfGenerator {
     public StreamedContent crearCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) throws ProgesinException {
         StreamedContent pdfStream = null;
         try {
-            File fileOr = File.createTempFile(NOMBREPDFCUESIONARIOORIGINAL, ".pdf");
+            File fileOr = File.createTempFile(NOMBREPDFCUESIONARIOORIGINAL, Constantes.EXTENSIONPDF);
             
             try (PdfWriter writer = new PdfWriter(fileOr.getAbsolutePath());
                     PdfDocument pdf = new PdfDocument(writer)) {
@@ -352,7 +352,7 @@ public class PdfGenerator {
                 // Close document
                 document.close();
                 
-                File fileDest = File.createTempFile(NOMBREPDFCUESTIONARIO, ".pdf");
+                File fileDest = File.createTempFile(NOMBREPDFCUESTIONARIO, Constantes.EXTENSIONPDF);
                 insertarNumeroPagina(fileOr.getAbsolutePath(), fileDest.getAbsolutePath(), document);
                 
                 InputStream inputStream = new FileInputStream(fileDest);
@@ -558,7 +558,7 @@ public class PdfGenerator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         StreamedContent pdfStream = null;
         try {
-            File file = File.createTempFile(NOMBREPDFESTADISTICAS, ".pdf");
+            File file = File.createTempFile(NOMBREPDFESTADISTICAS, Constantes.EXTENSIONPDF);
             try (PdfWriter writer = new PdfWriter(file.getAbsolutePath()); PdfDocument pdf = new PdfDocument(writer)) {
                 Document document = new Document(pdf, PageSize.A4);
                 document.setMargins(100, 36, 70, 36);
@@ -592,58 +592,14 @@ public class PdfGenerator {
                 document.add(creaSubtitulo("Desglose"));
                 for (EstadoInspeccionEnum estado : listaEstadosSeleccionados) {
                     List<Inspeccion> listaInspecciones = mapaEstados.get(estado);
-                    float[] columnWidths = { 1, 2, 1, 1, 1, 1 }; // 6 columnas
-                    Table tabla = new Table(columnWidths);
-                    if (!listaInspecciones.isEmpty()) {
-                        Paragraph descripcionEstado = new Paragraph(estado.getDescripcion());
-                        descripcionEstado.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(153, 201, 255)));
-                        descripcionEstado.setMarginTop(20);
-                        descripcionEstado.setFontSize(10);
-                        document.add(descripcionEstado);
-                        tabla.setWidthPercent(100);
-                        tabla.addHeaderCell("EXPEDIENTE");
-                        tabla.addHeaderCell("TIPO DE INSPECCION");
-                        tabla.addHeaderCell("EQUIPO");
-                        tabla.addHeaderCell("CUERPO");
-                        tabla.addHeaderCell("UNIDAD");
-                        tabla.addHeaderCell("PROVINCIA");
-                        tabla.getHeader().setBackgroundColor(new DeviceRgb(204, 228, 255));
-                        tabla.getHeader().setPaddingTop(20);
-                        tabla.getHeader().setHorizontalAlignment(HorizontalAlignment.CENTER);
-                        tabla.getHeader().setFontSize(9);
-                    }
-                    Cell celda;
-                    for (Inspeccion ins : listaInspecciones) {
-                        celda = new Cell();
-                        celda.setFontSize(9);
-                        celda.add(ins.getNumero());
-                        tabla.addCell(celda);
-                        celda = new Cell();
-                        celda.setFontSize(9);
-                        celda.add(ins.getTipoInspeccion().getDescripcion());
-                        tabla.addCell(celda);
-                        celda = new Cell();
-                        celda.setFontSize(9);
-                        celda.add(ins.getEquipo().getNombreEquipo());
-                        tabla.addCell(celda);
-                        celda = new Cell();
-                        celda.setFontSize(9);
-                        celda.add(ins.getAmbito().getDescripcion());
-                        tabla.addCell(celda);
-                        celda = new Cell();
-                        celda.setFontSize(9);
-                        celda.add(ins.getNombreUnidad());
-                        tabla.addCell(celda);
-                        celda = new Cell();
-                        celda.setFontSize(9);
-                        celda.add(ins.getMunicipio().getProvincia().getNombre());
-                        tabla.addCell(celda);
-                    }
-                    document.add(tabla);
+                    
+                    // genera tabla de inspecciones
+                    creaTablaDesglose(document, listaInspecciones, estado);
+                    
                 }
                 
                 document.close();
-                File fileDest = File.createTempFile(NOMBREPDFESTADISTICAS, ".pdf");
+                File fileDest = File.createTempFile(NOMBREPDFESTADISTICAS, Constantes.EXTENSIONPDF);
                 insertarNumeroPagina(file.getAbsolutePath(), fileDest.getAbsolutePath(), document);
                 InputStream inputStream = new FileInputStream(fileDest);
                 pdfStream = new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
@@ -753,5 +709,64 @@ public class PdfGenerator {
             texto.setFontSize(9);
             doc.add(texto);
         }
+    }
+    
+    /**
+     * Inserta en el informe una tabla con el desglose de inspecciones en un estado dado.
+     * 
+     * @param doc Documento en el que se insertará la tabla
+     * @param listaInspecciones Lista de las inspecciones
+     * @param estado Estado de las inspecciones
+     */
+    private void creaTablaDesglose(Document doc, List<Inspeccion> listaInspecciones, EstadoInspeccionEnum estado) {
+        float[] columnWidths = { 1, 2, 1, 1, 1, 1 }; // 6 columnas
+        Table tabla = new Table(columnWidths);
+        if (!listaInspecciones.isEmpty()) {
+            Paragraph descripcionEstado = new Paragraph(estado.getDescripcion());
+            descripcionEstado.setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(153, 201, 255)));
+            descripcionEstado.setMarginTop(20);
+            descripcionEstado.setFontSize(10);
+            doc.add(descripcionEstado);
+            tabla.setWidthPercent(100);
+            tabla.addHeaderCell("EXPEDIENTE");
+            tabla.addHeaderCell("TIPO DE INSPECCION");
+            tabla.addHeaderCell("EQUIPO");
+            tabla.addHeaderCell("CUERPO");
+            tabla.addHeaderCell("UNIDAD");
+            tabla.addHeaderCell("PROVINCIA");
+            tabla.getHeader().setBackgroundColor(new DeviceRgb(204, 228, 255));
+            tabla.getHeader().setPaddingTop(20);
+            tabla.getHeader().setHorizontalAlignment(HorizontalAlignment.CENTER);
+            tabla.getHeader().setFontSize(9);
+        }
+        Cell celda;
+        
+        for (Inspeccion ins : listaInspecciones) {
+            celda = new Cell();
+            celda.setFontSize(9);
+            celda.add(ins.getNumero());
+            tabla.addCell(celda);
+            celda = new Cell();
+            celda.setFontSize(9);
+            celda.add(ins.getTipoInspeccion().getDescripcion());
+            tabla.addCell(celda);
+            celda = new Cell();
+            celda.setFontSize(9);
+            celda.add(ins.getEquipo().getNombreEquipo());
+            tabla.addCell(celda);
+            celda = new Cell();
+            celda.setFontSize(9);
+            celda.add(ins.getAmbito().getDescripcion());
+            tabla.addCell(celda);
+            celda = new Cell();
+            celda.setFontSize(9);
+            celda.add(ins.getNombreUnidad());
+            tabla.addCell(celda);
+            celda = new Cell();
+            celda.setFontSize(9);
+            celda.add(ins.getMunicipio().getProvincia().getNombre());
+            tabla.addCell(celda);
+        }
+        doc.add(tabla);
     }
 }

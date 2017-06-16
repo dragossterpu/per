@@ -207,6 +207,13 @@ public class CuestionarioEnviadoBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.CUESTIONARIO.name());
                 
+                StringBuilder cuerpo = new StringBuilder()
+                        .append("Se ha procedido a eliminar el cuestionario para la inspección ");
+                cuerpo.append(cuestionario.getInspeccion().getNumero());
+                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(),
+                        "Se ha dado de baja el cuestionario ".concat(cuestionario.getInspeccion().getNumero()),
+                        descripcion);
+                
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
                         "Ya ha sido anulado con anterioridad o no tiene permisos para realizar esta acción", null);

@@ -186,4 +186,11 @@ public interface IUserService {
     
     List<User> usuariosEquipo(Equipo equipo);
     
+    /**
+     * Obtiene los usuarios provisionales que comparten un correo electrónico pasado como parámetro.
+     * 
+     * @param correo Correo por el que se buscará
+     * @return Usuarios resultantes
+     */
+    List<User> listaUsuariosProvisionalesCorreo(String correo);
 }

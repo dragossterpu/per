@@ -398,4 +398,16 @@ public class UserService implements IUserService {
     public List<User> buscarNoMiembroEquipoNoJefe(Long idEquipo) {
         return userRepository.buscarPosibleMiembroEquipoNoJefe(idEquipo);
     }
+    
+    /**
+     * Obtiene los usuarios provisionales que comparten un correo electrónico pasado como parámetro.
+     * 
+     * @param correo Correo por el que se buscará
+     * @return Usuarios resultantes
+     */
+    @Override
+    public List<User> listaUsuariosProvisionalesCorreo(String correo) {
+        return userRepository.usuariosProvisionalesCorreo(correo);
+    }
+    
 }

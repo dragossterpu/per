@@ -18,6 +18,7 @@ import es.mira.progesin.persistence.entities.PuestoTrabajo;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
@@ -67,6 +68,12 @@ public class SelectFindOne {
      */
     @Autowired
     private IGuiasPasosRepository guiasPasosRepository;
+    
+    /**
+     * Repositorio de Modelos de cuestionario.
+     */
+    @Autowired
+    private IModeloCuestionarioRepository modeloCuestionarioRepository;
     
     /**
      * Variable usada para actualizar la lista cargada en el contexto de la aplicación.
@@ -276,5 +283,15 @@ public class SelectFindOne {
             tipoEquipo = optional.get();
         }
         return tipoEquipo;
+    }
+    
+    /**
+     * Busca un modelo de cuestionario por su id.
+     * 
+     * @param id Id a buscar
+     * @return Modelo correspondiente al id
+     */
+    public ModeloCuestionario findOneModeloCuestionario(String id) {
+        return modeloCuestionarioRepository.findOne(Integer.valueOf(id));
     }
 }

@@ -481,6 +481,12 @@ public class SolicitudDocPreviaBean implements Serializable {
                     
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                             SeccionesEnum.DOCUMENTACION.name());
+                    
+                    StringBuilder cuerpo = new StringBuilder()
+                            .append("Se ha procedido a eliminar la solicitud de documentación para la inspección ");
+                    cuerpo.append(solicitud.getInspeccion().getNumero());
+                    correoElectronico.envioCorreo(usuarioProv, "Se ha dado de baja la solicitud de documentación "
+                            .concat(solicitud.getInspeccion().getNumero()), descripcion);
                 }
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
