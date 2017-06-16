@@ -128,10 +128,10 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','t
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas','5');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');
 
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'ajangulo', 'Equipo A', 'ANTONIO JAVIER ANGULO BALLARIN', 'system', 1);
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'CARLOS GONZÁLEZ CASTILLO', 'system', 2);
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'mfgonzalez', 'Equipo C', 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 'system', 3);
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo, fecha_baja, username_baja) values (seq_equipo.nextval, sysdate, 'fvilchews', 'Equipo D', 'FRANCISCO VILCHES RENTERO', 'system', 4, sysdate, 'system');
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'ajangulo', 'Equipo A', 'system', 1);
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'system', 2);
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'mfgonzalez', 'Equipo C', 'system', 3);
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo, fecha_baja, username_baja) values (seq_equipo.nextval, sysdate, 'fvilchews', 'Equipo D', 'system', 4, sysdate, 'system');
 
 insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 1, 'JEFE_EQUIPO', 'ajangulo');
 insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'pedro');
