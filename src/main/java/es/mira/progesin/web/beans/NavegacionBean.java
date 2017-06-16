@@ -59,20 +59,27 @@ public class NavegacionBean implements Serializable {
     }
     
     /**
-     * Añade un paso más al camino.
+     * Busca si el paso ya está en el camino, de ser así lo borra junto con los que estén detrás, después se añade como
+     * último paso al camino.
      * 
      * @param nombre de la vista
      * @param ruta de la vista
      */
     public void adelante(String nombre, String ruta) {
         List<MenuElement> elementos = caminoMigas.getElements();
-        DefaultMenuItem ultimo = (DefaultMenuItem) elementos.get(elementos.size() - 1);
-        if (nombre.equals(ultimo.getValue()) == Boolean.FALSE) {
-            DefaultMenuItem nuevo = new DefaultMenuItem();
-            nuevo.setUrl(ruta);
-            nuevo.setValue(nombre);
-            caminoMigas.addElement(nuevo);
+        DefaultMenuItem e;
+        int tam = elementos.size();
+        for (int i = 0; i < tam; i++) {
+            e = (DefaultMenuItem) elementos.get(i);
+            if (nombre.equals(e.getValue())) {
+                elementos.subList(i, tam).clear();
+                break;
+            }
         }
+        DefaultMenuItem nuevo = new DefaultMenuItem();
+        nuevo.setUrl(ruta);
+        nuevo.setValue(nombre);
+        caminoMigas.addElement(nuevo);
     }
     
     /**
@@ -86,11 +93,4 @@ public class NavegacionBean implements Serializable {
         adelante(nombre, ruta);
     }
     
-    /**
-     * Elimina el último paso al pulsar un botón volver/cerrar en una vista.
-     * 
-     */
-    public void atras() {
-        caminoMigas.getElements().remove(caminoMigas.getElements().size() - 1);
-    }
 }

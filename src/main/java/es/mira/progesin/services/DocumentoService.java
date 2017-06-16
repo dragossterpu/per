@@ -145,7 +145,7 @@ public class DocumentoService implements IDocumentoService {
      * 
      * @param entity Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
-     * @throws ProgesinException
+     * @throws ProgesinException Excepción lanzada
      */
     @Override
     public DefaultStreamedContent descargaDocumento(Documento entity) throws ProgesinException {

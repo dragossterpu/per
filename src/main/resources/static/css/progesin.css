@@ -427,3 +427,13 @@ select {
 .anulado {
     color: #888;
 }
+
+#caminoMigas.ui-breadcrumb {
+    background:none;
+    border:none;
+}
+
+#caminoMigas a.ui-menuitem-link, #caminoMigas li.ui-breadcrumb-chevron {
+    margin-top: 3px;
+    font-size: 11px;
+}

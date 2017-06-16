@@ -32,7 +32,7 @@
         <div class="bloqueVista">
             <h:form id="formAlta">
 
-                <p:fileUpload width="100%" cancelLabel="CANCELAR" label="SELECCIONAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS" fileUploadListener="#{provisionalSolicitudBean.gestionarCargaDocumento}" mode="advanced" dragDropSupport="true" sizelimit="20971520" update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" disabled="#{yaCumplimentado}" />
+                <p:fileUpload width="100%" cancelLabel="CANCELAR" label="SELECCIONAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTOS" fileUploadListener="#{provisionalSolicitudBean.gestionarCargaDocumento}" mode="advanced" dragDropSupport="true" sizelimit="20971520" update=":formAlta:panelAdjuntos tablaDocumentos" autofileLimit="30" allowTypes="/(\.|\/)(jpe?g|png|bmp|doc|docx|pptx|ppt|pub|xls|xlsx|pdf)$/i" disabled="#{yaCumplimentado}" sequential="true" />
 
 
                 <p:outputPanel id="panelAdjuntos">
