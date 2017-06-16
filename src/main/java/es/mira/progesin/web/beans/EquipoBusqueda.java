@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
@@ -65,11 +64,6 @@ public class EquipoBusqueda implements Serializable {
      */
     
     private List<User> miembros;
-    
-    /**
-     * Lista de equipos.
-     */
-    private List<Equipo> listaEquipos;
     
     /**
      * Estado del equipo que se desea buscar.

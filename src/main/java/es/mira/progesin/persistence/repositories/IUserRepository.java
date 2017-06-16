@@ -70,7 +70,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
      * 
      * @return resultado de la búsqueda
      */
-    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND u.fechaBaja is null AND NOT EXISTS (SELECT m FROM Miembro m, Equipo e WHERE e.id=m.equipo AND m.username=u.username AND e.fechaBaja is null)")
+    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND u.fechaBaja is null AND NOT EXISTS (SELECT m FROM Miembro m, Equipo e WHERE e.id=m.equipo AND m.usuario=u AND e.fechaBaja is null)")
     List<User> buscarNoMiembro();
     
     /**
@@ -80,7 +80,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
      * 
      * @return resultado de la búsqueda
      */
-    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND u.fechaBaja is null AND NOT EXISTS (SELECT m FROM Miembro m, Equipo e WHERE m.username=u.username AND e.id=m.equipo AND (m.posicion='JEFE_EQUIPO'AND e.fechaBaja is null OR e.id = :idEquipo))")
+    @Query("SELECT u FROM User u WHERE u.role='ROLE_EQUIPO_INSPECCIONES' AND u.fechaBaja is null AND NOT EXISTS (SELECT m FROM Miembro m, Equipo e WHERE m.usuario=u AND e.id=m.equipo AND (m.posicion='JEFE_EQUIPO'AND e.fechaBaja is null OR e.id = :idEquipo))")
     List<User> buscarPosibleMiembroEquipoNoJefe(@Param("idEquipo") Long idEquipo);
     
     /**
@@ -121,6 +121,15 @@ public interface IUserRepository extends CrudRepository<User, String> {
      * @param equipo Equipo del que se desean extraer sus usuarios
      * @return Lista de usuarios.
      */
-    @Query("Select a from User a, Miembro b where a.username=b.username and b.equipo=:equipo")
+    @Query("Select a from User a, Miembro b where a.username=b.usuario.username and b.equipo=:equipo")
     List<User> usuariosEnEquipo(@Param("equipo") Equipo equipo);
+    
+    /**
+     * Obtiene los usuarios provisionales que comparten un correo electrónico pasado como parámetro.
+     * 
+     * @param correo Correo por el que se buscará
+     * @return Usuarios resultantes
+     */
+    @Query("Select a from User a where role='ROLE_PROV_CUESTIONARIO' and correo=?1")
+    List<User> usuariosProvisionalesCorreo(String correo);
 }

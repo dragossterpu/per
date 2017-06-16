@@ -187,14 +187,14 @@ public class EquiposBean implements Serializable {
     public void altaEquipo() {
         
         try {
-            equipo.setJefeEquipo(jefeSeleccionado.getUsername());
-            equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
-                    + jefeSeleccionado.getApellido2());
+            equipo.setJefeEquipo(jefeSeleccionado);
+            
             equipo.setTipoEquipo(tipoEquipo);
             
             List<Miembro> miembrosNuevoEquipo = new ArrayList<>();
             Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
             miembrosNuevoEquipo.add(jefe);
+            
             String nombresCompletos = aniadirMiembrosEquipo(RolEquipoEnum.MIEMBRO, miembrosNuevoEquipo);
             equipo.setMiembros(miembrosNuevoEquipo);
             
@@ -202,12 +202,23 @@ public class EquiposBean implements Serializable {
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El equipo ha sido creado con éxito");
-            String descripcion = "Se ha creado un nuevo equipo de inspecciones '" + equipo.getNombreEquipo()
-                    + "'. Nombres de componentes " + nombresCompletos;
+            
+            StringBuilder descripcion = new StringBuilder().append("Se ha creado un nuevo equipo de inspecciones ");
+            descripcion.append(equipo.getNombreEquipo());
+            descripcion.append("\n\n");
+            descripcion.append("Jefe de equipo: ");
+            descripcion.append(jefe.getNombreCompleto());
+            descripcion.append("\n\n");
+            descripcion.append("Nombre de componentes ");
+            descripcion.append(nombresCompletos);
+            
+            // String descripcion = "Se ha creado un nuevo equipo de inspecciones '" + equipo.getNombreEquipo()
+            // + "'. Nombres de componentes " + nombresCompletos;
             // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+            regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
-            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.name(), equipo);
+            notificacionService.crearNotificacionEquipo(descripcion.toString(), SeccionesEnum.INSPECCION.name(),
+                    equipo);
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
@@ -350,9 +361,8 @@ public class EquiposBean implements Serializable {
                 List<Miembro> listaMiembros = equipo.getMiembros();
                 listaMiembros.removeIf(m -> RolEquipoEnum.JEFE_EQUIPO.equals(m.getPosicion()));
                 
-                equipo.setJefeEquipo(jefeSeleccionado.getUsername());
-                equipo.setNombreJefe(jefeSeleccionado.getNombre() + " " + jefeSeleccionado.getApellido1() + " "
-                        + jefeSeleccionado.getApellido2());
+                equipo.setJefeEquipo(jefeSeleccionado);
+                
                 Miembro jefe = crearMiembro(RolEquipoEnum.JEFE_EQUIPO, jefeSeleccionado);
                 listaMiembros.add(jefe);
                 
@@ -429,8 +439,9 @@ public class EquiposBean implements Serializable {
         Miembro miembroNuevo;
         miembroNuevo = new Miembro();
         miembroNuevo.setEquipo(equipo);
-        miembroNuevo.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-        miembroNuevo.setUsername(user.getUsername());
+        // miembroNuevo.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
+        // miembroNuevo.setUsername(user.getUsername());
+        miembroNuevo.setUsuario(user);
         miembroNuevo.setPosicion(posicion);
         return miembroNuevo;
     }

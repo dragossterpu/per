@@ -284,7 +284,7 @@ public class InspeccionBean {
         inspeccion.setInspecciones(new ArrayList<>());
         setProvinciSelec(null);
         
-        Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
+        Miembro miembro = miembroService.buscaMiembroByUser(user);
         listaEquipos = equipoService.findByFechaBajaIsNull();
         if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
             listaEquipos = new ArrayList<>();
@@ -329,7 +329,7 @@ public class InspeccionBean {
         setListaMunicipios(municipioService.findByProvincia(insp.getMunicipio().getProvincia()));
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Miembro miembro = miembroService.buscaMiembroByUsername(user.getUsername());
+        Miembro miembro = miembroService.buscaMiembroByUser(user);
         listaEquipos = equipoService.findByFechaBajaIsNull();
         if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
             listaEquipos = new ArrayList<>();

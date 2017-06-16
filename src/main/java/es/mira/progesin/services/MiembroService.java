@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 
@@ -29,12 +30,12 @@ public class MiembroService implements IMiembroService {
     /**
      * Devuelve un miembro con un login especifico.
      * 
-     * @param username login del usuario
+     * @param user Usuario
      * @return devuelve el miembro encontrado
      */
     @Override
-    public Miembro buscaMiembroByUsername(String username) {
-        return miembrosRepository.findByUsername(username);
+    public Miembro buscaMiembroByUser(User user) {
+        return miembrosRepository.findByUsuario(user);
     }
     
     /**
@@ -67,7 +68,7 @@ public class MiembroService implements IMiembroService {
      */
     @Override
     public boolean esJefeEquipo(String username) {
-        return miembrosRepository.existsByUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
+        return miembrosRepository.existsByUsuarioUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
     }
     
 }

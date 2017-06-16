@@ -33,7 +33,7 @@ public interface IEquipoRepository extends CrudRepository<Equipo, Long> {
      * @param paramLogin nombre usuario (username)
      * @return listado de equipos a los que pertenece el usuario
      */
-    @Query("SELECT e FROM Equipo e, Miembro m WHERE m.equipo = e.id AND upper(m.username) LIKE upper(:infoLogin))")
+    @Query("SELECT e FROM Equipo e, Miembro m WHERE m.equipo = e.id AND upper(m.usuario.username) LIKE upper(:infoLogin))")
     public List<Equipo> buscarEquiposByUsername(@Param("infoLogin") String paramLogin);
     
 }

@@ -65,21 +65,34 @@ public class Equipo extends AbstractEntity implements Serializable {
     private TipoEquipo tipoEquipo;
     
     /**
-     * Username del jefe del equipo.
+     * User del jefe del equipo.
      */
-    @Column(name = "jefeEquipo", length = 100, nullable = false)
-    private String jefeEquipo;
     
-    /**
-     * Nombre del jefe del equipo.
-     */
-    @Column(name = "nombreJefe", length = 150)
-    private String nombreJefe;
+    @ManyToOne
+    @JoinColumn(name = "jefeEquipo", foreignKey = @ForeignKey(name = "FK_EQ_JEFE"))
+    private User jefeEquipo;
     
     /**
      * Miembros que integran el equipo incluidos jefe y colaboradores.
      */
     @OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Miembro> miembros;
+    
+    /**
+     * Recupera el nombre completo del jefe.
+     * 
+     * @return nombre completo
+     */
+    public String getNombreJefe() {
+        StringBuilder nombreCompleto = new StringBuilder();
+        nombreCompleto.append(this.jefeEquipo.nombre);
+        nombreCompleto.append(' ');
+        nombreCompleto.append(this.jefeEquipo.apellido1);
+        if (this.jefeEquipo.nombre != null) {
+            nombreCompleto.append(' ');
+            nombreCompleto.append(this.jefeEquipo.apellido2);
+        }
+        return nombreCompleto.toString();
+    }
     
 }

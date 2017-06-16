@@ -284,7 +284,7 @@ public class AlertaService implements IAlertaService {
     @Override
     public void crearAlertaJefeEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
         try {
-            User usuario = userService.findOne(inspeccion.getEquipo().getJefeEquipo());
+            User usuario = userService.findOne(inspeccion.getEquipo().getJefeEquipo().getUsername());
             crearAlertaUsuario(seccion, descripcion, usuario);
             
         } catch (DataAccessException e) {

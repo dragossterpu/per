@@ -81,7 +81,8 @@ public class EquipoService implements IEquipoService {
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         if (equipoBusqueda.getNombreJefe() != null) {
-            criteria.add(Restrictions.ilike("nombreJefe", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
+            criteria.createAlias("equipo.jefeEquipo", "jefe");
+            criteria.add(Restrictions.ilike("jefe.username", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
         }
         if (equipoBusqueda.getNombreEquipo() != null) {
             criteria.add(Restrictions.ilike("nombreEquipo", equipoBusqueda.getNombreEquipo(), MatchMode.ANYWHERE));
@@ -92,8 +93,8 @@ public class EquipoService implements IEquipoService {
         }
         if (equipoBusqueda.getNombreMiembro() != null) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-            subquery.add(Restrictions.ilike("miembro.nombreCompleto", equipoBusqueda.getNombreMiembro(),
-                    MatchMode.ANYWHERE));
+            subquery.createAlias("miembro.usuario", "usuario");
+            subquery.add(Restrictions.ilike("usuario.username", equipoBusqueda.getNombreMiembro(), MatchMode.ANYWHERE));
             subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));

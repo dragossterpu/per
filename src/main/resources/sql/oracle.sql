@@ -133,18 +133,18 @@ insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, user
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'mfgonzalez', 'Equipo C', 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 'system', 3);
 insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo, fecha_baja, username_baja) values (seq_equipo.nextval, sysdate, 'fvilchews', 'Equipo D', 'FRANCISCO VILCHES RENTERO', 'system', 4, sysdate, 'system');
 
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'ANTONIO JAVIER ANGULO BALLARIN', 'JEFE_EQUIPO', 'ajangulo');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'PEDRO  CARRETERO LIAU', 'MIEMBRO', 'pedro');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'JOSE MANUEL SIERRA EXOJO', 'MIEMBRO', 'jmanuel');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'ANTONIO LOPEZ BETRIAN', 'MIEMBRO', 'alopez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'CARLOS GONZÁLEZ CASTILLO', 'JEFE_EQUIPO', 'cgonzalez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'AMADEO MATEOS CHICO', 'MIEMBRO', 'amateos');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'ELIAS MARTINEZ ALLER','MIEMBRO','emartinez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 'JEFE_EQUIPO', 'mfgonzalez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'JOSE LUIS CALONGE DELSO', 'MIEMBRO', 'jlcalonge');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'JOSE IGNACIO CEREZO HERNANDEZ', 'MIEMBRO', 'jicerezo');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'ANTONIO LOPEZ BETRIAN', 'COLABORADOR', 'alopez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 4, 'FRANCISCO VILCHES RENTERO', 'JEFE_EQUIPO', 'fvilchews');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 1, 'JEFE_EQUIPO', 'ajangulo');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'pedro');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'jmanuel');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'alopez');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 2, 'JEFE_EQUIPO', 'cgonzalez');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 2, 'MIEMBRO', 'amateos');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 2, 'MIEMBRO','emartinez');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 3, 'JEFE_EQUIPO', 'mfgonzalez');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 3, 'MIEMBRO', 'jlcalonge');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 3, 'MIEMBRO', 'jicerezo');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 3, 'COLABORADOR', 'alopez');
+insert into miembros(id, id_equipo,  posicion, usuario) values (seq_miembros.nextval, 4, 'JEFE_EQUIPO', 'fvilchews');
 
 
 

@@ -8,10 +8,10 @@
 
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
-                    <h:outputLabel for="nombreJefe" value="Nombre de jefe de equipo:" />
+                    <h:outputLabel for="nombreJefe" value="Nombre de usuario del jefe de equipo:" />
                     <p:inputText id="nombreJefe" value="#{equiposBean.equipoBusqueda.nombreJefe}" converter="#{trimConverter}"/>
 
-                    <h:outputLabel for="nombreMiembro" value="Nombre de componente de equipo:" />
+                    <h:outputLabel for="nombreMiembro" value="Nombre de usuario del componente de equipo:" />
                     <p:inputText id="nombreMiembro" value="#{equiposBean.equipoBusqueda.nombreMiembro}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="nombreEquipo" value="Nombre del equipo:" />
@@ -85,7 +85,7 @@
                     </p:column>
 
                     <p:column headerText="Usuario jefe de equipo" sortBy="#{equipo.jefeEquipo}" width="90" visible="#{equiposBean.columnasVisibles[3]}" exportable="#{equiposBean.columnasVisibles[3]}">
-                        <h:outputText value="#{equipo.jefeEquipo}" />
+                        <h:outputText value="#{equipo.jefeEquipo.username}" />
                     </p:column>
 
                     <p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.nombreJefe}" width="90" visible="#{equiposBean.columnasVisibles[4]}" exportable="#{equiposBean.columnasVisibles[4]}">

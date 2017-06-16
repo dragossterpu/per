@@ -92,7 +92,8 @@ public class IUserRepositoryTest {
      */
     @Test
     public final void buscarPosibleMiembroEquipoNoJefe() {
-        Equipo equipo = Equipo.builder().id(2L).jefeEquipo("cgonzalez").build();
+        User jefe = User.builder().username("cgonzalez").build();
+        Equipo equipo = Equipo.builder().id(2L).jefeEquipo(jefe).build();
         List<User> userList = this.repository.buscarPosibleMiembroEquipoNoJefe(equipo.getId());
         assertThat(userList.size()).isEqualTo(34);
     }

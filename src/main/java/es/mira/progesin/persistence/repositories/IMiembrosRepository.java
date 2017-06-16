@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 
 /**
@@ -32,14 +33,15 @@ public interface IMiembrosRepository extends CrudRepository<Miembro, Long> {
      * @param rol del miembro
      * @return verdadero o falso
      */
-    boolean existsByUsernameAndPosicion(String username, RolEquipoEnum rol);
+    boolean existsByUsuarioUsernameAndPosicion(String username, RolEquipoEnum rol);
     
     /**
      * Busca un miembro de un equipo teniendo su login.
      * 
-     * @param username login del usuario
+     * @param user Usuario
      * @return miembro encontrado si existe
      */
-    Miembro findByUsername(String username);
+    
+    Miembro findByUsuario(User user);
     
 }

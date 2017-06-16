@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
+import es.mira.progesin.persistence.entities.User;
 
 /**
  * Interfaz del servicio que gestiona los miembros de un equipo.
@@ -17,10 +18,10 @@ public interface IMiembroService {
     /**
      * Devuelve un miembro con un login especifico.
      * 
-     * @param username login del usuario
+     * @param user usuario
      * @return devuelve el miembro encontrado
      */
-    Miembro buscaMiembroByUsername(String username);
+    Miembro buscaMiembroByUser(User user);
     
     /**
      * Guarda la información de un miembro de equipo en la bdd.

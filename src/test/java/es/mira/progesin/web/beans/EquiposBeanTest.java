@@ -271,10 +271,10 @@ public class EquiposBeanTest {
      */
     @Test
     public void eliminarMiembro() {
+        User userMiembro = User.builder().username("miembro").build();
         Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
-        Miembro miembro = Miembro.builder().id(1L).username("miembro")
-                .nombreCompleto("nombreMiembro apellido1Miembro apellido2Miembro").posicion(RolEquipoEnum.MIEMBRO)
-                .equipo(equipo).build();
+        Miembro miembro = Miembro.builder().id(1L).usuario(userMiembro).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo)
+                .build();
         List<Miembro> miembros = new ArrayList<>();
         miembros.add(miembro);
         equipo.setMiembros(miembros);
@@ -311,13 +311,12 @@ public class EquiposBeanTest {
      */
     @Test
     public void cambiarJefeEquipo() {
+        User userJefe = User.builder().username("jefe").build();
+        User miembro1 = User.builder().username("miembro1").build();
         Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
         List<Miembro> miembros = new ArrayList<>();
-        miembros.add(Miembro.builder().username("jefe").nombreCompleto("nombreJefe apellido1Jefe apellido2Jefe")
-                .posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
-        miembros.add(Miembro.builder().username("miembro1")
-                .nombreCompleto("nombreMiembro1 apellido1Miembro1 apellido2Miembro1").posicion(RolEquipoEnum.MIEMBRO)
-                .equipo(equipo).build());
+        miembros.add(Miembro.builder().usuario(userJefe).posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
+        miembros.add(Miembro.builder().usuario(miembro1).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo).build());
         equipo.setMiembros(miembros);
         equipoBean.setEquipo(equipo);
         equipoBean.setJefeSeleccionado(User.builder().username("nuevoJefe").nombre("nombreNuevoJefe")
@@ -370,13 +369,13 @@ public class EquiposBeanTest {
      */
     @Test
     public void guardarMiembros() {
+        User userJefe = User.builder().username("jefe").build();
+        User userMiembro = User.builder().username("miembro").build();
+        
         Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
         List<Miembro> miembros = new ArrayList<>();
-        miembros.add(Miembro.builder().username("jefe").nombreCompleto("nombreJefe apellido1Jefe apellido2Jefe")
-                .posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
-        miembros.add(Miembro.builder().username("miembro1")
-                .nombreCompleto("nombreMiembro1 apellido1Miembro1 apellido2Miembro1").posicion(RolEquipoEnum.MIEMBRO)
-                .equipo(equipo).build());
+        miembros.add(Miembro.builder().usuario(userJefe).posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
+        miembros.add(Miembro.builder().usuario(userMiembro).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo).build());
         equipo.setMiembros(miembros);
         equipoBean.setEquipo(equipo);
         List<User> miembrosSeleccionados = new ArrayList<>();

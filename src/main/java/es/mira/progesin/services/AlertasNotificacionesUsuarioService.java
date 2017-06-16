@@ -167,7 +167,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
      */
     @Override
     public void grabarMensajeJefeEquipo(Object entidad, Inspeccion inspeccion) {
-        grabarMensajeUsuario(entidad, inspeccion.getEquipo().getJefeEquipo());
+        grabarMensajeUsuario(entidad, inspeccion.getEquipo().getJefeEquipo().getUsername());
     }
     
     /**
@@ -216,7 +216,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
         List<Miembro> miembrosEquipo = miembrosRepository.findByEquipo(inspeccion.getEquipo());
         
         for (Miembro miembro : miembrosEquipo) {
-            grabarMensajeUsuario(entidad, miembro.getUsername());
+            grabarMensajeUsuario(entidad, miembro.getUsuario().getUsername());
         }
     }
     
@@ -297,7 +297,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
     public void grabarMensajeEquipo(Object entidad, Equipo equipo) {
         List<Miembro> miembrosEquipo = miembrosRepository.findByEquipo(equipo);
         for (Miembro miembro : miembrosEquipo) {
-            grabarMensajeUsuario(entidad, miembro.getUsername());
+            grabarMensajeUsuario(entidad, miembro.getUsuario().getUsername());
         }
     }
     
