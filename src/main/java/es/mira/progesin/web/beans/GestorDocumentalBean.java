@@ -24,6 +24,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelDocumentos;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -224,7 +225,8 @@ public class GestorDocumentalBean implements Serializable {
         try {
             setFile(documentoService.descargaDocumento(document));
         } catch (ProgesinException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    e.getMessage());
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.name(), e);
         }
     }
