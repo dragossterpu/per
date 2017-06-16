@@ -269,8 +269,7 @@ prompt =========================================================================
     USERNAME_BAJA VARCHAR2(255 CHAR), 
     USERNAME_MODIF VARCHAR2(255 CHAR), 
     JEFE_EQUIPO VARCHAR2(100 CHAR), 
-    NOMBRE_EQUIPO VARCHAR2(100 CHAR), 
-    NOMBRE_JEFE VARCHAR2(150 CHAR), 
+    NOMBRE_EQUIPO VARCHAR2(255 CHAR),  
     ID_TIPO_EQUIPO NUMBER(19,0)
    ) ;
 /
@@ -397,7 +396,7 @@ prompt =========================================================================
    (    ID NUMBER(19,0), 
     NOMBRE_COMPLETO VARCHAR2(255 CHAR), 
     POSICION VARCHAR2(255 CHAR), 
-    USERNAME VARCHAR2(255 CHAR), 
+    USUARIO VARCHAR2(255 CHAR), 
     ID_EQUIPO NUMBER(19,0)
    ) ;
 /
@@ -1246,6 +1245,8 @@ prompt =========================================================================
 
   ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_TIPOEQUIPO FOREIGN KEY (ID_TIPO_EQUIPO)
       REFERENCES TIPO_EQUIPO (ID) ENABLE;
+  ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_JEFE FOREIGN KEY (JEFE_EQUIPO)
+	  REFERENCES USERS (USERNAME) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIA_PASOS
@@ -1307,6 +1308,8 @@ prompt =========================================================================
 
   ALTER TABLE MIEMBROS ADD CONSTRAINT FK_M_EQUIPO FOREIGN KEY (ID_EQUIPO)
       REFERENCES EQUIPO (ID) ENABLE;
+  ALTER TABLE MIEMBROS ADD CONSTRAINT FK_U_MIEMBRO FOREIGN KEY (USUARIO)
+	  REFERENCES USERS (USERNAME) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  MUNICIPIOS

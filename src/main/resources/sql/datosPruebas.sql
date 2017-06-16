@@ -48,23 +48,23 @@ Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,
 Insert into USERS (USERNAME,PRIM_APELLIDO,SEGUNDO_APELLIDO,CORREO,DOC_IDENTIDAD,CATEGORIA,DESPACHO,ESTADO,FECHA_ALTA,FECHA_BAJA,FECHA_DESTINO_IPSS,FECHA_INACTIVO,FECHA_INGRESO,FECHA_MODIFICACION,NIVEL,NOMBRE,PASSWORD,ROLE,TELEFONO,TFNO_MOVIL_OFICIAL,TFNO_MOVIL_PARTICULAR,USERNAME_ALTA,USERNAME_BAJA,USERNAME_MODIF,ID_CUERPO,ID_DEPARTAMENTO,ID_EMPLEO,ID_PUESTO,ID_CLASE) values ('fvilchews','VILCHES','RENTERO','correo@policia.es','n11718','A1',null,'ACTIVO',to_timestamp('01/09/20 16:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,to_timestamp('17/04/20 15:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),null,null,null,'28','FRANCISCO','$2a$10$tDGyXBpEASeXlAUCdKsZ9u3MBBvT48xjA.v0lrDuRWlSZ6yfNsLve','ROLE_EQUIPO_INSPECCIONES','665566544',null,null,'system',null,null,'1','8','25','6','4');
 
 
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'ajangulo', 'Equipo A', 'ANTONIO JAVIER ANGULO BALLARIN', 'system', 1);
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'CARLOS GONZÁLEZ CASTILLO', 'system', 2);
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'mfgonzalez', 'Equipo C', 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 'system', 3);
-insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, nombre_jefe, username_alta, id_tipo_equipo, fecha_baja, username_baja) values (seq_equipo.nextval, sysdate, 'fvilchews', 'Equipo D', 'FRANCISCO VILCHES RENTERO', 'system', 4, sysdate, 'system');
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'ajangulo', 'Equipo A', 'system', 1);
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'cgonzalez', 'Equipo B', 'system', 2);
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo) values (seq_equipo.nextval, sysdate, 'mfgonzalez', 'Equipo C', 'system', 3);
+insert into equipo(id, fecha_alta, jefe_equipo, nombre_equipo, username_alta, id_tipo_equipo, fecha_baja, username_baja) values (seq_equipo.nextval, sysdate, 'fvilchews', 'Equipo D', 'system', 4, sysdate, 'system');
 
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'ANTONIO JAVIER ANGULO BALLARIN', 'JEFE_EQUIPO', 'ajangulo');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'PEDRO  CARRETERO LIAU', 'MIEMBRO', 'pedro');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'JOSE MANUEL SIERRA EXOJO', 'MIEMBRO', 'jmanuel');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 1, 'ANTONIO LOPEZ BETRIAN', 'MIEMBRO', 'alopez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'CARLOS GONZÁLEZ CASTILLO', 'JEFE_EQUIPO', 'cgonzalez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'AMADEO MATEOS CHICO', 'MIEMBRO', 'amateos');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 2, 'ELIAS MARTINEZ ALLER','MIEMBRO','emartinez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'MARCELO FRANCISCO GONZALEZ FERNANDEZ', 'JEFE_EQUIPO', 'mfgonzalez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'JOSE LUIS CALONGE DELSO', 'MIEMBRO', 'jlcalonge');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'JOSE IGNACIO CEREZO HERNANDEZ', 'MIEMBRO', 'jicerezo');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 3, 'ANTONIO LOPEZ BETRIAN', 'COLABORADOR', 'alopez');
-insert into miembros(id, id_equipo, nombre_completo, posicion, username) values (seq_miembros.nextval, 4, 'FRANCISCO VILCHES RENTERO', 'JEFE_EQUIPO', 'fvilchews');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 1, 'JEFE_EQUIPO', 'ajangulo');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'pedro');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'jmanuel');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 1, 'MIEMBRO', 'alopez');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 2, 'JEFE_EQUIPO', 'cgonzalez');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 2, 'MIEMBRO', 'amateos');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 2, 'MIEMBRO','emartinez');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 3, 'JEFE_EQUIPO', 'mfgonzalez');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 3, 'MIEMBRO', 'jlcalonge');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 3, 'MIEMBRO', 'jicerezo');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 3, 'COLABORADOR', 'alopez');
+insert into miembros(id, id_equipo, posicion, usuario) values (seq_miembros.nextval, 4, 'JEFE_EQUIPO', 'fvilchews');
 
 insert into inspecciones (id, ambito, anio, cuatrimestre, fecha_alta, tipo_unidad,nombre_unidad, username_alta, id_equipo, tipo_inspeccion,estado_inspeccion,id_municipio, fecha_prevista) values (seq_inspeccion.nextval, 'PN', 2017, 'PRIMERO', trunc(sysdate),2, 'Lérida', 'system', 1, 'I.G.P.','M_FINALIZADA',4331,trunc(sysdate));
 insert into inspecciones (id, ambito, anio, cuatrimestre, fecha_alta, tipo_unidad,nombre_unidad, username_alta, id_equipo, tipo_inspeccion,estado_inspeccion,id_municipio, fecha_prevista) values (seq_inspeccion.nextval, 'PN', 2017, 'PRIMERO', trunc(sysdate), 3,'La Seu D''Urgell', 'system', 1, 'I.G.P.','M_FINALIZADA',4331,trunc(sysdate));
