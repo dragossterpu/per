@@ -1,6 +1,9 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
+    
+        <ui:param name="esJefeInspeccionesApoyo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,SERVICIO_APOYO,ADMIN')}" />
+    
 
         <h3>Búsqueda solicitudes de documentación</h3>
 
@@ -147,7 +150,7 @@
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspeccionesApoyo}">
                         <p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="ui-icon-trash" actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}" update=":busquedaSolicitudDocPrevia:panelSolicitudes">
                             <p:confirm header="Eliminar" icon="ui-icon-alert" message="¿Está seguro de que desea eliminar esta solicitud?" />
                         </p:commandButton>
