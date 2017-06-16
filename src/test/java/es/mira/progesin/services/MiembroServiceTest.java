@@ -56,7 +56,7 @@ public class MiembroServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.MiembroService#buscaMiembroByUser(String)}.
+     * Test method for {@link es.mira.progesin.services.MiembroService#buscaMiembroByUser(User)}.
      */
     @Test
     public void buscaMiembroByUser() {

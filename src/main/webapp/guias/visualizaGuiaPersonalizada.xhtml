@@ -6,19 +6,20 @@
             <div class="tituloCuestionario">
                 <H2>
                     <h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}" />
+                     <h:commandLink actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}" title="Descargar guía en formato Word">
+                        <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
+                        <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
+                    </h:commandLink>
                 </H2>
             </div>
 
             <p:messages autoUpdate="true" showSummary="true" closable="true" />
 
-            <h:commandLink actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}" title="Descargar guía en formato Word">
-                <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
-                <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
-            </h:commandLink>
+           
 
             <div class="listaInspecciones">
 
-                <p:dataList value="#{guiaPersonalizadaBean.guiaPersonalizada.inspeccion}" var="inspeccion" type="unordered" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}">
+                <p:dataList value="#{guiaPersonalizadaBean.guiaPersonalizada.inspeccion}"  var="inspeccion" type="unordered" rendered="#{not empty guiaPersonalizadaBean.guiaPersonalizada.inspeccion}">
                     <f:facet name="header">
                         <h:outputText value="Inspecciones asociadas:" />
                     </f:facet>
