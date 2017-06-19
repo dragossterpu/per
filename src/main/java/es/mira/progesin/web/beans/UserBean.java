@@ -350,8 +350,9 @@ public class UserBean implements Serializable {
                 this.user.setPassword(passwordEncoder.encode(password));
                 userService.save(user);
             } else {
+                String encodedPassword = passwordEncoder.encode(password);
                 for (User usu : lista) {
-                    usu.setPassword(passwordEncoder.encode(password));
+                    usu.setPassword(encodedPassword);
                     userService.save(usu);
                 }
             }
