@@ -88,7 +88,7 @@ public class Equipo extends AbstractEntity implements Serializable {
         nombreCompleto.append(this.jefeEquipo.nombre);
         nombreCompleto.append(' ');
         nombreCompleto.append(this.jefeEquipo.apellido1);
-        if (this.jefeEquipo.nombre != null) {
+        if (this.jefeEquipo.apellido2 != null) {
             nombreCompleto.append(' ');
             nombreCompleto.append(this.jefeEquipo.apellido2);
         }

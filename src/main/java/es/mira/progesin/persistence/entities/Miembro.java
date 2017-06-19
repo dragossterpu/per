@@ -62,16 +62,9 @@ public class Miembro implements Serializable {
     private Equipo equipo;
     
     /**
-     * Login del miembro.
+     * Usuario miembro.
      */
-    // @Column(name = "username")
-    // private String username;
     
-    /**
-     * Nombre completo del miembro.
-     */
-    // @Column(name = "nombre_completo")
-    // private String nombreCompleto;
     @ManyToOne
     @JoinColumn(name = "usuario", foreignKey = @ForeignKey(name = "FK_U_MIEMBRO"))
     private User usuario;
@@ -84,7 +77,7 @@ public class Miembro implements Serializable {
     private RolEquipoEnum posicion;
     
     /**
-     * Devuelve el nombre completo del usuario.
+     * Devuelve el nombre completo del miembro.
      * 
      * @return Cadena formada por la concatenación de nombre y apellidos del usuario
      */
@@ -93,7 +86,7 @@ public class Miembro implements Serializable {
         nombreCompleto.append(this.usuario.nombre);
         nombreCompleto.append(' ');
         nombreCompleto.append(this.usuario.apellido1);
-        if (this.usuario.nombre != null) {
+        if (this.usuario.apellido2 != null) {
             nombreCompleto.append(' ');
             nombreCompleto.append(this.usuario.apellido2);
         }
