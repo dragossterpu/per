@@ -99,7 +99,7 @@
 
                     </p:column>
                     <p:column headerText="Usuario" sortBy="#{documento.usernameAlta}" width="100" visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
-                        <h:outputText value="#{documento.usernameAlta.length() gt 20 ? documento.usernameAlta.substring(0,17).concat('...') : documento.usernameAlta}"  />
+                        <h:outputText value="#{documento.usernameAlta.length() gt 20 ? documento.usernameAlta.substring(0,17).concat('...') : documento.usernameAlta}"  title="#{documento.usernameAlta}"/>
 
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
