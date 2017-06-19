@@ -187,17 +187,19 @@ public class ProvisionalSolicitudBean implements Serializable {
                     solicitudDocumentacionPrevia.getDocumentos().add(documento);
                     solicitudDocumentacionPrevia = solicitudDocumentacionService.save(solicitudDocumentacionPrevia);
                     
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                            "Documento/s subidos con éxito");
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Alta",
+                            "Documento/s subidos con éxito", "msgs");
                 } else {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de archivos",
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Carga de archivos",
                             "El archivo " + archivo.getFileName()
-                                    + " no es válido, el nombre o la extensión no se corresponde con alguno de los documentos solicitados.");
+                                    + " no es válido, el nombre o la extensión no se corresponde con alguno de los documentos solicitados.",
+                            "msgs");
                 }
             } else {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de archivos",
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Carga de archivos",
                         "La extensión del archivo '" + event.getFile().getFileName()
-                                + "' no corresponde a su tipo real");
+                                + "' no corresponde a su tipo real",
+                        "msgs");
             }
         } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),

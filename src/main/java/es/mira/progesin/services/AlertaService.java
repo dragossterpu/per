@@ -173,7 +173,7 @@ public class AlertaService implements IAlertaService {
     public void crearAlertaUsuario(String seccion, String descripcion, User usuario) {
         try {
             Alerta alerta = crearAlerta(seccion, descripcion);
-            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getNombre());
+            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
             correo.envioCorreo(usuario.getCorreo(), "Nueva alerta PROGESIN",
                     "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
             
