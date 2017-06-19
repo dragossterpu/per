@@ -2,7 +2,7 @@ package es.mira.progesin.services;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,7 +46,7 @@ public class EstadisticaService implements IEstadisticaService {
      */
     @Override
     public Map<EstadoInspeccionEnum, Integer> obtenerEstadisticas(InspeccionBusqueda filtro) {
-        Map<EstadoInspeccionEnum, Integer> estadistica = new LinkedHashMap<>();
+        Map<EstadoInspeccionEnum, Integer> estadistica = new EnumMap<>(EstadoInspeccionEnum.class);
         
         List<EstadoInspeccionEnum> listaEstados = Arrays.stream(EstadoInspeccionEnum.values())
                 .collect(Collectors.toList());
@@ -96,7 +96,7 @@ public class EstadisticaService implements IEstadisticaService {
     @Override
     public StreamedContent exportar(InspeccionBusqueda filtro, List<EstadoInspeccionEnum> listaEstadosSeleccionados,
             File fileImg) throws ProgesinException {
-        Map<EstadoInspeccionEnum, List<Inspeccion>> mapaEstados = new LinkedHashMap<>();
+        Map<EstadoInspeccionEnum, List<Inspeccion>> mapaEstados = new EnumMap<>(EstadoInspeccionEnum.class);
         
         for (EstadoInspeccionEnum estado : listaEstadosSeleccionados) {
             filtro.setEstado(estado);
