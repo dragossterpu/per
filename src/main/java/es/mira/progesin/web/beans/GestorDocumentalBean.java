@@ -339,17 +339,15 @@ public class GestorDocumentalBean implements Serializable {
                 documento.setInspeccion(listaInspecciones);
                 documento.setMateriaIndexada(materiaIndexada);
                 documento.setFechaBaja(null);
-                if (documentoService.save(documento) != null) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
-                            SeccionesEnum.GESTOR.getDescripcion(), "Se ha guardado su documento con éxito");
-                    recargaLista();
-                    
-                    RequestContext.getCurrentInstance().reset("formAlta:asociado");
-                }
+                documentoService.save(documento);
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
+                        SeccionesEnum.GESTOR.getDescripcion(), "Se ha guardado su documento con éxito");
+                recargaLista();
+                
+                RequestContext.getCurrentInstance().reset("formAlta:asociado");
                 nombreDoc = "";
                 listaInspecciones = new ArrayList<>();
             } catch (DataAccessException e) {
-                documentoService.delete(documento);
                 registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
             }
         } else {
@@ -378,15 +376,14 @@ public class GestorDocumentalBean implements Serializable {
      */
     public void modificaDocumento() {
         try {
-            if (documentoService.save(documento) != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
-                        SeccionesEnum.GESTOR.getDescripcion(), "Se ha modificado el documento");
-                recargaLista();
-            } else {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
-                        SeccionesEnum.GESTOR.getDescripcion(), "Se ha producido un error al modificar el documento");
-            }
+            documentoService.save(documento);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
+                    SeccionesEnum.GESTOR.getDescripcion(), "Se ha modificado el documento");
+            recargaLista();
+            
         } catch (DataAccessException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
+                    SeccionesEnum.GESTOR.getDescripcion(), "Se ha producido un error al modificar el documento");
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
         }
     }
