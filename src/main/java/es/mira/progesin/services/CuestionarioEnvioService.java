@@ -300,7 +300,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-            subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
+            subquery.add(Restrictions.eq("miembro.usuario", usuarioActual));
             subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));

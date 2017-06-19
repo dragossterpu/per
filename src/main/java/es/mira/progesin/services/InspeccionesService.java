@@ -220,7 +220,8 @@ public class InspeccionesService implements IInspeccionesService {
         }
         
         if (busqueda.getJefeEquipo() != null) {
-            criteria.add(Restrictions.ilike("equipo.jefeEquipo", busqueda.getJefeEquipo(), MatchMode.ANYWHERE));
+            criteria.add(
+                    Restrictions.ilike("equipo.jefeEquipo.username", busqueda.getJefeEquipo(), MatchMode.ANYWHERE));
         }
         
         if (busqueda.getEstado() != null) {
@@ -250,7 +251,7 @@ public class InspeccionesService implements IInspeccionesService {
             User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
                 DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-                subquery.add(Restrictions.eq("miembro.username", usuarioActual.getUsername()));
+                subquery.add(Restrictions.eq("miembro.usuario", usuarioActual));
                 subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
                 subquery.setProjection(Projections.property("miembro.equipo"));
                 criteria.add(Property.forName("equipo.id").in(subquery));

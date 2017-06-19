@@ -35,7 +35,7 @@
                     <p:inputText id="equipo" value="#{inspeccionBean.inspeccion.equipo.nombreEquipo}" converter="#{trimConverter}" disabled="true" />
 
                     <h:outputLabel for="jefeEquipo" value="Jefe del equipo:" />
-                    <p:inputText id="jefeEquipo" value="#{inspeccionBean.inspeccion.equipo.jefeEquipo}" converter="#{trimConverter}" disabled="true" />
+                    <p:inputText id="jefeEquipo" value="#{inspeccionBean.inspeccion.equipo.jefeEquipo.username}" converter="#{trimConverter}" disabled="true" />
 
                     <h:outputLabel for="fechaPrevista" value="Fecha prevista visita:" />
                     <p:inputText id="fechaPrevista" value="#{inspeccionBean.inspeccion.fechaPrevista}" disabled="true">

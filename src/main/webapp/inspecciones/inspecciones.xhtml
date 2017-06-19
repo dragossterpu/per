@@ -170,8 +170,8 @@
                         <h:outputText value="#{inspeccion.equipo.nombreEquipo}" />
                     </p:column>
 
-                    <p:column headerText="Jefe" sortBy="#{inspeccion.equipo.jefeEquipo}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}">
-                        <h:outputText value="#{inspeccion.equipo.jefeEquipo}" />
+                    <p:column headerText="Jefe" sortBy="#{inspeccion.equipo.jefeEquipo.username}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}">
+                        <h:outputText value="#{inspeccion.equipo.jefeEquipo.username}" />
                     </p:column>
 
                     <p:column headerText="Cuatrimestre" sortBy="#{inspeccion.cuatrimestre}" width="70" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">

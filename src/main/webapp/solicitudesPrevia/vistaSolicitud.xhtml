@@ -1,7 +1,7 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.equipo.jefeEquipo or p:ifGranted('ADMIN')}" />
+        <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.equipo.jefeEquipo.username or p:ifGranted('ADMIN')}" />
         <ui:param name="yaFinalizada" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion}" />
         <ui:param name="yaAnulada" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaBaja}" />
 
