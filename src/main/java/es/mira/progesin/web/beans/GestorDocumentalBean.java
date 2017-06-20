@@ -396,20 +396,14 @@ public class GestorDocumentalBean implements Serializable {
      */
     public void asignarNuevaInspeccion(Inspeccion inspeccion) {
         if (inspeccion != null && !listaInspecciones.contains(inspeccion)) {
-            try {
-                if (documento.getInspeccion() == null) {
-                    listaInspecciones = new ArrayList<>();
-                } else {
-                    listaInspecciones = new ArrayList<>(documento.getInspeccion());
-                }
-                if (!listaInspecciones.contains(inspeccion)) {
-                    listaInspecciones.add(inspeccion);
-                    documento.setInspeccion(listaInspecciones);
-                }
-            } catch (DataAccessException e) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR ",
-                        "Se ha producido un error al asignar una inspección al documento");
-                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+            if (documento.getInspeccion() == null) {
+                listaInspecciones = new ArrayList<>();
+            } else {
+                listaInspecciones = new ArrayList<>(documento.getInspeccion());
+            }
+            if (!listaInspecciones.contains(inspeccion)) {
+                listaInspecciones.add(inspeccion);
+                documento.setInspeccion(listaInspecciones);
             }
         }
     }
