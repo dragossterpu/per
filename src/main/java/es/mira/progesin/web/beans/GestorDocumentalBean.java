@@ -397,7 +397,7 @@ public class GestorDocumentalBean implements Serializable {
     public void asignarNuevaInspeccion(Inspeccion inspeccion) {
         if (inspeccion != null && !listaInspecciones.contains(inspeccion)) {
             try {
-                if (documento.getInspeccion() == null || documento.getInspeccion().isEmpty()) {
+                if (documento.getInspeccion() == null) {
                     listaInspecciones = new ArrayList<>();
                 } else {
                     listaInspecciones = new ArrayList<>(documento.getInspeccion());
