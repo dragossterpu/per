@@ -560,10 +560,12 @@ public class InspeccionBean {
      */
     public String recuperarBusqueda() {
         inspeccionBusqueda = new InspeccionBusqueda();
-        setProvinciSelec(busquedaBuscador.getProvincia());
-        setInspeccionBusqueda(busquedaBuscador);
-        model.setBusqueda(inspeccionBusqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        if (busquedaBuscador != null) {
+            setProvinciSelec(busquedaBuscador.getProvincia());
+            setInspeccionBusqueda(busquedaBuscador);
+            model.setBusqueda(inspeccionBusqueda);
+            model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        }
         listaEquipos = equipoService.findByFechaBajaIsNull();
         return RUTABUSCAINSPECCIONES;
     }
