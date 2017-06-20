@@ -108,8 +108,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * @author EZENTIS
      */
     public void limpiar() {
-        
-        cuestionarioBusqueda.limpiar();
+        cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
         model.setRowCount(0);
         
     }

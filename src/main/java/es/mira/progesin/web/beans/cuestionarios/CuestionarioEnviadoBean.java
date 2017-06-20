@@ -194,8 +194,9 @@ public class CuestionarioEnviadoBean implements Serializable {
             List<RoleEnum> rolesAdmitidos = new ArrayList<>();
             rolesAdmitidos.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
             rolesAdmitidos.add(RoleEnum.ROLE_ADMIN);
-            if (cuestionario.getFechaAnulacion() == null && (rolesAdmitidos.contains(usuarioActual.getRole())
-                    || usuarioActual.getUsername().equals(cuestionario.getInspeccion().getEquipo().getJefeEquipo()))) {
+            if (cuestionario.getFechaAnulacion() == null
+                    && (rolesAdmitidos.contains(usuarioActual.getRole()) || usuarioActual.getUsername()
+                            .equals(cuestionario.getInspeccion().getEquipo().getJefeEquipo().getUsername()))) {
                 cuestionario.setUsernameAnulacion(usuarioActual.getUsername());
                 cuestionario.setFechaAnulacion(new Date());
                 cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);

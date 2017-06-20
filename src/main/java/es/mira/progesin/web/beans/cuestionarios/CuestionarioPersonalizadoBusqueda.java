@@ -6,6 +6,7 @@ import java.util.Date;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -15,6 +16,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@NoArgsConstructor
 public class CuestionarioPersonalizadoBusqueda implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -47,19 +49,5 @@ public class CuestionarioPersonalizadoBusqueda implements Serializable {
      * Estado del cuestionario.
      */
     private EstadoEnum estado;
-    
-    /**
-     * Limpia valores seleccionados en anteriores búsquedas.
-     * 
-     * @author EZENTIS
-     */
-    public void limpiar() {
-        setFechaDesde(null);
-        setFechaHasta(null);
-        setUsername(null);
-        setNombreCuestionario(null);
-        setModeloCuestionarioSeleccionado(null);
-        setEstado(null);
-    }
     
 }
