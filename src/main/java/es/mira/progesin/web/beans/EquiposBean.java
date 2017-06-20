@@ -296,11 +296,17 @@ public class EquiposBean implements Serializable {
      * @return vista modificarEquipo
      */
     public String getFormModificarEquipo(Equipo equip) {
-        this.miembrosSeleccionados = new ArrayList<>();
-        List<Miembro> miembrosEquipo = miembroService.findByEquipo(equip);
-        equip.setMiembros(miembrosEquipo);
-        this.equipo = equip;
-        return "/equipos/modificarEquipo?faces-redirect=true";
+        
+        Equipo equipoAux = equipoService.findOne(equipo.getId());
+        String redireccion = null;
+        if (equipoAux != null) {
+            this.miembrosSeleccionados = new ArrayList<>();
+            List<Miembro> miembrosEquipo = miembroService.findByEquipo(equipoAux);
+            equip.setMiembros(miembrosEquipo);
+            this.equipo = equipoAux;
+            redireccion = "/equipos/modificarEquipo?faces-redirect=true";
+        }
+        return redireccion;
     }
     
     /**
@@ -439,8 +445,6 @@ public class EquiposBean implements Serializable {
         Miembro miembroNuevo;
         miembroNuevo = new Miembro();
         miembroNuevo.setEquipo(equipo);
-        // miembroNuevo.setNombreCompleto(user.getNombre() + " " + user.getApellido1() + " " + user.getApellido2());
-        // miembroNuevo.setUsername(user.getUsername());
         miembroNuevo.setUsuario(user);
         miembroNuevo.setPosicion(posicion);
         return miembroNuevo;

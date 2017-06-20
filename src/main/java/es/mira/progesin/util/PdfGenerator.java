@@ -584,10 +584,7 @@ public class PdfGenerator {
                 document.add(creaSubtitulo("Estados seleccionados"));
                 creaInfoSeleccion(document, listaEstadosSeleccionados);
                 document.add(new AreaBreak()); // Salto de página
-                // Gráfica
-                document.add(creaSubtitulo("Gráfica"));
-                document.add(new Image(ImageDataFactory.create(fileImg.getPath())));
-                document.add(new AreaBreak()); // Salto de página
+                
                 // Datos
                 document.add(creaSubtitulo("Desglose"));
                 for (EstadoInspeccionEnum estado : listaEstadosSeleccionados) {
@@ -597,7 +594,10 @@ public class PdfGenerator {
                     creaTablaDesglose(document, listaInspecciones, estado);
                     
                 }
-                
+                // Gráfica
+                document.add(new AreaBreak()); // Salto de página
+                document.add(creaSubtitulo("Gráfica"));
+                document.add(new Image(ImageDataFactory.create(fileImg.getPath())));
                 document.close();
                 File fileDest = File.createTempFile(NOMBREPDFESTADISTICAS, Constantes.EXTENSIONPDF);
                 insertarNumeroPagina(file.getAbsolutePath(), fileDest.getAbsolutePath(), document);

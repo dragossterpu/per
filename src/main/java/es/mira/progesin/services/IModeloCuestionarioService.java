@@ -26,4 +26,12 @@ public interface IModeloCuestionarioService {
      */
     public List<ModeloCuestionario> findAll();
     
+    /**
+     * Devuelve un modelo de cuestionario identificado por su id.
+     * 
+     * @param id Identificador del modelo
+     * @return Modelo recuperado
+     */
+    public ModeloCuestionario findOne(Integer id);
+    
 }

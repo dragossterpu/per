@@ -115,6 +115,17 @@ public class DocumentoService implements IDocumentoService {
     }
     
     /**
+     * Devuelve un documento localizado por su id.
+     * 
+     * @param id Identificador del documento
+     * @return Documento
+     */
+    @Override
+    public Documento findOne(Long id) {
+        return documentoRepository.findOne(id);
+    }
+    
+    /**
      * Guarda una serie de documentos en base de datos. Como parámetro recibe los documentos a guardar y devuelve los
      * documentos guardados.
      * 

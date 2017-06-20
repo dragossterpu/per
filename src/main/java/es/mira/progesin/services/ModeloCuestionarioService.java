@@ -46,4 +46,15 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
         return (List<ModeloCuestionario>) modeloCuestionarioRepository.findAll();
     }
     
+    /**
+     * Devuelve un modelo de cuestionario identificado por su id.
+     * 
+     * @param id Identificador del modelo
+     * @return Modelo recuperado
+     */
+    @Override
+    public ModeloCuestionario findOne(Integer id) {
+        return modeloCuestionarioRepository.findOne(id);
+    }
+    
 }

@@ -118,10 +118,18 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     
     public String visualizaGuia(GuiaPersonalizada personalizada) {
-        setGuiaPersonalizada(personalizada);
-        setListaPasos(guiaPersonalizadaService.listaPasos(personalizada));
-        guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(personalizada));
-        return "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
+        GuiaPersonalizada guiaAux = guiaPersonalizadaService.findOne(personalizada.getId());
+        String redireccion = null;
+        if (guiaAux != null) {
+            setGuiaPersonalizada(guiaAux);
+            setListaPasos(guiaPersonalizadaService.listaPasos(guiaAux));
+            guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(guiaAux));
+            redireccion = "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
+                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+        }
+        return redireccion;
     }
     
     /**
@@ -142,8 +150,13 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     
     public void anular(GuiaPersonalizada personalizada) {
-        guiaPersonalizadaService.anular(personalizada);
-        
+        GuiaPersonalizada guiaAux = guiaPersonalizadaService.findOne(personalizada.getId());
+        if (guiaAux != null) {
+            guiaPersonalizadaService.anular(guiaAux);
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
+                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+        }
     }
     
     /**
@@ -211,17 +224,23 @@ public class GuiaPersonalizadaBean implements Serializable {
      * @param guiaActivar Guía a activar
      */
     public void activa(GuiaPersonalizada guiaActivar) {
-        try {
-            guiaActivar.setFechaAnulacion(null);
-            guiaActivar.setUsernameAnulacion(null);
-            if (guiaPersonalizadaService.save(guiaActivar) != null) {
-                regActividadService.altaRegActividad(
-                        "La guía '".concat(guiaActivar.getNombreGuiaPersonalizada().concat("' ha sido activada")),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
-                
+        GuiaPersonalizada guiaAux = guiaPersonalizadaService.findOne(guiaActivar.getId());
+        if (guiaAux != null) {
+            try {
+                guiaActivar.setFechaAnulacion(null);
+                guiaActivar.setUsernameAnulacion(null);
+                if (guiaPersonalizadaService.save(guiaAux) != null) {
+                    regActividadService.altaRegActividad(
+                            "La guía '".concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido activada")),
+                            TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                    
+                }
+            } catch (DataAccessException e) {
+                regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
-        } catch (DataAccessException e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
+                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
         }
     }
     

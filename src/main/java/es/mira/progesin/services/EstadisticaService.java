@@ -66,6 +66,7 @@ public class EstadisticaService implements IEstadisticaService {
             }
             
             estadistica.put(ins.getEstadoInspeccion(), actual + 1);
+            
         }
         return estadistica;
     }
@@ -107,6 +108,22 @@ public class EstadisticaService implements IEstadisticaService {
         
         return generadorPDF.generarInformeEstadisticas(mapaEstados, filtro, fileImg);
         
+    }
+    
+    /**
+     * Obtiene el total de resultados de la consulta estadística.
+     * 
+     * @param estadistica Mapa de valores de la consulta.
+     * @return Número total de inspecciones de las que se hace estadística
+     */
+    @Override
+    public int obtenerTotal(Map<EstadoInspeccionEnum, Integer> estadistica) {
+        int total = 0;
+        for (EstadoInspeccionEnum clave : estadistica.keySet()) {
+            total += estadistica.get(clave);
+        }
+        
+        return total;
     }
     
 }

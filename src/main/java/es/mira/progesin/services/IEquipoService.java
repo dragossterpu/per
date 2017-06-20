@@ -30,6 +30,14 @@ public interface IEquipoService {
     public List<Equipo> findByFechaBajaIsNull();
     
     /**
+     * Devuelve un equipo localizado por su id.
+     * 
+     * @param id Identificador del equipo
+     * @return Equipo
+     */
+    public Equipo findOne(Long id);
+    
+    /**
      * Guarda la información de un equipo en la bdd.
      * 
      * @param entity equipo

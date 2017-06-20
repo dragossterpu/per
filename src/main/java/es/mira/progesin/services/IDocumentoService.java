@@ -201,4 +201,11 @@ public interface IDocumentoService {
      */
     public TipoDocumento buscaTipoDocumentoPorNombre(String nombre);
     
+    /**
+     * Devuelve un documento localizado por su id.
+     * 
+     * @param id Identificador del documento
+     * @return Documento
+     */
+    public Documento findOne(Long id);
 }

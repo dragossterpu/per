@@ -197,4 +197,15 @@ public class EquipoService implements IEquipoService {
         return equipoRepository.buscarEquiposByUsername(paramLogin);
     }
     
+    /**
+     * Devuelve un equipo localizado por su id.
+     * 
+     * @param id Identificador del equipo
+     * @return Equipo
+     */
+    @Override
+    public Equipo findOne(Long id) {
+        return equipoRepository.findOne(id);
+    }
+    
 }

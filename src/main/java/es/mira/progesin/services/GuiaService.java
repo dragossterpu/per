@@ -228,4 +228,15 @@ public class GuiaService implements IGuiaService {
         return Math.toIntExact(cnt);
     }
     
+    /**
+     * Devuelve un modelo de guía identificado por su id.
+     * 
+     * @param id Identificador del modelo
+     * @return Modelo recuperado
+     */
+    @Override
+    public Guia findOne(Long id) {
+        return guiaRepository.findOne(id);
+    }
+    
 }

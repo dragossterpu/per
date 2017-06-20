@@ -238,4 +238,15 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         return inspeccionRepository.cargaInspeccionesGuia(guia.getId());
     }
     
+    /**
+     * Devuelve una guía personalizada por medio de su id.
+     * 
+     * @param id Identificador de la gía
+     * @return Guía personalizada
+     */
+    @Override
+    public GuiaPersonalizada findOne(Long id) {
+        return guiaPersonalizadaRepository.findOne(id);
+    }
+    
 }

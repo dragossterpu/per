@@ -65,6 +65,12 @@ public class EstadisticaBean implements Serializable {
     private Map<EstadoInspeccionEnum, Integer> mapaResultados;
     
     /**
+     * Total de inspecciones.
+     */
+    
+    private int total;
+    
+    /**
      * Estados seleccionados para la generación del informe en PDF.
      */
     private List<EstadoInspeccionEnum> estadosSeleccionados;
@@ -113,6 +119,7 @@ public class EstadisticaBean implements Serializable {
         filtro = new InspeccionBusqueda();
         listaEstados = Arrays.stream(EstadoInspeccionEnum.values()).collect(Collectors.toList());
         obtieneEstadistica();
+        total = 0;
         
     }
     
@@ -133,6 +140,7 @@ public class EstadisticaBean implements Serializable {
     public void limpiarBusqueda() {
         filtro = new InspeccionBusqueda();
         obtieneEstadistica();
+        total = 0;
     }
     
     /**
@@ -164,13 +172,13 @@ public class EstadisticaBean implements Serializable {
         if (imagen.split(",").length > 1) {
             String encoded = imagen.split(",")[1];
             byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(encoded);
-            // Write to a .png file
+            
             try {
                 RenderedImage renderedImage = ImageIO.read(new ByteArrayInputStream(decoded));
                 fileImg = File.createTempFile("out", ".png");
                 ImageIO.write(renderedImage, "png", fileImg);
             } catch (IOException e) {
-                e.printStackTrace();
+                registroActividadService.altaRegActividadError(SeccionesEnum.ESTADISTICAS.getDescripcion(), e);
             }
         }
         obtieneInformePDF(fileImg);
@@ -197,6 +205,7 @@ public class EstadisticaBean implements Serializable {
      */
     private void obtieneEstadistica() {
         mapaResultados = estadisticaService.obtenerEstadisticas(filtro);
+        total = estadisticaService.obtenerTotal(mapaResultados);
         createGrafica();
     }
     
@@ -228,7 +237,9 @@ public class EstadisticaBean implements Serializable {
         }
         grafica.setShowDataLabels(true);
         grafica.setLegendPosition("w");
-    };
+        grafica.setSeriesColors(
+                "FFFFFF,C0C0C0,808080,000000,FF0000,800000,FFFF00,FFFF00,00FF00,008000,00FFFF,008080,0000FF,800080");
+    }
     
     /**
      * Recupera el objeto gráfica para mostrarse en la vista.

@@ -285,9 +285,18 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return vista modificarSolicitud
      */
     public String getFormModificarSolicitud(SolicitudDocumentacionPrevia solicitud) {
-        solicitudDocumentacionPrevia = solicitud;
-        backupFechaLimiteEnvio = solicitud.getFechaLimiteEnvio();
-        return "/solicitudesPrevia/modificarSolicitud?faces-redirect=true";
+        
+        SolicitudDocumentacionPrevia solic = solicitudDocumentacionService.findOne(solicitud.getId());
+        String redireccion = null;
+        if (solic != null) {
+            solicitudDocumentacionPrevia = solic;
+            backupFechaLimiteEnvio = solic.getFechaLimiteEnvio();
+            redireccion = "/solicitudesPrevia/modificarSolicitud?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Visualización",
+                    "Se ha producido un error al acceder a la solicitud. La solicitud no existe");
+        }
+        return redireccion;
     }
     
     /**
@@ -299,9 +308,18 @@ public class SolicitudDocPreviaBean implements Serializable {
      * @return vista vistaSolicitud
      */
     public String visualizarSolicitud(SolicitudDocumentacionPrevia solicitud) {
-        setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solicitud.getId()));
-        setSolicitudDocumentacionPrevia(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId()));
-        return "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
+        
+        SolicitudDocumentacionPrevia solic = solicitudDocumentacionService.findOne(solicitud.getId());
+        String redireccion = null;
+        if (solic != null) {
+            setListadoDocumentosPrevios(tipoDocumentacionService.findByIdSolicitud(solic.getId()));
+            setSolicitudDocumentacionPrevia(solicitudDocumentacionService.findByIdConDocumentos(solic.getId()));
+            redireccion = "/solicitudesPrevia/vistaSolicitud?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Edición",
+                    "Se ha producido un error al acceder a la solicitud. La solicitud no existe");
+        }
+        return redireccion;
     }
     
     /**

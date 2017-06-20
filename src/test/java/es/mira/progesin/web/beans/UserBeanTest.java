@@ -354,15 +354,30 @@ public class UserBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.UserBean#getFormModificarUsuario(User)}.
      */
     @Test
-    public void getFormModificarUsuario() {
+    public void getFormModificarUsuario_existe() {
         User user = User.builder().estado(EstadoEnum.ACTIVO).build();
         @SuppressWarnings("unchecked")
         List<Empleo> listaEmpleos = mock(List.class);
         when(empleoRepository.findByCuerpoOrderByDescripcionAsc(any(CuerpoEstado.class))).thenReturn(listaEmpleos);
-        
+        when(userService.findOne(user.getUsername())).thenReturn(user);
         String formulario = userBean.getFormModificarUsuario(user);
         
         assertThat(formulario).isEqualTo("/users/modificarUsuario?faces-redirect=true");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.UserBean#getFormModificarUsuario(User)}.
+     */
+    @Test
+    public void getFormModificarUsuario_noExiste() {
+        User user = User.builder().estado(EstadoEnum.ACTIVO).build();
+        @SuppressWarnings("unchecked")
+        List<Empleo> listaEmpleos = mock(List.class);
+        when(empleoRepository.findByCuerpoOrderByDescripcionAsc(any(CuerpoEstado.class))).thenReturn(listaEmpleos);
+        when(userService.findOne("test")).thenReturn(null);
+        String formulario = userBean.getFormModificarUsuario(user);
+        
+        assertThat(formulario).isNull();
     }
     
     /**

@@ -17,6 +17,13 @@ import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
  * @author EZENTIS
  */
 public interface ISolicitudDocumentacionService {
+    /**
+     * Devuelve una solicitud identificada por su id.
+     * 
+     * @param id Identificador de la solicitud
+     * @return Solicitud
+     */
+    SolicitudDocumentacionPrevia findOne(Long id);
     
     /**
      * Guarda la información de una solicitud en la bdd.

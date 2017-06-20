@@ -306,10 +306,11 @@ public class SolicitudDocPreviaBeanTest {
      * .
      */
     @Test
-    public void getFormModificarSolicitud() {
+    public void getFormModificarSolicitud_existe() {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
+        when(solicitudDocumentacionService.findOne(1L)).thenReturn(solicitud);
         
         String ruta_vista = solicitudDocPreviaBean.getFormModificarSolicitud(solicitud);
         
@@ -318,14 +319,32 @@ public class SolicitudDocPreviaBeanTest {
     
     /**
      * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormModificarSolicitud(SolicitudDocumentacionPrevia)}
+     * .
+     */
+    @Test
+    public void getFormModificarSolicitud_noExiste() {
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
+        when(solicitudDocumentacionService.findOne(1L)).thenReturn(null);
+        
+        String ruta_vista = solicitudDocPreviaBean.getFormModificarSolicitud(solicitud);
+        
+        assertThat(ruta_vista).isNull();
+    }
+    
+    /**
+     * Test method for
      * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#visualizarSolicitud(SolicitudDocumentacionPrevia)}.
      */
     @Test
-    public void visualizarSolicitud() {
+    public void visualizarSolicitud_existe() {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .build();
         when(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId())).thenReturn(solicitud);
+        when(solicitudDocumentacionService.findOne(1L)).thenReturn(solicitud);
         
         String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
         assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getInspeccion().getNumero())
@@ -333,6 +352,24 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).findByIdConDocumentos(1L);
         verify(tipoDocumentacionService, times(1)).findByIdSolicitud(1L);
         assertThat(ruta_vista).isEqualTo("/solicitudesPrevia/vistaSolicitud?faces-redirect=true");
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#visualizarSolicitud(SolicitudDocumentacionPrevia)}.
+     */
+    @Test
+    public void visualizarSolicitud_noExiste() {
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .build();
+        when(solicitudDocumentacionService.findByIdConDocumentos(solicitud.getId())).thenReturn(solicitud);
+        when(solicitudDocumentacionService.findOne(1L)).thenReturn(null);
+        
+        String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
+        
+        assertThat(ruta_vista).isNull();
+        ;
     }
     
     /**

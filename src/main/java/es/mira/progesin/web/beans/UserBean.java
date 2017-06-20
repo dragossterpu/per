@@ -286,12 +286,21 @@ public class UserBean implements Serializable {
      * @return URL de la página de modificar usuario
      */
     public String getFormModificarUsuario(User usuario) {
-        estadoUsuario = usuario.getEstado().name();
-        this.user = usuario;
         
-        auditoriaVisualizacion(usuario);
-        buscarEmpleo();
-        return "/users/modificarUsuario?faces-redirect=true";
+        User usu = userService.findOne(usuario.getUsername());
+        String redireccion = null;
+        
+        if (usu != null) {
+            estadoUsuario = usu.getEstado().name();
+            this.user = usu;
+            auditoriaVisualizacion(usu);
+            buscarEmpleo();
+            redireccion = "/users/modificarUsuario?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
+                    "Se ha producido un error al acceder al usuario. El usuario no existe");
+        }
+        return redireccion;
     }
     
     /**

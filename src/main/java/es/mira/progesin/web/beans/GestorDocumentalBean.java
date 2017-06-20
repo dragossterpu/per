@@ -221,13 +221,21 @@ public class GestorDocumentalBean implements Serializable {
      * @param document Documento a descargar
      */
     public void descargarFichero(Documento document) {
+        
+        Documento docAux = documentoService.findOne(document.getId());
         setFile(null);
-        try {
-            setFile(documentoService.descargaDocumento(document));
-        } catch (ProgesinException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    e.getMessage());
-            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.name(), e);
+        
+        if (docAux != null) {
+            try {
+                setFile(documentoService.descargaDocumento(docAux));
+            } catch (ProgesinException e) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                        e.getMessage());
+                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.name(), e);
+            }
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+                    "Se ha producido un error en la descarga del fichero");
         }
     }
     
@@ -364,11 +372,20 @@ public class GestorDocumentalBean implements Serializable {
      * @return URL de la vista de edición
      */
     public String editarDocumento(Documento doc) {
-        documento = doc;
-        nombreDoc = documentoService.obtieneNombreFichero(documento);
-        List<Inspeccion> listado = documentoService.listaInspecciones(documento);
-        documento.setInspeccion(listado);
-        return "/gestorDocumental/editarDocumento?faces-redirect=true";
+        Documento docAux = documentoService.findOne(doc.getId());
+        String redireccion = null;
+        
+        if (docAux != null) {
+            documento = docAux;
+            nombreDoc = documentoService.obtieneNombreFichero(documento);
+            List<Inspeccion> listado = documentoService.listaInspecciones(documento);
+            documento.setInspeccion(listado);
+            redireccion = "/gestorDocumental/editarDocumento?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+                    "Se ha producido un error al acceder al documento");
+        }
+        return redireccion;
     }
     
     /**

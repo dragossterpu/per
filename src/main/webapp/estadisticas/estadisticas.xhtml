@@ -2,12 +2,11 @@
     <ui:define name="content">
 
         
-        <div class="tituloCuestionario">
-            Estadisticas
-        </div>
+        
+        <h3 id="titulo">Estadísticas</h3>
         <h:form id="formEstadisticas">
            
-             <p:panel id="camposBusqueda">
+             <p:panel id="camposBusqueda" style="border:0">
                 <div class="bloqueFormulario">
                  <div class="columnaIzdaFormulario">
                       <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
@@ -30,16 +29,21 @@
                      </div>
                  </div>
                  <div class="botonesFormulario">
-                     <p:commandButton  value="Ver estadísticas" actionListener="#{estadisticaBean.filtrar(tipoInspeccion,provincia,fechaDesde,fechaHasta)}" icon="fa fa-search"  update="panelEstadisticas"/>
-                     <p:commandButton  value="Limpiar" icon="fa fa-eraser" actionListener="#{estadisticaBean.limpiarBusqueda}" update="panelEstadisticas" >
+                     <p:commandButton  value="Ver estadísticas" actionListener="#{estadisticaBean.filtrar(tipoInspeccion,provincia,fechaDesde,fechaHasta)}" icon="fa fa-search"  update="formEstadisticas" oncomplete="$('.mensajeSinResultados').css('opacity', 1)"/>
+                     <p:commandButton  value="Limpiar" icon="fa fa-eraser" actionListener="#{estadisticaBean.limpiarBusqueda}" update="formEstadisticas" >
                         <p:ajax update="camposBusqueda" resetValues="true" />
                      </p:commandButton>
      
                  </div>
-             </p:panel>    
-             <p:outputPanel layout="block" id="panelEstadisticas">
+             </p:panel>   
+             
                  
-                        <p:outputPanel >
+             <p:outputPanel layout="block" id="panelEstadisticas">
+             
+                        <p:outputPanel styleClass="mensajeSinResultados" rendered="#{estadisticaBean.total eq 0}">
+                         No existe ningún resultado que cumpla los parámetros de su búsqueda.
+                        </p:outputPanel>
+                        <p:outputPanel rendered="#{estadisticaBean.total ne 0}">
                             <h:commandLink>
                                 <p:graphicImage value="/images/xls.png" />
                                 <p:dataExporter type="xls" target="tablaEstadisticas" fileName="estadisticas" />
@@ -57,7 +61,7 @@
                             
                         </p:outputPanel>
                         <p:dataTable  id="tablaEstadisticas"  value="#{estadisticaBean.listaEstados}" var="estado"
-                         selection="#{estadisticaBean.estadosSeleccionados}" rowKey="#{estado.descripcion}">
+                         selection="#{estadisticaBean.estadosSeleccionados}" rowKey="#{estado.descripcion}" rendered="#{estadisticaBean.total ne 0}">
         
                             <f:facet name="header">
                                  Estadisticas
@@ -74,7 +78,7 @@
                             </p:column>
                             
                             <p:rowExpansion>                       
-                                   <p:dataTable  id="tablaDetalle"  emptyMessage="No se han inspecciones en estado" value="#{estadisticaBean.verDetalles(estado)}" var="detalle">
+                                   <p:dataTable  id="tablaDetalle"  emptyMessage="No se han encontrado inspecciones en estado" value="#{estadisticaBean.verDetalles(estado)}" var="detalle">
                                      <p:column headerText="Expediente" width="70">
                                          <h:outputText value="#{detalle.numero}" />
                                      </p:column>
@@ -93,17 +97,11 @@
                                      <p:column headerText="Provincia"  width="80">
                                          <h:outputText value="#{detalle.municipio.provincia.nombre}" />
                                      </p:column>
-                                     <p:summaryRow>
-                                 <p:column colspan="2" style="text-align:right">
-                                    <h:outputText value="Total:" />
-                                </p:column>
-                                <p:column>
-                                    <h:outputText value="0" />
-                                </p:column>
-                            </p:summaryRow>
                                    </p:dataTable>
                            </p:rowExpansion>
-                           
+                            <f:facet name="footer">
+                                <h:outputText value="Total de inspecciones: #{estadisticaBean.total}" />  
+                            </f:facet>
                         </p:dataTable>
                         <p:dialog id="dialogGrafica" widgetVar="dialogG" header="Distribución de las inspecciones en función de su estado">
                              <p:chart type="pie" widgetVar="graficaImagen" model="#{estadisticaBean.grafica}" style="width:700px;height:500px"/>
@@ -122,7 +120,7 @@
              
                   <p:commandButton  value="Generar informe estadístico"  update="message" ajax="false" 
                   onclick="exportarGrafica()"
-                  actionListener="#{estadisticaBean.filtraPDF(tipoInspeccion,provincia,fechaDesde,fechaHasta, graficaExportar)}" icon="fa fa-file-pdf-o" >
+                  actionListener="#{estadisticaBean.filtraPDF(tipoInspeccion,provincia,fechaDesde,fechaHasta, graficaExportar)}" icon="fa fa-file-pdf-o" rendered="#{estadisticaBean.total ne 0}">
                       <p:fileDownload value="#{estadisticaBean.file}" />
                   </p:commandButton>
               </div>

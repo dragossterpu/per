@@ -47,4 +47,12 @@ public interface IEstadisticaService {
      * @return Listado de las inspecciones que corresponden a la búsqueda.
      */
     public List<Inspeccion> verListaEstado(InspeccionBusqueda filtro, EstadoInspeccionEnum estado);
+    
+    /**
+     * Obtiene el total de resultados de la consulta estadística.
+     * 
+     * @param estadistica Mapa de valores de la consulta.
+     * @return Número total de inspecciones de las que se hace estadística
+     */
+    public int obtenerTotal(Map<EstadoInspeccionEnum, Integer> estadistica);
 }

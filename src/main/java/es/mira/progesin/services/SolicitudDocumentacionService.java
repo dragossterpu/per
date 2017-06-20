@@ -443,4 +443,15 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         documentoService.delete(documento);
         return solicitudSincronizada;
     }
+    
+    /**
+     * Devuelve una solicitud identificada por su id.
+     * 
+     * @param id Identificador de la solicitud
+     * @return Solicitud
+     */
+    @Override
+    public SolicitudDocumentacionPrevia findOne(Long id) {
+        return solicitudDocumentacionPreviaRepository.findOne(id);
+    }
 }

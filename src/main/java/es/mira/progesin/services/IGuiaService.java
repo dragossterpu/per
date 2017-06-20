@@ -100,6 +100,13 @@ public interface IGuiaService {
      * @param tipo tipo de Inspección
      * @return boolean existencia o no de la asociación
      */
-    boolean existeByTipoInspeccion(TipoInspeccion tipo);
+    public boolean existeByTipoInspeccion(TipoInspeccion tipo);
     
+    /**
+     * Devuelve un modelo de guía identificado por su id.
+     * 
+     * @param id Identificador del modelo
+     * @return Modelo recuperado
+     */
+    public Guia findOne(Long id);
 }
