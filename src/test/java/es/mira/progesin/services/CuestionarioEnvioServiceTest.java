@@ -24,6 +24,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.model.SortOrder;
@@ -56,6 +57,8 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
  *
  */
 @RunWith(PowerMockRunner.class)
+// Evita conflictos con clases del sistema al enlazar los mocks por tipo
+@PowerMockIgnore("javax.security.*")
 @PrepareForTest(SecurityContextHolder.class)
 public class CuestionarioEnvioServiceTest {
     /**

@@ -43,7 +43,8 @@ import es.mira.progesin.web.beans.UserBusqueda;
 @RunWith(PowerMockRunner.class)
 @PowerMockRunnerDelegate(SpringRunner.class)
 @PrepareForTest(SecurityContextHolder.class)
-@PowerMockIgnore("javax.management.*")
+// Evita conflictos con clases del sistema al enlazar los mocks por tipo
+@PowerMockIgnore({ "javax.management.*", "javax.security.*" })
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
 public class UserServiceCriteriaTest {
