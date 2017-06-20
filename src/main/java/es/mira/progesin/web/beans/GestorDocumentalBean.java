@@ -414,16 +414,10 @@ public class GestorDocumentalBean implements Serializable {
      * @param inspeccion Inspección a desasociar
      */
     public void desAsociarInspeccion(Inspeccion inspeccion) {
-        try {
-            List<Inspeccion> inspecciones = new ArrayList<>(documento.getInspeccion());
-            inspecciones.remove(inspeccion);
-            documento.setInspeccion(inspecciones);
-            listaInspecciones.remove(inspeccion);
-        } catch (DataAccessException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-                    "Se ha producido un error al desasociar una inspección del documento");
-            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
-        }
+        List<Inspeccion> inspecciones = new ArrayList<>(documento.getInspeccion());
+        inspecciones.remove(inspeccion);
+        documento.setInspeccion(inspecciones);
+        listaInspecciones.remove(inspeccion);
     }
     
     /**
