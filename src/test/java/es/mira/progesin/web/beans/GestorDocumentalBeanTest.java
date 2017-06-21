@@ -284,7 +284,7 @@ public class GestorDocumentalBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
-     * @throws ProgesinException
+     * @throws ProgesinException excepción lanzada
      */
     @Test
     public final void testDescargarFichero() throws ProgesinException {
@@ -292,6 +292,7 @@ public class GestorDocumentalBeanTest {
         doc1.setId(2L);
         DefaultStreamedContent defaultStreamedContent = mock(DefaultStreamedContent.class);
         when(documentoService.descargaDocumento(doc1)).thenReturn(defaultStreamedContent);
+        when(documentoService.findOne(doc1.getId())).thenReturn(doc1);
         gestorDocumentalBeanMock.descargarFichero(doc1);
         StreamedContent file = gestorDocumentalBeanMock.getFile();
         assertThat(file).isNotNull();
@@ -304,14 +305,16 @@ public class GestorDocumentalBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
-     * @throws ProgesinException
+     * @throws ProgesinException excepción lanzada
      */
     @Test()
     public final void testDescargarFicheroException() throws ProgesinException {
         Documento doc1 = new Documento();
         doc1.setId(2L);
         ProgesinException progesinException = new ProgesinException(new Exception(""));
+        
         when(documentoService.descargaDocumento(doc1)).thenThrow(progesinException);
+        when(documentoService.findOne(doc1.getId())).thenReturn(doc1);
         gestorDocumentalBeanMock.descargarFichero(doc1);
         StreamedContent file = gestorDocumentalBeanMock.getFile();
         assertThat(file).isNull();
@@ -326,7 +329,7 @@ public class GestorDocumentalBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#cargaFichero(org.primefaces.event.FileUploadEvent)}.
-     * @throws ProgesinException
+     * @throws ProgesinException excepción lanzada
      */
     @Test()
     public final void testCargaFichero() throws ProgesinException {
@@ -607,6 +610,7 @@ public class GestorDocumentalBeanTest {
         Documento docTest = new Documento();
         docTest.setId(2L);
         gestorDocumentalBeanMock.setDocumento(docTest);
+        when(documentoService.findOne(docTest.getId())).thenReturn(docTest);
         when(documentoService.obtieneNombreFichero(docTest)).thenReturn("nombreFichero_Test");
         when(documentoService.listaInspecciones(docTest)).thenReturn(inspecciones);
         String ruta = gestorDocumentalBeanMock.editarDocumento(docTest);
