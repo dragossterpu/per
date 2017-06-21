@@ -305,6 +305,9 @@ public class EquiposBean implements Serializable {
             equip.setMiembros(miembrosEquipo);
             this.equipo = equipoAux;
             redireccion = "/equipos/modificarEquipo?faces-redirect=true";
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificar equipo",
+                    "Se ha producido un error al acceder al equipo. El equipo no existe");
         }
         return redireccion;
     }

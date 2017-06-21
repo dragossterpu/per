@@ -166,7 +166,12 @@
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                     </div>
                 </p:confirmDialog>
-
+                <p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
+                   <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                   <div class="centrarBotonesDialog">
+                       <p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" />
+                   </div>
+               </p:dialog>
                 <p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 
             </p:outputPanel>

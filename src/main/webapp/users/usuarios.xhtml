@@ -145,7 +145,12 @@
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
                 </div>
             </p:confirmDialog>
-
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
+               <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+               <div class="centrarBotonesDialog">
+                   <p:button value="Cerrar" outcome="/users/usuarios" />
+               </div>
+           </p:dialog>
         </h:form>
 
     </ui:define>
