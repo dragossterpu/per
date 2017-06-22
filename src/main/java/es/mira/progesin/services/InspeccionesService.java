@@ -16,18 +16,14 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
@@ -57,6 +53,12 @@ public class InspeccionesService implements IInspeccionesService {
      */
     @Autowired
     private IInspeccionesRepository inspeccionesRepository;
+    
+    /**
+     * Servicio de equipos.
+     */
+    @Autowired
+    private IEquipoService equipoService;
     
     /**
      * Método que guarda una inspección.
@@ -248,14 +250,7 @@ public class InspeccionesService implements IInspeccionesService {
                 && busqueda.getInspeccionModif().getId() != null) {
             criteria.add(Restrictions.ne("id", busqueda.getInspeccionModif().getId()));
         } else if (!busqueda.isAsociar()) {
-            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-                DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-                subquery.add(Restrictions.eq("miembro.usuario", usuarioActual));
-                subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
-                subquery.setProjection(Projections.property("miembro.equipo"));
-                criteria.add(Property.forName("equipo.id").in(subquery));
-            }
+            equipoService.setCriteriaEquipo(criteria);
         }
     }
     

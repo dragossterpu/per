@@ -15,13 +15,16 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
@@ -208,4 +211,20 @@ public class EquipoService implements IEquipoService {
         return equipoRepository.findOne(id);
     }
     
+    /**
+     * Añade al criteria als restricciones necesarias para realizar las consultas en caso de que el usuario conectado
+     * tenga el rol EQUIPO_INSPECCIONES.
+     * @param criteria criteria al que se desea añadir la restricción
+     */
+    @Override
+    public void setCriteriaEquipo(Criteria criteria) {
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+            DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
+            subquery.add(Restrictions.eq("miembro.usuario", usuarioActual));
+            subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
+            subquery.setProjection(Projections.property("miembro.equipo"));
+            criteria.add(Property.forName("equipo.id").in(subquery));
+        }
+    }
 }

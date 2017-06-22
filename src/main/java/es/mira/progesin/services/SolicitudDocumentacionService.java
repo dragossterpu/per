@@ -7,27 +7,22 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
@@ -84,6 +79,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      */
     @Autowired
     private ITipoDocumentacionService tipoDocumentacionService;
+    
+    /**
+     * Servicio de equipos.
+     */
+    @Autowired
+    private IEquipoService equipoService;
     
     /**
      * Guarda la información de una solicitud en la bdd.
@@ -272,14 +273,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-            subquery.add(Restrictions.eq("miembro.usuario", usuarioActual));
-            subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
-            subquery.setProjection(Projections.property("miembro.equipo"));
-            criteria.add(Property.forName("equipo.id").in(subquery));
-        }
+        equipoService.setCriteriaEquipo(criteria);
         
     }
     

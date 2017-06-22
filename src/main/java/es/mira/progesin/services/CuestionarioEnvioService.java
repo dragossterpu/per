@@ -8,22 +8,18 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -33,7 +29,6 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
@@ -104,6 +99,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     @Autowired
     private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
+    
+    /**
+     * Servicio de equipos.
+     */
+    @Autowired
+    private IEquipoService equipoService;
     
     /**
      * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo
@@ -297,14 +298,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             criteria.add(Restrictions.ilike("equipo.nombreEquipo", cuestionarioEnviadoBusqueda.getNombreEquipo(),
                     MatchMode.ANYWHERE));
         }
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
-            subquery.add(Restrictions.eq("miembro.usuario", usuarioActual));
-            subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
-            subquery.setProjection(Projections.property("miembro.equipo"));
-            criteria.add(Property.forName("equipo.id").in(subquery));
-        }
+        equipoService.setCriteriaEquipo(criteria);
         criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
             criteria.add(Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario",
