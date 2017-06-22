@@ -111,10 +111,10 @@ public final class HtmlPdfGenerator {
             XMLParser parser = new XMLParser(worker);
             
             // Asegurarse de que es XHTML
-            documentoHTML = limpiarHtml(documentoHTML);
+            String documentoXHTML = limpiarHtml(documentoHTML);
             
-            // Volcar HTML en el PDF
-            parser.parse(new ByteArrayInputStream(documentoHTML.getBytes()));
+            // Volcar XHTML en el PDF
+            parser.parse(new ByteArrayInputStream(documentoXHTML.getBytes()));
             
             // InputStream html = new ByteArrayInputStream(limpiarHtml(documentoHTML).getBytes());
             // InputStream css = StreamUtil.getResourceStream(Constantes.CSSTEXTEDITORPDF);
