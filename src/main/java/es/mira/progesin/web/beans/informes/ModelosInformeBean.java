@@ -49,4 +49,14 @@ public class ModelosInformeBean implements Serializable {
         Collections.sort(listadoModelosInforme, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
     }
     
+    /**
+     * Cargar formulario para crear informe a partir de un modelo y una inspección.
+     * 
+     * @param modelo modelo seleccionado
+     * @return ruta de la vista
+     */
+    public String crearInforme(ModeloInforme modelo) {
+        return "/enConstruccion";
+    }
+    
 }
