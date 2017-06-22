@@ -37,6 +37,11 @@ import es.mira.progesin.persistence.repositories.IUserRepository;
 public class UserServiceTest {
     
     /**
+     * Username de prueba.
+     */
+    private static final String EZENTIS = "ezentis";
+    
+    /**
      * Simulación de un repositorio de usuarios.
      */
     @Mock
@@ -76,8 +81,8 @@ public class UserServiceTest {
      */
     @Test
     public void deleteById() {
-        userService.delete("ezentis");
-        verify(userRepositoryMock, times(1)).delete("ezentis");
+        userService.delete(EZENTIS);
+        verify(userRepositoryMock, times(1)).delete(EZENTIS);
     }
     
     /**
@@ -85,8 +90,8 @@ public class UserServiceTest {
      */
     @Test
     public void exists() {
-        userService.exists("ezentis");
-        verify(userRepositoryMock, times(1)).exists("ezentis");
+        userService.exists(EZENTIS);
+        verify(userRepositoryMock, times(1)).exists(EZENTIS);
     }
     
     /**
@@ -94,9 +99,9 @@ public class UserServiceTest {
      */
     @Test
     public void findOne() {
-        User user = User.builder().username("ezentis").build();
-        when(userRepositoryMock.findOne("ezentis")).thenReturn(user);
-        User userFind = userService.findOne("ezentis");
+        User user = User.builder().username(EZENTIS).build();
+        when(userRepositoryMock.findOne(EZENTIS)).thenReturn(user);
+        User userFind = userService.findOne(EZENTIS);
         assertThat(userFind.getUsername()).isEqualTo(user.getUsername());
     }
     
@@ -105,8 +110,8 @@ public class UserServiceTest {
      */
     @Test
     public void findByUsernameIgnoreCase() {
-        userService.findByUsernameIgnoreCase("ezentis");
-        verify(userRepositoryMock, times(1)).findByUsernameIgnoreCase("ezentis");
+        userService.findByUsernameIgnoreCase(EZENTIS);
+        verify(userRepositoryMock, times(1)).findByUsernameIgnoreCase(EZENTIS);
     }
     
     /**
@@ -114,7 +119,7 @@ public class UserServiceTest {
      */
     @Test
     public void save() {
-        User user = User.builder().username("ezentis").build();
+        User user = User.builder().username(EZENTIS).build();
         userService.save(user);
         verify(userRepositoryMock, times(1)).save(user);
     }
@@ -226,7 +231,7 @@ public class UserServiceTest {
     @Test
     public void save_listaUsers() {
         List<User> listaUsuarios = new ArrayList<>();
-        User user = User.builder().username("ezentis").build();
+        User user = User.builder().username(EZENTIS).build();
         listaUsuarios.add(user);
         userService.save(listaUsuarios);
         

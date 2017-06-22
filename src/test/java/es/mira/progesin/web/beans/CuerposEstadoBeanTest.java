@@ -103,12 +103,6 @@ public class CuerposEstadoBeanTest {
     private ArgumentCaptor<CuerpoEstado> cuerpoCaptor;
     
     /**
-     * Captor de excepciones.
-     */
-    @Captor
-    private ArgumentCaptor<Exception> exceptionCaptor;
-    
-    /**
      * Comprueba que la clase existe.
      */
     @Test
@@ -144,7 +138,7 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void eliminarCuerpo_conUsuariosYEmpleos() {
-        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo").build();
         when(userService.existsByCuerpoEstado(cuerpo)).thenReturn(true);
         when(empleoRepository.existsByCuerpo(cuerpo)).thenReturn(true);
         
@@ -161,7 +155,7 @@ public class CuerposEstadoBeanTest {
     @Test
     public void eliminarCuerpo_sinUsuariosNiEmpleos() {
         listaCuerposEstado = new ArrayList<>();
-        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("POLICIA").build();
         listaCuerposEstado.add(cuerpo);
         cuerposEstadoBean.setListaCuerposEstado(listaCuerposEstado);
         when(userService.existsByCuerpoEstado(cuerpo)).thenReturn(false);
@@ -181,7 +175,7 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void eliminarCuerpo_excepcion() {
-        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("Cuerpo Test").build();
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(1).descripcion("CUERPO").build();
         when(userService.existsByCuerpoEstado(cuerpo)).thenThrow(TransientDataAccessResourceException.class);
         
         cuerposEstadoBean.eliminarCuerpo(cuerpo);
@@ -226,7 +220,7 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void onRowEdit() {
-        CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("TEST").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(cuerpo);
         
@@ -243,7 +237,7 @@ public class CuerposEstadoBeanTest {
      */
     @Test
     public void onRowEdit_excepcion() {
-        CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("Cuerpo Test").build();
+        CuerpoEstado cuerpo = CuerpoEstado.builder().id(7).descripcion("GUARDIA CIVIL").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(cuerpo);
         when(cuerposEstadoService.save(cuerpo)).thenThrow(TransientDataAccessResourceException.class);

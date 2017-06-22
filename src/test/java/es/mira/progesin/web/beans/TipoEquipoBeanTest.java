@@ -93,7 +93,7 @@ public class TipoEquipoBeanTest {
      */
     @Test
     public void eliminarTipo() {
-        TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("TEST").descripcion("Tipo Equipo Test").build();
+        TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("TEST").descripcion("Tipo Equipo").build();
         List<TipoEquipo> listaTipoEquipo = new ArrayList<>();
         listaTipoEquipo.add(tEquipo);
         tipoEquipoBean.setListaTipoEquipo(listaTipoEquipo);
@@ -111,7 +111,7 @@ public class TipoEquipoBeanTest {
      */
     @Test
     public void eliminarTipo_existeEquipo() {
-        TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("TEST").descripcion("Tipo Equipo Test").build();
+        TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("CODIGO").descripcion("Equipo Test").build();
         List<TipoEquipo> listaTipoEquipo = new ArrayList<>();
         listaTipoEquipo.add(tEquipo);
         tipoEquipoBean.setListaTipoEquipo(listaTipoEquipo);
@@ -140,7 +140,7 @@ public class TipoEquipoBeanTest {
      */
     @Test
     public void altaTipo() {
-        TipoEquipo tEquipo = TipoEquipo.builder().codigo("TEST").descripcion("Tipo Equipo Test").build();
+        TipoEquipo tEquipo = TipoEquipo.builder().codigo("CIE").descripcion("Equipo").build();
         
         tipoEquipoBean.altaTipo("TEST", "Tipo Equipo Test");
         
@@ -154,7 +154,7 @@ public class TipoEquipoBeanTest {
      */
     @Test
     public void onRowEdit() {
-        TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("TEST").descripcion("Tipo Equipo Test").build();
+        TipoEquipo tEquipo = TipoEquipo.builder().id(1L).codigo("cod").descripcion("desc equipo").build();
         RowEditEvent event = mock(RowEditEvent.class);
         when(event.getObject()).thenReturn(tEquipo);
         

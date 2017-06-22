@@ -13,7 +13,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -62,12 +61,6 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Mock
     private Authentication authentication;
-    
-    /**
-     * Mock del session factory.
-     */
-    @Mock
-    private SessionFactory sessionFactory;
     
     /**
      * Mock del servicio de usuario.
@@ -172,7 +165,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#findEnviadaNoFinalizadaPorCorreoDestinatario(String)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#findEnviadaNoFinalizadaPorCorreoDestinatario(String)}
+     * .
      */
     @Test
     public void findEnviadaNoFinalizadaPorCorreoDestinatario() {
@@ -186,7 +180,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, String, org.primefaces.model.SortOrder, SolicitudDocPreviaBusqueda)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, String, org.primefaces.model.SortOrder, SolicitudDocPreviaBusqueda)}
+     * .
      */
     @Ignore
     @Test
@@ -198,7 +193,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda)}
+     * .
      */
     @Ignore
     @Test
@@ -217,7 +213,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia, User)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia, User)}
+     * .
      */
     @Test
     public void transaccSaveCreaUsuarioProv() {
@@ -236,7 +233,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia, String)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveElimUsuarioProv(SolicitudDocumentacionPrevia, String)}
+     * .
      */
     @Test
     public void transaccSaveElimUsuarioProv() {
@@ -255,7 +253,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia, String)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveInactivaUsuarioProv(SolicitudDocumentacionPrevia, String)}
+     * .
      */
     @Test
     public void transaccSaveInactivaUsuarioProv() {
@@ -271,7 +270,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia, String)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveActivaUsuarioProv(SolicitudDocumentacionPrevia, String)}
+     * .
      */
     @Test
     public void transaccSaveActivaUsuarioProv() {
@@ -285,8 +285,8 @@ public class SolicitudDocumentacionServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccDeleteElimDocPrevia(Long)}.
+     * Test method for {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccDeleteElimDocPrevia(Long)}
+     * .
      */
     @Test
     public void transaccDeleteElimDocPrevia() {
@@ -341,7 +341,8 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia, List)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveAltaDocumentos(SolicitudDocumentacionPrevia, List)}
+     * .
      */
     @Test
     public void transaccSaveAltaDocumentos() {

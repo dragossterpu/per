@@ -24,7 +24,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Entidad para un Puesto de trabajo.
@@ -36,7 +35,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity

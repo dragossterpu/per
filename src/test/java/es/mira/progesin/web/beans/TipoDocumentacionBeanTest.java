@@ -30,7 +30,6 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.services.IParametroService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
@@ -68,12 +67,6 @@ public class TipoDocumentacionBeanTest {
      */
     @Mock
     private ApplicationBean applicationBeanMock;
-    
-    /**
-     * Simulación del servicio de parámetros.
-     */
-    @Mock
-    private IParametroService parametroServiceMock;
     
     /**
      * Listado de extensiones.
@@ -120,7 +113,8 @@ public class TipoDocumentacionBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}.
+     * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}
+     * .
      */
     @Test
     public void testEliminarDocumentacion() {

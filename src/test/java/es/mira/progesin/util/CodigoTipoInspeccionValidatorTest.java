@@ -44,9 +44,9 @@ public class CodigoTipoInspeccionValidatorTest {
     public final void validate() {
         FacesContext context = mock(FacesContext.class);
         UIComponent component = mock(UIComponent.class);
-        Object value = new String();
+        String value = "I.G.P.";
         
-        when(servicio.existeByCodigoIgnoreCase(value.toString())).thenReturn(false);
+        when(servicio.existeByCodigoIgnoreCase(value)).thenReturn(false);
         
         validador.validate(context, component, value);
     }
@@ -59,9 +59,9 @@ public class CodigoTipoInspeccionValidatorTest {
     public void validate_false() {
         FacesContext context = mock(FacesContext.class);
         UIComponent component = mock(UIComponent.class);
-        Object value = new String();
+        String value = "I.S.";
         
-        when(servicio.existeByCodigoIgnoreCase(value.toString())).thenReturn(true);
+        when(servicio.existeByCodigoIgnoreCase(value)).thenReturn(true);
         
         validador.validate(context, component, value);
         

@@ -21,10 +21,7 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -52,10 +49,8 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
-import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
-import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.VerificadorExtensiones;
@@ -100,18 +95,6 @@ public class GestorDocumentalBeanTest {
     private IDocumentoService documentoService;
     
     /**
-     * Mock de prueba del Servicio de alertas.
-     */
-    @Mock
-    private IAlertaService alertaService;
-    
-    /**
-     * Mock de prueba del Servicio de notificaciones.
-     */
-    @Mock
-    private INotificacionService notificacionService;
-    
-    /**
      * Mock de prueba del Servicio de registro de actividad.
      */
     @Mock
@@ -140,20 +123,6 @@ public class GestorDocumentalBeanTest {
      */
     @InjectMocks
     private GestorDocumentalBean gestorDocumentalBeanMock;
-    
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
-    
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
     
     /**
      * Configuración inicial del test.
@@ -186,13 +155,6 @@ public class GestorDocumentalBeanTest {
     }
     
     /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
-    
-    /**
      * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#init()}.
      */
     @Test
@@ -211,9 +173,9 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testResetBusqueda() {
-        LazyModelDocumentos model = new LazyModelDocumentos(documentoService);
-        model.setRowCount(0);
-        gestorDocumentalBeanMock.setModel(model);
+        LazyModelDocumentos modelo = new LazyModelDocumentos(documentoService);
+        modelo.setRowCount(0);
+        gestorDocumentalBeanMock.setModel(modelo);
         String ruta = gestorDocumentalBeanMock.resetBusqueda();
         assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda()).isNotNull();
         assertThat(gestorDocumentalBeanMock.getModel().getRowCount()).isEqualTo(0);
@@ -238,9 +200,9 @@ public class GestorDocumentalBeanTest {
         Documento doc = new Documento();
         List<Documento> documentos = new ArrayList<>();
         documentos.add(doc);
-        LazyModelDocumentos model = new LazyModelDocumentos(documentoService);
-        model.setDatasource(documentos);
-        gestorDocumentalBeanMock.setModel(model);
+        LazyModelDocumentos modelo = new LazyModelDocumentos(documentoService);
+        modelo.setDatasource(documentos);
+        gestorDocumentalBeanMock.setModel(modelo);
         
         DocumentoBusqueda docBusqueda = new DocumentoBusqueda();
         gestorDocumentalBeanMock.setDocumentoBusqueda(docBusqueda);
@@ -283,7 +245,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      * @throws ProgesinException excepción lanzada
      */
     @Test
@@ -304,7 +267,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      * @throws ProgesinException excepción lanzada
      */
     @Test()
@@ -357,7 +321,7 @@ public class GestorDocumentalBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#cargaFichero(org.primefaces.event.FileUploadEvent)}.
-     * @throws ProgesinException
+     * @throws ProgesinException posible excepción
      */
     @Test()
     public final void testCargaFicheroExtensionIncorrecta() throws ProgesinException {
@@ -386,7 +350,7 @@ public class GestorDocumentalBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#cargaFichero(org.primefaces.event.FileUploadEvent)}.
-     * @throws ProgesinException
+     * @throws ProgesinException posible excepción
      */
     @Test()
     public final void testCargaFicheroException() throws ProgesinException {
@@ -415,7 +379,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testEliminarDocumento() {
@@ -493,8 +458,8 @@ public class GestorDocumentalBeanTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#autocompletarInspeccion(java.lang.String)}.
+     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#autocompletarInspeccion(java.lang.String)}
+     * .
      */
     @Test
     public final void testAutocompletarInspeccion() {
@@ -508,7 +473,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}
+     * .
      */
     @Test
     public final void testCreaDocumento() {
@@ -554,7 +520,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}
+     * .
      */
     @Test
     public final void testCreaDocumentoException() {
@@ -582,7 +549,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}
+     * .
      */
     @Test
     public final void testCreaDocumentoIncorrecto() {
@@ -600,7 +568,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#editarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#editarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testEditarDocumento() {
@@ -638,7 +607,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * .
      */
     @Test
     public final void testAsignarNuevaInspeccion() {
@@ -659,7 +629,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * .
      */
     @Test
     public final void testAsignarNuevaInspeccionExistente() {
@@ -680,7 +651,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#desAsociarInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#desAsociarInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * .
      */
     @Test
     public final void testDesAsociarInspeccion() {
@@ -704,7 +676,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#recuperarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#recuperarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testRecuperarDocumento() {
@@ -715,7 +688,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testBorrarDocumento() {
@@ -739,7 +713,8 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testBorrarDocumentoException() {

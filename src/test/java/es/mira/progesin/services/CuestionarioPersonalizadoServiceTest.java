@@ -8,7 +8,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -35,12 +34,6 @@ public class CuestionarioPersonalizadoServiceTest {
      */
     @Mock
     private ICuestionarioPersonalizadoRepository cuestionarioPersonalizadoRepository;
-    
-    /**
-     * Simulación de la factoría de sesiones.
-     */
-    @Mock
-    private SessionFactory sessionFactory;
     
     /**
      * Servicio de cuestionario personalizado.
@@ -100,7 +93,8 @@ public class CuestionarioPersonalizadoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, String, SortOrder, CuestionarioPersonalizadoBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, String, SortOrder, CuestionarioPersonalizadoBusqueda)}
+     * .
      */
     @Ignore
     @Test
@@ -118,7 +112,8 @@ public class CuestionarioPersonalizadoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda)}
+     * .
      */
     @Ignore
     @Test

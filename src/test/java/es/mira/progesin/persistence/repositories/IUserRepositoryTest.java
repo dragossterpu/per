@@ -30,6 +30,12 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
 public class IUserRepositoryTest {
+    
+    /**
+     * Username de prueba.
+     */
+    private static final String EZENTISUSERNAME = "ezentis";
+    
     /**
      * Repositorio de usuarios.
      */
@@ -44,7 +50,7 @@ public class IUserRepositoryTest {
     @Test
     public final void testFindByCorreoIgnoreCaseOrDocIdentidadIgnoreCase() {
         User user = this.repository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase("EZENTIS@EZENTIS.COM", "");
-        assertThat(user.getUsername()).isEqualTo("ezentis");
+        assertThat(user.getUsername()).isEqualTo(EZENTISUSERNAME);
     }
     
     /**
@@ -53,7 +59,7 @@ public class IUserRepositoryTest {
     @Test
     public final void testFindByCorreo() {
         User user = this.repository.findByCorreo("ezentis@ezentis.com");
-        assertThat(user.getUsername()).isEqualTo("ezentis");
+        assertThat(user.getUsername()).isEqualTo(EZENTISUSERNAME);
     }
     
     /**
@@ -63,7 +69,7 @@ public class IUserRepositoryTest {
     @Test
     public final void testFindByCorreoOrDocIdentidad() {
         User user = this.repository.findByCorreoOrDocIdentidad("", "12345678S");
-        assertThat(user.getUsername()).isEqualTo("ezentis");
+        assertThat(user.getUsername()).isEqualTo(EZENTISUSERNAME);
     }
     
     /**
@@ -113,7 +119,7 @@ public class IUserRepositoryTest {
      */
     @Test
     public final void testFindByUsernameIgnoreCase() {
-        User user = this.repository.findByUsernameIgnoreCase("ezentis");
+        User user = this.repository.findByUsernameIgnoreCase(EZENTISUSERNAME);
         assertThat(user).isNotNull();
     }
     

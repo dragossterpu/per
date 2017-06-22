@@ -42,11 +42,7 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.persistence.repositories.IClaseUsuarioRepository;
-import es.mira.progesin.persistence.repositories.IDepartamentoRepository;
 import es.mira.progesin.persistence.repositories.IEmpleoRepository;
-import es.mira.progesin.persistence.repositories.IPuestoTrabajoRepository;
-import es.mira.progesin.services.ICuerpoEstadoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.UserService;
 import es.mira.progesin.util.FacesUtilities;
@@ -83,18 +79,6 @@ public class UserBeanTest {
     private UserService userService;
     
     /**
-     * Mock del servicio de cuerpos de estado.
-     */
-    @Mock
-    private ICuerpoEstadoService cuerpoEstadoService;
-    
-    /**
-     * Mock dek repositorio de puestos de trabajo.
-     */
-    @Mock
-    private IPuestoTrabajoRepository puestoTrabajoRepository;
-    
-    /**
      * Mock del password encoder.
      */
     @Mock
@@ -117,18 +101,6 @@ public class UserBeanTest {
      */
     @Mock
     private IEmpleoRepository empleoRepository;
-    
-    /**
-     * Mock del repositorio de departamentos.
-     */
-    @Mock
-    private IDepartamentoRepository departamentoRepository;
-    
-    /**
-     * Mock del repositorio de clase de usuario.
-     */
-    @Mock
-    private IClaseUsuarioRepository claseUsuarioRepository;
     
     /**
      * Clase a probar donde se inyectan los mocks.
@@ -213,15 +185,15 @@ public class UserBeanTest {
     @Test
     public void altaUsuario_noExisteUsuario() {
         // Preparación para la llamada al método
-        User user = User.builder().username("username").correo("correoDestinatario").build();
+        User user = User.builder().username("name").correo("correo").build();
         userBean.setUser(user);
-        when(userService.exists("username")).thenReturn(Boolean.FALSE);
+        when(userService.exists("name")).thenReturn(Boolean.FALSE);
         when(passwordEncoderMock.encode("password")).thenReturn("encodedpassword");
         
         userBean.altaUsuario();
         
         verify(userService, times(1)).save(user);
-        verify(correoElectronico, times(1)).envioCorreo(eq("correoDestinatario"), any(String.class), any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class), any(String.class));
         
         // Comprobamos que se muestra el mensaje en pantalla
         PowerMockito.verifyStatic(times(1));
@@ -237,10 +209,10 @@ public class UserBeanTest {
     @Test
     public void altaUsuario_excepcionBBDD() {
         // Preparación para la llamada al método
-        User user = User.builder().username("username").correo("correoDestinatario").build();
+        User user = User.builder().username("user_name").correo("correo_destinatario").build();
         userBean.setUser(user);
-        when(userService.exists("username")).thenReturn(Boolean.FALSE);
-        when(passwordEncoderMock.encode("password")).thenReturn("encodedpassword");
+        when(userService.exists("user_name")).thenReturn(Boolean.FALSE);
+        when(passwordEncoderMock.encode("pass")).thenReturn("encodedpass");
         
         when(userService.save(user)).thenThrow(TransientDataAccessResourceException.class);
         
@@ -259,10 +231,10 @@ public class UserBeanTest {
     @Test
     public void altaUsuario_excepcionCorreo() {
         // Preparación para la llamada al método
-        User user = User.builder().username("username").correo("correoDestinatario").build();
+        User user = User.builder().username("pepe").correo("correoDestinatario").build();
         userBean.setUser(user);
-        when(userService.exists("username")).thenReturn(Boolean.FALSE);
-        when(passwordEncoderMock.encode("password")).thenReturn("encodedpassword");
+        when(userService.exists("pepe")).thenReturn(Boolean.FALSE);
+        when(passwordEncoderMock.encode("clave")).thenReturn("encodedClave");
         
         when(userService.save(user)).thenThrow(CorreoException.class);
         

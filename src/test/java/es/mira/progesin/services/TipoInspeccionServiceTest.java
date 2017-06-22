@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -66,6 +67,7 @@ public class TipoInspeccionServiceTest {
         TipoInspeccion tipo = mock(TipoInspeccion.class);
         tipoInspeccionService.borrarTipo(tipo);
         verify(tipoInspeccionRepository, times(1)).delete(tipo);
+        verify(applicationBean, times(1)).setListaTiposInspeccion(ArgumentMatchers.anyList());
         
     }
     
@@ -77,6 +79,7 @@ public class TipoInspeccionServiceTest {
         TipoInspeccion tipo = mock(TipoInspeccion.class);
         tipoInspeccionService.guardarTipo(tipo);
         verify(tipoInspeccionRepository, times(1)).save(tipo);
+        verify(applicationBean, times(1)).setListaTiposInspeccion(ArgumentMatchers.anyList());
     }
     
     /**

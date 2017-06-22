@@ -22,17 +22,17 @@ import es.mira.progesin.persistence.entities.User;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
+    
+    /**
+     * Username de prueba.
+     */
+    private final static String EZENTIS = "ezentis";
+    
     /**
      * Simulación del servicio de usuarios.
      */
     @Mock
     private IUserService userService;
-    
-    /**
-     * Simulación del registro de actividad.
-     */
-    @Mock
-    private IRegistroActividadService registroActividadService;
     
     /**
      * Servicio de login.
@@ -63,12 +63,12 @@ public class LoginServiceTest {
     @Test
     public void loadUserByUsername_valido() {
         
-        User usuario = User.builder().username("ezentis").build();
-        when(userService.findByUsernameIgnoreCase("ezentis")).thenReturn(usuario);
+        User usuario = User.builder().username(EZENTIS).build();
+        when(userService.findByUsernameIgnoreCase(EZENTIS)).thenReturn(usuario);
         
-        UserDetails logueado = loginService.loadUserByUsername("ezentis");
+        UserDetails logueado = loginService.loadUserByUsername(EZENTIS);
         
-        assertThat(logueado.getUsername()).isEqualTo("ezentis");
+        assertThat(logueado.getUsername()).isEqualTo(EZENTIS);
         
     }
     
