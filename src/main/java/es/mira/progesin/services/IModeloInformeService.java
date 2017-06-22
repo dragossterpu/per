@@ -18,4 +18,12 @@ public interface IModeloInformeService {
      */
     public List<ModeloInforme> findAll();
     
+    /**
+     * Recupera un modelo de informe con sus areas y subareas a partir del id.
+     * 
+     * @param id id del modelo
+     * @return modelo completo
+     */
+    public ModeloInforme findDistinctById(Long id);
+    
 }

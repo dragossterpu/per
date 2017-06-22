@@ -33,4 +33,15 @@ public class ModeloInformeService implements IModeloInformeService {
         return (List<ModeloInforme>) modeloInformeRepository.findAll();
     }
     
+    /**
+     * Recupera un modelo de informe con sus areas y subareas a partir del id.
+     * 
+     * @param id id del modelo
+     * @return modelo completo
+     */
+    @Override
+    public ModeloInforme findDistinctById(Long id) {
+        return modeloInformeRepository.findDistinctById(id);
+    }
+    
 }

@@ -18,6 +18,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Base64ImageProvider extends AbstractImageProvider {
+    
+    /**
+     * Factor de escala para las imágenes de los documentos PDF.
+     */
+    private static final float ESCALA = 60f;
+    
     /**
      * Devuelve la imagen que se encuentra codificada en base64 (usado en la generación en pdf de los informes, al
      * encontrarse las imagenes almacenadas en BBDD y codificadas).
@@ -33,6 +39,7 @@ public class Base64ImageProvider extends AbstractImageProvider {
             } else {
                 image = Image.getInstance(src);
             }
+            image.scalePercent(ESCALA);
         } catch (BadElementException | IOException ex) {
             log.error("Error al obtener la imagen", ex);
         }

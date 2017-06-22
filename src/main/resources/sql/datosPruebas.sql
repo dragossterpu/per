@@ -185,4 +185,6 @@ insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (seq_documentacion_previa.nextval,'Evaluación de Riesgos Laborales','PDF',1,'PRL');
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (seq_documentacion_previa.nextval,'Memoria Anual de 2015','PDF',1,'MA');
 
+insert into informes (id, inspeccion_id, modelo_informe_id, fecha_alta, username_alta, fecha_finalizacion, username_finalizacion) values (seq_informe.nextval, 21, 1, trunc(sysdate), 'ezentis', trunc(sysdate), 'ezentis');
+
 commit;

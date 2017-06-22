@@ -43,23 +43,23 @@ public class RespuestaInforme implements Serializable {
     /**
      * Informe al que pertenece a respuesta.
      */
-    @Id
     @ManyToOne
-    @JoinColumn(name = "informe_id", foreignKey = @ForeignKey(name = "fk_informe"))
+    @Id
+    @JoinColumn(name = "informe_id", foreignKey = @ForeignKey(name = "fk_informe"), insertable = false, updatable = false)
     private Informe informe;
     
     /**
      * Subarea respondida.
      */
-    @Id
     @ManyToOne
-    @JoinColumn(name = "subarea_id", foreignKey = @ForeignKey(name = "fk_subarea_inf"))
+    @Id
+    @JoinColumn(name = "subarea_id", foreignKey = @ForeignKey(name = "fk_subarea_inf"), insertable = false, updatable = false)
     private SubareaInforme subarea;
     
     /**
      * Texto de la respuesta en código HTML con estilos de PrimeFaces.
      */
     @Lob
-    @Column(name = "respuesta")
-    private byte[] respuesta;
+    @Column(name = "texto")
+    private byte[] texto;
 }

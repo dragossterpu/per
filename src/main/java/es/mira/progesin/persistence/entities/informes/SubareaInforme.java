@@ -4,10 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -52,8 +49,10 @@ public class SubareaInforme implements Serializable {
     /**
      * Area a la que pertenece.
      */
-    @ManyToOne
-    @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
-    private AreaInforme area;
+    //
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
+    @Column(name = "area_id")
+    private Long areaId;
     
 }

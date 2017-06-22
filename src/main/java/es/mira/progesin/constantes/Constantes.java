@@ -128,8 +128,12 @@ public final class Constantes {
     /**
      * Constante con el literal correspondiente a la extensión de los documentos PDF.
      */
-    
     public static final String EXTENSIONPDF = ".PDF";
+    
+    /**
+     * Constante ruta recurso imagen fondo de la portada de informes.
+     */
+    public static final String PORTADAINFORME = "/static/images/informe_portada.png";
     
     /**
      * Constructor para que no se pueda instanciar la clase.

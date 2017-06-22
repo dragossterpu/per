@@ -2,21 +2,73 @@
     <ui:define name="content">
 
         <h:form id="informe">
+            <div class="bloqueVistaTitulo">
+            <h3>Editar informe</h3>
+        </div>
  
-			<p:accordionPanel value="#{informeBean.informe.modelo.areas}" var="area" activeIndex="-1">
+			<p:accordionPanel value="#{informeBean.modeloInforme.areas}" var="area" activeIndex="-1">
 				<p:tab title="#{area.descripcion}">
 					<p:accordionPanel value="#{area.subareas}" var="subarea" activeIndex="-1">
 						<p:tab title="#{subarea.descripcion}">
-							<p:textEditor value="" height="300" style="margin-bottom:10px"/>
+							<p:textEditor value="#{informeBean.mapaRespuestas[subarea]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
+                                <f:facet name="toolbar">
+                                    <span class="ql-formats">
+                                        <select class="ql-font"></select>
+                                        <select class="ql-size">
+                                            <option value="small">Pequeña</option>
+                                            <option selected="selected">Normal</option>
+                                            <option value="large">Grande</option>
+                                        </select>
+                                    </span>
+                                     <span class="ql-formats">
+                                        <button class="ql-bold" title="Negrita"></button>
+                                        <button class="ql-italic" title="Cursiva"></button>
+                                        <button class="ql-underline" title="Subrayado"></button>
+                                        <button class="ql-strike" title="Tachado"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-color ql-picker ql-color-picker" title="Color letra"></select>
+                                        <select class="ql-background ql-picker ql-color-picker" title="Color fondo"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-script" value="sub" title="Subíndice"></button>
+                                        <button class="ql-script" value="super" title="Superíndice"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select  class="ql-header">
+                                            <option value="3">Título 1</option>
+                                            <option value="4"> Título 2</option>
+                                        </select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered" title="Lista numerada"></button>
+                                        <button class="ql-list" value="bullet" title="Lista no numerada"></button>
+                                        <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
+                                        <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
+                                        <select class="ql-align"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link" title="Añadir enlace"></button>
+                                        <button class="ql-image" title="Añadir imagen"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-clean" title="Limpiar formato"></button>
+                                    </span>
+                                </f:facet>
+                            </p:textEditor>
 						</p:tab>
 					</p:accordionPanel>
 				</p:tab>
 			</p:accordionPanel>
 
-            <p:commandButton value="Submit" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
-            <!-- <p:commandButton value="Clear" type="button" onclick="PF('editor1').clear();" icon="ui-icon-close" /> -->
-
-
+            <p:commandButton value="Guardar" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
+            
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:button value="Cerrar" outcome="/informes/informes" />
+                </div>
+            </p:dialog>
         </h:form>
 
     </ui:define>

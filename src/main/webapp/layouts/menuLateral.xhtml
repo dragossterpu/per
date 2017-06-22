@@ -12,7 +12,7 @@
             </p:submenu>
             
             <p:submenu label="Usuarios" id="menuUsuarios">
-                <p:menuitem value="Administrar usuarios" action="#{userBean.getFormularioBusquedaUsuarios}" />
+                <p:menuitem value="Administrar usuarios" action="#{userBean.getFormularioBusquedaUsuarios}" /> 
             </p:submenu>
             
             <p:submenu label="Solicitudes previas cuestionario">
@@ -44,8 +44,8 @@
             </p:submenu>
 
             <p:submenu label="Informes">
-                <p:menuitem value="Modelos de informe" outcome="/enConstruccion" />
-                <p:menuitem value="Búsqueda de informes"  outcome="/enConstruccion" /> <!-- outcome="/informes/informes" -->
+                <p:menuitem value="Modelos de informe" outcome="/informes/modelosInformes" />
+                <p:menuitem value="Búsqueda de informes" action="#{informeBean.getFormBusquedaInformes}" />
             </p:submenu>
         </p:menu>
 

@@ -1,4 +1,4 @@
-WHENEVER OSERROR EXIT FAILURE ROLLBACK
+WHENEVER OSERROR EXIT FAILURE ROLLBACK 
 WHENEVER SQLERROR EXIT FAILURE ROLLBACK
 
 prompt =========================================================================
@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  07/06/2017    
+prompt    Actualización:  07/06/2017     
 prompt =========================================================================
 
 
@@ -347,7 +347,15 @@ prompt =========================================================================
   CREATE TABLE INFORMES 
    (   ID NUMBER(19,0), 
     INSPECCION_ID NUMBER(19,0), 
-    MODELO_INFORME_ID NUMBER(19,0) 
+    MODELO_INFORME_ID NUMBER(19,0),
+    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR), 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR),
+    FECHA_FINALIZACION TIMESTAMP (6), 
+    USERNAME_FINALIZACION VARCHAR2(255 CHAR) 
    ) ;
 /
 prompt =========================================================================
@@ -562,7 +570,7 @@ prompt  Creacion tabla  RESPUESTAS_INFORME
 prompt =========================================================================
 
   CREATE TABLE RESPUESTAS_INFORME 
-   (    RESPUESTA BLOB, 
+   (    TEXTO BLOB, 
     INFORME_ID NUMBER(19,0), 
     SUBAREA_ID NUMBER(19,0)
    ) ;
@@ -1246,7 +1254,7 @@ prompt =========================================================================
   ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_TIPOEQUIPO FOREIGN KEY (ID_TIPO_EQUIPO)
       REFERENCES TIPO_EQUIPO (ID) ENABLE;
   ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_JEFE FOREIGN KEY (JEFE_EQUIPO)
-	  REFERENCES USERS (USERNAME) ENABLE;
+      REFERENCES USERS (USERNAME) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIA_PASOS
@@ -1309,7 +1317,7 @@ prompt =========================================================================
   ALTER TABLE MIEMBROS ADD CONSTRAINT FK_M_EQUIPO FOREIGN KEY (ID_EQUIPO)
       REFERENCES EQUIPO (ID) ENABLE;
   ALTER TABLE MIEMBROS ADD CONSTRAINT FK_U_MIEMBRO FOREIGN KEY (USUARIO)
-	  REFERENCES USERS (USERNAME) ENABLE;
+      REFERENCES USERS (USERNAME) ENABLE;
 /
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  MUNICIPIOS
@@ -1389,7 +1397,7 @@ prompt =========================================================================
   ALTER TABLE AREAS_INFORME MODIFY (DESCRIPCION NOT NULL ENABLE);
   ALTER TABLE AREAS_INFORME ADD PRIMARY KEY (ID)
       USING INDEX  ENABLE;
-  ALTER TABLE AREAS_INFORME ADD CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (MODELO_INFORME_ID)
+  ALTER TABLE AREAS_INFORME ADD CONSTRAINT FK_AREA_MODELOINF FOREIGN KEY (MODELO_INFORME_ID)
       REFERENCES MODELOS_INFORME (ID) ENABLE;
 /
 prompt =========================================================================
@@ -1407,7 +1415,12 @@ prompt =========================================================================
 prompt  Reference Constraints para la tabla  INFORMES
 prompt =========================================================================
 
-  ALTER TABLE INFORMES MODIFY (ID NOT NULL ENABLE);
+  ALTER TABLE INFORMES MODIFY (
+    ID NOT NULL ENABLE,
+    FECHA_ALTA NOT NULL ENABLE, 
+    USERNAME_ALTA NOT NULL ENABLE, 
+    FECHA_FINALIZACION NOT NULL ENABLE, 
+    USERNAME_FINALIZACION NOT NULL ENABLE);
   ALTER TABLE INFORMES ADD PRIMARY KEY (ID)
       USING INDEX  ENABLE;
   ALTER TABLE INFORMES ADD CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)

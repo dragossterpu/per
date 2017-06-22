@@ -1,7 +1,10 @@
 package es.mira.progesin.persistence.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
 import es.mira.progesin.persistence.entities.informes.RespuestaInformeId;
 
@@ -10,6 +13,14 @@ import es.mira.progesin.persistence.entities.informes.RespuestaInformeId;
  * 
  * @author EZENTIS
  */
-public interface IRespuestaInformeRepository extends CrudRepository<RespuestaInforme, RespuestaInformeId> {
+public interface IRespuestaInformeRepository extends JpaRepository<RespuestaInforme, RespuestaInformeId> {
+    
+    /**
+     * Recupera las respuestas de un informe dado.
+     * 
+     * @param informe seleccionado
+     * @return lista de respuestas
+     */
+    List<RespuestaInforme> findByInforme(Informe informe);
     
 }

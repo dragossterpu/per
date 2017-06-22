@@ -26,11 +26,11 @@ public class RespuestaInformeId implements Serializable {
     /**
      * Informe al que pertenece la respuesta.
      */
-    private Informe informe;
+    private Long informe;
     
     /**
      * Subarea respondida.
      */
-    private SubareaInforme subarea;
+    private Long subarea;
     
 }
