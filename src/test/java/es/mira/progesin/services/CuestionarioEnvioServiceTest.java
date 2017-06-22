@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,7 +41,6 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
@@ -74,12 +72,6 @@ public class CuestionarioEnvioServiceTest {
     private Authentication authentication;
     
     /**
-     * Simulación de la factoría de sesiones.
-     */
-    @Mock
-    private SessionFactory sessionFactory;
-    
-    /**
      * Simulación del repositorio cuestionarios enviados.
      */
     @Mock
@@ -108,12 +100,6 @@ public class CuestionarioEnvioServiceTest {
      */
     @Mock
     private transient IInspeccionesService inspeccionesService;
-    
-    /**
-     * Simulación del repositorio de areas/usuarios.
-     */
-    @Mock
-    private transient IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
     /**
      * Simulación objeto correoElectrónico.

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -30,12 +31,6 @@ public class DepartamentoServiceTest {
     private IDepartamentoRepository repository;
     
     /**
-     * Simulación del servicio de usuarios.
-     */
-    @Mock
-    private IUserService userService;
-    
-    /**
      * Simulación del application bean.
      */
     @Mock
@@ -50,20 +45,18 @@ public class DepartamentoServiceTest {
     /**
      * Comprueba que la clase existe.
      * 
-     * @throws Exception Excepción
      */
     @Test
-    public void type() throws Exception {
+    public void type() {
         assertThat(Departamento.class).isNotNull();
     }
     
     /**
      * Comprueba que la clase se puede instanciar.
      * 
-     * @throws Exception Excepción
      */
     @Test
-    public void instantiation() throws Exception {
+    public void instantiation() {
         DepartamentoService target = new DepartamentoService();
         assertThat(target).isNotNull();
     }
@@ -95,6 +88,7 @@ public class DepartamentoServiceTest {
         Departamento departamentoMock = mock(Departamento.class);
         service.delete(departamentoMock);
         verify(repository, times(1)).delete(departamentoMock);
+        verify(applicationBean, times(1)).setListaDepartamentos(ArgumentMatchers.anyList());
     }
     
 }

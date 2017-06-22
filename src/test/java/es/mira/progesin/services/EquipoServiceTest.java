@@ -15,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
-import es.mira.progesin.persistence.repositories.IMiembrosRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
 
 /**
@@ -25,12 +24,6 @@ import es.mira.progesin.web.beans.EquipoBusqueda;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class EquipoServiceTest {
-    
-    /**
-     * Mock del repositorio de miembros de equipo.
-     */
-    @Mock
-    private IMiembrosRepository miembrosRepository;
     
     /**
      * Mock del repositorio de equipos.
@@ -82,7 +75,8 @@ public class EquipoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.EquipoService#buscarEquipoCriteria(int, int, String, org.primefaces.model.SortOrder, EquipoBusqueda)}.
+     * {@link es.mira.progesin.services.EquipoService#buscarEquipoCriteria(int, int, String, org.primefaces.model.SortOrder, EquipoBusqueda)}
+     * .
      */
     @Ignore
     @Test

@@ -96,6 +96,11 @@ public class SugerenciasBeanTest {
     private ICorreoElectronico correoService;
     
     /**
+     * Literal para pruebas.
+     */
+    private static final String RUTA = "/administracion/sugerencias/contestarSugerencia?faces-redirect=true";
+    
+    /**
      * Configuración inicial del test.
      */
     @Before
@@ -131,8 +136,8 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testGuardarSugerencia() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "INFORMES";
+        String descripcion = "descripcion_informes";
         
         Sugerencia sugerencia = Sugerencia.builder().modulo(modulo).descripcion(descripcion).build();
         
@@ -162,8 +167,8 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testGuardarSugerencia_exception() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "GESTOR DOCUMENTAL";
+        String descripcion = "test_documental";
         
         Sugerencia sugerencia = Sugerencia.builder().modulo(modulo).descripcion(descripcion).build();
         
@@ -203,8 +208,8 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testEliminarSugerencia() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "MODULO_SUGERENCIA";
+        String descripcion = "descripcion_sugerencia";
         int id = 3;
         
         Sugerencia sugerencia = Sugerencia.builder().modulo(modulo).descripcion(descripcion).idSugerencia(id).build();
@@ -231,8 +236,8 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testEliminarSugerencia_excepcion() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "INSPECCIONES";
+        String descripcion = "SUGERENCIA INSPECCIONES";
         int id = 3;
         
         Sugerencia sugerencia = Sugerencia.builder().modulo(modulo).descripcion(descripcion).idSugerencia(id).build();
@@ -260,8 +265,8 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testContestarSugerencia() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "CUESTIONARIOS";
+        String descripcion = "descripción cuestionario";
         int id = 3;
         
         Sugerencia sugerenciaSeleccionada = Sugerencia.builder().modulo(modulo).descripcion(descripcion)
@@ -270,7 +275,7 @@ public class SugerenciasBeanTest {
         String ruta = sugerenciasBeanMock.contestarSugerencia(sugerenciaSeleccionada);
         
         assertThat(sugerenciaSeleccionada).isEqualTo(sugerenciasBeanMock.getSugerencia());
-        assertThat(ruta).isEqualTo("/administracion/sugerencias/contestarSugerencia?faces-redirect=true");
+        assertThat(ruta).isEqualTo(RUTA);
     }
     
     /**
@@ -280,17 +285,17 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testContestar() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "SOLICITUDES";
+        String descripcion = "descripcion_solicitud";
         int id = 3;
         
         Sugerencia sugerenciaSeleccionada = Sugerencia.builder().modulo(modulo).descripcion(descripcion)
-                .idSugerencia(id).fechaRegistro(new Date()).usuarioRegistro("usuarioRegistroTest").build();
+                .idSugerencia(id).fechaRegistro(new Date()).usuarioRegistro("usuarioRegistro").build();
         sugerenciasBeanMock.setSugerencia(sugerenciaSeleccionada);
         
         String contestacion = "contestación_test";
         when(sugerenciasServiceMock.save(sugerenciaSeleccionada)).thenReturn(sugerenciaSeleccionada);
-        when(userService.findOne("usuarioRegistroTest")).thenReturn(User.builder().correo("correo@test.test").build());
+        when(userService.findOne("usuarioRegistro")).thenReturn(User.builder().correo("correo@test.test").build());
         
         String ruta = sugerenciasBeanMock.contestar(sugerenciaSeleccionada, contestacion);
         
@@ -303,7 +308,7 @@ public class SugerenciasBeanTest {
         
         verify(regActividadServiceMock, times(0)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
                 any(Exception.class));
-        assertThat(ruta).isEqualTo("/administracion/sugerencias/contestarSugerencia?faces-redirect=true");
+        assertThat(ruta).isEqualTo(RUTA);
     }
     
     /**
@@ -337,7 +342,7 @@ public class SugerenciasBeanTest {
         verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
                 any(Exception.class));
         
-        assertThat(ruta).isEqualTo("/administracion/sugerencias/contestarSugerencia?faces-redirect=true");
+        assertThat(ruta).isEqualTo(RUTA);
     }
     
     /**
@@ -347,8 +352,8 @@ public class SugerenciasBeanTest {
      */
     @Test
     public final void testContestar_otraException() {
-        String modulo = "MODULO_TEST";
-        String descripcion = "descripcion_test";
+        String modulo = "GUÍAS";
+        String descripcion = "descripcion_guias";
         int id = 3;
         
         Sugerencia sugerenciaSeleccionada = Sugerencia.builder().modulo(modulo).descripcion(descripcion)
@@ -368,7 +373,7 @@ public class SugerenciasBeanTest {
         verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
                 any(Exception.class));
         
-        assertThat(ruta).isEqualTo("/administracion/sugerencias/contestarSugerencia?faces-redirect=true");
+        assertThat(ruta).isEqualTo(RUTA);
     }
     
 }

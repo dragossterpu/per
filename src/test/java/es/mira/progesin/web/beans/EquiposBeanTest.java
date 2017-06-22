@@ -44,7 +44,6 @@ import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.services.ITipoEquipoService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
 
@@ -74,12 +73,6 @@ public class EquiposBeanTest {
      */
     @Mock
     private Authentication authentication;
-    
-    /**
-     * Mock del servicio de tipos de equipo.
-     */
-    @Mock
-    private ITipoEquipoService tipoEquipoService;
     
     /**
      * Mock del servicio de equipos.
@@ -112,12 +105,6 @@ public class EquiposBeanTest {
     private INotificacionService notificacionService;
     
     /**
-     * Mock del objeto parametros busqueda equipos.
-     */
-    @Mock
-    private EquipoBusqueda equipoBusqueda;
-    
-    /**
      * Captor del objeto equipo.
      */
     @Captor
@@ -128,6 +115,21 @@ public class EquiposBeanTest {
      */
     @InjectMocks
     private EquiposBean equipoBean;
+    
+    /**
+     * Literal para pruebas.
+     */
+    private static final String JEFEEQUIPO = "jefeEquipo";
+    
+    /**
+     * Literal para pruebas.
+     */
+    private static final String MIEMBROS = "miembros";
+    
+    /**
+     * Literal para pruebas.
+     */
+    private static final String CONFIRM = "confirm";
     
     /**
      * Configuración inicial del test.
@@ -313,7 +315,7 @@ public class EquiposBeanTest {
     public void cambiarJefeEquipo() {
         User userJefe = User.builder().username("jefe").build();
         User miembro1 = User.builder().username("miembro1").build();
-        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombre").build();
         List<Miembro> miembros = new ArrayList<>();
         miembros.add(Miembro.builder().usuario(userJefe).posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
         miembros.add(Miembro.builder().usuario(miembro1).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo).build());
@@ -372,7 +374,7 @@ public class EquiposBeanTest {
         User userJefe = User.builder().username("jefe").build();
         User userMiembro = User.builder().username("miembro").build();
         
-        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("equipo").build();
         List<Miembro> miembros = new ArrayList<>();
         miembros.add(Miembro.builder().usuario(userJefe).posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
         miembros.add(Miembro.builder().usuario(userMiembro).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo).build());
@@ -425,13 +427,13 @@ public class EquiposBeanTest {
         List<User> miembrosSeleccionados = new ArrayList<>();
         miembrosSeleccionados.add(jefeSeleccionado);
         equipoBean.setMiembrosSeleccionados(miembrosSeleccionados);
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "jefeEquipo", "miembros");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), JEFEEQUIPO, MIEMBROS);
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
         assertThat(equipoBean.getListadoPotencialesMiembros()).doesNotContain(jefeSeleccionado);
         assertThat(equipoBean.getMiembrosSeleccionados()).doesNotContain(jefeSeleccionado);
-        assertThat(nombre_paso).isEqualTo("miembros");
+        assertThat(nombre_paso).isEqualTo(MIEMBROS);
     }
     
     /**
@@ -440,14 +442,14 @@ public class EquiposBeanTest {
     @Test
     public void onFlowProcess_pasoJefeEquipoAMiembros_validacionJefeNoSeleccionado() {
         equipoBean.setJefeSeleccionado(null);
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "jefeEquipo", "miembros");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), JEFEEQUIPO, MIEMBROS);
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
-        assertThat(nombre_paso).isEqualTo("jefeEquipo");
+        assertThat(nombre_paso).isEqualTo(JEFEEQUIPO);
     }
     
     /**
@@ -457,11 +459,11 @@ public class EquiposBeanTest {
     @Test
     public void onFlowProcess_pasoMiembrosAConfirm() {
         equipoBean.setMiembrosSeleccionados(mock(List.class));
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "miembros", "confirm");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), MIEMBROS, CONFIRM);
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        assertThat(nombre_paso).isEqualTo("confirm");
+        assertThat(nombre_paso).isEqualTo(CONFIRM);
     }
     
     /**
@@ -471,11 +473,11 @@ public class EquiposBeanTest {
     public void onFlowProcess_pasoMiembrosAConfirm_validacionSaltarPaso() {
         equipoBean.setSkip(true);
         equipoBean.setMiembrosSeleccionados(new ArrayList<>());
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "miembros", "confirm");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), MIEMBROS, CONFIRM);
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        assertThat(nombre_paso).isEqualTo("confirm");
+        assertThat(nombre_paso).isEqualTo(CONFIRM);
     }
     
     /**
@@ -485,14 +487,14 @@ public class EquiposBeanTest {
     public void onFlowProcess_pasoMiembrosAConfirm_validacionMiembrosNoSeleccionados() {
         equipoBean.setSkip(false);
         equipoBean.setMiembrosSeleccionados(new ArrayList<>());
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "miembros", "confirm");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), MIEMBROS, CONFIRM);
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
-        assertThat(nombre_paso).isEqualTo("miembros");
+        assertThat(nombre_paso).isEqualTo(MIEMBROS);
     }
     
     /**
@@ -504,11 +506,11 @@ public class EquiposBeanTest {
         User jefeSeleccionado = User.builder().username("potencialJefe").nombre("nombrePotencialJefe")
                 .apellido1("apellido1PotencialJefe").apellido2("apellido2PotencialJefe").build();
         equipoBean.setJefeSeleccionado(jefeSeleccionado);
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "miembros", "jefeEquipo");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), MIEMBROS, JEFEEQUIPO);
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        assertThat(nombre_paso).isEqualTo("jefeEquipo");
+        assertThat(nombre_paso).isEqualTo(JEFEEQUIPO);
         assertThat(equipoBean.getListadoPotencialesMiembros()).contains(jefeSeleccionado);
     }
     

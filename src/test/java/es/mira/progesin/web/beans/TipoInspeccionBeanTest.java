@@ -124,7 +124,7 @@ public class TipoInspeccionBeanTest {
      */
     @Test
     public void eliminarTipo_existeEnInspeccion() {
-        TipoInspeccion tipo = TipoInspeccion.builder().codigo("test").build();
+        TipoInspeccion tipo = TipoInspeccion.builder().codigo("codigo").build();
         when(inspeccionesService.existeByTipoInspeccion(tipo)).thenReturn(true);
         
         tipoInspeccionBean.eliminarTipo(tipo);
@@ -139,7 +139,7 @@ public class TipoInspeccionBeanTest {
      */
     @Test
     public void eliminarTipo_existeEnGuia() {
-        TipoInspeccion tipo = TipoInspeccion.builder().codigo("test").build();
+        TipoInspeccion tipo = TipoInspeccion.builder().codigo("cod").build();
         when(guiaService.existeByTipoInspeccion(tipo)).thenReturn(true);
         
         tipoInspeccionBean.eliminarTipo(tipo);

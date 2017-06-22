@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,12 +87,6 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Mock
     private Authentication authentication;
-    
-    /**
-     * Mock del objeto de parámetros de búsqueda.
-     */
-    @Mock
-    private SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda;
     
     /**
      * Mock del servicio del registro de actividad.
@@ -184,6 +179,21 @@ public class SolicitudDocPreviaBeanTest {
     private ArgumentCaptor<SolicitudDocumentacionPrevia> solicitudCaptor;
     
     /**
+     * Literal para pruebas.
+     */
+    private static final String CORREO = "correoDestinatario";
+    
+    /**
+     * Literal para pruebas.
+     */
+    private static final String DOCUMENTACION = "documentacion";
+    
+    /**
+     * Literal para pruebas.
+     */
+    private static final String APOYO = "apoyo";
+    
+    /**
      * Configuración inicial del test.
      */
     @Before
@@ -219,9 +229,8 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void crearSolicitud() {
         Inspeccion inspeccion = mock(Inspeccion.class);
-        String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+                .inspeccion(inspeccion).correoDestinatario(CORREO).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
@@ -240,9 +249,8 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void crearSolicitud_validacionInspeccionConTareasPendientes() {
         Inspeccion inspeccion = mock(Inspeccion.class);
-        String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+                .inspeccion(inspeccion).correoDestinatario(CORREO).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
@@ -261,14 +269,13 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void crearSolicitud_validacionUsuarioConTareasPendientes() {
         Inspeccion inspeccion = mock(Inspeccion.class);
-        String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+                .inspeccion(inspeccion).correoDestinatario(CORREO).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
         Inspeccion inspeccion2 = mock(Inspeccion.class);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoDestinatario))
+        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(CORREO))
                 .thenReturn(CuestionarioEnvio.builder().inspeccion(inspeccion2).build());
         
         solicitudDocPreviaBean.crearSolicitud();
@@ -283,9 +290,8 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void crearSolicitud_Excepcion() {
         Inspeccion inspeccion = mock(Inspeccion.class);
-        String correoDestinatario = "correoDestinatario";
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).correoDestinatario(correoDestinatario).build();
+                .inspeccion(inspeccion).correoDestinatario(CORREO).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         solicitudDocPreviaBean.setDocumentosSeleccionados(documentosSeleccionados);
@@ -369,7 +375,6 @@ public class SolicitudDocPreviaBeanTest {
         String ruta_vista = solicitudDocPreviaBean.visualizarSolicitud(solicitud);
         
         assertThat(ruta_vista).isNull();
-        ;
     }
     
     /**
@@ -508,12 +513,12 @@ public class SolicitudDocPreviaBeanTest {
         Inspeccion inspeccion = Inspeccion.builder().ambito(ambito).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "general", "documentacion");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), "general", DOCUMENTACION);
         
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
         verify(tipoDocumentacionService, times(1)).findByAmbito(ambito);
-        assertThat(nombre_paso).isEqualTo("documentacion");
+        assertThat(nombre_paso).isEqualTo(DOCUMENTACION);
     }
     
     /**
@@ -525,7 +530,7 @@ public class SolicitudDocPreviaBeanTest {
         Inspeccion inspeccion = Inspeccion.builder().ambito(ambito).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "general", "documentacion");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), "general", DOCUMENTACION);
         when(solicitudDocumentacionService.findNoFinalizadaPorInspeccion(inspeccion))
                 .thenReturn(mock(SolicitudDocumentacionPrevia.class));
         
@@ -537,15 +542,14 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#onFlowProcess(FlowEvent)}.
      */
-    @SuppressWarnings("unchecked")
     @Test
     public void onFlowProcess_pasoDocumentacionAApoyo() {
-        solicitudDocPreviaBean.setDocumentosSeleccionados(mock(List.class));
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "documentacion", "apoyo");
+        solicitudDocPreviaBean.setDocumentosSeleccionados(new ArrayList<>());
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), DOCUMENTACION, APOYO);
         
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
-        assertThat(nombre_paso).isEqualTo("apoyo");
+        assertThat(nombre_paso).isEqualTo(DOCUMENTACION);
     }
     
     /**
@@ -555,11 +559,11 @@ public class SolicitudDocPreviaBeanTest {
     public void onFlowProcess_pasoDocumentacionAApoyo_validacionSaltarPaso() {
         solicitudDocPreviaBean.setSkip(Boolean.TRUE);
         solicitudDocPreviaBean.setDocumentosSeleccionados(new ArrayList<>());
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "documentacion", "apoyo");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), DOCUMENTACION, APOYO);
         
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
-        assertThat(nombre_paso).isEqualTo("apoyo");
+        assertThat(nombre_paso).isEqualTo(APOYO);
     }
     
     /**
@@ -569,14 +573,14 @@ public class SolicitudDocPreviaBeanTest {
     public void onFlowProcess_pasoDocumentacionAApoyo_validacionDocumentosNoSeleccionados() {
         solicitudDocPreviaBean.setSkip(Boolean.FALSE);
         solicitudDocPreviaBean.setDocumentosSeleccionados(new ArrayList<>());
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "documentacion", "apoyo");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), DOCUMENTACION, APOYO);
         
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
-        assertThat(nombre_paso).isEqualTo("documentacion");
+        assertThat(nombre_paso).isEqualTo(DOCUMENTACION);
     }
     
     /**
@@ -584,7 +588,7 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void onFlowProcess_pasoApoyoAConfirm() {
-        FlowEvent event = new FlowEvent(mock(UIComponent.class), "apoyo", "confirm");
+        FlowEvent event = new FlowEvent(mock(UIComponent.class), APOYO, "confirm");
         
         String nombre_paso = solicitudDocPreviaBean.onFlowProcess(event);
         
@@ -663,12 +667,12 @@ public class SolicitudDocPreviaBeanTest {
     public void eliminarSolicitud_ConFechaEnvio_Logica() {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .fechaEnvio(new Date()).correoDestinatario("correoDestinatario").build();
+                .fechaEnvio(new Date()).correoDestinatario(CORREO).build();
         when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_JEFE_INSPECCIONES).build());
         
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
-        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(solicitud, "correoDestinatario");
+        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(solicitud, CORREO);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.name()));
     }
@@ -682,15 +686,15 @@ public class SolicitudDocPreviaBeanTest {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SimpleDateFormat sdf = solicitudDocPreviaBean.getSdf();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("10/1/2017"))
-                .correoDestinatario("correoDestinatario").build();
+                .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("10/1/2017")).correoDestinatario(CORREO)
+                .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         solicitudDocPreviaBean.setBackupFechaLimiteEnvio(sdf.parse("10/1/2017"));
         
         solicitudDocPreviaBean.modificarSolicitud();
         
         verify(solicitudDocumentacionService, times(1)).save(solicitud);
-        verify(correoElectronico, times(0)).envioCorreo(eq("correoDestinatario"), any(String.class), any(String.class));
+        verify(correoElectronico, times(0)).envioCorreo(eq(CORREO), any(String.class), any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
     }
@@ -704,15 +708,15 @@ public class SolicitudDocPreviaBeanTest {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SimpleDateFormat sdf = solicitudDocPreviaBean.getSdf();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("11/1/2017"))
-                .correoDestinatario("correoDestinatario").build();
+                .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("11/1/2017")).correoDestinatario(CORREO)
+                .build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         solicitudDocPreviaBean.setBackupFechaLimiteEnvio(sdf.parse("10/1/2017"));
         
         solicitudDocPreviaBean.modificarSolicitud();
         
         verify(solicitudDocumentacionService, times(1)).save(solicitud);
-        verify(correoElectronico, times(1)).envioCorreo(eq("correoDestinatario"), any(String.class), any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
     }
@@ -722,16 +726,15 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void enviarSolicitud_validacionUsuarioProvExiste() {
-        String correoDestinatario = "correoDestinatario";
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .correoDestinatario("correoDestinatario").build();
+                .correoDestinatario(CORREO).build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(userService.exists(correoDestinatario)).thenReturn(Boolean.TRUE);
+        when(userService.exists(CORREO)).thenReturn(Boolean.TRUE);
         
         solicitudDocPreviaBean.enviarSolicitud();
         
-        verify(userService, times(1)).exists(correoDestinatario);
+        verify(userService, times(1)).exists(CORREO);
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Envío abortado"),
                 any(String.class));
@@ -742,29 +745,26 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void enviarSolicitud() {
-        String correoDestinatario = "correoDestinatario";
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .correoDestinatario(correoDestinatario).asunto("asunto").build();
+                .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        when(userService.exists(correoDestinatario)).thenReturn(Boolean.FALSE);
-        @SuppressWarnings("unchecked")
-        Map<String, Map<String, String>> mapa = mock(Map.class);
+        when(userService.exists(CORREO)).thenReturn(Boolean.FALSE);
+        Map<String, Map<String, String>> mapa = new HashMap<>();
+        Map<String, String> submapa = new HashMap<>();
+        mapa.put("URLPROGESIN", submapa);
+        submapa.put(ambito.name(), "url");
         when(applicationBean.getMapaParametros()).thenReturn(mapa);
-        @SuppressWarnings("unchecked")
-        Map<String, String> submapa = mock(Map.class);
-        when(mapa.get("URLPROGESIN")).thenReturn(submapa);
-        when(submapa.get(ambito.name())).thenReturn("url");
         List<RoleEnum> listRoles = new ArrayList<>();
         listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
         listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
-        
+        when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
         solicitudDocPreviaBean.enviarSolicitud();
         
-        verify(userService, times(1)).exists(correoDestinatario);
+        verify(userService, times(1)).exists(CORREO);
         verify(solicitudDocumentacionService, times(1)).transaccSaveCreaUsuarioProv(eq(solicitud), any(User.class));
-        verify(correoElectronico, times(1)).envioCorreo(eq(correoDestinatario), any(String.class), contains("url"));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), contains("url"));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
@@ -776,16 +776,14 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void finalizarSolicitud() {
-        String correoDestinatario = "correoDestinatario";
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .correoDestinatario(correoDestinatario).asunto("asunto").build();
+                .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         
         solicitudDocPreviaBean.finalizarSolicitud();
         
-        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(eq(solicitud),
-                eq(correoDestinatario));
+        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(eq(solicitud), eq(CORREO));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
     }
@@ -795,11 +793,10 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Test
     public void noConformeSolicitud() {
-        String correoDestinatario = "correoDestinatario";
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
-                .correoDestinatario(correoDestinatario).asunto("asunto").build();
+                .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         @SuppressWarnings("unchecked")
         Map<String, Map<String, String>> mapa = mock(Map.class);
@@ -812,10 +809,8 @@ public class SolicitudDocPreviaBeanTest {
         
         solicitudDocPreviaBean.noConformeSolicitud(motivosNoConforme);
         
-        verify(solicitudDocumentacionService, times(1)).transaccSaveActivaUsuarioProv(eq(solicitud),
-                eq(correoDestinatario));
-        verify(correoElectronico, times(1)).envioCorreo(eq(correoDestinatario), any(String.class),
-                contains(motivosNoConforme));
+        verify(solicitudDocumentacionService, times(1)).transaccSaveActivaUsuarioProv(eq(solicitud), eq(CORREO));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), contains(motivosNoConforme));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
     }
@@ -870,8 +865,7 @@ public class SolicitudDocPreviaBeanTest {
     public void imprimirPdf() throws ProgesinException {
         SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
-        @SuppressWarnings("unchecked")
-        List<DocumentacionPrevia> listDoc = mock(List.class);
+        List<DocumentacionPrevia> listDoc = new ArrayList<>();
         solicitudDocPreviaBean.setListadoDocumentosPrevios(listDoc);
         
         solicitudDocPreviaBean.imprimirPdf();

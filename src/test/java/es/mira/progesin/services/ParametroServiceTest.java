@@ -26,6 +26,12 @@ import es.mira.progesin.persistence.repositories.IParametrosRepository;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ParametroServiceTest {
+    
+    /**
+     * Literal para la clave del mapa de parámetros.
+     */
+    private static final String EXTENSIONES = "extensiones";
+    
     /**
      * Simulación del repositorio de parámetros.
      */
@@ -62,14 +68,14 @@ public class ParametroServiceTest {
     public void getMapaParametros() {
         
         List<String> secciones = new ArrayList<>();
-        secciones.add("extensiones");
+        secciones.add(EXTENSIONES);
         
         List<Parametro> parametros = new ArrayList<>();
-        parametros.add(new Parametro(new ParametroId("extensiones", "DOC", "application/msword")));
-        parametros.add(new Parametro(new ParametroId("extensiones", "BMP", "image/bmp")));
+        parametros.add(new Parametro(new ParametroId(EXTENSIONES, "DOC", "application/msword")));
+        parametros.add(new Parametro(new ParametroId(EXTENSIONES, "BMP", "image/bmp")));
         
         when(paramRepository.findSecciones()).thenReturn(secciones);
-        when(paramRepository.findParamByParamSeccion("extensiones")).thenReturn(parametros);
+        when(paramRepository.findParamByParamSeccion(EXTENSIONES)).thenReturn(parametros);
         
         Map<String, Map<String, String>> actual = parametroService.getMapaParametros();
         
@@ -78,7 +84,7 @@ public class ParametroServiceTest {
         paramsSeccion.put("BMP", "image/bmp");
         
         Map<String, Map<String, String>> expected = new HashMap<>();
-        expected.put("extensiones", paramsSeccion);
+        expected.put(EXTENSIONES, paramsSeccion);
         
         assertThat(actual).isEqualTo(expected);
     }

@@ -16,7 +16,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
-import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
 
 /**
@@ -33,12 +32,6 @@ public class ModeloCuestionarioServiceTest {
      */
     @Mock
     private IModeloCuestionarioRepository modeloCuestionarioRepository;
-    
-    /**
-     * Simulación del repositorio de áreas de cuestionario.
-     */
-    @Mock
-    private IAreaCuestionarioRepository areaCuestionarioRepository;
     
     /**
      * Servicio de modelos de cuestionario.

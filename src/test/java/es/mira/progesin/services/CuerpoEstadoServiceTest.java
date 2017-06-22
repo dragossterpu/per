@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -47,20 +48,18 @@ public class CuerpoEstadoServiceTest {
     /**
      * Comprueba que la clase existe.
      * 
-     * @throws Exception Excepción lanzada
      */
     @Test
-    public void type() throws Exception {
+    public void type() {
         assertThat(CuerpoEstadoService.class).isNotNull();
     }
     
     /**
      * Comprueba que la clase se puede instanciar.
      * 
-     * @throws Exception Excepción lanzada
      */
     @Test
-    public void instantiation() throws Exception {
+    public void instantiation() {
         CuerpoEstadoService target = new CuerpoEstadoService();
         assertThat(target).isNotNull();
     }
@@ -82,6 +81,7 @@ public class CuerpoEstadoServiceTest {
         CuerpoEstado cuerpo = mock(CuerpoEstado.class);
         service.save(cuerpo);
         verify(repository, times(1)).save(cuerpo);
+        verify(applicationBean, times(1)).setListaCuerpos(ArgumentMatchers.anyList());
     }
     
     /**
@@ -104,6 +104,7 @@ public class CuerpoEstadoServiceTest {
         CuerpoEstado cuerpo = mock(CuerpoEstado.class);
         service.delete(cuerpo);
         verify(repository, times(1)).delete(cuerpo);
+        verify(applicationBean, times(1)).setListaCuerpos(ArgumentMatchers.anyList());
     }
     
 }

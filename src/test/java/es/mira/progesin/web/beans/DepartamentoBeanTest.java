@@ -113,7 +113,7 @@ public class DepartamentoBeanTest {
      */
     @Test
     public void eliminarDepartamento_conUsuarios() {
-        Departamento departamento = Departamento.builder().id(1L).descripcion("DepartamentoTest").build();
+        Departamento departamento = Departamento.builder().id(1L).descripcion("Departamento").build();
         when(userService.existsByDepartamento(departamento)).thenReturn(true);
         
         departamentoBean.eliminarDepartamento(departamento);
@@ -129,7 +129,7 @@ public class DepartamentoBeanTest {
     @Test
     public void eliminarDepartamento_sinUsuarios() {
         listaDepartamentos = new ArrayList<>();
-        Departamento departamento = Departamento.builder().id(1L).descripcion("DepartamentoTest").build();
+        Departamento departamento = Departamento.builder().id(1L).descripcion("Test").build();
         listaDepartamentos.add(departamento);
         departamentoBean.setListaDepartamentos(listaDepartamentos);
         when(userService.existsByDepartamento(departamento)).thenReturn(false);

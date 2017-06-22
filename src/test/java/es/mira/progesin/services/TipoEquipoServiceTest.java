@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -78,6 +79,7 @@ public class TipoEquipoServiceTest {
         TipoEquipo tEquipo = mock(TipoEquipo.class);
         tipoEquipoService.delete(tEquipo);
         verify(tipoEquipoRepository, times(1)).delete(tEquipo);
+        verify(applicationBean, times(1)).setListaTiposEquipo(ArgumentMatchers.anyList());
     }
     
     /**
@@ -88,6 +90,7 @@ public class TipoEquipoServiceTest {
         TipoEquipo tEquipo = mock(TipoEquipo.class);
         tipoEquipoService.save(tEquipo);
         verify(tipoEquipoRepository, times(1)).save(tEquipo);
+        verify(applicationBean, times(1)).setListaTiposEquipo(ArgumentMatchers.anyList());
     }
     
     /**

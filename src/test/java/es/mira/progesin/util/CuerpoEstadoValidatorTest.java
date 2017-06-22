@@ -74,8 +74,8 @@ public class CuerpoEstadoValidatorTest {
         
         when(component.getAttributes()).thenReturn(mapa);
         when(mapa.get("actualNombreCorto")).thenReturn(1);
-        when(value.toString()).thenReturn("Test");
-        when(cuerposEstadoService.existeByNombreCortoIgnoreCaseAndIdNotIn("Test", 1)).thenReturn(false);
+        when(value.toString()).thenReturn("prueba");
+        when(cuerposEstadoService.existeByNombreCortoIgnoreCaseAndIdNotIn("prueba", 1)).thenReturn(false);
         
         validador.validate(context, component, value);
         

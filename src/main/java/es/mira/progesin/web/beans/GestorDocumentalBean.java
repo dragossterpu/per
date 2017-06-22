@@ -147,6 +147,11 @@ public class GestorDocumentalBean implements Serializable {
     private LazyModelDocumentos model;
     
     /**
+     * Constante para evitar literales repetidos.
+     */
+    private static final String CARGAFICHEROS = "Carga de ficheros";
+    
+    /**
      * Inicializa el objeto.
      */
     @PostConstruct
@@ -234,7 +239,7 @@ public class GestorDocumentalBean implements Serializable {
                 registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.name(), e);
             }
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                     "Se ha producido un error en la descarga del fichero");
         }
     }
@@ -254,7 +259,7 @@ public class GestorDocumentalBean implements Serializable {
             if (verificadorExtensiones.extensionCorrecta(uFile)) {
                 documento = documentoService.cargaDocumentoSinGuardar(uFile, tipo, null);
             } else {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                         "La extensión del fichero '" + event.getFile().getFileName()
                                 + "' no corresponde a su tipo real");
                 registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",
@@ -263,7 +268,7 @@ public class GestorDocumentalBean implements Serializable {
             
         } catch (ProgesinException ex) {
             registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), ex);
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                     "Se ha producido un error en la cargad el fichero");
         }
     }
@@ -382,7 +387,7 @@ public class GestorDocumentalBean implements Serializable {
             documento.setInspeccion(listado);
             redireccion = "/gestorDocumental/editarDocumento?faces-redirect=true";
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Carga de ficheros",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                     "Se ha producido un error al acceder al documento");
         }
         return redireccion;

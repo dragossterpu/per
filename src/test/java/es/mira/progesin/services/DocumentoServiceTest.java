@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,12 +51,6 @@ import es.mira.progesin.util.FacesUtilities;
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ StreamUtils.class, FacesUtilities.class })
 public class DocumentoServiceTest {
-    
-    /**
-     * Mock de prueba de la Factoría de sesiones.
-     */
-    @Mock
-    private SessionFactory sessionFactory;
     
     /**
      * Mock de prueba del Servicio de registro de actividad.
@@ -167,7 +160,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#descargaDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.services.DocumentoService#descargaDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      * @throws SQLException lanza excepción
      * @throws ProgesinException lanza excepción
      */
@@ -216,7 +210,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#cargaDocumento(org.primefaces.model.UploadedFile, es.mira.progesin.persistence.entities.gd.TipoDocumento, es.mira.progesin.persistence.entities.Inspeccion)}.
+     * {@link es.mira.progesin.services.DocumentoService#cargaDocumento(org.primefaces.model.UploadedFile, es.mira.progesin.persistence.entities.gd.TipoDocumento, es.mira.progesin.persistence.entities.Inspeccion)}
+     * .
      * @throws IOException lanza excepción
      * @throws ProgesinException lanza excepción
      */
@@ -244,7 +239,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#cargaDocumentoSinGuardar(org.primefaces.model.UploadedFile, es.mira.progesin.persistence.entities.gd.TipoDocumento, es.mira.progesin.persistence.entities.Inspeccion)}.
+     * {@link es.mira.progesin.services.DocumentoService#cargaDocumentoSinGuardar(org.primefaces.model.UploadedFile, es.mira.progesin.persistence.entities.gd.TipoDocumento, es.mira.progesin.persistence.entities.Inspeccion)}
+     * .
      * @throws IOException excepción lanzada
      * @throws ProgesinException excepción lanzada
      */
@@ -278,7 +274,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#cargaDocumentoSinGuardar(org.primefaces.model.UploadedFile, es.mira.progesin.persistence.entities.gd.TipoDocumento, es.mira.progesin.persistence.entities.Inspeccion)}.
+     * {@link es.mira.progesin.services.DocumentoService#cargaDocumentoSinGuardar(org.primefaces.model.UploadedFile, es.mira.progesin.persistence.entities.gd.TipoDocumento, es.mira.progesin.persistence.entities.Inspeccion)}
+     * .
      * @throws IOException excepción lanzada
      * @throws ProgesinException excepción lanzada
      */
@@ -314,7 +311,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#buscarDocumentoPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.DocumentoBusqueda)}.
+     * {@link es.mira.progesin.services.DocumentoService#buscarDocumentoPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.DocumentoBusqueda)}
+     * .
      */
     @Test
     public final void testBuscarDocumentoPorCriteria() {
@@ -322,7 +320,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#obtieneNombreFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.services.DocumentoService#obtieneNombreFichero(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testObtieneNombreFichero() {
@@ -348,7 +347,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#recuperarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.services.DocumentoService#recuperarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testRecuperarDocumento() {
@@ -365,7 +365,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#listaInspecciones(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.services.DocumentoService#listaInspecciones(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testListaInspecciones() {
@@ -377,7 +378,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#perteneceACuestionario(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.services.DocumentoService#perteneceACuestionario(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testPerteneceACuestionario() {
@@ -389,7 +391,8 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#perteneceASolicitud(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.services.DocumentoService#perteneceASolicitud(es.mira.progesin.persistence.entities.gd.Documento)}
+     * .
      */
     @Test
     public final void testPerteneceASolicitud() {

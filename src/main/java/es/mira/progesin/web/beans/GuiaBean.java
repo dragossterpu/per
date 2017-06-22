@@ -146,6 +146,16 @@ public class GuiaBean {
     private ITipoInspeccionService tipoInspeccionService;
     
     /**
+     * Literal usado para mostrar mensaje de error.
+     */
+    private static final String GUIANOEXISTE = "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe";
+    
+    /**
+     * Literal usado para mostrar mensaje de error.
+     */
+    private static final String MODELOSGUIA = "Modelos de guía";
+    
+    /**
      * Busca las guías según los filtros introducidos en el formulario de búsqueda.
      * 
      */
@@ -170,8 +180,7 @@ public class GuiaBean {
             listaPasos = guiaService.listaPasos(guiaAux);
             redireccion = "/guias/visualizaGuia?faces-redirect=true";
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modelos de guía",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, MODELOSGUIA, GUIANOEXISTE);
         }
         return redireccion;
     }
@@ -220,8 +229,7 @@ public class GuiaBean {
             listaPasos = guiaService.listaPasosNoNull(guia);
             redireccion = "/guias/editarGuia?faces-redirect=true";
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modelos de guía",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, MODELOSGUIA, GUIANOEXISTE);
         }
         return redireccion;
     }
@@ -441,8 +449,7 @@ public class GuiaBean {
             listaPasos = guiaService.listaPasosNoNull(guiaAux);
             redireccion = "/guias/personalizarGuia?faces-redirect=true";
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modelos de guía",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, MODELOSGUIA, GUIANOEXISTE);
         }
         return redireccion;
     }
@@ -523,8 +530,7 @@ public class GuiaBean {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modelos de guía",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, MODELOSGUIA, GUIANOEXISTE);
         }
     }
     
@@ -539,10 +545,13 @@ public class GuiaBean {
             guiaBaja.setFechaBaja(new Date());
             guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             if (guiaService.guardaGuia(guiaBaja) != null) {
-                regActividadService.altaRegActividad(
-                        Constantes.LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
-                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                regActividadService
+                        .altaRegActividad(
+                                Constantes.LAGUIA
+                                        .concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
+                                                .concat(SecurityContextHolder.getContext().getAuthentication()
+                                                        .getName())),
+                                TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
         } catch (DataAccessException e) {
@@ -565,10 +574,13 @@ public class GuiaBean {
                 bajaLogica(guiaEliminar);
             } else {
                 guiaService.eliminar(guiaEliminar);
-                regActividadService.altaRegActividad(
-                        Constantes.LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
-                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                regActividadService
+                        .altaRegActividad(
+                                Constantes.LAGUIA
+                                        .concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
+                                                .concat(SecurityContextHolder.getContext().getAuthentication()
+                                                        .getName())),
+                                TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
         } catch (DataAccessException e) {
@@ -598,8 +610,7 @@ public class GuiaBean {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modelos de guía",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, MODELOSGUIA, GUIANOEXISTE);
         }
     }
     
