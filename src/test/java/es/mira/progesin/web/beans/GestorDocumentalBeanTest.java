@@ -13,7 +13,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,9 +31,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -49,8 +48,10 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
+import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.VerificadorExtensiones;
@@ -95,6 +96,18 @@ public class GestorDocumentalBeanTest {
     private IDocumentoService documentoService;
     
     /**
+     * Mock de prueba del Servicio de alertas.
+     */
+    @Mock
+    private IAlertaService alertaService;
+    
+    /**
+     * Mock de prueba del Servicio de notificaciones.
+     */
+    @Mock
+    private INotificacionService notificacionService;
+    
+    /**
      * Mock de prueba del Servicio de registro de actividad.
      */
     @Mock
@@ -131,7 +144,6 @@ public class GestorDocumentalBeanTest {
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
-        
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("usuarioLogueado");
@@ -173,9 +185,7 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testResetBusqueda() {
-        LazyModelDocumentos modelo = new LazyModelDocumentos(documentoService);
-        modelo.setRowCount(0);
-        gestorDocumentalBeanMock.setModel(modelo);
+        model = new LazyModelDocumentos(documentoService);
         String ruta = gestorDocumentalBeanMock.resetBusqueda();
         assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda()).isNotNull();
         assertThat(gestorDocumentalBeanMock.getModel().getRowCount()).isEqualTo(0);
@@ -200,17 +210,16 @@ public class GestorDocumentalBeanTest {
         Documento doc = new Documento();
         List<Documento> documentos = new ArrayList<>();
         documentos.add(doc);
-        LazyModelDocumentos modelo = new LazyModelDocumentos(documentoService);
-        modelo.setDatasource(documentos);
-        gestorDocumentalBeanMock.setModel(modelo);
+        model = new LazyModelDocumentos(documentoService);
+        model.setDatasource(documentos);
+        gestorDocumentalBeanMock.setDocumentoBusqueda(new DocumentoBusqueda());
         
-        DocumentoBusqueda docBusqueda = new DocumentoBusqueda();
-        gestorDocumentalBeanMock.setDocumentoBusqueda(docBusqueda);
-        // String ruta = gestorDocumentalBeanMock.resetBusquedaEliminados();
-        // assertThat(gestorDocumentalBeanMock.getListaInspecciones()).isNotNull();
-        // assertThat(gestorDocumentalBeanMock.getNombreDoc()).isEqualTo("");
-        // assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda().isEliminado()).isTrue();
-        // assertThat(ruta).isEqualTo("/administracion/papelera/papelera?faces-redirect=true");
+        String ruta = gestorDocumentalBeanMock.resetBusquedaEliminados();
+        assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda()).isNotNull();
+        assertThat(gestorDocumentalBeanMock.getListaInspecciones()).isNotNull();
+        assertThat(gestorDocumentalBeanMock.getNombreDoc()).isEqualTo("");
+        assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda().isEliminado()).isTrue();
+        assertThat(ruta).isEqualTo("/administracion/papelera/papelera?faces-redirect=true");
     }
     
     /**
@@ -219,6 +228,13 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testOnToggle() {
+        ToggleEvent eventMock = mock(ToggleEvent.class);
+        when(eventMock.getData()).thenReturn(0);
+        List<Boolean> listaToogle = new ArrayList<>();
+        listaToogle.add(Boolean.FALSE);
+        gestorDocumentalBeanMock.setList(listaToogle);
+        gestorDocumentalBeanMock.onToggle(eventMock);
+        assertThat(listaToogle.get(0)).isFalse();
     }
     
     /**
@@ -228,10 +244,6 @@ public class GestorDocumentalBeanTest {
     public final void testRecargaLista() {
         DocumentoBusqueda busqueda = new DocumentoBusqueda();
         gestorDocumentalBeanMock.setDocumentoBusqueda(busqueda);
-        List<Documento> documentos = new ArrayList<>();
-        when(model.getDatasource()).thenReturn(documentos);
-        when(model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null)).thenReturn(documentos);
-        
         gestorDocumentalBeanMock.recargaLista();
         assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda().isEliminado()).isFalse();
     }
@@ -241,11 +253,15 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testRecargaListaEliminados() {
+        DocumentoBusqueda busqueda = new DocumentoBusqueda();
+        gestorDocumentalBeanMock.setDocumentoBusqueda(busqueda);
+        gestorDocumentalBeanMock.recargaListaEliminados();
+        assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda().isEliminado()).isTrue();
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
      * .
      * @throws ProgesinException excepción lanzada
      */
@@ -254,12 +270,12 @@ public class GestorDocumentalBeanTest {
         Documento doc1 = new Documento();
         doc1.setId(2L);
         DefaultStreamedContent defaultStreamedContent = mock(DefaultStreamedContent.class);
-        when(documentoService.descargaDocumento(doc1)).thenReturn(defaultStreamedContent);
         when(documentoService.findOne(doc1.getId())).thenReturn(doc1);
+        when(documentoService.descargaDocumento(doc1)).thenReturn(defaultStreamedContent);
         gestorDocumentalBeanMock.descargarFichero(doc1);
-        StreamedContent file = gestorDocumentalBeanMock.getFile();
-        assertThat(file).isNotNull();
-        assertThat(file).isInstanceOf(DefaultStreamedContent.class);
+        
+        assertThat(gestorDocumentalBeanMock.getFile()).isNotNull();
+        assertThat(gestorDocumentalBeanMock.getFile()).isInstanceOf(DefaultStreamedContent.class);
         verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.name()),
                 any(ProgesinException.class));
         
@@ -267,7 +283,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
      * .
      * @throws ProgesinException excepción lanzada
      */
@@ -276,12 +292,11 @@ public class GestorDocumentalBeanTest {
         Documento doc1 = new Documento();
         doc1.setId(2L);
         ProgesinException progesinException = new ProgesinException(new Exception(""));
+        when(documentoService.findOne(doc1.getId())).thenReturn(doc1);
         
         when(documentoService.descargaDocumento(doc1)).thenThrow(progesinException);
-        when(documentoService.findOne(doc1.getId())).thenReturn(doc1);
         gestorDocumentalBeanMock.descargarFichero(doc1);
-        StreamedContent file = gestorDocumentalBeanMock.getFile();
-        assertThat(file).isNull();
+        assertThat(gestorDocumentalBeanMock.getFile()).isNull();
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
@@ -292,8 +307,26 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#cargaFichero(org.primefaces.event.FileUploadEvent)}.
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * .
      * @throws ProgesinException excepción lanzada
+     */
+    @Test()
+    public final void testDescargarFicheroNoExiste() throws ProgesinException {
+        Documento doc1 = new Documento();
+        doc1.setId(2L);
+        when(documentoService.findOne(doc1.getId())).thenReturn(null);
+        gestorDocumentalBeanMock.descargarFichero(doc1);
+        assertThat(gestorDocumentalBeanMock.getFile()).isNull();
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
+                any(String.class));
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#cargaFichero(org.primefaces.event.FileUploadEvent)}. .
+     * @throws ProgesinException posible excepción
      */
     @Test()
     public final void testCargaFichero() throws ProgesinException {
@@ -379,16 +412,18 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      * .
      */
     @Test
     public final void testEliminarDocumento() {
+        gestorDocumentalBeanMock.setDocumentoBusqueda(new DocumentoBusqueda());
         Documento doc = spy(Documento.class);
-        doc.setFechaBaja(new Date());
-        doc.setUsernameBaja("user_test");
+        doc.setId(2L);
         when(documentoService.save(doc)).thenReturn(doc);
-        // TODO. Falta
+        gestorDocumentalBeanMock.eliminarDocumento(doc);
+        assertThat(doc.getFechaBaja()).isNotNull();
+        assertThat(doc.getUsernameBaja()).isEqualTo("usuarioLogueado");
     }
     
     /**
@@ -396,6 +431,9 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testLimpiarBusqueda() {
+        gestorDocumentalBeanMock.limpiarBusqueda();
+        assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda()).isNotNull();
+        assertThat(gestorDocumentalBeanMock.getModel().getRowCount()).isEqualTo(0);
     }
     
     /**
@@ -458,8 +496,8 @@ public class GestorDocumentalBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#autocompletarInspeccion(java.lang.String)}
-     * .
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#autocompletarInspeccion(java.lang.String)}. .
      */
     @Test
     public final void testAutocompletarInspeccion() {
@@ -473,7 +511,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
      * .
      */
     @Test
@@ -485,10 +523,6 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         
         Documento doc = new Documento();
-        doc.setDescripcion(descripcionTest);
-        doc.setNombre(nombreDocTest);
-        doc.setTipoDocumento(tipoDocTest);
-        doc.setMateriaIndexada(materiaIndexadaTest);
         gestorDocumentalBeanMock.setDocumento(doc);
         when(documentoService.save(doc)).thenReturn(doc);
         
@@ -497,11 +531,11 @@ public class GestorDocumentalBeanTest {
         List<Documento> documentos = new ArrayList<>();
         when(model.getDatasource()).thenReturn(documentos);
         when(model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null)).thenReturn(documentos);
-        
         PowerMockito.mockStatic(RequestContext.class);
         when(RequestContext.getCurrentInstance()).thenReturn(requestContext);
         doNothing().when(requestContext).reset("formAlta:asociado");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
+        
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.GESTOR.getDescripcion()), any(String.class));
@@ -509,18 +543,19 @@ public class GestorDocumentalBeanTest {
         assertThat(gestorDocumentalBeanMock.getDocumento().getTipoDocumento()).isEqualTo(tipoDocTest);
         assertThat(gestorDocumentalBeanMock.getDocumento().getDescripcion()).isEqualTo(descripcionTest);
         assertThat(gestorDocumentalBeanMock.getDocumento().getMateriaIndexada()).isEqualTo(materiaIndexadaTest);
+        assertThat(gestorDocumentalBeanMock.getDocumento().getFechaBaja()).isNull();
         assertThat(gestorDocumentalBeanMock.getNombreDoc()).isEqualTo("");
         assertThat(gestorDocumentalBeanMock.getListaInspecciones()).isNotNull();
         assertThat(gestorDocumentalBeanMock.getListaInspecciones()).isEmpty();
         assertThat(gestorDocumentalBeanMock.getDocumento()).isEqualTo(doc);
         
-        verify(registroActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
+        verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(DataAccessException.class));
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
      * .
      */
     @Test
@@ -532,12 +567,8 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         
         Documento doc = new Documento();
-        doc.setDescripcion(descripcionTest);
-        doc.setNombre(nombreDocTest);
-        doc.setTipoDocumento(tipoDocTest);
-        doc.setMateriaIndexada(materiaIndexadaTest);
         gestorDocumentalBeanMock.setDocumento(doc);
-        DataAccessException exception = new DataAccessException("t") {
+        DataAccessException exception = new DataAccessException("exception_test") {
             private static final long serialVersionUID = 1L;
         };
         when(documentoService.save(doc)).thenThrow(exception);
@@ -549,7 +580,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
      * .
      */
     @Test
@@ -568,7 +599,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#editarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#editarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      * .
      */
     @Test
@@ -578,16 +609,39 @@ public class GestorDocumentalBeanTest {
         inspecciones.add(i1);
         Documento docTest = new Documento();
         docTest.setId(2L);
-        gestorDocumentalBeanMock.setDocumento(docTest);
         when(documentoService.findOne(docTest.getId())).thenReturn(docTest);
         when(documentoService.obtieneNombreFichero(docTest)).thenReturn("nombreFichero_Test");
         when(documentoService.listaInspecciones(docTest)).thenReturn(inspecciones);
         String ruta = gestorDocumentalBeanMock.editarDocumento(docTest);
+        assertThat(gestorDocumentalBeanMock.getDocumento()).isEqualTo(docTest);
+        assertThat(gestorDocumentalBeanMock.getNombreDoc()).isEqualTo("nombreFichero_Test");
+        assertThat(gestorDocumentalBeanMock.getDocumento().getInspeccion()).isEqualTo(inspecciones);
         assertThat(ruta).isEqualTo("/gestorDocumental/editarDocumento?faces-redirect=true");
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#modificaDocumento()}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#editarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * .
+     */
+    @Test
+    public final void testEditarDocumentoNoExiste() {
+        List<Inspeccion> inspecciones = new ArrayList<>();
+        Inspeccion i1 = mock(Inspeccion.class);
+        inspecciones.add(i1);
+        Documento docTest = new Documento();
+        docTest.setId(2L);
+        when(documentoService.findOne(docTest.getId())).thenReturn(null);
+        String ruta = gestorDocumentalBeanMock.editarDocumento(docTest);
+        assertThat(gestorDocumentalBeanMock.getDocumento()).isNull();
+        assertThat(ruta).isNull();
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
+                any(String.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#modificaDocumento()}. .
      */
     @Test
     public final void testModificaDocumento() {
@@ -606,8 +660,29 @@ public class GestorDocumentalBeanTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#modificaDocumento()}. .
+     */
+    @Test
+    public final void testModificaDocumentoException() {
+        DataAccessException exception = new DataAccessException("exception_test") {
+            private static final long serialVersionUID = 1L;
+        };
+        Documento docTest = new Documento();
+        docTest.setId(2L);
+        gestorDocumentalBeanMock.setDocumento(docTest);
+        when(documentoService.save(docTest)).thenThrow(exception);
+        gestorDocumentalBeanMock.modificaDocumento();
+        
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR),
+                eq(SeccionesEnum.GESTOR.getDescripcion()), any(String.class));
+        verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
+                any(DataAccessException.class));
+    }
+    
+    /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
      * .
      */
     @Test
@@ -629,7 +704,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
      * .
      */
     @Test
@@ -651,7 +726,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#desAsociarInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#desAsociarInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}.
      * .
      */
     @Test
@@ -676,7 +751,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#recuperarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#recuperarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      * .
      */
     @Test
@@ -688,7 +763,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      * .
      */
     @Test
@@ -713,8 +788,7 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
-     * .
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#borrarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      */
     @Test
     public final void testBorrarDocumentoException() {
