@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document.OutputSettings.Syntax;
 import org.primefaces.model.DefaultStreamedContent;
 
 import com.itextpdf.text.Document;
@@ -47,10 +45,10 @@ public final class HtmlPdfGenerator {
     }
     
     /**
-     * Genera archivo PDF a partir de un documento en HTML.
+     * Genera archivo PDF a partir de un documento en XHTML.
      * 
      * @param nombreDocumento nombre del archivo
-     * @param documentoHTML documento en formato HTML
+     * @param documentoXHTML documento en formato XHTML
      * @param fechaFinalizacion fecha en que se termino el informe
      * @param titulo título del pdf
      * @param imagenPortada fondo de la portada
@@ -58,7 +56,7 @@ public final class HtmlPdfGenerator {
      * @return archivo PDF
      * @throws ProgesinException al manejar archivos y generar el PDF
      */
-    public static DefaultStreamedContent generarInformePdf(String nombreDocumento, String documentoHTML, String titulo,
+    public static DefaultStreamedContent generarInformePdf(String nombreDocumento, String documentoXHTML, String titulo,
             String fechaFinalizacion, String imagenPortada, String autor) throws ProgesinException {
         
         DefaultStreamedContent pdfStream = null;
@@ -110,9 +108,6 @@ public final class HtmlPdfGenerator {
             XMLWorker worker = new XMLWorker(css, true);
             XMLParser parser = new XMLParser(worker);
             
-            // Asegurarse de que es XHTML
-            String documentoXHTML = limpiarHtml(documentoHTML);
-            
             // Volcar XHTML en el PDF
             parser.parse(new ByteArrayInputStream(documentoXHTML.getBytes()));
             
@@ -152,21 +147,10 @@ public final class HtmlPdfGenerator {
             document.setMargins(0, 0, 0, 0);
             document.newPage();
             document.add(png);
+            // TODO incluir título y fecha finalización encima de la imagen de fondo.
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
-    }
-    
-    /**
-     * Limpia el html pasado como parámetro para cerrar todas las etiquetas que haya sin cerrar.
-     * 
-     * @param html html a limpiar
-     * @return html limpio, con todas las etiquetas cerradas
-     */
-    private static String limpiarHtml(String html) {
-        final org.jsoup.nodes.Document document = Jsoup.parse(html);
-        document.outputSettings().syntax(Syntax.xml);
-        return document.html();
     }
     
 }

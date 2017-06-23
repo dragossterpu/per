@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document.OutputSettings.Syntax;
+
 import es.mira.progesin.constantes.Constantes;
 
 /**
@@ -98,6 +101,18 @@ public class Utilities {
     public static String getFechaFormateada(Date date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
+    }
+    
+    /**
+     * Limpia el html pasado como parámetro para cerrar todas las etiquetas que haya sin cerrar.
+     * 
+     * @param html html a limpiar
+     * @return html limpio, con todas las etiquetas cerradas
+     */
+    public static String limpiarHtml(String html) {
+        final org.jsoup.nodes.Document document = Jsoup.parse(html);
+        document.outputSettings().syntax(Syntax.xml);
+        return document.html();
     }
     
 }

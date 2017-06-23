@@ -29,6 +29,7 @@ import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.HtmlPdfGenerator;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -174,7 +175,7 @@ public class InformeBean implements Serializable {
             try {
                 mapaRespuestas.put(respuesta.getSubarea(), new String(respuesta.getTexto(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         "Se ha producido un error en la recuperación del texto");
                 regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
             }
@@ -193,18 +194,18 @@ public class InformeBean implements Serializable {
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
             e.printStackTrace();
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar el informe");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
         }
     }
     
     /**
-     * Genera HTML con los datos del informe.
+     * Genera XHTML con los datos del informe.
      * 
      * @return texto completo del informe
      */
-    private String obtenerDatosInformeConEstilo() {
+    private String generarInformeXHTML() {
         StringBuilder informeFormateado = new StringBuilder();
         informeFormateado.append("<div class=\"ql-snow ql-editor\">");
         modeloInforme.getAreas().forEach(area -> {
@@ -219,7 +220,10 @@ public class InformeBean implements Serializable {
             });
         });
         informeFormateado.append("</div>");
-        return informeFormateado.toString();
+        
+        // Asegurarse de que es XHTML
+        String informeXHTML = Utilities.limpiarHtml(informeFormateado.toString());
+        return informeXHTML;
     }
     
     /**
@@ -229,7 +233,7 @@ public class InformeBean implements Serializable {
         try {
             String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
                     informe.getInspeccion().getAnio());
-            String informeHTML = obtenerDatosInformeConEstilo();
+            String informeXHTML = generarInformeXHTML();
             String titulo = String.format("Inspección realizada a la %s de la %s de %s",
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
@@ -237,11 +241,11 @@ public class InformeBean implements Serializable {
             String fechaFinalizacion = sdf.format(informe.getFechaFinalizacion());
             String imagenPortada = Constantes.PORTADAINFORME;
             String autor = informe.getUsernameFinalizacion();
-            setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeHTML, titulo, fechaFinalizacion,
+            setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
                     imagenPortada, autor));
         } catch (ProgesinException e) {
             e.printStackTrace();
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del PDF");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
         }
