@@ -57,12 +57,6 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAEVALUACIONRIESGOSGC', 'Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAEVALUACIONRIESGOSGC', 'Observaciones');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONRIESGOSINFRAPN', 'Unidad/es o Personal que han recibido la formación');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONRIESGOSINFRAPN', 'Cursos, jornadas etc. Título.');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONRIESGOSINFRAPN', 'Nº de asistentes');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONRIESGOSINFRAPN', 'Fecha');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONRIESGOSINFRAPN', 'Total de Horas');
-
 --insert modelo
 
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'INFRA_PN','INFRAESTRUCTURA E INSTALACIONES PN');
@@ -224,7 +218,13 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros elementos. Inhibidores de frecuencias (perturbadores de onda): Cantidad. Lugar de ubicación/instalación (Cubierta, fachada principal, etc.) y si es accionable desde Control de Seguridad.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAINHIBIDORESFRECCUENCIAS', 26);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros elementos. Necesidades/mejoras/sugerencias relativas a medidas de seguridad.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 27);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros elementos. Empresa de mantenimiento del equipo de CCTV.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 26);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros elementos. Carteles de “Zona videovigilada” (ubicación).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 27);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros elementos. Copia revisión del scaner y arco de seguridad.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Otros elementos. Necesidades/mejoras/sugerencias relativas a medidas de seguridad.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 29);
 
 
 --insert área
@@ -266,11 +266,11 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Participación y representación. Comité de Seguridad y Salud y Comité Territorial de Seguridad y Salud Laboral. Número total de componentes (Administración y Delegados de Prevención) y número de los adscritos a esta plantilla (en el supuesto de que la unidad inspeccionada no sea la JSP).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 9);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Participación y representación. Comité de Seguridad y Salud y Comité Territorial de Seguridad y Salud Laboral. Aportar última acta de ambos (Creo que actualmente esto ya se pide en el primer envío que se les hace a las plantillas).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Participación y representación. Comité de Seguridad y Salud y Comité Territorial de Seguridad y Salud Laboral. Aportar última acta de ambos.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 10);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información. Medios utilizados para facilitar información de los riesgos detectados en las Evaluaciones de Riesgos al personal de la Unidad /Comisaría evaluada.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 11);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información. ¿Queda constancia documental o por otro medio de prueba, de que la información ha sido recibida por el funcionario afectado?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOADJUNTOSINO', 12);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Información. ¿Queda constancia documental o por otro medio de prueba, de que la información ha sido recibida por el funcionario afectado?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 12);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Formación en materia Preventiva recibida por los componentes de las  Unidades objeto de Inspección en los dos últimos años' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAFORMACIONRIESGOSINFRAPN', 13);
 
@@ -307,6 +307,12 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Área de detención. Techo: No debe tener doble escayola. De obra de hormigón, revestido con pintura plástica resistente y lavable. Sin cajas de electricidad, cables, enchufes, bombillas, ni otros accesorios.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 7);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Área de detención. Ventanas al exterior y su ubicación.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Área de detención. Mirillas y rejillas ventilación en puertas o tabiques.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Área de detención. Tipo de cerradura (cerrojos, candados, embutidas, superpuestas, llaves maestras)' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Área de detención. Paramentos celdas (lisos o alicatados).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 8);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Área de detención. Suelos celdas (terrazo, liso, etc. Sin bordillo).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 9);
 
@@ -382,7 +388,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 --insert área
 Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'GALERÍA DE TIRO', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 6);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En el supuesto de que su estado sea deficiente, explicar las causas y las gestiones efectuadas para paliarlo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ubicación  y estado genera1 ( Bien, aceptable, deficiente). En el supuesto de que su estado sea deficiente, explicar las causas y las gestiones efectuadas para paliarlo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Longitud y anchura de la instalación.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 1);
 
