@@ -57,6 +57,12 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAEVALUACIONRIESGOSGC', 'Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAEVALUACIONRIESGOSGC', 'Observaciones');
 
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONRIESGOSINFRAPN', 'Unidad/es o Personal que han recibido la formación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONRIESGOSINFRAPN', 'Cursos, jornadas etc. Título.');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONRIESGOSINFRAPN', 'Nº de asistentes');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONRIESGOSINFRAPN', 'Fecha');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONRIESGOSINFRAPN', 'Total de Horas');
+
 --insert modelo
 
 Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'INFRA_PN','INFRAESTRUCTURA E INSTALACIONES PN');
@@ -91,7 +97,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Cornisas, terrazas, etc.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 24);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Canalones y bajantes', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 25);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Paramentos interiores (paredes, suelos y techos)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 26);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Otros', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 27);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Otros', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 27);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias, sólo sede inspeccionada: Deficiencias. Caso de que adolezca de graves deficiencias, tanto estructurales y técnicas como operativas, reflejar si existe algún estudio o proyecto encaminado a subsanarlas, bien sea a iniciativa del Centro Directivo, bien de otros entes territoriales (Ayuntamiento, Diputación, Comunidad Autónoma, etc.).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 28);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Obras de mejora o de creación de nuevas infraestructuras realizadas durante los dos años últimos, con indicación del coste por cada una de ellas y su fuente de financiación (por cada sede).', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 29);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Con las mismas consideraciones, obras previstas de realizar en el presente año.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 30);
@@ -103,7 +109,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 En el supuesto de que haya un contrato con una empresa para el mantenimiento preventivo, correctivo y/o técnico legal de las dependencias (albañilería, fontanería, jardinería, calefacción, ascensores, etc.)
 ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMANTENIMIENTOINMUEBLE', 34);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZLIMPIEZASEDE', 35);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias: ¿Disponen de copia del contrato de limpieza y/o del Pliego de las prescripciones técnicas del mismo? ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 36);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias: ¿Disponen de copia del contrato de limpieza y/o del Pliego de las prescripciones técnicas del mismo? ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 36);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias: En caso negativo ¿se conocen las condiciones de prestación de este servicio?', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 37);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias: Número de trabajadores y horario (Por parte de la empresa y otro tipo de personal de limpieza)
 ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 38);
@@ -408,9 +414,9 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Para la realización de la limpieza de la instalación ¿se emplea aspiradora con función seco/mojado y filtro de partículas tipo HEPA (filtro de aire de alta eficiencia para partículas)?  Y  el personal de la limpieza conoce la Instrucción IOPR004, (Normas a seguir en las actividades de limpieza con riesgo de exposición al plomo y sus compuestos)?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 9);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Se dispone del suficiente material: dianas, siluetas, parches, gafas y cascos protectores, etc., para el normal desarrollo de las actividades de la galería? En caso negativo, indicar de qué medios se carece, causas y gestiones.?' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 10);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Se dispone del suficiente material: dianas, siluetas, parches, gafas y cascos protectores, etc., para el normal desarrollo de las actividades de la galería? En caso negativo, indicar de qué medios se carece, causas y gestiones.?' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 11);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Existe señalización a la entrada de la galería del uso obligatorio de cascos y gafas protectoras homologadas?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Existe señalización a la entrada de la galería del uso obligatorio de cascos y gafas protectoras homologadas?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 10);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Se cuenta con sistema de extracción/ventilación de aire forzado en buen estado de funcionamento?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 12);
 

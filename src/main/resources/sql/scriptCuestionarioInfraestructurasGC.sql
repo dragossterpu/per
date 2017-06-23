@@ -170,11 +170,11 @@ insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'camp
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'COMANDANCIA DE … UNIDADES');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. CCTV');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. Alarma anti-intrusismos');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. Cierre perimetral');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. Cajas Fuertes o Seguridad');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Puertas (*) (modalidad)');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Patrullas fijas');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. Alarma anti-intrusismo');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. Cierre perimetral');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS TÉCNICO-FÍSICAS. Cajas Fuertes o Seguridad');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Puertas (*) (modalidad)');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo08', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Patrullas fijas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Patrullas esporádicas');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZCAMARASCCTV', 'Fijas');
@@ -222,13 +222,13 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo06', 'TABLAEVALUACIONRIESGOSGC', 'Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAEVALUACIONRIESGOSGC', 'Observaciones');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONRIESGOSINFRAGC1', 'Unidad/es que han recibido la formación');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONRIESGOSINFRAGC1', 'Componente');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONRIESGOSINFRAGC1', 'Cursos, jornadas etc. Título.');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONRIESGOSINFRAGC1', 'Fecha');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONRIESGOSINFRAGC1', 'Horas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo05', 'TABLAFORMACIONRIESGOSINFRAGC1', 'Organismo que ha impartido la materia');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONRIESGOSINFRAGC2', 'Componente');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLAFORMACIONRIESGOSINFRAGC2', 'Unidad/es que han recibido la formación');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLAFORMACIONRIESGOSINFRAGC2', 'Cursos, jornadas etc. Título.');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLAFORMACIONRIESGOSINFRAGC2', 'Nº de asistentes');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLAFORMACIONRIESGOSINFRAGC2', 'Fecha');
@@ -239,8 +239,8 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombre
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZACCIDENTESLABORALES', 'MAS DE CUATRO TRABAJADORES CON LESIONES CARÁCTER  LEVE (en el mismo accidente)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila04', 'MATRIZACCIDENTESLABORALES', 'LEVES');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila05', 'MATRIZACCIDENTESLABORALES', 'TOTAL');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZACCIDENTESLABORALES', 'Último año. ACCIDENTES');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZACCIDENTESLABORALES', 'Úlimo año. ACCIDENTADOS');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'MATRIZACCIDENTESLABORALES', 'Último año. ACCIDENTES');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'MATRIZACCIDENTESLABORALES', 'Úlimo año. ACCIDENTADOS');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZACCIDENTESLABORALES', 'Penúltimo año. ACCIDENTES');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'MATRIZACCIDENTESLABORALES', 'Penúltimo año. ACCIDENTADOS');
 
@@ -281,7 +281,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Plan de Seguridad y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Plan de emergencias y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Plan de evacuación de calabozos y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
-
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Libro organización', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación del libro de Normas de Régimen Interior y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 22);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 23);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente. Viviendas logísticas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 24);
@@ -503,7 +503,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 --insert área
 Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'GALERÍA DE TIRO (solo sede Unidad Inspeccionada)', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 4);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ubicación  y estado genera1 (Bien, aceptable, deficiente). En el supuesto de que su estado sea deficiente, explicar las causas y las gestiones efectuadas para paliarlo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ubicación  y estado general (Bien, aceptable, deficiente). En el supuesto de que su estado sea deficiente, explicar las causas y las gestiones efectuadas para paliarlo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Longitud y anchura de la instalación.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 1);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ubicación y  superficie de las dependencias auxiliares de la galería de tiro: cabina del instructor, almacén de material de la galería, etc.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 2);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Número de puestos de tirador.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 3);
@@ -513,8 +513,8 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Posee sistema de variación lumínica?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 7);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Existe megafonía para dirigir a los tiradores desde la cabina del instructor?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 8);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Para la realización de la limpieza de la instalación ¿se emplea aspiradora con función seco/mojado y filtro de partículas tipo HEPA (filtro de aire de alta eficiencia para partículas)?  Y  el personal de la limpieza conoce la Instrucción IOPR004, (Normas a seguir en las actividades de limpieza con riesgo de exposición al plomo y sus compuestos).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 9);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Se dispone del suficiente material: dianas, siluetas, parches, gafas y cascos protectores, etc., para el normal desarrollo de las actividades de la galería? En caso negativo, indicar de qué medios se carece, causas y gestiones.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 10);
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Existe señalización a la entrada de la galería del uso obligatorio de cascos y gafas protectoras homologadas?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Se dispone del suficiente material: dianas, siluetas, parches, gafas y cascos protectores, etc., para el normal desarrollo de las actividades de la galería? En caso negativo, indicar de qué medios se carece, causas y gestiones.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 11);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Existe señalización a la entrada de la galería del uso obligatorio de cascos y gafas protectoras homologadas?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 10);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Se cuenta con sistema de extracción/ventilación de aire forzado en buen estado de funcionamiento?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 12);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, '¿Las condiciones de temperatura, humedad, iluminación y ventilación son adecuadas? ¿Disponen de algún equipo para esta medida? Si la respuesta es negativa, indicar las causas y gestiones realizadas para solventar el problema.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 13);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En el caso de que se comparta el uso de estas instalaciones, indicar qué otras FFCCS las utilizan y si existe un protocolo o acuerdo firmado para ello.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 14);
