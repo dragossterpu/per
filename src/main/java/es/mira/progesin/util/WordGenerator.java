@@ -503,7 +503,7 @@ public class WordGenerator {
      */
     private void crearRespuestaTablaMatriz(XWPFDocument doc, PreguntasCuestionario pregunta) {
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
-                .findColumnasBySeccion(pregunta.getTipoRespuesta());
+                .findByConfigSeccionOrderByConfigClaveAsc(pregunta.getTipoRespuesta());
         
         XWPFTable table;
         if (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)) {
