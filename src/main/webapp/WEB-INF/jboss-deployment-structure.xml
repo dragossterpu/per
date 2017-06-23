@@ -1,0 +1,11 @@
+<!-- 
+    JBoss AS7 has a class loading mechanism which is different from previous versions. 
+    This includes a module named javax.xml.bind.api; to get docx4j working in your WAR.
+-->
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
+    <deployment>
+        <dependencies>
+            <module name="com.sun.xml.bind" />
+       </dependencies>
+    </deployment>
+</jboss-deployment-structure>

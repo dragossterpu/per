@@ -4,7 +4,10 @@
         <h:form id="informe">
 
             <h:outputStylesheet library="primefaces" name="texteditor/texteditor.css" />
-
+            <h:commandLink style="float: right;" actionListener="#{informeBean.crearInformeDOCX()}">
+                <p:graphicImage value="/images/doc.png" style="padding: 0" />
+                <p:fileDownload value="#{informeBean.file}" />
+            </h:commandLink>
             <h:commandLink style="float: right;" actionListener="#{informeBean.crearInformePDF()}">
                 <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                 <p:fileDownload value="#{informeBean.file}" />

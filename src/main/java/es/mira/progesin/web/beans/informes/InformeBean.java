@@ -28,6 +28,7 @@ import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.HtmlDocxGenerator;
 import es.mira.progesin.util.HtmlPdfGenerator;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -252,19 +253,28 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Crea un archivo DOC con los datos del informe.
-     * 
-     * @param inform cumplimentado por los inspectores
+     * Crea un archivo DOCX con los datos del informe.
      */
-    public void crearInformeDOC(Informe inform) {
-        // try {
-        // // setFile(htmlDocGenerator.generarInformeDoc(inform));
-        // } catch (IOException | DocumentException e) {
-        // // e.printStackTrace();
-        // // FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR",
-        // // "Se ha producido un error en la generación del DOC");
-        // regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
-        // }
+    public void crearInformeDOCX() {
+        try {
+            String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
+                    informe.getInspeccion().getAnio());
+            String informeXHTML = generarInformeXHTML();
+            String titulo = String.format("Inspección realizada a la %s de la %s de %s",
+                    informe.getInspeccion().getTipoUnidad().getDescripcion(),
+                    informe.getInspeccion().getAmbito().getDescripcion(),
+                    informe.getInspeccion().getMunicipio().getName());
+            String fechaFinalizacion = sdf.format(informe.getFechaFinalizacion());
+            String imagenPortada = Constantes.PORTADAINFORME;
+            String autor = informe.getUsernameFinalizacion();
+            setFile(HtmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                    imagenPortada, autor));
+        } catch (ProgesinException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error en la generación del DOCX");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
+        }
     }
     
 }
