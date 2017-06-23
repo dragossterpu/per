@@ -171,7 +171,7 @@ public class UserServiceCriteriaTest {
         UserBusqueda userBusqueda = UserBusqueda.builder().username("EZEN").build();
         
         int numRegistros = userService.contarRegistros(userBusqueda);
-        assertThat(numRegistros).isEqualTo(1);
+        assertThat(numRegistros).isEqualTo(11);
     }
     
 }

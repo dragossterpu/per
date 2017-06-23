@@ -247,4 +247,13 @@ public class UserServiceTest {
         userService.usuariosEquipo(equipo);
         verify(userRepositoryMock, times(1)).usuariosEnEquipo(equipo);
     }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.UserService#listaUsuariosProvisionalesCorreo(String)}.
+     */
+    @Test
+    public void listaUsuariosProvisionalesCorreo() {
+        userService.listaUsuariosProvisionalesCorreo("prueba@ezentis.com");
+        verify(userRepositoryMock, times(1)).usuariosProvisionalesCorreo("prueba@ezentis.com");
+    }
 }

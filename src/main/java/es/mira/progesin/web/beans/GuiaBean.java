@@ -173,7 +173,7 @@ public class GuiaBean {
      */
     
     public String visualizaGuia(Guia guide) {
-        Guia guiaAux = guiaService.findOne(guia.getId());
+        Guia guiaAux = guiaService.findOne(guide.getId());
         String redireccion = null;
         if (guiaAux != null) {
             this.guia = guiaAux;
@@ -225,8 +225,8 @@ public class GuiaBean {
         if (guiaAux != null) {
             alta = false;
             this.guia = guide;
-            listaPasosGrabar = guiaService.listaPasos(guia);
-            listaPasos = guiaService.listaPasosNoNull(guia);
+            listaPasosGrabar = guiaService.listaPasos(guiaAux);
+            listaPasos = guiaService.listaPasosNoNull(guiaAux);
             redireccion = "/guias/editarGuia?faces-redirect=true";
         } else {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, MODELOSGUIA, GUIANOEXISTE);
@@ -545,13 +545,10 @@ public class GuiaBean {
             guiaBaja.setFechaBaja(new Date());
             guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
             if (guiaService.guardaGuia(guiaBaja) != null) {
-                regActividadService
-                        .altaRegActividad(
-                                Constantes.LAGUIA
-                                        .concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
-                                                .concat(SecurityContextHolder.getContext().getAuthentication()
-                                                        .getName())),
-                                TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                regActividadService.altaRegActividad(
+                        Constantes.LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
+                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
         } catch (DataAccessException e) {
@@ -574,13 +571,10 @@ public class GuiaBean {
                 bajaLogica(guiaEliminar);
             } else {
                 guiaService.eliminar(guiaEliminar);
-                regActividadService
-                        .altaRegActividad(
-                                Constantes.LAGUIA
-                                        .concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
-                                                .concat(SecurityContextHolder.getContext().getAuthentication()
-                                                        .getName())),
-                                TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                regActividadService.altaRegActividad(
+                        Constantes.LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
+                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
         } catch (DataAccessException e) {
@@ -598,8 +592,8 @@ public class GuiaBean {
         Guia guiaAux = guiaService.findOne(guiaActivar.getId());
         if (guiaAux != null) {
             try {
-                guiaActivar.setFechaAnulacion(null);
-                guiaActivar.setUsernameAnulacion(null);
+                guiaAux.setFechaAnulacion(null);
+                guiaAux.setUsernameAnulacion(null);
                 if (guiaService.guardaGuia(guiaAux) != null) {
                     regActividadService.altaRegActividad(
                             Constantes.LAGUIA.concat(guiaAux.getNombre().concat("' ha sido activada")),

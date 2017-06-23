@@ -33,6 +33,7 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
@@ -91,6 +92,12 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Mock
     private ISolicitudDocumentacionPreviaRepository solicitudDocumentacionPreviaRepository;
+    
+    /**
+     * Simulación del servicio de documentos.
+     */
+    @Mock
+    private IDocumentoService documentoService;
     
     /**
      * Instancia de prueba del servicio de solicitudes de documentación.
@@ -357,4 +364,36 @@ public class SolicitudDocumentacionServiceTest {
         verify(tipoDocumentacionService, times(2)).save(any(DocumentacionPrevia.class));
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.services.SolicitudDocumentacionService#findByIdConDocumentos(Long)}.
+     */
+    @Test
+    public void findByIdConDocumentos() {
+        solicitudDocPreviaService.findByIdConDocumentos(2L);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).findById(2L);
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#eliminarDocumentoSolicitud(SolicitudDocumentacionPrevia, Documento)}.
+     */
+    @Test
+    public void eliminarDocumentoSolicitud() {
+        SolicitudDocumentacionPrevia solicitud = mock(SolicitudDocumentacionPrevia.class);
+        Documento documento = mock(Documento.class);
+        
+        solicitudDocPreviaService.eliminarDocumentoSolicitud(solicitud, documento);
+        
+        verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
+        verify(documentoService, times(1)).delete(documento);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.SolicitudDocumentacionService#findOne(Long)}.
+     */
+    @Test
+    public void findOne() {
+        solicitudDocPreviaService.findOne(1L);
+        verify(solicitudDocumentacionPreviaRepository, times(1)).findOne(1L);
+    }
 }

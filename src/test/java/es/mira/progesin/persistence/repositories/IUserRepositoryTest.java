@@ -79,7 +79,7 @@ public class IUserRepositoryTest {
     @Test
     public final void testFindByfechaBajaIsNullAndRoleNotIn() {
         List<User> userList = this.repository.findByfechaBajaIsNullAndRoleNotIn(Arrays.asList(RoleEnum.ROLE_ADMIN));
-        assertThat(userList.size()).isEqualTo(44);
+        assertThat(userList.size()).isEqualTo(54);
     }
     
     /**
@@ -160,5 +160,14 @@ public class IUserRepositoryTest {
     public final void usuariosEnEquipo() {
         Equipo equipo = Equipo.builder().id(1L).build();
         assertThat(this.repository.usuariosEnEquipo(equipo)).hasSize(4);
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IUserRepository#usuariosProvisionalesCorreo(String)}.
+     */
+    @Test
+    public final void usuariosProvisionalesCorreo() {
+        assertThat(this.repository.usuariosProvisionalesCorreo("prueba@ezentis.com")).hasSize(10);
     }
 }

@@ -229,7 +229,7 @@ public class ProvisionalSolicitudBean implements Serializable {
      */
     public void eliminarDocumento(Documento documento) {
         try {
-            solicitudDocumentacionPrevia.getDocumentos().remove(documento);
+            
             solicitudDocumentacionPrevia = solicitudDocumentacionService
                     .eliminarDocumentoSolicitud(solicitudDocumentacionPrevia, documento);
         } catch (DataAccessException e) {

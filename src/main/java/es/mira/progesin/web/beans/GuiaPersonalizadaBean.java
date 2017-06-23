@@ -227,8 +227,8 @@ public class GuiaPersonalizadaBean implements Serializable {
         GuiaPersonalizada guiaAux = guiaPersonalizadaService.findOne(guiaActivar.getId());
         if (guiaAux != null) {
             try {
-                guiaActivar.setFechaAnulacion(null);
-                guiaActivar.setUsernameAnulacion(null);
+                guiaAux.setFechaAnulacion(null);
+                guiaAux.setUsernameAnulacion(null);
                 if (guiaPersonalizadaService.save(guiaAux) != null) {
                     regActividadService.altaRegActividad(
                             "La guía '".concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido activada")),

@@ -307,15 +307,6 @@ public class GestorDocumentalBean implements Serializable {
     }
     
     /**
-     * Devuelve el número de registros de la búsqueda.
-     * 
-     * @return Número de registros
-     */
-    public long getCountRegistros() {
-        return documentoService.getCounCriteria(documentoBusqueda);
-    }
-    
-    /**
      * Inicia la creación de un nuevo documento.
      */
     public void nuevoDocumento() {

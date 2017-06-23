@@ -101,4 +101,13 @@ public class ISolicitudDocumentacionPreviaRepositoryTest {
         assertThat(solicitudes.get(1).getId()).isEqualTo(6L);
     }
     
+    /**
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository#findById(Long)}.
+     */
+    @Test
+    public final void findById() {
+        SolicitudDocumentacionPrevia sol = solicitudDocPreviaRepository.findById(2L);
+        assertThat(sol).isNotNull();
+    }
 }
