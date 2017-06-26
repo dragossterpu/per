@@ -89,12 +89,12 @@ public class AreasCuestionario implements Serializable {
     private String usernameBaja;
     
     /**
-     * Sobreescritura del método toString.
+     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para los OrderList de
+     * Primefaces.
      */
     @Override
     public String toString() {
-        return "AreasCuestionario [id=" + id + ", area=" + area + ", idCuestionario=" + idCuestionario + ", orden="
-                + orden + ", fechaBaja=" + fechaBaja + ", usernameBaja=" + usernameBaja + "]";
+        return area;
     }
     
 }

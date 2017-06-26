@@ -125,18 +125,28 @@ public class PuestoTrabajoBeanTest {
         assertThat(puestoTrabajoBean.getListaPuestosTrabajo()).hasSize(2);
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.PuestoTrabajoBean#altaPuesto(String)}.
+     */
     @Ignore
     @Test
     public void altaPuesto() {
         
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.PuestoTrabajoBean#onRowEdit(org.primefaces.event.RowEditEvent)}
+     * .
+     */
     @Ignore
     @Test
     public void onRowEdit() {
         
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.PuestoTrabajoBean#init()} .
+     */
     @Ignore
     @Test
     public void init() {

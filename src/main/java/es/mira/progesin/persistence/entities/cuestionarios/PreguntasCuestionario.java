@@ -20,7 +20,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author EZENTIS
@@ -32,7 +31,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -86,5 +84,14 @@ public class PreguntasCuestionario implements Serializable {
      */
     @Column(name = "username_baja")
     private String usernameBaja;
+    
+    /**
+     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para los OrderList de
+     * Primefaces.
+     */
+    @Override
+    public String toString() {
+        return pregunta;
+    }
     
 }

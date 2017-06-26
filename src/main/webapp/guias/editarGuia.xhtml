@@ -18,7 +18,7 @@
                 </p:selectOneMenu>
 
 
-                <p:orderList id="orderListPasos" value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" converter="#{guiasConverter}" moveBottomLabel="Último" moveTopLabel="Primero" moveDownLabel="Posterior" moveUpLabel="Anterior" controlsLocation="left" responsive="true">
+                <p:orderList id="orderListPasos" value="#{guiaBean.listaPasos}" var="paso" itemValue="#{paso}" converter="#{orderlistConverter}" moveBottomLabel="Último" moveTopLabel="Primero" moveDownLabel="Posterior" moveUpLabel="Anterior" controlsLocation="left" responsive="true">
                     <p:ajax event="select" listener="#{guiaBean.onSelectPaso}" />
                     <f:facet name="caption">Pasos</f:facet>
                     <p:column rendered="#{empty paso.fechaBaja}">

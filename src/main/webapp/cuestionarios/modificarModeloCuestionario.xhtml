@@ -23,7 +23,7 @@
                     </p:panel>
                 </p:tab>
                 <p:tab id="areas" title="Áreas">
-                    <p:orderList id="orderListAreas" value="#{modificarModeloCuestionarioBean.listaAreasCuestionarioVisualizar}" var="area" itemValue="#{area}" converter="#{areasConverter}" controlsLocation="left" responsive="true">
+                    <p:orderList id="orderListAreas" value="#{modificarModeloCuestionarioBean.listaAreasCuestionarioVisualizar}" var="area" itemValue="#{area}" converter="#{orderlistConverter}" controlsLocation="left" responsive="true">
                         <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectArea}" />
                         <f:facet name="caption">Areas</f:facet>
                         <p:column rendered="#{empty area.fechaBaja}">
@@ -170,7 +170,7 @@
                     <p:repeat value="#{modificarModeloCuestionarioBean.listaAreasCuestionarioVisualizar}" var="area">
                         <p:accordionPanel activeIndex="-1" id="acordeonAreas">
                             <p:tab title="#{area.area}" rendered="#{empty area.fechaBaja}" id="areaTab">
-                                <p:orderList id="orderListPreguntas" value="#{area.preguntas}" var="pregunta" itemValue="#{pregunta}" converter="#{preguntasConverter}" controlsLocation="left" responsive="true">
+                                <p:orderList id="orderListPreguntas" value="#{area.preguntas}" var="pregunta" itemValue="#{pregunta}" converter="#{orderlistConverter}" controlsLocation="left" responsive="true">
                                     <f:attribute name="collectionType" value="java.util.ArrayList" />
                                     <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectPregunta}" />
                                     <f:facet name="caption">Preguntas</f:facet>

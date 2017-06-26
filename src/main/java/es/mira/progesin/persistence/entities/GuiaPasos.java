@@ -80,4 +80,13 @@ public class GuiaPasos implements Serializable {
     @Column(name = "username_baja")
     private String usernameBaja;
     
+    /**
+     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para los OrderList de
+     * Primefaces.
+     */
+    @Override
+    public String toString() {
+        return paso;
+    }
+    
 }
