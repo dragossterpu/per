@@ -228,9 +228,11 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Crea un archivo PDF con los datos del informe.
+     * Crea un archivo PDF o DOCX con los datos del informe.
+     * 
+     * @param tipoArchivo formato al que se exporta el informe
      */
-    public void crearInformePDF() {
+    public void crearInforme(String tipoArchivo) {
         try {
             String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
                     informe.getInspeccion().getAnio());
@@ -242,37 +244,17 @@ public class InformeBean implements Serializable {
             String fechaFinalizacion = sdf.format(informe.getFechaFinalizacion());
             String imagenPortada = Constantes.PORTADAINFORME;
             String autor = informe.getUsernameFinalizacion();
-            setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                    imagenPortada, autor));
+            if ("PDF".equals(tipoArchivo)) {
+                setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                        imagenPortada, autor));
+            } else if ("DOCX".equals(tipoArchivo)) {
+                setFile(HtmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                        imagenPortada, autor));
+            }
         } catch (ProgesinException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error en la generación del PDF");
-            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
-        }
-    }
-    
-    /**
-     * Crea un archivo DOCX con los datos del informe.
-     */
-    public void crearInformeDOCX() {
-        try {
-            String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
-                    informe.getInspeccion().getAnio());
-            String informeXHTML = generarInformeXHTML();
-            String titulo = String.format("Inspección realizada a la %s de la %s de %s",
-                    informe.getInspeccion().getTipoUnidad().getDescripcion(),
-                    informe.getInspeccion().getAmbito().getDescripcion(),
-                    informe.getInspeccion().getMunicipio().getName());
-            String fechaFinalizacion = sdf.format(informe.getFechaFinalizacion());
-            String imagenPortada = Constantes.PORTADAINFORME;
-            String autor = informe.getUsernameFinalizacion();
-            setFile(HtmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                    imagenPortada, autor));
-        } catch (ProgesinException e) {
-            e.printStackTrace();
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error en la generación del DOCX");
+                    "Se ha producido un error en la generación del " + tipoArchivo);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
         }
     }

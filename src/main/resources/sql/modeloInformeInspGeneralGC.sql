@@ -4,11 +4,11 @@ insert into areas_informe(id, descripcion, modelo_informe_id) values (1, '1.- IN
 insert into subareas_informe(id, descripcion, area_id) values (1, '1.1.- Introducción.', 1);
 
 insert into areas_informe(id, descripcion, modelo_informe_id) values (2, '2.- ÁMBITO Y OBJETIVOS DE LA INSPECCIÓN', 1);
-insert into subareas_informe(id, descripcion, area_id) values (2, '2.1- Unidad inspeccionada.', 2);
-insert into subareas_informe(id, descripcion, area_id) values (3, '2.2- Ámbto territorial, población y servicios.', 2);
-insert into subareas_informe(id, descripcion, area_id) values (4, '2.3- Objetivos generales y específicos.', 2);
-insert into subareas_informe(id, descripcion, area_id) values (5, '2.4- Problemática de interés policial.', 2);
-insert into subareas_informe(id, descripcion, area_id) values (6, '2.5- Conclusiones y propuestas.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (2, '2.1.- Unidad inspeccionada.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (3, '2.2.- Ámbito territorial, población y servicios.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (4, '2.3.- Objetivos generales y específicos.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (5, '2.4.- Problemática de interés policial.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (6, '2.5.- Conclusiones y propuestas.', 2);
 
 insert into areas_informe(id, descripcion, modelo_informe_id) values (3, '3.- REUNIONES Y VISITAS INSTITUCIONALES', 1);
 insert into subareas_informe(id, descripcion, area_id) values (7, '3.1.- Con Autoridades.', 3);

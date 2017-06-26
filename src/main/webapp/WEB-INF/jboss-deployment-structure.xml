@@ -2,9 +2,21 @@
     JBoss AS7 has a class loading mechanism which is different from previous versions. 
     This includes a module named javax.xml.bind.api; to get docx4j working in your WAR.
 -->
-<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.3">
     <deployment>
+        <resources>
+           <resource-root path="docx4j-3.3.4.jar"/>
+           <resource-root path="docx4j-ImportXHTML-3.3.4.jar"/>
+        </resources>
         <dependencies>
+            <module name="org.slf4j"/>
+            <system export="true">
+                <paths>
+                    <path name="com/sun/xml/internal/bind/marshaller"/>
+                </paths>
+            </system>    
+            <module name="javax.xml.bind.api"/>  
+            <module name="javax.api"/>               
             <module name="com.sun.xml.bind" />
        </dependencies>
     </deployment>
