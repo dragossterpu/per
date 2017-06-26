@@ -476,13 +476,6 @@ public class GestorDocumentalBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#getCountRegistros()}.
-     */
-    @Test
-    public final void testGetCountRegistros() {
-    }
-    
-    /**
      * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#nuevoDocumento()}.
      */
     @Test
