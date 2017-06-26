@@ -86,8 +86,9 @@ public class EquipoService implements IEquipoService {
             Date fechaHasta = new Date(equipoBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
+        criteria.createAlias("equipo.jefeEquipo", "jefe");
         if (equipoBusqueda.getNombreJefe() != null) {
-            criteria.createAlias("equipo.jefeEquipo", "jefe");
+            
             criteria.add(Restrictions.ilike("jefe.username", equipoBusqueda.getNombreJefe(), MatchMode.ANYWHERE));
         }
         if (equipoBusqueda.getNombreEquipo() != null) {

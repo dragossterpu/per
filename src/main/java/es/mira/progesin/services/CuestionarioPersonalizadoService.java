@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -103,10 +102,8 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         }
         if (cuestionarioBusqueda.getEstado() == null || cuestionarioBusqueda.getEstado().equals(EstadoEnum.ACTIVO)) {
             criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
-            criteria.addOrder(Order.desc(Constantes.FECHACREACION));
         } else if (cuestionarioBusqueda.getEstado().equals(EstadoEnum.INACTIVO)) {
             criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
-            criteria.addOrder(Order.desc(Constantes.FECHABAJA));
         }
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         
