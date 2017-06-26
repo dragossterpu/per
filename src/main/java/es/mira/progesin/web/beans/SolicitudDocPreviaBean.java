@@ -737,7 +737,7 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void buscarSolicitudDocPrevia() {
         model.setBusqueda(solicitudDocPreviaBusqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /**

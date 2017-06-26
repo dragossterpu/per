@@ -161,7 +161,7 @@ public class GuiaBean {
      */
     public void buscarGuia() {
         model.setBusqueda(busqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /**

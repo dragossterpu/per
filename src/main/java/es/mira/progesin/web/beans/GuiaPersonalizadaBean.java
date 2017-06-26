@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelGuiasPersonalizadas;
 import es.mira.progesin.persistence.entities.GuiaPasos;
@@ -105,7 +106,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     public void buscarGuia() {
         model.setBusqueda(guiaPersonalizadaBusqueda);
-        model.load(0, 20, "fechaCreacion", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaCreacion", SortOrder.DESCENDING, null);
         cargaMapaInspecciones();
     }
     

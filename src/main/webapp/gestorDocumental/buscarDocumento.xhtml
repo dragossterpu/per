@@ -2,7 +2,7 @@
 
     <ui:define name="content">
         <h3>Búsqueda documentos</h3>
-
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         <p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
             <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
             <div class="centrarBotonesDialog">
@@ -71,7 +71,7 @@
                     </h:commandLink>
 
                 </p:outputPanel>
-                <p:dataTable id="tablaDocumentos" var="documento" value="#{gestorDocumentalBean.model}" emptyMessage="No se han encontrado resultados" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15,20" rows="20" rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
+                <p:dataTable id="tablaDocumentos" var="documento" value="#{gestorDocumentalBean.model}" emptyMessage="No se han encontrado resultados" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
 
                     <f:facet name="header">
 								Documentos

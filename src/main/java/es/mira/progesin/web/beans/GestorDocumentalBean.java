@@ -300,7 +300,7 @@ public class GestorDocumentalBean implements Serializable {
      */
     public void buscaDocumento() {
         model.setBusqueda(documentoBusqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
         cargaMapaInspecciones();
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";

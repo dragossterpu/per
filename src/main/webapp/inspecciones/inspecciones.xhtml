@@ -7,7 +7,7 @@
         <ui:param name="usernameActual" value="#{request.remoteUser}" />
         <ui:param name="esJefeIspeccOapoyo" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}" />
         <ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}" />
-
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
 
         <h3>
             <h:outputText for="id" value="Búsqueda de inspecciones" rendered="#{inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" />
@@ -127,7 +127,7 @@
                         <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones" />
                     </h:commandLink>
                 </p:outputPanel>
-                <p:dataTable var="inspeccion" value="#{inspeccionBean.model}" rows="20" id="tablaInspecciones" rowsPerPageTemplate="5,10,15,20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{inspeccionBean.model.rowCount ne 0}" selection="#{inspeccionBean.inspeccionBusqueda.inspeccionesSeleccionadas}" rowKey="#{inspeccion.id}" rowSelectMode="checkbox">
+                <p:dataTable var="inspeccion" value="#{inspeccionBean.model}" rows="#{Constantes.TAMPAGINA}" id="tablaInspecciones" rowsPerPageTemplate="5,10,15,20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{inspeccionBean.model.rowCount ne 0}" selection="#{inspeccionBean.inspeccionBusqueda.inspeccionesSeleccionadas}" rowKey="#{inspeccion.id}" rowSelectMode="checkbox">
 
                     <p:ajax event="rowUnselectCheckbox" listener="#{inspeccionBean.onRowUnSelected}" />
                     <p:ajax event="rowSelectCheckbox" listener="#{inspeccionBean.onRowSelected}" />

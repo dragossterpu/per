@@ -136,6 +136,11 @@ public final class Constantes {
     public static final String PORTADAINFORME = "/static/images/informe_portada.png";
     
     /**
+     * Tamaño de página para los listados.
+     */
+    public static final int TAMPAGINA = 20;
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

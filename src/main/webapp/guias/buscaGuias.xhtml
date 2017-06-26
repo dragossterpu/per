@@ -1,7 +1,7 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <ui:define name="content">
 
-        
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
 
       
         <ui:param name="esEquipoInspeccion" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,JEFE_INSPECCIONES,ADMIN')}" />
@@ -63,7 +63,7 @@
                         <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias" />
                     </h:commandLink>
                 </p:outputPanel>
-                <p:dataTable var="guia" id="tablaGuias" value="#{guiaBean.model}" rowsPerPageTemplate="5,10,15,20" rows="20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{guiaBean.model.rowCount ne 0}" rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">
+                <p:dataTable var="guia" id="tablaGuias" value="#{guiaBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{guiaBean.model.rowCount ne 0}" rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">
 
                     <f:facet name="header">
 					Guias

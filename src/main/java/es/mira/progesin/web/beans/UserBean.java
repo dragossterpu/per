@@ -251,7 +251,7 @@ public class UserBean implements Serializable {
     public void buscarUsuario() {
         this.estadoUsuario = null;
         model.setBusqueda(userBusqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
         
         auditoriaBusqueda(userBusqueda);
     }

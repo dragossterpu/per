@@ -15,6 +15,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelCuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
@@ -87,7 +88,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     public void buscarCuestionario() {
         
         model.setBusqueda(cuestionarioBusqueda);
-        model.load(0, 20, "fechaCreacion", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaCreacion", SortOrder.DESCENDING, null);
     }
     
     /**

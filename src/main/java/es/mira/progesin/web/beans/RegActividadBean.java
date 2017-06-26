@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelRegistro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -76,7 +77,7 @@ public class RegActividadBean implements Serializable {
     
     public void buscarRegActividad() {
         model.setBusqueda(regActividadBusqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
         
     }
     

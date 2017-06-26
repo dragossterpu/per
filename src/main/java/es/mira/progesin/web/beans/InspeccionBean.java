@@ -20,6 +20,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -181,7 +182,7 @@ public class InspeccionBean {
     public void buscarInspeccion() {
         inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
-        model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
         if (!inspeccionBusqueda.isAsociar()) {
             busquedaBuscador = new InspeccionBusqueda();
             setBusquedaBuscador(inspeccionBusqueda);
@@ -564,7 +565,7 @@ public class InspeccionBean {
             setProvinciSelec(busquedaBuscador.getProvincia());
             setInspeccionBusqueda(busquedaBuscador);
             model.setBusqueda(inspeccionBusqueda);
-            model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null);
+            model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
         }
         listaEquipos = equipoService.findByFechaBajaIsNull();
         return RUTABUSCAINSPECCIONES;

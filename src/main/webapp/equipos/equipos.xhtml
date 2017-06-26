@@ -1,7 +1,7 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
    
     <ui:define name="content">
-
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         <h3>Búsqueda de equipos</h3>
 
         <h:form id="busquedaEquipos">
@@ -65,7 +65,7 @@
                         <p:dataExporter type="csv" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
                     </h:commandLink>
                 </p:outputPanel>
-                <p:dataTable var="equipo" value="#{equiposBean.model}" rowsPerPageTemplate="5,10,15,20" rows="20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaEquipos" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{equiposBean.model.rowCount ne 0}" rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
+                <p:dataTable var="equipo" value="#{equiposBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaEquipos" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{equiposBean.model.rowCount ne 0}" rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
                     <f:facet name="header">
 						Equipos	
 					</f:facet>

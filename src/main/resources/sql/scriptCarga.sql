@@ -1714,9 +1714,9 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosC
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantillasGC','Comandancia', 1);
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantillasGC','Compañía', 2);
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plantillasGC','Zona', 3);
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Comandancia','plantillasGC', 1);
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Compañía','plantillasGC', 2);
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Zona', 'plantillasGC',3);
 
 COMMIT;
 

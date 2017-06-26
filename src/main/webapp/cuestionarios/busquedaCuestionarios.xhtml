@@ -1,6 +1,6 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <ui:define name="content">
-
+    <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         <h3>Búsqueda de cuestionarios enviados</h3>
 
         <h:form id="busquedaCuestionario">
@@ -93,7 +93,7 @@
                         <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados" />
                     </h:commandLink>
                 </p:outputPanel>
-                <p:dataTable var="cuestionario" value="#{cuestionarioEnviadoBean.model}" rowsPerPageTemplate="5,10,15,20" rows="20" id="tablaCuestionarios" paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioEnviadoBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
+                <p:dataTable var="cuestionario" value="#{cuestionarioEnviadoBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" id="tablaCuestionarios" paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioEnviadoBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 
 
                     <f:facet name="header">

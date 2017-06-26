@@ -5,7 +5,7 @@
         <ui:param name="esJefeInspeccion" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="usernameActual" value="#{request.remoteUser}" />
         <ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}" />
-        
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         
         <h3>Búsqueda de modelos de cuestionarios personalizados</h3>
 
@@ -68,7 +68,7 @@
                         <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados" />
                     </h:commandLink>
                 </p:outputPanel>
-                <p:dataTable var="cuestionario" value="#{cuestionarioPersonalizadoBean.model}" id="tablaCuestionarios" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}" resizableColumns="true" draggableColumns="true" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
+                <p:dataTable var="cuestionario" value="#{cuestionarioPersonalizadoBean.model}" id="tablaCuestionarios" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}" resizableColumns="true" draggableColumns="true" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
                     <f:facet name="header">
 					Cuestionarios personalizados
 				</f:facet>

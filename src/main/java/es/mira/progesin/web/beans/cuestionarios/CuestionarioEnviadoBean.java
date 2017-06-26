@@ -160,7 +160,7 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void buscarCuestionario() {
         model.setBusqueda(cuestionarioEnviadoBusqueda);
-        model.load(0, 20, "fechaEnvio", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, "fechaEnvio", SortOrder.DESCENDING, null);
         
     }
     
