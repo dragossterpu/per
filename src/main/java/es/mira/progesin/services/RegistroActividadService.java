@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -50,6 +49,12 @@ public class RegistroActividadService implements IRegistroActividadService {
      */
     @Autowired
     private SessionFactory sessionFactory;
+    
+    /**
+     * Servicio para usar los métodos usados junto con criteria.
+     */
+    @Autowired
+    private ICriteriaService criteriaService;
     
     /**
      * Guarda en base de datos un registro de actividad.
@@ -98,16 +103,8 @@ public class RegistroActividadService implements IRegistroActividadService {
         Criteria criteria = session.createCriteria(RegistroActividad.class);
         creaCriteria(regActividadBusqueda, criteria);
         
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
-        
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.desc("idRegActividad"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder,
+                "idRegActividad");
         
         @SuppressWarnings("unchecked")
         List<RegistroActividad> listado = criteria.list();

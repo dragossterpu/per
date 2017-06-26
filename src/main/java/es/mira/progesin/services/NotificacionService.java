@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -64,6 +63,12 @@ public class NotificacionService implements INotificacionService {
      */
     @Autowired
     private SessionFactory sessionFactory;
+    
+    /**
+     * Servicio para usar los métodos usados junto con criteria.
+     */
+    @Autowired
+    private ICriteriaService criteriaService;
     
     /**
      * 
@@ -224,16 +229,8 @@ public class NotificacionService implements INotificacionService {
         Criteria criteria = session.createCriteria(Notificacion.class, "notificacion");
         creaCriteria(usuario, criteria);
         
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
-        
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.desc("idNotificacion"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder,
+                "idNotificacion");
         
         @SuppressWarnings("unchecked")
         List<Notificacion> listado = criteria.list();

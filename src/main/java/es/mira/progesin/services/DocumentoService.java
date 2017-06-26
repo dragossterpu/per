@@ -13,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.DefaultStreamedContent;
@@ -78,6 +77,12 @@ public class DocumentoService implements IDocumentoService {
      */
     @Autowired
     private ITipoDocumentoRepository tipoDocumentoRepository;
+    
+    /**
+     * Servicio para usar los métodos usados junto con criteria.
+     */
+    @Autowired
+    private ICriteriaService criteriaService;
     
     /**
      * Elimina una serie de documentos de la base de datos. El documento a eliminar se pasa como parámetro.
@@ -298,30 +303,22 @@ public class DocumentoService implements IDocumentoService {
      * @param pageSize Número máximo de registros a mostrar
      * @param sortField Campo por el cual se ordena la búsqueda
      * @param sortOrder Sentido de la ordenación
-     * @param busqueda Objeto que contiene los criterios de búsqueda
+     * @param busquedaDocumento Objeto que contiene los criterios de búsqueda
      * @return Lista de los documentos que corresponden a los criterios recibidos
      * 
      */
     @Override
     public List<Documento> buscarDocumentoPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
-            DocumentoBusqueda busqueda) {
+            DocumentoBusqueda busquedaDocumento) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Documento.class, "documento");
+        Criteria criteriaDocumento = session.createCriteria(Documento.class, "documento");
         
-        creaCriteria(busqueda, criteria);
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
+        creaCriteria(busquedaDocumento, criteriaDocumento);
         
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteriaDocumento, first, pageSize, sortField, sortOrder, "id");
         
         @SuppressWarnings("unchecked")
-        List<Documento> listado = criteria.list();
+        List<Documento> listado = criteriaDocumento.list();
         session.close();
         
         return listado;
@@ -330,29 +327,29 @@ public class DocumentoService implements IDocumentoService {
     /**
      * Añade al criteria los parámetros de búsqueda.
      * 
-     * @param busqueda Objeto que contiene los parámetros de búsqueda
+     * @param busquedaDocumento Objeto que contiene los parámetros de búsqueda
      * @param criteria Criteria al que se añadirán los parámetros.
      */
-    private void creaCriteria(DocumentoBusqueda busqueda, Criteria criteria) {
-        if (busqueda.getFechaDesde() != null) {
-            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
+    private void creaCriteria(DocumentoBusqueda busquedaDocumento, Criteria criteria) {
+        if (busquedaDocumento.getFechaDesde() != null) {
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaDocumento.getFechaDesde()));
         }
         
-        if (busqueda.getFechaHasta() != null) {
-            Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+        if (busquedaDocumento.getFechaHasta() != null) {
+            Date fechaHasta = new Date(busquedaDocumento.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (busqueda.getNombre() != null) {
-            criteria.add(Restrictions.ilike("nombre", busqueda.getNombre(), MatchMode.ANYWHERE));
+        if (busquedaDocumento.getNombre() != null) {
+            criteria.add(Restrictions.ilike("nombre", busquedaDocumento.getNombre(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getTipoDocumento() != null) {
-            criteria.add(Restrictions.eq("tipoDocumento", busqueda.getTipoDocumento()));
+        if (busquedaDocumento.getTipoDocumento() != null) {
+            criteria.add(Restrictions.eq("tipoDocumento", busquedaDocumento.getTipoDocumento()));
         }
         
-        if (busqueda.getMateriaIndexada() != null) {
-            String[] claves = busqueda.getMateriaIndexada().split(",");
+        if (busquedaDocumento.getMateriaIndexada() != null) {
+            String[] claves = busquedaDocumento.getMateriaIndexada().split(",");
             Criterion[] clavesOr = new Criterion[claves.length];
             for (int i = 0; i < claves.length; i++) {
                 clavesOr[i] = Restrictions.ilike("materiaIndexada", claves[i].trim(), MatchMode.ANYWHERE);
@@ -360,21 +357,21 @@ public class DocumentoService implements IDocumentoService {
             criteria.add(Restrictions.or(clavesOr));
         }
         
-        if (busqueda.getInspeccion() != null) {
+        if (busquedaDocumento.getInspeccion() != null) {
             criteria.createAlias("inspeccion", "inspecciones");
-            criteria.add(Restrictions.eq("inspecciones.id", busqueda.getInspeccion().getId()));
-            criteria.add(Restrictions.eq("inspecciones.anio", busqueda.getInspeccion().getAnio()));
+            criteria.add(Restrictions.eq("inspecciones.id", busquedaDocumento.getInspeccion().getId()));
+            criteria.add(Restrictions.eq("inspecciones.anio", busquedaDocumento.getInspeccion().getAnio()));
             
         }
         
-        if (busqueda.isEliminado()) {
+        if (busquedaDocumento.isEliminado()) {
             criteria.add(Restrictions.isNotNull("fechaBaja"));
         } else {
             criteria.add(Restrictions.isNull("fechaBaja"));
         }
         
-        if (busqueda.getDescripcion() != null) {
-            criteria.add(Restrictions.ilike("descripcion", busqueda.getDescripcion(), MatchMode.ANYWHERE));
+        if (busquedaDocumento.getDescripcion() != null) {
+            criteria.add(Restrictions.ilike("descripcion", busquedaDocumento.getDescripcion(), MatchMode.ANYWHERE));
         }
         
     }

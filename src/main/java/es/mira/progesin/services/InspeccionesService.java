@@ -55,10 +55,10 @@ public class InspeccionesService implements IInspeccionesService {
     private IInspeccionesRepository inspeccionesRepository;
     
     /**
-     * Servicio de equipos.
+     * Servicio para usar los métodos usados junto con criteria.
      */
     @Autowired
-    private IEquipoService equipoService;
+    private ICriteriaService criteriaService;
     
     /**
      * Método que guarda una inspección.
@@ -174,83 +174,85 @@ public class InspeccionesService implements IInspeccionesService {
     /**
      * Consulta criteria para búsqueda de inspecciones.
      * 
-     * @param busqueda filtro de búsqueda
+     * @param busquedaInspecciones filtro de búsqueda
      * @param criteria objeto criteria
      */
-    private void consultaCriteriaInspecciones(InspeccionBusqueda busqueda, Criteria criteria) {
+    private void consultaCriteriaInspecciones(InspeccionBusqueda busquedaInspecciones, Criteria criteria) {
         
-        if (busqueda.getFechaDesde() != null) {
-            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
+        if (busquedaInspecciones.getFechaDesde() != null) {
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaInspecciones.getFechaDesde()));
         }
         
-        if (busqueda.getFechaHasta() != null) {
-            Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+        if (busquedaInspecciones.getFechaHasta() != null) {
+            Date fechaHasta = new Date(busquedaInspecciones.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (busqueda.getId() != null) {
-            criteria.add(Restrictions.eq("id", Long.parseLong(busqueda.getId())));
+        if (busquedaInspecciones.getId() != null) {
+            criteria.add(Restrictions.eq("id", Long.parseLong(busquedaInspecciones.getId())));
         }
         
-        if (busqueda.getAnio() != null) {
-            criteria.add(Restrictions.eq("anio", Integer.parseInt(busqueda.getAnio())));
+        if (busquedaInspecciones.getAnio() != null) {
+            criteria.add(Restrictions.eq("anio", Integer.parseInt(busquedaInspecciones.getAnio())));
         }
         
-        if (busqueda.getUsuarioCreacion() != null) {
-            criteria.add(Restrictions.ilike("usernameAlta", busqueda.getUsuarioCreacion(), MatchMode.ANYWHERE));
+        if (busquedaInspecciones.getUsuarioCreacion() != null) {
+            criteria.add(
+                    Restrictions.ilike("usernameAlta", busquedaInspecciones.getUsuarioCreacion(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getTipoInspeccion() != null) {
-            criteria.add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
+        if (busquedaInspecciones.getTipoInspeccion() != null) {
+            criteria.add(Restrictions.eq("tipoInspeccion", busquedaInspecciones.getTipoInspeccion()));
         }
         
-        if (busqueda.getAmbito() != null) {
-            criteria.add(Restrictions.eq("ambito", busqueda.getAmbito()));
+        if (busquedaInspecciones.getAmbito() != null) {
+            criteria.add(Restrictions.eq("ambito", busquedaInspecciones.getAmbito()));
         }
         
-        if (busqueda.getNombreUnidad() != null) {
-            criteria.add(Restrictions.ilike("nombreUnidad", busqueda.getNombreUnidad(), MatchMode.ANYWHERE));
+        if (busquedaInspecciones.getNombreUnidad() != null) {
+            criteria.add(
+                    Restrictions.ilike("nombreUnidad", busquedaInspecciones.getNombreUnidad(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getCuatrimestre() != null) {
-            criteria.add(Restrictions.eq("cuatrimestre", busqueda.getCuatrimestre()));
+        if (busquedaInspecciones.getCuatrimestre() != null) {
+            criteria.add(Restrictions.eq("cuatrimestre", busquedaInspecciones.getCuatrimestre()));
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        if (busqueda.getEquipo() != null) {
-            criteria.add(Restrictions.eq("equipo", busqueda.getEquipo()));
+        if (busquedaInspecciones.getEquipo() != null) {
+            criteria.add(Restrictions.eq("equipo", busquedaInspecciones.getEquipo()));
         }
         
-        if (busqueda.getJefeEquipo() != null) {
-            criteria.add(
-                    Restrictions.ilike("equipo.jefeEquipo.username", busqueda.getJefeEquipo(), MatchMode.ANYWHERE));
+        if (busquedaInspecciones.getJefeEquipo() != null) {
+            criteria.add(Restrictions.ilike("equipo.jefeEquipo.username", busquedaInspecciones.getJefeEquipo(),
+                    MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getEstado() != null) {
-            criteria.add(Restrictions.eq("estadoInspeccion", busqueda.getEstado()));
+        if (busquedaInspecciones.getEstado() != null) {
+            criteria.add(Restrictions.eq("estadoInspeccion", busquedaInspecciones.getEstado()));
         }
         
         // criteria.createAlias("municipio.provincia", "provincia"); // inner join
         criteria.createAlias("inspeccion.municipio", "municipio"); // inner join
-        if (busqueda.getMunicipio() != null) {
-            criteria.add(Restrictions.eq("municipio", busqueda.getMunicipio()));
-        } else if (busqueda.getProvincia() != null) {
+        if (busquedaInspecciones.getMunicipio() != null) {
+            criteria.add(Restrictions.eq("municipio", busquedaInspecciones.getMunicipio()));
+        } else if (busquedaInspecciones.getProvincia() != null) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
-            subquery.add(Restrictions.eq("munic.provincia", busqueda.getProvincia()));
+            subquery.add(Restrictions.eq("munic.provincia", busquedaInspecciones.getProvincia()));
             subquery.setProjection(Projections.property("munic.id"));
             criteria.add(Property.forName("inspeccion.municipio").in(subquery));
         }
         
-        if (busqueda.getTipoUnidad() != null) {
-            criteria.add(Restrictions.eq("tipoUnidad", busqueda.getTipoUnidad()));
+        if (busquedaInspecciones.getTipoUnidad() != null) {
+            criteria.add(Restrictions.eq("tipoUnidad", busquedaInspecciones.getTipoUnidad()));
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        if (busqueda.isAsociar() && busqueda.getInspeccionModif() != null
-                && busqueda.getInspeccionModif().getId() != null) {
-            criteria.add(Restrictions.ne("id", busqueda.getInspeccionModif().getId()));
-        } else if (!busqueda.isAsociar()) {
-            equipoService.setCriteriaEquipo(criteria);
+        if (busquedaInspecciones.isAsociar() && busquedaInspecciones.getInspeccionModif() != null
+                && busquedaInspecciones.getInspeccionModif().getId() != null) {
+            criteria.add(Restrictions.ne("id", busquedaInspecciones.getInspeccionModif().getId()));
+        } else if (!busquedaInspecciones.isAsociar()) {
+            criteriaService.setCriteriaEquipo(criteria);
         }
     }
     

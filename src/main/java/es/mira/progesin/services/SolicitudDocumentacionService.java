@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -81,10 +80,10 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     private ITipoDocumentacionService tipoDocumentacionService;
     
     /**
-     * Servicio de equipos.
+     * Servicio para usar los métodos usados junto con criteria.
      */
     @Autowired
-    private IEquipoService equipoService;
+    private ICriteriaService criteriaService;
     
     /**
      * Guarda la información de una solicitud en la bdd.
@@ -149,16 +148,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(SolicitudDocumentacionPrevia.class, "solicitud");
         consultaCriteriaSolicitudesDoc(solicitudDocPreviaBusqueda, criteria);
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
         
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "id");
         
         @SuppressWarnings("unchecked")
         List<SolicitudDocumentacionPrevia> listaSolicitudesDocPrevia = criteria.list();
@@ -273,7 +264,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         }
         
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        equipoService.setCriteriaEquipo(criteria);
+        criteriaService.setCriteriaEquipo(criteria);
         
     }
     

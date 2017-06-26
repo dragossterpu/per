@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -55,37 +54,43 @@ public class GuiaService implements IGuiaService {
     private IGuiasRepository guiaRepository;
     
     /**
+     * Servicio para usar los métodos usados junto con criteria.
+     */
+    @Autowired
+    private ICriteriaService criteriaService;
+    
+    /**
      * Añade los parámetros de búsqueda al criteria.
      * 
-     * @param busqueda Objeto que contiene los parámetros e introducir
+     * @param busquedaGuia Objeto que contiene los parámetros e introducir
      * @param criteria Criteria a modificar
      */
     
-    private void creaCriteria(GuiaBusqueda busqueda, Criteria criteria) {
+    private void creaCriteria(GuiaBusqueda busquedaGuia, Criteria criteria) {
         
-        if (busqueda.getFechaDesde() != null) {
-            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busqueda.getFechaDesde()));
+        if (busquedaGuia.getFechaDesde() != null) {
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaGuia.getFechaDesde()));
         }
         
-        if (busqueda.getFechaHasta() != null) {
-            Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+        if (busquedaGuia.getFechaHasta() != null) {
+            Date fechaHasta = new Date(busquedaGuia.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (busqueda.getNombre() != null) {
-            criteria.add(Restrictions.ilike("nombre", busqueda.getNombre(), MatchMode.ANYWHERE));
+        if (busquedaGuia.getNombre() != null) {
+            criteria.add(Restrictions.ilike("nombre", busquedaGuia.getNombre(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getUsuarioCreacion() != null) {
-            criteria.add(Restrictions.ilike("usernameAlta", busqueda.getUsuarioCreacion(), MatchMode.ANYWHERE));
+        if (busquedaGuia.getUsuarioCreacion() != null) {
+            criteria.add(Restrictions.ilike("usernameAlta", busquedaGuia.getUsuarioCreacion(), MatchMode.ANYWHERE));
         }
         
-        if (busqueda.getTipoInspeccion() != null) {
-            criteria.add(Restrictions.eq("tipoInspeccion", busqueda.getTipoInspeccion()));
+        if (busquedaGuia.getTipoInspeccion() != null) {
+            criteria.add(Restrictions.eq("tipoInspeccion", busquedaGuia.getTipoInspeccion()));
         }
         
-        if (busqueda.getEstado() != null) {
-            if (EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
+        if (busquedaGuia.getEstado() != null) {
+            if (EstadoEnum.INACTIVO.equals(busquedaGuia.getEstado())) {
                 criteria.add(Restrictions.isNotNull("fechaAnulacion"));
             } else {
                 criteria.add(Restrictions.isNull("fechaAnulacion"));
@@ -192,16 +197,7 @@ public class GuiaService implements IGuiaService {
         Criteria criteria = session.createCriteria(Guia.class);
         creaCriteria(busqueda, criteria);
         
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
-        
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "id");
         
         @SuppressWarnings("unchecked")
         List<Guia> listado = criteria.list();

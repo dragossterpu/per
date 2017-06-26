@@ -9,7 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -44,8 +43,6 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 @Service
 public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
-    private static final long serialVersionUID = 1L;
-    
     /**
      * Factoría de sesiones.
      */
@@ -56,55 +53,55 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * Repositorio de cuestionarios enviados.
      */
     @Autowired
-    private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
+    private ICuestionarioEnvioRepository cuestionarioEnvioRepository;
     
     /**
      * Repositorio de respuestas.
      */
     @Autowired
-    private transient IRespuestaCuestionarioRepository respuestaRepository;
+    private IRespuestaCuestionarioRepository respuestaRepository;
     
     /**
      * Repositorio de respuestas tipo tabla/matriz.
      */
     @Autowired
-    private transient IDatosTablaGenericaRepository datosTablaRepository;
+    private IDatosTablaGenericaRepository datosTablaRepository;
     
     /**
      * Servicio de usuarios.
      */
     @Autowired
-    private transient IUserService userService;
+    private IUserService userService;
     
     /**
      * Servicio de inspecciones.
      */
     @Autowired
-    private transient IInspeccionesService inspeccionesService;
+    private IInspeccionesService inspeccionesService;
     
     /**
      * Interfaz para el envío de correos.
      */
     @Autowired
-    private transient ICorreoElectronico correoElectronico;
+    private ICorreoElectronico correoElectronico;
     
     /**
      * Repositorio de preguntas de un cuestionario.
      */
     @Autowired
-    private transient IPreguntaCuestionarioRepository preguntasRepository;
+    private IPreguntaCuestionarioRepository preguntasRepository;
     
     /**
      * Servicio de areas asignadas a un usuario de cuestionario enviado.
      */
     @Autowired
-    private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
+    private IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
     
     /**
-     * Servicio de equipos.
+     * Servicio para usar los métodos usados junto con criteria.
      */
     @Autowired
-    private IEquipoService equipoService;
+    private ICriteriaService criteriaService;
     
     /**
      * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo
@@ -182,16 +179,8 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(CuestionarioEnvio.class, "cuestionario");
         consultaCriteriaCuestionarioEnviado(cuestionarioEnviadoBusqueda, criteria);
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
         
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "id");
         
         @SuppressWarnings("unchecked")
         List<CuestionarioEnvio> listaCuestionarioEnvio = criteria.list();
@@ -298,7 +287,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
             criteria.add(Restrictions.ilike("equipo.nombreEquipo", cuestionarioEnviadoBusqueda.getNombreEquipo(),
                     MatchMode.ANYWHERE));
         }
-        equipoService.setCriteriaEquipo(criteria);
+        criteriaService.setCriteriaEquipo(criteria);
         criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
             criteria.add(Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario",

@@ -9,7 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
@@ -68,6 +67,12 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     private IInspeccionesRepository inspeccionRepository;
     
     /**
+     * Servicio para usar los métodos usados junto con criteria.
+     */
+    @Autowired
+    private ICriteriaService criteriaService;
+    
+    /**
      * Elimina una guía personalizada de la base de datos.
      * 
      * @param guia que se desea eliminar
@@ -111,16 +116,8 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         Criteria criteria = session.createCriteria(GuiaPersonalizada.class, "guiaPersonalizada");
         
         consultaCriteriaGuiasPersonalizadas(busqueda, criteria);
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
         
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "id");
         
         @SuppressWarnings("unchecked")
         List<GuiaPersonalizada> listaGuias = criteria.list();

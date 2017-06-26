@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.primefaces.model.SortOrder;
@@ -19,7 +18,7 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
  * @author EZENTIS
  *
  */
-public interface ICuestionarioEnvioService extends Serializable {
+public interface ICuestionarioEnvioService {
     
     /**
      * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo

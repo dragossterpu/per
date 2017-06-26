@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -46,9 +45,10 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
     private SessionFactory sessionFactory;
     
     /**
-     * Variable para el formato de la fecha.
+     * Servicio para usar los métodos usados junto con criteria.
      */
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    @Autowired
+    private ICriteriaService criteriaService;
     
     /**
      * Elimina un cuestionario personalizado a partir de su objeto.
@@ -128,16 +128,9 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(CuestionarioPersonalizado.class);
         creaCriteria(cuestionarioBusqueda, criteria);
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
         
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.asc("id"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "id");
+        
         @SuppressWarnings("unchecked")
         List<CuestionarioPersonalizado> listaCuestionarioEnvio = criteria.list();
         session.close();

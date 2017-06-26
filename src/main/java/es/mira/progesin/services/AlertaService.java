@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -73,6 +72,12 @@ public class AlertaService implements IAlertaService {
      */
     @Autowired
     private SessionFactory sessionFactory;
+    
+    /**
+     * Servicio para usar los métodos usados junto con criteria.
+     */
+    @Autowired
+    private ICriteriaService criteriaService;
     
     /**
      * 
@@ -311,16 +316,7 @@ public class AlertaService implements IAlertaService {
         Criteria criteria = session.createCriteria(Alerta.class, "alerta");
         creaCriteria(usuario, criteria);
         
-        criteria.setFirstResult(first);
-        criteria.setMaxResults(pageSize);
-        
-        if (sortField != null && sortOrder.equals(SortOrder.ASCENDING)) {
-            criteria.addOrder(Order.asc(sortField));
-        } else if (sortField != null && sortOrder.equals(SortOrder.DESCENDING)) {
-            criteria.addOrder(Order.desc(sortField));
-        } else if (sortField == null) {
-            criteria.addOrder(Order.desc("idAlerta"));
-        }
+        criteriaService.prepararPaginacionOrdenCriteria(criteria, first, pageSize, sortField, sortOrder, "idAlerta");
         
         @SuppressWarnings("unchecked")
         List<Alerta> listado = criteria.list();
@@ -338,10 +334,10 @@ public class AlertaService implements IAlertaService {
     @Override
     public int getCounCriteria(String usuario) {
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(Alerta.class, "alerta");
-        creaCriteria(usuario, criteria);
-        criteria.setProjection(Projections.rowCount());
-        Long cnt = (Long) criteria.uniqueResult();
+        Criteria criteriaAlerta = session.createCriteria(Alerta.class, "alerta");
+        creaCriteria(usuario, criteriaAlerta);
+        criteriaAlerta.setProjection(Projections.rowCount());
+        Long cnt = (Long) criteriaAlerta.uniqueResult();
         session.close();
         
         return Math.toIntExact(cnt);
@@ -355,12 +351,12 @@ public class AlertaService implements IAlertaService {
      */
     private void creaCriteria(String usuario, Criteria criteria) {
         
-        DetachedCriteria usuarioMensaje = DetachedCriteria.forClass(AlertasNotificacionesUsuario.class, "mensaje");
-        usuarioMensaje.add(Restrictions.ilike("mensaje.usuario", usuario, MatchMode.ANYWHERE));
-        usuarioMensaje.add(Restrictions.eq("mensaje.tipo", TipoMensajeEnum.ALERTA));
-        usuarioMensaje.setProjection(Property.forName("mensaje.idMensaje"));
+        DetachedCriteria mensaje = DetachedCriteria.forClass(AlertasNotificacionesUsuario.class, "mensaje");
+        mensaje.add(Restrictions.ilike("mensaje.usuario", usuario, MatchMode.ANYWHERE));
+        mensaje.add(Restrictions.eq("mensaje.tipo", TipoMensajeEnum.ALERTA));
+        mensaje.setProjection(Property.forName("mensaje.idMensaje"));
         
-        criteria.add(Property.forName("alerta.idAlerta").in(usuarioMensaje));
+        criteria.add(Property.forName("alerta.idAlerta").in(mensaje));
         
     }
     

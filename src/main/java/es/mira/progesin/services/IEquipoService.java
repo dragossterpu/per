@@ -2,7 +2,6 @@ package es.mira.progesin.services;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Equipo;
@@ -82,12 +81,5 @@ public interface IEquipoService {
      * @return listado de equipos a los que pertenece el usuario
      */
     public List<Equipo> buscarEquiposByUsername(String paramLogin);
-    
-    /**
-     * Añade al criteria als restricciones necesarias para realizar las consultas en caso de que el usuario conectado
-     * tenga el rol EQUIPO_INSPECCIONES.
-     * @param criteria criteria al que se desea añadir la restricción
-     */
-    public void setCriteriaEquipo(Criteria criteria);
     
 }
