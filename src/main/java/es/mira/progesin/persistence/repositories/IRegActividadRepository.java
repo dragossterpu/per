@@ -20,10 +20,10 @@ import es.mira.progesin.persistence.entities.RegistroActividad;
 public interface IRegActividadRepository extends CrudRepository<RegistroActividad, Integer> {
     
     /**
-     * Devuelve una lista de nombre de seccion cuyo nombreSeccion incluya la cadena recibida como parámetro.
+     * Devuelve una lista de nombre de seccion cuyo nombreSeccion coincide la cadena recibida como parámetro.
      * 
      * @param info Nombre de la sección
-     * @return Listado de registros pertenecientes a esa sección
+     * @return Listado de nombres de sección cuyos nombres coinciden determinada cadena
      * 
      */
     
@@ -31,10 +31,10 @@ public interface IRegActividadRepository extends CrudRepository<RegistroActivida
     public List<String> buscarPorNombreSeccion(@Param("info") String info);
     
     /**
-     * Devuelve una lista de nombres de usuario cuyo nombre incluya la cadena recibida como parámetro.
+     * Devuelve una lista de nombres de usuario cuyo nombre coincide la cadena recibida como parámetro.
      * 
      * @param info Username del usuario de registro
-     * @return Listado de registros pertenecientes a ese usuario
+     * @return Listado de nombres de usuario cuyos nombres coinciden determinada cadena
      * 
      */
     
