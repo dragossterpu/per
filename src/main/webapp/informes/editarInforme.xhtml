@@ -3,7 +3,7 @@
 
         <h:form id="informe">
             <div class="bloqueVistaTitulo">
-            <h3>Editar informe</h3>
+            <h3>Modificar informe</h3>
         </div>
  
 			<p:accordionPanel value="#{informeBean.modeloInforme.areas}" var="area" activeIndex="-1">
@@ -36,8 +36,9 @@
                                     </span>
                                     <span class="ql-formats">
                                         <select  class="ql-header">
-                                            <option value="3">Título 1</option>
-                                            <option value="4"> Título 2</option>
+                                            <option selected="selected">Normal</option>
+                                            <option value="3">Título 3</option>
+                                            <option value="4">Título 4</option>
                                         </select>
                                     </span>
                                     <span class="ql-formats">
@@ -61,8 +62,9 @@
 				</p:tab>
 			</p:accordionPanel>
 
-            <p:commandButton value="Guardar" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
-            
+            <div class="botonesFormulario">
+                <p:commandButton value="Guardar" action="#{informeBean.guardarInforme}" icon="ui-icon-disk" />
+            </div>
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                 <div class="centrarBotonesDialog">

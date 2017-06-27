@@ -3,6 +3,7 @@ package es.mira.progesin.web.beans.informes;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
@@ -26,6 +28,7 @@ import es.mira.progesin.persistence.repositories.IInformeRepository;
 import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IModeloInformeService;
+import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.HtmlDocxGenerator;
@@ -63,9 +66,24 @@ public class InformeBean implements Serializable {
     private ModeloInforme modeloInforme;
     
     /**
+     * Objeto de búsqueda de informes.
+     */
+    private InformeBusqueda informeBusqueda;
+    
+    /**
      * Listado de informes del buscador.
      */
-    private List<Informe> listadoInformes;
+    private List<Informe> model;
+    
+    // /**
+    // * LazyModel para la visualización de datos paginados en la vista.
+    // */
+    // private LazyModelInformes model;
+    
+    /**
+     * Lista de tipos de inspección.
+     */
+    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * Mapa de respuestas.
@@ -106,6 +124,12 @@ public class InformeBean implements Serializable {
     // private transient HtmlDocGenerator htmlDocGenerator;
     
     /**
+     * Servicio de modelos de informe.
+     */
+    @Autowired
+    private transient ITipoInspeccionService tipoInspeccionService;
+    
+    /**
      * Servicio del registro de actividad.
      */
     @Autowired
@@ -121,18 +145,40 @@ public class InformeBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        
+        setInformeBusqueda(new InformeBusqueda());
+        model = new ArrayList<>();// new LazyModelInformes(informeService);
+        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**
-     * Cargar formulario para buscar informes.
-     * 
-     * @return ruta de la vista
+     * Devuelve al formulario de búsqueda de informes a su estado inicial y borra los resultados de búsquedas anteriores
+     * si se navega desde el menú u otra sección.
+     * @return ruta siguiente
      */
     // TODO implementar buscador con criteria
+    // TODO Añadir paginación servidor
     public String getFormBusquedaInformes() {
-        setListadoInformes(informeService.findAll());
+        limpiarBusqueda();
         return "/informes/informes?faces-redirect=true";
+    }
+    
+    /**
+     * Borra los resultados de búsquedas anteriores.
+     */
+    public void limpiarBusqueda() {
+        setInformeBusqueda(new InformeBusqueda());
+        model.clear();// setRowCount(0);
+    }
+    
+    /**
+     * Busca las solicitudes de documentación previa según los filtros introducidos en el formulario de búsqueda.
+     * 
+     * 
+     */
+    public void buscarInforme() {
+        // model.setBusqueda(informeBusqueda);
+        // model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
+        setModel(informeService.findAll());
     }
     
     /**
@@ -210,9 +256,9 @@ public class InformeBean implements Serializable {
         StringBuilder informeFormateado = new StringBuilder();
         informeFormateado.append("<div class=\"ql-snow ql-editor\">");
         modeloInforme.getAreas().forEach(area -> {
-            informeFormateado.append("<h2>");
+            informeFormateado.append("<h1>");
             informeFormateado.append(area.getDescripcion());
-            informeFormateado.append("</h2>");
+            informeFormateado.append("</h1>");
             area.getSubareas().forEach(subarea -> {
                 informeFormateado.append("<h2>");
                 informeFormateado.append(subarea.getDescripcion());
