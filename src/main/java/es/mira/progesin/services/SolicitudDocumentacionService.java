@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
@@ -186,8 +187,41 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      */
     private void consultaCriteriaSolicitudesDoc(SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda,
             Criteria criteria) {
-        if (solicitudDocPreviaBusqueda.getEstado() != null) {
-            switch (solicitudDocPreviaBusqueda.getEstado()) {
+        
+        if (solicitudDocPreviaBusqueda.getFechaDesde() != null) {
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, solicitudDocPreviaBusqueda.getFechaDesde()));
+        }
+        if (solicitudDocPreviaBusqueda.getFechaHasta() != null) {
+            Date fechaHasta = new Date(
+                    solicitudDocPreviaBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
+        }
+        if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null) {
+            criteria.add(Restrictions.ilike("usernameAlta", solicitudDocPreviaBusqueda.getUsuarioCreacion(),
+                    MatchMode.ANYWHERE));
+        }
+        
+        criteriaEstadoSolicitud(criteria, solicitudDocPreviaBusqueda.getEstado());
+        
+        criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
+        criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
+        criteriaDatosInspeccion(criteria, solicitudDocPreviaBusqueda);
+        
+        criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
+        criteriaService.setCriteriaEquipo(criteria);
+        
+    }
+    
+    /**
+     * Añade al criteria el filtro con el estado de la solicitud. En caso de no seleccionar ningún estado se mostrarán
+     * sólo las solicitudes que no estén dadas de baja.
+     * 
+     * @param criteria Criteria al que se añadirán los parámetros.
+     * @param estado estado de la solicitud
+     */
+    private void criteriaEstadoSolicitud(Criteria criteria, SolicitudDocPreviaEnum estado) {
+        if (estado != null) {
+            switch (estado) {
                 case VALIDADA_APOYO:
                     criteria.add(Restrictions.isNotNull("fechaValidApoyo"));
                     criteria.add(Restrictions.isNull("fechaValidJefeEquipo"));
@@ -229,20 +263,15 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         } else {
             criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
         }
-        if (solicitudDocPreviaBusqueda.getFechaDesde() != null) {
-            criteria.add(Restrictions.ge(Constantes.FECHAALTA, solicitudDocPreviaBusqueda.getFechaDesde()));
-        }
-        if (solicitudDocPreviaBusqueda.getFechaHasta() != null) {
-            Date fechaHasta = new Date(
-                    solicitudDocPreviaBusqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
-            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
-        }
-        if (solicitudDocPreviaBusqueda.getUsuarioCreacion() != null) {
-            criteria.add(Restrictions.ilike("usernameAlta", solicitudDocPreviaBusqueda.getUsuarioCreacion(),
-                    MatchMode.ANYWHERE));
-        }
-        criteria.createAlias("solicitud.inspeccion", "inspeccion"); // inner join
-        criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
+    }
+    
+    /**
+     * Añade al criteria los filtros relacionados con los datos de una inspección.
+     * 
+     * @param criteria Criteria al que se añadirán los parámetros.
+     * @param solicitudDocPreviaBusqueda filtro con los datos relacionados con una inspección
+     */
+    private void criteriaDatosInspeccion(Criteria criteria, SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda) {
         if (solicitudDocPreviaBusqueda.getNombreUnidad() != null) {
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", solicitudDocPreviaBusqueda.getNombreUnidad(),
                     MatchMode.ANYWHERE));
@@ -262,10 +291,6 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             criteria.add(Restrictions.eq("tipoInspeccion.codigo",
                     solicitudDocPreviaBusqueda.getTipoInspeccion().getCodigo()));
         }
-        
-        criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
-        criteriaService.setCriteriaEquipo(criteria);
-        
     }
     
     /**

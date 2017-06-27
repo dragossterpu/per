@@ -348,15 +348,6 @@ public class DocumentoService implements IDocumentoService {
             criteria.add(Restrictions.eq("tipoDocumento", busquedaDocumento.getTipoDocumento()));
         }
         
-        if (busquedaDocumento.getMateriaIndexada() != null) {
-            String[] claves = busquedaDocumento.getMateriaIndexada().split(",");
-            Criterion[] clavesOr = new Criterion[claves.length];
-            for (int i = 0; i < claves.length; i++) {
-                clavesOr[i] = Restrictions.ilike("materiaIndexada", claves[i].trim(), MatchMode.ANYWHERE);
-            }
-            criteria.add(Restrictions.or(clavesOr));
-        }
-        
         if (busquedaDocumento.getInspeccion() != null) {
             criteria.createAlias("inspeccion", "inspecciones");
             criteria.add(Restrictions.eq("inspecciones.id", busquedaDocumento.getInspeccion().getId()));
@@ -374,6 +365,24 @@ public class DocumentoService implements IDocumentoService {
             criteria.add(Restrictions.ilike("descripcion", busquedaDocumento.getDescripcion(), MatchMode.ANYWHERE));
         }
         
+        criteriaMateriaIndexada(criteria, busquedaDocumento.getMateriaIndexada());
+    }
+    
+    /**
+     * Añade al criteria el filtro de la materia indexada introducida en el formulario.
+     * 
+     * @param criteria Criteria al que se añadirán los parámetros.
+     * @param materiaIndexada materia indexada introducida en el filtro (separada por comas)
+     */
+    private void criteriaMateriaIndexada(Criteria criteria, String materiaIndexada) {
+        if (materiaIndexada != null) {
+            String[] claves = materiaIndexada.split(",");
+            Criterion[] clavesOr = new Criterion[claves.length];
+            for (int i = 0; i < claves.length; i++) {
+                clavesOr[i] = Restrictions.ilike("materiaIndexada", claves[i].trim(), MatchMode.ANYWHERE);
+            }
+            criteria.add(Restrictions.or(clavesOr));
+        }
     }
     
     /**

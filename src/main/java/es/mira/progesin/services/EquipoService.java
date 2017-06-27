@@ -98,25 +98,33 @@ public class EquipoService implements IEquipoService {
         if (equipoBusqueda.getTipoEquipo() != null) {
             criteria.add(Restrictions.eq("tipoEquipo.id", equipoBusqueda.getTipoEquipo().getId()));
         }
-        if (equipoBusqueda.getNombreMiembro() != null) {
+        
+        criteriaMiembro(criteria, equipoBusqueda.getNombreMiembro());
+        
+        if (EstadoEnum.INACTIVO.name().equals(equipoBusqueda.getEstado())) {
+            criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
+        } else if (EstadoEnum.ACTIVO.name().equals(equipoBusqueda.getEstado())) {
+            criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
+        }
+        
+        criteria.addOrder(Order.desc(Constantes.FECHAALTA));
+    }
+    
+    /**
+     * Añade al criteria el filtro para el miembro de un equipo.
+     * 
+     * @param criteria Criteria
+     * @param usernameMiembro username del miembro introducido en el filtro
+     */
+    private void criteriaMiembro(Criteria criteria, String usernameMiembro) {
+        if (usernameMiembro != null) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
             subquery.createAlias("miembro.usuario", "usuario");
-            subquery.add(Restrictions.ilike("usuario.username", equipoBusqueda.getNombreMiembro(), MatchMode.ANYWHERE));
+            subquery.add(Restrictions.ilike("usuario.username", usernameMiembro, MatchMode.ANYWHERE));
             subquery.add(Restrictions.eqProperty("equipo.id", "miembro.equipo"));
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));
-            
         }
-        if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.ACTIVO.name())) {
-            criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
-        }
-        if (equipoBusqueda.getEstado() != null && equipoBusqueda.getEstado().equals(EstadoEnum.INACTIVO.name())) {
-            criteria.add(Restrictions.isNotNull(Constantes.FECHABAJA));
-            criteria.addOrder(Order.desc(Constantes.FECHABAJA));
-        } else {
-            criteria.addOrder(Order.desc(Constantes.FECHAALTA));
-        }
-        
     }
     
     /**

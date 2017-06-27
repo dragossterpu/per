@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
+import es.mira.progesin.persistence.entities.enums.CuestionarioEnviadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
@@ -215,8 +216,41 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     private void consultaCriteriaCuestionarioEnviado(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda,
             Criteria criteria) {
-        if (cuestionarioEnviadoBusqueda.getEstado() != null) {
-            switch (cuestionarioEnviadoBusqueda.getEstado()) {
+        
+        criteriaEstado(criteria, cuestionarioEnviadoBusqueda.getEstado());
+        
+        criteriaFechas(criteria, cuestionarioEnviadoBusqueda);
+        
+        if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null) {
+            criteria.add(Restrictions.ilike("usernameEnvio", cuestionarioEnviadoBusqueda.getUsernameEnvio(),
+                    MatchMode.ANYWHERE));
+        }
+        
+        criteriaDatosInspeccion(criteria, cuestionarioEnviadoBusqueda);
+        
+        criteriaService.setCriteriaEquipo(criteria);
+        
+        criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
+        if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
+            criteria.add(Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario",
+                    cuestionarioEnviadoBusqueda.getNombreCuestionario(), MatchMode.ANYWHERE));
+        }
+        criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join
+        if (cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado() != null) {
+            criteria.add(Restrictions.eq("modeloCuestionario.id",
+                    cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
+        }
+    }
+    
+    /**
+     * Añade al criteria el estado de un cuestionario.
+     * 
+     * @param criteria criteria a utilizar
+     * @param estado estado del cuestionario
+     */
+    private void criteriaEstado(Criteria criteria, CuestionarioEnviadoEnum estado) {
+        if (estado != null) {
+            switch (estado) {
                 case CUMPLIMENTADO:
                     criteria.add(Restrictions.isNotNull("fechaCumplimentacion"));
                     criteria.add(Restrictions.isNull(Constantes.FECHAFINALIZACION));
@@ -244,6 +278,16 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         } else {
             criteria.add(Restrictions.isNull(Constantes.FECHAANULACION));
         }
+        
+    }
+    
+    /**
+     * Añade al criteria las fechas del buscador.
+     * 
+     * @param criteria criteria a utilizar
+     * @param cuestionarioEnviadoBusqueda filtros del buscador del cuestionario enviado
+     */
+    private void criteriaFechas(Criteria criteria, CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         if (cuestionarioEnviadoBusqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge("fechaEnvio", cuestionarioEnviadoBusqueda.getFechaDesde()));
         }
@@ -257,10 +301,15 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                     cuestionarioEnviadoBusqueda.getFechaLimiteRespuesta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le("fechaLimiteCuestionario", fechaLimiteRespuesta));
         }
-        if (cuestionarioEnviadoBusqueda.getUsernameEnvio() != null) {
-            criteria.add(Restrictions.ilike("usernameEnvio", cuestionarioEnviadoBusqueda.getUsernameEnvio(),
-                    MatchMode.ANYWHERE));
-        }
+    }
+    
+    /**
+     * Añade al criteria los datos del buscador relacionados con una inspección.
+     * 
+     * @param criteria criteria a utilizar
+     * @param cuestionarioEnviadoBusqueda filtros del buscador del cuestionario enviado
+     */
+    private void criteriaDatosInspeccion(Criteria criteria, CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda) {
         criteria.createAlias("cuestionario.inspeccion", "inspeccion"); // inner join
         if (cuestionarioEnviadoBusqueda.getNombreUnidad() != null) {
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", cuestionarioEnviadoBusqueda.getNombreUnidad(),
@@ -286,17 +335,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         if (cuestionarioEnviadoBusqueda.getNombreEquipo() != null) {
             criteria.add(Restrictions.ilike("equipo.nombreEquipo", cuestionarioEnviadoBusqueda.getNombreEquipo(),
                     MatchMode.ANYWHERE));
-        }
-        criteriaService.setCriteriaEquipo(criteria);
-        criteria.createAlias("cuestionario.cuestionarioPersonalizado", "cuestionarioPersonalizado"); // inner join
-        if (cuestionarioEnviadoBusqueda.getNombreCuestionario() != null) {
-            criteria.add(Restrictions.ilike("cuestionarioPersonalizado.nombreCuestionario",
-                    cuestionarioEnviadoBusqueda.getNombreCuestionario(), MatchMode.ANYWHERE));
-        }
-        criteria.createAlias("cuestionarioPersonalizado.modeloCuestionario", "modeloCuestionario"); // inner join
-        if (cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado() != null) {
-            criteria.add(Restrictions.eq("modeloCuestionario.id",
-                    cuestionarioEnviadoBusqueda.getModeloCuestionarioSeleccionado().getId()));
         }
     }
     

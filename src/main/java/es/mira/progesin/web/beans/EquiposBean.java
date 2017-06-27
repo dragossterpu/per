@@ -503,8 +503,7 @@ public class EquiposBean implements Serializable {
                 
                 siguientePaso = event.getOldStep();
             }
-        } else if (MIEMBROS.equals(event.getOldStep()) && "confirm".equals(event.getNewStep())
-                && miembrosSeleccionados.isEmpty() && skip == Boolean.FALSE) {
+        } else if (confirmarSinMiembrosSinCheckear(event.getOldStep(), event.getNewStep())) {
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Debe elegir uno o más componentes o confirmar que no desea ninguno aparte del jefe", "", "");
@@ -517,6 +516,19 @@ public class EquiposBean implements Serializable {
             
         }
         return siguientePaso;
+    }
+    
+    /**
+     * Comprueba si intenta ir al último paso del flujo (confirmar) sin haber seleccionado ningún miembro y sin haber
+     * chequeado la opción equipo sin componentes.
+     * 
+     * @param pasoAnterior paso anterior del flujo
+     * @param pasoSiguiente paso siguiente del flujo
+     * @return true o false
+     */
+    private boolean confirmarSinMiembrosSinCheckear(String pasoAnterior, String pasoSiguiente) {
+        return MIEMBROS.equals(pasoAnterior) && "confirm".equals(pasoSiguiente) && miembrosSeleccionados.isEmpty()
+                && skip == Boolean.FALSE;
     }
     
     /**

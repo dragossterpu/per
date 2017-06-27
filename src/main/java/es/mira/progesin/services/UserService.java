@@ -153,9 +153,6 @@ public class UserService implements IUserService {
      */
     private void creaCriteria(UserBusqueda userBusqueda, Criteria criteria) {
         
-        criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado", JoinType.LEFT_OUTER_JOIN);
-        criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo", JoinType.LEFT_OUTER_JOIN);
-        
         if (userBusqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge(Constantes.FECHAALTA, userBusqueda.getFechaDesde()));
         }
@@ -165,26 +162,11 @@ public class UserService implements IUserService {
             criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
         }
         
-        if (userBusqueda.getNombre() != null) {
-            criteria.add(Restrictions.ilike("nombre", userBusqueda.getNombre(), MatchMode.ANYWHERE));
-        }
-        
-        if (userBusqueda.getApellido1() != null) {
-            criteria.add(Restrictions.ilike("apellido1", userBusqueda.getApellido1(), MatchMode.ANYWHERE));
-        }
-        
-        if (userBusqueda.getApellido2() != null) {
-            criteria.add(Restrictions.ilike("apellido2", userBusqueda.getApellido2(), MatchMode.ANYWHERE));
-        }
+        criteriaDatosPersonales(criteria, userBusqueda.getNombre(), userBusqueda.getApellido1(),
+                userBusqueda.getApellido2());
         
         if (userBusqueda.getUsername() != null) {
             criteria.add(Restrictions.ilike("username", userBusqueda.getUsername(), MatchMode.ANYWHERE));
-        }
-        if (userBusqueda.getCuerpoEstado() != null) {
-            criteria.add(Restrictions.eq("cuerpoEstado", userBusqueda.getCuerpoEstado()));
-        }
-        if (userBusqueda.getPuestoTrabajo() != null) {
-            criteria.add(Restrictions.eq("puestoTrabajo", userBusqueda.getPuestoTrabajo()));
         }
         if (userBusqueda.getRole() != null) {
             criteria.add(Restrictions.eq("role", userBusqueda.getRole()));
@@ -193,14 +175,66 @@ public class UserService implements IUserService {
             criteria.add(Restrictions.eq("estado", userBusqueda.getEstado()));
         }
         
+        criteriaCuerpoPuesto(criteria, userBusqueda.getCuerpoEstado(), userBusqueda.getPuestoTrabajo());
+        criteriaRoleProvisional(criteria);
+        
+        criteria.add(Restrictions.isNull("fechaBaja"));
+        
+    }
+    
+    /**
+     * Añade al criteria los filtros relacionados con los datos personales de un usuario.
+     * 
+     * @param criteria Criteria
+     * @param nombre nombre introducido en el filtro
+     * @param apellido1 apellido1 introducido en el filtro
+     * @param apellido2 apellido2 introducido en el filtro
+     */
+    private void criteriaDatosPersonales(Criteria criteria, String nombre, String apellido1, String apellido2) {
+        if (nombre != null) {
+            criteria.add(Restrictions.ilike("nombre", nombre, MatchMode.ANYWHERE));
+        }
+        
+        if (apellido1 != null) {
+            criteria.add(Restrictions.ilike("apellido1", apellido1, MatchMode.ANYWHERE));
+        }
+        
+        if (apellido2 != null) {
+            criteria.add(Restrictions.ilike("apellido2", apellido2, MatchMode.ANYWHERE));
+        }
+    }
+    
+    /**
+     * Añade al criteria el fitro con los roles provisionales para mostrar en los resultados de búsqueda los usuarios
+     * provisionales, siempre que el usuario conectado sea un usuario administrador.
+     * 
+     * @param criteria Criteria
+     */
+    private void criteriaRoleProvisional(Criteria criteria) {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_ADMIN.equals(usuarioActual.getRole()) == Boolean.FALSE) {
             criteria.add(Restrictions.not(Restrictions.in("role",
                     new RoleEnum[] { RoleEnum.ROLE_PROV_SOLICITUD, RoleEnum.ROLE_PROV_CUESTIONARIO })));
         }
+    }
+    
+    /**
+     * Añade al criteria los filtros relacionados el puesto de trabajo y el cuerpo de los filtros.
+     * 
+     * @param criteria Criteria
+     * @param cuerpo cuerpo introducido en el filtro
+     * @param puesto puesto introducido en el filtro
+     */
+    private void criteriaCuerpoPuesto(Criteria criteria, CuerpoEstado cuerpo, PuestoTrabajo puesto) {
+        criteria.createAlias("usuario.cuerpoEstado", "cuerpoEstado", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("usuario.puestoTrabajo", "puestoTrabajo", JoinType.LEFT_OUTER_JOIN);
         
-        criteria.add(Restrictions.isNull("fechaBaja"));
-        
+        if (cuerpo != null) {
+            criteria.add(Restrictions.eq("cuerpoEstado", cuerpo));
+        }
+        if (puesto != null) {
+            criteria.add(Restrictions.eq("puestoTrabajo", puesto));
+        }
     }
     
     /**

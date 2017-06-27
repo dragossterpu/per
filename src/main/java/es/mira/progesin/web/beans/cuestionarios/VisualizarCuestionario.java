@@ -235,9 +235,7 @@ public class VisualizarCuestionario implements Serializable {
         listaRespuestas.forEach(respuesta -> {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             String tipoRespuesta = pregunta.getTipoRespuesta();
-            if ((tipoRespuesta.startsWith(Constantes.TIPORESPUESTATABLA)
-                    || tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ))
-                    && respuesta.getRespuestaTablaMatriz() != null) {
+            if (esTipoRespuestaTablaOMatriz(tipoRespuesta) && respuesta.getRespuestaTablaMatriz() != null) {
                 mapaRespuestasTablaAux.put(pregunta, respuesta.getRespuestaTablaMatriz());
             } else {
                 mapaRespuestas.put(pregunta, respuesta.getRespuestaTexto());
@@ -290,9 +288,7 @@ public class VisualizarCuestionario implements Serializable {
                 }
                 listaPreguntas.add(pregunta);
                 mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
-                if (pregunta.getTipoRespuesta() != null
-                        && (pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTATABLA)
-                                || pregunta.getTipoRespuesta().startsWith(Constantes.TIPORESPUESTAMATRIZ))) {
+                if (esTipoRespuestaTablaOMatriz(pregunta.getTipoRespuesta())) {
                     construirTipoRespuestaTablaMatrizVacia(pregunta);
                 }
             }
@@ -309,13 +305,24 @@ public class VisualizarCuestionario implements Serializable {
         
         // Ordeno las áreas por su campo orden
         Collections.sort(areas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
-        String ruta_vista;
+        String rutaVista;
         if (cuestionarioEnviado == null) {
-            ruta_vista = "/cuestionarios/responderCuestionario?faces-redirect=true";
+            rutaVista = "/cuestionarios/responderCuestionario?faces-redirect=true";
         } else {
-            ruta_vista = "/cuestionarios/validarCuestionario?faces-redirect=true";
+            rutaVista = "/cuestionarios/validarCuestionario?faces-redirect=true";
         }
-        return ruta_vista;
+        return rutaVista;
+    }
+    
+    /**
+     * Comprueba si el tipo de respuesta es de tipo TABLA o MATRIZ.
+     * 
+     * @param tipoRespuesta tipo de la respuesta
+     * @return true o false
+     */
+    private boolean esTipoRespuestaTablaOMatriz(String tipoRespuesta) {
+        return tipoRespuesta != null && (tipoRespuesta.startsWith(Constantes.TIPORESPUESTATABLA)
+                || tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ));
     }
     
     /**
