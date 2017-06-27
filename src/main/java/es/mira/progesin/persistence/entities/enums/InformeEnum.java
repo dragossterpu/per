@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Enumerado para los diferentes estados por los que pasa una Informe de documentación previa.
+ * Enumerado para los diferentes estados por los que pasa un Informe.
  * 
  * @author EZENTIS
  *
