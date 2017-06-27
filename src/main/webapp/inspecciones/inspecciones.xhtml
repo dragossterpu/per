@@ -35,7 +35,7 @@
                         <f:selectItems value="#{applicationBean.listaTiposUnidad}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                     </p:selectOneMenu>
 
-                    <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+                    <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspección:" />
                     <p:selectOneMenu value="#{inspeccionBean.inspeccionBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="columnaDchaFormulario">
-                    <h:outputLabel for="equipoSelect" value="Equipo de inspeccion:" />
+                    <h:outputLabel for="equipoSelect" value="Equipo de inspección:" />
                     <p:selectOneMenu value="#{inspeccionBean.inspeccionBusqueda.equipo}" id="equipoSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{inspeccionBean.listaEquipos}" var="equipo" itemLabel="#{equipo.nombreEquipo}" itemValue="#{equipo}" />
@@ -106,7 +106,7 @@
 
                 <p:commandButton value="Nueva inspección" icon="fa fa-user-plus" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" />
 
-                <p:commandButton value="Aceptar" icon="fa fa-user-plus" action="#{inspeccionBean.asociarInspecciones}" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" />
+                <p:commandButton value="Aceptar/Volver" icon="fa fa-user-plus" action="#{inspeccionBean.asociarInspecciones}" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" />
 
             </div>
             <p:outputPanel layout="block" id="panelInspecciones">
