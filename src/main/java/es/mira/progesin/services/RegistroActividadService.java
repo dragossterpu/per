@@ -24,6 +24,7 @@ import es.mira.progesin.persistence.entities.RegistroActividad;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IRegActividadRepository;
 import es.mira.progesin.web.beans.RegActividadBusqueda;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
+@NoArgsConstructor
 @Service("registroActividadService")
 public class RegistroActividadService implements IRegistroActividadService {
     
@@ -55,6 +57,17 @@ public class RegistroActividadService implements IRegistroActividadService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public RegistroActividadService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
     
     /**
      * Guarda en base de datos un registro de actividad.
@@ -153,7 +166,6 @@ public class RegistroActividadService implements IRegistroActividadService {
     @Override
     public void altaRegActividadError(String nombreSeccion, Exception e) {
         try {
-            
             RegistroActividad registroActividad = new RegistroActividad();
             registroActividad.setTipoRegActividad(TipoRegistroEnum.ERROR.name());
             registroActividad.setFechaAlta(new Date());
