@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
-import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
@@ -174,21 +173,10 @@ public class InspeccionesService implements IInspeccionesService {
      */
     private void consultaCriteriaInspecciones(InspeccionBusqueda busquedaInspecciones, Criteria criteria) {
         
-        if (busquedaInspecciones.getFechaDesde() != null) {
-            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaInspecciones.getFechaDesde()));
-        }
-        
-        if (busquedaInspecciones.getFechaHasta() != null) {
-            Date fechaHasta = new Date(busquedaInspecciones.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
-            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
-        }
+        criteriaFechasInspeccion(criteria, busquedaInspecciones);
         
         if (busquedaInspecciones.getId() != null) {
             criteria.add(Restrictions.eq("id", Long.parseLong(busquedaInspecciones.getId())));
-        }
-        
-        if (busquedaInspecciones.getAnio() != null) {
-            criteria.add(Restrictions.eq("anio", Integer.parseInt(busquedaInspecciones.getAnio())));
         }
         
         if (busquedaInspecciones.getUsuarioCreacion() != null) {
@@ -209,10 +197,55 @@ public class InspeccionesService implements IInspeccionesService {
                     Restrictions.ilike("nombreUnidad", busquedaInspecciones.getNombreUnidad(), MatchMode.ANYWHERE));
         }
         
+        if (busquedaInspecciones.getEstado() != null) {
+            criteria.add(Restrictions.eq("estadoInspeccion", busquedaInspecciones.getEstado()));
+        }
+        
+        if (busquedaInspecciones.getTipoUnidad() != null) {
+            criteria.add(Restrictions.eq("tipoUnidad", busquedaInspecciones.getTipoUnidad()));
+        }
+        
+        criteriaMunicipioProvincia(criteria, busquedaInspecciones);
+        
+        criteriaEquipo(criteria, busquedaInspecciones);
+        
+        criteraAsociarInspeccionModificar(criteria, busquedaInspecciones.isAsociar(),
+                busquedaInspecciones.getInspeccionModif());
+    }
+    
+    /**
+     * Añade al criteria los criterios relacionados fechas.
+     * 
+     * @param criteria Criteria
+     * @param busquedaInspecciones Filtro de búsqueda con las fechas (desde, hasta, año, cuatrimestre)
+     */
+    private void criteriaFechasInspeccion(Criteria criteria, InspeccionBusqueda busquedaInspecciones) {
+        criteria.add(Restrictions.isNull("fechaBaja"));
+        
+        if (busquedaInspecciones.getFechaDesde() != null) {
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaInspecciones.getFechaDesde()));
+        }
+        
+        if (busquedaInspecciones.getFechaHasta() != null) {
+            Date fechaHasta = new Date(busquedaInspecciones.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
+        }
+        
+        if (busquedaInspecciones.getAnio() != null) {
+            criteria.add(Restrictions.eq("anio", Integer.parseInt(busquedaInspecciones.getAnio())));
+        }
         if (busquedaInspecciones.getCuatrimestre() != null) {
             criteria.add(Restrictions.eq("cuatrimestre", busquedaInspecciones.getCuatrimestre()));
         }
-        
+    }
+    
+    /**
+     * Añade al criteria los criterios relacionados con el equipo de una inspección.
+     * 
+     * @param criteria Criteria
+     * @param busquedaInspecciones Filtro de búsqueda
+     */
+    private void criteriaEquipo(Criteria criteria, InspeccionBusqueda busquedaInspecciones) {
         criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
         if (busquedaInspecciones.getEquipo() != null) {
             criteria.add(Restrictions.eq("equipo", busquedaInspecciones.getEquipo()));
@@ -223,41 +256,25 @@ public class InspeccionesService implements IInspeccionesService {
                     MatchMode.ANYWHERE));
         }
         
-        if (busquedaInspecciones.getEstado() != null) {
-            criteria.add(Restrictions.eq("estadoInspeccion", busquedaInspecciones.getEstado()));
-        }
-        
-        criteriaMunicipioProvincia(criteria, busquedaInspecciones.getMunicipio(), busquedaInspecciones.getProvincia());
-        
-        if (busquedaInspecciones.getTipoUnidad() != null) {
-            criteria.add(Restrictions.eq("tipoUnidad", busquedaInspecciones.getTipoUnidad()));
-        }
-        
-        criteria.add(Restrictions.isNull("fechaBaja"));
-        
         // Desde el buscador muestro sólo las inspecciones de su mismo equipo, desde asociar inspecciones muestro todas
         if (!busquedaInspecciones.isAsociar()) {
             criteriaService.setCriteriaEquipo(criteria);
         }
-        
-        criteraAsociarInspeccionModificar(criteria, busquedaInspecciones.isAsociar(),
-                busquedaInspecciones.getInspeccionModif());
     }
     
     /**
      * Añade al criteria el filtro del municipio o la provincia.
      * 
      * @param criteria Criteria
-     * @param municipio municipio filtrado
-     * @param provincia provincia filtrada
+     * @param busquedaInspecciones Filtro de búsqueda
      */
-    private void criteriaMunicipioProvincia(Criteria criteria, Municipio municipio, Provincia provincia) {
+    private void criteriaMunicipioProvincia(Criteria criteria, InspeccionBusqueda busquedaInspecciones) {
         criteria.createAlias("inspeccion.municipio", "municipio"); // inner join
-        if (municipio != null) {
-            criteria.add(Restrictions.eq("municipio", municipio));
-        } else if (provincia != null) {
+        if (busquedaInspecciones.getMunicipio() != null) {
+            criteria.add(Restrictions.eq("municipio", busquedaInspecciones.getMunicipio()));
+        } else if (busquedaInspecciones.getProvincia() != null) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
-            subquery.add(Restrictions.eq("munic.provincia", provincia));
+            subquery.add(Restrictions.eq("munic.provincia", busquedaInspecciones.getProvincia()));
             subquery.setProjection(Projections.property("munic.id"));
             criteria.add(Property.forName("inspeccion.municipio").in(subquery));
         }
