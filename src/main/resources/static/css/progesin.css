@@ -100,7 +100,7 @@ h1, h2, h3 {
 
 #contenidoProv {
     padding: 10px 0 0 50px;
-    width: 80%;
+    width: 90%;
     float: left;
     height: auto;
 }
@@ -438,3 +438,8 @@ select {
     margin-top: 3px;
     font-size: 11px;
 }
+
+.cuadroPlantillas {
+    background-color: aliceblue; 
+    margin-top: 10px;
+    }

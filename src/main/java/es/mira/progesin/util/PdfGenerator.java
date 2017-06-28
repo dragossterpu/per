@@ -437,7 +437,7 @@ public class PdfGenerator {
         List<DatosTablaGenerica> listaDatosTabla = respuesta.getRespuestaTablaMatriz();
         String tipoRespuesta = respuesta.getRespuestaId().getPregunta().getTipoRespuesta();
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = configuracionRespuestaRepository
-                .findByConfigSeccionOrderByConfigClaveAsc(tipoRespuesta);
+                .findColumnasBySeccion(tipoRespuesta);
         
         Table tabla = new Table(valoresColumnas.size());
         tabla.setWidthPercent(100);

@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -41,7 +42,21 @@ public class AuthenticationSuccessHandlerPersonalizado implements Authentication
         registroActividadService.altaRegActividad(textoReg, TipoRegistroEnum.AUDITORIA.name(),
                 SeccionesEnum.LOGIN.name());
         
-        response.sendRedirect("./index.xhtml");
+        User usuario = (User) autentication.getPrincipal();
+        
+        switch (usuario.getRole()) {
+            case ROLE_PROV_CUESTIONARIO:
+                response.sendRedirect("./cuestionarios/responderCuestionario.xhtml");
+                break;
+            case ROLE_PROV_SOLICITUD:
+                response.sendRedirect("./provisionalSolicitud/provisionalSolicitud.xhtml");
+                break;
+            default:
+                response.sendRedirect("./index.xhtml");
+                break;
+            
+        }
+        
     }
     
 }

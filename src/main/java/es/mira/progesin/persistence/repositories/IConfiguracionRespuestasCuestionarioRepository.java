@@ -42,7 +42,7 @@ public interface IConfiguracionRespuestasCuestionarioRepository
      * @param seccion sección por la que se busca
      * @return lista de configuraciones
      */
-    @Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave not like 'nombreFila%')")
+    @Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave not like 'nombreFila%') order by c.config.seccion asc")
     List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(@Param("seccion") String seccion);
     
     /**
@@ -51,7 +51,7 @@ public interface IConfiguracionRespuestasCuestionarioRepository
      * @param seccion sección por la que se busca
      * @return lista de configuraciones
      */
-    @Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave like 'nombreFila%')")
+    @Query("select c from ConfiguracionRespuestasCuestionario c where c.config.seccion = :seccion and c.config.clave like 'nombreFila%') order by c.config.seccion asc")
     List<ConfiguracionRespuestasCuestionario> findFilasBySeccion(@Param("seccion") String seccion);
     
     /**

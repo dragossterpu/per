@@ -1,4 +1,4 @@
-<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/layouts/layoutInteriorProv.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
       
        <ui:define name="content">
         <ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
@@ -122,6 +122,7 @@
 
                 <div class="botonesFormulario">
                     <p:button outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}" />
+                    <p:button outcome="/provisionalSolicitud/descargaPlantillas" value="Descargar plantillas" icon="fa fa-download" />
                     <p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
                     <p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="form" />
                 </div>

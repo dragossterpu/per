@@ -10,3 +10,4 @@
 @scriptCuestionarioRelaciones_PN.sql
 @scriptCuestionarioRRHH_GC.sql
 @scriptCuestionarioRRHH_PN.sql
+@scriptCuestionarioInfraestructuraGCyPN.sql

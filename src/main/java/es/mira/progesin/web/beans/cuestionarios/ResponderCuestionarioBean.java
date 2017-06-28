@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -47,6 +48,7 @@ import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.VerificadorExtensiones;
+import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,6 +67,12 @@ import lombok.Setter;
 public class ResponderCuestionarioBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Bean de datos comunes de la aplicación.
+     */
+    @Autowired
+    private transient ApplicationBean applicationBean;
     
     /**
      * Lista de usuarios provisionales.
@@ -90,6 +98,17 @@ public class ResponderCuestionarioBean implements Serializable {
      * Cuestionario enviado.
      */
     private CuestionarioEnvio cuestionarioEnviado;
+    
+    /**
+     * Plantilla complementaria al cuestionario.
+     */
+    private transient Documento plantilla;
+    
+    /**
+     * Stream que permite la descarga de la plantilla adjunta al cuestionario.
+     */
+    
+    private transient StreamedContent file;
     
     /**
      * Verificador de extensiones.
@@ -397,8 +416,15 @@ public class ResponderCuestionarioBean implements Serializable {
     @PostConstruct
     public void init() {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
         if (RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
             cuestionarioEnviado = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(usuarioActual.getCorreo());
+            String idPlantillaString = applicationBean.getMapaParametros().get("plantillaCuestionario")
+                    .get(cuestionarioEnviado.getCuestionarioPersonalizado().getModeloCuestionario().getCodigo());
+            
+            if (idPlantillaString != null) {
+                plantilla = documentoService.findOne(Long.valueOf(idPlantillaString));
+            }
             
             setUsuariosProv(
                     userService.crearUsuariosProvisionalesCuestionario(cuestionarioEnviado.getCorreoEnvio(), ""));
@@ -503,4 +529,19 @@ public class ResponderCuestionarioBean implements Serializable {
                 areaUsuario -> mapaAreaUsuarioCuestEnv.put(areaUsuario.getIdArea(), areaUsuario.getUsernameProv()));
         
     }
+    
+    /**
+     * Permite descargar la plantilla anexa al cuestionario.
+     * 
+     */
+    public void descargarPlantilla() {
+        try {
+            this.setFile(documentoService.descargaDocumento(plantilla.getId()));
+        } catch (ProgesinException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    "Se ha producido un error descargar la plantilla.");
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+        }
+    }
+    
 }

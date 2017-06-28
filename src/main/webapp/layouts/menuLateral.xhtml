@@ -49,18 +49,7 @@
             </p:submenu>
         </p:menu>
 
-        <p:menu rendered="#{p:ifAnyGranted('PROV_SOLICITUD')}">
-            <p:submenu label="Solicitud previa cuestionario">
-                <p:menuitem value="Cumplimentar solicitud" action="#{provisionalSolicitudBean.visualizarSolicitud}"/>
-                <p:menuitem value="Descarga de plantillas" outcome="/provisionalSolicitud/descargaPlantillas" />
-            </p:submenu>
-        </p:menu>
 
-        <p:menu rendered="#{p:ifAnyGranted('PROV_CUESTIONARIO')}">
-            <p:submenu label="Cuestionario">
-                <p:menuitem value="Responder cuestionario" outcome="/cuestionarios/responderCuestionario" />
-            </p:submenu>
-        </p:menu>
 
     </h:form>
 

@@ -213,8 +213,6 @@ public class EquiposBean implements Serializable {
             descripcion.append("Nombre de componentes ");
             descripcion.append(nombresCompletos);
             
-            // String descripcion = "Se ha creado un nuevo equipo de inspecciones '" + equipo.getNombreEquipo()
-            // + "'. Nombres de componentes " + nombresCompletos;
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.name());
@@ -320,7 +318,6 @@ public class EquiposBean implements Serializable {
      */
     public void eliminarMiembro(Miembro miembro) {
         try {
-            // TODO historico de miembros
             List<Miembro> listaMiembros = equipo.getMiembros();
             listaMiembros.remove(miembro);
             equipo.setMiembros(listaMiembros);

@@ -220,6 +220,8 @@ public class ProvisionalSolicitudBean implements Serializable {
             // Invierto orden para buscar por contentType y obtener extension
             extensiones.put(p.getValue(), p.getKey());
         }
+        visualizarSolicitud();
+        
     }
     
     /**

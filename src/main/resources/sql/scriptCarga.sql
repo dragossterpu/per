@@ -1551,7 +1551,16 @@ BEGIN
         DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
         DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
         DBMS_LOB.CLOSE(l_bfile);
-
+    INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (4, empty_blob(),'Plantilla Infraestructuras -Otras sedes- CG.docx') RETURN fichero INTO l_blob;
+        l_bfile := BFILENAME('PLANTILLAS_PROGESIN', 'Plantilla Infraestructuras -Otras sedes- CG.docx');
+        DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+        DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+        DBMS_LOB.CLOSE(l_bfile);    
+    INSERT INTO documentos_blob (id, fichero, nombre_fichero) VALUES (5, empty_blob(),'Plantilla Infraestructuras -Otras sedes- PN.docx') RETURN fichero INTO l_blob;
+        l_bfile := BFILENAME('PLANTILLAS_PROGESIN', 'Plantilla Infraestructuras -Otras sedes- PN.docx');
+        DBMS_LOB.OPEN(l_bfile, DBMS_LOB.LOB_READONLY);
+        DBMS_LOB.LOADFROMFILE(l_blob, l_bfile,dbms_lob.lobmaxsize);
+        DBMS_LOB.CLOSE(l_bfile);    
     EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';
     
 EXCEPTION WHEN OTHERS THEN NULL;
@@ -1566,6 +1575,10 @@ prompt =========================================================================
 Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (1, 1,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_C.xlsx', SYSDATE, 'system',18);
 Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (2, 2,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_CIA.xlsx', SYSDATE, 'system',18);
 Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (3, 3,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_Z.xlsx', SYSDATE, 'system',18);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (4, 4,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Guardia Civil', SYSDATE, 'system',18);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (5, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Policía Nacional', SYSDATE, 'system',18);
+
+
 COMMIT;
 
 prompt =========================================================================
@@ -1717,6 +1730,9 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apo
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Comandancia','plantillasGC', 1);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Compañía','plantillasGC', 2);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Zona', 'plantillasGC',3);
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('INFRA_GC','plantillaCuestionario',4);
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('INFRA_PN','plantillaCuestionario',5);
+
 
 COMMIT;
 
