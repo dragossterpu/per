@@ -36,6 +36,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -547,10 +548,7 @@ public class GestorDocumentalBeanTest {
         
         Documento doc = new Documento();
         gestorDocumentalBeanMock.setDocumento(doc);
-        DataAccessException exception = new DataAccessException("exception_test") {
-            private static final long serialVersionUID = 1L;
-        };
-        when(documentoService.save(doc)).thenThrow(exception);
+        when(documentoService.save(doc)).thenThrow(TransientDataAccessResourceException.class);
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
         verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
@@ -643,13 +641,10 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testModificaDocumentoException() {
-        DataAccessException exception = new DataAccessException("exception_test") {
-            private static final long serialVersionUID = 1L;
-        };
         Documento docTest = new Documento();
         docTest.setId(2L);
         gestorDocumentalBeanMock.setDocumento(docTest);
-        when(documentoService.save(docTest)).thenThrow(exception);
+        when(documentoService.save(docTest)).thenThrow(TransientDataAccessResourceException.class);
         gestorDocumentalBeanMock.modificaDocumento();
         
         PowerMockito.verifyStatic(times(1));
@@ -772,9 +767,6 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testBorrarDocumentoException() {
-        DataAccessException exception = new DataAccessException("t") {
-            private static final long serialVersionUID = 1L;
-        };
         Documento documento = new Documento();
         documento.setNombre("documento_test");
         List<Inspeccion> inspecciones = new ArrayList<>();
@@ -785,7 +777,7 @@ public class GestorDocumentalBeanTest {
         inspecciones.add(i1);
         inspecciones.add(i2);
         documento.setInspeccion(inspecciones);
-        doThrow(exception).when(documentoService).delete(documento);
+        doThrow(TransientDataAccessResourceException.class).when(documentoService).delete(documento);
         gestorDocumentalBeanMock.borrarDocumento(documento);
         verify(documentoService, times(1)).delete(documento);
         verify(registroActividadService, never()).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
