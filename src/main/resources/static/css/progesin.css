@@ -86,12 +86,12 @@ h1, h2, h3 {
 }
 
 #menuLateral {
-    width: 25%;
+    width: 22%;
     float: left;
 }
 
 #contenido {
-    width: 75%;
+    width: 78%;
     float: left;
     height: auto;
     padding: 10px 0 10px 10px;
@@ -138,11 +138,12 @@ h1, h2, h3 {
 
 .container-fluid {
     background-color: #fff;
-    max-width: 950px;
+    max-width: 1050px;
     margin: auto;
     padding: 1em;
     padding-top: inherit;
     font-size: 12px;
+    box-shadow: 1px 0px 8px 1px #888888;
 }
 
 .bloqueFormulario {

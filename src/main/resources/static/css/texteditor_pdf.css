@@ -1,6 +1,6 @@
 .ql-container {
     box-sizing: border-box;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 13px;
     height: 100%;
     margin: 0;
@@ -401,11 +401,11 @@
 }
 
 .ql-editor .ql-font-serif {
-    font-family: Georgia, Times New Roman, serif
+    font-family: Calibri, serif
 }
 
 .ql-editor .ql-font-monospace {
-    font-family: Monaco, Courier New, monospace
+    font-family: Courier New, monospace
 }
 
 .ql-editor .ql-size-small {
@@ -430,7 +430,8 @@
 }
 
 .ql-editor .ql-align-justify {
-    text-align: justify
+    text-align: justify;
+    white-space: normal
 }
 
 .ql-editor .ql-align-right {
