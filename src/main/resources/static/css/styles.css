@@ -11,18 +11,16 @@ body {
     height: 190px;
     background: url(../images/cabecera_ministerio.png ) no-repeat;
     background-position: center;
-    -moz-box-shadow: inset 0 0 3px #000000;
-    -webkit-box-shadow: inset 0 0 3px #000000;
-    box-shadow: inset 0 0 3px #000000;
 }
 
 #holder {
-    width: 1200px;
+    width: 1050px;
     height: 720px;
-    margin: 0px auto 20px auto;
+    margin: 0px auto;
     border: solid 1px #ccc;
     position: relative;
     background: #ffffff;
+    box-shadow: 1px 0px 8px 1px #888888;
 }
 
 #login_form {
