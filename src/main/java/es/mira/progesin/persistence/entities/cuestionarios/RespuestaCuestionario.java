@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

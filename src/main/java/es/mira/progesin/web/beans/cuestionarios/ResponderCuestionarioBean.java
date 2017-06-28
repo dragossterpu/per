@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
-import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;

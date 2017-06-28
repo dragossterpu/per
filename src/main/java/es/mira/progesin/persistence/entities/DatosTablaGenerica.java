@@ -1,4 +1,4 @@
-package es.mira.progesin.model;
+package es.mira.progesin.persistence.entities;
 
 import java.io.Serializable;
 

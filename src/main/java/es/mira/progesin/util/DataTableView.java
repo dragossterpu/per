@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import lombok.Getter;
 import lombok.Setter;

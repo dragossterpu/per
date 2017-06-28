@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import es.mira.progesin.model.DatosTablaGenerica;
+import es.mira.progesin.persistence.entities.DatosTablaGenerica;
 
 /**
  * Repositorio donde se almacenan las respuestas de un cuestionario que son de tipo TABLA o MATRIZ.
