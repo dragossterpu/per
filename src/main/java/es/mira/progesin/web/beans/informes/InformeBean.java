@@ -121,7 +121,7 @@ public class InformeBean implements Serializable {
     // private transient HtmlPdfGenerator htmlPdfGenerator;
     
     // @Autowired
-    // private transient HtmlDocGenerator htmlDocGenerator;
+    // private transient HtmlDocxGenerator htmlDocxGenerator;
     
     /**
      * Servicio de modelos de informe.

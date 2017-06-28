@@ -3,7 +3,8 @@
 
         <h:form id="informe">
 
-            <h:outputStylesheet library="primefaces" name="texteditor/texteditor.css" />
+            
+            <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
             <h:commandLink style="float: right;" actionListener="#{informeBean.crearInforme('DOCX')}">
                 <p:graphicImage value="/images/doc.png" style="padding: 0" />
                 <p:fileDownload value="#{informeBean.file}" />
@@ -13,7 +14,7 @@
                 <p:fileDownload value="#{informeBean.file}" />
             </h:commandLink>
             
-           <!-- <div style="width:21cm; height:29.7cm;">
+            <div style="width:21cm; height:29.7cm;">
                 <p:graphicImage value="/images/informe_portada.png" width="21cm" height="29.7cm" style="width:100%"/>
                 <div style="position:relative; top:-18cm; left:2cm; width:400px; text-align:center;">
                     <h3>Inspección realizada a la #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de la #{informeBean.informe.inspeccion.ambito.descripcion} de <span style="text-transform:capitalize;">#{informeBean.informe.inspeccion.municipio.name}</span></h3>
@@ -22,11 +23,15 @@
                     <h4>#{informeBean.informe.inspeccion.tipoInspeccion.descripcion}</h4>
                 </div>
                 <div style="position:relative; top:-10cm; left:3.4cm; width:5.23cm; text-align:center; float:left">
-                    <h4>#{informeBean.informe.fechaFinalizacion}</h4>
+                    <h4>
+                        <h:outputText value="#{informeBean.informe.fechaFinalizacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </h4>
                 </div>
                 <div style="clear:both"/>
-            </div>  -->
-            <div class="ql-snow ql-editor" id="informe">
+            </div>
+            <div class="ql-snow ql-editor" id="informe" style="width:21cm; position:relative; top:-4cm">
                 <ui:repeat value="#{informeBean.modeloInforme.areas}" var="area">
                 <h4><h:outputText value="#{area.descripcion}"/></h4>
                     <ui:repeat value="#{area.subareas}" var="subarea">
