@@ -25,12 +25,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource(locations = "classpath:test.properties")
 public class IRegActividadRepositoryTest {
     
+    /**
+     * Repositorio para el registro de actividad.
+     */
     @Autowired
-    IRegActividadRepository regActividadRepository;
+    private IRegActividadRepository regActividadRepository;
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IRegActividadRepository#buscarPorNombreSeccion(java.lang.String)}.
+     * {@link es.mira.progesin.persistence.repositories.IRegActividadRepository#buscarPorNombreSeccion(java.lang.String)}
+     * .
      */
     @Test
     public final void testBuscarPorNombreSeccion() {
@@ -40,7 +44,8 @@ public class IRegActividadRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IRegActividadRepository#buscarPorUsuarioRegistro(java.lang.String)}.
+     * {@link es.mira.progesin.persistence.repositories.IRegActividadRepository#buscarPorUsuarioRegistro(java.lang.String)}
+     * .
      */
     @Test
     public final void testBuscarPorUsuarioRegistro() {
