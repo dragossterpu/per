@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
@@ -34,11 +34,6 @@ import es.mira.progesin.web.beans.InspeccionBusqueda;
  */
 @Service
 public class InspeccionesService implements IInspeccionesService {
-    
-    /**
-     * Variable para el formato de la fecha.
-     */
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Variable utilizada para inyectar la SessionFactory.
@@ -232,27 +227,52 @@ public class InspeccionesService implements IInspeccionesService {
             criteria.add(Restrictions.eq("estadoInspeccion", busquedaInspecciones.getEstado()));
         }
         
-        // criteria.createAlias("municipio.provincia", "provincia"); // inner join
-        criteria.createAlias("inspeccion.municipio", "municipio"); // inner join
-        if (busquedaInspecciones.getMunicipio() != null) {
-            criteria.add(Restrictions.eq("municipio", busquedaInspecciones.getMunicipio()));
-        } else if (busquedaInspecciones.getProvincia() != null) {
-            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
-            subquery.add(Restrictions.eq("munic.provincia", busquedaInspecciones.getProvincia()));
-            subquery.setProjection(Projections.property("munic.id"));
-            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
-        }
+        criteriaMunicipioProvincia(criteria, busquedaInspecciones.getMunicipio(), busquedaInspecciones.getProvincia());
         
         if (busquedaInspecciones.getTipoUnidad() != null) {
             criteria.add(Restrictions.eq("tipoUnidad", busquedaInspecciones.getTipoUnidad()));
         }
         
         criteria.add(Restrictions.isNull("fechaBaja"));
-        if (busquedaInspecciones.isAsociar() && busquedaInspecciones.getInspeccionModif() != null
-                && busquedaInspecciones.getInspeccionModif().getId() != null) {
-            criteria.add(Restrictions.ne("id", busquedaInspecciones.getInspeccionModif().getId()));
-        } else if (!busquedaInspecciones.isAsociar()) {
+        
+        // Desde el buscador muestro sólo las inspecciones de su mismo equipo, desde asociar inspecciones muestro todas
+        if (!busquedaInspecciones.isAsociar()) {
             criteriaService.setCriteriaEquipo(criteria);
+        }
+        
+        criteraAsociarInspeccionModificar(criteria, busquedaInspecciones.isAsociar(),
+                busquedaInspecciones.getInspeccionModif());
+    }
+    
+    /**
+     * Añade al criteria el filtro del municipio o la provincia.
+     * 
+     * @param criteria Criteria
+     * @param municipio municipio filtrado
+     * @param provincia provincia filtrada
+     */
+    private void criteriaMunicipioProvincia(Criteria criteria, Municipio municipio, Provincia provincia) {
+        criteria.createAlias("inspeccion.municipio", "municipio"); // inner join
+        if (municipio != null) {
+            criteria.add(Restrictions.eq("municipio", municipio));
+        } else if (provincia != null) {
+            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
+            subquery.add(Restrictions.eq("munic.provincia", provincia));
+            subquery.setProjection(Projections.property("munic.id"));
+            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
+        }
+    }
+    
+    /**
+     * Elimina del resultado de la busqueda la inspección que está modificando.
+     * 
+     * @param criteria Criteria
+     * @param isAsociar true si va al buscador desde la opción "Asociar inspecciones"
+     * @param inspeccion inspección a modificar
+     */
+    private void criteraAsociarInspeccionModificar(Criteria criteria, boolean isAsociar, Inspeccion inspeccion) {
+        if (isAsociar && inspeccion != null && inspeccion.getId() != null) {
+            criteria.add(Restrictions.ne("id", inspeccion.getId()));
         }
     }
     
