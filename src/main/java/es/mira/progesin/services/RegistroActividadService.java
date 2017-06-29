@@ -191,12 +191,7 @@ public class RegistroActividadService implements IRegistroActividadService {
         try {
             RegistroActividad registroActividad = new RegistroActividad();
             registroActividad.setTipoRegActividad(tipoReg);
-            if (SecurityContextHolder.getContext().getAuthentication() != null) {
-                registroActividad
-                        .setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
-            } else {
-                registroActividad.setUsernameRegActividad("system");
-            }
+            registroActividad.setUsernameRegActividad(SecurityContextHolder.getContext().getAuthentication().getName());
             registroActividad.setFechaAlta(new Date());
             registroActividad.setNombreSeccion(seccion);
             registroActividad.setDescripcion(descripcion);
