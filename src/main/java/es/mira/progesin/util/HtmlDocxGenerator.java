@@ -149,7 +149,7 @@ public final class HtmlDocxGenerator {
         document.getParts().put(cover_ftr_part);
         
         Ftr cover_ftr = objectFactory.createFtr();// getFtr(objectFactory);
-        Ftr content_ftr = getFtr(objectFactory);
+        Ftr content_ftr = getNumPagina(objectFactory);
         cover_ftr_part.setJaxbElement(cover_ftr);
         content_ftr_part.setJaxbElement(content_ftr);
         Relationship cover_ftr_rel = document.getMainDocumentPart().addTargetPart(cover_ftr_part);
@@ -317,17 +317,23 @@ public final class HtmlDocxGenerator {
     }
     
     /**
-     * Footer.
+     * Número de página.
      * 
-     * @param document documento docx
      * @param objectFactory constructor
      * @return footer
      * @throws Exception error
      */
-    public static Ftr getFtr(ObjectFactory objectFactory) throws Exception {
+    public static Ftr getNumPagina(ObjectFactory objectFactory) throws Exception {
         // AddPage Numbers
         CTSimpleField pgnum = objectFactory.createCTSimpleField();
-        pgnum.setInstr(" PAGE \\* MERGEFORMAT ");
+        pgnum.setInstr("PAGE \\* MERGEFORMAT");
+        Text de = objectFactory.createText();
+        de.setSpace("preserve");
+        de.setValue(" de ");
+        R r = objectFactory.createR();
+        r.getContent().add(de);
+        CTSimpleField pgsnum = objectFactory.createCTSimpleField();
+        pgsnum.setInstr("NUMPAGES \\* MERGEFORMAT");
         RPr RPr = objectFactory.createRPr();
         RPr.setNoProof(new BooleanDefaultTrue());
         PPr ppr = objectFactory.createPPr();
@@ -342,10 +348,14 @@ public final class HtmlDocxGenerator {
         R run = objectFactory.createR();
         run.getContent().add(RPr);
         pgnum.getContent().add(run);
+        pgsnum.getContent().add(run);
         
         JAXBElement<CTSimpleField> fldSimple = objectFactory.createPFldSimple(pgnum);
+        JAXBElement<CTSimpleField> fldSimple2 = objectFactory.createPFldSimple(pgsnum);
         P para = objectFactory.createP();
         para.getContent().add(fldSimple);
+        para.getContent().add(r);
+        para.getContent().add(fldSimple2);
         para.setPPr(ppr);
         // Now add our paragraph to the footer
         Ftr ftr = objectFactory.createFtr();

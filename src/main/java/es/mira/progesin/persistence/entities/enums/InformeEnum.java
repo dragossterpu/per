@@ -17,7 +17,7 @@ public enum InformeEnum {
     /**
      * Informe creado.
      */
-    CREADO("Creado"),
+    INICIADO("Iniciado"),
     /**
      * Informe finalizado.
      */
