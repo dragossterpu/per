@@ -11,7 +11,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,10 +18,11 @@ import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,10 +39,10 @@ import es.mira.progesin.util.FacesUtilities;
  * @author EZENTIS
  *
  */
-
+@SuppressStaticInitializationFor("progesin/src/main/java/es/mira/progesin/services/RegistroActividadService.java")
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, LoggerFactory.class })
+@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RegistroActividadService.class })
 public class RegistroActividadServiceTest {
     
     /**
@@ -73,7 +73,7 @@ public class RegistroActividadServiceTest {
      * Mock para la simulación del log.
      */
     @Mock
-    private Logger log;
+    private Logger logMock;
     
     /**
      * Comprobación clase existe.
@@ -97,14 +97,12 @@ public class RegistroActividadServiceTest {
      */
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(LoggerFactory.class);
+        Whitebox.setInternalState(RegistroActividadService.class, logMock);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("usuarioLogueado");
-        when(LoggerFactory.getLogger(any(Class.class))).thenReturn(log);
-        
     }
     
     /**
@@ -137,9 +135,14 @@ public class RegistroActividadServiceTest {
      * .
      */
     @Test
-    @Ignore
     public final void testAltaRegActividadErrorException() {
+        Exception exception = mock(Exception.class);
+        when(regActividadRepository.save(any(RegistroActividad.class)))
+                .thenThrow(TransientDataAccessResourceException.class);
+        registroActividadServiceMock.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), exception);
         
+        verify(regActividadRepository, times(1)).save(any(RegistroActividad.class));
+        verify(logMock, times(1)).error(any(String.class), any(TransientDataAccessResourceException.class));
     }
     
     /**
@@ -160,17 +163,13 @@ public class RegistroActividadServiceTest {
      * .
      */
     @Test
-    @Ignore
     public final void testAltaRegActividadException() {
-        DataAccessException exception1 = new DataAccessException("DataAccesException_test") {
-            private static final long serialVersionUID = 1L;
-        };
-        when(regActividadRepository.save(any(RegistroActividad.class))).thenThrow(exception1);
-        
+        when(regActividadRepository.save(any(RegistroActividad.class)))
+                .thenThrow(TransientDataAccessResourceException.class);
         registroActividadServiceMock.altaRegActividad("descripcion_test", TipoRegistroEnum.ALTA.name(),
                 SeccionesEnum.INSPECCION.name());
-        // verify(regActividadRepository, times(1)).save(any(RegistroActividad.class));
-        // verify(log, times(1)).error(any(String.class), any(Exception.class));
+        verify(regActividadRepository, times(2)).save(any(RegistroActividad.class));
+        verify(logMock, times(1)).error(any(String.class), any(TransientDataAccessResourceException.class));
     }
     
     /**
