@@ -93,41 +93,12 @@ public class NotificacionService implements INotificacionService {
      * 
      */
     private Notificacion crearNotificacion(String descripcion, String seccion) {
-        Notificacion notificacionCreada = null;
-        try {
-            Notificacion notificacion = new Notificacion();
-            notificacion.setUsernameNotificacion(SecurityContextHolder.getContext().getAuthentication().getName());
-            notificacion.setNombreSeccion(seccion);
-            notificacion.setFechaAlta(new Date());
-            notificacion.setDescripcion(descripcion);
-            
-            notificacionCreada = notificacionRepository.save(notificacion);
-        } catch (DataAccessException e) {
-            registroActividadService.altaRegActividadError(seccion, e);
-        }
-        return notificacionCreada;
-        
-    }
-    
-    /**
-     * 
-     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un usuario
-     * pasado como parámetro.
-     * 
-     * @param descripcion Descripción de la notificación
-     * @param seccion Sección sobre la que se hace la notificación
-     * @param usuario Usuario al que se le dirige la notificación
-     * 
-     */
-    @Override
-    public void crearNotificacionUsuario(String descripcion, String seccion, String usuario) {
-        try {
-            Notificacion notificacion = crearNotificacion(descripcion, seccion);
-            alertasNotificacionesUsuarioService.grabarMensajeUsuario(notificacion, usuario);
-        } catch (DataAccessException e) {
-            registroActividadService.altaRegActividadError(seccion, e);
-        }
-        
+        Notificacion notificacion = new Notificacion();
+        notificacion.setUsernameNotificacion(SecurityContextHolder.getContext().getAuthentication().getName());
+        notificacion.setNombreSeccion(seccion);
+        notificacion.setFechaAlta(new Date());
+        notificacion.setDescripcion(descripcion);
+        return notificacionRepository.save(notificacion);
     }
     
     /**

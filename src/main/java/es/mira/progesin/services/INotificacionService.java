@@ -32,19 +32,6 @@ public interface INotificacionService {
     
     /**
      * 
-     * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un usuario
-     * pasado como parámetro.
-     * 
-     * @param descripcion Descripción de la notificación
-     * @param seccion Sección sobre la que se hace la notificación
-     * @param usuario Usuario al que se le dirige la notificación
-     * 
-     */
-    
-    void crearNotificacionUsuario(String descripcion, String seccion, String usuario);
-    
-    /**
-     * 
      * Crea una notificación a partir de una descripción y una sección recibidas como parámetro y la asigna a un rol
      * pasado como parámetro.
      * 
