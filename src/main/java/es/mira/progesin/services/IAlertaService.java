@@ -6,7 +6,6 @@ import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 
 /**
@@ -66,30 +65,6 @@ public interface IAlertaService {
      */
     
     List<Alerta> findByFechaBajaIsNull();
-    
-    /**
-     * 
-     * Crea una alerta y se asigna a u usuario. Se crea a partir de la sección, la descripción y el usuario que se
-     * reciben como parámetros.
-     * 
-     * @param seccion Sección para la que se crea la alerta
-     * @param descripcion Descripción de la alerta
-     * @param usuario Usuario al que se envía la alerta
-     * 
-     */
-    
-    public void crearAlertaUsuario(String seccion, String descripcion, User usuario);
-    
-    /**
-     * 
-     * Crea una alerta y se asigna a una lista de usuarios.
-     * 
-     * @param seccion Sección para la que se crea la alerta
-     * @param descripcion Descripción de la alerta
-     * @param listaUsuarios Listado de usuarios a los que se debe enviar la alerta
-     * 
-     */
-    public void crearAlertaMultiplesUsuarios(String seccion, String descripcion, List<User> listaUsuarios);
     
     /**
      * 

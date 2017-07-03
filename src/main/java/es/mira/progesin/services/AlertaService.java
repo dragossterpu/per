@@ -160,30 +160,6 @@ public class AlertaService implements IAlertaService {
     
     /**
      * 
-     * Crea una alerta y se asigna a u usuario. Se crea a partir de la sección, la descripción y el usuario que se
-     * reciben como parámetros.
-     * 
-     * @param seccion Sección para la que se crea la alerta
-     * @param descripcion Descripción de la alerta
-     * @param usuario Usuario al que se envía la alerta
-     * 
-     */
-    @Override
-    public void crearAlertaUsuario(String seccion, String descripcion, User usuario) {
-        try {
-            Alerta alerta = crearAlerta(seccion, descripcion);
-            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
-            correo.envioCorreo(usuario.getCorreo(), "Nueva alerta PROGESIN",
-                    "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
-            
-        } catch (DataAccessException | CorreoException e) {
-            registroActividadService.altaRegActividadError(seccion, e);
-        }
-        
-    }
-    
-    /**
-     * 
      * Crea una alerta y se asigna a una lista de usuarios.
      * 
      * @param seccion Sección para la que se crea la alerta
@@ -191,22 +167,17 @@ public class AlertaService implements IAlertaService {
      * @param listaUsuarios Listado de usuarios a los que se debe enviar la alerta
      * 
      */
-    @Override
-    public void crearAlertaMultiplesUsuarios(String seccion, String descripcion, List<User> listaUsuarios) {
-        try {
-            List<String> listaCorreos = new ArrayList<>();
-            Alerta alerta = crearAlerta(seccion, descripcion);
-            
-            for (User usuario : listaUsuarios) {
-                alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
-                listaCorreos.add(usuario.getCorreo());
-            }
-            correo.envioCorreo(listaCorreos, "Nueva alerta PROGESIN",
-                    "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
-            
-        } catch (DataAccessException | CorreoException e) {
-            registroActividadService.altaRegActividadError(seccion, e);
+    
+    private void crearAlertaMultiplesUsuarios(String seccion, String descripcion, List<User> listaUsuarios) {
+        List<String> listaCorreos = new ArrayList<>();
+        Alerta alerta = crearAlerta(seccion, descripcion);
+        
+        for (User usuario : listaUsuarios) {
+            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
+            listaCorreos.add(usuario.getCorreo());
         }
+        correo.envioCorreo(listaCorreos, "Nueva alerta PROGESIN",
+                "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
     }
     
     /**
@@ -224,7 +195,7 @@ public class AlertaService implements IAlertaService {
         try {
             List<User> usuariosRol = userService.findByfechaBajaIsNullAndRole(rol);
             crearAlertaMultiplesUsuarios(seccion, descripcion, usuariosRol);
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | CorreoException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -264,7 +235,7 @@ public class AlertaService implements IAlertaService {
         try {
             List<User> listausuarios = userService.usuariosEquipo(inspeccion.getEquipo());
             crearAlertaMultiplesUsuarios(seccion, descripcion, listausuarios);
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | CorreoException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
@@ -284,9 +255,12 @@ public class AlertaService implements IAlertaService {
     public void crearAlertaJefeEquipo(String seccion, String descripcion, Inspeccion inspeccion) {
         try {
             User usuario = userService.findOne(inspeccion.getEquipo().getJefeEquipo().getUsername());
-            crearAlertaUsuario(seccion, descripcion, usuario);
+            Alerta alerta = crearAlerta(seccion, descripcion);
+            alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
+            correo.envioCorreo(usuario.getCorreo(), "Nueva alerta PROGESIN",
+                    "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
             
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | CorreoException e) {
             registroActividadService.altaRegActividadError(seccion, e);
         }
         
