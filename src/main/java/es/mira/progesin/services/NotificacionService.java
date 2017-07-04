@@ -24,6 +24,7 @@ import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.repositories.INotificacionRepository;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -32,7 +33,7 @@ import es.mira.progesin.persistence.repositories.INotificacionRepository;
  * @author EZENTIS
  * 
  */
-
+@NoArgsConstructor
 @Service
 public class NotificacionService implements INotificacionService {
     
@@ -69,6 +70,17 @@ public class NotificacionService implements INotificacionService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServic Servicio Criteria
+     */
+    public NotificacionService(SessionFactory sessionFact, CriteriaService criteriaServic) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServic;
+    }
     
     /**
      * 
