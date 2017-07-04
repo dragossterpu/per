@@ -106,7 +106,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public void type() {
-        assertThat(AlertaService.class).isNotNull();
+        assertThat(NotificacionService.class).isNotNull();
     }
     
     /**
