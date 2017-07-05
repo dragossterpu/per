@@ -14,7 +14,7 @@
                 <p:fileDownload value="#{informeBean.file}" />
             </h:commandLink>
             
-            <div style="width:21cm; height:29.7cm;">
+<!--             <div style="width:21cm; height:29.7cm;">
                 <p:graphicImage value="/images/informe_portada.png" width="21cm" height="29.7cm" style="width:100%"/>
                 <div style="position:relative; top:-18cm; left:2cm; width:400px; text-align:center;">
                     <h3>Inspección realizada a la #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de la #{informeBean.informe.inspeccion.ambito.descripcion} de <span style="text-transform:capitalize;">#{informeBean.informe.inspeccion.municipio.name}</span></h3>
@@ -30,8 +30,8 @@
                     </h4>
                 </div>
                 <div style="clear:both"/>
-            </div>
-            <div class="ql-snow ql-editor" id="informe" style="width:21cm; position:relative; top:-4cm">
+            </div> -->
+            <div class="ql-snow ql-editor" id="informe" ><!-- style="width:21cm; position:relative; top:-4cm"> -->
                 <ui:repeat value="#{informeBean.modeloInforme.areas}" var="area">
                 <h4><h:outputText value="#{area.descripcion}"/></h4>
                     <ui:repeat value="#{area.subareas}" var="subarea">

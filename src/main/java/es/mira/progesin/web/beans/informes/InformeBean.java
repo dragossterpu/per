@@ -120,8 +120,11 @@ public class InformeBean implements Serializable {
     // @Autowired
     // private transient HtmlPdfGenerator htmlPdfGenerator;
     
-    // @Autowired
-    // private transient HtmlDocxGenerator htmlDocxGenerator;
+    /**
+     * Generador de DOCXs a partir de código html.
+     */
+    @Autowired
+    private transient HtmlDocxGenerator htmlDocxGenerator;
     
     /**
      * Servicio de modelos de informe.
@@ -294,7 +297,7 @@ public class InformeBean implements Serializable {
                 setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
                         imagenPortada, autor));
             } else if ("DOCX".equals(tipoArchivo)) {
-                setFile(HtmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                setFile(htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
                         imagenPortada, autor));
             }
         } catch (ProgesinException e) {
