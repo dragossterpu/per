@@ -238,7 +238,8 @@ public class EstadisticaBean implements Serializable {
         grafica.setShowDataLabels(true);
         grafica.setLegendPosition("w");
         grafica.setSeriesColors(
-                "FFFFFF,C0C0C0,808080,000000,FF0000,800000,FFFF00,FFFF00,00FF00,008000,00FFFF,008080,0000FF,800080");
+                "FFFFFF,C0C0C0,808080,d0b38e,FF0000,ec9931,FFFF00,00FF00,008000,00FFFF,008080,0000FF,800080,f6546a,084D6E");
+        
     }
     
     /**

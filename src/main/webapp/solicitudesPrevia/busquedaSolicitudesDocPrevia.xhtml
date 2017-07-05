@@ -151,7 +151,7 @@
                         <h:commandLink title="Modificar solicitud" styleClass="fa fa-edit ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspeccionesApoyo}">
-                        <p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="ui-icon-trash" actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}" update=":busquedaSolicitudDocPrevia:panelSolicitudes">
+                        <p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="ui-icon-trash" actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}" update=":busquedaSolicitudDocPrevia:panelSolicitudes" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
                             <p:confirm header="Eliminar" icon="ui-icon-alert" message="¿Está seguro de que desea eliminar esta solicitud?" />
                         </p:commandButton>
                     </p:column>
@@ -171,6 +171,9 @@
                    <div class="centrarBotonesDialog">
                        <p:button value="Cerrar" outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" />
                    </div>
+               </p:dialog>
+               <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                   <p:graphicImage value="/images/loading.gif" />
                </p:dialog>
                 <p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 
