@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
+import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -74,6 +75,12 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      */
     @Autowired
     transient IRegistroActividadService regActividadService;
+    
+    /**
+     * Servicio de documentos.
+     */
+    @Autowired
+    transient IDocumentoService documentoService;
     
     /**
      * LazyModel de cuestionarios personalizados para hacer la paginación por servidor.
@@ -171,7 +178,10 @@ public class CuestionarioPersonalizadoBean implements Serializable {
             cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
             Inspeccion inspeccion = new Inspeccion();
             cuestionarioEnvio.setInspeccion(inspeccion);
+            
+            envioCuestionarioBean.setListaPlantillas(documentoService.buscaNombreTipoDocumento("PLANTILLA CUESTIONARIO"));
             envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
+            // envioCuestionarioBean.setMostrarPlantillas(false);
             rutaVista = "/cuestionarios/enviarCuestionario?faces-redirect=true";
         } else {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Acción no permitida",

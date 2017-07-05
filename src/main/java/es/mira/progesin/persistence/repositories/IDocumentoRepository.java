@@ -56,6 +56,15 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
     Long perteneceACuestionario(Long idDocumento);
     
     /**
+     * Devuelve el número de cuestionarios enviados que tienen adjunta la plantilla pasada como parámetro.
+     * 
+     * @param idDocumento Identificador de la plantilla
+     * @return Número de cuestionarios en los que está adjunta la plantilla
+     */
+    @Query(value = "select count(id_cuest_env) from cuest_env_plantilla where id_plantilla=?1", nativeQuery = true)
+    Long plantillaPerteneceACuestionario(Long idDocumento);
+    
+    /**
      * Devuelve el id de la solicitud que tenga adjunto el documento recibido como parámetro.
      * 
      * @param idDocumento Id del documento a buscar
@@ -63,4 +72,22 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
      */
     @Query(value = "select id_solicitud_previa from solicitud_previa_docs where id_documento=?1", nativeQuery = true)
     Long perteneceASolicitud(Long idDocumento);
+    
+    /**
+     * Devuelve los documentos que corresponden a un tipo de documento.
+     * 
+     * @param tipo Nombre del tipo de documento
+     * @return Listado de documentos
+     */
+    @Query("select a from Documento a, TipoDocumento b where a.tipoDocumento=b.id and b.nombre=?1")
+    List<Documento> buscaNombreTipoDocumento(String tipo);
+    
+    /**
+     * Devuelve los documentos de tipo plantilla asociados a un cuestionario enviado.
+     * 
+     * @param idCuestionarioEnviado Identificador del cuestionario.
+     * @return Listado de plantillas.
+     */
+    @Query(value = "select * from documentos a, cuest_env_plantilla b where a.id=b.id_plantilla and b.id_cuest_env=?1", nativeQuery = true)
+    List<Documento> findPlantillas(Long idCuestionarioEnviado);
 }

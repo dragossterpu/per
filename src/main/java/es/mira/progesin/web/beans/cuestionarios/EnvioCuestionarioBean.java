@@ -20,6 +20,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
@@ -54,6 +55,11 @@ public class EnvioCuestionarioBean implements Serializable {
      * Objeto para el envío de cuestionarios.
      */
     private CuestionarioEnvio cuestionarioEnvio;
+    
+    /**
+     * Listado de las plantillas anexas al cuestionario.
+     */
+    private List<Documento> listaPlantillas;
     
     /**
      * Servicio de inspecciones.
@@ -304,4 +310,5 @@ public class EnvioCuestionarioBean implements Serializable {
         }
         return respuesta;
     }
+    
 }

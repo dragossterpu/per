@@ -2,16 +2,22 @@ package es.mira.progesin.persistence.entities.cuestionarios;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,6 +26,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -44,6 +51,7 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "CUESTIONARIOS_ENVIADOS")
+@NamedEntityGraph(name = "CuestionarioEnvio.plantillas", attributeNodes = @NamedAttributeNode("plantillas"))
 public class CuestionarioEnvio implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -154,4 +162,10 @@ public class CuestionarioEnvio implements Serializable {
     @Column
     private String usernameAnulacion;
     
+    /**
+     * Plantillas anexas al cuestionario.
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "cuest_env_plantilla", joinColumns = @JoinColumn(name = "id_cuest_env"), inverseJoinColumns = @JoinColumn(name = "id_plantilla"))
+    private List<Documento> plantillas;
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 
 /**
@@ -23,8 +24,8 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * inspección
      * 
      */
-    @Query("SELECT i FROM Inspeccion i WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
-    public List<Inspeccion> buscarPorNombreUnidadONumero(@Param("infoInspeccion") String paramString);
+    @Query("SELECT i FROM Inspeccion i WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :inspeccionInfo) ORDER BY i.nombreUnidad, i.id DESC")
+    public List<Inspeccion> buscarPorNombreUnidadONumero(@Param("inspeccionInfo") String paramString);
     
     /**
      * @param paramString nombre de la unidad o número de inspección
@@ -79,4 +80,26 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * @return Resultado de la búsqueda
      */
     public List<Inspeccion> findByEstadoInspeccion(EstadoInspeccionEnum estado);
+    
+    /**
+     * Devuelve las inspecciones en las que ha participado un usuario.
+     * 
+     * @param usuario Usuario consultado
+     * @return Listado de las inspecciones en las que ha participado.
+     */
+    @Query(value = "select a.* from inspecciones a, miembros b where a.id_equipo= b.id_equipo and b.usuario=?1", nativeQuery = true)
+    public List<Inspeccion> findInspeccionesByUsuario(String usuario);
+    
+    /**
+     * Devuelve un listado de inspecciones a partir de su nombre de unidad o año. Los resultados se filtran para
+     * devolver sólo aquellos en los que el usuario está implicado.
+     * 
+     * @param paramString nombre de la unidad o número de inspección
+     * @param userConsulta Usuario por el que se filtra
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
+    @Query("SELECT i FROM Inspeccion i, Miembro m WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) AND i.equipo=m.equipo and m.usuario=:userConsulta ORDER BY i.nombreUnidad, i.id DESC")
+    public List<Inspeccion> buscarPorNombreUnidadONumeroYUsuario(@Param("infoInspeccion") String paramString,
+            @Param("userConsulta") User userConsulta);
 }

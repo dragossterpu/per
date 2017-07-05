@@ -27,6 +27,7 @@ import org.springframework.util.StreamUtils;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -444,6 +445,17 @@ public class DocumentoService implements IDocumentoService {
     }
     
     /**
+     * Devuelve el número de cuestionarios enviados que tienen adjunta la plantilla pasada como parámetro.
+     * 
+     * @param documento Identificador de la plantilla
+     * @return Número de cuestionarios en los que está adjunta la plantilla
+     */
+    @Override
+    public Long plantillaPerteneceACuestionario(Documento documento) {
+        return documentoRepository.plantillaPerteneceACuestionario(documento.getId());
+    }
+    
+    /**
      * Devuelve el id de la solicitud de documentación que tiene asociado el documento pasado como parámetro.
      * 
      * @param documento del que se desea recuperar la solicitud
@@ -472,6 +484,54 @@ public class DocumentoService implements IDocumentoService {
     @Override
     public TipoDocumento buscaTipoDocumentoPorNombre(String nombre) {
         return tipoDocumentoRepository.findByNombre(nombre);
+    }
+    
+    /**
+     * Devuelve los documentos que corresponden a un tipo de documento.
+     * 
+     * @param tipoDocumento Nombre del tipo de documento
+     * @return Listado de documentos
+     */
+    @Override
+    public List<Documento> buscaNombreTipoDocumento(String tipoDocumento) {
+        return documentoRepository.buscaNombreTipoDocumento(tipoDocumento);
+    }
+    
+    /**
+     * Devuelve los documentos de tipo plantilla asociados a un cuestionario enviado.
+     * 
+     * @param idCuestionarioEnviado Identificador del cuestionario.
+     * @return Listado de plantillas.
+     */
+    @Override
+    public List<Documento> findPlantillas(Long idCuestionarioEnviado) {
+        return documentoRepository.findPlantillas(idCuestionarioEnviado);
+    }
+    
+    /**
+     * Indica si el documento pasado por parámetro está adjunto a alguna inspección en la que el usuario está implicado.
+     * 
+     * @param usuario Usuario del que se desea conocer si alguna de sus inspecciones tiene el documento asignado.
+     * @param documento Documento del que se desea consultar si está asignado a una inspección del usuario.
+     * @return Respuesta a la consulta
+     */
+    @Override
+    public boolean documentoEnInspeccionUsuario(User usuario, Documento documento) {
+        boolean respuesta = false;
+        List<Inspeccion> listaInspeccionesAsociadas = listaInspecciones(documento);
+        
+        if (listaInspeccionesAsociadas.isEmpty()) {
+            respuesta = true;
+        } else {
+            List<Inspeccion> listaInspeccionesUsuario = inspeccionRepository
+                    .findInspeccionesByUsuario(usuario.getUsername());
+            for (Inspeccion ins : listaInspeccionesAsociadas) {
+                if (listaInspeccionesUsuario.contains(ins)) {
+                    respuesta = true;
+                }
+            }
+        }
+        return respuesta;
     }
     
 }

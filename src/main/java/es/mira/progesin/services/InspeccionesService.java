@@ -22,6 +22,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
@@ -348,6 +349,31 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public List<Inspeccion> findByEstadoInspeccion(EstadoInspeccionEnum estado) {
         return inspeccionesRepository.findByEstadoInspeccion(estado);
+    }
+    
+    /**
+     * Devuelve las inspecciones en las que ha participado un usuario.
+     * 
+     * @param usuario Usuario consultado
+     * @return Listado de las inspecciones en las que ha participado.
+     */
+    @Override
+    public List<Inspeccion> findInspeccionesByUsuario(String usuario) {
+        return inspeccionesRepository.findInspeccionesByUsuario(usuario);
+    }
+    
+    /**
+     * Devuelve un listado de inspecciones a partir de su nombre de unidad o año. Los resultados se filtran para
+     * devolver sólo aquellos en los que el usuario está implicado.
+     * 
+     * @param infoInspeccion nombre de la unidad o número de inspección
+     * @param usuario Usuario por el que se filtra
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
+    @Override
+    public List<Inspeccion> buscarPorNombreUnidadONumeroUsuario(String infoInspeccion, User usuario) {
+        return inspeccionesRepository.buscarPorNombreUnidadONumeroYUsuario("%" + infoInspeccion + "%", usuario);
     }
     
 }

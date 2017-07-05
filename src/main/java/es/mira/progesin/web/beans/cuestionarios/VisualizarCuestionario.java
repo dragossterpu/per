@@ -213,6 +213,7 @@ public class VisualizarCuestionario implements Serializable {
      * @return vista desde la que ha sido llamada responderCuestionario o validarCuestionario
      */
     public String visualizarRespuestasCuestionario(CuestionarioEnvio cuestionario) {
+        cuestionario.setPlantillas(documentoService.findPlantillas(cuestionario.getId()));
         this.setCuestionarioEnviado(cuestionario);
         setMapaRespuestas(new HashMap<>());
         setMapaRespuestasTabla(new HashMap<>());

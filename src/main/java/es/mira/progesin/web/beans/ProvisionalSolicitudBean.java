@@ -1,7 +1,6 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -103,9 +102,9 @@ public class ProvisionalSolicitudBean implements Serializable {
     private List<DocumentacionPrevia> listadoDocumentosPrevios;
     
     /**
-     * lista de archivos de plantillas presentes en el sistema por ambito de la solicitud.
+     * lista de archivos de plantillas presentes en el sistema.
      */
-    private transient List<Entry<String, String>> listaPlantillasAmbito;
+    private transient List<Documento> listaPlantillas;
     
     /**
      * Solicitud que se muestra al usuario provisional para ser cumplimentada.
@@ -316,24 +315,28 @@ public class ProvisionalSolicitudBean implements Serializable {
         solicitudDocumentacionPrevia = solicitudDocumentacionService
                 .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
         if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
-            String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
-            setListaPlantillasAmbito(new ArrayList<>());
-            if ("GC".equals(ambito) || "PN".equals(ambito)) {
-                Map<String, String> mapaPlantillas = applicationBean.getMapaParametros().get("plantillas" + ambito);
-                if (mapaPlantillas != null) {
-                    listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
-                }
-            } else {
-                // OTROS se muestran todas las de GC y PN
-                Map<String, String> mapaPlantillasGC = applicationBean.getMapaParametros().get("plantillasGC");
-                Map<String, String> mapaPlantillasPN = applicationBean.getMapaParametros().get("plantillasPN");
-                if (mapaPlantillasGC != null) {
-                    listaPlantillasAmbito.addAll(mapaPlantillasGC.entrySet());
-                }
-                if (mapaPlantillasPN != null) {
-                    listaPlantillasAmbito.addAll(mapaPlantillasPN.entrySet());
-                }
-            }
+            // String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
+            // setListaPlantillasAmbito(new ArrayList<>());
+            // if ("GC".equals(ambito) || "PN".equals(ambito)) {
+            // Map<String, String> mapaPlantillas = applicationBean.getMapaParametros().get("plantillas" + ambito);
+            
+            listaPlantillas = documentoService.buscaNombreTipoDocumento("PLANTILLA SOLICITUD");
+            
+            // if (mapaPlantillas != null) {
+            // //listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
+            // listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
+            // }
+            // } else {
+            // // OTROS se muestran todas las de GC y PN
+            // Map<String, String> mapaPlantillasGC = applicationBean.getMapaParametros().get("plantillasGC");
+            // Map<String, String> mapaPlantillasPN = applicationBean.getMapaParametros().get("plantillasPN");
+            // if (mapaPlantillasGC != null) {
+            // listaPlantillasAmbito.addAll(mapaPlantillasGC.entrySet());
+            // }
+            // if (mapaPlantillasPN != null) {
+            // listaPlantillasAmbito.addAll(mapaPlantillasPN.entrySet());
+            // }
+            // }
         }
     }
     

@@ -100,11 +100,6 @@ public class ResponderCuestionarioBean implements Serializable {
     private CuestionarioEnvio cuestionarioEnviado;
     
     /**
-     * Plantilla complementaria al cuestionario.
-     */
-    private transient Documento plantilla;
-    
-    /**
      * Stream que permite la descarga de la plantilla adjunta al cuestionario.
      */
     
@@ -419,12 +414,6 @@ public class ResponderCuestionarioBean implements Serializable {
         
         if (RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
             cuestionarioEnviado = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(usuarioActual.getCorreo());
-            String idPlantillaString = applicationBean.getMapaParametros().get("plantillaCuestionario")
-                    .get(cuestionarioEnviado.getCuestionarioPersonalizado().getModeloCuestionario().getCodigo());
-            
-            if (idPlantillaString != null) {
-                plantilla = documentoService.findOne(Long.valueOf(idPlantillaString));
-            }
             
             setUsuariosProv(
                     userService.crearUsuariosProvisionalesCuestionario(cuestionarioEnviado.getCorreoEnvio(), ""));
@@ -531,10 +520,12 @@ public class ResponderCuestionarioBean implements Serializable {
     }
     
     /**
-     * Permite descargar la plantilla anexa al cuestionario.
+     * Permite descargar una plantilla anexa al cuestionario.
+     * 
+     * @param plantilla Plantilla a descargar
      * 
      */
-    public void descargarPlantilla() {
+    public void descargarPlantilla(Documento plantilla) {
         try {
             this.setFile(documentoService.descargaDocumento(plantilla.getId()));
         } catch (ProgesinException e) {

@@ -740,6 +740,14 @@ prompt =========================================================================
 /
 
 prompt =========================================================================
+prompt  Creacion tabla  CUEST_ENV_PLANTILLA
+prompt =========================================================================
+    CREATE TABLE CUEST_ENV_PLANTILLA 
+   (	ID_CUEST_ENV NUMBER(19,0), 
+	ID_PLANTILLA NUMBER(19,0)
+    );
+/
+prompt =========================================================================
 prompt + Tarea3
 prompt =========================================================================
 prompt Ejecutando creación de index y Constraints...
@@ -1191,6 +1199,14 @@ prompt =========================================================================
 /
 
 prompt =========================================================================
+prompt  Constraints para la tabla  CUEST_ENV_PLANTILLA
+prompt =========================================================================
+
+  ALTER TABLE CUEST_ENV_PLANTILLA MODIFY (ID_CUEST_ENV NOT NULL ENABLE);
+  ALTER TABLE CUEST_ENV_PLANTILLA MODIFY (ID_PLANTILLA NOT NULL ENABLE);
+/
+
+prompt =========================================================================
 prompt  Reference Constraints para la tabla  AREASCUESTIONARIO
 prompt =========================================================================
 
@@ -1451,6 +1467,16 @@ prompt =========================================================================
 /
 
 prompt =========================================================================
+prompt  Reference Constraints para la tabla  CUEST_ENV_PLANTILLA
+prompt =========================================================================
+
+  ALTER TABLE CUEST_ENV_PLANTILLA ADD CONSTRAINT FK_DOC_PLANTILLA FOREIGN KEY (ID_PLANTILLA)
+      REFERENCES DOCUMENTOS (ID) ENABLE;
+  ALTER TABLE CUEST_ENV_PLANTILLA ADD CONSTRAINT FK_CUEST_PLANTILLA FOREIGN KEY (ID_CUEST_ENV)
+      REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE;
+/
+
+prompt =========================================================================
 prompt + Tarea4
 prompt =========================================================================
 prompt Ejecutando inserción de datos...
@@ -1521,6 +1547,9 @@ Insert into TIPO_DOCUMENTO (ID,NOMBRE) values (20,'QUEJAS');
 Insert into TIPO_DOCUMENTO (ID,NOMBRE) values (21,'RECURSOS HUMANOS');
 Insert into TIPO_DOCUMENTO (ID,NOMBRE) values (22,'RECURSOS MATERIALES');
 Insert into TIPO_DOCUMENTO (ID,NOMBRE) values (23,'VIDEO');
+Insert into TIPO_DOCUMENTO (ID,NOMBRE) values (24,'PLANTILLA CUESTIONARIO');
+Insert into TIPO_DOCUMENTO (ID,NOMBRE) values (25,'PLANTILLA SOLICITUD');
+
 COMMIT;
 
 prompt =========================================================================
@@ -1572,11 +1601,11 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos DOCUMENTOS...
 prompt =========================================================================
 
-Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (1, 1,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_C.xlsx', SYSDATE, 'system',18);
-Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (2, 2,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_CIA.xlsx', SYSDATE, 'system',18);
-Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (3, 3,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','00_d_CPT_Z.xlsx', SYSDATE, 'system',18);
-Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (4, 4,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Guardia Civil', SYSDATE, 'system',18);
-Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (5, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Policía Nacional', SYSDATE, 'system',18);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (1, 1,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Comandancia Guardia Civil', SYSDATE, 'system',25);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (2, 2,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Compañía Guardia Civil', SYSDATE, 'system',25);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (3, 3,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','Zona Guardia Civil', SYSDATE, 'system',25);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (4, 4,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Guardia Civil', SYSDATE, 'system',24);
+Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (5, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Policía Nacional', SYSDATE, 'system',24);
 
 
 COMMIT;
@@ -1676,6 +1705,10 @@ Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) v
 Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (26,'GC','Relación de mandos de las distintas Unidades, de categoría Oficial, con indicación de teléfonos y correos electrónicos de contacto','DOC, DOCX, PDF','RM');
 Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (27,'GC','Relación de municipios que configuran la demarcación de la compañía','DOC, DOCX','RMD');
 Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (28,'PN','Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico','DOC, DOCX','RM');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (29,'GC','Catálogo de puestos de trabajo Comandancia','XLSX','00_d_CPT_C');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (30,'GC','Catálogo de puestos de trabajo Compañía','XLSX','00_d_CPT_CIA');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (31,'GC','Catálogo de puestos de trabajo Zona','XLSX','00_d_CPT_Z');
+
 COMMIT;
 
 
@@ -1727,11 +1760,7 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosC
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Comandancia','plantillasGC', 1);
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Compañía','plantillasGC', 2);
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('Zona', 'plantillasGC',3);
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('INFRA_GC','plantillaCuestionario',4);
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('INFRA_PN','plantillaCuestionario',5);
+
 
 
 COMMIT;

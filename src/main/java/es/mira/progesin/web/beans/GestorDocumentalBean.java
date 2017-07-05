@@ -28,6 +28,8 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelDocumentos;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -322,7 +324,17 @@ public class GestorDocumentalBean implements Serializable {
      * @return Resultados coincidentes con la cadena de búsqueda
      */
     public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
-        return inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
+        
+        User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Inspeccion> respuesta = new ArrayList<>();
+        
+        if (RoleEnum.ROLE_ADMIN.equals(usuario.getRole())) {
+            respuesta = inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
+        } else {
+            respuesta = inspeccionesService.buscarPorNombreUnidadONumeroUsuario(infoInspeccion, usuario);
+        }
+        
+        return respuesta;
     }
     
     /**
@@ -471,9 +483,7 @@ public class GestorDocumentalBean implements Serializable {
                 cadenaInspecciones = cadenaInspecciones.concat(inspe.getNumero()).concat("\n");
             }
             mapaInspecciones.put(doc.getId(), cadenaInspecciones);
-            
-            mapaEdicion.put(doc.getId(), !(documentoService.perteneceACuestionario(doc) == null
-                    && documentoService.perteneceASolicitud(doc) == null));
+            mapaEdicion.put(doc.getId(), deshabilitaEdicion(doc));
         }
     }
     
@@ -483,6 +493,28 @@ public class GestorDocumentalBean implements Serializable {
     public void vaciarPapelera() {
         documentoService.vaciarPapelera();
         buscaDocumento();
+    }
+    
+    /**
+     * Verifica si el documento pasado como parámetro puede o no editarse. En función de ello indica que debe
+     * deshabilitarse la posibilidad de edición.
+     * 
+     * @param doc Documento del que se desea verificar si es editable.
+     * @return Indicación de la necesidad de deshabilitar la edición del documento.
+     */
+    private boolean deshabilitaEdicion(Documento doc) {
+        
+        User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        boolean perteneceACuestionario = documentoService.perteneceACuestionario(doc) != null;
+        boolean perteneceASolicitud = documentoService.perteneceASolicitud(doc) != null;
+        boolean plantillaAdjuntaCuestionario = documentoService.plantillaPerteneceACuestionario(doc) > 0;
+        boolean documentoEnInspeccionUsuario = documentoService.documentoEnInspeccionUsuario(usuario, doc);
+        
+        boolean esAdmin = RoleEnum.ROLE_ADMIN.equals(usuario.getRole());
+        
+        return perteneceACuestionario || perteneceASolicitud || plantillaAdjuntaCuestionario
+                || (!documentoEnInspeccionUsuario && !esAdmin);
     }
     
 }

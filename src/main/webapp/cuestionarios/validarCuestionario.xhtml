@@ -94,7 +94,14 @@
                     </p:tab>
                 </p:accordionPanel>
             </ui:repeat>
-
+            <p:outputPanel styleClass="cuadroPlantillas" >
+                <h:outputLabel for="tablaPlantillas" value="Plantillas asociadas" />
+                <p:dataTable id="tablaPlantillas" var="plantilla" value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.plantillas}" >
+                     <p:column headerText="Plantilla">
+                          <h:outputText value="#{plantilla.nombre}"> </h:outputText>
+                     </p:column>
+                </p:dataTable>
+            </p:outputPanel>    
             <p:outputPanel>
                 <div class="botonesFormulario">
                     <p:commandButton id="validar" actionListener="#{cuestionarioEnviadoBean.validarRespuestas}" value="Guardar validaciones" icon="fa fa-fw fa-save" rendered="#{esJefeEquipoInspeccion and yaCumplimentado and not yaFinalizado}" />

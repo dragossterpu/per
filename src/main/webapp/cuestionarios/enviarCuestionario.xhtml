@@ -44,7 +44,24 @@
                 <p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." required="true" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />
                 <p:outputLabel id="contador" />
                 <p:messages for="motivo" autoUpdate="true" closable="true" />
-
+                
+                
+                
+                <h:panelGroup id="parentPanel" >
+                   <p:outputPanel id="panelPlantillas" styleClass="cuadroPlantillas" >
+                      <h:outputLabel for="tablaPlantillas" value="Asociar plantilla:" />
+                      <p:dataTable id="tablaPlantillas" var="plantilla" value="#{envioCuestionarioBean.listaPlantillas}" selection="#{envioCuestionarioBean.cuestionarioEnvio.plantillas}" rowKey="#{plantilla.id}">
+                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                           <p:column>
+                                <h:outputText value="#{plantilla.nombre}"> </h:outputText>
+                           </p:column>
+                      </p:dataTable>
+                   </p:outputPanel>
+                </h:panelGroup>
+               
+               
+                
+                
                 <p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true" />
             </div>
 
