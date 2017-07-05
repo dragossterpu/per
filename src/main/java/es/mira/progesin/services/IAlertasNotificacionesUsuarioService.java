@@ -114,18 +114,6 @@ public interface IAlertasNotificacionesUsuarioService {
      * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
      * inspección.
      * 
-     * @param entidad Alerta o Notificación a grabar
-     * @param inspeccion Se asignará el mensaje a los miembros del equipo que tiene asignada esta inspección
-     * 
-     */
-    
-    void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion);
-    
-    /**
-     * 
-     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
-     * inspección.
-     * 
      * @param entidad Alerta o Notificación
      * @param equipo al que se desea enviar el Mensaje (Alerta o Notificacion)
      * 

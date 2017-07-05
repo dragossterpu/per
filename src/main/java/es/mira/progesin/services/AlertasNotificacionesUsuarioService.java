@@ -203,24 +203,6 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
     }
     
     /**
-     * 
-     * Graba un mensaje (Alerta o Notificacion) vinculado a todos los usuarios pertenecientes al equipo asignado a una
-     * inspección.
-     * 
-     * @param entidad Alerta o Notificación a grabar
-     * @param inspeccion Se asignará el mensaje a los miembros del equipo que tiene asignada esta inspección
-     * 
-     */
-    @Override
-    public void grabarMensajeEquipo(Object entidad, Inspeccion inspeccion) {
-        List<Miembro> miembrosEquipo = miembrosRepository.findByEquipo(inspeccion.getEquipo());
-        
-        for (Miembro miembro : miembrosEquipo) {
-            grabarMensajeUsuario(entidad, miembro.getUsuario().getUsername());
-        }
-    }
-    
-    /**
      * Crea el mensaje con los datos de la alerta.
      * 
      * @param entidad Alerta de la que se creará el AlertasNotificacionesUsuario
