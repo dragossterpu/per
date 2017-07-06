@@ -44,6 +44,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelDocumentos;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -427,13 +429,13 @@ public class GestorDocumentalBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#buscaDocumento()}.
      */
     @Test
-    public final void testBuscaDocumento() {
+    public final void testBuscaDocumentoAdmin() {
         Inspeccion insp1 = spy(Inspeccion.class);
         insp1.setId(1L);
         insp1.setAnio(2018);
         List<Inspeccion> inspecciones = new ArrayList<>();
         inspecciones.add(insp1);
-        
+        User user = User.builder().username("administrador").role(RoleEnum.ROLE_ADMIN).build();
         Documento doc1 = spy(Documento.class);
         doc1.setId(1L);
         Documento doc2 = spy(Documento.class);
@@ -454,6 +456,49 @@ public class GestorDocumentalBeanTest {
         when(model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null)).thenReturn(documentos);
         when(documentoService.perteneceACuestionario(doc1)).thenReturn(1L);
         when(documentoService.perteneceASolicitud(doc1)).thenReturn(3L);
+        when(authentication.getPrincipal()).thenReturn(user);
+        
+        gestorDocumentalBeanMock.buscaDocumento();
+        
+        assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda()).isNotNull();
+        assertThat(gestorDocumentalBeanMock.getListaInspecciones()).isNotNull();
+        assertThat(gestorDocumentalBeanMock.getListaInspecciones().size()).isEqualTo(0);
+        assertThat(gestorDocumentalBeanMock.getNombreDoc()).isEqualTo("");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.GestorDocumentalBean#buscaDocumento()}.
+     */
+    @Test
+    public final void testBuscaDocumentoNoAdmin() {
+        Inspeccion insp1 = spy(Inspeccion.class);
+        insp1.setId(1L);
+        insp1.setAnio(2018);
+        List<Inspeccion> inspecciones = new ArrayList<>();
+        inspecciones.add(insp1);
+        User user = User.builder().username("usuario").role(RoleEnum.ROLE_EQUIPO_INSPECCIONES).build();
+        Documento doc1 = spy(Documento.class);
+        doc1.setId(1L);
+        Documento doc2 = spy(Documento.class);
+        doc2.setId(2L);
+        List<Documento> documentos = new ArrayList<>();
+        documentos.add(doc1);
+        documentos.add(doc2);
+        
+        DocumentoBusqueda docBusqueda = new DocumentoBusqueda();
+        gestorDocumentalBeanMock.setDocumentoBusqueda(docBusqueda);
+        Map<Long, String> mapaInspecciones = new LinkedHashMap<>();
+        Map<Long, Boolean> mapaEdicion = new HashMap<>();
+        gestorDocumentalBeanMock.setMapaInspecciones(mapaInspecciones);
+        gestorDocumentalBeanMock.setMapaEdicion(mapaEdicion);
+        
+        when(model.getDatasource()).thenReturn(documentos);
+        when(documentoService.listaInspecciones(doc1)).thenReturn(inspecciones);
+        when(model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null)).thenReturn(documentos);
+        when(documentoService.perteneceACuestionario(doc1)).thenReturn(1L);
+        when(documentoService.perteneceASolicitud(doc1)).thenReturn(3L);
+        when(authentication.getPrincipal()).thenReturn(user);
+        
         gestorDocumentalBeanMock.buscaDocumento();
         
         assertThat(gestorDocumentalBeanMock.getDocumentoBusqueda()).isNotNull();
@@ -480,13 +525,34 @@ public class GestorDocumentalBeanTest {
      * . .
      */
     @Test
-    public final void testAutocompletarInspeccion() {
+    public final void testAutocompletarInspeccionAdministrador() {
         Inspeccion i = mock(Inspeccion.class);
         List<Inspeccion> inspecciones = new ArrayList<>();
         inspecciones.add(i);
+        User user = User.builder().username("admin").role(RoleEnum.ROLE_ADMIN).build();
+        when(inspeccionesService.buscarPorNombreUnidadONumero("test")).thenReturn(inspecciones);
+        when(authentication.getPrincipal()).thenReturn(user);
+        
+        gestorDocumentalBeanMock.autocompletarInspeccion("nombre");
+        verify(inspeccionesService, times(1)).buscarPorNombreUnidadONumero("nombre");
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#autocompletarInspeccion(java.lang.String)}.
+     * 
+     */
+    @Test
+    public final void testAutocompletarInspeccionNoAdministrador() {
+        Inspeccion i = mock(Inspeccion.class);
+        List<Inspeccion> inspecciones = new ArrayList<>();
+        inspecciones.add(i);
+        User user = User.builder().username("user").role(RoleEnum.ROLE_EQUIPO_INSPECCIONES).build();
         when(inspeccionesService.buscarPorNombreUnidadONumero("nombre_test")).thenReturn(inspecciones);
+        when(authentication.getPrincipal()).thenReturn(user);
+        
         gestorDocumentalBeanMock.autocompletarInspeccion("nombre_test");
-        verify(inspeccionesService, times(1)).buscarPorNombreUnidadONumero("nombre_test");
+        verify(inspeccionesService, times(1)).buscarPorNombreUnidadONumeroUsuario("nombre_test", user);
     }
     
     /**
@@ -660,7 +726,7 @@ public class GestorDocumentalBeanTest {
      * . .
      */
     @Test
-    public final void testAsignarNuevaInspeccion() {
+    public final void testAsignarNuevaInspeccion_Inspeccion() {
         Inspeccion i1 = new Inspeccion();
         i1.setId(1L);
         List<Inspeccion> inspecciones = new ArrayList<>();

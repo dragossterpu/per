@@ -24,7 +24,7 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
      * inspección
      * 
      */
-    @Query("SELECT i FROM Inspeccion i WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :inspeccionInfo) ORDER BY i.nombreUnidad, i.id DESC")
+    @Query("SELECT i FROM Inspeccion i WHERE (upper(i.nombreUnidad) LIKE upper(:inspeccionInfo) OR (i.id||'/'||i.anio) LIKE :inspeccionInfo) ORDER BY i.nombreUnidad, i.id DESC")
     public List<Inspeccion> buscarPorNombreUnidadONumero(@Param("inspeccionInfo") String paramString);
     
     /**
