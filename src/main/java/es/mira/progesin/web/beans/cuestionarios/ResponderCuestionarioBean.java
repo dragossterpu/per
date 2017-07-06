@@ -197,7 +197,7 @@ public class ResponderCuestionarioBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar las respuestas. ");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     
@@ -243,11 +243,11 @@ public class ResponderCuestionarioBean implements Serializable {
                 
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(textoNotReg, TipoRegistroEnum.ALTA.name(),
-                        SeccionesEnum.CUESTIONARIO.name());
+                        SeccionesEnum.CUESTIONARIO.getDescripcion());
                 // Creamos alertas a los miembros del equipo y al rol de Apoyo
-                alertaService.crearAlertaRol(SeccionesEnum.CUESTIONARIO.name(), textoNotReg,
+                alertaService.crearAlertaRol(SeccionesEnum.CUESTIONARIO.getDescripcion(), textoNotReg,
                         RoleEnum.ROLE_SERVICIO_APOYO);
-                alertaService.crearAlertaEquipo(SeccionesEnum.CUESTIONARIO.name(), textoNotReg,
+                alertaService.crearAlertaEquipo(SeccionesEnum.CUESTIONARIO.getDescripcion(), textoNotReg,
                         cuestionarioEnviado.getInspeccion());
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Cumplimentación abortada",
@@ -256,7 +256,7 @@ public class ResponderCuestionarioBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al enviar el cuestionario cumplimentado. ");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     
@@ -376,7 +376,7 @@ public class ResponderCuestionarioBean implements Serializable {
             } catch (DataAccessException | ProgesinException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                         "Se ha producido un error al subir el fichero. Inténtelo de nuevo más tarde.");
-                regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+                regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             }
         } else {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -401,7 +401,7 @@ public class ResponderCuestionarioBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el fichero. Inténtelo de nuevo más tarde.");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     
@@ -463,7 +463,7 @@ public class ResponderCuestionarioBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al asignar areas del cuestionario. ");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     
@@ -500,7 +500,7 @@ public class ResponderCuestionarioBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar su parte.");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     
@@ -531,7 +531,7 @@ public class ResponderCuestionarioBean implements Serializable {
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error descargar la plantilla.");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     

@@ -167,7 +167,7 @@ public class RegistroActividadServiceTest {
         when(regActividadRepository.save(any(RegistroActividad.class)))
                 .thenThrow(TransientDataAccessResourceException.class);
         registroActividadServiceMock.altaRegActividad("descripcion_test", TipoRegistroEnum.ALTA.name(),
-                SeccionesEnum.INSPECCION.name());
+                SeccionesEnum.INSPECCION.getDescripcion());
         verify(regActividadRepository, times(2)).save(any(RegistroActividad.class));
         verify(logMock, times(1)).error(any(String.class), any(TransientDataAccessResourceException.class));
     }

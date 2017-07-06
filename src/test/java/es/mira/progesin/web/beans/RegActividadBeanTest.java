@@ -203,7 +203,7 @@ public class RegActividadBeanTest {
     public final void testAutocompletarSeccion() {
         String infoSeccion = "ad";
         List<String> seccs = new ArrayList<>();
-        seccs.add(SeccionesEnum.ADMINISTRACION.name());
+        seccs.add(SeccionesEnum.ADMINISTRACION.getDescripcion());
         when(regActividadService.buscarPorNombreSeccion(any(String.class))).thenReturn(seccs);
         List<String> secciones = regActividadBeanMock.autocompletarSeccion(infoSeccion);
         

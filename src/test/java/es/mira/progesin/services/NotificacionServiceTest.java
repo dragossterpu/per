@@ -134,7 +134,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionRolStringStringRoleEnum() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         RoleEnum rol = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         
         Notificacion notificacionGuardada = Notificacion.builder().descripcion(DESCRIPCIONOTIFICACION)
@@ -155,7 +155,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionRolStringStringRoleEnumException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         RoleEnum rol = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         
         when(notificacionRepository.save(any(Notificacion.class)))
@@ -174,7 +174,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionRolStringStringListOfRoleEnum() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         RoleEnum rol1 = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         RoleEnum rol2 = RoleEnum.ROLE_JEFE_INSPECCIONES;
         List<RoleEnum> listRoles = new ArrayList<>();
@@ -199,7 +199,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionRolStringStringListOfRoleEnumException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         RoleEnum rol1 = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         RoleEnum rol2 = RoleEnum.ROLE_JEFE_INSPECCIONES;
         List<RoleEnum> listRoles = new ArrayList<>();
@@ -221,7 +221,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionJefeEquipo() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         Inspeccion inspeccion = mock(Inspeccion.class);
         
         Notificacion notificacionGuardada = Notificacion.builder().descripcion(DESCRIPCIONOTIFICACION)
@@ -242,7 +242,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionJefeEquipoException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         Inspeccion inspeccion = mock(Inspeccion.class);
         
         when(notificacionRepository.save(any(Notificacion.class)))
@@ -261,7 +261,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionEquipo() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         Equipo equipo = mock(Equipo.class);
         
         Notificacion notificacionGuardada = Notificacion.builder().descripcion(DESCRIPCIONOTIFICACION)
@@ -280,7 +280,7 @@ public class NotificacionServiceTest {
      */
     @Test
     public final void testCrearNotificacionEquipoException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         Equipo equipo = mock(Equipo.class);
         
         when(notificacionRepository.save(any(Notificacion.class)))

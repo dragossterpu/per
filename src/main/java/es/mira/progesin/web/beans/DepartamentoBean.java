@@ -87,7 +87,7 @@ public class DepartamentoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al eliminar el departamento, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     
@@ -108,7 +108,7 @@ public class DepartamentoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el departamento, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     
@@ -126,7 +126,7 @@ public class DepartamentoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar modificar un departamento, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     

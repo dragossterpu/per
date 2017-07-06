@@ -197,10 +197,10 @@ public class EquiposBeanTest {
         assertThat(equipoCaptor.getValue().getNombreJefe()).isEqualTo("nombreJefe apellido1Jefe apellido2Jefe");
         assertThat(equipoCaptor.getValue().getMiembros()).hasSize(2);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.INSPECCION.name()));
+                eq(SeccionesEnum.INSPECCION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
-                eq(SeccionesEnum.INSPECCION.name()), eq(equipoCaptor.getValue()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(equipoCaptor.getValue()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(Exception.class));
     }
     
@@ -250,8 +250,8 @@ public class EquiposBeanTest {
         assertThat(equipoCaptor.getValue().getFechaBaja()).isNotNull();
         assertThat(equipoCaptor.getValue().getUsernameBaja()).isNotNull();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.INSPECCION.name()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(Exception.class));
     }
     
@@ -287,10 +287,10 @@ public class EquiposBeanTest {
         verify(equipoService, times(1)).save(equipoCaptor.capture());
         assertThat(equipoCaptor.getValue().getMiembros()).isEmpty();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.INSPECCION.name()));
+                eq(SeccionesEnum.INSPECCION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
-                eq(SeccionesEnum.INSPECCION.name()), eq(equipoCaptor.getValue()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(equipoCaptor.getValue()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(Exception.class));
     }
     
@@ -331,10 +331,10 @@ public class EquiposBeanTest {
                 .isEqualTo("nombreNuevoJefe apellido1NuevoJefe apellido2NuevoJefe");
         assertThat(equipoCaptor.getValue().getMiembros().size()).isEqualTo(2);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
-                eq(SeccionesEnum.INSPECCION.name()), eq(equipoCaptor.getValue()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(equipoCaptor.getValue()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(Exception.class));
     }
     
@@ -390,10 +390,10 @@ public class EquiposBeanTest {
         verify(equipoService, times(1)).save(equipoCaptor.capture());
         assertThat(equipoCaptor.getValue().getMiembros().size()).isEqualTo(3);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
-                eq(SeccionesEnum.INSPECCION.name()), eq(equipoCaptor.getValue()));
-        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(equipoCaptor.getValue()));
+        verify(regActividadService, times(0)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(Exception.class));
     }
     

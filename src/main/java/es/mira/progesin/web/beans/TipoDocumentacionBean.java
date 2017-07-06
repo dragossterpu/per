@@ -130,7 +130,7 @@ public class TipoDocumentacionBean implements Serializable {
         String descripcion = "Se ha eliminado un tipo de documentación. Nombre: " + documentacion.getNombre();
         // Guardamos la actividad en bbdd
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                SeccionesEnum.DOCUMENTACION.name());
+                SeccionesEnum.DOCUMENTACION.getDescripcion());
     }
     
     /**
@@ -163,11 +163,11 @@ public class TipoDocumentacionBean implements Serializable {
                     + documentacion.getNombre();
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                    SeccionesEnum.DOCUMENTACION.name());
+                    SeccionesEnum.DOCUMENTACION.getDescripcion());
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta la documentación, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
         listaTipoDocumentacion = tipoDocumentacionService.findAll();
     }
@@ -186,7 +186,7 @@ public class TipoDocumentacionBean implements Serializable {
         String descripcion = "Se ha modificado el tipo de documentación. Nombre: " + tipoDoc.getNombre();
         // Guardamos la actividad en bbdd
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                SeccionesEnum.DOCUMENTACION.name());
+                SeccionesEnum.DOCUMENTACION.getDescripcion());
     }
     
 }

@@ -83,13 +83,13 @@ public class TipoEquipoBean implements Serializable {
                         + tipo.getDescripcion() + ")";
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                        SeccionesEnum.ADMINISTRACION.name());
+                        SeccionesEnum.ADMINISTRACION.getDescripcion());
             }
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
             // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     
@@ -119,12 +119,12 @@ public class TipoEquipoBean implements Serializable {
             String descripcionTipo = "Se ha dado de alta el tipo de equipo: " + codigo + "(" + descripcion + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
-                    SeccionesEnum.ADMINISTRACION.name());
+                    SeccionesEnum.ADMINISTRACION.getDescripcion());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
         // TODO generar alerta / notificación
     }
@@ -147,12 +147,12 @@ public class TipoEquipoBean implements Serializable {
                     + tipoEquipo.getDescripcion() + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.ADMINISTRACION.name());
+                    SeccionesEnum.ADMINISTRACION.getDescripcion());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al modificar el tipo de equipo, inténtelo de nuevo más tarde", null);
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     

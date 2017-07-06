@@ -147,7 +147,7 @@ public class EdicionCuestionarioBean {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el cuestionario");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     

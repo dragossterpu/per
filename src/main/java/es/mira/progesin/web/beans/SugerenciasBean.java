@@ -99,7 +99,7 @@ public class SugerenciasBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar la sugerencia. Inténtelo de nuevo más tarde.");
-            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.getDescripcion(), e);
         }
         return "/principal/crearSugerencia?faces-redirect=true";
         
@@ -128,7 +128,7 @@ public class SugerenciasBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar la sugerencia. Inténtelo de nuevo más tarde.", "msgs");
-            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.getDescripcion(), e);
         }
     }
     
@@ -170,11 +170,11 @@ public class SugerenciasBean implements Serializable {
         } catch (CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al enviar el correo electrónico.");
-            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.getDescripcion(), e);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al contestar la sugerencia. Inténtelo de nuevo más tarde.");
-            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.SUGERENCIAS.getDescripcion(), e);
         }
         return "/administracion/sugerencias/contestarSugerencia?faces-redirect=true";
     }

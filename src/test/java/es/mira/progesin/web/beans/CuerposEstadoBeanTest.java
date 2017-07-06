@@ -167,7 +167,7 @@ public class CuerposEstadoBeanTest {
         verify(empleoRepository, times(1)).existsByCuerpo(cuerpo);
         verify(cuerposEstadoService, times(1)).delete(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.ADMINISTRACION.name()));
+                eq(SeccionesEnum.ADMINISTRACION.getDescripcion()));
     }
     
     /**
@@ -182,7 +182,7 @@ public class CuerposEstadoBeanTest {
         
         verify(userService, times(1)).existsByCuerpoEstado(cuerpo);
         verify(cuerposEstadoService, times(0)).delete(cuerpo);
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
         
     }
@@ -199,7 +199,7 @@ public class CuerposEstadoBeanTest {
         assertThat(cuerpoCaptor.getValue().getDescripcion()).isEqualTo("Cuerpo Test");
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.ADMINISTRACION.name()));
+                eq(SeccionesEnum.ADMINISTRACION.getDescripcion()));
     }
     
     /**
@@ -211,7 +211,7 @@ public class CuerposEstadoBeanTest {
         
         cuerposEstadoBean.altaCuerpo("TEST", "Cuerpo Test");
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     
@@ -228,7 +228,7 @@ public class CuerposEstadoBeanTest {
         
         verify(cuerposEstadoService, times(1)).save(cuerpo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.getDescripcion()));
         
     }
     
@@ -245,7 +245,7 @@ public class CuerposEstadoBeanTest {
         cuerposEstadoBean.onRowEdit(event);
         
         verify(cuerposEstadoService, times(1)).save(cuerpo);
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     

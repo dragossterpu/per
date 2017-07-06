@@ -161,7 +161,7 @@ public class DepartamentoBeanTest {
                 .thenThrow(TransientDataAccessResourceException.class);
         
         departamentoBean.altaDepartamento("Departamento test");
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     
@@ -191,7 +191,7 @@ public class DepartamentoBeanTest {
         
         departamentoBean.onRowEdit(event);
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     

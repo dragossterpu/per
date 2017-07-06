@@ -159,7 +159,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el cuestionario personalizado, inténtelo de nuevo más tarde",
                     null);
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
         
     }

@@ -240,7 +240,7 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
                 documentosSeleccionados);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
     /**
@@ -301,8 +301,8 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.crearSolicitud();
         
         verify(regActividadService, times(0)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     
@@ -393,8 +393,8 @@ public class SolicitudDocPreviaBeanTest {
         assertThat(solicitudCaptor.getValue().getFechaValidApoyo()).isNotNull();
         assertThat(solicitudCaptor.getValue().getUsernameValidApoyo()).isNotNull();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(alertaService, times(1)).crearAlertaJefeEquipo(eq(SeccionesEnum.DOCUMENTACION.name()), any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
+        verify(alertaService, times(1)).crearAlertaJefeEquipo(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), any(String.class),
                 eq(inspeccion));
     }
     
@@ -412,7 +412,7 @@ public class SolicitudDocPreviaBeanTest {
         
         solicitudDocPreviaBean.validacionApoyo();
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     
@@ -432,8 +432,8 @@ public class SolicitudDocPreviaBeanTest {
         assertThat(solicitudCaptor.getValue().getFechaValidJefeEquipo()).isNotNull();
         assertThat(solicitudCaptor.getValue().getUsernameValidJefeEquipo()).isNotNull();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(alertaService, times(1)).crearAlertaRol(eq(SeccionesEnum.DOCUMENTACION.name()), any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
+        verify(alertaService, times(1)).crearAlertaRol(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), any(String.class),
                 eq(RoleEnum.ROLE_JEFE_INSPECCIONES));
     }
     
@@ -451,7 +451,7 @@ public class SolicitudDocPreviaBeanTest {
         
         solicitudDocPreviaBean.validacionJefeEquipo();
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     
@@ -487,7 +487,7 @@ public class SolicitudDocPreviaBeanTest {
         
         solicitudDocPreviaBean.descargarFichero(1L);
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
                 any(ProgesinException.class));
         
     }
@@ -674,7 +674,7 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(solicitud, CORREO);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
     /**
@@ -696,7 +696,7 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).save(solicitud);
         verify(correoElectronico, times(0)).envioCorreo(eq(CORREO), any(String.class), any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
     /**
@@ -718,7 +718,7 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).save(solicitud);
         verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
     /**
@@ -766,9 +766,9 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).transaccSaveCreaUsuarioProv(eq(solicitud), any(User.class));
         verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), contains("url"));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
-                eq(SeccionesEnum.DOCUMENTACION.name()), eq(listRoles));
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(listRoles));
     }
     
     /**
@@ -785,7 +785,7 @@ public class SolicitudDocPreviaBeanTest {
         
         verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(eq(solicitud), eq(CORREO));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
     /**
@@ -812,7 +812,7 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).transaccSaveActivaUsuarioProv(eq(solicitud), eq(CORREO));
         verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), contains(motivosNoConforme));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
     /**

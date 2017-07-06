@@ -158,7 +158,7 @@ public class TareasService implements ITareasService {
                 }
             }
         } catch (CorreoException ce) {
-            registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.name(), ce);
+            registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.getDescripcion(), ce);
         }
     }
     
@@ -205,7 +205,7 @@ public class TareasService implements ITareasService {
                 }
             }
         } catch (CorreoException ce) {
-            registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.name(), ce);
+            registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.getDescripcion(), ce);
         }
     }
     
@@ -226,7 +226,7 @@ public class TareasService implements ITareasService {
                 try {
                     documentoService.delete(documento);
                 } catch (DataAccessException e) {
-                    registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.name(), e);
+                    registroActividad.altaRegActividadError(SeccionesEnum.ALERTAS.getDescripcion(), e);
                 }
             }
         }

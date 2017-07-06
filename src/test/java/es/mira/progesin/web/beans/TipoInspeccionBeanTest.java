@@ -199,7 +199,7 @@ public class TipoInspeccionBeanTest {
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     }
     
@@ -216,7 +216,7 @@ public class TipoInspeccionBeanTest {
         
         verify(tipoInspeccionService, times(1)).guardarTipo(tipo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.getDescripcion()));
     };
     
     /**
@@ -231,7 +231,7 @@ public class TipoInspeccionBeanTest {
         
         tipoInspeccionBean.onRowEdit(evento);
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     };
     
@@ -244,7 +244,7 @@ public class TipoInspeccionBeanTest {
         tipoInspeccionBean.altaTipo("codigo", "descripcion");
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.INSPECCION.name()));
+                eq(SeccionesEnum.INSPECCION.getDescripcion()));
     };
     
     /**
@@ -257,7 +257,7 @@ public class TipoInspeccionBeanTest {
         
         tipoInspeccionBean.altaTipo("codigo", "descripcion");
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
     };
     

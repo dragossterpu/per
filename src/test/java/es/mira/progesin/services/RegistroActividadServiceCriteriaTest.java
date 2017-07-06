@@ -113,7 +113,7 @@ public class RegistroActividadServiceCriteriaTest {
         
         RegActividadBusqueda regActividadBusqueda = new RegActividadBusqueda();
         regActividadBusqueda.setUsernameRegActividad("raul");
-        regActividadBusqueda.setNombreSeccion(SeccionesEnum.CUESTIONARIO.name());
+        regActividadBusqueda.setNombreSeccion(SeccionesEnum.CUESTIONARIO.getDescripcion());
         CriteriaService criteriaService = new CriteriaService();
         RegistroActividadService registroActividadService = new RegistroActividadService(sessionFactory,
                 criteriaService);

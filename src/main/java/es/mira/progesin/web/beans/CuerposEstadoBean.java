@@ -94,12 +94,12 @@ public class CuerposEstadoBean implements Serializable {
                 String descripcion = "El usuario " + user + " ha eliminado el cuerpo de estado "
                         + cuerpo.getNombreCorto();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                        SeccionesEnum.ADMINISTRACION.name());
+                        SeccionesEnum.ADMINISTRACION.getDescripcion());
             }
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar borrar un cuerpo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     
@@ -122,7 +122,7 @@ public class CuerposEstadoBean implements Serializable {
             
             String descripcion = "El usuario " + user + " ha dado de alta el cuerpo " + nombreCorto;
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                    SeccionesEnum.ADMINISTRACION.name());
+                    SeccionesEnum.ADMINISTRACION.getDescripcion());
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El cuerpo ha sido creado con éxito");
@@ -130,7 +130,7 @@ public class CuerposEstadoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar dar de alta el cuerpo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     
@@ -147,13 +147,13 @@ public class CuerposEstadoBean implements Serializable {
             cuerpoEstado.setUsernameModif(user);
             cuerposEstadoService.save(cuerpoEstado);
             regActividadService.altaRegActividad("Se ha modificado " + cuerpoEstado,
-                    TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.ADMINISTRACION.name());
+                    TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.ADMINISTRACION.getDescripcion());
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",
                     cuerpoEstado.getDescripcion(), null);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar modificar un cuerpo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
         
     }

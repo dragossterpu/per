@@ -312,9 +312,9 @@ public class InspeccionBean {
                     "La inspección " + inspeccion.getNumero() + " ha sido creada con éxito");
             String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                    SeccionesEnum.INSPECCION.name());
+                    SeccionesEnum.INSPECCION.getDescripcion());
         } catch (DataAccessException e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
         return null;
     }
@@ -366,12 +366,12 @@ public class InspeccionBean {
             
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.INSPECCION.name());
+                    SeccionesEnum.INSPECCION.getDescripcion());
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar la inspección. Inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
         
     }
@@ -427,7 +427,7 @@ public class InspeccionBean {
             String descripcion = "El usuario " + user + " ha eliminado la inspección " + inspeccion.getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                    SeccionesEnum.INSPECCION.name());
+                    SeccionesEnum.INSPECCION.getDescripcion());
             
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);

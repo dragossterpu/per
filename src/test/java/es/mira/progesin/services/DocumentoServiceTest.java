@@ -267,7 +267,7 @@ public class DocumentoServiceTest {
         assertThat(doc).isInstanceOf(Documento.class);
         assertThat(doc).isEqualTo(documentosServiceMock.cargaDocumentoSinGuardar(uploadedFile, tipo, inspeccion));
         
-        verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.name()),
+        verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(Exception.class));
         
     }
@@ -296,7 +296,7 @@ public class DocumentoServiceTest {
         
         doc = documentosServiceMock.cargaDocumentoSinGuardar(uploadedFile, tipo, inspeccion);
         assertThat(doc).isNull();
-        verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.name()),
+        verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(Exception.class));
         
     }

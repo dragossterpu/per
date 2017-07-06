@@ -203,7 +203,7 @@ public class ProvisionalSolicitudBean implements Serializable {
         } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al cargar el documento, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
         return "/provisionalSolicitud/cargaDocumentos";
     }
@@ -234,7 +234,7 @@ public class ProvisionalSolicitudBean implements Serializable {
             solicitudDocumentacionPrevia = solicitudDocumentacionService
                     .eliminarDocumentoSolicitud(solicitudDocumentacionPrevia, documento);
         } catch (DataAccessException e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
     }
     
@@ -249,7 +249,7 @@ public class ProvisionalSolicitudBean implements Serializable {
             setFile(documentoService.descargaDocumento(idDocumento));
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
     }
     
@@ -271,17 +271,17 @@ public class ProvisionalSolicitudBean implements Serializable {
                     + solicitudDocumentacionPrevia.getInspeccion().getNumero() + " cumplimentada";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.DOCUMENTACION.name());
+                    SeccionesEnum.DOCUMENTACION.getDescripcion());
             // Guardamos la alerta en bbdd
-            alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.name(), descripcion,
+            alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.getDescripcion(), descripcion,
                     solicitudDocumentacionPrevia.getInspeccion());
             
-            alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.name(), descripcion, RoleEnum.ROLE_SERVICIO_APOYO);
+            alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.getDescripcion(), descripcion, RoleEnum.ROLE_SERVICIO_APOYO);
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
         
     }
@@ -298,12 +298,12 @@ public class ProvisionalSolicitudBean implements Serializable {
             String descripcion = "Solicitud documentación previa cuestionario para la inspección "
                     + solicitudDocumentacionPrevia.getInspeccion().getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.DOCUMENTACION.name());
+                    SeccionesEnum.DOCUMENTACION.getDescripcion());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
     }
     
@@ -350,7 +350,7 @@ public class ProvisionalSolicitudBean implements Serializable {
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error en la generación del PDF");
-            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
     }
 }

@@ -210,15 +210,15 @@ public class UserBean implements Serializable {
                         "El usuario ha sido creado con éxito");
                 String descripcion = "Alta nuevo usuario " + user.getUsername();
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
-                        SeccionesEnum.USUARIOS.name());
+                        SeccionesEnum.USUARIOS.getDescripcion());
             } catch (DataAccessException e1) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Alta",
                         "Se ha producido un error al dar de alta el usuario. Inténtelo de nuevo más tarde");
-                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e1);
+                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.getDescripcion(), e1);
             } catch (CorreoException e2) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         Constantes.FALLOCORREO);
-                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e2);
+                regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.getDescripcion(), e2);
             }
             
         }
@@ -270,10 +270,10 @@ public class UserBean implements Serializable {
             String descripcion = "Se ha eliminado el usuario " + usuario.getUsername();
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                    SeccionesEnum.USUARIOS.name());
+                    SeccionesEnum.USUARIOS.getDescripcion());
         } catch (DataAccessException e) {
             // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.getDescripcion(), e);
         }
         
     }
@@ -320,12 +320,12 @@ public class UserBean implements Serializable {
             }
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.USUARIOS.name());
+                    SeccionesEnum.USUARIOS.getDescripcion());
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
             // Guardamos loe posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.getDescripcion(), e);
         }
         
     }
@@ -338,7 +338,7 @@ public class UserBean implements Serializable {
     private void cambiarEstado(User usuario) {
         String descripcionEstado = "Modificación del estado del usuario :" + " " + usuario.getUsername();
         regActividadService.altaRegActividad(descripcionEstado, TipoRegistroEnum.MODIFICACION.name(),
-                SeccionesEnum.USUARIOS.name());
+                SeccionesEnum.USUARIOS.getDescripcion());
         if (EstadoEnum.INACTIVO.equals(usuario.getEstado())) {
             usuario.setFechaInactivo(new Date());
         } else {
@@ -374,7 +374,7 @@ public class UserBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Clave",
                     "Se ha producido un error en la regeneración o envío de la contraseña");
             // Guardamos loe posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.getDescripcion(), e);
         }
     }
     
@@ -479,7 +479,7 @@ public class UserBean implements Serializable {
         descripcion.append(cuerpo);
         
         regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.AUDITORIA.name(),
-                SeccionesEnum.USUARIOS.name());
+                SeccionesEnum.USUARIOS.getDescripcion());
         
     }
     
@@ -494,6 +494,6 @@ public class UserBean implements Serializable {
                 + " ha realizado ha visualizado un usuario." + "El usuario consultado es: " + usuario.getUsername();
         
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(),
-                SeccionesEnum.USUARIOS.name());
+                SeccionesEnum.USUARIOS.getDescripcion());
     }
 }

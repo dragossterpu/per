@@ -203,10 +203,10 @@ public class EnvioCuestionarioBean implements Serializable {
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                             SeccionesEnum.CUESTIONARIO.getDescripcion());
                     
-                    notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                    notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                             RoleEnum.ROLE_JEFE_INSPECCIONES);
                     
-                    notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                    notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                             cuestionarioEnvio.getInspeccion().getEquipo());
                     
                 }
@@ -214,7 +214,7 @@ public class EnvioCuestionarioBean implements Serializable {
         } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     "Se ha produdico un error en el envio del cuestionario", "", null);
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     

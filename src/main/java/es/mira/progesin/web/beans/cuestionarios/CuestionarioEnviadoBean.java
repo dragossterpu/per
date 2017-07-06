@@ -206,7 +206,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
                 
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                        SeccionesEnum.CUESTIONARIO.name());
+                        SeccionesEnum.CUESTIONARIO.getDescripcion());
                 
                 String cuerpo = "Se ha procedido a eliminar el cuestionario para la inspección "
                         + cuestionario.getInspeccion().getNumero();
@@ -220,7 +220,7 @@ public class CuestionarioEnviadoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al eliminar el cuestionario, inténtelo de nuevo más tarde", null);
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }
     
@@ -288,20 +288,20 @@ public class CuestionarioEnviadoBean implements Serializable {
                 String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero() + " finalizado";
                 
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                        SeccionesEnum.CUESTIONARIO.name());
+                        SeccionesEnum.CUESTIONARIO.getDescripcion());
                 
                 List<RoleEnum> rolesANotificar = new ArrayList<>();
                 rolesANotificar.add(RoleEnum.ROLE_SERVICIO_APOYO);
                 rolesANotificar.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                         rolesANotificar);
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                         cuestionario.getInspeccion().getEquipo());
             }
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al validar las respuestas, inténtelo de nuevo más tarde.");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
         
     }
@@ -343,21 +343,21 @@ public class CuestionarioEnviadoBean implements Serializable {
             String descripcion = asunto.toString() + " declarado no conforme";
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.CUESTIONARIO.name());
+                    SeccionesEnum.CUESTIONARIO.getDescripcion());
             
-            notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+            notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                     RoleEnum.ROLE_SERVICIO_APOYO);
-            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.name(),
+            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                     cuestionario.getInspeccion().getEquipo());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al declarar no conforme el cuestionario, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         } catch (CorreoException e2) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     Constantes.FALLOCORREO);
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e2);
         }
     }
     
@@ -407,16 +407,16 @@ public class CuestionarioEnviadoBean implements Serializable {
             String descripcion = DESCRIPCION + cuestionario.getInspeccion().getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.CUESTIONARIO.name());
+                    SeccionesEnum.CUESTIONARIO.getDescripcion());
             
         } catch (DataAccessException e1) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al modificar el cuestionario, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e1);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e1);
         } catch (CorreoException e2) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     Constantes.FALLOCORREO);
-            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.name(), e2);
+            regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e2);
         }
     }
     

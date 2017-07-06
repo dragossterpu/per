@@ -144,7 +144,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaRolStringStringRoleEnum() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion = "alerta_test";
         RoleEnum rol = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         List<User> usuariosRol = new ArrayList<>();
@@ -183,7 +183,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaRolStringStringRoleEnumException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion = "alerta_test";
         RoleEnum rol = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         List<User> usuariosRol = new ArrayList<>();
@@ -224,7 +224,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaRolStringStringListOfRoleEnum() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion1 = "alerta_test1";
         List<RoleEnum> roles = new ArrayList<>();
         RoleEnum rol1 = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
@@ -286,7 +286,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaEquipo() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion = "alerta_test1";
         List<User> usuarios = new ArrayList<>();
         User usuario1 = new User();
@@ -328,7 +328,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaEquipoException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion = "alerta_test1";
         List<User> usuarios = new ArrayList<>();
         User usuario1 = new User();
@@ -365,7 +365,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaJefeEquipo() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion = "alerta_test1";
         List<User> usuarios = new ArrayList<>();
         User usuario1jefe = new User();
@@ -405,7 +405,7 @@ public class AlertaServiceTest {
      */
     @Test
     public final void testCrearAlertaJefeEquipoException() {
-        String seccion = SeccionesEnum.ADMINISTRACION.name();
+        String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
         String descripcion = "alerta_test1";
         List<User> usuarios = new ArrayList<>();
         User usuario1jefe = new User();

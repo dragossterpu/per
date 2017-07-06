@@ -113,7 +113,7 @@ public class TipoInspeccionBean implements Serializable {
                         + tipo.getDescripcion() + ")";
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                        SeccionesEnum.INSPECCION.name());
+                        SeccionesEnum.INSPECCION.getDescripcion());
                 
             }
             
@@ -123,7 +123,7 @@ public class TipoInspeccionBean implements Serializable {
                             + " Se ha producido un error al eliminar el tipo de inspección, inténtelo de nuevo más tarde",
                     "", "msgs");
             // Guardamos los posibles errores en bbdd
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
     }
     
@@ -148,14 +148,14 @@ public class TipoInspeccionBean implements Serializable {
                     + tipo.getDescripcion() + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.INSPECCION.name());
+                    SeccionesEnum.INSPECCION.getDescripcion());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                     Constantes.ERRORMENSAJE
                             + " Se ha producido un error al modificar el tipo de inspección, inténtelo de nuevo más tarde",
                     "", null);
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
     }
     
@@ -181,12 +181,12 @@ public class TipoInspeccionBean implements Serializable {
             String descripcionTipo = "Se ha dado de alta el tipo de inspección: " + codigo + "(" + descripcion + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
-                    SeccionesEnum.INSPECCION.name());
+                    SeccionesEnum.INSPECCION.getDescripcion());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el tipo de inspección, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
     }
     

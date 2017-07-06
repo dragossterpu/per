@@ -263,7 +263,7 @@ public class GestorDocumentalBeanTest {
         
         assertThat(gestorDocumentalBeanMock.getFile()).isNotNull();
         assertThat(gestorDocumentalBeanMock.getFile()).isInstanceOf(DefaultStreamedContent.class);
-        verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.name()),
+        verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(ProgesinException.class));
         
     }
@@ -288,7 +288,7 @@ public class GestorDocumentalBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
-        verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.name()),
+        verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(ProgesinException.class));
     }
     

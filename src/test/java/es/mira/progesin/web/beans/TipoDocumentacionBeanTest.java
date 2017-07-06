@@ -173,8 +173,8 @@ public class TipoDocumentacionBeanTest {
         
         verify(tipoDocumentacionServiceMock, times(1)).save(tipoDoc);
         verify(regActividadServiceMock, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.DOCUMENTACION.name()));
-        verify(regActividadServiceMock, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.name()),
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
+        verify(regActividadServiceMock, times(0)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
                 any(Exception.class));
     }
     
@@ -196,7 +196,7 @@ public class TipoDocumentacionBeanTest {
         
         verify(tipoDocumentacionServiceMock, times(1)).save(tipoDoc);
         verify(regActividadServiceMock, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
     
 }

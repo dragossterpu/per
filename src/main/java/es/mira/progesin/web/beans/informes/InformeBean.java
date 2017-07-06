@@ -227,7 +227,7 @@ public class InformeBean implements Serializable {
             } catch (UnsupportedEncodingException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         "Se ha producido un error en la recuperación del texto");
-                regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
+                regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
             }
         });
         modeloInforme.getAreas()
@@ -246,7 +246,7 @@ public class InformeBean implements Serializable {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar el informe");
-            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
     
@@ -304,7 +304,7 @@ public class InformeBean implements Serializable {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del " + tipoArchivo);
-            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
     

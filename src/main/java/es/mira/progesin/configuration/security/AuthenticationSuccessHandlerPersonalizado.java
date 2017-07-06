@@ -40,7 +40,7 @@ public class AuthenticationSuccessHandlerPersonalizado implements Authentication
         response.setStatus(HttpServletResponse.SC_OK);
         String textoReg = "El usuario " + autentication.getName() + " ha iniciado sesión en la aplicación";
         registroActividadService.altaRegActividad(textoReg, TipoRegistroEnum.AUDITORIA.name(),
-                SeccionesEnum.LOGIN.name());
+                SeccionesEnum.LOGIN.getDescripcion());
         
         User usuario = (User) autentication.getPrincipal();
         

@@ -200,7 +200,7 @@ public class UserBeanTest {
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Alta"), any(String.class));
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.USUARIOS.name()));
+                eq(SeccionesEnum.USUARIOS.getDescripcion()));
     }
     
     /**
@@ -221,7 +221,7 @@ public class UserBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Alta"), any(String.class));
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.getDescripcion()),
                 any(Exception.class));
     }
     
@@ -244,7 +244,7 @@ public class UserBeanTest {
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.getDescripcion()),
                 any(CorreoException.class));
     }
     
@@ -290,7 +290,7 @@ public class UserBeanTest {
         userBean.buscarUsuario();
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.AUDITORIA.name()),
-                eq(SeccionesEnum.USUARIOS.name()));
+                eq(SeccionesEnum.USUARIOS.getDescripcion()));
         assertThat(userBean.getEstadoUsuario()).isNull();
     }
     
@@ -305,7 +305,7 @@ public class UserBeanTest {
         verify(userService, times(1)).save(usuario);
         assertThat(usuario.getFechaBaja()).isNotNull();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.USUARIOS.name()));
+                eq(SeccionesEnum.USUARIOS.getDescripcion()));
     }
     
     /**
@@ -318,7 +318,7 @@ public class UserBeanTest {
         
         userBean.eliminarUsuario(usuario);
         
-        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.name()),
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.getDescripcion()),
                 any(DataAccessException.class));
     }
     
@@ -368,10 +368,10 @@ public class UserBeanTest {
                 any(String.class));
         
         verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del estado"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
         
         verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del usuario"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
         
         assertThat(userBean.getUser().getFechaInactivo()).isNotNull();
     }
@@ -392,10 +392,10 @@ public class UserBeanTest {
                 any(String.class));
         
         verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del estado"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
         
         verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del usuario"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
         
         assertThat(userBean.getUser().getFechaInactivo()).isNull();
     }

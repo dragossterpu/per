@@ -238,7 +238,7 @@ public class GestorDocumentalBean implements Serializable {
             } catch (ProgesinException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         e.getMessage());
-                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.name(), e);
+                registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
             }
         } else {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,

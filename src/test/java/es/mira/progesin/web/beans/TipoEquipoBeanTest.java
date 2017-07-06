@@ -146,7 +146,7 @@ public class TipoEquipoBeanTest {
         
         verify(tipoEquipoService, times(1)).save(tEquipo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.ADMINISTRACION.name()));
+                eq(SeccionesEnum.ADMINISTRACION.getDescripcion()));
     }
     
     /**
@@ -162,7 +162,7 @@ public class TipoEquipoBeanTest {
         
         verify(tipoEquipoService, times(1)).save(tEquipo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.name()));
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.ADMINISTRACION.getDescripcion()));
     }
     
 }

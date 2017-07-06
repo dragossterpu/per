@@ -156,7 +156,7 @@ public class SugerenciasBeanTest {
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         
-        verify(regActividadServiceMock, never()).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, never()).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         
     }
@@ -181,7 +181,7 @@ public class SugerenciasBeanTest {
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         
-        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         assertThat(ruta).isEqualTo("/principal/crearSugerencia?faces-redirect=true");
         
@@ -224,7 +224,7 @@ public class SugerenciasBeanTest {
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         
-        verify(regActividadServiceMock, never()).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, never()).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         
     }
@@ -253,7 +253,7 @@ public class SugerenciasBeanTest {
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         
-        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         
     }
@@ -306,7 +306,7 @@ public class SugerenciasBeanTest {
         verify(userService, times(1)).findOne(any(String.class));
         verify(correoService, times(1)).envioCorreo(any(String.class), any(String.class), any(String.class));
         
-        verify(regActividadServiceMock, times(0)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, times(0)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         assertThat(ruta).isEqualTo(RUTA);
     }
@@ -339,7 +339,7 @@ public class SugerenciasBeanTest {
         verify(correoService, times(1)).envioCorreo(any(String.class), any(String.class), any(String.class));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
-        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         
         assertThat(ruta).isEqualTo(RUTA);
@@ -370,7 +370,7 @@ public class SugerenciasBeanTest {
         verify(correoService, times(0)).envioCorreo(any(String.class), any(String.class), any(String.class));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
-        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.name()),
+        verify(regActividadServiceMock, times(1)).altaRegActividadError(eq(SeccionesEnum.SUGERENCIAS.getDescripcion()),
                 any(Exception.class));
         
         assertThat(ruta).isEqualTo(RUTA);

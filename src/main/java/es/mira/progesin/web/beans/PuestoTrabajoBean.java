@@ -82,7 +82,7 @@ public class PuestoTrabajoBean implements Serializable {
                 listaPuestosTrabajo.remove(puesto);
             }
         } catch (DataAccessException e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar el puesto de trabajo, inténtelo de nuevo más tarde", null);
         }
@@ -103,7 +103,7 @@ public class PuestoTrabajoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al dar de alta el puesto de trabajo, inténtelo de nuevo más tarde");
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
     }
     
@@ -120,7 +120,7 @@ public class PuestoTrabajoBean implements Serializable {
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al editar el puesto de trabajo, inténtelo de nuevo más tarde.", null);
-            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.name(), e);
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
         
     }
