@@ -743,8 +743,8 @@ prompt =========================================================================
 prompt  Creacion tabla  CUEST_ENV_PLANTILLA
 prompt =========================================================================
     CREATE TABLE CUEST_ENV_PLANTILLA 
-   (	ID_CUEST_ENV NUMBER(19,0), 
-	ID_PLANTILLA NUMBER(19,0)
+   ( ID_CUEST_ENV NUMBER(19,0), 
+ ID_PLANTILLA NUMBER(19,0)
     );
 /
 prompt =========================================================================
