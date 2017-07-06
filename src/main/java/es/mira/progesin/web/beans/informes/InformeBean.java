@@ -291,14 +291,14 @@ public class InformeBean implements Serializable {
                     informe.getInspeccion().getAmbito().getDescripcion(),
                     informe.getInspeccion().getMunicipio().getName());
             String fechaFinalizacion = sdf.format(informe.getFechaFinalizacion());
-            String imagenPortada = Constantes.PORTADAINFORME;
             String autor = informe.getUsernameFinalizacion();
+            
             if ("PDF".equals(tipoArchivo)) {
                 setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                        imagenPortada, autor));
+                        autor));
             } else if ("DOCX".equals(tipoArchivo)) {
                 setFile(htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
-                        imagenPortada, autor));
+                        autor));
             }
         } catch (ProgesinException e) {
             e.printStackTrace();

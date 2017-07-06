@@ -13,16 +13,7 @@ import com.itextpdf.text.io.StreamUtil;
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.PngImage;
-import com.itextpdf.tool.xml.XMLWorker;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
-import com.itextpdf.tool.xml.css.CssFile;
-import com.itextpdf.tool.xml.html.Tags;
 import com.itextpdf.tool.xml.parser.XMLParser;
-import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
-import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
-import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
-import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
-import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
@@ -51,13 +42,12 @@ public final class HtmlPdfGenerator {
      * @param documentoXHTML documento en formato XHTML
      * @param fechaFinalizacion fecha en que se termino el informe
      * @param titulo título del pdf
-     * @param imagenPortada fondo de la portada
      * @param autor usuario que genera el informe
      * @return archivo PDF
      * @throws ProgesinException al manejar archivos y generar el PDF
      */
     public static DefaultStreamedContent generarInformePdf(String nombreDocumento, String documentoXHTML, String titulo,
-            String fechaFinalizacion, String imagenPortada, String autor) throws ProgesinException {
+            String fechaFinalizacion, String autor) throws ProgesinException {
         
         DefaultStreamedContent pdfStream = null;
         
@@ -68,56 +58,35 @@ public final class HtmlPdfGenerator {
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             
             // Initialize PDF document A4
-            Document document = new Document();
+            Document documento = new Document();
             
             // Initialize PDF writer
-            PdfWriter writer = PdfWriter.getInstance(document, byteStream);
+            PdfWriter writer = PdfWriter.getInstance(documento, byteStream);
             
             // Eventos para incluir cabecera, pie y número de página
             PdfPageEvent pdfPageEvent = new ProgesinPdfPageEvent();
             writer.setPageEvent(pdfPageEvent);
             
             // Open document
-            document.open();
-            document.addTitle(titulo);
-            document.addAuthor(autor);
-            document.addCreationDate();
+            documento.open();
+            documento.addTitle(titulo);
+            documento.addAuthor(autor);
+            documento.addCreationDate();
             
             // Portada
-            generarPortada(document, titulo, fechaFinalizacion, imagenPortada);
+            generarPortada(documento, titulo, fechaFinalizacion);
             
             // Márgenes para el resto de páginas
-            document.setMargins(70, 36, 70, 36);
+            documento.setMargins(70, 36, 70, 36);
             
-            // CSS
-            CSSResolver cssResolver = XMLWorkerHelper.getInstance().getDefaultCssResolver(true);
-            CssFile cssTextEditor = XMLWorkerHelper.getCSS(StreamUtil.getResourceStream(Constantes.CSSTEXTEDITORPDF));
-            cssResolver.addCss(cssTextEditor);
-            
-            // HTML
-            HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
-            htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
-            htmlContext.setImageProvider(new Base64ImageProvider());
-            
-            // Pipelines
-            PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
-            HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
-            CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
-            
-            // XML Worker
-            XMLWorker worker = new XMLWorker(css, true);
-            XMLParser parser = new XMLParser(worker);
+            // Parser
+            XMLParser parser = new ProgesinXMLParser(documento, writer);
             
             // Volcar XHTML en el PDF
             parser.parse(new ByteArrayInputStream(documentoXHTML.getBytes()));
             
-            // InputStream html = new ByteArrayInputStream(limpiarHtml(documentoHTML).getBytes());
-            // InputStream css = StreamUtil.getResourceStream(Constantes.CSSTEXTEDITORPDF);
-            // XMLWorkerHelper xmlWorkerHelper = XMLWorkerHelper.getInstance();
-            // xmlWorkerHelper.parseXHtml(writer, document, html, css);
-            
             // Close document
-            document.close();
+            documento.close();
             writer.close();
             
             ByteArrayInputStream inputStream = new ByteArrayInputStream(byteStream.toByteArray());
@@ -134,19 +103,17 @@ public final class HtmlPdfGenerator {
     /**
      * Generar portada con una imagen de plantilla.
      * 
-     * @param document documento generado
+     * @param documento documento generado
      * @param titulo texto portada
      * @param fechaFinalizacion fecha
-     * @param imagenPortada plantilla fondo
      */
-    private static void generarPortada(Document document, String titulo, String fechaFinalizacion,
-            String imagenPortada) {
+    private static void generarPortada(Document documento, String titulo, String fechaFinalizacion) {
         try {
-            Image png = PngImage.getImage(StreamUtil.getResourceStream(imagenPortada));
+            Image png = PngImage.getImage(StreamUtil.getResourceStream(Constantes.PORTADAINFORME));
             png.scaleAbsolute(595, 842);
-            document.setMargins(0, 0, 0, 0);
-            document.newPage();
-            document.add(png);
+            documento.setMargins(0, 0, 0, 0);
+            documento.newPage();
+            documento.add(png);
             // TODO incluir título y fecha finalización encima de la imagen de fondo.
         } catch (IOException | DocumentException e) {
             e.printStackTrace();

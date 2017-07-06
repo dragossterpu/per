@@ -7,15 +7,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.xml.bind.JAXBException;
+
 import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
 import org.docx4j.openpackaging.contenttype.CTOverride;
 import org.docx4j.openpackaging.contenttype.ContentTypeManager;
 import org.docx4j.openpackaging.contenttype.ContentTypes;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.org.xhtmlrenderer.util.XRLog;
 import org.docx4j.toc.Toc;
 import org.docx4j.toc.TocGenerator;
+import org.docx4j.toc.TocHelper;
+import org.docx4j.wml.BooleanDefaultTrue;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.stereotype.Component;
 
@@ -35,21 +38,9 @@ import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
 public class HtmlDocxGenerator {
     
     /**
-     * Constructor.
-     */
-    public HtmlDocxGenerator() {
-        XRLog.setLoggingEnabled(false);
-    }
-    
-    // /**
-    // * Constructor de elementos wml.
-    // */
-    // private ObjectFactory objectFactory = Context.getWmlObjectFactory();
-    
-    /**
      * Documento generado.
      */
-    private WordprocessingMLPackage document;
+    private WordprocessingMLPackage documento;
     
     /**
      * Genera archivo DOCX a partir de un documento en XHTML.
@@ -58,16 +49,15 @@ public class HtmlDocxGenerator {
      * @param documentoXHTML documento en formato XHTML
      * @param fechaFinalizacion fecha en que se termino el documento
      * @param titulo título del documento
-     * @param imagenPortada fondo de la portada
      * @param autor usuario que genera el documento
      * @return archivo DOCX
      * @throws ProgesinException al manejar archivos y generar el DOCX
      */
     public DefaultStreamedContent generarInformeDocx(String nombreDocumento, String documentoXHTML, String titulo,
-            String fechaFinalizacion, String imagenPortada, String autor) throws ProgesinException {
+            String fechaFinalizacion, String autor) throws ProgesinException {
         DefaultStreamedContent docxStream = null;
         try {
-            crearDocumentoConPlantilla(titulo);
+            crearDocumentoConPlantilla(titulo, autor, fechaFinalizacion);
             
             incluirCSS();
             
@@ -87,17 +77,30 @@ public class HtmlDocxGenerator {
      * Genera un nuevo documento a partir de una plantilla dotx.
      * 
      * @param titulo título del documento
+     * @param autor autor del documento
+     * @param fechaFinalizacion fecha fin del informe
      * @throws Docx4JException error al cargar la plantilla
      * @throws URISyntaxException error al cambiar el tipo de dotx a docx
+     * @throws JAXBException error al sustituir variables
      */
-    private void crearDocumentoConPlantilla(String titulo) throws Docx4JException, URISyntaxException {
-        document = WordprocessingMLPackage
-                .load(StreamUtil.getResourceStream("/documentos/Plantillas/PlantillaInforme.dotx"));
+    private void crearDocumentoConPlantilla(String titulo, String autor, String fechaFinalizacion)
+            throws Docx4JException, URISyntaxException {
         
-        document.setTitle(titulo);
+        documento = WordprocessingMLPackage.load(StreamUtil.getResourceStream(Constantes.PLANTILLAINFORMEDOTX));
+        documento.setTitle(titulo);
+        
+        // EXPERIMENTAL
+        // try {
+        // VariablePrepare.prepare(documento);
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
+        // Map<String, String> variables = new HashMap<>();
+        // variables.put("fechaFinalizacion", fechaFinalizacion);
+        // documento.getMainDocumentPart().variableReplace(variables);
         
         // Replace dotx content type with docx
-        ContentTypeManager ctm = document.getContentTypeManager();
+        ContentTypeManager ctm = documento.getContentTypeManager();
         // Get <Override PartName="/word/document.xml"
         // ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml"/>
         CTOverride override = ctm.getOverrideContentType().get(new URI("/word/document.xml"));
@@ -115,7 +118,7 @@ public class HtmlDocxGenerator {
     private void incluirCSS() throws UnsupportedEncodingException, IOException {
         String css = new String(
                 StreamUtil.inputStreamToArray(StreamUtil.getResourceStream(Constantes.CSSTEXTEDITORPDF)), "UTF-8");
-        document.getMainDocumentPart().getStyleDefinitionsPart().setCss(css);
+        documento.getMainDocumentPart().getStyleDefinitionsPart().setCss(css);
     }
     
     /**
@@ -123,26 +126,27 @@ public class HtmlDocxGenerator {
      * @throws Docx4JException error al procesar xhtml a docx
      */
     private void importarXHTML(String documentoXHTML) throws Docx4JException {
-        XHTMLImporterImpl xhtmlImporter = new XHTMLImporterImpl(document);
-        document.getMainDocumentPart().getContent().addAll(xhtmlImporter.convert(documentoXHTML, null));
+        XHTMLImporterImpl xhtmlImporter = new XHTMLImporterImpl(documento);
+        documento.getMainDocumentPart().getContent().addAll(xhtmlImporter.convert(documentoXHTML, null));
     }
     
     /**
-     * Actualizar la tabla de contenidos del documento word con las áreas y subáreas.
+     * Incluir en el documento word una tabla de contenidos detrás de la portada desplazando el resto del contenido.
      * @throws Docx4JException error
      */
     private void incluirTablaContenidos() throws Docx4JException {
+        
         Toc.setTocHeadingText("Índice");
-        TocGenerator tocGenerator = new TocGenerator(document);
+        TocGenerator tocGenerator = new TocGenerator(documento);
         
         // Tabla con núm. página, usa export-fo
-        tocGenerator.generateToc(1, "TOC \\o \"1-3\" \\h \\z \\u ", false);
+        // tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, false);
         
-        // // Tabla sin núm. página
-        // tocGenerator.generateToc(1, "TOC \\o \"1-3\" \\h \\z \\u ", true);
-        // // Forzar actualizar al abrir documento
-        // document.getMainDocumentPart().getDocumentSettingsPart().getContents()
-        // .setUpdateFields(new BooleanDefaultTrue());
+        // Tabla sin núm. página
+        tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
+        // Forzar actualizar al abrir documento
+        documento.getMainDocumentPart().getDocumentSettingsPart().getContents()
+                .setUpdateFields(new BooleanDefaultTrue());
     }
     
     /**
@@ -151,14 +155,16 @@ public class HtmlDocxGenerator {
      * @param nombreDocumento nombre del archivo
      * @return stream
      * @throws Docx4JException error al guardar
+     * @throws IOException error al cerrar stream
      */
-    private DefaultStreamedContent exportarDocx(String nombreDocumento) throws Docx4JException {
+    private DefaultStreamedContent exportarDocx(String nombreDocumento) throws Docx4JException, IOException {
         DefaultStreamedContent docxStream;
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         
-        document.save(byteStream);
+        documento.save(byteStream);
         
         ByteArrayInputStream inputStream = new ByteArrayInputStream(byteStream.toByteArray());
+        
         docxStream = new DefaultStreamedContent(inputStream, ContentTypeEnum.DOCX.getContentType(),
                 nombreDocumento + ".docx");
         return docxStream;
@@ -174,11 +180,11 @@ public class HtmlDocxGenerator {
     // */
     // private DefaultStreamedContent exportarPdf(String nombreDocumento) throws Docx4JException {
     // DefaultStreamedContent docxStream;
-    // OutputStream byteStream = new ByteArrayOutputStream();
+    // ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
     //
-    // Docx4J.toPDF(document, byteStream);
+    // Docx4J.toPDF(documento, byteStream);
     //
-    // ByteArrayInputStream inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) byteStream).toByteArray());
+    // ByteArrayInputStream inputStream = new ByteArrayInputStream(byteStream.toByteArray());
     // docxStream = new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
     // nombreDocumento + ".pdf");
     // return docxStream;
