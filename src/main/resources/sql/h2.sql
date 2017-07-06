@@ -366,4 +366,16 @@ Insert into ALERTAS_NOTIFICACIONES_USUARIO (USUARIO,TIPO_MENSAJE,ID_MENSAJE,FECH
 Insert into ALERTAS_NOTIFICACIONES_USUARIO (USUARIO,TIPO_MENSAJE,ID_MENSAJE,FECHA_ALTA,NOMBRE_SECCION) values ('jcarranz','ALERTA','2',to_timestamp('28/06/17 17:17:10,162000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO');
 Insert into ALERTAS_NOTIFICACIONES_USUARIO (USUARIO,TIPO_MENSAJE,ID_MENSAJE,FECHA_ALTA,NOMBRE_SECCION) values ('fvilchews','NOTIFICACION','1',to_timestamp('28/06/17 17:17:10,012000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO');
 
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (1,'GUIA1', 'I.G.P.', 0, trunc(sysdate), 'ezentis1');
+insert into guia_Pasos (id, id_guia, paso, orden) values (1, 1,'Paso1 G1', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (2, 1,'Paso2 G1', 1);
+
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (2,'GUIA2', 'I.T_PRL', 1, trunc(sysdate), 'ezentis2');
+insert into guia_Pasos (id, id_guia, paso, orden) values (3, 2,'Paso1 G2', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (4, 2,'Paso2 G2', 1);
+
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (3,'GUIA3', 'I.T_PRL', 2, trunc(sysdate), 'ezentis2');
+insert into guia_Pasos (id, id_guia, paso, orden) values (5, 3,'Paso1 G3', 0);
+insert into guia_Pasos (id, id_guia, paso, orden) values (6, 3,'Paso2 G3', 1);
+
 COMMIT;
