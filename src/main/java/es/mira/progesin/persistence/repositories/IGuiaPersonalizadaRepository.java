@@ -1,8 +1,6 @@
 package es.mira.progesin.persistence.repositories;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
@@ -22,7 +20,6 @@ public interface IGuiaPersonalizadaRepository extends CrudRepository<GuiaPersona
      * @param guia Modelo de guía de la cual se buscan guías personalizadas
      * @return Valor booleano: true si existe al menos una guía personalizada, false en caso contrario
      */
-    @Query("select case when count(a)>0 then true else false end from GuiaPersonalizada a where a.guia = :guia")
-    boolean findByIdGuia(@Param("guia") Guia guia);
+    boolean existsByGuia(Guia guia);
     
 }

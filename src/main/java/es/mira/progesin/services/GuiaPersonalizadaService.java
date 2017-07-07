@@ -221,7 +221,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      */
     @Override
     public boolean buscarPorModeloGuia(Guia guia) {
-        return guiaPersonalizadaRepository.findByIdGuia(guia);
+        return guiaPersonalizadaRepository.existsByGuia(guia);
     }
     
     /**
