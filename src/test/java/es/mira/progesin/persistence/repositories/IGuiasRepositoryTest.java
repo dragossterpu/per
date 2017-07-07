@@ -52,7 +52,7 @@ public class IGuiasRepositoryTest {
         TipoInspeccion tipo = new TipoInspeccion();
         tipo.setCodigo("I.T_PRL");
         boolean existe = guiasRepository.existsByTipoInspeccion(tipo);
-        assertThat(existe).isEqualTo(true);
+        assertThat(existe).isTrue();
     }
     
 }

@@ -379,7 +379,7 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (5, 3,'Paso1 G3', 0);
 insert into guia_Pasos (id, id_guia, paso, orden) values (6, 3,'Paso2 G3', 1);
 
 insert into guia_personalizada (id, fecha_creacion, nombre_guia_personalizada, username_creacion, id_modelo_guia) values (1, trunc(sysdate), 'GUIA PERSONALIZADA 1', 'ezentis', 2);
-insert into guia_inspeccion (id_guia, id_inspeccion) values (1, 8);
+insert into guia_inspeccion (id_guia, id_inspeccion) values (1, 2);
 
 
 
