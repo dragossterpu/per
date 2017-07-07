@@ -60,8 +60,8 @@ public class Informe extends AbstractEntity implements Serializable {
      * Modelo en que está basado el informe.
      */
     @ManyToOne
-    @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_inf_modeloinf"))
-    private ModeloInforme modelo;
+    @JoinColumn(name = "informe_personal_id", foreignKey = @ForeignKey(name = "fk_infor_personal"))
+    private ModeloInformePersonalizado modeloPersonalizado;
     
     /**
      * Inspección a la que pertenece el informe.

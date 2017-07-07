@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Controller("modelosInformeBean")
 @Scope(FacesViewScope.NAME)
-public class ModelosInformeBean implements Serializable {
+public class ModeloInformeBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     

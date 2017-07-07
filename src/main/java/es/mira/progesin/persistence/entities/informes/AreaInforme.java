@@ -6,9 +6,12 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +20,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Entidad para almacenar el área de un informe.
@@ -29,7 +31,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -43,6 +44,8 @@ public class AreaInforme implements Serializable {
      */
     @Id
     @Column(name = "ID")
+    @SequenceGenerator(name = "SEQ_AREASINFORME", sequenceName = "SEQ_AREASINFORME", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_AREASINFORME")
     private Long id;
     
     /**
@@ -66,4 +69,20 @@ public class AreaInforme implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private List<SubareaInforme> subareas;
+    
+    /**
+     * Orden en el que aparecerán las áreas.
+     */
+    @Column(name = "orden")
+    private Integer orden;
+
+    /**
+     * Sobreescritura del método toString para que muestre sólo la descripción.
+     */
+    @Override
+    public String toString() {
+        return descripcion;
+    }
+    
+    
 }

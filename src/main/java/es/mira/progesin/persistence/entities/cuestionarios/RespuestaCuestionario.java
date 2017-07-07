@@ -51,7 +51,7 @@ public class RespuestaCuestionario implements Serializable {
      * ID de la respuesta.
      */
     @EmbeddedId
-    RespuestaCuestionarioId respuestaId;
+    private RespuestaCuestionarioId respuestaId;
     
     /**
      * Lista con las respuestas de tipo tabla o matriz.

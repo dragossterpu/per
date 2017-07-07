@@ -21,6 +21,7 @@ import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.gd.TipoDocumento;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.persistence.repositories.gd.ITipoDocumentoRepository;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -74,6 +75,12 @@ public class SelectFindOne {
      */
     @Autowired
     private IModeloCuestionarioRepository modeloCuestionarioRepository;
+    
+    /**
+     * Repositorio de subáreas de informe.
+     */
+    @Autowired
+    private ISubareaInformeRepository subareaRepository;
     
     /**
      * Variable usada para actualizar la lista cargada en el contexto de la aplicación.
@@ -293,5 +300,15 @@ public class SelectFindOne {
      */
     public ModeloCuestionario findOneModeloCuestionario(String id) {
         return modeloCuestionarioRepository.findOne(Integer.valueOf(id));
+    }
+    
+    /**
+     * Busca la subárea de un informe.
+     * 
+     * @param id id de la subárea
+     * @return subárea de un informe
+     */
+    public SubareaInforme findOneSubareaInforme(String id) {
+        return subareaRepository.findOne(Long.valueOf(id));
     }
 }

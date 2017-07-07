@@ -15,7 +15,8 @@
                     </p:column>
 
                     <p:column styleClass="botonTabla">
-                        <h:commandLink title="Crear informe" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{modelosInformeBean.crearInforme(modelo)}" rendered="#{esJefeInspecciones or esEquipo}" />
+<!--                         <h:commandLink title="Crear informe" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{modelosInformeBean.crearInforme(modelo)}" rendered="#{esJefeInspecciones or esEquipo}" />
+ -->                        <p:commandButton title="Crear modelo de informe personalizado" icon="fa fa-copy" action="#{informePersonalizadoBean.crearModeloInformePersonalizado(modelo.id)}"/>
                     </p:column>
                 </p:dataTable>
                 <p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true" />

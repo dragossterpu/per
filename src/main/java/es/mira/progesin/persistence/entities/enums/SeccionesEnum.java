@@ -70,7 +70,7 @@ public enum SeccionesEnum {
     /**
      * Sección clave olvidada.
      */
-    ESTADISTICAS("ESTADISTICAS");
+    ESTADISTICAS("ESTADÍSTICAS");
     
     /**
      * Descripción de la sección.

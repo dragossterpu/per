@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +16,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Entidad para la subarea de un informe.
@@ -24,7 +26,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -38,6 +39,8 @@ public class SubareaInforme implements Serializable {
      */
     @Id
     @Column(name = "ID")
+    @SequenceGenerator(name = "SEQ_SUBAREASINFORME", sequenceName = "SEQ_SUBAREASINFORME", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SUBAREASINFORME")
     private Long id;
     
     /**
@@ -54,5 +57,20 @@ public class SubareaInforme implements Serializable {
     // @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
     @Column(name = "area_id")
     private Long areaId;
+
+    /**
+     * Sobreescritura del método toString para que muestre sólo la descripción.
+     */
+    @Override
+    public String toString() {
+        return descripcion;
+    }
+    
+    /**
+     * Orden de la subárea dentro del área.
+     */
+    @Column(name = "orden")
+    private Integer orden;
+    
     
 }

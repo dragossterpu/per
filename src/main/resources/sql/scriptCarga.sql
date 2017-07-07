@@ -79,16 +79,7 @@ prompt =========================================================================
     USERNAME_BAJA VARCHAR2(255 CHAR)
    ) ;
 /
-prompt =========================================================================
-prompt  Creacion tabla  AREAS_INFORME
-prompt =========================================================================
 
-  CREATE TABLE AREAS_INFORME 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(1000 CHAR), 
-    MODELO_INFORME_ID NUMBER(19,0)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  AREAS_USUARIO_CUESTENV
 prompt =========================================================================
@@ -340,24 +331,7 @@ prompt =========================================================================
     TIPO_INSPECCION VARCHAR2(10 CHAR)
    ) ;
 /
-prompt =========================================================================
-prompt  Creacion tabla  INFORMES
-prompt =========================================================================
 
-  CREATE TABLE INFORMES 
-   (   ID NUMBER(19,0), 
-    INSPECCION_ID NUMBER(19,0), 
-    MODELO_INFORME_ID NUMBER(19,0),
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR),
-    FECHA_FINALIZACION TIMESTAMP (6), 
-    USERNAME_FINALIZACION VARCHAR2(255 CHAR) 
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  INSPECCIONES
 prompt =========================================================================
@@ -418,15 +392,7 @@ prompt =========================================================================
     DESCRIPCION VARCHAR2(255 CHAR)
    ) ;
 /
-prompt =========================================================================
-prompt  Creacion tabla  MODELOS_INFORME
-prompt =========================================================================
 
-  CREATE TABLE MODELOS_INFORME 
-   (    ID NUMBER(19,0), 
-    NOMBRE VARCHAR2(100 CHAR)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  MUNICIPIOS
 prompt =========================================================================
@@ -565,16 +531,7 @@ prompt =========================================================================
     ID_PREGUNTA NUMBER(19,0)
    ) ;
 /
-prompt =========================================================================
-prompt  Creacion tabla  RESPUESTAS_INFORME
-prompt =========================================================================
 
-  CREATE TABLE RESPUESTAS_INFORME 
-   (    TEXTO BLOB, 
-    INFORME_ID NUMBER(19,0), 
-    SUBAREA_ID NUMBER(19,0)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  SOLICITUD_DOC_PREVIA
 prompt =========================================================================
@@ -615,16 +572,7 @@ prompt =========================================================================
     ID_INSPECCION NUMBER(19,0)
    ) ;
 /
-prompt =========================================================================
-prompt  Creacion tabla  SUBAREAS_INFORME
-prompt =========================================================================
 
-  CREATE TABLE SUBAREAS_INFORME 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(1000 CHAR), 
-    AREA_ID NUMBER(19,0)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  SUGERENCIA
 prompt =========================================================================
@@ -746,6 +694,115 @@ prompt =========================================================================
    ( ID_CUEST_ENV NUMBER(19,0), 
  ID_PLANTILLA NUMBER(19,0)
     );
+/
+
+
+prompt =========================================================================
+prompt  Creacion tabla  MODELOS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE MODELOS_INFORME 
+   (    ID NUMBER(19,0) NOT NULL ENABLE, 
+         NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE,
+         CONSTRAINT PK_MODELO_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE
+   ) ;
+/
+
+prompt =========================================================================
+prompt  Creacion tabla  AREAS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE AREAS_INFORME 
+   (    ID NUMBER(19,0) NOT NULL ENABLE, 
+        DESCRIPCION VARCHAR2(1000 CHAR) NOT NULL ENABLE, 
+        MODELO_INFORME_ID NUMBER(19,0) NOT NULL ENABLE,
+        ORDEN NUMBER(19,0) /*NOT NULL ENABLE*/,
+        CONSTRAINT PK_AREA_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE,
+        CONSTRAINT FK_AREA_MODELOINF FOREIGN KEY (MODELO_INFORME_ID)
+            REFERENCES MODELOS_INFORME (ID) ENABLE
+   ) ;
+/
+
+prompt =========================================================================
+prompt  Creacion tabla  SUBAREAS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE SUBAREAS_INFORME 
+   (    ID NUMBER(19,0) NOT NULL ENABLE, 
+        DESCRIPCION VARCHAR2(1000 CHAR) NOT NULL ENABLE, 
+        AREA_ID NUMBER(19,0) NOT NULL ENABLE,
+        ORDEN NUMBER(19,0) /*NOT NULL ENABLE*/,
+        CONSTRAINT PK_SUBAREA_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE,
+        CONSTRAINT FK_AREA_INFORME FOREIGN KEY (AREA_ID)
+            REFERENCES AREAS_INFORME (ID) ENABLE
+   ) ;
+/
+
+
+prompt =========================================================================
+prompt  Creacion tabla  MODELOS_INFORME_PERSONALIZADOS
+prompt =========================================================================
+
+ CREATE TABLE MODELOS_INFORME_PERSONALIZADOS
+(
+    ID NUMBER(19,0) NOT NULL ENABLE, 
+    NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+    ID_MODELO_INFORME NUMBER(19,0) NOT NULL ENABLE, 
+    CONSTRAINT PK_INFORME_PERSO  PRIMARY KEY (ID) USING INDEX ENABLE,
+    CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (ID_MODELO_INFORME)
+        REFERENCES MODELOS_INFORME (ID) ENABLE
+);
+
+prompt =========================================================================
+prompt  Creacion tabla  INFORME_PERSONAL_SUBAREAS
+prompt =========================================================================
+
+      
+CREATE TABLE INFORME_PERSONAL_SUBAREAS 
+(   ID_INFORME_PERS NUMBER(19,0) NOT NULL ENABLE, 
+    ID_SUBAREA NUMBER(19,0) NOT NULL ENABLE, 
+    CONSTRAINT FK_SUBAREA_INF_PERS FOREIGN KEY (ID_SUBAREA)
+        REFERENCES SUBAREAS_INFORME (ID) ENABLE, 
+    CONSTRAINT FK_INFOR_PERS FOREIGN KEY (ID_INFORME_PERS)
+        REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE
+);
+
+prompt =========================================================================
+prompt  Creacion tabla  INFORMES
+prompt =========================================================================
+
+  CREATE TABLE INFORMES 
+   (   ID NUMBER(19,0) NOT NULL ENABLE, 
+    INSPECCION_ID NUMBER(19,0) NOT NULL ENABLE, 
+    INFORME_PERSONAL_ID NUMBER(19,0) NOT NULL ENABLE,
+    FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_MODIFICACION TIMESTAMP (6), 
+    USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_MODIF VARCHAR2(255 CHAR),
+    FECHA_FINALIZACION TIMESTAMP (6), 
+    USERNAME_FINALIZACION VARCHAR2(255 CHAR),
+    CONSTRAINT PK_INFORME PRIMARY KEY (ID) USING INDEX ENABLE,
+    CONSTRAINT FK_INFOR_PERSONAL FOREIGN KEY (INFORME_PERSONAL_ID)
+        REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE
+   ) ;
+/
+
+prompt =========================================================================
+prompt  Creacion tabla  RESPUESTAS_INFORME
+prompt =========================================================================
+
+  CREATE TABLE RESPUESTAS_INFORME 
+   (    TEXTO BLOB, 
+        INFORME_ID NUMBER(19,0), 
+        SUBAREA_ID NUMBER(19,0),
+        CONSTRAINT PK_RESPUESTA_INF PRIMARY KEY (INFORME_ID, SUBAREA_ID) USING INDEX ENABLE,
+        CONSTRAINT FK_RESPUESTA_INFOR FOREIGN KEY (INFORME_ID)
+            REFERENCES INFORMES (ID) ENABLE,
+        CONSTRAINT FK_RESPUESTA_SUBAREA FOREIGN KEY (SUBAREA_ID)
+            REFERENCES SUBAREAS_INFORME (ID) ENABLE
+   ) ;
 /
 prompt =========================================================================
 prompt + Tarea3
@@ -1396,65 +1453,7 @@ prompt =========================================================================
   ALTER TABLE USERS ADD CONSTRAINT FK_U_PUESTO FOREIGN KEY (ID_PUESTO)
       REFERENCES PUESTOSTRABAJO (ID) ENABLE;
 /
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  MODELOS_INFORME
-prompt =========================================================================
 
-  ALTER TABLE MODELOS_INFORME MODIFY (ID NOT NULL ENABLE);
-  ALTER TABLE MODELOS_INFORME MODIFY (NOMBRE NOT NULL ENABLE);
-  ALTER TABLE MODELOS_INFORME ADD PRIMARY KEY (ID)
-      USING INDEX  ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  AREAS_INFORME
-prompt =========================================================================
-
-  ALTER TABLE AREAS_INFORME MODIFY (ID NOT NULL ENABLE);
-  ALTER TABLE AREAS_INFORME MODIFY (DESCRIPCION NOT NULL ENABLE);
-  ALTER TABLE AREAS_INFORME ADD PRIMARY KEY (ID)
-      USING INDEX  ENABLE;
-  ALTER TABLE AREAS_INFORME ADD CONSTRAINT FK_AREA_MODELOINF FOREIGN KEY (MODELO_INFORME_ID)
-      REFERENCES MODELOS_INFORME (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  SUBAREAS_INFORME
-prompt =========================================================================
-
-  ALTER TABLE SUBAREAS_INFORME MODIFY (ID NOT NULL ENABLE);
-  ALTER TABLE SUBAREAS_INFORME MODIFY (DESCRIPCION NOT NULL ENABLE);
-  ALTER TABLE SUBAREAS_INFORME ADD PRIMARY KEY (ID)
-      USING INDEX  ENABLE;
-  ALTER TABLE SUBAREAS_INFORME ADD CONSTRAINT FK_AREA_INFORME FOREIGN KEY (AREA_ID)
-      REFERENCES AREAS_INFORME (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  INFORMES
-prompt =========================================================================
-
-  ALTER TABLE INFORMES MODIFY (
-    ID NOT NULL ENABLE,
-    FECHA_ALTA NOT NULL ENABLE, 
-    USERNAME_ALTA NOT NULL ENABLE, 
-    FECHA_FINALIZACION NOT NULL ENABLE, 
-    USERNAME_FINALIZACION NOT NULL ENABLE);
-  ALTER TABLE INFORMES ADD PRIMARY KEY (ID)
-      USING INDEX  ENABLE;
-  ALTER TABLE INFORMES ADD CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  RESPUESTAS_INFORME
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTAS_INFORME MODIFY (INFORME_ID NOT NULL ENABLE);
-  ALTER TABLE RESPUESTAS_INFORME MODIFY (SUBAREA_ID NOT NULL ENABLE);
-  ALTER TABLE RESPUESTAS_INFORME ADD PRIMARY KEY (INFORME_ID, SUBAREA_ID)
-      USING INDEX  ENABLE;
-  ALTER TABLE RESPUESTAS_INFORME ADD CONSTRAINT FK_INFORME FOREIGN KEY (INFORME_ID)
-      REFERENCES INFORMES (ID) ENABLE;
-  ALTER TABLE RESPUESTAS_INFORME ADD CONSTRAINT FK_SUBAREA_INF FOREIGN KEY (SUBAREA_ID)
-      REFERENCES SUBAREAS_INFORME (ID) ENABLE;
-/
 
 prompt =========================================================================
 prompt  Reference Constraints para la tabla  GUIA_INSPECCION
@@ -1475,6 +1474,13 @@ prompt =========================================================================
   ALTER TABLE CUEST_ENV_PLANTILLA ADD CONSTRAINT FK_CUEST_PLANTILLA FOREIGN KEY (ID_CUEST_ENV)
       REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE;
 /
+
+prompt =========================================================================
+prompt  Reference Constraints para la tabla  INFORMES
+prompt =========================================================================
+
+  ALTER TABLE INFORMES ADD CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
+      REFERENCES INSPECCIONES (ID) ENABLE;
 
 prompt =========================================================================
 prompt + Tarea4
@@ -1910,7 +1916,19 @@ begin
   
   --secuencia   SEQ_INFORME
   EXECUTE IMMEDIATE 'CREATE SEQUENCE  SEQ_INFORME  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION';
+ 
+   --secuencia   SEQ_MODELOINFORME
+  EXECUTE IMMEDIATE 'CREATE SEQUENCE   SEQ_MODELOINFORME  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
   
+  --secuencia   SEQ_INFORMEPERSONAL
+  EXECUTE IMMEDIATE 'CREATE SEQUENCE SEQ_INFORMEPERSONAL  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION';
+  
+    --secuencia   SEQ_AREASINFORME
+  EXECUTE IMMEDIATE 'CREATE SEQUENCE   SEQ_AREASINFORME  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
+
+    --secuencia   SEQ_AREASINFORME
+  EXECUTE IMMEDIATE 'CREATE SEQUENCE   SEQ_SUBAREASINFORME  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOPARTITION' ;
+
 end;
 
 
