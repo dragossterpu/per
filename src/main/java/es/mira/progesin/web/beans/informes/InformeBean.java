@@ -212,7 +212,8 @@ public class InformeBean implements Serializable {
      */
     private void cargarInforme(Long id) {
         setInforme(informeService.findOne(id));
-        setModeloInforme(modeloInformeService.findDistinctById(informe.getModelo().getId()));
+        // TODO Cambiar por el informe personalizado
+//        setModeloInforme(modeloInformeService.findDistinctById(informe.getModelo().getId()));
         generarMapaRespuestas();
     }
     
