@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  07/06/2017     
+prompt    Actualización:  07/06/2017   
 prompt =========================================================================
 
 
@@ -138,6 +138,7 @@ prompt =========================================================================
     USERNAME_CREACION VARCHAR2(255 CHAR), 
     ID_MODELO_CUESTIONARIO NUMBER(10,0)
    ) ;
+ 
 /
 prompt =========================================================================
 prompt  Creacion tabla  CUESTIONARIOS_ENVIADOS
@@ -747,7 +748,11 @@ prompt =========================================================================
 (
     ID NUMBER(19,0) NOT NULL ENABLE, 
     NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE, 
-    ID_MODELO_INFORME NUMBER(19,0) NOT NULL ENABLE, 
+    ID_MODELO_INFORME NUMBER(19,0) NOT NULL ENABLE,
+    FECHA_BAJA TIMESTAMP (6), 
+    FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+    USERNAME_BAJA VARCHAR2(255 CHAR), 
+    USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
     CONSTRAINT PK_INFORME_PERSO  PRIMARY KEY (ID) USING INDEX ENABLE,
     CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (ID_MODELO_INFORME)
         REFERENCES MODELOS_INFORME (ID) ENABLE
@@ -1562,7 +1567,7 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos DOCUMENTOS_BLOB...
 prompt =========================================================================
 
-DECLARE
+/*DECLARE
     l_bfile  BFILE;
     l_blob   BLOB;
 BEGIN
@@ -1599,7 +1604,7 @@ BEGIN
     EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';
     
 EXCEPTION WHEN OTHERS THEN NULL;
-END;
+END
 /
 COMMIT;
 
@@ -1614,7 +1619,7 @@ Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, user
 Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (5, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Policía Nacional', SYSDATE, 'system',24);
 
 
-COMMIT;
+COMMIT;*/
 
 prompt =========================================================================
 prompt Ejecutando inserción de datos EMPLEO...

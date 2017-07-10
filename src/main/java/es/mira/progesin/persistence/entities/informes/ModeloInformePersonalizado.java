@@ -1,6 +1,7 @@
 package es.mira.progesin.persistence.entities.informes;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,6 +20,9 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,7 +75,33 @@ public class ModeloInformePersonalizado implements Serializable {
      * Lista de subáreas que formarán el informe personalizado.
      */
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "informe_personal_subareas", joinColumns = @JoinColumn(name = "id_informe_pers",  foreignKey = @ForeignKey(name = "fk_infor_pers")), inverseJoinColumns = @JoinColumn(name = "id_subarea",  foreignKey = @ForeignKey(name = "fk_subarea_inf_pers")))
+    @JoinTable(name = "informe_personal_subareas", joinColumns = @JoinColumn(name = "id_informe_pers", foreignKey = @ForeignKey(name = "fk_infor_pers")), inverseJoinColumns = @JoinColumn(name = "id_subarea", foreignKey = @ForeignKey(name = "fk_subarea_inf_pers")))
     @OrderBy("orden")
     private List<SubareaInforme> subareas;
+    
+    /**
+     * Usuario de creación.
+     */
+    @CreatedBy
+    @Column(name = "username_alta", nullable = false)
+    private String usernameAlta;
+    
+    /**
+     * Fecha de creaión.
+     */
+    @CreatedDate
+    @Column(name = "fecha_alta", nullable = false)
+    private Date fechaAlta;
+    
+    /**
+     * Usuario de baja.
+     */
+    @Column(name = "username_baja")
+    private String usernameBaja;
+    
+    /**
+     * Fecha de baja.
+     */
+    @Column(name = "fecha_baja")
+    private Date fechaBaja;
 }
