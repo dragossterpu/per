@@ -6,6 +6,7 @@ import java.util.Date;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -15,6 +16,7 @@ import lombok.Setter;
  * @author EZENTIS
  *
  */
+@NoArgsConstructor
 @Setter
 @Getter
 public class GuiaBusqueda implements Serializable {

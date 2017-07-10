@@ -23,6 +23,7 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IGuiasRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -31,7 +32,7 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
  * @author EZENTIS
  *
  */
-
+@NoArgsConstructor
 @Service
 public class GuiaService implements IGuiaService {
     
@@ -58,6 +59,17 @@ public class GuiaService implements IGuiaService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public GuiaService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
     
     /**
      * Añade los parámetros de búsqueda al criteria.
