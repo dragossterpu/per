@@ -1567,7 +1567,7 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos DOCUMENTOS_BLOB...
 prompt =========================================================================
 
-/*DECLARE
+DECLARE
     l_bfile  BFILE;
     l_blob   BLOB;
 BEGIN
@@ -1604,7 +1604,7 @@ BEGIN
     EXECUTE IMMEDIATE 'DROP DIRECTORY PLANTILLAS_PROGESIN';
     
 EXCEPTION WHEN OTHERS THEN NULL;
-END
+END;
 /
 COMMIT;
 
@@ -1619,7 +1619,7 @@ Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, user
 Insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (5, 5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document','Plantilla infraestructuras Policía Nacional', SYSDATE, 'system',24);
 
 
-COMMIT;*/
+COMMIT;
 
 prompt =========================================================================
 prompt Ejecutando inserción de datos EMPLEO...
