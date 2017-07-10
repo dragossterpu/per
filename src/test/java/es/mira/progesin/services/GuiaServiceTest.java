@@ -135,10 +135,9 @@ public class GuiaServiceTest {
     @Test
     public final void testExistePaso() {
         GuiaPasos paso = new GuiaPasos();
-        paso.setId(3L);
+        paso.setId(2L);
         guiaService.existePaso(paso);
         verify(pasosRepository).findPasoExistenteEnGuiasPersonalizadas(paso.getId());
-        
     }
     
     /**

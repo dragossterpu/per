@@ -374,7 +374,7 @@ insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username
 insert into guia_Pasos (id, id_guia, paso, orden) values (3, 2,'Paso1 G2', 0);
 insert into guia_Pasos (id, id_guia, paso, orden) values (4, 2,'Paso2 G2', 1);
 
-insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta) values (3,'GUIA3', 'I.T_PRL', 2, to_timestamp('10/07/17 17:17:10,230000000','DD/MM/RR HH24:MI:SS,FF'), 'ezentis2');
+insert into guias (id, nombre_guia, tipo_inspeccion, orden, fecha_alta, username_alta, fecha_baja) values (3,'GUIA3', 'I.T_PRL', 2, to_timestamp('10/07/17 17:17:10,230000000','DD/MM/RR HH24:MI:SS,FF'), 'ezentis2', to_timestamp('12/07/17 17:17:10,230000000','DD/MM/RR HH24:MI:SS,FF'));
 insert into guia_Pasos (id, id_guia, paso, orden) values (5, 3,'Paso1 G3', 0);
 insert into guia_Pasos (id, id_guia, paso, orden) values (6, 3,'Paso2 G3', 1);
 insert into guia_Pasos (id, id_guia, paso, orden) values (7, 3,'Paso3 G3', 2);

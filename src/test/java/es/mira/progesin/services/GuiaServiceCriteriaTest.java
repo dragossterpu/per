@@ -117,7 +117,7 @@ public class GuiaServiceCriteriaTest {
      * {@link es.mira.progesin.services.GuiaService#buscarGuiaPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.GuiaBusqueda)}.
      */
     @Test
-    public final void testBuscarGuiaPorCriteriaUsuarioCreacionEstado() {
+    public final void testBuscarGuiaPorCriteriaUsuarioCreacionEstadoActivo() {
         int first = 0;
         int pageSize = 20;
         String sortField = null;
@@ -134,7 +134,32 @@ public class GuiaServiceCriteriaTest {
         busqueda.setEstado(EstadoEnum.ACTIVO);
         
         List<Guia> listaGuias = guiaService.buscarGuiaPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
-        assertThat(listaGuias).hasSize(2);
+        assertThat(listaGuias).hasSize(1);
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.GuiaService#buscarGuiaPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.GuiaBusqueda)}.
+     */
+    @Test
+    public final void testBuscarGuiaPorCriteriaUsuarioCreacionEstadoInactivo() {
+        int first = 0;
+        int pageSize = 20;
+        String sortField = null;
+        SortOrder sortOrder = SortOrder.DESCENDING;
+        
+        User user = User.builder().username(USER).role(RoleEnum.ROLE_ADMIN).build();
+        when(authentication.getPrincipal()).thenReturn(user);
+        CriteriaService criteriaService = new CriteriaService();
+        
+        GuiaService guiaService = new GuiaService(sessionFactory, criteriaService);
+        
+        GuiaBusqueda busqueda = new GuiaBusqueda();
+        busqueda.setUsuarioCreacion("tis2");
+        busqueda.setEstado(EstadoEnum.INACTIVO);
+        
+        List<Guia> listaGuias = guiaService.buscarGuiaPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
+        assertThat(listaGuias).hasSize(0);
     }
     
     /**
@@ -161,7 +186,7 @@ public class GuiaServiceCriteriaTest {
         busqueda.setTipoInspeccion(tipo);
         
         List<Guia> listaGuias = guiaService.buscarGuiaPorCriteria(first, pageSize, sortField, sortOrder, busqueda);
-        assertThat(listaGuias).hasSize(2);
+        assertThat(listaGuias).hasSize(1);
     }
     
     /**
@@ -178,7 +203,7 @@ public class GuiaServiceCriteriaTest {
         GuiaBusqueda busqueda = new GuiaBusqueda();
         
         int numRegistros = guiaService.getCounCriteria(busqueda);
-        assertThat(numRegistros).isEqualTo(3);
+        assertThat(numRegistros).isEqualTo(2);
     }
     
 }
