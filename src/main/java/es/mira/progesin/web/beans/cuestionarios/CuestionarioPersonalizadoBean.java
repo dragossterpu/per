@@ -90,7 +90,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     /**
      * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
      * 
-     * @author EZENTIS
      */
     public void buscarCuestionario() {
         
@@ -102,7 +101,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * Devuelve al formulario de búsqueda de modelos de cuestionario a su estado inicial y borra los resultados de
      * búsquedas anteriores si se navega desde el menú u otra sección.
      * 
-     * @author EZENTIS
      * @return siguiente ruta
      */
     public String getFormBusquedaModelosCuestionario() {
@@ -113,7 +111,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     /**
      * Resetea los valores de búsqueda introducidos en el formulario y el resultado de la búsqueda.
      * 
-     * @author EZENTIS
      */
     public void limpiar() {
         cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
@@ -125,7 +122,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * Elimina un cuestionario. Si ya ha sido enviado alguna vez se realiza baja lógica en caso contrario, eliminación
      * física.
      * 
-     * @author EZENTIS
      * @param cuestionario Cuestionario a eliminar
      */
     public void eliminarCuestionario(CuestionarioPersonalizado cuestionario) {
@@ -167,7 +163,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     /**
      * Muestra la pantalla de envío del cuestionario personalizado.
      *
-     * @author EZENTIS
      * @param cuestionario Cuestionario a enviar
      * @return Nombre de la vista del formulario de envío
      */
@@ -179,7 +174,8 @@ public class CuestionarioPersonalizadoBean implements Serializable {
             Inspeccion inspeccion = new Inspeccion();
             cuestionarioEnvio.setInspeccion(inspeccion);
             
-            envioCuestionarioBean.setListaPlantillas(documentoService.buscaNombreTipoDocumento("PLANTILLA CUESTIONARIO"));
+            envioCuestionarioBean
+                    .setListaPlantillas(documentoService.buscaNombreTipoDocumento("PLANTILLA CUESTIONARIO"));
             envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
             // envioCuestionarioBean.setMostrarPlantillas(false);
             rutaVista = "/cuestionarios/enviarCuestionario?faces-redirect=true";
@@ -193,7 +189,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     /**
      * PostConstruct, inicializa el bean.
      * 
-     * @author EZENTIS
      */
     @PostConstruct
     public void init() {
