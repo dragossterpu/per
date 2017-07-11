@@ -62,6 +62,11 @@ public class EnvioCuestionarioBean implements Serializable {
     private List<Documento> listaPlantillas;
     
     /**
+     * Listado de las plantillas seleccionadas.
+     */
+    private List<Documento> plantillasSeleccionadas;
+    
+    /**
      * Servicio de inspecciones.
      */
     @Autowired
@@ -206,8 +211,8 @@ public class EnvioCuestionarioBean implements Serializable {
                     notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                             RoleEnum.ROLE_JEFE_INSPECCIONES);
                     
-                    notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
-                            cuestionarioEnvio.getInspeccion().getEquipo());
+                    notificacionService.crearNotificacionEquipo(descripcion,
+                            SeccionesEnum.CUESTIONARIO.getDescripcion(), cuestionarioEnvio.getInspeccion().getEquipo());
                     
                 }
             }
@@ -311,4 +316,10 @@ public class EnvioCuestionarioBean implements Serializable {
         return respuesta;
     }
     
+    /**
+     * Adjunta las plantillas seleccionadas al cuestionario enviado.
+     */
+    public void adjuntarPlantilla() {
+        cuestionarioEnvio.setPlantillas(plantillasSeleccionadas);
+    }
 }

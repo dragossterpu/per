@@ -1,0 +1,25 @@
+<ui:composition template="#{p:ifAnyGranted('PROV_CUESTIONARIO') ? '/layouts/layoutInteriorProv.xhtml' : '/layouts/layoutInterior.xhtml'}" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="content">
+    
+   <h3>Descarga de plantillas</h3> 
+   <h:form id="descargaPlantillas">
+
+           <h:panelGroup id="parentPanel" >
+                   <p:outputPanel id="panelPlantillas" styleClass="cuadroPlantillas" >
+                      <h:outputLabel for="tablaPlantillas" value="Asociar plantilla:" />
+                      <p:dataTable id="tablaPlantillas" var="plantilla" value="#{envioCuestionarioBean.listaPlantillas}" selection="#{envioCuestionarioBean.plantillasSeleccionadas}" rowKey="#{plantilla.id}">
+                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                           <p:column>
+                                <h:outputText value="#{plantilla.nombre}"> </h:outputText>
+                           </p:column>
+                      </p:dataTable>
+                   </p:outputPanel>
+                </h:panelGroup>
+            <div class="botonesFormulario">
+                <p:button id="volver" value="Volver" outcome="/cuestionarios/enviarCuestionario"  icon="fa fa-fw fa-undo"/>
+                <p:commandButton id="adjuntar" actionListener="#{envioCuestionarioBean.adjuntarPlantilla}" value="Adjuntar" icon="fa fa-plus"/>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

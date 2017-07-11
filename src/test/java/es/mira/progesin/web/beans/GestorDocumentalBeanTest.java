@@ -35,6 +35,7 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.model.Visibility;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
@@ -216,14 +217,31 @@ public class GestorDocumentalBeanTest {
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#onToggle(org.primefaces.event.ToggleEvent)}.
      */
     @Test
-    public final void testOnToggle() {
+    public final void testOnToggle_False() {
         ToggleEvent eventMock = mock(ToggleEvent.class);
         when(eventMock.getData()).thenReturn(0);
+        when(eventMock.getVisibility()).thenReturn(Visibility.HIDDEN);
         List<Boolean> listaToogle = new ArrayList<>();
         listaToogle.add(Boolean.FALSE);
         gestorDocumentalBeanMock.setList(listaToogle);
         gestorDocumentalBeanMock.onToggle(eventMock);
         assertThat(listaToogle.get(0)).isFalse();
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#onToggle(org.primefaces.event.ToggleEvent)}.
+     */
+    @Test
+    public final void testOnToggle_True() {
+        ToggleEvent eventMock = mock(ToggleEvent.class);
+        when(eventMock.getData()).thenReturn(0);
+        when(eventMock.getVisibility()).thenReturn(Visibility.VISIBLE);
+        List<Boolean> listaToogle = new ArrayList<>();
+        listaToogle.add(Boolean.TRUE);
+        gestorDocumentalBeanMock.setList(listaToogle);
+        gestorDocumentalBeanMock.onToggle(eventMock);
+        assertThat(listaToogle.get(0)).isTrue();
     }
     
     /**
@@ -640,6 +658,44 @@ public class GestorDocumentalBeanTest {
                 eq(null));
     }
     
+    /***
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
+     */
+    
+    @Test
+    public final void testCreaDocumentoSinNombre() {
+        String nombreDocTest = "";
+        TipoDocumento tipoDocTest = mock(TipoDocumento.class);
+        String descripcionTest = "descripcionTest";
+        String materiaIndexadaTest = "materiaIndexadaTest";
+        gestorDocumentalBeanMock.setNombreDoc("nombreTest");
+        gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
+        
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+                eq(null));
+    }
+    
+    /***
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#creaDocumento(java.lang.String, es.mira.progesin.persistence.entities.gd.TipoDocumento, java.lang.String, java.lang.String)}.
+     */
+    
+    @Test
+    public final void testCreaDocumentoFicheroSinNombre() {
+        String nombreDocTest = "nombreDocTest";
+        TipoDocumento tipoDocTest = mock(TipoDocumento.class);
+        String descripcionTest = "descripcionTest";
+        String materiaIndexadaTest = "materiaIndexadaTest";
+        gestorDocumentalBeanMock.setNombreDoc("");
+        gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
+        
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+                eq(null));
+    }
+    
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#editarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
@@ -726,6 +782,23 @@ public class GestorDocumentalBeanTest {
      * . .
      */
     @Test
+    public final void testAsignarNuevaInspeccion_SinInspecciones() {
+        
+        Documento docTest = new Documento();
+        gestorDocumentalBeanMock.setDocumento(docTest);
+        Inspeccion insParametro = new Inspeccion();
+        insParametro.setId(2L);
+        gestorDocumentalBeanMock.asignarNuevaInspeccion(insParametro);
+        assertThat(gestorDocumentalBeanMock.getDocumento().getInspeccion()).hasSize(1);
+        
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * . .
+     */
+    @Test
     public final void testAsignarNuevaInspeccion_Inspeccion() {
         Inspeccion i1 = new Inspeccion();
         i1.setId(1L);
@@ -739,6 +812,46 @@ public class GestorDocumentalBeanTest {
         insParametro.setId(2L);
         gestorDocumentalBeanMock.asignarNuevaInspeccion(insParametro);
         assertThat(gestorDocumentalBeanMock.getDocumento().getInspeccion()).hasSize(2);
+        
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * . .
+     */
+    @Test
+    public final void testAsignarNuevaInspeccion_InspeccionNull() {
+        
+        List<Inspeccion> inspecciones = new ArrayList<>();
+        
+        Documento docTest = new Documento();
+        docTest.setInspeccion(inspecciones);
+        gestorDocumentalBeanMock.setDocumento(docTest);
+        Inspeccion insParametro = null;
+        gestorDocumentalBeanMock.asignarNuevaInspeccion(insParametro);
+        assertThat(gestorDocumentalBeanMock.getDocumento().getInspeccion()).hasSize(0);
+        
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#asignarNuevaInspeccion(es.mira.progesin.persistence.entities.Inspeccion)}
+     * . .
+     */
+    @Test
+    public final void testAsignarNuevaInspeccionExistente_InspeccionNull() {
+        Inspeccion i1 = new Inspeccion();
+        i1.setId(1L);
+        List<Inspeccion> inspecciones = new ArrayList<>();
+        inspecciones.add(i1);
+        
+        Documento docTest = new Documento();
+        docTest.setInspeccion(inspecciones);
+        gestorDocumentalBeanMock.setDocumento(docTest);
+        Inspeccion insParametro = null;
+        gestorDocumentalBeanMock.asignarNuevaInspeccion(insParametro);
+        assertThat(gestorDocumentalBeanMock.getDocumento().getInspeccion()).hasSize(1);
         
     }
     

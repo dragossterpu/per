@@ -43,29 +43,13 @@
                 <h:outputLabel for="motivo" value="Motivo del cuestionario (*):" />
                 <p:inputTextarea id="motivo" value="#{envioCuestionarioBean.cuestionarioEnvio.motivoCuestionario}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." required="true" requiredMessage="Introduzca el motivo de envío del cuestionario" converter="#{trimConverter}" disabled="#{yaEnviado}" />
                 <p:outputLabel id="contador" />
-                <p:messages for="motivo" autoUpdate="true" closable="true" />
-                
-                
-                
-                <h:panelGroup id="parentPanel" >
-                   <p:outputPanel id="panelPlantillas" styleClass="cuadroPlantillas" >
-                      <h:outputLabel for="tablaPlantillas" value="Asociar plantilla:" />
-                      <p:dataTable id="tablaPlantillas" var="plantilla" value="#{envioCuestionarioBean.listaPlantillas}" selection="#{envioCuestionarioBean.cuestionarioEnvio.plantillas}" rowKey="#{plantilla.id}">
-                           <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                           <p:column>
-                                <h:outputText value="#{plantilla.nombre}"> </h:outputText>
-                           </p:column>
-                      </p:dataTable>
-                   </p:outputPanel>
-                </h:panelGroup>
-               
-               
-                
+                <p:messages for="motivo" autoUpdate="true" closable="true" />           
                 
                 <p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true" />
             </div>
 
             <div class="botonesFormulario">
+                <p:button value="Adjuntar plantilla" update="panelPlantillas" icon="fa fa-plus" outcome="/cuestionarios/adjuntarPlantillasCuestionario"/>
                 <p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and (esJefeEquipoInspeccion or esJefeInspecciones)}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
                 <p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and not yaAnulado and (esJefeEquipoInspeccion or esJefeInspecciones)}" />
                 <p:button outcome="#{menuOrigen}" value="Cancelar" icon="fa fa-fw fa-undo" />

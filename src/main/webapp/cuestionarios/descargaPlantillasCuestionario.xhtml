@@ -1,0 +1,26 @@
+<ui:composition template="#{p:ifAnyGranted('PROV_CUESTIONARIO') ? '/layouts/layoutInteriorProv.xhtml' : '/layouts/layoutInterior.xhtml'}" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <ui:define name="content">
+    
+   <h3>Descarga de plantillas</h3> 
+   <h:form id="descargaPlantillas">
+
+           <p:outputPanel styleClass="cuadroPlantillas" rendered="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.plantillas}">
+             <h:outputLabel for="tablaPlantillas" value="Plantillas asociadas" />
+                <p:dataTable id="tablaPlantillas" var="plantilla" value="#{cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.plantillas}" >
+                     <p:column headerText="Plantilla">
+                          <h:outputText value="#{plantilla.nombre}"> </h:outputText>
+                     </p:column>
+                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                          <p:commandButton id="botonDescarga" icon="fa fa-fw fa-download" ajax="false" actionListener="#{responderCuestionarioBean.descargarPlantilla(plantilla)}" >
+                              <p:fileDownload value="#{responderCuestionarioBean.file}" />
+                          </p:commandButton>    
+                     </p:column>                 
+                </p:dataTable>
+            </p:outputPanel>
+            <div class="botonesFormulario">
+                <p:button id="volver" value="Volver" outcome="/cuestionarios/responderCuestionario"  icon="fa fa-fw fa-undo"/>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
