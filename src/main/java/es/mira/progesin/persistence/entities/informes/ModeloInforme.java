@@ -60,7 +60,7 @@ public class ModeloInforme implements Serializable {
     /**
      * Areas que conforman el modelo de informe.
      */
-    @OneToMany(mappedBy = "modeloInforme", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_area_modeloinf"))
     private List<AreaInforme> areas;
 }
