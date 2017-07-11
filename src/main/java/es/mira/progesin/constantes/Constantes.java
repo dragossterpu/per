@@ -86,6 +86,11 @@ public final class Constantes {
     public static final String FECHAALTA = "fechaAlta";
     
     /**
+     * Palabra "usernameAlta" para no repetirla n veces dentro de una clase.
+     */
+    public static final String USERNAMEALTA = "usernameAlta";
+    
+    /**
      * Palabra "fechaCreacion" para no repetirla n veces dentro de una clase.
      */
     public static final String FECHACREACION = "fechaCreacion";
