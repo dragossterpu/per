@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
@@ -260,6 +262,25 @@ public class InformeBean implements Serializable {
             setInforme(informeService.saveConRespuestas(informe, mapaRespuestas));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al guardar el informe");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * Finalizar y guarda el informe actual.
+     */
+    public void finalizarInforme() {
+        try {
+            String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+            informe.setFechaFinalizacion(new Date());
+            informe.setUsernameFinalizacion(usuarioActual);
+            setInforme(informeService.saveConRespuestas(informe, mapaRespuestas));
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                    "El informe ha sido guardado y finalizado con éxito.");
         } catch (DataAccessException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,

@@ -2,14 +2,14 @@
     <ui:define name="content">
 
         <h:form id="informe">
-
+            <ui:param name="yaFinalizado" value="#{not empty informeBean.informe.fechaFinalizacion}" />
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
-            <h:commandLink style="float: right;" actionListener="#{informeBean.crearInforme('DOCX')}">
+            <h:commandLink style="float: right;" actionListener="#{informeBean.crearInforme('DOCX')}" rendered="#{yaFinalizado}">
                 <p:graphicImage value="/images/doc.png" style="padding: 0" />
                 <p:fileDownload value="#{informeBean.file}" />
             </h:commandLink>
-            <h:commandLink style="float: right;" actionListener="#{informeBean.crearInforme('PDF')}">
+            <h:commandLink style="float: right;" actionListener="#{informeBean.crearInforme('PDF')}" rendered="#{yaFinalizado}">
                 <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                 <p:fileDownload value="#{informeBean.file}" />
             </h:commandLink>
