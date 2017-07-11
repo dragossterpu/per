@@ -3,8 +3,11 @@ package es.mira.progesin.services;
 import java.util.List;
 import java.util.Map;
 
+import org.primefaces.model.SortOrder;
+
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
+import es.mira.progesin.web.beans.informes.InformeBusqueda;
 
 /**
  * Servicio de informes de inspección.
@@ -39,11 +42,24 @@ public interface IInformeService {
     Informe findOne(Long id);
     
     /**
-     * Recupera todos los informes.
+     * Método que devuelve la lista de informes en una consulta basada en criteria.
      * 
-     * @return listado de informes
+     * @param informeBusqueda objeto con los criterios de búsqueda
+     * @param first primer elemento de la consulta
+     * @param pageSize tamaño de cada página de resultados
+     * @param sortField campo por el que se ordenan los resultados
+     * @param sortOrder sentido de la ordenacion (ascendente/descendente)
+     * @return la lista de informes.
      */
-    // TODO cambiar por criteria
-    List<Informe> findAll();
+    List<Informe> buscarInformeCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            InformeBusqueda informeBusqueda);
+    
+    /**
+     * Método que devuelve el número de informes en una consulta basada en criteria.
+     * 
+     * @param informeBusqueda objeto con parámetros de búsqueda
+     * @return devuelve el número de registros de la consulta criteria.
+     */
+    int getCountInformeCriteria(InformeBusqueda informeBusqueda);
     
 }

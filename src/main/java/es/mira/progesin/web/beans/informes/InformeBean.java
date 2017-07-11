@@ -13,7 +13,10 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
+import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
@@ -53,6 +57,17 @@ public class InformeBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     /**
+     * Variable utilizada para almacenar el resultado de mostrar una columna o no en la tabla de búsqueda de informes.
+     * 
+     */
+    private List<Boolean> list;
+    
+    /**
+     * Número de columnas de la vista.
+     */
+    private static final int NUMCOLSTABLA = 8;
+    
+    /**
      * Formato de fecha.
      */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -73,14 +88,9 @@ public class InformeBean implements Serializable {
     private InformeBusqueda informeBusqueda;
     
     /**
-     * Listado de informes del buscador.
+     * LazyModel para la visualización de datos paginados en la vista.
      */
-    private List<Informe> model;
-    
-    // /**
-    // * LazyModel para la visualización de datos paginados en la vista.
-    // */
-    // private LazyModelInformes model;
+    private LazyModelInforme model;
     
     /**
      * Lista de tipos de inspección.
@@ -149,8 +159,12 @@ public class InformeBean implements Serializable {
     @PostConstruct
     public void init() {
         setInformeBusqueda(new InformeBusqueda());
-        model = new ArrayList<>();// new LazyModelInformes(informeService);
+        model = new LazyModelInforme(informeService);
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
+        setList(new ArrayList<>());
+        for (int i = 0; i <= NUMCOLSTABLA; i++) {
+            list.add(Boolean.TRUE);
+        }
     }
     
     /**
@@ -170,7 +184,7 @@ public class InformeBean implements Serializable {
      */
     public void limpiarBusqueda() {
         setInformeBusqueda(new InformeBusqueda());
-        model.clear();// setRowCount(0);
+        model.setRowCount(0);
     }
     
     /**
@@ -179,9 +193,8 @@ public class InformeBean implements Serializable {
      * 
      */
     public void buscarInforme() {
-        // model.setBusqueda(informeBusqueda);
-        // model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
-        setModel(informeService.findAll());
+        model.setBusqueda(informeBusqueda);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /**
@@ -345,6 +358,15 @@ public class InformeBean implements Serializable {
                     "Se ha producido un error en la generación del " + tipoArchivo);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
+    }
+    
+    /**
+     * Controla las columnas visibles en la lista de resultados del buscador.
+     * 
+     * @param e checkbox de la columna seleccionada
+     */
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
 }

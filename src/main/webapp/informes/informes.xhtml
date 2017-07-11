@@ -3,6 +3,8 @@
 
         <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
+        
 
         <h3>Búsqueda de informes</h3>
         
@@ -62,10 +64,10 @@
         <p:separator styleClass="separator ui-state-disabled" />
 
         <p:outputPanel layout="block" id="panelInformes">
-                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{informeBean.model.size() eq 0}">
+                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{informeBean.model.rowCount eq 0}">
                     No existe ningún resultado que cumpla los parámetros de su búsqueda.
                 </p:outputPanel>
-                <p:outputPanel rendered="#{informeBean.model.size() ne 0}">
+                <p:outputPanel rendered="#{informeBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
                         <p:dataExporter type="xls" target="tablaInformes" fileName="lista_informes" />
@@ -80,7 +82,7 @@
                     </h:commandLink>
                 </p:outputPanel>
                 
-                <p:dataTable var="informe" value="#{informeBean.model}" id="tablaInformes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{informeBean.model.size() ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
+                <p:dataTable var="informe" value="#{informeBean.model}" id="tablaInformes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{informeBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
                     <f:facet name="header">
                         Informes
                         <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
@@ -88,24 +90,24 @@
                             <p:ajax event="toggle" listener="#{informeBean.onToggle}" />
                         </p:columnToggler>
                     </f:facet>
-                    <p:column headerText="Número Inspección" sortBy="#{informe.inspeccion.id}" width="60">
-                        <h:outputText value="#{informe.inspeccion.numero}" />
+                    <p:column headerText="Núm. exp.:" sortBy="#{informe.inspeccion.id}" width="60" visible="#{inspeccionBean.list[0]}" exportable="#{informePersonalizadoBean.list[0]}">
+                        <h:outputText value="#{informe.inspeccion.id}" />
                     </p:column>
-                    <p:column headerText="Ámbito Inspección" sortBy="#{informe.inspeccion.ambito}" width="60">
-                        <h:outputText value="#{informe.inspeccion.ambito}" />
+                    <p:column headerText="Ámbito Inspección" sortBy="#{informe.inspeccion.ambito}" width="60" visible="#{inspeccionBean.list[1]}" exportable="#{informePersonalizadoBean.list[1]}">
+                        <h:outputText value="#{informe.inspeccion.ambito.descripcion}" />
                     </p:column>
-                    <p:column headerText="Tipo Inspección" sortBy="#{informe.inspeccion.tipoInspeccion}" width="100">
-                        <h:outputText value="#{informe.inspeccion.tipoInspeccion.descripcion}" />
+                    <p:column headerText="Tipo Inspección" sortBy="#{informe.inspeccion.tipoInspeccion.codigo}" width="100" visible="#{inspeccionBean.list[2]}" exportable="#{informePersonalizadoBean.list[2]}">
+                        <h:outputText value="#{informe.inspeccion.tipoInspeccion.codigo}" />
                     </p:column>
-                    <p:column headerText="Unidad" sortBy="#{informe.inspeccion.nombreUnidad}" width="100">
+                    <p:column headerText="Unidad" sortBy="#{informe.inspeccion.nombreUnidad}" width="100" visible="#{inspeccionBean.list[3]}" exportable="#{informePersonalizadoBean.list[3]}">
                         <h:outputText value="#{informe.inspeccion.nombreUnidad}" />
                     </p:column>
-                    <p:column headerText="Alta" sortBy="#{informe.fechaAlta}" width="70">
+                    <p:column headerText="Alta" sortBy="#{informe.fechaAlta}" width="70" visible="#{inspeccionBean.list[4]}" exportable="#{informePersonalizadoBean.list[4]}">
                         <h:outputText value="#{informe.fechaAlta}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Finalizado" sortBy="#{informe.fechaFinalizacion}" width="70">
+                    <p:column headerText="Finalizado" sortBy="#{informe.fechaFinalizacion}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{informePersonalizadoBean.list[5]}">
                         <h:outputText value="#{informe.fechaFinalizacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
@@ -117,7 +119,7 @@
                         <h:commandLink title="Editar informe" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{informeBean.getFormEditarInforme(informe.id)}" />
                     </p:column>
                     <f:facet name="footer">
-                        Resultado de la búsqueda: #{informeBean.model.size()} informes.
+                        Resultado de la búsqueda: #{informeBean.model.rowCount} informes.
                     </f:facet>
                 </p:dataTable>
                 <p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true" />
