@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -57,12 +56,12 @@ public class SubareaInforme implements Serializable {
      * Area a la que pertenece.
      */
     //
-     @ManyToOne//(fetch = FetchType.LAZY)
-     @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
-     private AreaInforme area;
-//    @Column(name = "area_id")
-//    private Long areaId;
-
+    @ManyToOne // (fetch = FetchType.LAZY)
+    @JoinColumn(name = "area_id", foreignKey = @ForeignKey(name = "fk_area_informe"))
+    private AreaInforme area;
+    // @Column(name = "area_id")
+    // private Long areaId;
+    
     /**
      * Sobreescritura del método toString para que muestre sólo la descripción.
      */
@@ -76,6 +75,5 @@ public class SubareaInforme implements Serializable {
      */
     @Column(name = "orden")
     private Integer orden;
-    
     
 }

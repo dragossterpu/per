@@ -185,4 +185,123 @@ insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (seq_documentacion_previa.nextval,'Evaluación de Riesgos Laborales','PDF',1,'PRL');
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (seq_documentacion_previa.nextval,'Memoria Anual de 2015','PDF',1,'MA');
 
+
+insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (seq_informepersonal.nextval, 'Personalizado GC', 1, trunc(sysdate), 'system');
+
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 1);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 2);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 3);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 4);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 5);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 6);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 7);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 8);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 9);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 10);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 11);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 12);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 13);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 14);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 15);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 16);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 17);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 18);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 19);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 20);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 21);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 22);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 23);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 24);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 25);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 26);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 27);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 28);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 29);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 30);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 31);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 32);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 33);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 34);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 35);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 36);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 37);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 38);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 39);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 40);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 41);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 42);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 43);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 44);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 45);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 46);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 47);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 48);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 49);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 50);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 51);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 52);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 53);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 54);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 55);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 56);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 57);
+
+insert into INFORMES(ID, INSPECCION_ID, INFORME_PERSONAL_ID, FECHA_ALTA, USERNAME_ALTA) values (seq_informe.nextval, 21, seq_informepersonal.currval, trunc(sysdate), 'system');
+
+
+insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (seq_informepersonal.nextval, 'Personalizado PN', 2, trunc(sysdate), 'system');
+
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 58);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 59);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 60);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 61);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 62);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 63);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 64);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 65);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 66);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 67);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 68);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 69);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 70);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 71);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 72);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 73);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 74);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 75);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 76);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 77);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 78);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 79);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 80);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 81);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 82);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 83);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 84);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 85);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 86);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 87);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 88);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 89);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 90);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 91);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 92);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 93);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 94);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 95);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 96);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 97);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 98);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 99);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 100);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 101);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 102);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 103);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 104);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 105);
+
+insert into INFORMES(ID, INSPECCION_ID, INFORME_PERSONAL_ID, FECHA_ALTA, USERNAME_ALTA) values (seq_informe.nextval, 22, seq_informepersonal.currval, trunc(sysdate), 'system');
+
+
+
 commit;

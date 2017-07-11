@@ -21,18 +21,13 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
-import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.Informe;
-import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
-import es.mira.progesin.persistence.repositories.IInformeRepository;
-import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
-import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
@@ -94,7 +89,7 @@ public class InformeBean implements Serializable {
      * Lista ordenada de areas del informe.
      */
     private List<AreaInforme> listaAreas;
-
+    
     /**
      * Mapa de respuestas.
      */
@@ -215,7 +210,8 @@ public class InformeBean implements Serializable {
      */
     private void cargarInforme(Long id) {
         setInforme(informeService.findOne(id));
-        setModeloInformePersonalizado(modeloInformePersonalizadoService.findModeloPersonalizadoCompleto(informe.getModeloPersonalizado().getId()));
+        setModeloInformePersonalizado(modeloInformePersonalizadoService
+                .findModeloPersonalizadoCompleto(informe.getModeloPersonalizado().getId()));
         generarMapaAreasSubareas();
         generarMapaRespuestas();
     }
@@ -226,7 +222,7 @@ public class InformeBean implements Serializable {
     private void generarMapaAreasSubareas() {
         mapaAreasSubareas = new HashMap<>();
         List<SubareaInforme> listaSubareas;
-        for (SubareaInforme subarea : modeloInformePersonalizado.getSubareas()){ 
+        for (SubareaInforme subarea : modeloInformePersonalizado.getSubareas()) {
             listaSubareas = mapaAreasSubareas.get(subarea.getArea());
             if (listaSubareas == null) {
                 listaSubareas = new ArrayList<>();
@@ -235,8 +231,8 @@ public class InformeBean implements Serializable {
             mapaAreasSubareas.put(subarea.getArea(), listaSubareas);
         }
         listaAreas = new ArrayList<>(mapaAreasSubareas.keySet());
-
-        //Collections.sort(listaAreas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
+        
+        Collections.sort(listaAreas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
     }
     
     /**
