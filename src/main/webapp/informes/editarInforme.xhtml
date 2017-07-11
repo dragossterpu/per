@@ -6,9 +6,9 @@
             <h3>Modificar informe</h3>
         </div>
  
-			<p:accordionPanel value="#{informeBean.modeloInforme.areas}" var="area" activeIndex="-1">
+			<p:accordionPanel value="#{informeBean.listaAreas}" var="area" activeIndex="-1" multiple="true">
 				<p:tab title="#{area.descripcion}">
-					<p:accordionPanel value="#{area.subareas}" var="subarea" activeIndex="-1">
+					<p:accordionPanel value="#{informeBean.mapaAreasSubareas[area]}" var="subarea" activeIndex="-1" multiple="true">
 						<p:tab title="#{subarea.descripcion}">
 							<p:textEditor value="#{informeBean.mapaRespuestas[subarea]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
                                 <f:facet name="toolbar">

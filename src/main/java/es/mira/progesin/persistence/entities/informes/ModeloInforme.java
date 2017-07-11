@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,8 +60,7 @@ public class ModeloInforme implements Serializable {
     /**
      * Areas que conforman el modelo de informe.
      */
-    // @OneToMany(mappedBy = "modeloInforme", fetch = FetchType.LAZY)
-    @OneToMany
+    @OneToMany(mappedBy = "modeloInforme", fetch = FetchType.LAZY)
     @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_area_modeloinf"))
     private List<AreaInforme> areas;
 }

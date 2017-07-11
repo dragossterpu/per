@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,13 +21,17 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.persistence.repositories.IInformeRepository;
 import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 import es.mira.progesin.services.IInformeService;
+import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.IModeloInformeService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.RegistroActividadService;
@@ -61,9 +66,9 @@ public class InformeBean implements Serializable {
     private Informe informe;
     
     /**
-     * Modelo del informe seleccionado.
+     * Modelo personalizado del informe seleccionado.
      */
-    private ModeloInforme modeloInforme;
+    private ModeloInformePersonalizado modeloInformePersonalizado;
     
     /**
      * Objeto de búsqueda de informes.
@@ -86,7 +91,17 @@ public class InformeBean implements Serializable {
     private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
+     * Lista ordenada de areas del informe.
+     */
+    private List<AreaInforme> listaAreas;
+
+    /**
      * Mapa de respuestas.
+     */
+    private Map<AreaInforme, List<SubareaInforme>> mapaAreasSubareas;
+    
+    /**
+     * Mapa de areas y subareas del modelo personalizado.
      */
     private Map<SubareaInforme, String> mapaRespuestas;
     
@@ -100,19 +115,7 @@ public class InformeBean implements Serializable {
      * Servicio de modelos de informe.
      */
     @Autowired
-    private transient IModeloInformeService modeloInformeService;
-    
-    /**
-     * BORRAR SOLO PRUEBAS.
-     */
-    @Autowired
-    private transient IModeloInformeRepository modeloInformeRepository;
-    
-    /**
-     * BORRAR SOLO PRUEBAS.
-     */
-    @Autowired
-    private transient IInformeRepository informeRepository;
+    private transient IModeloInformePersonalizadoService modeloInformePersonalizadoService;
     
     // /**
     // * Generador de PDFs a partir de código html.
@@ -212,9 +215,28 @@ public class InformeBean implements Serializable {
      */
     private void cargarInforme(Long id) {
         setInforme(informeService.findOne(id));
-        // TODO Cambiar por el informe personalizado
-//        setModeloInforme(modeloInformeService.findDistinctById(informe.getModelo().getId()));
+        setModeloInformePersonalizado(modeloInformePersonalizadoService.findModeloPersonalizadoCompleto(informe.getModeloPersonalizado().getId()));
+        generarMapaAreasSubareas();
         generarMapaRespuestas();
+    }
+    
+    /**
+     * Genera mapa con areas y subareas del informe a partir del modelo personalizado.
+     */
+    private void generarMapaAreasSubareas() {
+        mapaAreasSubareas = new HashMap<>();
+        List<SubareaInforme> listaSubareas;
+        for (SubareaInforme subarea : modeloInformePersonalizado.getSubareas()){ 
+            listaSubareas = mapaAreasSubareas.get(subarea.getArea());
+            if (listaSubareas == null) {
+                listaSubareas = new ArrayList<>();
+            }
+            listaSubareas.add(subarea);
+            mapaAreasSubareas.put(subarea.getArea(), listaSubareas);
+        }
+        listaAreas = new ArrayList<>(mapaAreasSubareas.keySet());
+
+        //Collections.sort(listaAreas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
     }
     
     /**
@@ -222,6 +244,7 @@ public class InformeBean implements Serializable {
      */
     private void generarMapaRespuestas() {
         mapaRespuestas = new HashMap<>();
+        mapaAreasSubareas.forEach((area, subareas) -> subareas.forEach(subarea -> mapaRespuestas.put(subarea, "")));
         informe.getRespuestas().forEach(respuesta -> {
             try {
                 mapaRespuestas.put(respuesta.getSubarea(), new String(respuesta.getTexto(), "UTF-8"));
@@ -231,8 +254,6 @@ public class InformeBean implements Serializable {
                 regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
             }
         });
-        modeloInforme.getAreas()
-                .forEach(area -> area.getSubareas().forEach(subarea -> mapaRespuestas.putIfAbsent(subarea, "")));
     }
     
     /**
@@ -259,11 +280,11 @@ public class InformeBean implements Serializable {
     private String generarInformeXHTML() {
         StringBuilder informeFormateado = new StringBuilder();
         informeFormateado.append("<div class=\"ql-snow ql-editor\">");
-        modeloInforme.getAreas().forEach(area -> {
+        mapaAreasSubareas.forEach((area, subareas) -> {
             informeFormateado.append("<h1>");
             informeFormateado.append(area.getDescripcion());
             informeFormateado.append("</h1>");
-            area.getSubareas().forEach(subarea -> {
+            subareas.forEach(subarea -> {
                 informeFormateado.append("<h2>");
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
