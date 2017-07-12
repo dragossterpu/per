@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * Implementación de los métodos definidos en la interfaz IGuiaPersonalizadaService.
@@ -33,7 +34,7 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
  * @author EZENTIS
  *
  */
-
+@NoArgsConstructor
 @Service
 public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     /**
@@ -71,6 +72,17 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public GuiaPersonalizadaService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
     
     /**
      * Elimina una guía personalizada de la base de datos.

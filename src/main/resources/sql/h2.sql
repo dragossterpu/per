@@ -379,12 +379,16 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (5, 3,'Paso1 G3', 0);
 insert into guia_Pasos (id, id_guia, paso, orden) values (6, 3,'Paso2 G3', 1);
 insert into guia_Pasos (id, id_guia, paso, orden) values (7, 3,'Paso3 G3', 2);
 
-insert into guia_personalizada (id, fecha_creacion, nombre_guia_personalizada, username_creacion, id_modelo_guia) values (1, trunc(sysdate), 'GUIA PERSONALIZADA 1', 'ezentis', 2);
-insert into guia_inspeccion (id_guia, id_inspeccion) values (1, 2);
+insert into guia_personalizada (id, fecha_creacion, nombre_guia_personalizada, username_creacion, id_modelo_guia) values (1, to_timestamp('10/07/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'GUIA PERSONALIZADA 1', 'ezentis', 2);
 
-insert into guia_personalizada (id, fecha_creacion, nombre_guia_personalizada, username_creacion, id_modelo_guia) values (2, trunc(sysdate), 'GUIA PERSONALIZADA 2', 'ezentis', 3);
+insert into guia_personalizada (id, fecha_creacion, nombre_guia_personalizada, username_creacion, id_modelo_guia) values (2, to_timestamp('10/07/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'GUIA PERSONALIZADA 2', 'ezentis', 3);
 insert into guia_personalizada_pasos (id_guia_pers, id_paso_elegido) VALUES (2,6);
 insert into guia_personalizada_pasos (id_guia_pers, id_paso_elegido) VALUES (2,7);
+
+insert into guia_inspeccion (id_guia, id_inspeccion) values (1, 5);
+insert into guia_inspeccion (id_guia, id_inspeccion) values (2, 6);
+
+
 
 
 COMMIT;
