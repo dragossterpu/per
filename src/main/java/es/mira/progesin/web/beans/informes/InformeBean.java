@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -233,14 +234,14 @@ public class InformeBean implements Serializable {
      */
     private void generarMapaAreasSubareas() {
         mapaAreasSubareas = new HashMap<>();
-        List<SubareaInforme> listaSubareas;
+        List<SubareaInforme> listaSubareasArea;
         for (SubareaInforme subarea : modeloInformePersonalizado.getSubareas()) {
-            listaSubareas = mapaAreasSubareas.get(subarea.getArea());
-            if (listaSubareas == null) {
-                listaSubareas = new ArrayList<>();
+            listaSubareasArea = mapaAreasSubareas.get(subarea.getArea());
+            if (listaSubareasArea == null) {
+                listaSubareasArea = new ArrayList<>();
             }
-            listaSubareas.add(subarea);
-            mapaAreasSubareas.put(subarea.getArea(), listaSubareas);
+            listaSubareasArea.add(subarea);
+            mapaAreasSubareas.put(subarea.getArea(), listaSubareasArea);
         }
         listaAreas = new ArrayList<>(mapaAreasSubareas.keySet());
         
@@ -304,12 +305,14 @@ public class InformeBean implements Serializable {
     private String generarInformeXHTML() {
         StringBuilder informeFormateado = new StringBuilder();
         informeFormateado.append("<div class=\"ql-snow ql-editor\">");
-        mapaAreasSubareas.forEach((area, subareas) -> {
-            informeFormateado.append("<h1>");
+        AtomicInteger i = new AtomicInteger(0);
+        listaAreas.forEach(area -> {
+            informeFormateado.append("<h1>" + i.incrementAndGet() + ". ");
             informeFormateado.append(area.getDescripcion());
             informeFormateado.append("</h1>");
-            subareas.forEach(subarea -> {
-                informeFormateado.append("<h2>");
+            AtomicInteger j = new AtomicInteger(0);
+            mapaAreasSubareas.get(area).forEach(subarea -> {
+                informeFormateado.append("<h2>" + i.get() + "." + j.incrementAndGet() + ". ");
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
                 informeFormateado.append(mapaRespuestas.get(subarea));

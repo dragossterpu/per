@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.io.StreamUtil;
@@ -25,7 +27,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
     /**
      * Fuente.
      */
-    private BaseFont baseFont = load(BaseFont.HELVETICA_BOLD);
+    private BaseFont baseFont = FontFactory.getFont(FontFactory.HELVETICA, Font.BOLD).getBaseFont();
     
     /**
      * Plantilla num página.
@@ -36,22 +38,6 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
      * Tamaño fuente.
      */
     private final static float FOOTERTEXTSIZE = 12f;
-    
-    /**
-     * Cargar fuente.
-     * 
-     * @param fontname nombre fuente
-     * @return fuente
-     */
-    private BaseFont load(String fontname) {
-        BaseFont fuente = null;
-        try {
-            fuente = BaseFont.createFont(fontname, BaseFont.CP1252, true);
-        } catch (DocumentException | IOException e) {
-            e.printStackTrace();
-        }
-        return fuente;
-    }
     
     /**
      * Inicio del documento.
@@ -73,8 +59,8 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
             try {
                 Image header = PngImage.getImage(StreamUtil.getResourceStream(Constantes.LOGOMININISTERIOINTERIOR));
                 header.scaleAbsolute(523, 842);
-                header.setAbsolutePosition(document.getPageSize().getLeft() + document.leftMargin(),
-                        document.getPageSize().getTop() - document.topMargin());
+                header.setAbsolutePosition(document.left() + document.leftMargin(),
+                        document.top() + document.topMargin());
                 cb.addImage(header);
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();

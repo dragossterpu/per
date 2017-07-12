@@ -32,13 +32,17 @@
                 <div style="clear:both"/>
             </div> -->
             <div class="ql-snow ql-editor" id="informe" ><!-- style="width:21cm; position:relative; top:-4cm"> -->
-                <ui:repeat value="#{informeBean.listaAreas}" var="area">
-                <h4><h:outputText value="#{area.descripcion}"/></h4>
-                    <ui:repeat value="#{informeBean.mapaAreasSubareas[area]}" var="subarea">
-                        <h4><h:outputText value="#{subarea.descripcion}"/></h4>
-                        <h:outputText value="#{informeBean.mapaRespuestas[subarea]}" escape="false"/>
-                    </ui:repeat>
-                </ui:repeat>
+                <ol class="titulos">
+	                <ui:repeat value="#{informeBean.listaAreas}" var="area">
+	                <li><h4><h:outputText value="#{area.descripcion}"/></h4>
+	                    <ol class="titulos">
+		                    <ui:repeat value="#{informeBean.mapaAreasSubareas[area]}" var="subarea">
+		                        <li><h4><h:outputText value="#{subarea.descripcion}"/></h4></li>
+		                        <h:outputText value="#{informeBean.mapaRespuestas[subarea]}" escape="false"/>
+		                    </ui:repeat>
+	                    </ol></li>
+	                </ui:repeat>
+                </ol>
             </div>
         </h:form>
 
