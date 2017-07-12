@@ -127,8 +127,7 @@ public class GuiaPersonalizadaBean implements Serializable {
             guiaPersonalizada.setInspeccion(guiaPersonalizadaService.listaInspecciones(guiaAux));
             redireccion = "/guias/visualizaGuiaPersonalizada?faces-redirect=true";
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            noExisteGuiaMensaje();
         }
         return redireccion;
     }
@@ -155,8 +154,7 @@ public class GuiaPersonalizadaBean implements Serializable {
         if (guiaAux != null) {
             guiaPersonalizadaService.anular(guiaAux);
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            noExisteGuiaMensaje();
         }
     }
     
@@ -240,8 +238,7 @@ public class GuiaPersonalizadaBean implements Serializable {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
         } else {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
-                    "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+            noExisteGuiaMensaje();
         }
     }
     
@@ -257,6 +254,14 @@ public class GuiaPersonalizadaBean implements Serializable {
             }
             mapaInspecciones.put(guia.getId(), cadenaInspecciones);
         }
+    }
+    
+    /**
+     * Muestra mensaje de error cuando una guía personalizada no existe.
+     */
+    private void noExisteGuiaMensaje() {
+        FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
+                "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
     }
     
 }
