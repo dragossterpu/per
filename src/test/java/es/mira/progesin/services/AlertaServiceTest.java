@@ -77,6 +77,31 @@ public class AlertaServiceTest {
     private IAlertaService alertaServiceMock = new AlertaService();
     
     /**
+     * Constante descripción.
+     */
+    private static final String DESCRIPCIONALERTA = "alerat_test";
+    
+    /**
+     * Constante usuario 1.
+     */
+    private static final String USUARIO1 = "ezentis1";
+    
+    /**
+     * Constante usuario 2.
+     */
+    private static final String USUARIO2 = "ezentis2";
+    
+    /**
+     * Constante correo usuario 1.
+     */
+    private static final String CORREOUSUARIO1 = "ezentis1@ezentis.com";
+    
+    /**
+     * Constante correo usuario 2.
+     */
+    private static final String CORREOUSUARIO2 = "ezentis2@ezentis.com";
+    
+    /**
      * Comprobación clase existe.
      */
     @Test
@@ -145,20 +170,20 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaRolStringStringRoleEnum() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion = "alerta_test";
+        String descripcion = DESCRIPCIONALERTA;
         RoleEnum rol = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         List<User> usuariosRol = new ArrayList<>();
         User usuario1 = new User();
-        usuario1.setUsername("ezentis1");
-        usuario1.setCorreo("ezentis1@ezentis.com");
+        usuario1.setUsername(USUARIO1);
+        usuario1.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuariosRol.add(usuario1);
         usuariosRol.add(usuario2);
         List<String> listaCorreos = new ArrayList<>();
-        listaCorreos.add("ezentis1@ezentis.com");
-        listaCorreos.add("ezentis2@ezentis.com");
+        listaCorreos.add(CORREOUSUARIO1);
+        listaCorreos.add(CORREOUSUARIO2);
         Alerta alertaSinId = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
         Alerta alertaGuardada = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).idAlerta(2L).build();
         
@@ -184,20 +209,20 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaRolStringStringRoleEnumException() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion = "alerta_test";
+        String descripcion = DESCRIPCIONALERTA;
         RoleEnum rol = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         List<User> usuariosRol = new ArrayList<>();
         User usuario1 = new User();
-        usuario1.setUsername("ezentis1");
-        usuario1.setCorreo("ezentis1@ezentis.com");
+        usuario1.setUsername(USUARIO1);
+        usuario1.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuariosRol.add(usuario1);
         usuariosRol.add(usuario2);
         List<String> listaCorreos = new ArrayList<>();
-        listaCorreos.add("ezentis1@ezentis.com");
-        listaCorreos.add("ezentis2@ezentis.com");
+        listaCorreos.add(CORREOUSUARIO1);
+        listaCorreos.add(CORREOUSUARIO2);
         Alerta alertaSinId = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
         Alerta alertaGuardada = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).idAlerta(2L).build();
         
@@ -225,7 +250,7 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaRolStringStringListOfRoleEnum() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion1 = "alerta_test1";
+        String descripcion = DESCRIPCIONALERTA;
         List<RoleEnum> roles = new ArrayList<>();
         RoleEnum rol1 = RoleEnum.ROLE_EQUIPO_INSPECCIONES;
         RoleEnum rol2 = RoleEnum.ROLE_SERVICIO_APOYO;
@@ -233,46 +258,46 @@ public class AlertaServiceTest {
         roles.add(rol2);
         List<User> usuariosRol1 = new ArrayList<>();
         User usuario1 = new User();
-        usuario1.setUsername("ezentis1");
-        usuario1.setCorreo("ezentis1@ezentis.com");
+        usuario1.setUsername(USUARIO1);
+        usuario1.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuariosRol1.add(usuario1);
         usuariosRol1.add(usuario2);
         List<User> usuariosRol2 = new ArrayList<>();
         User usuario3 = new User();
         usuario3.setUsername("ezentis3");
-        usuario3.setCorreo("ezenti3@ezentis.com");
+        usuario3.setCorreo("ezentis3@ezentis.com");
         User usuario4 = new User();
         usuario4.setUsername("ezentis4");
         usuario4.setCorreo("ezentis4@ezentis.com");
         usuariosRol2.add(usuario3);
         usuariosRol2.add(usuario4);
         List<String> listaCorreos1 = new ArrayList<>();
-        listaCorreos1.add("ezentis1@ezentis.com");
-        listaCorreos1.add("ezentis2@ezentis.com");
+        listaCorreos1.add(CORREOUSUARIO1);
+        listaCorreos1.add(CORREOUSUARIO2);
         List<String> listaCorreos2 = new ArrayList<>();
-        listaCorreos2.add("ezenti3@ezentis.com");
+        listaCorreos2.add("ezentis3@ezentis.com");
         listaCorreos2.add("ezentis4@ezentis.com");
         
-        Alerta alertaSinId1 = Alerta.builder().descripcion(descripcion1).nombreSeccion(seccion).build();
-        Alerta alertaGuardada1 = Alerta.builder().descripcion(descripcion1).nombreSeccion(seccion).idAlerta(1L).build();
+        Alerta alertaSinId = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
+        Alerta alertaGuardada = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).idAlerta(1L).build();
         
-        when(alertaRepository.save(alertaSinId1)).thenReturn(alertaGuardada1);
+        when(alertaRepository.save(alertaSinId)).thenReturn(alertaGuardada);
         when(userService.findByfechaBajaIsNullAndRole(rol1)).thenReturn(usuariosRol1);
         when(userService.findByfechaBajaIsNullAndRole(rol2)).thenReturn(usuariosRol2);
         
-        alertaServiceMock.crearAlertaRol(seccion, descripcion1, roles);
+        alertaServiceMock.crearAlertaRol(seccion, descripcion, roles);
         
-        verify(alertaRepository, times(2)).save(alertaSinId1);
-        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada1,
+        verify(alertaRepository, times(2)).save(alertaSinId);
+        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario1.getUsername());
-        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada1,
+        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario2.getUsername());
-        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada1,
+        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario3.getUsername());
-        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada1,
+        verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario4.getUsername());
         
         verify(correo, times(1)).envioCorreo(eq(listaCorreos1), any(String.class), any(String.class));
@@ -287,22 +312,22 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaEquipo() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion = "alerta_test1";
+        String descripcion = DESCRIPCIONALERTA;
         List<User> usuarios = new ArrayList<>();
         User usuario1 = new User();
-        usuario1.setUsername("ezentis1");
-        usuario1.setCorreo("ezentis1@ezentis.com");
+        usuario1.setUsername(USUARIO1);
+        usuario1.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuarios.add(usuario1);
         usuarios.add(usuario2);
         Inspeccion inspeccion = new Inspeccion();
         Equipo equipo = mock(Equipo.class);
         inspeccion.setEquipo(equipo);
         List<String> listaCorreos = new ArrayList<>();
-        listaCorreos.add("ezentis1@ezentis.com");
-        listaCorreos.add("ezentis2@ezentis.com");
+        listaCorreos.add(CORREOUSUARIO1);
+        listaCorreos.add(CORREOUSUARIO2);
         
         Alerta alertaSinId1 = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
         Alerta alertaGuardada = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).idAlerta(1L).build();
@@ -329,22 +354,22 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaEquipoException() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion = "alerta_test1";
+        String descripcion = DESCRIPCIONALERTA;
         List<User> usuarios = new ArrayList<>();
         User usuario1 = new User();
-        usuario1.setUsername("ezentis1");
-        usuario1.setCorreo("ezentis1@ezentis.com");
+        usuario1.setUsername(USUARIO1);
+        usuario1.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuarios.add(usuario1);
         usuarios.add(usuario2);
         Inspeccion inspeccion = new Inspeccion();
         Equipo equipo = mock(Equipo.class);
         inspeccion.setEquipo(equipo);
         List<String> listaCorreos = new ArrayList<>();
-        listaCorreos.add("ezentis1@ezentis.com");
-        listaCorreos.add("ezentis2@ezentis.com");
+        listaCorreos.add(CORREOUSUARIO1);
+        listaCorreos.add(CORREOUSUARIO2);
         Alerta alertaSinId1 = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
         
         when(userService.usuariosEquipo(equipo)).thenReturn(usuarios);
@@ -366,14 +391,14 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaJefeEquipo() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion = "alerta_test1";
+        String descripcion = DESCRIPCIONALERTA;
         List<User> usuarios = new ArrayList<>();
         User usuario1jefe = new User();
-        usuario1jefe.setUsername("ezentis1");
-        usuario1jefe.setCorreo("ezentis1@ezentis.com");
+        usuario1jefe.setUsername(USUARIO1);
+        usuario1jefe.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuarios.add(usuario1jefe);
         usuarios.add(usuario2);
         Inspeccion inspeccion = new Inspeccion();
@@ -381,8 +406,8 @@ public class AlertaServiceTest {
         equipo.setJefeEquipo(usuario1jefe);
         inspeccion.setEquipo(equipo);
         List<String> listaCorreos = new ArrayList<>();
-        listaCorreos.add("ezentis1@ezentis.com");
-        listaCorreos.add("ezentis2@ezentis.com");
+        listaCorreos.add(CORREOUSUARIO1);
+        listaCorreos.add(CORREOUSUARIO2);
         
         Alerta alertaSinId1 = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
         Alerta alertaGuardada = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).idAlerta(1L).build();
@@ -406,14 +431,14 @@ public class AlertaServiceTest {
     @Test
     public final void testCrearAlertaJefeEquipoException() {
         String seccion = SeccionesEnum.ADMINISTRACION.getDescripcion();
-        String descripcion = "alerta_test1";
+        String descripcion = DESCRIPCIONALERTA;
         List<User> usuarios = new ArrayList<>();
         User usuario1jefe = new User();
-        usuario1jefe.setUsername("ezentis1");
-        usuario1jefe.setCorreo("ezentis1@ezentis.com");
+        usuario1jefe.setUsername(USUARIO1);
+        usuario1jefe.setCorreo(CORREOUSUARIO1);
         User usuario2 = new User();
-        usuario2.setUsername("ezentis2");
-        usuario2.setCorreo("ezentis2@ezentis.com");
+        usuario2.setUsername(USUARIO2);
+        usuario2.setCorreo(CORREOUSUARIO2);
         usuarios.add(usuario1jefe);
         usuarios.add(usuario2);
         Inspeccion inspeccion = new Inspeccion();
@@ -421,8 +446,8 @@ public class AlertaServiceTest {
         equipo.setJefeEquipo(usuario1jefe);
         inspeccion.setEquipo(equipo);
         List<String> listaCorreos = new ArrayList<>();
-        listaCorreos.add("ezentis1@ezentis.com");
-        listaCorreos.add("ezentis2@ezentis.com");
+        listaCorreos.add(CORREOUSUARIO1);
+        listaCorreos.add(CORREOUSUARIO2);
         
         Alerta alertaSinId1 = Alerta.builder().descripcion(descripcion).nombreSeccion(seccion).build();
         when(userService.findOne(inspeccion.getEquipo().getJefeEquipo().getUsername())).thenReturn(usuario1jefe);
