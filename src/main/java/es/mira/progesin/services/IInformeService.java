@@ -34,12 +34,21 @@ public interface IInformeService {
     Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas);
     
     /**
+     * Finaliza y guarda el informe y todas las subareas que hayan sido respondidas.
+     * 
+     * @param informe informe
+     * @param mapaRespuestas respuestas
+     * @return informe actualizado
+     */
+    Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas);
+    
+    /**
      * Recupera un informe con sus respuestas a partir de su id.
      * 
      * @param id id del informe
      * @return informe completo
      */
-    Informe findOne(Long id);
+    Informe findConRespuestas(Long id);
     
     /**
      * Método que devuelve la lista de informes en una consulta basada en criteria.

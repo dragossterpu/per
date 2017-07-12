@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,6 @@ import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
@@ -170,10 +168,9 @@ public class InformeBean implements Serializable {
     /**
      * Devuelve al formulario de búsqueda de informes a su estado inicial y borra los resultados de búsquedas anteriores
      * si se navega desde el menú u otra sección.
+     * 
      * @return ruta siguiente
      */
-    // TODO implementar buscador con criteria
-    // TODO Añadir paginación servidor
     public String getFormBusquedaInformes() {
         limpiarBusqueda();
         return "/informes/informes?faces-redirect=true";
@@ -224,7 +221,7 @@ public class InformeBean implements Serializable {
      * @param id clave del informe
      */
     private void cargarInforme(Long id) {
-        setInforme(informeService.findOne(id));
+        setInforme(informeService.findConRespuestas(id));
         setModeloInformePersonalizado(modeloInformePersonalizadoService
                 .findModeloPersonalizadoCompleto(informe.getModeloPersonalizado().getId()));
         generarMapaAreasSubareas();
@@ -288,10 +285,7 @@ public class InformeBean implements Serializable {
      */
     public void finalizarInforme() {
         try {
-            String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
-            informe.setFechaFinalizacion(new Date());
-            informe.setUsernameFinalizacion(usuarioActual);
-            setInforme(informeService.saveConRespuestas(informe, mapaRespuestas));
+            setInforme(informeService.finalizarSaveConRespuestas(informe, mapaRespuestas));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado y finalizado con éxito.");
         } catch (DataAccessException e) {

@@ -22,7 +22,7 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, '2.- ÁMBITO Y OBJETIVOS DE LA INSPECCIÓN', SEQ_MODELOINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, '2.1- Unidad inspeccionada.', SEQ_AREASINFORME.CURRVAL, 1);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, '2.2- Ámbto territorial, población y servicios.', SEQ_AREASINFORME.CURRVAL, 2);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, '2.2- Ámbito territorial, población y servicios.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, '2.3- Objetivos generales y específicos.', SEQ_AREASINFORME.CURRVAL, 3);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, '2.4- Problemática de interés policial.', SEQ_AREASINFORME.CURRVAL, 4);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, '2.5- Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 5);

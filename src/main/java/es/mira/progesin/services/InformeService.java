@@ -14,6 +14,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,7 +79,7 @@ public class InformeService implements IInformeService {
     }
     
     /**
-     * Guarda el informe y todas las subareas que hayan sido respondidas.
+     * Guarda el informe con todas las subareas que hayan sido respondidas.
      * 
      * @param informe informe
      * @param mapaRespuestas respuestas
@@ -87,7 +88,16 @@ public class InformeService implements IInformeService {
     @Override
     @Transactional(readOnly = false)
     public Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas) {
-        Informe informeActualizado = informeRepository.findOne(informe.getId());
+        Informe informeActualizado = findConRespuestas(informe.getId());
+        guardarRespuestas(mapaRespuestas, informeActualizado);
+        return informeRepository.save(informeActualizado);
+    }
+    
+    /**
+     * @param mapaRespuestas
+     * @param informeActualizado
+     */
+    private void guardarRespuestas(Map<SubareaInforme, String> mapaRespuestas, Informe informeActualizado) {
         final List<RespuestaInforme> respuestas = new ArrayList<>();
         mapaRespuestas.forEach((subarea, respuesta) -> {
             if (respuesta != null) {
@@ -96,6 +106,24 @@ public class InformeService implements IInformeService {
             }
         });
         informeActualizado.setRespuestas(respuestaInformeRepository.save(respuestas));
+    }
+    
+    /**
+     * Finaliza y guarda el informe con todas las subareas que hayan sido respondidas.
+     * 
+     * @param informe informe
+     * @param mapaRespuestas respuestas
+     * @return informe actualizado
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas) {
+        Informe informeActualizado = findConRespuestas(informe.getId());
+        guardarRespuestas(mapaRespuestas, informeActualizado);
+        
+        String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+        informeActualizado.setFechaFinalizacion(new Date());
+        informeActualizado.setUsernameFinalizacion(usuarioActual);
         return informeRepository.save(informeActualizado);
     }
     
@@ -106,7 +134,7 @@ public class InformeService implements IInformeService {
      * @return informe completo
      */
     @Override
-    public Informe findOne(Long id) {
+    public Informe findConRespuestas(Long id) {
         return informeRepository.findOne(id);
     }
     
