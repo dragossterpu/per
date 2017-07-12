@@ -58,9 +58,16 @@ public class ModeloInforme implements Serializable {
     private String nombre;
     
     /**
+     * Determina si es un modelo estándar.
+     */
+    @Column(name = "estandar")
+    private Boolean estandar;
+    
+    /**
      * Areas que conforman el modelo de informe.
      */
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_area_modeloinf"))
     private List<AreaInforme> areas;
+    
 }

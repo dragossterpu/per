@@ -705,6 +705,7 @@ prompt =========================================================================
   CREATE TABLE MODELOS_INFORME 
    (    ID NUMBER(19,0) NOT NULL ENABLE, 
          NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE,
+         ESTANDAR NUMBER(1,0) DEFAULT 0 NOT NULL ENABLE,
          CONSTRAINT PK_MODELO_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE
    ) ;
 /

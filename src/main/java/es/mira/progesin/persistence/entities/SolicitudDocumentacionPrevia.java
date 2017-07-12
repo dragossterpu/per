@@ -132,7 +132,7 @@ public class SolicitudDocumentacionPrevia implements Serializable {
     private String apoyoTelefono;
     
     /**
-     * Corero del usuario de apoyo.
+     * Correo del usuario de apoyo.
      */
     @Column(name = "apoyoCorreo")
     private String apoyoCorreo;
