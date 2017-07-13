@@ -228,12 +228,11 @@ public class GuiaPersonalizadaBean implements Serializable {
             try {
                 guiaAux.setFechaAnulacion(null);
                 guiaAux.setUsernameAnulacion(null);
-                if (guiaPersonalizadaService.save(guiaAux) != null) {
-                    regActividadService.altaRegActividad(
-                            "La guía '".concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido activada")),
-                            TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
-                    
-                }
+                guiaPersonalizadaService.save(guiaAux);
+                regActividadService.altaRegActividad(
+                        "La guía '".concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido activada")),
+                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
