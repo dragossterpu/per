@@ -364,22 +364,19 @@ public class GuiaBean {
     
     private void grabaGuia() {
         try {
-            
-            if (guiaService.guardaGuia(guia) != null) {
-                if (alta) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                            "La guía se ha creado con éxito ");
-                    regActividadService.altaRegActividad(
-                            "La guía con nombre '".concat(guia.getNombre().concat("' ha sido creada")),
-                            TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
-                } else {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
-                            "La guía ha sido modificada con éxito ");
-                    regActividadService.altaRegActividad(
-                            Constantes.LAGUIA.concat(guia.getNombre().concat("' ha sido modificada")),
-                            TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
-                }
-                
+            guiaService.guardaGuia(guia);
+            if (alta) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                        "La guía se ha creado con éxito ");
+                regActividadService.altaRegActividad(
+                        "La guía con nombre '".concat(guia.getNombre().concat("' ha sido creada")),
+                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
+            } else {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
+                        "La guía ha sido modificada con éxito ");
+                regActividadService.altaRegActividad(
+                        Constantes.LAGUIA.concat(guia.getNombre().concat("' ha sido modificada")),
+                        TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
             
         } catch (DataAccessException e) {
@@ -480,10 +477,10 @@ public class GuiaBean {
                 personalizada.setGuia(guia);
                 personalizada.setPasosElegidos(listaPasosSeleccionados);
                 personalizada.setInspeccion(listaInspecciones);
-                if (guiaPersonalizadaService.save(personalizada) != null) {
-                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
-                            "Se ha guardado su guía personalizada con éxito");
-                }
+                guiaPersonalizadaService.save(personalizada);
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
+                        "Se ha guardado su guía personalizada con éxito");
+                
                 listaInspecciones = new ArrayList<>();
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensajeError, "", "message");
@@ -521,11 +518,9 @@ public class GuiaBean {
             try {
                 guiaAux.setFechaAnulacion(new Date());
                 guiaAux.setUsernameAnulacion(SecurityContextHolder.getContext().getAuthentication().getName());
-                if (guiaService.guardaGuia(guiaAux) != null) {
-                    regActividadService.altaRegActividad("Se ha anulado la guía '".concat(guiaAux.getNombre()),
-                            TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
-                }
-                
+                guiaService.guardaGuia(guiaAux);
+                regActividadService.altaRegActividad("Se ha anulado la guía '".concat(guiaAux.getNombre()),
+                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
@@ -544,12 +539,11 @@ public class GuiaBean {
         try {
             guiaBaja.setFechaBaja(new Date());
             guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-            if (guiaService.guardaGuia(guiaBaja) != null) {
-                regActividadService.altaRegActividad(
-                        Constantes.LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
-                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
-            }
+            guiaService.guardaGuia(guiaBaja);
+            regActividadService.altaRegActividad(
+                    Constantes.LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
+                            .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
+                    TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
@@ -594,11 +588,10 @@ public class GuiaBean {
             try {
                 guiaAux.setFechaAnulacion(null);
                 guiaAux.setUsernameAnulacion(null);
-                if (guiaService.guardaGuia(guiaAux) != null) {
-                    regActividadService.altaRegActividad(
-                            Constantes.LAGUIA.concat(guiaAux.getNombre().concat("' ha sido activada")),
-                            TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
-                }
+                guiaService.guardaGuia(guiaAux);
+                regActividadService.altaRegActividad(
+                        Constantes.LAGUIA.concat(guiaAux.getNombre().concat("' ha sido activada")),
+                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
                 
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
