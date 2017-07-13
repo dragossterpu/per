@@ -74,19 +74,19 @@ public class GuiaPersonalizadaBeanTest {
      * Generador de documentos Word.
      */
     @Mock
-    private transient WordGenerator wordGenerator;
+    private WordGenerator wordGenerator;
     
     /**
      * Servicio de registro de actividad.
      */
     @Mock
-    private transient IRegistroActividadService regActividadService;
+    private IRegistroActividadService regActividadService;
     
     /**
      * Servicio de guías personalizadas.
      */
     @Mock
-    private transient IGuiaPersonalizadaService guiaPersonalizadaService;
+    private IGuiaPersonalizadaService guiaPersonalizadaService;
     
     /**
      * Bean de Guía personalizada.
