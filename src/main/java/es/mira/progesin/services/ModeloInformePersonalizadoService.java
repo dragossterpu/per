@@ -15,10 +15,12 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
@@ -53,6 +55,12 @@ public class ModeloInformePersonalizadoService implements IModeloInformePersonal
      */
     @Autowired
     private IModeloInformePersonalizadoRepository informePersonalizadoRepositoy;
+    
+    /**
+     * Servicio de informes.
+     */
+    @Autowired
+    private IInformeService informeService;
     
     /**
      * Servicio del registro de actividad.
@@ -181,4 +189,34 @@ public class ModeloInformePersonalizadoService implements IModeloInformePersonal
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     }
     
+    /**
+     * Elimina o anula un modelo personalizado de informe ya usado.
+     * 
+     * @param modeloPersonalizado modelo seleccionado
+     * @return modelo sincronizado
+     */
+    @Override
+    public ModeloInformePersonalizado eliminarModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado) {
+        ModeloInformePersonalizado modeloPersonalizadoActualizado = null;
+        try {
+            if (informeService.existsByModeloPersonalizado(modeloPersonalizado)) {
+                String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+                modeloPersonalizado.setFechaBaja(new Date());
+                modeloPersonalizado.setUsernameBaja(usuarioActual);
+                modeloPersonalizadoActualizado = informePersonalizadoRepositoy.save(modeloPersonalizado);
+                String descripcion = "Se ha anulado el modelo de informe personalizado: "
+                        + modeloPersonalizado.getNombre();
+                // Guardamos la actividad en bbdd
+                registroActivadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.INFORMES.getDescripcion());
+            } else {
+                informePersonalizadoRepositoy.delete(modeloPersonalizado.getId());
+                // devolvemos el mismo objeto para diferenciarlo de null en caso de excepción
+                modeloPersonalizadoActualizado = modeloPersonalizado;
+            }
+        } catch (DataAccessException e) {
+            registroActivadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
+        return modeloPersonalizadoActualizado;
+    }
 }

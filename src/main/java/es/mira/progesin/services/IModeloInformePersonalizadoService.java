@@ -58,4 +58,12 @@ public interface IModeloInformePersonalizadoService {
      * @return devuelve el número de registros de la consulta criteria.
      */
     int getCountInformePersonalizadoCriteria(InformePersonalizadoBusqueda informePersonalizadoBusqueda);
+    
+    /**
+     * Elimina o anula un modelo personalizado de informe ya usado.
+     * 
+     * @param modeloPersonalizado modelo seleccionado
+     * @return modelo sincronizado
+     */
+    ModeloInformePersonalizado eliminarModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado);
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.web.beans.informes.InformeBusqueda;
 
@@ -70,5 +71,13 @@ public interface IInformeService {
      * @return devuelve el número de registros de la consulta criteria.
      */
     int getCountInformeCriteria(InformeBusqueda informeBusqueda);
+    
+    /**
+     * Comprobar si hay algún informe basado en éste modelo personalizado.
+     * 
+     * @param modeloPersonalizado modelo de informe personalizado
+     * @return verdadero o falso
+     */
+    boolean existsByModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado);
     
 }

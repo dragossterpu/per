@@ -22,6 +22,7 @@ import es.mira.progesin.lazydata.LazyModelInformePersonalizado;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.IModeloInformeService;
@@ -185,6 +186,22 @@ public class ModeloInformePersonalizadoBean implements Serializable {
                     "Se ha producido un error al guardar el informe");
         }
         
+    }
+    
+    /**
+     * Eliminación de un modelo personalizado de informe. Se hace eliminación física si no ha sido usado sino sólo
+     * lógica.
+     * 
+     * @param modeloPersonalizado modelo personalizado a eliminar
+     */
+    public void eliminarModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado) {
+        if (informePersonalizadoService.eliminarModeloPersonalizado(modeloPersonalizado) != null) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Informe personalizado",
+                    "Se ha eliminado o anulado con éxito");
+        } else {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
+        }
     }
     
     /**

@@ -197,7 +197,7 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Busca las solicitudes de documentación previa según los filtros introducidos en el formulario de búsqueda.
+     * Busca los informes según los filtros introducidos en el formulario de búsqueda.
      * 
      * 
      */

@@ -186,7 +186,7 @@ insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE
 insert into DOCUMENTACION_PREVIA (ID,DESCRIPCION,EXTENSIONES,ID_SOLICITUD,NOMBRE) values (seq_documentacion_previa.nextval,'Memoria Anual de 2015','PDF',1,'MA');
 
 
-insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (seq_informepersonal.nextval, 'Personalizado GC', 1, trunc(sysdate), 'system');
+insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (seq_informepersonal.nextval, 'Estándar (Guardia Civil)', 1, trunc(sysdate), 'system');
 
 insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 1);
 insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 2);
@@ -249,7 +249,7 @@ insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_i
 insert into INFORMES(ID, INSPECCION_ID, INFORME_PERSONAL_ID, FECHA_ALTA, USERNAME_ALTA) values (seq_informe.nextval, 21, seq_informepersonal.currval, trunc(sysdate), 'system');
 
 
-insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (seq_informepersonal.nextval, 'Personalizado PN', 2, trunc(sysdate), 'system');
+insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (seq_informepersonal.nextval, 'Estándar (Cuerpo Nacional de Policía)', 2, trunc(sysdate), 'system');
 
 insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 58);
 insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (seq_informepersonal.currval, 59);

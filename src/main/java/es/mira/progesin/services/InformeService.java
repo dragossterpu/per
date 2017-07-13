@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
 import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.persistence.repositories.IInformeRepository;
@@ -264,6 +265,17 @@ public class InformeService implements IInformeService {
         } else {
             criteria.add(Restrictions.isNull(Constantes.FECHABAJA));
         }
+    }
+    
+    /**
+     * Comprobar si hay algún informe basado en éste modelo personalizado.
+     * 
+     * @param modeloPersonalizado modelo de informe personalizado
+     * @return verdadero o falso
+     */
+    @Override
+    public boolean existsByModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado) {
+        return informeRepository.existsByModeloPersonalizado(modeloPersonalizado);
     }
     
 }
