@@ -373,4 +373,18 @@ public class GuiaPersonalizadaBeanTest {
         
     }
     
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GuiaPersonalizadaBean#activa(es.mira.progesin.persistence.entities.GuiaPersonalizada)}.
+     */
+    @Test
+    public final void testActivaGuiaNull() {
+        GuiaPersonalizada guia = new GuiaPersonalizada();
+        guia.setId(1L);
+        when(guiaPersonalizadaService.findOne(guia.getId())).thenReturn(null);
+        guiaPersonalizadaBean.activa(guia);
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
+                any(String.class));
+    }
+    
 }
