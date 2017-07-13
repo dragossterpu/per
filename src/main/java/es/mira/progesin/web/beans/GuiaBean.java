@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,12 @@ import lombok.Setter;
 @Getter
 @Controller("guiaBean")
 @Scope("session")
-public class GuiaBean {
+public class GuiaBean implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Guía.
      */
@@ -91,7 +97,7 @@ public class GuiaBean {
     /**
      * Fichero que contendrá la versión descargable de la guía.
      */
-    private StreamedContent file;
+    private transient StreamedContent file;
     
     /**
      * Discriminador para diferenciar si se está dando de alta una guía.
@@ -113,37 +119,37 @@ public class GuiaBean {
      * Generador de documentos word.
      */
     @Autowired
-    private WordGenerator wordGenerator;
+    private transient WordGenerator wordGenerator;
     
     /**
      * Servicio de guías.
      */
     @Autowired
-    private IGuiaService guiaService;
+    private transient IGuiaService guiaService;
     
     /**
      * Servicio de registro de actividad.
      */
     @Autowired
-    private IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Servicio de guiías personalizadas.
      */
     @Autowired
-    private IGuiaPersonalizadaService guiaPersonalizadaService;
+    private transient IGuiaPersonalizadaService guiaPersonalizadaService;
     
     /**
      * Servicio de inspecciones.
      */
     @Autowired
-    private IInspeccionesService inspeccionesService;
+    private transient IInspeccionesService inspeccionesService;
     
     /**
      * Servicio de tipos de inspección.
      */
     @Autowired
-    private ITipoInspeccionService tipoInspeccionService;
+    private transient ITipoInspeccionService tipoInspeccionService;
     
     /**
      * Literal usado para mostrar mensaje de error.
