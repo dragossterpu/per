@@ -1,0 +1,68 @@
+<ui:composition template="../layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <h:form id="informe">
+            <div class="bloqueVistaTitulo">
+                <h3>Crear informe</h3>
+            </div>
+            
+            <div class="aclaraciones">Compruebe las áreas y subáreas del modelo personalizado seleccionado y elija la inspección de la que desea generar el informe.</div>
+          
+            <div class="bloqueFormulario">
+                <div class="columnaIzdaFormulario">
+		            <div class="tituloCuestionario">
+		                <h:outputText value="Modelo: #{informeBean.modeloInformePersonalizado.nombre}" />
+		            </div>
+					<p:accordionPanel  value="#{informeBean.listaAreas}" var="area" multiple="true" activeIndex="-1">
+					    <p:tab title="#{area.descripcion}">
+					        <ui:repeat value="#{informeBean.mapaAreasSubareas[area]}" var="subarea">
+					            <div class="prevPregCuest">
+					                <span class="fa fa-check-square-o" style="float: left; margin-right: 5px;" />
+					                <h:outputText value="#{subarea.descripcion}" />
+					            </div>
+					        </ui:repeat>
+					    </p:tab>
+					</p:accordionPanel>
+				</div>
+	                            
+                <div class="columnaDchaFormulario">
+                    <div class="tituloCuestionario">
+		                <h:outputText value="Inspección" />
+		            </div>
+	                <h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
+	                <p:autoComplete id="infoInspeccion" value="#{inspeccion}" completeMethod="#{informeBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
+	                    <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
+	                </p:autoComplete>
+	                
+	                <h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
+	                <p:inputText id="tipoInspeccion" value="#{inspeccion.tipoInspeccion.descripcion}" disabled="true" />
+	
+	                <h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
+	                <p:inputText id="ambitoInspeccion" value="#{inspeccion.ambito.descripcion}" disabled="true" />
+	
+	                <h:outputLabel for="cuatrimestreInspeccion" value="Cuatrimestre inspección:" />
+	                <p:inputText id="cuatrimestreInspeccion" value="#{inspeccion.cuatrimestre.descripcion}" disabled="true" />
+	
+	                <h:outputLabel for="anioInspeccion" value="Año inspección:" />
+	                <p:inputText id="anioInspeccion" value="#{inspeccion.anio}" disabled="true" />
+	                <p:messages for="infoInspeccion" autoUpdate="true" closable="true" />
+                </div>
+            </div>
+                
+            <div class="botonesFormulario">
+                <p:commandButton value="Crear informe" action="#{informeBean.crearInforme(inspeccion)}" icon="fa fa-fw fa-save" />
+                <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informesPersonalizados" />
+            </div>
+   
+            <p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true" />
+                
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:button value="Cerrar" outcome="/informes/informes" />
+                </div>
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

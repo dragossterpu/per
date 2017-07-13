@@ -65,6 +65,7 @@
             <div class="botonesFormulario">
                 <p:commandButton value="Guardar borrador" action="#{informeBean.guardarInforme}" icon="fa fa-fw fa-save" />
                 <p:commandButton value="Guardar y finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-fw fa-check" />
+                <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />

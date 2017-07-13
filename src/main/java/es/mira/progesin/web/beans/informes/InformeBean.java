@@ -20,18 +20,23 @@ import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInforme;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IInformeService;
+import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.RegistroActividadService;
@@ -118,7 +123,7 @@ public class InformeBean implements Serializable {
     private transient IInformeService informeService;
     
     /**
-     * Servicio de modelos de informe.
+     * Servicio de modelos personalizados de informe.
      */
     @Autowired
     private transient IModeloInformePersonalizadoService modeloInformePersonalizadoService;
@@ -136,10 +141,16 @@ public class InformeBean implements Serializable {
     private transient HtmlDocxGenerator htmlDocxGenerator;
     
     /**
-     * Servicio de modelos de informe.
+     * Servicio de tipos de inspección.
      */
     @Autowired
     private transient ITipoInspeccionService tipoInspeccionService;
+    
+    /**
+     * Servicio de inspecciones.
+     */
+    @Autowired
+    private transient IInspeccionesService inspeccionService;
     
     /**
      * Servicio del registro de actividad.
@@ -193,6 +204,21 @@ public class InformeBean implements Serializable {
     public void buscarInforme() {
         model.setBusqueda(informeBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
+    }
+    
+    /**
+     * Cargar formulario para crear un informe a partir de un modelo personalizado y eligiendo la inspección a la que
+     * pertenece.
+     * 
+     * @param idModeloPersonalizado modelo a partir del que se que crea el informe
+     * @return ruta de la vista
+     */
+    public String getFormCrearInforme(Long idModeloPersonalizado) {
+        setInforme(new Informe());
+        setModeloInformePersonalizado(
+                modeloInformePersonalizadoService.findModeloPersonalizadoCompleto(idModeloPersonalizado));
+        generarMapaAreasSubareas();
+        return "/informes/crearInforme?faces-redirect=true";
     }
     
     /**
@@ -266,6 +292,26 @@ public class InformeBean implements Serializable {
     }
     
     /**
+     * Crear el informe de una inspección a partir de un modelo personalizado.
+     * 
+     * @param inspeccion elegida por el usuario en el formulario
+     */
+    public void crearInforme(Inspeccion inspeccion) {
+        try {
+            Informe nuevoInforme = Informe.builder().modeloPersonalizado(modeloInformePersonalizado)
+                    .inspeccion(inspeccion).build();
+            informeService.save(nuevoInforme);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El informe ha sido creado con éxito.");
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al crear el informe");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
+    }
+    
+    /**
      * Guarda el informe actual.
      */
     public void guardarInforme() {
@@ -326,11 +372,11 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Crea un archivo PDF o DOCX con los datos del informe.
+     * Exportar un archivo PDF o DOCX con los datos del informe.
      * 
      * @param tipoArchivo formato al que se exporta el informe
      */
-    public void crearInforme(String tipoArchivo) {
+    public void exportarInforme(String tipoArchivo) {
         try {
             String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
                     informe.getInspeccion().getAnio());
@@ -355,6 +401,26 @@ public class InformeBean implements Serializable {
                     "Se ha producido un error en la generación del " + tipoArchivo);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
+    }
+    
+    /**
+     * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasados como parámetro. Se
+     * usa en el formulario de envío para el autocompletado.
+     * 
+     * @param infoInspeccion Número de inspección que teclea el usuario en el formulario o nombre de la unidad de la
+     * inspección
+     * @return lista de inspecciones que contienen algún caracter coincidente con el número introducido
+     */
+    public List<Inspeccion> autocompletarInspeccion(String infoInspeccion) {
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Inspeccion> resultadosBusqueda;
+        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
+            resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
+                    usuarioActual.getUsername());
+        } else {
+            resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
+        }
+        return resultadosBusqueda;
     }
     
     /**
