@@ -347,7 +347,8 @@ public class GuiaBean implements Serializable {
         if (guia.getNombre() == null || guia.getNombre().isEmpty()) {
             mensajeError = mensajeError.concat("\nEl nombre no puede estar en blanco");
             correcto = false;
-        } else if (listaPasos == null || listaPasos.isEmpty()) {
+        }
+        if (listaPasos == null || listaPasos.isEmpty()) {
             mensajeError = mensajeError.concat("\nSe debe incluir al menos un paso en la guía");
             correcto = false;
         }
@@ -483,8 +484,8 @@ public class GuiaBean implements Serializable {
                 personalizada.setPasosElegidos(listaPasosSeleccionados);
                 personalizada.setInspeccion(listaInspecciones);
                 guiaPersonalizadaService.save(personalizada);
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Guía",
-                        "Se ha guardado su guía personalizada con éxito");
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
+                        SeccionesEnum.GUIAS.getDescripcion(), "Se ha guardado su guía personalizada con éxito");
                 
                 listaInspecciones = new ArrayList<>();
             } else {
