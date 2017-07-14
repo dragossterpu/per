@@ -230,7 +230,7 @@ public class GuiaBean implements Serializable {
         String redireccion = null;
         if (guiaAux != null) {
             alta = false;
-            this.guia = guide;
+            this.guia = guiaAux;
             listaPasosGrabar = guiaService.listaPasos(guiaAux);
             listaPasos = guiaService.listaPasosNoNull(guiaAux);
             redireccion = "/guias/editarGuia?faces-redirect=true";
@@ -541,19 +541,10 @@ public class GuiaBean implements Serializable {
      * 
      * @param guiaBaja Guía que se desea dar de baja
      */
-    public void bajaLogica(Guia guiaBaja) {
-        try {
-            guiaBaja.setFechaBaja(new Date());
-            guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-            guiaService.guardaGuia(guiaBaja);
-            regActividadService.altaRegActividad(
-                    Constantes.LAGUIA.concat(guiaBaja.getNombre().concat("' ha sido eliminada por el usuario ")
-                            .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
-                    TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
-            
-        } catch (DataAccessException e) {
-            regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
-        }
+    private void bajaLogica(Guia guiaBaja) {
+        guiaBaja.setFechaBaja(new Date());
+        guiaBaja.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+        guiaService.guardaGuia(guiaBaja);
     }
     
     /**
@@ -571,12 +562,11 @@ public class GuiaBean implements Serializable {
                 bajaLogica(guiaEliminar);
             } else {
                 guiaService.eliminar(guiaEliminar);
-                regActividadService.altaRegActividad(
-                        Constantes.LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
-                                .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
             }
-            
+            regActividadService.altaRegActividad(
+                    Constantes.LAGUIA.concat(guiaEliminar.getNombre().concat("' ha sido eliminada por el usuario ")
+                            .concat(SecurityContextHolder.getContext().getAuthentication().getName())),
+                    TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
         }
