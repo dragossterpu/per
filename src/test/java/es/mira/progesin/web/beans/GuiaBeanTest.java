@@ -259,6 +259,23 @@ public class GuiaBeanTest {
     }
     
     /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.GuiaBean#editaGuia(es.mira.progesin.persistence.entities.Guia)}.
+     */
+    @Test
+    public final void testEditaGuiaNoExiste() {
+        Guia guia = new Guia();
+        guia.setId(1L);
+        when(guiaService.findOne(guia.getId())).thenReturn(null);
+        
+        String redireccion = guiaBean.editaGuia(guia);
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
+                any(String.class));
+        assertThat(redireccion).isNull();
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.GuiaBean#aniadePaso(java.lang.String)}.
      */
     @Test
@@ -419,17 +436,19 @@ public class GuiaBeanTest {
         when(wordGenerator.crearDocumentoGuia(guia)).thenThrow(ProgesinException.class);
         guiaBean.crearDocumentoWordGuia(guia);
         verify(wordGenerator, times(1)).crearDocumentoGuia(guia);
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
+                any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(TipoRegistroEnum.ERROR.name()),
                 any(ProgesinException.class));
-        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
-                any(String.class));
+        
     }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.GuiaBean#guardaGuia()}.
      */
     @Test
-    public final void testGuardaGuia() {
+    public final void testGuardaGuiaAlta() {
         Guia guia = new Guia();
         guia.setId(2L);
         guia.setNombre(NOMBREGUIA);
@@ -455,10 +474,49 @@ public class GuiaBeanTest {
         guiaBean.guardaGuia();
         verify(guiaService, times(1)).guardaGuia(guia);
         assertThat(guiaBean.getListaPasosGrabar()).isEqualTo(guiaBean.getGuia().getPasos());
-        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
-                eq(TipoRegistroEnum.MODIFICACION.name()), any(String.class));
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq(TipoRegistroEnum.ALTA.name()),
+                any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.GUIAS.getDescripcion()));
+        
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.GuiaBean#guardaGuia()}.
+     */
+    @Test
+    public final void testGuardaGuiaModificacion() {
+        Guia guia = new Guia();
+        guia.setId(2L);
+        guia.setNombre(NOMBREGUIA);
+        guiaBean.setGuia(guia);
+        List<GuiaPasos> pasos = new ArrayList<>();
+        GuiaPasos paso1 = new GuiaPasos();
+        paso1.setId(1L);
+        paso1.setPaso("paso1");
+        pasos.add(paso1);
+        guiaBean.setListaPasos(pasos);
+        List<GuiaPasos> pasosGrabar = new ArrayList<>();
+        GuiaPasos pasoGrabar1 = new GuiaPasos();
+        pasoGrabar1.setId(1L);
+        pasoGrabar1.setPaso("pasoGrabar1");
+        GuiaPasos pasoGrabar2 = new GuiaPasos();
+        pasoGrabar2.setId(2L);
+        pasoGrabar2.setPaso("pasoGrabar2");
+        pasosGrabar.add(pasoGrabar1);
+        pasosGrabar.add(pasoGrabar2);
+        guiaBean.setListaPasosGrabar(pasosGrabar);
+        when(guiaService.guardaGuia(guiaBean.getGuia())).thenReturn(guiaBean.getGuia());
+        guiaBean.setAlta(false);
+        guiaBean.guardaGuia();
+        verify(guiaService, times(1)).guardaGuia(guia);
+        assertThat(guiaBean.getListaPasosGrabar()).isEqualTo(guiaBean.getGuia().getPasos());
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
+                eq(TipoRegistroEnum.MODIFICACION.name()), any(String.class));
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.GUIAS.getDescripcion()));
         
     }
     
@@ -472,6 +530,7 @@ public class GuiaBeanTest {
         guia.setNombre("");
         guiaBean.setGuia(guia);
         guiaBean.guardaGuia();
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class), eq(null));
         
@@ -488,8 +547,47 @@ public class GuiaBeanTest {
         guiaBean.setGuia(guia);
         guiaBean.setListaPasos(new ArrayList<>());
         guiaBean.guardaGuia();
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class), eq(null));
+        
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.GuiaBean#guardaGuia()}.
+     */
+    @Test
+    public final void testGuardaGuiaAltaException() {
+        Guia guia = new Guia();
+        guia.setId(2L);
+        guia.setNombre(NOMBREGUIA);
+        guiaBean.setGuia(guia);
+        List<GuiaPasos> pasos = new ArrayList<>();
+        GuiaPasos paso1 = new GuiaPasos();
+        paso1.setId(1L);
+        paso1.setPaso("paso1");
+        pasos.add(paso1);
+        guiaBean.setListaPasos(pasos);
+        List<GuiaPasos> pasosGrabar = new ArrayList<>();
+        GuiaPasos pasoGrabar1 = new GuiaPasos();
+        pasoGrabar1.setId(1L);
+        pasoGrabar1.setPaso("pasoGrabar1");
+        GuiaPasos pasoGrabar2 = new GuiaPasos();
+        pasoGrabar2.setId(2L);
+        pasoGrabar2.setPaso("pasoGrabar2");
+        pasosGrabar.add(pasoGrabar1);
+        pasosGrabar.add(pasoGrabar2);
+        guiaBean.setListaPasosGrabar(pasosGrabar);
+        when(guiaService.guardaGuia(guiaBean.getGuia())).thenThrow(TransientDataAccessResourceException.class);
+        guiaBean.setAlta(true);
+        guiaBean.guardaGuia();
+        verify(guiaService, times(1)).guardaGuia(guia);
+        assertThat(guiaBean.getListaPasosGrabar()).isEqualTo(guiaBean.getGuia().getPasos());
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
+                any(String.class));
+        verify(regActividadService, times(1)).altaRegActividadError(eq(TipoRegistroEnum.ERROR.name()),
+                any(TransientDataAccessResourceException.class));
         
     }
     
@@ -569,6 +667,7 @@ public class GuiaBeanTest {
         
         guiaBean.guardarPersonalizada(nombreGuia);
         verify(guiaPersonalizadaService, times(1)).save(any(GuiaPersonalizada.class));
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.GUIAS.getDescripcion()), any(String.class));
         assertThat(guiaBean.getListaInspecciones()).isNotNull();
@@ -586,7 +685,7 @@ public class GuiaBeanTest {
         guiaBean.setListaPasosSeleccionados(new ArrayList<>());
         
         guiaBean.guardarPersonalizada(nombreGuia);
-        
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
     }
@@ -615,6 +714,7 @@ public class GuiaBeanTest {
         
         guiaBean.guardarPersonalizada(nombreGuia);
         verify(guiaPersonalizadaService, times(1)).save(any(GuiaPersonalizada.class));
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GUIAS.getDescripcion()),
@@ -658,7 +758,7 @@ public class GuiaBeanTest {
         guia.setNombre(NOMBREGUIA);
         when(guiaService.findOne(guia.getId())).thenReturn(null);
         guiaBean.anular(guia);
-        
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         
@@ -764,6 +864,7 @@ public class GuiaBeanTest {
         when(guiaService.findOne(guia.getId())).thenReturn(null);
         
         guiaBean.activa(guia);
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }
