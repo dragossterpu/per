@@ -347,8 +347,7 @@ public class GuiaBean implements Serializable {
         if (guia.getNombre() == null || guia.getNombre().isEmpty()) {
             mensajeError = mensajeError.concat("\nEl nombre no puede estar en blanco");
             correcto = false;
-        }
-        if (listaPasos == null || listaPasos.isEmpty()) {
+        } else if (listaPasos == null || listaPasos.isEmpty()) {
             mensajeError = mensajeError.concat("\nSe debe incluir al menos un paso en la guía");
             correcto = false;
         }
@@ -372,14 +371,14 @@ public class GuiaBean implements Serializable {
         try {
             guiaService.guardaGuia(guia);
             if (alta) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, TipoRegistroEnum.ALTA.name(),
                         "La guía se ha creado con éxito ");
                 regActividadService.altaRegActividad(
                         "La guía con nombre '".concat(guia.getNombre().concat("' ha sido creada")),
                         TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
             } else {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificacion",
-                        "La guía ha sido modificada con éxito ");
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
+                        TipoRegistroEnum.MODIFICACION.name(), "La guía ha sido modificada con éxito ");
                 regActividadService.altaRegActividad(
                         Constantes.LAGUIA.concat(guia.getNombre().concat("' ha sido modificada")),
                         TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
