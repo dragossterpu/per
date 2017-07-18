@@ -25,9 +25,9 @@ import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
-import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
+import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -139,7 +139,7 @@ public class ModificarModeloCuestionarioBean {
      * Repositorio de areas de cuestionario.
      */
     @Autowired
-    private IAreaCuestionarioRepository areaCuestionarioRepository;
+    private IAreaCuestionarioService areaCuestionarioService;
     
     /**
      * Repositorio de preguntas.
@@ -180,9 +180,9 @@ public class ModificarModeloCuestionarioBean {
     public String editarModelo(ModeloCuestionario cuestionario) {
         this.esNuevoModelo = false;
         this.modeloCuestionario = cuestionario;
-        listaAreasCuestionario = areaCuestionarioRepository
+        listaAreasCuestionario = areaCuestionarioService
                 .findDistinctByIdCuestionarioOrderByOrdenAsc(modeloCuestionario.getId());
-        listaAreasCuestionarioVisualizar = areaCuestionarioRepository
+        listaAreasCuestionarioVisualizar = areaCuestionarioService
                 .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloCuestionario.getId());
         // Asigno las preguntas que no tengan fecha de baja a su área respectiva
         listaAreasCuestionarioVisualizar.forEach(area -> area
@@ -264,7 +264,7 @@ public class ModificarModeloCuestionarioBean {
             if (areaSelec.getId() != null) {
                 // Comprobamos si el área está siendo usada en algún
                 // cuestionario personalizado
-                AreasCuestionario areaUsada = areaCuestionarioRepository
+                AreasCuestionario areaUsada = areaCuestionarioService
                         .findAreaExistenteEnCuestionariosPersonalizados(areaSelec.getId());
                 if (areaUsada != null) {
                     // baja lógica

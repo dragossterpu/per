@@ -29,7 +29,7 @@ public class AreaCuestionarioService implements IAreaCuestionarioService {
      * @return Lista de áreas
      */
     @Override
-    public List<AreasCuestionario> findAreasByIdCuestionarioByOrder(Integer idCuestionario) {
+    public List<AreasCuestionario> findDistinctByIdCuestionarioOrderByOrdenAsc(Integer idCuestionario) {
         return areaRepository.findDistinctByIdCuestionarioOrderByOrdenAsc(idCuestionario);
     }
     
@@ -42,6 +42,30 @@ public class AreaCuestionarioService implements IAreaCuestionarioService {
     @Override
     public List<AreasCuestionario> findByIdIn(List<Long> listaIdAreasElegidas) {
         return areaRepository.findByIdIn(listaIdAreasElegidas);
+    }
+    
+    /**
+     * Recupera un listado de áreas a partir de una lista de id recibida como parámetro.
+     * @param idArea del area
+     * 
+     * @return Listado de áreas localizadas
+     */
+    @Override
+    public AreasCuestionario findAreaExistenteEnCuestionariosPersonalizados(Long idArea) {
+        return areaRepository.findAreaExistenteEnCuestionariosPersonalizados(idArea);
+    }
+    
+    /**
+     * Recupera un listado de todas las áreas que no se han dado de baja, ordenadas ascendentemente, de un cuestionario
+     * cuyo id se recibe como parámetro.
+     * 
+     * @param idCuestionario identificador del cuestionario del que se obtendrán las áreas
+     * @return Listado de áreas pertenecientes al cuestionario recibido como parámetro
+     */
+    @Override
+    public List<AreasCuestionario> findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(
+            Integer idCuestionario) {
+        return areaRepository.findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(idCuestionario);
     }
     
 }

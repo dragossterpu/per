@@ -18,7 +18,7 @@ public interface IAreaCuestionarioService {
      * @param idCuestionario Id del cuestionario del que se desea obtener las áreas
      * @return Lista de áreas
      */
-    List<AreasCuestionario> findAreasByIdCuestionarioByOrder(Integer idCuestionario);
+    List<AreasCuestionario> findDistinctByIdCuestionarioOrderByOrdenAsc(Integer idCuestionario);
     
     /**
      * Busca un listado de áreas a partir de una lista de id recibida como parámetro.
@@ -27,5 +27,23 @@ public interface IAreaCuestionarioService {
      * @return Listado de áreas localizadas
      */
     List<AreasCuestionario> findByIdIn(List<Long> listaIdAreasElegidas);
+    
+    /**
+     * Recupera un listado de todas las áreas que no se han dado de baja, ordenadas ascendentemente, de un cuestionario
+     * cuyo id se recibe como parámetro.
+     * 
+     * @param idCuestionario identificador del cuestionario del que se obtendrán las áreas
+     * @return Listado de áreas pertenecientes al cuestionario recibido como parámetro
+     */
+    List<AreasCuestionario> findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(Integer idCuestionario);
+    
+    /**
+     * Busca un área identificada por su id recibido como parámetro en cuestionarios personalizados para verificar si ha
+     * sido empleada en alguno.
+     * 
+     * @param idArea id del área a buscar en cuestionarios personalizados
+     * @return Área encontrada en cuestionarios personalizados
+     */
+    AreasCuestionario findAreaExistenteEnCuestionariosPersonalizados(Long idArea);
     
 }
