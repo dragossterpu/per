@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -26,7 +25,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.primefaces.model.SortOrder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +44,6 @@ import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.ICorreoElectronico;
-import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 
 /**
  * Test del servicio cuestionario enviado.
@@ -206,33 +203,6 @@ public class CuestionarioEnvioServiceTest {
         
         verify(cuestionarioEnvioRepository, times(1))
                 .findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(correo);
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#buscarCuestionarioEnviadoCriteria(int, int, String, SortOrder, CuestionarioEnviadoBusqueda)}
-     * .
-     */
-    @Ignore
-    @Test
-    public void buscarCuestionarioEnviadoCriteria() {
-        /**
-         * ver CriteriaTests
-         * {@link CrietariaTests#buscarCuestionarioEnviadoCriteria(int, int, String, SortOrder, CuestionarioEnviadoBusqueda)}
-         */
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda)}
-     * .
-     */
-    @Ignore
-    @Test
-    public void getCountCuestionarioCriteria() {
-        CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda = mock(CuestionarioEnviadoBusqueda.class);
-        
-        cuestionarioEnvioService.getCountCuestionarioCriteria(cuestionarioEnviadoBusqueda);
     }
     
     /**

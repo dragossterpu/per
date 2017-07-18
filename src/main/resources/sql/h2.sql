@@ -298,35 +298,68 @@ insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, user
 insert into documentos (id, id_fichero, tipo_contenido, nombre, fecha_alta, username_alta, tipo_documento) values (4, 4,'contenido_docx4','documento4.xlsx', to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system', 3);
 
 --Cuestionarios
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01','MATRIZPRUEBA','CAMPO1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02','MATRIZPRUEBA','CAMPO2');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01','MATRIZPRUEBA','FILA1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02','MATRIZPRUEBA','FILA2');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLATEST', 'TABLATEST1');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZTEST', 'MATRIZTEST1');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZTEST', 'MATRIZTEST2');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPRUEBA', 'campo01', 'CAMPO1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TABLAPRUEBA', 'campo02', 'CAMPO2');
 
-Insert into MODELOSCUESTIONARIOS (id,CODIGO,DESCRIPCION) values (1,'MODELO_TEST','MODELO_TEST1');
-Insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (1, 'AREATEST1', 1, 0);
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('TEXTAREA', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('INPUT', '1', '1');
+Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNTOINPUT', '1', '1');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'Sí');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'No');
 
-insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (1, 'PreguntaTest1', 1, 'MATRIZTEST', 0);
-insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (2, 'PreguntaTest2', 1, 'TABLATEST', 1);
-insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (3, 'PreguntaTest3', 1, 'TABLATEST', 2);
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (1,'C1','CUESTIONARIO1');
+
+insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (1, 'AREA1_CUESTIONARIO1', 1, 0);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (1, 'PREGUNTA1_AREA1_CUESTIONARIO1', 1, 'MATRIZPRUEBA', 0);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (2, 'PREGUNTA2_AREA1_CUESTIONARIO1', 1, 'TABLAPRUEBA', 1);
+
+insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (1, 'AREA2_CUESTIONARIO1', 2, 1);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (3, 'PREGUNTA1_AREA2_CUESTIONARIO1', 2, 'TEXTAREA', 0);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (4, 'PREGUNTA2_AREA2_CUESTIONARIO1', 2, 'INPUT', 1);
+
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (2,'C2','CUESTIONARIO2');
+
+insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (2, 'AREA1_CUESTIONARIO2', 3, 0);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (5, 'PREGUNTA1_AREA1_CUESTIONARIO2', 3, 'ADJUNTOINPUT', 0);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (6, 'PREGUNTA2_AREA1_CUESTIONARIO2', 3, 'RADIOSINO', 1);
+
+insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (2, 'AREA2_CUESTIONARIO2', 4, 1);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (7, 'PREGUNTA1_AREA2_CUESTIONARIO2', 4, 'MATRIZPRUEBA', 0);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (8, 'PREGUNTA2_AREA2_CUESTIONARIO2', 4, 'TEXTAREA', 1);
+
+--insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLATEST', 'TABLATEST1');
+--insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZTEST', 'MATRIZTEST1');
+--insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZTEST', 'MATRIZTEST2');
+
+--Insert into MODELOSCUESTIONARIOS (id,CODIGO,DESCRIPCION) values (1,'MODELO_TEST','MODELO_TEST1');
+--Insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (1, 'AREATEST1', 1, 0);
+
+--insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (1, 'PreguntaTest1', 1, 'MATRIZTEST', 0);
+--insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (2, 'PreguntaTest2', 1, 'TABLATEST', 1);
+--insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (3, 'PreguntaTest3', 1, 'TABLATEST', 2);
 
 --Cuestionario personalizado activo
 insert into cuestionario_personalizado (ID, FECHA_BAJA, FECHA_CREACION, NOMBRE_CUESTIONARIO, USERNAME_BAJA, USERNAME_CREACION, ID_MODELO_CUESTIONARIO) VALUES (1, null, to_timestamp('28/04/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO_TEST1', null, 'system', 1);
 
 --Cuestionario personalizado de baja
-insert into cuestionario_personalizado (ID, FECHA_BAJA, FECHA_CREACION, NOMBRE_CUESTIONARIO, USERNAME_BAJA, USERNAME_CREACION, ID_MODELO_CUESTIONARIO) VALUES (2, to_timestamp('21/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('20/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO_TEST2', null, 'system', 1);
+insert into cuestionario_personalizado (ID, FECHA_BAJA, FECHA_CREACION, NOMBRE_CUESTIONARIO, USERNAME_BAJA, USERNAME_CREACION, ID_MODELO_CUESTIONARIO) VALUES (2, to_timestamp('21/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('20/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'),'CUESTIONARIO_TEST2', null, 'system', 2);
 
 --Cuestionario enviado sin respuesta aún
 insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
-(1, 'cargoTest1', 'test1@ezentis.com', null, null, to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, SYSDATE, null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, null, 1, 1);
+(1, 'cargoTest1', 'test1@ezentis.com', null, null, to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, to_timestamp('10/06/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, null, 1, 1);
 
 --Cuestionario enviado y cumplimentado sin revisar
 insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
-(2, 'cargoTest2', 'test2@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, SYSDATE, null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, null, 1, 1);
+(2, 'cargoTest2', 'test2@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, to_timestamp('10/07/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, null, 1, 2);
 
 --Cuestionario enviado y cumplimentado no conforme
 insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
-(3, 'cargoTest3', 'test3@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, SYSDATE, to_timestamp('20/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, 'system', 1, 1);
+(3, 'cargoTest3', 'test3@ezentis.com', null, to_timestamp('15/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('10/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), null, to_timestamp('14/08/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), to_timestamp('20/05/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'MOTIVO_CUESTIONARIO_TEST1', 'pepe', null, 'system', null, 'system', 1, 3);
 
 --Cuestionario enviado y cumplimentado finalizado
 insert into cuestionarios_enviados (ID, CARGO, CORREO, FECHA_ANULACION, FECHA_CUMPLIMENTACION, FECHA_ENVIO, FECHA_FINALIZACION, FECHA_LIMITE_CUESTIONARIO, FECHA_NO_CONFORME, MOTIVO, NOMBRE_USUARIO, USERNAME_ANULACION, USERNAME_ENVIO, USERNAME_FINALIZACION, USERNAME_NO_CONFORME, ID_CUESTIONARIO_PERSONALIZADO, ID_INSPECCION) VALUES 
@@ -387,6 +420,10 @@ insert into guia_personalizada_pasos (id_guia_pers, id_paso_elegido) VALUES (2,7
 
 insert into guia_inspeccion (id_guia, id_inspeccion) values (1, 5);
 insert into guia_inspeccion (id_guia, id_inspeccion) values (2, 6);
+
+--CUESTIONARIOS
+
+
 
 
 

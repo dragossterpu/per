@@ -69,9 +69,7 @@ public class ModeloCuestionarioServiceTest {
     @Test
     public void save() {
         ModeloCuestionario modeloCuestionario = mock(ModeloCuestionario.class);
-        
         modeloCuestionarioService.save(modeloCuestionario);
-        
         verify(modeloCuestionarioRepository, times(1)).save(modeloCuestionario);
     }
     
@@ -81,9 +79,16 @@ public class ModeloCuestionarioServiceTest {
     @Test
     public void findAll() {
         modeloCuestionarioService.findAll();
-        
         verify(modeloCuestionarioRepository, times(1)).findAll();
-        
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.services.ModeloCuestionarioService#findOne(Integer)}.
+     */
+    @Test
+    public void findOne() {
+        modeloCuestionarioService.findOne(2);
+        verify(modeloCuestionarioRepository, times(1)).findOne(2);
     }
     
 }

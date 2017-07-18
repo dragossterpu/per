@@ -30,15 +30,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import es.mira.progesin.persistence.entities.GuiaPersonalizada;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
-import es.mira.progesin.web.beans.GuiaBusqueda;
+import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 /**
- * Test del servicio de guías personalizadas donde se usa criteria de hibernate.
+ * Test del servicio de cuestionarios personalizados donde se usa criteria de hibernate.
  * 
  * @author EZENTIS
  *
@@ -50,10 +50,10 @@ import es.mira.progesin.web.beans.GuiaBusqueda;
 @PowerMockIgnore({ "javax.management.*", "javax.security.*" })
 @DataJpaTest
 @TestPropertySource(locations = "classpath:test.properties")
-public class GuiaPersonalizadaServiceCriteriaTest {
+public class CuestionarioPersonalizadoServiceCriteriaTest {
     
     /**
-     * Constatnte usuario.
+     * Constante usuario.
      */
     private static final String USER = "admin";
     
@@ -87,10 +87,10 @@ public class GuiaPersonalizadaServiceCriteriaTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.GuiaPersonalizadaService#buscarGuiaPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.GuiaBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda)}.
      */
     @Test
-    public final void testBuscarPorCriteriaFechas() {
+    public final void testBuscarCuestionarioPersonalizadoCriteriaFechas() {
         int first = 0;
         int pageSize = 20;
         String sortField = null;
@@ -100,27 +100,27 @@ public class GuiaPersonalizadaServiceCriteriaTest {
         when(authentication.getPrincipal()).thenReturn(user);
         CriteriaService criteriaService = new CriteriaService();
         
-        GuiaPersonalizadaService guiaPersonalizadaService = new GuiaPersonalizadaService(sessionFactory,
-                criteriaService);
+        CuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService(
+                sessionFactory, criteriaService);
         
-        LocalDate localDate = LocalDate.of(2017, 7, 10);
+        LocalDate localDate = LocalDate.of(2017, 4, 28);
         Date fechaDesde = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date fechaHasta = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        GuiaBusqueda busqueda = new GuiaBusqueda();
+        CuestionarioPersonalizadoBusqueda busqueda = new CuestionarioPersonalizadoBusqueda();
         busqueda.setFechaDesde(fechaDesde);
         busqueda.setFechaHasta(fechaHasta);
         
-        List<GuiaPersonalizada> listaGuiasPersonalizadas = guiaPersonalizadaService.buscarGuiaPorCriteria(first,
-                pageSize, sortField, sortOrder, busqueda);
-        assertThat(listaGuiasPersonalizadas).hasSize(2);
+        List<CuestionarioPersonalizado> listaCuestionariosPersonalizados = cuestionarioPersonalizadoService
+                .buscarCuestionarioPersonalizadoCriteria(first, pageSize, sortField, sortOrder, busqueda);
+        assertThat(listaCuestionariosPersonalizados).hasSize(1);
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.GuiaPersonalizadaService#buscarGuiaPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.GuiaBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda)}.
      */
     @Test
-    public final void testBuscarGuiaPorCriteriaUsuarioNombre() {
+    public final void testBuscarCuestionarioPersonalizadoCriteriaModeloUsername() {
         int first = 0;
         int pageSize = 20;
         String sortField = null;
@@ -130,24 +130,26 @@ public class GuiaPersonalizadaServiceCriteriaTest {
         when(authentication.getPrincipal()).thenReturn(user);
         CriteriaService criteriaService = new CriteriaService();
         
-        GuiaPersonalizadaService guiaPersonalizadaService = new GuiaPersonalizadaService(sessionFactory,
-                criteriaService);
+        CuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService(
+                sessionFactory, criteriaService);
         
-        GuiaBusqueda busqueda = new GuiaBusqueda();
-        busqueda.setUsuarioCreacion("enti");
-        busqueda.setNombre("2");
+        ModeloCuestionario modeloCuestionario = new ModeloCuestionario();
+        modeloCuestionario.setId(1);
+        CuestionarioPersonalizadoBusqueda busqueda = new CuestionarioPersonalizadoBusqueda();
+        busqueda.setModeloCuestionarioSeleccionado(modeloCuestionario);
+        busqueda.setUsername("system");
         
-        List<GuiaPersonalizada> listaGuiasPersonalizadas = guiaPersonalizadaService.buscarGuiaPorCriteria(first,
-                pageSize, sortField, sortOrder, busqueda);
-        assertThat(listaGuiasPersonalizadas).hasSize(1);
+        List<CuestionarioPersonalizado> listaCuestionariosPersonalizados = cuestionarioPersonalizadoService
+                .buscarCuestionarioPersonalizadoCriteria(first, pageSize, sortField, sortOrder, busqueda);
+        assertThat(listaCuestionariosPersonalizados).hasSize(1);
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.GuiaPersonalizadaService#buscarGuiaPorCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.GuiaBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda)}.
      */
     @Test
-    public final void testBuscarGuiaPorCriteriaTipoInspeccionEstado() {
+    public final void testBuscarCuestionarioPersonalizadoCriteriaNombreEstado() {
         int first = 0;
         int pageSize = 20;
         String sortField = null;
@@ -157,36 +159,36 @@ public class GuiaPersonalizadaServiceCriteriaTest {
         when(authentication.getPrincipal()).thenReturn(user);
         CriteriaService criteriaService = new CriteriaService();
         
-        GuiaPersonalizadaService guiaPersonalizadaService = new GuiaPersonalizadaService(sessionFactory,
-                criteriaService);
-        TipoInspeccion tipo = new TipoInspeccion();
-        tipo.setCodigo("I.T_PRL");
+        CuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService(
+                sessionFactory, criteriaService);
         
-        GuiaBusqueda busqueda = new GuiaBusqueda();
-        busqueda.setTipoInspeccion(tipo);
-        busqueda.setEstado(EstadoEnum.ACTIVO);
+        ModeloCuestionario modeloCuestionario = new ModeloCuestionario();
+        modeloCuestionario.setId(1);
+        CuestionarioPersonalizadoBusqueda busqueda = new CuestionarioPersonalizadoBusqueda();
+        busqueda.setNombreCuestionario("ST2");
+        busqueda.setEstado(EstadoEnum.INACTIVO);
         
-        List<GuiaPersonalizada> listaGuiasPersonalizadas = guiaPersonalizadaService.buscarGuiaPorCriteria(first,
-                pageSize, sortField, sortOrder, busqueda);
-        assertThat(listaGuiasPersonalizadas).hasSize(2);
+        List<CuestionarioPersonalizado> listaCuestionariosPersonalizados = cuestionarioPersonalizadoService
+                .buscarCuestionarioPersonalizadoCriteria(first, pageSize, sortField, sortOrder, busqueda);
+        assertThat(listaCuestionariosPersonalizados).hasSize(1);
     }
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.GuiaPersonalizadaService#getCountGuiaCriteria(es.mira.progesin.web.beans.GuiaBusqueda)}.
+     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#getCountCuestionarioCriteria(es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda)}.
      */
     @Test
-    public final void testGetCountGuiaCriteria() {
+    public final void testGetCountCuestionarioCriteria() {
         User user = User.builder().username(USER).role(RoleEnum.ROLE_ADMIN).build();
         when(authentication.getPrincipal()).thenReturn(user);
         
         CriteriaService criteriaService = new CriteriaService();
-        GuiaPersonalizadaService guiaPersonalizadaService = new GuiaPersonalizadaService(sessionFactory,
-                criteriaService);
-        GuiaBusqueda busqueda = new GuiaBusqueda();
+        CuestionarioPersonalizadoService cuestionarioPersonalizadoService = new CuestionarioPersonalizadoService(
+                sessionFactory, criteriaService);
+        CuestionarioPersonalizadoBusqueda busqueda = new CuestionarioPersonalizadoBusqueda();
         
-        int numRegistros = guiaPersonalizadaService.getCountGuiaCriteria(busqueda);
-        assertThat(numRegistros).isEqualTo(2);
+        int numRegistros = cuestionarioPersonalizadoService.getCountCuestionarioCriteria(busqueda);
+        assertThat(numRegistros).isEqualTo(1);
     }
     
 }

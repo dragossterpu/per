@@ -92,7 +92,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * 
      */
     public void buscarCuestionario() {
-        
         model.setBusqueda(cuestionarioBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaCreacion", SortOrder.DESCENDING, null);
     }

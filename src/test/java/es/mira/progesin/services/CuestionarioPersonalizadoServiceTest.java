@@ -9,17 +9,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
-import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 /**
  * 
@@ -74,7 +71,6 @@ public class CuestionarioPersonalizadoServiceTest {
         CuestionarioPersonalizado cuestionario = mock(CuestionarioPersonalizado.class);
         
         cuestionarioPersonalizadoService.delete(cuestionario);
-        
         verify(cuestionarioPersonalizadoRepository, times(1)).delete(cuestionario);
     }
     
@@ -87,40 +83,6 @@ public class CuestionarioPersonalizadoServiceTest {
         CuestionarioPersonalizado cuestionario = mock(CuestionarioPersonalizado.class);
         
         cuestionarioPersonalizadoService.save(cuestionario);
-        
         verify(cuestionarioPersonalizadoRepository, times(1)).save(cuestionario);
     }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#buscarCuestionarioPersonalizadoCriteria(int, int, String, SortOrder, CuestionarioPersonalizadoBusqueda)}
-     * .
-     */
-    @Ignore
-    @Test
-    public void buscarCuestionarioPersonalizadoCriteria() {
-        // int first = 0;
-        // int pageSize = 0;
-        // String sortField = null;
-        // SortOrder sortOrder = mock(SortOrder.class);
-        // CuestionarioPersonalizadoBusqueda cuestionarioBusqueda = mock(CuestionarioPersonalizadoBusqueda.class);
-        //
-        // cuestionarioPersonalizadoService.buscarCuestionarioPersonalizadoCriteria(first, pageSize, sortField,
-        // sortOrder,
-        // cuestionarioBusqueda);
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioPersonalizadoService#getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda)}
-     * .
-     */
-    @Ignore
-    @Test
-    public void getCountCuestionarioCriteria() {
-        // CuestionarioPersonalizadoBusqueda cuestionarioBusqueda = mock(CuestionarioPersonalizadoBusqueda.class);
-        //
-        // cuestionarioPersonalizadoService.getCountCuestionarioCriteria(cuestionarioBusqueda);
-    }
-    
 }

@@ -35,12 +35,14 @@ import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * Servicio de cuestionarios enviados.
  * 
  * @author EZENTIS
  */
+@NoArgsConstructor
 @Service
 public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     
@@ -103,6 +105,17 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServic Servicio Criteria
+     */
+    public CuestionarioEnvioService(SessionFactory sessionFact, CriteriaService criteriaServic) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServic;
+    }
     
     /**
      * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo

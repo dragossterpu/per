@@ -20,12 +20,14 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * Servicio de modelos de cuestionario personalizados.
  * 
  * @author EZENTIS
  */
+@NoArgsConstructor
 @Service
 public class CuestionarioPersonalizadoService implements ICuestionarioPersonalizadoService {
     
@@ -48,6 +50,17 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public CuestionarioPersonalizadoService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
     
     /**
      * Elimina un cuestionario personalizado a partir de su objeto.
