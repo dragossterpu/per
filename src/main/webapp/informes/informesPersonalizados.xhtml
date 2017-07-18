@@ -69,26 +69,26 @@
 	                   </p:columnToggler>
 	               </f:facet>
 	                 
-	               <p:column headerText="Nombre" sortBy="#{informePersonalizado.nombre}" width="130" visible="#{inspeccionBean.list[1]}" exportable="#{informePersonalizadoBean.list[1]}">
+	               <p:column headerText="Nombre" sortBy="#{informePersonalizado.nombre}" width="130" visible="#{inspeccionBean.list[0]}" exportable="#{informePersonalizadoBean.list[0]}">
 	                   <h:outputText value="#{informePersonalizado.nombre}" />
 	               </p:column>
-	               <p:column headerText="Modelo" sortBy="#{informePersonalizado.modeloInforme.id}" width="130" visible="#{inspeccionBean.list[2]}" exportable="#{informePersonalizadoBean.list[2]}">
+	               <p:column headerText="Modelo" sortBy="#{informePersonalizado.modeloInforme.id}" width="130" visible="#{inspeccionBean.list[1]}" exportable="#{informePersonalizadoBean.list[1]}">
 	                   <h:outputText value="#{informePersonalizado.modeloInforme.nombre}" />
 	               </p:column>
-	               <p:column headerText="Alta" sortBy="#{informePersonalizado.fechaAlta}" width="70" visible="#{inspeccionBean.list[3]}" exportable="#{informePersonalizadoBean.list[3]}">
+	               <p:column headerText="Alta" sortBy="#{informePersonalizado.fechaAlta}" width="70" visible="#{inspeccionBean.list[2]}" exportable="#{informePersonalizadoBean.list[2]}">
 	                   <h:outputText value="#{informePersonalizado.fechaAlta}">
 	                       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid"/>
 	                   </h:outputText>
 	               </p:column>
-	               <p:column headerText="Usuario alta" sortBy="#{informePersonalizado.usernameAlta}" width="90" visible="#{inspeccionBean.list[4]}" exportable="#{informePersonalizadoBean.list[4]}">
+	               <p:column headerText="Usuario alta" sortBy="#{informePersonalizado.usernameAlta}" width="90" visible="#{inspeccionBean.list[3]}" exportable="#{informePersonalizadoBean.list[3]}">
 	                   <h:outputText value="#{informePersonalizado.usernameAlta}" />
 	               </p:column>
-	               <p:column headerText="Baja" sortBy="#{informePersonalizado.fechaBaja}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{informePersonalizadoBean.list[5]}">
+	               <p:column headerText="Baja" sortBy="#{informePersonalizado.fechaBaja}" width="70" visible="#{inspeccionBean.list[4]}" exportable="#{informePersonalizadoBean.list[4]}">
 	                   <h:outputText value="#{informePersonalizado.fechaBaja}">
 	                       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
 	                   </h:outputText>
 	               </p:column>
-	               <p:column headerText="Usuario baja" sortBy="#{informePersonalizado.usernameBaja}" width="90" visible="#{inspeccionBean.list[6]}" exportable="#{informePersonalizadoBean.list[6]}">
+	               <p:column headerText="Usuario baja" sortBy="#{informePersonalizado.usernameBaja}" width="90" visible="#{inspeccionBean.list[5]}" exportable="#{informePersonalizadoBean.list[5]}">
 	                   <h:outputText value="#{informePersonalizado.usernameBaja}"/>
 	               </p:column>
 	               <p:column styleClass="botonTabla" exportable="false" toggleable="false">

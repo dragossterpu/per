@@ -39,7 +39,11 @@
 		                    <ol class="titulos">
 			                    <ui:repeat value="#{informeBean.mapaAreasSubareas[area]}" var="subarea">
 			                        <li><h4><h:outputText value="#{subarea.descripcion}"/></h4></li>
-			                        <h:outputText value="#{informeBean.mapaRespuestas[subarea]}" escape="false"/>
+			                        <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
+                                    <h:outputFormat rendered="#{not empty informeBean.mapaRespuestas[subarea][1]}">
+                                        <li><h5><h:outputText value="Conclusiones y propuestas."/></h5></li>
+                                        <h:outputText value="#{informeBean.mapaRespuestas[subarea][1]}" escape="false"/>
+                                    </h:outputFormat>
 			                    </ui:repeat>
 		                    </ol>
 	                    </li>

@@ -88,22 +88,23 @@ public class InformeService implements IInformeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas) {
+    public Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas) {
         Informe informeActualizado = findConRespuestas(informe.getId());
         guardarRespuestas(mapaRespuestas, informeActualizado);
         return informeRepository.save(informeActualizado);
     }
     
     /**
-     * @param mapaRespuestas
-     * @param informeActualizado
+     * @param mapaRespuestas respuestas
+     * @param informeActualizado informe actualizado
      */
-    private void guardarRespuestas(Map<SubareaInforme, String> mapaRespuestas, Informe informeActualizado) {
+    private void guardarRespuestas(Map<SubareaInforme, String[]> mapaRespuestas, Informe informeActualizado) {
         final List<RespuestaInforme> respuestas = new ArrayList<>();
         mapaRespuestas.forEach((subarea, respuesta) -> {
-            if (respuesta != null) {
+            if (respuesta[0] != null && respuesta[1] != null) {
                 subarea = subareaInformeRepository.findOne(subarea.getId());
-                respuestas.add(new RespuestaInforme(informeActualizado, subarea, respuesta.getBytes()));
+                respuestas.add(new RespuestaInforme(informeActualizado, subarea, respuesta[0].getBytes(),
+                        respuesta[1].getBytes()));
             }
         });
         informeActualizado.setRespuestas(respuestaInformeRepository.save(respuestas));
@@ -118,7 +119,7 @@ public class InformeService implements IInformeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas) {
+    public Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas) {
         Informe informeActualizado = findConRespuestas(informe.getId());
         guardarRespuestas(mapaRespuestas, informeActualizado);
         

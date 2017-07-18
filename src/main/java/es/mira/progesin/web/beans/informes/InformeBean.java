@@ -114,7 +114,7 @@ public class InformeBean implements Serializable {
     /**
      * Mapa de areas y subareas del modelo personalizado.
      */
-    private Map<SubareaInforme, String> mapaRespuestas;
+    private Map<SubareaInforme, String[]> mapaRespuestas;
     
     /**
      * Servicio de informes.
@@ -279,10 +279,16 @@ public class InformeBean implements Serializable {
      */
     private void generarMapaRespuestas() {
         mapaRespuestas = new HashMap<>();
-        mapaAreasSubareas.forEach((area, subareas) -> subareas.forEach(subarea -> mapaRespuestas.put(subarea, "")));
+        mapaAreasSubareas.forEach(
+                (area, subareas) -> subareas.forEach(subarea -> mapaRespuestas.put(subarea, new String[] { "", "" })));
         informe.getRespuestas().forEach(respuesta -> {
             try {
-                mapaRespuestas.put(respuesta.getSubarea(), new String(respuesta.getTexto(), "UTF-8"));
+                String[] resp = new String[2];
+                resp[0] = new String(respuesta.getTexto(), "UTF-8");
+                if (respuesta.getConclusiones() != null) {
+                    resp[1] = new String(respuesta.getConclusiones(), "UTF-8");
+                }
+                mapaRespuestas.put(respuesta.getSubarea(), resp);
             } catch (UnsupportedEncodingException e) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         "Se ha producido un error en la recuperación del texto");
@@ -361,7 +367,9 @@ public class InformeBean implements Serializable {
                 informeFormateado.append("<h2>" + i.get() + "." + j.incrementAndGet() + ". ");
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
-                informeFormateado.append(mapaRespuestas.get(subarea));
+                informeFormateado.append(mapaRespuestas.get(subarea)[0]);
+                informeFormateado.append("<h3>Conclusiones y propuestas.</h3>");
+                informeFormateado.append(mapaRespuestas.get(subarea)[1]);
             });
         });
         informeFormateado.append("</div>");

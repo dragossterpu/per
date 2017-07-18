@@ -32,7 +32,7 @@ public interface IInformeService {
      * @param mapaRespuestas respuestas
      * @return informe actualizado
      */
-    Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas);
+    Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas);
     
     /**
      * Finaliza y guarda el informe y todas las subareas que hayan sido respondidas.
@@ -41,7 +41,7 @@ public interface IInformeService {
      * @param mapaRespuestas respuestas
      * @return informe actualizado
      */
-    Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String> mapaRespuestas);
+    Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas);
     
     /**
      * Recupera un informe con sus respuestas a partir de su id.

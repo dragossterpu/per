@@ -113,10 +113,10 @@
                         </h:outputText>
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-                        <h:commandLink title="Ver informe" styleClass="fa fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{informeBean.getFormVisualizarInforme(informe.id)}" />
+                        <p:commandButton title="Ver informe" icon="fa fa-eye" action="#{informeBean.getFormVisualizarInforme(informe.id)}" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspecciones or esEquipo}">
-                        <h:commandLink title="Editar informe" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{informeBean.getFormEditarInforme(informe.id)}" />
+                        <p:commandButton title="Editar informe" icon="fa fa-copy" action="#{informeBean.getFormEditarInforme(informe.id)}" disabled="#{not empty informe.fechaFinalizacion}" />
                     </p:column>
                     <f:facet name="footer">
                         Resultado de la búsqueda: #{informeBean.model.rowCount} informes.
