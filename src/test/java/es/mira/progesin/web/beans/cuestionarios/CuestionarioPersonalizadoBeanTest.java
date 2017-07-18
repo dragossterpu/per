@@ -21,8 +21,6 @@ import javax.faces.application.FacesMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
@@ -60,6 +58,17 @@ import es.mira.progesin.util.FacesUtilities;
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
 public class CuestionarioPersonalizadoBeanTest {
+    
+    /**
+     * Constante user.
+     */
+    private static final String USUARIOLOGUEADO = "usuarioLogueado";
+    
+    /**
+     * Constante nombre cuestionario.
+     */
+    private static final String NOMBRECUESTIONARIO = "cuestionario_test";
+    
     /**
      * Simulación del securityContext.
      */
@@ -91,7 +100,7 @@ public class CuestionarioPersonalizadoBeanTest {
     private ICuestionarioEnvioService cuestionarioEnvioService;
     
     /**
-     * Simulación del bean de cuestionarios personalizados.
+     * Simulación del bean de cuestionarios envio.
      */
     private EnvioCuestionarioBean envioCuestionarioBean;
     
@@ -111,12 +120,6 @@ public class CuestionarioPersonalizadoBeanTest {
      */
     @Mock
     transient IRegistroActividadService regActividadService;
-    
-    /**
-     * Captor de tipo CuestionarioPersonalizado.
-     */
-    @Captor
-    ArgumentCaptor<CuestionarioPersonalizado> cuestionarioPersonalizadoCaptor;
     
     /**
      * Comprueba que la clase existe.
@@ -145,7 +148,7 @@ public class CuestionarioPersonalizadoBeanTest {
         PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn("usuarioLogueado");
+        when(authentication.getName()).thenReturn(USUARIOLOGUEADO);
         model = new LazyModelCuestionarioPersonalizado(cuestionarioPersonalizadoService);
         envioCuestionarioBean = new EnvioCuestionarioBean();
     }
@@ -208,9 +211,9 @@ public class CuestionarioPersonalizadoBeanTest {
     public final void testEliminarCuestionarioBajaLogica() {
         CuestionarioPersonalizado cuestionario = new CuestionarioPersonalizado();
         cuestionario.setId(1L);
-        cuestionario.setNombreCuestionario("cuestionario_test");
+        cuestionario.setNombreCuestionario(NOMBRECUESTIONARIO);
         User user = new User();
-        user.setUsername("usuarioLogueado");
+        user.setUsername(USUARIOLOGUEADO);
         user.setRole(RoleEnum.ROLE_ADMIN);
         when(authentication.getPrincipal()).thenReturn(user);
         when(cuestionarioEnvioService.existsByCuestionarioPersonalizado(cuestionario)).thenReturn(true);
@@ -233,9 +236,9 @@ public class CuestionarioPersonalizadoBeanTest {
     public final void testEliminarCuestionarioBajaFisica() {
         CuestionarioPersonalizado cuestionario = new CuestionarioPersonalizado();
         cuestionario.setId(1L);
-        cuestionario.setNombreCuestionario("cuestionario_test");
+        cuestionario.setNombreCuestionario(NOMBRECUESTIONARIO);
         User user = new User();
-        user.setUsername("usuarioLogueado");
+        user.setUsername(USUARIOLOGUEADO);
         user.setRole(RoleEnum.ROLE_ADMIN);
         when(authentication.getPrincipal()).thenReturn(user);
         when(cuestionarioEnvioService.existsByCuestionarioPersonalizado(cuestionario)).thenReturn(false);
@@ -258,9 +261,9 @@ public class CuestionarioPersonalizadoBeanTest {
     public final void testEliminarCuestionarioRolNoPermitido() {
         CuestionarioPersonalizado cuestionario = new CuestionarioPersonalizado();
         cuestionario.setId(1L);
-        cuestionario.setNombreCuestionario("cuestionario_test");
+        cuestionario.setNombreCuestionario(NOMBRECUESTIONARIO);
         User user = new User();
-        user.setUsername("usuarioLogueado");
+        user.setUsername(USUARIOLOGUEADO);
         user.setRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
         when(authentication.getPrincipal()).thenReturn(user);
         
@@ -279,9 +282,9 @@ public class CuestionarioPersonalizadoBeanTest {
     public final void testEliminarCuestionarioException() {
         CuestionarioPersonalizado cuestionario = new CuestionarioPersonalizado();
         cuestionario.setId(1L);
-        cuestionario.setNombreCuestionario("cuestionario_test");
+        cuestionario.setNombreCuestionario(NOMBRECUESTIONARIO);
         User user = new User();
-        user.setUsername("usuarioLogueado");
+        user.setUsername(USUARIOLOGUEADO);
         user.setRole(RoleEnum.ROLE_ADMIN);
         when(authentication.getPrincipal()).thenReturn(user);
         when(cuestionarioEnvioService.existsByCuestionarioPersonalizado(cuestionario)).thenReturn(false);
