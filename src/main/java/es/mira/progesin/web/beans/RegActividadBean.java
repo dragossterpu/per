@@ -77,7 +77,7 @@ public class RegActividadBean implements Serializable {
     
     public void buscarRegActividad() {
         model.setBusqueda(regActividadBusqueda);
-        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
+        model.load(0, Constantes.TAMPAGINA, Constantes.FECHAALTA, SortOrder.DESCENDING, null);
         
     }
     

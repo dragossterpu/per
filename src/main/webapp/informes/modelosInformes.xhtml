@@ -29,9 +29,8 @@
                 <p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true" />
                 
              <div class="botonesFormulario">
-                <h:commandLink title="Crear nuevo modelo de informe" styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto" action="#{nuevoModeloInformeBean.getFormNuevoModelo}" rendered="#{esJefeInspecciones}">
-                    <span class="ui-CommandLink-texto">Crear nuevo modelo de informe</span>
-                </h:commandLink>
+                <p:commandButton title="Crear nuevo modelo de informe" icon="fa fa-user-plus" action="#{nuevoModeloInformeBean.getFormNuevoModelo}" 
+                value="Crear nuevo modelo de informe" rendered="#{esJefeInspecciones}"/>
             </div> 
             <p:confirmDialog global="true">
                 <div class="centrarBotonesDialog">
