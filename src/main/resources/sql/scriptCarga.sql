@@ -706,6 +706,10 @@ prompt =========================================================================
    (    ID NUMBER(19,0) NOT NULL ENABLE, 
          NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE,
          ESTANDAR NUMBER(1,0) DEFAULT 0 NOT NULL ENABLE,
+         FECHA_ALTA TIMESTAMP (6), 
+         FECHA_BAJA TIMESTAMP (6), 
+         USERNAME_ALTA VARCHAR2(255 CHAR), 
+         USERNAME_BAJA VARCHAR2(255 CHAR),
          CONSTRAINT PK_MODELO_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE
    ) ;
 /

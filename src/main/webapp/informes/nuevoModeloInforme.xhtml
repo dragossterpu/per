@@ -1,0 +1,83 @@
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+       <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
+       <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
+   
+       <h3>Nuevo modelos de informe</h3>
+       <div class="bloqueFormulario">
+         <h:form id="form">    
+           <p:wizard flowListener="#{nuevoModeloInformeBean.onFlowProcess}" nextLabel="Siguiente" backLabel='Atrás'>
+               <p:tab id="nombre" title="Nombre">
+                   <p:panel header="Nombre">
+                        <div class="bloqueFormulario">
+                            <h:outputLabel for="nombreModeloInforme" value="Nombre del modelo de informe(*):" />
+                            <p:inputText id="nombreModeloInforme" value="#{nuevoModeloInformeBean.nuevoModelo.nombre}" converter="#{trimConverter}" required="true" requiredMessage="Introduzca un nombre para el modelo" maxlength="255" />
+                            <p:messages for="nombreModeloInforme" autoUpdate="true" closable="true" />
+                        </div>
+                    </p:panel>
+               </p:tab>
+               <p:tab id="area" title="Area">
+                  <p:panel header="Areas del informe">
+                     <p:orderList id="orderListAreas" value="#{nuevoModeloInformeBean.listaAreas}"  var="area" itemValue="#{area}" converter="#{orderlistConverter}" controlsLocation="left" responsive="true">
+                         <p:ajax event="select" listener="#{nuevoModeloInformeBean.onSelectArea}" />
+                         <p:column>
+                            <h:outputText value="#{area.descripcion}" />
+                        </p:column>
+                     </p:orderList>
+                  </p:panel>
+                   <p:panel>
+                            <h:outputLabel for="idArea" value="Área:" />
+                            <p:inputTextarea id="idArea" binding="#{nombreArea}" converter="#{trimConverter}" maxlength="1000" counter="contador" counterTemplate="Quedan {0} caracteres." />
+                            <p:outputLabel />
+                            <p:outputLabel id="contador" />
+                        <p:commandButton actionListener="#{nuevoModeloInformeBean.aniadeArea(nombreArea.value)}" update="orderListAreas,idArea" value="Añadir área" icon="fa fa-fw fa-plus">
+                            <p:resetInput target="idArea" />
+                        </p:commandButton>
+                        <p:commandButton actionListener="#{nuevoModeloInformeBean.borraArea}" update="orderListAreas" value="Eliminar área" icon="fa fa-fw fa-minus" />
+                    </p:panel>
+               </p:tab>
+               
+              <p:tab id="subareas" title="Subáreas">
+                    <p:repeat value="#{nuevoModeloInformeBean.listaAreas}" var="area">
+                        <p:accordionPanel activeIndex="-1" id="acordeonAreas">
+                            <p:tab title="#{area.descripcion}" id="areaTab">
+                                <p:orderList id="orderListSubAreas" value="#{area.subareas}" var="subarea" itemValue="#{subarea}" converter="#{orderlistConverter}" controlsLocation="left" responsive="true">
+                                   
+                                    <p:ajax event="select" listener="#{nuevoModeloInformeBean.onSelectSubArea}" />
+                                    <f:facet name="caption">Subareas</f:facet>
+                                    <p:column>
+                                        <h:outputText value="#{subarea.descripcion}" />
+                                    </p:column>
+                                </p:orderList>
+                                    
+                                    <h:outputLabel for="idSubArea" value="SubÁrea:" />
+                                    <p:inputTextarea id="idSubArea" binding="#{textoSubarea}" converter="#{trimConverter}" maxlength="1000" counter="contador2" counterTemplate="Quedan {0} caracteres." />
+                                    <p:outputLabel />
+                                    <p:outputLabel id="contador2" />
+                                    <p:commandButton actionListener="#{nuevoModeloInformeBean.aniadeSubarea(area,textoSubarea.value)}" update="orderListSubAreas,idSubArea" value="Añadir Subarea" icon="fa fa-fw fa-plus">
+                                        <p:resetInput target="idSubArea" />
+                                    </p:commandButton>
+                                    <p:commandButton actionListener="#{nuevoModeloInformeBean.borraSubarea(area)}" update="orderListSubAreas" value="Eliminar subarea" icon="fa fa-fw fa-minus" />
+                                
+                            </p:tab>
+                        </p:accordionPanel>
+                    </p:repeat>
+                </p:tab>
+              
+               <p:tab id="finalizar" title="Finalizar">
+                  <p:panel header="Areas del informe">
+                     <p:commandButton value="Guardar modelo" action="#{nuevoModeloInformeBean.grabaInforme}"></p:commandButton>
+                  </p:panel>   
+               </p:tab>
+           </p:wizard>
+           <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:button value="Cerrar" outcome="/informes/modelosInformes" />
+                </div>
+            </p:dialog>
+         </h:form>  
+       </div>
+    </ui:define>
+</ui:composition>

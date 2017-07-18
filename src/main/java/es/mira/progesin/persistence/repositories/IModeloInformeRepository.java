@@ -1,5 +1,7 @@
 package es.mira.progesin.persistence.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.repository.CrudRepository;
@@ -21,5 +23,12 @@ public interface IModeloInformeRepository extends CrudRepository<ModeloInforme, 
      */
     @EntityGraph(value = "ModeloInforme.areas", type = EntityGraphType.LOAD)
     ModeloInforme findDistinctById(Long id);
+    
+    /**
+     * Recupera una lista con todos los modelos de informe de la bdd que no tengan fecha de baja.
+     * 
+     * @return Lista de todos los modelos
+     */
+    List<ModeloInforme> findAllByFechaBajaIsNull();
     
 }

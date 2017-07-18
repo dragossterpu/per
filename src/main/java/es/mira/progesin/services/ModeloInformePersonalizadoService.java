@@ -219,4 +219,15 @@ public class ModeloInformePersonalizadoService implements IModeloInformePersonal
         }
         return modeloPersonalizadoActualizado;
     }
+    
+    /**
+     * Determina si existen modelos personalizados del tipo pasado como referencia.
+     * 
+     * @param modelo Modelo del que se desea saber si existen personalizados.
+     * @return Booleano con la respuesta.
+     */
+    @Override
+    public boolean existsByModelo(ModeloInforme modelo) {
+        return informePersonalizadoRepositoy.existsByModeloInforme(modelo);
+    }
 }

@@ -66,4 +66,12 @@ public interface IModeloInformePersonalizadoService {
      * @return modelo sincronizado
      */
     ModeloInformePersonalizado eliminarModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado);
+    
+    /**
+     * Determina si existen modelos personalizados del tipo pasado como referencia.
+     * 
+     * @param modelo Modelo del que se desea saber si existen personalizados.
+     * @return Booleano con la respuesta.
+     */
+    boolean existsByModelo(ModeloInforme modelo);
 }

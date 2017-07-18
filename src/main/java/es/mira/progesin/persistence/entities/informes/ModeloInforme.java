@@ -1,10 +1,12 @@
 package es.mira.progesin.persistence.entities.informes;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +43,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "MODELOS_INFORME")
 @NamedEntityGraph(name = "ModeloInforme.areas", attributeNodes = @NamedAttributeNode("areas"))
 public class ModeloInforme implements Serializable {
@@ -58,7 +66,7 @@ public class ModeloInforme implements Serializable {
     private String nombre;
     
     /**
-     * Determina si es un modelo estándar.
+     * Determina si es un modelo estandar.
      */
     @Column(name = "estandar")
     private Boolean estandar;
@@ -68,6 +76,33 @@ public class ModeloInforme implements Serializable {
      */
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "modelo_informe_id", foreignKey = @ForeignKey(name = "fk_area_modeloinf"))
+    @OrderBy("orden")
     private List<AreaInforme> areas;
+    
+    /**
+     * Usuario de creación.
+     */
+    @CreatedBy
+    @Column(name = "username_alta", nullable = false)
+    protected String usernameAlta;
+    
+    /**
+     * Fecha de creación.
+     */
+    @CreatedDate
+    @Column(name = "fecha_alta", nullable = false)
+    protected Date fechaAlta;
+    
+    /**
+     * Usuario de baja.
+     */
+    @Column(name = "username_baja")
+    protected String usernameBaja;
+    
+    /**
+     * Fecha de baja.
+     */
+    @Column(name = "fecha_baja")
+    protected Date fechaBaja;
     
 }

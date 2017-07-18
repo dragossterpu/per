@@ -1,10 +1,15 @@
 package es.mira.progesin.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 
@@ -22,6 +27,30 @@ public class ModeloInformeService implements IModeloInformeService {
      */
     @Autowired
     private IModeloInformeRepository modeloInformeRepository;
+    
+    /**
+     * Servicio de áreas de informe.
+     */
+    @Autowired
+    private IAreaInformeService areainformeservice;
+    
+    /**
+     * Servicio de subáreas de informe.
+     */
+    @Autowired
+    private SubareaInformeService subareaInformeService;
+    
+    /**
+     * Servicio de modelos de informes personalizados.
+     */
+    @Autowired
+    private IModeloInformePersonalizadoService modeloInformePersonalizadoService;
+    
+    /**
+     * Servicio de registr de actividad.
+     */
+    @Autowired
+    private IRegistroActividadService registroActividadService;
     
     /**
      * Busca todos los modelos de informe que hay en BBDD.
@@ -44,4 +73,47 @@ public class ModeloInformeService implements IModeloInformeService {
         return modeloInformeRepository.findDistinctById(id);
     }
     
+    /**
+     * Elimina un modelo. La eliminación será lógica si existen modelos personalizados de este tipo o física si no es
+     * así.
+     * 
+     * @param modelo Modelo a eliminar
+     * @return modelo eliminado
+     */
+    @Override
+    public ModeloInforme eliminarModelo(ModeloInforme modelo) {
+        ModeloInforme modeloActualizado = null;
+        try {
+            if (modeloInformePersonalizadoService.existsByModelo(modelo)) {
+                String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+                modelo.setFechaBaja(new Date());
+                modelo.setUsernameBaja(usuarioActual);
+                modeloActualizado = modeloInformeRepository.save(modelo);
+                String descripcion = "Se ha anulado el modelo de informe personalizado: " + modelo.getNombre();
+                // Guardamos la actividad en bbdd
+                registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.INFORMES.getDescripcion());
+            } else {
+                subareaInformeService.deleteByArea(areainformeservice.findByModeloInformeId(modelo.getId()));
+                areainformeservice.deleteByModeloInformeId(modelo.getId());
+                modeloInformeRepository.delete(modelo);
+                // devolvemos el mismo objeto para diferenciarlo de null en caso de excepción
+                modeloActualizado = modelo;
+            }
+            
+        } catch (DataAccessException e) {
+            registroActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
+        return modeloActualizado;
+    }
+    
+    /**
+     * Recupera una lista con todos los modelos de informe de la bdd que no tengan fecha de baja.
+     * 
+     * @return Lista de todos los modelos
+     */
+    @Override
+    public List<ModeloInforme> findAllByFechaBajaIsNull() {
+        return modeloInformeRepository.findAllByFechaBajaIsNull();
+    }
 }

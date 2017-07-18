@@ -45,18 +45,20 @@ public class ModeloInformeBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        setListadoModelosInforme(modeloInformeService.findAll());
+        setListadoModelosInforme(modeloInformeService.findAllByFechaBajaIsNull());
         Collections.sort(listadoModelosInforme, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
     }
     
     /**
-     * Cargar formulario para crear informe a partir de un modelo y una inspección.
+     * Elimina el modelo que se recibe como parámetro.
      * 
-     * @param modelo modelo seleccionado
-     * @return ruta de la vista
+     * @param modelo Modelo a eliminar
+     * @return modelo eliminado.
      */
-    public String crearInforme(ModeloInforme modelo) {
-        return "/enConstruccion";
+    public void eliminarModelo(ModeloInforme modelo) {
+        modeloInformeService.eliminarModelo(modelo);
+        setListadoModelosInforme(modeloInformeService.findAllByFechaBajaIsNull());
+        Collections.sort(listadoModelosInforme, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
     }
     
 }
