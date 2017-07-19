@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  07/06/2017   
+prompt    Actualización:  19/07/2017   
 prompt =========================================================================
 
 
@@ -34,793 +34,918 @@ BEGIN
 END;
 /    
 COMMIT;
-
 prompt =========================================================================
 prompt + Tarea2
 prompt =========================================================================
 prompt Ejecutando creación de tablas...
 
 prompt =========================================================================
-prompt  Creacion tabla  ALERTAS
+prompt  Creacion tabla  PARAMETROS
 prompt =========================================================================
-
-  CREATE TABLE ALERTAS 
-   (    ID_ALERTA NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(2000 CHAR), 
-    FECHA_REGISTRO TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    NOMBRE_SECCION VARCHAR2(50 CHAR), 
-    USUARIO_REGISTRO VARCHAR2(255 CHAR), 
-    USUARIO_BAJA VARCHAR2(255 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  ALERTAS_NOTIFICACIONES_USUARIO
-prompt =========================================================================
-
-  CREATE TABLE ALERTAS_NOTIFICACIONES_USUARIO 
-   (    USUARIO VARCHAR2(255 CHAR), 
-    TIPO_MENSAJE VARCHAR2(50 CHAR), 
-    ID_MENSAJE NUMBER(19,0), 
-    FECHA_ALTA TIMESTAMP (6), 
-    NOMBRE_SECCION VARCHAR2(50 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  AREASCUESTIONARIO
-prompt =========================================================================
-
-  CREATE TABLE AREASCUESTIONARIO 
-   (    ID NUMBER(19,0), 
-    NOMBRE_AREA VARCHAR2(255 CHAR), 
-    FECHA_BAJA TIMESTAMP (6), 
-    ID_CUESTIONARIO NUMBER(10,0), 
-    ORDEN NUMBER(10,0), 
-    USERNAME_BAJA VARCHAR2(255 CHAR)
-   ) ;
+CREATE TABLE PARAMETROS 
+   (	CLAVE VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	SECCION VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	VALOR VARCHAR2(4000 CHAR) NOT NULL ENABLE, 
+	 PRIMARY KEY (CLAVE, SECCION, VALOR) ENABLE
+   ); 
 /
 
-prompt =========================================================================
-prompt  Creacion tabla  AREAS_USUARIO_CUESTENV
-prompt =========================================================================
-
-  CREATE TABLE AREAS_USUARIO_CUESTENV 
-   (    ID_AREA NUMBER(19,0), 
-    ID_CUESTIONARIO_ENVIADO NUMBER(19,0), 
-    USERNAME_PROV VARCHAR2(255 CHAR)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  CLASE_USUARIO
 prompt =========================================================================
 
-  CREATE TABLE CLASE_USUARIO 
-   (    ID_CLASE NUMBER(19,0), 
-    CLASE VARCHAR2(255 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  CONFIG_RESPUESTAS_CUESTIONARIO
-prompt =========================================================================
+CREATE TABLE CLASE_USUARIO 
+   (	ID_CLASE NUMBER(19,0) NOT NULL ENABLE, 
+	CLASE VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID_CLASE) USING INDEX ENABLE
+   );
+  /
 
-  CREATE TABLE CONFIG_RESPUESTAS_CUESTIONARIO 
-   (    CLAVE VARCHAR2(255 CHAR), 
-    SECCION VARCHAR2(255 CHAR), 
-    VALOR VARCHAR2(255 CHAR)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  CUERPOSESTADO
 prompt =========================================================================
 
-  CREATE TABLE CUERPOSESTADO 
-   (    ID NUMBER(10,0), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    DESCRIPCION VARCHAR2(100 CHAR), 
-    NOMBRE_CORTO VARCHAR2(10 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  CUESTIONARIO_PERSONALIZADO
-prompt =========================================================================
-
-  CREATE TABLE CUESTIONARIO_PERSONALIZADO 
-   (    ID NUMBER(19,0), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_CREACION TIMESTAMP (6), 
-    NOMBRE_CUESTIONARIO VARCHAR2(100 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_CREACION VARCHAR2(255 CHAR), 
-    ID_MODELO_CUESTIONARIO NUMBER(10,0)
-   ) ;
+ CREATE TABLE CUERPOSESTADO 
+   (	ID NUMBER(10,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	DESCRIPCION VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	NOMBRE_CORTO VARCHAR2(10 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   );
+ /  
  
-/
-prompt =========================================================================
-prompt  Creacion tabla  CUESTIONARIOS_ENVIADOS
-prompt =========================================================================
-
-  CREATE TABLE CUESTIONARIOS_ENVIADOS 
-   (    ID NUMBER(19,0), 
-    CARGO VARCHAR2(500 CHAR), 
-    CORREO VARCHAR2(500 CHAR), 
-    FECHA_ANULACION TIMESTAMP (6), 
-    FECHA_CUMPLIMENTACION TIMESTAMP (6), 
-    FECHA_ENVIO TIMESTAMP (6), 
-    FECHA_FINALIZACION TIMESTAMP (6), 
-    FECHA_LIMITE_CUESTIONARIO TIMESTAMP (6), 
-    FECHA_NO_CONFORME TIMESTAMP (6), 
-    MOTIVO VARCHAR2(2000 CHAR), 
-    NOMBRE_USUARIO VARCHAR2(500 CHAR), 
-    USERNAME_ANULACION VARCHAR2(255 CHAR), 
-    USERNAME_ENVIO VARCHAR2(255 CHAR), 
-    USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
-    USERNAME_NO_CONFORME VARCHAR2(255 CHAR), 
-    ID_CUESTIONARIO_PERSONALIZADO NUMBER(19,0), 
-    ID_INSPECCION NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  CUEST_PER_PREGUNTAS
-prompt =========================================================================
-
-  CREATE TABLE CUEST_PER_PREGUNTAS 
-   (    ID_CUEST_PERS NUMBER(19,0), 
-    ID_PREG_ELEGIDA NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
+ prompt =========================================================================
 prompt  Creacion tabla  DEPARTAMENTO
 prompt =========================================================================
 
-  CREATE TABLE DEPARTAMENTO 
-   (    ID NUMBER(19,0), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    DESCRIPCION VARCHAR2(100 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  DOCUMENTACION_PREVIA
-prompt =========================================================================
+CREATE TABLE DEPARTAMENTO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	DESCRIPCION VARCHAR2(100 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   );
+ /
 
-  CREATE TABLE DOCUMENTACION_PREVIA 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(255 CHAR), 
-    EXTENSIONES VARCHAR2(255 CHAR), 
-    ID_SOLICITUD NUMBER(19,0), 
-    NOMBRE VARCHAR2(255 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  DOCUMENTOS
-prompt =========================================================================
-
-  CREATE TABLE DOCUMENTOS 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(2000 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    MATERIA_INDEXADA VARCHAR2(2000 CHAR), 
-    NOMBRE VARCHAR2(255 CHAR), 
-    TIPO_CONTENIDO VARCHAR2(255 CHAR), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    ID_FICHERO NUMBER(19,0), 
-    TIPO_DOCUMENTO NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  DOCUMENTOS_BLOB
-prompt =========================================================================
-
-  CREATE TABLE DOCUMENTOS_BLOB 
-   (    ID NUMBER(19,0), 
-    FICHERO BLOB, 
-    NOMBRE_FICHERO VARCHAR2(255 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  DOCUMENTOS_INSPECCION
-prompt =========================================================================
-
-  CREATE TABLE DOCUMENTOS_INSPECCION 
-   (    ID_DOCUMENTO NUMBER(19,0), 
-    ID_INSPECCION NUMBER(19,0)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  EMPLEO
 prompt =========================================================================
 
-  CREATE TABLE EMPLEO 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(100 CHAR), 
-    NOMBRE_CORTO VARCHAR2(20 CHAR), 
-    ID_CUERPO NUMBER(10,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  EQUIPO
-prompt =========================================================================
-
-  CREATE TABLE EQUIPO 
-   (    ID NUMBER(19,0), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    JEFE_EQUIPO VARCHAR2(100 CHAR), 
-    NOMBRE_EQUIPO VARCHAR2(255 CHAR),  
-    ID_TIPO_EQUIPO NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  SOLICITUD_PREVIA_DOCS
-prompt =========================================================================
-
-  CREATE TABLE SOLICITUD_PREVIA_DOCS 
-   (    ID_SOLICITUD_PREVIA NUMBER(19,0), 
-    ID_DOCUMENTO NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  GUIA_PASOS
-prompt =========================================================================
-
-  CREATE TABLE GUIA_PASOS 
-   (    ID NUMBER(19,0), 
-    FECHA_BAJA TIMESTAMP (6), 
-    ORDEN NUMBER(10,0), 
-    PASO VARCHAR2(2000 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    ID_GUIA NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  GUIA_PERSONALIZADA
-prompt =========================================================================
-
-  CREATE TABLE GUIA_PERSONALIZADA 
-   (    ID NUMBER(19,0), 
-    FECHA_ANULACION TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_CREACION TIMESTAMP (6), 
-    NOMBRE_GUIA_PERSONALIZADA VARCHAR2(100 CHAR), 
-    USERNAME_ANULACION VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_CREACION VARCHAR2(255 CHAR), 
-    ID_MODELO_GUIA NUMBER(19,0), 
-    INSPECCION NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  GUIA_PERSONALIZADA_PASOS
-prompt =========================================================================
-
-  CREATE TABLE GUIA_PERSONALIZADA_PASOS 
-   (    ID_GUIA_PERS NUMBER(19,0), 
-    ID_PASO_ELEGIDO NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  GUIAS
-prompt =========================================================================
-
-  CREATE TABLE GUIAS 
-   (    ID NUMBER(19,0), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    FECHA_ANULACION TIMESTAMP (6), 
-    NOMBRE_GUIA VARCHAR2(255 CHAR), 
-    ORDEN NUMBER(10,0), 
-    USERNAME_ANULACION VARCHAR2(255 CHAR), 
-    TIPO_INSPECCION VARCHAR2(10 CHAR)
-   ) ;
-/
+ CREATE TABLE EMPLEO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(100 CHAR), 
+	NOMBRE_CORTO VARCHAR2(20 CHAR), 
+	ID_CUERPO NUMBER(10,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_EM_CUERPO FOREIGN KEY (ID_CUERPO)
+	  REFERENCES CUERPOSESTADO (ID) ENABLE
+   ) ; 
+   
+ /
 
 prompt =========================================================================
-prompt  Creacion tabla  INSPECCIONES
+prompt  Creacion tabla  PUESTOSTRABAJO
 prompt =========================================================================
 
-  CREATE TABLE INSPECCIONES 
-(   ID NUMBER(19,0), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    AMBITO VARCHAR2(10 CHAR), 
-    ANIO NUMBER(10,0), 
-    CUATRIMESTRE VARCHAR2(30 CHAR), 
-    ESTADO_INSPECCION VARCHAR2(30 CHAR), 
-    FECHA_ANULACION TIMESTAMP (6), 
-    FECHA_FINALIZACION TIMESTAMP (6), 
-    FECHA_PREVISTA TIMESTAMP (6), 
-    NOMBRE_UNIDAD VARCHAR2(255 CHAR), 
-    NUMERO VARCHAR2(100 CHAR), 
-    USERNAME_ANULACION VARCHAR2(255 CHAR), 
-    USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
-    ID_EQUIPO NUMBER(19,0), 
-    ID_MUNICIPIO NUMBER(19,0), 
-    TIPO_INSPECCION VARCHAR2(10 CHAR), 
-    TIPO_UNIDAD NUMBER(19,0)
-   ) ;
-/
+ CREATE TABLE PUESTOSTRABAJO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(100 CHAR), 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_MODIF TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   ) ; 
+    
 prompt =========================================================================
-prompt  Creacion tabla  INSPECCIONES_ASOCIADAS
+prompt  Creacion tabla  PROVINCIAS
 prompt =========================================================================
 
-  CREATE TABLE INSPECCIONES_ASOCIADAS 
-   (    ID_INSPECCION NUMBER(19,0), 
-    ID_INSPECCION_ASOCIADA NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  MIEMBROS
-prompt =========================================================================
-
-  CREATE TABLE MIEMBROS 
-   (    ID NUMBER(19,0), 
-    NOMBRE_COMPLETO VARCHAR2(255 CHAR), 
-    POSICION VARCHAR2(255 CHAR), 
-    USUARIO VARCHAR2(255 CHAR), 
-    ID_EQUIPO NUMBER(19,0)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  MODELOSCUESTIONARIOS
-prompt =========================================================================
-
-  CREATE TABLE MODELOSCUESTIONARIOS 
-   (    ID NUMBER(10,0), 
-    CODIGO VARCHAR2(255 CHAR), 
-    DESCRIPCION VARCHAR2(255 CHAR)
-   ) ;
-/
+CREATE TABLE PROVINCIAS 
+   (	CODIGO VARCHAR2(3 CHAR) NOT NULL ENABLE, 
+	CODIGO_MN VARCHAR2(10 CHAR), 
+	NOMBRE VARCHAR2(100 CHAR), 
+	 PRIMARY KEY (CODIGO) USING INDEX ENABLE
+   ) ; 
 
 prompt =========================================================================
 prompt  Creacion tabla  MUNICIPIOS
 prompt =========================================================================
 
-  CREATE TABLE MUNICIPIOS 
-   (    ID NUMBER(19,0), 
-    NAME VARCHAR2(100 CHAR), 
-    CODE_PROVINCE VARCHAR2(3 CHAR)
-   ) ;
+CREATE TABLE MUNICIPIOS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	NAME VARCHAR2(100 CHAR), 
+	CODE_PROVINCE VARCHAR2(3 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_PROVINCIA FOREIGN KEY (CODE_PROVINCE)
+	  REFERENCES PROVINCIAS (CODIGO) ENABLE
+   ) ;    
+ 
+ prompt =========================================================================
+prompt  Creacion tabla  ALERTAS
+prompt =========================================================================
+
+   CREATE TABLE ALERTAS 
+   (	ID_ALERTA NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(2000 CHAR), 
+	FECHA_REGISTRO TIMESTAMP (6), 
+	FECHA_BAJA TIMESTAMP (6), 
+	NOMBRE_SECCION VARCHAR2(50 CHAR), 
+	USUARIO_REGISTRO VARCHAR2(255 CHAR), 
+	USUARIO_BAJA VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID_ALERTA) USING INDEX  ENABLE
+   );  
 /
+
 prompt =========================================================================
 prompt  Creacion tabla  NOTIFICACIONES
 prompt =========================================================================
-
-  CREATE TABLE NOTIFICACIONES 
-   (    ID_NOTIFICACION NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(2000 CHAR), 
-    FECHA_NOTIFICACION TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    NOMBRE_SECCION VARCHAR2(50 CHAR), 
-    TIPO_NOTIFICACION VARCHAR2(20 CHAR), 
-    USUARIO_BAJA VARCHAR2(255 CHAR), 
-    USUARIO_REGISTRO VARCHAR2(255 CHAR)
-   ) ;
-/
+CREATE TABLE NOTIFICACIONES 
+   (	ID_NOTIFICACION NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(2000 CHAR), 
+	FECHA_NOTIFICACION TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	NOMBRE_SECCION VARCHAR2(50 CHAR), 
+	TIPO_NOTIFICACION VARCHAR2(20 CHAR), 
+	USUARIO_BAJA VARCHAR2(255 CHAR), 
+	USUARIO_REGISTRO VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID_NOTIFICACION) USING INDEX ENABLE
+   );
+   
 prompt =========================================================================
-prompt  Creacion tabla  PARAMETROS
-prompt =========================================================================
-
-  CREATE TABLE PARAMETROS 
-   (    CLAVE VARCHAR2(255 CHAR), 
-    SECCION VARCHAR2(255 CHAR), 
-    VALOR VARCHAR2(4000 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  PREGUNTASCUESTIONARIO
+prompt  Creacion tabla  ALERTAS_NOTIFICACIONES_USUARIO
 prompt =========================================================================
 
-  CREATE TABLE PREGUNTASCUESTIONARIO 
-   (    ID NUMBER(19,0), 
-    FECHA_BAJA TIMESTAMP (6), 
-    ORDEN NUMBER(10,0), 
-    PREGUNTA VARCHAR2(2000 CHAR), 
-    TIPO_RESPUESTA VARCHAR2(100 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    ID_AREA NUMBER(19,0)
-   ) ;
+  CREATE TABLE ALERTAS_NOTIFICACIONES_USUARIO 
+   (	USUARIO VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	TIPO_MENSAJE VARCHAR2(50 CHAR) NOT NULL ENABLE, 
+	ID_MENSAJE NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	NOMBRE_SECCION VARCHAR2(50 CHAR) NOT NULL ENABLE, 
+	 PRIMARY KEY (USUARIO, TIPO_MENSAJE, ID_MENSAJE, FECHA_ALTA, NOMBRE_SECCION) USING INDEX ENABLE
+   );
 /
-prompt =========================================================================
-prompt  Creacion tabla  PROVINCIAS
-prompt =========================================================================
 
-  CREATE TABLE PROVINCIAS 
-   (    CODIGO VARCHAR2(3 CHAR), 
-    CODIGO_MN VARCHAR2(10 CHAR), 
-    NOMBRE VARCHAR2(100 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  PUESTOSTRABAJO
-prompt =========================================================================
-
-  CREATE TABLE PUESTOSTRABAJO 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(100 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_MODIF TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR)
-   ) ;
-/
 prompt =========================================================================
 prompt  Creacion tabla  REG_ACTIVIDAD
 prompt =========================================================================
 
-  CREATE TABLE REG_ACTIVIDAD 
-   (    REG_ACTIVIDAD NUMBER(19,0), 
-    DESCRIPCION CLOB, 
-    FECHA_ALTA TIMESTAMP (6), 
-    NOMBRE_SECCION VARCHAR2(50 CHAR), 
-    TIPO_REG_ACTIVIDAD VARCHAR2(255 CHAR), 
-    USUARIO_REGISTRO VARCHAR2(255 CHAR)
-   ) ;
-/
+CREATE TABLE REG_ACTIVIDAD 
+   (	REG_ACTIVIDAD NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION CLOB, 
+	FECHA_ALTA TIMESTAMP (6), 
+	NOMBRE_SECCION VARCHAR2(50 CHAR), 
+	TIPO_REG_ACTIVIDAD VARCHAR2(255 CHAR), 
+	USUARIO_REGISTRO VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (REG_ACTIVIDAD) USING INDEX  ENABLE
+   ) ; 
+
 prompt =========================================================================
-prompt  Creacion tabla  RESPUESTA_DATOS_TABLA
+prompt  Creacion tabla  SUGERENCIA
+prompt =========================================================================
+CREATE TABLE SUGERENCIA 
+   (	ID_SUGERENCIA NUMBER(10,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(4000 CHAR), 
+	FECHA_CONTESTACION TIMESTAMP (6), 
+	FECHA_REGISTRO TIMESTAMP (6), 
+	MODULO VARCHAR2(50 CHAR), 
+	USUARIO_CONTESTACION VARCHAR2(255 CHAR), 
+	USUARIO_REGISTRO VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID_SUGERENCIA) USING INDEX ENABLE
+   ); 
+
+prompt =========================================================================
+prompt  Creacion tabla  TIPOS_UNIDAD
+prompt =========================================================================
+CREATE TABLE TIPOS_UNIDAD 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(100 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   ) ; 
+
+prompt =========================================================================
+prompt  Creacion tabla  TIPODOCUMENTACIONPREVIA
+prompt =========================================================================
+CREATE TABLE TIPODOCUMENTACIONPREVIA 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	AMBITO VARCHAR2(10 CHAR), 
+	DESCRIPCION VARCHAR2(255 CHAR), 
+	EXTENSIONES VARCHAR2(255 CHAR), 
+	NOMBRE VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   ) ;  
+
+prompt =========================================================================
+prompt  Creacion tabla  DOCUMENTACION_PREVIA
 prompt =========================================================================
 
-  CREATE TABLE RESPUESTA_DATOS_TABLA 
-   (    ID NUMBER(19,0), 
-    CAMPO01 VARCHAR2(255 CHAR), 
-    CAMPO02 VARCHAR2(255 CHAR), 
-    CAMPO03 VARCHAR2(255 CHAR), 
-    CAMPO04 VARCHAR2(255 CHAR), 
-    CAMPO05 VARCHAR2(255 CHAR), 
-    CAMPO06 VARCHAR2(255 CHAR), 
-    CAMPO07 VARCHAR2(255 CHAR), 
-    CAMPO08 VARCHAR2(255 CHAR), 
-    CAMPO09 VARCHAR2(255 CHAR), 
-    CAMPO10 VARCHAR2(255 CHAR), 
-    CAMPO11 VARCHAR2(255 CHAR), 
-    CAMPO12 VARCHAR2(255 CHAR), 
-    CAMPO13 VARCHAR2(255 CHAR), 
-    CAMPO14 VARCHAR2(255 CHAR), 
-    CAMPO15 VARCHAR2(255 CHAR), 
-    CAMPO16 VARCHAR2(255 CHAR), 
-    CAMPO17 VARCHAR2(255 CHAR), 
-    CAMPO18 VARCHAR2(255 CHAR), 
-    CAMPO19 VARCHAR2(255 CHAR), 
-    CAMPO20 VARCHAR2(255 CHAR), 
-    NOMBRE_FILA VARCHAR2(255 CHAR), 
-    RESPUESTA_ID_CUEST_ENVIADO NUMBER(19,0), 
-    RESPUESTA_ID_PREGUNTA NUMBER(19,0)
-   ) ;
-/
+CREATE TABLE DOCUMENTACION_PREVIA 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(255 CHAR), 
+	EXTENSIONES VARCHAR2(255 CHAR), 
+	ID_SOLICITUD NUMBER(19,0), 
+	NOMBRE VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   );
+
 prompt =========================================================================
-prompt  Creacion tabla  RESPUESTAS_CUEST_DOCS
+prompt  Creacion tabla  TIPO_DOCUMENTO
 prompt =========================================================================
 
-  CREATE TABLE RESPUESTAS_CUEST_DOCS 
-   (    ID_CUESTIONARIO_ENVIADO NUMBER(19,0), 
-    ID_PREGUNTA NUMBER(19,0), 
-    ID_DOCUMENTO NUMBER(19,0)
+CREATE TABLE TIPO_DOCUMENTO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	NOMBRE VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   ) ; 
+
+prompt =========================================================================
+prompt  Creacion tabla  TIPO_EQUIPO
+prompt =========================================================================
+
+ CREATE TABLE TIPO_EQUIPO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	CODIGO VARCHAR2(5 CHAR), 
+	DESCRIPCION VARCHAR2(100 CHAR), 
+	 CONSTRAINT INDICE_TIPO_EQUIPO UNIQUE (CODIGO) USING INDEX ENABLE, 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   ) ;   
+
+prompt =========================================================================
+prompt  Creacion tabla  USERS
+prompt =========================================================================
+CREATE TABLE USERS 
+   (	USERNAME VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	PRIM_APELLIDO VARCHAR2(50 CHAR) NOT NULL ENABLE, 
+	SEGUNDO_APELLIDO VARCHAR2(50 CHAR), 
+	CATEGORIA VARCHAR2(20 CHAR), 
+	CORREO VARCHAR2(50 CHAR) NOT NULL ENABLE, 
+	DESPACHO VARCHAR2(20 CHAR), 
+	DOC_IDENTIDAD VARCHAR2(10 CHAR) NOT NULL ENABLE, 
+	ESTADO VARCHAR2(8 CHAR) NOT NULL ENABLE, 
+	FECHA_DESTINO_IPSS TIMESTAMP (6), 
+	FECHA_INACTIVO TIMESTAMP (6), 
+	FECHA_INGRESO TIMESTAMP (6), 
+	NIVEL NUMBER(10,0), 
+	NOMBRE VARCHAR2(50 CHAR) NOT NULL ENABLE, 
+	PASSWORD VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	ROLE VARCHAR2(25 CHAR) NOT NULL ENABLE, 
+	TELEFONO VARCHAR2(12 CHAR), 
+	TFNO_MOVIL_OFICIAL VARCHAR2(12 CHAR), 
+	TFNO_MOVIL_PARTICULAR VARCHAR2(12 CHAR), 
+	ID_CLASE NUMBER(19,0), 
+	ID_CUERPO NUMBER(10,0), 
+	ID_DEPARTAMENTO NUMBER(19,0), 
+	ID_EMPLEO NUMBER(19,0), 
+	ID_PUESTO NUMBER(19,0), 
+	 PRIMARY KEY (USERNAME) USING INDEX ENABLE, 
+	 CONSTRAINT FK_U_CLASE FOREIGN KEY (ID_CLASE)
+	  REFERENCES CLASE_USUARIO (ID_CLASE) ENABLE, 
+	 CONSTRAINT FK_U_CUERPO FOREIGN KEY (ID_CUERPO)
+	  REFERENCES CUERPOSESTADO (ID) ENABLE, 
+	 CONSTRAINT FK_U_DEPARTAMENTO FOREIGN KEY (ID_DEPARTAMENTO)
+	  REFERENCES DEPARTAMENTO (ID) ENABLE, 
+	 CONSTRAINT FK_U_EMPLEO FOREIGN KEY (ID_EMPLEO)
+	  REFERENCES EMPLEO (ID) ENABLE, 
+	 CONSTRAINT FK_U_PUESTO FOREIGN KEY (ID_PUESTO)
+	  REFERENCES PUESTOSTRABAJO (ID) ENABLE
+   ) ; 
+   
+prompt =========================================================================
+prompt  Creacion tabla  EQUIPO
+prompt =========================================================================
+
+CREATE TABLE EQUIPO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	JEFE_EQUIPO VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	NOMBRE_EQUIPO VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	ID_TIPO_EQUIPO NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX  ENABLE, 
+	 CONSTRAINT FK_EQ_TIPOEQUIPO FOREIGN KEY (ID_TIPO_EQUIPO)
+	  REFERENCES TIPO_EQUIPO (ID) ENABLE, 
+	 CONSTRAINT FK_EQ_JEFE FOREIGN KEY (JEFE_EQUIPO)
+	  REFERENCES USERS (USERNAME) ENABLE
+   ) ; 
+
+prompt =========================================================================
+prompt  Creacion tabla  MIEMBROS
+prompt =========================================================================
+
+CREATE TABLE MIEMBROS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	NOMBRE_COMPLETO VARCHAR2(255 CHAR), 
+	POSICION VARCHAR2(255 CHAR), 
+	USUARIO VARCHAR2(255 CHAR), 
+	ID_EQUIPO NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_M_EQUIPO FOREIGN KEY (ID_EQUIPO)
+	  REFERENCES EQUIPO (ID) ENABLE, 
+	 CONSTRAINT FK_U_MIEMBRO FOREIGN KEY (USUARIO)
+	  REFERENCES USERS (USERNAME) ENABLE
+   ) ; 
+
+prompt =========================================================================
+prompt  Creacion tabla  TIPOS_INSPECCION
+prompt =========================================================================
+
+CREATE TABLE TIPOS_INSPECCION 
+   (	CODIGO VARCHAR2(10 CHAR) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	DESCRIPCION VARCHAR2(100 CHAR), 
+	 PRIMARY KEY (CODIGO) USING INDEX ENABLE
+   ) ;
+
+prompt =========================================================================
+prompt  Creacion tabla  INSPECCIONES
+prompt =========================================================================
+
+CREATE TABLE INSPECCIONES 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	AMBITO VARCHAR2(10 CHAR) NOT NULL ENABLE, 
+	ANIO NUMBER(10,0) NOT NULL ENABLE, 
+	CUATRIMESTRE VARCHAR2(30 CHAR), 
+	ESTADO_INSPECCION VARCHAR2(30 CHAR), 
+	FECHA_ANULACION TIMESTAMP (6), 
+	FECHA_FINALIZACION TIMESTAMP (6), 
+	FECHA_PREVISTA TIMESTAMP (6), 
+	NOMBRE_UNIDAD VARCHAR2(255 CHAR), 
+	NUMERO VARCHAR2(100 CHAR), 
+	USERNAME_ANULACION VARCHAR2(255 CHAR), 
+	USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
+	ID_EQUIPO NUMBER(19,0) NOT NULL ENABLE, 
+	ID_MUNICIPIO NUMBER(19,0), 
+	TIPO_INSPECCION VARCHAR2(10 CHAR) NOT NULL ENABLE, 
+	TIPO_UNIDAD NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_I_EQUIPO FOREIGN KEY (ID_EQUIPO)
+	  REFERENCES EQUIPO (ID) ENABLE, 
+	 CONSTRAINT FK_I_MUNICIPIO FOREIGN KEY (ID_MUNICIPIO)
+	  REFERENCES MUNICIPIOS (ID) ENABLE, 
+	 CONSTRAINT FK_I_TIPOUNIDAD FOREIGN KEY (TIPO_UNIDAD)
+	  REFERENCES TIPOS_UNIDAD (ID) ENABLE, 
+	 CONSTRAINT FK_I_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
+	  REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE
+   ) ;
+
+prompt =========================================================================
+prompt  Creacion tabla  INSPECCIONES_ASOCIADAS
+prompt =========================================================================
+
+CREATE TABLE INSPECCIONES_ASOCIADAS 
+   (	ID_INSPECCION NUMBER(19,0) NOT NULL ENABLE, 
+	ID_INSPECCION_ASOCIADA NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FA_INSASO_INSPECCIONASOC FOREIGN KEY (ID_INSPECCION_ASOCIADA)
+	  REFERENCES INSPECCIONES (ID) ENABLE, 
+	 CONSTRAINT FK_INSASO_INSPECCION FOREIGN KEY (ID_INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE
+   ) ;
+
+prompt =========================================================================
+prompt  Creacion tabla  DOCUMENTOS_BLOB
+prompt =========================================================================
+
+CREATE TABLE DOCUMENTOS_BLOB 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FICHERO BLOB, 
+	NOMBRE_FICHERO VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE
+   ); 
+/ 
+
+prompt =========================================================================
+prompt  Creacion tabla  DOCUMENTOS
+prompt =========================================================================
+
+CREATE TABLE DOCUMENTOS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(2000 CHAR), 
+	FECHA_ALTA TIMESTAMP (6), 
+	FECHA_BAJA TIMESTAMP (6), 
+	MATERIA_INDEXADA VARCHAR2(2000 CHAR), 
+	NOMBRE VARCHAR2(255 CHAR), 
+	TIPO_CONTENIDO VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_ALTA VARCHAR2(255 CHAR), 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	ID_FICHERO NUMBER(19,0), 
+	TIPO_DOCUMENTO NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_DOC_TIPODOC FOREIGN KEY (TIPO_DOCUMENTO)
+	  REFERENCES TIPO_DOCUMENTO (ID) ENABLE, 
+	 CONSTRAINT FK_D_FICHERO FOREIGN KEY (ID_FICHERO)
+	  REFERENCES DOCUMENTOS_BLOB (ID) ENABLE
    ) ;
 /
+
 prompt =========================================================================
+prompt  Creacion tabla  DOCUMENTOS_INSPECCION
+prompt =========================================================================
+
+CREATE TABLE DOCUMENTOS_INSPECCION 
+   (	ID_DOCUMENTO NUMBER(19,0) NOT NULL ENABLE, 
+	ID_INSPECCION NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FK_DOCUINS_INSPECCION FOREIGN KEY (ID_INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE, 
+	 CONSTRAINT FK_DOCUINS_DOCUMENTO FOREIGN KEY (ID_DOCUMENTO)
+	  REFERENCES DOCUMENTOS (ID) ENABLE
+   );
+
+prompt =========================================================================
+prompt  Creacion tabla  CONFIG_RESPUESTAS_CUESTIONARIO
+prompt =========================================================================
+
+  CREATE TABLE CONFIG_RESPUESTAS_CUESTIONARIO 
+   (	CLAVE VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	SECCION VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	VALOR VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	 PRIMARY KEY (CLAVE, SECCION, VALOR)
+  USING INDEX ENABLE
+   );
+
+prompt =========================================================================
+prompt  Creacion tabla  MODELOSCUESTIONARIOS
+prompt =========================================================================
+
+CREATE TABLE MODELOSCUESTIONARIOS 
+   (	ID NUMBER(10,0) NOT NULL ENABLE, 
+	CODIGO VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	 PRIMARY KEY (ID)
+  USING INDEX ENABLE
+   );
+/
+
+prompt =========================================================================
+prompt  Creacion tabla  AREASCUESTIONARIO
+prompt =========================================================================
+
+CREATE TABLE AREASCUESTIONARIO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	NOMBRE_AREA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	ID_CUESTIONARIO NUMBER(10,0), 
+	ORDEN NUMBER(10,0), 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID)
+  USING INDEX ENABLE, 
+	 CONSTRAINT FK_AC_CUESTIONARIO FOREIGN KEY (ID_CUESTIONARIO)
+	  REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE
+   );  
+/
+
+prompt =========================================================================
+prompt  Creacion tabla  PREGUNTASCUESTIONARIO
+prompt =========================================================================
+
+ CREATE TABLE PREGUNTASCUESTIONARIO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	ORDEN NUMBER(10,0), 
+	PREGUNTA VARCHAR2(2000 CHAR) NOT NULL ENABLE, 
+	TIPO_RESPUESTA VARCHAR2(100 CHAR), 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	ID_AREA NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX  ENABLE, 
+	 CONSTRAINT FK_PC_AREA FOREIGN KEY (ID_AREA)
+	  REFERENCES AREASCUESTIONARIO (ID) ENABLE
+   ); 
+
+  
+ prompt =========================================================================
+prompt  Creacion tabla  CUESTIONARIO_PERSONALIZADO
+prompt =========================================================================
+
+CREATE TABLE CUESTIONARIO_PERSONALIZADO 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_CREACION TIMESTAMP (6) NOT NULL ENABLE, 
+	NOMBRE_CUESTIONARIO VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_CREACION VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	ID_MODELO_CUESTIONARIO NUMBER(10,0) NOT NULL ENABLE, 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_CP_MODELO_CUESTIONARIO FOREIGN KEY (ID_MODELO_CUESTIONARIO)
+	  REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE
+   );
+/  
+
+prompt =========================================================================
+prompt  Creacion tabla  CUEST_PER_PREGUNTAS
+prompt =========================================================================
+
+CREATE TABLE CUEST_PER_PREGUNTAS 
+   (	ID_CUEST_PERS NUMBER(19,0) NOT NULL ENABLE, 
+	ID_PREG_ELEGIDA NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FK_CP_PREGELEGIDA FOREIGN KEY (ID_PREG_ELEGIDA)
+	  REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE, 
+	 CONSTRAINT FK_CP_CUESTIONARIOPER FOREIGN KEY (ID_CUEST_PERS)
+	  REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE
+   );
+/
+
+prompt =========================================================================
+prompt  Creacion tabla  CUESTIONARIOS_ENVIADOS
+prompt =========================================================================
+
+CREATE TABLE CUESTIONARIOS_ENVIADOS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	CARGO VARCHAR2(500 CHAR), 
+	CORREO VARCHAR2(500 CHAR) NOT NULL ENABLE, 
+	FECHA_ANULACION TIMESTAMP (6), 
+	FECHA_CUMPLIMENTACION TIMESTAMP (6), 
+	FECHA_ENVIO TIMESTAMP (6), 
+	FECHA_FINALIZACION TIMESTAMP (6), 
+	FECHA_LIMITE_CUESTIONARIO TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_NO_CONFORME TIMESTAMP (6), 
+	MOTIVO VARCHAR2(2000 CHAR) NOT NULL ENABLE, 
+	NOMBRE_USUARIO VARCHAR2(500 CHAR) NOT NULL ENABLE, 
+	USERNAME_ANULACION VARCHAR2(255 CHAR), 
+	USERNAME_ENVIO VARCHAR2(255 CHAR), 
+	USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
+	USERNAME_NO_CONFORME VARCHAR2(255 CHAR), 
+	ID_CUESTIONARIO_PERSONALIZADO NUMBER(19,0) NOT NULL ENABLE, 
+	ID_INSPECCION NUMBER(19,0) NOT NULL ENABLE, 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_CE_CUEST_PERSON FOREIGN KEY (ID_CUESTIONARIO_PERSONALIZADO)
+	  REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE, 
+	 CONSTRAINT FK_CE_INSPECCION FOREIGN KEY (ID_INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE
+   );
+
+   prompt =========================================================================
 prompt  Creacion tabla  RESPUESTASCUESTIONARIO
 prompt =========================================================================
 
-  CREATE TABLE RESPUESTASCUESTIONARIO 
-   (    FECHA_VALIDACION TIMESTAMP (6), 
-    RESPUESTA_TEXTO VARCHAR2(2000 CHAR), 
-    USERNAME_VALIDACION VARCHAR2(255 CHAR), 
-    ID_CUEST_ENVIADO NUMBER(19,0), 
-    ID_PREGUNTA NUMBER(19,0)
-   ) ;
+CREATE TABLE RESPUESTASCUESTIONARIO 
+   (	FECHA_VALIDACION TIMESTAMP (6), 
+	RESPUESTA_TEXTO VARCHAR2(2000 CHAR), 
+	USERNAME_VALIDACION VARCHAR2(255 CHAR), 
+	ID_CUEST_ENVIADO NUMBER(19,0) NOT NULL ENABLE, 
+	ID_PREGUNTA NUMBER(19,0) NOT NULL ENABLE, 
+	 PRIMARY KEY (ID_CUEST_ENVIADO, ID_PREGUNTA) USING INDEX ENABLE, 
+	 CONSTRAINT FK_RC_CUEST_ENVIADO FOREIGN KEY (ID_CUEST_ENVIADO)
+	  REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE, 
+	 CONSTRAINT FK_RC_PREGUNTA FOREIGN KEY (ID_PREGUNTA)
+	  REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE
+   );  
+
+prompt =========================================================================
+prompt  Creacion tabla  RESPUESTAS_CUEST_DOCS
+prompt =========================================================================
+CREATE TABLE RESPUESTAS_CUEST_DOCS 
+   (	ID_CUESTIONARIO_ENVIADO NUMBER(19,0) NOT NULL ENABLE, 
+	ID_PREGUNTA NUMBER(19,0) NOT NULL ENABLE, 
+	ID_DOCUMENTO NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT INDICE_RESPUESTAS_CUEST UNIQUE (ID_DOCUMENTO) USING INDEX ENABLE, 
+	 CONSTRAINT FK_RESPCUESTDOCS FOREIGN KEY (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA)
+	  REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE, 
+	 CONSTRAINT FK_RESPCUESTDOCS_DOCU FOREIGN KEY (ID_DOCUMENTO)
+	  REFERENCES DOCUMENTOS (ID) ENABLE
+   );
+
+prompt =========================================================================
+prompt  Creacion tabla  RESPUESTA_DATOS_TABLA
+prompt =========================================================================
+CREATE TABLE RESPUESTA_DATOS_TABLA 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	CAMPO01 VARCHAR2(255 CHAR), 
+	CAMPO02 VARCHAR2(255 CHAR), 
+	CAMPO03 VARCHAR2(255 CHAR), 
+	CAMPO04 VARCHAR2(255 CHAR), 
+	CAMPO05 VARCHAR2(255 CHAR), 
+	CAMPO06 VARCHAR2(255 CHAR), 
+	CAMPO07 VARCHAR2(255 CHAR), 
+	CAMPO08 VARCHAR2(255 CHAR), 
+	CAMPO09 VARCHAR2(255 CHAR), 
+	CAMPO10 VARCHAR2(255 CHAR), 
+	CAMPO11 VARCHAR2(255 CHAR), 
+	CAMPO12 VARCHAR2(255 CHAR), 
+	CAMPO13 VARCHAR2(255 CHAR), 
+	CAMPO14 VARCHAR2(255 CHAR), 
+	CAMPO15 VARCHAR2(255 CHAR), 
+	CAMPO16 VARCHAR2(255 CHAR), 
+	CAMPO17 VARCHAR2(255 CHAR), 
+	CAMPO18 VARCHAR2(255 CHAR), 
+	CAMPO19 VARCHAR2(255 CHAR), 
+	CAMPO20 VARCHAR2(255 CHAR), 
+	NOMBRE_FILA VARCHAR2(255 CHAR), 
+	RESPUESTA_ID_CUEST_ENVIADO NUMBER(19,0), 
+	RESPUESTA_ID_PREGUNTA NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_RESPUESTADATOS FOREIGN KEY (RESPUESTA_ID_CUEST_ENVIADO, RESPUESTA_ID_PREGUNTA)
+	  REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE
+   );
+    
+prompt =========================================================================
+prompt  Creacion tabla  AREAS_USUARIO_CUESTENV
+prompt =========================================================================
+
+   CREATE TABLE AREAS_USUARIO_CUESTENV 
+   (	ID_AREA NUMBER(19,0) NOT NULL ENABLE, 
+	ID_CUESTIONARIO_ENVIADO NUMBER(19,0) NOT NULL ENABLE, 
+	USERNAME_PROV VARCHAR2(255 CHAR), 
+	 PRIMARY KEY (ID_AREA, ID_CUESTIONARIO_ENVIADO)
+  USING INDEX ENABLE
+   ); 
 /
+prompt =========================================================================
+prompt  Creacion tabla  CUEST_ENV_PLANTILLA
+prompt =========================================================================
+   
+CREATE TABLE CUEST_ENV_PLANTILLA 
+   (	ID_CUEST_ENV NUMBER(19,0) NOT NULL ENABLE, 
+	ID_PLANTILLA NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FK_DOC_PLANTILLA FOREIGN KEY (ID_PLANTILLA)
+	  REFERENCES DOCUMENTOS (ID) ENABLE, 
+	 CONSTRAINT FK_CUEST_PLANTILLA FOREIGN KEY (ID_CUEST_ENV)
+	  REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE
+   );
 
 prompt =========================================================================
 prompt  Creacion tabla  SOLICITUD_DOC_PREVIA
 prompt =========================================================================
 
-  CREATE TABLE SOLICITUD_DOC_PREVIA 
-   (    ID NUMBER(19,0), 
-    APOYO_CORREO VARCHAR2(255 CHAR), 
-    APOYO_NOMBRE VARCHAR2(255 CHAR), 
-    APOYO_PUESTO VARCHAR2(255 CHAR), 
-    APOYO_TELEFONO VARCHAR2(255 CHAR), 
-    ASUNTO VARCHAR2(255 CHAR), 
-    CARGO_INTERLOCUTOR VARCHAR2(255 CHAR), 
-    CATEGORIA_INTERLOCUTOR VARCHAR2(255 CHAR), 
-    CORREO_CORPORATIVO_INTER VARCHAR2(255 CHAR), 
-    CORREO_CORPORATIVO_INTER_COMPL VARCHAR2(255 CHAR), 
-    CORREO_DESTINATARIO VARCHAR2(255 CHAR), 
-    DESCARGA_PLANTILLAS VARCHAR2(255 CHAR), 
-    DESTINATARIO VARCHAR2(255 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_CUMPLIMENTACION TIMESTAMP (6), 
-    FECHA_ENVIO TIMESTAMP (6), 
-    FECHA_FINALIZACION TIMESTAMP (6), 
-    FECHA_LIMITE_CUMPLIMENTAR TIMESTAMP (6), 
-    FECHA_LIMITE_ENVIO TIMESTAMP (6), 
-    FECHA_NO_CONFORME TIMESTAMP (6), 
-    FECHA_VALID_APOYO TIMESTAMP (6), 
-    FECHA_VALID_JEFE_EQUIPO TIMESTAMP (6), 
-    NOMBRE_COMPLETO_INTERLOCUTOR VARCHAR2(255 CHAR), 
-    TELEFONO_INTERLOCUTOR VARCHAR2(255 CHAR), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_ENVIO VARCHAR2(255 CHAR), 
-    USERNAME_VALID_APOYO VARCHAR2(255 CHAR), 
-    USERNAME_VALID_JEFE_EQUIPO VARCHAR2(255 CHAR), 
-    USUARIO_FINALIZACION VARCHAR2(255 CHAR), 
-    USUARIO_NO_CONFORME VARCHAR2(255 CHAR), 
-    ID_INSPECCION NUMBER(19,0)
-   ) ;
-/
-
+CREATE TABLE SOLICITUD_DOC_PREVIA 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	APOYO_CORREO VARCHAR2(255 CHAR), 
+	APOYO_NOMBRE VARCHAR2(255 CHAR), 
+	APOYO_PUESTO VARCHAR2(255 CHAR), 
+	APOYO_TELEFONO VARCHAR2(255 CHAR), 
+	ASUNTO VARCHAR2(255 CHAR), 
+	CARGO_INTERLOCUTOR VARCHAR2(255 CHAR), 
+	CATEGORIA_INTERLOCUTOR VARCHAR2(255 CHAR), 
+	CORREO_CORPORATIVO_INTER VARCHAR2(255 CHAR), 
+	CORREO_CORPORATIVO_INTER_COMPL VARCHAR2(255 CHAR), 
+	CORREO_DESTINATARIO VARCHAR2(255 CHAR), 
+	DESCARGA_PLANTILLAS VARCHAR2(255 CHAR), 
+	DESTINATARIO VARCHAR2(255 CHAR), 
+	FECHA_ALTA TIMESTAMP (6), 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_CUMPLIMENTACION TIMESTAMP (6), 
+	FECHA_ENVIO TIMESTAMP (6), 
+	FECHA_FINALIZACION TIMESTAMP (6), 
+	FECHA_LIMITE_CUMPLIMENTAR TIMESTAMP (6), 
+	FECHA_LIMITE_ENVIO TIMESTAMP (6), 
+	FECHA_NO_CONFORME TIMESTAMP (6), 
+	FECHA_VALID_APOYO TIMESTAMP (6), 
+	FECHA_VALID_JEFE_EQUIPO TIMESTAMP (6), 
+	NOMBRE_COMPLETO_INTERLOCUTOR VARCHAR2(255 CHAR), 
+	TELEFONO_INTERLOCUTOR VARCHAR2(255 CHAR), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_ENVIO VARCHAR2(255 CHAR), 
+	USERNAME_VALID_APOYO VARCHAR2(255 CHAR), 
+	USERNAME_VALID_JEFE_EQUIPO VARCHAR2(255 CHAR), 
+	USUARIO_FINALIZACION VARCHAR2(255 CHAR), 
+	USUARIO_NO_CONFORME VARCHAR2(255 CHAR), 
+	ID_INSPECCION NUMBER(19,0) NOT NULL ENABLE, 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_SDP_INSPECCION FOREIGN KEY (ID_INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE
+   ) ; 
+   
 prompt =========================================================================
-prompt  Creacion tabla  SUGERENCIA
-prompt =========================================================================
-
-  CREATE TABLE SUGERENCIA 
-   (    ID_SUGERENCIA NUMBER(10,0), 
-    DESCRIPCION VARCHAR2(4000 CHAR), 
-    FECHA_CONTESTACION TIMESTAMP (6), 
-    FECHA_REGISTRO TIMESTAMP (6), 
-    MODULO VARCHAR2(50 CHAR), 
-    USUARIO_CONTESTACION VARCHAR2(255 CHAR), 
-    USUARIO_REGISTRO VARCHAR2(255 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  TIPODOCUMENTACIONPREVIA
+prompt  Creacion tabla  SOLICITUD_PREVIA_DOCS
 prompt =========================================================================
 
-  CREATE TABLE TIPODOCUMENTACIONPREVIA 
-   (    ID NUMBER(19,0), 
-    AMBITO VARCHAR2(10 CHAR), 
-    DESCRIPCION VARCHAR2(255 CHAR), 
-    EXTENSIONES VARCHAR2(255 CHAR), 
-    NOMBRE VARCHAR2(255 CHAR)
-   ) ;
-/
+CREATE TABLE SOLICITUD_PREVIA_DOCS 
+   (	ID_SOLICITUD_PREVIA NUMBER(19,0) NOT NULL ENABLE, 
+	ID_DOCUMENTO NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT INDICE_SOLICITUD_PREVIA UNIQUE (ID_DOCUMENTO) USING INDEX ENABLE
+   );
+
 prompt =========================================================================
-prompt  Creacion tabla  TIPO_DOCUMENTO
+prompt  Creacion tabla  GUIAS
 prompt =========================================================================
 
-  CREATE TABLE TIPO_DOCUMENTO 
-   (    ID NUMBER(19,0), 
-    NOMBRE VARCHAR2(255 CHAR)
-   ) ;
-/
+CREATE TABLE GUIAS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	FECHA_ANULACION TIMESTAMP (6), 
+	NOMBRE_GUIA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	ORDEN NUMBER(10,0), 
+	USERNAME_ANULACION VARCHAR2(255 CHAR), 
+	TIPO_INSPECCION VARCHAR2(10 CHAR) NOT NULL ENABLE, 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_G_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
+	  REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE
+   ) ; 
+
 prompt =========================================================================
-prompt  Creacion tabla  TIPO_EQUIPO
+prompt  Creacion tabla  GUIA_PASOS
 prompt =========================================================================
 
-  CREATE TABLE TIPO_EQUIPO 
-   (    ID NUMBER(19,0), 
-    CODIGO VARCHAR2(5 CHAR), 
-    DESCRIPCION VARCHAR2(100 CHAR)
-   ) ;
-/
+CREATE TABLE GUIA_PASOS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	ORDEN NUMBER(10,0) NOT NULL ENABLE, 
+	PASO VARCHAR2(2000 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	ID_GUIA NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_GP_GUIA FOREIGN KEY (ID_GUIA)
+	  REFERENCES GUIAS (ID) ENABLE
+   ) ;    
+
 prompt =========================================================================
-prompt  Creacion tabla  TIPOS_INSPECCION
+prompt  Creacion tabla  GUIA_PERSONALIZADA
 prompt =========================================================================
 
-  CREATE TABLE TIPOS_INSPECCION 
-   (    CODIGO VARCHAR2(10 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    DESCRIPCION VARCHAR2(100 CHAR)
-   ) ;
-/
+CREATE TABLE GUIA_PERSONALIZADA 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ANULACION TIMESTAMP (6), 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_CREACION TIMESTAMP (6) NOT NULL ENABLE, 
+	NOMBRE_GUIA_PERSONALIZADA VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	USERNAME_ANULACION VARCHAR2(255 CHAR), 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_CREACION VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	ID_MODELO_GUIA NUMBER(19,0) NOT NULL ENABLE, 
+	INSPECCION NUMBER(19,0), 
+	 PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_GPR_INSPECCION FOREIGN KEY (INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE, 
+	 CONSTRAINT FK_GPR_MODELO_GUIA FOREIGN KEY (ID_MODELO_GUIA)
+	  REFERENCES GUIAS (ID) ENABLE
+   );
+  
 prompt =========================================================================
-prompt  Creacion tabla  TIPOS_UNIDAD
-prompt =========================================================================
-
-  CREATE TABLE TIPOS_UNIDAD 
-   (    ID NUMBER(19,0), 
-    DESCRIPCION VARCHAR2(100 CHAR)
-   ) ;
-/
-prompt =========================================================================
-prompt  Creacion tabla  USERS
+prompt  Creacion tabla  GUIA_PERSONALIZADA_PASOS
 prompt =========================================================================
 
-  CREATE TABLE USERS 
-   (    USERNAME VARCHAR2(255 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR), 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR), 
-    PRIM_APELLIDO VARCHAR2(50 CHAR), 
-    SEGUNDO_APELLIDO VARCHAR2(50 CHAR), 
-    CATEGORIA VARCHAR2(20 CHAR), 
-    CORREO VARCHAR2(50 CHAR), 
-    DESPACHO VARCHAR2(20 CHAR), 
-    DOC_IDENTIDAD VARCHAR2(10 CHAR), 
-    ESTADO VARCHAR2(8 CHAR), 
-    FECHA_DESTINO_IPSS TIMESTAMP (6), 
-    FECHA_INACTIVO TIMESTAMP (6), 
-    FECHA_INGRESO TIMESTAMP (6), 
-    NIVEL NUMBER(10,0), 
-    NOMBRE VARCHAR2(50 CHAR), 
-    PASSWORD VARCHAR2(100 CHAR), 
-    ROLE VARCHAR2(25 CHAR), 
-    TELEFONO VARCHAR2(12 CHAR), 
-    TFNO_MOVIL_OFICIAL VARCHAR2(12 CHAR), 
-    TFNO_MOVIL_PARTICULAR VARCHAR2(12 CHAR), 
-    ID_CLASE NUMBER(19,0), 
-    ID_CUERPO NUMBER(10,0), 
-    ID_DEPARTAMENTO NUMBER(19,0), 
-    ID_EMPLEO NUMBER(19,0), 
-    ID_PUESTO NUMBER(19,0)
-   ) ;
-/
+CREATE TABLE GUIA_PERSONALIZADA_PASOS 
+   (	ID_GUIA_PERS NUMBER(19,0) NOT NULL ENABLE, 
+	ID_PASO_ELEGIDO NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FK_GUIAPERPASO_PASO FOREIGN KEY (ID_PASO_ELEGIDO)
+	  REFERENCES GUIA_PASOS (ID) ENABLE, 
+	 CONSTRAINT FK_GUIAPERPASO_GUIAPER FOREIGN KEY (ID_GUIA_PERS)
+	  REFERENCES GUIA_PERSONALIZADA (ID) ENABLE
+   );
+
 prompt =========================================================================
 prompt  Creacion tabla  GUIA_INSPECCION
 prompt =========================================================================
-    CREATE TABLE GUIA_INSPECCION
-    (   ID_GUIA NUMBER(19,0), 
-       ID_INSPECCION NUMBER(19,0)
-    );
-/
-
-prompt =========================================================================
-prompt  Creacion tabla  CUEST_ENV_PLANTILLA
-prompt =========================================================================
-    CREATE TABLE CUEST_ENV_PLANTILLA 
-   ( ID_CUEST_ENV NUMBER(19,0), 
- ID_PLANTILLA NUMBER(19,0)
-    );
-/
-
+ CREATE TABLE GUIA_INSPECCION 
+   (	ID_GUIA NUMBER(19,0) NOT NULL ENABLE, 
+	ID_INSPECCION NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FK_GUIA_INSPECCION FOREIGN KEY (ID_INSPECCION)
+	  REFERENCES INSPECCIONES (ID) ENABLE, 
+	 CONSTRAINT FK_GUIA FOREIGN KEY (ID_GUIA)
+	  REFERENCES GUIA_PERSONALIZADA (ID) ENABLE
+   ) ;
 
 prompt =========================================================================
 prompt  Creacion tabla  MODELOS_INFORME
 prompt =========================================================================
 
-  CREATE TABLE MODELOS_INFORME 
-   (    ID NUMBER(19,0) NOT NULL ENABLE, 
-         NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE,
-         ESTANDAR NUMBER(1,0) DEFAULT 0 NOT NULL ENABLE,
-         FECHA_ALTA TIMESTAMP (6), 
-         FECHA_BAJA TIMESTAMP (6), 
-         USERNAME_ALTA VARCHAR2(255 CHAR), 
-         USERNAME_BAJA VARCHAR2(255 CHAR),
-         CONSTRAINT PK_MODELO_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE
-   ) ;
-/
-
+CREATE TABLE MODELOS_INFORME 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	ESTANDAR NUMBER(1,0) DEFAULT 0 NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6), 
+	FECHA_BAJA TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR), 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	 CONSTRAINT PK_MODELO_INFORME PRIMARY KEY (ID) ENABLE
+   ) ; 
+   
 prompt =========================================================================
 prompt  Creacion tabla  AREAS_INFORME
 prompt =========================================================================
 
-  CREATE TABLE AREAS_INFORME 
-   (    ID NUMBER(19,0) NOT NULL ENABLE, 
-        DESCRIPCION VARCHAR2(1000 CHAR) NOT NULL ENABLE, 
-        MODELO_INFORME_ID NUMBER(19,0) NOT NULL ENABLE,
-        ORDEN NUMBER(19,0) NOT NULL ENABLE,
-        CONSTRAINT PK_AREA_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE,
-        CONSTRAINT FK_AREA_MODELOINF FOREIGN KEY (MODELO_INFORME_ID)
-            REFERENCES MODELOS_INFORME (ID) ENABLE
-   ) ;
-/
-
+ CREATE TABLE AREAS_INFORME 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(1000 CHAR) NOT NULL ENABLE, 
+	MODELO_INFORME_ID NUMBER(19,0) NOT NULL ENABLE, 
+	ORDEN NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT PK_AREA_INFORME PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_AREA_MODELOINF FOREIGN KEY (MODELO_INFORME_ID)
+	  REFERENCES MODELOS_INFORME (ID) ENABLE
+   ) ; 
+   
 prompt =========================================================================
 prompt  Creacion tabla  SUBAREAS_INFORME
 prompt =========================================================================
 
-  CREATE TABLE SUBAREAS_INFORME 
-   (    ID NUMBER(19,0) NOT NULL ENABLE, 
-        DESCRIPCION VARCHAR2(1000 CHAR) NOT NULL ENABLE, 
-        AREA_ID NUMBER(19,0) NOT NULL ENABLE,
-        ORDEN NUMBER(19,0) NOT NULL ENABLE,
-        CONSTRAINT PK_SUBAREA_INFORME  PRIMARY KEY (ID) USING INDEX ENABLE,
-        CONSTRAINT FK_AREA_INFORME FOREIGN KEY (AREA_ID)
-            REFERENCES AREAS_INFORME (ID) ENABLE
-   ) ;
-/
-
-
+CREATE TABLE SUBAREAS_INFORME 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	DESCRIPCION VARCHAR2(1000 CHAR) NOT NULL ENABLE, 
+	AREA_ID NUMBER(19,0) NOT NULL ENABLE, 
+	ORDEN NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT PK_SUBAREA_INFORME PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_AREA_INFORME FOREIGN KEY (AREA_ID)
+	  REFERENCES AREAS_INFORME (ID) ENABLE
+   ) ; 
+   
 prompt =========================================================================
 prompt  Creacion tabla  MODELOS_INFORME_PERSONALIZADOS
 prompt =========================================================================
 
- CREATE TABLE MODELOS_INFORME_PERSONALIZADOS
-(
-    ID NUMBER(19,0) NOT NULL ENABLE, 
-    NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE, 
-    ID_MODELO_INFORME NUMBER(19,0) NOT NULL ENABLE,
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
-    CONSTRAINT PK_INFORME_PERSO  PRIMARY KEY (ID) USING INDEX ENABLE,
-    CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (ID_MODELO_INFORME)
-        REFERENCES MODELOS_INFORME (ID) ENABLE
-);
+CREATE TABLE MODELOS_INFORME_PERSONALIZADOS 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	NOMBRE VARCHAR2(100 CHAR) NOT NULL ENABLE, 
+	ID_MODELO_INFORME NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	 CONSTRAINT PK_INFORME_PERSO PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_MODELO_INFORME FOREIGN KEY (ID_MODELO_INFORME)
+	  REFERENCES MODELOS_INFORME (ID) ENABLE
+   ) ; 
 
 prompt =========================================================================
 prompt  Creacion tabla  INFORME_PERSONAL_SUBAREAS
 prompt =========================================================================
 
-      
-CREATE TABLE INFORME_PERSONAL_SUBAREAS 
-(   ID_INFORME_PERS NUMBER(19,0) NOT NULL ENABLE, 
-    ID_SUBAREA NUMBER(19,0) NOT NULL ENABLE, 
-    CONSTRAINT FK_SUBAREA_INF_PERS FOREIGN KEY (ID_SUBAREA)
-        REFERENCES SUBAREAS_INFORME (ID) ENABLE, 
-    CONSTRAINT FK_INFOR_PERS FOREIGN KEY (ID_INFORME_PERS)
-        REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE
-);
+ CREATE TABLE INFORME_PERSONAL_SUBAREAS 
+   (	ID_INFORME_PERS NUMBER(19,0) NOT NULL ENABLE, 
+	ID_SUBAREA NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT FK_SUBAREA_INF_PERS FOREIGN KEY (ID_SUBAREA)
+	  REFERENCES SUBAREAS_INFORME (ID) ENABLE, 
+	 CONSTRAINT FK_INFOR_PERS FOREIGN KEY (ID_INFORME_PERS)
+	  REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE
+   ) ; 
 
 prompt =========================================================================
 prompt  Creacion tabla  INFORMES
 prompt =========================================================================
 
-  CREATE TABLE INFORMES 
-   (   ID NUMBER(19,0) NOT NULL ENABLE, 
-    INSPECCION_ID NUMBER(19,0) NOT NULL ENABLE, 
-    INFORME_PERSONAL_ID NUMBER(19,0) NOT NULL ENABLE,
-    FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
-    FECHA_BAJA TIMESTAMP (6), 
-    FECHA_MODIFICACION TIMESTAMP (6), 
-    USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
-    USERNAME_BAJA VARCHAR2(255 CHAR), 
-    USERNAME_MODIF VARCHAR2(255 CHAR),
-    FECHA_FINALIZACION TIMESTAMP (6), 
-    USERNAME_FINALIZACION VARCHAR2(255 CHAR),
-    CONSTRAINT PK_INFORME PRIMARY KEY (ID) USING INDEX ENABLE,
-    CONSTRAINT FK_INFOR_PERSONAL FOREIGN KEY (INFORME_PERSONAL_ID)
-        REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE
-   ) ;
-/
-
+CREATE TABLE INFORMES 
+   (	ID NUMBER(19,0) NOT NULL ENABLE, 
+	INSPECCION_ID NUMBER(19,0) NOT NULL ENABLE, 
+	INFORME_PERSONAL_ID NUMBER(19,0) NOT NULL ENABLE, 
+	FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
+	FECHA_BAJA TIMESTAMP (6), 
+	FECHA_MODIFICACION TIMESTAMP (6), 
+	USERNAME_ALTA VARCHAR2(255 CHAR) NOT NULL ENABLE, 
+	USERNAME_BAJA VARCHAR2(255 CHAR), 
+	USERNAME_MODIF VARCHAR2(255 CHAR), 
+	FECHA_FINALIZACION TIMESTAMP (6), 
+	USERNAME_FINALIZACION VARCHAR2(255 CHAR), 
+	 CONSTRAINT PK_INFORME PRIMARY KEY (ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_INFOR_PERSONAL FOREIGN KEY (INFORME_PERSONAL_ID)
+	  REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE, 
+	 CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
+	  REFERENCES INSPECCIONES (ID) ENABLE
+   ) ; 
+   
 prompt =========================================================================
 prompt  Creacion tabla  RESPUESTAS_INFORME
 prompt =========================================================================
 
-  CREATE TABLE RESPUESTAS_INFORME 
-   (    TEXTO BLOB NOT NULL ENABLE,
-        CONCLUSIONES BLOB,
-        INFORME_ID NUMBER(19,0) NOT NULL ENABLE, 
-        SUBAREA_ID NUMBER(19,0) NOT NULL ENABLE,
-        CONSTRAINT PK_RESPUESTA_INF PRIMARY KEY (INFORME_ID, SUBAREA_ID) USING INDEX ENABLE,
-        CONSTRAINT FK_RESPUESTA_INFOR FOREIGN KEY (INFORME_ID)
-            REFERENCES INFORMES (ID) ENABLE,
-        CONSTRAINT FK_RESPUESTA_SUBAREA FOREIGN KEY (SUBAREA_ID)
-            REFERENCES SUBAREAS_INFORME (ID) ENABLE
-   ) ;
-/
-
+CREATE TABLE RESPUESTAS_INFORME 
+   (	TEXTO BLOB NOT NULL ENABLE, 
+	CONCLUSIONES BLOB, 
+	INFORME_ID NUMBER(19,0) NOT NULL ENABLE, 
+	SUBAREA_ID NUMBER(19,0) NOT NULL ENABLE, 
+	 CONSTRAINT PK_RESPUESTA_INF PRIMARY KEY (INFORME_ID, SUBAREA_ID) USING INDEX ENABLE, 
+	 CONSTRAINT FK_RESPUESTA_INFOR FOREIGN KEY (INFORME_ID)
+	  REFERENCES INFORMES (ID) ENABLE, 
+	 CONSTRAINT FK_RESPUESTA_SUBAREA FOREIGN KEY (SUBAREA_ID)
+	  REFERENCES SUBAREAS_INFORME (ID) ENABLE
+   ) ; 
+  
 prompt =========================================================================
 prompt  Creacion tabla  ASIGN_SUBAREA_INFORME_USER
 prompt =========================================================================
 
-  CREATE TABLE ASIGN_SUBAREA_INFORME_USER 
+CREATE TABLE ASIGN_SUBAREA_INFORME_USER 
    (    INFORME_ID NUMBER(19,0) NOT NULL ENABLE, 
         SUBAREA_ID NUMBER(19,0) NOT NULL ENABLE,
         USERNAME VARCHAR2(255 CHAR),
@@ -831,688 +956,10 @@ prompt =========================================================================
             REFERENCES SUBAREAS_INFORME (ID) ENABLE,
         CONSTRAINT FK_ASIGN_USER FOREIGN KEY (USERNAME)
             REFERENCES USERS (USERNAME) ENABLE
-   ) ;
-/
+   ) ;     
+   
 prompt =========================================================================
 prompt + Tarea3
-prompt =========================================================================
-prompt Ejecutando creación de index y Constraints...
-
-prompt =========================================================================
-prompt  Creacion índice  INDICE_SOLICITUD_PREVIA
-prompt =========================================================================
-
-  CREATE UNIQUE INDEX INDICE_SOLICITUD_PREVIA ON SOLICITUD_PREVIA_DOCS (ID_DOCUMENTO);
-/
-prompt =========================================================================
-prompt  Creacion índice  INDICE_RESPUESTAS_CUEST
-prompt =========================================================================
-
-  CREATE UNIQUE INDEX INDICE_RESPUESTAS_CUEST ON RESPUESTAS_CUEST_DOCS (ID_DOCUMENTO);
-/
-prompt =========================================================================
-prompt  Creacion índice  INDICE_TIPO_EQUIPO
-prompt =========================================================================
-
-  CREATE UNIQUE INDEX INDICE_TIPO_EQUIPO ON TIPO_EQUIPO (CODIGO);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  CUERPOSESTADO
-prompt =========================================================================
-
-  ALTER TABLE CUERPOSESTADO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE CUERPOSESTADO MODIFY (DESCRIPCION NOT NULL ENABLE);
-  ALTER TABLE CUERPOSESTADO MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE CUERPOSESTADO MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE CUERPOSESTADO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  PUESTOSTRABAJO
-prompt =========================================================================
-
-  ALTER TABLE PUESTOSTRABAJO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE PUESTOSTRABAJO MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE PUESTOSTRABAJO MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE PUESTOSTRABAJO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  DOCUMENTOS
-prompt =========================================================================
-
-  ALTER TABLE DOCUMENTOS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE DOCUMENTOS MODIFY (TIPO_CONTENIDO NOT NULL ENABLE);
-  ALTER TABLE DOCUMENTOS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  INSPECCIONES_ASOCIADAS
-prompt =========================================================================
-
-  ALTER TABLE INSPECCIONES_ASOCIADAS MODIFY (ID_INSPECCION_ASOCIADA NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES_ASOCIADAS MODIFY (ID_INSPECCION NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  RESPUESTASCUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTASCUESTIONARIO ADD PRIMARY KEY (ID_CUEST_ENVIADO, ID_PREGUNTA)
-  USING INDEX  ENABLE;
-  ALTER TABLE RESPUESTASCUESTIONARIO MODIFY (ID_PREGUNTA NOT NULL ENABLE);
-  ALTER TABLE RESPUESTASCUESTIONARIO MODIFY (ID_CUEST_ENVIADO NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  ALERTAS
-prompt =========================================================================
-
-  ALTER TABLE ALERTAS ADD PRIMARY KEY (ID_ALERTA)
-  USING INDEX  ENABLE;
-  ALTER TABLE ALERTAS MODIFY (ID_ALERTA NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  INSPECCIONES
-prompt =========================================================================
-
-  ALTER TABLE INSPECCIONES ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE INSPECCIONES MODIFY (TIPO_INSPECCION NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES MODIFY (ID_EQUIPO NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES MODIFY (ANIO NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES MODIFY (AMBITO NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE INSPECCIONES MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  GUIA_PERSONALIZADA_PASOS
-prompt =========================================================================
-
-  ALTER TABLE GUIA_PERSONALIZADA_PASOS MODIFY (ID_PASO_ELEGIDO NOT NULL ENABLE);
-  ALTER TABLE GUIA_PERSONALIZADA_PASOS MODIFY (ID_GUIA_PERS NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  PREGUNTASCUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE PREGUNTASCUESTIONARIO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE PREGUNTASCUESTIONARIO MODIFY (PREGUNTA NOT NULL ENABLE);
-  ALTER TABLE PREGUNTASCUESTIONARIO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  CUESTIONARIOS_ENVIADOS
-prompt =========================================================================
-
-  ALTER TABLE CUESTIONARIOS_ENVIADOS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (ID_INSPECCION NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (ID_CUESTIONARIO_PERSONALIZADO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (NOMBRE_USUARIO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (MOTIVO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (FECHA_LIMITE_CUESTIONARIO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (CORREO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIOS_ENVIADOS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  GUIA_PERSONALIZADA
-prompt =========================================================================
-
-  ALTER TABLE GUIA_PERSONALIZADA ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE GUIA_PERSONALIZADA MODIFY (ID_MODELO_GUIA NOT NULL ENABLE);
-  ALTER TABLE GUIA_PERSONALIZADA MODIFY (USERNAME_CREACION NOT NULL ENABLE);
-  ALTER TABLE GUIA_PERSONALIZADA MODIFY (NOMBRE_GUIA_PERSONALIZADA NOT NULL ENABLE);
-  ALTER TABLE GUIA_PERSONALIZADA MODIFY (FECHA_CREACION NOT NULL ENABLE);
-  ALTER TABLE GUIA_PERSONALIZADA MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  AREAS_USUARIO_CUESTENV
-prompt =========================================================================
-
-  ALTER TABLE AREAS_USUARIO_CUESTENV ADD PRIMARY KEY (ID_AREA, ID_CUESTIONARIO_ENVIADO)
-  USING INDEX  ENABLE;
-  ALTER TABLE AREAS_USUARIO_CUESTENV MODIFY (ID_CUESTIONARIO_ENVIADO NOT NULL ENABLE);
-  ALTER TABLE AREAS_USUARIO_CUESTENV MODIFY (ID_AREA NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  ALERTAS_NOTIFICACIONES_USUARIO
-prompt =========================================================================
-
-  ALTER TABLE ALERTAS_NOTIFICACIONES_USUARIO ADD PRIMARY KEY (USUARIO, TIPO_MENSAJE, ID_MENSAJE, FECHA_ALTA, NOMBRE_SECCION)
-  USING INDEX  ENABLE;
-  ALTER TABLE ALERTAS_NOTIFICACIONES_USUARIO MODIFY (NOMBRE_SECCION NOT NULL ENABLE);
-  ALTER TABLE ALERTAS_NOTIFICACIONES_USUARIO MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE ALERTAS_NOTIFICACIONES_USUARIO MODIFY (ID_MENSAJE NOT NULL ENABLE);
-  ALTER TABLE ALERTAS_NOTIFICACIONES_USUARIO MODIFY (TIPO_MENSAJE NOT NULL ENABLE);
-  ALTER TABLE ALERTAS_NOTIFICACIONES_USUARIO MODIFY (USUARIO NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  CONFIG_RESPUESTAS_CUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE CONFIG_RESPUESTAS_CUESTIONARIO ADD PRIMARY KEY (CLAVE, SECCION, VALOR)
-  USING INDEX  ENABLE;
-  ALTER TABLE CONFIG_RESPUESTAS_CUESTIONARIO MODIFY (VALOR NOT NULL ENABLE);
-  ALTER TABLE CONFIG_RESPUESTAS_CUESTIONARIO MODIFY (SECCION NOT NULL ENABLE);
-  ALTER TABLE CONFIG_RESPUESTAS_CUESTIONARIO MODIFY (CLAVE NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  DOCUMENTACION_PREVIA
-prompt =========================================================================
-
-  ALTER TABLE DOCUMENTACION_PREVIA ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE DOCUMENTACION_PREVIA MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  MODELOSCUESTIONARIOS
-prompt =========================================================================
-
-  ALTER TABLE MODELOSCUESTIONARIOS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE MODELOSCUESTIONARIOS MODIFY (DESCRIPCION NOT NULL ENABLE);
-  ALTER TABLE MODELOSCUESTIONARIOS MODIFY (CODIGO NOT NULL ENABLE);
-  ALTER TABLE MODELOSCUESTIONARIOS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  DEPARTAMENTO
-prompt =========================================================================
-
-  ALTER TABLE DEPARTAMENTO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE DEPARTAMENTO MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE DEPARTAMENTO MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE DEPARTAMENTO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  TIPOS_INSPECCION
-prompt =========================================================================
-
-  ALTER TABLE TIPOS_INSPECCION ADD PRIMARY KEY (CODIGO)
-  USING INDEX  ENABLE;
-  ALTER TABLE TIPOS_INSPECCION MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE TIPOS_INSPECCION MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE TIPOS_INSPECCION MODIFY (CODIGO NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  MIEMBROS
-prompt =========================================================================
-
-  ALTER TABLE MIEMBROS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE MIEMBROS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  CUESTIONARIO_PERSONALIZADO
-prompt =========================================================================
-
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO MODIFY (ID_MODELO_CUESTIONARIO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO MODIFY (USERNAME_CREACION NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO MODIFY (NOMBRE_CUESTIONARIO NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO MODIFY (FECHA_CREACION NOT NULL ENABLE);
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  MUNICIPIOS
-prompt =========================================================================
-
-  ALTER TABLE MUNICIPIOS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE MUNICIPIOS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  PROVINCIAS
-prompt =========================================================================
-
-  ALTER TABLE PROVINCIAS ADD PRIMARY KEY (CODIGO)
-  USING INDEX  ENABLE;
-  ALTER TABLE PROVINCIAS MODIFY (CODIGO NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  USERS
-prompt =========================================================================
-
-  ALTER TABLE USERS ADD PRIMARY KEY (USERNAME)
-  USING INDEX  ENABLE;
-  ALTER TABLE USERS MODIFY (ROLE NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (PASSWORD NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (NOMBRE NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (ESTADO NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (DOC_IDENTIDAD NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (CORREO NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (PRIM_APELLIDO NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE USERS MODIFY (USERNAME NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  TIPODOCUMENTACIONPREVIA
-prompt =========================================================================
-
-  ALTER TABLE TIPODOCUMENTACIONPREVIA ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE TIPODOCUMENTACIONPREVIA MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  SOLICITUD_DOC_PREVIA
-prompt =========================================================================
-
-  ALTER TABLE SOLICITUD_DOC_PREVIA ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE SOLICITUD_DOC_PREVIA MODIFY (ID_INSPECCION NOT NULL ENABLE);
-  ALTER TABLE SOLICITUD_DOC_PREVIA MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE SOLICITUD_DOC_PREVIA MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  TIPO_DOCUMENTO
-prompt =========================================================================
-
-  ALTER TABLE TIPO_DOCUMENTO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE TIPO_DOCUMENTO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  PARAMETROS
-prompt =========================================================================
-
-  ALTER TABLE PARAMETROS ADD PRIMARY KEY (CLAVE, SECCION, VALOR)
-  USING INDEX  ENABLE;
-  ALTER TABLE PARAMETROS MODIFY (VALOR NOT NULL ENABLE);
-  ALTER TABLE PARAMETROS MODIFY (SECCION NOT NULL ENABLE);
-  ALTER TABLE PARAMETROS MODIFY (CLAVE NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  SOLICITUD_PREVIA_DOCS
-prompt =========================================================================
-
-  ALTER TABLE SOLICITUD_PREVIA_DOCS ADD CONSTRAINT INDICE_SOLICITUD_PREVIA UNIQUE (ID_DOCUMENTO)
-  USING INDEX  ENABLE;
-  ALTER TABLE SOLICITUD_PREVIA_DOCS MODIFY (ID_DOCUMENTO NOT NULL ENABLE);
-  ALTER TABLE SOLICITUD_PREVIA_DOCS MODIFY (ID_SOLICITUD_PREVIA NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  NOTIFICACIONES
-prompt =========================================================================
-
-  ALTER TABLE NOTIFICACIONES ADD PRIMARY KEY (ID_NOTIFICACION)
-  USING INDEX  ENABLE;
-  ALTER TABLE NOTIFICACIONES MODIFY (FECHA_NOTIFICACION NOT NULL ENABLE);
-  ALTER TABLE NOTIFICACIONES MODIFY (ID_NOTIFICACION NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  RESPUESTA_DATOS_TABLA
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTA_DATOS_TABLA ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE RESPUESTA_DATOS_TABLA MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  CLASE_USUARIO
-prompt =========================================================================
-
-  ALTER TABLE CLASE_USUARIO ADD PRIMARY KEY (ID_CLASE)
-  USING INDEX  ENABLE;
-  ALTER TABLE CLASE_USUARIO MODIFY (ID_CLASE NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  DOCUMENTOS_INSPECCION
-prompt =========================================================================
-
-  ALTER TABLE DOCUMENTOS_INSPECCION MODIFY (ID_INSPECCION NOT NULL ENABLE);
-  ALTER TABLE DOCUMENTOS_INSPECCION MODIFY (ID_DOCUMENTO NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  TIPOS_UNIDAD
-prompt =========================================================================
-
-  ALTER TABLE TIPOS_UNIDAD ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE TIPOS_UNIDAD MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  EMPLEO
-prompt =========================================================================
-
-  ALTER TABLE EMPLEO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE EMPLEO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  DOCUMENTOS_BLOB
-prompt =========================================================================
-
-  ALTER TABLE DOCUMENTOS_BLOB ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE DOCUMENTOS_BLOB MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  REG_ACTIVIDAD
-prompt =========================================================================
-
-  ALTER TABLE REG_ACTIVIDAD ADD PRIMARY KEY (REG_ACTIVIDAD)
-  USING INDEX  ENABLE;
-  ALTER TABLE REG_ACTIVIDAD MODIFY (REG_ACTIVIDAD NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  GUIA_PASOS
-prompt =========================================================================
-
-  ALTER TABLE GUIA_PASOS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE GUIA_PASOS MODIFY (PASO NOT NULL ENABLE);
-  ALTER TABLE GUIA_PASOS MODIFY (ORDEN NOT NULL ENABLE);
-  ALTER TABLE GUIA_PASOS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  TIPO_EQUIPO
-prompt =========================================================================
-
-  ALTER TABLE TIPO_EQUIPO ADD CONSTRAINT INDICE_TIPO_EQUIPO UNIQUE (CODIGO)
-  USING INDEX  ENABLE;
-  ALTER TABLE TIPO_EQUIPO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE TIPO_EQUIPO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  AREASCUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE AREASCUESTIONARIO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE AREASCUESTIONARIO MODIFY (NOMBRE_AREA NOT NULL ENABLE);
-  ALTER TABLE AREASCUESTIONARIO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  SUGERENCIA
-prompt =========================================================================
-
-  ALTER TABLE SUGERENCIA ADD PRIMARY KEY (ID_SUGERENCIA)
-  USING INDEX  ENABLE;
-  ALTER TABLE SUGERENCIA MODIFY (ID_SUGERENCIA NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  GUIAS
-prompt =========================================================================
-
-  ALTER TABLE GUIAS ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE GUIAS MODIFY (TIPO_INSPECCION NOT NULL ENABLE);
-  ALTER TABLE GUIAS MODIFY (NOMBRE_GUIA NOT NULL ENABLE);
-  ALTER TABLE GUIAS MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE GUIAS MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE GUIAS MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  RESPUESTAS_CUEST_DOCS
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTAS_CUEST_DOCS ADD CONSTRAINT INDICE_RESPUESTAS_CUEST UNIQUE (ID_DOCUMENTO)
-  USING INDEX  ENABLE;
-  ALTER TABLE RESPUESTAS_CUEST_DOCS MODIFY (ID_DOCUMENTO NOT NULL ENABLE);
-  ALTER TABLE RESPUESTAS_CUEST_DOCS MODIFY (ID_PREGUNTA NOT NULL ENABLE);
-  ALTER TABLE RESPUESTAS_CUEST_DOCS MODIFY (ID_CUESTIONARIO_ENVIADO NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  EQUIPO
-prompt =========================================================================
-
-  ALTER TABLE EQUIPO ADD PRIMARY KEY (ID)
-  USING INDEX  ENABLE;
-  ALTER TABLE EQUIPO MODIFY (NOMBRE_EQUIPO NOT NULL ENABLE);
-  ALTER TABLE EQUIPO MODIFY (JEFE_EQUIPO NOT NULL ENABLE);
-  ALTER TABLE EQUIPO MODIFY (USERNAME_ALTA NOT NULL ENABLE);
-  ALTER TABLE EQUIPO MODIFY (FECHA_ALTA NOT NULL ENABLE);
-  ALTER TABLE EQUIPO MODIFY (ID NOT NULL ENABLE);
-/
-prompt =========================================================================
-prompt  Constraints para la tabla  CUEST_PER_PREGUNTAS
-prompt =========================================================================
-
-  ALTER TABLE CUEST_PER_PREGUNTAS MODIFY (ID_PREG_ELEGIDA NOT NULL ENABLE);
-  ALTER TABLE CUEST_PER_PREGUNTAS MODIFY (ID_CUEST_PERS NOT NULL ENABLE);
-/
-
-prompt =========================================================================
-prompt  Constraints para la tabla  GUIA_INSPECCION
-prompt =========================================================================
-
-  ALTER TABLE GUIA_INSPECCION MODIFY (ID_GUIA NOT NULL ENABLE);
-  ALTER TABLE GUIA_INSPECCION MODIFY (ID_INSPECCION NOT NULL ENABLE);
-/
-
-prompt =========================================================================
-prompt  Constraints para la tabla  CUEST_ENV_PLANTILLA
-prompt =========================================================================
-
-  ALTER TABLE CUEST_ENV_PLANTILLA MODIFY (ID_CUEST_ENV NOT NULL ENABLE);
-  ALTER TABLE CUEST_ENV_PLANTILLA MODIFY (ID_PLANTILLA NOT NULL ENABLE);
-/
-
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  AREASCUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE AREASCUESTIONARIO ADD CONSTRAINT FK_AC_CUESTIONARIO FOREIGN KEY (ID_CUESTIONARIO)
-      REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  CUESTIONARIO_PERSONALIZADO
-prompt =========================================================================
-
-  ALTER TABLE CUESTIONARIO_PERSONALIZADO ADD CONSTRAINT FK_CP_MODELO_CUESTIONARIO FOREIGN KEY (ID_MODELO_CUESTIONARIO)
-      REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  CUESTIONARIOS_ENVIADOS
-prompt =========================================================================
-
-  ALTER TABLE CUESTIONARIOS_ENVIADOS ADD CONSTRAINT FK_CE_CUEST_PERSON FOREIGN KEY (ID_CUESTIONARIO_PERSONALIZADO)
-      REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE;
-  ALTER TABLE CUESTIONARIOS_ENVIADOS ADD CONSTRAINT FK_CE_INSPECCION FOREIGN KEY (ID_INSPECCION)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  CUEST_PER_PREGUNTAS
-prompt =========================================================================
-
-  ALTER TABLE CUEST_PER_PREGUNTAS ADD CONSTRAINT FK_CP_PREGELEGIDA FOREIGN KEY (ID_PREG_ELEGIDA)
-      REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE;
-  ALTER TABLE CUEST_PER_PREGUNTAS ADD CONSTRAINT FK_CP_CUESTIONARIOPER FOREIGN KEY (ID_CUEST_PERS)
-      REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  DOCUMENTOS
-prompt =========================================================================
-
-  ALTER TABLE DOCUMENTOS ADD CONSTRAINT FK_DOC_TIPODOC FOREIGN KEY (TIPO_DOCUMENTO)
-      REFERENCES TIPO_DOCUMENTO (ID) ENABLE;
-  ALTER TABLE DOCUMENTOS ADD CONSTRAINT FK_D_FICHERO FOREIGN KEY (ID_FICHERO)
-      REFERENCES DOCUMENTOS_BLOB (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  DOCUMENTOS_INSPECCION
-prompt =========================================================================
-
-  ALTER TABLE DOCUMENTOS_INSPECCION ADD CONSTRAINT FK_DOCUINS_INSPECCION FOREIGN KEY (ID_INSPECCION)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-  ALTER TABLE DOCUMENTOS_INSPECCION ADD CONSTRAINT FK_DOCUINS_DOCUMENTO FOREIGN KEY (ID_DOCUMENTO)
-      REFERENCES DOCUMENTOS (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  EMPLEO
-prompt =========================================================================
-
-  ALTER TABLE EMPLEO ADD CONSTRAINT FK_EM_CUERPO FOREIGN KEY (ID_CUERPO)
-      REFERENCES CUERPOSESTADO (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  EQUIPO
-prompt =========================================================================
-
-  ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_TIPOEQUIPO FOREIGN KEY (ID_TIPO_EQUIPO)
-      REFERENCES TIPO_EQUIPO (ID) ENABLE;
-  ALTER TABLE EQUIPO ADD CONSTRAINT FK_EQ_JEFE FOREIGN KEY (JEFE_EQUIPO)
-      REFERENCES USERS (USERNAME) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  GUIA_PASOS
-prompt =========================================================================
-
-  ALTER TABLE GUIA_PASOS ADD CONSTRAINT FK_GP_GUIA FOREIGN KEY (ID_GUIA)
-      REFERENCES GUIAS (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  GUIA_PERSONALIZADA
-prompt =========================================================================
-
-  ALTER TABLE GUIA_PERSONALIZADA ADD CONSTRAINT FK_GPR_INSPECCION FOREIGN KEY (INSPECCION)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-  ALTER TABLE GUIA_PERSONALIZADA ADD CONSTRAINT FK_GPR_MODELO_GUIA FOREIGN KEY (ID_MODELO_GUIA)
-      REFERENCES GUIAS (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  GUIA_PERSONALIZADA_PASOS
-prompt =========================================================================
-
-  ALTER TABLE GUIA_PERSONALIZADA_PASOS ADD CONSTRAINT FK_GUIAPERPASO_PASO FOREIGN KEY (ID_PASO_ELEGIDO)
-      REFERENCES GUIA_PASOS (ID) ENABLE;
-  ALTER TABLE GUIA_PERSONALIZADA_PASOS ADD CONSTRAINT FK_GUIAPERPASO_GUIAPER FOREIGN KEY (ID_GUIA_PERS)
-      REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  GUIAS
-prompt =========================================================================
-
-  ALTER TABLE GUIAS ADD CONSTRAINT FK_G_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
-      REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  INSPECCIONES
-prompt =========================================================================
-
-  ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_EQUIPO FOREIGN KEY (ID_EQUIPO)
-      REFERENCES EQUIPO (ID) ENABLE;
-  ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_MUNICIPIO FOREIGN KEY (ID_MUNICIPIO)
-      REFERENCES MUNICIPIOS (ID) ENABLE;
-  ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_TIPOUNIDAD FOREIGN KEY (TIPO_UNIDAD)
-      REFERENCES TIPOS_UNIDAD (ID) ENABLE;
-  ALTER TABLE INSPECCIONES ADD CONSTRAINT FK_I_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
-      REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  INSPECCIONES_ASOCIADAS
-prompt =========================================================================
-
-  ALTER TABLE INSPECCIONES_ASOCIADAS ADD CONSTRAINT FA_INSASO_INSPECCIONASOC FOREIGN KEY (ID_INSPECCION_ASOCIADA)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-  ALTER TABLE INSPECCIONES_ASOCIADAS ADD CONSTRAINT FK_INSASO_INSPECCION FOREIGN KEY (ID_INSPECCION)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  MIEMBROS
-prompt =========================================================================
-
-  ALTER TABLE MIEMBROS ADD CONSTRAINT FK_M_EQUIPO FOREIGN KEY (ID_EQUIPO)
-      REFERENCES EQUIPO (ID) ENABLE;
-  ALTER TABLE MIEMBROS ADD CONSTRAINT FK_U_MIEMBRO FOREIGN KEY (USUARIO)
-      REFERENCES USERS (USERNAME) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  MUNICIPIOS
-prompt =========================================================================
-
-  ALTER TABLE MUNICIPIOS ADD CONSTRAINT FK_PROVINCIA FOREIGN KEY (CODE_PROVINCE)
-      REFERENCES PROVINCIAS (CODIGO) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  PREGUNTASCUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE PREGUNTASCUESTIONARIO ADD CONSTRAINT FK_PC_AREA FOREIGN KEY (ID_AREA)
-      REFERENCES AREASCUESTIONARIO (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  RESPUESTA_DATOS_TABLA
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTA_DATOS_TABLA ADD CONSTRAINT FK_RESPUESTADATOS FOREIGN KEY (RESPUESTA_ID_CUEST_ENVIADO, RESPUESTA_ID_PREGUNTA)
-      REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  RESPUESTAS_CUEST_DOCS
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTAS_CUEST_DOCS ADD CONSTRAINT FK_RESPCUESTDOCS FOREIGN KEY (ID_CUESTIONARIO_ENVIADO, ID_PREGUNTA)
-      REFERENCES RESPUESTASCUESTIONARIO (ID_CUEST_ENVIADO, ID_PREGUNTA) ENABLE;
-  ALTER TABLE RESPUESTAS_CUEST_DOCS ADD CONSTRAINT FK_RESPCUESTDOCS_DOCU FOREIGN KEY (ID_DOCUMENTO)
-      REFERENCES DOCUMENTOS (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  RESPUESTASCUESTIONARIO
-prompt =========================================================================
-
-  ALTER TABLE RESPUESTASCUESTIONARIO ADD CONSTRAINT FK_RC_CUEST_ENVIADO FOREIGN KEY (ID_CUEST_ENVIADO)
-      REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE;
-  ALTER TABLE RESPUESTASCUESTIONARIO ADD CONSTRAINT FK_RC_PREGUNTA FOREIGN KEY (ID_PREGUNTA)
-      REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  SOLICITUD_DOC_PREVIA
-prompt =========================================================================
-
-  ALTER TABLE SOLICITUD_DOC_PREVIA ADD CONSTRAINT FK_SDP_INSPECCION FOREIGN KEY (ID_INSPECCION)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-/
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  USERS
-prompt =========================================================================
-
-  ALTER TABLE USERS ADD CONSTRAINT FK_U_CLASE FOREIGN KEY (ID_CLASE)
-      REFERENCES CLASE_USUARIO (ID_CLASE) ENABLE;
-  ALTER TABLE USERS ADD CONSTRAINT FK_U_CUERPO FOREIGN KEY (ID_CUERPO)
-      REFERENCES CUERPOSESTADO (ID) ENABLE;
-  ALTER TABLE USERS ADD CONSTRAINT FK_U_DEPARTAMENTO FOREIGN KEY (ID_DEPARTAMENTO)
-      REFERENCES DEPARTAMENTO (ID) ENABLE;
-  ALTER TABLE USERS ADD CONSTRAINT FK_U_EMPLEO FOREIGN KEY (ID_EMPLEO)
-      REFERENCES EMPLEO (ID) ENABLE;
-  ALTER TABLE USERS ADD CONSTRAINT FK_U_PUESTO FOREIGN KEY (ID_PUESTO)
-      REFERENCES PUESTOSTRABAJO (ID) ENABLE;
-/
-
-
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  GUIA_INSPECCION
-prompt =========================================================================
-
-  ALTER TABLE GUIA_INSPECCION ADD CONSTRAINT FK_GUIA_INSPECCION FOREIGN KEY (ID_INSPECCION)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-  ALTER TABLE GUIA_INSPECCION ADD CONSTRAINT FK_GUIA FOREIGN KEY (ID_GUIA)
-      REFERENCES GUIA_PERSONALIZADA (ID) ENABLE;
-/
-
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  CUEST_ENV_PLANTILLA
-prompt =========================================================================
-
-  ALTER TABLE CUEST_ENV_PLANTILLA ADD CONSTRAINT FK_DOC_PLANTILLA FOREIGN KEY (ID_PLANTILLA)
-      REFERENCES DOCUMENTOS (ID) ENABLE;
-  ALTER TABLE CUEST_ENV_PLANTILLA ADD CONSTRAINT FK_CUEST_PLANTILLA FOREIGN KEY (ID_CUEST_ENV)
-      REFERENCES CUESTIONARIOS_ENVIADOS (ID) ENABLE;
-/
-
-prompt =========================================================================
-prompt  Reference Constraints para la tabla  INFORMES
-prompt =========================================================================
-
-  ALTER TABLE INFORMES ADD CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
-      REFERENCES INSPECCIONES (ID) ENABLE;
-
-prompt =========================================================================
-prompt + Tarea4
 prompt =========================================================================
 prompt Ejecutando inserción de datos...
 
@@ -1849,7 +1296,7 @@ COMMIT;
 
 
 prompt =========================================================================
-prompt + Tarea5
+prompt + Tarea4
 prompt =========================================================================
 prompt Ejecutando creación de secuencias...
 
@@ -1962,3 +1409,5 @@ end;
 
 
 
+
+   
