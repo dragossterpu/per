@@ -20,9 +20,8 @@ public interface IInformeRepository extends CrudRepository<Informe, Long> {
      * @param id id del informe
      * @return informe completo
      */
-    @Override
     @EntityGraph(value = "Informe.respuestas", type = EntityGraphType.LOAD)
-    Informe findOne(Long id);
+    Informe findById(Long id);
     
     /**
      * Comprobar si hay algún informe basado en éste modelo personalizado.

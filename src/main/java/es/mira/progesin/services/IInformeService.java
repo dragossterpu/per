@@ -30,18 +30,22 @@ public interface IInformeService {
      * 
      * @param informe informe
      * @param mapaRespuestas respuestas
+     * @param mapaAsignaciones asignaciones
      * @return informe actualizado
      */
-    Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas);
+    Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+            Map<SubareaInforme, String> mapaAsignaciones);
     
     /**
      * Finaliza y guarda el informe y todas las subareas que hayan sido respondidas.
      * 
      * @param informe informe
      * @param mapaRespuestas respuestas
+     * @param mapaAsignaciones asignaciones
      * @return informe actualizado
      */
-    Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas);
+    Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+            Map<SubareaInforme, String> mapaAsignaciones);
     
     /**
      * Recupera un informe con sus respuestas a partir de su id.
@@ -79,5 +83,13 @@ public interface IInformeService {
      * @return verdadero o falso
      */
     boolean existsByModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado);
+    
+    /**
+     * Asignar un subárea de un informe al usuario del inspector al que pertenece la sesión actual.
+     * 
+     * @param subarea subárea seleccionada
+     * @param informe informe de la inspección en curso
+     */
+    void asignarSubarea(SubareaInforme subarea, Informe informe);
     
 }

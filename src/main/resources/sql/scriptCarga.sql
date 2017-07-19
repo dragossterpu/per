@@ -815,6 +815,24 @@ prompt =========================================================================
             REFERENCES SUBAREAS_INFORME (ID) ENABLE
    ) ;
 /
+
+prompt =========================================================================
+prompt  Creacion tabla  ASIGN_SUBAREA_INFORME_USER
+prompt =========================================================================
+
+  CREATE TABLE ASIGN_SUBAREA_INFORME_USER 
+   (    INFORME_ID NUMBER(19,0) NOT NULL ENABLE, 
+        SUBAREA_ID NUMBER(19,0) NOT NULL ENABLE,
+        USERNAME VARCHAR2(255 CHAR),
+        CONSTRAINT PK_ASIGN_INF PRIMARY KEY (INFORME_ID, SUBAREA_ID) USING INDEX ENABLE,
+        CONSTRAINT FK_ASIGN_INFOR FOREIGN KEY (INFORME_ID)
+            REFERENCES INFORMES (ID) ENABLE,
+        CONSTRAINT FK_ASIGN_SUBAREA FOREIGN KEY (SUBAREA_ID)
+            REFERENCES SUBAREAS_INFORME (ID) ENABLE,
+        CONSTRAINT FK_ASIGN_USER FOREIGN KEY (USERNAME)
+            REFERENCES USERS (USERNAME) ENABLE
+   ) ;
+/
 prompt =========================================================================
 prompt + Tarea3
 prompt =========================================================================

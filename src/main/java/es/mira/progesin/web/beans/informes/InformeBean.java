@@ -32,9 +32,11 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
+import es.mira.progesin.services.AsignSubareaInformeUserService;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
@@ -117,6 +119,11 @@ public class InformeBean implements Serializable {
     private Map<SubareaInforme, String[]> mapaRespuestas;
     
     /**
+     * Mapa de subareas del informe y los usuarios que las están respondiendo.
+     */
+    private Map<SubareaInforme, String> mapaAsignaciones;
+    
+    /**
      * Servicio de informes.
      */
     @Autowired
@@ -151,6 +158,12 @@ public class InformeBean implements Serializable {
      */
     @Autowired
     private transient IInspeccionesService inspeccionService;
+    
+    /**
+     * Servicio de asignaciones de subareas a inspectores.
+     */
+    @Autowired
+    private AsignSubareaInformeUserService asignSubareaInformeUserService;
     
     /**
      * Servicio del registro de actividad.
@@ -229,6 +242,7 @@ public class InformeBean implements Serializable {
      */
     public String getFormEditarInforme(Long informeId) {
         cargarInforme(informeId);
+        generarMapaAsignaciones();
         return "/informes/editarInforme?faces-redirect=true";
     }
     
@@ -298,6 +312,17 @@ public class InformeBean implements Serializable {
     }
     
     /**
+     * Genera mapa con la asignación de subáreas del informe a inspectores.
+     */
+    private void generarMapaAsignaciones() {
+        mapaAsignaciones = new HashMap<>();
+        List<AsignSubareaInformeUser> asignaciones = asignSubareaInformeUserService.findByInforme(informe);
+        asignaciones.forEach(asignacion -> {
+            mapaAsignaciones.put(asignacion.getSubarea(), asignacion.getUser().getUsername());
+        });
+    }
+    
+    /**
      * Crear el informe de una inspección a partir de un modelo personalizado.
      * 
      * @param inspeccion elegida por el usuario en el formulario
@@ -322,7 +347,7 @@ public class InformeBean implements Serializable {
      */
     public void guardarInforme() {
         try {
-            setInforme(informeService.saveConRespuestas(informe, mapaRespuestas));
+            setInforme(informeService.saveConRespuestas(informe, mapaRespuestas, mapaAsignaciones));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
@@ -338,7 +363,7 @@ public class InformeBean implements Serializable {
      */
     public void finalizarInforme() {
         try {
-            setInforme(informeService.finalizarSaveConRespuestas(informe, mapaRespuestas));
+            setInforme(informeService.finalizarSaveConRespuestas(informe, mapaRespuestas, mapaAsignaciones));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado y finalizado con éxito.");
         } catch (DataAccessException e) {
@@ -409,6 +434,16 @@ public class InformeBean implements Serializable {
                     "Se ha producido un error en la generación del " + tipoArchivo);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
+    }
+    
+    /**
+     * Asignar un subárea del informe en curso al usuario del inspector al que pertenece la sesión actual.
+     * 
+     * @param subarea subárea seleccionada
+     */
+    public void asignarSubarea(SubareaInforme subarea) {
+        informeService.asignarSubarea(subarea, informe);
+        generarMapaAsignaciones();
     }
     
     /**

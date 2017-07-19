@@ -9,102 +9,118 @@
 			<p:accordionPanel value="#{informeBean.listaAreas}" var="area" activeIndex="-1" multiple="true">
 				<p:tab title="#{area.descripcion}">
 					<p:accordionPanel value="#{informeBean.mapaAreasSubareas[area]}" var="subarea" activeIndex="-1" multiple="true">
-						<p:tab title="#{subarea.descripcion}">
-							<p:textEditor value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
-                                <f:facet name="toolbar">
-                                    <span class="ql-formats">
-                                        <select class="ql-font"></select>
-                                        <select class="ql-size">
-                                            <option value="small">Pequeña</option>
-                                            <option selected="selected">Normal</option>
-                                            <option value="large">Grande</option>
-                                        </select>
-                                    </span>
-                                     <span class="ql-formats">
-                                        <button class="ql-bold" title="Negrita"></button>
-                                        <button class="ql-italic" title="Cursiva"></button>
-                                        <button class="ql-underline" title="Subrayado"></button>
-                                        <button class="ql-strike" title="Tachado"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <select class="ql-color ql-picker ql-color-picker" title="Color letra"></select>
-                                        <select class="ql-background ql-picker ql-color-picker" title="Color fondo"></select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-script" value="sub" title="Subíndice"></button>
-                                        <button class="ql-script" value="super" title="Superíndice"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <select  class="ql-header">
-                                            <option selected="selected">Normal</option>
-                                            <option value="3">Título 3</option>
-                                            <option value="4">Título 4</option>
-                                        </select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-list" value="ordered" title="Lista numerada"></button>
-                                        <button class="ql-list" value="bullet" title="Lista no numerada"></button>
-                                        <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
-                                        <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
-                                        <select class="ql-align"></select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-link" title="Añadir enlace"></button>
-                                        <button class="ql-image" title="Añadir imagen"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-clean" title="Limpiar formato"></button>
-                                    </span>
-                                </f:facet>
-                            </p:textEditor>
-                            Conclusiones y propuestas.
-                            <p:textEditor value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
-                                <f:facet name="toolbar">
-                                    <span class="ql-formats">
-                                        <select class="ql-font"></select>
-                                        <select class="ql-size">
-                                            <option value="small">Pequeña</option>
-                                            <option selected="selected">Normal</option>
-                                            <option value="large">Grande</option>
-                                        </select>
-                                    </span>
-                                     <span class="ql-formats">
-                                        <button class="ql-bold" title="Negrita"></button>
-                                        <button class="ql-italic" title="Cursiva"></button>
-                                        <button class="ql-underline" title="Subrayado"></button>
-                                        <button class="ql-strike" title="Tachado"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <select class="ql-color ql-picker ql-color-picker" title="Color letra"></select>
-                                        <select class="ql-background ql-picker ql-color-picker" title="Color fondo"></select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-script" value="sub" title="Subíndice"></button>
-                                        <button class="ql-script" value="super" title="Superíndice"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <select  class="ql-header">
-                                            <option selected="selected">Normal</option>
-                                            <option value="3">Título 3</option>
-                                            <option value="4">Título 4</option>
-                                        </select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-list" value="ordered" title="Lista numerada"></button>
-                                        <button class="ql-list" value="bullet" title="Lista no numerada"></button>
-                                        <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
-                                        <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
-                                        <select class="ql-align"></select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-link" title="Añadir enlace"></button>
-                                        <button class="ql-image" title="Añadir imagen"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-clean" title="Limpiar formato"></button>
-                                    </span>
-                                </f:facet>
-                            </p:textEditor>
+						<p:tab id="tabsubarea" title="#{subarea.descripcion}">
+                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">
+                                <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
+                                <h:outputFormat rendered="#{not empty informeBean.mapaRespuestas[subarea][1]}">
+                                    <li><h5><h:outputText value="Conclusiones y propuestas."/></h5></li>
+                                    <h:outputText value="#{informeBean.mapaRespuestas[subarea][1]}" escape="false"/>
+                                </h:outputFormat>
+                            </p:outputPanel>
+                            
+                            <h:outputText value="Asignado a: #{informeBean.mapaAsignaciones[subarea]}"  style="color:red;font-weight:bold;" rendered="#{not empty informeBean.mapaAsignaciones[subarea]}"/>
+                            <p:commandButton value="Editar" actionListener="#{informeBean.asignarSubarea(subarea)}" update="informe" rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
+                            
+                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}">
+                                <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}"
+                                    required="true" requiredMessage="No puede dejar un subárea sin responder.">
+                                    <f:facet name="toolbar">
+                                        <span class="ql-formats">
+                                            <select class="ql-font"></select>
+                                            <select class="ql-size">
+                                                <option value="small">Pequeña</option>
+                                                <option selected="selected">Normal</option>
+                                                <option value="large">Grande</option>
+                                            </select>
+                                        </span>
+                                         <span class="ql-formats">
+                                            <button class="ql-bold" title="Negrita"></button>
+                                            <button class="ql-italic" title="Cursiva"></button>
+                                            <button class="ql-underline" title="Subrayado"></button>
+                                            <button class="ql-strike" title="Tachado"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <select class="ql-color ql-picker ql-color-picker" title="Color letra"></select>
+                                            <select class="ql-background ql-picker ql-color-picker" title="Color fondo"></select>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-script" value="sub" title="Subíndice"></button>
+                                            <button class="ql-script" value="super" title="Superíndice"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <select  class="ql-header">
+                                                <option selected="selected">Normal</option>
+                                                <option value="3">Título 3</option>
+                                                <option value="4">Título 4</option>
+                                            </select>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-list" value="ordered" title="Lista numerada"></button>
+                                            <button class="ql-list" value="bullet" title="Lista no numerada"></button>
+                                            <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
+                                            <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
+                                            <select class="ql-align"></select>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-link" title="Añadir enlace"></button>
+                                            <button class="ql-image" title="Añadir imagen"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-clean" title="Limpiar formato"></button>
+                                        </span>
+                                    </f:facet>
+                                </p:textEditor>
+                                <p:messages for="editortexto" autoUpdate="true" closable="true" />
+                                <li><h5><h:outputText value="Conclusiones y propuestas."/></h5></li>
+                                <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
+                                    <f:facet name="toolbar">
+                                        <span class="ql-formats">
+                                            <select class="ql-font"></select>
+                                            <select class="ql-size">
+                                                <option value="small">Pequeña</option>
+                                                <option selected="selected">Normal</option>
+                                                <option value="large">Grande</option>
+                                            </select>
+                                        </span>
+                                         <span class="ql-formats">
+                                            <button class="ql-bold" title="Negrita"></button>
+                                            <button class="ql-italic" title="Cursiva"></button>
+                                            <button class="ql-underline" title="Subrayado"></button>
+                                            <button class="ql-strike" title="Tachado"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <select class="ql-color ql-picker ql-color-picker" title="Color letra"></select>
+                                            <select class="ql-background ql-picker ql-color-picker" title="Color fondo"></select>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-script" value="sub" title="Subíndice"></button>
+                                            <button class="ql-script" value="super" title="Superíndice"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <select  class="ql-header">
+                                                <option selected="selected">Normal</option>
+                                                <option value="3">Título 3</option>
+                                                <option value="4">Título 4</option>
+                                            </select>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-list" value="ordered" title="Lista numerada"></button>
+                                            <button class="ql-list" value="bullet" title="Lista no numerada"></button>
+                                            <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
+                                            <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
+                                            <select class="ql-align"></select>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-link" title="Añadir enlace"></button>
+                                            <button class="ql-image" title="Añadir imagen"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-clean" title="Limpiar formato"></button>
+                                        </span>
+                                    </f:facet>
+                                </p:textEditor>
+                                <p:messages for="editorconclusiones" autoUpdate="true" closable="true" />
+                            </p:outputPanel>
 						</p:tab>
 					</p:accordionPanel>
 				</p:tab>

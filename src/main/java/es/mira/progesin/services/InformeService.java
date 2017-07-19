@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
+import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
@@ -68,6 +70,9 @@ public class InformeService implements IInformeService {
     @Autowired
     private ISubareaInformeRepository subareaInformeRepository;
     
+    @Autowired
+    private IAsignSubareaInformeUserService asignSubareaInformeUserService;
+    
     /**
      * Guarda la información de un informe en la bdd.
      * 
@@ -88,26 +93,41 @@ public class InformeService implements IInformeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas) {
+    public Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+            Map<SubareaInforme, String> mapaAsignaciones) {
         Informe informeActualizado = findConRespuestas(informe.getId());
-        guardarRespuestas(mapaRespuestas, informeActualizado);
+        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones);
         return informeRepository.save(informeActualizado);
     }
     
     /**
      * @param mapaRespuestas respuestas
      * @param informeActualizado informe actualizado
+     * @param mapaAsignaciones asignaciones
      */
-    private void guardarRespuestas(Map<SubareaInforme, String[]> mapaRespuestas, Informe informeActualizado) {
+    private void guardarRespuestas(Map<SubareaInforme, String[]> mapaRespuestas, Informe informeActualizado,
+            Map<SubareaInforme, String> mapaAsignaciones) {
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         final List<RespuestaInforme> respuestas = new ArrayList<>();
         mapaRespuestas.forEach((subarea, respuesta) -> {
-            if (respuesta[0] != null && respuesta[1] != null) {
-                subarea = subareaInformeRepository.findOne(subarea.getId());
-                respuestas.add(new RespuestaInforme(informeActualizado, subarea, respuesta[0].getBytes(),
-                        respuesta[1].getBytes()));
+            if (usuarioActual.getUsername().equals(mapaAsignaciones.get(subarea))) {
+                byte[] texto = null;
+                byte[] conclusiones = null;
+                if (respuesta[0] != null) {
+                    texto = respuesta[0].getBytes();
+                }
+                if (respuesta[1] != null) {
+                    conclusiones = respuesta[1].getBytes();
+                }
+                if (texto != null) {
+                    subarea = subareaInformeRepository.findOne(subarea.getId());
+                    respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
+                }
             }
         });
-        informeActualizado.setRespuestas(respuestaInformeRepository.save(respuestas));
+        respuestaInformeRepository.save(respuestas);
+        asignSubareaInformeUserService.deleteByInformeAndUser(informeActualizado, usuarioActual);
+        informeActualizado.setRespuestas(respuestaInformeRepository.findByInforme(informeActualizado));
     }
     
     /**
@@ -119,9 +139,10 @@ public class InformeService implements IInformeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas) {
+    public Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+            Map<SubareaInforme, String> mapaAsignaciones) {
         Informe informeActualizado = findConRespuestas(informe.getId());
-        guardarRespuestas(mapaRespuestas, informeActualizado);
+        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones);
         
         String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
         informeActualizado.setFechaFinalizacion(new Date());
@@ -137,7 +158,7 @@ public class InformeService implements IInformeService {
      */
     @Override
     public Informe findConRespuestas(Long id) {
-        return informeRepository.findOne(id);
+        return informeRepository.findById(id);
     }
     
     /**
@@ -277,6 +298,17 @@ public class InformeService implements IInformeService {
     @Override
     public boolean existsByModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado) {
         return informeRepository.existsByModeloPersonalizado(modeloPersonalizado);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void asignarSubarea(SubareaInforme subarea, Informe informe) {
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SubareaInforme subareaActualizada = subareaInformeRepository.findOne(subarea.getId());
+        Informe informeActualizado = informeRepository.findOne(informe.getId());
+        AsignSubareaInformeUser asignacion = new AsignSubareaInformeUser(subareaActualizada, informeActualizado,
+                usuarioActual);
+        asignSubareaInformeUserService.save(asignacion);
     }
     
 }
