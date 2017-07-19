@@ -70,6 +70,9 @@ public class InformeService implements IInformeService {
     @Autowired
     private ISubareaInformeRepository subareaInformeRepository;
     
+    /**
+     * Servicio de asignación de subáreas de informe a inspectores.
+     */
     @Autowired
     private IAsignSubareaInformeUserService asignSubareaInformeUserService;
     
@@ -93,10 +96,11 @@ public class InformeService implements IInformeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+    public Informe guardarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
             Map<SubareaInforme, String> mapaAsignaciones) {
+        String usernameUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
         Informe informeActualizado = findConRespuestas(informe.getId());
-        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones);
+        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones, usernameUsuarioActual);
         return informeRepository.save(informeActualizado);
     }
     
@@ -104,13 +108,13 @@ public class InformeService implements IInformeService {
      * @param mapaRespuestas respuestas
      * @param informeActualizado informe actualizado
      * @param mapaAsignaciones asignaciones
+     * @param usernameUsuarioActual username del inspector actual
      */
     private void guardarRespuestas(Map<SubareaInforme, String[]> mapaRespuestas, Informe informeActualizado,
-            Map<SubareaInforme, String> mapaAsignaciones) {
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Map<SubareaInforme, String> mapaAsignaciones, String usernameUsuarioActual) {
         final List<RespuestaInforme> respuestas = new ArrayList<>();
         mapaRespuestas.forEach((subarea, respuesta) -> {
-            if (usuarioActual.getUsername().equals(mapaAsignaciones.get(subarea))) {
+            if (usernameUsuarioActual.equals(mapaAsignaciones.get(subarea))) {
                 byte[] texto = null;
                 byte[] conclusiones = null;
                 if (respuesta[0] != null) {
@@ -126,8 +130,26 @@ public class InformeService implements IInformeService {
             }
         });
         respuestaInformeRepository.save(respuestas);
-        asignSubareaInformeUserService.deleteByInformeAndUser(informeActualizado, usuarioActual);
         informeActualizado.setRespuestas(respuestaInformeRepository.findByInforme(informeActualizado));
+    }
+    
+    /**
+     * Guarda el informe con todas las subareas que hayan sido respondidas y elimina las asignaciones del usuario
+     * actual.
+     * 
+     * @param informe informe
+     * @param mapaRespuestas respuestas
+     * @return informe actualizado
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public Informe desasignarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+            Map<SubareaInforme, String> mapaAsignaciones) {
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Informe informeActualizado = findConRespuestas(informe.getId());
+        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones, usuarioActual.getUsername());
+        asignSubareaInformeUserService.deleteByInformeAndUser(informeActualizado, usuarioActual);
+        return informeRepository.save(informeActualizado);
     }
     
     /**
@@ -139,14 +161,15 @@ public class InformeService implements IInformeService {
      */
     @Override
     @Transactional(readOnly = false)
-    public Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+    public Informe finalizarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
             Map<SubareaInforme, String> mapaAsignaciones) {
+        String usernameUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
         Informe informeActualizado = findConRespuestas(informe.getId());
-        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones);
+        guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones, usernameUsuarioActual);
+        asignSubareaInformeUserService.deleteByInforme(informeActualizado);
         
-        String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
         informeActualizado.setFechaFinalizacion(new Date());
-        informeActualizado.setUsernameFinalizacion(usuarioActual);
+        informeActualizado.setUsernameFinalizacion(usernameUsuarioActual);
         return informeRepository.save(informeActualizado);
     }
     
@@ -300,15 +323,27 @@ public class InformeService implements IInformeService {
         return informeRepository.existsByModeloPersonalizado(modeloPersonalizado);
     }
     
+    /**
+     * Comprueba si existe una asignación de un subárea de un informe y sino la crea asociada al usuario del inspector
+     * al que pertenece la sesión actual.
+     * 
+     * @param subarea subárea seleccionada
+     * @param informe informe de la inspección en curso
+     * @return asignación existente o la nueva creada
+     */
     @Override
     @Transactional(readOnly = false)
-    public void asignarSubarea(SubareaInforme subarea, Informe informe) {
-        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        SubareaInforme subareaActualizada = subareaInformeRepository.findOne(subarea.getId());
-        Informe informeActualizado = informeRepository.findOne(informe.getId());
-        AsignSubareaInformeUser asignacion = new AsignSubareaInformeUser(subareaActualizada, informeActualizado,
-                usuarioActual);
-        asignSubareaInformeUserService.save(asignacion);
+    public AsignSubareaInformeUser asignarSubarea(SubareaInforme subarea, Informe informe) {
+        AsignSubareaInformeUser asignacion = asignSubareaInformeUserService.findBySubareaAndInforme(subarea, informe);
+        if (asignacion == null) {
+            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            SubareaInforme subareaActualizada = subareaInformeRepository.findOne(subarea.getId());
+            Informe informeActualizado = informeRepository.findOne(informe.getId());
+            AsignSubareaInformeUser nuevaAsignacion = new AsignSubareaInformeUser(subareaActualizada,
+                    informeActualizado, usuarioActual);
+            asignacion = asignSubareaInformeUserService.save(nuevaAsignacion);
+        }
+        return asignacion;
     }
     
 }

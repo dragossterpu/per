@@ -1,33 +1,34 @@
 <ui:composition template="../layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
 
+        <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq informeBean.informe.inspeccion.equipo.jefeEquipo.username or p:ifAnyGranted('JEFE_INSPECCIONES, ADMIN')}" />
+        
         <h:form id="informe">
             <div class="bloqueVistaTitulo">
             <h3>Modificar informe</h3>
         </div>
- 
 			<p:accordionPanel value="#{informeBean.listaAreas}" var="area" activeIndex="-1" multiple="true">
 				<p:tab title="#{area.descripcion}">
 					<p:accordionPanel value="#{informeBean.mapaAreasSubareas[area]}" var="subarea" activeIndex="-1" multiple="true">
-						<p:tab id="tabsubarea" title="#{subarea.descripcion}">
+                        <p:tab id="tabsubarea" title="#{subarea.descripcion}">
                             <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">
                                 <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
                                 <h:outputFormat rendered="#{not empty informeBean.mapaRespuestas[subarea][1]}">
-                                    <li><h5><h:outputText value="Conclusiones y propuestas."/></h5></li>
+                                    <h5><h:outputText value="Conclusiones y propuestas."/></h5>
                                     <h:outputText value="#{informeBean.mapaRespuestas[subarea][1]}" escape="false"/>
                                 </h:outputFormat>
                             </p:outputPanel>
                             
                             <h:outputText value="Asignado a: #{informeBean.mapaAsignaciones[subarea]}"  style="color:red;font-weight:bold;" rendered="#{not empty informeBean.mapaAsignaciones[subarea]}"/>
-                            <p:commandButton value="Editar" actionListener="#{informeBean.asignarSubarea(subarea)}" update="informe" rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
+                            <p:commandButton value="Editar" actionListener="#{informeBean.asignarSubarea(subarea)}" update="tabsubarea" rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
                             
                             <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}">
                                 <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}"
                                     required="true" requiredMessage="No puede dejar un subárea sin responder.">
                                     <f:facet name="toolbar">
                                         <span class="ql-formats">
-                                            <select class="ql-font"></select>
-                                            <select class="ql-size">
+                                            <select class="ql-font" title="Tipo de letra"></select>
+                                            <select class="ql-size" title="Tamaño de letra">
                                                 <option value="small">Pequeña</option>
                                                 <option selected="selected">Normal</option>
                                                 <option value="large">Grande</option>
@@ -48,7 +49,7 @@
                                             <button class="ql-script" value="super" title="Superíndice"></button>
                                         </span>
                                         <span class="ql-formats">
-                                            <select  class="ql-header">
+                                            <select  class="ql-header" title="Encabezado">
                                                 <option selected="selected">Normal</option>
                                                 <option value="3">Título 3</option>
                                                 <option value="4">Título 4</option>
@@ -59,7 +60,7 @@
                                             <button class="ql-list" value="bullet" title="Lista no numerada"></button>
                                             <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
                                             <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
-                                            <select class="ql-align"></select>
+                                            <select class="ql-align" title="Alineación"></select>
                                         </span>
                                         <span class="ql-formats">
                                             <button class="ql-link" title="Añadir enlace"></button>
@@ -71,12 +72,12 @@
                                     </f:facet>
                                 </p:textEditor>
                                 <p:messages for="editortexto" autoUpdate="true" closable="true" />
-                                <li><h5><h:outputText value="Conclusiones y propuestas."/></h5></li>
+                                <h5><h:outputText value="Conclusiones y propuestas."/></h5>
                                 <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
-                                    <f:facet name="toolbar">
+                                     <f:facet name="toolbar">
                                         <span class="ql-formats">
-                                            <select class="ql-font"></select>
-                                            <select class="ql-size">
+                                            <select class="ql-font" title="Tipo de letra"></select>
+                                            <select class="ql-size" title="Tamaño de letra">
                                                 <option value="small">Pequeña</option>
                                                 <option selected="selected">Normal</option>
                                                 <option value="large">Grande</option>
@@ -97,7 +98,7 @@
                                             <button class="ql-script" value="super" title="Superíndice"></button>
                                         </span>
                                         <span class="ql-formats">
-                                            <select  class="ql-header">
+                                            <select  class="ql-header" title="Encabezado">
                                                 <option selected="selected">Normal</option>
                                                 <option value="3">Título 3</option>
                                                 <option value="4">Título 4</option>
@@ -108,7 +109,7 @@
                                             <button class="ql-list" value="bullet" title="Lista no numerada"></button>
                                             <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
                                             <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
-                                            <select class="ql-align"></select>
+                                            <select class="ql-align" title="Alineación"></select>
                                         </span>
                                         <span class="ql-formats">
                                             <button class="ql-link" title="Añadir enlace"></button>
@@ -121,20 +122,21 @@
                                 </p:textEditor>
                                 <p:messages for="editorconclusiones" autoUpdate="true" closable="true" />
                             </p:outputPanel>
-						</p:tab>
+                        </p:tab>
 					</p:accordionPanel>
 				</p:tab>
 			</p:accordionPanel>
-
+            
             <div class="botonesFormulario">
-                <p:commandButton value="Guardar borrador" action="#{informeBean.guardarInforme}" icon="fa fa-fw fa-save" />
-                <p:commandButton value="Guardar y finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-fw fa-check" />
+                <p:commandButton value="Guardar" action="#{informeBean.guardarInforme}" icon="fa fa-save" />
+                <p:commandButton value="Guardar y liberar mis asignaciones" action="#{informeBean.desasignarInforme}" icon="fa fa-save" />
+                <p:commandButton value="Finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeEquipoInspeccion}"/>
                 <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                 <div class="centrarBotonesDialog">
-                    <p:button value="Cerrar" outcome="/informes/informes" />
+                    <p:button value="Cerrar" onclick="PF('dialogMessage').hide()" />
                 </div>
             </p:dialog>
         </h:form>

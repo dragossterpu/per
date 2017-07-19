@@ -5,6 +5,7 @@ import java.util.List;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 
 /**
  * Interfaz del servicio para la gestión de la asignación de subáreas de un informe para que las completen inspectores.
@@ -28,6 +29,15 @@ public interface IAsignSubareaInformeUserService {
      * @return lista de asignaciones
      */
     List<AsignSubareaInformeUser> findByInforme(Informe informe);
+    
+    /**
+     * Busca la asignación de un subárea de un informe.
+     * 
+     * @param subarea subárea del informe
+     * @param informe informe en curso
+     * @return asignación si es que existe o null
+     */
+    AsignSubareaInformeUser findBySubareaAndInforme(SubareaInforme subarea, Informe informe);
     
     /**
      * Borra todas las asignaciones de subáreas de un informe.

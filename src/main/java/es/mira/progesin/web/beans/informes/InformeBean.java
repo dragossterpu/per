@@ -347,7 +347,23 @@ public class InformeBean implements Serializable {
      */
     public void guardarInforme() {
         try {
-            setInforme(informeService.saveConRespuestas(informe, mapaRespuestas, mapaAsignaciones));
+            setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                    "El informe ha sido guardado con éxito.");
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al guardar el informe");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * Guarda el informe actual y elimina las asignaciones del usuario actual.
+     */
+    public void desasignarInforme() {
+        try {
+            setInforme(informeService.desasignarInforme(informe, mapaRespuestas, mapaAsignaciones));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
@@ -363,7 +379,8 @@ public class InformeBean implements Serializable {
      */
     public void finalizarInforme() {
         try {
-            setInforme(informeService.finalizarSaveConRespuestas(informe, mapaRespuestas, mapaAsignaciones));
+            // TODO comprobar que todas las respuestas tienen texto y conclusiones distinto de null
+            setInforme(informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado y finalizado con éxito.");
         } catch (DataAccessException e) {
@@ -442,8 +459,8 @@ public class InformeBean implements Serializable {
      * @param subarea subárea seleccionada
      */
     public void asignarSubarea(SubareaInforme subarea) {
-        informeService.asignarSubarea(subarea, informe);
-        generarMapaAsignaciones();
+        AsignSubareaInformeUser asignacion = informeService.asignarSubarea(subarea, informe);
+        mapaAsignaciones.put(asignacion.getSubarea(), asignacion.getUser().getUsername());
     }
     
     /**

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
@@ -33,7 +34,18 @@ public interface IInformeService {
      * @param mapaAsignaciones asignaciones
      * @return informe actualizado
      */
-    Informe saveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+    Informe guardarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+            Map<SubareaInforme, String> mapaAsignaciones);
+    
+    /**
+     * Guarda el informe y todas las subareas que hayan sido respondidas y elimina las asignaciones del usuario actual.
+     * 
+     * @param informe informe
+     * @param mapaRespuestas respuestas
+     * @param mapaAsignaciones asignaciones
+     * @return informe actualizado
+     */
+    Informe desasignarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
             Map<SubareaInforme, String> mapaAsignaciones);
     
     /**
@@ -44,7 +56,7 @@ public interface IInformeService {
      * @param mapaAsignaciones asignaciones
      * @return informe actualizado
      */
-    Informe finalizarSaveConRespuestas(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
+    Informe finalizarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
             Map<SubareaInforme, String> mapaAsignaciones);
     
     /**
@@ -85,11 +97,13 @@ public interface IInformeService {
     boolean existsByModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado);
     
     /**
-     * Asignar un subárea de un informe al usuario del inspector al que pertenece la sesión actual.
+     * Comprueba si existe una asignación de un subárea de un informe y sino la crea asociada al usuario del inspector
+     * al que pertenece la sesión actual.
      * 
      * @param subarea subárea seleccionada
      * @param informe informe de la inspección en curso
+     * @return asignación existente o la nueva creada
      */
-    void asignarSubarea(SubareaInforme subarea, Informe informe);
+    AsignSubareaInformeUser asignarSubarea(SubareaInforme subarea, Informe informe);
     
 }

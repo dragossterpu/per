@@ -33,12 +33,6 @@
     background: #f0f7ff;
 }
 
-.ui-accordion {
-    background: #bed6f8
-        url(/progesin/javax.faces.resource/images/header.png.xhtml?ln=primefaces-bluesky)
-        repeat-x;
-}
-
 .ui-accordion-content {
     padding: 1em !important;
 }
