@@ -5,9 +5,9 @@
             <p:remoteCommand name="onload" action="#{provisionalSolicitudBean.plantillasAmbitoSolicitud}" update="form" autoRun="true" />
         </h:form>
 
-        <div class="bloqueVistaTitulo">
-            <h3>Plantillas de documentación previa</h3>
-        </div>
+        <ui:param name="titulo" value="Descarga de plantillas" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <div id="listadoPlantillas">
             <h:form id="form">

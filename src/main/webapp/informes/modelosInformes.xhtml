@@ -3,8 +3,10 @@
 
         <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
-
-        <h3>Modelos de informe</h3>
+        
+        <ui:param name="titulo" value="Modelos de informe" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <div class="bloqueFormulario">
             <h:form id="form">

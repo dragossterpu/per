@@ -1,10 +1,13 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-
-        <h2>Mi Perfil</h2>
-
+    
+        <ui:param name="titulo" value="Mi Perfil" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
+        <h:form>
         <div class="bloqueFormulario">
-            <h3>Datos Personales</h3>
+            <h4>Datos Personales</h4>
             <div class="columnaIzdaFormulario">
                 <h:outputLabel for="nombre" value="Nombre:" />
                 <p:inputText id="nombre" value="#{userBean.user.nombre}" disabled="true" />
@@ -41,10 +44,9 @@
         </div>
 
         <div class="bloqueFormulario">
-            <h3>Datos de contacto</h3>
+            <h4>Datos de contacto</h4>
 
             <div class="columnaIzdaFormulario">
-
                 <h:outputLabel for="telefono" value="Teléfono:" />
                 <p:inputText id="telefono" value="#{userBean.user.telefono}" disabled="true" />
 
@@ -53,7 +55,6 @@
 
                 <h:outputLabel for="telefonoMovilParticular" value="Teléfono particular:" />
                 <p:inputText id="telefonoMovilParticular" value="#{userBean.user.telefonoMovilParticular}" disabled="true" />
-
             </div>
 
             <div class="columnaDchaFormulario">
@@ -62,12 +63,11 @@
 
                 <h:outputLabel for="despacho" value="Despacho:" />
                 <p:inputText id="despacho" value="#{userBean.user.despacho}" disabled="true" />
-
             </div>
 
         </div>
         <div class="bloqueFormulario">
-            <h3>Perfil</h3>
+            <h4>Perfil</h4>
 
             <div class="columnaIzdaFormulario">
                 <h:outputLabel for="username" value="Nombre usuario:" />
@@ -101,12 +101,11 @@
 
                 <h:outputLabel for="clase" value="Clase:" />
                 <p:inputText id="clase" value="#{userBean.user.claseUsuario.clase}" disabled="true" />
-
             </div>
         </div>
-
-        <h3>Contraseña</h3>
-
+        </h:form>
+        
+        <h4>Contraseña</h4>
         <div class="bloqueFormulario">
             <div class="columnaIzdaFormulario">
                 <h:form id="passwordForm">
@@ -119,19 +118,16 @@
                     <h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
                     <p:password value="#{miPerfilBean.claveConfirm}" required="true" feedback="true" id="claveConfirm" requiredMessage="Repita la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
-                    <h:commandLink title="Guardar" action="#{miPerfilBean.cambiarClave}" update="busquedaUsers" styleClass="ui-state-default ui-corner-all fa fa-eraser ui-CommandLink ui-CommandLink-icono-texto">
-                        <span class="ui-CommandLink-texto">Guardar</span>
-                    </h:commandLink>
+                    <p:commandButton value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-eraser"/>
 
                     <p:commandButton value="Limpiar" update="passwordForm" process="@this">
                         <p:resetInput target="passwordForm" />
                     </p:commandButton>
 
+                    <p:messages id="messages" autoUpdate="true" closable="true" />
                 </h:form>
             </div>
-            <div class="clear">
-                <p:messages id="messages" autoUpdate="true" closable="true" />
-            </div>
         </div>
+        
     </ui:define>
 </ui:composition>

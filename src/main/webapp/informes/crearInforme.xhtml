@@ -2,9 +2,10 @@
     <ui:define name="content">
 
         <h:form id="informe">
-            <div class="bloqueVistaTitulo">
-                <h3>Crear informe</h3>
-            </div>
+        
+            <ui:param name="titulo" value="Crear informe" />
+            <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+            <h3>#{titulo}</h3>
             
             <div class="aclaraciones">Compruebe las áreas y subáreas del modelo personalizado seleccionado y elija la inspección de la que desea generar el informe.</div>
           

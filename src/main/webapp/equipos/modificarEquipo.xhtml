@@ -3,13 +3,11 @@
 
         <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
         <ui:param name="yaAnulado" value="#{not empty equiposBean.equipo.fechaBaja}" />
-
-        <p:outputPanel rendered="#{not yaAnulado and esJefeInspecciones}">
-            <h3>Modificar equipo</h3>
-        </p:outputPanel>
-        <p:outputPanel rendered="#{yaAnulado or not esJefeInspecciones}">
-            <h3>Ver equipo</h3>
-        </p:outputPanel>
+        
+        <ui:param name="titulo" value="#{not yaAnulado and esJefeInspecciones ? 'Modificar equipo' : 'Equipo'}" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
         <br></br>
         <h:form id="modificarEquipo">
             <div id="miembrosEquipo">

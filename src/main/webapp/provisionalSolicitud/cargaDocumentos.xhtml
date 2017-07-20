@@ -3,10 +3,10 @@
     <ui:define name="content">
 
         <ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
-
-        <div class="bloqueVistaTitulo">
-            <h3>Adjuntar documentos solicitud</h3>
-        </div>
+                
+        <ui:param name="titulo" value="Adjuntar documentos solicitud" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <div class="aclaraciones">Sólo se aceptarán aquellos archivos que coincidan en nombre y extensión con los documentos expuestos a continuación.</div>
 
@@ -36,10 +36,10 @@
 
 
                 <p:outputPanel id="panelAdjuntos">
-                    <p:dataTable id="tablaDocumentos" var="documento" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.documentos}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }" emptyMessage="No hay documentos cargados">
+                    <p:dataTable id="tablaDocumentos" var="documento" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.documentos}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }" emptyMessage="No hay documentos cargados.">
                         <p:ajax event="rowEdit" listener="#{provisionalSolicitudBean.onRowEdit}" update=":formAlta:msgs" />
 
-                        <p:column headerText="Documentos">
+                        <p:column headerText="Documentos cargados">
                             <h:outputText value="#{documento.nombre}" />
                         </p:column>
                         <p:column styleClass="botonTabla">

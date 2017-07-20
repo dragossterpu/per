@@ -1,21 +1,21 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-
+        
+        <ui:param name="titulo" value="Guía personalizada" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
         <h:form id="formGuias">
 
             <div class="tituloCuestionario">
-                <H2>
-                    <h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}" />
-                     <h:commandLink actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}" title="Descargar guía en formato Word">
-                        <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
-                        <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
-                    </h:commandLink>
-                </H2>
+                <h:outputText value="#{guiaPersonalizadaBean.guiaPersonalizada.nombreGuiaPersonalizada}" />
+                 <h:commandLink actionListener="#{guiaPersonalizadaBean.crearDocumentoWordGuia(guiaPersonalizadaBean.guiaPersonalizada)}" title="Descargar guía en formato Word">
+                    <p:graphicImage value="/images/doc.png" styleClass="pdfImg" />
+                    <p:fileDownload value="#{guiaPersonalizadaBean.file}" />
+                </h:commandLink>
             </div>
 
             <p:messages autoUpdate="true" showSummary="true" closable="true" />
-
-           
 
             <div class="listaInspecciones">
 
@@ -28,9 +28,8 @@
                 </p:dataList>
             </div>
 
-
             <div class="bloqueVistaTitulo">
-                <h3>Pasos</h3>
+                <h4>Pasos</h4>
                 <p:dataList var="paso" value="#{guiaPersonalizadaBean.listaPasos}" type="ordered" styleClass="listaPaso">
                     <h:outputText value="#{paso.paso}" />
                 </p:dataList>

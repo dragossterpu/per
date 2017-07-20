@@ -3,10 +3,12 @@
        <ui:define name="content">
         <ui:param name="yaCumplimentado" value="#{not empty provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaCumplimentacion}" />
         <h:form id="form">
-
+                
+            <ui:param name="titulo" value="Solicitud documentación previa cuestionario" />
+            <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
             <div class="bloqueVistaTitulo">
                 <h3>
-                    Solicitud documentación previa cuestionario
+                    #{titulo}
                     <h:commandLink style="float: right;" actionListener="#{provisionalSolicitudBean.imprimirPdf()}">
                         <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                         <p:fileDownload value="#{provisionalSolicitudBean.file}" />

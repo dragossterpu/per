@@ -1,7 +1,9 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
 
-        <h3>Alta tipo de inspección</h3>
+        <ui:param name="titulo" value="Alta tipo de inspección" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <div class="bloqueFormulario">
             <h:form id="form">

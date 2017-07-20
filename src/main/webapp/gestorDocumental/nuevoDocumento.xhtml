@@ -4,8 +4,11 @@
         <h:form>
             <p:remoteCommand name="onload" action="#{gestorDocumentalBean.nuevoDocumento}" autoRun="true" />
         </h:form>
-
-        <h3>Añadir nuevo documento</h3>
+        
+        <ui:param name="titulo" value="Añadir documento" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
         <h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
             <p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
             <div class="bloqueFormulario">
@@ -55,8 +58,8 @@
                 </div>
             </div>
             <div class="botonesFormulario">
-                <p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
                 <p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value)}" value="Guardar" icon="fa fa-save"  onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+                <p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
             </div>
 
             <p:confirmDialog global="true">

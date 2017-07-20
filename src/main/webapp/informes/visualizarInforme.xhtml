@@ -3,6 +3,10 @@
 
         <h:form id="informe">
             <ui:param name="yaFinalizado" value="#{not empty informeBean.informe.fechaFinalizacion}" />
+                    
+            <ui:param name="titulo" value="Informe" />
+            <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+            <h3>#{titulo}</h3>
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
             <h:commandLink style="float: right;" actionListener="#{informeBean.exportarInforme('DOCX')}" rendered="#{yaFinalizado}">

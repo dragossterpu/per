@@ -2,11 +2,13 @@
     <ui:define name="content">
 
         <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq informeBean.informe.inspeccion.equipo.jefeEquipo.username or p:ifAnyGranted('JEFE_INSPECCIONES, ADMIN')}" />
-        
+                            
+        <ui:param name="titulo" value="Modificar informe" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+            
         <h:form id="informe">
-            <div class="bloqueVistaTitulo">
-            <h3>Modificar informe</h3>
-        </div>
+
 			<p:accordionPanel value="#{informeBean.listaAreas}" var="area" activeIndex="-1" multiple="true">
 				<p:tab title="#{area.descripcion}">
 					<p:accordionPanel value="#{informeBean.mapaAreasSubareas[area]}" var="subarea" activeIndex="-1" multiple="true">

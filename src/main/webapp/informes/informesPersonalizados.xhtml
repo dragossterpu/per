@@ -5,8 +5,9 @@
         <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         
-
-        <h3>Búsqueda de informes personalizados</h3>
+        <ui:param name="titulo" value="Búsqueda de informes personalizados" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <h:form id="busquedaInformePersonalizado">
 	        <div class="bloqueFormulario">

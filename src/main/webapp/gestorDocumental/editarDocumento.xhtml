@@ -1,7 +1,11 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h3>Editar documento</h3>
+    
+        <ui:param name="titulo" value="Editar documento" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
         <h:form id="formAlta" acceptcharset="UTF-8" enctype="multipart/form-data;charset=UTF-8">
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
@@ -47,10 +51,10 @@
                 </div>
             </div>
             <div class="botonesFormulario">
-                <p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
                 <p:commandButton actionListener="#{gestorDocumentalBean.modificaDocumento}" value="Guardar" icon="fa fa-save">
                     <p:confirm header="Modificar documento" message="¿Está seguro que desea modificar este documento?" icon="fa fa-warning-sign" />
                 </p:commandButton>
+                <p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
             </div>
             <p:confirmDialog global="true">
                 <div class="centrarBotonesDialog">
