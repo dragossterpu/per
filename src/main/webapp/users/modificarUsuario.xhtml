@@ -50,6 +50,9 @@
                         <h:outputLabel for="fechaIngreso" value="Fecha de ingreso en el cuerpo:" />
                         <p:calendar value="#{userBean.user.fechaIngreso}" id="fechaIngreso" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" yearRange="c-100:c" disabled="#{noEsAdmin}" />
 
+                        <h:outputLabel for="numIdentificacion" value="Número de identificación personal: " />
+                        <p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}"  converter="#{trimConverter}" disabled="#{noEsAdmin}" maxlength="20"/>
+                        
                     </div>
                 </div>
                 <div class="bloqueFormulario">

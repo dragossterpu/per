@@ -93,6 +93,12 @@ public class User extends AbstractEntity implements Serializable {
     protected String docIdentidad;
     
     /**
+     * Número de identificación personal.
+     */
+    @Column(name = "num_identificacion", length = 20)
+    protected String numIdentificacion;
+    
+    /**
      * Teléfono del usuario.
      */
     @Column(name = "telefono", length = 12)

@@ -34,6 +34,9 @@
                 <p:inputText id="fechaIngreso" value="#{userBean.user.fechaIngreso}" disabled="true">
                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                 </p:inputText>
+                
+                <h:outputLabel for="numIdentificacion" value="Número de identificación personal: " />
+                <p:inputText id="numIdentificacion" value="#{userBean.user.numIdentificacion}"  disabled="true"/>
             </div>
         </div>
 
