@@ -5,11 +5,14 @@
         <ui:param name="yaFinalizada" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaFinalizacion}" />
         <ui:param name="yaAnulada" value="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaBaja}" />
 
+        <ui:param name="titulo" value="Solicitud de documentación" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        
         <h:form id="formAlta">
 
             <div class="bloqueVistaTitulo">
                 <h3>
-                    Solicitud documentación previa cuestionario
+                    #{titulo}
                     <h:commandLink style="float: right;" actionListener="#{solicitudDocPreviaBean.imprimirPdf()}">
                         <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                         <p:fileDownload value="#{solicitudDocPreviaBean.file}" />

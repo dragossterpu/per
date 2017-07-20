@@ -5,7 +5,9 @@
 
         <ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
-        <h3>Búsqueda de usuarios</h3>
+        <ui:param name="titulo" value="Búsqueda de usuarios" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <h:form id="busquedaUsers">
             <div class="bloqueFormulario">

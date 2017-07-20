@@ -6,11 +6,8 @@
         <ui:param name="rolPermitido" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN,EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
         <ui:param name="rolSugerencias" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN') or (p:ifGranted('EQUIPO_INSPECCIONES') and miembroService.esJefeEquipo(usernameActual))}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
-        <!-- <h:form>
-        <p:remoteCommand name="onload" action="#{navegacionBean.iniciarCamino()}" update="caminoMigas" autoRun="true" />
-    </h:form> -->
-
-        
+       
+        <f:event listener="#{navegacionBean.iniciarCamino()}" type="preRenderView"/>
 
         <div class="textoDerecha">
             <h:form>

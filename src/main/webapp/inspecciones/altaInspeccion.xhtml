@@ -11,8 +11,10 @@
     </f:metadata>
     
     <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}"/>
-
-    <h3>Nueva Inspección</h3>
+        
+    <ui:param name="titulo" value="Nueva Inspección" />
+    <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+    <h3>#{titulo}</h3>
     <div class="aclaraciones">
         Los campos marcados con (*) son obligatorios
     </div>

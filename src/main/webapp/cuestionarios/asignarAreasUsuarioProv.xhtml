@@ -1,7 +1,9 @@
-<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/layouts/layoutInteriorProv.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-
-        <h3>Asignación de areas del cuestionario</h3>
+            
+        <ui:param name="titulo" value="Asignación de areas del cuestionario" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <div class="aclaraciones">Al asignar un area a un usuario determinado, ésta quedará bloqueada para el resto, incluido el usuario principal (usted), hasta que dicho usuario de por finalizada su cumplimentación.</div>
 

@@ -380,6 +380,7 @@ public class InformeBean implements Serializable {
     public void finalizarInforme() {
         try {
             // TODO comprobar que todas las respuestas tienen texto y conclusiones distinto de null
+            // TODO ¿cambiar estado inspeccion?
             setInforme(informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones));
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado y finalizado con éxito.");

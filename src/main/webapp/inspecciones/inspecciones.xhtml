@@ -1,4 +1,4 @@
-<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="content">
 
         <f:metadata>
@@ -8,13 +8,19 @@
         <ui:param name="esJefeIspeccOapoyo" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}" />
         <ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
-
-        <h3>
-            <h:outputText for="id" value="Búsqueda de inspecciones" rendered="#{inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" />
-        </h3>
-        <h3>
-            <h:outputText for="id" value="Asociar inspecciones" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" />
-        </h3>
+        
+        <ui:param name="esAsociacion" value="#{['asociarAlta', 'asociarEditar'].contains(inspeccionBean.vieneDe)}" />
+        <fn:choose>
+            <fn:when test="#{esAsociacion}"> 
+                <ui:param name="titulo" value="Asociar inspecciones" />
+                <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath.concat('?vieneDe=').concat(inspeccionBean.vieneDe))}" type="preRenderView"/>
+            </fn:when>
+            <fn:otherwise>
+                <ui:param name="titulo" value="Búsqueda de inspecciones" />
+                <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath.concat('?vieneDe=editar'))}" type="preRenderView"/>
+            </fn:otherwise>
+        </fn:choose>
+        <h3>#{titulo}</h3>
 
         <h:form id="busquedaInspecciones">
             <div class="bloqueFormulario">
@@ -104,9 +110,9 @@
 
                 <p:commandButton value="Limpiar" action="#{inspeccionBean.limpiarBusqueda}" update="busquedaInspecciones" icon="fa fa-eraser" />
 
-                <p:commandButton value="Nueva inspección" icon="fa fa-user-plus" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" />
+                <p:commandButton value="Nueva inspección" icon="fa fa-user-plus" action="#{inspeccionBean.nuevaInspeccion}" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and !esAsociacion}" />
 
-                <p:commandButton value="Aceptar/Volver" icon="fa fa-user-plus" action="#{inspeccionBean.asociarInspecciones}" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" />
+                <p:commandButton value="Aceptar/Volver" icon="fa fa-user-plus" action="#{inspeccionBean.asociarInspecciones}" rendered="#{esAsociacion}" />
 
             </div>
             <p:outputPanel layout="block" id="panelInspecciones">
@@ -144,9 +150,7 @@
                         </p:columnToggler>
                     </f:facet>
 
-                    <p:column selectionMode="multiple" rendered="#{inspeccionBean.vieneDe == 'asociarEditar' or inspeccionBean.vieneDe == 'asociarAlta'}" style="width:16px;text-align:center" >
-
-                    </p:column>
+                    <p:column selectionMode="multiple" rendered="#{esAsociacion}" style="width:16px;text-align:center" />
 
                     <p:column headerText="Núm. exp." sortBy="#{inspeccion.id}" width="60" visible="#{inspeccionBean.list[0]}" exportable="#{inspeccionBean.list[0]}">
                         <h:outputText value="#{inspeccion.id}" />
@@ -206,14 +210,14 @@
                         <h:outputText value="#{inspeccion.municipio.provincia.nombre}" />
                     </p:column>
 
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{!esAsociacion}">
                         <h:commandLink title="Ver inspección" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.visualizaInspeccion(inspeccion)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and !esAsociacion}">
                         <h:commandLink title="Modificar inspección" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{inspeccionBean.getFormModificarInspeccion(inspeccion)}" update="tablaInspecciones" />
                     </p:column>
 
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and inspeccionBean.vieneDe != 'asociarEditar' and inspeccionBean.vieneDe != 'asociarAlta'}" >
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{(esJefeIspeccOapoyo or esJefeEquipo) and !esAsociacion}" >
                         <p:commandButton title="Eliminar inspección" icon="fa fa-trash" update="tablaInspecciones" actionListener="#{inspeccionBean.eliminar(inspeccion)}">
                             <p:confirm header="Eliminar inspección" message="¿Está seguro que desea eliminar la inspección?" icon="fa fa-warning-sign" />
                         </p:commandButton>

@@ -437,12 +437,6 @@ select {
     font-size: 11px;
 }
 
-.cuadroPlantillas {
-    background-color: aliceblue; 
-    margin-top: 10px;
-    padding: 10px;
-}
-
 .ui-columntoggler{
     min-width: 200px;
 }

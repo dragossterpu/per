@@ -6,7 +6,10 @@
         </f:metadata>
 
         <ui:param name="esAdmin" value="#{p:ifGranted('ADMIN')}" />
-
+        
+        <ui:param name="titulo" value="Inspección" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        
         <h3>Inspección #{inspeccionBean.inspeccion.numero}</h3>
 
         <h:form id="viasualizarInspecciones">

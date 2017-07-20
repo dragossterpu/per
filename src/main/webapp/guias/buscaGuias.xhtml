@@ -3,10 +3,11 @@
 
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
 
-      
         <ui:param name="esEquipoInspeccion" value="#{p:ifAnyGranted('EQUIPO_INSPECCIONES,JEFE_INSPECCIONES,ADMIN')}" />
-
-        <h3>Búsqueda de guías</h3>
+        
+        <ui:param name="titulo" value="Búsqueda de guías" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <h:form id="busquedaGuias">
             <div class="bloqueFormulario">

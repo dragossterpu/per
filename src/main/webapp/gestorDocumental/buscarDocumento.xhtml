@@ -1,7 +1,11 @@
 <ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
-        <h3>Búsqueda documentos</h3>
+        
+        <ui:param name="titulo" value="Búsqueda de documentos" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+    
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         <p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
             <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />

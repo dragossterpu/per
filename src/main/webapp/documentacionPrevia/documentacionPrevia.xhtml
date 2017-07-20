@@ -2,8 +2,10 @@
     <ui:define name="content">
 
         <ui:param name="esJefeInspeccionesApoyo" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES,SERVICIO_APOYO')}" />
-
-        <h3>Tipos de documentación previa</h3>
+        
+        <ui:param name="titulo" value="Tipos de documentación previa" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
 
         <div id="listadoDocumentacion">

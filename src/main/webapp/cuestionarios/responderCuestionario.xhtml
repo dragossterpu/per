@@ -5,7 +5,11 @@
         <ui:param name="yaEnviado" value="#{not empty responderCuestionarioBean.visualizarCuestionario.cuestionarioEnviado}" />
         <ui:param name="yaCumplimentado" value="#{not empty responderCuestionarioBean.cuestionarioEnviado.fechaCumplimentacion}" />
         <ui:param name="esUserProvPrincipal" value="#{request.remoteUser eq responderCuestionarioBean.cuestionarioEnviado.correoEnvio}" />
-
+            
+        <ui:param name="titulo" value="#{yaEnviado ? 'Responder cuestionario' : 'Ver cuestionario'}" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+    
         <h:form id="form">
 
             <div class="tituloCuestionario">

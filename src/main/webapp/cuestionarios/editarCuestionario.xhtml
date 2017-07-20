@@ -2,9 +2,13 @@
     <ui:define name="content">
 
         <ui:param name="esJefeInspeccionesOEquipo" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,EQUIPO_INSPECCIONES,ADMIN')}" />
-
+        
+        <ui:param name="titulo" value="Personalizar modelo de cuestionario" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
         <div class="tituloCuestionario">
-            <h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}" />
+            Modelo: <h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}" />
         </div>
         <h:form id="form">
 

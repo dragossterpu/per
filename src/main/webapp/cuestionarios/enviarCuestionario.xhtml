@@ -7,11 +7,10 @@
         <ui:param name="menuOrigen" value="#{yaEnviado ? '/cuestionarios/busquedaCuestionarios' : '/cuestionarios/busquedaModelosCuestionarios'}" />
         <ui:param name="yaFinalizado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaFinalizacion}" />
         <ui:param name="yaAnulado" value="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaAnulacion}" />
-
-        <h3>
-            <h:outputText rendered="#{empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}" value="Envío cuestionario" />
-            <h:outputText rendered="#{not empty envioCuestionarioBean.cuestionarioEnvio.fechaEnvio}" value="Modificar datos envío cuestionario" />
-        </h3>
+        
+        <ui:param name="titulo" value="#{yaEnviado ? 'Modificar datos envío cuestionario' : 'Envío cuestionario'}" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <div class="aclaraciones">Los campos marcados con (*) son obligatorios</div>
 

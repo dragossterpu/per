@@ -3,8 +3,10 @@
 
         <ui:param name="noEsAdmin" value="#{not p:ifGranted('ADMIN')}" />
         <ui:param name="esProvisional" value="#{userBean.user.role.prov}" />
-
-        <h3>Modificar Usuario</h3>
+        
+        <ui:param name="titulo" value="Modificar usuario" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
 
         <h:form id="formAlta">
 

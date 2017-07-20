@@ -4,8 +4,12 @@
         <h:form>
             <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud}" update="form" autoRun="true" />
         </h:form>
+                
+        <f:event listener="#{navegacionBean.recomenzar('Búsqueda solicitudes de documentación', '/solicitudesPrevia/busquedaSolicitudesDocPrevia.xhtml')}" type="preRenderView"/>
+        <ui:param name="titulo" value="Crear solicitud de documentación" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
         
-        <h3>Crear solicitud de documentación</h3>
         <div class="aclaraciones">Los campos marcados con (*) son obligatorios</div>
 
         <h:form id="form">
