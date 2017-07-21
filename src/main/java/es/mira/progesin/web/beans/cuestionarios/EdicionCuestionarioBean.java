@@ -19,8 +19,8 @@ import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.persistence.repositories.IAreaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
+import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
@@ -58,7 +58,7 @@ public class EdicionCuestionarioBean {
      * Repositorio para las áreas de un modelo cuestionario.
      */
     @Autowired
-    private IAreaCuestionarioRepository areaCuestionarioRepository;
+    private IAreaCuestionarioService areaCuestionarioService;
     
     /**
      * Repositorio para las preguntas de un modelo de cuestionario.
@@ -87,7 +87,7 @@ public class EdicionCuestionarioBean {
     public String editarCuestionario(ModeloCuestionario modCuestionario) {
         this.modeloCuestionario = modCuestionario;
         preguntasSelecciondas = new HashMap<>();
-        listaAreasCuestionario = areaCuestionarioRepository
+        listaAreasCuestionario = areaCuestionarioService
                 .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modCuestionario.getId());
         for (AreasCuestionario area : listaAreasCuestionario) {
             area.setPreguntas(pregunaCuestionarioRepository.findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area));
@@ -142,8 +142,8 @@ public class EdicionCuestionarioBean {
             }
             cp.setPreguntasElegidas(preguntasElegidas);
             cuestionarioPersonalizadoService.save(cp);
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cuestionario",
-                    "Se ha guardado su cuestionario con éxito");
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
+                    SeccionesEnum.CUESTIONARIO.getDescripcion(), "Se ha guardado su cuestionario con éxito");
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el cuestionario");
