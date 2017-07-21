@@ -140,7 +140,7 @@ public class EdicionCuestionarioBeanTest {
      */
     
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         PowerMockito.mockStatic(RequestContext.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
