@@ -36,7 +36,7 @@ import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
-import es.mira.progesin.services.AsignSubareaInformeUserService;
+import es.mira.progesin.services.IAsignSubareaInformeUserService;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
@@ -163,7 +163,7 @@ public class InformeBean implements Serializable {
      * Servicio de asignaciones de subareas a inspectores.
      */
     @Autowired
-    private AsignSubareaInformeUserService asignSubareaInformeUserService;
+    private transient IAsignSubareaInformeUserService asignSubareaInformeUserService;
     
     /**
      * Servicio del registro de actividad.
@@ -462,6 +462,16 @@ public class InformeBean implements Serializable {
     public void asignarSubarea(SubareaInforme subarea) {
         AsignSubareaInformeUser asignacion = informeService.asignarSubarea(subarea, informe);
         mapaAsignaciones.put(asignacion.getSubarea(), asignacion.getUser().getUsername());
+    }
+    
+    /**
+     * Borra la asignación de un subárea de un informe a un inspector.
+     * 
+     * @param subarea subárea seleccionada
+     */
+    public void desasignarSubarea(SubareaInforme subarea) {
+        asignSubareaInformeUserService.deleteBySubareaAndInforme(subarea, informe);
+        mapaAsignaciones.remove(subarea);
     }
     
     /**

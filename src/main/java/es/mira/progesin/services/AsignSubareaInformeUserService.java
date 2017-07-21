@@ -67,6 +67,7 @@ public class AsignSubareaInformeUserService implements IAsignSubareaInformeUserS
      * @param informe informe en curso
      */
     @Override
+    @Transactional(readOnly = false)
     public void deleteByInforme(Informe informe) {
         asignSubareaInformeUserRepository.deleteByInforme(informe);
     }
@@ -78,9 +79,22 @@ public class AsignSubareaInformeUserService implements IAsignSubareaInformeUserS
      * @param usuario inspector
      */
     @Override
+    @Transactional(readOnly = false)
     public void deleteByInformeAndUser(Informe informe, User usuario) {
         asignSubareaInformeUserRepository.deleteByInformeAndUser(informe, usuario);
         
+    }
+    
+    /**
+     * Borra la asignación de un subárea de un informe a un inspector.
+     * 
+     * @param subarea subárea del informe
+     * @param informe informe en curso
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteBySubareaAndInforme(SubareaInforme subarea, Informe informe) {
+        asignSubareaInformeUserRepository.deleteBySubareaAndInforme(subarea, informe);
     }
     
 }

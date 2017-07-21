@@ -1,0 +1,47 @@
+<ui:define name="toolbarEditor" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <f:facet name="toolbar">
+        <span class="ql-formats">
+            <select class="ql-font" title="Tipo de letra"></select>
+            <select class="ql-size" title="Tamaño de letra">
+                <option value="small">Pequeña</option>
+                <option selected="selected">Normal</option>
+                <option value="large">Grande</option>
+            </select>
+        </span>
+         <span class="ql-formats">
+            <button class="ql-bold" title="Negrita"></button>
+            <button class="ql-italic" title="Cursiva"></button>
+            <button class="ql-underline" title="Subrayado"></button>
+            <button class="ql-strike" title="Tachado"></button>
+        </span>
+        <span class="ql-formats">
+            <select class="ql-color ql-picker ql-color-picker" title="Color letra"></select>
+            <select class="ql-background ql-picker ql-color-picker" title="Color fondo"></select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-script" value="sub" title="Subíndice"></button>
+            <button class="ql-script" value="super" title="Superíndice"></button>
+        </span>
+        <span class="ql-formats">
+            <select  class="ql-header" title="Encabezado">
+                <option selected="selected">Normal</option>
+                <option value="3">Título 3</option>
+                <option value="4">Título 4</option>
+            </select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-list" value="ordered" title="Lista numerada"></button>
+            <button class="ql-list" value="bullet" title="Lista no numerada"></button>
+            <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
+            <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
+            <select class="ql-align" title="Alineación"></select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-link" title="Añadir enlace"></button>
+            <button class="ql-image" title="Añadir imagen"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-clean" title="Limpiar formato"></button>
+        </span>
+    </f:facet>
+</ui:define>

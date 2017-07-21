@@ -54,4 +54,12 @@ public interface IAsignSubareaInformeUserService {
      */
     void deleteByInformeAndUser(Informe informe, User usuario);
     
+    /**
+     * Borra la asignación de un subárea de un informe a un inspector.
+     * 
+     * @param subarea subárea del informe
+     * @param informe informe en curso
+     */
+    void deleteBySubareaAndInforme(SubareaInforme subarea, Informe informe);
+    
 }
