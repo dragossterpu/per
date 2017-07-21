@@ -136,7 +136,6 @@ public class EdicionCuestionarioBeanTest {
     
     /**
      * Inicializa el test.
-     * @throws Exception lanzada
      */
     
     @Before
