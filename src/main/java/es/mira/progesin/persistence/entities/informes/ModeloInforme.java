@@ -84,25 +84,25 @@ public class ModeloInforme implements Serializable {
      */
     @CreatedBy
     @Column(name = "username_alta", nullable = false)
-    protected String usernameAlta;
+    private String usernameAlta;
     
     /**
      * Fecha de creación.
      */
     @CreatedDate
     @Column(name = "fecha_alta", nullable = false)
-    protected Date fechaAlta;
+    private Date fechaAlta;
     
     /**
      * Usuario de baja.
      */
     @Column(name = "username_baja")
-    protected String usernameBaja;
+    private String usernameBaja;
     
     /**
      * Fecha de baja.
      */
     @Column(name = "fecha_baja")
-    protected Date fechaBaja;
+    private Date fechaBaja;
     
 }
