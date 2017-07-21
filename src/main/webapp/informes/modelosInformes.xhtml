@@ -23,12 +23,12 @@
                         <p:commandButton title="Crear modelo de informe personalizado" icon="fa fa-copy" action="#{informePersonalizadoBean.crearModeloInformePersonalizado(modelo.id)}"/>
                     </p:column>
                     <p:column styleClass="botonTabla">
-                        <p:commandButton title="Eliminar modelo" icon="fa fa-trash" action="#{modelosInformeBean.eliminarModelo(modelo)}" update="tablaInformes" rendered="#{modelo.estandar ne true}">
+                        <p:commandButton title="Eliminar modelo" icon="fa fa-trash" action="#{modelosInformeBean.eliminarModelo(modelo)}" update="tablaInformes" rendered="#{not modelo.estandar}">
                             <p:confirm header="Eliminar modelo" message="¿Está seguro que desea eliminar el modelo?" icon="fa fa-warning-sign" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
-                <p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true" />
+                <p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true" />
                 
              <div class="botonesFormulario">
                 <p:commandButton title="Crear nuevo modelo de informe" icon="fa fa-user-plus" action="#{nuevoModeloInformeBean.getFormNuevoModelo}" 

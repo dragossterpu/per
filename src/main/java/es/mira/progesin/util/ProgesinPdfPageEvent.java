@@ -66,7 +66,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
                 e.printStackTrace();
             }
             
-            String text = String.format("Página %s de ", writer.getPageNumber() - 1);
+            String text = String.format("Página %s de ", writer.getPageNumber());
             
             float textBase = document.bottom() - 15;
             float textSize = baseFont.getWidthPoint(text, FOOTERTEXTSIZE);
@@ -90,7 +90,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
         totalPages.beginText();
         totalPages.setFontAndSize(baseFont, FOOTERTEXTSIZE);
         totalPages.setTextMatrix(0, 0);
-        totalPages.showText(String.valueOf(writer.getPageNumber() - 1));
+        totalPages.showText(String.valueOf(writer.getPageNumber()));
         totalPages.endText();
     }
 }

@@ -143,7 +143,7 @@ public final class Constantes {
     /**
      * Constante ruta recurso plantilla (dotx) para generar informes en word (docx).
      */
-    public static final String PLANTILLAINFORMEDOTX = "/documentos/Plantillas/PlantillaInforme.dotx";
+    public static final String TEMPLATEINFORMEDOTX = "/documentos/templateInforme.dotx";
     
     /**
      * Tamaño de página para los listados.

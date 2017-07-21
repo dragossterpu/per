@@ -195,12 +195,10 @@ public class ModeloInformePersonalizadoBean implements Serializable {
      * @param modeloPersonalizado modelo personalizado a eliminar
      */
     public void eliminarModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado) {
-        if (informePersonalizadoService.eliminarModeloPersonalizado(modeloPersonalizado) != null) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Informe personalizado",
-                    "Se ha eliminado o anulado con éxito");
-        } else {
+        if (informePersonalizadoService.eliminarModeloPersonalizado(modeloPersonalizado) == null) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al eliminar el tipo de equipo, inténtelo de nuevo más tarde", null);
+                    "Se ha producido un error al eliminar el informe personalizado, inténtelo de nuevo más tarde",
+                    null);
         }
     }
     

@@ -5,14 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.services.IModeloInformeService;
+import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,9 +58,12 @@ public class ModeloInformeBean implements Serializable {
      * @param modelo Modelo a eliminar
      */
     public void eliminarModelo(ModeloInforme modelo) {
-        modeloInformeService.eliminarModelo(modelo);
-        setListadoModelosInforme(modeloInformeService.findAllByFechaBajaIsNull());
-        Collections.sort(listadoModelosInforme, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+        if (modeloInformeService.eliminarModelo(modelo) != null) {
+            listadoModelosInforme.remove(modelo);
+        } else {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al eliminar el modelo, inténtelo de nuevo más tarde", null);
+        }
     }
     
 }

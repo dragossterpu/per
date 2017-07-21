@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.docx4j.Docx4J;
 import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
 import org.docx4j.docProps.core.dc.elements.ObjectFactory;
 import org.docx4j.docProps.core.dc.elements.SimpleLiteral;
@@ -20,6 +19,7 @@ import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.toc.Toc;
 import org.docx4j.toc.TocGenerator;
 import org.docx4j.toc.TocHelper;
+import org.docx4j.wml.BooleanDefaultTrue;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.stereotype.Component;
 
@@ -87,7 +87,7 @@ public class HtmlDocxGenerator {
      */
     private void crearDocumentoConPlantilla(String titulo, String autor, String fechaFinalizacion)
             throws Docx4JException, URISyntaxException, IOException {
-        InputStream plantillaStream = StreamUtil.getResourceStream(Constantes.PLANTILLAINFORMEDOTX);
+        InputStream plantillaStream = StreamUtil.getResourceStream(Constantes.TEMPLATEINFORMEDOTX);
         documento = WordprocessingMLPackage.load(plantillaStream);
         plantillaStream.close();
         
@@ -139,14 +139,15 @@ public class HtmlDocxGenerator {
         Toc.setTocHeadingText("Índice");
         TocGenerator tocGenerator = new TocGenerator(documento);
         
+        // EXPERIMENTAL (Genera temporales que no se pueden borrar)
         // Tabla con núm. página, usa export-fo
-        tocGenerator.generateToc(2, TocHelper.DEFAULT_TOC_INSTRUCTION, false);
+        // tocGenerator.generateToc(2, TocHelper.DEFAULT_TOC_INSTRUCTION, false);
         
         // Tabla sin núm. página
-        // tocGenerator.generateToc(2, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
+        tocGenerator.generateToc(2, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
         // Forzar actualizar al abrir documento
-        // documento.getMainDocumentPart().getDocumentSettingsPart().getContents()
-        // .setUpdateFields(new BooleanDefaultTrue());
+        documento.getMainDocumentPart().getDocumentSettingsPart().getContents()
+                .setUpdateFields(new BooleanDefaultTrue());
     }
     
     /**
@@ -172,27 +173,28 @@ public class HtmlDocxGenerator {
         return contenidoDOCX;
     }
     
-    /**
-     * Pasa el contenido del documento a un stream para su descarga.
-     *
-     * @param nombreDocumento nombre del archivo
-     * @return stream
-     * @throws Docx4JException error al guardar
-     * @throws IOException error al cerrar el outputstream
-     */
-    private DefaultStreamedContent exportarPdf(String nombreDocumento) throws Docx4JException, IOException {
-        DefaultStreamedContent contenidoPDF;
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        
-        Docx4J.toPDF(documento, outputStream);
-        
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-        
-        outputStream.close();
-        
-        contenidoPDF = new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
-                nombreDocumento + ".pdf");
-        return contenidoPDF;
-    }
+    // EXPERIMENTAL (Genera temporales que no se pueden borrar)
+    // /**
+    // * Pasa el contenido del documento a un stream para su descarga.
+    // *
+    // * @param nombreDocumento nombre del archivo
+    // * @return stream
+    // * @throws Docx4JException error al guardar
+    // * @throws IOException error al cerrar el outputstream
+    // */
+    // private DefaultStreamedContent exportarPdf(String nombreDocumento) throws Docx4JException, IOException {
+    // DefaultStreamedContent contenidoPDF;
+    // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    //
+    // Docx4J.toPDF(documento, outputStream);
+    //
+    // ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+    //
+    // outputStream.close();
+    //
+    // contenidoPDF = new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
+    // nombreDocumento + ".pdf");
+    // return contenidoPDF;
+    // }
     
 }
