@@ -215,6 +215,7 @@ public class EdicionCuestionarioBeanTest {
         edicionCuestionarioBean.setListaAreasCuestionario(new ArrayList<>());
         
         String redireccion = edicionCuestionarioBean.previsualizarFormulario();
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         assertThat(redireccion).isNull();
@@ -246,6 +247,7 @@ public class EdicionCuestionarioBeanTest {
         
         edicionCuestionarioBean.guardarFormulario(nombreCuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).save(cuestionarioPersonalizadoCaptor.capture());
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), any(String.class));
     }
@@ -277,6 +279,7 @@ public class EdicionCuestionarioBeanTest {
         
         edicionCuestionarioBean.guardarFormulario(nombreCuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).save(cuestionarioPersonalizadoCaptor.capture());
+        PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(registroActividadService, times(1)).altaRegActividadError(
