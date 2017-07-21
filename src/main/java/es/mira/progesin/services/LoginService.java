@@ -39,11 +39,10 @@ public class LoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userService.findByUsernameIgnoreCase(username);
-        if (null == user) {
+        if (user == null) {
             throw new UsernameNotFoundException("El usuario " + username + " no existe.");
-        } else {
-            return new UserRepositoryUserDetails(user);
         }
+        return new UserRepositoryUserDetails(user);
     }
     
     private static final class UserRepositoryUserDetails extends User implements UserDetails {
@@ -57,35 +56,35 @@ public class LoginService implements UserDetailsService {
          */
         public UserRepositoryUserDetails(User user) {
             super();
-            username = user.getUsername();
-            password = user.getPassword();
-            nombre = user.getNombre();
-            apellido1 = user.getApellido1();
-            apellido2 = user.getApellido2();
-            role = user.getRole();
-            correo = user.getCorreo();
-            docIdentidad = user.getDocIdentidad();
-            estado = user.getEstado();
-            telefono = user.getTelefono();
-            fechaAlta = user.getFechaAlta();
-            fechaBaja = user.getFechaBaja();
+            setUsername(user.getUsername());
+            setPassword(user.getPassword());
+            setNombre(user.getNombre());
+            setApellido1(user.getApellido1());
+            setApellido2(user.getApellido2());
+            setRole(user.getRole());
+            setCorreo(user.getCorreo());
+            setDocIdentidad(user.getDocIdentidad());
+            setEstado(user.getEstado());
+            setTelefono(user.getTelefono());
+            setFechaAlta(user.getFechaAlta());
+            setFechaBaja(user.getFechaBaja());
         }
         
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             Set<GrantedAuthority> authorities = new HashSet<>();
-            authorities.add(new SimpleGrantedAuthority(role.name()));
+            authorities.add(new SimpleGrantedAuthority(getRole().name()));
             return authorities;
         }
         
         @Override
         public boolean isAccountNonExpired() {
-            return fechaBaja == null;
+            return getFechaBaja() == null;
         }
         
         @Override
         public boolean isAccountNonLocked() {
-            return EstadoEnum.ACTIVO.equals(estado);
+            return EstadoEnum.ACTIVO.equals(getEstado());
         }
         
         @Override

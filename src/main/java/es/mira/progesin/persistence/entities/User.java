@@ -53,87 +53,87 @@ public class User extends AbstractEntity implements Serializable {
      */
     @Id
     @Column(name = "username")
-    protected String username;
+    private String username;
     
     /**
      * Contraseña del usuario.
      */
     @Column(name = "password", length = 100, nullable = false)
-    protected String password;
+    private String password;
     
     /**
      * Estado: activo o inactivo.
      */
     @Column(name = "estado", length = 8, nullable = false)
     @Enumerated(EnumType.STRING)
-    protected EstadoEnum estado;
+    private EstadoEnum estado;
     
     /**
      * Nombre del usuario.
      */
     @Column(name = "nombre", length = 50, nullable = false)
-    protected String nombre;
+    private String nombre;
     
     /**
      * Primer apellido.
      */
     @Column(name = "prim_apellido", length = 50, nullable = false)
-    protected String apellido1;
+    private String apellido1;
     
     /**
      * Segundo apellido.
      */
     @Column(name = "segundo_apellido", length = 50)
-    protected String apellido2;
+    private String apellido2;
     
     /**
      * Documento de identidad.
      */
     @Column(name = "doc_identidad", length = 10, nullable = false)
-    protected String docIdentidad;
+    private String docIdentidad;
     
     /**
      * Número de identificación personal.
      */
     @Column(name = "num_identificacion", length = 20)
-    protected String numIdentificacion;
+    private String numIdentificacion;
     
     /**
      * Teléfono del usuario.
      */
     @Column(name = "telefono", length = 12)
-    protected String telefono;
+    private String telefono;
     
     /**
      * Teléfono móvil oficial.
      */
     @Column(name = "tfno_movil_oficial", length = 12)
-    protected String telefonoMovilOficial;
+    private String telefonoMovilOficial;
     
     /**
      * Teléfono móvil particular.
      */
     @Column(name = "tfno_movil_particular", length = 12)
-    protected String telefonoMovilParticular;
+    private String telefonoMovilParticular;
     
     /**
      * Correo electronico del usuario.
      */
     @Column(name = "correo", length = 50, nullable = false)
-    protected String correo;
+    private String correo;
     
     /**
      * Rol del usuario.
      */
     @Column(name = "role", length = 25, nullable = false)
     @Enumerated(EnumType.STRING)
-    protected RoleEnum role;
+    private RoleEnum role;
     
     /**
      * Despacho del usuario.
      */
     @Column(name = "despacho", length = 20)
-    protected String despacho;
+    private String despacho;
     
     /**
      * Cuerpo al que pertenece el usuario.
@@ -147,7 +147,7 @@ public class User extends AbstractEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "ID_EMPLEO", foreignKey = @ForeignKey(name = "FK_U_EMPLEO"))
-    protected Empleo empleo;
+    private Empleo empleo;
     
     /**
      * Puesto que tiene el usuario.
@@ -161,7 +161,7 @@ public class User extends AbstractEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "ID_DEPARTAMENTO", foreignKey = @ForeignKey(name = "FK_U_DEPARTAMENTO"))
-    protected Departamento departamento;
+    private Departamento departamento;
     
     /**
      * Nivel del usuario.
@@ -174,31 +174,31 @@ public class User extends AbstractEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "ID_CLASE", foreignKey = @ForeignKey(name = "FK_U_CLASE"))
-    protected ClaseUsuario claseUsuario;
+    private ClaseUsuario claseUsuario;
     
     /**
      * Categoría del usuario.
      */
     @Column(name = "categoria", length = 20)
-    protected String categoria;
+    private String categoria;
     
     /**
      * Fecha de destino en el IPSS.
      */
     @Column(name = "fecha_destino_ipss")
-    protected Date fechaDestinoIPSS;
+    private Date fechaDestinoIPSS;
     
     /**
      * Fecha de ingreso.
      */
     @Column(name = "fecha_ingreso")
-    protected Date fechaIngreso;
+    private Date fechaIngreso;
     
     /**
      * Fecha inactivo.
      */
     @Column(name = "fecha_inactivo")
-    protected Date fechaInactivo;
+    private Date fechaInactivo;
     
     /**
      * Constructor de usuarios provisionales principales.
@@ -240,5 +240,22 @@ public class User extends AbstractEntity implements Serializable {
         this.setCorreo(correoP);
         this.setFechaDestinoIPSS(new Date());
         this.setNivel(0);
+    }
+    
+    /**
+     * Devuelve el nombre completo del usuario.
+     * 
+     * @return Cadena formada por la concatenación de nombre y apellidos del usuario
+     */
+    public String getNombreCompleto() {
+        StringBuilder nombreCompleto = new StringBuilder();
+        nombreCompleto.append(nombre);
+        nombreCompleto.append(' ');
+        nombreCompleto.append(apellido1);
+        if (apellido2 != null) {
+            nombreCompleto.append(' ');
+            nombreCompleto.append(apellido2);
+        }
+        return nombreCompleto.toString();
     }
 }

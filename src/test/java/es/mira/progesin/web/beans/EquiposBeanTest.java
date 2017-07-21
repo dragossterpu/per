@@ -194,7 +194,8 @@ public class EquiposBeanTest {
         equipoBean.altaEquipo();
         
         verify(equipoService, times(1)).save(equipoCaptor.capture());
-        assertThat(equipoCaptor.getValue().getNombreJefe()).isEqualTo("nombreJefe apellido1Jefe apellido2Jefe");
+        assertThat(equipoCaptor.getValue().getJefeEquipo().getNombreCompleto())
+                .isEqualTo("nombreJefe apellido1Jefe apellido2Jefe");
         assertThat(equipoCaptor.getValue().getMiembros()).hasSize(2);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.INSPECCION.getDescripcion()));
@@ -327,7 +328,7 @@ public class EquiposBeanTest {
         equipoBean.cambiarJefeEquipo();
         
         verify(equipoService, times(1)).save(equipoCaptor.capture());
-        assertThat(equipoCaptor.getValue().getNombreJefe())
+        assertThat(equipoCaptor.getValue().getJefeEquipo().getNombreCompleto())
                 .isEqualTo("nombreNuevoJefe apellido1NuevoJefe apellido2NuevoJefe");
         assertThat(equipoCaptor.getValue().getMiembros().size()).isEqualTo(2);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),

@@ -208,7 +208,7 @@ public class EquiposBean implements Serializable {
             descripcion.append(equipo.getNombreEquipo());
             descripcion.append("\n\n");
             descripcion.append("Jefe de equipo: ");
-            descripcion.append(jefe.getNombreCompleto());
+            descripcion.append(jefe.getUsuario().getNombreCompleto());
             descripcion.append("\n\n");
             descripcion.append("Nombre de componentes ");
             descripcion.append(nombresCompletos);
@@ -216,8 +216,8 @@ public class EquiposBean implements Serializable {
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
-            notificacionService.crearNotificacionEquipo(descripcion.toString(), SeccionesEnum.INSPECCION.getDescripcion(),
-                    equipo);
+            notificacionService.crearNotificacionEquipo(descripcion.toString(),
+                    SeccionesEnum.INSPECCION.getDescripcion(), equipo);
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
@@ -328,7 +328,7 @@ public class EquiposBean implements Serializable {
                     "Se ha eliminado con éxito el componente o colaborador del equipo", null);
             String descripcion = "Se ha eliminado un componente o colaborador del equipo inspecciones '"
                     + equipo.getNombreEquipo() + "'. Nombre del componente o colaborador del equipo: "
-                    + miembro.getNombreCompleto();
+                    + miembro.getUsuario().getNombreCompleto();
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
@@ -380,11 +380,12 @@ public class EquiposBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                         "jefe cambiado con éxito");
                 String descripcion = "Se ha cambiado el jefe del equipo inspecciones '" + equipo.getNombreEquipo()
-                        + "'. Nombre del nuevo jefe: " + equipo.getNombreJefe();
+                        + "'. Nombre del nuevo jefe: " + equipo.getJefeEquipo().getNombreCompleto();
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.INSPECCION.getDescripcion());
-                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(), equipo);
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                        equipo);
             }
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -463,7 +464,7 @@ public class EquiposBean implements Serializable {
         for (User user : miembrosSeleccionados) {
             Miembro miembroNuevo = crearMiembro(posicion, user);
             miembros.add(miembroNuevo);
-            nombresCompletos.add(miembroNuevo.getNombreCompleto());
+            nombresCompletos.add(miembroNuevo.getUsuario().getNombreCompleto());
         }
         return String.join(", ", nombresCompletos);
     }

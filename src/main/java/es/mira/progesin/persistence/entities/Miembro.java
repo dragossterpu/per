@@ -76,21 +76,4 @@ public class Miembro implements Serializable {
     @Enumerated(EnumType.STRING)
     private RolEquipoEnum posicion;
     
-    /**
-     * Devuelve el nombre completo del miembro.
-     * 
-     * @return Cadena formada por la concatenación de nombre y apellidos del usuario
-     */
-    public String getNombreCompleto() {
-        StringBuilder nombreCompleto = new StringBuilder();
-        nombreCompleto.append(this.usuario.nombre);
-        nombreCompleto.append(' ');
-        nombreCompleto.append(this.usuario.apellido1);
-        if (this.usuario.apellido2 != null) {
-            nombreCompleto.append(' ');
-            nombreCompleto.append(this.usuario.apellido2);
-        }
-        return nombreCompleto.toString();
-    }
-    
 }

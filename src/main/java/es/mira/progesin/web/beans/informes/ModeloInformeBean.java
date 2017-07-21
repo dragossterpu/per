@@ -53,7 +53,6 @@ public class ModeloInformeBean implements Serializable {
      * Elimina el modelo que se recibe como parámetro.
      * 
      * @param modelo Modelo a eliminar
-     * @return modelo eliminado.
      */
     public void eliminarModelo(ModeloInforme modelo) {
         modeloInformeService.eliminarModelo(modelo);

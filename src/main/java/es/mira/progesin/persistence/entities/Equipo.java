@@ -78,21 +78,4 @@ public class Equipo extends AbstractEntity implements Serializable {
     @OneToMany(mappedBy = "equipo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Miembro> miembros;
     
-    /**
-     * Recupera el nombre completo del jefe.
-     * 
-     * @return nombre completo
-     */
-    public String getNombreJefe() {
-        StringBuilder nombreCompleto = new StringBuilder();
-        nombreCompleto.append(this.jefeEquipo.nombre);
-        nombreCompleto.append(' ');
-        nombreCompleto.append(this.jefeEquipo.apellido1);
-        if (this.jefeEquipo.apellido2 != null) {
-            nombreCompleto.append(' ');
-            nombreCompleto.append(this.jefeEquipo.apellido2);
-        }
-        return nombreCompleto.toString();
-    }
-    
 }
