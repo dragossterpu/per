@@ -91,8 +91,8 @@
                         <h:outputText value="#{equipo.jefeEquipo.username}" />
                     </p:column>
 
-                    <p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.jefe.nombre}" width="90" visible="#{equiposBean.columnasVisibles[4]}" exportable="#{equiposBean.columnasVisibles[4]}">
-                        <h:outputText value="#{equipo.nombreJefe}" />
+                    <p:column headerText="Nombre jefe de equipo" sortBy="#{equipo.jefe.username}" width="90" visible="#{equiposBean.columnasVisibles[4]}" exportable="#{equiposBean.columnasVisibles[4]}">
+                        <h:outputText value="#{equipo.jefeEquipo.nombreCompleto}" />
                     </p:column>
 
                     <p:column width="20" exportable="false">
