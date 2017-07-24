@@ -20,8 +20,8 @@
                         </div>
                     </p:panel>
                </p:tab>
-               <p:tab id="area" title="Area">
-                  <p:panel header="Areas del informe">
+               <p:tab id="area" title="Área">
+                  <p:panel header="Áreas del informe">
                      <p:orderList id="orderListAreas" value="#{nuevoModeloInformeBean.listaAreas}"  var="area" itemValue="#{area}" converter="#{orderlistConverter}" controlsLocation="left" responsive="true">
                          <p:ajax event="select" listener="#{nuevoModeloInformeBean.onSelectArea}" />
                          <p:column>
