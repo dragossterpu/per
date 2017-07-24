@@ -64,7 +64,7 @@ public class RespuestaInforme implements Serializable {
     private byte[] texto;
     
     /**
-     * Concluisiones de la respuesta del subárea del informe en código HTML con estilos de PrimeFaces.
+     * Conclusiones de la respuesta del subárea del informe en código HTML con estilos de PrimeFaces.
      */
     @Lob
     @Column(name = "conclusiones")
