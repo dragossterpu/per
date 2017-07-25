@@ -16,6 +16,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IDepartamentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
@@ -83,6 +84,9 @@ public class DepartamentoBean implements Serializable {
             } else {
                 departamentoService.delete(departamento);
                 listaDepartamentos.remove(departamento);
+                String descripcion = "Se ha dado de baja el departamento: " + departamento.getDescripcion();
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.ADMINISTRACION.getDescripcion());
             }
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
@@ -105,6 +109,10 @@ public class DepartamentoBean implements Serializable {
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El departamento ha sido creado con éxito");
+            
+            String descripcion = "Se ha dado de alta el departamento: " + departamento.getDescripcion();
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.ADMINISTRACION.getDescripcion());
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta el departamento, inténtelo de nuevo más tarde");
@@ -123,6 +131,10 @@ public class DepartamentoBean implements Serializable {
             departamentoService.save(departamento);
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Departamento modificado",
                     departamento.getDescripcion(), null);
+            
+            String descripcion = "Se ha modificado el departamento: " + departamento.getDescripcion();
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.ADMINISTRACION.getDescripcion());
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al intentar modificar un departamento, inténtelo de nuevo más tarde");

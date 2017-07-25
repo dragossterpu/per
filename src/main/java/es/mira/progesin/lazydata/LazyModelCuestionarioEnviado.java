@@ -35,7 +35,7 @@ public class LazyModelCuestionarioEnviado extends LazyDataModel<CuestionarioEnvi
     /**
      * Servicio de cuestionarios enviados.
      */
-    private ICuestionarioEnvioService servicio;
+    private transient ICuestionarioEnvioService servicio;
     
     /**
      * Lista que sirve al modelo como fuente de datos.
