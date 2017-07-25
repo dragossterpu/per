@@ -28,7 +28,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo07', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Patrullas fijas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo08', 'TABLAMEDSEGURIDADEDIFICIOSGC', 'MEDIDAS PERSONALES. Patrullas esporádicas');
 
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLADETENIDOSPN', 'UNIDAD');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLADETENIDOSPN', 'Edificio');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo02', 'TABLADETENIDOSPN', 'Colectivos (Nº)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo03', 'TABLADETENIDOSPN', 'Colectivos (Capacidad)');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo04', 'TABLADETENIDOSPN', 'Colectivos. Estado(B,R,M)');
@@ -109,7 +109,7 @@ insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'camp
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAMANTENIMIENTOPROPIO', 'Titulación técnico-profesional y habilitación administrativa que les capacita para ello');
 
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'MATRIZLIMPIEZASEDE', 'Dependencias generales');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'MATRIZLIMPIEZASEDE', 'Taller mecánico/garages');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'MATRIZLIMPIEZASEDE', 'Taller mecánico/garajes');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'MATRIZLIMPIEZASEDE', 'Cuartos técnicos');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'MATRIZLIMPIEZASEDE', 'Calabozos');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'MATRIZLIMPIEZASEDE', 'Galería de tiro');
@@ -119,7 +119,7 @@ insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nomb
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila3', 'MATRIZLIMPIEZASEDE', 'Horarios');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'nombreFila4', 'MATRIZLIMPIEZASEDE', 'Grado de satisfacción (Muy buena, buena, mala)');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAALTATENSION', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAALTATENSION', 'Nª');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAALTATENSION', 'Titularidad');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAALTATENSION', 'Empresa responsable');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAALTATENSION', 'Potencia contratada');
@@ -134,66 +134,76 @@ insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'camp
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLABAJATENSION', 'Empresa mantenimiento');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLABAJATENSION', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAGRUPOELECTROGENO', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAGRUPOELECTROGENO', 'Marca y modelo');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAGRUPOELECTROGENO', 'Fecha de puesta en servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAGRUPOELECTROGENO', 'Dependencias a las que da servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAGRUPOELECTROGENO', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAGRUPOELECTROGENO', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAGRUPOELECTROGENO', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAGRUPOELECTROGENO', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAGRUPOELECTROGENO', 'Marca y modelo');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAGRUPOELECTROGENO', 'Fecha de puesta en servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAGRUPOELECTROGENO', 'Dependencias a las que da servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAGRUPOELECTROGENO', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo07', 'TABLAGRUPOELECTROGENO', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLACALDERAS', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLACALDERAS', 'Marca y modelo');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLACALDERAS', 'Potencia');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLACALDERAS', 'Combustible que utiliza');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLACALDERAS', 'Fecha de puesta en servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLACALDERAS', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo07', 'TABLACALDERAS', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLACALDERAS', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLACALDERAS', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLACALDERAS', 'Marca y modelo');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLACALDERAS', 'Potencia');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLACALDERAS', 'Combustible que utiliza');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLACALDERAS', 'Fecha de puesta en servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo07', 'TABLACALDERAS', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo08', 'TABLACALDERAS', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLATERMOS', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLATERMOS', 'Fecha de puesta en servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLATERMOS', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLATERMOS', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLATERMOS', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLATERMOS', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLATERMOS', 'Fecha de puesta en servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLATERMOS', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLATERMOS', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAREFRIGERACION', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAREFRIGERACION', 'Marca y modelo');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAREFRIGERACION', 'Potencia');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAREFRIGERACION', 'Fecha de puesta en servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAREFRIGERACION', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAREFRIGERACION', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAREFRIGERACION', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAREFRIGERACION', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAREFRIGERACION', 'Marca y modelo');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAREFRIGERACION', 'Potencia');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAREFRIGERACION', 'Fecha de puesta en servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAREFRIGERACION', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo07', 'TABLAREFRIGERACION', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAAIREACONDICIONADO', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAAIREACONDICIONADO', 'Marca y modelo');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAAIREACONDICIONADO', 'Fecha de puesta en servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAAIREACONDICIONADO', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAAIREACONDICIONADO', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAAIREACONDICIONADO', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAAIREACONDICIONADO', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAAIREACONDICIONADO', 'Marca y modelo');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAAIREACONDICIONADO', 'Fecha de puesta en servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAAIREACONDICIONADO', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAAIREACONDICIONADO', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAASCENSORES', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAASCENSORES', 'Plantas a las que da servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAASCENSORES', 'Capacidad');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAASCENSORES', 'Peso de carga');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAASCENSORES', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAASCENSORES', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAASCENSORES', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAASCENSORES', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAASCENSORES', 'Plantas a las que da servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAASCENSORES', 'Capacidad');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAASCENSORES', 'Peso de carga');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLAASCENSORES', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo07', 'TABLAASCENSORES', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAMONTACARGAS', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAMONTACARGAS', 'Peso de carga');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAMONTACARGAS', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAMONTACARGAS', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAMONTACARGAS', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAMONTACARGAS', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAMONTACARGAS', 'Peso de carga');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAMONTACARGAS', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAMONTACARGAS', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLADEPOSITOCOMBUSTIBLE', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLADEPOSITOCOMBUSTIBLE', 'Capacidad');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLADEPOSITOCOMBUSTIBLE', 'Modalidad');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLADEPOSITOCOMBUSTIBLE', 'Fecha de puesta en servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLADEPOSITOCOMBUSTIBLE', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLADEPOSITOCOMBUSTIBLE', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLADEPOSITOCOMBUSTIBLE', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLADEPOSITOCOMBUSTIBLE', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLADEPOSITOCOMBUSTIBLE', 'Capacidad');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLADEPOSITOCOMBUSTIBLE', 'Modalidad');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLADEPOSITOCOMBUSTIBLE', 'Fecha de puesta en servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo06', 'TABLADEPOSITOCOMBUSTIBLE', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo07', 'TABLADEPOSITOCOMBUSTIBLE', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAEQUIPORIESGOESPECIAL', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAEQUIPORIESGOESPECIAL', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAEQUIPORIESGOESPECIAL', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAEQUIPORIESGOESPECIAL', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAEQUIPORIESGOESPECIAL', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAEQUIPORIESGOESPECIAL', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAEQUIPORIESGOESPECIAL', 'Fecha última revisión');
 
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLASAI', 'Ubicación');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLASAI', 'Instalaciones a las que le dan servicio');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLASAI', 'Empresa mantenimiento');
-insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLASAI', 'Fecha última revisión');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLASAI', 'Nº');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLASAI', 'Ubicación');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLASAI', 'Instalaciones a las que le dan servicio');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLASAI', 'Empresa mantenimiento');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLASAI', 'Fecha última revisión');
 
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAPREVENCIONLEGIONELLA', 'Empresa que ha realizado la toma de muestras y la analítica');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAPREVENCIONLEGIONELLA', 'Fecha de la última operación ');
@@ -229,6 +239,11 @@ insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'camp
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAPROTECCIONINCENDIO', 'Revisión/Inspeccion ');
 insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo05', 'TABLAPROTECCIONINCENDIO', 'Fecha última revisión');
 
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo01', 'TABLAPROTECCIONINCENDIONOUBICACION', 'Número de equipos');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo02', 'TABLAPROTECCIONINCENDIONOUBICACION', 'Empresa mantenedora');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo03', 'TABLAPROTECCIONINCENDIONOUBICACION', 'Revisión/Inspeccion ');
+insert into  CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) Values ( 'campo04', 'TABLAPROTECCIONINCENDIONOUBICACION', 'Fecha última revisión');
+
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZCAMARASCCTV', 'Fijas');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZCAMARASCCTV', 'Móviles');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZCAMARASCCTV', 'Cámaras Domo (giro 360º)');
@@ -248,7 +263,7 @@ insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo0
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZMONITORESUBICACION', 'Blanco y Negro');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila02', 'MATRIZMONITORESUBICACION', 'Color');
-insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZMONITORESUBICACION', 'Total');
+insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila03', 'MATRIZMONITORESUBICACION', 'Observaciones');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZMONITORESUBICACION', 'Ubicación');
 
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'TABLADETENIDOSGC', 'UNIDAD/EDIFICIO');
@@ -326,12 +341,12 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Plan de Seguridad y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 18);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Plan de emergencias y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Plan de evacuación de calabozos y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Libro organización', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación del libro de Normas de Régimen Interior y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 22);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación Libro organización y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede unidad inspeccionada: Aprobación del libro de Normas de Régimen Interior y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF). Para sedes diferentes de la principal responder en la plantilla anexa. ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 22);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 23);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente. Viviendas logísticas', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 24);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente. Dependencias oficiales', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 25);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente. Total', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 26);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Pabellones de toda la Unidad inspeccionada (En caso de ser la Zona los datos referidos al personal destinado en la cabecera de la Zona): Relación por acuartelamientos de toda la Unidad Inspeccionada, incluyendo la misma, indicando lo siguiente. Total/Suma de todo lo anterior', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAACUARTELAMIENTO', 26);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Indiquen las causas de que existan pabellones habitables desocupados, así como los peticionarios de cada uno de ellos que no sean por mejora:', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 27);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Relación numérica del personal por acuartelamientos que no tenga peticionado pabellón que reside fuera de los acuartelamientos con autorización:', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 28);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Por orden de prioridad, cuarteles necesitados de nuevas construcciones, indicando si se dispone de solar y breve detalle de su situación actual (conocimiento de la Dirección, convenio municipal, documentación enviada, etc.).  ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLANUEVASCONSTRUCCIONES', 29);
@@ -350,8 +365,8 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Con las mismas consideraciones, obras previstas de realizar en el presente año.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 41);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Mantenimiento del inmueble y/o inmuebles GC (solo sede Unidad Inspeccionada): En el supuesto de que haya un contrato con una empresa para el mantenimiento preventivo, correctivo y/o técnico legal de las dependencias instalación eléctrica, elevadores,  compresores, depósitos de combustible, equipos de aire acondicionado, calderas de calefacción, ascensores, montacargas, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAEMPRESAMANTENIMIENTO', 42);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Mantenimiento del inmueble y/o inmuebles GC (solo sede Unidad Inspeccionada): Si dichas tareas son efectuadas por personal del Servicio o del acuartelamiento donde se halla', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMANTENIMIENTOPROPIO', 43);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Mantenimiento del inmueble y/o inmuebles GC (solo sede Unidad Inspeccionada): Desglosado por meses, relación de los trabajos realizados durante el último trimestre.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 44);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede Unidad Inspeccionada ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZLIMPIEZASEDE', 45);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Mantenimiento del inmueble y/o inmuebles GC (solo sede Unidad Inspeccionada): Desglosado por meses, relación de los trabajos realizados durante el último trimestre. (Sólo para el caso anterior)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 44);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede Unidad Inspeccionada. Para sedes diferentes de la principal responder en la plantilla anexa. ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZLIMPIEZASEDE', 45);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede Unidad Inspeccionada : ¿Disponen de copia del contrato de limpieza y/o del Pliego de las prescripciones técnicas del mismo? ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 46);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede Unidad Inspeccionada : En caso negativo ¿se conocen las condiciones de prestación de este servicio?', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 47);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede Unidad Inspeccionada : Número de trabajadores y horario (Por parte de la empresa y otro tipo de personal de limpieza)
@@ -379,8 +394,11 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estancias/instalaciones/equipos de riesgo especial (solo Sede Unidad Inspeccionada) : PARARRAYOS', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAEQUIPORIESGOESPECIAL', 14);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estancias/instalaciones/equipos de riesgo especial (solo Sede Unidad Inspeccionada) : Sistemas detección de CO2/CO y extracción de humos y gases en aparcamientos cerrados.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAEQUIPORIESGOESPECIAL', 15);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estancias/instalaciones/equipos de riesgo especial (solo Sede Unidad Inspeccionada) : Prevención control legionella (analíticas realizadas)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPREVENCIONLEGIONELLA', 16);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estancias/instalaciones/equipos de riesgo especial (solo Sede Unidad Inspeccionada) : Otros recintos de riesgo', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 17);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico Unidad Inspeccionada: Listado de máquinas y equipos con que cuenta el taller mecánico (por ejemplo: equipos de elevación -de vehículos, de carga, grúas,.-, compresores, equipos de soldadura, equipos de extracción de aceites, cargadores de baterías, esmeriladoras, prensas, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAEQUIPOTALLER', 18);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estancias/instalaciones/equipos de riesgo especial (solo Sede Unidad Inspeccionada) : Otros recintos de riesgo. Durante el proceso inspector se acreditarán mediante la entrega de copia de los contratos de mantenimiento y última revisión e inspección del equipo de que se trate.
+
+Para sedes diferentes de la principal responder en la plantilla anexa.
+', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 17);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico Unidad Inspeccionada: Listado de máquinas y equipos con que cuenta el taller mecánico (por ejemplo: equipos de elevación -de vehículos, de carga, grúas,.-, compresores, equipos de soldadura, equipos de extracción de aceites, cargadores de baterías, esmeriladoras, prensas, etc.). Para sedes diferentes de la principal responder en la plantilla anexa.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAEQUIPOTALLER', 18);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico Unidad Inspeccionada: Actividades realizadas en el taller (mecánica general, chapa y pintura, solo mantenimiento, etc.)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 19);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico Unidad Inspeccionada:  Mecánicos: especialidades que ostentan y horario de trabajo', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico Unidad Inspeccionada: Equipos de protección y vestuario de que se les dota', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 21);
@@ -395,7 +413,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Bocas de Incendio 
 Equipadas (BIE´S)
 ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBOCAINCENDIO', 30);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Instalación automática por rociadores rociadores ( indicar si es por agua, polvo ABC u otro sistema)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 31);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Instalación automática por rociadores ( indicar si es por agua, polvo ABC u otro sistema)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 31);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Instalación automática por gases ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 32);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Sistema abastecimiento de agua BIE,s (especificar red general o deposito agua)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 33);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Depósito de reserva de agua', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 34);
@@ -403,13 +421,13 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Columna seca', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 36);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Detectores de Humos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 37);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Central de alarma incendios', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 38);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Pulsadores manuales de alarma', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 39);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Alumbrado de emergencia', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 40);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Señalización de evacuación y protección', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 41);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Sirenas de alarma ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 42);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Megafonía', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 43);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Radioteléfonos, interfonos, etc.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 44);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Otras instalaciones de protección contra incendios, detección y alarma', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 45);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Pulsadores manuales de alarma', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 39);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Alumbrado de emergencia', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 40);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Señalización de evacuación y protección', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 41);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Sirenas de alarma ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 42);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Megafonía', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 43);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Radioteléfonos, interfonos, etc.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 44);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Otras instalaciones de protección contra incendios, detección y alarma', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIONOUBICACION', 45);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Medios de protección contra incendios (solo sede Unidad Inspeccionada): Botiquín de primeros auxilios', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 46);
 
 
@@ -565,9 +583,9 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En el caso de que se comparta el uso de estas instalaciones, indicar qué otras FFCCS las utilizan y si existe un protocolo o acuerdo firmado para ello.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 14);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'En el supuesto de que todos los funcionarios cumplieran con las prácticas de tiro estipuladas, ¿estas se podrían llevar a efecto atendiendo a los medios materiales y humanos disponibles?.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 15);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Accidentes o vicisitudes ocurridos en los dos años anteriores.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 16);
-
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'El día de la visita se facilitará copia del informe emitido por el técnico de la empresa de mantenimiento.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 17);
 --insert área
-Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'ORGANIZACIÓN PERIFÉRICA DE LA PREVENCIÓN DE RIESGOS LABORALES GC', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 5);
+Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'ORGANIZACIÓN PERIFÉRICA DE LA PREVENCIÓN DE RIESGOS LABORALES GC.', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 5);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sección de Zona. Fecha de constitución.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 0);
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sección de Zona. Dotación de personal y Titulación (Técnico Superior, Intermedio o Básico) (catálogo y en revista).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 1);
@@ -636,6 +654,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede principal: Aprobación Plan de emergencias y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 19);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Sede principal: Aprobación Plan de evacuación de calabozos y fecha última actualización (Adjuntar copia de los planes y libros en formato PDF) ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Disposición de carteles identificativos (por cada sede)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLACARTELESIDENTIFICATIVOSPN', 21);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias, solo sede Unidad Inspeccionada: Paramentos exteriores (fachadas)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 22);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Cubierta', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 23);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Cornisas, terrazas, etc.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 24);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estado general de conservación de las dependencias: Canalones y bajantes', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOCINCOESTADOS', 25);
@@ -646,10 +665,19 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Con las mismas consideraciones, obras previstas de realizar en el presente año.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 30);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Estacionamientos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZESTACIONAMIENTOS', 31);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Protocolos para la concesión de plazas de aparcamiento para vehículos particulares y el control de dichos vehículos', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 32);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Viviendas oficiales', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAVIVIENDA', 33);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Viviendas oficiales. Se aportará durante la inspección el inventario y documento de entrega y recepción del ocupante de la vivienda, así como quien asume los gastos de la misma.', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAVIVIENDA', 33);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Mantenimiento del inmueble y/o inmuebles
 
 En el supuesto de que haya un contrato con una empresa para el mantenimiento preventivo, correctivo y/o técnico legal de las dependencias (albañilería, fontanería, jardinería, calefacción, ascensores, etc.)
+Además de facilitar los anteriores datos, se remitirá por correo electrónico el pliego de prescripciones técnicas y sus anexos, correspondientes a dicho contrato.
+
+Preparar para el día de la visita:
+
+-Empresas adjudicatarias o que han realizado los mantenimientos de cada una de las instalaciones.
+-Copia de los partes de trabajo,  facturas y certificados de mantenimientos (preventivo, técnico-legal y correctivo). 
+-Conformidad dada por la Unidad en relación a los trabajos o servicios prestados por las empresas adjudicatarias.
+-Libros de mantenimiento (en su caso)
+
 ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAMANTENIMIENTOINMUEBLE', 34);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZLIMPIEZASEDE', 35);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Limpieza sede de las dependencias: ¿Disponen de copia del contrato de limpieza y/o del Pliego de las prescripciones técnicas del mismo? ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTORADIOSINO', 36);
@@ -693,10 +721,9 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico: Numero y descripción de los almacenes ubicados en el taller (ruedas, líquidos, etc)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 28);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Taller mecánico: ¿Dispone de foso el taller?   ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'RADIOSINO', 29);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Extintores', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZEXTINTORES', 30);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Bocas de Incendio 
-Equipadas (BIE´S)
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Bocas de Incendio / Equipadas (BIE´S)
 ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZBOCAINCENDIO', 31);
-insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Instalación automática por rociadores rociadores ( indicar si es por agua, polvo ABC u otro sistema)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 32);
+insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Instalación automática por rociadores ( indicar si es por agua, polvo ABC u otro sistema)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 32);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Instalación automática por gases ', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 33);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Sistema abastecimiento de agua BIE,s (especificar red general o deposito agua)', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 34);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Instalaciones de protección contra incendios (Instalaciones de riesgo especial del edificio principal de la Unidad): Depósito de reserva de agua', SEQ_AREASCUESTIONARIOS.CURRVAL, 'TABLAPROTECCIONINCENDIO', 35);
@@ -835,6 +862,12 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Siniestralidad laboral. Relación de accidentes laborales ocurridos en la Unidad inspeccionada  durante el periodo que se indica.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'MATRIZACCIDENTESLABORALES', 19);
 
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Siniestralidad laboral. Agrupar todos los accidentes anteriores por conceptos (in itiniere, caídas al mismo nivel, accidente de tráfico, etc).' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'ADJUNTOINPUT', 20);
+
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Siniestralidad laboral. Número de procedimientos 1300 y 1301 instruidos por los anteriores accidentes.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 21);
+
+
+
 
 --insert área
 Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'ÁREA DE DETENIDOS', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 5);
@@ -937,7 +970,7 @@ insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) va
 --insert área
 Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'GALERÍA DE TIRO', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 6);
 
-insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ubicación  y estado genera1 ( Bien, aceptable, deficiente). En el supuesto de que su estado sea deficiente, explicar las causas y las gestiones efectuadas para paliarlo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
+insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Ubicación  y estado general ( Bien, aceptable, deficiente). En el supuesto de que su estado sea deficiente, explicar las causas y las gestiones efectuadas para paliarlo.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'TEXTAREA', 0);
 
 insert into preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) values (SEQ_PREGUNTASCUESTIONARIO.NEXTVAL, 'Longitud y anchura de la instalación.' , SEQ_AREASCUESTIONARIOS.CURRVAL, 'INPUT', 1);
 
