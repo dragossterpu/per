@@ -100,7 +100,7 @@ public class EnvioCuestionarioBean implements Serializable {
      * Servicio de cuestionarios enviados.
      */
     @Autowired
-    private ICuestionarioEnvioService cuestionarioEnvioService;
+    private transient ICuestionarioEnvioService cuestionarioEnvioService;
     
     /**
      * Bean de configuración de la aplicación.
