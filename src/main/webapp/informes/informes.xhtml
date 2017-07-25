@@ -116,7 +116,7 @@
                         <p:commandButton title="Ver informe" icon="fa fa-eye" action="#{informeBean.getFormVisualizarInforme(informe.id)}" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspecciones or esEquipo}">
-                        <p:commandButton title="Editar informe" icon="fa fa-edit" action="#{informeBean.getFormEditarInforme(informe.id)}" disabled="#{not empty informe.fechaFinalizacion}" />
+                        <p:commandButton title="Redactar informe" icon="fa fa-edit" action="#{informeBean.getFormEditarInforme(informe.id)}" disabled="#{not empty informe.fechaFinalizacion}" />
                     </p:column>
                     <f:facet name="footer">
                         Resultado de la búsqueda: #{informeBean.model.rowCount} informes.

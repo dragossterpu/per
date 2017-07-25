@@ -470,9 +470,10 @@ public class DocumentoService implements IDocumentoService {
      * Elimina todos los documentos almacenados en la papelera.
      */
     @Override
-    public void vaciarPapelera() {
-        documentoRepository.deleteByFechaBajaIsNotNull();
-        
+    public List<Documento> vaciarPapelera() {
+        List<Documento> listaEliminar = documentoRepository.findByFechaBajaIsNotNull();
+        documentoRepository.delete(listaEliminar);
+        return listaEliminar;
     }
     
     /**

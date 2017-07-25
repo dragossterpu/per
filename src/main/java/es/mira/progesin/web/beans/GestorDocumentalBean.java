@@ -281,10 +281,17 @@ public class GestorDocumentalBean implements Serializable {
      * @param document Documento al que se dará de baja lógica
      */
     public void eliminarDocumento(Documento document) {
-        document.setFechaBaja(new Date());
-        document.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-        documentoService.save(document);
-        buscaDocumento();
+        try {
+            document.setFechaBaja(new Date());
+            document.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+            documentoService.save(document);
+            buscaDocumento();
+            registroActividadService.altaRegActividad(
+                    "Se ha enviado a la papelera el documento ".concat(document.getNombre()),
+                    TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
+        } catch (DataAccessException e) {
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+        }
     }
     
     /**
@@ -451,8 +458,15 @@ public class GestorDocumentalBean implements Serializable {
      * @param doc Documento a recuperar
      */
     public void recuperarDocumento(Documento doc) {
-        documentoService.recuperarDocumento(doc);
-        buscaDocumento();
+        try {
+            documentoService.recuperarDocumento(doc);
+            registroActividadService.altaRegActividad("Se ha recuperado el documento ".concat(doc.getNombre()),
+                    TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GESTOR.getDescripcion());
+            buscaDocumento();
+        } catch (DataAccessException e) {
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+        }
+        
     }
     
     /**
@@ -491,8 +505,21 @@ public class GestorDocumentalBean implements Serializable {
      * Vacía la papelera de reciclaje.
      */
     public void vaciarPapelera() {
-        documentoService.vaciarPapelera();
-        buscaDocumento();
+        try {
+            List<Documento> documentosEliminados = documentoService.vaciarPapelera();
+            StringBuffer nombreFicherosEliminados = new StringBuffer().append("\n\n");
+            for (Documento docu : documentosEliminados) {
+                nombreFicherosEliminados.append('-').append(docu.getNombre()).append("\n");
+                
+            }
+            registroActividadService.altaRegActividad(
+                    "Se ha vaciado la papelera eliminando los documentos siguientes :"
+                            .concat(nombreFicherosEliminados.toString()),
+                    TipoRegistroEnum.BAJA.name(), SeccionesEnum.GESTOR.getDescripcion());
+            buscaDocumento();
+        } catch (DataAccessException e) {
+            registroActividadService.altaRegActividadError(SeccionesEnum.GESTOR.getDescripcion(), e);
+        }
     }
     
     /**

@@ -97,7 +97,7 @@ public interface IDocumentoService {
      * @return documento cargado en base de datos
      * @throws ProgesinException Excepción lanzada
      */
-  Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
+    Documento cargaDocumentoSinGuardar(UploadedFile file, TipoDocumento tipo, Inspeccion inspeccion)
             throws ProgesinException;
     
     /**
@@ -131,8 +131,8 @@ public interface IDocumentoService {
      * @return Lista de los documentos que corresponden a los criterios recibidos
      * 
      */
-  List<Documento> buscarDocumentoPorCriteria(int first, int pageSize, String sortField,
-      SortOrder sortOrder, DocumentoBusqueda busqueda);
+    List<Documento> buscarDocumentoPorCriteria(int first, int pageSize, String sortField, SortOrder sortOrder,
+            DocumentoBusqueda busqueda);
     
     /**
      * Consulta el número de registros en base de datos que corresponden a los criterios de búsqueda.
@@ -140,7 +140,7 @@ public interface IDocumentoService {
      * @param busqueda Objeto que contiene los criterios de búsqueda
      * @return número de registros correspondientes a la búsqueda
      */
-  int getCounCriteria(DocumentoBusqueda busqueda);
+    int getCounCriteria(DocumentoBusqueda busqueda);
     
     /**
      * Devuelve el nombre del fichero contenido en el objeto Documento.
@@ -148,21 +148,21 @@ public interface IDocumentoService {
      * @param documento del cual quiere extraerse el nombre del fichero contenido
      * @return nombre del fichero
      */
-  String obtieneNombreFichero(Documento documento);
+    String obtieneNombreFichero(Documento documento);
     
     /**
      * Devuelve la lista de tipos de documentos.
      * 
      * @return lista de tipos de documentos
      */
-  List<TipoDocumento> listaTiposDocumento();
+    List<TipoDocumento> listaTiposDocumento();
     
     /**
      * Recupera un documento de la papelera.
      * 
      * @param documento Es el documento a recuperar de la papelera
      */
-  void recuperarDocumento(Documento documento);
+    void recuperarDocumento(Documento documento);
     
     /**
      * 
@@ -171,16 +171,15 @@ public interface IDocumentoService {
      * @param documento del que se desean recuperar las inspecciones
      * @return lista de inspecciones asociadas al documento
      */
-  List<Inspeccion> listaInspecciones(Documento documento);
+    List<Inspeccion> listaInspecciones(Documento documento);
     
     /**
-   * Devuelve el id del Cuestionarios que tiene asociado a una respuesta el documento pasado como
-   * parámetro.
+     * Devuelve el id del Cuestionarios que tiene asociado a una respuesta el documento pasado como parámetro.
      * 
      * @param documento del que se desea recuperar el cuestionario
      * @return id del cuestionario
      */
-  Long perteneceACuestionario(Documento documento);
+    Long perteneceACuestionario(Documento documento);
     
     /**
      * Devuelve el id de la solicitud de documentación que tiene asociado el documento pasado como parámetro.
@@ -188,12 +187,12 @@ public interface IDocumentoService {
      * @param documento del que se desea recuperar la solicitud
      * @return id de la solicitud
      */
-  Long perteneceASolicitud(Documento documento);
+    Long perteneceASolicitud(Documento documento);
     
     /**
      * Elimina todos los documentos almacenados en la papelera.
      */
-  void vaciarPapelera();
+    List<Documento> vaciarPapelera();
     
     /**
      * Recupera un tipo de documento a partir de su nombre.
@@ -201,7 +200,7 @@ public interface IDocumentoService {
      * @param nombre nombre del tipo
      * @return tipo de documento
      */
-  TipoDocumento buscaTipoDocumentoPorNombre(String nombre);
+    TipoDocumento buscaTipoDocumentoPorNombre(String nombre);
     
     /**
      * Devuelve un documento localizado por su id.
@@ -209,7 +208,7 @@ public interface IDocumentoService {
      * @param id Identificador del documento
      * @return Documento
      */
-   Documento findOne(Long id);
+    Documento findOne(Long id);
     
     /**
      * Devuelve los documentos que corresponden a un tipo de documento.
