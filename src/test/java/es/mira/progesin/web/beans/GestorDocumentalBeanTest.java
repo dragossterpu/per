@@ -68,6 +68,21 @@ import es.mira.progesin.util.VerificadorExtensiones;
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
 public class GestorDocumentalBeanTest {
     /**
+     * Constante descripcion.
+     */
+    private static final String DESCRIPCION = "descripcionTest";
+    
+    /**
+     * Constante nombre de documento.
+     */
+    private static final String NOMBREDOC = "nombreDocTest";
+    
+    /**
+     * Constante materia indexada.
+     */
+    private static final String MATERIAINDEX = "materiaIndexadaTest";
+    
+    /**
      * Simulación del securityContext.
      */
     @Mock
@@ -427,6 +442,7 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.setDocumentoBusqueda(new DocumentoBusqueda());
         Documento doc = spy(Documento.class);
         doc.setId(2L);
+        doc.setNombre(NOMBREDOC);
         when(documentoService.save(doc)).thenReturn(doc);
         gestorDocumentalBeanMock.eliminarDocumento(doc);
         assertThat(doc.getFechaBaja()).isNotNull();
@@ -580,11 +596,11 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testCreaDocumento() {
-        String nombreDocTest = "nombreDocTest";
+        String nombreDocTest = NOMBREDOC;
         TipoDocumento tipoDocTest = mock(TipoDocumento.class);
-        String descripcionTest = "descripcionTest";
-        String materiaIndexadaTest = "materiaIndexadaTest";
-        gestorDocumentalBeanMock.setNombreDoc("nombreTest");
+        String descripcionTest = DESCRIPCION;
+        String materiaIndexadaTest = MATERIAINDEX;
+        gestorDocumentalBeanMock.setNombreDoc(NOMBREDOC);
         
         Documento doc = new Documento();
         gestorDocumentalBeanMock.setDocumento(doc);
@@ -598,7 +614,7 @@ public class GestorDocumentalBeanTest {
         PowerMockito.mockStatic(RequestContext.class);
         when(RequestContext.getCurrentInstance()).thenReturn(requestContext);
         doNothing().when(requestContext).reset("formAlta:asociado");
-        gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
+        gestorDocumentalBeanMock.creaDocumento(NOMBREDOC, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
@@ -624,10 +640,10 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testCreaDocumentoException() {
-        String nombreDocTest = "nombreDocTest";
+        String nombreDocTest = NOMBREDOC;
         TipoDocumento tipoDocTest = mock(TipoDocumento.class);
-        String descripcionTest = "descripcionTest";
-        String materiaIndexadaTest = "materiaIndexadaTest";
+        String descripcionTest = DESCRIPCION;
+        String materiaIndexadaTest = MATERIAINDEX;
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         
         Documento doc = new Documento();
@@ -646,10 +662,10 @@ public class GestorDocumentalBeanTest {
      */
     @Test
     public final void testCreaDocumentoIncorrecto() {
-        String nombreDocTest = "nombreDocTest";
+        String nombreDocTest = NOMBREDOC;
         TipoDocumento tipoDocTest = null;
-        String descripcionTest = "descripcionTest";
-        String materiaIndexadaTest = "materiaIndexadaTest";
+        String descripcionTest = DESCRIPCION;
+        String materiaIndexadaTest = MATERIAINDEX;
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
@@ -667,8 +683,8 @@ public class GestorDocumentalBeanTest {
     public final void testCreaDocumentoSinNombre() {
         String nombreDocTest = "";
         TipoDocumento tipoDocTest = mock(TipoDocumento.class);
-        String descripcionTest = "descripcionTest";
-        String materiaIndexadaTest = "materiaIndexadaTest";
+        String descripcionTest = DESCRIPCION;
+        String materiaIndexadaTest = MATERIAINDEX;
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
@@ -684,10 +700,10 @@ public class GestorDocumentalBeanTest {
     
     @Test
     public final void testCreaDocumentoFicheroSinNombre() {
-        String nombreDocTest = "nombreDocTest";
+        String nombreDocTest = NOMBREDOC;
         TipoDocumento tipoDocTest = mock(TipoDocumento.class);
-        String descripcionTest = "descripcionTest";
-        String materiaIndexadaTest = "materiaIndexadaTest";
+        String descripcionTest = DESCRIPCION;
+        String materiaIndexadaTest = MATERIAINDEX;
         gestorDocumentalBeanMock.setNombreDoc("");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
@@ -910,6 +926,7 @@ public class GestorDocumentalBeanTest {
     @Test
     public final void testRecuperarDocumento() {
         Documento documento = new Documento();
+        documento.setNombre(NOMBREDOC);
         gestorDocumentalBeanMock.recuperarDocumento(documento);
         verify(documentoService, times(1)).recuperarDocumento(documento);
     }
