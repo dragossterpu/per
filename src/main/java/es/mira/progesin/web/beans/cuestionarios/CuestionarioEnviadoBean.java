@@ -32,7 +32,6 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
-import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
@@ -109,12 +108,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     @Autowired
     private transient ICorreoElectronico correoElectronico;
-    
-    /**
-     * Servicio de inspecciones.
-     */
-    @Autowired
-    private transient IInspeccionesService inspeccionesService;
     
     /**
      * Servicio del registro de actividad.
