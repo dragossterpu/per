@@ -29,7 +29,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.primefaces.context.RequestContext;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -82,10 +81,6 @@ public class EnvioCuestionarioBeanTest {
     private static final String CODIGOINSPECCION = "I.G.P.";
     
     /**
-     * Constante correo.
-     */
-    
-    /**
      * Simulación del securityContext.
      */
     @Mock
@@ -96,12 +91,6 @@ public class EnvioCuestionarioBeanTest {
      */
     @Mock
     private Authentication authentication;
-    
-    /**
-     * Simulación del RequestContext.
-     */
-    @Mock
-    private RequestContext requestContext;
     
     /**
      * Servicio de inspecciones.
@@ -174,13 +163,11 @@ public class EnvioCuestionarioBeanTest {
     
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(RequestContext.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(USUARIOLOGUEADO);
-        when(RequestContext.getCurrentInstance()).thenReturn(requestContext);
     }
     
     /**
