@@ -64,7 +64,7 @@ import es.mira.progesin.web.beans.ApplicationBean;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
+@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
 public class EnvioCuestionarioBeanTest {
     /**
      * Constante user.

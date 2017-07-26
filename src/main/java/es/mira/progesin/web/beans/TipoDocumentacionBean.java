@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -123,14 +124,20 @@ public class TipoDocumentacionBean implements Serializable {
      * @param documentacion objeto tipo de documentacion a eliminar
      */
     public void eliminarDocumentacion(TipoDocumentacion documentacion) {
-        tipoDocumentacionService.delete(documentacion.getId());
-        this.listaTipoDocumentacion = null;
-        listaTipoDocumentacion = tipoDocumentacionService.findAll();
-        
-        String descripcion = "Se ha eliminado un tipo de documentación. Nombre: " + documentacion.getNombre();
-        // Guardamos la actividad en bbdd
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                SeccionesEnum.DOCUMENTACION.getDescripcion());
+        try {
+            tipoDocumentacionService.delete(documentacion.getId());
+            this.listaTipoDocumentacion = null;
+            listaTipoDocumentacion = tipoDocumentacionService.findAll();
+            
+            String descripcion = "Se ha eliminado un tipo de documentación. Nombre: " + documentacion.getNombre();
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.DOCUMENTACION.getDescripcion());
+        } catch (DataAccessException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al intentar borrar la documentación, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
+        }
     }
     
     /**
@@ -178,15 +185,21 @@ public class TipoDocumentacionBean implements Serializable {
      * @param event evento disparado al pulsar el botón modificar edición
      */
     public void onRowEdit(RowEditEvent event) {
-        TipoDocumentacion tipoDoc = (TipoDocumentacion) event.getObject();
-        tipoDocumentacionService.save(tipoDoc);
-        FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Documentación modificada",
-                tipoDoc.getDescripcion(), "msgs");
-        
-        String descripcion = "Se ha modificado el tipo de documentación. Nombre: " + tipoDoc.getNombre();
-        // Guardamos la actividad en bbdd
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
-                SeccionesEnum.DOCUMENTACION.getDescripcion());
+        try {
+            TipoDocumentacion tipoDoc = (TipoDocumentacion) event.getObject();
+            tipoDocumentacionService.save(tipoDoc);
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Documentación modificada",
+                    tipoDoc.getDescripcion(), "msgs");
+            
+            String descripcion = "Se ha modificado el tipo de documentación. Nombre: " + tipoDoc.getNombre();
+            // Guardamos la actividad en bbdd
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+                    SeccionesEnum.DOCUMENTACION.getDescripcion());
+        } catch (DataAccessException e) {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al intentar editar la documentación, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
+        }
     }
     
 }
