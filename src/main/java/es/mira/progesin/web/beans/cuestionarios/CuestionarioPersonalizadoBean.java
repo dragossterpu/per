@@ -175,6 +175,7 @@ public class CuestionarioPersonalizadoBean implements Serializable {
             
             envioCuestionarioBean
                     .setListaPlantillas(documentoService.buscaNombreTipoDocumento("PLANTILLA CUESTIONARIO"));
+            envioCuestionarioBean.setPlantillasSeleccionadas(null);
             envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
             // envioCuestionarioBean.setMostrarPlantillas(false);
             rutaVista = "/cuestionarios/enviarCuestionario?faces-redirect=true";
