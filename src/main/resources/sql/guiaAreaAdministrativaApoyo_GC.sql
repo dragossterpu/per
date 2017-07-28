@@ -71,27 +71,27 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'RÉGIMEN DISCIPLINARIO:Dimensionado del personal. Valorar suficiencia, insuficiencia o sobredimensionamiento','45');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'RÉGIMEN DISCIPLINARIO:Comprobar qué actividades realizan y si tienen establecido un reparto de tareas entre los distintos funcionarios que permita valorar la carga individual de trabajo','46');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'RÉGIMEN DISCIPLINARIO: Control de la actividad. Solicitar la siguiente información correspondiente a los dos últimos años naturales completos, de forma separada:
--Número de Procedimientos incoados por falta leve.
-  -Motivo por el que se ha incoado cada uno de los citados procedimientos, especificando su número.
-  -Funcionarios inculpados en los mismos.
-  -Resoluciones adoptadas para cada uno de dichos inculpados:
-    -Archivo.
-    -Reprensión.
-    -Sanción (indicando el número de días).
-  -Elevaciones de expediente a falta grave o muy grave.
-  -Procedimientos en trámite.
-  -Tiempo medio empleado para la tramitación.
--Número de informaciones reservadas:
-  -Abiertas.
-  -Archivadas.
-  -Elevadas a procedimiento por falta leve
-  -Elevadas a expediente por falta grave o muy grave.
--Reseñar los procedimientos caducados y archivados por prescripción, indicando los motivos, consignando la falta leve por la que se ha instruido y su número de procedimiento.
--Número de procedimientos por faltas graves y muy graves incoados a personal de la Comandancia, agentes implicados y sanción impuesta.
--Otros procedimientos. Número de expedientes por:
-  -Lesiones en acto de servicio.
-  -Resarcimiento de daños.
-  -Otros (especificar).','47');
+Número de Procedimientos incoados por falta leve.
+Motivo por el que se ha incoado cada uno de los citados procedimientos, especificando su número.
+Funcionarios inculpados en los mismos.
+Resoluciones adoptadas para cada uno de dichos inculpados:
+Archivo.
+Reprensión.
+Sanción (indicando el número de días).
+Elevaciones de expediente a falta grave o muy grave.
+Procedimientos en trámite.
+Tiempo medio empleado para la tramitación.
+Número de informaciones reservadas:
+Abiertas.
+Archivadas.
+Elevadas a procedimiento por falta leve
+Elevadas a expediente por falta grave o muy grave.
+Reseñar los procedimientos caducados y archivados por prescripción, indicando los motivos, consignando la falta leve por la que se ha instruido y su número de procedimiento.
+Número de procedimientos por faltas graves y muy graves incoados a personal de la Comandancia, agentes implicados y sanción impuesta.
+Otros procedimientos. Número de expedientes por:
+Lesiones en acto de servicio.
+Resarcimiento de daños.
+Otros (especificar).','47');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'RÉGIMEN DISCIPLINARIO:En relación con los datos del apartado anterior, comparar los resultados de ambos periodos anuales','48');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'RÉGIMEN DISCIPLINARIO:Examinar, de manera aleatoria, algunos de los procedimientos incoados, comprobando adecuación de su estructura, si cumple con los trámites de notificación, alegaciones y resoluciones en tiempo y forma','49');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'RÉGIMEN DISCIPLINARIO:Infraestructuras (oficinas, mobiliario, etc.) y medios informáticos con los que cuentan. Suficiencia y estado','50');
@@ -101,20 +101,20 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ASISTENCIA LETRADA:Dimensionado del personal. Valorar suficiencia, insuficiencia o sobredimensionamiento','54');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ASISTENCIA LETRADA:Comprobar qué actividades realizan y si tienen establecido un reparto de tareas entre los distintos funcionarios que permita valorar la carga individual de trabajo','55');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ASISTENCIA LETRADA:Control de la actividad. Solicitar la siguiente información correspondiente a los dos últimos años naturales completos, de forma separada:
--Número de casos asignados.
--Número de entrevistas preparatorias con funcionarios:
-  -Personales.
-  -Telefónicas.
--Número de intervenciones preliminares ante órganos judiciales.
--Número de juicios orales.
--Número de Resoluciones definitivas:
-  -Autos de sobreseimiento provisionales.
-  -Autos de sobreseimiento libres.
-  -Sentencias absolutorias.
-  -Sentencias condenatorias.
--Número de recursos:
-  -Contra resoluciones interlocutorias.
-  -Contra resoluciones definitivas.','56');
+Número de casos asignados.
+Número de entrevistas preparatorias con funcionarios:
+Personales.
+Telefónicas.
+Número de intervenciones preliminares ante órganos judiciales.
+Número de juicios orales.
+Número de Resoluciones definitivas:
+Autos de sobreseimiento provisionales.
+Autos de sobreseimiento libres.
+Sentencias absolutorias.
+Sentencias condenatorias.
+Número de recursos:
+Contra resoluciones interlocutorias.
+Contra resoluciones definitivas.','56');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ASISTENCIA LETRADA:En relación con los datos del apartado anterior, comparar los resultados de ambos periodos anuales','57');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ASISTENCIA LETRADA:Asuntos pendientes en el momento de la inspección. Justificación del posible retraso acumulado','58');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'ASISTENCIA LETRADA:Infraestructuras (oficina, mobiliario, etc.) y medios informáticos con los que cuentan. Suficiencia y estado','59');
@@ -124,26 +124,26 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSPECCIÓN OFICINA PERIFERICA DE COMUNICACIÓN (Solo Comandancias)Dimensionado del personal. Valorar suficiencia, insuficiencia o sobredimensionamiento.','63');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSPECCIÓN OFICINA PERIFERICA DE COMUNICACIÓN (Solo Comandancias)Comprobar qué actividades realizan y si tienen establecido un reparto de tareas entre los distintos funcionarios que permita valorar la carga individual de trabajo','64');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSPECCIÓN OFICINA PERIFERICA DE COMUNICACIÓN (Solo Comandancias)Control de la actividad. Solicitar la siguiente información numérica correspondiente a los dos últimos años naturales completos, de forma separada:
--Notas de prensa.
--Noticias propias aparecidas.
--Noticias ajenas aparecidas.
--Imágenes:
-  -Video.
-  -Fotos.
--Entrevistas.
--Reportajes.
--Ruedas de prensa.
--Dossier prensa.
--Conferencias.
--Actos oficiales:
-  -Guardia Civil.
-  -Ajenos.
--Colaboraciones:
-  -Policías.
-  -Otros.
--Festivales y ferias.
--Vinos de honor.
--Otras actividades no recogidas (especificar).','65');
+Notas de prensa.
+Noticias propias aparecidas.
+Noticias ajenas aparecidas.
+Imágenes:
+Video.
+Fotos.
+Entrevistas.
+Reportajes.
+Ruedas de prensa.
+Dossier prensa.
+Conferencias.
+Actos oficiales:
+Guardia Civil.
+Ajenos.
+Colaboraciones:
+Policías.
+Otros.
+Festivales y ferias.
+Vinos de honor.
+Otras actividades no recogidas (especificar).','65');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSPECCIÓN OFICINA PERIFERICA DE COMUNICACIÓN (Solo Comandancias)En relación con los datos del apartado anterior, comparar los resultados de ambos periodos anuales','66');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSPECCIÓN OFICINA PERIFERICA DE COMUNICACIÓN (Solo Comandancias)Examinar, de manera aleatoria, varias notas de prensa emitidas, valorando la adecuación de su estructura y contenido','67');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'INSPECCIÓN OFICINA PERIFERICA DE COMUNICACIÓN (Solo Comandancias)Presencia en las redes sociales','68');
@@ -166,10 +166,10 @@ insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL,
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'QUEJAS Y SUGERENCIASComprobar tiempos de contestación y si exceden de los establecidos en la Instrucción 7/2007','85');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'QUEJAS Y SUGERENCIASComprobar qué actividades realizan y si tienen establecido un reparto de tareas entre los distintos funcionarios que permita valorar la carga individual de trabajo','86');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'QUEJAS Y SUGERENCIASControl de la actividad. Solicitar la siguiente información numérica, correspondiente a los dos últimos años naturales completos, de forma separada:
--Quejas.
--Sugerencias.
--Felicitaciones
--Otras (especificar).','87');
+Quejas.
+Sugerencias.
+Felicitaciones
+Otras (especificar).','87');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'QUEJAS Y SUGERENCIASEn relación con los datos del apartado anterior, comparar los resultados de ambos periodos anuales','88');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'QUEJAS Y SUGERENCIASComprobar varias de las contestaciones realizadas para verificar su adecuación al caso concreto y que se evitan respuestas estandarizadas','89');
 insert into guia_Pasos (id, id_guia, paso, orden) values (SEQ_PASOSGUIA.NEXTVAL, SEQ_GUIAS.CURRVAL,'QUEJAS Y SUGERENCIASInfraestructuras (oficina, mobiliario, etc.), y medios informáticos con los que cuentan. Suficiencia y estado','90');
