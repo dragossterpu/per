@@ -30,12 +30,15 @@ import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -130,6 +133,20 @@ public class InspeccionBean {
      */
     @Autowired
     private IMiembroService miembroService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio de las alertas.
+     * 
+     */
+    @Autowired
+    private IAlertaService alertaService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio de las notificaciones.
+     * 
+     */
+    @Autowired
+    private INotificacionService notificacionesService;
     
     /**
      * Variable utilizada para almacenar la lista de municipios asociados a una inspección.
@@ -313,6 +330,8 @@ public class InspeccionBean {
             String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
+            alertaService.crearAlertaEquipo(SeccionesEnum.INSPECCION.getDescripcion(), descripcion, inspeccion);
+            
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
@@ -367,6 +386,10 @@ public class InspeccionBean {
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
+            notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                    inspeccion.getEquipo());
+            notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                    RoleEnum.ROLE_SERVICIO_APOYO);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar la inspección. Inténtelo de nuevo más tarde");
@@ -424,10 +447,14 @@ public class InspeccionBean {
         try {
             inspeccionesService.save(inspeccionEliminar);
             
-            String descripcion = "El usuario " + user + " ha eliminado la inspección " + inspeccion.getNumero();
+            String descripcion = "El usuario " + user + " ha eliminado la inspección " + inspeccionEliminar.getNumero();
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
+            notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                    inspeccion.getEquipo());
+            notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                    RoleEnum.ROLE_SERVICIO_APOYO);
             
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
