@@ -283,11 +283,10 @@ public class VisualizarCuestionario implements Serializable {
             // Si es user provisional y existe no conformidad, pintar sólo aquellas que no tengan respuesta ya validada
             // (las recuperadas de la BDD en listaRespuestas y presentes en el mapa de validaciones)
             if (soloNoValidadas == Boolean.FALSE || mapaValidacionRespuestas.containsKey(pregunta)) {
-                // listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
-                // if (listaPreguntas == null) {
-                // listaPreguntas = new ArrayList<>();
-                // }
-                listaPreguntas = new ArrayList<>();
+                listaPreguntas = mapaAreaPreguntas.get(pregunta.getArea());
+                if (listaPreguntas == null) {
+                    listaPreguntas = new ArrayList<>();
+                }
                 listaPreguntas.add(pregunta);
                 mapaAreaPreguntas.put(pregunta.getArea(), listaPreguntas);
                 if (esTipoRespuestaTablaOMatriz(pregunta.getTipoRespuesta())) {
