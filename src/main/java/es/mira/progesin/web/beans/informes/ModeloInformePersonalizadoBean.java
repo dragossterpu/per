@@ -145,7 +145,7 @@ public class ModeloInformePersonalizadoBean implements Serializable {
     }
     
     /**
-     * Previsuaizar las opciones seleccioneadas del modelo de informe antes de crearlo definitivamente.
+     * Previsualizar las opciones seleccionadas del modelo de informe antes de crearlo definitivamente.
      * 
      * @return ruta de la vista
      */

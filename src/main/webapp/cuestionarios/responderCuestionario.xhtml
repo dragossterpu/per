@@ -125,7 +125,10 @@
                 </p:accordionPanel>
             </ui:repeat>
            
-
+           <h:outputLabel value="Debe cumplimentar todas las preguntas para poder responder el cuestionario" 
+                rendered="#{facesContext.validationFailed}"
+                styleClass="ui-widget ui-messages-error ui-corner-all ui-messages-error-summary"/>
+           
             <p:outputPanel rendered="#{p:ifGranted('PROV_CUESTIONARIO')}">
                 <div class="botonesFormulario">
                     <p:button id="plantillas" value="Descargar plantillas" outcome="/cuestionarios/descargaPlantillasCuestionario"  icon="fa fa-user-plus" rendered="#{not empty cuestionarioEnviadoBean.visualizarCuestionario.cuestionarioEnviado.plantillas}" />
