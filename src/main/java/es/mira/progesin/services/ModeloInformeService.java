@@ -89,10 +89,7 @@ public class ModeloInformeService implements IModeloInformeService {
                 modelo.setFechaBaja(new Date());
                 modelo.setUsernameBaja(usuarioActual);
                 modeloActualizado = modeloInformeRepository.save(modelo);
-                String descripcion = "Se ha anulado el modelo de informe personalizado: " + modelo.getNombre();
-                // Guardamos la actividad en bbdd
-                registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                        SeccionesEnum.INFORMES.getDescripcion());
+                
             } else {
                 subareaInformeService.deleteByArea(areainformeservice.findByModeloInformeId(modelo.getId()));
                 areainformeservice.deleteByModeloInformeId(modelo.getId());
@@ -100,7 +97,10 @@ public class ModeloInformeService implements IModeloInformeService {
                 // devolvemos el mismo objeto para diferenciarlo de null en caso de excepción
                 modeloActualizado = modelo;
             }
-            
+            String descripcion = "Se ha eliminado el modelo de informe personalizado: " + modelo.getNombre();
+            // Guardamos la actividad en bbdd
+            registroActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.INFORMES.getDescripcion());
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }

@@ -49,7 +49,7 @@
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{gestorDocumentalBean.buscaDocumento}" update="panelDocumentos" value="Buscar" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
                 <p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar" icon="fa fa-eraser" />
-                <p:button outcome="/gestorDocumental/nuevoDocumento" value="Subir documento" icon="fa fa-upload" />
+                <p:commandButton action="#{gestorDocumentalBean.nuevoDocumento}" value="Subir documento" icon="fa fa-upload"/>
             </div>
 
             <p:outputPanel layout="block" id="panelDocumentos">

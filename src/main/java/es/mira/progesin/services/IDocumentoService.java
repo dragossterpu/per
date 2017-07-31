@@ -191,6 +191,8 @@ public interface IDocumentoService {
     
     /**
      * Elimina todos los documentos almacenados en la papelera.
+     * 
+     * @return Lista de documentos eliminados
      */
     List<Documento> vaciarPapelera();
     

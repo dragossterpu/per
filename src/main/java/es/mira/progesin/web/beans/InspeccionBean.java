@@ -326,8 +326,8 @@ public class InspeccionBean {
             inspeccion = inspeccionesService.save(inspeccion);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "La inspección " + inspeccion.getNumero() + " ha sido creada con éxito");
-            String descripcion = "Alta nueva inspección " + inspeccion.getNumero();
+                    "La inspección  ha sido creada con éxito");
+            String descripcion = "Alta nueva inspección";
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
             alertaService.crearAlertaEquipo(SeccionesEnum.INSPECCION.getDescripcion(), descripcion, inspeccion);
@@ -452,7 +452,7 @@ public class InspeccionBean {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
             notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
-                    inspeccion.getEquipo());
+                    inspeccionEliminar.getEquipo());
             notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
                     RoleEnum.ROLE_SERVICIO_APOYO);
             

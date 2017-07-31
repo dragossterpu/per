@@ -26,12 +26,14 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * Implementación del servicio de inspecciones.
  * 
  * @author EZENTIS
  */
+@NoArgsConstructor
 @Service
 public class InspeccionesService implements IInspeccionesService {
     
@@ -54,6 +56,15 @@ public class InspeccionesService implements IInspeccionesService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     */
+    public InspeccionesService(SessionFactory sessionFact) {
+        this.sessionFactory = sessionFact;
+    }
     
     /**
      * Método que guarda una inspección.

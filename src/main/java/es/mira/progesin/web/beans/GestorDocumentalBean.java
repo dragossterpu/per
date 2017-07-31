@@ -257,9 +257,11 @@ public class GestorDocumentalBean implements Serializable {
         try {
             TipoDocumento tipo = tipoDocumentoRepository.findByNombre("OTROS");
             UploadedFile uFile = event.getFile();
-            nombreDoc = uFile.getFileName();
+            
             if (verificadorExtensiones.extensionCorrecta(uFile)) {
+                
                 documento = documentoService.cargaDocumentoSinGuardar(uFile, tipo, null);
+                nombreDoc = uFile.getFileName();
             } else {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                         "La extensión del fichero '" + event.getFile().getFileName()
@@ -318,10 +320,12 @@ public class GestorDocumentalBean implements Serializable {
     /**
      * Inicia la creación de un nuevo documento.
      */
-    public void nuevoDocumento() {
+    public String nuevoDocumento() {
         documento = new Documento();
         listaInspecciones = new ArrayList<>();
         nombreDoc = "";
+        
+        return "/gestorDocumental/nuevoDocumento?faces-redirect=true";
     }
     
     /**
