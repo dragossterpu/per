@@ -89,19 +89,19 @@ public class EstadisticaBean implements Serializable {
      * Servicio de tipos de inspección.
      */
     @Autowired
-    private ITipoInspeccionService tipoInspeccionService;
+    private transient ITipoInspeccionService tipoInspeccionService;
     
     /**
      * Servicio de estadistica.
      */
     @Autowired
-    private IEstadisticaService estadisticaService;
+    private transient IEstadisticaService estadisticaService;
     
     /**
      * Servicio de registro de actividad.
      */
     @Autowired
-    private IRegistroActividadService registroActividadService;
+    private transient IRegistroActividadService registroActividadService;
     
     /**
      * Lista de los posibles tipos de inspección.

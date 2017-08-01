@@ -143,7 +143,7 @@
                         </p:selectOneMenu>
                         <p:messages for="departamentoSelect" autoUpdate="true" closable="true" />
 
-                        <h:outputLabel for="categoria" value="Categoria: (*)" />
+                        <h:outputLabel for="categoria" value="Categoría: (*)" />
                         <p:importEnum type="es.mira.progesin.persistence.entities.enums.CategoriaEnum" var="categoria" allSuffix="ALL_ENUM_VALUES" />
                         <p:selectOneMenu value="#{userBean.user.categoria}" id="categoria" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione una categoria para el usuario" style="width:100%;">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
