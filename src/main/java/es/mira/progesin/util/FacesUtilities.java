@@ -60,18 +60,31 @@ public class FacesUtilities {
     }
     
     /**
-     * Muestra una cuadro de diálogo con información.
+     * Muestra una cuadro de diálogo con información. El cuadro de diálogo debe tener como nombre (widgetVar) "dialogMessage".
      * 
      * @author Ezentis
      * @param severity gravedad del aviso
      * @param summary resumen
      * @param detail detalles del mensaje
      */
-    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail) {
+    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail ) {
+        setMensajeConfirmacionDialog(severity, summary, detail, "dialogMessage");
+    }
+    
+    /**
+     * Muestra una cuadro de diálogo con información.
+     * 
+     * @author Ezentis
+     * @param severity gravedad del aviso
+     * @param summary resumen
+     * @param detail detalles del mensaje
+     * @param widgetVarName Nombre del cuadro de diálogo
+     */
+    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail, String widgetVarName) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = new FacesMessage(severity, summary, detail);
-        FacesContext.getCurrentInstance().addMessage("dialogMessage", message);
-        context.execute("PF('dialogMessage').show()");
+        FacesContext.getCurrentInstance().addMessage(widgetVarName, message);
+        context.execute("PF('" + widgetVarName + "').show()");
     }
     
     /**

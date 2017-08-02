@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado;
@@ -105,5 +106,21 @@ public interface IInformeService {
      * @return asignación existente o la nueva creada
      */
     AsignSubareaInformeUser asignarSubarea(SubareaInforme subarea, Informe informe);
+
+    /**
+     * Comprueba si para un informe dado existen subáres sin responder.
+     * 
+     * @param idInforme id del informe
+     * @return 0 si todas las subáreas han sido respondidas
+     */
+    Long buscaSubareasSinResponder(Long idInforme);
+    
+    /**
+     * Crea el informe de una inspección a partir de un modelo.
+     * 
+     * @param inspeccion inspección a partir de la que se creará el informe
+     * @param modeloInformePersonalizado modelo que se utilizará para crear el informe
+     */
+    void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado);
     
 }

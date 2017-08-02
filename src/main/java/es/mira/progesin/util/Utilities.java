@@ -115,4 +115,13 @@ public class Utilities {
         return document.html();
     }
     
+    /**
+     * Comprueba que el html contiene texto, es decir, que no sólo lleva etiquetas de párrafo, salto de línea, etc.
+     * 
+     * @param html Html a comprobar
+     * @return True si el html contiene algo más que etiquetas
+     */
+    public static Boolean noEstaVacio(String html) {
+        return Jsoup.parse(html).text().isEmpty() == Boolean.FALSE;
+    }
 }

@@ -32,7 +32,7 @@
                 <h:outputLabel for="tipoInspeccionSelect" value="Tipo de Inspección" />
                 <p:selectOneMenu value="#{informeBean.informeBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                     <f:selectItem itemLabel="Todos" itemValue="" />
-                    <f:selectItems value="#{informeBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                    <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                 </p:selectOneMenu>
 
             </div>

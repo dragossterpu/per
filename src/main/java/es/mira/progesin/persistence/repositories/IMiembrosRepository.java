@@ -33,7 +33,7 @@ public interface IMiembrosRepository extends CrudRepository<Miembro, Long> {
      * @param rol del miembro
      * @return verdadero o falso
      */
-    boolean existsByUsuarioUsernameAndPosicion(String username, RolEquipoEnum rol);
+    boolean existsByUsuarioUsernameAndPosicionAndEquipoFechaBajaIsNull(String username, RolEquipoEnum rol);
     
     /**
      * Busca un miembro de un equipo teniendo su login.

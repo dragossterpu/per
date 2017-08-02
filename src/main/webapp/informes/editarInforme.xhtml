@@ -27,9 +27,9 @@
                                 <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario" disabled="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
                             </p:commandButton>
                             
-                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}">
-                                <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}" 
-                                    required="#{param['informe:finalizar']!=null}" requiredMessage="#{'No puede dejar un subárea sin responder:'.concat(area).concat(':').concat(subarea.descripcion)}">
+                          <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelRespuestas">
+                                <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px"
+                                    required="#{param['informe:finalizar']!=null}" requiredMessage="No puede dejar un subárea sin responder">
                                     
                                     <ui:include src="toolbarEditor.xhtml"/>
                                     
@@ -37,13 +37,13 @@
                                 <p:messages for="editortexto" autoUpdate="true" closable="true" />
                                 
                                 <h5><h:outputText value="Conclusiones y propuestas."/></h5>
-                                <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px" converter="#{trimConverter}">
+                                <p:textEditor id="editorconclusiones" value="#{informeBean.mapaRespuestas[subarea][1]}" height="300" style="margin-bottom:10px">
                                     
                                     <ui:include src="toolbarEditor.xhtml"/>
                                     
                                 </p:textEditor>
                                 <p:messages for="editorconclusiones" autoUpdate="true" closable="true" />
-                            </p:outputPanel>
+                           </p:outputPanel>
                             
                         </p:tab>
 					</p:accordionPanel>
@@ -51,18 +51,27 @@
 			</p:accordionPanel>
             
             <div class="botonesFormulario">
-                <p:commandButton value="Guardar" action="#{informeBean.guardarInforme}" icon="fa fa-save"  update="informe"/>
-                <p:commandButton value="Guardar y liberar mis asignaciones" action="#{informeBean.desasignarInforme}" icon="fa fa-save" update="informe"/>
-                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeEquipoInspeccion}" update="informe" ajax="true" />
+                <p:commandButton value="Guardar" actionListener="#{informeBean.guardarInforme}" icon="fa fa-save"  update="informe"/>
+                <p:commandButton value="Guardar y liberar mis asignaciones" actionListener="#{informeBean.desasignarInforme}" icon="fa fa-save" update="informe"/>
+                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeEquipoInspeccion}" />
                 <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
             
-            <p:messages  autoUpdate="true" closable="true" showDetail="true"/>
-            
+            <h:outputLabel value="Debe cumplimentar todas las subáreas del informe para poder finalizarlo" 
+                rendered="#{facesContext.validationFailed}"
+                styleClass="ui-widget ui-messages-error ui-corner-all ui-messages-error-summary"/>
+                
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                 <div class="centrarBotonesDialog">
                     <p:button value="Cerrar" onclick="PF('dialogMessage').hide()" />
+                </div>
+            </p:dialog>
+            
+            <p:dialog id="dialogFinalizar" widgetVar="dialogFinalizar" header="INFO" closable="false">
+                <p:messages for="dialogFinalizar" autoUpdate="true" showDetail="true" showSummary="true" />
+                <div class="centrarBotonesDialog">
+                    <p:button value="Cerrar" outcome="/informes/informes" />
                 </div>
             </p:dialog>
             

@@ -98,7 +98,7 @@ public class MiembroServiceTest {
         
         miembroService.esJefeEquipo(username);
         
-        verify(miembrosRepository, times(1)).existsByUsuarioUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
+        verify(miembrosRepository, times(1)).existsByUsuarioUsernameAndPosicionAndEquipoFechaBajaIsNull(username, RolEquipoEnum.JEFE_EQUIPO);
     }
     
 }
