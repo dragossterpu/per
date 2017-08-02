@@ -302,11 +302,11 @@ public class InspeccionBean {
         inspeccion.setInspecciones(new ArrayList<>());
         setProvinciSelec(null);
         
-        Miembro miembro = miembroService.buscaMiembroByUser(user);
         listaEquipos = equipoService.findByFechaBajaIsNull();
-        if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
+        Equipo equipo = equipoService.buscarEquipoByJefe(user.getUsername());
+        if (equipo != null) {
             listaEquipos = new ArrayList<>();
-            listaEquipos.add(miembro.getEquipo());
+            listaEquipos.add(equipo);
         }
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
@@ -349,7 +349,7 @@ public class InspeccionBean {
         setListaMunicipios(municipioService.findByProvincia(insp.getMunicipio().getProvincia()));
         
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Miembro miembro = miembroService.buscaMiembroByUser(user);
+        Miembro miembro = miembroService.buscaMiembroByUserAndEquipo(user, insp.getEquipo());
         listaEquipos = equipoService.findByFechaBajaIsNull();
         if (miembro != null && miembro.getPosicion().equals(RolEquipoEnum.JEFE_EQUIPO)) {
             listaEquipos = new ArrayList<>();

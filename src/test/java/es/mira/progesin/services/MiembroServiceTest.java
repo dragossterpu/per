@@ -56,16 +56,17 @@ public class MiembroServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.MiembroService#buscaMiembroByUser(User)}.
+     * Test method for {@link es.mira.progesin.services.MiembroService#buscaMiembroByUserAndEquipo}.
      */
     @Test
     public void buscaMiembroByUser() {
         
         User usuario = mock(User.class);
+        Equipo equipo = mock(Equipo.class);
         
-        miembroService.buscaMiembroByUser(usuario);
+        miembroService.buscaMiembroByUserAndEquipo(usuario, equipo);
         
-        verify(miembrosRepository, times(1)).findByUsuario(usuario);
+        verify(miembrosRepository, times(1)).findByUsuarioAndEquipo(usuario, equipo);
     }
     
     /**

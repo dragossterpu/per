@@ -34,8 +34,8 @@ public class MiembroService implements IMiembroService {
      * @return devuelve el miembro encontrado
      */
     @Override
-    public Miembro buscaMiembroByUser(User user) {
-        return miembrosRepository.findByUsuario(user);
+    public Miembro buscaMiembroByUserAndEquipo(User user, Equipo equipo) {
+        return miembrosRepository.findByUsuarioAndEquipo(user, equipo);
     }
     
     /**

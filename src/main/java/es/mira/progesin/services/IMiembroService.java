@@ -19,9 +19,10 @@ public interface IMiembroService {
      * Devuelve un miembro con un login especifico.
      * 
      * @param user usuario
+     * @param equipo de busqueda
      * @return devuelve el miembro encontrado
      */
-    Miembro buscaMiembroByUser(User user);
+    Miembro buscaMiembroByUserAndEquipo(User user, Equipo equipo);
     
     /**
      * Guarda la información de un miembro de equipo en la bdd.
