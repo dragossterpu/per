@@ -214,4 +214,15 @@ public class EquipoService implements IEquipoService {
         return equipoRepository.findOne(id);
     }
     
+    /**
+     * Devuelve el equipo de un miembro con Rol jefe.
+     * 
+     * @param paramLogin username jefe
+     * @return Equipo devuelto
+     */
+    @Override
+    public Equipo buscarEquipoByJefe(String paramLogin) {
+        return equipoRepository.buscarEquipoByJefe(paramLogin);
+    }
+    
 }

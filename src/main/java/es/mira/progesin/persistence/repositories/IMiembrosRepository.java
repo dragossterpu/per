@@ -39,9 +39,10 @@ public interface IMiembrosRepository extends CrudRepository<Miembro, Long> {
      * Busca un miembro de un equipo teniendo su login.
      * 
      * @param user Usuario
+     * @param equipo de busqueda
      * @return miembro encontrado si existe
      */
     
-    Miembro findByUsuario(User user);
+    Miembro findByUsuarioAndEquipo(User user, Equipo equipo);
     
 }
