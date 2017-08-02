@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
 import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
@@ -29,6 +31,7 @@ import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.persistence.repositories.IInformeRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaInformeRepository;
 import es.mira.progesin.persistence.repositories.ISubareaInformeRepository;
+import es.mira.progesin.util.Utilities;
 import es.mira.progesin.web.beans.informes.InformeBusqueda;
 
 /**
@@ -77,6 +80,12 @@ public class InformeService implements IInformeService {
     private IAsignSubareaInformeUserService asignSubareaInformeUserService;
     
     /**
+     * Servicio de inspecciones.
+     */
+    @Autowired
+    private IInspeccionesService inspeccionService;
+    
+    /**
      * Guarda la información de un informe en la bdd.
      * 
      * @param informe informe creado o modificado
@@ -94,6 +103,7 @@ public class InformeService implements IInformeService {
      * @param mapaRespuestas respuestas
      * @return informe actualizado
      */
+    
     @Override
     @Transactional(readOnly = false)
     public Informe guardarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
@@ -117,16 +127,16 @@ public class InformeService implements IInformeService {
             if (usernameUsuarioActual.equals(mapaAsignaciones.get(subarea))) {
                 byte[] texto = null;
                 byte[] conclusiones = null;
-                if (respuesta[0] != null) {
+                if (respuesta[0] != null && Utilities.noEstaVacio(respuesta[0])) {
                     texto = respuesta[0].getBytes();
                 }
-                if (respuesta[1] != null) {
+                if (respuesta[1] != null && Utilities.noEstaVacio(respuesta[1])) {
                     conclusiones = respuesta[1].getBytes();
                 }
-                if (texto != null) {
+//                if (texto != null) {
                     subarea = subareaInformeRepository.findOne(subarea.getId());
                     respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
-                }
+//                }
             }
         });
         respuestaInformeRepository.save(respuestas);
@@ -170,7 +180,12 @@ public class InformeService implements IInformeService {
         
         informeActualizado.setFechaFinalizacion(new Date());
         informeActualizado.setUsernameFinalizacion(usernameUsuarioActual);
-        return informeRepository.save(informeActualizado);
+        Informe informeGuardado = informeRepository.save(informeActualizado);
+        // Cambiamos el estado de la inspección a INFORME FINALIZADO
+        Inspeccion inspeccion = inspeccionService.findInspeccionById(informe.getInspeccion().getId());
+        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.J_INFORME_REALIZADO);
+        inspeccionService.save(inspeccion);
+        return informeGuardado;
     }
     
     /**
@@ -344,6 +359,32 @@ public class InformeService implements IInformeService {
             asignacion = asignSubareaInformeUserService.save(nuevaAsignacion);
         }
         return asignacion;
+    }
+    
+    /**
+     * Comprueba si para un informe dado existen subáres sin responder.
+     * 
+     * @param idInforme id del informe
+     * @return 0 si todas las subáreas han sido respondidas
+     */
+    @Override
+    public Long buscaSubareasSinResponder(Long idInforme) {
+        return subareaInformeRepository.buscaSubareasSinResponder(idInforme);
+    }
+
+    /**
+     * Crea el informe de una inspección a partir de un modelo.
+     * 
+     * @param inspeccion inspección a partir de la que se creará el informe
+     * @param modeloInformePersonalizado modelo que se utilizará para crear el informe
+     */
+    @Override
+    public void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado) {
+        Informe nuevoInforme = Informe.builder().modeloPersonalizado(modeloInformePersonalizado)
+                .inspeccion(inspeccion).build();
+        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.I_ELABORACION_INFORME);
+        inspeccionService.save(inspeccion);
+        informeRepository.save(nuevoInforme);       
     }
     
 }

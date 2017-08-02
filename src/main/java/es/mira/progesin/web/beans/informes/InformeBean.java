@@ -27,7 +27,6 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.persistence.entities.Inspeccion;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -40,7 +39,6 @@ import es.mira.progesin.services.IAsignSubareaInformeUserService;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
-import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.HtmlDocxGenerator;
@@ -99,11 +97,6 @@ public class InformeBean implements Serializable {
     private LazyModelInforme model;
     
     /**
-     * Lista de tipos de inspección.
-     */
-    private List<TipoInspeccion> listaTiposInspeccion;
-    
-    /**
      * Lista ordenada de areas del informe.
      */
     private List<AreaInforme> listaAreas;
@@ -146,12 +139,7 @@ public class InformeBean implements Serializable {
      */
     @Autowired
     private transient HtmlDocxGenerator htmlDocxGenerator;
-    
-    /**
-     * Servicio de tipos de inspección.
-     */
-    @Autowired
-    private transient ITipoInspeccionService tipoInspeccionService;
+ 
     
     /**
      * Servicio de inspecciones.
@@ -181,9 +169,10 @@ public class InformeBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        setInformeBusqueda(new InformeBusqueda());
+//        setInformeBusqueda(new InformeBusqueda());
         model = new LazyModelInforme(informeService);
-        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
+        setInformeBusqueda(model.getBusqueda());
+   
         setList(new ArrayList<>());
         for (int i = 0; i <= NUMCOLSTABLA; i++) {
             list.add(Boolean.TRUE);
@@ -298,7 +287,9 @@ public class InformeBean implements Serializable {
         informe.getRespuestas().forEach(respuesta -> {
             try {
                 String[] resp = new String[2];
-                resp[0] = new String(respuesta.getTexto(), "UTF-8");
+                if (respuesta.getTexto() != null) {
+                    resp[0] = new String(respuesta.getTexto(), "UTF-8");
+                }
                 if (respuesta.getConclusiones() != null) {
                     resp[1] = new String(respuesta.getConclusiones(), "UTF-8");
                 }
@@ -329,9 +320,7 @@ public class InformeBean implements Serializable {
      */
     public void crearInforme(Inspeccion inspeccion) {
         try {
-            Informe nuevoInforme = Informe.builder().modeloPersonalizado(modeloInformePersonalizado)
-                    .inspeccion(inspeccion).build();
-            informeService.save(nuevoInforme);
+            informeService.crearInforme(inspeccion, modeloInformePersonalizado);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El informe ha sido creado con éxito.");
         } catch (DataAccessException e) {
@@ -364,6 +353,8 @@ public class InformeBean implements Serializable {
     public void desasignarInforme() {
         try {
             setInforme(informeService.desasignarInforme(informe, mapaRespuestas, mapaAsignaciones));
+            // Volvemos a generar el mapa de asignaciones para que se actualice la vista
+            generarMapaAsignaciones();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
@@ -379,11 +370,16 @@ public class InformeBean implements Serializable {
      */
     public void finalizarInforme() {
         try {
-            // TODO comprobar que todas las respuestas tienen texto y conclusiones distinto de null
-            // TODO ¿cambiar estado inspeccion?
-            setInforme(informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones));
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
-                    "El informe ha sido guardado y finalizado con éxito.");
+            //Comprobar que todas las subáreas tienen respuesta
+            Long nSubareasSinRta = informeService.buscaSubareasSinResponder(informe.getId());
+            if (nSubareasSinRta > 0) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                        "No se puede finalizar el informe al existir subáreas sin responder");
+            } else {
+                setInforme(informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones));
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
+                        "El informe ha sido finalizado con éxito.", "dialogFinalizar");
+            }
         } catch (DataAccessException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
