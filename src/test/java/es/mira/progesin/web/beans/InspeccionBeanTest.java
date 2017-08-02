@@ -35,8 +35,10 @@ import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.AlertaService;
 import es.mira.progesin.services.EquipoService;
+import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.MiembroService;
@@ -87,6 +89,12 @@ public class InspeccionBeanTest {
     private IMunicipioService municipioService;
     
     /**
+     * Mock del servicio de equipos.
+     */
+    @Mock
+    private IEquipoService equipoService;
+    
+    /**
      * Objeto en el que se injectan los mocks.
      */
     @InjectMocks
@@ -111,6 +119,7 @@ public class InspeccionBeanTest {
         inspeccionBean.setMiembroService(mock(MiembroService.class));
         inspeccionBean.setNotificacionesService(mock(NotificacionService.class));
         inspeccionBean.setAlertaService(mock(AlertaService.class));
+        inspeccionBean.setEquipoService(mock(EquipoService.class));
     }
     
     /**
@@ -223,6 +232,8 @@ public class InspeccionBeanTest {
      */
     @Test
     public final void testNuevaInspeccion() {
+        when(authentication.getPrincipal()).thenReturn(mock(User.class));
+        
         String ruta = inspeccionBean.nuevaInspeccion();
         assertThat(ruta).isEqualTo("/inspecciones/altaInspeccion?faces-redirect=true");
     }
