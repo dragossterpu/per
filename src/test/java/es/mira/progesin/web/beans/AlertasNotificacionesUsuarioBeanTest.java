@@ -26,15 +26,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import es.mira.progesin.lazydata.LazyModelAlertas;
-import es.mira.progesin.lazydata.LazyModelNotificaciones;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
-import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 
@@ -57,8 +53,6 @@ public class AlertasNotificacionesUsuarioBeanTest {
     /**
      * Simulación del RequestContext.
      */
-    @Mock
-    private RequestContext requestContext;
     
     /**
      * Simulación de la autenticación.
@@ -77,28 +71,6 @@ public class AlertasNotificacionesUsuarioBeanTest {
      */
     @Mock
     private IRegistroActividadService regActividad;
-    
-    /**
-     * Mock Servicio de alertas.
-     */
-    @Mock
-    private IAlertaService alertaService;
-    
-    /**
-     * Mock Servicio de notificaciones.
-     */
-    @Mock
-    private INotificacionService notificacionService;
-    
-    /**
-     * LazyModel para la visualización de las alertas.
-     */
-    private LazyModelAlertas modelAlertas;
-    
-    /**
-     * LazyModel para la visualización de las notificaciones.
-     */
-    private LazyModelNotificaciones modelNotificaciones;
     
     /**
      * Simulación de AlertasNotificacionesUsuarioBean.
