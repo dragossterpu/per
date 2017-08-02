@@ -1,5 +1,8 @@
 package es.mira.progesin.web.beans;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.faces.application.FacesMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +55,11 @@ public class MiPerfilBean {
     IUserService userService;
     
     /**
+     * Constante patrón de contraseña.
+     */
+    private static final String PASSPATTERN = "^(?=.*?[A-Z])(?=.*?[0-9]).{2,}$";
+    
+    /**
      * Método usado para que el usuario pueda cambiar su contraseña.
      */
     public void cambiarClave() {
@@ -60,18 +68,35 @@ public class MiPerfilBean {
                     "Las contraseñas introducidas no coinciden", "", null);
         } else {
             User usuario = user.getUser();
-            // TODO Comprobar que cumple los siguientes criterios: como mínimo un carácter en mayúscula y un número,
-            // permitiéndose cualquier carácter UTF-8, en cualquier posición.
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(this.getClaveActual(), usuario.getPassword())) {
-                usuario.setPassword(passwordEncoder.encode(this.getClaveNueva()));
-                userService.save(usuario);
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
-                        "La contraseña ha sido modificada con éxito", "", null);
+                if (validaPass(this.claveNueva)) {
+                    usuario.setPassword(passwordEncoder.encode(this.getClaveNueva()));
+                    userService.save(usuario);
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
+                            "La contraseña ha sido modificada con éxito", "", null);
+                } else {
+                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
+                            "La nueva contraseña al menos debe tener un número y una letra mayúscula. Inténtelo de nuevo",
+                            "", null);
+                }
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                         "La contraseña actual introducida no es válida. Inténtelo de nuevo", "", null);
             }
         }
+        
+    }
+    
+    /**
+     * Método qué que indica si una cadena cumple un ptrón determinado.
+     * @param password String a validar
+     * @return ¿Válida?
+     */
+    private boolean validaPass(String password) {
+        Pattern pattern = Pattern.compile(PASSPATTERN);
+        Matcher matcher = pattern.matcher(password);
+        
+        return matcher.matches();
     }
 }
