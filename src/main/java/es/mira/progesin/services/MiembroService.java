@@ -68,7 +68,7 @@ public class MiembroService implements IMiembroService {
      */
     @Override
     public boolean esJefeEquipo(String username) {
-        return miembrosRepository.existsByUsuarioUsernameAndPosicion(username, RolEquipoEnum.JEFE_EQUIPO);
+        return miembrosRepository.existsByUsuarioUsernameAndPosicionAndEquipoFechaBajaIsNull(username, RolEquipoEnum.JEFE_EQUIPO);
     }
     
 }
