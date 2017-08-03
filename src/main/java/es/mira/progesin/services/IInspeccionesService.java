@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
@@ -22,13 +23,13 @@ public interface IInspeccionesService {
      * @param inspecciones a guardar
      * @return devuelve la inspección guardada
      */
-  Inspeccion save(Inspeccion inspecciones);
+    Inspeccion save(Inspeccion inspecciones);
     
     /**
      * Borra una inspección pasada por parámetro.
      * @param inspecciones a borrar
      */
-  void delete(Inspeccion inspecciones);
+    void delete(Inspeccion inspecciones);
     
     /**
      * Busca inspecciones no finalizadas filtrando por el nombre de la unidad o el número de la inspección.
@@ -69,7 +70,7 @@ public interface IInspeccionesService {
      * @param id de la inspección
      * @return devuelve inspección si es encontrada.
      */
-  Inspeccion findInspeccionById(Long id);
+    Inspeccion findInspeccionById(Long id);
     
     /**
      * Devuelve la lista de inspecciones asociadas a otra.
@@ -77,7 +78,7 @@ public interface IInspeccionesService {
      * @param inspeccion pasada por parámetro
      * @return devuelve lista de inspecciones asociadas
      */
-  List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion);
+    List<Inspeccion> listaInspeccionesAsociadas(Inspeccion inspeccion);
     
     /**
      * Comprueba si existe una inspección de determinado tipo.
@@ -114,7 +115,7 @@ public interface IInspeccionesService {
      * @param estado Estado de inspección a buscar
      * @return Resultado de la búsqueda
      */
-     List<Inspeccion> findByEstadoInspeccion(EstadoInspeccionEnum estado);
+    List<Inspeccion> findByEstadoInspeccion(EstadoInspeccionEnum estado);
     
     /**
      * Devuelve las inspecciones en las que ha participado un usuario.
@@ -122,7 +123,7 @@ public interface IInspeccionesService {
      * @param usuario Usuario consultado
      * @return Listado de las inspecciones en las que ha participado.
      */
-     List<Inspeccion> findInspeccionesByUsuario(String usuario);
+    List<Inspeccion> findInspeccionesByUsuario(String usuario);
     
     /**
      * Devuelve un listado de inspecciones a partir de su nombre de unidad o año. Los resultados se filtran para
@@ -134,4 +135,10 @@ public interface IInspeccionesService {
      * inspección
      */
     List<Inspeccion> buscarPorNombreUnidadONumeroUsuario(String infoInspeccion, User usuario);
+    
+    /**
+     * @param equipo de la inspección
+     * @return valor booleano dependiendo de si existe una inspección finalizada o no
+     */
+    public boolean existenInspeccionesNoFinalizadas(Equipo equipo);
 }

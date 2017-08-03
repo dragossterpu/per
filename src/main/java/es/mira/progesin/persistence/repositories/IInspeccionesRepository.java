@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
@@ -102,4 +103,11 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
     @Query("SELECT i FROM Inspeccion i, Miembro m WHERE (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) AND i.equipo=m.equipo and m.usuario=:userConsulta ORDER BY i.nombreUnidad, i.id DESC")
     public List<Inspeccion> buscarPorNombreUnidadONumeroYUsuario(@Param("infoInspeccion") String paramString,
             @Param("userConsulta") User userConsulta);
+    
+    /**
+     * @param equipo de la inspección
+     * @return valor booleano dependiendo de si existe una inspección finalizada o no
+     */
+    public boolean existsByEquipoAndFechaFinalizacionIsNull(Equipo equipo);
+    
 }

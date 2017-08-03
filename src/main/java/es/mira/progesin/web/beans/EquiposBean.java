@@ -28,6 +28,7 @@ import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
+import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -163,6 +164,12 @@ public class EquiposBean implements Serializable {
     transient INotificacionService notificacionService;
     
     /**
+     * Servicio de Inspecciones.
+     */
+    @Autowired
+    transient IInspeccionesService inspeccionesService;
+    
+    /**
      * Muestra formulario de alta de nuevos equipos, inicializando lo necesario para mostrar correctamente la página. Se
      * llama desde la página de búsqueda de equipos.
      * 
@@ -262,23 +269,26 @@ public class EquiposBean implements Serializable {
     /**
      * Elimina un equipo. Se invoca desde la lista de resultados del buscador.
      * 
-     * @param equip recuperado del formulario de búsqueda de equipos
+     * @param eq recuperado del formulario de búsqueda de equipos
      */
-    public void eliminarEquipo(Equipo equip) {
+    public void eliminarEquipo(Equipo eq) {
         try {
-            // TODO ¿comprobar si hay inspecciones sin finalizar?
-            equip.setFechaBaja(new Date());
-            
-            equip.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-            
-            equipoService.save(equip);
-            
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
-                    "Se ha dado de baja con éxito un equipo de inspecciones", null);
-            String descripcion = "Se ha eliminado el equipo inspecciones '" + equip.getNombreEquipo() + "'.";
-            // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                    SeccionesEnum.INSPECCION.getDescripcion());
+            if (inspeccionesService.existenInspeccionesNoFinalizadas(eq)) {
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                        "No se puede eliminar este equipo. Tiene inspecciones sin finalizar.", null);
+            } else {
+                eq.setFechaBaja(new Date());
+                eq.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
+                
+                equipoService.save(eq);
+                
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
+                        "Se ha dado de baja con éxito un equipo de inspecciones", null);
+                String descripcion = "Se ha eliminado el equipo inspecciones '" + eq.getNombreEquipo() + "'.";
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                        SeccionesEnum.INSPECCION.getDescripcion());
+            }
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),

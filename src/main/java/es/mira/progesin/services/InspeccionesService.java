@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
@@ -385,6 +386,15 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public List<Inspeccion> buscarPorNombreUnidadONumeroUsuario(String infoInspeccion, User usuario) {
         return inspeccionesRepository.buscarPorNombreUnidadONumeroYUsuario("%" + infoInspeccion + "%", usuario);
+    }
+    
+    /**
+     * @param equipo de la inspección
+     * @return valor booleano dependiendo de si existe una inspección finalizada o no
+     */
+    @Override
+    public boolean existenInspeccionesNoFinalizadas(Equipo equipo) {
+        return inspeccionesRepository.existsByEquipoAndFechaFinalizacionIsNull(equipo);
     }
     
 }
