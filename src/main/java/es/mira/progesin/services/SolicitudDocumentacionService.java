@@ -29,12 +29,14 @@ import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * Servicio de solicitudes de documentación.
  * 
  * @author EZENTIS
  */
+@NoArgsConstructor
 @Service
 public class SolicitudDocumentacionService implements ISolicitudDocumentacionService {
     
@@ -85,6 +87,17 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public SolicitudDocumentacionService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
     
     /**
      * Guarda la información de una solicitud en la bdd.

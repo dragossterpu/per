@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,7 +37,6 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
 
 /**
  * Test del servicio Solicitud Documentación Previa.
@@ -111,7 +109,6 @@ public class SolicitudDocumentacionServiceTest {
     @Before
     public void setUp() {
         PowerMockito.mockStatic(SecurityContextHolder.class);
-        
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
     }
@@ -183,39 +180,6 @@ public class SolicitudDocumentacionServiceTest {
         verify(solicitudDocumentacionPreviaRepository, times(1))
                 .findByFechaBajaIsNullAndFechaFinalizacionIsNullAndFechaEnvioIsNotNullAndCorreoDestinatarioIgnoreCase(
                         correo);
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, String, org.primefaces.model.SortOrder, SolicitudDocPreviaBusqueda)}
-     * .
-     */
-    @Ignore
-    @Test
-    public void buscarSolicitudDocPreviaCriteria() {
-        // TODO test del buscador de equipos
-        // List<SolicitudDocumentacionPrevia> actual =
-        // solicitudDocPreviaService.buscarSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda);
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#getCountSolicitudDocPreviaCriteria(SolicitudDocPreviaBusqueda)}
-     * .
-     */
-    @Ignore
-    @Test
-    public void getCountSolicitudDocPreviaCriteria() {
-        // TODO test del buscador de equipos
-        // SolicitudDocPreviaBusqueda solicitudDocPreviaBusqueda = mock(SolicitudDocPreviaBusqueda.class);
-        // Session session = mock(Session.class);
-        // when(sessionFactory.openSession()).thenReturn(session);
-        // Criteria criteria = mock(Criteria.class);
-        // when(session.createCriteria(SolicitudDocumentacionPrevia.class, "solicitud")).thenReturn(criteria);
-        // when(authentication.getPrincipal()).thenReturn(mock(User.class));
-        // when(criteria.uniqueResult()).thenReturn(0L);
-        //
-        // solicitudDocPreviaService.getCountSolicitudDocPreviaCriteria(solicitudDocPreviaBusqueda);
     }
     
     /**
