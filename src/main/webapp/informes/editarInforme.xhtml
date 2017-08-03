@@ -1,7 +1,8 @@
 <ui:composition template="../layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-
-        <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq informeBean.informe.inspeccion.equipo.jefeEquipo.username or p:ifAnyGranted('JEFE_INSPECCIONES, ADMIN')}" />
+        
+        <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
+        <ui:param name="esJefeEquipoInspeccion" value="#{request.remoteUser eq informeBean.informe.inspeccion.equipo.jefeEquipo.username}" />
                             
         <ui:param name="titulo" value="Redactar informe" />
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
@@ -23,7 +24,7 @@
                             </p:outputPanel>
                             
                             <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="tabsubarea" immediate="true" partialSubmit="true"  rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
-                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="tabsubarea" immediate="true" partialSubmit="true" rendered="#{(informeBean.mapaAsignaciones[subarea] eq request.remoteUser) or (not empty informeBean.mapaAsignaciones[subarea] and esJefeEquipoInspeccion)}">
+                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="tabsubarea" immediate="true" partialSubmit="true" rendered="#{(informeBean.mapaAsignaciones[subarea] eq request.remoteUser) or (not empty informeBean.mapaAsignaciones[subarea] and (esJefeEquipoInspeccion or esJefeInspecciones))}">
                                 <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario" disabled="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
                             </p:commandButton>
                             
@@ -53,7 +54,7 @@
             <div class="botonesFormulario">
                 <p:commandButton value="Guardar" actionListener="#{informeBean.guardarInforme}" icon="fa fa-save"  update="informe"/>
                 <p:commandButton value="Guardar y liberar mis asignaciones" actionListener="#{informeBean.desasignarInforme}" icon="fa fa-save" update="informe"/>
-                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeEquipoInspeccion}" />
+                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeInspecciones or esJefeEquipoInspeccion}" />
                 <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
             

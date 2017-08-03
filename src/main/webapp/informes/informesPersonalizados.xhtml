@@ -92,11 +92,12 @@
 	               <p:column headerText="Usuario baja" sortBy="#{informePersonalizado.usernameBaja}" width="90" visible="#{inspeccionBean.list[5]}" exportable="#{informePersonalizadoBean.list[5]}">
 	                   <h:outputText value="#{informePersonalizado.usernameBaja}"/>
 	               </p:column>
-	               <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-	                   <p:commandButton title="Crear informe" icon="fa fa-copy" action="#{informeBean.getFormCrearInforme(informePersonalizado.id)}" disabled="#{not empty informePersonalizado.fechaBaja}"/>
+	               <p:column styleClass="botonTabla" exportable="false" toggleable="false" >
+	                   <p:commandButton title="Crear informe" icon="fa fa-copy" action="#{informeBean.getFormCrearInforme(informePersonalizado.id)}" disabled="#{not empty informePersonalizado.fechaBaja}" rendered="#{esJefeInspecciones or esEquipo}"/>
 	               </p:column>
 	               <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-	                   <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{informePersonalizadoBean.eliminarModeloPersonalizado(informePersonalizado)}" update=":busquedaInformePersonalizado:panelInformes tablaInformes " disabled="#{not empty informePersonalizado.fechaBaja}">
+	                   <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{informePersonalizadoBean.eliminarModeloPersonalizado(informePersonalizado)}" update=":busquedaInformePersonalizado:panelInformes tablaInformes " 
+                        disabled="#{not empty informePersonalizado.fechaBaja}" rendered="#{esJefeInspecciones}">
 	                       <p:confirm header="Eliminar modelo personalizado" message="¿Está seguro que desea eliminar, o anular en caso de haber sido usado, este modelo?" icon="fa fa-warning-sign" />
 	                   </p:commandButton>
 	               </p:column>

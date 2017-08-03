@@ -133,10 +133,10 @@ public class InformeService implements IInformeService {
                 if (respuesta[1] != null && Utilities.noEstaVacio(respuesta[1])) {
                     conclusiones = respuesta[1].getBytes();
                 }
-//                if (texto != null) {
-                    subarea = subareaInformeRepository.findOne(subarea.getId());
-                    respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
-//                }
+                // if (texto != null) {
+                subarea = subareaInformeRepository.findOne(subarea.getId());
+                respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
+                // }
             }
         });
         respuestaInformeRepository.save(respuestas);
@@ -266,7 +266,6 @@ public class InformeService implements IInformeService {
         
         criteriaInspeccion(criteria, informeBusqueda);
         criteriaEstadoInforme(criteria, informeBusqueda.getEstado());
-        
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     }
     
@@ -279,6 +278,8 @@ public class InformeService implements IInformeService {
     private void criteriaInspeccion(Criteria criteria, InformeBusqueda informeBusqueda) {
         criteria.createAlias("informe.inspeccion", "inspeccion"); // inner join
         criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
+        criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
+        
         if (informeBusqueda.getIdInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.id", Long.parseLong(informeBusqueda.getIdInspeccion())));
         }
@@ -295,6 +296,8 @@ public class InformeService implements IInformeService {
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", informeBusqueda.getNombreUnidad(),
                     MatchMode.ANYWHERE));
         }
+        criteriaService.setCriteriaEquipo(criteria);
+        
     }
     
     /**
@@ -371,7 +374,7 @@ public class InformeService implements IInformeService {
     public Long buscaSubareasSinResponder(Long idInforme) {
         return subareaInformeRepository.buscaSubareasSinResponder(idInforme);
     }
-
+    
     /**
      * Crea el informe de una inspección a partir de un modelo.
      * 
@@ -380,11 +383,11 @@ public class InformeService implements IInformeService {
      */
     @Override
     public void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado) {
-        Informe nuevoInforme = Informe.builder().modeloPersonalizado(modeloInformePersonalizado)
-                .inspeccion(inspeccion).build();
+        Informe nuevoInforme = Informe.builder().modeloPersonalizado(modeloInformePersonalizado).inspeccion(inspeccion)
+                .build();
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.I_ELABORACION_INFORME);
         inspeccionService.save(inspeccion);
-        informeRepository.save(nuevoInforme);       
+        informeRepository.save(nuevoInforme);
     }
     
 }
