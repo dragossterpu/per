@@ -149,7 +149,7 @@
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <p:commandButton title="Ver solicitud" icon="fa fa-eye" action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspeccionesApoyo}">
                         <p:commandButton title="Modificar solicitud" icon="fa fa-edit" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspeccionesApoyo}">
