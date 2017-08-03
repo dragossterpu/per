@@ -15,7 +15,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -28,10 +27,13 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelEquipos;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
@@ -41,6 +43,7 @@ import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
+import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
@@ -52,7 +55,6 @@ import es.mira.progesin.util.FacesUtilities;
  * 
  * @author EZENTIS
  */
-@Ignore
 @RunWith(PowerMockRunner.class)
 // Evita conflictos con clases del sistema al enlazar los mocks por tipo
 @PowerMockIgnore("javax.security.*")
@@ -105,6 +107,18 @@ public class EquiposBeanTest {
     private INotificacionService notificacionService;
     
     /**
+     * Mock del servicio de inspecciones.
+     */
+    @Mock
+    private IInspeccionesService inspeccionesService;
+    
+    /**
+     * Mock del servicio de inspecciones.
+     */
+    @Mock
+    private LazyModelEquipos model;
+    
+    /**
      * Captor del objeto equipo.
      */
     @Captor
@@ -130,6 +144,11 @@ public class EquiposBeanTest {
      * Literal para pruebas.
      */
     private static final String CONFIRM = "confirm";
+    
+    /**
+     * Literal para nombre equipo.
+     */
+    private static final String NOMBREQUIPO = "nombreEquipo";
     
     /**
      * Configuración inicial del test.
@@ -169,6 +188,7 @@ public class EquiposBeanTest {
         usuarios.add(User.builder().username("miembro1").nombre("nombreMiembro1").apellido1("apellido1Miembro1")
                 .apellido2("apellido2Miembro1").build());
         when(userService.buscarNoMiembroEquipoNoJefe(null)).thenReturn(usuarios);
+        when(userService.buscarUserSinEquipo()).thenReturn(usuarios);
         
         String rutaVista = equipoBean.getFormAltaEquipo();
         
@@ -182,7 +202,7 @@ public class EquiposBeanTest {
      */
     @Test
     public void altaEquipo() {
-        equipoBean.setEquipo(Equipo.builder().nombreEquipo("nombreEquipo").build());
+        equipoBean.setEquipo(Equipo.builder().nombreEquipo(NOMBREQUIPO).build());
         equipoBean.setJefeSeleccionado(User.builder().username("jefe").nombre("nombreJefe").apellido1("apellido1Jefe")
                 .apellido2("apellido2Jefe").build());
         equipoBean.setTipoEquipo(TipoEquipo.builder().codigo("codigo").descripcion("descripcion").build());
@@ -231,10 +251,26 @@ public class EquiposBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#buscarEquipo()}.
      */
     @Test
-    @Ignore
     public void buscarEquipo() {
-        // equipoBean.buscarEquipo();
-        // verify(equipoService, times(1)).buscarEquipoCriteria(equipoBusqueda);
+        EquipoBusqueda busqueda = mock(EquipoBusqueda.class);
+        equipoBean.setEquipoBusqueda(busqueda);
+        equipoBean.buscarEquipo();
+        verify(model, times(1)).setBusqueda(busqueda);
+        verify(model, times(1)).load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#eliminarEquipo(Equipo)}.
+     */
+    @Test
+    public void eliminarEquipoConInspecciones() {
+        when(authentication.getName()).thenReturn("jefeInspecciones");
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
+        when(inspeccionesService.existenInspeccionesNoFinalizadas(equipo)).thenReturn(true);
+        equipoBean.eliminarEquipo(equipo);
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
+                any(String.class), eq(null));
     }
     
     /**
@@ -243,8 +279,8 @@ public class EquiposBeanTest {
     @Test
     public void eliminarEquipo() {
         when(authentication.getName()).thenReturn("jefeInspecciones");
-        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
-        
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
+        when(inspeccionesService.existenInspeccionesNoFinalizadas(equipo)).thenReturn(false);
         equipoBean.eliminarEquipo(equipo);
         
         verify(equipoService, times(1)).save(equipoCaptor.capture());
@@ -257,16 +293,51 @@ public class EquiposBeanTest {
     }
     
     /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#eliminarEquipo(Equipo)}.
+     */
+    @Test
+    public void eliminarEquipoException() {
+        when(authentication.getName()).thenReturn("jefeInspecciones");
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
+        when(inspeccionesService.existenInspeccionesNoFinalizadas(equipo)).thenReturn(false);
+        when(equipoService.save(equipo)).thenThrow(TransientDataAccessResourceException.class);
+        equipoBean.eliminarEquipo(equipo);
+        
+        verify(equipoService, times(1)).save(equipoCaptor.capture());
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
+                any(String.class), eq(null));
+        verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
+                any(TransientDataAccessResourceException.class));
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(Equipo)}.
      */
     @Test
     public void getFormModificarEquipo() {
-        Equipo equipo = mock(Equipo.class);
-        
+        Equipo equipo = new Equipo();
+        equipo.setId(1L);
+        when(equipoService.findOne(equipo.getId())).thenReturn(equipo);
         String ruta_vista = equipoBean.getFormModificarEquipo(equipo);
         
         verify(miembroService, times(1)).findByEquipo(equipo);
         assertThat(ruta_vista).isEqualTo("/equipos/modificarEquipo?faces-redirect=true");
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.EquiposBean#getFormModificarEquipo(Equipo)}.
+     */
+    @Test
+    public void getFormModificarEquipoNoExiste() {
+        Equipo equipo = mock(Equipo.class);
+        equipo.setId(1L);
+        when(equipoService.findOne(equipo.getId())).thenReturn(null);
+        String ruta_vista = equipoBean.getFormModificarEquipo(equipo);
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
+                any(String.class));
+        assertThat(ruta_vista).isNull();
     }
     
     /**
@@ -275,7 +346,7 @@ public class EquiposBeanTest {
     @Test
     public void eliminarMiembro() {
         User userMiembro = User.builder().username("miembro").build();
-        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombreEquipo").build();
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
         Miembro miembro = Miembro.builder().id(1L).usuario(userMiembro).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo)
                 .build();
         List<Miembro> miembros = new ArrayList<>();
@@ -305,7 +376,7 @@ public class EquiposBeanTest {
         
         String ruta_vista = equipoBean.getFormCambiarJefeEquipo();
         
-        verify(userService, times(1)).buscarNoMiembroEquipoNoJefe(equipo.getId());
+        verify(userService, times(1)).buscarUserSinEquipo();
         assertThat(ruta_vista).isEqualTo("/equipos/cambiarJefeEquipo?faces-redirect=true");
     }
     
@@ -316,7 +387,7 @@ public class EquiposBeanTest {
     public void cambiarJefeEquipo() {
         User userJefe = User.builder().username("jefe").build();
         User miembro1 = User.builder().username("miembro1").build();
-        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("nombre").build();
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
         List<Miembro> miembros = new ArrayList<>();
         miembros.add(Miembro.builder().usuario(userJefe).posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
         miembros.add(Miembro.builder().usuario(miembro1).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo).build());
@@ -375,7 +446,7 @@ public class EquiposBeanTest {
         User userJefe = User.builder().username("jefe").build();
         User userMiembro = User.builder().username("miembro").build();
         
-        Equipo equipo = Equipo.builder().id(1L).nombreEquipo("equipo").build();
+        Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
         List<Miembro> miembros = new ArrayList<>();
         miembros.add(Miembro.builder().usuario(userJefe).posicion(RolEquipoEnum.JEFE_EQUIPO).equipo(equipo).build());
         miembros.add(Miembro.builder().usuario(userMiembro).posicion(RolEquipoEnum.MIEMBRO).equipo(equipo).build());
