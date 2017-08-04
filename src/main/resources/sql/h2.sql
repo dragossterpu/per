@@ -426,6 +426,11 @@ insert into guia_inspeccion (id_guia, id_inspeccion) values (2, 6);
 
 --CUESTIONARIOS
 
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('45',2,'0'), 'Toledo', 'TO');
+insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'AJOFRÍN', lpad('45', 2, '0'));
+insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CABAÑAS DE LA SAGRA', lpad('45', 2, '0'));
+
+
 
 
 
