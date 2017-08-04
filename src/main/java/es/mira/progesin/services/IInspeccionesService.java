@@ -137,6 +137,8 @@ public interface IInspeccionesService {
     List<Inspeccion> buscarPorNombreUnidadONumeroUsuario(String infoInspeccion, User usuario);
     
     /**
+     * Método que devuelve si existen inspecciones sin finalizar para un determinado equipo.
+     * 
      * @param equipo de la inspección
      * @return valor booleano dependiendo de si existe una inspección finalizada o no
      */

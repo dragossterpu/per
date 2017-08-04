@@ -105,6 +105,8 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
             @Param("userConsulta") User userConsulta);
     
     /**
+     * Método que devuelve si existen inspecciones sin finalizar para un determinado equipo.
+     * 
      * @param equipo de la inspección
      * @return valor booleano dependiendo de si existe una inspección finalizada o no
      */
