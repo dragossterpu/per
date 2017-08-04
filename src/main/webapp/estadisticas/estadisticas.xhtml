@@ -10,7 +10,7 @@
              <p:panel id="camposBusqueda" style="border:0">
                 <div class="bloqueFormulario">
                  <div class="columnaIzdaFormulario">
-                      <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+                      <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspección:" />
                       <p:selectOneMenu value="#{tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                           <f:selectItem itemLabel="Todos" itemValue="" />
                           <f:selectItems value="#{estadisticaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />

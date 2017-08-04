@@ -59,7 +59,7 @@
                     <p:column headerText="Tipo" sortBy="#{documento.tipoDocumento}" visible="#{gestorDocumentalBean.list[4]}" exportable="#{gestorDocumentalBean.list[4]}">
                         <h:outputText value="#{documento.tipoDocumento.nombre}" />
                     </p:column>
-                    <p:column headerText="Inspeccion" width="100" visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
+                    <p:column headerText="Inspección" width="100" visible="#{gestorDocumentalBean.list[5]}" exportable="#{gestorDocumentalBean.list[5]}">
                         <h:outputText value="#{gestorDocumentalBean.mapaInspecciones[documento.id]}" styleClass="saltoLinea" rendered="#{ not empty gestorDocumentalBean.mapaInspecciones[documento.id]}" />
 
                     </p:column>

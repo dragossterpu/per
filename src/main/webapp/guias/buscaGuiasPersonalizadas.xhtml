@@ -13,7 +13,7 @@
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombreGuia" value="Nombre de la guia:" />
                     <p:inputText id="nombreGuia" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.nombre}" converter="#{trimConverter}"/>
-                    <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+                    <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspección:" />
                     <p:selectOneMenu value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{guiaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
