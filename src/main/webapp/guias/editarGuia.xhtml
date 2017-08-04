@@ -13,10 +13,10 @@
             <h:form id="form">
                 <p:messages globalOnly="true" autoUpdate="true" closable="true" showDetail="true" />
 
-                <h:outputLabel for="nombreGuia" value="Nombre de la guia(*):" />
+                <h:outputLabel for="nombreGuia" value="Nombre de la guía(*):" />
                 <p:inputText id="nombreGuia" value="#{guiaBean.guia.nombre}" converter="#{trimConverter}" maxlength="255" />
 
-                <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspeccion:" />
+                <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspección:" />
                 <p:selectOneMenu value="#{guiaBean.guia.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                     <f:selectItems value="#{guiaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                 </p:selectOneMenu>

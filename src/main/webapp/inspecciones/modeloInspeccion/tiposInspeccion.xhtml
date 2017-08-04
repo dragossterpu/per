@@ -11,11 +11,11 @@
                     <p:dataTable id="tablaTiposInspeccion" var="tipoInspeccion" value="#{tipoInspeccionBean.listaTipoInspeccion}" editable="true" onkeypress="if (event.keyCode == 13) {return false; }">
                         <p:ajax event="rowEdit" listener="#{tipoInspeccionBean.onRowEdit}" />
 
-                        <p:column headerText="Código del tipo" width="90">
+                        <p:column headerText="Código del modelo" width="90">
                             <h:outputText value="#{tipoInspeccion.codigo}" />
                         </p:column>
 
-                        <p:column headerText="Descripción del tipo">
+                        <p:column headerText="Descripción del modelo">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{tipoInspeccion.descripcion}" />
@@ -33,7 +33,7 @@
 
                         <p:column styleClass="botonTabla">
                             <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{tipoInspeccionBean.eliminarTipo(tipoInspeccion)}" update="tablaTiposInspeccion">
-                                <p:confirm header="Eliminar tipo de inspección" message="¿Está seguro que desea eliminar este tipo de inspección?" icon="fa fa-warning-sign" />
+                                <p:confirm header="Eliminar modelo de inspección" message="¿Está seguro que desea eliminar este modelo de inspección?" icon="fa fa-warning-sign" />
                             </p:commandButton>
                         </p:column>
 
@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="botonesFormulario">
-                    <p:button value="Nuevo tipo de inspección" icon="fa fa-user-plus" outcome="/inspecciones/modeloInspeccion/altaTipoInspeccion" />
+                    <p:button value="Nuevo modelo de inspección" icon="fa fa-user-plus" outcome="/inspecciones/modeloInspeccion/altaTipoInspeccion" />
                 </div>
 
                 <p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="false" />
