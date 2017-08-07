@@ -248,7 +248,8 @@ public class ProvisionalSolicitudBean implements Serializable {
         try {
             setFile(documentoService.descargaDocumento(idDocumento));
         } catch (ProgesinException e) {
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage());
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    e.getMessage());
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
         }
     }
@@ -276,7 +277,8 @@ public class ProvisionalSolicitudBean implements Serializable {
             alertaService.crearAlertaJefeEquipo(SeccionesEnum.DOCUMENTACION.getDescripcion(), descripcion,
                     solicitudDocumentacionPrevia.getInspeccion());
             
-            alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.getDescripcion(), descripcion, RoleEnum.ROLE_SERVICIO_APOYO);
+            alertaService.crearAlertaRol(SeccionesEnum.DOCUMENTACION.getDescripcion(), descripcion,
+                    RoleEnum.ROLE_SERVICIO_APOYO);
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -315,28 +317,9 @@ public class ProvisionalSolicitudBean implements Serializable {
         solicitudDocumentacionPrevia = solicitudDocumentacionService
                 .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
         if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
-            // String ambito = solicitudDocumentacionPrevia.getInspeccion().getAmbito().name();
-            // setListaPlantillasAmbito(new ArrayList<>());
-            // if ("GC".equals(ambito) || "PN".equals(ambito)) {
-            // Map<String, String> mapaPlantillas = applicationBean.getMapaParametros().get("plantillas" + ambito);
             
             listaPlantillas = documentoService.buscaNombreTipoDocumento("PLANTILLA SOLICITUD");
             
-            // if (mapaPlantillas != null) {
-            // //listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
-            // listaPlantillasAmbito.addAll(mapaPlantillas.entrySet());
-            // }
-            // } else {
-            // // OTROS se muestran todas las de GC y PN
-            // Map<String, String> mapaPlantillasGC = applicationBean.getMapaParametros().get("plantillasGC");
-            // Map<String, String> mapaPlantillasPN = applicationBean.getMapaParametros().get("plantillasPN");
-            // if (mapaPlantillasGC != null) {
-            // listaPlantillasAmbito.addAll(mapaPlantillasGC.entrySet());
-            // }
-            // if (mapaPlantillasPN != null) {
-            // listaPlantillasAmbito.addAll(mapaPlantillasPN.entrySet());
-            // }
-            // }
         }
     }
     
