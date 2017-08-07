@@ -87,6 +87,11 @@ public class SolicitudDocPreviaBean implements Serializable {
     private List<Boolean> listaColumnToggler;
     
     /**
+     * Número de columnas de la vista.
+     */
+    private static final int NUMCOLSTABLA = 12;
+    
+    /**
      * Solicitud de documentación previa.
      */
     private SolicitudDocumentacionPrevia solicitudDocumentacionPrevia;
@@ -406,6 +411,10 @@ public class SolicitudDocPreviaBean implements Serializable {
         datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
         model = new LazyModelSolicitudes(solicitudDocumentacionService);
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
+        setListaColumnToggler(new ArrayList<>());
+        for (int i = 0; i <= NUMCOLSTABLA; i++) {
+            listaColumnToggler.add(Boolean.TRUE);
+        }
     }
     
     /**

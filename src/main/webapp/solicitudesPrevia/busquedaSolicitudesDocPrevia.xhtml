@@ -92,54 +92,54 @@
                             <p:ajax event="toggle" listener="#{solicitudDocPreviaBean.onToggle}" />
                         </p:columnToggler>
                     </f:facet>
-                    <p:column headerText="Número Inspección" sortBy="#{solicitud.inspeccion.id}" width="60">
+                    <p:column headerText="Número Inspección" sortBy="#{solicitud.inspeccion.id}" width="60" visible="#{solicitudDocPreviaBean.listaColumnToggler[0]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[0]}">
                         <h:outputText value="#{solicitud.inspeccion.numero}" />
                     </p:column>
-                    <p:column headerText="Ámbito Inspección" sortBy="#{solicitud.inspeccion.ambito}" width="60">
+                    <p:column headerText="Ámbito Inspección" sortBy="#{solicitud.inspeccion.ambito}" width="60" visible="#{solicitudDocPreviaBean.listaColumnToggler[1]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[1]}">
                         <h:outputText value="#{solicitud.inspeccion.ambito}" />
                     </p:column>
-                    <p:column headerText="Tipo Inspección" sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="100">
+                    <p:column headerText="Tipo Inspección" sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="100" visible="#{solicitudDocPreviaBean.listaColumnToggler[2]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[2]}">
                         <h:outputText value="#{solicitud.inspeccion.tipoInspeccion.descripcion}" />
                     </p:column>
-                    <p:column headerText="Unidad" sortBy="#{solicitud.inspeccion.nombreUnidad}" width="100">
+                    <p:column headerText="Unidad" sortBy="#{solicitud.inspeccion.nombreUnidad}" width="100" visible="#{solicitudDocPreviaBean.listaColumnToggler[3]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[3]}">
                         <h:outputText value="#{solicitud.inspeccion.nombreUnidad}" />
                     </p:column>
-                    <p:column headerText="Alta" sortBy="#{solicitud.fechaAlta}" width="70">
+                    <p:column headerText="Alta" sortBy="#{solicitud.fechaAlta}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[4]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[4]}">
                         <h:outputText value="#{solicitud.fechaAlta}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Validación Apoyo" sortBy="#{solicitud.fechaValidApoyo}" width="70">
+                    <p:column headerText="Validación Apoyo" sortBy="#{solicitud.fechaValidApoyo}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[5]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[5]}">
                         <h:outputText value="#{solicitud.fechaValidApoyo}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Validación Jefe Equipo" sortBy="#{solicitud.fechaValidJefeEquipo}" width="70">
+                    <p:column headerText="Validación Jefe Equipo" sortBy="#{solicitud.fechaValidJefeEquipo}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[6]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[6]}">
                         <h:outputText value="#{solicitud.fechaValidJefeEquipo}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}" width="70">
+                    <p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[7]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[7]}">
                         <h:outputText value="#{solicitud.fechaEnvio}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Cumplimentada" sortBy="#{solicitud.fechaCumplimentacion}" width="90">
+                    <p:column headerText="Cumplimentada" sortBy="#{solicitud.fechaCumplimentacion}" width="90" visible="#{solicitudDocPreviaBean.listaColumnToggler[8]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[8]}">
                         <h:outputText value="#{solicitud.fechaCumplimentacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="No conforme" sortBy="#{solicitud.fechaNoConforme}" width="90">
+                    <p:column headerText="No conforme" sortBy="#{solicitud.fechaNoConforme}" width="90" visible="#{solicitudDocPreviaBean.listaColumnToggler[9]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[9]}">
                         <h:outputText value="#{solicitud.fechaNoConforme}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Finalizada" sortBy="#{solicitud.fechaFinalizacion}" width="70">
+                    <p:column headerText="Finalizada" sortBy="#{solicitud.fechaFinalizacion}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[10]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[10]}">
                         <h:outputText value="#{solicitud.fechaFinalizacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Anulada" sortBy="#{solicitud.fechaBaja}" width="70">
+                    <p:column headerText="Anulada" sortBy="#{solicitud.fechaBaja}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[11]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[11]}">
                         <h:outputText value="#{solicitud.fechaBaja}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>

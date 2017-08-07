@@ -497,7 +497,6 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#init()}.
      */
-    
     @Test
     public void init() {
         Map<String, String> datosApoyo = new HashMap<>();
@@ -512,6 +511,7 @@ public class SolicitudDocPreviaBeanTest {
         assertThat(solicitudDocPreviaBean.getDatosApoyo()).isNotNull();
         assertThat(solicitudDocPreviaBean.getModel()).isNotNull();
         assertThat(solicitudDocPreviaBean.getListaTiposInspeccion()).isNotNull();
+        assertThat(solicitudDocPreviaBean.getListaColumnToggler()).isNotNull();
         
     }
     
