@@ -13,7 +13,11 @@
 			<p:accordionPanel value="#{informeBean.listaAreas}" var="area" activeIndex="-1" multiple="true">
 				<p:tab title="#{area.descripcion}">
 					<p:accordionPanel value="#{informeBean.mapaAreasSubareas[area]}" var="subarea" activeIndex="-1" multiple="true" id="tabsubarea">
-                        <p:tab title="#{(subarea.descripcion).concat(not empty informeBean.mapaAsignaciones[subarea] ? (' (Asignado a: ').concat(informeBean.mapaAsignaciones[subarea]).concat(')') : '')}">
+                        <p:tab>
+                            <f:facet name="title">
+                                #{subarea.descripcion} 
+                                <h:outputText style="color:red" value="#{('(Asignado a: ').concat(informeBean.mapaAsignaciones[subarea]).concat(')')}" rendered="#{not empty informeBean.mapaAsignaciones[subarea]}"/>
+                            </f:facet>
                         
                             <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">
                                 <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
