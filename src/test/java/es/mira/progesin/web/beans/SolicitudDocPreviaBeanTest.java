@@ -22,7 +22,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -35,13 +34,16 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.SortOrder;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.lazydata.LazyModelSolicitudes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -59,6 +61,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
+import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
@@ -92,79 +95,85 @@ public class SolicitudDocPreviaBeanTest {
      * Mock del servicio del registro de actividad.
      */
     @Mock
-    private transient IRegistroActividadService regActividadService;
+    private IRegistroActividadService regActividadService;
     
     /**
      * Mock del servicio de notificaciones.
      */
     @Mock
-    private transient INotificacionService notificacionService;
+    private INotificacionService notificacionService;
     
     /**
      * Mock del servicio de alertas.
      */
     @Mock
-    private transient IAlertaService alertaService;
+    private IAlertaService alertaService;
     
     /**
      * Mock del servicio de solicitudes de documentación.
      */
     @Mock
-    private transient ISolicitudDocumentacionService solicitudDocumentacionService;
+    private ISolicitudDocumentacionService solicitudDocumentacionService;
     
     /**
      * Mock del servicio de tipos de documentación.
      */
     @Mock
-    private transient ITipoDocumentacionService tipoDocumentacionService;
+    private ITipoDocumentacionService tipoDocumentacionService;
     
     /**
      * Mock del servicio de inspecciones.
      */
     @Mock
-    private transient IInspeccionesService inspeccionesService;
+    private IInspeccionesService inspeccionesService;
     
     /**
      * Mock del servicio de usuarios.
      */
     @Mock
-    private transient IUserService userService;
+    private IUserService userService;
     
     /**
      * Mock del servicio de documentos.
      */
     @Mock
-    private transient IDocumentoService documentoService;
+    private IDocumentoService documentoService;
     
     /**
      * Mock del cifrador de contraseñas.
      */
     @Mock
-    private transient PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     
     /**
      * Mock del servicio de correos electrónicos.
      */
     @Mock
-    private transient ICorreoElectronico correoElectronico;
+    private ICorreoElectronico correoElectronico;
     
     /**
      * Mock del bean de aplicación.
      */
     @Mock
-    private transient ApplicationBean applicationBean;
+    private ApplicationBean applicationBean;
     
     /**
      * Mock del generador de pdfs.
      */
     @Mock
-    private transient PdfGenerator pdfGenerator;
+    private PdfGenerator pdfGenerator;
     
     /**
      * Mock del servicio de cuestionarios enviados.
      */
     @Mock
-    private transient ICuestionarioEnvioService cuestionarioEnvioService;
+    private ICuestionarioEnvioService cuestionarioEnvioService;
+    
+    /**
+     * Mock del servicio de tipos de inspección.
+     */
+    @Mock
+    private ITipoInspeccionService tipoInspeccionService;
     
     /**
      * Instancia de prueba del bean de solicitudes de documentación.
@@ -177,6 +186,12 @@ public class SolicitudDocPreviaBeanTest {
      */
     @Captor
     private ArgumentCaptor<SolicitudDocumentacionPrevia> solicitudCaptor;
+    
+    /**
+     * Mock LazyModel para la visualización de datos paginados en la vista.
+     */
+    @Mock
+    private LazyModelSolicitudes model;
     
     /**
      * Literal para pruebas.
@@ -394,8 +409,8 @@ public class SolicitudDocPreviaBeanTest {
         assertThat(solicitudCaptor.getValue().getUsernameValidApoyo()).isNotNull();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
-        verify(alertaService, times(1)).crearAlertaJefeEquipo(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), any(String.class),
-                eq(inspeccion));
+        verify(alertaService, times(1)).crearAlertaJefeEquipo(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
+                any(String.class), eq(inspeccion));
     }
     
     /**
@@ -433,8 +448,8 @@ public class SolicitudDocPreviaBeanTest {
         assertThat(solicitudCaptor.getValue().getUsernameValidJefeEquipo()).isNotNull();
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
-        verify(alertaService, times(1)).crearAlertaRol(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), any(String.class),
-                eq(RoleEnum.ROLE_JEFE_INSPECCIONES));
+        verify(alertaService, times(1)).crearAlertaRol(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
+                any(String.class), eq(RoleEnum.ROLE_JEFE_INSPECCIONES));
     }
     
     /**
@@ -458,22 +473,45 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormularioCrearSolicitud()}.
      */
-    @Ignore
+    
     @Test
     public void getFormularioCrearSolicitud() {
+        Map<String, String> datosApoyo = new HashMap<>();
+        datosApoyo.put("ApoyoCorreo", "apoyoCorreo");
+        datosApoyo.put("ApoyoNombre", "apoyoNombre");
+        datosApoyo.put("ApoyoPuesto", "apoyoPuesto");
+        datosApoyo.put("ApoyoTelefono", "apoyoTelefono");
+        solicitudDocPreviaBean.setDatosApoyo(datosApoyo);
         
-        // solicitudDocPreviaBean.getFormularioCrearSolicitud();
+        solicitudDocPreviaBean.getFormularioCrearSolicitud();
+        assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoCorreo()).isEqualTo("apoyoCorreo");
+        assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoNombre()).isEqualTo("apoyoNombre");
+        assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoPuesto()).isEqualTo("apoyoPuesto");
+        assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoTelefono())
+                .isEqualTo("apoyoTelefono");
+        assertThat(solicitudDocPreviaBean.getDocumentosSeleccionados()).isNotNull();
+        assertThat(solicitudDocPreviaBean.isSkip()).isFalse();
         
     }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#init()}.
      */
-    @Ignore
+    
     @Test
     public void init() {
+        Map<String, String> datosApoyo = new HashMap<>();
+        Map<String, Map<String, String>> mapaParametros = new HashMap<>();
+        mapaParametros.put("datosApoyo", datosApoyo);
+        when(applicationBean.getMapaParametros()).thenReturn(mapaParametros);
+        when(tipoInspeccionService.buscaTodos()).thenReturn(new ArrayList<>());
         
-        // solicitudDocPreviaBean.init();
+        solicitudDocPreviaBean.init();
+        
+        assertThat(solicitudDocPreviaBean.getSolicitudDocPreviaBusqueda()).isNotNull();
+        assertThat(solicitudDocPreviaBean.getDatosApoyo()).isNotNull();
+        assertThat(solicitudDocPreviaBean.getModel()).isNotNull();
+        assertThat(solicitudDocPreviaBean.getListaTiposInspeccion()).isNotNull();
         
     }
     
@@ -818,31 +856,33 @@ public class SolicitudDocPreviaBeanTest {
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#getFormBusquedaSolicitudes()}.
      */
-    @Ignore
     @Test
     public void getFormBusquedaSolicitudes() {
-        solicitudDocPreviaBean.getFormBusquedaSolicitudes();
+        String ruta = solicitudDocPreviaBean.getFormBusquedaSolicitudes();
+        verify(model, times(1)).setRowCount(0);
+        assertThat(solicitudDocPreviaBean.getSolicitudDocPreviaBusqueda()).isNotNull();
+        assertThat(ruta).isEqualTo("/solicitudesPrevia/busquedaSolicitudesDocPrevia?faces-redirect=true");
         
     }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#limpiarBusqueda()}.
      */
-    @Ignore
     @Test
     public void limpiarBusqueda() {
         solicitudDocPreviaBean.limpiarBusqueda();
-        
+        verify(model, times(1)).setRowCount(0);
+        assertThat(solicitudDocPreviaBean.getSolicitudDocPreviaBusqueda()).isNotNull();
     }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.SolicitudDocPreviaBean#buscarSolicitudDocPrevia()}.
      */
-    @Ignore
     @Test
     public void buscarSolicitudDocPrevia() {
         solicitudDocPreviaBean.buscarSolicitudDocPrevia();
-        
+        verify(model, times(1)).setBusqueda(solicitudDocPreviaBean.getSolicitudDocPreviaBusqueda());
+        verify(model, times(1)).load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
     
     /**
