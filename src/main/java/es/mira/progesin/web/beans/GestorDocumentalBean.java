@@ -319,6 +319,7 @@ public class GestorDocumentalBean implements Serializable {
     
     /**
      * Inicia la creación de un nuevo documento.
+     * @return ruta de la vista
      */
     public String nuevoDocumento() {
         documento = new Documento();

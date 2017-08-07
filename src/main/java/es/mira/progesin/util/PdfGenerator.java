@@ -398,10 +398,8 @@ public class PdfGenerator {
      * @param listaRespuestas lista de respuestas
      * @param document documento donde se insertan las respuestas
      * @throws ProgesinException excepción que puede lanzar
-     * @throws IllegalAccessException excepción que puede lanzar
      */
-    private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document)
-            throws ProgesinException {
+    private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document) throws ProgesinException {
         for (RespuestaCuestionario respuesta : listaRespuestas) {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             Paragraph p = new Paragraph(pregunta.getPregunta());
