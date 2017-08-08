@@ -143,4 +143,11 @@ public interface IInspeccionesService {
      * @return valor booleano dependiendo de si existe una inspección finalizada o no
      */
     public boolean existenInspeccionesNoFinalizadas(Equipo equipo);
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     * @param nombreDoc nombre del documento word
+     * @param pageOnly imprepe una pagina o toda la búsqueda
+     */
+    void exportDoc(String nombreDoc, boolean pageOnly);
 }

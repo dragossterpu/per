@@ -598,4 +598,11 @@ public class InspeccionBean {
         return RUTABUSCAINSPECCIONES;
     }
     
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        inspeccionesService.exportDoc("listaInspecciones", false);
+    }
+    
 }
