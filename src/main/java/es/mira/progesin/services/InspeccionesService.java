@@ -1,12 +1,8 @@
 package es.mira.progesin.services;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -17,7 +13,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
-import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +25,7 @@ import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
-import es.mira.progesin.util.DocExporter;
-import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 import lombok.NoArgsConstructor;
 
@@ -411,28 +403,6 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public boolean existenInspeccionesNoFinalizadas(Equipo equipo) {
         return inspeccionesRepository.existsByEquipoAndFechaFinalizacionIsNull(equipo);
-    }
-    
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     * @param nombreDoc nombre del documento word
-     * @param pageOnly imprepe una pagina o toda la búsqueda
-     */
-    @Override
-    public void exportDoc(String nombreDoc, boolean pageOnly) {
-        try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            DocExporter exporter = new DocExporter();
-            DataTable dataTable = (DataTable) context.getViewRoot()
-                    .findComponent("busquedaInspecciones:tablaInspecciones");
-            
-            exporter.export(context, dataTable, nombreDoc, pageOnly, false, "UTF-8", null, null, null);
-            context.responseComplete();
-        } catch (IOException e) {
-            registroActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
-            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, "Error",
-                    "Ha habido un error al intentar exportar a .doc.", null);
-        }
     }
     
 }

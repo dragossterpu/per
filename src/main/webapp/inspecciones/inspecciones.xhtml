@@ -126,13 +126,13 @@
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaInspecciones" fileName="listaInspecciones" />
+                        <p:dataExporter type="pdf" target="tablaInspecciones" fileName="listaInspecciones" preProcessor="#{inspeccionBean.rotarPdf}"/>
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones" />
                     </h:commandLink>
-                    <h:commandLink  action="#{inspeccionBean.exportDoc}" >
+                    <h:commandLink  action="#{inspeccionBean.exportDoc}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
                 </p:outputPanel>

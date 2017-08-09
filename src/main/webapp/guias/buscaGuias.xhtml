@@ -63,6 +63,9 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias" />
                     </h:commandLink>
+                     <h:commandLink  action="#{guiaBean.exportDoc}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="guia" id="tablaGuias" value="#{guiaBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{guiaBean.model.rowCount ne 0}" rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">
 

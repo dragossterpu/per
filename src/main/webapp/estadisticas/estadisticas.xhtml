@@ -57,6 +57,9 @@
                                 <p:graphicImage value="/images/csv.png" />
                                 <p:dataExporter type="csv" target="tablaEstadisticas" fileName="estadisticas" />
                             </h:commandLink>
+                            <h:commandLink  action="#{estadisticaBean.exportDoc}" >
+                                <p:graphicImage value="/images/doc.png" /> 
+                            </h:commandLink>
                             
                             <p:graphicImage ajax="false" value="/images/statistics.png" onclick="PF('dialogG').show()"/>
                             
@@ -72,36 +75,36 @@
                                <p:rowToggler />
                            </p:column>
                             <p:column headerText="Estado"  width="200"  >
-                                <h:outputText value="#{estado.descripcion}" />
+                                <h:outputText value="#{estado.descripcion}" style="float:left"/>
                             </p:column>
                             <p:column headerText="Numero" width="50">
-                                <h:outputText value="#{estadisticaBean.mapaResultados[estado]}" />
+                                <h:outputText value="#{estadisticaBean.mapaResultados[estado]}" style="float:right"/>
                             </p:column>
                             
                             <p:rowExpansion>                       
                                    <p:dataTable  id="tablaDetalle"  emptyMessage="No se han encontrado inspecciones en estado" value="#{estadisticaBean.verDetalles(estado)}" var="detalle">
                                      <p:column headerText="Expediente" width="70">
-                                         <h:outputText value="#{detalle.numero}" />
+                                         <h:outputText value="#{detalle.numero}" style="float:left"/>
                                      </p:column>
                                      <p:column headerText="Tipo de inspección"  width="80">
-                                         <h:outputText value="#{detalle.tipoInspeccion.codigo}" />
+                                         <h:outputText value="#{detalle.tipoInspeccion.codigo}" style="float:left"/>
                                      </p:column>
                                      <p:column headerText="Equipo"  width="80">
-                                         <h:outputText value="#{detalle.equipo.nombreEquipo}" />
+                                         <h:outputText value="#{detalle.equipo.nombreEquipo}" style="float:left"/>
                                      </p:column>
                                      <p:column headerText="Cuerpo"  width="80">
-                                         <h:outputText value="#{detalle.ambito.descripcion}"/>
+                                         <h:outputText value="#{detalle.ambito.descripcion}" style="float:left"/>
                                      </p:column>
                                      <p:column headerText="Unidad"  width="80">
-                                         <h:outputText value="#{detalle.nombreUnidad}" />
+                                         <h:outputText value="#{detalle.nombreUnidad}" style="float:left"/>
                                      </p:column>
                                      <p:column headerText="Provincia"  width="80">
-                                         <h:outputText value="#{detalle.municipio.provincia.nombre}" />
+                                         <h:outputText value="#{detalle.municipio.provincia.nombre}" style="float:left"/>
                                      </p:column>
                                    </p:dataTable>
                            </p:rowExpansion>
                             <f:facet name="footer">
-                                <h:outputText value="Total de inspecciones: #{estadisticaBean.total}" />  
+                                <h:outputText value="Total de inspecciones: #{estadisticaBean.total}"/>  
                             </f:facet>
                         </p:dataTable>
                         <p:dialog id="dialogGrafica" widgetVar="dialogG" header="Distribución de las inspecciones en función de su estado">

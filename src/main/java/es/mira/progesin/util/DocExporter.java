@@ -20,6 +20,7 @@ import org.primefaces.component.export.Exporter;
 import org.primefaces.component.export.ExporterOptions;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Cell;
@@ -32,8 +33,11 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.Table;
 import com.lowagie.text.rtf.RtfWriter2;
 
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.services.IRegistroActividadService;
+
 /**
- * Clase para exportar en Word.
+ * Clase para la exportación en Word.
  * @author Ezentis
  *
  */
@@ -64,7 +68,13 @@ public class DocExporter extends Exporter {
     private Table docTable;
     
     /**
-     * 
+     * Registro de actividad.
+     */
+    @Autowired
+    private IRegistroActividadService regActividadService;
+    
+    /**
+     * Exporta en Word una DataTable de PrimeFaces.
      */
     @Override
     public void export(FacesContext context, DataTable table, String filename, boolean pageOnly, boolean selectionOnly,
@@ -82,7 +92,6 @@ public class DocExporter extends Exporter {
             if (!document.isOpen()) {
                 document.open();
             }
-            
             if (options != null) {
                 expOptions = options;
             }
@@ -98,97 +107,44 @@ public class DocExporter extends Exporter {
             writeDocToResponse(context.getExternalContext(), baos, filename);
             
         } catch (DocumentException e) {
-            throw new IOException(e.getMessage());
+            throw new IOException(e);
         }
     }
     
+    /**
+     * Método implementado que no se utiliza.
+     */
     @Override
     public void export(FacesContext context, List<String> clientIds, String outputFileName, boolean pageOnly,
             boolean selectionOnly, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor,
             ExporterOptions options) throws IOException {
-        // try {
-        // Document document = new Document();
-        // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        // RtfWriter2.getInstance(document, baos);
-        //
-        // if (preProcessor != null) {
-        // preProcessor.invoke(context.getELContext(), new Object[] { document });
-        // }
-        //
-        // if (!document.isOpen()) {
-        // document.open();
-        // }
-        //
-        // if (options != null) {
-        // expOptions = options;
-        // }
-        //
-        // VisitContext visitContext = VisitContext.createVisitContext(context, clientIds, null);
-        // VisitCallback visitCallback = new PDFExportVisitCallback(this, document, pageOnly, selectionOnly,
-        // encodingType);
-        //
-        // VisitCallback visitCallback = new context.getViewRoot().visitTree(visitContext, visitCallback);
-        
-        // if (postProcessor != null) {
-        // postProcessor.invoke(context.getELContext(), new Object[] { document });
-        // }
-        //
-        // document.close();
-        //
-        // writeDocToResponse(context.getExternalContext(), baos, outputFileName);
-        //
-        // } catch (DocumentException e) {
-        // throw new IOException(e.getMessage());
-        // }
+        throw new UnsupportedOperationException();
     }
     
+    /**
+     * Método implementado que no se utiliza.
+     */
     @Override
     public void export(FacesContext context, String outputFileName, List<DataTable> tables, boolean pageOnly,
             boolean selectionOnly, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor,
             ExporterOptions options) throws IOException {
-        // try {
-        // Document document = new Document();
-        // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        // RtfWriter2.getInstance(document, baos);
-        //
-        // if (preProcessor != null) {
-        // preProcessor.invoke(context.getELContext(), new Object[] { document });
-        // }
-        //
-        // if (!document.isOpen()) {
-        // document.open();
-        // }
-        //
-        // if (options != null) {
-        // expOptions = options;
-        // }
-        //
-        // for (DataTable table : tables) {
-        // document.add(exportDocTable(context, table, pageOnly, selectionOnly, encodingType));
-        //
-        // Paragraph preface = new Paragraph();
-        // addEmptyLine(preface, 3);
-        // document.add(preface);
-        // }
-        //
-        // if (postProcessor != null) {
-        // postProcessor.invoke(context.getELContext(), new Object[] { document });
-        // }
-        //
-        // document.close();
-        //
-        // writeDocToResponse(context.getExternalContext(), baos, outputFileName);
-        //
-        // } catch (DocumentException e) {
-        // throw new IOException(e.getMessage());
-        // }
+        throw new UnsupportedOperationException();
     }
     
-    /*
+    /**
+     * Retorna el objeto tabla exportada.
      * 
+     * @param context FacesContext
+     * @param table DataTable PrimeFaces
+     * @param pageOnly exportar toda la página o la lista entera de la consulta
+     * @param selectionOnly sólo se exportarán registros seleccionados
+     * @param encoding codificación
+     * @return tabla objeto tabla exportada.
+     * @throws IOException lanzada
+     * @throws BadElementException lanzada
      */
-    protected Table exportDocTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly,
-            String encoding) throws BadElementException {
+    private Table exportDocTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly,
+            String encoding) throws IOException, BadElementException {
         int columnsCount = getColumnsCount(table);
         Table docTab = new Table(columnsCount);
         this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
@@ -225,27 +181,18 @@ public class DocExporter extends Exporter {
     /**
      * 
      * @param context FacesContext
-     * @param table PrimeFaces
-     * @param docTable tabla a exportar
-     * @param facetType tipo
+     * @param table DataTable PrimeFaces
+     * @param docTab tabla a exportar
+     * @param facetType tipo Face
      * @throws BadElementException lanzada
      */
-    protected void addTableFacets(FacesContext context, DataTable table, Table docTable, String facetType)
+    private void addTableFacets(FacesContext context, DataTable table, Table docTab, String facetType)
             throws BadElementException {
         String facetText = null;
         UIComponent facet = table.getFacet(facetType);
         if (facet != null) {
             if (facet instanceof UIPanel) {
-                for (UIComponent child : facet.getChildren()) {
-                    if (child.isRendered()) {
-                        String value = ComponentUtils.getValueToRender(context, child);
-                        
-                        if (value != null) {
-                            facetText = value;
-                            break;
-                        }
-                    }
-                }
+                facetText = getFacetsTextWhenUIPanel(facet, context);
             } else {
                 facetText = ComponentUtils.getValueToRender(context, facet);
             }
@@ -267,8 +214,28 @@ public class DocExporter extends Exporter {
             
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setColspan(colspan);
-            docTable.addCell(cell);
+            docTab.addCell(cell);
         }
+    }
+    
+    /**
+     * Obtiene los hijos de un componente y el value del primero de ellos que esté renderizado.
+     * 
+     * @param facet Componente
+     * @param context FacesContext
+     * @return value
+     */
+    private String getFacetsTextWhenUIPanel(UIComponent facet, FacesContext context) {
+        String value = null;
+        for (UIComponent child : facet.getChildren()) {
+            if (child.isRendered()) {
+                value = ComponentUtils.getValueToRender(context, child);
+                if (value != null) {
+                    break;
+                }
+            }
+        }
+        return value;
     }
     
     /**
@@ -276,20 +243,17 @@ public class DocExporter extends Exporter {
      */
     @Override
     protected void exportCells(DataTable table, Object document) {
-        try {
-            Table docTab = (Table) document;
-            for (UIColumn col : table.getColumns()) {
-                if (col instanceof DynamicColumn) {
-                    ((DynamicColumn) col).applyStatelessModel();
-                }
-                if (col.isRendered() && col.isExportable()) {
-                    addColumnValue(docTab, col.getChildren(), this.cellFont, col);
-                }
+        Table docTab = (Table) document;
+        
+        for (UIColumn col : table.getColumns()) {
+            if (col instanceof DynamicColumn) {
+                ((DynamicColumn) col).applyStatelessModel();
+            }
+            if (col.isRendered() && col.isExportable()) {
+                
+                addColumnValue(docTab, col.getChildren(), this.cellFont, col);
                 
             }
-        } catch (BadElementException e) {
-            e.printStackTrace();
-            
         }
     }
     
@@ -299,9 +263,10 @@ public class DocExporter extends Exporter {
      * @param table tabla primefaces
      * @param docTab tabla a exportar
      * @param columnType tipo columna
+     * @throws IOException
      * @throws BadElementException lanzada
      */
-    protected void addColumnFacets(DataTable table, Table docTab, ColumnType columnType) throws BadElementException {
+    private void addColumnFacets(DataTable table, Table docTab, ColumnType columnType) throws BadElementException {
         for (UIColumn col : table.getColumns()) {
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
@@ -312,31 +277,41 @@ public class DocExporter extends Exporter {
                 if (facet != null) {
                     addColumnValue(facet);
                 } else {
-                    String textValue;
-                    switch (columnType) {
-                        case HEADER:
-                            textValue = col.getHeaderText();
-                            break;
-                        
-                        case FOOTER:
-                            textValue = col.getFooterText();
-                            break;
-                        
-                        default:
-                            textValue = "";
-                            break;
-                    }
-                    
-                    if (textValue != null) {
-                        Cell cell = new Cell(new Paragraph(textValue, this.facetFont));
-                        if (this.facetBgColor != null) {
-                            cell.setBackgroundColor(this.facetBgColor);
-                        }
-                        
-                        docTab.addCell(cell);
-                    }
+                    addColum(columnType, col, docTab);
                 }
             }
+        }
+    }
+    
+    /**
+     * 
+     * @param columnType tipo columna
+     * @param col columna
+     * @param docTab tabla exportada
+     * @throws BadElementException lanzada
+     */
+    private void addColum(ColumnType columnType, UIColumn col, Table docTab) throws BadElementException {
+        String textValue;
+        switch (columnType) {
+            case HEADER:
+                textValue = col.getHeaderText();
+                break;
+            
+            case FOOTER:
+                textValue = col.getFooterText();
+                break;
+            
+            default:
+                textValue = "";
+                break;
+        }
+        
+        if (textValue != null) {
+            Cell cell = new Cell(new Paragraph(textValue, this.facetFont));
+            if (this.facetBgColor != null) {
+                cell.setBackgroundColor(this.facetBgColor);
+            }
+            docTab.addCell(cell);
         }
     }
     
@@ -345,7 +320,7 @@ public class DocExporter extends Exporter {
      * 
      * @param component a añadir
      */
-    protected void addColumnValue(UIComponent component) {
+    private void addColumnValue(UIComponent component) {
         String value = "";
         if (component != null) {
             value = exportValue(FacesContext.getCurrentInstance(), component);
@@ -357,6 +332,7 @@ public class DocExporter extends Exporter {
     }
     
     /**
+     * añade un valor a la culumna.
      * 
      * @param docTab tabla
      * @param components lista de componentes
@@ -364,25 +340,40 @@ public class DocExporter extends Exporter {
      * @param column columna
      * @throws BadElementException excepción lanzada
      */
-    protected void addColumnValue(Table docTab, List<UIComponent> components, Font font, UIColumn column)
-            throws BadElementException {
+    private void addColumnValue(Table docTab, List<UIComponent> components, Font font, UIColumn column) {
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        if (column.getExportFunction() != null) {
-            docTab.addCell(new Paragraph(exportColumnByFunction(context, column), font));
-        } else {
-            StringBuilder builder = new StringBuilder();
-            for (UIComponent component : components) {
-                if (component.isRendered()) {
-                    String value = exportValue(context, component);
-                    
-                    if (value != null)
-                        builder.append(value);
+        try {
+            if (column.getExportFunction() != null) {
+                
+                docTab.addCell(new Paragraph(exportColumnByFunction(context, column), font));
+                
+            } else {
+                
+                docTab.addCell(new Paragraph(getValues(components, context), font));
+            }
+        } catch (BadElementException e) {
+            regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * 
+     * @param components UIComponent
+     * @param context contexto
+     * @return values
+     */
+    private String getValues(List<UIComponent> components, FacesContext context) {
+        StringBuilder builder = new StringBuilder();
+        for (UIComponent component : components) {
+            if (component.isRendered()) {
+                String value = exportValue(context, component);
+                
+                if (value != null) {
+                    builder.append(value);
                 }
             }
-            
-            docTab.addCell(new Paragraph(builder.toString(), font));
         }
+        return builder.toString();
     }
     
     /**
@@ -394,7 +385,7 @@ public class DocExporter extends Exporter {
      * @throws IOException lanzada
      * @throws DocumentException lanzada
      */
-    protected void writeDocToResponse(ExternalContext externalContext, ByteArrayOutputStream baos, String fileName)
+    private void writeDocToResponse(ExternalContext externalContext, ByteArrayOutputStream baos, String fileName)
             throws IOException {
         externalContext.setResponseContentType("application/msword");
         externalContext.setResponseHeader("Expires", "0");
@@ -414,7 +405,7 @@ public class DocExporter extends Exporter {
      * @param table tabla
      * @return cols
      */
-    protected int getColumnsCount(DataTable table) {
+    private int getColumnsCount(DataTable table) {
         int count = 0;
         
         for (UIColumn col : table.getColumns()) {
@@ -425,7 +416,6 @@ public class DocExporter extends Exporter {
             if (!col.isRendered() || !col.isExportable()) {
                 continue;
             }
-            
             count++;
         }
         
@@ -433,22 +423,11 @@ public class DocExporter extends Exporter {
     }
     
     /**
-     * Añade línea vacía.
-     * 
-     * @param paragraph parrafo
-     * @param number número
-     */
-    protected void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
-        }
-    }
-    
-    /**
+     * Aplica estilos a las cabeceras y pies de página.
      * 
      * @param options opciones
      */
-    protected void applyFacetOptions(ExporterOptions options) {
+    private void applyFacetOptions(ExporterOptions options) {
         String facetBackground = options.getFacetBgColor();
         if (facetBackground != null) {
             facetBgColor = Color.decode(facetBackground);
@@ -481,10 +460,11 @@ public class DocExporter extends Exporter {
     }
     
     /**
+     * Aplica estilos a las celdas.
      * 
      * @param options opciones
      */
-    protected void applyCellOptions(ExporterOptions options) {
+    private void applyCellOptions(ExporterOptions options) {
         String cellFontColor = options.getCellFontColor();
         if (cellFontColor != null) {
             cellFont.setColor(Color.decode(cellFontColor));

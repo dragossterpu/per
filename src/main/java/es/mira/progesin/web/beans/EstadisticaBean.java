@@ -30,6 +30,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IEstadisticaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -102,6 +103,13 @@ public class EstadisticaBean implements Serializable {
      */
     @Autowired
     private transient IRegistroActividadService registroActividadService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Lista de los posibles tipos de inspección.
@@ -260,4 +268,13 @@ public class EstadisticaBean implements Serializable {
     public List<Inspeccion> verDetalles(EstadoInspeccionEnum estado) {
         return estadisticaService.verListaEstado(filtro, estado);
     }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        exportadorWord.exportDoc("listaEstadisticas", false, null, "formEstadisticas:tablaEstadisticas",
+                SeccionesEnum.ESTADISTICAS);
+    }
+    
 }

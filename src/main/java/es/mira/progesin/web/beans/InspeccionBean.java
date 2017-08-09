@@ -1,12 +1,15 @@
 package es.mira.progesin.web.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -19,6 +22,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
@@ -40,6 +46,7 @@ import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,7 +63,12 @@ import lombok.Setter;
 @Getter
 @Controller("inspeccionBean")
 @Scope("session")
-public class InspeccionBean {
+public class InspeccionBean implements Serializable {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     
     /**
      * Variable utilizada para almacenar un parámetro que corresponde a la última úbicación, última vista visitada
@@ -104,49 +116,49 @@ public class InspeccionBean {
      * 
      */
     @Autowired
-    private IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Variable utilizada para inyectar el servicio de inspecciones.
      * 
      */
     @Autowired
-    private IInspeccionesService inspeccionesService;
+    private transient IInspeccionesService inspeccionesService;
     
     /**
      * Variable utilizada para inyectar el servicio de equipos.
      * 
      */
     @Autowired
-    private IEquipoService equipoService;
+    private transient IEquipoService equipoService;
     
     /**
      * Variable utilizada para inyectar el servicio de los municipios.
      * 
      */
     @Autowired
-    private IMunicipioService municipioService;
+    private transient IMunicipioService municipioService;
     
     /**
      * Variable utilizada para inyectar el servicio de los miembros de un equipo.
      * 
      */
     @Autowired
-    private IMiembroService miembroService;
+    private transient IMiembroService miembroService;
     
     /**
      * Variable utilizada para inyectar el servicio de las alertas.
      * 
      */
     @Autowired
-    private IAlertaService alertaService;
+    private transient IAlertaService alertaService;
     
     /**
      * Variable utilizada para inyectar el servicio de las notificaciones.
      * 
      */
     @Autowired
-    private INotificacionService notificacionesService;
+    private transient INotificacionService notificacionesService;
     
     /**
      * Variable utilizada para almacenar la lista de municipios asociados a una inspección.
@@ -177,12 +189,19 @@ public class InspeccionBean {
      * 
      */
     @Autowired
-    private IRegistroActividadService registroActividadService;
+    private transient IRegistroActividadService registroActividadService;
     
     /**
      * Número de columnas de la vista.
      */
     private static final int NUMCOLSTABLA = 17;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Ruta buscador de isnpecciones.
@@ -195,7 +214,6 @@ public class InspeccionBean {
      * de la tabla y con el orden por defecto.
      * 
      */
-    
     public void buscarInspeccion() {
         inspeccionBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(inspeccionBusqueda);
@@ -602,7 +620,23 @@ public class InspeccionBean {
      * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
      */
     public void exportDoc() {
-        inspeccionesService.exportDoc("listaInspecciones", false);
+        FacesContext context = FacesContext.getCurrentInstance();
+        MethodExpression preProcessor = context.getApplication().getExpressionFactory().createMethodExpression(
+                context.getELContext(), "#{inspeccionBean.rotarPdf}", null, new Class[] { InspeccionBean.class });
+        
+        exportadorWord.exportDoc("listaInspecciones", false, preProcessor, "busquedaInspecciones:tablaInspecciones",
+                SeccionesEnum.INSPECCION);
+    }
+    
+    /**
+     * Rota un documento al realizar la exportación.
+     * 
+     * @param document documento obtenido de la vista.
+     */
+    public static void rotarPdf(Object document) {
+        Document pdf = (Document) document;
+        pdf.setPageSize(PageSize.A4.rotate());
+        pdf.setMargins(20, 20, 10, 10);
     }
     
 }
