@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelCuestionarioPersonalizado;
@@ -28,7 +33,9 @@ import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.web.beans.InspeccionBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,6 +88,13 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      */
     @Autowired
     transient IDocumentoService documentoService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * LazyModel de cuestionarios personalizados para hacer la paginación por servidor.
@@ -194,6 +208,30 @@ public class CuestionarioPersonalizadoBean implements Serializable {
     public void init() {
         cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
         model = new LazyModelCuestionarioPersonalizado(cuestionarioPersonalizadoService);
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        MethodExpression preProcessor = context.getApplication().getExpressionFactory().createMethodExpression(
+                context.getELContext(), "#{cuestionarioPersonalizadoBean.rotarPdf}", null,
+                new Class[] { InspeccionBean.class });
+        
+        exportadorWord.exportDoc("listaCuestionariosPersonalizados", false, preProcessor,
+                "busquedaCuestionario:tablaCuestionarios", SeccionesEnum.CUESTIONARIO);
+    }
+    
+    /**
+     * Rota un documento al realizar la exportación.
+     * 
+     * @param document documento obtenido de la vista.
+     */
+    public static void rotarPdf(Object document) {
+        Document pdf = (Document) document;
+        pdf.setPageSize(PageSize.A4.rotate());
+        pdf.setMargins(20, 20, 10, 10);
     }
     
 }

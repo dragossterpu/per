@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
@@ -18,6 +20,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
@@ -35,9 +40,11 @@ import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
+import es.mira.progesin.web.beans.InspeccionBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -142,6 +149,13 @@ public class CuestionarioEnviadoBean implements Serializable {
      * listado de tipos de inspección dados de alta.
      */
     private List<TipoInspeccion> listaTiposInspeccion;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Número de columnas de la vista.
@@ -420,6 +434,30 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        MethodExpression preProcessor = context.getApplication().getExpressionFactory().createMethodExpression(
+                context.getELContext(), "#{cuestionarioEnviadoBean.rotarPdf}", null,
+                new Class[] { InspeccionBean.class });
+        
+        exportadorWord.exportDoc("listaCuestionariosEnviados", false, preProcessor,
+                "busquedaCuestionario:tablaCuestionarios", SeccionesEnum.INSPECCION);
+    }
+    
+    /**
+     * Rota un documento al realizar la exportación.
+     * 
+     * @param document documento obtenido de la vista.
+     */
+    public static void rotarPdf(Object document) {
+        Document pdf = (Document) document;
+        pdf.setPageSize(PageSize.A4.rotate());
+        pdf.setMargins(20, 20, 10, 10);
     }
     
 }
