@@ -40,6 +40,7 @@ import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.VerificadorExtensiones;
 import lombok.Getter;
@@ -147,6 +148,13 @@ public class GestorDocumentalBean implements Serializable {
      * Lazy Model para la consulta paginada de documentos en base de datos.
      */
     private LazyModelDocumentos model;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Constante para evitar literales repetidos.
@@ -547,6 +555,13 @@ public class GestorDocumentalBean implements Serializable {
         
         return perteneceACuestionario || perteneceASolicitud || plantillaAdjuntaCuestionario
                 || (!documentoEnInspeccionUsuario && !esAdmin);
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        exportadorWord.exportDoc("listaModelosGuia", false, null, "form:tablaDocumentos", SeccionesEnum.DOCUMENTACION);
     }
     
 }

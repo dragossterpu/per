@@ -26,6 +26,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
@@ -99,6 +100,13 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     @Autowired
     private transient IGuiaPersonalizadaService guiaPersonalizadaService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Busca las guías según los filtros introducidos en el formulario de búsqueda.
@@ -261,6 +269,14 @@ public class GuiaPersonalizadaBean implements Serializable {
     private void noExisteGuiaMensaje() {
         FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Guías personalizadas",
                 "Se ha producido un error en el acceso a la guía. La guía solicitada ya no existe");
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        exportadorWord.exportDoc("listaGuiasPersonalizadas", false, null, "busquedaGuias:tablaGuias",
+                SeccionesEnum.GUIAS);
     }
     
 }

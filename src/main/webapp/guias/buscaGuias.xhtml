@@ -82,13 +82,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Usuario" sortBy="#{guia.usernameAlta}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
-                        <h:outputText value="#{guia.usernameAlta}" />
+                        <h:outputText value="#{guia.usernameAlta}" style="float:left"/>
                     </p:column>
                     <p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion}" width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
-                        <h:outputText value="#{guia.tipoInspeccion.descripcion}" />
+                        <h:outputText value="#{guia.tipoInspeccion.descripcion}" style="float:left"/>
                     </p:column>
                     <p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
-                        <h:outputText value="#{guia.nombre}" />
+                        <h:outputText value="#{guia.nombre}" style="float:left"/>
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}" rendered="#{esEquipoInspeccion and empty guia.fechaAnulacion}" update="tablaGuias" />

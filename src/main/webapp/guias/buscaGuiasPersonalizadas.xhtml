@@ -58,6 +58,9 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias" />
                     </h:commandLink>
+                     <h:commandLink  action="#{guiaPersonalizadaBean.exportDoc}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="guia" value="#{guiaPersonalizadaBean.model}" id="tablaGuias" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" resizableColumns="true" draggableColumns="true" rendered="#{guiaPersonalizadaBean.model.rowCount ne 0}" rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">
 
@@ -74,19 +77,19 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Usuario" sortBy="#{guia.usernameCreacion}" width="50" visible="#{guiaPersonalizadaBean.list[1]}" exportable="#{guiaPersonalizadaBean.list[1]}">
-                        <h:outputText value="#{guia.usernameCreacion}" />
+                        <h:outputText value="#{guia.usernameCreacion}" style="float:left"/>
                     </p:column>
                     <p:column headerText="Tipo" sortBy="#{guia.guia.tipoInspeccion}" width="100" visible="#{guiaPersonalizadaBean.list[2]}" exportable="#{guiaPersonalizadaBean.list[2]}">
-                        <h:outputText value="#{guia.guia.tipoInspeccion.descripcion}" />
+                        <h:outputText value="#{guia.guia.tipoInspeccion.descripcion}" style="float:left"/>
                     </p:column>
                     <p:column headerText="Modelo" sortBy="#{guia.guia.nombre}" width="100" visible="#{guiaPersonalizadaBean.list[3]}" exportable="#{guiaPersonalizadaBean.list[3]}">
-                        <h:outputText value="#{guia.guia.nombre}" />
+                        <h:outputText value="#{guia.guia.nombre}" style="float:left"/>
                     </p:column>
                     <p:column headerText="Inspeccion" sortBy="#{guia.inspeccion}" width="100" visible="#{guiaPersonalizadaBean.list[4]}" exportable="#{guiaPersonalizadaBean.list[4]}">
-                        <h:outputText value="#{guiaPersonalizadaBean.mapaInspecciones[guia.id]}" styleClass="saltoLinea" />
+                        <h:outputText value="#{guiaPersonalizadaBean.mapaInspecciones[guia.id]}" styleClass="saltoLinea" style="float:left"/>
                     </p:column>
                     <p:column headerText="Nombre" sortBy="#{guia.nombreGuiaPersonalizada}" width="180" visible="#{guiaPersonalizadaBean.list[5]}" exportable="#{guiaPersonalizadaBean.list[5]}">
-                        <h:outputText value="#{guia.nombreGuiaPersonalizada}" />
+                        <h:outputText value="#{guia.nombreGuiaPersonalizada}" style="float:left"/>
                     </p:column>
 
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
