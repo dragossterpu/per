@@ -10,7 +10,9 @@ import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -100,6 +102,11 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      * LazyModel de cuestionarios personalizados para hacer la paginación por servidor.
      */
     private LazyModelCuestionarioPersonalizado model;
+    
+    /**
+     * Lista de booleanos para controlar la visualización de columnas en la vista.
+     */
+    private List<Boolean> list;
     
     /**
      * Busca modelos de cuestionario personalizados según los filtros introducidos en el formulario de búsqueda.
@@ -206,8 +213,21 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      */
     @PostConstruct
     public void init() {
+        setList(new ArrayList<>());
+        for (int i = 0; i <= 4; i++) {
+            list.add(Boolean.TRUE);
+        }
         cuestionarioBusqueda = new CuestionarioPersonalizadoBusqueda();
         model = new LazyModelCuestionarioPersonalizado(cuestionarioPersonalizadoService);
+    }
+    
+    /**
+     * Controla las columnas visibles en la lista de resultados del buscador.
+     * 
+     * @param e checkbox de la columna seleccionada
+     */
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
     /**

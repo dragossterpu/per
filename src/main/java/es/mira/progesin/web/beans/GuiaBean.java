@@ -9,8 +9,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -615,6 +617,15 @@ public class GuiaBean implements Serializable {
         if (inspeccion != null && !listaInspecciones.contains(inspeccion)) {
             listaInspecciones.add(inspeccion);
         }
+    }
+    
+    /**
+     * Controla las columnas visibles en la lista de resultados del buscador.
+     * 
+     * @param e checkbox de la columna seleccionada
+     */
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
     /**
