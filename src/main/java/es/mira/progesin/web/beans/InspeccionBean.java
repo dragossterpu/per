@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -22,9 +20,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.PageSize;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
@@ -620,23 +615,9 @@ public class InspeccionBean implements Serializable {
      * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
      */
     public void exportDoc() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        MethodExpression preProcessor = context.getApplication().getExpressionFactory().createMethodExpression(
-                context.getELContext(), "#{inspeccionBean.rotarPdf}", null, new Class[] { InspeccionBean.class });
         
-        exportadorWord.exportDoc("listaInspecciones", false, preProcessor, "busquedaInspecciones:tablaInspecciones",
+        exportadorWord.exportDoc("listaInspecciones", false, "busquedaInspecciones:tablaInspecciones",
                 SeccionesEnum.INSPECCION);
-    }
-    
-    /**
-     * Rota un documento al realizar la exportación.
-     * 
-     * @param document documento obtenido de la vista.
-     */
-    public static void rotarPdf(Object document) {
-        Document pdf = (Document) document;
-        pdf.setPageSize(PageSize.A4.rotate());
-        pdf.setMargins(20, 20, 10, 10);
     }
     
 }

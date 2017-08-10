@@ -561,7 +561,8 @@ public class GestorDocumentalBean implements Serializable {
      * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
      */
     public void exportDoc() {
-        exportadorWord.exportDoc("listaModelosGuia", false, null, "form:tablaDocumentos", SeccionesEnum.DOCUMENTACION);
+        
+        exportadorWord.exportDoc("listaModelosGuia", false, "form:tablaDocumentos", SeccionesEnum.DOCUMENTACION);
     }
     
 }

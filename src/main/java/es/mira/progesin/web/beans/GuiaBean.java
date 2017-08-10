@@ -641,7 +641,7 @@ public class GuiaBean implements Serializable {
      * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
      */
     public void exportDoc() {
-        exportadorWord.exportDoc("listaModelosGuia", false, null, "busquedaGuias:tablaGuias", SeccionesEnum.GUIAS);
+        exportadorWord.exportDoc("listaModelosGuia", false, "busquedaGuias:tablaGuias", SeccionesEnum.GUIAS);
     }
     
 }

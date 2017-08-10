@@ -175,7 +175,6 @@ public class GuiaPersonalizadaBean implements Serializable {
      * @param personalizada Guía a eliminar.
      * 
      */
-    
     public void eliminar(GuiaPersonalizada personalizada) {
         guiaPersonalizadaService.eliminar(personalizada);
         
@@ -185,7 +184,6 @@ public class GuiaPersonalizadaBean implements Serializable {
      * Inicializa el bean.
      * 
      */
-    
     @PostConstruct
     public void init() {
         guiaPersonalizadaBusqueda = new GuiaBusqueda();
@@ -286,8 +284,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
      */
     public void exportDoc() {
-        exportadorWord.exportDoc("listaGuiasPersonalizadas", false, null, "busquedaGuias:tablaGuias",
-                SeccionesEnum.GUIAS);
+        exportadorWord.exportDoc("listaGuiasPersonalizadas", false, "busquedaGuias:tablaGuias", SeccionesEnum.GUIAS);
     }
     
 }

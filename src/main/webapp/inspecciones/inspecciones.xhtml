@@ -155,12 +155,12 @@
 
                     <p:column selectionMode="multiple" rendered="#{esAsociacion}" style="width:16px;text-align:center" />
 
-                    <p:column headerText="Núm. exp." sortBy="#{inspeccion.id}" width="60" visible="#{inspeccionBean.list[0]}" exportable="#{inspeccionBean.list[0]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.id}" style="float:right"/>
+                    <p:column headerText="Núm. exp." sortBy="#{inspeccion.id}" width="60" visible="#{inspeccionBean.list[0]}" exportable="#{inspeccionBean.list[0]}" style="text-align:right">
+                        <h:outputText value="#{inspeccion.id}" />
                     </p:column>
 
                     <p:column headerText="Año" sortBy="#{inspeccion.anio}" width="60" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.anio}" style="float:right"/>
+                        <h:outputText value="#{inspeccion.anio}"/>
                     </p:column>
 
                     <p:column headerText="Fecha" sortBy="#{inspeccion.fechaAlta}" width="70" visible="#{inspeccionBean.list[2]}" exportable="#{inspeccionBean.list[2]}" style="text-align:center">

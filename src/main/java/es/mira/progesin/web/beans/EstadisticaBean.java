@@ -273,7 +273,8 @@ public class EstadisticaBean implements Serializable {
      * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
      */
     public void exportDoc() {
-        exportadorWord.exportDoc("listaEstadisticas", false, null, "formEstadisticas:tablaEstadisticas",
+        
+        exportadorWord.exportDoc("listaEstadisticas", false, "formEstadisticas:tablaEstadisticas",
                 SeccionesEnum.ESTADISTICAS);
     }
     
