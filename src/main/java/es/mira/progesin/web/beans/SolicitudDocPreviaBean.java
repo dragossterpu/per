@@ -47,6 +47,7 @@ import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.PdfGenerator;
@@ -239,6 +240,13 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     @Autowired
     private transient ITipoInspeccionService tipoInspeccionService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -620,7 +628,8 @@ public class SolicitudDocPreviaBean implements Serializable {
                 List<RoleEnum> listRoles = new ArrayList<>();
                 listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
                 listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
-                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(), listRoles);
+                notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(),
+                        listRoles);
             }
         } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
@@ -832,4 +841,12 @@ public class SolicitudDocPreviaBean implements Serializable {
         return solicitudPendiente == null && cuestionarioPendiente == null;
     }
     
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        
+        exportadorWord.exportDoc("lista_solicitudes_documentacion_previas", false,
+                "busquedaSolicitudDocPrevia:tablaSolicitudes", SeccionesEnum.DOCUMENTACION);
+    }
 }

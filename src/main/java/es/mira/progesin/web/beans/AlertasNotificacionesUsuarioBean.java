@@ -15,12 +15,14 @@ import es.mira.progesin.lazydata.LazyModelAlertas;
 import es.mira.progesin.lazydata.LazyModelNotificaciones;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Notificacion;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.util.ExportadorWord;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -74,6 +76,13 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     private LazyModelNotificaciones modelNotificaciones;
     
     /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
+    
+    /**
      * Inicializa el bean.
      */
     
@@ -123,6 +132,23 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
             regActividad.altaRegActividadError("Notificaciones", e);
         }
         
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDocAlertas() {
+        
+        exportadorWord.exportDoc("listaAlertas", false, "busquedaAlertas:tablaAlertas", SeccionesEnum.ALERTAS);
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDocNotificaciones() {
+        
+        exportadorWord.exportDoc("listaNotificaciones", false, "busquedaNotificaciones:tablaNotificaciones",
+                SeccionesEnum.NOTIFICACIONES);
     }
     
 }
