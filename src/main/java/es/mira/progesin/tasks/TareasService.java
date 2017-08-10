@@ -1,7 +1,9 @@
 package es.mira.progesin.tasks;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,20 +36,19 @@ import es.mira.progesin.web.beans.ApplicationBean;
  * @author EZENTIS
  * 
  */
-
 @Service("tareasService")
-
 public class TareasService implements ITareasService {
     
-    /**
-     * Un día en milisegundos.
-     */
-    private static final int DIAMILISEGUNDOS = 86400000;
     
     /**
      * Nombre del parámetro que define número de días para responder cuestionario.
      */
     private static final String PLAZODIASCUESTIONARIO = "plazoDiasCuestionario";
+    
+    /**
+     * Nombre del parámetro que define número de días para responder una solicitud de documentación previa.
+     */
+    private static final String PLAZODIASSOLICITUD = "plazoDiasDocumentacion";
     
     /**
      * Servicio de cuestionarios enviados.
@@ -98,7 +99,7 @@ public class TareasService implements ITareasService {
     /**
      * Constante con literal para el inicio de mensaje.
      */
-    private static final String INICIO = "Se envía este correo como redordatorio\n";
+    private static final String INICIO = "Se envía este correo como recordatorio.\n";
     
     /**
      * Inicializa el servicio cargando los parámetros relativos a las tareas.
@@ -119,24 +120,24 @@ public class TareasService implements ITareasService {
     
     /**
      * Recordatorio de la necesidad de enviar un cuestionario.
+     * El proceso se ejecutará de lunes a viernes a las 8 de la mañana.
      */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
-    
     public void recordatorioEnvioCuestionario() {
-        Date hoy = new Date();
+        LocalDate hoy = LocalDate.now();  
         List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
         try {
             for (int i = 0; i < lista.size(); i++) {
                 CuestionarioEnvio cuestionario = lista.get(i);
-                long milis = cuestionario.getFechaLimiteCuestionario().getTime() - hoy.getTime();
-                int dias = (int) (milis / DIAMILISEGUNDOS);
+                LocalDate fechaCuestionario = cuestionario.getFechaLimiteCuestionario().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                long dias = ChronoUnit.DAYS.between(hoy, fechaCuestionario);
                 int plazoDiasCuestionario = 0;
                 if (tareasProperties.getProperty(PLAZODIASCUESTIONARIO) != null) {
                     plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty(PLAZODIASCUESTIONARIO));
                 }
                 if (dias == plazoDiasCuestionario) {
-                    StringBuilder cuerpo = new StringBuilder().append("Faltan ").append(dias)
+                    StringBuilder cuerpo = new StringBuilder(INICIO).append("Faltan ").append(dias)
                             .append(" dia/s para la fecha límite de envío del cuestionario de la inspección ")
                             .append(cuestionario.getInspeccion().getNumero()).append(FINAL);
                     
@@ -154,7 +155,7 @@ public class TareasService implements ITareasService {
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
                     correoElectronico.envioCorreo(listaDestinos,
-                            "Recordatorio Fin de plazo para el envío del cuestionario", cuerpo.toString());
+                            "Recordatorio fin de plazo para el envío del cuestionario", cuerpo.toString());
                 }
             }
         } catch (CorreoException ce) {
@@ -164,26 +165,26 @@ public class TareasService implements ITareasService {
     
     /**
      * Recordatorio de la necesidad de enviar la documentación solicitada.
+     * El proceso se ejecutará de lunes a viernes a las 8 de la mañana.
      */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
-    
     public void recordatorioEnvioDocumentacion() {
-        Date hoy = new Date();
+        LocalDate hoy = LocalDate.now();  
         List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
         try {
             for (int i = 0; i < lista.size(); i++) {
                 
                 SolicitudDocumentacionPrevia solicitud = lista.get(i);
-                long milis = solicitud.getFechaLimiteCumplimentar().getTime() - hoy.getTime();
-                int dias = (int) (milis / DIAMILISEGUNDOS);
-                int plazoDiasCuestionario = 0;
-                if (tareasProperties.getProperty(PLAZODIASCUESTIONARIO) != null) {
-                    plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty(PLAZODIASCUESTIONARIO));
+                LocalDate fechaSolicitud = solicitud.getFechaLimiteCumplimentar().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                long dias = ChronoUnit.DAYS.between(hoy, fechaSolicitud);
+                int plazoDiasSolcitud = 0;
+                if (tareasProperties.getProperty(PLAZODIASSOLICITUD) != null) {
+                    plazoDiasSolcitud = Integer.parseInt(tareasProperties.getProperty(PLAZODIASSOLICITUD));
                 }
-                if (dias == plazoDiasCuestionario) {
+                if (dias == plazoDiasSolcitud) {
                     
-                    StringBuilder cuerpo = new StringBuilder().append("INICIO").append("Faltan ").append(dias)
+                    StringBuilder cuerpo = new StringBuilder(INICIO).append("Faltan ").append(dias)
                             .append(" dia/s para la fecha límite de envío de la documentación para la inspección número ")
                             .append(solicitud.getInspeccion().getNumero()).append(FINAL);
                     
@@ -192,8 +193,7 @@ public class TareasService implements ITareasService {
                 }
                 
                 if (dias == 0) {
-                    StringBuilder cuerpo = new StringBuilder().append("INICIO")
-                            .append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
+                    StringBuilder cuerpo = new StringBuilder(INICIO).append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
                             .append(solicitud.getInspeccion().getNumero()).append(FINAL);
                     
                     List<String> listaDestinos = new ArrayList<>();
@@ -201,7 +201,7 @@ public class TareasService implements ITareasService {
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
                     correoElectronico.envioCorreo(listaDestinos,
-                            "Recordatorio Fin de plazo para el envío de documentación previa", cuerpo.toString());
+                            "Recordatorio fin de plazo para el envío de documentación previa", cuerpo.toString());
                 }
             }
         } catch (CorreoException ce) {
@@ -210,18 +210,18 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Limpia la papelera de documentos.
+     * Borrra definitivamente los documentos que lleven más de 90 días o más dados de baja.
+     * El proceso se ejecutará de lunes a viernes a la 1 de la mañana.
      */
     @Override
-    @Scheduled(cron = "0 0 8 * * MON-FRI")
-    
+    @Scheduled(cron = "0 0 1 * * MON-FRI")
     public void limpiarPapelera() {
-        Date hoy = new Date();
+        LocalDate hoy = LocalDate.now(); 
         List<Documento> listadoDocumentosPapelera = documentoService.findByFechaBajaIsNotNull();
         
         for (Documento documento : listadoDocumentosPapelera) {
-            Long milis = hoy.getTime() - documento.getFechaBaja().getTime();
-            int dias = (int) (milis / DIAMILISEGUNDOS);
+            LocalDate fechaBajaDocumento = documento.getFechaBaja().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            long dias = ChronoUnit.DAYS.between(hoy, fechaBajaDocumento);
             if (dias >= 90) {
                 try {
                     documentoService.delete(documento);

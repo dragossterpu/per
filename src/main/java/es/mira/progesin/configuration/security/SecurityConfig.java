@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        
+        // TODO falta limitar el acceso por url a todas las rutas a las que no pueden acceder todos los usuarios, por ejemplo, los provisionales
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
                 .permitAll().antMatchers(Constantes.RUTALOGIN + "/**").anonymous().antMatchers("/acceso/**").anonymous()
                 // Acceso a la administración sólo para el role ADMIN
