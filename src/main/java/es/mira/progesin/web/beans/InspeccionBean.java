@@ -395,19 +395,26 @@ public class InspeccionBean implements Serializable {
             limpiarBusqueda();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
-            String descripcion = "Modificación inspección: " + inspeccion.getNumero();
+            
+            String descripcion = "Inspección " + inspeccion.getNumero() + " modificada.";
             
             String descripcionRegistro = inspeccionesService.getTextoRegistro(inspecionNoMod, inspeccion,
                     inspeccionesNoMod, inspeccionesAsignadasActuales);
-            System.out.println(descripcionRegistro);
             
-            // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcionRegistro, TipoRegistroEnum.MODIFICACION.name(),
-                    SeccionesEnum.INSPECCION.getDescripcion());
-            notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
-                    inspeccion.getEquipo());
-            notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
-                    RoleEnum.ROLE_SERVICIO_APOYO);
+            if (!descripcionRegistro.isEmpty()) {
+                StringBuilder descrip = new StringBuilder();
+                descrip.append(descripcion);
+                descrip.append("Ver a continuación:");
+                descrip.append(descripcionRegistro);
+                // Guardamos la actividad en bbdd
+                regActividadService.altaRegActividad(descrip.toString(), TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INSPECCION.getDescripcion());
+                notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                        inspeccion.getEquipo());
+                notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                        RoleEnum.ROLE_SERVICIO_APOYO);
+            }
+            
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar la inspección. Inténtelo de nuevo más tarde");

@@ -429,8 +429,8 @@ public class InspeccionesService implements IInspeccionesService {
     @Override
     public String getTextoRegistro(Inspeccion insp, Inspeccion inspMod, List<Inspeccion> inspecciones,
             List<Inspeccion> inspeccionesMod) {
-        StringBuilder descripcion = new StringBuilder(
-                "Inspección " + insp.getNumero() + " modificada. Ver a continuación:");
+        StringBuilder descripcion = new StringBuilder();
+        
         descripcion.append(getTextoAnio(insp, inspMod));
         descripcion.append(getTextoAmbito(insp, inspMod));
         descripcion.append(getTextoTipoInspeccion(insp, inspMod));
@@ -442,7 +442,6 @@ public class InspeccionesService implements IInspeccionesService {
         descripcion.append(getTextoNombreUnidad(insp, inspMod));
         descripcion.append(getTextoMinicipio(insp, inspMod));
         descripcion.append(getTextoInspeccionesAsociadas(inspecciones, inspeccionesMod));
-        
         return descripcion.toString();
     }
     
@@ -454,7 +453,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoAnio(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getAnio().equals(inspMod.getAnio())) {
             descripcion.append(NUEVALINEA + "Año" + ANTES + insp.getAnio() + AHORA + inspMod.getAnio() + ")");
         }
@@ -469,7 +468,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoAmbito(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getAmbito().equals(inspMod.getAmbito())) {
             descripcion.append(NUEVALINEA + "Ámbito" + ANTES + insp.getAmbito().getDescripcion() + AHORA
                     + inspMod.getAmbito().getDescripcion() + ")");
@@ -485,7 +484,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoTipoInspeccion(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getTipoInspeccion().equals(inspMod.getTipoInspeccion())) {
             descripcion.append(NUEVALINEA + "Tipo inspección" + ANTES + insp.getTipoInspeccion().getDescripcion()
                     + AHORA + inspMod.getTipoInspeccion().getDescripcion() + ")");
@@ -501,7 +500,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoEstadoInspeccion(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getEstadoInspeccion().equals(inspMod.getEstadoInspeccion())) {
             descripcion.append(NUEVALINEA + "Estado inspección" + ANTES + insp.getEstadoInspeccion().getDescripcion()
                     + AHORA + inspMod.getEstadoInspeccion().getDescripcion() + ")");
@@ -517,7 +516,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoFechaPrevista(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         LocalDate localDateInsp = insp.getFechaPrevista().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate localDateInspMod = inspMod.getFechaPrevista().toInstant().atZone(ZoneId.systemDefault())
                 .toLocalDate();
@@ -535,7 +534,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoEquipo(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getEquipo().equals(inspMod.getEquipo())) {
             descripcion.append(NUEVALINEA + "Equipo" + ANTES + insp.getEquipo().getNombreEquipo() + AHORA
                     + inspMod.getEquipo().getNombreEquipo() + ")");
@@ -551,7 +550,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoCuatrimestre(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getCuatrimestre().equals(inspMod.getCuatrimestre())) {
             descripcion.append(NUEVALINEA + "Cuatrimestre" + ANTES + insp.getCuatrimestre().getDescripcion() + AHORA
                     + inspMod.getCuatrimestre().getDescripcion() + ")");
@@ -567,7 +566,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoTipoUnidad(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getTipoUnidad().equals(inspMod.getTipoUnidad())) {
             descripcion.append(NUEVALINEA + "Tipo unidad" + ANTES + insp.getTipoUnidad().getDescripcion() + AHORA
                     + inspMod.getTipoUnidad().getDescripcion() + ")");
@@ -583,7 +582,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoNombreUnidad(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getNombreUnidad().trim().equals(inspMod.getNombreUnidad().trim())) {
             descripcion.append(NUEVALINEA + "Nombre unidad" + ANTES + insp.getNombreUnidad() + AHORA
                     + inspMod.getNombreUnidad() + ")");
@@ -599,7 +598,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoMinicipio(Inspeccion insp, Inspeccion inspMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         if (!insp.getMunicipio().equals(inspMod.getMunicipio())) {
             if (!insp.getMunicipio().getProvincia().equals(inspMod.getMunicipio().getProvincia())) {
                 descripcion.append(NUEVALINEA + "Provincia" + ANTES + insp.getMunicipio().getProvincia().getNombre()
@@ -619,7 +618,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getTextoInspeccionesAsociadas(List<Inspeccion> inspecciones, List<Inspeccion> inspeccionesMod) {
-        StringBuilder descripcion = new StringBuilder("");
+        StringBuilder descripcion = new StringBuilder();
         List<Inspeccion> inspsAux = new ArrayList<>(inspecciones);
         boolean contienenMismosObjetos = inspsAux.removeAll(inspeccionesMod);
         
@@ -637,7 +636,7 @@ public class InspeccionesService implements IInspeccionesService {
      * @return cadena
      */
     private String getNumInspecciones(List<Inspeccion> inspecciones) {
-        StringBuilder cadena = new StringBuilder("");
+        StringBuilder cadena = new StringBuilder();
         for (Inspeccion i : inspecciones) {
             cadena.append(i.getNumero() + "; ");
         }
