@@ -143,4 +143,16 @@ public interface IInspeccionesService {
      * @return valor booleano dependiendo de si existe una inspección finalizada o no
      */
     public boolean existenInspeccionesNoFinalizadas(Equipo equipo);
+    
+    /**
+     * Devuelve una cadena con el texto del registro utilizado en la modificación de una inspección.
+     * 
+     * @param insp inspección actual
+     * @param inspMod inspección modificada
+     * @param inspecciones inspecciones asociadas actuales
+     * @param inspeccionesMod inspecciones asociadas modificadas
+     * @return descripcion
+     */
+    String getTextoRegistro(Inspeccion insp, Inspeccion inspMod, List<Inspeccion> inspecciones,
+            List<Inspeccion> inspeccionesMod);
 }

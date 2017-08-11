@@ -30,6 +30,9 @@
                             <p:graphicImage value="/images/csv.png" />
                             <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas" />
                         </h:commandLink>
+                         <h:commandLink  action="#{AlertasNotificacionesUsuarioBean.exportDocAlertas}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                        </h:commandLink>
                     </p:outputPanel>
                     <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.modelAlertas}" id="tablaAlertas" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Ninguna">
 
@@ -75,6 +78,9 @@
                         <h:commandLink>
                             <p:graphicImage value="/images/csv.png" />
                             <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                        </h:commandLink>
+                       <h:commandLink  action="#{AlertasNotificacionesUsuarioBean.exportDocNotificaciones}">
+                        <p:graphicImage value="/images/doc.png" /> 
                         </h:commandLink>
                     </p:outputPanel>
                     <p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.modelNotificaciones}" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaNotificaciones" emptyMessage="Ninguna">
