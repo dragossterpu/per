@@ -39,7 +39,6 @@ import es.mira.progesin.web.beans.ApplicationBean;
 @Service("tareasService")
 public class TareasService implements ITareasService {
     
-    
     /**
      * Nombre del parámetro que define número de días para responder cuestionario.
      */
@@ -119,18 +118,19 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Recordatorio de la necesidad de enviar un cuestionario.
-     * El proceso se ejecutará de lunes a viernes a las 8 de la mañana.
+     * Recordatorio de la necesidad de enviar un cuestionario. El proceso se ejecutará de lunes a viernes a las 8 de la
+     * mañana.
      */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void recordatorioEnvioCuestionario() {
-        LocalDate hoy = LocalDate.now();  
+        LocalDate hoy = LocalDate.now();
         List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
         try {
             for (int i = 0; i < lista.size(); i++) {
                 CuestionarioEnvio cuestionario = lista.get(i);
-                LocalDate fechaCuestionario = cuestionario.getFechaLimiteCuestionario().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fechaCuestionario = cuestionario.getFechaLimiteCuestionario().toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate();
                 long dias = ChronoUnit.DAYS.between(hoy, fechaCuestionario);
                 int plazoDiasCuestionario = 0;
                 if (tareasProperties.getProperty(PLAZODIASCUESTIONARIO) != null) {
@@ -164,19 +164,20 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Recordatorio de la necesidad de enviar la documentación solicitada.
-     * El proceso se ejecutará de lunes a viernes a las 8 de la mañana.
+     * Recordatorio de la necesidad de enviar la documentación solicitada. El proceso se ejecutará de lunes a viernes a
+     * las 8 de la mañana.
      */
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void recordatorioEnvioDocumentacion() {
-        LocalDate hoy = LocalDate.now();  
+        LocalDate hoy = LocalDate.now();
         List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
         try {
             for (int i = 0; i < lista.size(); i++) {
                 
                 SolicitudDocumentacionPrevia solicitud = lista.get(i);
-                LocalDate fechaSolicitud = solicitud.getFechaLimiteCumplimentar().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fechaSolicitud = solicitud.getFechaLimiteCumplimentar().toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate();
                 long dias = ChronoUnit.DAYS.between(hoy, fechaSolicitud);
                 int plazoDiasSolcitud = 0;
                 if (tareasProperties.getProperty(PLAZODIASSOLICITUD) != null) {
@@ -193,7 +194,8 @@ public class TareasService implements ITareasService {
                 }
                 
                 if (dias == 0) {
-                    StringBuilder cuerpo = new StringBuilder(INICIO).append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
+                    StringBuilder cuerpo = new StringBuilder(INICIO)
+                            .append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
                             .append(solicitud.getInspeccion().getNumero()).append(FINAL);
                     
                     List<String> listaDestinos = new ArrayList<>();
@@ -210,18 +212,19 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Borrra definitivamente los documentos que lleven más de 90 días o más dados de baja.
-     * El proceso se ejecutará de lunes a viernes a la 1 de la mañana.
+     * Borrra definitivamente los documentos que lleven más de 90 días o más dados de baja. El proceso se ejecutará de
+     * lunes a viernes a la 1 de la mañana.
      */
     @Override
     @Scheduled(cron = "0 0 1 * * MON-FRI")
     public void limpiarPapelera() {
-        LocalDate hoy = LocalDate.now(); 
+        LocalDate hoy = LocalDate.now();
         List<Documento> listadoDocumentosPapelera = documentoService.findByFechaBajaIsNotNull();
         
         for (Documento documento : listadoDocumentosPapelera) {
-            LocalDate fechaBajaDocumento = documento.getFechaBaja().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            long dias = ChronoUnit.DAYS.between(hoy, fechaBajaDocumento);
+            LocalDate fechaBajaDocumento = documento.getFechaBaja().toInstant().atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            long dias = ChronoUnit.DAYS.between(fechaBajaDocumento, hoy);
             if (dias >= 90) {
                 try {
                     documentoService.delete(documento);
