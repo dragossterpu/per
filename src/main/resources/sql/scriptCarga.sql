@@ -1176,19 +1176,17 @@ Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) v
 Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (18,'GC','Memoria Anual de los dos últimos años','PDF','Memoria_anual');
 Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (19,'PN','Memoria Anual de los dos últimos años','PDF','Memoria_anual');
 Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (20,'GC','Organigrama de la Unidad inspeccionada, con detalle de las Unidades Territoriales y Especialidades','DOC, DOCX, PPTX, PPT, PUB','Organigrama');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (21,'GC','Organigrama de la Compañía (Unidades Territoriales y Especialidades)','DOC, DOCX, PPTX, PPT, PUB','Organigrama');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (22,'GC','Organigrama de la Zona (Unidades Territoriales y Especialidades)','DOC, DOCX, PPTX, PPT, PUB','Organigrama');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (23,'PN','Organigramas de la Unidad inspeccionada, con detalle de sus Unidades y Servicios','DOC, DOCX, PPTX, PPT, PUB','Organigrama');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (24,'GC','Plan anual vigente de la Unidad Orgánica de Policía Judicial, SEPRONA y otras especialidades que lo confeccionen','PDF','Plan_anual_especialidades');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (25,'GC','Plan de Emergencia','PDF','Plan_emergencia');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (26,'PN','Plan de Emergencia','PDF','Plan_emergencia');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (27,'GC','Plan de Seguridad Ciudadana','PDF','Plan_seguridad_ciudanada');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (28,'GC','Relación de mandos de las distintas Unidades, de categoría Oficial, con indicación de teléfonos y correos electrónicos de contacto','DOC, DOCX, PDF','Relacion_mandos');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (29,'GC','Relación de Núcleos Operativos constituidos. Puestos integrados en los mismos, con detalle de sus municipios, población y superficie','DOC, DOCX','Relac_nucleos_op_puestos');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (30,'PN','Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico','DOC, DOCX','Relacion_eq_directivo');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (31,'GC','Catálogo de puestos de trabajo Comandancia','XLSX','00_d_CPT_C');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (32,'GC','Catálogo de puestos de trabajo Compañía','XLSX','00_d_CPT_CIA');
-Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (33,'GC','Catálogo de puestos de trabajo Zona','XLSX','00_d_CPT_Z');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (21,'PN','Organigramas de la Unidad inspeccionada, con detalle de sus Unidades y Servicios','DOC, DOCX, PPTX, PPT, PUB','Organigrama');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (22,'GC','Plan anual vigente de la Unidad Orgánica de Policía Judicial, SEPRONA y otras especialidades que lo confeccionen','PDF','Plan_anual_especialidades');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (23,'GC','Plan de Emergencia','PDF','Plan_emergencia');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (24,'PN','Plan de Emergencia','PDF','Plan_emergencia');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (25,'GC','Plan de Seguridad Ciudadana','PDF','Plan_seguridad_ciudanada');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (26,'GC','Relación de mandos de las distintas Unidades, de categoría Oficial, con indicación de teléfonos y correos electrónicos de contacto','DOC, DOCX, PDF','Relacion_mandos');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (27,'GC','Relación de Núcleos Operativos constituidos. Puestos integrados en los mismos, con detalle de sus municipios, población y superficie','DOC, DOCX','Relac_nucleos_op_puestos');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (28,'PN','Relación del Equipo Directivo con indicación del nombre y apellidos, categoría y cargo, números de teléfono y dirección de correo electrónico','DOC, DOCX','Relacion_eq_directivo');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (29,'GC','Catálogo de puestos de trabajo Comandancia','XLSX','00_d_CPT_C');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (30,'GC','Catálogo de puestos de trabajo Compañía','XLSX','00_d_CPT_CIA');
+Insert into TIPODOCUMENTACIONPREVIA (ID,AMBITO,DESCRIPCION,EXTENSIONES,NOMBRE) values (31,'GC','Catálogo de puestos de trabajo Zona','XLSX','00_d_CPT_Z');
 
 COMMIT;
 

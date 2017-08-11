@@ -1,5 +1,6 @@
 package es.mira.progesin.tasks;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -28,6 +29,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
+import lombok.Setter;
 
 /**
  * 
@@ -36,6 +38,7 @@ import es.mira.progesin.web.beans.ApplicationBean;
  * @author EZENTIS
  * 
  */
+@Setter
 @Service("tareasService")
 public class TareasService implements ITareasService {
     
@@ -101,12 +104,17 @@ public class TareasService implements ITareasService {
     private static final String INICIO = "Se envía este correo como recordatorio.\n";
     
     /**
+     * Constante con literal para el inicio de mensaje.
+     */
+    private Clock clock;
+    
+    /**
      * Inicializa el servicio cargando los parámetros relativos a las tareas.
      */
     @PostConstruct
     public void init() {
         Map<String, String> parametrosTareas = applicationBean.getMapaParametros().get("tareas");
-        
+        clock = Clock.systemDefaultZone();
         if (parametrosTareas != null) {
             Iterator<Entry<String, String>> it = parametrosTareas.entrySet().iterator();
             while (it.hasNext()) {
@@ -218,7 +226,7 @@ public class TareasService implements ITareasService {
     @Override
     @Scheduled(cron = "0 0 1 * * MON-FRI")
     public void limpiarPapelera() {
-        LocalDate hoy = LocalDate.now();
+        LocalDate hoy = LocalDate.now(clock);
         List<Documento> listadoDocumentosPapelera = documentoService.findByFechaBajaIsNotNull();
         
         for (Documento documento : listadoDocumentosPapelera) {
