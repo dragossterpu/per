@@ -90,6 +90,9 @@
                     <p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
                         <h:outputText value="#{guia.nombre}" style="float:left"/>
                     </p:column>
+                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{empty guia.fechaAnulacion}" update="tablaGuias" />
+                    </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}" rendered="#{esEquipoInspeccion and empty guia.fechaAnulacion}" update="tablaGuias" />
                         <h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{not esEquipoInspeccion and empty guia.fechaAnulacion}" update="tablaGuias" />
