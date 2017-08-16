@@ -22,38 +22,18 @@
 
             <div class="bloqueVistaTitulo">
                 <p>Nº Inspección: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero}</p>
-                <p>
-                    FECHA: Madrid,
-                    <h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAlta}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-                    </h:outputText>
-                </p>
+                <p>FECHA: Madrid, <h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaAlta}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" /></h:outputText></p>
                 <p>ASUNTO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}</p>
-                <p>
-                    <strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong>
-                </p>
+                <p><strong>DESTINATARIO: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}</strong></p>
             </div>
+            
             <div class="bloqueVista">
-                <p>
-                    En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad (publicada en el B.O.G.C. núm. 25 de 23-06-2015) y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion} del año #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}</strong>, se va a realizar una inspección de carácter <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> en esa Comandancia de su mando.
-                </p>
-            </div>
-            <div class="bloqueVista">
-                <p>
-                    Al objeto de llevar a cabo una recopilación de información sobre esa Unidad, en la fase previa a la Inspección, se solicita se envíe por correo electrónico a la dirección <strong>apoyo_ipss@interior.es</strong>, lo siguiente:
-                </p>
-            </div>
-            <div class="bloqueVista">
-                <p>1. A la mayor brevedad posible, como máximo 3 días hábiles, tras la recepción del presente, los datos del interlocutor de esa Unidad con indicación del nombre y apellidos, categoría y cargo, números de teléfono (fijo y móvil corporativo si dispusiera) y dirección de correo electrónico (cuenta corporativa, no cuenta personal).</p>
-            </div>
-            <div class="bloqueVista">
-                <p>
-                    2. Antes del <strong><h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-                        </h:outputText></strong>, con el nombre de fichero de se indica y en uno de los tipos de archivo que se especifica, los siguientes documentos:
-                </p>
-            </div>
-            <div class="bloqueVista">
+                <p>En virtud de lo establecido por la Instrucción núm. 5/2015, de la Secretaría de Estado de Seguridad, sobre organización y funciones de la Inspección de Personal y Servicios de Seguridad  y en relación con el Plan Anual de Inspecciones aprobado por el Secretario de Estado de Seguridad, se participa que por personal de esta Subdirección, durante el <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion} del año #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}</strong>, se va a realizar una inspección de carácter <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}</strong> a esa Unidad.</p>
+                
+                <p>Como se indicó en la anterior comunicación, en la primera fase de la inspección, se realizará la recopilación de información y datos. Dicha recopilación se realizará a través de la aplicación software, Programa de Gestión de Inspecciones “PROGESIN”.</p>
+                
+                <p>Mediante dicha herramienta informática, deberá enviar a esta IPSS antes del <strong><h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" /></h:outputText></strong>, con el nombre del fichero que se indicia y en uno de los tipos de archivo que se especifica, los siguientes documentos.</p>
+
                 <p:dataTable var="documentoPrevio" value="#{solicitudDocPreviaBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
                     <p:column headerText="DOCUMENTO">
                         <h:outputText value="#{documentoPrevio.descripcion}" />
@@ -67,21 +47,21 @@
                 </p:dataTable>
             </div>
             <div class="bloqueVistaTitulo">
-                <p>
-                    3. Una vez recibida la anterior documentación, será remitido un cuestionario para su cumplimentación que deberá tener entrada en esta IPSS antes del <strong><h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-                        </h:outputText></strong>.
-                </p>
+                <p>A la vista de esta documentación y las características de la Unidad, esta IPSS confeccionará un cuestionario que, utilizando la aplicación PROGESIN, deberán cumplimentar y enviar antes del <strong><h:outputText value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" /></h:outputText></strong>.</p>
+                <p>Una vez enviado el cuestionario cumplimentado y validado por esta IPSS, su usuario de la citada aplicación quedará inactivo.</p>
             </div>
             <div class="bloqueVista">
                 <p>Para cualquier aclaración, podrá dirigirse a:</p>
+                
+                <table class="tablaApoyo">
+                    <tr>
+                        <td>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}</td>
+                        <td>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}</td>
+                        <td><strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong></td>
+                    </tr>
+                </table>
             </div>
-            <div class="div_celda">#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}</div>
-            <div class="div_celda">#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}</div>
-            <div class="div_celda">#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}</div>
-            <div class="div_celda">
-                <strong>#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}</strong>
-            </div>
+            
             <div class="bloqueVistaTitulo">
                 <p>El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.</p>
             </div>

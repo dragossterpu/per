@@ -285,7 +285,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     private void datosApoyo() {
         solicitudDocumentacionPrevia.setApoyoCorreo(datosApoyo.get("ApoyoCorreo"));
-        solicitudDocumentacionPrevia.setApoyoNombre(datosApoyo.get("ApoyoNombre"));
         solicitudDocumentacionPrevia.setApoyoPuesto(datosApoyo.get("ApoyoPuesto"));
         solicitudDocumentacionPrevia.setApoyoTelefono(datosApoyo.get("ApoyoTelefono"));
     }

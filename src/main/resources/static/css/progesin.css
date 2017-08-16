@@ -158,25 +158,14 @@ h1, h2, h3 {
     font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
 }
 
-.div_celda {
-    width: 150px;
-    height: 40px;
-    font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
-    float: left;
-    vertical-align: middle;
-    text-align: center;
-    border: 1px solid #000000;
-}
-
 .tablaApoyo {
-    width: 100%;
-    border: 1px solid #000000;
-    text-indent: 0px;
-    vertical-align: middle;
-    text-align: center;
-    height: auto;
-    display: table;
+    margin: 0 auto;
+}
+.tablaApoyo td {
     font: 14px Arial, Helvetica, Helvetica Neue, Georgia;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid black;
 }
 
 .bloqueVistaTitulo {

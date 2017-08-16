@@ -478,14 +478,12 @@ public class SolicitudDocPreviaBeanTest {
     public void getFormularioCrearSolicitud() {
         Map<String, String> datosApoyo = new HashMap<>();
         datosApoyo.put("ApoyoCorreo", "apoyoCorreo");
-        datosApoyo.put("ApoyoNombre", "apoyoNombre");
         datosApoyo.put("ApoyoPuesto", "apoyoPuesto");
         datosApoyo.put("ApoyoTelefono", "apoyoTelefono");
         solicitudDocPreviaBean.setDatosApoyo(datosApoyo);
         
         solicitudDocPreviaBean.getFormularioCrearSolicitud();
         assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoCorreo()).isEqualTo("apoyoCorreo");
-        assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoNombre()).isEqualTo("apoyoNombre");
         assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoPuesto()).isEqualTo("apoyoPuesto");
         assertThat(solicitudDocPreviaBean.getSolicitudDocumentacionPrevia().getApoyoTelefono())
                 .isEqualTo("apoyoTelefono");

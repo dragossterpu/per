@@ -927,7 +927,7 @@ prompt  Creacion tabla  RESPUESTAS_INFORME
 prompt =========================================================================
 
 CREATE TABLE RESPUESTAS_INFORME 
-   (    TEXTO BLOB NOT NULL ENABLE, 
+   (    TEXTO BLOB, 
     CONCLUSIONES BLOB, 
     INFORME_ID NUMBER(19,0) NOT NULL ENABLE, 
     SUBAREA_ID NUMBER(19,0) NOT NULL ENABLE, 
@@ -1217,10 +1217,9 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.user','mail','pr
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('UserPwd','mail','ipss2016');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','true');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable','mail','true');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','mmayo@interior.es');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoNombre','datosApoyo','Manuel Mayo Rodríguez');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspector Auditor, Jefe del Servicio de Apoyo');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372541');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','apoyo_ipss@interior.es');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspección de Personal y Servicios de Seguridad');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372505');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOC','extensiones','application/msword');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOCX','extensiones','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPT','extensiones','application/vnd.ms-powerpoint');

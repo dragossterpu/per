@@ -133,10 +133,10 @@ public class InformeService implements IInformeService {
                 if (respuesta[1] != null && Utilities.noEstaVacio(respuesta[1])) {
                     conclusiones = respuesta[1].getBytes();
                 }
-                // if (texto != null) {
-                subarea = subareaInformeRepository.findOne(subarea.getId());
-                respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
-                // }
+                if (texto != null) {
+                    subarea = subareaInformeRepository.findOne(subarea.getId());
+                    respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
+                }
             }
         });
         respuestaInformeRepository.save(respuestas);

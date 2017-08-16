@@ -258,15 +258,11 @@ public class PdfGenerator {
      * @return Table Tabla con los datos de la persona de apoyo
      */
     private Table crearTablaDatosApoyo(SolicitudDocumentacionPrevia solDocPrevia) {
-        Table tabla = new Table(4);
+        Table tabla = new Table(3);
         tabla.setWidthPercent(100);
         
         Cell celda = new Cell();
         celda.add(solDocPrevia.getApoyoPuesto());
-        tabla.addCell(celda);
-        
-        celda = new Cell();
-        celda.add(solDocPrevia.getApoyoNombre());
         tabla.addCell(celda);
         
         celda = new Cell();
@@ -399,7 +395,8 @@ public class PdfGenerator {
      * @param document documento donde se insertan las respuestas
      * @throws ProgesinException excepción que puede lanzar
      */
-    private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document) throws ProgesinException {
+    private void crearRespuestasPorArea(List<RespuestaCuestionario> listaRespuestas, Document document)
+            throws ProgesinException {
         for (RespuestaCuestionario respuesta : listaRespuestas) {
             PreguntasCuestionario pregunta = respuesta.getRespuestaId().getPregunta();
             Paragraph p = new Paragraph(pregunta.getPregunta());

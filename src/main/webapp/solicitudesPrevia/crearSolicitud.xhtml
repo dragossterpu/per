@@ -96,21 +96,18 @@
                         <p:panel header="Apoyo">
                             <br></br>
 
-                            <div class="aclaraciones">Datos de la persona de apoyo por defecto.</div>
+                            <div class="aclaraciones">Datos de apoyo por defecto.</div>
 
                             <h:panelGrid columns="2" columnClasses="label, value">
 
-                                <h:outputLabel for="apoyoPuesto" value="Puesto persona apoyo (*):" />
-                                <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un puesto persona apoyo" />
+                                <h:outputLabel for="apoyoPuesto" value="Puesto apoyo (*):" />
+                                <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un puesto apoyo" />
 
-                                <h:outputLabel for="apoyoNombre" value="Nombre persona apoyo (*):" />
-                                <p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un nombre persona apoyo" />
+                                <h:outputLabel for="apoyoTelefono" value="Teléfono apoyo (*):" />                                
+                                <p:inputNumber id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" converter="#{trimConverter}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="true" requiredMessage="Es obligatorio un teléfono apoyo" />
 
-                                <h:outputLabel for="apoyoTelefono" value="Teléfono persona apoyo (*):" />                                
-                                <p:inputNumber id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" converter="#{trimConverter}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="true" requiredMessage="Es obligatorio un teléfono persona apoyo" />
-
-                                <h:outputLabel for="apoyoCorreo" value=" Correo persona apoyo (*):" />
-                                <p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un correo persona apoyo">
+                                <h:outputLabel for="apoyoCorreo" value=" Correo apoyo (*):" />
+                                <p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un correo apoyo">
                                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                                 </p:inputText>
 

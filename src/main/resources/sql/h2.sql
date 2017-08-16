@@ -113,10 +113,9 @@ insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) value
 insert into tipos_inspeccion (codigo,descripcion,fecha_alta,username_alta) values ('I.E_PUNT','I.Puntual extraordinaria',trunc(sysdate),'system');
 
 
-insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','mmayo@interior.es');
-insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoNombre','datosApoyo','Manuel Mayo Rodríguez');
-insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspector Auditor, Jefe del Servicio de Apoyo');
-insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','91.537.25.41');
+insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','apoyo_ipss@interior.es');
+insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspección de Personal y Servicios de Seguridad');
+insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372505');
 insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('BMP','extensiones','image/bmp');
 insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOC','extensiones','application/msword');
 insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOCX','extensiones','application/vnd.openxmlformats-officedocument.wordprocessingml.document');

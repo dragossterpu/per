@@ -15,7 +15,7 @@
                 <p:column headerText="DOCUMENTO" width="450">
                     <h:outputText value="#{documentoPrevio.descripcion}" />
                 </p:column>
-                <p:column headerText="NOMBRE" width="70">
+                <p:column headerText="NOMBRE ¹" width="70">
                     <h:outputText value="#{documentoPrevio.nombre}" />
                 </p:column>
                 <p:column headerText="EXTENSIONES" width="100">
@@ -23,12 +23,15 @@
                 </p:column>
             </p:dataTable>
         </div>
+        
         <br />
-        <br />
+        
         <div class="aclaraciones">
-            Se puede cargar uno o varios documentos a la vez. <strong>Si alguno de ellos se compone de dos o más partes, sus nombres deberán empezar por el nombre exigido para dicho documento</strong> (ej: organigrama_1.doc, organigramaParte2.ppt).
+            (1).- De cada tipo de documento se puede cargar uno o varios documentos a la vez. <strong>Si alguno de ellos se compone de dos o más partes, sus nombres deberán empezar por el nombre exigido para dicho documento y un número secuencial </strong> (ej: organigrama_1.doc, organigramaParte2.ppt). El tamaño máximo por archivo subido es de 20MB.
         </div>
 
+        <br />
+        
         <div class="bloqueVista">
             <h:form id="formAlta">
 

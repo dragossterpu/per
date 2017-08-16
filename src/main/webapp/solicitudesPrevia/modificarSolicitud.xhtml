@@ -78,10 +78,6 @@
                     <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" required="true" requiredMessage="Es obligatorio un puesto persona apoyo" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" converter="#{trimConverter}" />
                     <p:messages for="apoyoPuesto" autoUpdate="true" closable="true" />
 
-                    <h:outputLabel for="apoyoNombre" value="Nombre (*):" />
-                    <p:inputText id="apoyoNombre" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoNombre}" required="true" requiredMessage="Es obligatorio un nombre persona apoyo" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" />
-                    <p:messages for="apoyoNombre" autoUpdate="true" closable="true" />
-
                     <h:outputLabel for="apoyoTelefono" value="Teléfono (*):" />
                     <p:inputNumber id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" required="true" requiredMessage="Es obligatorio un teléfono persona apoyo" converter="#{trimConverter}" disabled="#{yaValidado or not esJefeInspeccionesApoyo}" maxValue="999999999" decimalPlaces="0" thousandSeparator=""/>                    
                     <p:messages for="apoyoTelefono" autoUpdate="true" closable="true" />
