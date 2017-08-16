@@ -31,10 +31,10 @@
                 <p>Mediante dicha herramienta informática, deberá enviar a esta IPSS antes del <strong><h:outputText value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" /></h:outputText></strong>, con el nombre del fichero que se indicia y en uno de los tipos de archivo que se especifica, los siguientes documentos.</p>
 
                 <p:dataTable var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}" emptyMessage="No se solicita ningún documento">
-                    <p:column headerText="DOCUMENTO" width="450">
+                    <p:column headerText="DOCUMENTO">
                         <h:outputText value="#{documentoPrevio.descripcion}" />
                     </p:column>
-                    <p:column headerText="NOMBRE" width="70">
+                    <p:column headerText="NOMBRE" width="150">
                         <h:outputText value="#{documentoPrevio.nombre}" />
                     </p:column>
                     <p:column headerText="EXTENSIONES" width="100">
