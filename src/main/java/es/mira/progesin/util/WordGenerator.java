@@ -351,7 +351,6 @@ public class WordGenerator {
             parrafo = doc.createParagraph();
             // Texto pregunta
             texto = parrafo.createRun();
-            texto.setBold(true);
             texto.setFontFamily(FONTFAMILY);
             /* Comprobamos si hay saltos de línea */
             String textoPaso = paso.getPaso();

@@ -8,7 +8,7 @@
             
         <ui:param name="titulo" value="#{yaEnviado ? 'Responder cuestionario' : 'Ver cuestionario'}" />
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-        <h3>#{titulo}</h3>
+        
     
         <h:form id="form">
 

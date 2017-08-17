@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
@@ -165,6 +166,15 @@ public class InformeBean implements Serializable {
     private transient StreamedContent file;
     
     /**
+     * Variable con los índices activos del acordeón de áreas.
+     */
+    private String indicesActivosAreas;
+    
+    /**
+     * Variable con los índices activos del acordeón de subáreas.
+     */
+    private Map<AreaInforme,String> indicesActivosSubareas;
+    /**
      * Inicializa el bean.
      */
     @PostConstruct
@@ -311,6 +321,7 @@ public class InformeBean implements Serializable {
         asignaciones.forEach(asignacion -> {
             mapaAsignaciones.put(asignacion.getSubarea(), asignacion.getUser().getUsername());
         });
+        obtenerIndicesActivosArcordeones(asignaciones);
     }
     
     /**
@@ -337,6 +348,7 @@ public class InformeBean implements Serializable {
     public void guardarInforme() {
         try {
             setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
+            generarMapaAsignaciones();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
@@ -497,6 +509,38 @@ public class InformeBean implements Serializable {
      */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+    }
+    
+    /**
+     * Obtiene los indices activos de los dos acordeones (áreas y subáreas) para el usuario logado. 
+     * Esto se hace para evitar el bug de primefaces en el texteditor, ya que si graban con el acordeon plegado se pierden los valores.
+     * 
+     * @param asignaciones Lista de subareas asignadas a algún usuario
+     */
+    private void obtenerIndicesActivosArcordeones(List<AsignSubareaInformeUser> asignaciones) {
+        String usuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+        StringJoiner areasActivas = new StringJoiner(",");
+        indicesActivosSubareas = new HashMap<>();
+        for (AsignSubareaInformeUser asignacion : asignaciones) {
+            AreaInforme area = asignacion.getSubarea().getArea();
+            if (listaAreas.contains(area) && usuarioActual.equals(asignacion.getUser().getUsername())) {
+                areasActivas.add(String.valueOf(listaAreas.indexOf(area)));
+                // Construyo un mapa<Area,indices> que contega las subareas asignadas por usuario
+               if(mapaAreasSubareas.containsKey(area)) {
+                   List<SubareaInforme> listaSubareasAreas = mapaAreasSubareas.get(area);
+                   if (indicesActivosSubareas.containsKey(area)) {
+                       indicesActivosSubareas.put(area, String.join(",", indicesActivosSubareas.get(area), String.valueOf(listaSubareasAreas.indexOf(asignacion.getSubarea()))));
+                   } else {
+                       indicesActivosSubareas.put(area, String.valueOf(listaSubareasAreas.indexOf(asignacion.getSubarea())));
+                   }
+               }
+            }
+        }
+        if (areasActivas.length() == 0) {
+            setIndicesActivosAreas("-1");
+        } else {
+            setIndicesActivosAreas(areasActivas.toString());
+        }
     }
     
 }

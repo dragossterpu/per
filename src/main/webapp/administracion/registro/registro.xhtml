@@ -11,12 +11,8 @@
             <div class="bloqueFormulario">
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombreSeccion" value="Nombre de la sección:" />
-                    
-
-                    
-                    
                     <p:importEnum type="es.mira.progesin.persistence.entities.enums.SeccionesEnum" var="secciones" allSuffix="ALL_ENUM_VALUES" />
-                    <p:selectOneMenu value="#{regActividadBean.regActividadBusqueda.nombreSeccion}" id="seccion">
+                    <p:selectOneMenu value="#{regActividadBean.regActividadBusqueda.nombreSeccion}" id="nombreSeccion">
                         <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                         <f:selectItems value="#{secciones.ALL_ENUM_VALUES}" var="secc" itemLabel="#{secc.descripcion}" itemValue="#{secc}" />
                     </p:selectOneMenu>
