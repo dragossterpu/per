@@ -8,18 +8,27 @@
         <div class="bloqueFormulario">
             <h:form id="form">
                 <h:outputLabel for="codigo" value="Código del tipo de inspección (*):" />
-                <p:inputText id="codigo" value="#{codigo}" required="true" requiredMessage="Introduzca el código del tipo de inspección" maxlength="8" converter="#{trimConverter}" validator="#{codigoTipoInspeccionValidator.validate}" />
+                <p:inputText id="codigo" value="#{codigo}" required="#{param['form:guardar']!=null}"  requiredMessage="Introduzca el código del tipo de inspección" maxlength="8" converter="#{trimConverter}" validator="#{codigoTipoInspeccionValidator.validate}" />
                 <p:messages for="codigo" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="descripcion" value="Descripción del tipo de inspección (*):" />
-                <p:inputText id="descripcion" value="#{descripcion}" required="true" requiredMessage="Introduzca la descripción del tipo de inspección" maxlength="100" converter="#{trimConverter}" />
+                <p:inputText id="descripcion" value="#{descripcion}" required="#{param['form:guardar']!=null}"  requiredMessage="Introduzca la descripción del tipo de inspección" maxlength="100" converter="#{trimConverter}" />
                 <p:messages for="descripcion" autoUpdate="true" closable="true" />
 
                 <div class="botonesFormulario">
-                    <p:commandButton actionListener="#{tipoInspeccionBean.altaTipo(codigo, descripcion)}" value="Crear tipo de inspección" icon="fa fa-fw fa-save" />
-                    <p:button outcome="/inspecciones/modeloInspeccion/tiposInspeccion" value="Cancelar" icon="fa fa-fw fa-undo" />
+                    <p:commandButton id="guardar" actionListener="#{tipoInspeccionBean.altaTipo(codigo, descripcion)}" value="Crear tipo de inspección" icon="fa fa-fw fa-save" />
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                         <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                    </p:commandButton>
                 </div>
 
+                <p:confirmDialog global="true">
+                    <div class="centrarBotonesDialog">
+                        <p:button outcome="/inspecciones/modeloInspeccion/tiposInspeccion" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
+                </p:confirmDialog>
+                
                 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                     <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                     <div class="centrarBotonesDialog">

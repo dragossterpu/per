@@ -33,7 +33,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelRegistro;
 import es.mira.progesin.persistence.entities.RegistroActividad;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 
@@ -193,22 +192,6 @@ public class RegActividadBeanTest {
         assertThat(regActividadBeanMock.getList()).isNotNull();
         assertThat(regActividadBeanMock.getList().size()).isEqualTo(6);
         assertThat(regActividadBeanMock.getModel()).isNotNull();
-        
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.RegActividadBean#autocompletarSeccion(java.lang.String)}.
-     */
-    @Test
-    public final void testAutocompletarSeccion() {
-        String infoSeccion = "ad";
-        List<String> seccs = new ArrayList<>();
-        seccs.add(SeccionesEnum.ADMINISTRACION.getDescripcion());
-        when(regActividadService.buscarPorNombreSeccion(any(String.class))).thenReturn(seccs);
-        List<String> secciones = regActividadBeanMock.autocompletarSeccion(infoSeccion);
-        
-        verify(regActividadService, times(1)).buscarPorNombreSeccion(any(String.class));
-        assertThat(secciones).hasSize(1);
         
     }
     

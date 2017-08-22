@@ -59,7 +59,7 @@
 	               </h:commandLink>
 	           </p:outputPanel>
 	               
-	           <p:dataTable var="informePersonalizado" value="#{informePersonalizadoBean.model}" id="tablaInformes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" 
+	           <p:dataTable var="informePersonalizado"  draggableColumns="true" value="#{informePersonalizadoBean.model}" id="tablaInformes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" 
 	               rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" resizableColumns="true" rendered="#{informePersonalizadoBean.model.rowCount ne 0}" 
 	               emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 	               <f:facet name="header">
@@ -84,14 +84,7 @@
 	               <p:column headerText="Usuario alta" sortBy="#{informePersonalizado.usernameAlta}" width="90" visible="#{inspeccionBean.list[3]}" exportable="#{informePersonalizadoBean.list[3]}">
 	                   <h:outputText value="#{informePersonalizado.usernameAlta}" />
 	               </p:column>
-	               <p:column headerText="Baja" sortBy="#{informePersonalizado.fechaBaja}" width="70" visible="#{inspeccionBean.list[4]}" exportable="#{informePersonalizadoBean.list[4]}">
-	                   <h:outputText value="#{informePersonalizado.fechaBaja}">
-	                       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-	                   </h:outputText>
-	               </p:column>
-	               <p:column headerText="Usuario baja" sortBy="#{informePersonalizado.usernameBaja}" width="90" visible="#{inspeccionBean.list[5]}" exportable="#{informePersonalizadoBean.list[5]}">
-	                   <h:outputText value="#{informePersonalizado.usernameBaja}"/>
-	               </p:column>
+
 	               <p:column styleClass="botonTabla" exportable="false" toggleable="false" >
 	                   <p:commandButton title="Crear informe" icon="fa fa-copy" action="#{informeBean.getFormCrearInforme(informePersonalizado.id)}" disabled="#{not empty informePersonalizado.fechaBaja}" rendered="#{esJefeInspecciones or esEquipo}"/>
 	               </p:column>

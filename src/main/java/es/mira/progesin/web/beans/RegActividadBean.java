@@ -128,18 +128,6 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * Devuelve una lista con las secciones cuyo nombre contenga la cadena de texto que se recibe como parámetro.
-     * 
-     * @param infoSeccion Nombre de la sección por la que se busca
-     * @return Listado de resultados
-     * 
-     */
-    
-    public List<String> autocompletarSeccion(String infoSeccion) {
-        return regActividadService.buscarPorNombreSeccion("%" + infoSeccion + "%");
-    }
-    
-    /**
      * Devuelve una lista con las nombre de usuario que contengan la cadena de texto que se recibe como parámetro.
      * 
      * @param infoUsuario Usuario por el que se hace la consulta

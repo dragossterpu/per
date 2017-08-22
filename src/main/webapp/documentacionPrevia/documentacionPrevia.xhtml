@@ -10,9 +10,14 @@
 
         <div id="listadoDocumentacion">
             <h:form id="form">
-                <p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" rows="20" paginator="true" resizableColumns="true" value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}" onkeypress="if (event.keyCode == 13) {return false; }">
+                <p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" draggableColumns="true" rows="20" paginator="true" resizableColumns="true" value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}" onkeypress="if (event.keyCode == 13) {return false; }">
                     <p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}" update=":form:msgs" />
-
+                    <f:facet name="header">
+                       <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                           <p:columnToggler datasource="tablaDocumentacion" trigger="toggler">
+                               <p:ajax event="toggle" listener="#{tipoDocumentacionBean.onToggle}" />
+                           </p:columnToggler>
+                    </f:facet>
                     <p:column headerText="Documento" sortBy="#{tipoDocumentacion.descripcion}">
                         <p:cellEditor>
                             <f:facet name="output">
@@ -48,7 +53,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Ámbito" sortBy="#{tipoDocumentacion.ambito}" style="width:100px">
+                    <p:column headerText="Ámbito" sortBy="#{tipoDocumentacion.ambito}" style="width:100px" toggleable="false">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{tipoDocumentacion.ambito.descripcion}" />
@@ -62,10 +67,10 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column styleClass="botonTabla" rendered="#{esJefeInspeccionesApoyo}">
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspeccionesApoyo}" toggleable="false">
                         <p:rowEditor editTitle="Editar" saveTitle="Guardar" cancelTitle="Cancelar" />
                     </p:column>
-                    <p:column styleClass="botonTabla" rendered="#{esJefeInspeccionesApoyo}">
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspeccionesApoyo}" toggleable="false">
                         <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{tipoDocumentacionBean.eliminarDocumentacion(tipoDocumentacion)}" update="tablaDocumentacion">
                             <p:confirm header="Eliminar documentacion" message="¿Está seguro que desea eliminar esta documentación?" icon="fa fa-warning-sign" />
                         </p:commandButton>

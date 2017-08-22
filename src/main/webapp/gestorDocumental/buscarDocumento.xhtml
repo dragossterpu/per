@@ -78,7 +78,7 @@
                     </h:commandLink>
 
                 </p:outputPanel>
-                <p:dataTable id="tablaDocumentos" var="documento" value="#{gestorDocumentalBean.model}" emptyMessage="No se han encontrado resultados" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
+                <p:dataTable id="tablaDocumentos"  draggableColumns="true" var="documento" value="#{gestorDocumentalBean.model}" emptyMessage="No se han encontrado resultados" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
 
                     <f:facet name="header">
 								Documentos

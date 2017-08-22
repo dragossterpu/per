@@ -71,6 +71,11 @@
                 <p:dataTable var="equipo" value="#{equiposBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaEquipos" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{equiposBean.model.rowCount ne 0}" rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
                     <f:facet name="header">
 						Equipos	
+                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                        <p:columnToggler datasource="tablaEquipos" trigger="toggler">
+                            <p:ajax event="toggle" listener="#{equiposBean.onToggle}" />
+                        </p:columnToggler>
+                    
 					</f:facet>
 
                     <p:column headerText="Fecha alta" sortBy="#{equipo.fechaAlta}" width="70" visible="#{equiposBean.columnasVisibles[0]}" exportable="#{equiposBean.columnasVisibles[0]}">
@@ -95,12 +100,12 @@
                         <h:outputText value="#{equipo.jefeEquipo.nombreCompleto}" />
                     </p:column>
 
-                    <p:column width="20" exportable="false">
+                    <p:column width="20" exportable="false" toggleable="false">
                         <h:commandLink title="Modificar Equipo" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{equiposBean.getFormModificarEquipo(equipo)}" rendered="#{empty equipo.fechaBaja and p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
                         <h:commandLink title="Ver Equipo" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{equiposBean.getFormModificarEquipo(equipo)}" rendered="#{not empty equipo.fechaBaja or p:ifAnyGranted('EQUIPO_INSPECCIONES,SERVICIO_APOYO,GABINETE')}" />
                     </p:column>
 
-                    <p:column width="20" exportable="false" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
+                    <p:column width="20" exportable="false" toggleable="false" rendered="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}">
                         <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{equiposBean.eliminarEquipo(equipo)}" update=":busquedaEquipos:panelEquipos tablaEquipos " disabled="#{not empty equipo.fechaBaja}">
                             <p:confirm header="Eliminar equipo" message="¿Está seguro que desea eliminar este equipo?" icon="fa fa-warning-sign" />
                         </p:commandButton>

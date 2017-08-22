@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +50,8 @@ import lombok.Setter;
 public class EstadisticaBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    
+    List<Inspeccion> listaDetalle;
     
     /**
      * Filtro de búsqueda para seleccionar las estadísticas a mostrar.
@@ -123,6 +126,7 @@ public class EstadisticaBean implements Serializable {
     
     @PostConstruct
     public void init() {
+        listaDetalle = new ArrayList<>();
         setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
         filtro = new InspeccionBusqueda();
         listaEstados = Arrays.stream(EstadoInspeccionEnum.values()).collect(Collectors.toList());
@@ -147,7 +151,6 @@ public class EstadisticaBean implements Serializable {
      */
     public void limpiarBusqueda() {
         filtro = new InspeccionBusqueda();
-        obtieneEstadistica();
         total = 0;
     }
     
@@ -243,7 +246,7 @@ public class EstadisticaBean implements Serializable {
         for (EstadoInspeccionEnum estado : listaEstados) {
             grafica.set(estado.getDescripcion(), mapaResultados.get(estado));
         }
-        grafica.setShowDataLabels(true);
+        grafica.setShowDatatip(false);
         grafica.setLegendPosition("w");
         grafica.setSeriesColors(
                 "FFFFFF,C0C0C0,808080,d0b38e,FF0000,ec9931,FFFF00,00FF00,008000,00FFFF,008080,0000FF,800080,f6546a,084D6E");
@@ -265,8 +268,8 @@ public class EstadisticaBean implements Serializable {
      * @param estado Estado que se desea consultar
      * @return Listado de las inspecciones que corresponden a la búsqueda.
      */
-    public List<Inspeccion> verDetalles(EstadoInspeccionEnum estado) {
-        return estadisticaService.verListaEstado(filtro, estado);
+    public void verDetalles(EstadoInspeccionEnum estado) {
+        listaDetalle = estadisticaService.verListaEstado(filtro, estado);
     }
     
     /**

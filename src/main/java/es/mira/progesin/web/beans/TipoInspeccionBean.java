@@ -106,8 +106,7 @@ public class TipoInspeccionBean implements Serializable {
                 listaTipoInspeccion.remove(tipo);
                 
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
-                        "Baja. Tipo de inspección eliminada con éxito. Los cambios surtirán efecto al iniciar sesión.",
-                        "", null);
+                        "Baja. Tipo de inspección eliminada con éxito.", "", null);
                 
                 String descripcion = "Se ha eliminado el tipo de inspección: " + tipo.getCodigo() + "("
                         + tipo.getDescripcion() + ")";
@@ -141,8 +140,7 @@ public class TipoInspeccionBean implements Serializable {
             tipoInspeccionService.guardarTipo(tipo);
             
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
-                    "Modificación. Tipo de inspección modificado con éxito. Los cambios surtirán efecto al iniciar sesión.",
-                    "", null);
+                    "Modificación. Tipo de inspección modificado con éxito.", "", null);
             
             String descripcion = "Se ha modificado el tipo de inspección: " + tipo.getCodigo() + "("
                     + tipo.getDescripcion() + ")";

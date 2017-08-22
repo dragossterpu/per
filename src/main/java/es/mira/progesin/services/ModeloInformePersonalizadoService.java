@@ -186,6 +186,8 @@ public class ModeloInformePersonalizadoService implements IModeloInformePersonal
                     Restrictions.ilike("nombre", informePersonalizadoBusqueda.getNombreInforme(), MatchMode.ANYWHERE));
         }
         
+        criteria.add(Restrictions.isNull("fechaBaja"));
+        
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     }
     

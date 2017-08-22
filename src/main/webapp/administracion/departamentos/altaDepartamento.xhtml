@@ -9,14 +9,23 @@
             <h:form id="form">
 
                 <h:outputLabel for="descripcion" value="Nombre del departamento (*):" />
-                <p:inputText id="descripcion" value="#{departamentoNuevo}" required="true" requiredMessage="Introduzca el nombre del departamento" converter="#{trimConverter}" maxlength="100" />
+                <p:inputText id="descripcion" value="#{departamentoNuevo}" required="#{param['form:enviar']!=null}"  requiredMessage="Introduzca el nombre del departamento" converter="#{trimConverter}" maxlength="100" />
                 <p:messages for="descripcion" autoUpdate="true" closable="true" />
 
                 <div class="botonesFormulario">
-                    <p:commandButton actionListener="#{departamentosBean.altaDepartamento(departamentoNuevo)}" value="Crear departamento" icon="fa fa-fw fa-save" />
-                    <p:button outcome="/administracion/departamentos/departamentos" value="Cancelar" icon="fa fa-fw fa-undo" />
+                    <p:commandButton id="enviar" actionListener="#{departamentosBean.altaDepartamento(departamentoNuevo)}" value="Crear departamento" icon="fa fa-fw fa-save" />
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                         <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                    </p:commandButton>
                 </div>
 
+                <p:confirmDialog global="true">
+                    <div class="centrarBotonesDialog">
+                        <p:button outcome="/administracion/departamentos/departamentos" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
+                </p:confirmDialog>
+                
                 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                     <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                     <div class="centrarBotonesDialog">

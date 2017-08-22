@@ -26,7 +26,7 @@
 
             <div>
                 <h:outputLabel for="respuesta" value="Respuesta (*):" />
-                <p:inputTextarea id="respuesta" rows="8" cols="50" counter="contador" maxlength="400" counterTemplate="Quedan {0} caracteres" autoResize="false" value="#{contestacion}" required="true" requiredMessage="Debe introducir un texto en la respuesta." converter="#{trimConverter}" validatorMessage="La respuesta debe tener más de 10 caracteres.">
+                <p:inputTextarea id="respuesta" rows="8" cols="50" counter="contador" maxlength="400" counterTemplate="Quedan {0} caracteres" autoResize="false" value="#{contestacion}" required="#{param['form:enviar']!=null}"  requiredMessage="Debe introducir un texto en la respuesta." converter="#{trimConverter}" validatorMessage="La respuesta debe tener más de 10 caracteres.">
                     <f:validateLength minimum="10" />
                 </p:inputTextarea>
                 <p:messages for="respuesta" autoUpdate="true" closable="true" />
@@ -34,11 +34,20 @@
             </div>
 
             <div class="botonesFormulario">
-                <p:commandButton actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia, contestacion)}" value="Contestar" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-                <p:button outcome="sugerenciasListado" value="Cancelar" icon="fa fa-fw fa-undo" />
+                <p:commandButton id="enviar" actionListener="#{sugerenciasBean.contestar(sugerenciasBean.sugerencia, contestacion)}" value="Contestar" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                      <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                 </p:commandButton>
 
             </div>
 
+            <p:confirmDialog global="true">
+                 <div class="centrarBotonesDialog">
+                     <p:button outcome="sugerenciasListado" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                 </div>
+             </p:confirmDialog>
+             
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                 <div class="centrarBotonesDialog">

@@ -9,6 +9,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -42,6 +44,11 @@ import lombok.Setter;
 public class TipoDocumentacionBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Lista de booleanos para controlar la visualización de columnas en la vista.
+     */
+    private List<Boolean> list;
     
     /**
      * Lista de tipos de documentación para mostrar en tablas.
@@ -149,6 +156,10 @@ public class TipoDocumentacionBean implements Serializable {
         listaTipoDocumentacion = tipoDocumentacionService.findAll();
         Map<String, String> mapaExtensiones = applicationBean.getMapaParametros().get("extensiones");
         setListaExtensionesPosibles(new ArrayList<>(mapaExtensiones.keySet()));
+        list = new ArrayList<>();
+        for (int i = 0; i <= 4; i++) {
+            list.add(Boolean.TRUE);
+        }
     }
     
     /**
@@ -200,6 +211,17 @@ public class TipoDocumentacionBean implements Serializable {
                     "Se ha producido un error al intentar editar la documentación, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
+    }
+    
+    /**
+     * Controla las columnas visibles en la lista de resultados del buscador.
+     * 
+     * @param e Evento toggle
+     * 
+     */
+    
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
 }

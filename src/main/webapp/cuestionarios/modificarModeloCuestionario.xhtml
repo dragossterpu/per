@@ -208,9 +208,18 @@
             </p:wizard>
             
             <div class="botonesFormulario">
-                <p:button outcome="/cuestionarios/modelosCuestionarios" value="Cancelar" icon="fa fa-fw fa-undo" />
+               <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                    <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+               </p:commandButton>
             </div>
             
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:button outcome="/cuestionarios/modelosCuestionarios" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
+             
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                 <div class="centrarBotonesDialog">

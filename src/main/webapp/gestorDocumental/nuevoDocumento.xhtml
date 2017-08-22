@@ -33,9 +33,7 @@
                             <h:outputText value="#{inspeccion.numero}" />
                         </p:column>
                         <p:column styleClass="botonTabla">
-                            <p:commandButton title="Desasociar" icon="fa fa-trash" actionListener="#{gestorDocumentalBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones">
-                                <p:confirm header="Desasociar inspección" message="¿Está seguro que desea desasociar esta inspección?" icon="fa fa-warning-sign" />
-                            </p:commandButton>
+                            <p:commandButton title="Desasociar" icon="fa fa-trash" actionListener="#{gestorDocumentalBean.desAsociarInspeccion(inspeccion)}" update="tablaInspecciones"/>
                         </p:column>
                     </p:dataTable>
                     <div class="centrarBotonesDialog">
@@ -49,7 +47,7 @@
             </div>
             <div class="clear">
                 <h:outputLabel for="uploader" value="Asociar fichero (*)"></h:outputLabel>
-                <p:fileUpload id="uploader" width="100%" cancelLabel="CANCELAR" label="SELECCIONAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTO" fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true" sizelimit="20971520" multiple="false" autofileLimit="30" update="asociado" fileLimit="1" fileLimitMessage="No puede asociarse más de un fichero" />
+                <p:fileUpload id="uploader" width="100%" cancelLabel="CANCELAR" label="SELECCIONAR DOCUMENTO" uploadLabel="SUBIR DOCUMENTO" fileUploadListener="#{gestorDocumentalBean.cargaFichero}" mode="advanced" dragDropSupport="true" sizelimit="20971520" multiple="false"  update="asociado" fileLimit="1" fileLimitMessage="No puede asociarse más de un fichero" auto="true"/>
                 <div class="bloqueFormulario">
                     <h:outputLabel for="asociado" value="Fichero asociado"></h:outputLabel>
                     <p:inputText id="asociado" disabled="true" value="#{gestorDocumentalBean.nombreDoc}"></p:inputText>
@@ -57,14 +55,16 @@
             </div>
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value)}" value="Guardar" icon="fa fa-save"  onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-                <p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
+                 <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                      <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                 </p:commandButton>
             </div>
 
             <p:confirmDialog global="true">
-                <div class="centrarBotonesDialog">
-                    <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-                </div>
+                    <div class="centrarBotonesDialog">
+                        <p:button outcome="/gestorDocumental/buscarDocumento?faces-redirect=true" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
             </p:confirmDialog>
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />

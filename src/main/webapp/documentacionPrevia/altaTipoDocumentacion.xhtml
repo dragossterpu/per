@@ -8,32 +8,41 @@
         <div class="bloqueFormulario">
             <h:form id="form">
                 <h:outputLabel for="descripcion" value="Descripción (*):" />
-                <p:inputTextarea id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="true" requiredMessage="Introduzca la descripción del documento" maxlength="255" converter="#{trimConverter}" />
+                <p:inputTextarea id="descripcion" value="#{tipoDocumentacionBean.descripcionNuevo}" required="#{param['form:alta']!=null}"  requiredMessage="Introduzca la descripción del documento" maxlength="255" converter="#{trimConverter}" />
                 <p:messages for="descripcion" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="nombre" value="Nombre (*):" />
-                <p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="true" requiredMessage="Introduzca el nombre del documento" maxlength="100" converter="#{trimConverter}" />
+                <p:inputText id="nombre" value="#{tipoDocumentacionBean.nombreNuevo}" required="#{param['form:alta']!=null}"  requiredMessage="Introduzca el nombre del documento" maxlength="100" converter="#{trimConverter}" />
                 <p:messages for="nombre" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="extensiones" value="Extensiones (*):" />
-                <p:selectManyCheckbox id="extensiones" layout="responsive" columns="4" value="#{tipoDocumentacionBean.extensionesNuevo}" showCheckbox="true" effect="fold" required="true" requiredMessage="Seleccione una o varias extensiones">
+                <p:selectManyCheckbox id="extensiones" layout="responsive" columns="4" value="#{tipoDocumentacionBean.extensionesNuevo}" showCheckbox="true" effect="fold" required="#{param['form:alta']!=null}"  requiredMessage="Seleccione una o varias extensiones">
                     <f:selectItems value="#{tipoDocumentacionBean.listaExtensionesPosibles}" var="extensionesTipoDocumentacion" itemLabel="#{extensionesTipoDocumentacion}" itemValue="#{extensionesTipoDocumentacion}" />
                 </p:selectManyCheckbox>
                 <p:messages for="extensiones" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="ambito" value="Ámbito (*):" />
                 <p:importEnum type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum" var="ambitos" allSuffix="ALL_ENUM_VALUES" />
-                <p:selectOneMenu id="ambito" value="#{tipoDocumentacionBean.ambitoNuevo}" effect="fold" required="true" requiredMessage="Seleccione un ámbito">
+                <p:selectOneMenu id="ambito" value="#{tipoDocumentacionBean.ambitoNuevo}" effect="fold" required="#{param['form:alta']!=null}"  requiredMessage="Seleccione un ámbito">
                     <f:selectItem itemLabel="Seleccione un ámbito" itemValue="" />
                     <f:selectItems value="#{ambitos.ALL_ENUM_VALUES}" var="ambitoTipoDocumentacion" itemLabel="#{ambitoTipoDocumentacion.descripcion}" itemValue="#{ambitoTipoDocumentacion}" />
                 </p:selectOneMenu>
                 <p:messages for="ambito" autoUpdate="true" closable="true" />
 
                 <div class="botonesFormulario">
-                    <p:commandButton actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save" />
-                    <p:button outcome="/documentacionPrevia/documentacionPrevia" value="Cancelar" icon="fa fa-fw fa-undo" />
+                    <p:commandButton id="alta" actionListener="#{tipoDocumentacionBean.altaTipo}" value="Crear tipo de documentación" icon="fa fa-fw fa-save" />
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                         <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                    </p:commandButton>
                 </div>
 
+                <p:confirmDialog global="true">
+                    <div class="centrarBotonesDialog">
+                        <p:button outcome="/documentacionPrevia/documentacionPrevia" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
+                </p:confirmDialog>
+                
                 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                     <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                     <div class="centrarBotonesDialog">
