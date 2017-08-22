@@ -114,10 +114,6 @@ public class EstadisticaBean implements Serializable {
     @Autowired
     private transient ExportadorWord exportadorWord;
     
-    /**
-     * Lista de los posibles tipos de inspección.
-     */
-    private List<TipoInspeccion> listaTiposInspeccion;
     
     /**
      * Inicializa el bean.
@@ -127,11 +123,10 @@ public class EstadisticaBean implements Serializable {
     @PostConstruct
     public void init() {
         listaDetalle = new ArrayList<>();
-        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
         filtro = new InspeccionBusqueda();
         listaEstados = Arrays.stream(EstadoInspeccionEnum.values()).collect(Collectors.toList());
-        obtieneEstadistica();
         total = 0;
+        grafica = new PieChartModel();
         
     }
     
@@ -266,7 +261,6 @@ public class EstadisticaBean implements Serializable {
      * Carga la lista de inspecciones que se encuentran en el estado solicitado.
      * 
      * @param estado Estado que se desea consultar
-     * @return Listado de las inspecciones que corresponden a la búsqueda.
      */
     public void verDetalles(EstadoInspeccionEnum estado) {
         listaDetalle = estadisticaService.verListaEstado(filtro, estado);

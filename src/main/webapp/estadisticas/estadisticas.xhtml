@@ -13,12 +13,12 @@
                       <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspección:" />
                       <p:selectOneMenu value="#{tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                           <f:selectItem itemLabel="Todos" itemValue="" />
-                          <f:selectItems value="#{estadisticaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                          <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                       </p:selectOneMenu>
                       <h:outputLabel for="provinciasSelect" value="Provincia:" />
                       <p:selectOneMenu value="#{provincia}" id="provinciasSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
                           <f:selectItem itemLabel="Todos" itemValue="" />
-                          <f:selectItems value="#{applicationBean.listaProvincias}" var="provincia" itemLabel="#{provincia.nombre}" itemValue="#{provincia}" />
+                          <f:selectItems value="#{applicationBean.listaProvincias}" var="prov" itemLabel="#{prov.nombre}" itemValue="#{prov}" />
                       </p:selectOneMenu>
                   </div>
                      <div class="columnaDchaFormulario">
@@ -108,6 +108,7 @@
                                 <h:outputText value="Total de inspecciones: #{estadisticaBean.total}"/>  
                             </f:facet>
                         </p:dataTable>
+                        
                         <p:dialog id="dialogGrafica" widgetVar="dialogG" header="Distribución de las inspecciones en función de su estado">
                              <p:chart  type="pie" widgetVar="graficaImagen" model="#{estadisticaBean.grafica}" style="color:#000; width:700px; height:500px"/>
                              <div class="centrarBotonesDialog">
