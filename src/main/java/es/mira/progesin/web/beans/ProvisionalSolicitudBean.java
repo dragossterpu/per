@@ -34,7 +34,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.VerificadorExtensiones;
 import lombok.Getter;
 import lombok.Setter;
@@ -128,10 +128,10 @@ public class ProvisionalSolicitudBean implements Serializable {
     private transient VerificadorExtensiones verificadorExtensiones;
     
     /**
-     * Generador de archivos PDF con la información de la solicitud cumplimentada.
+     * Generador del pdf de la solicitud.
      */
     @Autowired
-    private transient PdfGenerator pdfGenerator;
+    private PdfGeneratorSolicitudes pdfGenerator;
     
     /**
      * Carga los datos relativos a la solicitud de documentación previa en curso para el usuario provisional logueado
@@ -328,8 +328,9 @@ public class ProvisionalSolicitudBean implements Serializable {
      */
     public void imprimirPdf() {
         try {
-            setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
-                    listadoDocumentosPrevios));
+            pdfGenerator.setSolicitudDocPrevia(solicitudDocumentacionPrevia);
+            pdfGenerator.setListadoDocumentosSolicitud(listadoDocumentosPrevios);
+            setFile(pdfGenerator.exportarPdf());
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error en la generación del PDF");

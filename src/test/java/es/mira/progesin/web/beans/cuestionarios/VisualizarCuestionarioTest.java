@@ -57,7 +57,7 @@ import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorCuestionarios;
 import es.mira.progesin.util.WordGenerator;
 
 /**
@@ -138,7 +138,7 @@ public class VisualizarCuestionarioTest {
      * Mock de Generador de PDF.
      */
     @Mock
-    private PdfGenerator pdfGenerator;
+    private PdfGeneratorCuestionarios pdfGenerator;
     
     /**
      * Simulacion de VisualizarCuestionario.
@@ -612,12 +612,9 @@ public class VisualizarCuestionarioTest {
     @Test
     public final void testCrearPdfCuestionarioEnviado() throws ProgesinException {
         CuestionarioEnvio cuestionarioEnviado = mock(CuestionarioEnvio.class);
-        StreamedContent doc = mock(StreamedContent.class);
-        when(pdfGenerator.crearCuestionarioEnviado(cuestionarioEnviado)).thenReturn(doc);
         
         visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviado);
-        verify(pdfGenerator, times(1)).crearCuestionarioEnviado(cuestionarioEnviado);
-        assertThat(visualizarCuestionario.getFile()).isEqualTo(doc);
+        verify(pdfGenerator, times(1)).exportarPdf();
     }
     
     /**
@@ -628,10 +625,10 @@ public class VisualizarCuestionarioTest {
     @Test
     public final void testCrearPdfCuestionarioEnviadoProgesinException() throws ProgesinException {
         CuestionarioEnvio cuestionarioEnviado = mock(CuestionarioEnvio.class);
-        doThrow(ProgesinException.class).when(pdfGenerator).crearCuestionarioEnviado(cuestionarioEnviado);
+        doThrow(ProgesinException.class).when(pdfGenerator).exportarPdf();
         
         visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviado);
-        verify(pdfGenerator, times(1)).crearCuestionarioEnviado(cuestionarioEnviado);
+        verify(pdfGenerator, times(1)).exportarPdf();
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));

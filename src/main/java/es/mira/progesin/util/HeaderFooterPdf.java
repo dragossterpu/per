@@ -1,5 +1,11 @@
 package es.mira.progesin.util;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.core.io.ClassPathResource;
+
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -11,7 +17,9 @@ import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 
+import es.mira.progesin.constantes.Constantes;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Generador de cabeceras y pie para PDF.
@@ -20,6 +28,7 @@ import lombok.Getter;
  *
  */
 @Getter
+@Setter
 public class HeaderFooterPdf implements IEventHandler {
     /**
      * Dcoumento.
@@ -46,23 +55,23 @@ public class HeaderFooterPdf implements IEventHandler {
      */
     private Image footer1;
     
-    /**
-     * Constructor que recibe como parámetros el documento y las imágenes.
-     * 
-     * @param document Documento
-     * @param imagenUno Imagen 1
-     * @param imagenDos Imagen 2
-     * @param cabeceraRepetido Imagen
-     * @param pie1 Imagen de pie
-     */
-    public HeaderFooterPdf(Document document, Image imagenUno, Image imagenDos, Image cabeceraRepetido, Image pie1) {
-        this.doc = document;
-        this.headerRepetido = cabeceraRepetido;
-        this.header1 = imagenUno;
-        this.header2 = imagenDos;
-        this.footer1 = pie1;
-    }
     
+    /**
+     * 
+     * @param document Documento al que se quiere añadir el header/footer
+     * @param imagenUno Ruta de la imagen en la primera posición del header
+     * @param imagenDos Ruta de la imagen en la segunda posición del header
+     * @param cabeceraRepetido Ruta de la imagen que se repite en todas las páginas del header (salvo la primera)
+     * @param pie Ruta de la imagen del footer
+     * @throws IOException excepción se puede lanzar al crear las imágenes a partir de las rutas
+     */
+    public HeaderFooterPdf(Document document, String imagenUno, String imagenDos, String cabeceraRepetido, String pie) throws IOException {
+        this.doc = document;
+        this.headerRepetido = crearImagen(cabeceraRepetido);
+        this.header1 = crearImagen(imagenUno);
+        this.header2 = crearImagen(imagenDos);
+        this.footer1 = crearImagen(pie);
+    } 
     /**
      * Crea una cabecera y un pie de solicitud de documentación.
      * 
@@ -70,9 +79,9 @@ public class HeaderFooterPdf implements IEventHandler {
      */
     @Override
     public void handleEvent(Event event) {
-        createHeaderSolicitudDocumentacion(event);
+        crearHeader(event);
         if (this.footer1 != null) {
-            createFoterSolicitudDocumentacion(event);
+            crearFooter(event);
         }
     }
     
@@ -81,7 +90,7 @@ public class HeaderFooterPdf implements IEventHandler {
      * 
      * @param event Evento que dispara la generación
      */
-    private void createHeaderSolicitudDocumentacion(Event event) {
+    private void crearHeader(Event event) {
         PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
         PdfDocument pdfDoc = docEvent.getDocument();
         PdfPage page = docEvent.getPage();
@@ -119,7 +128,7 @@ public class HeaderFooterPdf implements IEventHandler {
      * 
      * @param event Evento que dispara la generación
      */
-    private void createFoterSolicitudDocumentacion(Event event) {
+    private void crearFooter(Event event) {
         PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
         PdfDocument pdfDoc = docEvent.getDocument();
         PdfPage page = docEvent.getPage();
@@ -129,13 +138,31 @@ public class HeaderFooterPdf implements IEventHandler {
                 (pageSize.getRight() - doc.getRightMargin() - (pageSize.getLeft() + doc.getLeftMargin())) / 2
                         + doc.getLeftMargin(),
                 pageSize.getBottom() + 10);
-        
-        PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
+       
+        PdfCanvas pdfCanvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
         Rectangle rectFooter = new Rectangle(pdfDoc.getDefaultPageSize().getX() + doc.getLeftMargin(),
                 pdfDoc.getDefaultPageSize().getBottom(), 523, footer1.getImageHeight());
-        Canvas c = new Canvas(canvas, pdfDoc, rectFooter);
-        c.add(footer1);
-        c.close();
+        
+        Canvas canvas = new Canvas(pdfCanvas, pdfDoc, rectFooter);
+        canvas.add(footer1);
+        canvas.close();
     }
     
+    /**
+     * Crea una imagen a partir de la ruta.
+     * 
+     * @param path Ruta de la imagen
+     * @return Imagen de itext
+     * @throws IOException Excepción que se puede lanzar al crear la imagen
+     */
+    private Image crearImagen(String path) throws IOException {
+        Image imagen = null;
+        if (path != null) {
+            File file = new ClassPathResource(path).getFile();
+            imagen = new Image(ImageDataFactory.create(file.getPath()));
+            imagen.scaleAbsolute(imagen.getImageWidth() * Constantes.ESCALA,
+                    imagen.getImageHeight() *  Constantes.ESCALA);
+        }
+        return imagen;
+    }
 }

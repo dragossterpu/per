@@ -4,7 +4,6 @@
 package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,8 +20,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -31,7 +28,7 @@ import org.primefaces.model.SortOrder;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorEstadisticas;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 /**
@@ -46,7 +43,7 @@ public class EstadisticaServiceTest {
      * Simulación de PdfGenerator.
      */
     @Mock
-    private PdfGenerator generadorPDF;
+    private PdfGeneratorEstadisticas generadorPDF;
     
     /**
      * Simulación de la autenticación.
@@ -54,11 +51,6 @@ public class EstadisticaServiceTest {
     @Mock
     private IInspeccionesService inspeccionesService;
     
-    /**
-     * Captor del tipo Map<EstadoInspeccionEnum, Integer>.
-     */
-    @Captor
-    private ArgumentCaptor<Map<EstadoInspeccionEnum, List<Inspeccion>>> mapaEstadisticas;
     
     /**
      * Instancia de prueba para el servicio de guías.
@@ -144,7 +136,7 @@ public class EstadisticaServiceTest {
         File fileImg = mock(File.class);
         estadisticasService.exportar(filtro, estados, fileImg);
         verify(inspeccionesService, times(1)).buscarInspeccionPorCriteria(0, 0, "id", SortOrder.ASCENDING, filtro);
-        verify(generadorPDF, times(1)).generarInformeEstadisticas(mapaEstadisticas.capture(), eq(filtro), eq(fileImg));
+        verify(generadorPDF, times(1)).exportarPdf();
         
     }
     

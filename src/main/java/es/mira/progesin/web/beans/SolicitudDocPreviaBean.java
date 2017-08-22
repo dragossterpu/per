@@ -50,7 +50,7 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -224,12 +224,6 @@ public class SolicitudDocPreviaBean implements Serializable {
     private transient ApplicationBean applicationBean;
     
     /**
-     * Generador de PDF.
-     */
-    @Autowired
-    private transient PdfGenerator pdfGenerator;
-    
-    /**
      * Servicio de Cuestionarios enviados.
      */
     @Autowired
@@ -247,6 +241,12 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     @Autowired
     private transient ExportadorWord exportadorWord;
+    
+    /**
+     * Generador del pdf de la solicitud.
+     */
+    @Autowired
+    private transient PdfGeneratorSolicitudes pdfGenerator;
     
     /**
      * Crea una solicitud de documentación en base a los datos introducidos en el formulario de la vista crearSolicitud.
@@ -775,8 +775,9 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     public void imprimirPdf() {
         try {
-            setFile(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia,
-                    listadoDocumentosPrevios));
+            pdfGenerator.setSolicitudDocPrevia(solicitudDocumentacionPrevia);
+            pdfGenerator.setListadoDocumentosSolicitud(listadoDocumentosPrevios);
+            setFile(pdfGenerator.exportarPdf());
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error en la generación del PDF");

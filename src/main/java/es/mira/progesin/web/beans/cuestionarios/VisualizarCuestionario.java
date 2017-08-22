@@ -37,7 +37,7 @@ import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorCuestionarios;
 import es.mira.progesin.util.WordGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -169,13 +169,13 @@ public class VisualizarCuestionario implements Serializable {
      * Servicio de registro de actividad.
      */
     @Autowired
-    transient IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Servicio de documentos.
      */
     @Autowired
-    transient IDocumentoService documentoService;
+    private transient IDocumentoService documentoService;
     
     /**
      * Generador de words.
@@ -187,7 +187,7 @@ public class VisualizarCuestionario implements Serializable {
      * Generador de PDF.
      */
     @Autowired
-    private transient PdfGenerator pdfGenerator;
+    private transient PdfGeneratorCuestionarios pdfGenerator;
     
     /**
      * Muestra en pantalla el cuestionario personalizado, mostrando las diferentes opciones de responder (cajas de
@@ -447,7 +447,8 @@ public class VisualizarCuestionario implements Serializable {
      */
     public void crearPdfCuestionarioEnviado(CuestionarioEnvio cuestionario) {
         try {
-            setFile(pdfGenerator.crearCuestionarioEnviado(cuestionario));
+            pdfGenerator.setCuestionarioEnviado(cuestionario);
+            setFile(pdfGenerator.exportarPdf());
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del PDF");

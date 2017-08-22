@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorEstadisticas;
 import es.mira.progesin.web.beans.InspeccionBusqueda;
 
 /**
@@ -36,7 +36,7 @@ public class EstadisticaService implements IEstadisticaService {
      * Generador de PDF.
      */
     @Autowired
-    PdfGenerator generadorPDF;
+    private PdfGeneratorEstadisticas generadorPDF;
     
     /**
      * Obtiene los datos de estadísticas agrupados por el estado de la inspección.
@@ -106,8 +106,10 @@ public class EstadisticaService implements IEstadisticaService {
             mapaEstados.put(estado, listaInspecciones);
         }
         
-        return generadorPDF.generarInformeEstadisticas(mapaEstados, filtro, fileImg);
-        
+        generadorPDF.setMapaEstados(mapaEstados);
+        generadorPDF.setFiltro(filtro);
+        generadorPDF.setFileImg(fileImg);
+        return generadorPDF.exportarPdf();
     }
     
     /**

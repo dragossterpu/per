@@ -53,7 +53,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.VerificadorExtensiones;
 
 /**
@@ -124,7 +124,7 @@ public class ProvisionalSolicitudBeanTest {
      * Mock Generador de archivos PDF con la información de la solicitud cumplimentada.
      */
     @Mock
-    private PdfGenerator pdfGenerator;
+    private PdfGeneratorSolicitudes pdfGenerator;
     
     /**
      * Constante nombre de archivo.
@@ -551,7 +551,7 @@ public class ProvisionalSolicitudBeanTest {
         
         provisionalSolicitudBean.imprimirPdf();
         
-        verify(pdfGenerator, times(1)).imprimirSolicitudDocumentacionPrevia(eq(solicitud), eq(listDoc));
+        verify(pdfGenerator, times(1)).exportarPdf();
     }
     
     /**
@@ -564,11 +564,11 @@ public class ProvisionalSolicitudBeanTest {
         provisionalSolicitudBean.setSolicitudDocumentacionPrevia(solicitud);
         List<DocumentacionPrevia> listDoc = new ArrayList<>();
         provisionalSolicitudBean.setListadoDocumentosPrevios(listDoc);
-        when(pdfGenerator.imprimirSolicitudDocumentacionPrevia(solicitud, listDoc)).thenThrow(ProgesinException.class);
+        when(pdfGenerator.exportarPdf()).thenThrow(ProgesinException.class);
         
         provisionalSolicitudBean.imprimirPdf();
         
-        verify(pdfGenerator, times(1)).imprimirSolicitudDocumentacionPrevia(eq(solicitud), eq(listDoc));
+        verify(pdfGenerator, times(1)).exportarPdf();
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));

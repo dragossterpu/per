@@ -39,6 +39,16 @@ public final class Constantes {
     public static final String LOGOIPSS = "static/images/logo_ipss.png";
     
     /**
+     * Ruta de la imagen que aparece en el header de la solicitud en la página 1 del pdf generado.
+     */
+    public static final String HEADERSOLDOCPAG1 = "static/images/header_sol_doc_pag_1.png";
+    
+    /**
+     * Ruta del logo de calidad.
+     */
+    public static final String LOGOCALIDAD = "static/images/footer_solicitud_1.png";
+    
+    /**
      * Números del 0 al 9.
      */
     public static final String NUMBERS = "0123456789";
@@ -118,7 +128,7 @@ public final class Constantes {
     /**
      * Factor de escala para las imágenes de cabecera de los documentos Word y PDF.
      */
-    public static final double ESCALA = 0.6;
+    public static final float ESCALA = 0.6f;
     
     /**
      * Mensaje fallo envío correo.
@@ -133,7 +143,7 @@ public final class Constantes {
     /**
      * Constante con el literal correspondiente a la extensión de los documentos PDF.
      */
-    public static final String EXTENSIONPDF = ".PDF";
+    public static final String EXTENSIONPDF = ".pdf";
     
     /**
      * Constante ruta recurso imagen fondo de la portada de informes.

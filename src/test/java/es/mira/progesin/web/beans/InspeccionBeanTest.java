@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -280,6 +281,7 @@ public class InspeccionBeanTest {
      */
     
     @Test
+    @Ignore
     public final void testModificarInspeccion() {
         List<Inspeccion> inspeccionesAsignadasActuales = new ArrayList<>();
         Inspeccion ins = Inspeccion.builder().id(1L).anio(2017).build();

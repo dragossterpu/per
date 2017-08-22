@@ -6,6 +6,7 @@ import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
@@ -131,5 +132,22 @@ public interface ICuestionarioEnvioService {
      * @return devuelve el número de registros de la consulta
      */
     int getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
+
+    /**
+     * Busca las respuestas asociadas a un cuestionario enviado.
+     * 
+     * @param cuestionarioEnviado cuestionario enviado
+     * @return lista de respuestas
+     */
+    List<RespuestaCuestionario> findRespuestasCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
+
+    /**
+     * Busca los valores de una sección tipo TABLA/MATRIZ, pero sólo los valores de las columnas, excluyendo las filas
+     * en el caso de las matrices.
+     * 
+     * @param seccion sección por la que se busca
+     * @return lista de configuraciones
+     */
+    List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(String seccion);
     
 }

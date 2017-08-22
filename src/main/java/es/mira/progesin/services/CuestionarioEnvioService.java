@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -29,6 +30,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.enums.CuestionarioEnviadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
@@ -105,6 +107,12 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Repositorio donde están las configuraciones de los tipos de respuesta de un cuestionario.
+     */
+    @Autowired
+    IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
     
     /**
      * Constructor usado para el test.
@@ -483,4 +491,26 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 .findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndFechaCumplimentacionIsNull();
     }
     
+    /**
+     * Busca las respuestas asociadas a un cuestionario enviado.
+     * 
+     * @param cuestionarioEnviado cuestionario enviado
+     * @return lista de respuestas
+     */
+    @Override
+    public List<RespuestaCuestionario>  findRespuestasCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
+        return respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
+    }
+    
+    /**
+     * Busca los valores de una sección tipo TABLA/MATRIZ, pero sólo los valores de las columnas, excluyendo las filas
+     * en el caso de las matrices.
+     * 
+     * @param seccion sección por la que se busca
+     * @return lista de configuraciones
+     */
+    @Override
+    public List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(String seccion) {
+        return configuracionRespuestaRepository.findColumnasBySeccion(seccion);
+    }
 }

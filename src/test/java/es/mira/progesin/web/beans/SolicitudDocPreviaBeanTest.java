@@ -66,7 +66,7 @@ import es.mira.progesin.services.IUserService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
-import es.mira.progesin.util.PdfGenerator;
+import es.mira.progesin.util.PdfGeneratorSolicitudes;
 
 /**
  * Test del bean solicitudDocPrevia.
@@ -161,7 +161,7 @@ public class SolicitudDocPreviaBeanTest {
      * Mock del generador de pdfs.
      */
     @Mock
-    private PdfGenerator pdfGenerator;
+    private PdfGeneratorSolicitudes pdfGenerator;
     
     /**
      * Mock del servicio de cuestionarios enviados.
@@ -908,7 +908,7 @@ public class SolicitudDocPreviaBeanTest {
         
         solicitudDocPreviaBean.imprimirPdf();
         
-        verify(pdfGenerator, times(1)).imprimirSolicitudDocumentacionPrevia(eq(solicitud), eq(listDoc));
+        verify(pdfGenerator, times(1)).exportarPdf();
     }
     
 }
