@@ -24,7 +24,7 @@ import lombok.Setter;
  *
  */
 @Setter
-@Component("pdfGeneratorEstadisticas")
+@Component("pdfGeneratorSolicitudes")
 public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
     
     /**
