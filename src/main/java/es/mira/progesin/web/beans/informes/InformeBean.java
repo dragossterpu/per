@@ -129,18 +129,17 @@ public class InformeBean implements Serializable {
     @Autowired
     private transient IModeloInformePersonalizadoService modeloInformePersonalizadoService;
     
-    // /**
-    // * Generador de PDFs a partir de código html.
-    // */
-    // @Autowired
-    // private transient HtmlPdfGenerator htmlPdfGenerator;
+    /**
+     * Generador de PDFs a partir de código html.
+     */
+    @Autowired
+    private transient HtmlPdfGenerator htmlPdfGenerator;
     
     /**
      * Generador de DOCXs a partir de código html.
      */
     @Autowired
     private transient HtmlDocxGenerator htmlDocxGenerator;
- 
     
     /**
      * Servicio de inspecciones.
@@ -173,16 +172,17 @@ public class InformeBean implements Serializable {
     /**
      * Variable con los índices activos del acordeón de subáreas.
      */
-    private Map<AreaInforme,String> indicesActivosSubareas;
+    private Map<AreaInforme, String> indicesActivosSubareas;
+    
     /**
      * Inicializa el bean.
      */
     @PostConstruct
     public void init() {
-//        setInformeBusqueda(new InformeBusqueda());
+        // setInformeBusqueda(new InformeBusqueda());
         model = new LazyModelInforme(informeService);
         setInformeBusqueda(model.getBusqueda());
-   
+        
         setList(new ArrayList<>());
         for (int i = 0; i <= NUMCOLSTABLA; i++) {
             list.add(Boolean.TRUE);
@@ -382,7 +382,7 @@ public class InformeBean implements Serializable {
      */
     public void finalizarInforme() {
         try {
-            //Comprobar que todas las subáreas tienen respuesta
+            // Comprobar que todas las subáreas tienen respuesta
             Long nSubareasSinRta = informeService.buscaSubareasSinResponder(informe.getId());
             if (nSubareasSinRta > 0) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
@@ -448,7 +448,7 @@ public class InformeBean implements Serializable {
             String autor = informe.getUsernameFinalizacion();
             
             if ("PDF".equals(tipoArchivo)) {
-                setFile(HtmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                setFile(htmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
                         autor));
             } else if ("DOCX".equals(tipoArchivo)) {
                 setFile(htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
@@ -512,8 +512,8 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Obtiene los indices activos de los dos acordeones (áreas y subáreas) para el usuario logado. 
-     * Esto se hace para evitar el bug de primefaces en el texteditor, ya que si graban con el acordeon plegado se pierden los valores.
+     * Obtiene los indices activos de los dos acordeones (áreas y subáreas) para el usuario logado. Esto se hace para
+     * evitar el bug de primefaces en el texteditor, ya que si graban con el acordeon plegado se pierden los valores.
      * 
      * @param asignaciones Lista de subareas asignadas a algún usuario
      */
@@ -526,14 +526,16 @@ public class InformeBean implements Serializable {
             if (listaAreas.contains(area) && usuarioActual.equals(asignacion.getUser().getUsername())) {
                 areasActivas.add(String.valueOf(listaAreas.indexOf(area)));
                 // Construyo un mapa<Area,indices> que contega las subareas asignadas por usuario
-               if(mapaAreasSubareas.containsKey(area)) {
-                   List<SubareaInforme> listaSubareasAreas = mapaAreasSubareas.get(area);
-                   if (indicesActivosSubareas.containsKey(area)) {
-                       indicesActivosSubareas.put(area, String.join(",", indicesActivosSubareas.get(area), String.valueOf(listaSubareasAreas.indexOf(asignacion.getSubarea()))));
-                   } else {
-                       indicesActivosSubareas.put(area, String.valueOf(listaSubareasAreas.indexOf(asignacion.getSubarea())));
-                   }
-               }
+                if (mapaAreasSubareas.containsKey(area)) {
+                    List<SubareaInforme> listaSubareasAreas = mapaAreasSubareas.get(area);
+                    if (indicesActivosSubareas.containsKey(area)) {
+                        indicesActivosSubareas.put(area, String.join(",", indicesActivosSubareas.get(area),
+                                String.valueOf(listaSubareasAreas.indexOf(asignacion.getSubarea()))));
+                    } else {
+                        indicesActivosSubareas.put(area,
+                                String.valueOf(listaSubareasAreas.indexOf(asignacion.getSubarea())));
+                    }
+                }
             }
         }
         if (areasActivas.length() == 0) {

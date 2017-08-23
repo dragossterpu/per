@@ -4,17 +4,13 @@
 -->
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.3">
     <deployment>
-        <resources>
-           <resource-root path="docx4j-3.3.4.jar"/>
-           <resource-root path="docx4j-ImportXHTML-3.3.4.jar"/>
-        </resources>
         <dependencies>
             <module name="org.slf4j"/>
             <system export="true">
                 <paths>
                     <path name="com/sun/xml/internal/bind/marshaller"/>
                 </paths>
-            </system>    
+            </system>
             <module name="javax.xml.bind.api"/>  
             <module name="javax.api"/>               
             <module name="com.sun.xml.bind" />

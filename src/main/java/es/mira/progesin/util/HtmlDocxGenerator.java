@@ -4,13 +4,19 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.bind.JAXBException;
 
 import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
 import org.docx4j.docProps.core.dc.elements.ObjectFactory;
 import org.docx4j.docProps.core.dc.elements.SimpleLiteral;
+import org.docx4j.model.datastorage.migration.VariablePrepare;
 import org.docx4j.openpackaging.contenttype.CTOverride;
 import org.docx4j.openpackaging.contenttype.ContentTypeManager;
 import org.docx4j.openpackaging.contenttype.ContentTypes;
@@ -36,7 +42,9 @@ import es.mira.progesin.persistence.entities.enums.ContentTypeEnum;
  * @author EZENTIS
  */
 @Component("htmlDocxGenerator")
-public class HtmlDocxGenerator {
+public class HtmlDocxGenerator implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     /**
      * Documento generado.
@@ -58,6 +66,7 @@ public class HtmlDocxGenerator {
             String fechaFinalizacion, String autor) throws ProgesinException {
         DefaultStreamedContent docxStream = null;
         try {
+            
             crearDocumentoConPlantilla(titulo, autor, fechaFinalizacion);
             
             incluirCSS();
@@ -66,10 +75,21 @@ public class HtmlDocxGenerator {
             
             incluirTablaContenidos();
             
+            // EXPERIMENTAL
+            try {
+                VariablePrepare.prepare(documento);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Map<String, String> variables = new HashMap<>();
+            variables.put("titulo", titulo);
+            variables.put("fechaFinalizacion", fechaFinalizacion);
+            documento.getMainDocumentPart().variableReplace(variables);
+            
             docxStream = exportarDocx(nombreDocumento);
             // docxStream = exportarPdf(nombreDocumento);
             
-        } catch (Docx4JException | URISyntaxException | IOException e) {
+        } catch (Docx4JException | URISyntaxException | IOException | JAXBException e) {
             throw new ProgesinException(e);
         }
         return docxStream;
@@ -96,16 +116,13 @@ public class HtmlDocxGenerator {
         SimpleLiteral creator = of.createSimpleLiteral();
         creator.getContent().add(autor);
         documento.getDocPropsCorePart().getContents().setCreator(creator);
-        SimpleLiteral created = of.createSimpleLiteral();
-        created.getContent().add(fechaFinalizacion);
-        documento.getDocPropsCorePart().getContents().setCreated(created);
+        // SimpleLiteral created = of.createSimpleLiteral();
+        // created.getContent().add(fechaFinalizacion);
+        // documento.getDocPropsCorePart().getContents().setCreated(created);
         
         // Replace dotx content type with docx
         ContentTypeManager ctm = documento.getContentTypeManager();
-        // Get <Override PartName="/word/document.xml"
-        // ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml"/>
         CTOverride override = ctm.getOverrideContentType().get(new URI("/word/document.xml"));
-        
         override.setContentType(ContentTypes.WORDPROCESSINGML_DOCUMENT);
     }
     
@@ -141,10 +158,10 @@ public class HtmlDocxGenerator {
         
         // EXPERIMENTAL (Genera temporales que no se pueden borrar)
         // Tabla con núm. página, usa export-fo
-        // tocGenerator.generateToc(2, TocHelper.DEFAULT_TOC_INSTRUCTION, false);
+        // tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, false);
         
         // Tabla sin núm. página
-        tocGenerator.generateToc(2, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
+        tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
         // Forzar actualizar al abrir documento
         documento.getMainDocumentPart().getDocumentSettingsPart().getContents()
                 .setUpdateFields(new BooleanDefaultTrue());
@@ -174,6 +191,7 @@ public class HtmlDocxGenerator {
     }
     
     // EXPERIMENTAL (Genera temporales que no se pueden borrar)
+    // usa export-fo
     // /**
     // * Pasa el contenido del documento a un stream para su descarga.
     // *
