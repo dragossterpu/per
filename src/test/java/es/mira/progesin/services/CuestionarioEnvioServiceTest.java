@@ -75,18 +75,6 @@ public class CuestionarioEnvioServiceTest {
     private transient ICuestionarioEnvioRepository cuestionarioEnvioRepository;
     
     /**
-     * Simulación del repositorio de respuestas.
-     */
-    @Mock
-    private transient IRespuestaCuestionarioRepository respuestaRepository;
-    
-    /**
-     * Simulación del repositorio de tablas.
-     */
-    @Mock
-    private transient IDatosTablaGenericaRepository datosTablaRepository;
-    
-    /**
      * Simulación del servicio de usuarios.
      */
     @Mock
@@ -218,22 +206,6 @@ public class CuestionarioEnvioServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveConRespuestas(List)}.
-     */
-    @Test
-    public void transaccSaveConRespuestas() {
-        List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
-        listaRespuestas.add(mock(RespuestaCuestionario.class));
-        when(respuestaRepository.save(listaRespuestas)).thenReturn(listaRespuestas);
-        
-        List<RespuestaCuestionario> respuesta = cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
-        
-        verify(respuestaRepository, times(1)).save(listaRespuestas);
-        verify(datosTablaRepository, times(1)).deleteRespuestasTablaHuerfanas();
-        assertThat(respuesta).isEqualTo(listaRespuestas);
-    }
-    
-    /**
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveElimUsuariosProv(CuestionarioEnvio)}.
      */
@@ -251,25 +223,6 @@ public class CuestionarioEnvioServiceTest {
         verify(areaUsuarioCuestEnvService, times(1)).deleteByIdCuestionarioEnviado(cuestionario.getId());
         verify(inspeccionesService, times(1)).cambiarEstado(cuestionario.getInspeccion(),
                 EstadoInspeccionEnum.G_PENDIENTE_VISITA_INSPECCION);
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio, List)}
-     * .
-     */
-    @Test
-    public void transaccSaveConRespuestasInactivaUsuariosProv() {
-        String correoPrincipal = "correo@dominio.es";
-        CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio(correoPrincipal).build();
-        List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
-        
-        cuestionarioEnvioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionario, listaRespuestas);
-        
-        verify(respuestaRepository, times(1)).save(listaRespuestas);
-        verify(datosTablaRepository, times(1)).deleteRespuestasTablaHuerfanas();
-        verify(userService, times(1)).cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
-        verify(cuestionarioEnvioRepository, times(1)).save(cuestionario);
     }
     
     /**

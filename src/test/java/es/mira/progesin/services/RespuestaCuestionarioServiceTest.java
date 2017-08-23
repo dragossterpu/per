@@ -3,11 +3,14 @@
  */
 package es.mira.progesin.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +24,9 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
+import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 
 /**
@@ -42,6 +47,24 @@ public class RespuestaCuestionarioServiceTest {
      */
     @Mock
     private IDocumentoService documentoService;
+    
+    /**
+     * Mock del repositorio de tablas.
+     */
+    @Mock
+    private IDatosTablaGenericaRepository datosTablaRepository;
+    
+    /**
+     * Mock del servicio de cuestionarios enviados.
+     */
+    @Mock
+    private ICuestionarioEnvioService cuestionarioEnvioService;
+    
+    /**
+     * Mock del servicio de usuarios.
+     */
+    @Mock
+    private IUserService userService;
     
     /**
      * Instancia de prueba del servicio de RespuestaCuestionario.
@@ -82,4 +105,39 @@ public class RespuestaCuestionarioServiceTest {
         verify(documentoService, times(1)).delete(documento);
     }
     
+    /**
+     * Test method for {@link es.mira.progesin.services.RespuestaCuestionarioService#transaccSaveConRespuestas(List)}.
+     */
+    @Test
+    public void transaccSaveConRespuestas() {
+        List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
+        listaRespuestas.add(mock(RespuestaCuestionario.class));
+        when(respuestaRepository.save(listaRespuestas)).thenReturn(listaRespuestas);
+        
+        List<RespuestaCuestionario> respuesta = respuestaCuestionarioService.transaccSaveConRespuestas(listaRespuestas);
+        
+        verify(respuestaRepository, times(1)).save(listaRespuestas);
+        verify(datosTablaRepository, times(1)).deleteRespuestasTablaHuerfanas();
+        assertThat(respuesta).isEqualTo(listaRespuestas);
+    }
+    
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.services.RespuestaCuestionarioService#transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio, List)}
+     * .
+     */
+    @Test
+    public void transaccSaveConRespuestasInactivaUsuariosProv() {
+        String correoPrincipal = "correo@dominio.es";
+        CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio(correoPrincipal).build();
+        List<RespuestaCuestionario> listaRespuestas = new ArrayList<RespuestaCuestionario>();
+        
+        respuestaCuestionarioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionario, listaRespuestas);
+        
+        verify(respuestaRepository, times(1)).save(listaRespuestas);
+        verify(datosTablaRepository, times(1)).deleteRespuestasTablaHuerfanas();
+        verify(userService, times(1)).cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
+        verify(cuestionarioEnvioService, times(1)).save(cuestionario);
+    }
 }

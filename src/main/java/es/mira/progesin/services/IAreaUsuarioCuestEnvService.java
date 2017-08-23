@@ -49,4 +49,11 @@ public interface IAreaUsuarioCuestEnvService {
     @Transactional(readOnly = false)
     void deleteByIdCuestionarioEnviado(Long id);
     
+    /**
+     * Asigna las áreas a los usuarios provisionales elegidos por el principal.
+     * 
+     * @param listaAreasUsuarioCuestEnv lista de áreas a asignar
+     * @return lista de areas asignadas actualizadas
+     */
+    List<AreaUsuarioCuestEnv> asignarAreasUsuarioYActivar(List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv); 
 }

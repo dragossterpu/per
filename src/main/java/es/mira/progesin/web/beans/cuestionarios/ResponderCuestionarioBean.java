@@ -9,9 +9,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -30,25 +28,19 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
-import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
-import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.IAreaUsuarioCuestEnvService;
-import es.mira.progesin.services.ICuestionarioEnvioService;
-import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.VerificadorExtensiones;
-import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,12 +59,6 @@ import lombok.Setter;
 public class ResponderCuestionarioBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
-    /**
-     * Bean de datos comunes de la aplicación.
-     */
-    @Autowired
-    private transient ApplicationBean applicationBean;
     
     /**
      * Lista de usuarios provisionales.
@@ -106,40 +92,16 @@ public class ResponderCuestionarioBean implements Serializable {
     private transient StreamedContent file;
     
     /**
-     * Verificador de extensiones.
-     */
-    @Autowired
-    private transient VerificadorExtensiones verificadorExtensiones;
-    
-    /**
      * Visualizar cuestionario.
      */
     @Autowired
     private VisualizarCuestionario visualizarCuestionario;
     
     /**
-     * Servicio de cuestionarios enviados.
-     */
-    @Autowired
-    private transient ICuestionarioEnvioService cuestionarioEnvioService;
-    
-    /**
      * Servicio de respuestas.
      */
     @Autowired
     private transient IRespuestaCuestionarioService respuestaService;
-    
-    /**
-     * Repositorio de tabla de datos.
-     */
-    @Autowired
-    private transient IDatosTablaGenericaRepository datosTablaRepository;
-    
-    /**
-     * Servicio de documentos.
-     */
-    @Autowired
-    private transient IDocumentoService documentoService;
     
     /**
      * Servicio de registro de actividad.
@@ -186,7 +148,7 @@ public class ResponderCuestionarioBean implements Serializable {
             guardarRespuestasTipoTexto(listaRespuestas);
             guardarRespuestasTipoTablaMatriz(listaRespuestas);
             
-            listaRespuestas = cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
+            listaRespuestas = respuestaService.transaccSaveConRespuestas(listaRespuestas);
             
             // Para que cuando guardemos las respuestas tipo tabla/matriz tengan id, sino da problemas el mapeo con las
             // respuestas de tipo tabla, ya que no encuentra el id cuando añaden filas y siguen con la misma sesión
@@ -232,8 +194,7 @@ public class ResponderCuestionarioBean implements Serializable {
                 guardarRespuestasTipoTablaMatriz(listaRespuestas);
                 
                 cuestionarioEnviado.setFechaCumplimentacion(new Date());
-                cuestionarioEnvioService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionarioEnviado,
-                        listaRespuestas);
+                respuestaService.transaccSaveConRespuestasInactivaUsuariosProv(cuestionarioEnviado, listaRespuestas);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
                         "Cuestionario cumplimentado y enviado con éxito.");
@@ -354,7 +315,7 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void subirFichero(FileUploadEvent event) {
         UploadedFile archivoSubido = event.getFile();
-        if (verificadorExtensiones.extensionCorrecta(archivoSubido)) {
+        if (respuestaService.esExtensionCorrecta(archivoSubido)) {
             
             try {
                 PreguntasCuestionario pregunta = (PreguntasCuestionario) event.getComponent().getAttributes()
@@ -413,10 +374,10 @@ public class ResponderCuestionarioBean implements Serializable {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
         if (RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
-            cuestionarioEnviado = cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(usuarioActual.getCorreo());
+            cuestionarioEnviado = respuestaService.buscaCuestionarioAResponder(usuarioActual.getCorreo());
             
             setUsuariosProv(
-                    userService.crearUsuariosProvisionalesCuestionario(cuestionarioEnviado.getCorreoEnvio(), ""));
+                    userService.listaUsuariosProvisionalesCorreo(cuestionarioEnviado.getCorreoEnvio()));
             
             // Dependiendo de si es el usuario principal o no recuperamos todas las asociaciones o sólo las del usuario
             // actual
@@ -445,16 +406,7 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void asignarAreas() {
         try {
-            List<String> usuariosAsignados = new ArrayList<>();
-            listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
-                if (usuariosAsignados.contains(areaUsuario.getUsernameProv()) == Boolean.FALSE) {
-                    usuariosAsignados.add(areaUsuario.getUsernameProv());
-                }
-            });
-            usuariosAsignados.forEach(usuarioProv -> userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO));
-            
-            listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.save(listaAreasUsuarioCuestEnv);
-            
+            listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
             if (listaAreasUsuarioCuestEnv != null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Asignación",
                         "Areas asignadas con éxito, cuando los usuarios elegidos completen su parte volverá a tener asignadas dichas areas y podrá enviar el cuestionario.");
@@ -477,24 +429,12 @@ public class ResponderCuestionarioBean implements Serializable {
             guardarRespuestasTipoTexto(listaRespuestas);
             guardarRespuestasTipoTablaMatriz(listaRespuestas);
             
-            cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestas);
-            
             String nombreUsuarioActual = visualizarCuestionario.getUsuarioActual().getUsername();
-            listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
-                if (areaUsuario.getUsernameProv().equals(nombreUsuarioActual)) {
-                    areaUsuario.setUsernameProv(cuestionarioEnviado.getCorreoEnvio());
-                }
-            });
+
+            respuestaService.guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, nombreUsuarioActual, cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
             
-            userService.cambiarEstado(nombreUsuarioActual, EstadoEnum.INACTIVO);
-            
-            listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.save(listaAreasUsuarioCuestEnv);
             if (listaAreasUsuarioCuestEnv != null) {
-                RequestContext context = RequestContext.getCurrentInstance();
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cumplimentación",
-                        "Guardado con éxito, su contribución al cuestionario ha finalizado.");
-                FacesContext.getCurrentInstance().addMessage("dialogMessageReasignar", message);
-                context.execute("PF('dialogMessageReasignar').show()");
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación", "Guardado con éxito, su contribución al cuestionario ha finalizado.", "dialogMessageReasignar");
                 generarMapaAreaUsuarioCuestEnv();
             }
         } catch (DataAccessException e) {
@@ -527,7 +467,7 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void descargarPlantilla(Documento plantilla) {
         try {
-            this.setFile(documentoService.descargaDocumento(plantilla.getId()));
+            this.setFile(respuestaService.descargarPlantilla(plantilla.getId()));
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error descargar la plantilla.");

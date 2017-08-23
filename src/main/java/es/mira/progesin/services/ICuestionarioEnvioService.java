@@ -47,30 +47,12 @@ public interface ICuestionarioEnvioService {
     void save(CuestionarioEnvio cuestionario);
     
     /**
-     * Transacción que guarda los datos de las respuestas de un cuestionario enviado.
-     * 
-     * @param listaRespuestas para un cuestionario
-     * @return lista de respuestas guardadas con id
-     */
-    List<RespuestaCuestionario> transaccSaveConRespuestas(List<RespuestaCuestionario> listaRespuestas);
-    
-    /**
      * Guarda los datos de un cuestionario enviado y elimina los usuarios provisionales que lo han cumplimentado una vez
      * finalizado o anulado.
      * 
      * @param cuestionario enviado
      */
     void transaccSaveElimUsuariosProv(CuestionarioEnvio cuestionario);
-    
-    /**
-     * Guarda los datos de un cuestionario enviado y sus respuestas, e inactiva los usuarios provisionales que lo han
-     * cumplimentado una vez finalizado o anulado.
-     * 
-     * @param cuestionario enviado
-     * @param listaRespuestas de un cuestionario
-     */
-    void transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
-            List<RespuestaCuestionario> listaRespuestas);
     
     /**
      * Guarda los datos de un cuestionario enviado y activa los usuarios provisionales que debe cumplimentarlo de nuevo
@@ -132,7 +114,7 @@ public interface ICuestionarioEnvioService {
      * @return devuelve el número de registros de la consulta
      */
     int getCountCuestionarioCriteria(CuestionarioEnviadoBusqueda cuestionarioEnviadoBusqueda);
-
+    
     /**
      * Busca las respuestas asociadas a un cuestionario enviado.
      * 
@@ -140,7 +122,7 @@ public interface ICuestionarioEnvioService {
      * @return lista de respuestas
      */
     List<RespuestaCuestionario> findRespuestasCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado);
-
+    
     /**
      * Busca los valores de una sección tipo TABLA/MATRIZ, pero sólo los valores de las columnas, excluyendo las filas
      * en el caso de las matrices.

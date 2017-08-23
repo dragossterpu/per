@@ -220,7 +220,7 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Borrra definitivamente los documentos que lleven más de 90 días o más dados de baja. El proceso se ejecutará de
+     * Borra definitivamente los documentos que lleven más de 90 días o más dados de baja. El proceso se ejecutará de
      * lunes a viernes a la 1 de la mañana.
      */
     @Override

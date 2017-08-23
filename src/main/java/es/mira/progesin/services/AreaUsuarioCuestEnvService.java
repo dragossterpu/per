@@ -1,5 +1,6 @@
 package es.mira.progesin.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
+import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 
 /**
@@ -24,6 +26,12 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
      */
     @Autowired
     private IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
+    
+    /**
+     * Servicio de usuarios.
+     */
+    @Autowired
+    private IUserService userService;
     
     /**
      * Guarda las asignaciones de áreas a usuarios provisionales de un cuestionario.
@@ -72,5 +80,24 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
     public void deleteByIdCuestionarioEnviado(Long idCuestionarioEnviado) {
         areaUsuarioCuestEnvRepository.deleteByIdCuestionarioEnviado(idCuestionarioEnviado);
         
+    }
+
+    /**
+     * Asigna las áreas a los usuarios provisionales elegidos por el principal.
+     * 
+     * @param listaAreasUsuarioCuestEnv lista de áreas a asignar
+     * @return lista de areas asignadas actualizadas
+     */
+    @Override
+    public List<AreaUsuarioCuestEnv> asignarAreasUsuarioYActivar(List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv) {
+        List<String> usuariosAsignados = new ArrayList<>();
+        listaAreasUsuarioCuestEnv.forEach(areaUsuario -> {
+            if (usuariosAsignados.contains(areaUsuario.getUsernameProv()) == Boolean.FALSE) {
+                usuariosAsignados.add(areaUsuario.getUsernameProv());
+            }
+        });
+        usuariosAsignados.forEach(usuarioProv -> userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO));
+        
+       return (List<AreaUsuarioCuestEnv>) areaUsuarioCuestEnvRepository.save(listaAreasUsuarioCuestEnv);
     }
 }

@@ -32,7 +32,6 @@ import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
-import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.ICorreoElectronico;
@@ -65,12 +64,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     @Autowired
     private IRespuestaCuestionarioRepository respuestaRepository;
-    
-    /**
-     * Repositorio de respuestas tipo tabla/matriz.
-     */
-    @Autowired
-    private IDatosTablaGenericaRepository datosTablaRepository;
     
     /**
      * Servicio de usuarios.
@@ -371,21 +364,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     }
     
     /**
-     * Transacción que guarda los datos de las respuestas de un cuestionario enviado.
-     * 
-     * @param listaRespuestas para un cuestionario
-     * @return lista de respuestas guardadas con id
-     */
-    @Override
-    @Transactional(readOnly = false)
-    public List<RespuestaCuestionario> transaccSaveConRespuestas(List<RespuestaCuestionario> listaRespuestas) {
-        List<RespuestaCuestionario> listaRespuestasGuardadas = respuestaRepository.save(listaRespuestas);
-        respuestaRepository.flush();
-        datosTablaRepository.deleteRespuestasTablaHuerfanas();
-        return listaRespuestasGuardadas;
-    }
-    
-    /**
      * Guarda los datos de un cuestionario enviado y elimina los usuarios provisionales que lo han cumplimentado una vez
      * finalizado o anulado.
      * 
@@ -410,25 +388,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         
         inspeccionesService.cambiarEstado(cuestionario.getInspeccion(),
                 EstadoInspeccionEnum.G_PENDIENTE_VISITA_INSPECCION);
-    }
-    
-    /**
-     * Guarda los datos de un cuestionario enviado y sus respuestas, e inactiva los usuarios provisionales que lo han
-     * cumplimentado una vez finalizado o anulado.
-     * 
-     * @param cuestionario enviado
-     * @param listaRespuestas de un cuestionario
-     */
-    @Override
-    @Transactional(readOnly = false)
-    public void transaccSaveConRespuestasInactivaUsuariosProv(CuestionarioEnvio cuestionario,
-            List<RespuestaCuestionario> listaRespuestas) {
-        respuestaRepository.save(listaRespuestas);
-        respuestaRepository.flush();
-        datosTablaRepository.deleteRespuestasTablaHuerfanas();
-        String correoPrincipal = cuestionario.getCorreoEnvio();
-        userService.cambiarEstado(correoPrincipal, EstadoEnum.INACTIVO);
-        cuestionarioEnvioRepository.save(cuestionario);
     }
     
     /**
@@ -498,7 +457,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * @return lista de respuestas
      */
     @Override
-    public List<RespuestaCuestionario>  findRespuestasCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
+    public List<RespuestaCuestionario> findRespuestasCuestionarioEnviado(CuestionarioEnvio cuestionarioEnviado) {
         return respuestaRepository.findDistinctByRespuestaIdCuestionarioEnviado(cuestionarioEnviado);
     }
     

@@ -19,7 +19,6 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -50,7 +48,6 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionarioId;
-import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
@@ -58,14 +55,11 @@ import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.IAreaUsuarioCuestEnvService;
-import es.mira.progesin.services.ICuestionarioEnvioService;
-import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.VerificadorExtensiones;
 
 /**
  * 
@@ -76,7 +70,7 @@ import es.mira.progesin.util.VerificadorExtensiones;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class, FacesContext.class })
+@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
 public class ResponderCuestionarioBeanTest {
     /**
      * Constante user.
@@ -110,23 +104,6 @@ public class ResponderCuestionarioBeanTest {
     @Mock
     private Authentication authentication;
     
-    /**
-     * Simulación de la RequestContext.
-     */
-    @Mock
-    private RequestContext requestContext;
-    
-    /**
-     * Simulación de la FacesContext.
-     */
-    @Mock
-    private FacesContext facesContext;
-    
-    /**
-     * Verificador de extensiones.
-     */
-    @Mock
-    private VerificadorExtensiones verificadorExtensiones;
     
     /**
      * Visualizar cuestionario.
@@ -135,22 +112,11 @@ public class ResponderCuestionarioBeanTest {
     private VisualizarCuestionario visualizarCuestionario;
     
     /**
-     * Servicio de cuestionarios enviados.
-     */
-    @Mock
-    private ICuestionarioEnvioService cuestionarioEnvioService;
-    
-    /**
      * Servicio de respuestas.
      */
     @Mock
     private IRespuestaCuestionarioService respuestaService;
     
-    /**
-     * Servicio de documentos.
-     */
-    @Mock
-    private IDocumentoService documentoService;
     
     /**
      * Servicio de registro de actividad.
@@ -241,15 +207,12 @@ public class ResponderCuestionarioBeanTest {
     
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(RequestContext.class);
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
-        PowerMockito.mockStatic(FacesContext.class);
+        
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(USUARIOLOGUEADO);
-        when(RequestContext.getCurrentInstance()).thenReturn(requestContext);
-        when(FacesContext.getCurrentInstance()).thenReturn(facesContext);
     }
     
     /**
@@ -276,7 +239,7 @@ public class ResponderCuestionarioBeanTest {
         Map<PreguntasCuestionario, String> mapaRespuestas = new HashMap<>();
         mapaRespuestas.put(pregunta, "resp");
         when(visualizarCuestionario.getMapaRespuestas()).thenReturn(mapaRespuestas);
-        when(cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture()))
+        when(respuestaService.transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture()))
                 .thenReturn(listaRespuestaCuestionario);
         
         Map<Long, String> mapaAreaUsuarioCuestEnv = new HashMap<>();
@@ -295,8 +258,7 @@ public class ResponderCuestionarioBeanTest {
         
         verify(visualizarCuestionario, times(1)).getMapaRespuestas();
         verify(visualizarCuestionario, times(1)).getMapaRespuestasTabla();
-        verify(cuestionarioEnvioService, times(1))
-                .transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture());
+        verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture());
         verify(visualizarCuestionario, times(1)).getMapaDocumentos();
         verify(visualizarCuestionario, times(1)).construirTipoRespuestaTablaMatrizConDatos();
         PowerMockito.verifyStatic(times(1));
@@ -328,7 +290,7 @@ public class ResponderCuestionarioBeanTest {
         Map<PreguntasCuestionario, String> mapaRespuestas = new HashMap<>();
         mapaRespuestas.put(pregunta, "resp");
         when(visualizarCuestionario.getMapaRespuestas()).thenReturn(mapaRespuestas);
-        when(cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture()))
+        when(respuestaService.transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture()))
                 .thenThrow(TransientDataAccessResourceException.class);
         
         Map<Long, String> mapaAreaUsuarioCuestEnv = new HashMap<>();
@@ -339,8 +301,7 @@ public class ResponderCuestionarioBeanTest {
         responderCuestionarioBean.guardarBorrador();
         
         verify(visualizarCuestionario, times(1)).getMapaRespuestas();
-        verify(cuestionarioEnvioService, times(1))
-                .transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture());
+        verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture());
         verify(visualizarCuestionario, times(1)).getMapaRespuestasTabla();
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
@@ -369,7 +330,7 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.enviarCuestionario();
         
-        verify(cuestionarioEnvioService, times(1)).transaccSaveConRespuestasInactivaUsuariosProv(
+        verify(respuestaService, times(1)).transaccSaveConRespuestasInactivaUsuariosProv(
                 eq(responderCuestionarioBean.getCuestionarioEnviado()), listaRespuestasCaptor.capture());
         
         PowerMockito.verifyStatic(times(1));
@@ -419,12 +380,12 @@ public class ResponderCuestionarioBeanTest {
         cuestionario.setInspeccion(mock(Inspeccion.class));
         responderCuestionarioBean.setCuestionarioEnviado(cuestionario);
         responderCuestionarioBean.setPrincipalControlaTodasAreas(true);
-        doThrow(TransientDataAccessResourceException.class).when(cuestionarioEnvioService)
+        doThrow(TransientDataAccessResourceException.class).when(respuestaService)
                 .transaccSaveConRespuestasInactivaUsuariosProv(eq(responderCuestionarioBean.getCuestionarioEnviado()),
                         listaRespuestasCaptor.capture());
         responderCuestionarioBean.enviarCuestionario();
         
-        verify(cuestionarioEnvioService, times(1)).transaccSaveConRespuestasInactivaUsuariosProv(
+        verify(respuestaService, times(1)).transaccSaveConRespuestasInactivaUsuariosProv(
                 eq(responderCuestionarioBean.getCuestionarioEnviado()), listaRespuestasCaptor.capture());
         
         PowerMockito.verifyStatic(times(1));
@@ -467,7 +428,7 @@ public class ResponderCuestionarioBeanTest {
         Map<String, Object> map = new HashMap<>();
         map.put("pregunta", pregunta);
         when(event.getFile()).thenReturn(archivoSubido);
-        when(verificadorExtensiones.extensionCorrecta(archivoSubido)).thenReturn(true);
+        when(respuestaService.esExtensionCorrecta(archivoSubido)).thenReturn(true);
         when(event.getComponent()).thenReturn(componente);
         when(componente.getAttributes()).thenReturn(map);
         CuestionarioEnvio cuestionarioEnvio = mock(CuestionarioEnvio.class);
@@ -487,7 +448,7 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.subirFichero(event);
         
-        verify(verificadorExtensiones, times(1)).extensionCorrecta(archivoSubido);
+        verify(respuestaService, times(1)).esExtensionCorrecta(archivoSubido);
         verify(visualizarCuestionario, times(1)).getMapaRespuestas();
         verify(visualizarCuestionario, times(2)).getMapaDocumentos();
         verify(respuestaService, times(1)).saveConDocumento(respuestaCaptor.capture(), archivoSubidoCaptor.capture());
@@ -502,11 +463,11 @@ public class ResponderCuestionarioBeanTest {
         FileUploadEvent event = mock(FileUploadEvent.class);
         UploadedFile archivoSubido = mock(UploadedFile.class);
         when(event.getFile()).thenReturn(archivoSubido);
-        when(verificadorExtensiones.extensionCorrecta(archivoSubido)).thenReturn(false);
+        when(respuestaService.esExtensionCorrecta(archivoSubido)).thenReturn(false);
         
         responderCuestionarioBean.subirFichero(event);
         
-        verify(verificadorExtensiones, times(1)).extensionCorrecta(archivoSubido);
+        verify(respuestaService, times(1)).esExtensionCorrecta(archivoSubido);
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
@@ -527,7 +488,7 @@ public class ResponderCuestionarioBeanTest {
         Map<String, Object> map = new HashMap<>();
         map.put("pregunta", pregunta);
         when(event.getFile()).thenReturn(archivoSubido);
-        when(verificadorExtensiones.extensionCorrecta(archivoSubido)).thenReturn(true);
+        when(respuestaService.esExtensionCorrecta(archivoSubido)).thenReturn(true);
         when(event.getComponent()).thenReturn(componente);
         when(componente.getAttributes()).thenReturn(map);
         CuestionarioEnvio cuestionarioEnvio = mock(CuestionarioEnvio.class);
@@ -547,7 +508,7 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.subirFichero(event);
         
-        verify(verificadorExtensiones, times(1)).extensionCorrecta(archivoSubido);
+        verify(respuestaService, times(1)).esExtensionCorrecta(archivoSubido);
         verify(visualizarCuestionario, times(1)).getMapaRespuestas();
         verify(respuestaService, times(1)).saveConDocumento(respuestaCaptor.capture(), archivoSubidoCaptor.capture());
         verify(visualizarCuestionario, times(1)).getMapaDocumentos();
@@ -638,7 +599,7 @@ public class ResponderCuestionarioBeanTest {
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setId(1L);
         cuestionarioEnviado.setCorreoEnvio("usernameProv");
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoUser)).thenReturn(cuestionarioEnviado);
+        when(respuestaService.buscaCuestionarioAResponder(correoUser)).thenReturn(cuestionarioEnviado);
         List<User> usuariosProv = new ArrayList<>();
         usuariosProv.add(mock(User.class));
         when(userService.crearUsuariosProvisionalesCuestionario(eq(cuestionarioEnviado.getCorreoEnvio()),
@@ -653,10 +614,9 @@ public class ResponderCuestionarioBeanTest {
                 .thenReturn(listaAreasUsuario);
         
         responderCuestionarioBean.init();
-        
-        verify(cuestionarioEnvioService, times(1)).findNoFinalizadoPorCorreoEnvio(correoUser);
-        verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(cuestionarioEnviado.getCorreoEnvio()),
-                any(String.class));
+      
+        verify(respuestaService, times(1)).buscaCuestionarioAResponder(correoUser);
+        verify(userService, times(1)).listaUsuariosProvisionalesCorreo(cuestionarioEnviado.getCorreoEnvio());
         verify(areaUsuarioCuestEnvService, times(1)).findByIdCuestionarioEnviado(eq(cuestionarioEnviado.getId()));
         verify(visualizarCuestionario, times(1)).setListaAreasVisualizarUsuario(areaCuestionarioService
                 .findByIdIn(new ArrayList<>(responderCuestionarioBean.getMapaAreaUsuarioCuestEnv().keySet())));
@@ -677,7 +637,7 @@ public class ResponderCuestionarioBeanTest {
         when(authentication.getPrincipal()).thenReturn(user);
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setId(1L);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoUser)).thenReturn(cuestionarioEnviado);
+        when(respuestaService.buscaCuestionarioAResponder(correoUser)).thenReturn(cuestionarioEnviado);
         List<User> usuariosProv = new ArrayList<>();
         usuariosProv.add(mock(User.class));
         when(userService.crearUsuariosProvisionalesCuestionario(eq(cuestionarioEnviado.getCorreoEnvio()),
@@ -693,9 +653,8 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.init();
         
-        verify(cuestionarioEnvioService, times(1)).findNoFinalizadoPorCorreoEnvio(correoUser);
-        verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(cuestionarioEnviado.getCorreoEnvio()),
-                any(String.class));
+        verify(respuestaService, times(1)).buscaCuestionarioAResponder(correoUser);
+        verify(userService, times(1)).listaUsuariosProvisionalesCorreo(cuestionarioEnviado.getCorreoEnvio());
         verify(areaUsuarioCuestEnvService, times(1))
                 .findByIdCuestionarioEnviadoAndUsuarioProv(cuestionarioEnviado.getId(), user.getUsername());
         verify(visualizarCuestionario, times(1)).setListaAreasVisualizarUsuario(areaCuestionarioService
@@ -720,8 +679,7 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.asignarAreas();
         
-        verify(userService, times(1)).cambiarEstado(eq(userName), eq(EstadoEnum.ACTIVO));
-        verify(areaUsuarioCuestEnvService, times(1)).save(listaAreasUsuarioCuestEnv);
+        verify(areaUsuarioCuestEnvService, times(1)).asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
@@ -740,12 +698,11 @@ public class ResponderCuestionarioBeanTest {
         listaAreasUsuarioCuestEnv.add(areaUsuarioCuestEnv);
         responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
         doThrow(TransientDataAccessResourceException.class).when(areaUsuarioCuestEnvService)
-                .save(listaAreasUsuarioCuestEnv);
+                .asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
         
         responderCuestionarioBean.asignarAreas();
         
-        verify(userService, times(1)).cambiarEstado(eq(userName), eq(EstadoEnum.ACTIVO));
-        verify(areaUsuarioCuestEnvService, times(1)).save(listaAreasUsuarioCuestEnv);
+        verify(areaUsuarioCuestEnvService, times(1)).asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
@@ -766,6 +723,8 @@ public class ResponderCuestionarioBeanTest {
         responderCuestionarioBean.setCuestionarioEnviado(cuestionarioEnviado);
         when(visualizarCuestionario.getUsuarioActual()).thenReturn(user);
         
+        List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+        
         List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv = new ArrayList<>();
         AreaUsuarioCuestEnv areaUsuarioCuestEnv = new AreaUsuarioCuestEnv();
         areaUsuarioCuestEnv.setIdArea(1L);
@@ -776,11 +735,10 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.guardarYAsignarAreasAlPrincipal();
         
-        verify(cuestionarioEnvioService, times(1)).transaccSaveConRespuestas(listaRespuestasCaptor.capture());
-        verify(userService, times(1)).cambiarEstado(eq(USUARIOLOGUEADO), eq(EstadoEnum.INACTIVO));
-        verify(areaUsuarioCuestEnvService, times(1)).save(listaAreasUsuarioCuestEnv);
+        verify(respuestaService, times(1)).guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO, cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
         PowerMockito.verifyStatic(times(1));
-        requestContext.execute(eq("PF('dialogMessageReasignar').show()"));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
+                eq("dialogMessageReasignar"));
     }
     
     /**
@@ -789,12 +747,28 @@ public class ResponderCuestionarioBeanTest {
      */
     @Test
     public final void testGuardarYAsignarAreasAlPrincipalExcepcion() {
-        when(cuestionarioEnvioService.transaccSaveConRespuestas(listaRespuestasCaptor.capture()))
+        User user = new User();
+        user.setUsername(USUARIOLOGUEADO);
+
+        CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
+        cuestionarioEnviado.setCorreoEnvio("correoTest");
+        responderCuestionarioBean.setCuestionarioEnviado(cuestionarioEnviado);
+        when(visualizarCuestionario.getUsuarioActual()).thenReturn(user);
+        
+        List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
+
+        List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv = new ArrayList<>();
+        AreaUsuarioCuestEnv areaUsuarioCuestEnv = new AreaUsuarioCuestEnv();
+        areaUsuarioCuestEnv.setIdArea(1L);
+        areaUsuarioCuestEnv.setUsernameProv(USUARIOLOGUEADO);
+        listaAreasUsuarioCuestEnv.add(areaUsuarioCuestEnv);
+        responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
+        
+        when(respuestaService.guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO, cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv))
                 .thenThrow(TransientDataAccessResourceException.class);
         
         responderCuestionarioBean.guardarYAsignarAreasAlPrincipal();
         
-        verify(cuestionarioEnvioService, times(1)).transaccSaveConRespuestas(listaRespuestasCaptor.capture());
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -830,10 +804,10 @@ public class ResponderCuestionarioBeanTest {
         DefaultStreamedContent doc = mock(DefaultStreamedContent.class);
         Documento plantilla = new Documento();
         plantilla.setId(1L);
-        when(documentoService.descargaDocumento(plantilla.getId())).thenReturn(doc);
+        when(respuestaService.descargarPlantilla(plantilla.getId())).thenReturn(doc);
         
         responderCuestionarioBean.descargarPlantilla(plantilla);
-        verify(documentoService, times(1)).descargaDocumento(plantilla.getId());
+        verify(respuestaService, times(1)).descargarPlantilla(plantilla.getId());
         assertThat(doc).isEqualTo(responderCuestionarioBean.getFile());
     }
     
@@ -846,10 +820,10 @@ public class ResponderCuestionarioBeanTest {
     public final void testDescargarPlantillaException() throws ProgesinException {
         Documento plantilla = new Documento();
         plantilla.setId(1L);
-        when(documentoService.descargaDocumento(plantilla.getId())).thenThrow(ProgesinException.class);
+        when(respuestaService.descargarPlantilla(plantilla.getId())).thenThrow(ProgesinException.class);
         
         responderCuestionarioBean.descargarPlantilla(plantilla);
-        verify(documentoService, times(1)).descargaDocumento(plantilla.getId());
+        verify(respuestaService, times(1)).descargarPlantilla(plantilla.getId());
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
