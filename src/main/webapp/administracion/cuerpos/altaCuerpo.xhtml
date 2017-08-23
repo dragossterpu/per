@@ -21,14 +21,14 @@
 
                 <div class="botonesFormulario">
                     <p:commandButton id="enviar" actionListener="#{cuerposEstadoBean.altaCuerpo(nombreCortoNuevo,descripcionCuerpo)}" value="Crear cuerpo" icon="fa fa-fw fa-save" />
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" type="buton" >
                          <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
                     </p:commandButton>
                 </div>
 
                 <p:confirmDialog global="true">
                     <div class="centrarBotonesDialog">
-                        <p:button outcome="/administracion/cuerpos/cuerpos" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:button outcome="/administracion/cuerpos/cuerpos" value="Aceptar" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
                     </div>
                 </p:confirmDialog>

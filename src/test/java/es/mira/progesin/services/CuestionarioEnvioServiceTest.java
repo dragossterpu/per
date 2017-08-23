@@ -36,13 +36,10 @@ import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
-import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
-import es.mira.progesin.persistence.repositories.IDatosTablaGenericaRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
-import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.util.ICorreoElectronico;
 
 /**

@@ -120,11 +120,6 @@ public class TareasServiceTest {
     @InjectMocks
     private TareasService tareasService = new TareasService();
     
-    /**
-     * Mock ChronoUnit.
-     */
-    @Mock
-    private ChronoUnit chronoUnit;
     
     /**
      * Configuración inicial del test.

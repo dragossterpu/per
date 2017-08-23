@@ -166,7 +166,4 @@ public class CuerposEstadoBean implements Serializable {
         listaCuerposEstado = cuerposEstadoService.findAll();
     }
     
-    public String cancelar(){
-        return "/administracion/cuerpos/cuerpos";
-    }
 }
