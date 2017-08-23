@@ -140,11 +140,10 @@ public class DocExporter extends Exporter {
      * @param selectionOnly sólo se exportarán registros seleccionados
      * @param encoding codificación
      * @return tabla objeto tabla exportada.
-     * @throws IOException lanzada
      * @throws BadElementException lanzada
      */
     private Table exportDocTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly,
-            String encoding) throws IOException, BadElementException {
+            String encoding) throws BadElementException {
         int columnsCount = getColumnsCount(table);
         Table docTab = new Table(columnsCount);
         this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);

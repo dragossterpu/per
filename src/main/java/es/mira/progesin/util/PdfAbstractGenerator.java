@@ -66,7 +66,8 @@ public abstract class PdfAbstractGenerator {
      * @return StreamedContent streamcontent para usar el fileDownload de primefaces
      * @throws ProgesinException posible excepción
      */
-    protected StreamedContent crearPdf(String nombrePdf, boolean footer, boolean insertarPagina) throws ProgesinException {
+    protected StreamedContent crearPdf(String nombrePdf, boolean footer, boolean insertarPagina)
+            throws ProgesinException {
         StreamedContent pdfStream = null;
         
         try (ByteArrayOutputStream outputStreamOr = new ByteArrayOutputStream();
@@ -75,7 +76,7 @@ public abstract class PdfAbstractGenerator {
             
             // Initialize document
             Document document = new Document(pdf, PageSize.A4);
-            document.setMargins(100, 36, 70, 36);
+            document.setMargins(70, 36, 70, 36);
             
             crearCabeceraFooter(document, footer);
             
@@ -88,7 +89,8 @@ public abstract class PdfAbstractGenerator {
             if (insertarPagina && !footer) {
                 ByteArrayOutputStream outputStreamPagina = insertarNumeroPagina(inputStreamOr);
                 InputStream inputStreamPagina = new ByteArrayInputStream(outputStreamPagina.toByteArray());
-                pdfStream = new DefaultStreamedContent(inputStreamPagina, ContentTypeEnum.PDF.getContentType(), nombrePdf);
+                pdfStream = new DefaultStreamedContent(inputStreamPagina, ContentTypeEnum.PDF.getContentType(),
+                        nombrePdf);
                 inputStreamPagina.close();
             } else {
                 pdfStream = new DefaultStreamedContent(inputStreamOr, ContentTypeEnum.PDF.getContentType(), nombrePdf);

@@ -55,7 +55,6 @@ public class HeaderFooterPdf implements IEventHandler {
      */
     private Image footer1;
     
-    
     /**
      * 
      * @param document Documento al que se quiere añadir el header/footer
@@ -65,13 +64,15 @@ public class HeaderFooterPdf implements IEventHandler {
      * @param pie Ruta de la imagen del footer
      * @throws IOException excepción se puede lanzar al crear las imágenes a partir de las rutas
      */
-    public HeaderFooterPdf(Document document, String imagenUno, String imagenDos, String cabeceraRepetido, String pie) throws IOException {
+    public HeaderFooterPdf(Document document, String imagenUno, String imagenDos, String cabeceraRepetido, String pie)
+            throws IOException {
         this.doc = document;
         this.headerRepetido = crearImagen(cabeceraRepetido);
         this.header1 = crearImagen(imagenUno);
         this.header2 = crearImagen(imagenDos);
         this.footer1 = crearImagen(pie);
-    } 
+    }
+    
     /**
      * Crea una cabecera y un pie de solicitud de documentación.
      * 
@@ -103,10 +104,9 @@ public class HeaderFooterPdf implements IEventHandler {
         if (pdfDoc.getPageNumber(page) == 1) {
             Rectangle rect = new Rectangle(pdfDoc.getDefaultPageSize().getX() + doc.getLeftMargin(),
                     pdfDoc.getDefaultPageSize().getTop() - doc.getTopMargin(), 523, header1.getImageHeight());
-            header1.setFixedPosition(pageSize.getLeft() + doc.getLeftMargin(),
-                    pageSize.getTop() - doc.getTopMargin() + 10);
+            header1.setFixedPosition(pageSize.getLeft() + doc.getLeftMargin(), pageSize.getTop() - doc.getTopMargin());
             header2.setFixedPosition(pageSize.getRight() - doc.getRightMargin() - header2.getImageScaledWidth(),
-                    pageSize.getTop() - doc.getTopMargin() + 10);
+                    pageSize.getTop() - doc.getTopMargin());
             Canvas c = new Canvas(canvas, pdfDoc, rect);
             c.add(header1);
             c.add(header2);
@@ -116,7 +116,7 @@ public class HeaderFooterPdf implements IEventHandler {
                     pdfDoc.getDefaultPageSize().getTop() - doc.getTopMargin(), 523, headerRepetido.getImageHeight());
             headerRepetido.setFixedPosition(
                     pageSize.getRight() - doc.getRightMargin() - headerRepetido.getImageScaledWidth(),
-                    pageSize.getTop() - doc.getTopMargin() + 30);
+                    pageSize.getTop() - doc.getTopMargin() + 10);
             Canvas c = new Canvas(canvas, pdfDoc, rect);
             c.add(headerRepetido);
             c.close();
@@ -138,7 +138,7 @@ public class HeaderFooterPdf implements IEventHandler {
                 (pageSize.getRight() - doc.getRightMargin() - (pageSize.getLeft() + doc.getLeftMargin())) / 2
                         + doc.getLeftMargin(),
                 pageSize.getBottom() + 10);
-       
+        
         PdfCanvas pdfCanvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
         Rectangle rectFooter = new Rectangle(pdfDoc.getDefaultPageSize().getX() + doc.getLeftMargin(),
                 pdfDoc.getDefaultPageSize().getBottom(), 523, footer1.getImageHeight());
@@ -161,7 +161,7 @@ public class HeaderFooterPdf implements IEventHandler {
             File file = new ClassPathResource(path).getFile();
             imagen = new Image(ImageDataFactory.create(file.getPath()));
             imagen.scaleAbsolute(imagen.getImageWidth() * Constantes.ESCALA,
-                    imagen.getImageHeight() *  Constantes.ESCALA);
+                    imagen.getImageHeight() * Constantes.ESCALA);
         }
         return imagen;
     }

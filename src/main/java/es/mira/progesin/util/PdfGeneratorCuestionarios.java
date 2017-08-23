@@ -44,7 +44,7 @@ public class PdfGeneratorCuestionarios extends PdfAbstractGenerator {
     /**
      * Nombre del pdf del cuestionario.
      */
-    private static final String NOMBREPDFCUESTIONARIO = "Cuestionario.pdf";
+    private static final String NOMBREPDFCUESTIONARIO = "Cuestionario";
     
     /**
      * Servicio de cuestionarios enviados.
@@ -65,7 +65,10 @@ public class PdfGeneratorCuestionarios extends PdfAbstractGenerator {
      */
     @Override
     public StreamedContent exportarPdf() throws ProgesinException {
-        return crearPdf(NOMBREPDFCUESTIONARIO, false, true);
+        return crearPdf(
+                String.format("%s_Inspeccion_%s-%s.pdf", NOMBREPDFCUESTIONARIO,
+                        cuestionarioEnviado.getInspeccion().getId(), cuestionarioEnviado.getInspeccion().getAnio()),
+                false, true);
     }
     
     /**
@@ -200,19 +203,20 @@ public class PdfGeneratorCuestionarios extends PdfAbstractGenerator {
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = cuestionarioEnvioService
                 .findColumnasBySeccion(tipoRespuesta);
         
-        Table tabla = new Table(valoresColumnas.size());
-        tabla.setWidthPercent(100);
-        tabla.setMarginBottom(10);
-        tabla.setFontSize(8);
-        
+        Table tabla;
         try {
             if (tipoRespuesta.startsWith(Constantes.TIPORESPUESTAMATRIZ)) {
                 tabla = new Table(valoresColumnas.size() + 1);
                 // Añado la primera columna de la cabecera vacía
                 tabla.addHeaderCell("");
+            } else {
+                tabla = new Table(valoresColumnas.size());
             }
             
             tabla.setWidthPercent(100);
+            tabla.setKeepTogether(true);
+            tabla.setMarginBottom(10);
+            tabla.setFontSize(8);
             
             for (ConfiguracionRespuestasCuestionario columna : valoresColumnas) {
                 Cell cell = new Cell();
@@ -257,6 +261,7 @@ public class PdfGeneratorCuestionarios extends PdfAbstractGenerator {
     private Table crearTablaDocumentos(RespuestaCuestionario respuesta) {
         Table tabla = new Table(1);
         tabla.setWidthPercent(100);
+        tabla.setKeepTogether(true);
         tabla.setMarginBottom(10);
         tabla.setFontSize(8);
         

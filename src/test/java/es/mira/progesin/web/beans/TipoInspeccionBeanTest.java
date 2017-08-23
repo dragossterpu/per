@@ -132,7 +132,7 @@ public class TipoInspeccionBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
-    };
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#eliminarTipo(TipoInspeccion)}.
@@ -147,7 +147,7 @@ public class TipoInspeccionBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
-    };
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#eliminarTipo(TipoInspeccion)}.
@@ -217,7 +217,7 @@ public class TipoInspeccionBeanTest {
         verify(tipoInspeccionService, times(1)).guardarTipo(tipo);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.getDescripcion()));
-    };
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#onRowEdit(RowEditEvent)}.
@@ -233,7 +233,7 @@ public class TipoInspeccionBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
-    };
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#altaTipo(String, String)}.
@@ -245,7 +245,7 @@ public class TipoInspeccionBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.INSPECCION.getDescripcion()));
-    };
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#altaTipo(String, String)}.
@@ -259,7 +259,7 @@ public class TipoInspeccionBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
-    };
+    }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.TipoInspeccionBean#init()}.

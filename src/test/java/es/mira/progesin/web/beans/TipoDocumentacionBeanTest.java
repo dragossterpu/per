@@ -88,10 +88,10 @@ public class TipoDocumentacionBeanTest {
     private ArgumentCaptor<TipoDocumentacion> tipoDocumentacionCaptor;
     
     /**
-     * @throws java.lang.Exception Excepción
+     * Configuración inicial del test.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         exts = new ArrayList<>();
         exts.add(".pdf");

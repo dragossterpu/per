@@ -37,7 +37,7 @@ import lombok.Setter;
  */
 @Setter
 @Component("pdfGeneratorEstadisticas")
-public class PdfGeneratorEstadisticas extends PdfAbstractGenerator{
+public class PdfGeneratorEstadisticas extends PdfAbstractGenerator {
     
     /**
      * Nombre del pdf de estadisticas.
@@ -58,7 +58,7 @@ public class PdfGeneratorEstadisticas extends PdfAbstractGenerator{
      * Fichero con la imagen a exportar.
      */
     private File fileImg;
-
+    
     /**
      * Genera un documento PDF con las estadísticas por estado de las inspecciones.
      * 
@@ -69,7 +69,7 @@ public class PdfGeneratorEstadisticas extends PdfAbstractGenerator{
     public StreamedContent exportarPdf() throws ProgesinException {
         return crearPdf(NOMBREPDFESTADISTICAS, false, true);
     }
-
+    
     /**
      * Genera el contenido que se mostrará en el PDF.
      * 
@@ -86,7 +86,8 @@ public class PdfGeneratorEstadisticas extends PdfAbstractGenerator{
         titulo.setPadding(5);
         documento.add(titulo);
         // Fecha
-        Paragraph fecha = new Paragraph("Fecha emisión documento : " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
+        Paragraph fecha = new Paragraph(
+                "Fecha emisión documento : " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
         fecha.setTextAlignment(TextAlignment.RIGHT);
         fecha.setPadding(5);
         documento.add(fecha);
@@ -121,7 +122,6 @@ public class PdfGeneratorEstadisticas extends PdfAbstractGenerator{
             throw new ProgesinException(e);
         }
     }
-    
     
     /**
      * Crea un párrafo formateado para servir como título.

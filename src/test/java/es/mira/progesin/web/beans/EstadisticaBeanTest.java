@@ -102,10 +102,9 @@ public class EstadisticaBeanTest {
     
     /**
      * Configuración inicial del test.
-     * @throws Exception lanzada.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         PowerMockito.mockStatic(ImageIO.class);
         PowerMockito.mockStatic(File.class);
         PowerMockito.mockStatic(FacesUtilities.class);
@@ -203,10 +202,9 @@ public class EstadisticaBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.EstadisticaBean#filtrar(es.mira.progesin.persistence.entities.TipoInspeccion, es.mira.progesin.persistence.entities.Provincia, java.util.Date, java.util.Date)}.
-     * @throws Exception lanzada.
      */
     @Test
-    public final void testFiltrar() throws Exception {
+    public final void testFiltrar() {
         estadisticaBean.setFiltro(new InspeccionBusqueda());
         Map<EstadoInspeccionEnum, Integer> mapaResultados = new EnumMap<>(EstadoInspeccionEnum.class);
         mapaResultados.put(EstadoInspeccionEnum.M_FINALIZADA, 2);
@@ -262,10 +260,9 @@ public class EstadisticaBeanTest {
      * Test method for
      * {@link es.mira.progesin.web.beans.EstadisticaBean#filtraPDF(es.mira.progesin.persistence.entities.TipoInspeccion, es.mira.progesin.persistence.entities.Provincia, java.util.Date, java.util.Date, java.lang.String)}.
      * @throws IOException lanzada.
-     * @throws ProgesinException lanzada.
      */
     @Test
-    public final void testFiltraPDFestadosNoSeleccionados() throws IOException, ProgesinException {
+    public final void testFiltraPDFestadosNoSeleccionados() throws IOException {
         
         List<EstadoInspeccionEnum> estadosSeleccionados = new ArrayList<>();
         estadisticaBean.setEstadosSeleccionados(estadosSeleccionados);

@@ -329,12 +329,10 @@ public class GestorDocumentalBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}
-     * . .
-     * @throws ProgesinException excepción lanzada
+     * {@link es.mira.progesin.web.beans.GestorDocumentalBean#descargarFichero(es.mira.progesin.persistence.entities.gd.Documento)}.
      */
     @Test()
-    public final void testDescargarFicheroNoExiste() throws ProgesinException {
+    public final void testDescargarFicheroNoExiste() {
         Documento doc1 = new Documento();
         doc1.setId(2L);
         when(documentoService.findOne(doc1.getId())).thenReturn(null);
@@ -376,10 +374,9 @@ public class GestorDocumentalBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.GestorDocumentalBean#cargaFichero(org.primefaces.event.FileUploadEvent)}.
-     * @throws ProgesinException posible excepción
      */
     @Test()
-    public final void testCargaFicheroExtensionIncorrecta() throws ProgesinException {
+    public final void testCargaFicheroExtensionIncorrecta() {
         TipoDocumento tipoDocTest = mock(TipoDocumento.class);
         FileUploadEvent event = mock(FileUploadEvent.class);
         UploadedFile uploadedFile = mock(UploadedFile.class);

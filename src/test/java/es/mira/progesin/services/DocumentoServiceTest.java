@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -160,13 +159,11 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#descargaDocumento(es.mira.progesin.persistence.entities.gd.Documento)}
-     * .
-     * @throws SQLException lanza excepción
+     * {@link es.mira.progesin.services.DocumentoService#descargaDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      * @throws ProgesinException lanza excepción
      */
     @Test
-    public final void testDescargaDocumentoDocumento() throws SQLException, ProgesinException {
+    public final void testDescargaDocumentoDocumento() throws ProgesinException {
         byte[] fichero = {};
         DocumentoBlob docBloc = spy(DocumentoBlob.class);
         docBloc.setId(1L);
@@ -186,11 +183,10 @@ public class DocumentoServiceTest {
     
     /**
      * Test method for {@link es.mira.progesin.services.DocumentoService#descargaDocumento(java.lang.Long)}.
-     * @throws SQLException lanza excepción
      * @throws ProgesinException lanza excepción
      */
     @Test
-    public final void testDescargaDocumentoLong() throws SQLException, ProgesinException {
+    public final void testDescargaDocumentoLong() throws ProgesinException {
         byte[] fichero = {};
         DocumentoBlob docBloc = spy(DocumentoBlob.class);
         docBloc.setId(1L);

@@ -248,10 +248,9 @@ public class ProvisionalSolicitudBeanTest {
     /**
      * Test method for
      * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
-     * @throws ProgesinException lanzada
      */
     @Test
-    public final void testGestionarCargaDocumentoExtensionIncorrecta() throws ProgesinException {
+    public final void testGestionarCargaDocumentoExtensionIncorrecta() {
         FileUploadEvent event = mock(FileUploadEvent.class);
         UploadedFile archivo = mock(UploadedFile.class);
         when(event.getFile()).thenReturn(archivo);

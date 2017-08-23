@@ -36,9 +36,6 @@
                     <h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
                     <p:inputText id="nombreUnidad" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.nombreUnidad}" converter="#{trimConverter}" />
 
-                    <h:outputLabel for="usernameEnvio" value="Usuario creación:" />
-                    <p:inputText id="usernameEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.usernameEnvio}" converter="#{trimConverter}"/>
-
                 </div>
 
                 <div class="columnaDchaFormulario">
@@ -58,6 +55,9 @@
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoCuestionarioEnviado" itemLabel="#{estadoCuestionarioEnviado.descripcion}" itemValue="#{estadoCuestionarioEnviado}" />
                     </p:selectOneMenu>
+
+                    <h:outputLabel for="usernameEnvio" value="Usuario envío:" />
+                    <p:inputText id="usernameEnvio" value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.usernameEnvio}" converter="#{trimConverter}"/>
 
                     <h:outputLabel for="fechaDesde" value="Fecha alta desde:" />
                     <p:calendar value="#{cuestionarioEnviadoBean.cuestionarioEnviadoBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
