@@ -132,7 +132,7 @@ public class NuevoModeloInformeBean implements Serializable {
      */
     public void aniadeArea(String area) {
         nuevoModeloInformeService.aniadeArea(area, listaAreas);
-    };
+    }
     
     /**
      * Añade un subarea al área.
