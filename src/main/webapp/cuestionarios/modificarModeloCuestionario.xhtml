@@ -12,10 +12,10 @@
                     <p:panel header="Nombre">
                         <div class="bloqueFormulario">
                             <h:outputLabel for="nombreModelo" value="Nombre del modelo (*):" />
-                            <p:inputText id="nombreModelo" value="#{modificarModeloCuestionarioBean.modeloCuestionario.descripcion}" converter="#{trimConverter}" required="true" requiredMessage="Introduzca un nombre para el modelo" maxlength="255" />
+                            <p:inputText id="nombreModelo" value="#{modificarModeloCuestionarioBean.modeloCuestionario.descripcion}" converter="#{trimConverter}" required="#{param['form:cancelar']==null}"  requiredMessage="Introduzca un nombre para el modelo" maxlength="255" />
                             <p:messages for="nombreModelo" autoUpdate="true" closable="true" />
                             <h:outputLabel for="codigoModelo" value="Código del modelo (*):" />
-                            <p:inputText id="codigoModelo" value="#{modificarModeloCuestionarioBean.modeloCuestionario.codigo}" converter="#{trimConverter}" required="true" requiredMessage="Introduzca un código para el modelo" maxlength="255" />
+                            <p:inputText id="codigoModelo" value="#{modificarModeloCuestionarioBean.modeloCuestionario.codigo}" converter="#{trimConverter}" required="#{param['form:cancelar']==null}"   requiredMessage="Introduzca un código para el modelo" maxlength="255" />
                             <p:messages for="codigoModelo" autoUpdate="true" closable="true" />
                         </div>
 
@@ -208,7 +208,7 @@
             </p:wizard>
             
             <div class="botonesFormulario">
-               <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+               <p:commandButton id="cancelar" value="Cancelar" icon="fa fa-fw fa-undo" >
                     <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
                </p:commandButton>
             </div>
