@@ -60,7 +60,7 @@ public class VerificadorExtensionesTest {
     /**
      * Test method for
      * {@link es.mira.progesin.util.VerificadorExtensiones#extensionCorrecta(org.primefaces.model.UploadedFile)}.
-     * @throws IOException
+     * @throws IOException Excepciones producidas
      */
     @Test
     public final void testExtensionCorrectaNoVerificada() throws IOException {

@@ -1,6 +1,7 @@
 package es.mira.progesin.services;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
@@ -99,11 +100,20 @@ public class EstadisticaService implements IEstadisticaService {
             File fileImg) throws ProgesinException {
         Map<EstadoInspeccionEnum, List<Inspeccion>> mapaEstados = new EnumMap<>(EstadoInspeccionEnum.class);
         
-        for (EstadoInspeccionEnum estado : listaEstadosSeleccionados) {
-            filtro.setEstado(estado);
-            List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteria(0, 0, "id",
-                    SortOrder.ASCENDING, filtro);
-            mapaEstados.put(estado, listaInspecciones);
+        filtro.setListaEstados(listaEstadosSeleccionados);
+        List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteriaEstadisticas(filtro);
+        
+        for (Inspeccion inspeccion : listaInspecciones) {
+            List<Inspeccion> lista = null;
+            EstadoInspeccionEnum estado = inspeccion.getEstadoInspeccion();
+            if (mapaEstados.get(estado) != null) {
+                lista = mapaEstados.get(estado);
+            } else {
+                lista = new ArrayList<>();
+            }
+            lista.add(inspeccion);
+            
+            mapaEstados.put(estado, lista);
         }
         
         generadorPDF.setMapaEstados(mapaEstados);

@@ -51,7 +51,6 @@ public class EstadisticaServiceTest {
     @Mock
     private IInspeccionesService inspeccionesService;
     
-    
     /**
      * Instancia de prueba para el servicio de guías.
      */
@@ -135,7 +134,7 @@ public class EstadisticaServiceTest {
         estados.add(estado);
         File fileImg = mock(File.class);
         estadisticasService.exportar(filtro, estados, fileImg);
-        verify(inspeccionesService, times(1)).buscarInspeccionPorCriteria(0, 0, "id", SortOrder.ASCENDING, filtro);
+        verify(inspeccionesService, times(1)).buscarInspeccionPorCriteriaEstadisticas(filtro);
         verify(generadorPDF, times(1)).exportarPdf();
         
     }

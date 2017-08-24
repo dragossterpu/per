@@ -28,7 +28,6 @@ import javax.faces.application.FacesMessage;
 import javax.imageio.ImageIO;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -157,7 +156,6 @@ public class EstadisticaBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.EstadisticaBean#getEstadisticas()}.
      */
     @Test
-    @Ignore
     public final void testGetEstadisticas() {
         Map<EstadoInspeccionEnum, Integer> mapaResultados = new EnumMap<>(EstadoInspeccionEnum.class);
         mapaResultados.put(EstadoInspeccionEnum.M_FINALIZADA, 2);
@@ -172,7 +170,6 @@ public class EstadisticaBeanTest {
         String redireccion = estadisticaBean.getEstadisticas();
         assertThat(estadisticaBean.getFiltro()).isNotNull();
         assertThat(estadisticaBean.getTotal()).isEqualTo(0);
-        assertThat(estadisticaBean.getGrafica()).isNotNull();
         
         assertThat(redireccion).isEqualTo("/estadisticas/estadisticas?faces-redirect=true");
     }
@@ -181,7 +178,6 @@ public class EstadisticaBeanTest {
      * Test method for {@link es.mira.progesin.web.beans.EstadisticaBean#limpiarBusqueda()}.
      */
     @Test
-    @Ignore
     public final void testLimpiarBusqueda() {
         Map<EstadoInspeccionEnum, Integer> mapaResultados = new EnumMap<>(EstadoInspeccionEnum.class);
         mapaResultados.put(EstadoInspeccionEnum.M_FINALIZADA, 2);
@@ -195,7 +191,6 @@ public class EstadisticaBeanTest {
         estadisticaBean.limpiarBusqueda();
         assertThat(estadisticaBean.getFiltro()).isNotNull();
         assertThat(estadisticaBean.getTotal()).isEqualTo(0);
-        assertThat(estadisticaBean.getGrafica()).isNotNull();
         
     }
     

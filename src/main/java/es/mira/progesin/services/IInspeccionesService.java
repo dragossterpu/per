@@ -155,4 +155,13 @@ public interface IInspeccionesService {
      */
     String getTextoRegistro(Inspeccion insp, Inspeccion inspMod, List<Inspeccion> inspecciones,
             List<Inspeccion> inspeccionesMod);
+    
+    /**
+     * Método que realiza una consulta de inspecciones, usando criteria, coincidente con determinados parámetros.
+     * 
+     * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
+     * @return lista de inspecciones resultado de la consulta
+     */
+    public List<Inspeccion> buscarInspeccionPorCriteriaEstadisticas(InspeccionBusqueda busqueda);
+    
 }

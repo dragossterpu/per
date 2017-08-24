@@ -51,7 +51,10 @@ public class EstadisticaBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    List<Inspeccion> listaDetalle;
+    /**
+     * Lista donde se detallan las inspecciones que se encuentran en un estado.
+     */
+    private List<Inspeccion> listaDetalle;
     
     /**
      * Filtro de búsqueda para seleccionar las estadísticas a mostrar.
@@ -114,7 +117,6 @@ public class EstadisticaBean implements Serializable {
     @Autowired
     private transient ExportadorWord exportadorWord;
     
-    
     /**
      * Inicializa el bean.
      * 
@@ -125,9 +127,10 @@ public class EstadisticaBean implements Serializable {
         listaDetalle = new ArrayList<>();
         filtro = new InspeccionBusqueda();
         listaEstados = Arrays.stream(EstadoInspeccionEnum.values()).collect(Collectors.toList());
-        total = 0;
+        estadosSeleccionados = new ArrayList<>();
         grafica = new PieChartModel();
         
+        total = 0;
     }
     
     /**
@@ -236,15 +239,22 @@ public class EstadisticaBean implements Serializable {
     /**
      * Genera un gráfico de sectores a partir de los datos de las estadísticas.
      */
-    private void createGrafica() {
+    public void createGrafica() {
         grafica = new PieChartModel();
-        for (EstadoInspeccionEnum estado : listaEstados) {
+        
+        List<EstadoInspeccionEnum> lista = listaEstados;
+        if (estadosSeleccionados != null && !estadosSeleccionados.isEmpty()) {
+            lista = estadosSeleccionados;
+        }
+        
+        for (EstadoInspeccionEnum estado : lista) {
             grafica.set(estado.getDescripcion(), mapaResultados.get(estado));
         }
-        grafica.setShowDatatip(false);
+        grafica.setShowDataLabels(true);
+        grafica.setShowDatatip(true);
         grafica.setLegendPosition("w");
         grafica.setSeriesColors(
-                "FFFFFF,C0C0C0,808080,d0b38e,FF0000,ec9931,FFFF00,00FF00,008000,00FFFF,008080,0000FF,800080,f6546a,084D6E");
+                "008000,00FFFF,008080,0000FF,800080,f6546a,084D6E,FFFFFF,C0C0C0,808080,d0b38e,FF0000,ec9931,FFFF00,00FF00");
         
     }
     

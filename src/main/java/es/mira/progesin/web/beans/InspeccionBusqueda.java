@@ -87,9 +87,14 @@ public class InspeccionBusqueda implements Serializable {
     private CuatrimestreEnum cuatrimestre;
     
     /**
-     * Filtro stado.
+     * Filtro estado.
      */
     private EstadoInspeccionEnum estado;
+    
+    /**
+     * Filtro stado.
+     */
+    private List<EstadoInspeccionEnum> listaEstados;
     
     /**
      * Filtro provincia.

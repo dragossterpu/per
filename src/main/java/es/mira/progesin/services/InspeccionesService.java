@@ -196,6 +196,60 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     /**
+     * Método que realiza una consulta de inspecciones, usando criteria, coincidente con determinados parámetros.
+     * 
+     * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada
+     * @return lista de inspecciones resultado de la consulta
+     */
+    
+    @Override
+    public List<Inspeccion> buscarInspeccionPorCriteriaEstadisticas(InspeccionBusqueda busqueda) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Inspeccion.class, "inspeccion");
+        consultaCriteriaInspeccionesEstadistica(busqueda, criteria);
+        
+        @SuppressWarnings("unchecked")
+        List<Inspeccion> listaInspecciones = criteria.list();
+        session.close();
+        
+        return listaInspecciones;
+    }
+    
+    /**
+     * Consulta criteria para búsqueda de inspecciones para la generación de estadísticas.
+     * 
+     * @param busquedaInspecciones filtro de búsqueda
+     * @param criteria objeto criteria
+     */
+    
+    private void consultaCriteriaInspeccionesEstadistica(InspeccionBusqueda busquedaInspecciones, Criteria criteria) {
+        
+        if (busquedaInspecciones.getFechaDesde() != null) {
+            criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaInspecciones.getFechaDesde()));
+        }
+        
+        if (busquedaInspecciones.getFechaHasta() != null) {
+            Date fechaHasta = new Date(busquedaInspecciones.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
+            criteria.add(Restrictions.le(Constantes.FECHAALTA, fechaHasta));
+        }
+        
+        if (busquedaInspecciones.getTipoInspeccion() != null) {
+            criteria.add(Restrictions.eq("tipoInspeccion", busquedaInspecciones.getTipoInspeccion()));
+        }
+        
+        if (busquedaInspecciones.getListaEstados() != null) {
+            criteria.add(Restrictions.in("estadoInspeccion", (busquedaInspecciones.getListaEstados())));
+        }
+        
+        if (busquedaInspecciones.getProvincia() != null) {
+            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
+            subquery.add(Restrictions.eq("munic.provincia", busquedaInspecciones.getProvincia()));
+            subquery.setProjection(Projections.property("munic.id"));
+            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
+        }
+    }
+    
+    /**
      * Consulta criteria para búsqueda de inspecciones.
      * 
      * @param busquedaInspecciones filtro de búsqueda

@@ -64,12 +64,17 @@
                             <p:graphicImage ajax="false" value="/images/statistics.png" onclick="PF('dialogG').show()"/>
                             
                         </p:outputPanel>
-                        <p:dataTable  id="tablaEstadisticas"  value="#{estadisticaBean.listaEstados}" var="estado"
+                        <p:dataTable  id="tablaEstadisticas"  value="#{estadisticaBean.listaEstados}" var="estado"  
                          selection="#{estadisticaBean.estadosSeleccionados}" rowKey="#{estado.descripcion}" rendered="#{estadisticaBean.total ne 0}">
         
                             <f:facet name="header">
                                  Estadisticas
                             </f:facet>
+                            
+                           <p:ajax event="rowSelectCheckbox" listener="#{estadisticaBean.createGrafica}" update="formEstadisticas:dialogGrafica" />
+                           <p:ajax event="rowUnselectCheckbox" listener="#{estadisticaBean.createGrafica}" update="formEstadisticas:dialogGrafica" />
+                           <p:ajax event="toggleSelect" listener="#{estadisticaBean.createGrafica}" update="formEstadisticas:dialogGrafica" />
+                           
                            <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false"/>
                            <p:column  width="10" exportable="false">
                                <p:rowToggler />
@@ -121,7 +126,7 @@
                         
                 
              </p:outputPanel>
-             <p:messages id="message" />
+             <p:messages id="message" autoUpdate="true"/>
               <div class="botonesFormulario">
              
                   <p:commandButton  value="Generar informe estadístico"  update="message" ajax="false" 
@@ -137,7 +142,6 @@
                   // exportAsImage() will return a base64 png encoded string
                   	
                   	PF('dialogG').show();
-                  	
                   	img =  PF('graficaImagen').exportAsImage();
                   	document.getElementById('formEstadisticas:b64').value = img.src;
                   	PF('dialogG').hide();

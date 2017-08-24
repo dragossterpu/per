@@ -47,6 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationSuccessHandlerPersonalizado authenticationSuccessHandlerPersonalizado;
     
     /**
+     * Manejador de login incorrectos en el sistema.
+     */
+    @Autowired
+    private AuthenticationFailureHandlerPersonalizado authenticationFailureHandlerPersonalizado;
+    
+    /**
      * Configuramos el UserDetailsService y el PasswordEncoder que vamos a usar.
      * @throws Exception
      */
@@ -71,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO falta limitar el acceso por url a todas las rutas a las que no pueden acceder todos los usuarios, por ejemplo, los provisionales
+        // TODO falta limitar el acceso por url a todas las rutas a las que no pueden acceder todos los usuarios, por
+        // ejemplo, los provisionales
         http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
                 .permitAll().antMatchers(Constantes.RUTALOGIN + "/**").anonymous().antMatchers("/acceso/**").anonymous()
                 // Acceso a la administración sólo para el role ADMIN
@@ -81,7 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre())
                 // Al resto pueden acceder todos los usuarios autenticados
                 .anyRequest().authenticated().and().formLogin().loginPage(Constantes.RUTALOGIN).permitAll()
-                .successHandler(authenticationSuccessHandlerPersonalizado).failureUrl(Constantes.RUTALOGIN);
+                .successHandler(authenticationSuccessHandlerPersonalizado)
+                .failureHandler(authenticationFailureHandlerPersonalizado);
         
         http.logout().logoutUrl(Constantes.RUTALOGOUT).logoutSuccessUrl(Constantes.RUTALOGIN);
         
