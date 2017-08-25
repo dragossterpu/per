@@ -30,7 +30,7 @@ import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.WordGenerator;
+import es.mira.progesin.util.WordGeneratorGuias;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -89,7 +89,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      * Generador de documentos Word.
      */
     @Autowired
-    private transient WordGenerator wordGenerator;
+    private transient WordGeneratorGuias wordGenerator;
     
     /**
      * Servicio de registro de actividad.

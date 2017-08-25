@@ -38,7 +38,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGeneratorCuestionarios;
-import es.mira.progesin.util.WordGenerator;
+import es.mira.progesin.util.WordGeneratorCuestionarios;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -181,7 +181,7 @@ public class VisualizarCuestionario implements Serializable {
      * Generador de words.
      */
     @Autowired
-    private transient WordGenerator wordGenerator;
+    private transient WordGeneratorCuestionarios wordGenerator;
     
     /**
      * Generador de PDF.
@@ -430,7 +430,7 @@ public class VisualizarCuestionario implements Serializable {
      */
     public void crearDocumentoWordCuestionarioPersonalizado(CuestionarioPersonalizado cuestionario) {
         try {
-            setFile(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionario));
+            setFile(wordGenerator.exportar(cuestionario));
         } catch (ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del documento Word");

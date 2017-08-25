@@ -58,7 +58,7 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGeneratorCuestionarios;
-import es.mira.progesin.util.WordGenerator;
+import es.mira.progesin.util.WordGeneratorCuestionarios;
 
 /**
  * 
@@ -132,7 +132,7 @@ public class VisualizarCuestionarioTest {
      * Mock de Generador de words.
      */
     @Mock
-    private WordGenerator wordGenerator;
+    private WordGeneratorCuestionarios wordGenerator;
     
     /**
      * Mock de Generador de PDF.
@@ -578,10 +578,10 @@ public class VisualizarCuestionarioTest {
     public final void testCrearDocumentoWordCuestionarioPersonalizado() throws ProgesinException {
         CuestionarioPersonalizado cuestionarioPersonalizado = mock(CuestionarioPersonalizado.class);
         StreamedContent doc = mock(StreamedContent.class);
-        when(wordGenerator.crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado)).thenReturn(doc);
+        when(wordGenerator.exportar(cuestionarioPersonalizado)).thenReturn(doc);
         
         visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(cuestionarioPersonalizado);
-        verify(wordGenerator, times(1)).crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado);
+        verify(wordGenerator, times(1)).exportar(cuestionarioPersonalizado);
         assertThat(visualizarCuestionario.getFile()).isEqualTo(doc);
     }
     
@@ -593,8 +593,7 @@ public class VisualizarCuestionarioTest {
     @Test
     public final void testCrearDocumentoWordCuestionarioPersonalizadoProgesinException() throws ProgesinException {
         CuestionarioPersonalizado cuestionarioPersonalizado = mock(CuestionarioPersonalizado.class);
-        doThrow(ProgesinException.class).when(wordGenerator)
-                .crearDocumentoCuestionarioPersonalizado(cuestionarioPersonalizado);
+        doThrow(ProgesinException.class).when(wordGenerator).exportar(cuestionarioPersonalizado);
         
         visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(cuestionarioPersonalizado);
         PowerMockito.verifyStatic(times(1));

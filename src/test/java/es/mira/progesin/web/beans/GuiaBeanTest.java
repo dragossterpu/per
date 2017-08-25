@@ -51,7 +51,7 @@ import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.WordGenerator;
+import es.mira.progesin.util.WordGeneratorGuias;
 
 /**
  * 
@@ -81,7 +81,7 @@ public class GuiaBeanTest {
      * Generador de documentos Word.
      */
     @Mock
-    private WordGenerator wordGenerator;
+    private WordGeneratorGuias wordGenerator;
     
     /**
      * Servicio de registro de actividad.

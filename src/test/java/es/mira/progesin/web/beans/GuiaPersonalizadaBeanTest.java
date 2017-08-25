@@ -45,7 +45,7 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaPersonalizadaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.util.WordGenerator;
+import es.mira.progesin.util.WordGeneratorGuias;
 
 /**
  * 
@@ -74,7 +74,7 @@ public class GuiaPersonalizadaBeanTest {
      * Generador de documentos Word.
      */
     @Mock
-    private WordGenerator wordGenerator;
+    private WordGeneratorGuias wordGenerator;
     
     /**
      * Servicio de registro de actividad.
