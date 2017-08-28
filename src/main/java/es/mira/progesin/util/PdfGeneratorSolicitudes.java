@@ -115,6 +115,7 @@ public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
         Table tabla = new Table(3);
         tabla.setWidthPercent(100);
         tabla.setKeepTogether(true);
+        tabla.setTextAlignment(TextAlignment.CENTER);
         
         Cell celda = new Cell();
         celda.add(solDocPrevia.getApoyoPuesto());

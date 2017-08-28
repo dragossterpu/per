@@ -36,7 +36,7 @@ import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
+import es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda;
 
 /**
  * Test del servicio de solicitud de documentación previa donde se usa criteria de hibernate.
@@ -87,7 +87,7 @@ public class SolicitudDocumentacionServiceCriteriaTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda)}.
      */
     @Test
     public final void testBuscarSolicitudDocPreviaCriteriaSinFiltros() {
@@ -112,7 +112,7 @@ public class SolicitudDocumentacionServiceCriteriaTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#buscarSolicitudDocPreviaCriteria(int, int, java.lang.String, org.primefaces.model.SortOrder, es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda)}.
      */
     @Test
     public final void testBuscarSolicitudDocPreviaCriteria() {
@@ -150,7 +150,7 @@ public class SolicitudDocumentacionServiceCriteriaTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#getCountSolicitudDocPreviaCriteria(es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda)}.
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#getCountSolicitudDocPreviaCriteria(es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda)}.
      */
     @Test
     public final void testGetCountSolicitudDocPreviaCriteria() {

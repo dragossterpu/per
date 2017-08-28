@@ -16,11 +16,8 @@
             <div class="bloqueFormulario">
                 <h4>Datos de la inspección</h4>
                 <div class="columnaIzdaFormulario">
-                    <h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
-                    <p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" queryDelay="1000" disabled="#{yaValidado or not esJefeInspeccionesApoyo}">
-                        <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
-                    </p:autoComplete>
-                    <p:messages for="infoInspeccion" autoUpdate="true" closable="true" />
+                    <h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección:" />
+                    <p:inputText  id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.nombreUnidad.concat(' - ').concat(solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.numero)}" disabled="true" />
 
                     <h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
                     <p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true" />
@@ -58,7 +55,7 @@
 
                     <h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
                     <p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación" disabled="#{yaAnulado or yaFinalizado or not esJefeInspeccionesApoyo}" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}">
-                        <p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')" />
+                        <p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')" disabled="#{yaValidado or not esJefeInspeccionesApoyo}"/>
                     </p:calendar>
                     <p:messages for="fechaLimiteEnvio" autoUpdate="true" closable="true" />
 

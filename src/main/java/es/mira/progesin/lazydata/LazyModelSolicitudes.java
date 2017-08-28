@@ -9,7 +9,7 @@ import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
+import es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda;
 import lombok.Getter;
 import lombok.Setter;
 

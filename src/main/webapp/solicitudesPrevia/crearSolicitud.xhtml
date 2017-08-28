@@ -2,7 +2,7 @@
     <ui:define name="content">
 
         <h:form>
-            <p:remoteCommand name="onload" action="#{solicitudDocPreviaBean.getFormularioCrearSolicitud}" update="form" autoRun="true" />
+            <p:remoteCommand name="onload" action="#{solicitudDocPreviaCreacionBean.getFormularioCrearSolicitud}" update="form" autoRun="true" />
         </h:form>
                 
         <ui:param name="titulo" value="Crear solicitud de documentación" />
@@ -14,7 +14,7 @@
         <h:form id="form">
 
             <p:growl id="growl" sticky="true" showDetail="true" />
-            <p:wizard flowListener="#{solicitudDocPreviaBean.onFlowProcess}" nextLabel="Siguiente" backLabel="Atrás">
+            <p:wizard flowListener="#{solicitudDocPreviaCreacionBean.onFlowProcess}" nextLabel="Siguiente" backLabel="Atrás">
                 <div class="bloqueFormulario">
                     <p:tab id="general" title="Datos contenido">
                         <br></br>
@@ -23,43 +23,43 @@
                             <h:panelGrid columns="2" columnClasses="label, value">
 
                                 <h:outputLabel for="infoInspeccion" value="Nombre Unidad y Número Inspección (*):" />
-                                <p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" queryDelay="1000">
+                                <p:autoComplete id="infoInspeccion" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.inspeccion}" completeMethod="#{solicitudDocPreviaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" queryDelay="1000">
                                     <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
                                 </p:autoComplete>
 
                                 <h:outputLabel for="tipoInspeccion" value="Carácter inspección:" />
-                                <p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true" />
+                                <p:inputText id="tipoInspeccion" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.inspeccion.tipoInspeccion.descripcion}" disabled="true" />
 
                                 <h:outputLabel for="ambitoInspeccion" value="Ámbito inspección:" />
-                                <p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.ambito.descripcion}" disabled="true" />
+                                <p:inputText id="ambitoInspeccion" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.inspeccion.ambito.descripcion}" disabled="true" />
 
                                 <h:outputLabel for="cuatrimestreInspeccion" value="Cuatrimestre inspección:" />
-                                <p:inputText id="cuatrimestreInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion}" disabled="true" />
+                                <p:inputText id="cuatrimestreInspeccion" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.inspeccion.cuatrimestre.descripcion}" disabled="true" />
 
                                 <h:outputLabel for="anioInspeccion" value="Año inspección:" />
-                                <p:inputText id="anioInspeccion" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.inspeccion.anio}" disabled="true" />
+                                <p:inputText id="anioInspeccion" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.inspeccion.anio}" disabled="true" />
 
                                 <h:outputLabel for="asunto" value="Asunto (*):" />
-                                <p:inputText id="asunto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}" />
+                                <p:inputText id="asunto" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}" />
 
                                 <h:outputLabel for="destinatario" value="Destinatario (*):" />
-                                <p:inputText id="destinatario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" converter="#{trimConverter}" />
+                                <p:inputText id="destinatario" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" converter="#{trimConverter}" />
 
                                 <h:outputLabel for="correoDestiantario" value="Correo destinatario (*):" />
-                                <p:inputText id="correoDestiantario" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
+                                <p:inputText id="correoDestiantario" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.correoDestinatario}" required="true" requiredMessage="Es obligatorio un correo del destinatario" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
                                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                                 </p:inputText>
 
                                 <h:outputLabel for="fechaLimiteEnvio" value="Fecha límite envío documentación (*):" />
-                                <p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" mindate="#{currentDate}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación">
+                                <p:calendar id="fechaLimiteEnvio" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" pattern="dd/MM/yyyy" locale="es" mindate="#{currentDate}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite envío documentación">
                                     <p:ajax event="dateSelect" update="fechaLimiteCumplimentar" global="false" oncomplete="$('[id*=fechaLimiteCumplimentar]').val('')" />
                                 </p:calendar>
 
                                 <h:outputLabel for="fechaLimiteCumplimentar" value="Fecha límite cumplimentar cuestionario (*):" />
-                                <p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" locale="es" mindate="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" />
+                                <p:calendar id="fechaLimiteCumplimentar" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.fechaLimiteCumplimentar}" pattern="dd/MM/yyyy" locale="es" mindate="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.fechaLimiteEnvio}" navigator="true" required="true" requiredMessage="Es obligatorio una fecha limite cumplimentar cuestionario" />
 
                                 <h:outputLabel for="descargaPlantillas" value="Permitir descarga plantillas:" />
-                                <p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
+                                <p:selectBooleanCheckbox id="descargaPlantillas" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.descargaPlantillas}" />
                             </h:panelGrid>
                             <p:messages autoUpdate="true" closable="true" />
                         </p:panel>
@@ -69,7 +69,7 @@
                         <p:panel header="documentacion">
                             <br></br>
 
-                            <p:dataTable id="documentosSolicitud" var="documento" value="#{solicitudDocPreviaBean.listadoDocumentos}" paginator="true" rows="20" selection="#{solicitudDocPreviaBean.documentosSeleccionados}" rowKey="#{documento.id}">
+                            <p:dataTable id="documentosSolicitud" var="documento" value="#{solicitudDocPreviaCreacionBean.listadoDocumentos}" paginator="true" rows="20" selection="#{solicitudDocPreviaCreacionBean.documentosSeleccionados}" rowKey="#{documento.id}">
                                 <f:facet name="header">
 						            Tipos de documentación previa
 						        </f:facet>
@@ -84,7 +84,7 @@
 
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputLabel for="chkSkip" value="Confirmar: Solicitud sin documentación" />
-                                <h:selectBooleanCheckbox id="chkSkip" value="#{solicitudDocPreviaBean.skip}" />
+                                <h:selectBooleanCheckbox id="chkSkip" value="#{solicitudDocPreviaCreacionBean.skip}" />
                             </h:panelGrid>
 
                             <p:messages autoUpdate="true" closable="true" />
@@ -101,13 +101,13 @@
                             <h:panelGrid columns="2" columnClasses="label, value">
 
                                 <h:outputLabel for="apoyoPuesto" value="Puesto apoyo (*):" />
-                                <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoPuesto}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un puesto apoyo" />
+                                <p:inputText id="apoyoPuesto" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.apoyoPuesto}" converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un puesto apoyo" />
 
                                 <h:outputLabel for="apoyoTelefono" value="Teléfono apoyo (*):" />                                
-                                <p:inputNumber id="apoyoTelefono" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoTelefono}" converter="#{trimConverter}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="true" requiredMessage="Es obligatorio un teléfono apoyo" />
+                                <p:inputNumber id="apoyoTelefono" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.apoyoTelefono}" converter="#{trimConverter}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="true" requiredMessage="Es obligatorio un teléfono apoyo" />
 
                                 <h:outputLabel for="apoyoCorreo" value=" Correo apoyo (*):" />
-                                <p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.apoyoCorreo}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un correo apoyo">
+                                <p:inputText id="apoyoCorreo" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.apoyoCorreo}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" required="true" requiredMessage="Es obligatorio un correo apoyo">
                                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                                 </p:inputText>
 
@@ -126,7 +126,7 @@
 
                             </h:panelGrid>
                             <div class="botonesFormulario">
-                                <p:commandButton actionListener="#{solicitudDocPreviaBean.crearSolicitud}" value="Crear solicitud documentación previa" icon="fa fa-fw fa-user-plus" />
+                                <p:commandButton actionListener="#{solicitudDocPreviaCreacionBean.crearSolicitud}" value="Crear solicitud documentación previa" icon="fa fa-fw fa-user-plus" />
                                 <p:button outcome="/solicitudesPrevia/busquedaSolicitudesDocPrevia" value="Cancelar" icon="fa fa-fw fa-undo" />
                             </div>
                             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">

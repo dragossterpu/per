@@ -9,7 +9,7 @@ import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.gd.Documento;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
+import es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda;
 
 /**
  * Interfaz del servicio de solicitudes de documentación.

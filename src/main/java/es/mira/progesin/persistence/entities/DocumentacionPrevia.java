@@ -27,8 +27,8 @@ import lombok.ToString;
  * @author EZENTIS
  * @see es.mira.progesin.persistence.entities.gd.TipoDocumentacion
  * @see es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia
- * @see es.mira.progesin.web.beans.SolicitudDocPreviaBean
- * @see es.mira.progesin.web.beans.ProvisionalSolicitudBean
+ * @see es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBean
+ * @see es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean
  */
 @AllArgsConstructor
 @NoArgsConstructor

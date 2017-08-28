@@ -15,25 +15,25 @@
                 <div class="columnaIzdaFormulario">
 
                     <h:outputLabel for="nombreUnidad" value="Nombre de la unidad:" />
-                    <p:inputText id="nombreUnidad" value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.nombreUnidad}" converter="#{trimConverter}" />
+                    <p:inputText id="nombreUnidad" value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.nombreUnidad}" converter="#{trimConverter}" />
 
                     <h:outputLabel for="idInspeccion" value="Número exp. de la Inspección:" />
-                    <p:inputNumber id="idInspeccion" decimalPlaces="0" thousandSeparator="" converter="javax.faces.Long" value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.idInspeccion}" />
+                    <p:inputNumber id="idInspeccion" decimalPlaces="0" thousandSeparator="" converter="javax.faces.Long" value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.idInspeccion}" />
 
                     <h:outputLabel for="anioInspeccion" value="Año de la Inspección:" />
-                    <p:inputNumber id="anioInspeccion" decimalPlaces="0" thousandSeparator="" maxlength="4" converter="javax.faces.Integer" maxValue="9999" value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.anioInspeccion}" />
+                    <p:inputNumber id="anioInspeccion" decimalPlaces="0" thousandSeparator="" maxlength="4" converter="javax.faces.Integer" maxValue="9999" value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.anioInspeccion}" />
 
                     <h:outputLabel for="ambitoInspeccion" value="Ámbito de la Inspección:" />
                     <p:importEnum type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum" var="ambitos" allSuffix="ALL_ENUM_VALUES" />
-                    <p:selectOneMenu value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.ambitoInspeccion}" id="ambitoInspeccion">
+                    <p:selectOneMenu value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.ambitoInspeccion}" id="ambitoInspeccion">
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{ambitos.ALL_ENUM_VALUES}" var="ambitoInspeccionSolicitudDocPrevia" itemLabel="#{ambitoInspeccionSolicitudDocPrevia.descripcion}" itemValue="#{ambitoInspeccionSolicitudDocPrevia}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="tipoInspeccionSelect" value="Tipo de Inspección" />
-                    <p:selectOneMenu value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
+                    <p:selectOneMenu value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
-                        <f:selectItems value="#{solicitudDocPreviaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                        <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                     </p:selectOneMenu>
 
                 </div>
@@ -41,35 +41,35 @@
                 <div class="columnaDchaFormulario">
 
                     <h:outputLabel for="usuarioCreacion" value="Usuario creación" />
-                    <p:inputText value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.usuarioCreacion}" id="usuarioCreacion" converter="#{trimConverter}" />
+                    <p:inputText value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.usuarioCreacion}" id="usuarioCreacion" converter="#{trimConverter}" />
 
                     <h:outputLabel for="estado" value="Estado de la solicitud:" />
                     <p:importEnum type="es.mira.progesin.persistence.entities.enums.SolicitudDocPreviaEnum" var="estados" allSuffix="ALL_ENUM_VALUES" />
-                    <p:selectOneMenu value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.estado}" id="estado">
+                    <p:selectOneMenu value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.estado}" id="estado">
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoSolicitudDocPrevia" itemLabel="#{estadoSolicitudDocPrevia.descripcion}" itemValue="#{estadoSolicitudDocPrevia}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="fechaDesde" value="Fecha creación desde:" />
-                    <p:calendar value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
+                    <p:calendar value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.fechaDesde}" id="fechaDesde" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
 
                     <h:outputLabel for="fechaHasta" value="Fecha creación hasta:" />
-                    <p:calendar value="#{solicitudDocPreviaBean.solicitudDocPreviaBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
+                    <p:calendar value="#{solicitudDocPreviaBuscadorBean.solicitudDocPreviaBusqueda.fechaHasta}" id="fechaHasta" pattern="dd/MM/yyyy" locale="es" navigator="true" maxdate="#{currentDate}" />
 
                 </div>
             </div>
             <div class="botonesFormulario">
-                <p:commandButton actionListener="#{solicitudDocPreviaBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
-                <p:commandButton actionListener="#{solicitudDocPreviaBean.limpiarBusqueda}" value="Limpiar" update="busquedaSolicitudDocPrevia" icon="fa fa-eraser" />
+                <p:commandButton actionListener="#{solicitudDocPreviaBuscadorBean.buscarSolicitudDocPrevia}" value="Buscar" update="panelSolicitudes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+                <p:commandButton actionListener="#{solicitudDocPreviaBuscadorBean.limpiarBusqueda}" value="Limpiar" update="busquedaSolicitudDocPrevia" icon="fa fa-eraser" />
             </div>
 
             <p:separator styleClass="separator ui-state-disabled" />
 
             <p:outputPanel layout="block" id="panelSolicitudes">
-                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{solicitudDocPreviaBean.model.rowCount eq 0}">
+                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{solicitudDocPreviaBuscadorBean.model.rowCount eq 0}">
 					No existe ningún resultado que cumpla los parámetros de su búsqueda.
 				</p:outputPanel>
-                <p:outputPanel rendered="#{solicitudDocPreviaBean.model.rowCount ne 0}">
+                <p:outputPanel rendered="#{solicitudDocPreviaBuscadorBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
                         <p:dataExporter type="xls" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas" />
@@ -82,67 +82,67 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaSolicitudes" fileName="lista_solicitudes_documentacion_previas" />
                     </h:commandLink>
-                    <h:commandLink  action="#{solicitudDocPreviaBean.exportDoc}">
+                    <h:commandLink  action="#{solicitudDocPreviaBuscadorBean.exportDoc}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
                 </p:outputPanel>
 
-                <p:dataTable var="solicitud"  draggableColumns="true" value="#{solicitudDocPreviaBean.model}" id="tablaSolicitudes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{solicitudDocPreviaBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
+                <p:dataTable var="solicitud"  draggableColumns="true" value="#{solicitudDocPreviaBuscadorBean.model}" id="tablaSolicitudes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" rendered="#{solicitudDocPreviaBuscadorBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
                     <f:facet name="header">
 						Solicitudes documentación
 					 	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
                         <p:columnToggler datasource="tablaSolicitudes" trigger="toggler">
-                            <p:ajax event="toggle" listener="#{solicitudDocPreviaBean.onToggle}" />
+                            <p:ajax event="toggle" listener="#{solicitudDocPreviaBuscadorBean.onToggle}" />
                         </p:columnToggler>
                     </f:facet>
-                    <p:column headerText="Número Inspección" sortBy="#{solicitud.inspeccion.id}" width="60" visible="#{solicitudDocPreviaBean.listaColumnToggler[0]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[0]}">
+                    <p:column headerText="Número Inspección" sortBy="#{solicitud.inspeccion.id}" width="60" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[0]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[0]}">
                         <h:outputText value="#{solicitud.inspeccion.numero}" />
                     </p:column>
-                    <p:column headerText="Ámbito Inspección" sortBy="#{solicitud.inspeccion.ambito}" width="60" visible="#{solicitudDocPreviaBean.listaColumnToggler[1]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[1]}">
+                    <p:column headerText="Ámbito Inspección" sortBy="#{solicitud.inspeccion.ambito}" width="60" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[1]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[1]}">
                         <h:outputText value="#{solicitud.inspeccion.ambito}" />
                     </p:column>
-                    <p:column headerText="Tipo Inspección" sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="100" visible="#{solicitudDocPreviaBean.listaColumnToggler[2]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[2]}">
+                    <p:column headerText="Tipo Inspección" sortBy="#{solicitud.inspeccion.tipoInspeccion}" width="100" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[2]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[2]}">
                         <h:outputText value="#{solicitud.inspeccion.tipoInspeccion.descripcion}" />
                     </p:column>
-                    <p:column headerText="Unidad" sortBy="#{solicitud.inspeccion.nombreUnidad}" width="100" visible="#{solicitudDocPreviaBean.listaColumnToggler[3]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[3]}">
+                    <p:column headerText="Unidad" sortBy="#{solicitud.inspeccion.nombreUnidad}" width="100" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[3]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[3]}">
                         <h:outputText value="#{solicitud.inspeccion.nombreUnidad}" />
                     </p:column>
-                    <p:column headerText="Alta" sortBy="#{solicitud.fechaAlta}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[4]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[4]}">
+                    <p:column headerText="Alta" sortBy="#{solicitud.fechaAlta}" width="70" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[4]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[4]}">
                         <h:outputText value="#{solicitud.fechaAlta}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Validación Apoyo" sortBy="#{solicitud.fechaValidApoyo}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[5]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[5]}">
+                    <p:column headerText="Validación Apoyo" sortBy="#{solicitud.fechaValidApoyo}" width="70" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[5]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[5]}">
                         <h:outputText value="#{solicitud.fechaValidApoyo}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Validación Jefe Equipo" sortBy="#{solicitud.fechaValidJefeEquipo}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[6]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[6]}">
+                    <p:column headerText="Validación Jefe Equipo" sortBy="#{solicitud.fechaValidJefeEquipo}" width="70" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[6]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[6]}">
                         <h:outputText value="#{solicitud.fechaValidJefeEquipo}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[7]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[7]}">
+                    <p:column headerText="Enviada" sortBy="#{solicitud.fechaEnvio}" width="70" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[7]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[7]}">
                         <h:outputText value="#{solicitud.fechaEnvio}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Cumplimentada" sortBy="#{solicitud.fechaCumplimentacion}" width="90" visible="#{solicitudDocPreviaBean.listaColumnToggler[8]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[8]}">
+                    <p:column headerText="Cumplimentada" sortBy="#{solicitud.fechaCumplimentacion}" width="90" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[8]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[8]}">
                         <h:outputText value="#{solicitud.fechaCumplimentacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="No conforme" sortBy="#{solicitud.fechaNoConforme}" width="90" visible="#{solicitudDocPreviaBean.listaColumnToggler[9]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[9]}">
+                    <p:column headerText="No conforme" sortBy="#{solicitud.fechaNoConforme}" width="90" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[9]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[9]}">
                         <h:outputText value="#{solicitud.fechaNoConforme}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Finalizada" sortBy="#{solicitud.fechaFinalizacion}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[10]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[10]}">
+                    <p:column headerText="Finalizada" sortBy="#{solicitud.fechaFinalizacion}" width="70" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[10]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[10]}">
                         <h:outputText value="#{solicitud.fechaFinalizacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Anulada" sortBy="#{solicitud.fechaBaja}" width="70" visible="#{solicitudDocPreviaBean.listaColumnToggler[11]}" exportable="#{solicitudDocPreviaBean.listaColumnToggler[11]}">
+                    <p:column headerText="Anulada" sortBy="#{solicitud.fechaBaja}" width="70" visible="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[11]}" exportable="#{solicitudDocPreviaBuscadorBean.listaColumnToggler[11]}">
                         <h:outputText value="#{solicitud.fechaBaja}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
@@ -150,10 +150,10 @@
 
 
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-                        <p:commandButton title="Ver solicitud" icon="fa fa-eye" action="#{solicitudDocPreviaBean.visualizarSolicitud(solicitud)}" />
+                        <p:commandButton title="Ver solicitud" icon="fa fa-eye" action="#{solicitudDocPreviaBuscadorBean.visualizarSolicitud(solicitud)}" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspeccionesApoyo}">
-                        <p:commandButton title="Modificar solicitud" icon="fa fa-edit" action="#{solicitudDocPreviaBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" />
+                        <p:commandButton title="Modificar solicitud" icon="fa fa-edit" action="#{solicitudDocPreviaBuscadorBean.getFormModificarSolicitud(solicitud)}" update="tablaSolicitudes" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspeccionesApoyo}">
                         <p:commandButton title="Eliminar: Si no ha sido enviada se eliminará por completo, sino se anulará y se mantendrá en el registro." icon="fa fa-trash" actionListener="#{solicitudDocPreviaBean.eliminarSolicitud(solicitud)}" update=":busquedaSolicitudDocPrevia:panelSolicitudes" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
@@ -161,7 +161,7 @@
                         </p:commandButton>
                     </p:column>
                     <f:facet name="footer">
-       					Resultado de la búsqueda: #{solicitudDocPreviaBean.model.rowCount} solicitudes.
+       					Resultado de la búsqueda: #{solicitudDocPreviaBuscadorBean.model.rowCount} solicitudes.
     				</f:facet>
                 </p:dataTable>
 

@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.solicitudes;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,6 +36,7 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.VerificadorExtensiones;
+import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 

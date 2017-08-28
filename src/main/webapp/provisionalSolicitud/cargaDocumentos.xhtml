@@ -12,10 +12,10 @@
 
         <div class="bloqueVista">
             <p:dataTable var="documentoPrevio" value="#{provisionalSolicitudBean.listadoDocumentosPrevios}">
-                <p:column headerText="DOCUMENTO" width="450">
+                <p:column headerText="DOCUMENTO">
                     <h:outputText value="#{documentoPrevio.descripcion}" />
                 </p:column>
-                <p:column headerText="NOMBRE ¹" width="70">
+                <p:column headerText="NOMBRE ¹" width="150">
                     <h:outputText value="#{documentoPrevio.nombre}" />
                 </p:column>
                 <p:column headerText="EXTENSIÓN" width="100">

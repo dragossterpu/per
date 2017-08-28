@@ -28,7 +28,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
-import es.mira.progesin.web.beans.SolicitudDocPreviaBusqueda;
+import es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda;
 import lombok.NoArgsConstructor;
 
 /**

@@ -1,4 +1,4 @@
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.solicitudes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 

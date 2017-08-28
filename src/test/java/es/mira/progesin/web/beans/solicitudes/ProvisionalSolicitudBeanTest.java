@@ -1,7 +1,7 @@
 /**
  * 
  */
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.solicitudes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,6 +55,8 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.VerificadorExtensiones;
+import es.mira.progesin.web.beans.ApplicationBean;
+import es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean;
 
 /**
  * Test para ProvisionalSolicitudBean.
@@ -177,7 +179,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#visualizarSolicitud()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#visualizarSolicitud()}.
      */
     @Test
     public final void testVisualizarSolicitud() {
@@ -201,7 +203,7 @@ public class ProvisionalSolicitudBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -247,7 +249,7 @@ public class ProvisionalSolicitudBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
      */
     @Test
     public final void testGestionarCargaDocumentoExtensionIncorrecta() {
@@ -267,7 +269,7 @@ public class ProvisionalSolicitudBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -313,7 +315,7 @@ public class ProvisionalSolicitudBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#gestionarCargaDocumento(org.primefaces.event.FileUploadEvent)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -361,7 +363,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#init()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#init()}.
      */
     @Test
     public final void testInit() {
@@ -375,7 +377,7 @@ public class ProvisionalSolicitudBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      */
     @Test
     public final void testEliminarDocumento() {
@@ -388,7 +390,7 @@ public class ProvisionalSolicitudBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#eliminarDocumento(es.mira.progesin.persistence.entities.gd.Documento)}.
      */
     @Test
     public final void testEliminarDocumentoException() {
@@ -404,7 +406,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -416,7 +418,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -432,7 +434,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
      */
     @Test
     public final void testEnviarDocumentacionPrevia() {
@@ -462,7 +464,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
      */
     @Test
     public final void testEnviarDocumentacionPreviaException() {
@@ -487,7 +489,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#guardarBorrardor()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#guardarBorrardor()}.
      */
     @Test
     public final void testGuardarBorrardor() {
@@ -507,7 +509,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#guardarBorrardor()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#guardarBorrardor()}.
      */
     @Test
     public final void testGuardarBorrardorException() {
@@ -525,7 +527,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#plantillasAmbitoSolicitud()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#plantillasAmbitoSolicitud()}.
      */
     @Test
     public final void testPlantillasAmbitoSolicitud() {
@@ -538,7 +540,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#imprimirPdf()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#imprimirPdf()}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -554,7 +556,7 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.ProvisionalSolicitudBean#imprimirPdf()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#imprimirPdf()}.
      * @throws ProgesinException lanzada
      */
     @Test

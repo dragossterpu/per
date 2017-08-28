@@ -1,7 +1,7 @@
 /**
  * 
  */
-package es.mira.progesin.web.beans;
+package es.mira.progesin.web.beans.solicitudes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,6 +40,8 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.web.beans.ApplicationBean;
+import es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean;
 
 /**
  * Test del bean TipoDocumentacionBean.
@@ -116,7 +118,7 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoDocumentacionBean#tipoDocumentacionListado()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#tipoDocumentacionListado()}.
      */
     @Test
     public void testTipoDocumentacionListado() {
@@ -127,7 +129,7 @@ public class TipoDocumentacionBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}
+     * {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}
      * .
      */
     @Test
@@ -151,7 +153,7 @@ public class TipoDocumentacionBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}
+     * {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#eliminarDocumentacion(es.mira.progesin.persistence.entities.gd.TipoDocumentacion)}
      * .
      */
     @Test
@@ -174,7 +176,7 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoDocumentacionBean#init()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#init()}.
      */
     @Test
     public void testInit() {
@@ -200,7 +202,7 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoDocumentacionBean#altaTipo()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#altaTipo()}.
      */
     @Test
     public void testAltaTipo() {
@@ -226,7 +228,7 @@ public class TipoDocumentacionBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.TipoDocumentacionBean#altaTipo()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#altaTipo()}.
      */
     @Test
     public void testAltaTipoDataException() {
@@ -255,7 +257,7 @@ public class TipoDocumentacionBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#onRowEdit(org.primefaces.event.RowEditEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#onRowEdit(org.primefaces.event.RowEditEvent)}.
      */
     @Test
     public void testOnRowEdit() {
@@ -275,7 +277,7 @@ public class TipoDocumentacionBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.TipoDocumentacionBean#onRowEdit(org.primefaces.event.RowEditEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean#onRowEdit(org.primefaces.event.RowEditEvent)}.
      */
     @Test
     public void testOnRowEditException() {
