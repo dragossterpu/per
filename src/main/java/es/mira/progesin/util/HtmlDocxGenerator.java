@@ -8,15 +8,10 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.bind.JAXBException;
 
 import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
 import org.docx4j.docProps.core.dc.elements.ObjectFactory;
 import org.docx4j.docProps.core.dc.elements.SimpleLiteral;
-import org.docx4j.model.datastorage.migration.VariablePrepare;
 import org.docx4j.openpackaging.contenttype.CTOverride;
 import org.docx4j.openpackaging.contenttype.ContentTypeManager;
 import org.docx4j.openpackaging.contenttype.ContentTypes;
@@ -75,21 +70,9 @@ public class HtmlDocxGenerator implements Serializable {
             
             incluirTablaContenidos();
             
-            // EXPERIMENTAL
-            try {
-                VariablePrepare.prepare(documento);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Map<String, String> variables = new HashMap<>();
-            variables.put("titulo", titulo);
-            variables.put("fechaFinalizacion", fechaFinalizacion);
-            documento.getMainDocumentPart().variableReplace(variables);
-            
             docxStream = exportarDocx(nombreDocumento);
-            // docxStream = exportarPdf(nombreDocumento);
             
-        } catch (Docx4JException | URISyntaxException | IOException | JAXBException e) {
+        } catch (Docx4JException | URISyntaxException | IOException e) {
             throw new ProgesinException(e);
         }
         return docxStream;
@@ -107,20 +90,22 @@ public class HtmlDocxGenerator implements Serializable {
      */
     private void crearDocumentoConPlantilla(String titulo, String autor, String fechaFinalizacion)
             throws Docx4JException, URISyntaxException, IOException {
+        
+        // Cargar plantilla
         InputStream plantillaStream = StreamUtil.getResourceStream(Constantes.TEMPLATEINFORMEDOTX);
         documento = WordprocessingMLPackage.load(plantillaStream);
         plantillaStream.close();
         
+        // Añadir metadatos
         documento.setTitle(titulo);
         ObjectFactory of = new ObjectFactory();
         SimpleLiteral creator = of.createSimpleLiteral();
         creator.getContent().add(autor);
         documento.getDocPropsCorePart().getContents().setCreator(creator);
-        // SimpleLiteral created = of.createSimpleLiteral();
-        // created.getContent().add(fechaFinalizacion);
-        // documento.getDocPropsCorePart().getContents().setCreated(created);
+        documento.addDocPropsCustomPart();
+        documento.getDocPropsCustomPart().setProperty("fechaFinalizacion", fechaFinalizacion);
         
-        // Replace dotx content type with docx
+        // Convertir content type plantilla dotx en documento docx
         ContentTypeManager ctm = documento.getContentTypeManager();
         CTOverride override = ctm.getOverrideContentType().get(new URI("/word/document.xml"));
         override.setContentType(ContentTypes.WORDPROCESSINGML_DOCUMENT);
@@ -156,10 +141,6 @@ public class HtmlDocxGenerator implements Serializable {
         Toc.setTocHeadingText("Índice");
         TocGenerator tocGenerator = new TocGenerator(documento);
         
-        // EXPERIMENTAL (Genera temporales que no se pueden borrar)
-        // Tabla con núm. página, usa export-fo
-        // tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, false);
-        
         // Tabla sin núm. página
         tocGenerator.generateToc(1, TocHelper.DEFAULT_TOC_INSTRUCTION, true);
         // Forzar actualizar al abrir documento
@@ -189,30 +170,5 @@ public class HtmlDocxGenerator implements Serializable {
                 nombreDocumento + ".docx");
         return contenidoDOCX;
     }
-    
-    // EXPERIMENTAL (Genera temporales que no se pueden borrar)
-    // usa export-fo
-    // /**
-    // * Pasa el contenido del documento a un stream para su descarga.
-    // *
-    // * @param nombreDocumento nombre del archivo
-    // * @return stream
-    // * @throws Docx4JException error al guardar
-    // * @throws IOException error al cerrar el outputstream
-    // */
-    // private DefaultStreamedContent exportarPdf(String nombreDocumento) throws Docx4JException, IOException {
-    // DefaultStreamedContent contenidoPDF;
-    // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    //
-    // Docx4J.toPDF(documento, outputStream);
-    //
-    // ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-    //
-    // outputStream.close();
-    //
-    // contenidoPDF = new DefaultStreamedContent(inputStream, ContentTypeEnum.PDF.getContentType(),
-    // nombreDocumento + ".pdf");
-    // return contenidoPDF;
-    // }
     
 }

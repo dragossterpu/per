@@ -419,8 +419,10 @@ public class InformeBean implements Serializable {
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
                 informeFormateado.append(mapaRespuestas.get(subarea)[0]);
-                informeFormateado.append("<h3>Conclusiones y propuestas.</h3>");
-                informeFormateado.append(mapaRespuestas.get(subarea)[1]);
+                if (mapaRespuestas.get(subarea)[1] != null) {
+                    informeFormateado.append("<h3>Conclusiones y propuestas.</h3>");
+                    informeFormateado.append(mapaRespuestas.get(subarea)[1]);
+                }
             });
         });
         informeFormateado.append("</div>");
