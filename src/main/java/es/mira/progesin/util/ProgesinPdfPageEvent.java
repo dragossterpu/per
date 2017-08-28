@@ -19,6 +19,7 @@ import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.PngImage;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 
 /**
@@ -88,7 +89,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
      */
     private void insertarCabecera(Document document) throws ProgesinException {
         try {
-            Image cabecera = PngImage.getImage(StreamUtil.getResourceStream("static/images/cabecera_informe.png"));
+            Image cabecera = PngImage.getImage(StreamUtil.getResourceStream(Constantes.CABECERAINFORMEPDF));
             cabecera.scaleToFit(document.right() - document.leftMargin(), document.topMargin());
             cabecera.setAbsolutePosition((document.right() + document.leftMargin() - cabecera.getScaledWidth()) / 2,
                     document.top());
@@ -106,7 +107,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
      */
     private void insertarPie(PdfWriter writer, Document document) throws ProgesinException {
         try {
-            Image pie = PngImage.getImage(StreamUtil.getResourceStream("static/images/pie_informe.png"));
+            Image pie = PngImage.getImage(StreamUtil.getResourceStream(Constantes.PIEINFORMEPDF));
             pie.scaleToFit(document.right() - document.leftMargin(), document.bottomMargin());
             pie.setAbsolutePosition((document.right() + document.leftMargin() - pie.getScaledWidth()) / 2,
                     document.bottom() - 40);

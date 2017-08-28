@@ -156,6 +156,16 @@ public final class Constantes {
     public static final String TEMPLATEINFORMEDOTX = "/documentos/templateInforme.dotx";
     
     /**
+     * Constante ruta recurso imagen cabecera de las páginas del informes en PDF.
+     */
+    public static final String CABECERAINFORMEPDF = "static/images/cabecera_informe.png";
+    
+    /**
+     * Constante ruta recurso imagen pie de las páginas del informes en PDF.
+     */
+    public static final String PIEINFORMEPDF = "static/images/pie_informe.png";
+    
+    /**
      * Tamaño de página para los listados.
      */
     public static final int TAMPAGINA = 20;
