@@ -87,6 +87,10 @@ public class PuestoTrabajo implements Serializable {
     @Column(name = "username_modif")
     private String usernameModif;
     
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
     @Override
     public String toString() {
         return id.toString();
