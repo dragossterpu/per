@@ -13,12 +13,9 @@ import java.io.InputStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-
-import es.mira.progesin.services.IRegistroActividadService;
 
 /**
  * Test para el verificador de extensiones.
@@ -28,12 +25,6 @@ import es.mira.progesin.services.IRegistroActividadService;
  */
 @RunWith(PowerMockRunner.class)
 public class VerificadorExtensionesTest {
-    
-    /**
-     * Mock para el registro de actividad.
-     */
-    @Mock
-    private IRegistroActividadService registroActividadService;
     
     /**
      * Objeto verificador.
