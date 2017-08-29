@@ -19,7 +19,6 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelCuestionarioPersonalizado;
-import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
@@ -185,8 +184,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
         if (cuestionario.getFechaBaja() == null) {
             CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
             cuestionarioEnvio.setCuestionarioPersonalizado(cuestionario);
-            Inspeccion inspeccion = new Inspeccion();
-            cuestionarioEnvio.setInspeccion(inspeccion);
             
             envioCuestionarioBean
                     .setListaPlantillas(documentoService.buscaNombreTipoDocumento("PLANTILLA CUESTIONARIO"));

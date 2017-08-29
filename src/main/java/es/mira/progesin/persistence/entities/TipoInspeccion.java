@@ -13,7 +13,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Entidad para almacenar los modelos de inspección.
@@ -25,7 +24,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, of = "codigo")
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -52,5 +50,14 @@ public class TipoInspeccion extends AbstractEntity implements Serializable, Comp
     @Override
     public int compareTo(TipoInspeccion o) {
         return this.descripcion.compareTo(o.descripcion);
+    }
+    
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return codigo;
     }
 }

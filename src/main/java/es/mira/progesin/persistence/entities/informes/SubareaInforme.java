@@ -63,17 +63,18 @@ public class SubareaInforme implements Serializable {
     // private Long areaId;
     
     /**
-     * Sobreescritura del método toString para que muestre sólo la descripción.
-     */
-    @Override
-    public String toString() {
-        return descripcion;
-    }
-    
-    /**
      * Orden de la subárea dentro del área.
      */
     @Column(name = "orden")
     private Integer orden;
+    
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
     
 }

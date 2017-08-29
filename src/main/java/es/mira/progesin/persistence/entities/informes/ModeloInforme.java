@@ -105,4 +105,13 @@ public class ModeloInforme implements Serializable {
     @Column(name = "fecha_baja")
     private Date fechaBaja;
     
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+    
 }

@@ -13,7 +13,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 
@@ -26,12 +25,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode()
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
 @Table(name = "tipoDocumento")
-
 public class TipoDocumento implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -48,4 +45,12 @@ public class TipoDocumento implements Serializable {
     @Column(name = "nombre")
     String nombre;
     
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }

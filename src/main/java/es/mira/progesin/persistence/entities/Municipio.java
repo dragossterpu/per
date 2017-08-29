@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,15 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 
@@ -35,11 +31,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode()
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "municipios")
 public class Municipio implements Serializable {
     
@@ -67,4 +61,12 @@ public class Municipio implements Serializable {
     @JoinColumn(name = "code_province", foreignKey = @ForeignKey(name = "FK_PROVINCIA"), nullable = false)
     private Provincia provincia;
     
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }

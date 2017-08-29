@@ -70,4 +70,13 @@ public class ModeloCuestionario implements Serializable {
     @OrderBy("orden")
     private List<AreasCuestionario> areas;
     
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+    
 }

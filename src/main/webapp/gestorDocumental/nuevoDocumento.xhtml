@@ -37,7 +37,7 @@
                         </p:column>
                     </p:dataTable>
                     <div class="centrarBotonesDialog">
-                        <p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
+                        <p:autoComplete id="infoInspeccion" binding="#{infoInspeccion}" completeMethod="#{gestorDocumentalBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{autocompleteInspeccion}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
                         </p:autoComplete>
                         <p:commandButton value="Asociar inspección" actionListener="#{gestorDocumentalBean.asignarNuevaInspeccion(infoInspeccion.value)}" update="tablaInspecciones,infoInspeccion" icon="fa fa-plus">
                             <p:resetInput target="infoInspeccion" />

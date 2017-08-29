@@ -75,14 +75,14 @@ public class AreaInforme implements Serializable {
      */
     @Column(name = "orden")
     private Integer orden;
-
+    
     /**
-     * Sobreescritura del método toString para que muestre sólo la descripción.
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
      */
     @Override
     public String toString() {
-        return descripcion;
+        return id.toString();
     }
-    
     
 }

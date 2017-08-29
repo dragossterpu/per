@@ -86,12 +86,11 @@ public class PreguntasCuestionario implements Serializable {
     private String usernameBaja;
     
     /**
-     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para los OrderList de
-     * Primefaces.
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
      */
     @Override
     public String toString() {
-        return pregunta;
+        return id.toString();
     }
-    
 }

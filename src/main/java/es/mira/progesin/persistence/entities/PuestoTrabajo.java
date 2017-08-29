@@ -87,4 +87,9 @@ public class PuestoTrabajo implements Serializable {
     @Column(name = "username_modif")
     private String usernameModif;
     
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+    
 }

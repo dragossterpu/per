@@ -19,7 +19,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Entity creada para almacenar un empleo.
@@ -31,7 +30,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode()
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -67,5 +65,14 @@ public class Empleo implements Serializable {
      */
     @Column(name = "NOMBRE_CORTO", length = 20)
     private String nombreCorto;
+    
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
     
 }

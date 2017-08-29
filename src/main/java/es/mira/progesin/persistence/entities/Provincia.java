@@ -50,4 +50,12 @@ public class Provincia implements Serializable {
     @Column(name = "codigo_mn", length = 10)
     private String codigoMN;
     
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return codigo;
+    }
 }

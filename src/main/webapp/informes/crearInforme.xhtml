@@ -31,7 +31,7 @@
 		                <h:outputText value="Inspección" />
 		            </div>
 	                <h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
-	                <p:autoComplete id="infoInspeccion" value="#{inspeccion}" completeMethod="#{informeBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
+	                <p:autoComplete id="infoInspeccion" value="#{inspeccion}" completeMethod="#{informeBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{autocompleteInspeccion}" forceSelection="true" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
 	                    <p:ajax event="itemSelect" update="tipoInspeccion ambitoInspeccion cuatrimestreInspeccion anioInspeccion" />
 	                </p:autoComplete>
                     <p:messages for="infoInspeccion" autoUpdate="true" closable="true" />

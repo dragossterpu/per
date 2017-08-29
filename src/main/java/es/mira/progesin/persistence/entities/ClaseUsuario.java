@@ -16,7 +16,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Entity utilizada para almacenar la clase a la que pertenece un usuario.
@@ -28,7 +27,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode()
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -50,5 +48,14 @@ public class ClaseUsuario implements Serializable {
      */
     @Column(name = "clase")
     private String clase;
+    
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
     
 }

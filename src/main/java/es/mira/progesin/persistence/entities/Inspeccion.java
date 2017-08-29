@@ -71,14 +71,6 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     @JoinColumn(name = "id_equipo", foreignKey = @ForeignKey(name = "fk_i_equipo"), nullable = false)
     private Equipo equipo;
     
-    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    // @JoinColumn(name = "inspeccion")
-    // private List<SolicitudDocumentacionPrevia> solicitudes;
-    //
-    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    // @JoinColumn(name = "inspeccion")
-    // private List<CuestionarioEnvio> cuestionarios;
-    
     /**
      * Nombre de unidad.
      */

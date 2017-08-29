@@ -16,7 +16,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 
@@ -29,7 +28,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, of = "id")
 @Builder
-@ToString
 @Getter
 @Setter
 @Entity
@@ -53,4 +51,13 @@ public class Departamento extends AbstractEntity implements Serializable {
     @Column(name = "descripcion", length = 100)
     private String descripcion;
     
+    
+    /**
+     * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre
+     * la clave primaria.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }

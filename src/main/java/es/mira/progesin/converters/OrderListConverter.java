@@ -10,6 +10,11 @@ import javax.faces.convert.Converter;
 import org.primefaces.component.orderlist.OrderList;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
+import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
+
 /**
  * 
  * Conversor para objetos OrderList de PrimeFaces.
@@ -26,7 +31,7 @@ public class OrderListConverter implements Converter {
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         String retorno = "";
         if (value != null) {
-            retorno = value.toString();
+            retorno = getTextoObjeto(value);
         }
         return retorno;
     }
@@ -44,7 +49,7 @@ public class OrderListConverter implements Converter {
         boolean encontrado = false;
         for (int i = 0; i < lista.size() && !encontrado; i++) {
             Object objeto = lista.get(i);
-            String nameSinSaltos = cadenaSinSaltos(objeto.toString());
+            String nameSinSaltos = cadenaSinSaltos(getTextoObjeto(objeto));
             String valueSinSaltos = cadenaSinSaltos(value);
             if (valueSinSaltos.equals(nameSinSaltos)) {
                 ret = objeto;
@@ -64,4 +69,22 @@ public class OrderListConverter implements Converter {
         return cadena.replace('\n', ' ').replace('\r', ' ').replaceAll(" ", "");
     }
     
+    /**
+     * Devuelve el texto a utilizar en el componente OrderList.
+     * @param objeto Objeto del que se recupera el texto
+     * @return texto que se visualiza en el OrderList
+     */
+    private String getTextoObjeto(Object objeto) {
+        String retorno = "";
+        if (objeto instanceof AreasCuestionario) {
+            retorno = ((AreasCuestionario) objeto).getArea();
+        } else if (objeto instanceof PreguntasCuestionario) {
+            retorno = ((PreguntasCuestionario) objeto).getPregunta();
+        } else if (objeto instanceof AreaInforme) {
+            retorno = ((AreaInforme) objeto).getDescripcion();
+        } else if (objeto instanceof SubareaInforme) {
+            retorno = ((SubareaInforme) objeto).getDescripcion();
+        }
+        return retorno;
+    }
 }

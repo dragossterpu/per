@@ -18,7 +18,7 @@
 
             <div class="bloqueFormulario">
                 <h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección (*):" />
-                <p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000" disabled="#{yaEnviado}">
+                <p:autoComplete id="infoInspeccion" value="#{envioCuestionarioBean.cuestionarioEnvio.inspeccion}" completeMethod="#{envioCuestionarioBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{autocompleteInspeccion}" forceSelection="true" required="true" requiredMessage="Introduzca la unidad o el número de la inspección" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000" disabled="#{yaEnviado}">
                     <p:ajax event="itemSelect" listener="#{envioCuestionarioBean.completarDatosSolicitudPrevia}" update="envioCuestionario" />
                 </p:autoComplete>
                 <p:messages for="infoInspeccion" autoUpdate="true" closable="true" />

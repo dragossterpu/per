@@ -122,7 +122,7 @@
 
             <p:dialog id="inspeccion" widgetVar="inspeccionDialogo" header="Asignar inspección" position="center">
                 <h:outputLabel for="infoInspeccion" value="Nombre Unidad - Número Inspección:" />
-                <p:autoComplete id="infoInspeccion" value="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{selectConverter}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
+                <p:autoComplete id="infoInspeccion" value="#{infoInspeccion}" completeMethod="#{guiaBean.autocompletarInspeccion}" var="inspeccion" itemLabel="#{inspeccion.nombreUnidad.concat(' - ').concat(inspeccion.numero)}" itemValue="#{inspeccion}" converter="#{autocompleteInspeccion}" forceSelection="true" emptyMessage="No se encuentraron resultados coincidentes" queryDelay="1000">
                 </p:autoComplete>
                 <div class="centrarBotonesDialog">
                     <p:commandButton value="Guardar" actionListener="#{guiaPersonalizadaBean.asignarInspeccion(infoInspeccion)}" update="tablaGuias" />
