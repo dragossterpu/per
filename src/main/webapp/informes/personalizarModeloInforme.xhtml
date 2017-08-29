@@ -15,9 +15,6 @@
                     <my:selectManyCheckboxAll value="#{informePersonalizadoBean.subareasSeleccionadas[area]}">
                         <f:selectItems value="#{area.subareas}" var="subarea" itemLabel="#{subarea.descripcion}" itemValue="#{subarea}"/>
                     </my:selectManyCheckboxAll>
-                    <!-- <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspeccionesOEquipo}" type="unordered" styleClass="preguntasModelo">
-                        <h:outputText value="#{preguntaArea.pregunta}" />
-                    </p:dataList> -->
                 </p:tab>
             </p:accordionPanel>
 
