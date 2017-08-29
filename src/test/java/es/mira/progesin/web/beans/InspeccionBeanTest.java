@@ -39,7 +39,6 @@ import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.services.AlertaService;
 import es.mira.progesin.services.EquipoService;
-import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.MiembroService;
@@ -88,12 +87,6 @@ public class InspeccionBeanTest {
      */
     @Mock
     private IMunicipioService municipioService;
-    
-    /**
-     * Mock del servicio de equipos.
-     */
-    @Mock
-    private IEquipoService equipoService;
     
     /**
      * Objeto en el que se injectan los mocks.

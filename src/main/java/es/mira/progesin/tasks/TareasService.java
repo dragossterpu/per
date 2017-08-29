@@ -132,7 +132,7 @@ public class TareasService implements ITareasService {
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void recordatorioEnvioCuestionario() {
-        LocalDate hoy = LocalDate.now();
+        LocalDate hoy = LocalDate.now(clock);
         List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
         try {
             for (int i = 0; i < lista.size(); i++) {
@@ -178,7 +178,7 @@ public class TareasService implements ITareasService {
     @Override
     @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void recordatorioEnvioDocumentacion() {
-        LocalDate hoy = LocalDate.now();
+        LocalDate hoy = LocalDate.now(clock);
         List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
         try {
             for (int i = 0; i < lista.size(); i++) {

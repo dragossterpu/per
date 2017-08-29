@@ -12,11 +12,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Clock;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,22 +22,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.dao.TransientDataAccessResourceException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -47,7 +39,6 @@ import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
-import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
 
@@ -56,21 +47,8 @@ import es.mira.progesin.web.beans.ApplicationBean;
  * @author EZENTIS
  *
  */
-@RunWith(PowerMockRunner.class)
-@PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, Duration.class, ChronoUnit.class })
+@RunWith(MockitoJUnitRunner.class)
 public class TareasServiceTest {
-    /**
-     * Simulación del securityContext.
-     */
-    @Mock
-    private SecurityContext securityContext;
-    
-    /**
-     * Simulación de la autenticación.
-     */
-    @Mock
-    private Authentication authentication;
     
     /**
      * Servicio de cuestionarios enviados.
@@ -120,21 +98,15 @@ public class TareasServiceTest {
     @InjectMocks
     private TareasService tareasService = new TareasService();
     
+    /**
+     * Literal correo para pruebas.
+     */
+    private static final String CORREOTEST = "correoTest";
     
     /**
-     * Configuración inicial del test.
+     * Literal para simular el día de hoy.
      */
-    
-    @Before
-    public void setUp() {
-        PowerMockito.mockStatic(FacesUtilities.class);
-        PowerMockito.mockStatic(SecurityContextHolder.class);
-        PowerMockito.mockStatic(Duration.class);
-        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn("usuarioLogueado");
-        // when(ChronoUnit.DAYS).thenReturn(chronoUnit);
-    }
+    private static final String FECHAHOY = "2017-12-03T10:15:30.00Z";
     
     /**
      * Test method for {@link es.mira.progesin.tasks.TareasService#init()}.
@@ -159,31 +131,132 @@ public class TareasServiceTest {
      * Test method for {@link es.mira.progesin.tasks.TareasService#recordatorioEnvioCuestionario()}.
      */
     @Test
-    public final void testRecordatorioEnvioCuestionario() {
+    public final void testRecordatorioEnvioCuestionarioPlazoJusto() {
         List<CuestionarioEnvio> lista = new ArrayList<>();
         CuestionarioEnvio cuestionario = new CuestionarioEnvio();
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
         
-        LocalDate localDate = LocalDate.of(2025, 10, 10);
+        Instant fixedInstant = Instant.parse(FECHAHOY);
+        Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
+        tareasService.setClock(clock);
+        
+        LocalDate localDate = LocalDate.of(2018, 2, 7);
         Date fechaLimite = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         cuestionario.setFechaLimiteCuestionario(fechaLimite);
         cuestionario.setInspeccion(inspeccion);
-        cuestionario.setCorreoEnvio("correoTest");
+        cuestionario.setCorreoEnvio(CORREOTEST);
         lista.add(cuestionario);
         when(cuestionarioEnvioService.findNoCumplimentados()).thenReturn(lista);
         when(tareasProperties.getProperty("plazoDiasCuestionario")).thenReturn("66");
         
         tareasService.recordatorioEnvioCuestionario();
+        verify(correoElectronico, times(1)).envioCorreo(eq(cuestionario.getCorreoEnvio()), any(String.class),
+                any(String.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.tasks.TareasService#recordatorioEnvioCuestionario()}.
+     */
+    @Test
+    public final void testRecordatorioEnvioCuestionarioPlazoJustoException() {
+        List<CuestionarioEnvio> lista = new ArrayList<>();
+        CuestionarioEnvio cuestionario = new CuestionarioEnvio();
+        Inspeccion inspeccion = new Inspeccion();
+        inspeccion.setId(1L);
+        inspeccion.setAnio(2017);
+        
+        Instant fixedInstant = Instant.parse(FECHAHOY);
+        Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
+        tareasService.setClock(clock);
+        
+        LocalDate localDate = LocalDate.of(2018, 2, 7);
+        Date fechaLimite = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        cuestionario.setFechaLimiteCuestionario(fechaLimite);
+        cuestionario.setInspeccion(inspeccion);
+        cuestionario.setCorreoEnvio(CORREOTEST);
+        lista.add(cuestionario);
+        when(cuestionarioEnvioService.findNoCumplimentados()).thenReturn(lista);
+        when(tareasProperties.getProperty("plazoDiasCuestionario")).thenReturn("66");
+        
+        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(cuestionario.getCorreoEnvio()),
+                any(String.class), any(String.class));
+        
+        tareasService.recordatorioEnvioCuestionario();
+        
+        verify(correoElectronico, times(1)).envioCorreo(eq(cuestionario.getCorreoEnvio()), any(String.class),
+                any(String.class));
+        verify(registroActividad, times(1)).altaRegActividadError(eq(SeccionesEnum.ALERTAS.getDescripcion()),
+                any(CorreoException.class));
     }
     
     /**
      * Test method for {@link es.mira.progesin.tasks.TareasService#recordatorioEnvioDocumentacion()}.
      */
-    @Ignore
     @Test
-    public final void testRecordatorioEnvioDocumentacion() {
+    public final void testRecordatorioEnvioDocumentacionPlazoJusto() {
+        List<SolicitudDocumentacionPrevia> listaSolicitudes = new ArrayList<>();
+        LocalDate localDate = LocalDate.of(2018, 2, 7);
+        Date fechaLimite = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Inspeccion inspeccion = new Inspeccion();
+        inspeccion.setId(1L);
+        inspeccion.setAnio(2017);
+        
+        Instant fixedInstant = Instant.parse(FECHAHOY);
+        Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
+        tareasService.setClock(clock);
+        
+        SolicitudDocumentacionPrevia solDocPrevia = new SolicitudDocumentacionPrevia();
+        solDocPrevia.setFechaLimiteCumplimentar(fechaLimite);
+        solDocPrevia.setInspeccion(inspeccion);
+        solDocPrevia.setCorreoDestinatario(CORREOTEST);
+        
+        listaSolicitudes.add(solDocPrevia);
+        
+        when(solicitudDocumentacionService.findEnviadasNoCumplimentadas()).thenReturn(listaSolicitudes);
+        when(tareasProperties.getProperty("plazoDiasDocumentacion")).thenReturn("66");
+        
+        tareasService.recordatorioEnvioDocumentacion();
+        
+        verify(correoElectronico, times(1)).envioCorreo(eq(solDocPrevia.getCorreoDestinatario()), any(String.class),
+                any(String.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.tasks.TareasService#recordatorioEnvioDocumentacion()}.
+     */
+    @Test
+    public final void testRecordatorioEnvioDocumentacionPlazoJustoException() {
+        List<SolicitudDocumentacionPrevia> listaSolicitudes = new ArrayList<>();
+        LocalDate localDate = LocalDate.of(2018, 2, 7);
+        Date fechaLimite = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Inspeccion inspeccion = new Inspeccion();
+        inspeccion.setId(1L);
+        inspeccion.setAnio(2017);
+        
+        Instant fixedInstant = Instant.parse(FECHAHOY);
+        Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
+        tareasService.setClock(clock);
+        
+        SolicitudDocumentacionPrevia solDocPrevia = new SolicitudDocumentacionPrevia();
+        solDocPrevia.setFechaLimiteCumplimentar(fechaLimite);
+        solDocPrevia.setInspeccion(inspeccion);
+        solDocPrevia.setCorreoDestinatario(CORREOTEST);
+        
+        listaSolicitudes.add(solDocPrevia);
+        
+        when(solicitudDocumentacionService.findEnviadasNoCumplimentadas()).thenReturn(listaSolicitudes);
+        when(tareasProperties.getProperty("plazoDiasDocumentacion")).thenReturn("66");
+        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(solDocPrevia.getCorreoDestinatario()),
+                any(String.class), any(String.class));
+        
+        tareasService.recordatorioEnvioDocumentacion();
+        
+        verify(correoElectronico, times(1)).envioCorreo(eq(solDocPrevia.getCorreoDestinatario()), any(String.class),
+                any(String.class));
+        verify(registroActividad, times(1)).altaRegActividadError(eq(SeccionesEnum.ALERTAS.getDescripcion()),
+                any(CorreoException.class));
     }
     
     /**
