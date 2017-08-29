@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.ToggleEvent;
@@ -30,13 +29,11 @@ import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
- * Test del bean solicitudDocPrevia.
+ * Test del bean solicitudDocPreviaBuscador.
  * 
  * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
-// Evita conflictos con clases del sistema al enlazar los mocks por tipo
-@PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class })
 public class SolicitudDocPreviaBuscadorBeanTest {
     

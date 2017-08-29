@@ -23,14 +23,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.FlowEvent;
 import org.springframework.dao.TransientDataAccessResourceException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
@@ -47,27 +43,13 @@ import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
- * Test del bean solicitudDocPrevia.
+ * Test del bean solicitudDocPreviaCreacion.
  * 
  * @author EZENTIS
  */
 @RunWith(PowerMockRunner.class)
-// Evita conflictos con clases del sistema al enlazar los mocks por tipo
-@PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
+@PrepareForTest({ FacesUtilities.class })
 public class SolicitudDocPreviaCreacionBeanTest {
-    
-    /**
-     * Mock de security context.
-     */
-    @Mock
-    private SecurityContext securityContext;
-    
-    /**
-     * Mock del objeto authentication.
-     */
-    @Mock
-    private Authentication authentication;
     
     /**
      * Mock del servicio del registro de actividad.
@@ -126,11 +108,6 @@ public class SolicitudDocPreviaCreacionBeanTest {
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
-        PowerMockito.mockStatic(SecurityContextHolder.class);
-        
-        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn("usuarioLogueado");
     }
     
     /**
