@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelUsuarios;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
@@ -307,21 +308,28 @@ public class UserBean implements Serializable {
      * Modifica los datos del usuario en función de los valores recuperados del formulario.
      */
     public void modificarUsuario() {
-        try {
-            
+        try {// TODO Enviar correo con las modificaciones
+            User original = userService.findOne(user.getUsername());
             userService.save(user);
+            User modificado = userService.findOne(user.getUsername());
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El usuario ha sido modificado con éxito");
             
-            String descripcion = "Modificación del usuario :" + " " + user.getUsername();
+            StringBuffer descripcion = new StringBuffer("Modificación del usuario : ").append(user.getUsername())
+                    .append("\n\n").append(Utilities.camposModificados(original, modificado));
             
             if (estadoUsuario != user.getEstado().name()) {
                 cambiarEstado(user);
             }
             // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+            regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.USUARIOS.getDescripcion());
-        } catch (DataAccessException e) {
+            
+            // Enviamos correo
+            correo.envioCorreo(user.getCorreo(), "Usuario modificado",
+                    "Se han realizado cambios en su perfil de usuario en la herramienta PROGESIN\n\n" + descripcion);
+            
+        } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
             // Guardamos loe posibles errores en bbdd

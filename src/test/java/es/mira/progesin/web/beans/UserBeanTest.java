@@ -58,6 +58,7 @@ import es.mira.progesin.util.Utilities;
 // Evita conflictos con clases del sistema al enlazar los mocks por tipo
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, Utilities.class })
+
 public class UserBeanTest {
     
     /**
@@ -114,6 +115,7 @@ public class UserBeanTest {
     @Before
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
+        PowerMockito.mockStatic(Utilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
@@ -359,6 +361,7 @@ public class UserBeanTest {
     public void modificarUsuario() {
         userBean.setEstadoUsuario("ACTIVO");
         User user = User.builder().estado(EstadoEnum.INACTIVO).build();
+        String camposModificados = Utilities.getPassword();
         userBean.setUser(user);
         
         userBean.modificarUsuario();

@@ -163,7 +163,7 @@
             <p:commandButton actionListener="#{inspeccionBean.altaInspeccion}" id="crear" value="Crear inspección" icon="fa fa-fw fa-save" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="formAlta"/>
             <p:commandButton  action="#{inspeccionBean.recuperarBusqueda}" value="Cancelar" icon="fa fa-fw fa-undo">
                 <f:param name="vieneDe" value="alta" />
-                <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
             </p:commandButton>
         </div>
         <p:confirmDialog global="true">

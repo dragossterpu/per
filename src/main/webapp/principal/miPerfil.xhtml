@@ -110,21 +110,38 @@
             <div class="columnaIzdaFormulario">
                 <h:form id="passwordForm">
                     <h:outputLabel for="claveActual" value="Contraseña actual:" />
-                    <p:password value="#{miPerfilBean.claveActual}" required="true" id="claveActual" requiredMessage="Introduzca la contraseña actual" />
+                    <p:password value="#{miPerfilBean.claveActual}" required="#{param['form:guardar']!=null}"  id="claveActual" requiredMessage="Introduzca la contraseña actual" />
 
                     <h:outputLabel for="claveNueva" value="Nueva contraseña:" />
-                    <p:password value="#{miPerfilBean.claveNueva}" required="true" feedback="true" id="claveNueva" requiredMessage="Introduzca la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
+                    <p:password value="#{miPerfilBean.claveNueva}" required="#{param['form:guardar']!=null}" feedback="true" id="claveNueva" requiredMessage="Introduzca la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
                     <h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
-                    <p:password value="#{miPerfilBean.claveConfirm}" required="true" feedback="true" id="claveConfirm" requiredMessage="Repita la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
+                    <p:password value="#{miPerfilBean.claveConfirm}" required="#{param['form:guardar']!=null}" feedback="true" id="claveConfirm" requiredMessage="Repita la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
-                    <p:commandButton value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-eraser"/>
+                    <p:commandButton id="guardar" value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-eraser"/>
 
                     <p:commandButton value="Limpiar" update="passwordForm" process="@this">
                         <p:resetInput target="passwordForm" />
                     </p:commandButton>
-
+                    
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                         <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                    </p:commandButton>
+                
                     <p:messages id="messages" autoUpdate="true" closable="true" />
+                    
+                    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                       <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                       <div class="centrarBotonesDialog">
+                           <p:button value="Cerrar" outcome="/index" />
+                       </div>
+                   </p:dialog>
+                    <p:confirmDialog global="true">
+                       <div class="centrarBotonesDialog">
+                           <p:button outcome="/index" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                           <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                       </div>
+                   </p:confirmDialog>
                 </h:form>
             </div>
         </div>

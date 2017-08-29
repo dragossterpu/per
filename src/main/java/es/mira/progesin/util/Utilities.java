@@ -1,6 +1,9 @@
 package es.mira.progesin.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
@@ -9,6 +12,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.persistence.entities.ClaseUsuario;
+import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
 
 /**
  * Métodos de utilidades.
@@ -124,4 +132,130 @@ public class Utilities {
     public static Boolean noEstaVacio(String html) {
         return Jsoup.parse(html).text().isEmpty() == Boolean.FALSE;
     }
+    
+    /**
+     * Obtiene una cadena con los campos que han cambiado durante la modificación de un usuario así como su valor
+     * anterior y posterior a la misma.
+     * 
+     * @param original Objeto original
+     * @param modificado Objeto modificado
+     * @return Cadena con los campos modificados
+     * @throws ProgesinException Excepción
+     */
+    
+    public static String camposModificados(Object original, Object modificado) throws ProgesinException {
+        Field[] listaCampos = original.getClass().getDeclaredFields();
+        
+        StringBuffer camposModificados = new StringBuffer();
+        
+        try {
+            for (int i = 0; i < listaCampos.length; i++) {
+                Field campo = listaCampos[i];
+                campo.setAccessible(true);
+                
+                // Valores
+                
+                String valorOriginal;
+                String valorModificado;
+                
+                if (campo.getType().getSimpleName().contains("List")) {
+                    valorOriginal = devuelveValoresList((ArrayList<?>) campo.get(original));
+                    valorModificado = devuelveValoresList((ArrayList<?>) campo.get(modificado));
+                } else {
+                    valorOriginal = devuelveValor(campo.get(original));
+                    valorModificado = devuelveValor(campo.get(modificado));
+                }
+                
+                if (!valorOriginal.equals(valorModificado)) {
+                    camposModificados.append(campo.getName()).append(" (Antes '").append(valorOriginal)
+                            .append("' ahora modificado a '").append(valorModificado).append("')\n\r");
+                }
+            }
+        } catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+            throw new ProgesinException(e);
+        }
+        
+        return camposModificados.toString();
+    }
+    
+    /**
+     * Devuelve el valor contenido dentro de un objeto.
+     * 
+     * @param campo Objeto del que se desea obtener una cadena
+     * @return Cadena de texto con el valor
+     * @throws ProgesinException Excepción
+     */
+    private static String devuelveValor(final Object campo) throws ProgesinException {
+        
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String valor = "No definido";
+        
+        if (campo != null) {
+            final Class<? extends Object> clase = campo.getClass();
+            
+            switch (clase.getSimpleName()) {
+                case "Empleo":
+                case "PuestoTrabajo":
+                case "RoleEnum":
+                case "CuerpoEstado":
+                case "TipoInspeccion":
+                case "CuatrimestreEnum":
+                case "EstadoInspeccionEnum":
+                case "AmbitoInspeccionEnum":
+                case "TipoUnidad":
+                    try {
+                        valor = (String) clase.getDeclaredMethod("getDescripcion", (Class<?>[]) null).invoke(campo,
+                                (Object[]) null);
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                            | NoSuchMethodException | SecurityException e) {
+                        throw new ProgesinException(e);
+                    }
+                    break;
+                case "ClaseUsuario":
+                    valor = ((ClaseUsuario) campo).getClase();
+                    break;
+                case "Equipo":
+                    valor = ((Equipo) campo).getNombreEquipo();
+                    break;
+                case "Municipio":
+                    valor = ((Municipio) campo).getName();
+                    break;
+                case "Inspeccion":
+                    valor = ((Inspeccion) campo).getNumero();
+                    break;
+                case "Timestamp":
+                case "Date":
+                    valor = sdf.format(campo);
+                    break;
+                default:
+                    valor = campo.toString();
+                    break;
+            }
+        }
+        
+        return valor;
+    }
+    
+    /**
+     * Devuelve el valor de una lista.
+     * 
+     * @param lista Lista de la que se desean extraer los valores
+     * @return Cadena conteniendo los valores extraídos
+     * @throws ProgesinException Excepción
+     */
+    private static String devuelveValoresList(ArrayList<?> lista) throws ProgesinException {
+        String cadena;
+        if (lista.size() < 1) {
+            cadena = "No definido";
+        } else {
+            String[] cadenArray = new String[lista.size()];
+            
+            for (int i = 0; i < lista.size(); i++) {
+                cadenArray[i] = devuelveValor(lista.get(i));
+            }
+            cadena = String.join(", ", cadenArray);
+        }
+        return cadena;
+    }
+    
 }

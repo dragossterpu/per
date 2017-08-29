@@ -129,8 +129,8 @@ public class MiPerfilBeanTest {
         miPerfilBeanMock.cambiarClave();
         verify(userService, timeout(1)).save(userCaptor.capture());
         PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
-                eq(null));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
+                any(String.class), any(String.class));
     }
     
     /**

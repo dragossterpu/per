@@ -56,7 +56,7 @@
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{gestorDocumentalBean.creaDocumento(nombreDocumento.value,tipoDocumentoSelect.value,descripcion.value,materiaIndexada.value)}" value="Guardar" icon="fa fa-save"  onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
                  <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
-                      <p:confirm header="Cancelar" message="¿Está seguro que cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                      <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
                  </p:commandButton>
             </div>
 
@@ -80,3 +80,4 @@
 
     </ui:define>
 </ui:composition>
+

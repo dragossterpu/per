@@ -145,18 +145,6 @@ public interface IInspeccionesService {
     public boolean existenInspeccionesNoFinalizadas(Equipo equipo);
     
     /**
-     * Devuelve una cadena con el texto del registro utilizado en la modificación de una inspección.
-     * 
-     * @param insp inspección actual
-     * @param inspMod inspección modificada
-     * @param inspecciones inspecciones asociadas actuales
-     * @param inspeccionesMod inspecciones asociadas modificadas
-     * @return descripcion
-     */
-    String getTextoRegistro(Inspeccion insp, Inspeccion inspMod, List<Inspeccion> inspecciones,
-            List<Inspeccion> inspeccionesMod);
-    
-    /**
      * Método que realiza una consulta de inspecciones, usando criteria, coincidente con determinados parámetros.
      * 
      * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada

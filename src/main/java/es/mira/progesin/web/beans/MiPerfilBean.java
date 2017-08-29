@@ -73,8 +73,8 @@ public class MiPerfilBean {
                 if (validaPass(this.claveNueva)) {
                     usuario.setPassword(passwordEncoder.encode(this.getClaveNueva()));
                     userService.save(usuario);
-                    FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
-                            "La contraseña ha sido modificada con éxito", "", null);
+                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
+                            "La contraseña ha sido modificada con éxito", "", "dialogMessage");
                 } else {
                     FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                             "La nueva contraseña al menos debe tener un número y una letra mayúscula. Inténtelo de nuevo",

@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -43,6 +44,7 @@ import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -388,6 +390,7 @@ public class InspeccionBean implements Serializable {
     public void modificarInspeccion() {
         try {
             Inspeccion inspecionNoMod = inspeccionesService.findInspeccionById(inspeccion.getId());
+            inspecionNoMod.setInspecciones(inspeccionesService.listaInspeccionesAsociadas(inspecionNoMod));
             List<Inspeccion> inspeccionesNoMod = inspeccionesService.listaInspeccionesAsociadas(inspeccion);
             
             inspeccion.setInspecciones(inspeccionesAsignadasActuales);
@@ -396,15 +399,17 @@ public class InspeccionBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
-            String descripcion = "Inspección " + inspeccion.getNumero() + " modificada.";
+            String descripcion = "Inspección " + inspeccion.getNumero() + " modificada.\n\n";
             
-            String descripcionRegistro = inspeccionesService.getTextoRegistro(inspecionNoMod, inspeccion,
-                    inspeccionesNoMod, inspeccionesAsignadasActuales);
+            // String descripcionRegistro = inspeccionesService.getTextoRegistro(inspecionNoMod, inspeccion,
+            // inspeccionesNoMod, inspeccionesAsignadasActuales);
+            
+            String descripcionRegistro = Utilities.camposModificados(inspecionNoMod, inspeccion);
             
             if (!descripcionRegistro.isEmpty()) {
                 StringBuilder descrip = new StringBuilder();
                 descrip.append(descripcion);
-                descrip.append("Ver a continuación:");
+                descrip.append("Ver a continuación:\n");
                 descrip.append(descripcionRegistro);
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descrip.toString(), TipoRegistroEnum.MODIFICACION.name(),
@@ -415,7 +420,7 @@ public class InspeccionBean implements Serializable {
                         RoleEnum.ROLE_SERVICIO_APOYO);
             }
             
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar la inspección. Inténtelo de nuevo más tarde");
             // Guardamos los posibles errores en bbdd

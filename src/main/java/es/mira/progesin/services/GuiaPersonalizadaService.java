@@ -1,6 +1,5 @@
 package es.mira.progesin.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -37,10 +36,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Service
 public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
-    /**
-     * Formato de fecha.
-     */
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Factoría de sesion.
