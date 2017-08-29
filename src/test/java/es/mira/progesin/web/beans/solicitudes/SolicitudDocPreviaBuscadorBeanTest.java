@@ -93,7 +93,7 @@ public class SolicitudDocPreviaBuscadorBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.solicitudDocPreviaBuscadorBean#init()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBuscadorBean#init()}.
      */
     @Test
     public void init() {
@@ -107,7 +107,7 @@ public class SolicitudDocPreviaBuscadorBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.solicitudes.solicitudDocPreviaBuscadorBean#onToggle(ToggleEvent)}.
+     * {@link es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBuscadorBean#onToggle(ToggleEvent)}.
      */
     @Test
     public void onToggle() {
@@ -125,7 +125,7 @@ public class SolicitudDocPreviaBuscadorBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.solicitudes.solicitudDocPreviaBuscadorBean#getFormBusquedaSolicitudes()}.
+     * {@link es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBuscadorBean#getFormBusquedaSolicitudes()}.
      */
     @Test
     public void getFormBusquedaSolicitudes() {
@@ -209,7 +209,7 @@ public class SolicitudDocPreviaBuscadorBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.solicitudDocPreviaBuscadorBean#limpiarBusqueda()}.
+     * Test method for {@link es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBuscadorBean#limpiarBusqueda()}.
      */
     @Test
     public void limpiarBusqueda() {
@@ -220,7 +220,7 @@ public class SolicitudDocPreviaBuscadorBeanTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.web.beans.solicitudes.solicitudDocPreviaBuscadorBean#buscarSolicitudDocPrevia()}.
+     * {@link es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBuscadorBean#buscarSolicitudDocPrevia()}.
      */
     @Test
     public void buscarSolicitudDocPrevia() {
