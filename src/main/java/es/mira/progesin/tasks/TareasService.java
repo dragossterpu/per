@@ -184,8 +184,8 @@ public class TareasService implements ITareasService {
             for (int i = 0; i < lista.size(); i++) {
                 
                 SolicitudDocumentacionPrevia solicitud = lista.get(i);
-                LocalDate fechaSolicitud = solicitud.getFechaLimiteCumplimentar().toInstant()
-                        .atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fechaSolicitud = solicitud.getFechaLimiteEnvio().toInstant().atZone(ZoneId.systemDefault())
+                        .toLocalDate();
                 long dias = ChronoUnit.DAYS.between(hoy, fechaSolicitud);
                 int plazoDiasSolcitud = 0;
                 if (tareasProperties.getProperty(PLAZODIASSOLICITUD) != null) {

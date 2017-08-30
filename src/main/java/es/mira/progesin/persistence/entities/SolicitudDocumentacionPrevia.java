@@ -96,13 +96,13 @@ public class SolicitudDocumentacionPrevia implements Serializable {
     private String correoDestinatario;
     
     /**
-     * Fecha límite de envío.
+     * Fecha límite de envío de la solicitud (respuesta del usuario provisional).
      */
     @Column(name = "fechaLimiteEnvio")
     private Date fechaLimiteEnvio;
     
     /**
-     * Fecha límite de cumplimentación.
+     * Fecha límite de cumplimentación del cuestionario.
      */
     @Column(name = "fechaLimiteCumplimentar")
     private Date fechaLimiteCumplimentar;
