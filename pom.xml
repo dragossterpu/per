@@ -103,7 +103,7 @@
         <!-- Primefaces Theme Library -->
         <dependency>
             <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
+            <artifactId>bluesky</artifactId>
             <!-- <artifactId>bootstrap</artifactId> -->
             <version>1.0.10</version>
         </dependency>
