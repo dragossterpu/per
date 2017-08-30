@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  19/07/2017   
+prompt    Actualización:  30/08/2018   
 prompt =========================================================================
 
 
@@ -162,7 +162,18 @@ prompt =========================================================================
     USUARIO_REGISTRO VARCHAR2(255 CHAR), 
     USUARIO_BAJA VARCHAR2(255 CHAR), 
     PRIMARY KEY (ID_ALERTA) USING INDEX  ENABLE
-   );  
+   )  
+    partition by range(FECHA_REGISTRO)
+    (
+      partition ALERTAS_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition ALERTAS_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition ALERTAS_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition ALERTAS_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition ALERTAS_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_alertas ON ALERTAS (FECHA_REGISTRO);
+    
 /
 
 prompt =========================================================================
@@ -178,7 +189,17 @@ CREATE TABLE NOTIFICACIONES
     USUARIO_BAJA VARCHAR2(255 CHAR), 
     USUARIO_REGISTRO VARCHAR2(255 CHAR), 
     PRIMARY KEY (ID_NOTIFICACION) USING INDEX ENABLE
-   );
+   )
+    partition by range(FECHA_NOTIFICACION)
+    (
+      partition NOTIFICACIONES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition NOTIFICACIONES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition NOTIFICACIONES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition NOTIFICACIONES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition NOTIFICACIONES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_notificaciones ON NOTIFICACIONES (FECHA_NOTIFICACION);
    
 prompt =========================================================================
 prompt  Creacion tabla  ALERTAS_NOTIFICACIONES_USUARIO
@@ -191,7 +212,17 @@ prompt =========================================================================
     FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
     NOMBRE_SECCION VARCHAR2(50 CHAR) NOT NULL ENABLE, 
     PRIMARY KEY (USUARIO, TIPO_MENSAJE, ID_MENSAJE, FECHA_ALTA, NOMBRE_SECCION) USING INDEX ENABLE
-   );
+   )
+    partition by range(FECHA_ALTA)
+    (
+      partition ALERTAS_NOTIFI_USUARIO_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition ALERTAS_NOTIFI_USUARIO_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition ALERTAS_NOTIFI_USUARIO_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition ALERTAS_NOTIFI_USUARIO_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition ALERTAS_NOTIFI_USUARIO_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_notifalertas ON ALERTAS_NOTIFICACIONES_USUARIO (FECHA_ALTA);
 /
 
 prompt =========================================================================
@@ -206,7 +237,17 @@ CREATE TABLE REG_ACTIVIDAD
     TIPO_REG_ACTIVIDAD VARCHAR2(255 CHAR), 
     USUARIO_REGISTRO VARCHAR2(255 CHAR), 
     PRIMARY KEY (REG_ACTIVIDAD) USING INDEX  ENABLE
-   ) ; 
+   ) 
+    partition by range(FECHA_ALTA)
+    (
+      partition REG_ACTIVIDAD_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition REG_ACTIVIDAD_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition REG_ACTIVIDAD_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition REG_ACTIVIDAD_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition REG_ACTIVIDAD_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_regactividad ON REG_ACTIVIDAD (FECHA_ALTA); 
 
 prompt =========================================================================
 prompt  Creacion tabla  SUGERENCIA
@@ -416,7 +457,18 @@ CREATE TABLE INSPECCIONES
     REFERENCES TIPOS_UNIDAD (ID) ENABLE, 
     CONSTRAINT FK_I_TIPO_INSPECCION FOREIGN KEY (TIPO_INSPECCION)
     REFERENCES TIPOS_INSPECCION (CODIGO) ENABLE
-   ) ;
+   ) 
+    partition by range(FECHA_ALTA)
+    (
+      partition INSPECCIONES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition INSPECCIONES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition INSPECCIONES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition INSPECCIONES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition INSPECCIONES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_inspec_unidad ON INSPECCIONES (NOMBRE_UNIDAD);
+    CREATE INDEX indice_inspec_fecha ON INSPECCIONES (FECHA_ALTA);
 
 prompt =========================================================================
 prompt  Creacion tabla  INSPECCIONES_ASOCIADAS
@@ -464,7 +516,19 @@ CREATE TABLE DOCUMENTOS
     REFERENCES TIPO_DOCUMENTO (ID) ENABLE, 
     CONSTRAINT FK_D_FICHERO FOREIGN KEY (ID_FICHERO)
     REFERENCES DOCUMENTOS_BLOB (ID) ENABLE
-   ) ;
+   ) 
+
+partition by range(FECHA_ALTA)
+    (
+      partition DOCUMENTOS_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition DOCUMENTOS_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition DOCUMENTOS_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition DOCUMENTOS_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition DOCUMENTOS_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    
+    CREATE INDEX indice_documentos ON DOCUMENTOS (FECHA_ALTA);
 /
 
 prompt =========================================================================
@@ -553,7 +617,18 @@ CREATE TABLE CUESTIONARIO_PERSONALIZADO
     PRIMARY KEY (ID) USING INDEX ENABLE, 
     CONSTRAINT FK_CP_MODELO_CUESTIONARIO FOREIGN KEY (ID_MODELO_CUESTIONARIO)
     REFERENCES MODELOSCUESTIONARIOS (ID) ENABLE
-   );
+   )
+partition by range(FECHA_CREACION)
+    (
+      partition INSPECCIONES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition INSPECCIONES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition INSPECCIONES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition INSPECCIONES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition INSPECCIONES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_cuestper_cuest ON CUESTIONARIO_PERSONALIZADO (ID_MODELO_CUESTIONARIO);
+    CREATE INDEX indice_cuestper_fecha ON CUESTIONARIO_PERSONALIZADO (FECHA_CREACION);
 /  
 
 prompt =========================================================================
@@ -597,9 +672,21 @@ CREATE TABLE CUESTIONARIOS_ENVIADOS
     REFERENCES CUESTIONARIO_PERSONALIZADO (ID) ENABLE, 
     CONSTRAINT FK_CE_INSPECCION FOREIGN KEY (ID_INSPECCION)
     REFERENCES INSPECCIONES (ID) ENABLE
-   );
+   )
 
-   prompt =========================================================================
+partition by range(FECHA_ENVIO)
+    (
+      partition CUESTIONARIOS_ENVIADOS_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition CUESTIONARIOS_ENVIADOS_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition CUESTIONARIOS_ENVIADOS_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition CUESTIONARIOS_ENVIADOS_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition CUESTIONARIOS_ENVIADOS_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_cuestenv_cuest ON CUESTIONARIOS_ENVIADOS (ID_CUESTIONARIO_PERSONALIZADO);
+    CREATE INDEX indice_cuestenv_fecha ON CUESTIONARIOS_ENVIADOS (FECHA_ENVIO);
+
+prompt =========================================================================
 prompt  Creacion tabla  RESPUESTASCUESTIONARIO
 prompt =========================================================================
 
@@ -615,6 +702,7 @@ CREATE TABLE RESPUESTASCUESTIONARIO
     CONSTRAINT FK_RC_PREGUNTA FOREIGN KEY (ID_PREGUNTA)
     REFERENCES PREGUNTASCUESTIONARIO (ID) ENABLE
    );  
+
 
 prompt =========================================================================
 prompt  Creacion tabla  RESPUESTAS_CUEST_DOCS
@@ -728,7 +816,18 @@ CREATE TABLE SOLICITUD_DOC_PREVIA
     PRIMARY KEY (ID) USING INDEX ENABLE, 
     CONSTRAINT FK_SDP_INSPECCION FOREIGN KEY (ID_INSPECCION)
     REFERENCES INSPECCIONES (ID) ENABLE
-   ) ; 
+   ) 
+partition by range(FECHA_ALTA)
+    (
+      partition SOLICITUD_DOC_PREVIA_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition SOLICITUD_DOC_PREVIA_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition SOLICITUD_DOC_PREVIA_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition SOLICITUD_DOC_PREVIA_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition SOLICITUD_DOC_PREVIA_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_soldocprevia_insp ON SOLICITUD_DOC_PREVIA (ID_INSPECCION);
+    CREATE INDEX indice_soldocprevia_fecha ON SOLICITUD_DOC_PREVIA (FECHA_ALTA);
    
 prompt =========================================================================
 prompt  Creacion tabla  SOLICITUD_PREVIA_DOCS
@@ -919,7 +1018,18 @@ CREATE TABLE INFORMES
     REFERENCES MODELOS_INFORME_PERSONALIZADOS (ID) ENABLE, 
     CONSTRAINT FK_INSP_INFORME FOREIGN KEY (INSPECCION_ID)
     REFERENCES INSPECCIONES (ID) ENABLE
-   ) ; 
+   )  
+partition by range(FECHA_ALTA)
+    (
+      partition INSPECCIONES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition INSPECCIONES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition INSPECCIONES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition INSPECCIONES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition INSPECCIONES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+    );
+
+    CREATE INDEX indice_informe_insp ON INFORMES (INSPECCION_ID);
+    CREATE INDEX indice_informe_fecha ON INFORMES (FECHA_ALTA);
    
 prompt =========================================================================
 prompt  Creacion tabla  RESPUESTAS_INFORME
@@ -1269,9 +1379,9 @@ prompt =========================================================================
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Cª Distrito');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Cª Local');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Cª Provincial');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'CIA');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañia');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'CIE');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Cmdcia');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Comandancia');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'JSP');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Pto. Fronterizo');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Serv. Central');
