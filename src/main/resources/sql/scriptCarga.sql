@@ -1383,8 +1383,8 @@ Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañia');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'CIE');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Comandancia');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'JSP');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Pto. Fronterizo');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Serv. Central');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Puesto Fronterizo');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Servicio Central');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (10,'U.E. y D.');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (11,'Zona');
 
