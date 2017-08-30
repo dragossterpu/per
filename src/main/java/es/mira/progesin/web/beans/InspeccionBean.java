@@ -391,7 +391,7 @@ public class InspeccionBean implements Serializable {
         try {
             Inspeccion inspecionNoMod = inspeccionesService.findInspeccionById(inspeccion.getId());
             inspecionNoMod.setInspecciones(inspeccionesService.listaInspeccionesAsociadas(inspecionNoMod));
-            List<Inspeccion> inspeccionesNoMod = inspeccionesService.listaInspeccionesAsociadas(inspeccion);
+            // List<Inspeccion> inspeccionesNoMod = inspeccionesService.listaInspeccionesAsociadas(inspeccion);
             
             inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             inspeccionesService.save(inspeccion);
@@ -399,25 +399,22 @@ public class InspeccionBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
-            String descripcion = "Inspección " + inspeccion.getNumero() + " modificada.\n\n";
-            
-            // String descripcionRegistro = inspeccionesService.getTextoRegistro(inspecionNoMod, inspeccion,
-            // inspeccionesNoMod, inspeccionesAsignadasActuales);
+            // String descripcion = "Inspección " + inspeccion.getNumero() + " modificada.\n\n";
             
             String descripcionRegistro = Utilities.camposModificados(inspecionNoMod, inspeccion);
             
             if (!descripcionRegistro.isEmpty()) {
-                StringBuilder descrip = new StringBuilder();
-                descrip.append(descripcion);
-                descrip.append("Ver a continuación:\n");
-                descrip.append(descripcionRegistro);
+                StringBuilder descripcion = new StringBuilder();
+                descripcion.append("Inspección " + inspeccion.getNumero() + " modificada.\n\n");
+                descripcion.append("Ver a continuación:\n");
+                descripcion.append(descripcionRegistro);
                 // Guardamos la actividad en bbdd
-                regActividadService.altaRegActividad(descrip.toString(), TipoRegistroEnum.MODIFICACION.name(),
+                regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.INSPECCION.getDescripcion());
-                notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
-                        inspeccion.getEquipo());
-                notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
-                        RoleEnum.ROLE_SERVICIO_APOYO);
+                notificacionesService.crearNotificacionEquipo(descripcion.toString(),
+                        SeccionesEnum.INSPECCION.getDescripcion(), inspeccion.getEquipo());
+                notificacionesService.crearNotificacionRol(descripcion.toString(),
+                        SeccionesEnum.INSPECCION.getDescripcion(), RoleEnum.ROLE_SERVICIO_APOYO);
             }
             
         } catch (DataAccessException | ProgesinException e) {

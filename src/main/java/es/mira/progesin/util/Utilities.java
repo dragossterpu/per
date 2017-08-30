@@ -146,7 +146,7 @@ public class Utilities {
     public static String camposModificados(Object original, Object modificado) throws ProgesinException {
         Field[] listaCampos = original.getClass().getDeclaredFields();
         
-        StringBuffer camposModificados = new StringBuffer();
+        StringBuilder camposModificados = new StringBuilder();
         
         try {
             for (int i = 0; i < listaCampos.length; i++) {
@@ -245,7 +245,7 @@ public class Utilities {
      */
     private static String devuelveValoresList(ArrayList<?> lista) throws ProgesinException {
         String cadena;
-        if (lista.size() < 1) {
+        if (lista.isEmpty()) {
             cadena = "No definido";
         } else {
             String[] cadenArray = new String[lista.size()];
