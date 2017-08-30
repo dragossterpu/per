@@ -318,8 +318,6 @@ public class CuestionarioPersonalizadoBeanTest {
         assertThat(cuestionarioPersonalizadoBean.getEnvioCuestionarioBean().getListaPlantillas()).isEqualTo(documentos);
         assertThat(cuestionarioPersonalizadoBean.getEnvioCuestionarioBean().getCuestionarioEnvio()
                 .getCuestionarioPersonalizado()).isEqualTo(cuestionario);
-        assertThat(cuestionarioPersonalizadoBean.getEnvioCuestionarioBean().getCuestionarioEnvio().getInspeccion())
-                .isNotNull();
         
         assertThat(redireccion).isEqualTo("/cuestionarios/enviarCuestionario?faces-redirect=true");
     }
