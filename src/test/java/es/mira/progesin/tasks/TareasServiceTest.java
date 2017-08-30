@@ -208,7 +208,7 @@ public class TareasServiceTest {
         tareasService.setClock(clock);
         
         SolicitudDocumentacionPrevia solDocPrevia = new SolicitudDocumentacionPrevia();
-        solDocPrevia.setFechaLimiteCumplimentar(fechaLimite);
+        solDocPrevia.setFechaLimiteEnvio(fechaLimite);
         solDocPrevia.setInspeccion(inspeccion);
         solDocPrevia.setCorreoDestinatario(CORREOTEST);
         
@@ -240,7 +240,7 @@ public class TareasServiceTest {
         tareasService.setClock(clock);
         
         SolicitudDocumentacionPrevia solDocPrevia = new SolicitudDocumentacionPrevia();
-        solDocPrevia.setFechaLimiteCumplimentar(fechaLimite);
+        solDocPrevia.setFechaLimiteEnvio(fechaLimite);
         solDocPrevia.setInspeccion(inspeccion);
         solDocPrevia.setCorreoDestinatario(CORREOTEST);
         
