@@ -11,15 +11,15 @@
                 <h4>Datos Personales</h4>
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombre" value="Nombre (*):" />
-                    <p:inputText id="nombre" value="#{userBean.user.nombre}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el nombre" converter="#{trimConverter}" />
+                    <p:inputText id="nombre" value="#{userBean.user.nombre}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el nombre" converter="#{trimConverter}" maxlength="50"/>
                     <p:messages for="nombre" autoUpdate="true" closable="true" />
 
                     <h:outputLabel for="apellido1" value="Primer apellido (*):" />
-                    <p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el primer apellido" converter="#{trimConverter}" />
+                    <p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el primer apellido" converter="#{trimConverter}" maxlength="50"/>
                     <p:messages for="apellido1" autoUpdate="true" closable="true" />
 
                     <h:outputLabel for="apellido2" value="Segundo apellido:" />
-                    <p:inputText id="apellido2" value="#{userBean.user.apellido2}" converter="#{trimConverter}" />
+                    <p:inputText id="apellido2" value="#{userBean.user.apellido2}" converter="#{trimConverter}" maxlength="50"/>
 
                     <h:outputLabel for="docIdentidad" value="NIF(*): " />
                     <p:inputText id="docIdentidad" value="#{userBean.user.docIdentidad}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el NIF" converter="#{trimConverter}" maxlength="10" />
@@ -61,13 +61,13 @@
 
                 <div class="columnaDchaFormulario">
                     <h:outputLabel for="correo" value="Correo electrónico (*): " />
-                    <p:inputText id="correo" value="#{userBean.user.correo}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el correo electrónico" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
+                    <p:inputText id="correo" value="#{userBean.user.correo}" required="#{param['formAlta:crear']!=null}"  requiredMessage="Introduzca el correo electrónico" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" maxlength="50">
                         <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                     </p:inputText>
                     <p:messages for="correo" autoUpdate="true" closable="true" />
 
                     <h:outputLabel for="numDespacho" value="Número de despacho: " />
-                    <p:inputText id="numDespacho" value="#{userBean.user.despacho}" converter="#{trimConverter}" />
+                    <p:inputText id="numDespacho" value="#{userBean.user.despacho}" converter="#{trimConverter}" maxlength="20"/>
                 </div>
             </div>
 
