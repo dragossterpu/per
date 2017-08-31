@@ -23,7 +23,6 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
 import org.springframework.security.core.Authentication;
@@ -211,18 +210,12 @@ public class RegActividadBeanTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.RegActividadBean#onRowSelect(org.primefaces.event.SelectEvent)}.
+     * Test method for {@link es.mira.progesin.web.beans.RegActividadBean#onRowSelect()}.
      */
     @Test
     public final void testOnRowSelect() {
-        regActividadBeanMock.setError(null);
-        RegistroActividad error = mock(RegistroActividad.class);
-        SelectEvent event = mock(SelectEvent.class);
-        when(event.getObject()).thenReturn(error);
-        regActividadBeanMock.onRowSelect(event);
+        regActividadBeanMock.onRowSelect();
         verify(requestContext, times(1)).execute(any(String.class));
-        assertThat(regActividadBeanMock.getError()).isNotNull();
     }
     
 }

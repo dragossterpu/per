@@ -53,6 +53,8 @@ public class AlertasNotificacionesUsuarioBeanTest {
     /**
      * Simulación del RequestContext.
      */
+    @Mock
+    private RequestContext requestContext;
     
     /**
      * Simulación de la autenticación.
@@ -85,9 +87,12 @@ public class AlertasNotificacionesUsuarioBeanTest {
     public void setUp() {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
+        PowerMockito.mockStatic(RequestContext.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("usuarioLogueado");
+        when(RequestContext.getCurrentInstance()).thenReturn(requestContext);
+        
     }
     
     /**
@@ -173,6 +178,15 @@ public class AlertasNotificacionesUsuarioBeanTest {
                 TipoMensajeEnum.NOTIFICACION);
         verify(regActividad, times(1)).altaRegActividadError(any(String.class),
                 any(TransientDataAccessResourceException.class));
+    }
+    
+    /**
+     * Test method for {@link es.mira.progesin.web.beans.AlertasNotificacionesUsuarioBean#onRowSelect()}.
+     */
+    @Test
+    public final void testOnRowSelect() {
+        alertasNotificacionesUsuarioBean.onRowSelect();
+        verify(requestContext, times(1)).execute(any(String.class));
     }
     
 }
