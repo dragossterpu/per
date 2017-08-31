@@ -429,9 +429,32 @@ insert into provincias (codigo, nombre,codigo_mn) values (lpad('45',2,'0'), 'Tol
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'AJOFRÍN', lpad('45', 2, '0'));
 insert into municipios (id, name,code_province) values (seq_municipio.nextval, 'CABAÑAS DE LA SAGRA', lpad('45', 2, '0'));
 
+--MODELOS DE INFORMES
+
+insert into modelos_informe(id, nombre, fecha_alta, username_alta) values (1, 'Modelo Informe Inspecciones Generales (Guardia Civil)', to_timestamp('10/06/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'ezentis');
+
+insert into areas_informe(id, descripcion, modelo_informe_id) values (1, '1.- INTRODUCCIÓN', 1);
+insert into subareas_informe(id, descripcion, area_id) values (1, '1.1.- Introducción.', 1);
+
+insert into areas_informe(id, descripcion, modelo_informe_id) values (2, '2.- ÁMBITO Y OBJETIVOS DE LA INSPECCIÓN', 1);
+insert into subareas_informe(id, descripcion, area_id) values (2, '2.1.- Unidad inspeccionada.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (3, '2.2.- Ámbito territorial, población y servicios.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (4, '2.3.- Objetivos generales y específicos.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (5, '2.4.- Problemática de interés policial.', 2);
+insert into subareas_informe(id, descripcion, area_id) values (6, '2.5.- Conclusiones y propuestas.', 2);
+
+--MODELOS DE INFORMES PERSONALIZADOS
+
+insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (1, 'Estándar (Guardia Civil)', 1, trunc(sysdate), 'system');
+
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (1, 1);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (1, 2);
+insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (1, 3);
 
 
+--INFORME
 
+insert into INFORMES(ID, INSPECCION_ID, INFORME_PERSONAL_ID, FECHA_ALTA, USERNAME_ALTA) values (1, 5, 1, trunc(sysdate), 'system');
 
 
 
