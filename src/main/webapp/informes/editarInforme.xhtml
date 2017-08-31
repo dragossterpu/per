@@ -35,7 +35,7 @@
                                 <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario" disabled="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
                             </p:commandButton>
                             
-                          <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelRespuestas">
+                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelRespuestas">
                                 <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px"
                                     required="#{param['informe:finalizar']!=null}" requiredMessage="No puede dejar una subárea sin responder">
                                     
@@ -51,7 +51,7 @@
                                     
                                 </p:textEditor>
                                 <p:messages for="editorconclusiones" autoUpdate="true" closable="true" />
-                           </p:outputPanel>
+                            </p:outputPanel>
                             
                         </p:tab>
 					</p:accordionPanel>

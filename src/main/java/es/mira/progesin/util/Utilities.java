@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Random;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
 
 import es.mira.progesin.constantes.Constantes;
@@ -118,7 +119,7 @@ public class Utilities {
      * @return html limpio, con todas las etiquetas cerradas
      */
     public static String limpiarHtml(String html) {
-        final org.jsoup.nodes.Document document = Jsoup.parse(html);
+        final Document document = Jsoup.parse(html);
         document.outputSettings().syntax(Syntax.xml);
         return document.html();
     }
@@ -130,7 +131,8 @@ public class Utilities {
      * @return True si el html contiene algo más que etiquetas
      */
     public static Boolean noEstaVacio(String html) {
-        return Jsoup.parse(html).text().isEmpty() == Boolean.FALSE;
+        final Document contenido = Jsoup.parse(html);
+        return (contenido.text().isEmpty() && contenido.getElementsByTag("img").isEmpty()) == Boolean.FALSE;
     }
     
     /**
