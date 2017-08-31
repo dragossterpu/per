@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.Visibility;
@@ -140,15 +139,13 @@ public class RegActividadBean implements Serializable {
     }
     
     /**
-     * Guarda el registro de actividad seleccionado por el usuario en la vista en una variable para que se muestre en un
-     * dialog.
+     * Guarda el registro la notificación seleccionada por el usuario en la vista en una variable para que se muestre en
+     * un dialog.
      * 
-     * @param event Registro a mostrar en detalle.
      * 
      */
     
-    public void onRowSelect(SelectEvent event) {
-        setError((RegistroActividad) event.getObject());
+    public void onRowSelect() {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('dlg').show();");
         

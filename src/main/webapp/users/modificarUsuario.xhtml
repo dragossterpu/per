@@ -21,18 +21,18 @@
                     <h4>Datos Personales</h4>
                     <div class="columnaIzdaFormulario">
                         <h:outputLabel for="nombre" value="Nombre (*):" />
-                        <p:inputText id="nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="Introduzca el nombre" converter="#{trimConverter}" disabled="#{noEsAdmin}" />
+                        <p:inputText id="nombre" value="#{userBean.user.nombre}" required="true" requiredMessage="Introduzca el nombre" converter="#{trimConverter}" disabled="#{noEsAdmin}" maxlength="50"/>
                         <p:messages for="nombre" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="apellido1" value="Primer apellido (*):" />
-                        <p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="true" requiredMessage="Introduzca el primer apellido" disabled="#{noEsAdmin}" converter="#{trimConverter}"/>
+                        <p:inputText id="apellido1" value="#{userBean.user.apellido1}" required="true" requiredMessage="Introduzca el primer apellido" disabled="#{noEsAdmin}" converter="#{trimConverter}" maxlength="50"/>
                         <p:messages for="apellido1" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="apellido2" value="Segundo apellido:" />
-                        <p:inputText id="apellido2" value="#{userBean.user.apellido2}" converter="#{trimConverter}" disabled="#{noEsAdmin}" />
+                        <p:inputText id="apellido2" value="#{userBean.user.apellido2}" converter="#{trimConverter}" disabled="#{noEsAdmin}" maxlength="50"/>
 
                         <h:outputLabel for="docIdentidad" value="NIF (*): " />
-                        <p:inputText id="docIdentidad" value="#{userBean.user.docIdentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}" disabled="#{noEsAdmin}" />
+                        <p:inputText id="docIdentidad" value="#{userBean.user.docIdentidad}" required="true" requiredMessage="Introduzca el NIF" converter="#{trimConverter}" disabled="#{noEsAdmin}" maxlength="10"/>
                         <p:messages for="docIdentidad" autoUpdate="true" closable="true" />
 
 
@@ -73,13 +73,13 @@
 
                     <div class="columnaDchaFormulario">
                         <h:outputLabel for="correo" value="Correo electrónico (*): " />
-                        <p:inputText id="correo" value="#{userBean.user.correo}" required="true" requiredMessage="Introduzca el correo electrónico" disabled="#{noEsAdmin}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
+                        <p:inputText id="correo" value="#{userBean.user.correo}" required="true" requiredMessage="Introduzca el correo electrónico" disabled="#{noEsAdmin}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}" maxlength="50">
                             <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                         </p:inputText>
                         <p:messages for="correo" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="numDespacho" value="Número de despacho: " />
-                        <p:inputText id="numDespacho" value="#{userBean.user.despacho}" converter="#{trimConverter}" disabled="#{noEsAdmin}" />
+                        <p:inputText id="numDespacho" value="#{userBean.user.despacho}" converter="#{trimConverter}" disabled="#{noEsAdmin}" maxlength="20"/>
                     </div>
                 </div>
                 <div class="bloqueFormulario">

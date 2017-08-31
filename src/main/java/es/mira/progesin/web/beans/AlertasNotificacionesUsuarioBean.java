@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -76,6 +77,11 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
     private LazyModelNotificaciones modelNotificaciones;
     
     /**
+     * Objeto que se usará para visualizar los registros.
+     */
+    private Notificacion notificacion;
+    
+    /**
      * Variable utilizada para inyectar el servicio ExportadorWord.
      * 
      */
@@ -118,15 +124,15 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
      * 
      * Elimina, para el usuario logado, la notificación pasada como parámetro.
      * 
-     * @param notificacion Notificación a eliminar
+     * @param notif Notificación a eliminar
      * 
      */
     
-    public void eliminarNotificacion(Notificacion notificacion) {
+    public void eliminarNotificacion(Notificacion notif) {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
-                    notificacion.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
-            String descripcion = "Se ha eliminado la notificación :" + notificacion.getDescripcion();
+                    notif.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
+            String descripcion = "Se ha eliminado la notificación :" + notif.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Notificaciones");
         } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Notificaciones", e);
@@ -151,4 +157,15 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
                 SeccionesEnum.NOTIFICACIONES);
     }
     
+    /**
+     * Guarda el registro de actividad seleccionado por el usuario en la vista en una variable para que se muestre en un
+     * dialog.
+     * 
+     * 
+     */
+    
+    public void onRowSelect() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dlg').show();");
+    }
 }
