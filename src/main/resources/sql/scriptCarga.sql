@@ -1329,6 +1329,9 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable'
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','apoyo_ipss@interior.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspección de Personal y Servicios de Seguridad');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372505');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoDireccion','datosApoyo','C/ Cea Bermúdez, 35-37 - 28003 MADRID');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoFax','datosApoyo','915372600');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoSecretaria','datosApoyo','SECRETARIA DE ESTADO DE SEGURIDAD');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOC','extensiones','application/msword');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOCX','extensiones','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPT','extensiones','application/vnd.ms-powerpoint');

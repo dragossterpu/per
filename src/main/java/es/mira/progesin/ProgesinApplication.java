@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -121,6 +122,17 @@ public class ProgesinApplication {
             servletContext.setInitParameter("encoding", "UTF-8");
             servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, TRUE);
         }
+    }
+    
+    /**
+     * Realiza la conexión con el servidor de correo.
+     *
+     * @return Objeto sender para realizar operaciones con la conexión
+     */
+    @Bean
+    public JavaMailSenderImpl javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        return mailSender;
     }
     
 }

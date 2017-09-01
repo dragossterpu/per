@@ -1,23 +1,28 @@
 package es.mira.progesin.util;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import com.mitchellbosecke.pebble.error.PebbleException;
+
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.web.beans.ApplicationBean;
@@ -29,7 +34,6 @@ import lombok.Getter;
  * @author EZENTIS
  * 
  */
-
 @Component("correoElectronico")
 @Getter
 public class CorreoElectronico implements ICorreoElectronico {
@@ -41,10 +45,39 @@ public class CorreoElectronico implements ICorreoElectronico {
     private ApplicationBean applicationBean;
     
     /**
+     * Servicio de envío de correo.
+     */
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+    
+    /**
      * Servicio del registro de actividad.
      */
     @Autowired
     private IRegistroActividadService registroActividad;
+    
+    /**
+     * Configura la conexión con el servidor de correo.
+     */
+    @PostConstruct
+    public void conexionServidor() {
+        
+        Map<String, String> parametrosMail = applicationBean.getMapaParametros().get("mail");
+        String pass = parametrosMail.get("UserPwd");
+        
+        Properties mailProperties = new Properties();
+        
+        Iterator<Entry<String, String>> it = parametrosMail.entrySet().iterator();
+        
+        while (it.hasNext()) {
+            Map.Entry<String, String> param = it.next();
+            mailProperties.put(param.getKey(), param.getValue());
+        }
+        
+        mailSender.setJavaMailProperties(mailProperties);
+        mailSender.setPassword(pass);
+        
+    }
     
     /**
      * 
@@ -58,7 +91,8 @@ public class CorreoElectronico implements ICorreoElectronico {
      */
     @Override
     public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) {
-        envioCorreoSinAdjuntos(paramDestino, null, paramAsunto, paramCuerpo);
+        String destino = String.join(", ", paramDestino);
+        enviarCorreo(destino, null, paramAsunto, paramCuerpo, null);
     }
     
     /**
@@ -75,7 +109,8 @@ public class CorreoElectronico implements ICorreoElectronico {
     @Override
     public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo,
             List<File> paramAdjunto) {
-        envioCorreoAdjuntos(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto);
+        String destino = String.join(", ", paramDestino);
+        enviarCorreo(destino, null, paramAsunto, paramCuerpo, paramAdjunto);
     }
     
     /**
@@ -93,13 +128,8 @@ public class CorreoElectronico implements ICorreoElectronico {
     @Override
     public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo,
             List<File> paramAdjunto) {
-        List<String> lista = new ArrayList<>();
-        lista.add(paramDestino);
         
-        List<String> cc = new ArrayList<>();
-        lista.add(paramCC);
-        
-        envioCorreoAdjuntos(lista, cc, paramAsunto, paramCuerpo, paramAdjunto);
+        enviarCorreo(paramDestino, paramCC, paramAsunto, paramCuerpo, paramAdjunto);
     }
     
     /**
@@ -115,10 +145,8 @@ public class CorreoElectronico implements ICorreoElectronico {
      */
     @Override
     public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) {
-        List<String> lista = new ArrayList<>();
-        lista.add(paramDestino);
         
-        envioCorreoAdjuntos(lista, null, paramAsunto, paramCuerpo, paramAdjunto);
+        enviarCorreo(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto);
     }
     
     /**
@@ -133,37 +161,9 @@ public class CorreoElectronico implements ICorreoElectronico {
      */
     @Override
     public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) {
-        List<String> lista = new ArrayList<>();
-        lista.add(paramDestino);
         
-        envioCorreoSinAdjuntos(lista, null, paramAsunto, paramCuerpo);
+        enviarCorreo(paramDestino, null, paramAsunto, paramCuerpo, null);
         
-    }
-    
-    /**
-     * Realiza la conexión con el servidor de correo.
-     * 
-     * @return Objeto sender para realizar operaciones con la conexión
-     */
-    private JavaMailSenderImpl conexionServidor() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        
-        Map<String, String> parametrosMail = applicationBean.getMapaParametros().get("mail");
-        String pass = parametrosMail.get("UserPwd");
-        
-        Properties mailProperties = new Properties();
-        
-        Iterator<Entry<String, String>> it = parametrosMail.entrySet().iterator();
-        
-        while (it.hasNext()) {
-            Map.Entry<String, String> param = it.next();
-            mailProperties.put(param.getKey(), param.getValue());
-        }
-        
-        mailSender.setJavaMailProperties(mailProperties);
-        mailSender.setPassword(pass);
-        
-        return mailSender;
     }
     
     /**
@@ -173,68 +173,46 @@ public class CorreoElectronico implements ICorreoElectronico {
      * @param conCopia Lista de destinatario en copia
      * @param asunto Asunto del correo
      * @param cuerpo Cuerpo del correo
+     * @param adjuntos Lista de ficheros adjuntos
      * @throws CorreoException excepción al enviar el correo
      */
-    private void envioCorreoSinAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo) {
+    private void enviarCorreo(String destino, String conCopia, String asunto, String cuerpo, List<File> adjuntos) {
         try {
-            JavaMailSenderImpl mailSender = conexionServidor();
-            SimpleMailMessage msg = new SimpleMailMessage();
             
-            String[] arrDestino = destino.toArray(new String[destino.size()]);
-            msg.setTo(arrDestino);
+            // Prepare message using a Spring helper
+            final MimeMessage message = mailSender.createMimeMessage();
+            final MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
+            helper.setTo(destino);
             if (conCopia != null) {
-                String[] arrCopia = conCopia.toArray(new String[conCopia.size()]);
-                msg.setCc(arrCopia);
+                helper.setCc(conCopia);
             }
-            msg.setSubject(asunto);
-            msg.setText(cuerpo);
-            
-            mailSender.send(msg);
-        } catch (MailException e) {
-            registroActividad.altaRegActividadError("Envio correo", e);
-            throw new CorreoException(e);
-        }
-        
-    }
-    
-    /**
-     * Envío de correos con adjuntos.
-     * 
-     * @param destino Lista de destinatarios destinatario
-     * @param conCopia Lista de destinatario en copia
-     * @param asunto Asunto del correo
-     * @param cuerpo Cuerpo del correo
-     * @param adjunto Lista de ficheros adjuntos
-     */
-    private void envioCorreoAdjuntos(List<String> destino, List<String> conCopia, String asunto, String cuerpo,
-            List<File> adjunto) {
-        JavaMailSenderImpl mailSender = conexionServidor();
-        MimeMessage message = mailSender.createMimeMessage();
-        
-        try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            
-            String[] arrDestino = destino.toArray(new String[destino.size()]);
-            
-            helper.setTo(arrDestino);
-            
-            if (conCopia != null) {
-                String[] arrCopia = conCopia.toArray(new String[conCopia.size()]);
-                helper.setCc(arrCopia);
-            }
-            
             helper.setSubject(asunto);
-            helper.setText(cuerpo);
+            // msg.setFrom("no-reply@interior.es");
             
-            for (File adj : adjunto) {
-                helper.addAttachment(adj.getName(), adj);
+            Map<String, String> datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
+            
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("cuerpo", cuerpo);
+            parametros.putAll(datosApoyo);
+            
+            final String htmlContent = Utilities.generarTextoConPlantilla(Constantes.TEMPLATECORREO, parametros);
+            helper.setText(htmlContent, true);
+            
+            ClassPathResource imagen = new ClassPathResource(Constantes.ESCUDOIPSS);
+            helper.addInline("imagenfirma", imagen.getFile());
+            
+            if (adjuntos != null) {
+                for (File adj : adjuntos) {
+                    helper.addAttachment(adj.getName(), adj);
+                }
             }
+            
             mailSender.send(message);
-        } catch (MessagingException e) {
+            
+        } catch (MailException | MessagingException | IOException | PebbleException e) {
             registroActividad.altaRegActividadError("Envio correo", e);
             throw new CorreoException(e);
-            
         }
         
     }

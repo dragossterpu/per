@@ -1,16 +1,24 @@
 package es.mira.progesin.util;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Document.OutputSettings.Syntax;
+
+import com.mitchellbosecke.pebble.PebbleEngine;
+import com.mitchellbosecke.pebble.error.PebbleException;
+import com.mitchellbosecke.pebble.template.PebbleTemplate;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
@@ -260,4 +268,27 @@ public class Utilities {
         return cadena;
     }
     
+    /**
+     * Carga la plantilla y genera el texto final con los parámetros proporcionados.
+     * 
+     * @param template plantilla (txt,html,etc.)
+     * @param parametros info a añadir a la plantilla
+     * @return texto compilado
+     * @throws PebbleException error al compilar
+     * @throws IOException error al cargar la plantilla
+     */
+    public static String generarTextoConPlantilla(String template, Map<String, Object> parametros)
+            throws PebbleException, IOException {
+        PebbleEngine engine = new PebbleEngine.Builder().build();
+        PebbleTemplate compiledTemplate = engine.getTemplate(template);
+        
+        Writer writer = new StringWriter();
+        compiledTemplate.evaluate(writer, parametros);
+        
+        String textoCompilado = writer.toString();
+        
+        // TODO Borrar salida para pruebas de desarrollo
+        System.out.println(textoCompilado);
+        return textoCompilado;
+    }
 }

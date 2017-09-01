@@ -153,22 +153,32 @@ public final class Constantes {
     /**
      * Constante ruta recurso plantilla (dotx) para generar informes en word (docx).
      */
-    public static final String TEMPLATEINFORMEDOTX = "/documentos/templateInforme.dotx";
+    public static final String TEMPLATEINFORMEDOTX = "/static/templates/templateInforme.dotx";
     
     /**
      * Constante ruta recurso imagen cabecera de las páginas del informes en PDF.
      */
-    public static final String CABECERAINFORMEPDF = "static/images/cabecera_informe.png";
+    public static final String CABECERAINFORMEPDF = "/static/images/cabecera_informe.png";
     
     /**
      * Constante ruta recurso imagen pie de las páginas del informes en PDF.
      */
-    public static final String PIEINFORMEPDF = "static/images/pie_informe.png";
+    public static final String PIEINFORMEPDF = "/static/images/pie_informe.png";
     
     /**
      * Tamaño de página para los listados.
      */
     public static final int TAMPAGINA = 20;
+    
+    /**
+     * Constante ruta recurso imagen firma de comunicaciones del sistema.
+     */
+    public static final String ESCUDOIPSS = "/static/images/escudo_ipss.png";
+    
+    /**
+     * Constante ruta recurso plantilla (html) para generar correos electrónicos con imágenes.
+     */
+    public static final String TEMPLATECORREO = "/static/templates/templateCorreo.html";
     
     /**
      * Constructor para que no se pueda instanciar la clase.
