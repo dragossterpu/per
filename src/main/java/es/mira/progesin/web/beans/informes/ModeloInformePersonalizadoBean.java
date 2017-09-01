@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInformePersonalizado;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
@@ -26,6 +27,7 @@ import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.IModeloInformeService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +48,7 @@ public class ModeloInformePersonalizadoBean implements Serializable {
     /**
      * Número de columnas de la vista.
      */
-    private static final int NUMCOLSTABLA = 7;
+    private static final int NUMCOLSTABLA = 6;
     
     /**
      * Modelo a partir del cual se crea el personalizado.
@@ -69,6 +71,13 @@ public class ModeloInformePersonalizadoBean implements Serializable {
      */
     @Autowired
     private transient IModeloInformePersonalizadoService informePersonalizadoService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * POJO con las opciones de búsqueda.
@@ -211,4 +220,12 @@ public class ModeloInformePersonalizadoBean implements Serializable {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
     
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        
+        exportadorWord.exportDoc("lista_informes_personalizados", false, "busquedaInformePersonalizado:tablaInformes",
+                SeccionesEnum.INFORMES);
+    }
 }

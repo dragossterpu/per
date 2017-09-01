@@ -81,6 +81,9 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaInformes" fileName="lista_informes" />
                     </h:commandLink>
+                    <h:commandLink  action="#{informeBean.exportDoc}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
                 </p:outputPanel>
                 
                 <p:dataTable var="informe"  draggableColumns="true" value="#{informeBean.model}" id="tablaInformes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" resizableColumns="true" rendered="#{informeBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
@@ -91,24 +94,24 @@
                             <p:ajax event="toggle" listener="#{informeBean.onToggle}" />
                         </p:columnToggler>
                     </f:facet>
-                    <p:column headerText="Núm. exp.:" sortBy="#{informe.inspeccion.id}" width="60" visible="#{inspeccionBean.list[0]}" exportable="#{informePersonalizadoBean.list[0]}">
+                    <p:column headerText="Núm. exp.:" sortBy="#{informe.inspeccion.id}" width="60" visible="#{informeBean.list[0]}" exportable="#{informeBean.list[0]}">
                         <h:outputText value="#{informe.inspeccion.id}" />
                     </p:column>
-                    <p:column headerText="Ámbito Inspección" sortBy="#{informe.inspeccion.ambito}" width="60" visible="#{inspeccionBean.list[1]}" exportable="#{informePersonalizadoBean.list[1]}">
+                    <p:column headerText="Ámbito Inspección" sortBy="#{informe.inspeccion.ambito}" width="60" visible="#{informeBean.list[1]}" exportable="#{informeBean.list[1]}">
                         <h:outputText value="#{informe.inspeccion.ambito.descripcion}" />
                     </p:column>
-                    <p:column headerText="Tipo Inspección" sortBy="#{informe.inspeccion.tipoInspeccion.codigo}" width="100" visible="#{inspeccionBean.list[2]}" exportable="#{informePersonalizadoBean.list[2]}">
+                    <p:column headerText="Tipo Inspección" sortBy="#{informe.inspeccion.tipoInspeccion.codigo}" width="100" visible="#{informeBean.list[2]}" exportable="#{informeBean.list[2]}">
                         <h:outputText value="#{informe.inspeccion.tipoInspeccion.codigo}" />
                     </p:column>
-                    <p:column headerText="Unidad" sortBy="#{informe.inspeccion.nombreUnidad}" width="100" visible="#{inspeccionBean.list[3]}" exportable="#{informePersonalizadoBean.list[3]}">
+                    <p:column headerText="Unidad" sortBy="#{informe.inspeccion.nombreUnidad}" width="100" visible="#{informeBean.list[3]}" exportable="#{informeBean.list[3]}">
                         <h:outputText value="#{informe.inspeccion.nombreUnidad}" />
                     </p:column>
-                    <p:column headerText="Alta" sortBy="#{informe.fechaAlta}" width="70" visible="#{inspeccionBean.list[4]}" exportable="#{informePersonalizadoBean.list[4]}">
+                    <p:column headerText="Alta" sortBy="#{informe.fechaAlta}" width="70" visible="#{informeBean.list[4]}" exportable="#{informeBean.list[4]}">
                         <h:outputText value="#{informe.fechaAlta}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Finalizado" sortBy="#{informe.fechaFinalizacion}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{informePersonalizadoBean.list[5]}">
+                    <p:column headerText="Finalizado" sortBy="#{informe.fechaFinalizacion}" width="70" visible="#{informeBean.list[5]}" exportable="#{informeBean.list[5]}">
                         <h:outputText value="#{informe.fechaFinalizacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>

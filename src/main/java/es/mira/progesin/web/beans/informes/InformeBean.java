@@ -41,6 +41,7 @@ import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.RegistroActividadService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.HtmlDocxGenerator;
 import es.mira.progesin.util.HtmlPdfGenerator;
@@ -81,6 +82,13 @@ public class InformeBean implements Serializable {
      * Informe con respuestas.
      */
     private Informe informe;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * Modelo personalizado del informe seleccionado.
@@ -545,6 +553,14 @@ public class InformeBean implements Serializable {
         } else {
             setIndicesActivosAreas(areasActivas.toString());
         }
+    }
+    
+    /**
+     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     */
+    public void exportDoc() {
+        
+        exportadorWord.exportDoc("lista_informes", false, "busquedaInforme:tablaInformes", SeccionesEnum.INFORMES);
     }
     
 }
