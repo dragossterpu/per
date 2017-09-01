@@ -81,44 +81,10 @@ public class CorreoElectronico implements ICorreoElectronico {
     
     /**
      * 
-     * Envío de correos electrónico sin adjuntos. La lista de destinatarios, asunto y cuerpo del mensaje se reciben como
-     * parámetros
-     * 
-     * @param paramDestino Lista de destinatarios
-     * @param paramAsunto Asunto del correo
-     * @param paramCuerpo Cuerpo del correo
-     * 
-     */
-    @Override
-    public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo) {
-        String destino = String.join(", ", paramDestino);
-        enviarCorreo(destino, null, paramAsunto, paramCuerpo, null);
-    }
-    
-    /**
-     * 
-     * Envío de correos electrónicos a una lista de destinatarios pasada como parámetros. El asunto, cuerpo del mensaje
-     * y los documentos adjuntos se reciben como parámetros
-     * 
-     * @param paramDestino Lista de destinatarios
-     * @param paramAsunto Asunto del correo
-     * @param paramCuerpo Cuerpo del correo
-     * @param paramAdjunto Lista de ficheros adjuntos
-     * 
-     */
-    @Override
-    public void envioCorreo(List<String> paramDestino, String paramAsunto, String paramCuerpo,
-            List<File> paramAdjunto) {
-        String destino = String.join(", ", paramDestino);
-        enviarCorreo(destino, null, paramAsunto, paramCuerpo, paramAdjunto);
-    }
-    
-    /**
-     * 
-     * Envío de correos electrónico. El destinatario, destinatario en copia, asunto, cuerpo del mensaje y los documentos
+     * Envío de correos electrónico. Destinatarios, destinatarios en copia, asunto, cuerpo del mensaje y los documentos
      * adjuntos se reciben como parámetros.
      * 
-     * @param paramDestino Destinatario
+     * @param paramDestino Destinatarios separados por ','
      * @param paramCC Destinatario en copia
      * @param paramAsunto Asunto del correo
      * @param paramCuerpo Cuerpo del correo
@@ -129,15 +95,16 @@ public class CorreoElectronico implements ICorreoElectronico {
     public void envioCorreo(String paramDestino, String paramCC, String paramAsunto, String paramCuerpo,
             List<File> paramAdjunto) {
         
-        enviarCorreo(paramDestino, paramCC, paramAsunto, paramCuerpo, paramAdjunto);
+        enviarCorreo(paramDestino, paramCC, paramAsunto, paramCuerpo, paramAdjunto, Constantes.TEMPLATECORREOBASE,
+                null);
     }
     
     /**
      * 
-     * Envío de correos electrónico. El destinatario, asunto, cuerpo del mensaje y los documentos adjuntos se reciben
-     * como parámetros
+     * Envío de correos electrónico. Destinatarios, asunto, cuerpo del mensaje y los documentos adjuntos se reciben como
+     * parámetros
      * 
-     * @param paramDestino Destinatario
+     * @param paramDestino Destinatarios separados por ','
      * @param paramAsunto Asunto del correo
      * @param paramCuerpo Cuerpo del correo
      * @param paramAdjunto Lista de ficheros adjuntos
@@ -146,15 +113,14 @@ public class CorreoElectronico implements ICorreoElectronico {
     @Override
     public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo, List<File> paramAdjunto) {
         
-        enviarCorreo(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto);
+        enviarCorreo(paramDestino, null, paramAsunto, paramCuerpo, paramAdjunto, Constantes.TEMPLATECORREOBASE, null);
     }
     
     /**
      * 
-     * Envío de correos electrónico sin adjuntos. El destinatario, asunto y cuerpo del mensaje se reciben como
-     * parámetros
+     * Envío de correos electrónico sin adjuntos. Destinatarios, asunto y cuerpo del mensaje se reciben como parámetros
      * 
-     * @param paramDestino Destinatario
+     * @param paramDestino Destinatarios separados por ','
      * @param paramAsunto del correo
      * @param paramCuerpo Cuerpo del correo
      * 
@@ -162,7 +128,26 @@ public class CorreoElectronico implements ICorreoElectronico {
     @Override
     public void envioCorreo(String paramDestino, String paramAsunto, String paramCuerpo) {
         
-        enviarCorreo(paramDestino, null, paramAsunto, paramCuerpo, null);
+        enviarCorreo(paramDestino, null, paramAsunto, paramCuerpo, null, Constantes.TEMPLATECORREOBASE, null);
+        
+    }
+    
+    /**
+     * 
+     * Envío de correos electrónico sin adjuntos con plantilla personalizada. Destinatarios, asunto, datos del cuerpo
+     * del mensaje y ruta de la plantilla se reciben como parámetros
+     * 
+     * @param paramDestino Destinatarios separados por ','
+     * @param paramAsunto del correo
+     * @param plantilla ruta del archivo de la plantilla pebble
+     * @param paramPlantilla parametros del cuerpo del correo que se usan en la plantilla
+     * 
+     */
+    @Override
+    public void envioCorreo(String paramDestino, String paramAsunto, String plantilla,
+            Map<String, String> paramPlantilla) {
+        
+        enviarCorreo(paramDestino, null, paramAsunto, null, null, plantilla, paramPlantilla);
         
     }
     
@@ -174,9 +159,12 @@ public class CorreoElectronico implements ICorreoElectronico {
      * @param asunto Asunto del correo
      * @param cuerpo Cuerpo del correo
      * @param adjuntos Lista de ficheros adjuntos
+     * @param plantilla ruta del archivo de la plantilla pebble
+     * @param parametrosExtra parametros que se usan en la plantilla
      * @throws CorreoException excepción al enviar el correo
      */
-    private void enviarCorreo(String destino, String conCopia, String asunto, String cuerpo, List<File> adjuntos) {
+    private void enviarCorreo(String destino, String conCopia, String asunto, String cuerpo, List<File> adjuntos,
+            String plantilla, Map<String, String> parametrosExtra) {
         try {
             
             // Prepare message using a Spring helper
@@ -188,15 +176,18 @@ public class CorreoElectronico implements ICorreoElectronico {
                 helper.setCc(conCopia);
             }
             helper.setSubject(asunto);
-            // msg.setFrom("no-reply@interior.es");
+            // helper.setFrom("no-reply@interior.es");
             
             Map<String, String> datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
             
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("cuerpo", cuerpo);
             parametros.putAll(datosApoyo);
+            if (parametrosExtra != null) {
+                parametros.putAll(parametrosExtra);
+            }
             
-            final String htmlContent = Utilities.generarTextoConPlantilla(Constantes.TEMPLATECORREO, parametros);
+            final String htmlContent = Utilities.generarTextoConPlantilla(plantilla, parametros);
             helper.setText(htmlContent, true);
             
             ClassPathResource imagen = new ClassPathResource(Constantes.ESCUDOIPSS);

@@ -14,7 +14,11 @@
             <li>Teléfono: {{ApoyoTelefono}}</li>
         </ul>
         <hr style="color:blue;"/>
+        
+        {% block contenido %}
         <p>{{cuerpo}}</p>
+        {% endblock %}
+        
         <hr style="color:blue;"/>
         <br/>
         <table>

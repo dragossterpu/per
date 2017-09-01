@@ -5,7 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
@@ -381,9 +383,13 @@ public class UserBean implements Serializable {
                     userService.save(usu);
                 }
             }
-            String cuerpoCorreo = "Su nueva contraseña es: " + password;
             
-            correo.envioCorreo(user.getCorreo(), "Restauración de la contraseña", cuerpoCorreo);
+            Map<String, String> paramPlantilla = new HashMap<>();
+            paramPlantilla.put("password", password);
+            correo.envioCorreo(user.getCorreo(),
+                    "Restauración contraseña aplicación software, Programa de Gestión de Inspecciones “PROGESIN”.",
+                    Constantes.TEMPLATECORREOPASSWORD, paramPlantilla);
+            
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
                     "Se ha enviado un correo al usuario con la nueva contraseña");
         } catch (DataAccessException | CorreoException e) {

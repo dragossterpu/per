@@ -176,9 +176,15 @@ public final class Constantes {
     public static final String ESCUDOIPSS = "/static/images/escudo_ipss.png";
     
     /**
-     * Constante ruta recurso plantilla (html) para generar correos electrónicos con imágenes.
+     * Constante ruta recurso plantilla (html) base con etiquetas pebble para generar correos electrónicos con imágenes.
      */
-    public static final String TEMPLATECORREO = "/static/templates/templateCorreo.html";
+    public static final String TEMPLATECORREOBASE = "/static/templates/templateCorreoBase.html";
+    
+    /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATECORREOPASSWORD = "/static/templates/templateCorreoPassword.html";
     
     /**
      * Constructor para que no se pueda instanciar la clase.

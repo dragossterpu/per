@@ -162,7 +162,7 @@ public class TareasService implements ITareasService {
                     listaDestinos.add(cuestionario.getCorreoEnvio());
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
-                    correoElectronico.envioCorreo(listaDestinos,
+                    correoElectronico.envioCorreo(String.join(", ", listaDestinos),
                             "Recordatorio fin de plazo para el envío del cuestionario", cuerpo.toString());
                 }
             }
@@ -210,7 +210,7 @@ public class TareasService implements ITareasService {
                     listaDestinos.add(solicitud.getCorreoDestinatario());
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
-                    correoElectronico.envioCorreo(listaDestinos,
+                    correoElectronico.envioCorreo(String.join(", ", listaDestinos),
                             "Recordatorio fin de plazo para el envío de documentación previa", cuerpo.toString());
                 }
             }
