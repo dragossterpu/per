@@ -167,7 +167,7 @@ public class CorreoElectronico implements ICorreoElectronico {
     }
     
     /**
-     * Envío de correos sin adjuntos.
+     * Envío de correos a uno o varios destinatarios en formato html con o sin archivos adjuntos.
      * 
      * @param destino Lista de destinatarios destinatario
      * @param conCopia Lista de destinatario en copia
