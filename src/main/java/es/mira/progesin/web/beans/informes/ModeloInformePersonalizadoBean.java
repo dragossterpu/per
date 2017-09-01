@@ -221,7 +221,7 @@ public class ModeloInformePersonalizadoBean implements Serializable {
     }
     
     /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
+     * Método para la exportación de la tabla a Word.
      */
     public void exportDoc() {
         

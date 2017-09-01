@@ -86,6 +86,9 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios" />
                     </h:commandLink>
+                     <h:commandLink  action="#{userBean.exportDoc}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="user" value="#{userBean.model}" id="tablaUsuarios" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{userBean.model.rowCount ne 0}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 
