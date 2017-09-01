@@ -213,6 +213,7 @@ public class Utilities {
                 case "EstadoInspeccionEnum":
                 case "AmbitoInspeccionEnum":
                 case "TipoUnidad":
+                case "Departamento":
                     try {
                         valor = (String) clase.getDeclaredMethod("getDescripcion", (Class<?>[]) null).invoke(campo,
                                 (Object[]) null);
@@ -263,6 +264,8 @@ public class Utilities {
             for (int i = 0; i < lista.size(); i++) {
                 cadenArray[i] = devuelveValor(lista.get(i));
             }
+            
+            Arrays.sort(cadenArray);
             cadena = String.join(", ", cadenArray);
         }
         return cadena;

@@ -64,7 +64,7 @@ public class Notificacion implements Serializable {
     /**
      * Username del usuario que registra la notificación.
      */
-    @Column(name = "USUARIO_REGISTRO")
+    @Column(name = "USUARIO_REGISTRO", nullable = false)
     private String usernameNotificacion;
     
     /**

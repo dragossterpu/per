@@ -63,7 +63,7 @@ public class ModeloCuestionario implements Serializable {
     private String descripcion;
     
     /**
-     * Listas de cuestionarios asociados.
+     * Listas de areas.
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idCuestionario")

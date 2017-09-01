@@ -69,14 +69,14 @@ public class RegistroActividad implements Serializable {
      * Fecha en la que se da de alta el registro.
      */
     @CreatedDate
-    @Column(name = "FECHA_ALTA")
+    @Column(name = "FECHA_ALTA", nullable = false)
     private Date fechaAlta;
     
     /**
      * Username del usuario que da de alta el registro.
      */
     @CreatedBy
-    @Column(name = "USUARIO_REGISTRO")
+    @Column(name = "USUARIO_REGISTRO", nullable = false)
     private String usernameRegActividad;
     
     /**
