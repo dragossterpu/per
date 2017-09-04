@@ -2,6 +2,10 @@
     <ui:define name="content">
     <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
     
+        <ui:param name="usernameActual" value="#{request.remoteUser}" />
+        <ui:param name="esAdminJefeIspecc" value="#{p:ifAnyGranted('ADMIN,JEFE_INSPECCIONES')}" />
+        <ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}" />
+        
         <ui:param name="titulo" value="Búsqueda de cuestionarios enviados" />
         <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
         <h3>#{titulo}</h3>
@@ -153,12 +157,12 @@
                         </h:outputText>
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-                        <p:commandButton title="Validar" icon="fa fa-eye" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
+                        <p:commandButton title="Ver" icon="fa fa-eye" action="#{cuestionarioEnviadoBean.visualizarCuestionario.visualizarRespuestasCuestionario(cuestionario)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdminJefeIspecc or esJefeEquipo}">
                         <p:commandButton title="Modificar datos envio" icon="fa fa-edit" action="#{cuestionarioEnviadoBean.getFormModificarCuestionario(cuestionario)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false"  rendered="#{esAdminJefeIspecc or esJefeEquipo}">
                         <p:commandButton title="Eliminar: se dará de baja y se mantendrá en el registro." icon="fa fa-trash" actionListener="#{cuestionarioEnviadoBean.eliminarCuestionario(cuestionario)}" update=":busquedaCuestionario:panelCuestionarios tablaCuestionarios" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
                             <p:confirm header="Eliminar cuestionario" message="¿Está seguro que desea eliminar el cuestionario?" icon="fa fa-warning-sign" />
                         </p:commandButton>
