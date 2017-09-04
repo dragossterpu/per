@@ -179,7 +179,7 @@ public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
                         .add("."));
         
         document.add(new Paragraph(
-                "Una vez enviado el cuestionario cumplimentado y validado por esta IPSS, su usuario de la citada aplicación quedará inactivo."));
+                "Una vez enviada la solicitud cumplimentada, su usuario de la citada aplicación quedará inactivo."));
         
         document.add(
                 new Paragraph("Para cualquier aclaración, podrá dirigirse a:").setPaddingBottom(20).setPaddingTop(20));
