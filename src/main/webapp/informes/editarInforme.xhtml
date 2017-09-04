@@ -32,7 +32,8 @@
                             
                             <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="tabsubarea" immediate="true" partialSubmit="true"  rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
                             <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="tabsubarea" immediate="true" partialSubmit="true" rendered="#{(informeBean.mapaAsignaciones[subarea] eq request.remoteUser) or (not empty informeBean.mapaAsignaciones[subarea] and (esJefeEquipoInspeccion or esJefeInspecciones))}">
-                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario" disabled="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
+                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario con una posible pérdida de datos no guardados" disabled="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
+                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, perderá los datos no guardados" disabled="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}"/>
                             </p:commandButton>
                             
                             <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelRespuestas">
