@@ -62,13 +62,9 @@
             <div class="botonesFormulario">
                 <p:commandButton value="Guardar" actionListener="#{informeBean.guardarInforme}" icon="fa fa-save"  update="informe"/>
                 <p:commandButton value="Guardar y liberar mis asignaciones" actionListener="#{informeBean.desasignarInforme}" icon="fa fa-save" update="informe"/>
-                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeInspecciones or esJefeEquipoInspeccion}" />
+                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeInspecciones or esJefeEquipoInspeccion}" update="informe"/>
                 <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
-            
-            <h:outputLabel value="Debe cumplimentar todas las subáreas del informe para poder finalizarlo" 
-                rendered="#{facesContext.validationFailed}"
-                styleClass="ui-widget ui-messages-error ui-corner-all ui-messages-error-summary"/>
                 
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                 <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
@@ -91,7 +87,9 @@
                 </div>
             </p:confirmDialog>
             
-             <p:messages closable="true" autoUpdate="true" showDetail="true" showSummary="true" />
+            <h:outputLabel value="Debe cumplimentar todas las subáreas del informe para poder finalizarlo" 
+                rendered="#{facesContext.validationFailed}"
+                styleClass="ui-widget ui-messages-error ui-corner-all ui-messages-error-summary"/>
             
         </h:form>
 

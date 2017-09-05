@@ -173,18 +173,24 @@ public class InformeService implements IInformeService {
     @Transactional(readOnly = false)
     public Informe finalizarInforme(Informe informe, Map<SubareaInforme, String[]> mapaRespuestas,
             Map<SubareaInforme, String> mapaAsignaciones) {
+        Informe informeGuardado = null;
         String usernameUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
         Informe informeActualizado = findConRespuestas(informe.getId());
         guardarRespuestas(mapaRespuestas, informeActualizado, mapaAsignaciones, usernameUsuarioActual);
-        asignSubareaInformeUserService.deleteByInforme(informeActualizado);
         
-        informeActualizado.setFechaFinalizacion(new Date());
-        informeActualizado.setUsernameFinalizacion(usernameUsuarioActual);
-        Informe informeGuardado = informeRepository.save(informeActualizado);
-        // Cambiamos el estado de la inspección a INFORME FINALIZADO
-        Inspeccion inspeccion = inspeccionService.findInspeccionById(informe.getInspeccion().getId());
-        inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.J_INFORME_REALIZADO);
-        inspeccionService.save(inspeccion);
+        // Comprobar que todas las subáreas tienen respuesta
+        Long nSubareasSinRta = buscaSubareasSinResponder(informe.getId());
+        if (nSubareasSinRta == 0) {
+            asignSubareaInformeUserService.deleteByInforme(informeActualizado);
+            
+            informeActualizado.setFechaFinalizacion(new Date());
+            informeActualizado.setUsernameFinalizacion(usernameUsuarioActual);
+            informeGuardado = informeRepository.save(informeActualizado);
+            // Cambiamos el estado de la inspección a INFORME FINALIZADO
+            Inspeccion inspeccion = inspeccionService.findInspeccionById(informe.getInspeccion().getId());
+            inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.J_INFORME_REALIZADO);
+            inspeccionService.save(inspeccion);
+        }
         return informeGuardado;
     }
     

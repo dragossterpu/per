@@ -125,6 +125,9 @@
                         <h:outputText id="motivo" value="#{informe.motivoAnulacion.length() gt 40 ? fn:substring(informe.motivoAnulacion,0,40).concat('...') : informe.motivoAnulacion}" />
                         <p:tooltip id="toolTipMotivo" for="motivo" value="#{informe.motivoAnulacion}" position="bottom"/>       
                     </p:column>
+                    <p:column headerText="I. Personalizado" sortBy="#{informe.modeloPersonalizado.nombre}" width="100" visible="#{informeBean.list[8]}" exportable="#{informeBean.list[8]}">
+                        <h:outputText value="#{informe.modeloPersonalizado.nombre}" />
+                    </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <p:commandButton title="Ver informe" icon="fa fa-eye" action="#{informeBean.getFormVisualizarInforme(informe.id)}" />
                     </p:column>

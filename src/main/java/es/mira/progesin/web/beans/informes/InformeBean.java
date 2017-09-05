@@ -73,7 +73,7 @@ public class InformeBean implements Serializable {
     /**
      * Número de columnas de la vista.
      */
-    private static final int NUMCOLSTABLA = 8;
+    private static final int NUMCOLSTABLA = 12;
     
     /**
      * Formato de fecha.
@@ -392,13 +392,12 @@ public class InformeBean implements Serializable {
      */
     public void finalizarInforme() {
         try {
-            // Comprobar que todas las subáreas tienen respuesta
-            Long nSubareasSinRta = informeService.buscaSubareasSinResponder(informe.getId());
-            if (nSubareasSinRta > 0) {
+            Informe informeGuardado = informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones);
+            if (informeGuardado == null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         "No se puede finalizar el informe al existir subáreas sin responder");
             } else {
-                setInforme(informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones));
+                setInforme(informeGuardado);
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                         "El informe ha sido finalizado con éxito.", "dialogFinalizar");
             }
@@ -592,7 +591,6 @@ public class InformeBean implements Serializable {
      * Método para la exportación de la tabla a Word.
      */
     public void exportDoc() {
-        
         exportadorWord.exportDoc("lista_informes", false, "busquedaInforme:tablaInformes", SeccionesEnum.INFORMES);
     }
     
