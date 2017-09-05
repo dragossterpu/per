@@ -171,12 +171,11 @@ public class CorreoElectronico implements ICorreoElectronico {
             final MimeMessage message = mailSender.createMimeMessage();
             final MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
-            helper.setTo(destino);
+            helper.setTo(destino.split(","));
             if (conCopia != null) {
-                helper.setCc(conCopia);
+                helper.setCc(conCopia.split(","));
             }
             helper.setSubject(asunto);
-            // helper.setFrom("no-reply@interior.es");
             
             Map<String, String> datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
             

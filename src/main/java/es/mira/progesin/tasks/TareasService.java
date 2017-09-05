@@ -172,7 +172,7 @@ public class TareasService implements ITareasService {
                     
                     Map<String, String> paramPlantilla = new HashMap<>();
                     paramPlantilla.put("ApoyoCorreo", tareasProperties.getProperty("correoApoyo"));
-                    correoElectronico.envioCorreo(String.join(", ", listaDestinos), asunto,
+                    correoElectronico.envioCorreo(String.join(",", listaDestinos), asunto,
                             Constantes.TEMPLATERECORDATORIOFINALIZACIONCUESTIONARIO, paramPlantilla);
                 }
             }
@@ -220,7 +220,7 @@ public class TareasService implements ITareasService {
                     listaDestinos.add(solicitud.getCorreoDestinatario());
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
-                    correoElectronico.envioCorreo(String.join(", ", listaDestinos),
+                    correoElectronico.envioCorreo(String.join(",", listaDestinos),
                             "Recordatorio fin de plazo para el envío de documentación previa", cuerpo.toString());
                 }
             }

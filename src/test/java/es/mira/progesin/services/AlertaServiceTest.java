@@ -198,7 +198,7 @@ public class AlertaServiceTest {
         verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario2.getUsername());
         
-        verify(correo, times(1)).envioCorreo(eq(String.join(", ", listaCorreos)), any(String.class), any(String.class));
+        verify(correo, times(1)).envioCorreo(eq(String.join(",", listaCorreos)), any(String.class), any(String.class));
         
     }
     
@@ -228,7 +228,7 @@ public class AlertaServiceTest {
         
         when(alertaRepository.save(alertaSinId)).thenReturn(alertaGuardada);
         when(userService.findByfechaBajaIsNullAndRole(rol)).thenReturn(usuariosRol);
-        doThrow(CorreoException.class).when(correo).envioCorreo(eq(String.join(", ", listaCorreos)), any(String.class),
+        doThrow(CorreoException.class).when(correo).envioCorreo(eq(String.join(",", listaCorreos)), any(String.class),
                 any(String.class));
         
         alertaServiceMock.crearAlertaRol(seccion, descripcion, rol);
@@ -239,7 +239,7 @@ public class AlertaServiceTest {
         verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario2.getUsername());
         
-        verify(correo, times(1)).envioCorreo(eq(String.join(", ", listaCorreos)), any(String.class), any(String.class));
+        verify(correo, times(1)).envioCorreo(eq(String.join(",", listaCorreos)), any(String.class), any(String.class));
         verify(registroActividadService, times(1)).altaRegActividadError(any(String.class), any(CorreoException.class));
         
     }
@@ -301,10 +301,8 @@ public class AlertaServiceTest {
         verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario4.getUsername());
         
-        verify(correo, times(1)).envioCorreo(eq(String.join(", ", listaCorreos1)), any(String.class),
-                any(String.class));
-        verify(correo, times(1)).envioCorreo(eq(String.join(", ", listaCorreos2)), any(String.class),
-                any(String.class));
+        verify(correo, times(1)).envioCorreo(eq(String.join(",", listaCorreos1)), any(String.class), any(String.class));
+        verify(correo, times(1)).envioCorreo(eq(String.join(",", listaCorreos2)), any(String.class), any(String.class));
         
     }
     
@@ -346,7 +344,7 @@ public class AlertaServiceTest {
                 usuario1.getUsername());
         verify(alertasNotificacionesUsuarioService, times(1)).grabarMensajeUsuario(alertaGuardada,
                 usuario2.getUsername());
-        verify(correo, times(1)).envioCorreo(eq(String.join(", ", listaCorreos)), any(String.class), any(String.class));
+        verify(correo, times(1)).envioCorreo(eq(String.join(",", listaCorreos)), any(String.class), any(String.class));
         
     }
     

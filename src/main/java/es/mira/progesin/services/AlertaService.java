@@ -188,7 +188,7 @@ public class AlertaService implements IAlertaService {
             alertasNotificacionesUsuarioService.grabarMensajeUsuario(alerta, usuario.getUsername());
             listaCorreos.add(usuario.getCorreo());
         }
-        correo.envioCorreo(String.join(", ", listaCorreos), "Nueva alerta PROGESIN",
+        correo.envioCorreo(String.join(",", listaCorreos), "Nueva alerta PROGESIN",
                 "Se ha generado una nueva alerta en la aplicacion PROGESIN:\n " + descripcion);
     }
     
