@@ -28,8 +28,7 @@ public interface IUserRepository extends CrudRepository<User, String> {
      * @return resultado de la búsqueda
      * 
      */
-    List<User> findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(@Param("correo") String correo,
-            @Param("docIdentidad") String docIdentidad);
+    List<User> findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String docIdentidad);
     
     /**
      * Busca un usuario a partir de su correo electrónico.
