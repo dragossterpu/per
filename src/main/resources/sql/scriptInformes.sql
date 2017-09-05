@@ -15,7 +15,7 @@ prompt =========================================================================
 prompt Ejecutando carga de Modelo Informe Inspecciones Generales (Guardia Civil)...
 prompt =========================================================================
 
-insert into modelos_informe(id, nombre, estandar) values (SEQ_MODELOINFORME.NEXTVAL, 'Modelo Informe Inspecciones Generales (Guardia Civil)', 1);
+insert into modelos_informe(id, nombre, estandar, username_alta, fecha_alta) values (SEQ_MODELOINFORME.NEXTVAL, 'Modelo Informe Inspecciones Generales (Guardia Civil)', 1, 'system', SYSDATE);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'INTRODUCCIÓN', SEQ_MODELOINFORME.CURRVAL, 1);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Introducción.', SEQ_AREASINFORME.CURRVAL, 1);
@@ -100,7 +100,7 @@ prompt =========================================================================
 prompt Ejecutando carga de Modelo Informe Inspecciones Generales (Cuerpo Nacional de Policía)...
 prompt =========================================================================
 
-insert into modelos_informe(id, nombre, estandar) values (SEQ_MODELOINFORME.NEXTVAL, 'Modelo Informe Inspecciones Generales (Cuerpo Nacional de Policía)', 1);
+insert into modelos_informe(id, nombre, estandar, username_alta, fecha_alta) values (SEQ_MODELOINFORME.NEXTVAL, 'Modelo Informe Inspecciones Generales (Cuerpo Nacional de Policía)', 1, 'system', SYSDATE);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'INTRODUCCIÓN', SEQ_MODELOINFORME.CURRVAL, 1);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Introducción.', SEQ_AREASINFORME.CURRVAL, 1);
