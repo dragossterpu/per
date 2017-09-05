@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
@@ -145,25 +147,33 @@ public class TareasService implements ITareasService {
                     plazoDiasCuestionario = Integer.parseInt(tareasProperties.getProperty(PLAZODIASCUESTIONARIO));
                 }
                 if (dias == plazoDiasCuestionario) {
-                    StringBuilder cuerpo = new StringBuilder(INICIO).append("Faltan ").append(dias)
-                            .append(" dia/s para la fecha límite de envío del cuestionario de la inspección ")
-                            .append(cuestionario.getInspeccion().getNumero()).append(FINAL);
                     
-                    correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), "Recordatorio envío cuestionario",
-                            cuerpo.toString());
+                    String asunto = "Recordatorio plazo envío cuestionario "
+                            + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                            + cuestionario.getInspeccion().getNombreUnidad() + "("
+                            + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
+                            + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+                    Map<String, String> mapa = null;
+                    correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto,
+                            Constantes.TEMPLATERECORDATORIOCUESTIONARIO, mapa);
                 }
                 
                 if (dias == 0) {
-                    StringBuilder cuerpo = new StringBuilder().append(INICIO)
-                            .append("Hoy finaliza el plazo para el envío del cuestionario de la inspección número ")
-                            .append(cuestionario.getInspeccion().getNumero()).append(FINAL);
                     
                     List<String> listaDestinos = new ArrayList<>();
                     listaDestinos.add(cuestionario.getCorreoEnvio());
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
-                    correoElectronico.envioCorreo(String.join(", ", listaDestinos),
-                            "Recordatorio fin de plazo para el envío del cuestionario", cuerpo.toString());
+                    String asunto = "Recordatorio finalización plazo envío cuestionario "
+                            + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                            + cuestionario.getInspeccion().getNombreUnidad() + "("
+                            + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
+                            + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+                    
+                    Map<String, String> paramPlantilla = new HashMap<>();
+                    paramPlantilla.put("ApoyoCorreo", tareasProperties.getProperty("correoApoyo"));
+                    correoElectronico.envioCorreo(String.join(", ", listaDestinos), asunto,
+                            Constantes.TEMPLATERECORDATORIOFINALIZACIONCUESTIONARIO, paramPlantilla);
                 }
             }
         } catch (CorreoException ce) {
