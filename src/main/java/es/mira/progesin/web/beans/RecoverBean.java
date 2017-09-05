@@ -46,6 +46,12 @@ public class RecoverBean implements Serializable {
     private transient IUserService userService;
     
     /**
+     * Servicio de usuarios.
+     */
+    @Autowired
+    private transient ApplicationBean applicationBean;
+    
+    /**
      * Servicio de registro de actividad.
      */
     @Autowired
@@ -87,7 +93,8 @@ public class RecoverBean implements Serializable {
                     String password = Utilities.getPassword();
                     String passCodificada = passwordEncoder.encode(password);
                     Map<String, String> paramPlantilla = new HashMap<>();
-                    paramPlantilla.put("enlaceProgesin", Constantes.ENLACEPROGESIN);
+                    paramPlantilla.put("enlaceProgesin",
+                            applicationBean.getMapaParametros().get("URLPROGESIN").get("PN"));
                     paramPlantilla.put("password", password);
                     listaUser.forEach((User user) -> {
                         user.setPassword(passCodificada);

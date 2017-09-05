@@ -121,6 +121,9 @@ public class UserBean implements Serializable {
      */
     private LazyModelUsuarios model;
     
+    @Autowired
+    private ApplicationBean applicationBean;
+    
     /**
      * Servicio de usuarios.
      */
@@ -213,10 +216,14 @@ public class UserBean implements Serializable {
                 user.setPassword(passwordEncoder.encode(password));
                 
                 userService.save(user);
+                Map<String, String> paramPlantilla = new HashMap<>();
+                paramPlantilla.put("user", user.getUsername());
+                paramPlantilla.put("password", password);
+                paramPlantilla.put("enlaceProgesin", applicationBean.getMapaParametros().get("URLPROGESIN").get("PN"));
+                correo.envioCorreo(user.getCorreo(),
+                        "Alta aplicación software, Programa de Gestión de Inspecciones “PROGESIN”.",
+                        Constantes.TEMPLATEALTAPLICACION, paramPlantilla);
                 
-                correo.envioCorreo(user.getCorreo(), "Alta en la herramienta Progesin",
-                        "Ha sido dado de alta en la herramienta PROGESIN con nombre de usuario '" + user.getUsername()
-                                + "' y clave '" + password + "'");
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                         "El usuario ha sido creado con éxito");
                 String descripcion = "Alta nuevo usuario " + user.getUsername();
@@ -388,7 +395,7 @@ public class UserBean implements Serializable {
             paramPlantilla.put("password", password);
             correo.envioCorreo(user.getCorreo(),
                     "Restauración contraseña aplicación software, Programa de Gestión de Inspecciones “PROGESIN”.",
-                    Constantes.TEMPLATECORREOPASSWORD, paramPlantilla);
+                    Constantes.TEMPLATECORREORESTAURARPASSWORD, paramPlantilla);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
                     "Se ha enviado un correo al usuario con la nueva contraseña");
