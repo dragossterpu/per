@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
@@ -404,6 +406,36 @@ public class InformeBean implements Serializable {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar el informe");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
+    }
+    
+    /**
+     * Anula un informe. Se hace anulación lógica añadiendo la fecha y el nombre de usuario que lo realizó.
+     * 
+     * @param informeAnulado informe a anular
+     * @param motivoAnulacion razón para anular el informe
+     */
+    public void anularInforme(Informe informeAnulado, String motivoAnulacion) {
+        try {
+            String nombreUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+            informeAnulado.setFechaBaja(new Date());
+            informeAnulado.setUsernameBaja(nombreUsuarioActual);
+            
+            informeService.save(informeAnulado);
+            
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Baja",
+                    "Se ha dado de baja con éxito el informe", null);
+            
+            String descripcion = "Informe para la inspección " + informeAnulado.getInspeccion().getNumero()
+                    + " anulado por el siguiente motivo: " + motivoAnulacion;
+            
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
+                    SeccionesEnum.INFORMES.getDescripcion());
+            
+        } catch (DataAccessException e) {
+            FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
+                    "Se ha producido un error al anular la informe, inténtelo de nuevo más tarde", null);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
