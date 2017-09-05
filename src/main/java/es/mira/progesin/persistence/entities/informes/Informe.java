@@ -90,4 +90,10 @@ public class Informe extends AbstractEntity implements Serializable {
     @Column(name = "usernameFinalizacion")
     private String usernameFinalizacion;
     
+    /**
+     * Razón por la que se ha anulado el informe.
+     */
+    @Column(name = "motivoAnulacion")
+    private String motivoAnulacion;
+    
 }

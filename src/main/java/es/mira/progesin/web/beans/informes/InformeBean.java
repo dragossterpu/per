@@ -421,6 +421,7 @@ public class InformeBean implements Serializable {
             String nombreUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
             informeAnulado.setFechaBaja(new Date());
             informeAnulado.setUsernameBaja(nombreUsuarioActual);
+            informeAnulado.setMotivoAnulacion(motivoAnulacion);
             
             informeService.save(informeAnulado);
             
