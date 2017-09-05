@@ -60,14 +60,14 @@ public interface IUserService {
     User save(User entity);
     
     /**
-     * Busca un usuario por su correo o su documento de identidad, ignorando mayúsculas.
+     * Busca una lista de usuarios por su correo o su documento de identidad, ignorando mayúsculas.
      * 
      * @param correo correo del usuario a buscar
      * @param nif documento del usuario a buscar
      * @return resultado de la búsqueda
      * 
      */
-    User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String nif, String correo);
+    List<User> findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String nif, String correo);
     
     /**
      * Devuelve una lista de usuarios en función de los criterios de búsqueda recibidos como parámetro. El listado se

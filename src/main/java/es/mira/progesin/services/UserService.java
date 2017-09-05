@@ -133,7 +133,7 @@ public class UserService implements IUserService {
     }
     
     /**
-     * Busca un usuario por su correo o su documento de identidad, ignorando mayúsculas.
+     * Busca una lista de usuarios por su correo o su documento de identidad, ignorando mayúsculas..
      * 
      * @param correo correo del usuario a buscar
      * @param nif documento del usuario a buscar
@@ -141,7 +141,7 @@ public class UserService implements IUserService {
      * 
      */
     @Override
-    public User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String nif) {
+    public List<User> findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String nif) {
         return userRepository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
     }
     

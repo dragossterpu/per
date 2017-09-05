@@ -49,8 +49,8 @@ public class IUserRepositoryTest {
      */
     @Test
     public final void testFindByCorreoIgnoreCaseOrDocIdentidadIgnoreCase() {
-        User user = this.repository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase("EZENTIS@EZENTIS.COM", "");
-        assertThat(user.getUsername()).isEqualTo(EZENTISUSERNAME);
+        List<User> listUser = this.repository.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase("EZENTIS@EZENTIS.COM", "");
+        assertThat(listUser.get(0).getUsername()).isEqualTo(EZENTISUSERNAME);
     }
     
     /**

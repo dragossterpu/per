@@ -21,14 +21,15 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
  */
 public interface IUserRepository extends CrudRepository<User, String> {
     /**
-     * Busca un usuario por su correo o su documento de identidad, ignorando mayúsculas.
+     * Busca una lista de usuarios por su correo o su documento de identidad, ignorando mayúsculas.
      * 
      * @param correo correo del usuario a buscar
      * @param docIdentidad documento del usuario a buscar
      * @return resultado de la búsqueda
      * 
      */
-    User findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(String correo, String docIdentidad);
+    List<User> findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(@Param("correo") String correo,
+            @Param("docIdentidad") String docIdentidad);
     
     /**
      * Busca un usuario a partir de su correo electrónico.

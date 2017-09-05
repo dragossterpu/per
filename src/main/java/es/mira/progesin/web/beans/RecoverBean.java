@@ -1,6 +1,9 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 
@@ -75,18 +78,34 @@ public class RecoverBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Debe proporcionar su correo electrónico o NIF para identificar su usuario", null);
         } else {
-            User user = userService.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
-            if (user != null) {
+            // Recuperamos una lista de usuarios ya que pueden existir varios con el mismo email en el caso de los
+            // usuarios provisionales
+            List<User> listaUser = userService.findByCorreoIgnoreCaseOrDocIdentidadIgnoreCase(correo, nif);
+            
+            if (listaUser != null && !listaUser.isEmpty()) {
                 try {
                     String password = Utilities.getPassword();
-                    user.setPassword(passwordEncoder.encode(password));
-                    userService.save(user);
-                    correoElectronico.envioCorreo(user.getCorreo(), "Reestablecido acceso a la herramienta PROGESIN",
-                            "Se le ha asignado una nueva contraseña, sus credenciales son " + user.getUsername() + " / "
-                                    + password);
+                    String passCodificada = passwordEncoder.encode(password);
+                    Map<String, String> paramPlantilla = new HashMap<>();
+                    paramPlantilla.put("enlaceProgesin", Constantes.ENLACEPROGESIN);
+                    paramPlantilla.put("password", password);
+                    listaUser.forEach((User user) -> {
+                        user.setPassword(passCodificada);
+                        if (listaUser.size() > 1) {
+                            paramPlantilla.put("login", user.getCorreo());
+                        } else {
+                            paramPlantilla.put("login", user.getUsername());
+                        }
+                    });
+                    userService.save(listaUser);
+                    
+                    correoElectronico.envioCorreo(listaUser.get(0).getCorreo(),
+                            "Reestablecido acceso aplicación software, Programa de Gestión de Inspecciones “PROGESIN”.",
+                            Constantes.TEMPLATECORREORESTABLECERPASSWORD, paramPlantilla);
+                    
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Clave",
                             "Se ha reestablecido su acceso al sistema, se le han enviado sus nuevos credenciales por correo electrónico");
-                    String descripcion = "Reestablecida clave del usuario " + user.getUsername();
+                    String descripcion = "Reestablecida clave del usuario " + paramPlantilla.get("login");
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                             SeccionesEnum.CLAVE_OLVIDADA.getDescripcion());
                 } catch (DataAccessException | CorreoException e) {
