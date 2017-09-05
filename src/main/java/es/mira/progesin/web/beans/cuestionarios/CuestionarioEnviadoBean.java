@@ -208,11 +208,15 @@ public class CuestionarioEnviadoBean implements Serializable {
                 
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.CUESTIONARIO.getDescripcion());
+                Map<String, String> mapa = null;
                 
-                String cuerpo = "Se ha procedido a eliminar el cuestionario para la inspección "
-                        + cuestionario.getInspeccion().getNumero();
-                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(),
-                        "Se ha dado de baja el cuestionario ".concat(cuestionario.getInspeccion().getNumero()), cuerpo);
+                String asunto = "Baja cuestionario " + cuestionario.getInspeccion().getTipoUnidad().getDescripcion()
+                        + " de " + cuestionario.getInspeccion().getNombreUnidad() + "("
+                        + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
+                        + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+                
+                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto,
+                        Constantes.TEMPLATEBAJACUESTIONARIO, mapa);
                 
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",

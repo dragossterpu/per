@@ -199,6 +199,12 @@ public final class Constantes {
     public static final String TEMPLATEALTAPLICACION = "/static/templates/templateAltaAplicacion.html";
     
     /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATEBAJACUESTIONARIO = "/static/templates/templateBajaCuestionario.html";
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {
