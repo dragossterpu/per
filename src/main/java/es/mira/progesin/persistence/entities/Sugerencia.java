@@ -68,14 +68,14 @@ public class Sugerencia implements Serializable {
     /**
      * Fecha de registro de la sugerencia.
      */
-    @Column(name = "FECHA_REGISTRO")
+    @Column(name = "FECHA_REGISTRO", nullable = false)
     @CreatedDate
     private Date fechaRegistro;
     
     /**
      * Usuario de registro de la sugerencia.
      */
-    @Column(name = "USUARIO_REGISTRO")
+    @Column(name = "USUARIO_REGISTRO", nullable = false)
     @CreatedBy
     private String usuarioRegistro;
     

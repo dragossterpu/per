@@ -135,7 +135,7 @@ public class SolicitudDocumentacionPrevia implements Serializable {
      * Fecha de alta de la solicitud.
      */
     @CreatedDate
-    @Column(name = "fechaAlta")
+    @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
     
     /**

@@ -256,10 +256,10 @@ CREATE TABLE SUGERENCIA
    (    ID_SUGERENCIA NUMBER(10,0) NOT NULL ENABLE, 
     DESCRIPCION VARCHAR2(4000 CHAR), 
     FECHA_CONTESTACION TIMESTAMP (6), 
-    FECHA_REGISTRO TIMESTAMP (6), 
+    FECHA_REGISTRO TIMESTAMP (6) NOT NULL ENABLE, 
     MODULO VARCHAR2(50 CHAR), 
     USUARIO_CONTESTACION VARCHAR2(255 CHAR), 
-    USUARIO_REGISTRO VARCHAR2(255 CHAR), 
+    USUARIO_REGISTRO VARCHAR2(255 CHAR) NOT NULL ENABLE,
     PRIMARY KEY (ID_SUGERENCIA) USING INDEX ENABLE
    ); 
 
@@ -333,7 +333,7 @@ CREATE TABLE USERS
     PRIM_APELLIDO VARCHAR2(50 CHAR) NOT NULL ENABLE, 
     SEGUNDO_APELLIDO VARCHAR2(50 CHAR), 
     CATEGORIA VARCHAR2(20 CHAR), 
-    CORREO VARCHAR2(50 CHAR) NOT NULL ENABLE, 
+    CORREO VARCHAR2(100 CHAR) NOT NULL ENABLE, 
     DESPACHO VARCHAR2(20 CHAR), 
     DOC_IDENTIDAD VARCHAR2(10 CHAR) NOT NULL ENABLE, 
     NUM_IDENTIFICACION VARCHAR2(20 CHAR), 
@@ -619,11 +619,11 @@ CREATE TABLE CUESTIONARIO_PERSONALIZADO
    )
 partition by range(FECHA_CREACION)
     (
-      partition INSPECCIONES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
-      partition INSPECCIONES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
-      partition INSPECCIONES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
-      partition INSPECCIONES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
-      partition INSPECCIONES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+      partition CUEST_PER_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition CUEST_PER_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition CUEST_PER_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition CUEST_PER_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition CUEST_PER_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
     );
 
     CREATE INDEX indice_cuestper_cuest ON CUESTIONARIO_PERSONALIZADO (ID_MODELO_CUESTIONARIO);
@@ -792,7 +792,7 @@ CREATE TABLE SOLICITUD_DOC_PREVIA
     CORREO_DESTINATARIO VARCHAR2(255 CHAR), 
     DESCARGA_PLANTILLAS VARCHAR2(255 CHAR), 
     DESTINATARIO VARCHAR2(255 CHAR), 
-    FECHA_ALTA TIMESTAMP (6), 
+    FECHA_ALTA TIMESTAMP (6) NOT NULL ENABLE, 
     FECHA_BAJA TIMESTAMP (6), 
     FECHA_CUMPLIMENTACION TIMESTAMP (6), 
     FECHA_ENVIO TIMESTAMP (6), 
@@ -1020,11 +1020,11 @@ CREATE TABLE INFORMES
    )  
 partition by range(FECHA_ALTA)
     (
-      partition INSPECCIONES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
-      partition INSPECCIONES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
-      partition INSPECCIONES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
-      partition INSPECCIONES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
-      partition INSPECCIONES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
+      partition INFORMES_2017 values less than (TO_DATE('01/01/2018','DD/MM/YYYY')),
+      partition INFORMES_2018 values less than (TO_DATE('01/01/2019','DD/MM/yyyy')),
+      partition INFORMES_2019 values less than (TO_DATE('01/01/2020','DD/MM/yyyy')),
+      partition INFORMES_2020 values less than (TO_DATE('01/01/2021','DD/MM/yyyy')),
+      partition INFORMES_2021 values less than (TO_DATE('01/01/2022','DD/MM/yyyy'))
     );
 
     CREATE INDEX indice_informe_insp ON INFORMES (INSPECCION_ID);

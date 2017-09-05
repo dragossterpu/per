@@ -67,8 +67,9 @@ public enum SeccionesEnum {
      * Sección clave olvidada.
      */
     CLAVE_OLVIDADA("RECORDATORIO CLAVE"),
+    
     /**
-     * Sección clave olvidada.
+     * Sección estadística.
      */
     ESTADISTICAS("ESTADÍSTICAS");
     

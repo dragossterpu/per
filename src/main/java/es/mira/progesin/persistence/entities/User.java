@@ -119,7 +119,7 @@ public class User extends AbstractEntity implements Serializable {
     /**
      * Correo electronico del usuario.
      */
-    @Column(name = "correo", length = 50, nullable = false)
+    @Column(name = "correo", length = 100, nullable = false)
     private String correo;
     
     /**
