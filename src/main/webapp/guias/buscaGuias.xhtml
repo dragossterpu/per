@@ -93,9 +93,8 @@
                      <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{empty guia.fechaAnulacion}" update="tablaGuias" />
                     </p:column>
-                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
-                        <h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}" rendered="#{esEquipoInspeccion and empty guia.fechaAnulacion}" update="tablaGuias" />
-                        <h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{not esEquipoInspeccion and empty guia.fechaAnulacion}" update="tablaGuias" />
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esEquipoInspeccion}">
+                        <h:commandLink title="Crear guía personalizada" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.creaPersonalizada(guia)}" update="tablaGuias" rendered="#{empty guia.fechaAnulacion}"/>
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esEquipoInspeccion}">
                         <h:commandLink title="Modificar guía" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.editaGuia(guia)}" rendered="#{empty guia.fechaAnulacion}" update="tablaGuias" />
