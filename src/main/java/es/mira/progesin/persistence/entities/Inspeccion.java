@@ -112,7 +112,7 @@ public class Inspeccion extends AbstractEntity implements Serializable {
     private Integer anio;
     
     /**
-     * Minicipio.
+     * Municipio.
      */
     @ManyToOne
     @JoinColumn(name = "id_municipio", foreignKey = @ForeignKey(name = "FK_i_MUNICIPIO"))

@@ -282,7 +282,7 @@ public class Utilities {
      */
     public static String generarTextoConPlantilla(String template, Map<String, Object> parametros)
             throws PebbleException, IOException {
-        PebbleEngine engine = new PebbleEngine.Builder().build();
+        PebbleEngine engine = new PebbleEngine.Builder().autoEscaping(false).build();
         PebbleTemplate compiledTemplate = engine.getTemplate(template);
         
         Writer writer = new StringWriter();
