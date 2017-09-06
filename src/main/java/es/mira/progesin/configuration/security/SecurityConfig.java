@@ -94,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutUrl(Constantes.RUTALOGOUT).logoutSuccessUrl(Constantes.RUTALOGIN);
         
         // configuración para el manejo de las sessiones de los usuarios
-        http.sessionManagement().maximumSessions(MAXCONCURRENTUSERSESSIONS).maxSessionsPreventsLogin(true)
+        http.sessionManagement().maximumSessions(MAXCONCURRENTUSERSESSIONS).maxSessionsPreventsLogin(false)
                 .sessionRegistry(sessionRegistry());
         
     }
