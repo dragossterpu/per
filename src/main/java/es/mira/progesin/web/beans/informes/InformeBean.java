@@ -12,13 +12,9 @@ import java.util.Map;
 import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.primefaces.event.ToggleEvent;
-import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
@@ -27,7 +23,6 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
-import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -43,7 +38,6 @@ import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.RegistroActividadService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.HtmlDocxGenerator;
 import es.mira.progesin.util.HtmlPdfGenerator;
@@ -65,17 +59,6 @@ public class InformeBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     /**
-     * Variable utilizada para almacenar el resultado de mostrar una columna o no en la tabla de búsqueda de informes.
-     * 
-     */
-    private List<Boolean> list;
-    
-    /**
-     * Número de columnas de la vista.
-     */
-    private static final int NUMCOLSTABLA = 12;
-    
-    /**
      * Formato de fecha.
      */
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -86,26 +69,9 @@ public class InformeBean implements Serializable {
     private Informe informe;
     
     /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
-    
-    /**
      * Modelo personalizado del informe seleccionado.
      */
     private ModeloInformePersonalizado modeloInformePersonalizado;
-    
-    /**
-     * Objeto de búsqueda de informes.
-     */
-    private InformeBusqueda informeBusqueda;
-    
-    /**
-     * LazyModel para la visualización de datos paginados en la vista.
-     */
-    private LazyModelInforme model;
     
     /**
      * Lista ordenada de areas del informe.
@@ -185,50 +151,6 @@ public class InformeBean implements Serializable {
     private Map<AreaInforme, String> indicesActivosSubareas;
     
     /**
-     * Inicializa el bean.
-     */
-    @PostConstruct
-    public void init() {
-        // setInformeBusqueda(new InformeBusqueda());
-        model = new LazyModelInforme(informeService);
-        setInformeBusqueda(model.getBusqueda());
-        
-        setList(new ArrayList<>());
-        for (int i = 0; i <= NUMCOLSTABLA; i++) {
-            list.add(Boolean.TRUE);
-        }
-    }
-    
-    /**
-     * Devuelve al formulario de búsqueda de informes a su estado inicial y borra los resultados de búsquedas anteriores
-     * si se navega desde el menú u otra sección.
-     * 
-     * @return ruta siguiente
-     */
-    public String getFormBusquedaInformes() {
-        limpiarBusqueda();
-        return "/informes/informes?faces-redirect=true";
-    }
-    
-    /**
-     * Borra los resultados de búsquedas anteriores.
-     */
-    public void limpiarBusqueda() {
-        setInformeBusqueda(new InformeBusqueda());
-        model.setRowCount(0);
-    }
-    
-    /**
-     * Busca los informes según los filtros introducidos en el formulario de búsqueda.
-     * 
-     * 
-     */
-    public void buscarInforme() {
-        model.setBusqueda(informeBusqueda);
-        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
-    }
-    
-    /**
      * Cargar formulario para crear un informe a partir de un modelo personalizado y eligiendo la inspección a la que
      * pertenece.
      * 
@@ -264,6 +186,24 @@ public class InformeBean implements Serializable {
     public String getFormVisualizarInforme(Long informeId) {
         cargarInforme(informeId);
         return "/informes/visualizarInforme?faces-redirect=true";
+    }
+    
+    /**
+     * Crear el informe de una inspección a partir de un modelo personalizado.
+     * 
+     * @param inspeccion elegida por el usuario en el formulario
+     */
+    public void crearInforme(Inspeccion inspeccion) {
+        try {
+            informeService.crearInforme(inspeccion, modeloInformePersonalizado);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El informe ha sido creado con éxito.");
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al crear el informe");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
     }
     
     /**
@@ -332,24 +272,6 @@ public class InformeBean implements Serializable {
             mapaAsignaciones.put(asignacion.getSubarea(), asignacion.getUser().getUsername());
         });
         obtenerIndicesActivosArcordeones(asignaciones);
-    }
-    
-    /**
-     * Crear el informe de una inspección a partir de un modelo personalizado.
-     * 
-     * @param inspeccion elegida por el usuario en el formulario
-     */
-    public void crearInforme(Inspeccion inspeccion) {
-        try {
-            informeService.crearInforme(inspeccion, modeloInformePersonalizado);
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "El informe ha sido creado con éxito.");
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al crear el informe");
-            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
-        }
     }
     
     /**
@@ -545,15 +467,6 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Controla las columnas visibles en la lista de resultados del buscador.
-     * 
-     * @param e checkbox de la columna seleccionada
-     */
-    public void onToggle(ToggleEvent e) {
-        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-    }
-    
-    /**
      * Obtiene los indices activos de los dos acordeones (áreas y subáreas) para el usuario logado. Esto se hace para
      * evitar el bug de primefaces en el texteditor, ya que si graban con el acordeon plegado se pierden los valores.
      * 
@@ -585,13 +498,6 @@ public class InformeBean implements Serializable {
         } else {
             setIndicesActivosAreas(areasActivas.toString());
         }
-    }
-    
-    /**
-     * Método para la exportación de la tabla a Word.
-     */
-    public void exportDoc() {
-        exportadorWord.exportDoc("lista_informes", false, "busquedaInforme:tablaInformes", SeccionesEnum.INFORMES);
     }
     
 }

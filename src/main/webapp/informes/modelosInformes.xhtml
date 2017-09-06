@@ -16,14 +16,14 @@
                         <h:outputText value="#{modelo.nombre}" />
                     </p:column>
 
-                    <p:column styleClass="botonTabla">
-                        <p:commandButton title="Crear nuevo modelo a partir de este" icon="fa fa-clone" action="#{nuevoModeloInformeBean.clonarInforme(modelo)}" rendered="#{esJefeInspecciones}" />
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
+                        <p:commandButton title="Crear nuevo modelo a partir de este" icon="fa fa-clone" action="#{nuevoModeloInformeBean.clonarInforme(modelo)}" />
                     </p:column>
-                    <p:column styleClass="botonTabla">
-                        <p:commandButton title="Crear modelo de informe personalizado" icon="fa fa-copy" action="#{informePersonalizadoBean.crearModeloInformePersonalizado(modelo.id)}" rendered="#{esJefeInspecciones or esEquipo}"/>
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones or esEquipo}">
+                        <p:commandButton title="Crear modelo de informe personalizado" icon="fa fa-copy" action="#{informePersonalizadoBean.crearModeloInformePersonalizado(modelo.id)}"/>
                     </p:column>
-                    <p:column styleClass="botonTabla">
-                        <p:commandButton title="Eliminar modelo" icon="fa fa-trash" action="#{modelosInformeBean.eliminarModelo(modelo)}" update="tablaInformes" disabled="#{modelo.estandar}" rendered="#{esJefeInspecciones}">
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
+                        <p:commandButton title="Eliminar modelo" icon="fa fa-trash" action="#{modelosInformeBean.eliminarModelo(modelo)}" update="tablaInformes" disabled="#{modelo.estandar}">
                             <p:confirm header="Eliminar modelo" message="¿Está seguro que desea eliminar el modelo?" icon="fa fa-warning-sign" />
                         </p:commandButton>
                     </p:column>

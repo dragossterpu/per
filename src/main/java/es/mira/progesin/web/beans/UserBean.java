@@ -121,9 +121,6 @@ public class UserBean implements Serializable {
      */
     private LazyModelUsuarios model;
     
-    @Autowired
-    private ApplicationBean applicationBean;
-    
     /**
      * Servicio de usuarios.
      */
