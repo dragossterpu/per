@@ -322,31 +322,27 @@ public class CuestionarioEnviadoBean implements Serializable {
             cuestionario.setUsernameNoConforme(usuarioActual);
             cuestionarioEnvioService.transaccSaveActivaUsuariosProv(cuestionario);
             
-            StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
-            StringBuilder cuerpo = new StringBuilder(
-                    "\r\n \r\nSe ha declarado no conforme el cuestionario que usted envió por los motivos que se exponen a continuación:")
-                            .append("\r\n \r\n").append(motivosNoConforme)
-                            .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                            .append(applicationBean.getMapaParametros().get("URLPROGESIN")
-                                    .get(cuestionario.getInspeccion().getAmbito().name()))
-                            .append(", el usuario de acceso principal es su correo electrónico. El nombre del resto de usuarios y la contraseña para todos ellos constan en la primera comunicación que se le envió.")
-                            .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
-                            .append("\r\n \r\nUna vez enviado el cuestionario cumplimentado todos los usuarios quedarán inactivos de nuevo. \r\n \r\n")
-                            .append("Muchas gracias y un saludo.");
+            String asunto = "No validación del cuestionario  "
+                    + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                    + cuestionario.getInspeccion().getNombreUnidad() + "("
+                    + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
+                    + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+            Map<String, String> paramPlantilla = new HashMap<>();
+            paramPlantilla.put("textoNoValidacion", motivosNoConforme);
             
-            correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(), cuerpo.toString());
+            correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto,
+                    Constantes.TEMPLATENOCONFORMECUESTIONARIO, paramPlantilla);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
                     "Declarado no conforme con éxito el cuestionario. El destinatario de la unidad será notificado y reactivado su acceso al sistema");
             
-            String descripcion = asunto.toString() + " declarado no conforme";
-            
-            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
+            regActividadService.altaRegActividad(asunto, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.CUESTIONARIO.getDescripcion());
             
-            notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
+            notificacionService.crearNotificacionRol(asunto, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                     RoleEnum.ROLE_SERVICIO_APOYO);
-            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
+            
+            notificacionService.crearNotificacionEquipo(asunto, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                     cuestionario.getInspeccion().getEquipo());
             
         } catch (DataAccessException e) {

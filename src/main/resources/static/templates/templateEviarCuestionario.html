@@ -1,0 +1,21 @@
+{% extends "/static/templates/templateCorreoBase.html" %}
+{% block contenido %}
+<p>{{textoEnvioCuestionario}}</p>
+<p>Para responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es <span style="color:blue">{{enlaceProgesin}}</span>.</p>
+<p>Los usuarios de acceso a la aplicación son:</p>
+<p>{{correoPrincipal}}<br/>
+{{correo1}}<br/>
+{{correo2}}<br/>
+{{correo3}}<br/>
+{{correo4}}<br/>
+{{correo5}}<br/>
+{{correo6}}<br/>
+{{correo7}}<br/>
+{{correo8}}<br/>
+{{correo9}}
+</p>
+<p>La contraseña de acceso para todos los usuarios es: <strong>{{ password }}</strong>.<br/>
+Sólo el usuario principal ({{correoPrincipal}}) podrá enviar el cuestionario, el resto de usuarios solamente podrá guardar el cuestionario como borrador.</p>
+<p>Una vez enviado el cuestionario todos los usuarios quedarán inactivos.</p>
+<p>Muchas gracias y un saludo.</p>
+{% endblock %}
