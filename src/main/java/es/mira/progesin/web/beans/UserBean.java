@@ -219,7 +219,6 @@ public class UserBean implements Serializable {
                 Map<String, String> paramPlantilla = new HashMap<>();
                 paramPlantilla.put("user", user.getUsername());
                 paramPlantilla.put("password", password);
-                paramPlantilla.put("enlaceProgesin", applicationBean.getMapaParametros().get("URLPROGESIN").get("PN"));
                 correo.envioCorreo(user.getCorreo(),
                         "Alta aplicación software, Programa de Gestión de Inspecciones “PROGESIN”.",
                         Constantes.TEMPLATEALTAPLICACION, paramPlantilla);

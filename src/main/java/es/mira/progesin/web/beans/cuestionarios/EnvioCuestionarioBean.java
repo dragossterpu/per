@@ -231,8 +231,7 @@ public class EnvioCuestionarioBean implements Serializable {
      * @return Cuerpo del correo
      */
     private String getCuerpoCorreo(String password, List<User> usuarios) {
-        String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN")
-                .get(cuestionarioEnvio.getInspeccion().getAmbito().name());
+        String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN").get("URLPROGESIN");
         
         StringBuilder textoAutomatico = new StringBuilder();
         textoAutomatico

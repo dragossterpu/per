@@ -177,11 +177,10 @@ public class CorreoElectronico implements ICorreoElectronico {
             }
             helper.setSubject(asunto);
             
-            Map<String, String> datosApoyo = applicationBean.getMapaParametros().get("datosApoyo");
-            
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("cuerpo", cuerpo);
-            parametros.putAll(datosApoyo);
+            parametros.putAll(applicationBean.getMapaParametros().get("URLPROGESIN"));
+            parametros.putAll(applicationBean.getMapaParametros().get("datosApoyo"));
             if (parametrosExtra != null) {
                 parametros.putAll(parametrosExtra);
             }

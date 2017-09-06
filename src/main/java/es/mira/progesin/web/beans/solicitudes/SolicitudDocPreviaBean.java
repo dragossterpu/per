@@ -371,8 +371,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                         .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
                 StringBuilder textoAutomatico = new StringBuilder(
                         "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                                .append(applicationBean.getMapaParametros().get("URLPROGESIN")
-                                        .get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
+                                .append(applicationBean.getMapaParametros().get("URLPROGESIN").get("URLPROGESIN"))
                                 .append(", su usuario de acceso es su correo electrónico y la contraseña es ")
                                 .append(password)
                                 .append(". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n")
@@ -460,8 +459,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                     "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:")
                             .append("\r\n \r\n").append(motivosNoConforme)
                             .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                            .append(applicationBean.getMapaParametros().get("URLPROGESIN")
-                                    .get(solicitudDocumentacionPrevia.getInspeccion().getAmbito().name()))
+                            .append(applicationBean.getMapaParametros().get("URLPROGESIN").get("URLPROGESIN"))
                             .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
                             .append("\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n")
                             .append("Muchas gracias y un saludo.");

@@ -1343,9 +1343,7 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PNG','extensiones','image/
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('BMP','extensiones','image/bmp');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PUB','extensiones','application/x-mspublisher');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PDF','extensiones','application/pdf');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PN','URLPROGESIN','http://194.224.253.45:8080/progesin');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('GC','URLPROGESIN','http://194.224.253.45:8080/progesin');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('OTROS','URLPROGESIN','http://194.224.253.45:8080/progesin');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('URLPROGESIN','URLPROGESIN','http://194.224.253.45:8080/progesin');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosCorreo','ezentis.com|interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas',5);
