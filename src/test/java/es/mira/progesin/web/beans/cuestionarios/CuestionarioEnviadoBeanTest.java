@@ -336,7 +336,6 @@ public class CuestionarioEnviadoBeanTest {
         assertThat(cuestionarioEnviadoBeanMock.getList()).hasSize(15);
         assertThat(cuestionarioEnviadoBeanMock.getCuestionarioEnviadoBusqueda()).isNotNull();
         assertThat(cuestionarioEnviadoBeanMock.getModel()).isNotNull();
-        assertThat(cuestionarioEnviadoBeanMock.getListaTiposInspeccion()).hasSize(1);
         
     }
     
