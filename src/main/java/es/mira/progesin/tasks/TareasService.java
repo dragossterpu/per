@@ -153,9 +153,9 @@ public class TareasService implements ITareasService {
                             + cuestionario.getInspeccion().getNombreUnidad() + "("
                             + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
                             + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
-                    Map<String, String> mapa = null;
+                    Map<String, String> paramPlantilla = null;
                     correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto,
-                            Constantes.TEMPLATERECORDATORIOCUESTIONARIO, mapa);
+                            Constantes.TEMPLATERECORDATORIOCUESTIONARIO, paramPlantilla);
                 }
                 
                 if (dias == 0) {

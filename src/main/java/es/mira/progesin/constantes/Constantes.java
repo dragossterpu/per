@@ -214,7 +214,13 @@ public final class Constantes {
      * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
      * contraseña.
      */
-    public static final String TEMPLATERECORDATORIOFINALIZACIONCUESTIONARIO = "/static/templates/templateRecordatorioEnvioCuestionario.html";
+    public static final String TEMPLATERECORDATORIOFINALIZACIONCUESTIONARIO = "/static/templates/templateFinalizacionEnvioCuestionario.html";
+    
+    /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATEMODIFICACIONFECHACUESTIONARIO = "/static/templates/templateModificacionFechaEnvioCuestionario.html";
     
     /**
      * Constructor para que no se pueda instanciar la clase.

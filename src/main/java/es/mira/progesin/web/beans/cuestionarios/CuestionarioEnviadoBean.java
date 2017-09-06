@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -387,16 +388,17 @@ public class CuestionarioEnviadoBean implements Serializable {
             if (cuestionario.getFechaEnvio() != null && !sdf.format(backupFechaLimiteCuestionario)
                     .equals(sdf.format(cuestionario.getFechaLimiteCuestionario()))) {
                 
-                StringBuilder asunto = new StringBuilder(DESCRIPCION).append(cuestionario.getInspeccion().getNumero());
-                StringBuilder textoAutomatico = new StringBuilder(
-                        "\r\n \r\nEl plazo del que disponía para enviar el cuestionario conectándose a la aplicación PROGESIN ha sido modificado.")
-                                .append("\r\n \r\nFecha límite de envío anterior: ")
-                                .append(sdf.format(backupFechaLimiteCuestionario))
-                                .append("\r\nFecha límite de envío nueva: ")
-                                .append(sdf.format(cuestionario.getFechaLimiteCuestionario()))
-                                .append("\r\n \r\nMuchas gracias y un saludo.");
-                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto.toString(),
-                        textoAutomatico.toString());
+                String asunto = "Modificación plazo envío cuestionario  "
+                        + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                        + cuestionario.getInspeccion().getNombreUnidad() + "("
+                        + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
+                        + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+                Map<String, String> paramPlantilla = new HashMap<>();
+                paramPlantilla.put("fechaAnterior", sdf.format(backupFechaLimiteCuestionario));
+                paramPlantilla.put("fechaActual", sdf.format(cuestionario.getFechaLimiteCuestionario()));
+                correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto,
+                        Constantes.TEMPLATEMODIFICACIONFECHACUESTIONARIO, paramPlantilla);
+                
                 mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
