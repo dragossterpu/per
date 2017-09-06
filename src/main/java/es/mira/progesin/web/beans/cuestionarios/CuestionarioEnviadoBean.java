@@ -22,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
@@ -140,11 +139,6 @@ public class CuestionarioEnviadoBean implements Serializable {
     private LazyModelCuestionarioEnviado model;
     
     /**
-     * listado de tipos de inspección dados de alta.
-     */
-    private List<TipoInspeccion> listaTiposInspeccion;
-    
-    /**
      * Variable utilizada para inyectar el servicio ExportadorWord.
      * 
      */
@@ -240,7 +234,6 @@ public class CuestionarioEnviadoBean implements Serializable {
         }
         setCuestionarioEnviadoBusqueda(new CuestionarioEnviadoBusqueda());
         setModel(new LazyModelCuestionarioEnviado(cuestionarioEnvioService));
-        setListaTiposInspeccion(tipoInspeccionService.buscaTodos());
     }
     
     /**
