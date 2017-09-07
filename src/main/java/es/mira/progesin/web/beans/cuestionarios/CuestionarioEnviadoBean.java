@@ -35,7 +35,6 @@ import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.ApplicationBean;
@@ -138,13 +137,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      * Objeto que define la tabla de resultados del buscador.
      */
     private LazyModelCuestionarioEnviado model;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Número de columnas de la vista.
@@ -424,13 +416,4 @@ public class CuestionarioEnviadoBean implements Serializable {
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
-    
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     */
-    public void exportDoc() {
-        exportadorWord.exportDoc("listaCuestionariosEnviados", false, "busquedaCuestionario:tablaCuestionarios",
-                SeccionesEnum.INSPECCION);
-    }
-    
 }

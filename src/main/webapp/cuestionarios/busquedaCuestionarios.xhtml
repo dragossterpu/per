@@ -99,7 +99,7 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados" />
                     </h:commandLink>
-                     <h:commandLink  action="#{cuestionarioEnviadoBean.exportDoc}">
+                     <h:commandLink  action="#{exportadorWord.exportDoc('listaCuestionariosEnviados', false, 'busquedaCuestionario:tablaCuestionarios', SeccionesEnum.INSPECCION)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
                 </p:outputPanel>

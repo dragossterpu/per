@@ -17,10 +17,8 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelSolicitudes;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,12 +68,6 @@ public class SolicitudDocPreviaBuscadorBean implements Serializable {
      */
     @Autowired
     private transient ITipoDocumentacionService tipoDocumentacionService;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Variable utilizada para inyectar el servicio ExportadorWord.
@@ -183,13 +175,5 @@ public class SolicitudDocPreviaBuscadorBean implements Serializable {
     public void buscarSolicitudDocPrevia() {
         model.setBusqueda(solicitudDocPreviaBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
-    }
-    
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     */
-    public void exportDoc() {
-        exportadorWord.exportDoc("lista_solicitudes_documentacion_previas", false,
-                "busquedaSolicitudDocPrevia:tablaSolicitudes", SeccionesEnum.DOCUMENTACION);
     }
 }

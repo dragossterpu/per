@@ -42,7 +42,6 @@ import es.mira.progesin.services.IMiembroService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.Utilities;
 import lombok.Getter;
@@ -192,13 +191,6 @@ public class InspeccionBean implements Serializable {
      * Número de columnas de la vista.
      */
     private static final int NUMCOLSTABLA = 17;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Ruta buscador de isnpecciones.

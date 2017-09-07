@@ -29,7 +29,6 @@ import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
 import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -83,13 +82,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      */
     @Autowired
     transient IDocumentoService documentoService;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * LazyModel de cuestionarios personalizados para hacer la paginación por servidor.
@@ -219,14 +211,6 @@ public class CuestionarioPersonalizadoBean implements Serializable {
      */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-    }
-    
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     */
-    public void exportDoc() {
-        exportadorWord.exportDoc("listaCuestionariosPersonalizados", false, "busquedaCuestionario:tablaCuestionarios",
-                SeccionesEnum.CUESTIONARIO);
     }
     
 }

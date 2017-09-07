@@ -58,7 +58,7 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias" />
                     </h:commandLink>
-                     <h:commandLink  action="#{guiaPersonalizadaBean.exportDoc}">
+                     <h:commandLink  action="#{exportadorWord.exportDoc('lista_guias_personalizadas', false, 'busquedaGuias:tablaGuias', SeccionesEnum.GUIAS)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
                 </p:outputPanel>

@@ -39,7 +39,6 @@ import es.mira.progesin.persistence.repositories.IEmpleoRepository;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.IUserService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
@@ -156,13 +155,6 @@ public class UserBean implements Serializable {
      */
     @Autowired
     private transient IEmpleoRepository empleoRepository;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Muestra el perfil del usuario.
@@ -522,11 +514,4 @@ public class UserBean implements Serializable {
                 SeccionesEnum.USUARIOS.getDescripcion());
     }
     
-    /**
-     * Método para la exportación de la tabla a Word.
-     */
-    public void exportDoc() {
-        
-        exportadorWord.exportDoc("listausuarios", false, "busquedaUsers:tablaUsuarios", SeccionesEnum.USUARIOS);
-    }
 }

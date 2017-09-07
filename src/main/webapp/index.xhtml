@@ -30,7 +30,7 @@
                             <p:graphicImage value="/images/csv.png" />
                             <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas" />
                         </h:commandLink>
-                         <h:commandLink  action="#{AlertasNotificacionesUsuarioBean.exportDocAlertas}">
+                         <h:commandLink  action="#{exportadorWord.exportDoc('listaAlertas', false, 'busquedaAlertas:tablaAlertas', SeccionesEnum.ALERTAS)}">
                         <p:graphicImage value="/images/doc.png" /> 
                         </h:commandLink>
                     </p:outputPanel>
@@ -79,7 +79,7 @@
                             <p:graphicImage value="/images/csv.png" />
                             <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones" />
                         </h:commandLink>
-                       <h:commandLink  action="#{AlertasNotificacionesUsuarioBean.exportDocNotificaciones}">
+                       <h:commandLink  action="#{exportadorWord.exportDoc('lista_notificaciones', false, 'busquedaNotificaciones:tablaNotificaciones', SeccionesEnum.NOTIFICACIONES)}">
                         <p:graphicImage value="/images/doc.png" /> 
                         </h:commandLink>
                     </p:outputPanel>

@@ -31,7 +31,6 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IEstadisticaService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -109,13 +108,6 @@ public class EstadisticaBean implements Serializable {
      */
     @Autowired
     private transient IRegistroActividadService registroActividadService;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Inicializa el bean.

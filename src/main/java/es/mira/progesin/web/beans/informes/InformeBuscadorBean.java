@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.services.IInformeService;
-import es.mira.progesin.util.ExportadorWord;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,13 +42,6 @@ public class InformeBuscadorBean implements Serializable {
      * Número de columnas de la vista.
      */
     private static final int NUMCOLSTABLA = 12;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Objeto de búsqueda de informes.

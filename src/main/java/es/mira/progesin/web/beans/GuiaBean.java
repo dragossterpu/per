@@ -34,7 +34,6 @@ import es.mira.progesin.services.IGuiaService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.WordGeneratorGuias;
 import lombok.Getter;
@@ -153,13 +152,6 @@ public class GuiaBean implements Serializable {
      */
     @Autowired
     private transient ITipoInspeccionService tipoInspeccionService;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * Literal usado para mostrar mensaje de error.
@@ -635,13 +627,6 @@ public class GuiaBean implements Serializable {
      */
     public void desAsociarInspeccion(Inspeccion inspeccion) {
         listaInspecciones.remove(inspeccion);
-    }
-    
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     */
-    public void exportDoc() {
-        exportadorWord.exportDoc("listaModelosGuia", false, "busquedaGuias:tablaGuias", SeccionesEnum.GUIAS);
     }
     
 }

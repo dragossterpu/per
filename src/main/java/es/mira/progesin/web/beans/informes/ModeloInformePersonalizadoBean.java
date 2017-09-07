@@ -26,7 +26,6 @@ import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.IModeloInformeService;
-import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,13 +69,6 @@ public class ModeloInformePersonalizadoBean implements Serializable {
      */
     @Autowired
     private transient IModeloInformePersonalizadoService informePersonalizadoService;
-    
-    /**
-     * Variable utilizada para inyectar el servicio ExportadorWord.
-     * 
-     */
-    @Autowired
-    private transient ExportadorWord exportadorWord;
     
     /**
      * POJO con las opciones de búsqueda.
