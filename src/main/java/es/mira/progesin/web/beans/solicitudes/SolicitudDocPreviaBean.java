@@ -23,6 +23,7 @@ import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -63,11 +64,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      * Constante con el valor de la descripción.
      */
     private static final String DESCRIPCION = "Solicitud documentación previa cuestionario para la inspección ";
-    
-    /**
-     * Constante.
-     */
-    private static final String ASUNTO = "Asunto: ";
     
     /**
      * Solicitud de documentación previa.
@@ -372,18 +368,25 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
                 
-                StringBuilder asunto = new StringBuilder(DESCRIPCION)
-                        .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
-                StringBuilder textoAutomatico = new StringBuilder(
-                        "\r\n \r\nPara cumplimentar la solicitud de documentación previa debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                                .append(applicationBean.getMapaParametros().get("URLPROGESIN").get("URLPROGESIN"))
-                                .append(", su usuario de acceso es su correo electrónico y la contraseña es ")
-                                .append(password)
-                                .append(". \r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo. \r\n \r\n")
-                                .append("Muchas gracias y un saludo.");
-                String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
-                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
-                        cuerpo);
+                TipoInspeccion tipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getTipoInspeccion();
+                
+                String asunto = "Comunicación Inspección "
+                        + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                        + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                        + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
+                        + "Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
+                
+                Map<String, String> paramPlantilla = new HashMap<>();
+                paramPlantilla.put("tipoInspeccion", tipoInspeccion.getDescripcion());
+                paramPlantilla.put("password", password);
+                
+                String plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
+                if (tipoInspeccion.getCodigo().equals("I.G.P.")) {
+                    plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGP;
+                }
+                
+                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, plantilla,
+                        paramPlantilla);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
                         "Se ha enviado con éxito la solicitud de documentación");
