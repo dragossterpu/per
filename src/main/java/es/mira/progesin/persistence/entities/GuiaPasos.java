@@ -81,12 +81,11 @@ public class GuiaPasos implements Serializable {
     private String usernameBaja;
     
     /**
-     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para los OrderList de
-     * Primefaces.
+     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para SelectItemsConverter.
      */
     @Override
     public String toString() {
-        return paso;
+        return id.toString();
     }
     
 }

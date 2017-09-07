@@ -10,6 +10,7 @@ import javax.faces.convert.Converter;
 import org.primefaces.component.orderlist.OrderList;
 import org.springframework.stereotype.Component;
 
+import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
@@ -82,6 +83,8 @@ public class OrderListConverter implements Converter {
             retorno = ((PreguntasCuestionario) objeto).getPregunta();
         } else if (objeto instanceof AreaInforme) {
             retorno = ((AreaInforme) objeto).getDescripcion();
+        } else if (objeto instanceof GuiaPasos) {
+            retorno = ((GuiaPasos) objeto).getPaso();
         } else if (objeto instanceof SubareaInforme) {
             retorno = ((SubareaInforme) objeto).getDescripcion();
         }
