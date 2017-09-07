@@ -16,7 +16,7 @@
         <h:form id="form">
             <p:panel id="panel">
                 <h:outputLabel for="modulo" value="Módulo (*):" />
-                <p:selectOneMenu id="modulo" value="#{modulo}" effect="fold" required="true" requiredMessage="Es obligatorio elegir un módulo.">
+                <p:selectOneMenu id="modulo" value="#{modulo}" effect="fold" required="#{param['form:Guardar']!=null}" requiredMessage="Es obligatorio elegir un módulo.">
                     <f:selectItem itemLabel="Seleccione uno: " itemValue="" />
                     <f:selectItem itemLabel="Módulo de Inspecciones" itemValue="INSPECCIONES" />
                     <f:selectItem itemLabel="Módulo de Solicitudes" itemValue="SOLICITUDES" />
@@ -32,7 +32,7 @@
 
                 <br />
                 <h:outputLabel for="descripcion" value="Descripción (*):" />
-                <p:inputTextarea id="descripcion" rows="8" cols="25" counter="contador" maxlength="400" required="true" requiredMessage="Introduzca la descripción de su sugerencia." counterTemplate="Quedan {0} caracteres." autoResize="true" value="#{descripcion}" converter="#{trimConverter}" validatorMessage="La descripción debe tener más de 10 caracteres.">
+                <p:inputTextarea id="descripcion" rows="8" cols="25" counter="contador" maxlength="400" required="#{param['form:Guardar']!=null}"  requiredMessage="Introduzca la descripción de su sugerencia." counterTemplate="Quedan {0} caracteres." autoResize="true" value="#{descripcion}" converter="#{trimConverter}" validatorMessage="La descripción debe tener más de 10 caracteres.">
                     <f:validateLength minimum="10" />
                 </p:inputTextarea>
                 <h:outputText id="contador" />
@@ -41,10 +41,13 @@
             </p:panel>
 
             <div class="botonesFormulario">
-                <p:commandButton value="Guardar" actionListener="#{sugerenciasBean.guardarSugerencia(modulo, descripcion)}" icon="fa fa-save" />
+                <p:commandButton id="Guardar" value="Guardar" actionListener="#{sugerenciasBean.guardarSugerencia(modulo, descripcion)}" icon="fa fa-save" />
                 <p:commandButton value="Limpiar" update="panel" process="@this">
                     <p:resetInput target="panel" />
                 </p:commandButton>
+                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                      <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                 </p:commandButton>
             </div>
 
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
@@ -53,6 +56,13 @@
                     <p:button value="Cerrar" outcome="/index" />
                 </div>
             </p:dialog>
+            
+            <p:confirmDialog global="true">
+                 <div class="centrarBotonesDialog">
+                     <p:button  outcome="/index" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                 </div>
+             </p:confirmDialog>
         </h:form>
 
     </ui:define>
