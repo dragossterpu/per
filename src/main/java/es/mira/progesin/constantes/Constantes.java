@@ -229,6 +229,30 @@ public final class Constantes {
     public static final String TEMPLATENOCONFORMECUESTIONARIO = "/static/templates/templateNoValidacionCuestionario.html";
     
     /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATERECORDATORIOFINALIZACIONSOLICITUD = "/static/templates/templateFechaLimiteEnvioDocumentacion.html";
+    
+    /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATERECORDATORIOSOLICITUD = "/static/templates/templateRecordatorioEnvioDocumentacion.html";
+    
+    /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATEMODIFICACIONFECHASOLICITUD = "/static/templates/templateModificarFechaEnvioDocumentacion.html";
+    
+    /**
+     * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
+     * contraseña.
+     */
+    public static final String TEMPLATENOCONFORMESOLICITUD = "/static/templates/templateNoConformidadSolicitud.html";
+    
+    /**
      * Constructor para que no se pueda instanciar la clase.
      */
     private Constantes() {

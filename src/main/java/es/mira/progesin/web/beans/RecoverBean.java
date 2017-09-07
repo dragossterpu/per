@@ -94,13 +94,13 @@ public class RecoverBean implements Serializable {
                     String passCodificada = passwordEncoder.encode(password);
                     Map<String, String> paramPlantilla = new HashMap<>();
                     paramPlantilla.put("password", password);
+                    if (listaUser.size() > 1) {
+                        paramPlantilla.put("login", listaUser.get(0).getCorreo());
+                    } else {
+                        paramPlantilla.put("login", listaUser.get(0).getUsername());
+                    }
                     listaUser.forEach((User user) -> {
                         user.setPassword(passCodificada);
-                        if (listaUser.size() > 1) {
-                            paramPlantilla.put("login", user.getCorreo());
-                        } else {
-                            paramPlantilla.put("login", user.getUsername());
-                        }
                     });
                     userService.save(listaUser);
                     
