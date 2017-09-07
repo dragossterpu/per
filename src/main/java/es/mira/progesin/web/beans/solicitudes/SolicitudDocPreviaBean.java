@@ -380,9 +380,9 @@ public class SolicitudDocPreviaBean implements Serializable {
                 paramPlantilla.put("tipoInspeccion", tipoInspeccion.getDescripcion());
                 paramPlantilla.put("password", password);
                 
-                String plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
-                if (tipoInspeccion.getCodigo().equals("I.G.P.")) {
-                    plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGP;
+                String plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGP;
+                if (tipoInspeccion.getCodigo().equals("I.G.S.")) {
+                    plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
                 }
                 
                 correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, plantilla,
