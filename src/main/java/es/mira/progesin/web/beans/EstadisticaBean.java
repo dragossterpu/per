@@ -275,14 +275,4 @@ public class EstadisticaBean implements Serializable {
     public void verDetalles(EstadoInspeccionEnum estado) {
         listaDetalle = estadisticaService.verListaEstado(filtro, estado);
     }
-    
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     */
-    public void exportDoc() {
-        
-        exportadorWord.exportDoc("listaEstadisticas", false, "formEstadisticas:tablaEstadisticas",
-                SeccionesEnum.ESTADISTICAS);
-    }
-    
 }

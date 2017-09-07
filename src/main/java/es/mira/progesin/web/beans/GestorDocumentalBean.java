@@ -557,12 +557,4 @@ public class GestorDocumentalBean implements Serializable {
                 || (!documentoEnInspeccionUsuario && !esAdmin);
     }
     
-    /**
-     * Recupera el objeto de búsqueda al volver a la vista de búsqueda de inspecciones.
-     */
-    public void exportDoc() {
-        
-        exportadorWord.exportDoc("listaModelosGuia", false, "form:tablaDocumentos", SeccionesEnum.DOCUMENTACION);
-    }
-    
 }

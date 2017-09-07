@@ -57,7 +57,7 @@
                                 <p:graphicImage value="/images/csv.png" />
                                 <p:dataExporter type="csv" target="tablaEstadisticas" fileName="estadisticas" />
                             </h:commandLink>
-                            <h:commandLink  action="#{estadisticaBean.exportDoc}" >
+                            <h:commandLink  action="#{exportadorWord.exportDoc('lista_estadisticas', false, 'formEstadisticas:tablaEstadisticas', SeccionesEnum.ESTADISTICAS)}" >
                                 <p:graphicImage value="/images/doc.png" /> 
                             </h:commandLink>
                             
