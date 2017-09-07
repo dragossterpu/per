@@ -3,7 +3,9 @@ package es.mira.progesin.web.beans.solicitudes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 
@@ -312,17 +314,20 @@ public class SolicitudDocPreviaBean implements Serializable {
             String mensajeCorreoEnviado = "";
             // Avisar al destinatario si la fecha limite para la solicitud ha cambiado
             if (solicitudDocumentacionPrevia.getFechaEnvio() != null && !backupFechaLimite.equals(fechaLimite)) {
-                StringBuilder asunto = new StringBuilder(DESCRIPCION)
-                        .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
-                StringBuilder textoAutomatico = new StringBuilder(
-                        "\r\n \r\nEl plazo del que disponía para enviar la documentación previa conectándose a la aplicación PROGESIN ha sido modificado.")
-                                .append("\r\n \r\nFecha límite de envío anterior: ").append(backupFechaLimite)
-                                .append("\r\nFecha límite de envío nueva: ").append(fechaLimite)
-                                .append("\r\n \r\nMuchas gracias y un saludo.");
-                String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
                 
-                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
-                        cuerpo);
+                String asunto = "Modificación plazo envío documentación previa a cuestionario "
+                        + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                        + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                        + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
+                        + "Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
+                
+                Map<String, String> paramPlantilla = new HashMap<>();
+                paramPlantilla.put("fechaAnterior", backupFechaLimite);
+                paramPlantilla.put("fechaActual", fechaLimite);
+                
+                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto,
+                        Constantes.TEMPLATEMODIFICACIONFECHASOLICITUD, paramPlantilla);
+                
                 mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
@@ -453,20 +458,17 @@ public class SolicitudDocPreviaBean implements Serializable {
             
             solicitudDocumentacionService.transaccSaveActivaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
             
-            StringBuilder asunto = new StringBuilder(DESCRIPCION)
-                    .append(solicitudDocumentacionPrevia.getInspeccion().getNumero());
-            StringBuilder textoAutomatico = new StringBuilder(
-                    "\r\n \r\nSe ha declarado no conforme la solicitud que usted envió por los motivos que se exponen a continuación:")
-                            .append("\r\n \r\n").append(motivosNoConforme)
-                            .append("\r\n \r\nPara solventarlo debe volver a conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es ")
-                            .append(applicationBean.getMapaParametros().get("URLPROGESIN").get("URLPROGESIN"))
-                            .append("\r\n \r\nEn caso de haber perdido dicha información póngase en contacto con el administrador de la aplicación a través del correo xxxxx@xxxx para solicitar una nueva contraseña.")
-                            .append("\r\n \r\nUna vez enviada la solicitud cumplimentada su usuario quedará inactivo de nuevo. \r\n \r\n")
-                            .append("Muchas gracias y un saludo.");
-            String cuerpo = ASUNTO + solicitudDocumentacionPrevia.getAsunto() + textoAutomatico;
+            String asunto = "No conformidad documentación previa a cuestionario "
+                    + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                    + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                    + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
+                    + "Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
             
-            correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
-                    cuerpo);
+            Map<String, String> paramPlantilla = new HashMap<>();
+            paramPlantilla.put("textoNoConformidad", motivosNoConforme);
+            
+            correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto,
+                    Constantes.TEMPLATENOCONFORMESOLICITUD, paramPlantilla);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "No Conforme",
                     "Declarada no conforme con éxito la solicitud de documentación. El destinatario de la unidad será notificado y reactivado su acceso al sistema");

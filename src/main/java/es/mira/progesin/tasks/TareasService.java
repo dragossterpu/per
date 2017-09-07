@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +42,15 @@ import lombok.Setter;
 @Setter
 @Service("tareasService")
 public class TareasService implements ITareasService {
+    /**
+     * Constante número expediente.
+     */
+    private static final String NUMEROEXP = "). Número de expediente ";
+    
+    /**
+     * Constante de.
+     */
+    private static final String DE = " de ";
     
     /**
      * Nombre del parámetro que define número de días para responder cuestionario.
@@ -96,16 +104,6 @@ public class TareasService implements ITareasService {
     private Properties tareasProperties = new Properties();
     
     /**
-     * Constante con literal para el final de mensaje.
-     */
-    private static final String FINAL = "\n\nEste es un recordatorio automático.\nNo responda a este correo.";
-    
-    /**
-     * Constante con literal para el inicio de mensaje.
-     */
-    private static final String INICIO = "Se envía este correo como recordatorio.\n";
-    
-    /**
      * Constante con literal para el inicio de mensaje.
      */
     private Clock clock;
@@ -132,7 +130,7 @@ public class TareasService implements ITareasService {
      * mañana.
      */
     @Override
-    @Scheduled(cron = "0 0 8 * * MON-FRI")
+    @Scheduled(cron = "0 0 8 * * ?")
     public void recordatorioEnvioCuestionario() {
         LocalDate hoy = LocalDate.now(clock);
         List<CuestionarioEnvio> lista = cuestionarioEnvioService.findNoCumplimentados();
@@ -149,10 +147,10 @@ public class TareasService implements ITareasService {
                 if (dias == plazoDiasCuestionario) {
                     
                     String asunto = "Recordatorio plazo envío cuestionario "
-                            + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                            + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + DE
                             + cuestionario.getInspeccion().getNombreUnidad() + "("
-                            + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
-                            + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+                            + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
+                            + cuestionario.getInspeccion().getNumero() + ".";
                     Map<String, String> paramPlantilla = null;
                     correoElectronico.envioCorreo(cuestionario.getCorreoEnvio(), asunto,
                             Constantes.TEMPLATERECORDATORIOCUESTIONARIO, paramPlantilla);
@@ -165,13 +163,12 @@ public class TareasService implements ITareasService {
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
                     String asunto = "Recordatorio finalización plazo envío cuestionario "
-                            + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                            + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + DE
                             + cuestionario.getInspeccion().getNombreUnidad() + "("
-                            + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre()
-                            + "). Número de expediente " + cuestionario.getInspeccion().getNumero() + ".";
+                            + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
+                            + cuestionario.getInspeccion().getNumero() + ".";
                     
-                    Map<String, String> paramPlantilla = new HashMap<>();
-                    paramPlantilla.put("ApoyoCorreo", tareasProperties.getProperty("correoApoyo"));
+                    Map<String, String> paramPlantilla = null;
                     correoElectronico.envioCorreo(String.join(",", listaDestinos), asunto,
                             Constantes.TEMPLATERECORDATORIOFINALIZACIONCUESTIONARIO, paramPlantilla);
                 }
@@ -186,7 +183,7 @@ public class TareasService implements ITareasService {
      * las 8 de la mañana.
      */
     @Override
-    @Scheduled(cron = "0 0 8 * * MON-FRI")
+    @Scheduled(cron = "0 0 8 * * ?")
     public void recordatorioEnvioDocumentacion() {
         LocalDate hoy = LocalDate.now(clock);
         List<SolicitudDocumentacionPrevia> lista = solicitudDocumentacionService.findEnviadasNoCumplimentadas();
@@ -203,25 +200,33 @@ public class TareasService implements ITareasService {
                 }
                 if (dias == plazoDiasSolcitud) {
                     
-                    StringBuilder cuerpo = new StringBuilder(INICIO).append("Faltan ").append(dias)
-                            .append(" dia/s para la fecha límite de envío de la documentación para la inspección número ")
-                            .append(solicitud.getInspeccion().getNumero()).append(FINAL);
+                    String asunto = "Recordatorio finalización plazo envío documentación previa a cuestionario "
+                            + solicitud.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                            + solicitud.getInspeccion().getNombreUnidad() + "("
+                            + solicitud.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
+                            + solicitud.getInspeccion().getNumero() + ".";
                     
-                    correoElectronico.envioCorreo(solicitud.getCorreoDestinatario(),
-                            "Recordatorio envío de documentación previa", cuerpo.toString());
+                    Map<String, String> paramPlantilla = null;
+                    correoElectronico.envioCorreo(solicitud.getCorreoDestinatario(), asunto,
+                            Constantes.TEMPLATERECORDATORIOSOLICITUD, paramPlantilla);
+                    
                 }
                 
                 if (dias == 0) {
-                    StringBuilder cuerpo = new StringBuilder(INICIO)
-                            .append("Hoy finaliza el plazo para el envío de la documentación para la inspección número ")
-                            .append(solicitud.getInspeccion().getNumero()).append(FINAL);
                     
                     List<String> listaDestinos = new ArrayList<>();
                     listaDestinos.add(solicitud.getCorreoDestinatario());
                     listaDestinos.add(tareasProperties.getProperty("correoApoyo"));
                     
-                    correoElectronico.envioCorreo(String.join(",", listaDestinos),
-                            "Recordatorio fin de plazo para el envío de documentación previa", cuerpo.toString());
+                    String asunto = "Recordatorio finalización plazo envío documentación previa a cuestionario "
+                            + solicitud.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                            + solicitud.getInspeccion().getNombreUnidad() + "("
+                            + solicitud.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
+                            + solicitud.getInspeccion().getNumero() + ".";
+                    
+                    Map<String, String> paramPlantilla = null;
+                    correoElectronico.envioCorreo(String.join(",", listaDestinos), asunto,
+                            Constantes.TEMPLATERECORDATORIOFINALIZACIONSOLICITUD, paramPlantilla);
                 }
             }
         } catch (CorreoException ce) {
