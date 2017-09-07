@@ -57,7 +57,7 @@
 	                   <p:graphicImage value="/images/csv.png" />
 	                   <p:dataExporter type="csv" target="tablaInformes" fileName="lista_informes_personalizados" />
 	               </h:commandLink>
-                   <h:commandLink  action="#{informePersonalizadoBean.exportDoc}">
+                   <h:commandLink  action="#{exportadorWord.exportDoc('lista_informes_personalizados', false, 'busquedaInformePersonalizado:tablaInformes', SeccionesEnum.INFORMES)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
 	           </p:outputPanel>

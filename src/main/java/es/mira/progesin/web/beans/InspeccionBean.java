@@ -621,13 +621,4 @@ public class InspeccionBean implements Serializable {
         return RUTABUSCAINSPECCIONES;
     }
     
-    /**
-     * Método para la exportación de la tabla a Word.
-     */
-    public void exportDoc() {
-        
-        exportadorWord.exportDoc("listaInspecciones", false, "busquedaInspecciones:tablaInspecciones",
-                SeccionesEnum.INSPECCION);
-    }
-    
 }

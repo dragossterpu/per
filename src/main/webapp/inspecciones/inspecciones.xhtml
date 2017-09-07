@@ -132,7 +132,7 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones" />
                     </h:commandLink>
-                    <h:commandLink  action="#{inspeccionBean.exportDoc}">
+                    <h:commandLink  action="#{exportadorWord.exportDoc('lista_inspecciones', false, 'busquedaInspecciones:tablaInspecciones', SeccionesEnum.INSPECCION)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
                 </p:outputPanel>

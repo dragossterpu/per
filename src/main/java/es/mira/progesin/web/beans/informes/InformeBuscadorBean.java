@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInforme;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.util.ExportadorWord;
 import lombok.Getter;
@@ -118,13 +117,6 @@ public class InformeBuscadorBean implements Serializable {
      */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-    }
-    
-    /**
-     * Método para la exportación de la tabla a Word.
-     */
-    public void exportDoc() {
-        exportadorWord.exportDoc("lista_informes", false, "busquedaInforme:tablaInformes", SeccionesEnum.INFORMES);
     }
     
 }
