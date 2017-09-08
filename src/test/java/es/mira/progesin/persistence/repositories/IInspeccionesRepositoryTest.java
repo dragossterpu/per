@@ -40,7 +40,7 @@ public class IInspeccionesRepositoryTest {
      */
     @Test
     public final void buscarPorNombreUnidadONumero() {
-        List<Inspeccion> lista = repositorio.buscarPorNombreUnidadONumero("Lérida");
+        List<Inspeccion> lista = repositorio.buscarPorNombreUnidadONumero("%Lérida%");
         assertThat(lista).hasSize(2);
     }
     
@@ -50,7 +50,7 @@ public class IInspeccionesRepositoryTest {
      */
     @Test
     public final void buscarNoFinalizadaPorNombreUnidadONumero() {
-        List<Inspeccion> lista = repositorio.buscarNoFinalizadaPorNombreUnidadONumero("Lérida");
+        List<Inspeccion> lista = repositorio.buscarNoFinalizadaPorNombreUnidadONumero("%Lérida%");
         assertThat(lista).hasSize(2);
     }
     
@@ -60,8 +60,20 @@ public class IInspeccionesRepositoryTest {
      */
     @Test
     public final void buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo() {
-        List<Inspeccion> lista = repositorio.buscarNoFinalizadaPorNombreUnidadONumero("1");
-        assertThat(lista).hasSize(0);
+        List<Inspeccion> lista = repositorio.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo("%1/2017%",
+                "ajangulo");
+        assertThat(lista).hasSize(1);
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.persistence.repositories.IInspeccionesRepository#buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo(String, String)}.
+     */
+    @Test
+    public final void buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo() {
+        List<Inspeccion> lista = repositorio.buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo("%1/2017%",
+                "alopez");
+        assertThat(lista).hasSize(1);
     }
     
     /**
@@ -113,7 +125,7 @@ public class IInspeccionesRepositoryTest {
     @Test
     public final void findByEstadoInspeccion() {
         List<Inspeccion> lista = repositorio.findByEstadoInspeccion(EstadoInspeccionEnum.C_PEND_SOLICITAR_DOC_PREVIA);
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(7);
     }
     
     /**
@@ -123,7 +135,7 @@ public class IInspeccionesRepositoryTest {
     @Test
     public final void findInspeccionesByUsuario() {
         List<Inspeccion> lista = repositorio.findInspeccionesByUsuario("ajangulo");
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(3);
     }
     
     /**
@@ -133,7 +145,7 @@ public class IInspeccionesRepositoryTest {
     @Test
     public final void buscarPorNombreUnidadONumeroYUsuario() {
         User usuario = User.builder().username("ajangulo").build();
-        List<Inspeccion> lista = repositorio.buscarPorNombreUnidadONumeroYUsuario("Lérida", usuario);
+        List<Inspeccion> lista = repositorio.buscarPorNombreUnidadONumeroYUsuario("%Lérida%", usuario);
         assertThat(lista).hasSize(2);
     }
 }

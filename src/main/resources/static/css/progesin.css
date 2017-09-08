@@ -88,6 +88,9 @@ h1, h2, h3 {
     float: left;
 }
 
+#menuLateral form {
+    margin: 0;
+}
 #contenido {
     width: 78%;
     float: left;
@@ -110,7 +113,13 @@ h1, h2, h3 {
     padding-top: 0.5em;
     font-size: 14px;
 }
-
+.pie {
+    background: url(../images/menu.jpg) no-repeat;
+    background-size: 100%;
+    height: 32px;
+    clear:both;
+    transform:rotateX(180deg);
+}
 .ui-breadcrumb {
     float: left;
     margin-left: 1em;

@@ -195,9 +195,16 @@ public class InformeBean implements Serializable {
      */
     public void crearInforme(Inspeccion inspeccion) {
         try {
-            informeService.crearInforme(inspeccion, modeloInformePersonalizado);
-            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "El informe ha sido creado con éxito.");
+            boolean existeOtro = informeService.existsByInspeccionAndFechaBajaIsNull(inspeccion);
+            if (existeOtro) {
+                String mensaje = "No se puede crear un informe ya que existe otro para esta inspección. "
+                        + "Debe anularlo antes de proseguir.";
+                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
+            } else {
+                informeService.crearInforme(inspeccion, modeloInformePersonalizado);
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                        "El informe ha sido creado con éxito.");
+            }
         } catch (DataAccessException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
@@ -281,12 +288,14 @@ public class InformeBean implements Serializable {
         try {
             setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
             generarMapaAsignaciones();
+            generarMapaAreasSubareas();
+            generarMapaRespuestas();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al guardar el informe");
+                    "Se ha producido un error al guardar el informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
@@ -299,12 +308,14 @@ public class InformeBean implements Serializable {
             setInforme(informeService.desasignarInforme(informe, mapaRespuestas, mapaAsignaciones));
             // Volvemos a generar el mapa de asignaciones para que se actualice la vista
             generarMapaAsignaciones();
+            generarMapaAreasSubareas();
+            generarMapaRespuestas();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al guardar el informe");
+                    "Se ha producido un error al guardar el informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
@@ -315,6 +326,9 @@ public class InformeBean implements Serializable {
     public void finalizarInforme() {
         try {
             Informe informeGuardado = informeService.finalizarInforme(informe, mapaRespuestas, mapaAsignaciones);
+            generarMapaAsignaciones();
+            generarMapaAreasSubareas();
+            generarMapaRespuestas();
             if (informeGuardado == null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                         "No se puede finalizar el informe al existir subáreas sin responder");
@@ -326,7 +340,7 @@ public class InformeBean implements Serializable {
         } catch (DataAccessException e) {
             e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al guardar el informe");
+                    "Se ha producido un error al finalizar el informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
@@ -432,23 +446,46 @@ public class InformeBean implements Serializable {
      * @param subarea subárea seleccionada
      */
     public void asignarSubarea(SubareaInforme subarea) {
-        AsignSubareaInformeUser asignacion = informeService.asignarSubarea(subarea, informe);
-        mapaAsignaciones.put(asignacion.getSubarea(), asignacion.getUser().getUsername());
+        try {
+            setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
+            informeService.asignarSubarea(subarea, informe);
+            generarMapaAsignaciones();
+            generarMapaAreasSubareas();
+            generarMapaRespuestas();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al asignar una subárea del informe, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
     }
     
     /**
      * Borra la asignación de un subárea de un informe a un inspector.
      * 
      * @param subarea subárea seleccionada
+     * @param guardar guardar estado del informe antes de desasignar
      */
-    public void desasignarSubarea(SubareaInforme subarea) {
-        asignSubareaInformeUserService.deleteBySubareaAndInforme(subarea, informe);
-        mapaAsignaciones.remove(subarea);
+    public void desasignarSubarea(SubareaInforme subarea, Boolean guardar) {
+        try {
+            if (guardar) {
+                setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
+            }
+            asignSubareaInformeUserService.deleteBySubareaAndInforme(subarea, informe);
+            generarMapaAsignaciones();
+            generarMapaAreasSubareas();
+            generarMapaRespuestas();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "Se ha producido un error al desaignar una subárea del informe, inténtelo de nuevo más tarde");
+            regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+        }
     }
     
     /**
      * Devuelve una lista con las inspecciones cuyo número contiene alguno de los caracteres pasados como parámetro. Se
-     * usa en el formulario de envío para el autocompletado.
+     * usa en el formulario de creación para el autocompletado.
      * 
      * @param infoInspeccion Número de inspección que teclea el usuario en el formulario o nombre de la unidad de la
      * inspección
@@ -458,8 +495,8 @@ public class InformeBean implements Serializable {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Inspeccion> resultadosBusqueda;
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
-            resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(infoInspeccion,
-                    usuarioActual.getUsername());
+            resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo(
+                    infoInspeccion, usuarioActual.getUsername());
         } else {
             resultadosBusqueda = inspeccionService.buscarNoFinalizadaPorNombreUnidadONumero(infoInspeccion);
         }

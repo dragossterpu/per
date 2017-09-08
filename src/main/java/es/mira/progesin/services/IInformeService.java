@@ -106,7 +106,7 @@ public interface IInformeService {
      * @return asignación existente o la nueva creada
      */
     AsignSubareaInformeUser asignarSubarea(SubareaInforme subarea, Informe informe);
-
+    
     /**
      * Comprueba si para un informe dado existen subáres sin responder.
      * 
@@ -122,5 +122,13 @@ public interface IInformeService {
      * @param modeloInformePersonalizado modelo que se utilizará para crear el informe
      */
     void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado);
+    
+    /**
+     * Comprueba si existen otros informes no anulados asociados a la inspeccion.
+     * 
+     * @param inspeccion inspeccion asociada al informe
+     * @return boolean
+     */
+    boolean existsByInspeccionAndFechaBajaIsNull(Inspeccion inspeccion);
     
 }

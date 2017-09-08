@@ -133,10 +133,8 @@ public class InformeService implements IInformeService {
                 if (respuesta[1] != null && Utilities.noEstaVacio(respuesta[1])) {
                     conclusiones = respuesta[1].getBytes();
                 }
-                if (texto != null) {
-                    subarea = subareaInformeRepository.findOne(subarea.getId());
-                    respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
-                }
+                subarea = subareaInformeRepository.findOne(subarea.getId());
+                respuestas.add(new RespuestaInforme(informeActualizado, subarea, texto, conclusiones));
             }
         });
         respuestaInformeRepository.save(respuestas);
@@ -394,6 +392,17 @@ public class InformeService implements IInformeService {
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.I_ELABORACION_INFORME);
         inspeccionService.save(inspeccion);
         informeRepository.save(nuevoInforme);
+    }
+    
+    /**
+     * Comprueba si existen otros informes no anulados asociados a la inspeccion.
+     * 
+     * @param inspeccion inspeccion asociada al informe
+     * @return boolean
+     */
+    @Override
+    public boolean existsByInspeccionAndFechaBajaIsNull(Inspeccion inspeccion) {
+        return informeRepository.existsByInspeccionAndFechaBajaIsNull(inspeccion);
     }
     
 }

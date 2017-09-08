@@ -175,7 +175,7 @@ public class InspeccionesServiceTest {
         
         List<Inspeccion> lista = inspeccionService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder,
                 busqueda);
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(7);
     }
     
     /**
@@ -388,7 +388,7 @@ public class InspeccionesServiceTest {
         
         List<Inspeccion> lista = inspeccionService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder,
                 busqueda);
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(3);
     }
     
     /**
@@ -402,7 +402,7 @@ public class InspeccionesServiceTest {
         String sortField = null;
         SortOrder sortOrder = SortOrder.ASCENDING;
         
-        Equipo equipo = Equipo.builder().id(1L).build();
+        Equipo equipo = Equipo.builder().id(2L).build();
         
         InspeccionBusqueda busqueda = new InspeccionBusqueda();
         busqueda.setEquipo(equipo);
@@ -415,7 +415,7 @@ public class InspeccionesServiceTest {
         
         List<Inspeccion> lista = inspeccionService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder,
                 busqueda);
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(2);
     }
     
     /**
@@ -429,7 +429,7 @@ public class InspeccionesServiceTest {
         String sortField = "equipo";
         SortOrder sortOrder = SortOrder.DESCENDING;
         
-        Equipo equipo = Equipo.builder().id(1L).build();
+        Equipo equipo = Equipo.builder().id(3L).build();
         
         InspeccionBusqueda busqueda = new InspeccionBusqueda();
         busqueda.setEquipo(equipo);
@@ -442,7 +442,7 @@ public class InspeccionesServiceTest {
         
         List<Inspeccion> lista = inspeccionService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder,
                 busqueda);
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(1);
     }
     
     /**
@@ -569,7 +569,7 @@ public class InspeccionesServiceTest {
         
         List<Inspeccion> lista = inspeccionService.buscarInspeccionPorCriteria(first, pageSize, sortField, sortOrder,
                 busqueda);
-        assertThat(lista).hasSize(8);
+        assertThat(lista).hasSize(3);
     }
     
     /**
@@ -587,7 +587,7 @@ public class InspeccionesServiceTest {
         busqueda.setAsociar(true);
         
         int numRegistros = inspeccionService.getCountInspeccionCriteria(busqueda);
-        assertThat(numRegistros).isEqualTo(8);
+        assertThat(numRegistros).isEqualTo(7);
     }
     
     /**

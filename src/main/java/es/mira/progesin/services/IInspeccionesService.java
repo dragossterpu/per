@@ -50,6 +50,9 @@ public interface IInspeccionesService {
     List<Inspeccion> buscarPorNombreUnidadONumero(String infoInspeccion);
     
     /**
+     * Busca inspecciones no finalizadas filtrando por el nombre de la unidad o el número de la inspección y cuyo equipo
+     * tenga como jefe el usuario pasado como parámetro.
+     * 
      * @param infoInspeccion puede ser nombre de unidad o número de inspección
      * @param usernameJefeEquipo jefe del equipo de la inspección
      * @return devuelve una lista con todas las inspecciones filtradas por nombre de la unidad y jefe de equiopo o por
@@ -57,6 +60,18 @@ public interface IInspeccionesService {
      */
     List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(String infoInspeccion,
             String usernameJefeEquipo);
+    
+    /**
+     * Busca inspecciones no finalizadas filtrando por el nombre de la unidad o el número de la inspección y cuyo equipo
+     * tenga como miembro el usuario pasado como parámetro.
+     * 
+     * @param infoInspeccion nombre de la unidad o número de inspección
+     * @param usernameMiembro miembro del equipo de la inspección
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
+    List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo(String infoInspeccion,
+            String usernameMiembro);
     
     /**
      * @param busqueda bean InspeccionBusqueda que define el filtro de la consulta realizada

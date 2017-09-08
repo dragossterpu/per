@@ -11,7 +11,7 @@
         <h:form id="informe">
 
             
-			<p:accordionPanel value="#{informeBean.listaAreas}" var="area"  activeIndex="#{informeBean.indicesActivosAreas}"
+			<p:accordionPanel id="acordeonAreas" value="#{informeBean.listaAreas}" var="area"  activeIndex="#{informeBean.indicesActivosAreas}"
                                           multiple="true">
 				<p:tab title="#{informeBean.listaAreas.indexOf(area)+1}. #{area.descripcion}">
 					<p:accordionPanel id="acordeonSubareas" value="#{informeBean.mapaAreasSubareas[area]}" var="subarea" activeIndex="#{informeBean.indicesActivosSubareas[area]}"
@@ -22,7 +22,7 @@
                                 <h:outputText style="color:red" value="#{('(Asignado a: ').concat(informeBean.mapaAsignaciones[subarea]).concat(')')}" rendered="#{not empty informeBean.mapaAsignaciones[subarea]}"/>
                             </f:facet>
                         
-                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">
+                            <p:outputPanel id="panelTextoRespuestas" rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">
                                 <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
                                 <h:outputFormat rendered="#{not empty informeBean.mapaRespuestas[subarea][1]}">
                                     <h5><h:outputText value="Conclusiones y propuestas."/></h5>
@@ -30,15 +30,17 @@
                                 </h:outputFormat>
                             </p:outputPanel>
                             
-                            <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="acordeonSubareas" immediate="true" partialSubmit="true"  rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
-                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="acordeonSubareas" immediate="true" partialSubmit="true" rendered="#{(informeBean.mapaAsignaciones[subarea] eq request.remoteUser) or (not empty informeBean.mapaAsignaciones[subarea] and (esJefeEquipoInspeccion or esJefeInspecciones))}">
-                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario con una posible pérdida de datos no guardados" disabled="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
-                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, perderá los datos no guardados" disabled="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}"/>
+                            <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="informe" rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
+                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea, true)}" update="informe" rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}">
+                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="Ésta acción guardará el estado actual del informe"/>
                             </p:commandButton>
+                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea, false)}" update="informe" rendered="#{(not empty informeBean.mapaAsignaciones[subarea]) and (informeBean.mapaAsignaciones[subarea] ne request.remoteUser) and (esJefeEquipoInspeccion or esJefeInspecciones)}">
+                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario con una posible pérdida de datos no guardados"/>
+                                 </p:commandButton>
                             
-                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelRespuestas">
+                            <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelEditorRespuestas">
                                 <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px"
-                                    required="#{param['informe:finalizar']!=null}" requiredMessage="No puede dejar una subárea sin responder">
+                                    required="#{param['informe:finalizar']!=null}" requiredMessage="No puede dejar una subárea sin responder" >
                                     
                                     <ui:include src="toolbarEditor.xhtml"/>
                                     
@@ -62,7 +64,7 @@
             <div class="botonesFormulario">
                 <p:commandButton value="Guardar" actionListener="#{informeBean.guardarInforme}" icon="fa fa-save"  update="informe"/>
                 <p:commandButton value="Guardar y liberar mis asignaciones" actionListener="#{informeBean.desasignarInforme}" icon="fa fa-save" update="informe"/>
-                <p:commandButton value="Finalizar" id="finalizar" action="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeInspecciones or esJefeEquipoInspeccion}" update="informe"/>
+                <p:commandButton value="Finalizar" id="finalizar" actionListener="#{informeBean.finalizarInforme}" icon="fa fa-check" rendered="#{esJefeInspecciones or esJefeEquipoInspeccion}" update="informe"/>
                 <p:button value="Volver" icon="fa fa-fw fa-undo" outcome="/informes/informes" />
             </div>
                 

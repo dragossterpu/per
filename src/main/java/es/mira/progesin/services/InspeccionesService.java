@@ -100,9 +100,11 @@ public class InspeccionesService implements IInspeccionesService {
     }
     
     /**
-     * Busca inspecciones filtrando por el nombre de la unidad o el número de la inspección.
+     * Busca inspecciones no finalizadas filtrando por el nombre de la unidad o el número de la inspección y cuyo equipo
+     * tenga como jefe el usuario pasado como parámetro.
      * 
      * @param infoInspeccion nombre de la unidad o número de inspección
+     * @param usernameJefeEquipo jefe del equipo de la inspección
      * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
      * inspección
      */
@@ -111,6 +113,22 @@ public class InspeccionesService implements IInspeccionesService {
             String usernameJefeEquipo) {
         return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo("%" + infoInspeccion + "%",
                 usernameJefeEquipo);
+    }
+    
+    /**
+     * Busca inspecciones filtrando por el nombre de la unidad o el número de la inspección y cuyo equipo tenga como
+     * miembro el usuario pasado como parámetro.
+     * 
+     * @param infoInspeccion nombre de la unidad o número de inspección
+     * @param usernameMiembro miembro del equipo de la inspección
+     * @return devuelve una lista con todas las inspecciones filtradas indicando el nombre de la unidad o el número de
+     * inspección
+     */
+    @Override
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo(String infoInspeccion,
+            String usernameMiembro) {
+        return inspeccionesRepository.buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo("%" + infoInspeccion + "%",
+                usernameMiembro);
     }
     
     /**

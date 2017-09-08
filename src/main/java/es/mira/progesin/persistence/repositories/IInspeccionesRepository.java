@@ -40,12 +40,22 @@ public interface IInspeccionesRepository extends CrudRepository<Inspeccion, Long
     /**
      * @param paramString1 puede ser nombre de unidad o número de inspección
      * @param paramString2 jefe del equipo de la inspección
-     * @return devuelve una lista con todas las inspecciones filtradas por nombre de la unidad y jefe de equiopo o por
-     * el número de inspección y el jefe de equipo
+     * @return devuelve una lista con todas las inspecciones filtradas por nombre de la unidad y jefe de equipo o por el
+     * número de inspección y el jefe de equipo
      */
     @Query("SELECT i FROM Inspeccion i WHERE EXISTS (SELECT e FROM Equipo e WHERE e.id = i.equipo AND e.jefeEquipo.username = :usernameJefeEquipo) AND i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
     public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYJefeEquipo(
             @Param("infoInspeccion") String paramString1, @Param("usernameJefeEquipo") String paramString2);
+    
+    /**
+     * @param paramString1 puede ser nombre de unidad o número de inspección
+     * @param paramString2 miembro del equipo de la inspección
+     * @return devuelve una lista con todas las inspecciones filtradas por nombre de la unidad y miembro de equipo o por
+     * el número de inspección y el miembro de equipo
+     */
+    @Query("SELECT i FROM Inspeccion i WHERE EXISTS (SELECT m FROM Miembro m WHERE m.equipo = i.equipo AND m.usuario.username = :usernameMiembroEquipo) AND i.fechaFinalizacion IS NULL AND i.fechaBaja IS NULL AND (upper(i.nombreUnidad) LIKE upper(:infoInspeccion) OR (i.id||'/'||i.anio) LIKE :infoInspeccion) ORDER BY i.nombreUnidad, i.id DESC")
+    public List<Inspeccion> buscarNoFinalizadaPorNombreUnidadONumeroYMiembroEquipo(
+            @Param("infoInspeccion") String paramString1, @Param("usernameMiembroEquipo") String paramString2);
     
     /**
      * @param idDocumento id del documento
