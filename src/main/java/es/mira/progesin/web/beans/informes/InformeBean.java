@@ -238,7 +238,7 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Genera mapa con respuestas del informe asociadas a subareas del modelo.
+     * Genera mapa con respuestas del informe asociadas a subáreas del modelo.
      */
     private void generarMapaRespuestas() {
         mapaRespuestas = new HashMap<>();
@@ -427,7 +427,7 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Asignar un subárea del informe en curso al usuario del inspector al que pertenece la sesión actual.
+     * Asignar una subárea del informe en curso al usuario del inspector al que pertenece la sesión actual.
      * 
      * @param subarea subárea seleccionada
      */
@@ -467,7 +467,7 @@ public class InformeBean implements Serializable {
     }
     
     /**
-     * Obtiene los indices activos de los dos acordeones (áreas y subáreas) para el usuario logado. Esto se hace para
+     * Obtiene los índices activos de los dos acordeones (áreas y subáreas) para el usuario logado. Esto se hace para
      * evitar el bug de primefaces en el texteditor, ya que si graban con el acordeon plegado se pierden los valores.
      * 
      * @param asignaciones Lista de subareas asignadas a algún usuario

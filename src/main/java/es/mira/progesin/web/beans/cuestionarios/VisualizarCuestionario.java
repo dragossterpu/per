@@ -467,9 +467,8 @@ public class VisualizarCuestionario implements Serializable {
     }
     
     /**
-     * Construye un mapa que relaciona el id con su objeto area de un cuestionario enviado para recuperar el nombre del
-     * area.
-     * 
+     * Construye un mapa que relaciona el id con su objeto área de un cuestionario enviado para recuperar el nombre del
+     * área.
      * 
      */
     public void generarMapaAreasVisualizarUsuario() {

@@ -42,7 +42,7 @@ import lombok.Setter;
 
 /**
  * Controlador de las operaciones relacionadas con los cuestionarios enviados. Búsqueda de cuestionarios enviados,
- * validación de sus respuestas por parte del equipo de inspecciones, re-envío a la unidad en cuestión en caso de no
+ * validación de sus respuestas por parte del equipo de inspecciones, reenvío a la unidad en cuestión en caso de no
  * conformidad, finalización del cuestionario cuando todas las respuestas estén validadas y, eventualmente, anulación de
  * cuestionarios.
  * 

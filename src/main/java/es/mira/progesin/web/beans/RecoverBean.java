@@ -64,7 +64,7 @@ public class RecoverBean implements Serializable {
     private transient PasswordEncoder passwordEncoder;
     
     /**
-     * Busca un usuario en base a su dirección de correo o al NIF, y en caso de hayarlo genera una nueva contraseña y
+     * Busca un usuario en base a su dirección de correo o al NIF, y en caso de hallarlo genera una nueva contraseña y
      * envía ésta junto al username al correo asociado a la cuenta.
      * 
      * @author EZENTIS
