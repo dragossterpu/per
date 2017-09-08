@@ -40,7 +40,6 @@ import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.Utilities;
-import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -148,12 +147,6 @@ public class SolicitudDocPreviaBean implements Serializable {
      */
     @Autowired
     private transient ICorreoElectronico correoElectronico;
-    
-    /**
-     * Bean de configuración de la aplicación.
-     */
-    @Autowired
-    private transient ApplicationBean applicationBean;
     
     /**
      * Generador del pdf de la solicitud.

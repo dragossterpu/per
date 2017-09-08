@@ -37,7 +37,6 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
-import es.mira.progesin.web.beans.ApplicationBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -120,12 +119,6 @@ public class CuestionarioEnviadoBean implements Serializable {
      */
     @Autowired
     private transient INotificacionService notificacionService;
-    
-    /**
-     * Bean de datos comunes de la aplicación.
-     */
-    @Autowired
-    private transient ApplicationBean applicationBean;
     
     /**
      * Servicio de tipos de inspección.

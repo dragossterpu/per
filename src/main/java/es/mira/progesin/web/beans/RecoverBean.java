@@ -46,12 +46,6 @@ public class RecoverBean implements Serializable {
     private transient IUserService userService;
     
     /**
-     * Servicio de usuarios.
-     */
-    @Autowired
-    private transient ApplicationBean applicationBean;
-    
-    /**
      * Servicio de registro de actividad.
      */
     @Autowired
