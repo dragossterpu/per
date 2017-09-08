@@ -317,8 +317,11 @@ public class EnvioCuestionarioBean implements Serializable {
     
     /**
      * Adjunta las plantillas seleccionadas al cuestionario enviado.
+     * 
+     * @return url de la página donde se adjuntan las plantillas.
      */
-    public void adjuntarPlantilla() {
+    public String adjuntarPlantilla() {
         cuestionarioEnvio.setPlantillas(plantillasSeleccionadas);
+        return "/cuestionarios/enviarCuestionario?faces-redirect=true";
     }
 }
