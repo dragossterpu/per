@@ -1,8 +1,11 @@
 package es.mira.progesin.services;
 
 import java.util.List;
+import java.util.Map;
 
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 
 /**
  * Interfaz del servicio de modelos de informe.
@@ -42,4 +45,19 @@ public interface IModeloInformeService {
      */
     ModeloInforme eliminarModelo(ModeloInforme modelo);
     
+    /**
+     * Visualiza un modelo de informe.
+     * 
+     * @param modeloVisualizar Modelo que se desea visualizar.
+     * @return Modelo a visualizar.
+     */
+    ModeloInforme visualizarModelo(ModeloInforme modeloVisualizar);
+    
+    /**
+     * Carga el mapa de relaciones áreas-subáreas para la lista de áreas recibida como parámetro.
+     * 
+     * @param areasVisualizar Listado de áreas que se desean visualizar
+     * @return Mapa de relaciones
+     */
+    Map<AreaInforme, List<SubareaInforme>> cargarMapaSubareas(List<AreaInforme> areasVisualizar);
 }

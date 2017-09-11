@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.ICuestionarioPersonalizadoService;
+import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -59,6 +60,12 @@ public class EdicionCuestionarioBean {
      */
     @Autowired
     private IAreaCuestionarioService areaCuestionarioService;
+    
+    /**
+     * Servicio de modelos de Cuestionario.
+     */
+    @Autowired
+    private IModeloCuestionarioService modeloCuestionarioService;
     
     /**
      * Repositorio para las preguntas de un modelo de cuestionario.

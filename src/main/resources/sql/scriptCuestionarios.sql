@@ -466,7 +466,7 @@ prompt =========================================================================
 prompt Ejecutando carga de CUESTIONARIO CIES...
 prompt =========================================================================
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.nextval,'CIES','CUESTIONARIO CIES');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.nextval,'CIES','CUESTIONARIO CIES', sysdate, 'system',1);
 
 Insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'INFRAESTRUCTURAS, INSTALACIONES Y MEDIOS BÁSICOS', SEQ_AREASCUESTIONARIOS.NEXTVAL, 0);
 
@@ -923,7 +923,7 @@ prompt =========================================================================
 prompt Ejecutando carga de CUESTIONARIO DE PRL DE LA GUARDIA CIVIL...
 prompt =========================================================================
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.nextval,'PRL_GC','CUESTIONARIO DE PRL DE LA GUARDIA CIVIL');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.nextval,'PRL_GC','CUESTIONARIO DE PRL DE LA GUARDIA CIVIL', sysdate, 'system',1);
 
 Insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'DATOS GENERALES', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
 
@@ -1004,7 +1004,7 @@ prompt =========================================================================
 prompt Ejecutando carga de CUESTIONARIO DE PRL DE LA POLICIA NACIONAL...
 prompt =========================================================================
 
-insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'PRL_PN','CUESTIONARIO DE PRL DE LA POLICÍA NACIONAL');
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'PRL_PN','CUESTIONARIO DE PRL DE LA POLICÍA NACIONAL', sysdate, 'system',1);
 
 insert into  areascuestionario (id, nombre_area, id_cuestionario, orden) values (SEQ_AREASCUESTIONARIOS.NEXTVAL, 'DATOS GENERALES', SEQ_MODELOSCUESTIONARIOS.CURRVAL, 0);
 
@@ -1095,7 +1095,7 @@ prompt =========================================================================
 prompt Ejecutando carga de CUESTIONARIO INFRAESTRUCTURAS E INSTALACIONES DE LA GUARDIA CIVIL...
 prompt =========================================================================
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'INFRA_GC','INFRAESTRUCTURAS E INSTALACIONES GC');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'INFRA_GC','INFRAESTRUCTURAS E INSTALACIONES GC', sysdate, 'system',1);
 
 
 insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (SEQ_MODELOSCUESTIONARIOS.CURRVAL, 'SITUACIÓN Y ESTADO DE LOS INMUEBLES', SEQ_AREASCUESTIONARIOS.NEXTVAL, 0);
@@ -1398,7 +1398,7 @@ prompt =========================================================================
 prompt Ejecutando carga de CUESTIONARIO INFRAESTRUCTURAS E INSTALACIONES DE LA POLICIA NACIONAL...
 prompt =========================================================================
 
-Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'INFRA_PN','INFRAESTRUCTURA E INSTALACIONES PN');
+Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (SEQ_MODELOSCUESTIONARIOS.NEXTVAL,'INFRA_PN','INFRAESTRUCTURA E INSTALACIONES PN', sysdate, 'system',1);
 
 --insert área
 

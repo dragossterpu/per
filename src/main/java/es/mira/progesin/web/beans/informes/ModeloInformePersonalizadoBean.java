@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans.informes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import es.mira.progesin.persistence.entities.informes.ModeloInformePersonalizado
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
 import es.mira.progesin.services.IModeloInformeService;
+import es.mira.progesin.util.ExportadorWord;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +56,21 @@ public class ModeloInformePersonalizadoBean implements Serializable {
     private ModeloInforme modeloInforme;
     
     /**
+     * Lista ordenada de areas del informe.
+     */
+    private List<AreaInforme> listaAreas;
+    
+    /**
+     * Modelo de informe personalizado.
+     */
+    private ModeloInformePersonalizado modeloPersonalizado;
+    
+    /**
+     * Mapa de relaciones entre áreas y subáreas.
+     */
+    private Map<AreaInforme, List<SubareaInforme>> mapaAreasSubareas;
+    
+    /**
      * Mapa que relaciona las áreas con sus respectivas preguntas.
      */
     private Map<AreaInforme, SubareaInforme[]> subareasSeleccionadas;
@@ -69,6 +86,13 @@ public class ModeloInformePersonalizadoBean implements Serializable {
      */
     @Autowired
     private transient IModeloInformePersonalizadoService informePersonalizadoService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio ExportadorWord.
+     * 
+     */
+    @Autowired
+    private transient ExportadorWord exportadorWord;
     
     /**
      * POJO con las opciones de búsqueda.
@@ -192,10 +216,10 @@ public class ModeloInformePersonalizadoBean implements Serializable {
      * Eliminación de un modelo personalizado de informe. Se hace eliminación física si no ha sido usado sino sólo
      * lógica.
      * 
-     * @param modeloPersonalizado modelo personalizado a eliminar
+     * @param modeloEliminar modelo personalizado a eliminar
      */
-    public void eliminarModeloPersonalizado(ModeloInformePersonalizado modeloPersonalizado) {
-        if (informePersonalizadoService.eliminarModeloPersonalizado(modeloPersonalizado) == null) {
+    public void eliminarModeloPersonalizado(ModeloInformePersonalizado modeloEliminar) {
+        if (informePersonalizadoService.eliminarModeloPersonalizado(modeloEliminar) == null) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al eliminar el informe personalizado, inténtelo de nuevo más tarde",
                     null);
@@ -209,6 +233,41 @@ public class ModeloInformePersonalizadoBean implements Serializable {
      */
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+    }
+    
+    /**
+     * Visualiza el informe recibido como parámetro.
+     * 
+     * @param informeVisualizar Informe a visualizar
+     * @return ruta de la vista visualizarInformePersonalizado
+     */
+    
+    public String visualizarInforme(Long informeVisualizar) {
+        this.modeloPersonalizado = informePersonalizadoService.findModeloPersonalizadoCompleto(informeVisualizar);
+        generarMapaAreasSubareas();
+        
+        return "/informes/visualizarInformePersonalizado?faces-redirect=true";
+        
+    }
+    
+    /**
+     * Genera el mapa de relaciones entre Áreas y subáreas.
+     * 
+     */
+    private void generarMapaAreasSubareas() {
+        mapaAreasSubareas = new HashMap<>();
+        List<SubareaInforme> listaSubareasArea;
+        for (SubareaInforme subarea : modeloPersonalizado.getSubareas()) {
+            listaSubareasArea = mapaAreasSubareas.get(subarea.getArea());
+            if (listaSubareasArea == null) {
+                listaSubareasArea = new ArrayList<>();
+            }
+            listaSubareasArea.add(subarea);
+            mapaAreasSubareas.put(subarea.getArea(), listaSubareasArea);
+        }
+        listaAreas = new ArrayList<>(mapaAreasSubareas.keySet());
+        
+        Collections.sort(listaAreas, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
     }
     
 }

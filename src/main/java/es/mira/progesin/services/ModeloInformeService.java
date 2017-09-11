@@ -1,7 +1,9 @@
 package es.mira.progesin.services;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.persistence.repositories.IModeloInformeRepository;
 
 /**
@@ -115,5 +119,37 @@ public class ModeloInformeService implements IModeloInformeService {
     @Override
     public List<ModeloInforme> findAllByFechaBajaIsNull() {
         return modeloInformeRepository.findAllByFechaBajaIsNull();
+    }
+    
+    /**
+     * Visualiza un modelo de informe.
+     * 
+     * @param modeloVisualizar Modelo que se desea visualizar.
+     * @return Modelo a visualizar.
+     */
+    @Override
+    public ModeloInforme visualizarModelo(ModeloInforme modeloVisualizar) {
+        ModeloInforme respuesta;
+        
+        respuesta = modeloInformeRepository.findOne(modeloVisualizar.getId());
+        respuesta.setAreas(areainformeservice.findByModeloInformeId(respuesta.getId()));
+        
+        return respuesta;
+    }
+    
+    /**
+     * Carga el mapa de relaciones áreas-subáreas para la lista de áreas recibida como parámetro.
+     * 
+     * @param areasVisualizar Listado de áreas que se desean visualizar
+     * @return Mapa de relaciones
+     */
+    @Override
+    public Map<AreaInforme, List<SubareaInforme>> cargarMapaSubareas(List<AreaInforme> areasVisualizar) {
+        Map<AreaInforme, List<SubareaInforme>> mapaAreasSubareas = new HashMap<AreaInforme, List<SubareaInforme>>();
+        
+        for (AreaInforme area : areasVisualizar) {
+            mapaAreasSubareas.put(area, subareaInformeService.findByArea(area));
+        }
+        return mapaAreasSubareas;
     }
 }

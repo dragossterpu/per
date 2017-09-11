@@ -15,6 +15,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import es.mira.progesin.persistence.entities.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -37,7 +38,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "modeloscuestionarios")
-public class ModeloCuestionario implements Serializable {
+public class ModeloCuestionario extends AbstractEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -69,6 +70,12 @@ public class ModeloCuestionario implements Serializable {
     @JoinColumn(name = "idCuestionario")
     @OrderBy("orden")
     private List<AreasCuestionario> areas;
+    
+    /**
+     * Determina si es un modelo estandar.
+     */
+    @Column(name = "estandar")
+    private Boolean estandar;
     
     /**
      * Sobreescritura del método toString para por usar el SelectItemsConverter de manera genérica, devolviendo siempre

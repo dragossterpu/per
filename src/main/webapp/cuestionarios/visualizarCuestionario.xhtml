@@ -1,0 +1,33 @@
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:my="http://java.sun.com/jsf/composite/composites">
+    <ui:define name="content">
+
+        
+        
+        <ui:param name="titulo" value="Visualizar modelo de cuestionario" />
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
+        <div class="tituloCuestionario">
+            <h:outputText value="#{edicionCuestionarioBean.modeloCuestionario.descripcion}" />
+        </div>
+        <h:form id="form">
+
+            <p:growl id="message" />
+
+            <p:accordionPanel multiple="true" activeIndex="-1" value="#{edicionCuestionarioBean.listaAreasCuestionario}" var="areaCuestionario">
+                <p:tab title="#{areaCuestionario.area}">
+                    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" type="unordered" styleClass="preguntasModelo">
+                        <h:outputText value="#{preguntaArea.pregunta}" />
+                    </p:dataList>
+                </p:tab>
+            </p:accordionPanel>
+
+            <div class="botonesFormulario">
+                
+                <p:button outcome="/cuestionarios/modelosCuestionarios" value="Volver" icon="fa fa-fw fa-undo" />
+                
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

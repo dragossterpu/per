@@ -77,9 +77,9 @@ public class ModeloCuestionarioServiceTest {
      * Test method for {@link es.mira.progesin.services.ModeloCuestionarioService#findAll()}.
      */
     @Test
-    public void findAll() {
-        modeloCuestionarioService.findAll();
-        verify(modeloCuestionarioRepository, times(1)).findAll();
+    public void findAllByFechaBajaIsNull() {
+        modeloCuestionarioService.findAllByFechaBajaIsNull();
+        verify(modeloCuestionarioRepository, times(1)).findAllByFechaBajaIsNull();
     }
     
     /**

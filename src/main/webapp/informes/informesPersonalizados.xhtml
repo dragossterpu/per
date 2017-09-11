@@ -87,7 +87,10 @@
 	               <p:column headerText="Usuario alta" sortBy="#{informePersonalizado.usernameAlta}" width="90" visible="#{informePersonalizadoBean.list[3]}" exportable="#{informePersonalizadoBean.list[3]}">
 	                   <h:outputText value="#{informePersonalizado.usernameAlta}" />
 	               </p:column>
-
+                
+                   <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                       <p:commandButton title="Ver informe" icon="fa fa-eye" action="#{informePersonalizadoBean.visualizarInforme(informePersonalizado.id)}"/>
+                   </p:column>
 	               <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esJefeInspecciones or esEquipo}">
 	                   <p:commandButton title="Crear informe" icon="fa fa-copy" action="#{informeBean.getFormCrearInforme(informePersonalizado.id)}" disabled="#{not empty informePersonalizado.fechaBaja}"/>
 	               </p:column>

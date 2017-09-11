@@ -46,4 +46,15 @@ public class SubareaInformeService implements ISubareaInformeService {
         }
         
     }
+    
+    /**
+     * Devuelve un listado de las subáreas pertenecientes a un área recibida como parámetro.
+     * 
+     * @param area Área de la que se desean recuperar las subáreas.
+     * @return Listado de subáreas.
+     */
+    @Override
+    public List<SubareaInforme> findByArea(AreaInforme area) {
+        return subareaInformeRepository.findByArea(area);
+    }
 }

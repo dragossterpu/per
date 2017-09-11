@@ -314,7 +314,7 @@ Insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('ADJUNT
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'SI', 'Sí');
 insert into CONFIG_RESPUESTAS_CUESTIONARIO (seccion,clave,valor) values ('RADIOSINO', 'NO', 'No');
 
-insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (1,'C1','CUESTIONARIO1');
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (1,'C1','CUESTIONARIO1', sysdate, 'system',1);
 
 insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (1, 'AREA1_CUESTIONARIO1', 1, 0);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (1, 'PREGUNTA1_AREA1_CUESTIONARIO1', 1, 'MATRIZPRUEBA', 0);
@@ -324,7 +324,7 @@ insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (1
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (3, 'PREGUNTA1_AREA2_CUESTIONARIO1', 2, 'TEXTAREA', 0);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (4, 'PREGUNTA2_AREA2_CUESTIONARIO1', 2, 'INPUT', 1);
 
-insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION) values (2,'C2','CUESTIONARIO2');
+insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (2,'C2','CUESTIONARIO2', sysdate, 'system',1);
 
 insert into  Areascuestionario (id_cuestionario,nombre_area,id, orden) Values (2, 'AREA1_CUESTIONARIO2', 3, 0);
 insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) Values (5, 'PREGUNTA1_AREA1_CUESTIONARIO2', 3, 'ADJUNTOINPUT', 0);
@@ -338,7 +338,7 @@ insert into  preguntascuestionario (ID,PREGUNTA,Id_area,tipo_respuesta, orden) V
 --insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('campo01', 'MATRIZTEST', 'MATRIZTEST1');
 --insert into CONFIG_RESPUESTAS_CUESTIONARIO (CLAVE,SECCION,VALOR) values ('nombreFila01', 'MATRIZTEST', 'MATRIZTEST2');
 
---Insert into MODELOSCUESTIONARIOS (id,CODIGO,DESCRIPCION) values (1,'MODELO_TEST','MODELO_TEST1');
+--Insert into MODELOSCUESTIONARIOS (ID,CODIGO,DESCRIPCION,FECHA_ALTA,USERNAME_ALTA,ESTANDAR) values (1,'MODELO_TEST','MODELO_TEST1', sysdate, 'system',1);
 --Insert into areascuestionario (id, nombre_area, id_cuestionario, orden) values (1, 'AREATEST1', 1, 0);
 
 --insert into preguntascuestionario (ID, PREGUNTA, Id_area, tipo_respuesta, orden) Values (1, 'PreguntaTest1', 1, 'MATRIZTEST', 0);

@@ -546,6 +546,8 @@ public class ModificarModeloCuestionarioBean {
     public void guardaCuestionario() {
         
         try {
+            modeloCuestionario.setFechaModificacion(new Date());
+            modeloCuestionario.setUsernameModif(SecurityContextHolder.getContext().getAuthentication().getName());
             modeloCuestionarioService.save(modeloCuestionario);
             
             String descripcion = "Se modifica el modelo de cuestionario :".concat(modeloCuestionario.getDescripcion());
@@ -569,6 +571,7 @@ public class ModificarModeloCuestionarioBean {
     public void guardaNuevoCuestionario() {
         try {
             modeloCuestionario.setAreas(listaAreasCuestionario);
+            modeloCuestionario.setEstandar(false);
             modeloCuestionarioService.save(modeloCuestionario);
             String descripcion = "Se crea el modelo de cuestionario: ".concat(modeloCuestionario.getDescripcion());
             

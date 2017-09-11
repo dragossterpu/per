@@ -15,7 +15,10 @@
                     <p:column headerText="Descripción">
                         <h:outputText value="#{modelo.nombre}" />
                     </p:column>
-
+                    
+                    <p:column styleClass="botonTabla">
+                        <p:commandButton title="Visualizar modelo" icon="fa fa-eye"  action="#{modelosInformeBean.visualizarModelo(modelo)}" />
+                    </p:column>
                     <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
                         <p:commandButton title="Crear nuevo modelo a partir de este" icon="fa fa-clone" action="#{nuevoModeloInformeBean.clonarInforme(modelo)}" />
                     </p:column>

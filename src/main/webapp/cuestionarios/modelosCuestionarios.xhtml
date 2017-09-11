@@ -21,11 +21,18 @@
                     </p:column>
 
                     <p:column styleClass="botonTabla">
-                        <h:commandLink title="Ver preguntas del modelo" styleClass="fa fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}" rendered="#{not (esJefeInspecciones or esEquipo)}" />
-                        <h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}" rendered="#{esJefeInspecciones or esEquipo}" />
+                        <p:commandButton title="Ver preguntas del modelo"  icon="fa fa-eye"  action="#{modelosCuestionarioBean.visualizarModelo(cuestionario)}"/>
+                    </p:column>
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones or esEquipo}">
+                        <h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  />
                     </p:column>
                     <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
                         <h:commandLink title="Modificar modelo cuestionario" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{modificarModeloCuestionarioBean.editarModelo(cuestionario)}" />
+                    </p:column>
+                    <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
+                        <p:commandButton title="Eliminar modelo" icon="fa fa-trash" action="#{modelosCuestionarioBean.eliminarModelo(cuestionario)}" update="tablaCuestionarios" disabled="#{cuestionario.estandar}">
+                            <p:confirm header="Eliminar modelo" message="¿Está seguro que desea eliminar el modelo?" icon="fa fa-warning-sign" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
                 <p:messages for="mensajeerror" autoUpdate="true" showDetail="true" showSummary="true" />
@@ -35,6 +42,13 @@
                         <span class="ui-CommandLink-texto">Crear nuevo modelo de cuestionario</span>
                     </h:commandLink>
                 </div>
+                
+                 <p:confirmDialog global="true">
+                     <div class="centrarBotonesDialog">
+                         <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                     </div>
+                 </p:confirmDialog>  
             </h:form>
         </div>
 

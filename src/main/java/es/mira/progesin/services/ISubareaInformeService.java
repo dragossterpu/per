@@ -30,4 +30,12 @@ public interface ISubareaInformeService {
     @Transactional(readOnly = false)
     void deleteByArea(List<AreaInforme> listaAreas);
     
+    /**
+     * Devuelve un listado de las subáreas pertenecientes a un área recibida como parámetro.
+     * 
+     * @param area Área de la que se desean recuperar las subáreas.
+     * @return Listado de subáreas.
+     */
+    List<SubareaInforme> findByArea(AreaInforme area);
+    
 }
