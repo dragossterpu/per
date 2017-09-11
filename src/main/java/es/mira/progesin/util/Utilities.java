@@ -312,4 +312,17 @@ public class Utilities {
         }
         return dias;
     }
+    
+    /**
+     * Método para evitar los nulos en cadenas de texto.
+     * @param cadena de entrada
+     * @return cadena de salida
+     */
+    public static String nullToBlank(String cadena) {
+        String cad = cadena;
+        if (cad == null) {
+            cad = "";
+        }
+        return cad;
+    }
 }
