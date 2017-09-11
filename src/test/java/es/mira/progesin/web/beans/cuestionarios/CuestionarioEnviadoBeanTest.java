@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,7 +43,10 @@ import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.lazydata.LazyModelCuestionarioEnviado;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
@@ -74,9 +78,19 @@ public class CuestionarioEnviadoBeanTest {
     private static final String USUARIOLOGUEADO = "usuarioLogueado";
     
     /**
+     * Constante tipo unidad.
+     */
+    private static final String TIPOUNIDAD = "tipoUnidad";
+    
+    /**
      * Constante correo envio.
      */
     private static final String CORREOENVIO = "correo_test";
+    
+    /**
+     * Constante Provincia/Ciudad.
+     */
+    private static final String PROVINCIA = "Toledo";
     
     /**
      * Simulación del securityContext.
@@ -243,10 +257,20 @@ public class CuestionarioEnviadoBeanTest {
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
         inspeccion.setEquipo(equipo);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
         cuestionarioEnvio.setInspeccion(inspeccion);
         cuestionarioEnvio.setCorreoEnvio(CORREOENVIO);
+        Map<String, String> mapa = null;
         cuestionarioEnviadoBeanMock.eliminarCuestionario(cuestionarioEnvio);
         
         assertThat(cuestionarioEnvio.getFechaAnulacion()).isNotNull();
@@ -258,7 +282,7 @@ public class CuestionarioEnviadoBeanTest {
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
         verify(correoElectronico, times(1)).envioCorreo(eq(cuestionarioEnvio.getCorreoEnvio()), any(String.class),
-                any(String.class));
+                eq(Constantes.TEMPLATEBAJACUESTIONARIO), eq(mapa));
         
     }
     
@@ -353,6 +377,15 @@ public class CuestionarioEnviadoBeanTest {
         inspeccion.setAnio(2017);
         inspeccion.setEquipo(equipo);
         inspeccion.setAmbito(AmbitoInspeccionEnum.GC);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setInspeccion(inspeccion);
@@ -363,11 +396,13 @@ public class CuestionarioEnviadoBeanTest {
         Map<String, Map<String, String>> mapaParametros = new HashMap<>();
         mapaParametros.put("URLPROGESIN", new HashMap<>());
         when(applicationBean.getMapaParametros()).thenReturn(mapaParametros);
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("textoNoValidacion", motivo);
         
         cuestionarioEnviadoBeanMock.noConformeCuestionario(motivo);
         verify(cuestionarioEnvioService, times(1)).transaccSaveActivaUsuariosProv(cuestionarioEnviado);
         verify(correoElectronico, times(1)).envioCorreo(eq(cuestionarioEnviado.getCorreoEnvio()), any(String.class),
-                any(String.class));
+                eq(Constantes.TEMPLATENOCONFORMECUESTIONARIO), eq(paramPlantilla));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
@@ -418,6 +453,15 @@ public class CuestionarioEnviadoBeanTest {
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
         inspeccion.setAmbito(AmbitoInspeccionEnum.GC);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setInspeccion(inspeccion);
@@ -428,8 +472,11 @@ public class CuestionarioEnviadoBeanTest {
         Map<String, Map<String, String>> mapaParametros = new HashMap<>();
         mapaParametros.put("URLPROGESIN", new HashMap<>());
         when(applicationBean.getMapaParametros()).thenReturn(mapaParametros);
+        
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("textoNoValidacion", motivo);
         doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(cuestionarioEnviado.getCorreoEnvio()),
-                any(String.class), any(String.class));
+                any(String.class), eq(Constantes.TEMPLATENOCONFORMECUESTIONARIO), eq(paramPlantilla));
         
         cuestionarioEnviadoBeanMock.noConformeCuestionario(motivo);
         
@@ -467,6 +514,15 @@ public class CuestionarioEnviadoBeanTest {
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setFechaEnvio(new Date(1L));
         cuestionarioEnviado.setFechaLimiteCuestionario(new Date(3L));
@@ -509,9 +565,19 @@ public class CuestionarioEnviadoBeanTest {
      */
     @Test
     public final void testModificarCuestionarioExceptionCorreo() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setFechaEnvio(new Date(1L));
         cuestionarioEnviado.setFechaLimiteCuestionario(new Date(3L));
@@ -519,8 +585,11 @@ public class CuestionarioEnviadoBeanTest {
         cuestionarioEnviado.setCorreoEnvio(CORREOENVIO);
         cuestionarioEnviadoBeanMock.setBackupFechaLimiteCuestionario(new Date(86400403L));
         when(envioCuestionarioBean.getCuestionarioEnvio()).thenReturn(cuestionarioEnviado);
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("fechaAnterior", sdf.format(cuestionarioEnviadoBeanMock.getBackupFechaLimiteCuestionario()));
+        paramPlantilla.put("fechaActual", sdf.format(cuestionarioEnviado.getFechaLimiteCuestionario()));
         doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(cuestionarioEnviado.getCorreoEnvio()),
-                any(String.class), any(String.class));
+                any(String.class), eq(Constantes.TEMPLATEMODIFICACIONFECHACUESTIONARIO), eq(paramPlantilla));
         
         cuestionarioEnviadoBeanMock.modificarCuestionario();
         
