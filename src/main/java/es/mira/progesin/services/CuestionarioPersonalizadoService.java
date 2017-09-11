@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.ICuestionarioPersonalizadoRepository;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
@@ -164,6 +165,18 @@ public class CuestionarioPersonalizadoService implements ICuestionarioPersonaliz
         session.close();
         
         return Math.toIntExact(cnt);
+    }
+    
+    /**
+     * Metodo que comprueba la existencia de cuestionarios personalizados que tengan como modelo base el que se recibe
+     * como parámetro.
+     * 
+     * @param modelo Modelo del que se desea conocer si hay cuestionarios personalizados.
+     * @return Respuesta de la consulta
+     */
+    @Override
+    public boolean existsByModelo(ModeloCuestionario modelo) {
+        return cuestionarioPersRep.existsBymodeloCuestionario(modelo);
     }
     
 }

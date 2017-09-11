@@ -5,6 +5,7 @@ import java.util.List;
 import org.primefaces.model.SortOrder;
 
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonalizado;
+import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.web.beans.cuestionarios.CuestionarioPersonalizadoBusqueda;
 
 /**
@@ -51,5 +52,14 @@ public interface ICuestionarioPersonalizadoService {
      * @return devuelve el número de registros de la consulta criteria.
      */
     int getCountCuestionarioCriteria(CuestionarioPersonalizadoBusqueda cuestionarioBusqueda);
+    
+    /**
+     * Metodo que comprueba la existencia de cuestionarios personalizados que tengan como modelo base el que se recibe
+     * como parámetro.
+     * 
+     * @param modelo Modelo del que se desea conocer si hay cuestionarios personalizados.
+     * @return Respuesta de la consulta
+     */
+    boolean existsByModelo(ModeloCuestionario modelo);
     
 }
