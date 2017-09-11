@@ -449,6 +449,7 @@ public class UserBean implements Serializable {
         String fechaHasta = "";
         String rol = "";
         String cuerpo = "";
+        
         if (usuario.getPuestoTrabajo() != null) {
             puesto = usuario.getPuestoTrabajo().getDescripcion();
         }
@@ -473,13 +474,13 @@ public class UserBean implements Serializable {
         descripcion.append(SecurityContextHolder.getContext().getAuthentication().getName());
         descripcion.append(
                 " ha realizado una consulta de usuarios.\nLa consulta realizada ha sido la siguiente: \n Nombre de usuario: ");
-        descripcion.append(usuario.getUsername());
+        descripcion.append(getUserNameAuditoria(usuario));
         descripcion.append("\n Nombre: ");
-        descripcion.append(usuario.getNombre());
+        descripcion.append(getNombreAuditoria(usuario));
         descripcion.append("\n Primer apellido: ");
-        descripcion.append(usuario.getApellido1());
+        descripcion.append(getApellido1Auditoria(userBusqueda));
         descripcion.append("\n Segundo apellido: ");
-        descripcion.append(usuario.getApellido2());
+        descripcion.append(getApellido2Auditoria(usuario));
         descripcion.append("\n Puesto de trabajo: ");
         descripcion.append(puesto);
         descripcion.append("\n Estado: ");
@@ -496,6 +497,66 @@ public class UserBean implements Serializable {
         regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.AUDITORIA.name(),
                 SeccionesEnum.USUARIOS.getDescripcion());
         
+    }
+    
+    /**
+     * Parte del método auditoriaBusqueda(UserBusqueda usuario) para evitar la complejidad ciclomática.
+     * 
+     * @param usuario Objeto de búsqueda de usuario.
+     * @return nombreUsuario retornado
+     */
+    
+    private String getUserNameAuditoria(UserBusqueda usuario) {
+        String nombreUsuario = "";
+        if (usuario.getUsername() != null) {
+            nombreUsuario = usuario.getUsername();
+        }
+        return nombreUsuario;
+    }
+    
+    /**
+     * Parte del método auditoriaBusqueda(UserBusqueda usuario) para evitar la complejidad ciclomática.
+     * 
+     * @param usuario Objeto de búsqueda de usuario.
+     * @return nombre retornado
+     */
+    
+    private String getNombreAuditoria(UserBusqueda usuario) {
+        String nombre = "";
+        if (usuario.getNombre() != null) {
+            nombre = usuario.getNombre();
+        }
+        return nombre;
+    }
+    
+    /**
+     * Parte del método auditoriaBusqueda(UserBusqueda usuario) para evitar la complejidad ciclomática.
+     * 
+     * @param usuario Objeto de búsqueda de usuario.
+     * @return apellido1 retornado
+     */
+    
+    private String getApellido1Auditoria(UserBusqueda usuario) {
+        String apellido1 = "";
+        if (usuario.getApellido1() != null) {
+            apellido1 = usuario.getApellido1();
+        }
+        return apellido1;
+    }
+    
+    /**
+     * Parte del método auditoriaBusqueda(UserBusqueda usuario) para evitar la complejidad ciclomática.
+     * 
+     * @param usuario Objeto de búsqueda de usuario.
+     * @return apellido1 retornado
+     */
+    
+    private String getApellido2Auditoria(UserBusqueda usuario) {
+        String apellido2 = "";
+        if (usuario.getApellido2() != null) {
+            apellido2 = usuario.getApellido2();
+        }
+        return apellido2;
     }
     
     /**
