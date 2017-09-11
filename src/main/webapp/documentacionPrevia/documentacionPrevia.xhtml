@@ -13,10 +13,11 @@
                 <p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" draggableColumns="true" rows="20" paginator="true" resizableColumns="true" value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}" onkeypress="if (event.keyCode == 13) {return false; }">
                     <p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}" update=":form:msgs" />
                     <f:facet name="header">
+                       &#160;
                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
-                           <p:columnToggler datasource="tablaDocumentacion" trigger="toggler">
-                               <p:ajax event="toggle" listener="#{tipoDocumentacionBean.onToggle}" />
-                           </p:columnToggler>
+                       <p:columnToggler datasource="tablaDocumentacion" trigger="toggler">
+                           <p:ajax event="toggle" listener="#{tipoDocumentacionBean.onToggle}" />
+                       </p:columnToggler>
                     </f:facet>
                     <p:column headerText="Documento" sortBy="#{tipoDocumentacion.descripcion}">
                         <p:cellEditor>
