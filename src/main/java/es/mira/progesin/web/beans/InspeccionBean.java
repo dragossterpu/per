@@ -181,13 +181,6 @@ public class InspeccionBean implements Serializable {
     private LazyModelInspeccion model;
     
     /**
-     * Variable utilizada para inyectar el servicio del registro de actividad.
-     * 
-     */
-    @Autowired
-    private transient IRegistroActividadService registroActividadService;
-    
-    /**
      * Número de columnas de la vista.
      */
     private static final int NUMCOLSTABLA = 17;
@@ -330,7 +323,7 @@ public class InspeccionBean implements Serializable {
             inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.A_SIN_INICIAR);
             inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             
-            inspeccion = inspeccionesService.save(inspeccion);
+            inspeccionesService.save(inspeccion);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "La inspección  ha sido creada con éxito");
@@ -381,8 +374,8 @@ public class InspeccionBean implements Serializable {
      */
     public void modificarInspeccion() {
         try {
-            Inspeccion inspecionNoMod = inspeccionesService.findInspeccionById(inspeccion.getId());
-            inspecionNoMod.setInspecciones(inspeccionesService.listaInspeccionesAsociadas(inspecionNoMod));
+            Inspeccion inspeccionNoMod = inspeccionesService.findInspeccionById(inspeccion.getId());
+            inspeccionNoMod.setInspecciones(inspeccionesService.listaInspeccionesAsociadas(inspeccionNoMod));
             
             inspeccion.setInspecciones(inspeccionesAsignadasActuales);
             inspeccionesService.save(inspeccion);
@@ -390,7 +383,7 @@ public class InspeccionBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
-            String descripcionRegistro = Utilities.camposModificados(inspecionNoMod, inspeccion);
+            String descripcionRegistro = Utilities.camposModificados(inspeccionNoMod, inspeccion);
             
             if (!descripcionRegistro.isEmpty()) {
                 StringBuilder descripcion = new StringBuilder();
@@ -496,7 +489,7 @@ public class InspeccionBean implements Serializable {
                 inspeccion.setMunicipio(nuevoMunicipio);
                 RequestContext.getCurrentInstance().execute("PF('dialogMunicipio').hide()");
             } catch (DataAccessException e) {
-                registroActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
+                regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                         "Error al guardar municipio. Inténtelo de nuevo más tarde.", null, "inputNombre");
             }

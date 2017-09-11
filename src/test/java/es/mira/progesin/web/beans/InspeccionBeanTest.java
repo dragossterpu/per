@@ -1,6 +1,9 @@
 package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -11,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
@@ -31,20 +34,26 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInspeccion;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.User;
-import es.mira.progesin.services.AlertaService;
+import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.EquipoService;
+import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMunicipioService;
+import es.mira.progesin.services.INotificacionService;
+import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.MiembroService;
-import es.mira.progesin.services.NotificacionService;
-import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.Utilities;
 
 /**
  * Test del bean de inspecciones.
@@ -55,7 +64,7 @@ import es.mira.progesin.util.FacesUtilities;
 @RunWith(PowerMockRunner.class)
 
 @PowerMockIgnore("javax.security.*")
-@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class })
+@PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, RequestContext.class, Utilities.class })
 public class InspeccionBeanTest {
     
     /**
@@ -89,6 +98,24 @@ public class InspeccionBeanTest {
     private IMunicipioService municipioService;
     
     /**
+     * Mock del servicio del registro de actividad.
+     */
+    @Mock
+    private IRegistroActividadService regActividadService;
+    
+    /**
+     * Mock del servicio de las alertas.
+     */
+    @Mock
+    private IAlertaService alertaService;
+    
+    /**
+     * Mock del servicio de las notificaciones.
+     */
+    @Mock
+    private INotificacionService notificacionesService;
+    
+    /**
      * Objeto en el que se injectan los mocks.
      */
     @InjectMocks
@@ -102,18 +129,15 @@ public class InspeccionBeanTest {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         PowerMockito.mockStatic(RequestContext.class);
+        PowerMockito.mockStatic(Utilities.class);
         
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("ezentis");
         when(RequestContext.getCurrentInstance()).thenReturn(requestContext);
         
-        inspeccionBean.setRegActividadService(mock(RegistroActividadService.class));
         inspeccionBean.setEquipoService(mock(EquipoService.class));
         inspeccionBean.setMiembroService(mock(MiembroService.class));
-        inspeccionBean.setNotificacionesService(mock(NotificacionService.class));
-        inspeccionBean.setAlertaService(mock(AlertaService.class));
-        inspeccionBean.setEquipoService(mock(EquipoService.class));
     }
     
     /**
@@ -240,15 +264,19 @@ public class InspeccionBeanTest {
     public final void testAltaInspeccion() {
         List<Inspeccion> inspeccionesAsignadasActuales = new ArrayList<>();
         // Inspeccion ins = mock(Inspeccion.class);
-        Inspeccion inspeccion = mock(Inspeccion.class);
-        
+        Inspeccion inspeccion = Inspeccion.builder().build();
         inspeccion.setInspecciones(inspeccionesAsignadasActuales);
-        
         inspeccionBean.setInspeccion(inspeccion);
+        ArgumentCaptor<Inspeccion> inspGuardada = ArgumentCaptor.forClass(Inspeccion.class);
         
         inspeccionBean.altaInspeccion();
         
-        verify(inspeccionesService, times(1)).save(inspeccion);
+        verify(inspeccionesService, times(1)).save(inspGuardada.capture());
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()));
+        verify(alertaService, times(1)).crearAlertaEquipo(eq(SeccionesEnum.INSPECCION.getDescripcion()),
+                any(String.class), eq(inspGuardada.getValue()));
+        assertThat(inspGuardada.getValue().getEstadoInspeccion()).isEqualTo(EstadoInspeccionEnum.A_SIN_INICIAR);
     }
     
     /**
@@ -271,17 +299,22 @@ public class InspeccionBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.InspeccionBean#modificarInspeccion()}.
+     * @throws ProgesinException error
      */
     
     @Test
-    @Ignore
-    public final void testModificarInspeccion() {
-        List<Inspeccion> inspeccionesAsignadasActuales = new ArrayList<>();
-        Inspeccion ins = Inspeccion.builder().id(1L).anio(2017).build();
-        LazyModelInspeccion model = mock(LazyModelInspeccion.class);
-        ins.setInspecciones(inspeccionesAsignadasActuales);
+    public final void testModificarInspeccion() throws ProgesinException {
         Equipo equipo = Equipo.builder().id(10L).build();
-        ins.setEquipo(equipo);
+        Inspeccion insNoMod = Inspeccion.builder().id(1L).anio(2017).equipo(equipo)
+                .estadoInspeccion(EstadoInspeccionEnum.A_SIN_INICIAR).build();
+        Inspeccion ins = Inspeccion.builder().id(1L).anio(2017).equipo(equipo)
+                .estadoInspeccion(EstadoInspeccionEnum.M_FINALIZADA).build();
+        List<Inspeccion> inspeccionesAsignadasActuales = new ArrayList<>();
+        LazyModelInspeccion model = mock(LazyModelInspeccion.class);
+        when(inspeccionesService.findInspeccionById(1L)).thenReturn(insNoMod);
+        when(inspeccionesService.listaInspeccionesAsociadas(ins)).thenReturn(inspeccionesAsignadasActuales);
+        when(Utilities.camposModificados(insNoMod, ins))
+                .thenReturn("estadoInspeccion (Antes 'A_SIN_INICIAR' ahora modificado a 'M_FINALIZADA')\n\r");
         
         inspeccionBean.setInspeccion(ins);
         inspeccionBean.setModel(model);
@@ -289,6 +322,12 @@ public class InspeccionBeanTest {
         inspeccionBean.modificarInspeccion();
         
         verify(inspeccionesService, times(1)).save(inspeccionBean.getInspeccion());
+        verify(regActividadService, times(1)).altaRegActividad(contains("Inspección 1/2017 modificada"),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.INSPECCION.getDescripcion()));
+        verify(notificacionesService, times(1)).crearNotificacionEquipo(contains("Inspección 1/2017 modificada"),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(equipo));
+        verify(notificacionesService, times(1)).crearNotificacionRol(contains("Inspección 1/2017 modificada"),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(RoleEnum.ROLE_SERVICIO_APOYO));
     }
     
     /**
