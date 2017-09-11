@@ -24,12 +24,14 @@ import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IEquipoRepository;
 import es.mira.progesin.web.beans.EquipoBusqueda;
+import lombok.NoArgsConstructor;
 
 /**
  * Sevicio para la clase Equipo.
  *
  * @author EZENTIS
  */
+@NoArgsConstructor
 @Service
 public class EquipoService implements IEquipoService {
     
@@ -50,6 +52,17 @@ public class EquipoService implements IEquipoService {
      */
     @Autowired
     private ICriteriaService criteriaService;
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServic Servicio Criteria
+     */
+    public EquipoService(SessionFactory sessionFact, CriteriaService criteriaServic) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServic;
+    }
     
     /**
      * Recupera todos los equipos activos y dados de baja.
