@@ -290,8 +290,6 @@ public class Utilities {
         
         String textoCompilado = writer.toString();
         
-        // TODO Borrar salida para pruebas de desarrollo
-        System.out.println(textoCompilado);
         return textoCompilado;
     }
 }
