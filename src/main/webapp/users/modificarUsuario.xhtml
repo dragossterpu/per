@@ -104,7 +104,6 @@
                         </p:selectOneMenu>
                         <p:messages for="role" autoUpdate="true" closable="true" />
 
-
                         <h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
                         <p:selectOneMenu value="#{userBean.user.puestoTrabajo}" id="puestoTrabajoSelect" required="true" requiredMessage="Seleccione un puesto de trabajo para el usuario" converter="#{selectConverter}" disabled="#{noEsAdmin}" style="width:100%;">
                             <f:selectItems value="#{applicationBean.listaPuestosTrabajo}" var="puestoTrabajo" itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
@@ -120,7 +119,6 @@
                     </div>
 
                     <div class="columnaDchaFormulario">
-
 
                         <h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo (*):" />
                         <p:selectOneMenu value="#{userBean.user.cuerpoEstado}" id="cuerpoEstadoSelect" required="true" requiredMessage="Seleccione un cuerpo" converter="#{selectConverter}" disabled="#{noEsAdmin}" style="width:100%;">
@@ -154,13 +152,13 @@
                         <h:outputLabel for="clase" value="Clase: (*)" />
                         <p:selectOneMenu value="#{userBean.user.claseUsuario}" id="clase" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione una clase para el usuario" converter="#{selectConverter}" style="width:100%;">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
-                            <f:selectItems value="#{applicationBean.listaClaseUsuario}" var="claseUser" itemLabel="#{claseUser.clase}" itemValue="#{claseUser}" />
+                            <f:selectItems value="#{applicationBean.listaClaseUsuario}" var="claseUser" itemLabel="#{claseUser.clase}" itemValue="#{claseUser}"/>
                         </p:selectOneMenu>
                         <p:messages for="clase" autoUpdate="true" closable="true" />
                     </div>
                 </div>
             </p:outputPanel>
-
+            <h:outputLabel value="Tiempo inactivo: #{userBean.diasInactividad} días" styleClass="#{userBean.user.fechaInactivo != null ? 'red' : 'blue'}"  style="font-weight:bold;text-align:center;" />
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{userBean.modificarUsuario}" value="Guardar cambios" icon="fa fa-fw fa-save" rendered="#{not noEsAdmin and not esProvisional}" />
                 <p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo" />

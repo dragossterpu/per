@@ -106,11 +106,6 @@ public class UserBean implements Serializable {
     private int numeroColumnasListadoUsarios = 9;
     
     /**
-     * Estado del usuario.
-     */
-    private String estadoUsuario;
-    
-    /**
      * Array que contiene los niveles seleccionables.
      */
     private int[] nivelesSelect = IntStream.rangeClosed(12, 30).toArray();
@@ -155,6 +150,11 @@ public class UserBean implements Serializable {
      */
     @Autowired
     private transient IEmpleoRepository empleoRepository;
+    
+    /**
+     * Dias inactividad de un usuario.
+     */
+    private long diasInactividad;
     
     /**
      * Muestra el perfil del usuario.
@@ -255,10 +255,8 @@ public class UserBean implements Serializable {
      * Busca los usuarios según los filtros introducidos en el formulariod de búsqueda.
      */
     public void buscarUsuario() {
-        this.estadoUsuario = null;
         model.setBusqueda(userBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
-        
         auditoriaBusqueda(userBusqueda);
     }
     
@@ -297,8 +295,8 @@ public class UserBean implements Serializable {
         String redireccion = null;
         
         if (usu != null) {
-            estadoUsuario = usu.getEstado().name();
             this.user = usu;
+            setDiasInactivo(usu.getFechaInactivo());
             auditoriaVisualizacion(usu);
             buscarEmpleo();
             redireccion = "/users/modificarUsuario?faces-redirect=true";
@@ -315,6 +313,9 @@ public class UserBean implements Serializable {
     public void modificarUsuario() {
         try {// TODO Enviar correo con las modificaciones
             User original = userService.findOne(user.getUsername());
+            if (original.getEstado() != user.getEstado()) {
+                cambiarEstado(user);
+            }
             userService.save(user);
             User modificado = userService.findOne(user.getUsername());
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
@@ -323,9 +324,6 @@ public class UserBean implements Serializable {
             StringBuffer descripcion = new StringBuffer("Modificación del usuario : ").append(user.getUsername())
                     .append("\n\n").append(Utilities.camposModificados(original, modificado));
             
-            if (estadoUsuario != user.getEstado().name()) {
-                cambiarEstado(user);
-            }
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.USUARIOS.getDescripcion());
@@ -512,6 +510,15 @@ public class UserBean implements Serializable {
         
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(),
                 SeccionesEnum.USUARIOS.getDescripcion());
+    }
+    
+    /**
+     * Guarda en una varible el número de días de inactividad de un usuario pasado por parámetro.
+     * 
+     * @param fecha usuario a consultar
+     */
+    public void setDiasInactivo(Date fecha) {
+        setDiasInactividad(Utilities.getDiasHastaHoy(fecha));
     }
     
 }

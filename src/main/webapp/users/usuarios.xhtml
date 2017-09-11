@@ -133,23 +133,32 @@
                         <h:commandLink title="Modificar usuario" styleClass="fa fa-fw fa-edit ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{userBean.getFormModificarUsuario(user)}" update="tablaUsuarios" rendered="#{esAdmin}" />
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
-                        <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios">
-                            <p:confirm header="Eliminar usuario" message="¿Está seguro que desea eliminar este usuario?" icon="fa fa-warning-sign" />
+                        <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{userBean.setDiasInactivo(user.fechaInactivo)}"
+                            rendered="#{(user.role ne 'ROLE_PROV_SOLICITUD') and (user.role ne 'ROLE_PROV_CUESTIONARIO')}" update="dlgEliminar"
+                            oncomplete="PF('dialogoEliminar').show()" >
+                            
+                            <p:dialog widgetVar="dialogoEliminar" modal="true" header="Eliminar usuario" id="dlgEliminar" resizable="false" draggable="false" closable="false" >
+                                <p:outputLabel value="¿Está seguro que desea eliminar éste usuario?"></p:outputLabel>
+                                <p:outputLabel value="Tiempo inactivo: #{userBean.diasInactividad} días."></p:outputLabel>
+                                <div class="centrarBotonesDialog">
+                                    <p:commandButton value="Sí" styleClass="ui-confirmdialog-yes" icon="fa fa-check" actionListener="#{userBean.eliminarUsuario(user)}"  
+                                        update="tablaUsuarios" oncomplete="">
+                                        </p:commandButton>
+                                    <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="fa fa-remove" onclick="PF('dialogoEliminar').hide()"/>
+                                </div>
+                            </p:dialog>
+                            
                         </p:commandButton>
                     </p:column>
-
+                          
                     <f:facet name="footer">
        				 Resultado de la búsqueda: #{userBean.model.rowCount} usuarios.
     			</f:facet>
                 </p:dataTable>
             </p:outputPanel>
 
-            <p:confirmDialog global="true">
-                <div class="centrarBotonesDialog">
-                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-                </div>
-            </p:confirmDialog>
+              
+
             <p:dialog id="dialog" widgetVar="dialogMessage" header="Error" closable="false">
                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                <div class="centrarBotonesDialog">

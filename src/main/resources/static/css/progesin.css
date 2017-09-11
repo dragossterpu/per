@@ -444,3 +444,7 @@ button[id*="toggler"] {
     margin-right: -11px;
     top: -5px;
 }
+
+.red{
+    color:red;
+}

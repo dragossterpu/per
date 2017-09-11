@@ -6,6 +6,9 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -291,5 +294,22 @@ public class Utilities {
         String textoCompilado = writer.toString();
         
         return textoCompilado;
+    }
+    
+    /**
+     * Devuelve el número de días que han pasado desde una fecha introducida por parámetro hasta hoy.
+     * 
+     * @param fecha usuario a consultar
+     * @return dias número de días
+     */
+    public static Long getDiasHastaHoy(Date fecha) {
+        LocalDate hoy = LocalDate.now();
+        long dias = 0;
+        LocalDate fechaDesde = null;
+        if (fecha != null) {
+            fechaDesde = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            dias = ChronoUnit.DAYS.between(fechaDesde, hoy);
+        }
+        return dias;
     }
 }

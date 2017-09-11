@@ -293,7 +293,7 @@ public class UserBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.AUDITORIA.name()),
                 eq(SeccionesEnum.USUARIOS.getDescripcion()));
-        assertThat(userBean.getEstadoUsuario()).isNull();
+        // assertThat(userBean.getEstadoUsuario()).isNull();
     }
     
     /**
@@ -359,7 +359,7 @@ public class UserBeanTest {
      */
     @Test
     public void modificarUsuario() {
-        userBean.setEstadoUsuario("ACTIVO");
+        // userBean.setEstadoUsuario("ACTIVO");
         User user = User.builder().estado(EstadoEnum.INACTIVO).build();
         String camposModificados = Utilities.getPassword();
         userBean.setUser(user);
@@ -384,7 +384,7 @@ public class UserBeanTest {
      */
     @Test
     public void modificarUsuario_activar() {
-        userBean.setEstadoUsuario("INACTIVO");
+        // userBean.setEstadoUsuario("INACTIVO");
         User user = User.builder().estado(EstadoEnum.ACTIVO).build();
         userBean.setUser(user);
         

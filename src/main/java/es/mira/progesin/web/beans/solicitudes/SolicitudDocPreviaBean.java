@@ -367,7 +367,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                         + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
                         + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
                         + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
-                        + "Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
+                        + "). Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
                 
                 Map<String, String> paramPlantilla = new HashMap<>();
                 paramPlantilla.put("tipoInspeccion", tipoInspeccion.getDescripcion());
