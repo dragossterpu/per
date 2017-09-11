@@ -643,7 +643,6 @@ public class VisualizarCuestionarioTest {
         user.setRole(RoleEnum.ROLE_JEFE_INSPECCIONES);
         when(authentication.getPrincipal()).thenReturn(user);
         visualizarCuestionario.init();
-        assertThat(visualizarCuestionario.getUsuarioActual()).isEqualTo(user);
         assertThat(visualizarCuestionario.isEsUsuarioProvisional()).isFalse();
     }
     

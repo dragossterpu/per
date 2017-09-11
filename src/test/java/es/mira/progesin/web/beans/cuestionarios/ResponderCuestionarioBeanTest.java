@@ -104,7 +104,6 @@ public class ResponderCuestionarioBeanTest {
     @Mock
     private Authentication authentication;
     
-    
     /**
      * Visualizar cuestionario.
      */
@@ -116,7 +115,6 @@ public class ResponderCuestionarioBeanTest {
      */
     @Mock
     private IRespuestaCuestionarioService respuestaService;
-    
     
     /**
      * Servicio de registro de actividad.
@@ -315,18 +313,14 @@ public class ResponderCuestionarioBeanTest {
      */
     @Test
     public final void testEnviarCuestionarioControlaTodasLasAreas() {
-        User userActual = new User();
-        userActual.setUsername(USUARIOLOGUEADO);
         List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv = new ArrayList<>();
         AreaUsuarioCuestEnv areaUsuario = new AreaUsuarioCuestEnv();
         areaUsuario.setUsernameProv(USUARIOLOGUEADO);
         listaAreasUsuarioCuestEnv.add(areaUsuario);
         responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
-        when(visualizarCuestionario.getUsuarioActual()).thenReturn(userActual);
         CuestionarioEnvio cuestionario = new CuestionarioEnvio();
         cuestionario.setInspeccion(mock(Inspeccion.class));
         responderCuestionarioBean.setCuestionarioEnviado(cuestionario);
-        responderCuestionarioBean.setPrincipalControlaTodasAreas(true);
         
         responderCuestionarioBean.enviarCuestionario();
         
@@ -349,14 +343,11 @@ public class ResponderCuestionarioBeanTest {
      */
     @Test
     public final void testEnviarCuestionarioNoControlaTodasLasAreas() {
-        User userActual = new User();
-        userActual.setUsername(USUARIOLOGUEADO);
         List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv = new ArrayList<>();
         AreaUsuarioCuestEnv areaUsuario = new AreaUsuarioCuestEnv();
         areaUsuario.setUsernameProv("otro");
         listaAreasUsuarioCuestEnv.add(areaUsuario);
         responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
-        when(visualizarCuestionario.getUsuarioActual()).thenReturn(userActual);
         responderCuestionarioBean.enviarCuestionario();
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
@@ -368,18 +359,14 @@ public class ResponderCuestionarioBeanTest {
      */
     @Test
     public final void testEnviarCuestionarioControlaTodasLasAreasException() {
-        User userActual = new User();
-        userActual.setUsername(USUARIOLOGUEADO);
         List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv = new ArrayList<>();
         AreaUsuarioCuestEnv areaUsuario = new AreaUsuarioCuestEnv();
         areaUsuario.setUsernameProv(USUARIOLOGUEADO);
         listaAreasUsuarioCuestEnv.add(areaUsuario);
         responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
-        when(visualizarCuestionario.getUsuarioActual()).thenReturn(userActual);
         CuestionarioEnvio cuestionario = new CuestionarioEnvio();
         cuestionario.setInspeccion(mock(Inspeccion.class));
         responderCuestionarioBean.setCuestionarioEnviado(cuestionario);
-        responderCuestionarioBean.setPrincipalControlaTodasAreas(true);
         doThrow(TransientDataAccessResourceException.class).when(respuestaService)
                 .transaccSaveConRespuestasInactivaUsuariosProv(eq(responderCuestionarioBean.getCuestionarioEnviado()),
                         listaRespuestasCaptor.capture());
@@ -614,7 +601,7 @@ public class ResponderCuestionarioBeanTest {
                 .thenReturn(listaAreasUsuario);
         
         responderCuestionarioBean.init();
-      
+        
         verify(respuestaService, times(1)).buscaCuestionarioAResponder(correoUser);
         verify(userService, times(1)).listaUsuariosProvisionalesCorreo(cuestionarioEnviado.getCorreoEnvio());
         verify(areaUsuarioCuestEnvService, times(1)).findByIdCuestionarioEnviado(eq(cuestionarioEnviado.getId()));
@@ -716,12 +703,9 @@ public class ResponderCuestionarioBeanTest {
      */
     @Test
     public final void testGuardarYAsignarAreasAlPrincipal() {
-        User user = new User();
-        user.setUsername(USUARIOLOGUEADO);
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setCorreoEnvio("correoTest");
         responderCuestionarioBean.setCuestionarioEnviado(cuestionarioEnviado);
-        when(visualizarCuestionario.getUsuarioActual()).thenReturn(user);
         
         List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
         
@@ -735,10 +719,11 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.guardarYAsignarAreasAlPrincipal();
         
-        verify(respuestaService, times(1)).guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO, cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
+        verify(respuestaService, times(1)).guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO,
+                cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
         PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
-                eq("dialogMessageReasignar"));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
+                any(String.class), eq("dialogMessageReasignar"));
     }
     
     /**
@@ -747,16 +732,12 @@ public class ResponderCuestionarioBeanTest {
      */
     @Test
     public final void testGuardarYAsignarAreasAlPrincipalExcepcion() {
-        User user = new User();
-        user.setUsername(USUARIOLOGUEADO);
-
         CuestionarioEnvio cuestionarioEnviado = new CuestionarioEnvio();
         cuestionarioEnviado.setCorreoEnvio("correoTest");
         responderCuestionarioBean.setCuestionarioEnviado(cuestionarioEnviado);
-        when(visualizarCuestionario.getUsuarioActual()).thenReturn(user);
         
         List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
-
+        
         List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv = new ArrayList<>();
         AreaUsuarioCuestEnv areaUsuarioCuestEnv = new AreaUsuarioCuestEnv();
         areaUsuarioCuestEnv.setIdArea(1L);
@@ -764,8 +745,9 @@ public class ResponderCuestionarioBeanTest {
         listaAreasUsuarioCuestEnv.add(areaUsuarioCuestEnv);
         responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
         
-        when(respuestaService.guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO, cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv))
-                .thenThrow(TransientDataAccessResourceException.class);
+        when(respuestaService.guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO,
+                cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv))
+                        .thenThrow(TransientDataAccessResourceException.class);
         
         responderCuestionarioBean.guardarYAsignarAreasAlPrincipal();
         

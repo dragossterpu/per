@@ -32,7 +32,7 @@ import lombok.Setter;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(callSuper = false, of = "id")
 @Builder
 @Getter
 @Setter

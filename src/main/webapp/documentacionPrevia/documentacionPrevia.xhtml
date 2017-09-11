@@ -30,7 +30,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Nombre Fichero" sortBy="#{tipoDocumentacion.nombre}" style="width:100px">
+                    <p:column headerText="Nombre Fichero" sortBy="#{tipoDocumentacion.nombre}" style="width:130px">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{tipoDocumentacion.nombre}" />
@@ -41,7 +41,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Extensión" style="width:50px">
+                    <p:column headerText="Extensión" style="width:70px">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{tipoDocumentacion.extensiones}" converter="#{listaExtensionesConverter}" />

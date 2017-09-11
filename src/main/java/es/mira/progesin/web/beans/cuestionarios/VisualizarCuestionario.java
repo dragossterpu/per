@@ -121,11 +121,6 @@ public class VisualizarCuestionario implements Serializable {
     private transient StreamedContent file;
     
     /**
-     * Usuario actual.
-     */
-    private User usuarioActual;
-    
-    /**
      * Booleano que indica que si el usuario es provisional.
      */
     
@@ -462,7 +457,7 @@ public class VisualizarCuestionario implements Serializable {
      */
     @PostConstruct
     public void init() {
-        setUsuarioActual((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         esUsuarioProvisional = RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole());
     }
     

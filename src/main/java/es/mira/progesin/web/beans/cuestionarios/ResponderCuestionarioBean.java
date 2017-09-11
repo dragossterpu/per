@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -64,11 +65,6 @@ public class ResponderCuestionarioBean implements Serializable {
      * Lista de usuarios provisionales.
      */
     private List<User> usuariosProv;
-    
-    /**
-     * Booleano usado para controlar si el usuario principal controla todas las áreas.
-     */
-    private boolean principalControlaTodasAreas;
     
     /**
      * Lista de áreas/usuarios.
@@ -187,7 +183,7 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void enviarCuestionario() {
         try {
-            comprobarAsignaciones();
+            boolean principalControlaTodasAreas = comprobarAsignaciones();
             if (principalControlaTodasAreas) {
                 List<RespuestaCuestionario> listaRespuestas = new ArrayList<>();
                 guardarRespuestasTipoTexto(listaRespuestas);
@@ -223,11 +219,16 @@ public class ResponderCuestionarioBean implements Serializable {
     
     /**
      * Comprueba las asignaciones realizadas.
+     * @return boolean
      */
-    private void comprobarAsignaciones() {
-        principalControlaTodasAreas = true;
-        listaAreasUsuarioCuestEnv.forEach(areaUsuario -> principalControlaTodasAreas = principalControlaTodasAreas
-                && visualizarCuestionario.getUsuarioActual().getUsername().equals(areaUsuario.getUsernameProv()));
+    private boolean comprobarAsignaciones() {
+        String nombreUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean principalControlaTodasAreas = true;
+        Iterator<AreaUsuarioCuestEnv> iterator = listaAreasUsuarioCuestEnv.iterator();
+        while (principalControlaTodasAreas && iterator.hasNext()) {
+            principalControlaTodasAreas = nombreUsuarioActual.equals(iterator.next().getUsernameProv());
+        }
+        return principalControlaTodasAreas;
     }
     
     /**
@@ -376,8 +377,7 @@ public class ResponderCuestionarioBean implements Serializable {
         if (RoleEnum.ROLE_PROV_CUESTIONARIO.equals(usuarioActual.getRole())) {
             cuestionarioEnviado = respuestaService.buscaCuestionarioAResponder(usuarioActual.getCorreo());
             
-            setUsuariosProv(
-                    userService.listaUsuariosProvisionalesCorreo(cuestionarioEnviado.getCorreoEnvio()));
+            setUsuariosProv(userService.listaUsuariosProvisionalesCorreo(cuestionarioEnviado.getCorreoEnvio()));
             
             // Dependiendo de si es el usuario principal o no recuperamos todas las asociaciones o sólo las del usuario
             // actual
@@ -406,7 +406,8 @@ public class ResponderCuestionarioBean implements Serializable {
      */
     public void asignarAreas() {
         try {
-            listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService.asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
+            listaAreasUsuarioCuestEnv = areaUsuarioCuestEnvService
+                    .asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
             if (listaAreasUsuarioCuestEnv != null) {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Asignación",
                         "Areas asignadas con éxito, cuando los usuarios elegidos completen su parte volverá a tener asignadas dichas areas y podrá enviar el cuestionario.");
@@ -429,12 +430,14 @@ public class ResponderCuestionarioBean implements Serializable {
             guardarRespuestasTipoTexto(listaRespuestas);
             guardarRespuestasTipoTablaMatriz(listaRespuestas);
             
-            String nombreUsuarioActual = visualizarCuestionario.getUsuarioActual().getUsername();
-
-            respuestaService.guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, nombreUsuarioActual, cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
+            String nombreUsuarioActual = SecurityContextHolder.getContext().getAuthentication().getName();
+            
+            respuestaService.guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, nombreUsuarioActual,
+                    cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
             
             if (listaAreasUsuarioCuestEnv != null) {
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación", "Guardado con éxito, su contribución al cuestionario ha finalizado.", "dialogMessageReasignar");
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Cumplimentación",
+                        "Guardado con éxito, su contribución al cuestionario ha finalizado.", "dialogMessageReasignar");
                 generarMapaAreaUsuarioCuestEnv();
             }
         } catch (DataAccessException e) {

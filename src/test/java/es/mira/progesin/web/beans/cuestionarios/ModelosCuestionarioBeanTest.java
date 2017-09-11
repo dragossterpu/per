@@ -72,11 +72,11 @@ public class ModelosCuestionarioBeanTest {
         ModeloCuestionario modelo = mock(ModeloCuestionario.class);
         List<ModeloCuestionario> listadoCuestionarios = new ArrayList<>();
         listadoCuestionarios.add(modelo);
-        when(modeloCuestionarioService.findAll()).thenReturn(listadoCuestionarios);
+        when(modeloCuestionarioService.findAllByFechaBajaIsNull()).thenReturn(listadoCuestionarios);
         modelosCuestionarioBean.setListadoCuestionarios(new ArrayList<>());
         modelosCuestionarioBean.init();
         
-        verify(modeloCuestionarioService, times(1)).findAll();
+        verify(modeloCuestionarioService, times(1)).findAllByFechaBajaIsNull();
         assertThat(modelosCuestionarioBean.getListadoCuestionarios()).hasSize(1);
     }
     
