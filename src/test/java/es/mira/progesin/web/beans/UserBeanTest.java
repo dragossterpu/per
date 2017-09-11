@@ -2,7 +2,6 @@ package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -11,7 +10,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 
@@ -110,6 +112,21 @@ public class UserBeanTest {
     private UserBean userBean;
     
     /**
+     * Constante usuario system.
+     */
+    private static final String SYSTEM = "system";
+    
+    /**
+     * Constante correo ezentis.
+     */
+    private static final String CORREOEZENTIS = "correo@ezentis.com";
+    
+    /**
+     * Constante password.
+     */
+    private static final String PASS = "password";
+    
+    /**
      * Configuración inicial del test.
      */
     @Before
@@ -190,12 +207,16 @@ public class UserBeanTest {
         User user = User.builder().username("name").correo("correo").build();
         userBean.setUser(user);
         when(userService.exists("name")).thenReturn(Boolean.FALSE);
-        when(passwordEncoderMock.encode("password")).thenReturn("encodedpassword");
+        when(passwordEncoderMock.encode(PASS)).thenReturn("encodedpassword");
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("user", user.getUsername());
+        paramPlantilla.put(PASS, user.getPassword());
         
         userBean.altaUsuario();
         
         verify(userService, times(1)).save(user);
-        verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class), any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(user.getCorreo()), any(String.class),
+                eq(Constantes.TEMPLATEALTAPLICACION), eq(paramPlantilla));
         
         // Comprobamos que se muestra el mensaje en pantalla
         PowerMockito.verifyStatic(times(1));
@@ -359,48 +380,46 @@ public class UserBeanTest {
      */
     @Test
     public void modificarUsuario() {
-        // userBean.setEstadoUsuario("ACTIVO");
-        User user = User.builder().estado(EstadoEnum.INACTIVO).build();
-        String camposModificados = Utilities.getPassword();
-        userBean.setUser(user);
+        User userOriginal = User.builder().estado(EstadoEnum.INACTIVO).username(SYSTEM).correo(CORREOEZENTIS).build();
+        User userModifi = User.builder().estado(EstadoEnum.ACTIVO).correo(CORREOEZENTIS).username(SYSTEM)
+                .fechaInactivo(new Date()).build();
+        when(userService.findOne(userModifi.getUsername())).thenReturn(userOriginal, userModifi);
+        userBean.setUser(userModifi);
         
         userBean.modificarUsuario();
+        
+        verify(userService, times(1)).save(userBean.getUser());
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         
-        verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del estado"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
+        verify(correoElectronico, times(1)).envioCorreo(eq(userBean.getUser().getCorreo()), any(String.class),
+                any(String.class));
         
-        verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del usuario"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
-        
-        assertThat(userBean.getUser().getFechaInactivo()).isNotNull();
+        assertThat(userBean.getUser().getFechaInactivo()).isNull();
     }
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.UserBean#modificarUsuario()}.
      */
     @Test
-    public void modificarUsuario_activar() {
-        // userBean.setEstadoUsuario("INACTIVO");
-        User user = User.builder().estado(EstadoEnum.ACTIVO).build();
-        userBean.setUser(user);
+    public void modificarUsuario_Exception() {
+        User userOriginal = User.builder().estado(EstadoEnum.INACTIVO).username(SYSTEM).correo(CORREOEZENTIS).build();
+        User userModifi = User.builder().estado(EstadoEnum.ACTIVO).correo(CORREOEZENTIS).username(SYSTEM)
+                .fechaInactivo(new Date()).build();
+        when(userService.findOne(userModifi.getUsername())).thenReturn(userOriginal, userModifi);
+        userBean.setUser(userModifi);
+        
+        doThrow(TransientDataAccessResourceException.class).when(userService).save(userBean.getUser());
         
         userBean.modificarUsuario();
         
+        verify(userService, times(1)).save(userBean.getUser());
+        
         PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
-        
-        verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del estado"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
-        
-        verify(regActividadService, times(1)).altaRegActividad(contains("Modificación del usuario"),
-                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.USUARIOS.getDescripcion()));
-        
-        assertThat(userBean.getUser().getFechaInactivo()).isNull();
     }
     
     /**
@@ -410,7 +429,7 @@ public class UserBeanTest {
     public void restaurarClave() {
         User user = User.builder().correo("correo@correo.es").build();
         userBean.setUser(user);
-        when(passwordEncoderMock.encode("password")).thenReturn("encodedpassword");
+        when(passwordEncoderMock.encode(PASS)).thenReturn("encodedpassword");
         
         userBean.restaurarClave();
         
@@ -425,9 +444,11 @@ public class UserBeanTest {
     public void restaurarClave_correoException() {
         User user = User.builder().correo("correo@correo.es").build();
         userBean.setUser(user);
-        when(passwordEncoderMock.encode("password")).thenReturn("encodedpassword");
-        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(any(String.class), any(String.class),
-                any(String.class));
+        when(passwordEncoderMock.encode(PASS)).thenReturn("encodedpassword");
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("password", user.getPassword());
+        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(user.getCorreo()), any(String.class),
+                eq(Constantes.TEMPLATECORREORESTAURARPASSWORD), eq(paramPlantilla));
         
         userBean.restaurarClave();
         
