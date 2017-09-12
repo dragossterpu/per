@@ -20,17 +20,17 @@
                     <p:outputPanel>
                         <h:commandLink>
                             <p:graphicImage value="/images/xls.png" />
-                            <p:dataExporter type="xls" target="tablaAlertas" fileName="listaAlertas" />
+                            <p:dataExporter type="xls" target="tablaAlertas" fileName="lista_alertas" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage value="/images/pdf.png" />
-                            <p:dataExporter type="pdf" target="tablaAlertas" fileName="listaAlertas" />
+                            <p:dataExporter type="pdf" target="tablaAlertas" fileName="lista_alertas" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage value="/images/csv.png" />
-                            <p:dataExporter type="csv" target="tablaAlertas" fileName="listaAlertas" />
+                            <p:dataExporter type="csv" target="tablaAlertas" fileName="lista_alertas" />
                         </h:commandLink>
-                         <h:commandLink  action="#{exportadorWord.exportDoc('listaAlertas', false, 'busquedaAlertas:tablaAlertas', SeccionesEnum.ALERTAS)}">
+                         <h:commandLink  action="#{exportadorWord.exportDoc('lista_alertas', false, 'busquedaAlertas:tablaAlertas', SeccionesEnum.ALERTAS)}">
                         <p:graphicImage value="/images/doc.png" /> 
                         </h:commandLink>
                     </p:outputPanel>
@@ -69,15 +69,15 @@
                     <p:outputPanel>
                         <h:commandLink>
                             <p:graphicImage value="/images/xls.png" />
-                            <p:dataExporter type="xls" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                            <p:dataExporter type="xls" target="tablaNotificaciones" fileName="lista_notificaciones" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage value="/images/pdf.png" />
-                            <p:dataExporter type="pdf" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                            <p:dataExporter type="pdf" target="tablaNotificaciones" fileName="lista_notificaciones" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage value="/images/csv.png" />
-                            <p:dataExporter type="csv" target="tablaNotificaciones" fileName="listaNotificaciones" />
+                            <p:dataExporter type="csv" target="tablaNotificaciones" fileName="lista_notificaciones" />
                         </h:commandLink>
                        <h:commandLink  action="#{exportadorWord.exportDoc('lista_notificaciones', false, 'busquedaNotificaciones:tablaNotificaciones', SeccionesEnum.NOTIFICACIONES)}">
                         <p:graphicImage value="/images/doc.png" /> 
