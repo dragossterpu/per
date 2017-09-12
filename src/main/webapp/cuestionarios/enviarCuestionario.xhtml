@@ -48,7 +48,6 @@
             </div>
 
             <div class="botonesFormulario">
-                <!-- <p:button value="Adjuntar plantilla" icon="fa fa-plus" outcome="/cuestionarios/adjuntarPlantillasCuestionario"/> -->
                 <p:commandButton action="/cuestionarios/adjuntarPlantillasCuestionario?faces-redirect=true" value="Adjuntar plantilla" icon="fa fa-plus"/>
                 <p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and (esJefeEquipoInspeccion or esJefeInspecciones)}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
                 <p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and not yaAnulado and (esJefeEquipoInspeccion or esJefeInspecciones)}" />
