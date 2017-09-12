@@ -74,7 +74,7 @@ public class ModeloCuestionarioServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.ModeloCuestionarioService#findAll()}.
+     * Test method for {@link es.mira.progesin.services.ModeloCuestionarioService#findAllByFechaBajaIsNull()}.
      */
     @Test
     public void findAllByFechaBajaIsNull() {

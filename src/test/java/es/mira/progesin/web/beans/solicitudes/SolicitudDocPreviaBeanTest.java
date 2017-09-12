@@ -2,7 +2,6 @@ package es.mira.progesin.web.beans.solicitudes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -36,10 +35,15 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -160,9 +164,30 @@ public class SolicitudDocPreviaBeanTest {
     private ArgumentCaptor<SolicitudDocumentacionPrevia> solicitudCaptor;
     
     /**
+     * Captura de parametros plantilla.
+     */
+    @Captor
+    private ArgumentCaptor<Map<String, String>> paramCaptor;
+    
+    /**
      * Literal para pruebas.
      */
     private static final String CORREO = "correoDestinatario";
+    
+    /**
+     * Literal provincia/municipio.
+     */
+    private static final String PROVINCIA = "Toledo";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String TIPOUNIDAD = "tipoUnidad";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String NOMBREUNIDAD = "nombreUnidad";
     
     /**
      * Configuración inicial del test.
@@ -395,17 +420,32 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void modificarSolicitud_ConFechaLimiteCambiada() throws ParseException {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        TipoInspeccion tipoInspeccion = new TipoInspeccion();
+        tipoInspeccion.setDescripcion("tipoInspeccion");
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
+        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .fechaEnvio(sdf.parse("1/1/2017")).fechaLimiteEnvio(sdf.parse("11/1/2017")).correoDestinatario(CORREO)
                 .build();
+        
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         solicitudDocPreviaBean.setBackupFechaLimiteEnvio(sdf.parse("10/1/2017"));
         
         solicitudDocPreviaBean.modificarSolicitud();
         
         verify(solicitudDocumentacionService, times(1)).save(solicitud);
-        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class),
+                eq(Constantes.TEMPLATEMODIFICACIONFECHASOLICITUD), paramCaptor.capture());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
@@ -436,6 +476,20 @@ public class SolicitudDocPreviaBeanTest {
     public void enviarSolicitud() {
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        TipoInspeccion tipoInspeccion = new TipoInspeccion();
+        tipoInspeccion.setDescripcion("tipoInspeccion");
+        tipoInspeccion.setCodigo("I.G.S.");
+        inspeccion.setTipoInspeccion(tipoInspeccion);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -449,11 +503,13 @@ public class SolicitudDocPreviaBeanTest {
         listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
         listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
         when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
+        
         solicitudDocPreviaBean.enviarSolicitud();
         
         verify(userService, times(1)).exists(CORREO);
         verify(solicitudDocumentacionService, times(1)).transaccSaveCreaUsuarioProv(eq(solicitud), any(User.class));
-        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), contains("url"));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class),
+                eq(Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS), paramCaptor.capture());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
@@ -485,6 +541,18 @@ public class SolicitudDocPreviaBeanTest {
     public void noConformeSolicitud() {
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        TipoInspeccion tipoInspeccion = new TipoInspeccion();
+        tipoInspeccion.setDescripcion("tipoInspeccion");
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
@@ -500,7 +568,8 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.noConformeSolicitud(motivosNoConforme);
         
         verify(solicitudDocumentacionService, times(1)).transaccSaveActivaUsuarioProv(eq(solicitud), eq(CORREO));
-        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class), contains(motivosNoConforme));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class),
+                eq(Constantes.TEMPLATENOCONFORMESOLICITUD), paramCaptor.capture());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
