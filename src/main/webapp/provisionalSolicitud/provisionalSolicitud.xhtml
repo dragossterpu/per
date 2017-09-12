@@ -97,8 +97,8 @@
                 </p:inputText>
 
                 <div class="botonesFormulario">
-                    <p:button outcome="/provisionalSolicitud/cargaDocumentos" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}" />
-                    <p:button outcome="/provisionalSolicitud/descargaPlantillas" value="Descargar plantillas" icon="fa fa-download" />
+                    <p:commandButton action="/provisionalSolicitud/cargaDocumentos?faces-redirect=true" value="Adjuntar documentos" icon="fa fa-fw fa-user-plus" rendered="#{not empty provisionalSolicitudBean.listadoDocumentosPrevios and not yaCumplimentado}" />
+                    <p:commandButton action="/provisionalSolicitud/descargaPlantillas?faces-redirect=true" value="Descargar plantillas" icon="fa fa-fw fa-download" rendered="#{not yaCumplimentado and not empty provisionalSolicitudBean.listaPlantillas}"/>
                     <p:commandButton id="borrador" actionListener="#{provisionalSolicitudBean.guardarBorrardor}" value="Guardar borrador" icon="fa fa-fw fa-save" rendered="#{not yaCumplimentado}" />
                     <p:commandButton id="enviar" actionListener="#{provisionalSolicitudBean.enviarDocumentacionPrevia}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaCumplimentado}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" update="form" />
                 </div>

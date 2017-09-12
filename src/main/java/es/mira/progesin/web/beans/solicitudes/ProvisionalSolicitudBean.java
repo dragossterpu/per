@@ -144,6 +144,9 @@ public class ProvisionalSolicitudBean implements Serializable {
         solicitudDocumentacionPrevia = solicitudDocumentacionService
                 .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
         listadoDocumentosPrevios = tipoDocumentacionService.findByIdSolicitud(solicitudDocumentacionPrevia.getId());
+        if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
+            listaPlantillas = documentoService.buscaNombreTipoDocumento("PLANTILLA SOLICITUD");
+        }
         return "/provisionalSolicitud/provisionalSolicitud?faces-redirect=true";
     }
     
@@ -307,20 +310,6 @@ public class ProvisionalSolicitudBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al guardar el borrador, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.DOCUMENTACION.getDescripcion(), e);
-        }
-    }
-    
-    /**
-     * Carga las plantillas existentes para el ámbito de la solicitud en curso para el usuario provisional actual.
-     */
-    public void plantillasAmbitoSolicitud() {
-        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-        solicitudDocumentacionPrevia = solicitudDocumentacionService
-                .findEnviadaNoFinalizadaPorCorreoDestinatario(correo);
-        if ("true".equals(solicitudDocumentacionPrevia.getDescargaPlantillas())) {
-            
-            listaPlantillas = documentoService.buscaNombreTipoDocumento("PLANTILLA SOLICITUD");
-            
         }
     }
     

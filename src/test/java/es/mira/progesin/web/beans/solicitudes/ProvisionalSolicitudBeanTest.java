@@ -56,7 +56,6 @@ import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.PdfGeneratorSolicitudes;
 import es.mira.progesin.util.VerificadorExtensiones;
 import es.mira.progesin.web.beans.ApplicationBean;
-import es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean;
 
 /**
  * Test para ProvisionalSolicitudBean.
@@ -406,7 +405,8 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -418,7 +418,8 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#descargarFichero(java.lang.Long)}.
      * @throws ProgesinException lanzada
      */
     @Test
@@ -434,7 +435,8 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
      */
     @Test
     public final void testEnviarDocumentacionPrevia() {
@@ -464,7 +466,8 @@ public class ProvisionalSolicitudBeanTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
+     * Test method for
+     * {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#enviarDocumentacionPrevia()}.
      */
     @Test
     public final void testEnviarDocumentacionPreviaException() {
@@ -524,19 +527,6 @@ public class ProvisionalSolicitudBeanTest {
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
                 any(TransientDataAccessResourceException.class));
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.solicitudes.ProvisionalSolicitudBean#plantillasAmbitoSolicitud()}.
-     */
-    @Test
-    public final void testPlantillasAmbitoSolicitud() {
-        SolicitudDocumentacionPrevia solicitudDocPrevia = new SolicitudDocumentacionPrevia();
-        solicitudDocPrevia.setDescargaPlantillas("true");
-        when(solicitudDocumentacionService.findEnviadaNoFinalizadaPorCorreoDestinatario("usuarioLogueado"))
-                .thenReturn(solicitudDocPrevia);
-        provisionalSolicitudBean.plantillasAmbitoSolicitud();
-        verify(documentoService, times(1)).buscaNombreTipoDocumento(eq("PLANTILLA SOLICITUD"));
     }
     
     /**
