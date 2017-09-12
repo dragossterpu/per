@@ -14,7 +14,7 @@
                     <p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}" update=":form:msgs" />
                     <f:facet name="header">
                        &#160;
-                       <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                       <p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
                        <p:columnToggler datasource="tablaDocumentacion" trigger="toggler">
                            <p:ajax event="toggle" listener="#{tipoDocumentacionBean.onToggle}" />
                        </p:columnToggler>

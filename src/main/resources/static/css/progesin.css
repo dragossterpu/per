@@ -445,6 +445,45 @@ button[id*="toggler"] {
     top: -5px;
 }
 
-.red{
+.rojo {
     color:red;
+}
+
+.negrita {
+    font-weight:bold;
+}
+
+.centrado {
+    text-align:center;
+}
+
+.graficaEstadisticas {
+    color:#000;
+    width:700px;
+    height:500px
+}
+
+.columnaSeleccionTabla {
+     width:16px;
+     text-align:center;
+}
+
+.ui-picklist {
+    width: 100%;
+}
+
+.ui-picklist-list-wrapper {
+    width: 50%;
+}
+
+.ui-picklist-list {
+    width: 100% !important;
+}
+
+.ui-picklist button {
+    margin: 10px;
+}
+
+button.botonToggler {
+    float: right;
 }

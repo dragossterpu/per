@@ -19,7 +19,7 @@
                         <p:tab>
                             <f:facet name="title">
                                 #{informeBean.listaAreas.indexOf(area)+1}.#{informeBean.mapaAreasSubareas[area].indexOf(subarea)+1}. #{subarea.descripcion} 
-                                <h:outputText style="color:red" value="#{('(Asignado a: ').concat(informeBean.mapaAsignaciones[subarea]).concat(')')}" rendered="#{not empty informeBean.mapaAsignaciones[subarea]}"/>
+                                <h:outputText styleClass="rojo" value="#{('(Asignado a: ').concat(informeBean.mapaAsignaciones[subarea]).concat(')')}" rendered="#{not empty informeBean.mapaAsignaciones[subarea]}"/>
                             </f:facet>
                         
                             <p:outputPanel id="panelTextoRespuestas" rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">

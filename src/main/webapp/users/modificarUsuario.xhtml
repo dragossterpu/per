@@ -91,27 +91,27 @@
 
                         <h:outputLabel for="estado" value="Estado:" />
                         <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados" allSuffix="ALL_ENUM_VALUES" />
-                        <p:selectOneMenu value="#{userBean.user.estado}" id="estado" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione un estado para el usuario" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.estado}" id="estado" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione un estado para el usuario">
                             <f:selectItems value="#{estados.ALL_ENUM_VALUES}" var="estadoUser" itemLabel="#{estadoUser}" itemValue="#{estadoUser}" />
                         </p:selectOneMenu>
                         <p:messages for="estado" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="role" value="Rol: (*)" />
                         <p:importEnum type="es.mira.progesin.persistence.entities.enums.RoleEnum" var="roles" allSuffix="ALL_ENUM_VALUES" />
-                        <p:selectOneMenu value="#{userBean.user.role}" id="role" disabled="#{noEsAdmin}" panelStyleClass="hideDisabled" required="true" requiredMessage="Seleccione un rol para el usuario" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.role}" id="role" disabled="#{noEsAdmin}" panelStyleClass="hideDisabled" required="true" requiredMessage="Seleccione un rol para el usuario">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                             <f:selectItems value="#{roles.ALL_ENUM_VALUES}" var="roleUser" itemLabel="#{roleUser.descripcion}" itemValue="#{roleUser}" itemDisabled="#{roleUser.prov}" />
                         </p:selectOneMenu>
                         <p:messages for="role" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="puestoTrabajoSelect" value="Puesto de trabajo (*):" />
-                        <p:selectOneMenu value="#{userBean.user.puestoTrabajo}" id="puestoTrabajoSelect" required="true" requiredMessage="Seleccione un puesto de trabajo para el usuario" converter="#{selectConverter}" disabled="#{noEsAdmin}" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.puestoTrabajo}" id="puestoTrabajoSelect" required="true" requiredMessage="Seleccione un puesto de trabajo para el usuario" converter="#{selectConverter}" disabled="#{noEsAdmin}">
                             <f:selectItems value="#{applicationBean.listaPuestosTrabajo}" var="puestoTrabajo" itemLabel="#{puestoTrabajo.descripcion}" itemValue="#{puestoTrabajo}" />
                         </p:selectOneMenu>
                         <p:messages for="puestoTrabajoSelect" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="nivel" value="Nivel (*):" />
-                        <p:selectOneMenu id="nivel" value="#{userBean.user.nivel}" required="true" requiredMessage="Seleccione un nivel para el usuario" disabled="#{noEsAdmin}" style="width:100%;">
+                        <p:selectOneMenu id="nivel" value="#{userBean.user.nivel}" required="true" requiredMessage="Seleccione un nivel para el usuario" disabled="#{noEsAdmin}">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                             <f:selectItems value="#{userBean.nivelesSelect}" var="nivelSeleccionado" itemLabel="#{nivelSeleccionado}" itemValue="#{nivelSeleccionado}" />
                         </p:selectOneMenu>
@@ -121,21 +121,21 @@
                     <div class="columnaDchaFormulario">
 
                         <h:outputLabel for="cuerpoEstadoSelect" value="Cuerpo (*):" />
-                        <p:selectOneMenu value="#{userBean.user.cuerpoEstado}" id="cuerpoEstadoSelect" required="true" requiredMessage="Seleccione un cuerpo" converter="#{selectConverter}" disabled="#{noEsAdmin}" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.cuerpoEstado}" id="cuerpoEstadoSelect" required="true" requiredMessage="Seleccione un cuerpo" converter="#{selectConverter}" disabled="#{noEsAdmin}">
                             <f:selectItems value="#{applicationBean.listaCuerpos}" var="cuerpoEstado" itemLabel="#{cuerpoEstado.descripcion}" itemValue="#{cuerpoEstado}" />
                             <p:ajax partialSubmit="false" listener="#{userBean.buscarEmpleo()}" update=":formAlta:empleoSelect" />
                         </p:selectOneMenu>
                         <p:messages for="cuerpoEstadoSelect" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="empleoSelect" value="Empleo:" />
-                        <p:selectOneMenu value="#{userBean.user.empleo}" id="empleoSelect" converter="#{selectConverter}" disabled="#{noEsAdmin}" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.empleo}" id="empleoSelect" converter="#{selectConverter}" disabled="#{noEsAdmin}">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                             <f:selectItems value="#{userBean.listaEmpleos}" var="empleo" itemLabel="#{empleo.descripcion}" itemValue="#{empleo}" />
                         </p:selectOneMenu>
                         <p:messages for="empleoSelect" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="departamentoSelect" value="Departamento (*):" />
-                        <p:selectOneMenu value="#{userBean.user.departamento}" id="departamentoSelect" required="true" requiredMessage="Seleccione un departamento" converter="#{selectConverter}" disabled="#{noEsAdmin}" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.departamento}" id="departamentoSelect" required="true" requiredMessage="Seleccione un departamento" converter="#{selectConverter}" disabled="#{noEsAdmin}">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                             <f:selectItems value="#{applicationBean.listaDepartamentos}" var="departamento" itemLabel="#{departamento.descripcion}" itemValue="#{departamento}" />
                         </p:selectOneMenu>
@@ -143,14 +143,14 @@
 
                         <h:outputLabel for="categoria" value="Categoría: (*)" />
                         <p:importEnum type="es.mira.progesin.persistence.entities.enums.CategoriaEnum" var="categoria" allSuffix="ALL_ENUM_VALUES" />
-                        <p:selectOneMenu value="#{userBean.user.categoria}" id="categoria" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione una categoria para el usuario" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.categoria}" id="categoria" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione una categoria para el usuario">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                             <f:selectItems value="#{categoria.ALL_ENUM_VALUES}" var="catUser" itemLabel="#{catUser.descripcion}" itemValue="#{catUser}" />
                         </p:selectOneMenu>
                         <p:messages for="categoria" autoUpdate="true" closable="true" />
 
                         <h:outputLabel for="clase" value="Clase: (*)" />
-                        <p:selectOneMenu value="#{userBean.user.claseUsuario}" id="clase" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione una clase para el usuario" converter="#{selectConverter}" style="width:100%;">
+                        <p:selectOneMenu value="#{userBean.user.claseUsuario}" id="clase" disabled="#{noEsAdmin}" required="true" requiredMessage="Seleccione una clase para el usuario" converter="#{selectConverter}">
                             <f:selectItem itemLabel="Seleccione uno" itemValue="" />
                             <f:selectItems value="#{applicationBean.listaClaseUsuario}" var="claseUser" itemLabel="#{claseUser.clase}" itemValue="#{claseUser}"/>
                         </p:selectOneMenu>
@@ -158,7 +158,7 @@
                     </div>
                 </div>
             </p:outputPanel>
-            <h:outputLabel value="Tiempo inactivo: #{userBean.diasInactividad} días" styleClass="#{userBean.user.fechaInactivo != null ? 'red' : 'blue'}"  style="font-weight:bold;text-align:center;" />
+            <h:outputLabel value="Tiempo inactivo: #{userBean.diasInactividad} días" styleClass="negrita centrado #{userBean.user.fechaInactivo != null ? 'rojo' : ''}" />
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{userBean.modificarUsuario}" value="Guardar cambios" icon="fa fa-fw fa-save" rendered="#{not noEsAdmin and not esProvisional}" />
                 <p:button outcome="/users/usuarios" value="Cancelar" icon="fa fa-fw fa-undo" />

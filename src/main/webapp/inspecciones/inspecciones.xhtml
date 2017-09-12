@@ -147,70 +147,70 @@
 
                     <f:facet name="header">
 					Inspecciones	
-					<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+					<p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
                         <p:columnToggler datasource="tablaInspecciones" trigger="toggler">
                             <p:ajax event="toggle" listener="#{inspeccionBean.onToggle}" />
                         </p:columnToggler>
                     </f:facet>
 
-                    <p:column selectionMode="multiple" rendered="#{esAsociacion}" style="width:16px;text-align:center" />
+                    <p:column selectionMode="multiple" rendered="#{esAsociacion}" styleClass="columnaSeleccionTabla" />
 
                     <p:column headerText="Núm. exp." sortBy="#{inspeccion.id}" width="60" visible="#{inspeccionBean.list[0]}" exportable="#{inspeccionBean.list[0]}" style="text-align:right">
                         <h:outputText value="#{inspeccion.id}" />
                     </p:column>
 
-                    <p:column headerText="Año" sortBy="#{inspeccion.anio}" width="60" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}" style="text-align:center">
+                    <p:column headerText="Año" sortBy="#{inspeccion.anio}" width="60" visible="#{inspeccionBean.list[1]}" exportable="#{inspeccionBean.list[1]}">
                         <h:outputText value="#{inspeccion.anio}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha" sortBy="#{inspeccion.fechaAlta}" width="70" visible="#{inspeccionBean.list[2]}" exportable="#{inspeccionBean.list[2]}" style="text-align:center">
+                    <p:column headerText="Fecha" sortBy="#{inspeccion.fechaAlta}" width="70" visible="#{inspeccionBean.list[2]}" exportable="#{inspeccionBean.list[2]}">
                         <h:outputText value="#{inspeccion.fechaAlta}">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
                         </h:outputText>
                     </p:column>
 
-                    <p:column headerText="Usuario alta inspección" sortBy="#{inspeccion.usernameAlta}" width="70" visible="#{inspeccionBean.list[3]}" exportable="#{inspeccionBean.list[3]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.usernameAlta}" style="float:left"/>
+                    <p:column headerText="Usuario alta inspección" sortBy="#{inspeccion.usernameAlta}" width="70" visible="#{inspeccionBean.list[3]}" exportable="#{inspeccionBean.list[3]}">
+                        <h:outputText value="#{inspeccion.usernameAlta}"/>
                     </p:column>
 
-                    <p:column headerText="Equipo" sortBy="#{inspeccion.equipo.nombreEquipo}" width="70" visible="#{inspeccionBean.list[4]}" exportable="#{inspeccionBean.list[4]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.equipo.nombreEquipo}" style="float:left"/>
+                    <p:column headerText="Equipo" sortBy="#{inspeccion.equipo.nombreEquipo}" width="70" visible="#{inspeccionBean.list[4]}" exportable="#{inspeccionBean.list[4]}">
+                        <h:outputText value="#{inspeccion.equipo.nombreEquipo}"/>
                     </p:column>
 
-                    <p:column headerText="Jefe" sortBy="#{inspeccion.equipo.jefeEquipo.username}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.equipo.jefeEquipo.username}" style="float:left"/>
+                    <p:column headerText="Jefe" sortBy="#{inspeccion.equipo.jefeEquipo.username}" width="70" visible="#{inspeccionBean.list[5]}" exportable="#{inspeccionBean.list[5]}">
+                        <h:outputText value="#{inspeccion.equipo.jefeEquipo.username}"/>
                     </p:column>
 
-                    <p:column headerText="Cuatrimestre" sortBy="#{inspeccion.cuatrimestre}" width="70" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.cuatrimestre}" style="float:left"/>
+                    <p:column headerText="Cuatrimestre" sortBy="#{inspeccion.cuatrimestre}" width="70" visible="#{inspeccionBean.list[6]}" exportable="#{inspeccionBean.list[6]}">
+                        <h:outputText value="#{inspeccion.cuatrimestre}"/>
                     </p:column>
 
-                    <p:column headerText="Ámbito" sortBy="#{inspeccion.ambito}" width="50" visible="#{inspeccionBean.list[7]}" exportable="#{inspeccionBean.list[7]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.ambito}" style="float:left"/>
+                    <p:column headerText="Ámbito" sortBy="#{inspeccion.ambito}" width="50" visible="#{inspeccionBean.list[7]}" exportable="#{inspeccionBean.list[7]}">
+                        <h:outputText value="#{inspeccion.ambito}"/>
                     </p:column>
 
-                    <p:column headerText="Tipo" sortBy="#{inspeccion.tipoInspeccion.codigo}" width="50" visible="#{inspeccionBean.list[8]}" exportable="#{inspeccionBean.list[8]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.tipoInspeccion.codigo}" style="float:left"/>
+                    <p:column headerText="Tipo" sortBy="#{inspeccion.tipoInspeccion.codigo}" width="50" visible="#{inspeccionBean.list[8]}" exportable="#{inspeccionBean.list[8]}">
+                        <h:outputText value="#{inspeccion.tipoInspeccion.codigo}"/>
                     </p:column>
 
-                    <p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion}" width="70" visible="#{inspeccionBean.list[9]}" exportable="#{inspeccionBean.list[9]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.estadoInspeccion.descripcion}" style="float:left"/>
+                    <p:column headerText="Estado" sortBy="#{inspeccion.estadoInspeccion}" width="135" visible="#{inspeccionBean.list[9]}" exportable="#{inspeccionBean.list[9]}">
+                        <h:outputText value="#{inspeccion.estadoInspeccion.descripcion}"/>
                     </p:column>
 
-                    <p:column headerText="Tipo unid." sortBy="#{inspeccion.tipoUnidad}" width="70" visible="#{inspeccionBean.list[10]}" exportable="#{inspeccionBean.list[10]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.tipoUnidad.descripcion}" style="float:left"/>
+                    <p:column headerText="Tipo unid." sortBy="#{inspeccion.tipoUnidad}" width="90" visible="#{inspeccionBean.list[10]}" exportable="#{inspeccionBean.list[10]}">
+                        <h:outputText value="#{inspeccion.tipoUnidad.descripcion}"/>
                     </p:column>
 
-                    <p:column headerText="Nombre unid." sortBy="#{inspeccion.nombreUnidad}" width="70" visible="#{inspeccionBean.list[11]}" exportable="#{inspeccionBean.list[11]}" style="text-align:center">
+                    <p:column headerText="Nombre unid." sortBy="#{inspeccion.nombreUnidad}" width="70" visible="#{inspeccionBean.list[11]}" exportable="#{inspeccionBean.list[11]}">
                         <h:outputText value="#{inspeccion.nombreUnidad}" />
                     </p:column>
 
-                    <p:column headerText="Municipio" sortBy="#{inspeccion.municipio.name}" width="70" visible="#{inspeccionBean.list[12]}" exportable="#{inspeccionBean.list[12]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.municipio.name}" style="float:left"/>
+                    <p:column headerText="Municipio" sortBy="#{inspeccion.municipio.name}" width="70" visible="#{inspeccionBean.list[12]}" exportable="#{inspeccionBean.list[12]}">
+                        <h:outputText value="#{inspeccion.municipio.name}"/>
                     </p:column>
 
-                    <p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia}" width="70" visible="#{inspeccionBean.list[13]}" exportable="#{inspeccionBean.list[13]}" style="text-align:center">
-                        <h:outputText value="#{inspeccion.municipio.provincia.nombre}" style="float:left"/>
+                    <p:column headerText="Provincia" sortBy="#{inspeccion.municipio.provincia}" width="70" visible="#{inspeccionBean.list[13]}" exportable="#{inspeccionBean.list[13]}">
+                        <h:outputText value="#{inspeccion.municipio.provincia.nombre}"/>
                     </p:column>
 
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{!esAsociacion}">

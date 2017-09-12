@@ -71,7 +71,7 @@
 
                     <f:facet name="header">
 					Guias
-					 <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+					 <p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
                         <p:columnToggler datasource="tablaGuias" trigger="toggler">
                             <p:ajax event="toggle" listener="#{guiaBean.onToggle}" />
                         </p:columnToggler>
@@ -82,13 +82,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Usuario" sortBy="#{guia.usernameAlta}" width="50" visible="#{guiaBean.list[1]}" exportable="#{guiaBean.list[1]}">
-                        <h:outputText value="#{guia.usernameAlta}" style="float:left"/>
+                        <h:outputText value="#{guia.usernameAlta}"/>
                     </p:column>
                     <p:column headerText="Tipo" sortBy="#{guia.tipoInspeccion}" width="100" visible="#{guiaBean.list[2]}" exportable="#{guiaBean.list[2]}">
-                        <h:outputText value="#{guia.tipoInspeccion.descripcion}" style="float:left"/>
+                        <h:outputText value="#{guia.tipoInspeccion.descripcion}"/>
                     </p:column>
                     <p:column headerText="Nombre" sortBy="#{guia.nombre}" width="180" visible="#{guiaBean.list[3]}" exportable="#{guiaBean.list[3]}">
-                        <h:outputText value="#{guia.nombre}" style="float:left"/>
+                        <h:outputText value="#{guia.nombre}"/>
                     </p:column>
                      <p:column styleClass="botonTabla" exportable="false" toggleable="false">
                         <h:commandLink title="Ver guía" styleClass="fa fa-fw fa-eye ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{guiaBean.visualizaGuia(guia)}" rendered="#{empty guia.fechaAnulacion}" update="tablaGuias" />

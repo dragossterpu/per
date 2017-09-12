@@ -67,7 +67,7 @@
 	               emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 	               <f:facet name="header">
 	                   Informes personalizados
-	                   <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+	                   <p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
 	                   <p:columnToggler datasource="tablaInformes" trigger="toggler">
 	                       <p:ajax event="toggle" listener="#{informePersonalizadoBean.onToggle}" />
 	                   </p:columnToggler>

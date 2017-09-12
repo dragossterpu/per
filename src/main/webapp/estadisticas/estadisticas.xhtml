@@ -75,37 +75,37 @@
                            <p:ajax event="rowUnselectCheckbox" listener="#{estadisticaBean.createGrafica}" update="formEstadisticas:dialogGrafica" />
                            <p:ajax event="toggleSelect" listener="#{estadisticaBean.createGrafica}" update="formEstadisticas:dialogGrafica" />
                            
-                           <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false"/>
-                           <p:column  width="10" exportable="false">
+                           <p:column selectionMode="multiple" styleClass="columnaSeleccionTabla" exportable="false"/>
+                           <p:column  width="15" exportable="false">
                                <p:rowToggler />
                            </p:column>
-                            <p:column headerText="Estado"  width="200"  >
-                                <h:outputText value="#{estado.descripcion}" style="float:left"/>
+                            <p:column headerText="Estado"  >
+                                <h:outputText value="#{estado.descripcion}"/>
                             </p:column>
-                            <p:column headerText="Numero" width="50">
-                                <h:outputText value="#{estadisticaBean.mapaResultados[estado]}" style="float:right"/>
+                            <p:column headerText="Número" width="50" style="text-align:right">
+                                <h:outputText value="#{estadisticaBean.mapaResultados[estado]}"/>
                             </p:column>
                             <p:ajax event="rowToggle" listener="#{estadisticaBean.verDetalles(estado)}" update="tablaDetalle"/>   
                             <p:rowExpansion> 
                                                     
                                    <p:dataTable  id="tablaDetalle" value="#{estadisticaBean.listaDetalle}" emptyMessage="No se han encontrado inspecciones en estado"  var="detalle">
                                      <p:column headerText="Expediente" width="70">
-                                         <h:outputText value="#{detalle.numero}" style="float:left"/>
+                                         <h:outputText value="#{detalle.numero}"/>
                                      </p:column>
                                      <p:column headerText="Tipo de inspección"  width="80">
-                                         <h:outputText value="#{detalle.tipoInspeccion.codigo}" style="float:left"/>
+                                         <h:outputText value="#{detalle.tipoInspeccion.codigo}"/>
                                      </p:column>
                                      <p:column headerText="Equipo"  width="80">
-                                         <h:outputText value="#{detalle.equipo.nombreEquipo}" style="float:left"/>
+                                         <h:outputText value="#{detalle.equipo.nombreEquipo}"/>
                                      </p:column>
                                      <p:column headerText="Cuerpo"  width="80">
-                                         <h:outputText value="#{detalle.ambito.descripcion}" style="float:left"/>
+                                         <h:outputText value="#{detalle.ambito.descripcion}"/>
                                      </p:column>
                                      <p:column headerText="Unidad"  width="80">
-                                         <h:outputText value="#{detalle.nombreUnidad}" style="float:left"/>
+                                         <h:outputText value="#{detalle.nombreUnidad}"/>
                                      </p:column>
                                      <p:column headerText="Provincia"  width="80">
-                                         <h:outputText value="#{detalle.municipio.provincia.nombre}" style="float:left"/>
+                                         <h:outputText value="#{detalle.municipio.provincia.nombre}"/>
                                      </p:column>
                                    </p:dataTable>
                            </p:rowExpansion>
@@ -115,7 +115,7 @@
                         </p:dataTable>
                         
                         <p:dialog id="dialogGrafica" widgetVar="dialogG" header="Distribución de las inspecciones en función de su estado">
-                             <p:chart  type="pie" widgetVar="graficaImagen" model="#{estadisticaBean.grafica}" style="color:#000; width:700px; height:500px"/>
+                             <p:chart type="pie" widgetVar="graficaImagen" model="#{estadisticaBean.grafica}" styleClass="graficaEstadisticas"/>
                              <div class="centrarBotonesDialog">
                                  <p:commandButton value="Cerrar" onclick="PF('dialogG').hide()" />
                              </div>

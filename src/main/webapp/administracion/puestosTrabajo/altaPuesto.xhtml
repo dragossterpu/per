@@ -5,7 +5,7 @@
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
         <h3>#{titulo}</h3>
 
-        <div class="bloqueFormulario" style="width: 50%">
+        <div class="columnaIzdaFormulario">
             <h:form id="form">
 
                 <h:outputLabel for="descripcion" value="Nombre del puesto de trabajo (*):" />
@@ -14,9 +14,18 @@
 
                 <div class="botonesFormulario">
                     <p:commandButton actionListener="#{puestosTrabajoBean.altaPuesto(puestoNuevo)}" value="Crear puesto de trabajo" icon="fa fa-fw fa-save" />
-                    <p:button outcome="/administracion/puestosTrabajo/puestosTrabajo" value="Cancelar" icon="fa fa-fw fa-undo" />
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" action="/administracion/puestosTrabajo/puestosTrabajo?faces-redirect=true" immediate="true">
+                         <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                    </p:commandButton>
                 </div>
 
+                <p:confirmDialog global="true">
+                    <div class="centrarBotonesDialog">
+                        <p:button value="Aceptar" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:button value="Cancelar" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                    </div>
+                </p:confirmDialog>
+                
                 <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                     <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                     <div class="centrarBotonesDialog">

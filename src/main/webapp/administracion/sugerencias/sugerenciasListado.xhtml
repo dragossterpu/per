@@ -13,7 +13,7 @@
                 <p:dataTable id="sugerencias" var="sugerencia" value="#{sugerenciasBean.sugerenciasListado}" draggableColumns="true" paginator="true" rows="20" emptyMessage="No hay ninguna sugerencia">
                     <f:facet name="header">
 						Sugerencias
-						<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+						<p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
                         <p:columnToggler datasource="sugerencias" trigger="toggler" />
                     </f:facet>
 

@@ -76,7 +76,7 @@
                 <p:dataTable var="cuestionario" value="#{cuestionarioPersonalizadoBean.model}" id="tablaCuestionarios" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}" resizableColumns="true" draggableColumns="true" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
                     <f:facet name="header">
 					Cuestionarios personalizados
-                    <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                    <p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
                         <p:columnToggler datasource="tablaCuestionarios" trigger="toggler">
                             <p:ajax event="toggle" listener="#{cuestionarioPersonalizadoBean.onToggle}" />
                         </p:columnToggler>
@@ -87,13 +87,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Usuario" sortBy="#{cuestionario.usernameCreacion}" width="70" visible="#{cuestionarioPersonalizadoBean.list[1]}" exportable="#{cuestionarioPersonalizadoBean.list[1]}">
-                        <h:outputText value="#{cuestionario.usernameCreacion}" style="float:left"/>
+                        <h:outputText value="#{cuestionario.usernameCreacion}"/>
                     </p:column>
                     <p:column headerText="Nombre cuestionario" sortBy="#{cuestionario.nombreCuestionario}" visible="#{cuestionarioPersonalizadoBean.list[2]}" exportable="#{cuestionarioPersonalizadoBean.list[2]}">
-                        <h:outputText value="#{cuestionario.nombreCuestionario}" style="float:left"/>
+                        <h:outputText value="#{cuestionario.nombreCuestionario}"/>
                     </p:column>
                     <p:column headerText="Modelo cuestionario" sortBy="#{cuestionario.nombreCuestionario}" visible="#{cuestionarioPersonalizadoBean.list[3]}" exportable="#{cuestionarioPersonalizadoBean.list[3]}">
-                        <h:outputText value="#{cuestionario.modeloCuestionario.descripcion}" style="float:left"/>
+                        <h:outputText value="#{cuestionario.modeloCuestionario.descripcion}"/>
                     </p:column>
                     <p:column headerText="Anulado" sortBy="#{cuestionario.fechaBaja}" width="70" visible="#{cuestionarioPersonalizadoBean.list[4]}" exportable="#{cuestionarioPersonalizadoBean.list[4]}">
                         <h:outputText value="#{cuestionario.fechaBaja}">

@@ -40,7 +40,7 @@
                                         <f:facet name="header">
 							            	Jefe de inspección
 							        	</f:facet>
-                                        <p:column selectionMode="single" style="width:16px;text-align:center" required="true" requiredMessage="Seleccione un jefe de equipo" />
+                                        <p:column selectionMode="single" styleClass="columnaSeleccionTabla" required="true" requiredMessage="Seleccione un jefe de equipo" />
                                         <p:column headerText="Nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}">
                                             <h:outputText value="#{usuario.nombre}" />
                                         </p:column>
@@ -64,7 +64,7 @@
                                     <f:facet name="header">
 							            Componentes
 							        </f:facet>
-                                    <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                                    <p:column selectionMode="multiple" styleClass="columnaSeleccionTabla" />
                                     <p:column headerText="Nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}">
                                         <h:outputText value="#{usuario.nombre}" />
                                     </p:column>

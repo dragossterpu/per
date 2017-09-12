@@ -71,7 +71,7 @@
                 <p:dataTable var="equipo" value="#{equiposBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaEquipos" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{equiposBean.model.rowCount ne 0}" rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">
                     <f:facet name="header">
 						Equipos	
-                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="fa fa-th" />
+                        <p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
                         <p:columnToggler datasource="tablaEquipos" trigger="toggler">
                             <p:ajax event="toggle" listener="#{equiposBean.onToggle}" />
                         </p:columnToggler>
