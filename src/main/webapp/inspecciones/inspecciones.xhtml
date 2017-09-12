@@ -122,15 +122,15 @@
                 <p:outputPanel rendered="#{inspeccionBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
-                        <p:dataExporter type="xls" target="tablaInspecciones" fileName="listaInspecciones" />
+                        <p:dataExporter type="xls" target="tablaInspecciones" fileName="lista_inspecciones" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaInspecciones" fileName="listaInspecciones" preProcessor="#{exportadorWord.rotar}"/>
+                        <p:dataExporter type="pdf" target="tablaInspecciones" fileName="lista_inspecciones" preProcessor="#{exportadorWord.rotar}"/>
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
-                        <p:dataExporter type="csv" target="tablaInspecciones" fileName="listaInspecciones" />
+                        <p:dataExporter type="csv" target="tablaInspecciones" fileName="lista_inspecciones" />
                     </h:commandLink>
                     <h:commandLink  action="#{exportadorWord.exportDoc('lista_inspecciones', false, 'busquedaInspecciones:tablaInspecciones', SeccionesEnum.INSPECCION)}">
                         <p:graphicImage value="/images/doc.png" /> 

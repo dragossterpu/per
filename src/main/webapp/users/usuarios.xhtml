@@ -76,15 +76,15 @@
                 <p:outputPanel rendered="#{userBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
-                        <p:dataExporter type="xls" target="tablaUsuarios" fileName="listausuarios" />
+                        <p:dataExporter type="xls" target="tablaUsuarios" fileName="lista_usuarios" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaUsuarios" fileName="listausuarios" />
+                        <p:dataExporter type="pdf" target="tablaUsuarios" fileName="lista_usuarios" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
-                        <p:dataExporter type="csv" target="tablaUsuarios" fileName="listausuarios" />
+                        <p:dataExporter type="csv" target="tablaUsuarios" fileName="lista_usuarios" />
                     </h:commandLink>
                      <h:commandLink  action="#{exportadorWord.exportDoc('lista_usuarios', false, 'busquedaUsers:tablaUsuarios', SeccionesEnum.USUARIOS)}">
                         <p:graphicImage value="/images/doc.png" /> 

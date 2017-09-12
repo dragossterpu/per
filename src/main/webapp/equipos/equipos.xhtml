@@ -57,15 +57,15 @@
                 <p:outputPanel rendered="#{equiposBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
-                        <p:dataExporter type="xls" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
+                        <p:dataExporter type="xls" target="tablaEquipos" fileName="lista_equipos" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
+                        <p:dataExporter type="pdf" target="tablaEquipos" fileName="lista_equipos" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
-                        <p:dataExporter type="csv" target="tablaEquipos" fileName="listaEquipos" pageOnly="true" />
+                        <p:dataExporter type="csv" target="tablaEquipos" fileName="lista_equipos" />
                     </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="equipo" value="#{equiposBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" id="tablaEquipos" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{equiposBean.model.rowCount ne 0}" rowStyleClass="#{not empty equipo.fechaBaja ? 'anulado' : null}">

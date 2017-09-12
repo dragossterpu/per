@@ -56,15 +56,15 @@
                 <p:outputPanel rendered="#{guiaPersonalizadaBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
-                        <p:dataExporter type="xls" target="tablaGuias" fileName="listaGuias" />
+                        <p:dataExporter type="xls" target="tablaGuias" fileName="lista_guias_personalizadas" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaGuias" fileName="listaGuias" />
+                        <p:dataExporter type="pdf" target="tablaGuias" fileName="lista_guias_personalizadas" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
-                        <p:dataExporter type="csv" target="tablaGuias" fileName="listaGuias" />
+                        <p:dataExporter type="csv" target="tablaGuias" fileName="lista_guias_personalizadas" />
                     </h:commandLink>
                      <h:commandLink  action="#{exportadorWord.exportDoc('lista_guias_personalizadas', false, 'busquedaGuias:tablaGuias', SeccionesEnum.GUIAS)}">
                         <p:graphicImage value="/images/doc.png" /> 

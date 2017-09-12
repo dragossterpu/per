@@ -53,15 +53,15 @@
                 <p:outputPanel rendered="#{regActividadBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
-                        <p:dataExporter type="xls" target="tablaRegActividad" fileName="listaRegActividad" />
+                        <p:dataExporter type="xls" target="tablaRegActividad" fileName="lista_registros_actividad" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaRegActividad" fileName="listaRegActividad" />
+                        <p:dataExporter type="pdf" target="tablaRegActividad" fileName="lista_registros_actividad" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
-                        <p:dataExporter type="csv" target="tablaRegActividad" fileName="listaRegActividad" />
+                        <p:dataExporter type="csv" target="tablaRegActividad" fileName="lista_registros_actividad" />
                     </h:commandLink>
                 </p:outputPanel>
 

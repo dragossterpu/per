@@ -59,15 +59,15 @@
                 <p:outputPanel rendered="#{gestorDocumentalBean.model.rowCount ne 0}">
                     <h:commandLink>
                         <p:graphicImage value="/images/xls.png" />
-                        <p:dataExporter type="xls" target="lista_documentos" fileName="Documentos" />
+                        <p:dataExporter type="xls" target="tablaDocumentos" fileName="lista_documentos" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="lista_documentos" fileName="Documentos" />
+                        <p:dataExporter type="pdf" target="tablaDocumentos" fileName="lista_documentos" />
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
-                        <p:dataExporter type="csv" target="lista_documentos" fileName="Documentos" />
+                        <p:dataExporter type="csv" target="tablaDocumentos" fileName="lista_documentos" />
                     </h:commandLink>
                       <h:commandLink  action="#{exportadorWord.exportDoc('lista_documentos', false, 'form:tablaDocumentos', SeccionesEnum.DOCUMENTACION)}">
                         <p:graphicImage value="/images/doc.png" /> 
