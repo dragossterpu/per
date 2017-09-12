@@ -1,7 +1,9 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 
@@ -196,8 +198,19 @@ public class EnvioCuestionarioBean implements Serializable {
                 } else {
                     List<User> listaUsuariosProvisionales = userService
                             .crearUsuariosProvisionalesCuestionario(correoEnvio, password);
+                    
+                    StringBuilder usuariosProvisionales = new StringBuilder();
+                    listaUsuariosProvisionales.forEach(userPorv -> {
+                        usuariosProvisionales.append(userPorv.getUsername()).append("<br/>");
+                    });
+                    
+                    Map<String, String> paramPlantilla = new HashMap<>();
+                    paramPlantilla.put("textoEnvioCuestionario", cuestionarioEnvio.getMotivoCuestionario());
+                    paramPlantilla.put("correosProvisionales", usuariosProvisionales.toString());
+                    paramPlantilla.put("password", password);
+                    paramPlantilla.put("correoPrincipal", listaUsuariosProvisionales.get(0).getUsername());
                     cuestionarioEnvioService.crearYEnviarCuestionario(listaUsuariosProvisionales, cuestionarioEnvio,
-                            getCuerpoCorreo(password, listaUsuariosProvisionales));
+                            paramPlantilla);
                     
                     FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                             "El cuestionario se ha enviado con éxito");
@@ -221,36 +234,6 @@ public class EnvioCuestionarioBean implements Serializable {
                     "Se ha produdico un error en el envio del cuestionario", "", null);
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
-    }
-    
-    /**
-     * Construye el correo.
-     * 
-     * @param password Password de entrada a la aplicación para los usuarios provisionales
-     * @param usuarios Lista de usuarios provisionales.
-     * @return Cuerpo del correo
-     */
-    private String getCuerpoCorreo(String password, List<User> usuarios) {
-        String urlAcceso = applicationBean.getMapaParametros().get("URLPROGESIN").get("URLPROGESIN");
-        
-        StringBuilder textoAutomatico = new StringBuilder();
-        textoAutomatico
-                .append("\r\n \r\nPara responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es '")
-                .append(urlAcceso).append("'.\r\nLos usuarios de acceso a la aplicación son: \r\n\r\n");
-        
-        StringBuilder usuariosProvisionales = new StringBuilder();
-        for (User usuario : usuarios) {
-            usuariosProvisionales.append(usuario.getUsername()).append("\r\n");
-        }
-        textoAutomatico.append(usuariosProvisionales);
-        textoAutomatico.append("\r\nLa contraseña de acceso para todos los usuarios es: ").append(password)
-                .append(".\r\nSólo el usuario principal (").append(cuestionarioEnvio.getCorreoEnvio())
-                .append(") podrá enviar el cuestionario, el resto de ")
-                .append("usuarios solamente podrá guardar el cuestionario como borrador.")
-                .append("\r\n \r\nUna vez enviado el cuestionario todos los usuarios quedarán inactivos. \r\n \r\n")
-                .append("Muchas gracias y un saludo.");
-        
-        return textoAutomatico.toString();
     }
     
     /**

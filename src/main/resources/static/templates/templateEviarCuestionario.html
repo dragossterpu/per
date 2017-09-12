@@ -2,12 +2,14 @@
 
 {% block contenido %}
 <p>{{textoEnvioCuestionario}}</p>
-<p>Para responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es <span style="color:blue">{{enlaceProgesin}}</span>.</p>
+<p>Para responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es <span style="color:blue">{{URLPROGESIN}}</span>.</p>
 <p>Los usuarios de acceso a la aplicación son:</p>
-<p>{{correosProvisionales}}<br/>
-</p>
+<p>{{correosProvisionales}}</p>
 <p>La contraseña de acceso para todos los usuarios es: <span style="color:blue">{{ password }}</span>.<br/>
-Sólo el usuario principal ({{correoPrincipal}}) podrá enviar el cuestionario, el resto de usuarios solamente podrá guardar el cuestionario como borrador.</p>
+En un primer momento, sólo el usuario principal tienes acceso a la aplicación, él cuál puede asignar áreas del cuestionario al resto de usuarios.<br/>
+Sólo los usuarios con áreas asignadas tendrán acceso y podrán guardar el cuestionario como borrador.<br/>
+Sólo el usuario principal ({{correoPrincipal}}) tiene permisos para enviar el cuestionario.<br/>
+</p>
 <p>Una vez enviado el cuestionario todos los usuarios quedarán inactivos.</p>
 <p>Muchas gracias y un saludo.</p>
 {% endblock %}

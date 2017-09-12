@@ -3,6 +3,7 @@ package es.mira.progesin.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
@@ -124,20 +125,25 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * 
      * @param listadoUsuariosProvisionales remitentes del cuestionario
      * @param cuestionarioEnvio enviado
-     * @param cuerpoCorreo correo electrónico de los remitentes
+     * @param paramPlantilla correo electrónico de los remitentes
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void crearYEnviarCuestionario(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
-            String cuerpoCorreo) {
+            Map<String, String> paramPlantilla) {
         userService.save(listadoUsuariosProvisionales);
         CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioRepository.save(cuestionarioEnvio);
         List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnviado,
                 listadoUsuariosProvisionales.get(0));
         areaUsuarioCuestEnvService.save(areasUsuarioCuestEnv);
-        String cuerpo = cuestionarioEnviado.getMotivoCuestionario().concat("\r\n").concat(cuerpoCorreo);
-        String asunto = "Cuestionario para la inspección " + cuestionarioEnvio.getInspeccion().getNumero();
-        correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, cuerpo);
+        
+        String asunto = "Envío de cuestionario " + cuestionarioEnvio.getInspeccion().getTipoUnidad().getDescripcion()
+                + " de " + cuestionarioEnvio.getInspeccion().getNombreUnidad() + "("
+                + cuestionarioEnvio.getInspeccion().getMunicipio().getProvincia().getNombre()
+                + "). Número de expediente " + cuestionarioEnvio.getInspeccion().getNumero() + ".";
+        
+        correoElectronico.envioCorreo(cuestionarioEnvio.getCorreoEnvio(), asunto, Constantes.TEMPLATEENVIOCUESTIONARIO,
+                paramPlantilla);
         
         inspeccionesService.cambiarEstado(cuestionarioEnvio.getInspeccion(),
                 EstadoInspeccionEnum.F_PEND_RECIBIR_CUESTIONARIO);

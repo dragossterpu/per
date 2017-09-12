@@ -1,6 +1,7 @@
 package es.mira.progesin.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
@@ -29,7 +30,7 @@ public interface ICuestionarioEnvioService {
      * @param cuestionarioEnvio enviado
      * @param cuerpoCorreo correo electrónico de los remitentes
      */
-    void crearYEnviarCuestionario(List<User> user, CuestionarioEnvio cuestionarioEnvio, String cuerpoCorreo);
+    // void crearYEnviarCuestionario(List<User> user, CuestionarioEnvio cuestionarioEnvio, String cuerpoCorreo);
     
     /**
      * Recupera el cuestionario enviado no finalizado perteneciente a un destinatario (no puede haber más de uno).
@@ -131,5 +132,16 @@ public interface ICuestionarioEnvioService {
      * @return lista de configuraciones
      */
     List<ConfiguracionRespuestasCuestionario> findColumnasBySeccion(String seccion);
+    
+    /**
+     * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo
+     * responderán y envía un correo al destinatario.
+     * 
+     * @param listadoUsuariosProvisionales remitentes del cuestionario
+     * @param cuestionarioEnvio enviado
+     * @param paramPlantilla parámetros de la plantilla
+     */
+    void crearYEnviarCuestionario(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
+            Map<String, String> paramPlantilla);
     
 }
