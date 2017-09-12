@@ -29,9 +29,13 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.dao.TransientDataAccessResourceException;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -109,6 +113,21 @@ public class TareasServiceTest {
     private static final String FECHAHOY = "2017-12-03T10:15:30.00Z";
     
     /**
+     * Literal provincia/municipio.
+     */
+    private static final String PROVINCIA = "Toledo";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String TIPOUNIDAD = "tipoUnidad";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String NOMBREUNIDAD = "nombreUnidad";
+    
+    /**
      * Test method for {@link es.mira.progesin.tasks.TareasService#init()}.
      */
     @Test
@@ -137,6 +156,16 @@ public class TareasServiceTest {
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         Instant fixedInstant = Instant.parse(FECHAHOY);
         Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
@@ -150,10 +179,11 @@ public class TareasServiceTest {
         lista.add(cuestionario);
         when(cuestionarioEnvioService.findNoCumplimentados()).thenReturn(lista);
         when(tareasProperties.getProperty("plazoDiasCuestionario")).thenReturn("66");
+        Map<String, String> paramPlantilla = null;
         
         tareasService.recordatorioEnvioCuestionario();
-        verify(correoElectronico, times(1)).envioCorreo(eq(cuestionario.getCorreoEnvio()), any(String.class),
-                any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREOTEST), any(String.class),
+                eq(Constantes.TEMPLATERECORDATORIOCUESTIONARIO), eq(paramPlantilla));
     }
     
     /**
@@ -166,6 +196,16 @@ public class TareasServiceTest {
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         Instant fixedInstant = Instant.parse(FECHAHOY);
         Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
@@ -179,14 +219,14 @@ public class TareasServiceTest {
         lista.add(cuestionario);
         when(cuestionarioEnvioService.findNoCumplimentados()).thenReturn(lista);
         when(tareasProperties.getProperty("plazoDiasCuestionario")).thenReturn("66");
-        
-        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(cuestionario.getCorreoEnvio()),
-                any(String.class), any(String.class));
+        Map<String, String> paramPlantilla = null;
+        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(CORREOTEST), any(String.class),
+                eq(Constantes.TEMPLATERECORDATORIOCUESTIONARIO), eq(paramPlantilla));
         
         tareasService.recordatorioEnvioCuestionario();
         
-        verify(correoElectronico, times(1)).envioCorreo(eq(cuestionario.getCorreoEnvio()), any(String.class),
-                any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREOTEST), any(String.class),
+                eq(Constantes.TEMPLATERECORDATORIOCUESTIONARIO), eq(paramPlantilla));
         verify(registroActividad, times(1)).altaRegActividadError(eq(SeccionesEnum.ALERTAS.getDescripcion()),
                 any(CorreoException.class));
     }
@@ -202,6 +242,16 @@ public class TareasServiceTest {
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         Instant fixedInstant = Instant.parse(FECHAHOY);
         Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
@@ -216,11 +266,11 @@ public class TareasServiceTest {
         
         when(solicitudDocumentacionService.findEnviadasNoCumplimentadas()).thenReturn(listaSolicitudes);
         when(tareasProperties.getProperty("plazoDiasDocumentacion")).thenReturn("66");
-        
+        Map<String, String> paramPlantilla = null;
         tareasService.recordatorioEnvioDocumentacion();
         
-        verify(correoElectronico, times(1)).envioCorreo(eq(solDocPrevia.getCorreoDestinatario()), any(String.class),
-                any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREOTEST), any(String.class),
+                eq(Constantes.TEMPLATERECORDATORIOSOLICITUD), eq(paramPlantilla));
     }
     
     /**
@@ -234,6 +284,16 @@ public class TareasServiceTest {
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         Instant fixedInstant = Instant.parse(FECHAHOY);
         Clock clock = Clock.fixed(fixedInstant, ZoneId.systemDefault());
@@ -248,13 +308,14 @@ public class TareasServiceTest {
         
         when(solicitudDocumentacionService.findEnviadasNoCumplimentadas()).thenReturn(listaSolicitudes);
         when(tareasProperties.getProperty("plazoDiasDocumentacion")).thenReturn("66");
-        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(solDocPrevia.getCorreoDestinatario()),
-                any(String.class), any(String.class));
+        Map<String, String> paramPlantilla = null;
+        doThrow(CorreoException.class).when(correoElectronico).envioCorreo(eq(CORREOTEST), any(String.class),
+                eq(Constantes.TEMPLATERECORDATORIOSOLICITUD), eq(paramPlantilla));
         
         tareasService.recordatorioEnvioDocumentacion();
         
-        verify(correoElectronico, times(1)).envioCorreo(eq(solDocPrevia.getCorreoDestinatario()), any(String.class),
-                any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq(CORREOTEST), any(String.class),
+                eq(Constantes.TEMPLATERECORDATORIOSOLICITUD), eq(paramPlantilla));
         verify(registroActividad, times(1)).altaRegActividadError(eq(SeccionesEnum.ALERTAS.getDescripcion()),
                 any(CorreoException.class));
     }
