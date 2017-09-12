@@ -90,4 +90,11 @@ public class Guia extends AbstractEntity implements Serializable {
     @Column(name = "username_anulacion")
     private String usernameAnulacion;
     
+    /**
+     * Sobreescritura del método toString para poder utilizarlo en el conversor implementado para SelectItemsConverter.
+     */
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }

@@ -23,6 +23,7 @@ import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.repositories.IGuiaPersonalizadaRepository;
 import es.mira.progesin.persistence.repositories.IGuiasPasosRepository;
+import es.mira.progesin.persistence.repositories.IGuiasRepository;
 import es.mira.progesin.persistence.repositories.IInspeccionesRepository;
 import es.mira.progesin.web.beans.GuiaBusqueda;
 import lombok.NoArgsConstructor;
@@ -61,6 +62,12 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
      */
     @Autowired
     private IInspeccionesRepository inspeccionRepository;
+    
+    /**
+     * Repositorio de guias.
+     */
+    @Autowired
+    private IGuiasRepository guiasRepository;
     
     /**
      * Servicio para usar los métodos usados junto con criteria.
@@ -165,6 +172,7 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         if (busqueda.getFechaDesde() != null) {
             criteria.add(Restrictions.ge(Constantes.FECHACREACION, busqueda.getFechaDesde()));
         }
+        
         if (busqueda.getFechaHasta() != null) {
             Date fechaHasta = new Date(busqueda.getFechaHasta().getTime() + TimeUnit.DAYS.toMillis(1));
             criteria.add(Restrictions.le(Constantes.FECHACREACION, fechaHasta));
@@ -181,6 +189,11 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
         if (busqueda.getTipoInspeccion() != null) {
             criteria.add(Restrictions.eq("guia.tipoInspeccion", busqueda.getTipoInspeccion()));
         }
+        
+        if (busqueda.getModelo() != null) {
+            criteria.add(Restrictions.ge("guia", busqueda.getModelo()));
+        }
+        
         if (busqueda.getEstado() != null) {
             if (EstadoEnum.INACTIVO.equals(busqueda.getEstado())) {
                 criteria.add(Restrictions.isNotNull("fechaAnulacion"));
@@ -251,6 +264,16 @@ public class GuiaPersonalizadaService implements IGuiaPersonalizadaService {
     @Override
     public GuiaPersonalizada findOne(Long id) {
         return guiaPersonalizadaRepository.findOne(id);
+    }
+    
+    /**
+     * Devuelve un listado de modelos de guía.
+     * 
+     * @return Listado xde modelos
+     */
+    @Override
+    public List<Guia> listadoModelos() {
+        return guiasRepository.findAllByOrderByNombre();
     }
     
 }

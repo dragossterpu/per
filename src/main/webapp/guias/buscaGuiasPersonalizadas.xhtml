@@ -13,11 +13,19 @@
                 <div class="columnaIzdaFormulario">
                     <h:outputLabel for="nombreGuia" value="Nombre de la guia:" />
                     <p:inputText id="nombreGuia" value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.nombre}" converter="#{trimConverter}"/>
+                    
                     <h:outputLabel for="tipoInspeccionSelect" value="Tipo de inspección:" />
                     <p:selectOneMenu value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
                         <f:selectItem itemLabel="Todos" itemValue="" />
                         <f:selectItems value="#{guiaBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
                     </p:selectOneMenu>
+                    
+                    <h:outputLabel for="modeloSelect" value="Modelo de guía:" />
+                    <p:selectOneMenu value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.modelo}" id="modeloSelect" converter="#{selectConverter}">
+                        <f:selectItem itemLabel="Todos" itemValue="" />
+                        <f:selectItems value="#{guiaPersonalizadaBean.listaModelos}" var="modeloGuia" itemLabel="#{modeloGuia.nombre}" itemValue="#{modeloGuia}" />
+                    </p:selectOneMenu>
+                    
                     <h:outputLabel for="estado" value="Estado:" />
                     <p:importEnum type="es.mira.progesin.persistence.entities.enums.EstadoEnum" var="estados" allSuffix="ALL_ENUM_VALUES" />
                     <p:selectOneMenu value="#{guiaPersonalizadaBean.guiaPersonalizadaBusqueda.estado}" id="estado">

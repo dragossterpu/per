@@ -52,9 +52,19 @@
                 <p:commandButton action="/cuestionarios/adjuntarPlantillasCuestionario?faces-redirect=true" value="Adjuntar plantilla" icon="fa fa-plus"/>
                 <p:commandButton id="btnEnviar" actionListener="#{envioCuestionarioBean.enviarCuestionario}" value="Enviar" icon="fa fa-fw fa-envelope-o" rendered="#{not yaEnviado and (esJefeEquipoInspeccion or esJefeInspecciones)}" ajax="true" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
                 <p:commandButton id="btnGuardar" actionListener="#{cuestionarioEnviadoBean.modificarCuestionario}" value="Guardar" icon="fa fa-fw fa-save" rendered="#{yaEnviado and not yaFinalizado and not yaAnulado and (esJefeEquipoInspeccion or esJefeInspecciones)}" />
-                <p:button outcome="#{menuOrigen}" value="Cancelar" icon="fa fa-fw fa-undo" />
+                
+                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" type="buton" >
+                         <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                </p:commandButton>
             </div>
 
+            <p:confirmDialog global="true">
+                 <div class="centrarBotonesDialog">
+                     <p:button outcome="#{menuOrigen}" value="Aceptar" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                 </div>
+             </p:confirmDialog>
+                
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:graphicImage value="/images/loading.gif" />
             </p:dialog>

@@ -32,4 +32,11 @@ public interface IGuiasRepository extends CrudRepository<Guia, Long> {
      * @return boolean Respuesta de la consulta
      */
     boolean existsByTipoInspeccion(TipoInspeccion tipo);
+    
+    /**
+     * Devuelve un listado de todas las guías ordenadas por nombre.
+     * 
+     * @return Listado de guías
+     */
+    List<Guia> findAllByOrderByNombre();
 }

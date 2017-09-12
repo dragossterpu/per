@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelGuiasPersonalizadas;
+import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.GuiaPasos;
 import es.mira.progesin.persistence.entities.GuiaPersonalizada;
 import es.mira.progesin.persistence.entities.Inspeccion;
@@ -58,6 +59,11 @@ public class GuiaPersonalizadaBean implements Serializable {
      * Objeto que contiene los criterios de búsqueda.
      */
     private GuiaBusqueda guiaPersonalizadaBusqueda;
+    
+    /**
+     * Lista de modelos de guía.
+     */
+    private List<Guia> listaModelos;
     
     /**
      * Lista de booleanos para controlar la visualización de columnas en la vista.
@@ -100,7 +106,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      * Servicio de guías personalizadas.
      */
     @Autowired
-    private transient IGuiaPersonalizadaService guiaPersonalizadaService;
+    private IGuiaPersonalizadaService guiaPersonalizadaService;
     
     /**
      * Busca las guías según los filtros introducidos en el formulario de búsqueda.
@@ -178,6 +184,7 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     @PostConstruct
     public void init() {
+        listaModelos = guiaPersonalizadaService.listadoModelos();
         guiaPersonalizadaBusqueda = new GuiaBusqueda();
         List<Boolean> lista = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {

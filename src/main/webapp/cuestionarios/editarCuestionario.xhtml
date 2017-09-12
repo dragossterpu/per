@@ -19,9 +19,7 @@
                     <my:selectManyCheckboxAll value="#{edicionCuestionarioBean.preguntasSelecciondas[areaCuestionario]}" rendered="#{esJefeInspeccionesOEquipo}">
                         <f:selectItems value="#{areaCuestionario.preguntas}" var="preguntaArea" itemLabel="#{preguntaArea.pregunta}" itemValue="#{preguntaArea}" />
                     </my:selectManyCheckboxAll>
-                    <p:dataList var="preguntaArea" value="#{areaCuestionario.preguntas}" rendered="#{not esJefeInspeccionesOEquipo}" type="unordered" styleClass="preguntasModelo">
-                        <h:outputText value="#{preguntaArea.pregunta}" />
-                    </p:dataList>
+                    
                 </p:tab>
             </p:accordionPanel>
 

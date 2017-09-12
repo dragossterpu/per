@@ -1,3 +1,4 @@
+
 package es.mira.progesin.util;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -180,8 +182,9 @@ public class Utilities {
                 }
                 
                 if (!valorOriginal.equals(valorModificado)) {
-                    camposModificados.append(campo.getName()).append(" (Antes '").append(valorOriginal)
-                            .append("' ahora modificado a '").append(valorModificado).append("')\n\r");
+                    camposModificados.append("<br>").append(devuelveNombreCampo(campo.getName())).append(" (Antes '")
+                            .append(valorOriginal).append("' ahora modificado a '").append(valorModificado)
+                            .append("')");
                 }
             }
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
@@ -272,6 +275,50 @@ public class Utilities {
             cadena = String.join(", ", cadenArray);
         }
         return cadena;
+    }
+    
+    /**
+     * Devuelve el nombre de un campo en formato más amigable.
+     * 
+     * @param campo Campo del que se desea el nombre
+     * @return Nombre del campo
+     */
+    private static String devuelveNombreCampo(String campo) {
+        StringBuffer respuesta = new StringBuffer("<strong>");
+        
+        Map<String, String> mapaNombres = new HashMap<String, String>();
+        mapaNombres.put("username", "Nombre usuario");
+        mapaNombres.put("estado", "Estado");
+        mapaNombres.put("nombre", "Nombre");
+        mapaNombres.put("apellido1", "Primer apellido");
+        mapaNombres.put("apellido2", "Segundo apellido");
+        mapaNombres.put("docIdentidad", "NIF");
+        mapaNombres.put("numIdentificacion", "Número de indentificación personal");
+        mapaNombres.put("telefono", "Teléfono");
+        mapaNombres.put("telefonoMovilOficial", "Teléfono móvil oficial");
+        mapaNombres.put("telefonoMovilParticular", "Teléfono móvil particular");
+        mapaNombres.put("correo", "Correo electrónico");
+        mapaNombres.put("role", "Rol");
+        mapaNombres.put("despacho", "Despacho");
+        mapaNombres.put("cuerpoEstado", "Cuerpo");
+        mapaNombres.put("empleo", "Empleo");
+        mapaNombres.put("puestoTrabajo", "Puesto de trabajo");
+        mapaNombres.put("nivel", "Nivel");
+        mapaNombres.put("categoria", "Categoría");
+        mapaNombres.put("departamento", "Departamento");
+        mapaNombres.put("claseUsuario", "Clase");
+        mapaNombres.put("fechaDestinoIPSS", "Fecha destino IPSS");
+        mapaNombres.put("fechaIngreso", "Fecha de ingreso en el cuerpo");
+        mapaNombres.put("fechaInactivo", "Fecha de desactivación");
+        
+        if (mapaNombres.get(campo) != null) {
+            respuesta.append(mapaNombres.get(campo));
+        } else {
+            respuesta.append(campo);
+        }
+        respuesta.append("</strong>");
+        
+        return respuesta.toString();
     }
     
     /**

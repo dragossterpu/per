@@ -3,6 +3,7 @@ package es.mira.progesin.web.beans;
 import java.io.Serializable;
 import java.util.Date;
 
+import es.mira.progesin.persistence.entities.Guia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import lombok.Getter;
@@ -52,5 +53,10 @@ public class GuiaBusqueda implements Serializable {
      * Estado en el que se encuenta la guía a buscar.
      */
     private EstadoEnum estado;
+    
+    /**
+     * Modelo de guía.
+     */
+    private Guia modelo;
     
 }
