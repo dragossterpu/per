@@ -43,7 +43,7 @@ public class ExportadorWord {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             MethodExpression preProcessor = context.getApplication().getExpressionFactory().createMethodExpression(
-                    context.getELContext(), "#{exportadorWord.rotarPdf}", null, new Class[] { ExportadorWord.class });
+                    context.getELContext(), "#{exportadorWord.rotar}", null, new Class[] { ExportadorWord.class });
             
             DocExporter exporter = new DocExporter();
             DataTable dataTable = (DataTable) context.getViewRoot().findComponent(idTabla);
@@ -61,7 +61,7 @@ public class ExportadorWord {
      * 
      * @param document documento obtenido de la vista.
      */
-    public static void rotarPdf(Object document) {
+    public static void rotar(Object document) {
         Document pdf = (Document) document;
         pdf.setPageSize(PageSize.A4.rotate());
         pdf.setMargins(20, 20, 10, 10);

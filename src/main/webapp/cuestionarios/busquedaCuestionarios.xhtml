@@ -93,7 +93,7 @@
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados" preProcessor="#{cuestionarioEnviadoBean.rotarPdf}"/>
+                        <p:dataExporter type="pdf" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados" preProcessor="#{exportadorWord.rotar}"/>
                     </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/csv.png" />
