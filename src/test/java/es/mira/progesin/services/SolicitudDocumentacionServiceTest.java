@@ -5,6 +5,7 @@ package es.mira.progesin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +28,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -37,6 +45,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
+import es.mira.progesin.util.ICorreoElectronico;
 
 /**
  * Test del servicio Solicitud Documentación Previa.
@@ -96,6 +105,12 @@ public class SolicitudDocumentacionServiceTest {
      */
     @Mock
     private IDocumentoService documentoService;
+    
+    /**
+     * Mock del servicio de correos electrónicos.
+     */
+    @Mock
+    private ICorreoElectronico correoElectronico;
     
     /**
      * Instancia de prueba del servicio de solicitudes de documentación.
@@ -187,18 +202,36 @@ public class SolicitudDocumentacionServiceTest {
      * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia, User)}
      * .
      */
+    @SuppressWarnings("unchecked")
     @Test
     public void transaccSaveCreaUsuarioProv() {
-        Inspeccion inspeccion = mock(Inspeccion.class);
-        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().inspeccion(inspeccion).build();
-        User usuarioProv = mock(User.class);
+        AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion("tipoUnidad");
+        TipoInspeccion tipoInspeccion = new TipoInspeccion();
+        tipoInspeccion.setDescripcion("tipoInspeccion");
+        tipoInspeccion.setCodigo("I.G.S.");
+        Provincia provincia = new Provincia();
+        provincia.setNombre("provincia");
+        Municipio municipio = new Municipio();
+        municipio.setName("municipio");
+        municipio.setProvincia(provincia);
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).tipoInspeccion(tipoInspeccion)
+                .nombreUnidad("unidad").tipoUnidad(tipoUnidad).municipio(municipio).build();
         
-        solicitudDocPreviaService.transaccSaveCreaUsuarioProv(solicitud, usuarioProv);
+        SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
+                .correoDestinatario("correo").asunto("asunto").build();
+        User usuarioProv = mock(User.class);
+        String password = "encodedPassword";
+        
+        solicitudDocPreviaService.transaccSaveCreaUsuarioProv(solicitud, usuarioProv, password);
         
         verify(solicitudDocumentacionPreviaRepository, times(1)).save(solicitud);
         verify(userService, times(1)).save(usuarioProv);
         verify(inspeccionesService, times(1)).cambiarEstado(solicitud.getInspeccion(),
                 EstadoInspeccionEnum.D_PEND_RECIBIR_DOC_PREVIA);
+        verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class),
+                eq(Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS), any(Map.class));
         
     }
     

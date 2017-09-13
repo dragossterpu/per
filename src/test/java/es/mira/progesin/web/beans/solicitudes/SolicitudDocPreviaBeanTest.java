@@ -12,7 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -476,40 +475,22 @@ public class SolicitudDocPreviaBeanTest {
     public void enviarSolicitud() {
         AmbitoInspeccionEnum ambito = AmbitoInspeccionEnum.GC;
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).ambito(ambito).build();
-        TipoUnidad tipoUnidad = new TipoUnidad();
-        tipoUnidad.setDescripcion(TIPOUNIDAD);
-        inspeccion.setTipoUnidad(tipoUnidad);
-        TipoInspeccion tipoInspeccion = new TipoInspeccion();
-        tipoInspeccion.setDescripcion("tipoInspeccion");
-        tipoInspeccion.setCodigo("I.G.S.");
-        inspeccion.setTipoInspeccion(tipoInspeccion);
-        inspeccion.setNombreUnidad(NOMBREUNIDAD);
-        Provincia provincia = new Provincia();
-        provincia.setNombre(PROVINCIA);
-        Municipio municipio = new Municipio();
-        municipio.setName(PROVINCIA);
-        municipio.setProvincia(provincia);
-        inspeccion.setMunicipio(municipio);
+        
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         when(userService.exists(CORREO)).thenReturn(Boolean.FALSE);
-        Map<String, Map<String, String>> mapa = new HashMap<>();
-        Map<String, String> submapa = new HashMap<>();
-        mapa.put("URLPROGESIN", submapa);
-        submapa.put(ambito.name(), "url");
-        when(applicationBean.getMapaParametros()).thenReturn(mapa);
         List<RoleEnum> listRoles = new ArrayList<>();
         listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
         listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+        when(Utilities.getPassword()).thenCallRealMethod();
         when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
         
         solicitudDocPreviaBean.enviarSolicitud();
         
         verify(userService, times(1)).exists(CORREO);
-        verify(solicitudDocumentacionService, times(1)).transaccSaveCreaUsuarioProv(eq(solicitud), any(User.class));
-        verify(correoElectronico, times(1)).envioCorreo(eq(CORREO), any(String.class),
-                eq(Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS), paramCaptor.capture());
+        verify(solicitudDocumentacionService, times(1)).transaccSaveCreaUsuarioProv(eq(solicitud), any(User.class),
+                any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),

@@ -1,7 +1,9 @@
 package es.mira.progesin.services;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
@@ -19,6 +21,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
@@ -28,6 +31,7 @@ import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
 import es.mira.progesin.persistence.repositories.IDocumentacionPreviaRepository;
 import es.mira.progesin.persistence.repositories.ISolicitudDocumentacionPreviaRepository;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaBusqueda;
 import lombok.NoArgsConstructor;
 
@@ -81,6 +85,12 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
      */
     @Autowired
     private ITipoDocumentacionService tipoDocumentacionService;
+    
+    /**
+     * Clase para el manejo de correos electrónicos.
+     */
+    @Autowired
+    private transient ICorreoElectronico correoElectronico;
     
     /**
      * Servicio para usar los métodos usados junto con criteria.
@@ -307,19 +317,40 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
     }
     
     /**
-     * Guarda los datos de una solicitud y crea el usuario provisional que debe cumplimentarla una vez enviada.
+     * Guarda los datos de una solicitud, crea el usuario provisional y le envía un correo para que la cumplimente.
      * 
      * @param solicitudDocumentacionPrevia solicitud modificada
      * @param usuarioProv objeto usuario
+     * @param password contraseña sin cifrar
      */
     @Override
     @Transactional(readOnly = false)
-    public void transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia,
-            User usuarioProv) {
+    public void transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, User usuarioProv,
+            String password) {
         solicitudDocumentacionPreviaRepository.save(solicitudDocumentacionPrevia);
         userService.save(usuarioProv);
         inspeccionesService.cambiarEstado(solicitudDocumentacionPrevia.getInspeccion(),
                 EstadoInspeccionEnum.D_PEND_RECIBIR_DOC_PREVIA);
+        
+        TipoInspeccion tipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getTipoInspeccion();
+        
+        String asunto = "Comunicación Inspección "
+                + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
+                + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
+                + "). Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
+        
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("tipoInspeccion", tipoInspeccion.getDescripcion());
+        paramPlantilla.put("password", password);
+        
+        String plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGP;
+        if (tipoInspeccion.getCodigo().equals("I.G.S.")) {
+            plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
+        }
+        
+        correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, plantilla,
+                paramPlantilla);
     }
     
     /**

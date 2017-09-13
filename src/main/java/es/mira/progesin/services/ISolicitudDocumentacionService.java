@@ -57,12 +57,14 @@ public interface ISolicitudDocumentacionService {
     SolicitudDocumentacionPrevia findEnviadaNoFinalizadaPorCorreoDestinatario(String correo);
     
     /**
-     * Guarda los datos de una solicitud y crea el usuario provisional que debe cumplimentarla una vez enviada.
+     * Guarda los datos de una solicitud, crea el usuario provisional y le envía un correo para que la cumplimente.
      * 
      * @param solicitudDocumentacionPrevia solicitud modificada
      * @param usuarioProv objeto usuario
+     * @param password contraseña sin cifrar
      */
-    void transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, User usuarioProv);
+    void transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia solicitudDocumentacionPrevia, User usuarioProv,
+            String password);
     
     /**
      * Guarda los datos de una solicitud y elimina el usuario provisional que la ha cumplimentado una vez finalizada o

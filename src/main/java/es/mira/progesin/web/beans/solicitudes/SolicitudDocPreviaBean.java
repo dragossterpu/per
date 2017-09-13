@@ -23,7 +23,6 @@ import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
-import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -359,27 +358,8 @@ public class SolicitudDocPreviaBean implements Serializable {
                 User usuarioProv = new User(solicitudDocumentacionPrevia.getCorreoDestinatario(),
                         passwordEncoder.encode(password), RoleEnum.ROLE_PROV_SOLICITUD);
                 
-                solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv);
-                
-                TipoInspeccion tipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getTipoInspeccion();
-                
-                String asunto = "Comunicación Inspección "
-                        + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                        + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
-                        + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
-                        + "). Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
-                
-                Map<String, String> paramPlantilla = new HashMap<>();
-                paramPlantilla.put("tipoInspeccion", tipoInspeccion.getDescripcion());
-                paramPlantilla.put("password", password);
-                
-                String plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGP;
-                if (tipoInspeccion.getCodigo().equals("I.G.S.")) {
-                    plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
-                }
-                
-                correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, plantilla,
-                        paramPlantilla);
+                solicitudDocumentacionService.transaccSaveCreaUsuarioProv(solicitudDocumentacionPrevia, usuarioProv,
+                        password);
                 
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Envío",
                         "Se ha enviado con éxito la solicitud de documentación");
