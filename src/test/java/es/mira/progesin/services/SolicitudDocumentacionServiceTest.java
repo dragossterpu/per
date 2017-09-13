@@ -199,7 +199,7 @@ public class SolicitudDocumentacionServiceTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia, User)}
+     * {@link es.mira.progesin.services.SolicitudDocumentacionService#transaccSaveCreaUsuarioProv(SolicitudDocumentacionPrevia ,User ,String )}
      * .
      */
     @SuppressWarnings("unchecked")
