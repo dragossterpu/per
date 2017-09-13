@@ -44,9 +44,9 @@
                             <p:ajax event="select" listener="#{modificarModeloCuestionarioBean.onSelectTipo}" oncomplete="PF('previsualiza').show('#{preguntas}')" update="previsualizaTipo" />
                         </p:pickList>
                         <!-- Visualización de tipos -->
-                        <p:overlayPanel widgetVar="previsualiza" showEffect="fade" hideEffect="fade" dismissable="true" showCloseIcon="true">
+                        <p:overlayPanel widgetVar="previsualiza" showEffect="fade" hideEffect="fade" dismissable="true" for="pickList" my="middle top" at="middle bottom">
                             <p:outputPanel id="previsualizaTipo" style="text-align:center;">
-                                <p:panelGrid columns="1">
+                                <p:panel>
                                     <f:facet name="header">
 					                    #{modificarModeloCuestionarioBean.tipoSeleccionado}									
 					                </f:facet>
@@ -56,7 +56,13 @@
                                     <p:selectOneRadio id="radio" rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'RADIO')}" disabled="true">
                                         <f:selectItems value="#{modificarModeloCuestionarioBean.getValoresTipoRespuesta(modificarModeloCuestionarioBean.tipoSeleccionado)}" var="valor" itemLabel="#{valor}" itemValue="#{valor}" />
                                     </p:selectOneRadio>
+                                    <p:selectOneRadio id="radioAdjunto" rendered="#{modificarModeloCuestionarioBean.tipoSeleccionado eq 'ADJUNTORADIOSINO'}"  disabled="true">
+                                        <f:selectItem itemLabel="Sí" itemValue="Sí" />
+                                        <f:selectItem itemLabel="No" itemValue="No" />
+                                    </p:selectOneRadio>
                                     <p:outputPanel rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'ADJUNTO')}">
+                                        <p:inputTextarea id="adjunto" rendered="#{modificarModeloCuestionarioBean.tipoSeleccionado eq 'ADJUNTOINPUT'}" size="10" maxlength="2000" counter="contadorAdjuntoInput" counterTemplate="Quedan {0} caracteres." disabled="true" />
+                                        <p:outputLabel id="contadorAdjuntoInput" rendered="#{modificarModeloCuestionarioBean.tipoSeleccionado eq 'ADJUNTOINPUT'}"/>
                                         <p:fileUpload fileUploadListener="#{cuestionarioPersonalizadoBean.handleFileUpload}" mode="advanced" dragDropSupport="false" label="Elegir fichero" uploadLabel="Subir" cancelLabel="Cancelar" disabled="true" multiple="true" />
                                     </p:outputPanel>
                                     <p:dataTable rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'TABLA')}" id="tablaPregunta" var="registroTabla" value="#{modificarModeloCuestionarioBean.datosTabla.listaDatosTabla}">
@@ -64,7 +70,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value="#{column.header}" />
                                             </f:facet>
-                                            <p:inputText id="tabla" value="#{registroTabla[column.property]}" />
+                                            <p:inputText id="tabla" value="#{registroTabla[column.property]}" disabled="true"/>
                                         </p:columns>
                                     </p:dataTable>
                                     <p:dataTable rendered="#{fn:startsWith(modificarModeloCuestionarioBean.tipoSeleccionado, 'MATRIZ')}" id="matrizPregunta" var="registroTabla" value="#{modificarModeloCuestionarioBean.datosTabla.listaDatosTabla}">
@@ -75,11 +81,11 @@
                                             <f:facet name="header">
                                                 <h:outputText value="#{column.header}" />
                                             </f:facet>
-                                            <p:inputText id="matriz" value="#{registroTabla[column.property]}" />
+                                            <p:inputText id="matriz" value="#{registroTabla[column.property]}" disabled="true"/>
 
                                         </p:columns>
                                     </p:dataTable>
-                                </p:panelGrid>
+                                </p:panel>
                             </p:outputPanel>
                         </p:overlayPanel>
                         <!-- Fin visualización  -->

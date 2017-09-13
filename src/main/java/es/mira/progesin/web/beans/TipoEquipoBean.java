@@ -126,7 +126,6 @@ public class TipoEquipoBean implements Serializable {
                     "Se ha producido un error al dar de alta el tipo de equipo, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.ADMINISTRACION.getDescripcion(), e);
         }
-        // TODO generar alerta / notificación
     }
     
     /**
