@@ -189,7 +189,7 @@ public class CuestionarioEnviadoBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.CUESTIONARIO.getDescripcion());
                 
-                if (cuestionario.getFechaEnvio() != null && cuestionario.getFechaFinalizacion() == null) {
+                if (cuestionario.getFechaFinalizacion() == null) {
                     
                     String asunto = "Baja cuestionario " + cuestionario.getInspeccion().getTipoUnidad().getDescripcion()
                             + " de " + cuestionario.getInspeccion().getNombreUnidad() + " ("

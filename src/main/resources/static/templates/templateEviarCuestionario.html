@@ -2,14 +2,15 @@
 
 {% block contenido %}
 <p>{{textoEnvioCuestionario}}</p>
-<p>Para responder el cuestionario debe conectarse a la aplicación PROGESIN. El enlace de acceso a la aplicación es <span style="color:blue">{{URLPROGESIN}}</span>.</p>
-<p>Los usuarios de acceso a la aplicación son:</p>
-<p>{{correosProvisionales}}</p>
-<p>La contraseña de acceso para todos los usuarios es: <span style="color:blue">{{ password }}</span>.<br/>
-En un primer momento, sólo el usuario principal tienes acceso a la aplicación, él cuál puede asignar áreas del cuestionario al resto de usuarios.<br/>
-Sólo los usuarios con áreas asignadas tendrán acceso y podrán guardar el cuestionario como borrador.<br/>
-Sólo el usuario principal ({{correoPrincipal}}) tiene permisos para enviar el cuestionario.<br/>
-</p>
-<p>Una vez enviado el cuestionario todos los usuarios quedarán inactivos.</p>
+<p>Como parte de la inspección iniciada, se envían las instrucciones para acceder y cumplimentar el cuestionario con fecha límite de envío {{ fechaLimite}}.</p>
+<p>Habrá que proceder del siguinete modo:</p>
+<p>1. Para responder el cuestionario debe conectarse a la aplicación PROGESIN mediante el enlace <span style="color:blue">{{URLPROGESIN}}</span>.<br/><br/>
+&#10004; Los usuarios de acceso a la aplicación son:<br/>
+{{correosProvisionales}}<br/>
+&#10004; La contraseña de acceso para todos los usuarios es: <span style="color:blue">{{ password }}</span>.</p>
+<p>2. En un primer momento, sólo el usuario principal ({{correoPrincipal}}) tiene acceso a la aplicación, él cuál puede asignar áreas del cuestionario al resto de usuarios.</p>
+<p>3. Sólo los usuarios con áreas asignadas tendrán acceso y podrán conectarse para responder las preguntas de sus diferetentes áreas.</p>
+<p>4. Los usuarios provisionales pueden guardar como borrador el trabajo realizado y sólamente el usuario principal podrá enviar el cuestionario cuando estén todas y cada una de las preguntas de cada área respondidas.</p>
+<p>5. Una vez enviado el cuestionario todos los usuarios quedarán inactivos.</p>
 <p>Muchas gracias y un saludo.</p>
 {% endblock %}
