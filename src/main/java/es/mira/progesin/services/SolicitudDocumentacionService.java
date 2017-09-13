@@ -336,7 +336,7 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         
         String asunto = "Comunicación Inspección "
                 + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + " ("
                 + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
                 + "). Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
         

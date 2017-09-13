@@ -148,7 +148,7 @@ public class TareasService implements ITareasService {
                     
                     String asunto = "Recordatorio plazo envío cuestionario "
                             + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + DE
-                            + cuestionario.getInspeccion().getNombreUnidad() + "("
+                            + cuestionario.getInspeccion().getNombreUnidad() + " ("
                             + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
                             + cuestionario.getInspeccion().getNumero() + ".";
                     Map<String, String> paramPlantilla = null;
@@ -164,7 +164,7 @@ public class TareasService implements ITareasService {
                     
                     String asunto = "Recordatorio finalización plazo envío cuestionario "
                             + cuestionario.getInspeccion().getTipoUnidad().getDescripcion() + DE
-                            + cuestionario.getInspeccion().getNombreUnidad() + "("
+                            + cuestionario.getInspeccion().getNombreUnidad() + " ("
                             + cuestionario.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
                             + cuestionario.getInspeccion().getNumero() + ".";
                     
@@ -202,7 +202,7 @@ public class TareasService implements ITareasService {
                     
                     String asunto = "Recordatorio finalización plazo envío documentación previa a cuestionario "
                             + solicitud.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                            + solicitud.getInspeccion().getNombreUnidad() + "("
+                            + solicitud.getInspeccion().getNombreUnidad() + " ("
                             + solicitud.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
                             + solicitud.getInspeccion().getNumero() + ".";
                     
@@ -220,7 +220,7 @@ public class TareasService implements ITareasService {
                     
                     String asunto = "Recordatorio finalización plazo envío documentación previa a cuestionario "
                             + solicitud.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                            + solicitud.getInspeccion().getNombreUnidad() + "("
+                            + solicitud.getInspeccion().getNombreUnidad() + " ("
                             + solicitud.getInspeccion().getMunicipio().getProvincia().getNombre() + NUMEROEXP
                             + solicitud.getInspeccion().getNumero() + ".";
                     

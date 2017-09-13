@@ -154,6 +154,11 @@ public class SolicitudDocPreviaBean implements Serializable {
     private transient PdfGeneratorSolicitudes pdfGenerator;
     
     /**
+     * Constante de.
+     */
+    private static final String DE = " de ";
+    
+    /**
      * Permite al equipo de apoyo validar la solicitud de documentación.
      * 
      */
@@ -271,11 +276,16 @@ public class SolicitudDocPreviaBean implements Serializable {
                     regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                             SeccionesEnum.DOCUMENTACION.getDescripcion());
                     
-                    StringBuilder cuerpo = new StringBuilder(
-                            "Se ha procedido a eliminar la solicitud de documentación para la inspección ");
-                    cuerpo.append(solicitud.getInspeccion().getNumero());
-                    correoElectronico.envioCorreo(usuarioProv, "Se ha dado de baja la solicitud de documentación "
-                            .concat(solicitud.getInspeccion().getNumero()), cuerpo.toString());
+                    if (solicitud.getFechaFinalizacion() == null) {
+                        String asunto = "Baja Solicitud " + solicitud.getInspeccion().getTipoUnidad().getDescripcion()
+                                + DE + solicitud.getInspeccion().getNombreUnidad() + " ("
+                                + solicitud.getInspeccion().getMunicipio().getProvincia().getNombre()
+                                + "). Número de expediente " + solicitud.getInspeccion().getNumero() + ".";
+                        
+                        Map<String, String> paramPlantilla = null;
+                        correoElectronico.envioCorreo(usuarioProv, asunto, Constantes.TEMPLATEBAJASOLICITUD,
+                                paramPlantilla);
+                    }
                 }
             } else {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_WARN, "Eliminación abortada",
@@ -305,7 +315,7 @@ public class SolicitudDocPreviaBean implements Serializable {
                 
                 String asunto = "Modificación plazo envío documentación previa a cuestionario "
                         + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                        + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                        + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + " ("
                         + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
                         + "Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
                 
@@ -436,7 +446,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             
             String asunto = "No conformidad documentación previa a cuestionario "
                     + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                    + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + "("
+                    + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + " ("
                     + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
                     + "Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
             
