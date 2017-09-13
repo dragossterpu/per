@@ -321,6 +321,7 @@ public class EnvioCuestionarioBeanTest {
         CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
         cuestionarioEnvio.setInspeccion(inspeccion);
         cuestionarioEnvio.setCorreoEnvio(CORREO);
+        cuestionarioEnvio.setFechaLimiteCuestionario(new Date());
         envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
         when(solDocService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
         when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);
@@ -376,6 +377,7 @@ public class EnvioCuestionarioBeanTest {
         CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
         cuestionarioEnvio.setInspeccion(inspeccion);
         cuestionarioEnvio.setCorreoEnvio(CORREO);
+        cuestionarioEnvio.setFechaLimiteCuestionario(new Date());
         envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
         when(solDocService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
         when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);

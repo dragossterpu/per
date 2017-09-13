@@ -209,6 +209,8 @@ public class EnvioCuestionarioBean implements Serializable {
                     paramPlantilla.put("correosProvisionales", usuariosProvisionales.toString());
                     paramPlantilla.put("password", password);
                     paramPlantilla.put("correoPrincipal", listaUsuariosProvisionales.get(0).getUsername());
+                    paramPlantilla.put("fechaLimite",
+                            Utilities.getFechaFormateada(cuestionarioEnvio.getFechaLimiteCuestionario(), "dd/MM/yyyy"));
                     cuestionarioEnvioService.crearYEnviarCuestionario(listaUsuariosProvisionales, cuestionarioEnvio,
                             paramPlantilla);
                     
