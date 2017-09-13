@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 
@@ -28,9 +29,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -40,6 +45,7 @@ import es.mira.progesin.services.IDocumentoService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.ICorreoElectronico;
 import es.mira.progesin.util.Utilities;
 
 /**
@@ -90,6 +96,12 @@ public class SolicitudDocPreviaBeanTest {
     private IDocumentoService documentoService;
     
     /**
+     * Mock para el servicio de correos electrónicos.
+     */
+    @Mock
+    private ICorreoElectronico correoElectronico;
+    
+    /**
      * Instancia de prueba del bean de solicitudes de documentación.
      */
     @InjectMocks
@@ -105,6 +117,27 @@ public class SolicitudDocPreviaBeanTest {
      * Literal para pruebas.
      */
     private static final String CORREO = "correoDestinatario";
+    
+    /**
+     * Literal provincia/municipio.
+     */
+    private static final String PROVINCIA = "Toledo";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String TIPOUNIDAD = "tipoUnidad";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String NOMBREUNIDAD = "nombreUnidad";
+    
+    /**
+     * Captura de parametros plantilla.
+     */
+    @Captor
+    private ArgumentCaptor<Map<String, String>> paramCaptor;
     
     /**
      * Configuración inicial del test.
@@ -297,13 +330,29 @@ public class SolicitudDocPreviaBeanTest {
     @Test
     public void eliminarSolicitud_ConFechaEnvio_Logica() {
         Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
+        
         SolicitudDocumentacionPrevia solicitud = SolicitudDocumentacionPrevia.builder().id(1L).inspeccion(inspeccion)
                 .fechaEnvio(new Date()).correoDestinatario(CORREO).build();
         when(authentication.getPrincipal()).thenReturn(User.builder().role(RoleEnum.ROLE_JEFE_INSPECCIONES).build());
         
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
-        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(solicitud, CORREO);
+        verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(eq(solicitud),
+                eq(solicitud.getCorreoDestinatario()));
+        
+        verify(correoElectronico, times(1)).envioCorreo(eq(solicitud.getCorreoDestinatario()), any(String.class),
+                eq(Constantes.TEMPLATEBAJASOLICITUD), paramCaptor.capture());
+        
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
     }
