@@ -9,7 +9,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.event.UnselectEvent;
@@ -487,7 +486,6 @@ public class InspeccionBean implements Serializable {
                 listaMunicipios.add(nuevoMunicipio);
                 Collections.sort(listaMunicipios, (o1, o2) -> Long.compare(o1.getId(), o2.getId()));
                 inspeccion.setMunicipio(nuevoMunicipio);
-                RequestContext.getCurrentInstance().execute("PF('dialogMunicipio').hide()");
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,

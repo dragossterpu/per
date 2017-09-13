@@ -199,7 +199,7 @@
 				required="#{param['formModific:guardar']!=null}" requiredMessage="El nombre del municipio no puede estar vacío" converter="#{trimConverter}" />
 			<p:messages for="inputNombre" autoUpdate="true" closable="true" showSummary="true"/>
 			<div class="centrarBotonesDialog">
-				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value, inspeccionBean.provinciSelec)}" update=":formModific:municipiosSelect" />
+				<p:commandButton id="guardar" value="Guardar" actionListener="#{inspeccionBean.nuevoMunicipio(nombreMunicipio.value, inspeccionBean.provinciSelec)}" update=":formModific:municipiosSelect" oncomplete="PF('dialogMunicipio').hide()"/>
 				<p:commandButton value="Cerrar" onclick="PF('dialogMunicipio').hide()"/>
 			</div>
 		</p:dialog>
