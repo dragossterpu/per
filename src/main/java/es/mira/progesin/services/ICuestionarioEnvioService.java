@@ -23,16 +23,6 @@ import es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBusqueda;
 public interface ICuestionarioEnvioService {
     
     /**
-     * Crea y envía un cuestionario a partir de un modelo personalizado, genera los usuarios provisionales que lo
-     * responderán y envía un correo al destinatario.
-     * 
-     * @param user remitentes del cuestionario
-     * @param cuestionarioEnvio enviado
-     * @param cuerpoCorreo correo electrónico de los remitentes
-     */
-    // void crearYEnviarCuestionario(List<User> user, CuestionarioEnvio cuestionarioEnvio, String cuerpoCorreo);
-    
-    /**
      * Recupera el cuestionario enviado no finalizado perteneciente a un destinatario (no puede haber más de uno).
      * 
      * @param correo electrónico del remitente

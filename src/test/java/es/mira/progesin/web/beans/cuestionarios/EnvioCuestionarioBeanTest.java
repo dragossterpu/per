@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +22,8 @@ import javax.faces.application.FacesMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
@@ -36,8 +37,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
@@ -52,7 +56,6 @@ import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISolicitudDocumentacionService;
 import es.mira.progesin.services.IUserService;
 import es.mira.progesin.util.FacesUtilities;
-import es.mira.progesin.web.beans.ApplicationBean;
 
 /**
  * 
@@ -123,12 +126,6 @@ public class EnvioCuestionarioBeanTest {
     private ICuestionarioEnvioService cuestionarioEnvioService;
     
     /**
-     * Bean de configuración de la aplicación.
-     */
-    @Mock
-    private ApplicationBean applicationBean;
-    
-    /**
      * Servicio de notificaciones.
      */
     @Mock
@@ -139,6 +136,27 @@ public class EnvioCuestionarioBeanTest {
      */
     @InjectMocks
     private EnvioCuestionarioBean envioCuestionarioBean;
+    
+    /**
+     * Literal provincia/municipio.
+     */
+    private static final String PROVINCIA = "Toledo";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String TIPOUNIDAD = "tipoUnidad";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String NOMBREUNIDAD = "nombreUnidad";
+    
+    /**
+     * Captura de parametros plantilla.
+     */
+    @Captor
+    private ArgumentCaptor<Map<String, String>> paramCaptor;
     
     /**
      * Comprueba que la clase existe.
@@ -311,17 +329,10 @@ public class EnvioCuestionarioBeanTest {
         when(userService.exists(correoEnvio)).thenReturn(false);
         envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
         
-        User user = new User();
-        user.setNombre("user_test");
+        User user = mock(User.class);
         List<User> users = new ArrayList<>();
         users.add(user);
         when(userService.crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class))).thenReturn(users);
-        
-        Map<String, String> mapa = new HashMap<>();
-        mapa.put(AmbitoInspeccionEnum.PN.name(), "ambitoPnTest");
-        Map<String, Map<String, String>> mapaParametros = new HashMap<>();
-        mapaParametros.put("URLPROGESIN", mapa);
-        when(applicationBean.getMapaParametros()).thenReturn(mapaParametros);
         
         envioCuestionarioBean.enviarCuestionario();
         PowerMockito.verifyStatic(times(1));
@@ -329,9 +340,8 @@ public class EnvioCuestionarioBeanTest {
                 any(String.class));
         verify(userService, times(1)).exists(correoEnvio);
         verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class));
-        verify(applicationBean, times(1)).getMapaParametros();
         verify(cuestionarioEnvioService, times(1)).crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio),
-                any(String.class));
+                paramCaptor.capture());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
@@ -352,6 +362,16 @@ public class EnvioCuestionarioBeanTest {
         inspeccion.setId(1L);
         inspeccion.setAnio(2017);
         inspeccion.setEquipo(mock(Equipo.class));
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         
         CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
         cuestionarioEnvio.setInspeccion(inspeccion);
@@ -364,26 +384,18 @@ public class EnvioCuestionarioBeanTest {
         when(userService.exists(correoEnvio)).thenReturn(false);
         envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
         
-        User user = new User();
-        user.setNombre("user_test");
+        User user = mock(User.class);
         List<User> users = new ArrayList<>();
         users.add(user);
         when(userService.crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class))).thenReturn(users);
         
-        Map<String, String> mapa = new HashMap<>();
-        mapa.put(AmbitoInspeccionEnum.PN.name(), "ambitoPnTest");
-        Map<String, Map<String, String>> mapaParametros = new HashMap<>();
-        mapaParametros.put("URLPROGESIN", mapa);
-        when(applicationBean.getMapaParametros()).thenReturn(mapaParametros);
         doThrow(TransientDataAccessResourceException.class).when(cuestionarioEnvioService)
-                .crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio), any(String.class));
-        
+                .crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio), paramCaptor.capture());
         envioCuestionarioBean.enviarCuestionario();
         verify(userService, times(1)).exists(correoEnvio);
         verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class));
-        verify(applicationBean, times(1)).getMapaParametros();
         verify(cuestionarioEnvioService, times(1)).crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio),
-                any(String.class));
+                paramCaptor.capture());
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),

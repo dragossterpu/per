@@ -12,7 +12,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +31,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -114,6 +120,21 @@ public class CuestionarioEnvioServiceTest {
     ArgumentCaptor<List<AreaUsuarioCuestEnv>> areasUsuarioCuestEnvCaptor;
     
     /**
+     * Literal provincia/municipio.
+     */
+    private static final String PROVINCIA = "Toledo";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String TIPOUNIDAD = "tipoUnidad";
+    
+    /**
+     * Literal Tipo de Unidad.
+     */
+    private static final String NOMBREUNIDAD = "nombreUnidad";
+    
+    /**
      * Configuración inicial del test.
      */
     @Before
@@ -142,21 +163,29 @@ public class CuestionarioEnvioServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List, CuestionarioEnvio, String)}
-     * .
+     * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List<User> ,
+     * CuestionarioEnvio , Map<String, String> )} .
      */
     @Test
     public void crearYEnviarCuestionario() {
         List<User> listadoUsuariosProvisionales = new ArrayList<User>();
-        listadoUsuariosProvisionales.add(User.builder().username("usuario").build());
+        listadoUsuariosProvisionales.add(User.builder().username("usuario").password("password").build());
         CuestionarioPersonalizado cuestionarioPersonalizado = CuestionarioPersonalizado.builder().id(1L).build();
         Inspeccion inspeccion = Inspeccion.builder().id(1L).build();
+        TipoUnidad tipoUnidad = new TipoUnidad();
+        tipoUnidad.setDescripcion(TIPOUNIDAD);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad(NOMBREUNIDAD);
+        Provincia provincia = new Provincia();
+        provincia.setNombre(PROVINCIA);
+        Municipio municipio = new Municipio();
+        municipio.setName(PROVINCIA);
+        municipio.setProvincia(provincia);
+        inspeccion.setMunicipio(municipio);
         CuestionarioEnvio cuestionarioEnviado = CuestionarioEnvio.builder().id(1L)
                 .cuestionarioPersonalizado(cuestionarioPersonalizado).inspeccion(inspeccion).correoEnvio("correo")
                 .motivoCuestionario("motivo").build();
         when(cuestionarioEnvioRepository.save(cuestionarioEnviado)).thenReturn(cuestionarioEnviado);
-        String cuerpoCorreo = "cuerpo";
         List<PreguntasCuestionario> preguntasElegidas = new ArrayList<>();
         preguntasElegidas
                 .add(PreguntasCuestionario.builder().id(1L).area(AreasCuestionario.builder().id(1L).build()).build());
@@ -164,14 +193,21 @@ public class CuestionarioEnvioServiceTest {
                 .add(PreguntasCuestionario.builder().id(2L).area(AreasCuestionario.builder().id(2L).build()).build());
         when(preguntasRepository.findPreguntasElegidasCuestionarioPersonalizado(1L)).thenReturn(preguntasElegidas);
         
+        Map<String, String> paramPlantilla = new HashMap<>();
+        paramPlantilla.put("textoEnvioCuestionario", "motivo");
+        paramPlantilla.put("correosProvisionales", "user_test");
+        paramPlantilla.put("password", listadoUsuariosProvisionales.get(0).getPassword());
+        paramPlantilla.put("correoPrincipal", "user_test");
+        
         cuestionarioEnvioService.crearYEnviarCuestionario(listadoUsuariosProvisionales, cuestionarioEnviado,
-                cuerpoCorreo);
+                paramPlantilla);
         
         verify(userService, times(1)).save(listadoUsuariosProvisionales);
         verify(cuestionarioEnvioRepository, times(1)).save(cuestionarioEnviado);
         verify(areaUsuarioCuestEnvService, times(1)).save(areasUsuarioCuestEnvCaptor.capture());
         assertThat(areasUsuarioCuestEnvCaptor.getValue()).hasSize(2);
-        verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class), any(String.class));
+        verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class),
+                eq(Constantes.TEMPLATEENVIOCUESTIONARIO), eq(paramPlantilla));
         verify(inspeccionesService, times(1)).cambiarEstado(cuestionarioEnviado.getInspeccion(),
                 EstadoInspeccionEnum.F_PEND_RECIBIR_CUESTIONARIO);
     }
