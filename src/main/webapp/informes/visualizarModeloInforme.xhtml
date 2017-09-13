@@ -9,17 +9,17 @@
             <h3>#{titulo}</h3>
             
             <div>
-              <ul>
+              <ol>
                   <ui:repeat var="area" value="#{modelosInformeBean.modelo.areas}">
                      <li><h4><h:outputText value="#{area.descripcion}"/></h4></li>
-                     <ul class="titulos">
+                     <ol class="titulos">
                        <ui:repeat value="#{modelosInformeBean.mapaAreasSubareas[area]}" var="subarea">
                             <li><h:outputText value="#{subarea.descripcion}"/></li>
                             
                        </ui:repeat>
-                     </ul>  
+                     </ol>  
                   </ui:repeat>
-              </ul>
+              </ol>
             </div> 
              
                     

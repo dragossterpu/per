@@ -9,20 +9,20 @@
             <h3>#{titulo}</h3>
             
             <div>
-              <ul>
+              <ol>
                <ui:repeat value="#{informePersonalizadoBean.listaAreas}" var="area">
                   <li>
                      <h4><h:outputText value="#{area.descripcion}"/></h4>
-                      <ul class="titulos">
+                      <ol class="titulos">
                        <ui:repeat value="#{informePersonalizadoBean.mapaAreasSubareas[area]}" var="subarea">
                            <li>
                              <h:outputText value="#{subarea.descripcion}"/>
                            </li>
                        </ui:repeat>
-                      </ul>
+                      </ol>
                      </li>
                  </ui:repeat>
-              </ul>
+              </ol>
             </div> 
              
                     

@@ -311,7 +311,7 @@ public class UserBean implements Serializable {
      * Modifica los datos del usuario en función de los valores recuperados del formulario.
      */
     public void modificarUsuario() {
-        try {// TODO Enviar correo con las modificaciones
+        try {
             User original = userService.findOne(user.getUsername());
             if (original.getEstado() != user.getEstado()) {
                 cambiarEstado(user);
@@ -335,7 +335,7 @@ public class UserBean implements Serializable {
         } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
                     "Se ha producido un error al modificar el usuario. Inténtelo de nuevo más tarde");
-            // Guardamos loe posibles errores en bbdd
+            // Guardamos los posibles errores en bbdd
             regActividadService.altaRegActividadError(SeccionesEnum.USUARIOS.getDescripcion(), e);
         }
         
