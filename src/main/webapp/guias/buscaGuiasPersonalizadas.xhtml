@@ -66,8 +66,12 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaGuias" fileName="lista_guias_personalizadas" />
                     </h:commandLink>
-                     <h:commandLink  action="#{exportadorWord.exportDoc('lista_guias_personalizadas', false, 'busquedaGuias:tablaGuias', SeccionesEnum.GUIAS)}">
+                    <h:commandLink  action="#{exportadorWord.exportDoc('lista_guias_personalizadas', false, 'busquedaGuias:tablaGuias', SeccionesEnum.GUIAS)}">
                         <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
+                     <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaGuias" />
                     </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="guia" value="#{guiaPersonalizadaBean.model}" id="tablaGuias" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" resizableColumns="true" draggableColumns="true" rendered="#{guiaPersonalizadaBean.model.rowCount ne 0}" rowStyleClass="#{not empty guia.fechaAnulacion ? 'anulado' : null}">

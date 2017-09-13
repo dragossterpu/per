@@ -89,6 +89,10 @@
                      <h:commandLink  action="#{exportadorWord.exportDoc('lista_usuarios', false, 'busquedaUsers:tablaUsuarios', SeccionesEnum.USUARIOS)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaUsuarios" />
+                    </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="user" value="#{userBean.model}" id="tablaUsuarios" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{userBean.model.rowCount ne 0}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
 

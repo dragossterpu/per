@@ -136,7 +136,6 @@ public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
      * Genera el contenido que se mostrará en el PDF.
      * 
      * @param document Documento pdf al que se adjuntará el contenido
-     * @throws ProgesinException excepción que puede lanzar
      */
     @Override
     public void crearCuerpoPdf(Document document) {

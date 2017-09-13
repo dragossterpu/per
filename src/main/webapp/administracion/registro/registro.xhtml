@@ -63,6 +63,13 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaRegActividad" fileName="lista_registros_actividad" />
                     </h:commandLink>
+                    <h:commandLink  action="#{exportadorWord.exportDoc('lista_registros_actividad', false, 'busquedalistaRegActividad:tablaRegActividad', SeccionesEnum.DOCUMENTACION)}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaRegActividad" />
+                    </h:commandLink>
                 </p:outputPanel>
 
                 <p:dataTable var="regActividad" value="#{regActividadBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" 

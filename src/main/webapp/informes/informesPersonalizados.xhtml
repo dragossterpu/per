@@ -60,6 +60,10 @@
                    <h:commandLink  action="#{exportadorWord.exportDoc('lista_informes_personalizados', false, 'busquedaInformePersonalizado:tablaInformes', SeccionesEnum.INFORMES)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaInformes" />
+                    </h:commandLink>
 	           </p:outputPanel>
 	               
 	           <p:dataTable var="informePersonalizado"  draggableColumns="true" value="#{informePersonalizadoBean.model}" id="tablaInformes" paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" 

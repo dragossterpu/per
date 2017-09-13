@@ -60,8 +60,12 @@
                             <h:commandLink  action="#{exportadorWord.exportDoc('lista_estadisticas', false, 'formEstadisticas:tablaEstadisticas', SeccionesEnum.ESTADISTICAS)}" >
                                 <p:graphicImage value="/images/doc.png" /> 
                             </h:commandLink>
+                            <h:commandLink>
+                                <p:graphicImage value="/images/imprimir.jpg" />
+                                <p:printer target="tablaEstadisticas" />
+                            </h:commandLink>
                             
-                            <p:graphicImage ajax="false" value="/images/statistics.png" onclick="PF('dialogG').show()"/>
+                    <p:graphicImage ajax="false" value="/images/statistics.png" onclick="PF('dialogG').show()"/>
                             
                         </p:outputPanel>
                         <p:dataTable  id="tablaEstadisticas"  value="#{estadisticaBean.listaEstados}" var="estado"  

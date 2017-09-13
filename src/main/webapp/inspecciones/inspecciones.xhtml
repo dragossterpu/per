@@ -135,6 +135,10 @@
                     <h:commandLink  action="#{exportadorWord.exportDoc('lista_inspecciones', false, 'busquedaInspecciones:tablaInspecciones', SeccionesEnum.INSPECCION)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaInspecciones" />
+                    </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="inspeccion" value="#{inspeccionBean.model}" rows="#{Constantes.TAMPAGINA}" id="tablaInspecciones" rowsPerPageTemplate="5,10,15,20" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" draggableColumns="true" paginator="true" resizableColumns="true" rendered="#{inspeccionBean.model.rowCount ne 0}" selection="#{inspeccionBean.inspeccionBusqueda.inspeccionesSeleccionadas}" rowKey="#{inspeccion.id}" rowSelectMode="checkbox">
 

@@ -23,6 +23,9 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaDocumentos" fileName="lista_documentos_papelera" />
                     </h:commandLink>
+                     <h:commandLink  action="#{exportadorWord.exportDoc('lista_documentos_papelera', false, 'form:tablaDocumentos', SeccionesEnum.DOCUMENTACION)}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
                     <h:commandLink>
                         <p:graphicImage value="/images/imprimir.jpg" />
                         <p:printer target="tablaDocumentos" />

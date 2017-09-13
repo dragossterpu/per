@@ -72,6 +72,10 @@
                      <h:commandLink  action="#{exportadorWord.exportDoc('lista_cuestionarios_personalizados', false, 'busquedaCuestionario:tablaCuestionarios', SeccionesEnum.CUESTIONARIO)}">
                         <p:graphicImage value="/images/doc.png" /> 
                     </h:commandLink>
+                     <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaCuestionarios" />
+                    </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="cuestionario" value="#{cuestionarioPersonalizadoBean.model}" id="tablaCuestionarios" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioPersonalizadoBean.model.rowCount ne 0}" resizableColumns="true" draggableColumns="true" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
                     <f:facet name="header">

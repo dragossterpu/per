@@ -99,12 +99,15 @@
                         <p:graphicImage value="/images/csv.png" />
                         <p:dataExporter type="csv" target="tablaCuestionarios" fileName="lista_cuestionarios_personalizados" />
                     </h:commandLink>
-                     <h:commandLink  action="#{exportadorWord.exportDoc('listaCuestionariosEnviados', false, 'busquedaCuestionario:tablaCuestionarios', SeccionesEnum.INSPECCION)}">
+                    <h:commandLink  action="#{exportadorWord.exportDoc('listaCuestionariosEnviados', false, 'busquedaCuestionario:tablaCuestionarios', SeccionesEnum.INSPECCION)}">
                         <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaCuestionarios" />
                     </h:commandLink>
                 </p:outputPanel>
                 <p:dataTable var="cuestionario" resizableColumns="true" draggableColumns="true" value="#{cuestionarioEnviadoBean.model}" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" id="tablaCuestionarios" paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{cuestionarioEnviadoBean.model.rowCount ne 0}" emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
-
 
                     <f:facet name="header">
 					Cuestionarios enviados
