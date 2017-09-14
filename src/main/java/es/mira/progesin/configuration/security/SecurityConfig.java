@@ -77,20 +77,50 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO falta limitar el acceso por url a todas las rutas a las que no pueden acceder todos los usuarios, por
-        // ejemplo, los provisionales
-        http.csrf().disable().authorizeRequests().antMatchers("/css/**", "/images/**", "/javax.faces.resource/**")
-                .permitAll().antMatchers(Constantes.RUTALOGIN + "/**").anonymous().antMatchers("/acceso/**").anonymous()
+        
+        // Desactivada protección Cross-Site, incompatible con la implementación actual del sistema
+        http.csrf().disable();
+        
+        // Gestión de peticiones HTTP a recursos del sistema en base a la sesión del usuario
+        http.authorizeRequests()
+                // Recursos comunes
+                .antMatchers("/css/**", "/images/**", "/javax.faces.resource/**").permitAll()
+                
+                // Acceso al sistema
+                .antMatchers(Constantes.RUTALOGIN + "/**").anonymous().antMatchers("/acceso/**").anonymous()
+                
                 // Acceso a la administración sólo para el role ADMIN
                 .antMatchers("/administracion/**", "/users/altaUsuario.xhtml").hasRole(RoleEnum.ROLE_ADMIN.getNombre())
+                
                 // Acceso a ciertas partes sólo el ADMIN y JEFE_INSPECCIONES
                 .antMatchers("/equipos/altaEquipo.xhtml", "/inspecciones/modeloInspeccion/**")
                 .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre())
-                // Al resto pueden acceder todos los usuarios autenticados
-                .anyRequest().authenticated().and().formLogin().loginPage(Constantes.RUTALOGIN).permitAll()
+                
+                // Acceso usuarios provisionales de solicitudes
+                .antMatchers("/provisionalSolicitud/**").hasRole(RoleEnum.ROLE_PROV_SOLICITUD.getNombre())
+                
+                // Acceso usuarios provisionales de cuestionarios
+                .antMatchers("/cuestionarios/asignarAreasUsuarioProv.xhtml")
+                .hasRole(RoleEnum.ROLE_PROV_CUESTIONARIO.getNombre())
+                
+                // Acceso todos los usuarios (provisionales cuestionario cumplimentar, resto previsualizar)
+                .antMatchers("/cuestionarios/descargaPlantillasCuestionario.xhtml",
+                        "/cuestionarios/responderCuestionario.xhtml")
+                .hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre(),
+                        RoleEnum.ROLE_EQUIPO_INSPECCIONES.getNombre(), RoleEnum.ROLE_SERVICIO_APOYO.getNombre(),
+                        RoleEnum.ROLE_GABINETE.getNombre(), RoleEnum.ROLE_PROV_CUESTIONARIO.getNombre())
+                
+                // Al resto pueden acceder todos los usuarios autenticados menos provisionales
+                .anyRequest().hasAnyRole(RoleEnum.ROLE_ADMIN.getNombre(), RoleEnum.ROLE_JEFE_INSPECCIONES.getNombre(),
+                        RoleEnum.ROLE_EQUIPO_INSPECCIONES.getNombre(), RoleEnum.ROLE_SERVICIO_APOYO.getNombre(),
+                        RoleEnum.ROLE_GABINETE.getNombre());
+        
+        // Inicio de sesión
+        http.formLogin().loginPage(Constantes.RUTALOGIN).permitAll()
                 .successHandler(authenticationSuccessHandlerPersonalizado)
                 .failureHandler(authenticationFailureHandlerPersonalizado);
         
+        // Cierre de sesión
         http.logout().logoutUrl(Constantes.RUTALOGOUT).logoutSuccessUrl(Constantes.RUTALOGIN);
         
         // configuración para el manejo de las sessiones de los usuarios
