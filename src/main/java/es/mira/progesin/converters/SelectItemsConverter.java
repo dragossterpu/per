@@ -1,5 +1,6 @@
 package es.mira.progesin.converters;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UIComponent;
@@ -54,11 +55,14 @@ public class SelectItemsConverter implements Converter {
                 UISelectItems uiSelectItems = (UISelectItems) child;
                 @SuppressWarnings("unchecked")
                 List<SelectItem> listaItems = (List<SelectItem>) uiSelectItems.getValue();
-                for (int itemIndex = 0; itemIndex < listaItems.size() && !encontrado; itemIndex++) {
-                    Object item = listaItems.get(itemIndex);
-                    if (item.toString().equals(submitedValue)) {
-                        entity = item;
-                        encontrado = true;
+                if (listaItems != null) {
+                    Iterator<SelectItem> iterator = listaItems.iterator();
+                    while (iterator.hasNext() && !encontrado) {
+                        Object item = iterator.next();
+                        encontrado = submitedValue.equals(item.toString());
+                        if (encontrado) {
+                            entity = item;
+                        }
                     }
                 }
             }
