@@ -1,29 +1,53 @@
-/**
- * 
- */
 package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DynamicMenuModel;
 
 /**
  * Test para NavegacionBean.
+ * 
  * @author EZENTIS
  *
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PowerMockIgnore("javax.security.*")
+@PrepareForTest({ FacesContext.class })
 public class NavegacionBeanTest {
     /**
      * Simulación de NavegacionBean.
      */
     @InjectMocks
     private NavegacionBean navegacionBean;
+    
+    /**
+     * Simulación de contexto externo.
+     */
+    
+    @Mock
+    private ExternalContext external;
+    
+    /**
+     * Simulación de contexto.
+     */
+    @Mock
+    private FacesContext context;
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.NavegacionBean#init()}.
@@ -76,6 +100,14 @@ public class NavegacionBeanTest {
      */
     @Test
     public final void testRecomenzar() {
+        Map<String, Object> mapaSesion = new HashMap<>();
+        mapaSesion.put("pruebaBean", new NavegacionBean());
+        
+        PowerMockito.mockStatic(FacesContext.class);
+        when(FacesContext.getCurrentInstance()).thenReturn(context);
+        when(context.getExternalContext()).thenReturn(external);
+        when(external.getSessionMap()).thenReturn(mapaSesion);
+        
         navegacionBean.recomenzar("bbb", "prueba3.xhtml");
         DefaultMenuItem defaultMenuItem = (DefaultMenuItem) navegacionBean.getCaminoMigas().getElements().get(0);
         

@@ -2,8 +2,10 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DynamicMenuModel;
@@ -91,6 +93,22 @@ public class NavegacionBean implements Serializable {
     public void recomenzar(String nombre, String ruta) {
         iniciarCamino();
         adelante(nombre, ruta);
+        limpiarBeans();
+    }
+    
+    /**
+     * Elimina los bean de la sesión.
+     */
+    private void limpiarBeans() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, Object> mapaSesion = context.getExternalContext().getSessionMap();
+        for (String cabecera : mapaSesion.keySet()) {
+            String ubicacion = mapaSesion.get(cabecera).getClass().getPackage().toString().toLowerCase();
+            if (ubicacion.contains("bean")) {
+                mapaSesion.remove("cabecera");
+            }
+        }
+        
     }
     
 }
