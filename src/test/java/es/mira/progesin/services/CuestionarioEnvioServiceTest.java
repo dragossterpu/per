@@ -140,7 +140,6 @@ public class CuestionarioEnvioServiceTest {
     @Before
     public void setUp() {
         PowerMockito.mockStatic(SecurityContextHolder.class);
-        
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
     }

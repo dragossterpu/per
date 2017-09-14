@@ -6,14 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
@@ -24,8 +21,7 @@ import es.mira.progesin.persistence.repositories.IModeloCuestionarioRepository;
  *
  * @author EZENTIS
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(SecurityContextHolder.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ModeloCuestionarioServiceTest {
     /**
      * Simulación del repositorio de modelos de cuestionario.
@@ -38,13 +34,6 @@ public class ModeloCuestionarioServiceTest {
      */
     @InjectMocks
     private IModeloCuestionarioService modeloCuestionarioService = new ModeloCuestionarioService();
-    
-    /**
-     * Configuración inicial del test.
-     */
-    @Before
-    public void setUp() {
-    }
     
     /**
      * Comprobación de que la clase existe.
