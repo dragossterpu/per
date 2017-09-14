@@ -30,9 +30,13 @@
                             <p:graphicImage value="/images/csv.png" />
                             <p:dataExporter type="csv" target="tablaAlertas" fileName="lista_alertas" />
                         </h:commandLink>
-                         <h:commandLink  action="#{exportadorWord.exportDoc('lista_alertas', false, 'busquedaAlertas:tablaAlertas', SeccionesEnum.ALERTAS)}">
-                        <p:graphicImage value="/images/doc.png" /> 
+                        <h:commandLink  action="#{exportadorWord.exportDoc('lista_alertas', false, 'busquedaAlertas:tablaAlertas', SeccionesEnum.ALERTAS)}">
+                            <p:graphicImage value="/images/doc.png" /> 
                         </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/imprimir.jpg" />
+                            <p:printer target="tablaAlertas" />
+                       </h:commandLink>
                     </p:outputPanel>
                     <p:dataTable var="alerta" value="#{AlertasNotificacionesUsuarioBean.modelAlertas}" id="tablaAlertas" paginator="true" rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" lazy="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Ninguna">
 
@@ -80,8 +84,12 @@
                             <p:dataExporter type="csv" target="tablaNotificaciones" fileName="lista_notificaciones" />
                         </h:commandLink>
                        <h:commandLink  action="#{exportadorWord.exportDoc('lista_notificaciones', false, 'busquedaNotificaciones:tablaNotificaciones', SeccionesEnum.NOTIFICACIONES)}">
-                        <p:graphicImage value="/images/doc.png" /> 
-                        </h:commandLink>
+                            <p:graphicImage value="/images/doc.png" /> 
+                       </h:commandLink>
+                       <h:commandLink>
+                            <p:graphicImage value="/images/imprimir.jpg" />
+                            <p:printer target="tablaNotificaciones" />
+                       </h:commandLink>
                     </p:outputPanel>
                     <p:dataTable var="notificacion" value="#{AlertasNotificacionesUsuarioBean.modelNotificaciones}" paginator="true" 
                     rowsPerPageTemplate="5,10,15,20" 
