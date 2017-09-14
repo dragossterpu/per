@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Gestión de peticiones HTTP a recursos del sistema en base a la sesión del usuario
         http.authorizeRequests()
                 // Recursos comunes
-                .antMatchers("/css/**", "/images/**", "/javax.faces.resource/**").permitAll()
+                .antMatchers("/css/**", "/images/**", "/js/**", "/javax.faces.resource/**").permitAll()
                 
                 // Acceso al sistema
                 .antMatchers(Constantes.RUTALOGIN + "/**").anonymous().antMatchers("/acceso/**").anonymous()

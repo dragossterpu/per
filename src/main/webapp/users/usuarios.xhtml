@@ -138,7 +138,7 @@
                     </p:column>
                     <p:column styleClass="botonTabla" exportable="false" toggleable="false" rendered="#{esAdmin}">
                         <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{userBean.setDiasInactivo(user.fechaInactivo)}"
-                            rendered="#{(user.role ne 'ROLE_PROV_SOLICITUD') and (user.role ne 'ROLE_PROV_CUESTIONARIO')}" update="dlgEliminar"
+                            disabled="#{(user.role eq 'ROLE_PROV_SOLICITUD') or (user.role eq 'ROLE_PROV_CUESTIONARIO')}" update="dlgEliminar"
                             oncomplete="PF('dialogoEliminar').show()" >
                             
                             <p:dialog widgetVar="dialogoEliminar" modal="true" header="Eliminar usuario" id="dlgEliminar" resizable="false" draggable="false" closable="false" >
