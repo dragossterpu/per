@@ -2,7 +2,7 @@
     <ui:define name="content">
     
         <ui:param name="titulo" value="Error interno" />
-        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
         <p:outputPanel styleClass="bloqueVistaTitulo">
             <h3>#{titulo}</h3>
         </p:outputPanel>

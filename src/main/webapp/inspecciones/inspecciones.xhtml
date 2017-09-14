@@ -9,7 +9,7 @@
         <ui:param name="esJefeEquipo" value="#{miembroService.esJefeEquipo(usernameActual)}" />
         <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
         
-        <ui:param name="esAsociacion" value="#{['asociarAlta', 'asociarEditar'].contains(inspeccionBean.vieneDe)}" />
+        <ui:param name="esAsociacion" value="#{(inspeccionBean.vieneDe eq 'asociarAlta') or (inspeccionBean.vieneDe eq 'asociarEditar')}" />
         <fn:choose>
             <fn:when test="#{esAsociacion}"> 
                 <ui:param name="titulo" value="Asociar inspecciones" />
