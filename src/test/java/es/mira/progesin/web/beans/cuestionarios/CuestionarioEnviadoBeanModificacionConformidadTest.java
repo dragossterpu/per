@@ -10,10 +10,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -27,8 +25,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.primefaces.event.ToggleEvent;
-import org.primefaces.model.Visibility;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -63,7 +59,7 @@ import es.mira.progesin.web.beans.ApplicationBean;
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
-public class CuestionarioEnviadoBean2Test {
+public class CuestionarioEnviadoBeanModificacionConformidadTest {
     
     /**
      * Constante user.
@@ -269,22 +265,6 @@ public class CuestionarioEnviadoBean2Test {
                 eq(Constantes.FALLOCORREO));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
                 any(CorreoException.class));
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBean#onToggle(org.primefaces.event.ToggleEvent)}.
-     */
-    @Test
-    public final void testOnToggle() {
-        ToggleEvent eventMock = mock(ToggleEvent.class);
-        when(eventMock.getData()).thenReturn(0);
-        when(eventMock.getVisibility()).thenReturn(Visibility.HIDDEN);
-        List<Boolean> listaToogle = new ArrayList<>();
-        listaToogle.add(Boolean.FALSE);
-        cuestionarioEnviadoBeanMock.setList(listaToogle);
-        cuestionarioEnviadoBeanMock.onToggle(eventMock);
-        assertThat(listaToogle.get(0)).isFalse();
     }
     
     /**

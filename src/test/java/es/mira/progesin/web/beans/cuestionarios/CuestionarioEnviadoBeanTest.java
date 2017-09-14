@@ -27,7 +27,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.Visibility;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -328,6 +330,22 @@ public class CuestionarioEnviadoBeanTest {
         assertThat(cuestionarioEnviadoBeanMock.getCuestionarioEnviadoBusqueda()).isNotNull();
         assertThat(cuestionarioEnviadoBeanMock.getModel()).isNotNull();
         
+    }
+    
+    /**
+     * Test method for
+     * {@link es.mira.progesin.web.beans.cuestionarios.CuestionarioEnviadoBean#onToggle(org.primefaces.event.ToggleEvent)}.
+     */
+    @Test
+    public final void testOnToggle() {
+        ToggleEvent eventMock = mock(ToggleEvent.class);
+        when(eventMock.getData()).thenReturn(0);
+        when(eventMock.getVisibility()).thenReturn(Visibility.HIDDEN);
+        List<Boolean> listaToogle = new ArrayList<>();
+        listaToogle.add(Boolean.FALSE);
+        cuestionarioEnviadoBeanMock.setList(listaToogle);
+        cuestionarioEnviadoBeanMock.onToggle(eventMock);
+        assertThat(listaToogle.get(0)).isFalse();
     }
     
 }
