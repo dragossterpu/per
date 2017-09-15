@@ -69,6 +69,24 @@ public class ModeloInformePersonalizadoService implements IModeloInformePersonal
     private IRegistroActividadService registroActivadService;
     
     /**
+     * Constructor vacío.
+     * 
+     */
+    public ModeloInformePersonalizadoService() {
+    }
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public ModeloInformePersonalizadoService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
+    
+    /**
      * Busca el informe personalizado cargando las subareas en el objeto devuelto.
      * 
      * @param idInformePersonalizado id del informe personalizado
