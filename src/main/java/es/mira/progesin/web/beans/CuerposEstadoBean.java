@@ -146,7 +146,8 @@ public class CuerposEstadoBean implements Serializable {
             cuerpoEstado.setFechaModificacion(new Date());
             cuerpoEstado.setUsernameModif(user);
             cuerposEstadoService.save(cuerpoEstado);
-            regActividadService.altaRegActividad("Se ha modificado " + cuerpoEstado,
+            regActividadService.altaRegActividad(
+                    "El usuario " + user + " ha modificado el cuerpo " + cuerpoEstado.getNombreCorto(),
                     TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.ADMINISTRACION.getDescripcion());
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO, "Cuerpo modificado",
                     cuerpoEstado.getDescripcion(), null);
