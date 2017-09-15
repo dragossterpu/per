@@ -322,15 +322,19 @@ public class UserBean implements Serializable {
                     "El usuario ha sido modificado con éxito");
             
             StringBuffer descripcion = new StringBuffer("Modificación del usuario : ").append(user.getUsername())
-                    .append("\n\n").append(Utilities.camposModificados(original, modificado));
+                    .append("<br>").append(Utilities.camposModificados(original, modificado));
             
             // Guardamos la actividad en bbdd
-            regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
+            
+            String descripcionPlana = descripcion.toString().replace("<br>", "\n").replace("<strong>", "")
+                    .replace("</strong>", "");
+            
+            regActividadService.altaRegActividad(descripcionPlana, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.USUARIOS.getDescripcion());
             
             // Enviamos correo
             correo.envioCorreo(user.getCorreo(), "Usuario modificado",
-                    "Se han realizado cambios en su perfil de usuario en la herramienta PROGESIN\n\n" + descripcion);
+                    "<p>Se han realizado cambios en su perfil de usuario en la herramienta PROGESIN</p>" + descripcion);
             
         } catch (DataAccessException | ProgesinException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Modificación",
@@ -507,7 +511,7 @@ public class UserBean implements Serializable {
     
     private void auditoriaVisualizacion(User usuario) {
         String descripcion = "El usuario " + SecurityContextHolder.getContext().getAuthentication().getName()
-                + " ha realizado ha visualizado un usuario." + "El usuario consultado es: " + usuario.getUsername();
+                + " ha visualizado un usuario." + "El usuario consultado es: " + usuario.getUsername();
         
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.AUDITORIA.name(),
                 SeccionesEnum.USUARIOS.getDescripcion());

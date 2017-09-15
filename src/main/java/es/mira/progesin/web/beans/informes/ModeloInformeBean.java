@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
@@ -29,7 +30,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("modelosInformeBean")
-@Scope("session")
+@Scope(FacesViewScope.NAME)
 public class ModeloInformeBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
