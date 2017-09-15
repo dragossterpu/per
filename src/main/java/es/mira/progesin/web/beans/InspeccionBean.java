@@ -326,7 +326,8 @@ public class InspeccionBean implements Serializable {
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "La inspección  ha sido creada con éxito");
-            String descripcion = "Alta nueva inspección";
+            String descripcion = "Alta de la inspección " + inspeccion.getNumero() + " asignada al equipo "
+                    + inspeccion.getEquipo().getNombreEquipo();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
             alertaService.crearAlertaEquipo(SeccionesEnum.INSPECCION.getDescripcion(), descripcion, inspeccion);

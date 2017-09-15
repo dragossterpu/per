@@ -162,8 +162,9 @@ public class CuestionarioEnvioServiceTest {
     }
     
     /**
-     * Test method for {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List<User> ,
-     * CuestionarioEnvio , Map<String, String> )} .
+     * Test method for
+     * {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List, CuestionarioEnvio, Map)}
+     * .
      */
     @Test
     public void crearYEnviarCuestionario() {

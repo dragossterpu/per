@@ -445,7 +445,7 @@ insert into subareas_informe(id, descripcion, area_id) values (6, '2.5.- Conclus
 
 --MODELOS DE INFORMES PERSONALIZADOS
 
-insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (1, 'Estándar (Guardia Civil)', 1, trunc(sysdate), 'system');
+insert into MODELOS_INFORME_PERSONALIZADOS(ID, NOMBRE, ID_MODELO_INFORME, FECHA_ALTA, USERNAME_ALTA) values (1, 'Estándar (Guardia Civil)', 1, to_timestamp('10/06/17 00:00:00,000000000','DD/MM/RR HH24:MI:SS,FF'), 'system');
 
 insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (1, 1);
 insert into INFORME_PERSONAL_SUBAREAS(ID_INFORME_PERS, ID_SUBAREA) values (1, 2);
