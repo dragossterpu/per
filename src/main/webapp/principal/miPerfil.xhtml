@@ -105,48 +105,46 @@
         </div>
         </h:form>
         
-        <h4>Contraseña</h4>
+        <h:form id="passwordForm">
         <div class="bloqueFormulario">
+        <h4>Contraseña</h4>
             <div class="columnaIzdaFormulario">
-                <h:form id="passwordForm">
-                    <h:outputLabel for="claveActual" value="Contraseña actual:" />
-                    <p:password value="#{miPerfilBean.claveActual}" required="#{param['form:guardar']!=null}"  id="claveActual" requiredMessage="Introduzca la contraseña actual" />
+                <h:outputLabel for="claveActual" value="Contraseña actual:" />
+                <p:password value="#{miPerfilBean.claveActual}" required="true"  id="claveActual" requiredMessage="Introduzca la contraseña actual" />
 
-                    <h:outputLabel for="claveNueva" value="Nueva contraseña:" />
-                    <p:password value="#{miPerfilBean.claveNueva}" required="#{param['form:guardar']!=null}" feedback="true" id="claveNueva" requiredMessage="Introduzca la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
+                <h:outputLabel for="claveNueva" value="Nueva contraseña:" />
+                <p:password value="#{miPerfilBean.claveNueva}" required="true" feedback="true" id="claveNueva" requiredMessage="Introduzca la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
-                    <h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
-                    <p:password value="#{miPerfilBean.claveConfirm}" required="#{param['form:guardar']!=null}" feedback="true" id="claveConfirm" requiredMessage="Repita la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
+                <h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
+                <p:password value="#{miPerfilBean.claveConfirm}" required="true" feedback="true" id="claveConfirm" requiredMessage="Repita la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
 
-                    <p:commandButton id="guardar" value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-eraser" title="Guardar la contraseña"/>
-
-                    <p:commandButton value="Limpiar" update="passwordForm" process="@this" title="Limpiar el formulario">
-                        <p:resetInput target="passwordForm" />
-                    </p:commandButton>
-                    
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" title="Cancelar y volver a la pantalla principal">
-                         <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
-                    </p:commandButton>
-                    
-                     <p:button id="volver" value="Volver" outcome="/index" title="Volver a la pantalla principal"/>
+                <p:commandButton id="guardar" value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-save" title="Guardar la contraseña"/>
+                <p:commandButton value="Limpiar" update="passwordForm" process="@this" title="Limpiar el formulario" icon="fa fa-eraser">
+                    <p:resetInput target="passwordForm" />
+                </p:commandButton>                
+                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" title="Cancelar y volver a la pantalla principal" action="/index?faces-redirect=true" immediate="true">
+                     <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                </p:commandButton>
+                 <p:button id="volver" value="Volver" outcome="/index" title="Volver a la pantalla principal"/>
+            
+                <p:messages id="messages" autoUpdate="true" closable="true" />   
+           </div>
                 
-                    <p:messages id="messages" autoUpdate="true" closable="true" />
-                    
-                    <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
-                       <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
-                       <div class="centrarBotonesDialog">
-                           <p:button value="Cerrar" outcome="/index" />
-                       </div>
-                   </p:dialog>
-                    <p:confirmDialog global="true">
-                       <div class="centrarBotonesDialog">
-                           <p:button outcome="/index" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-                           <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
-                       </div>
-                   </p:confirmDialog>
-                </h:form>
-            </div>
+            <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+               <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+               <div class="centrarBotonesDialog">
+                   <p:button value="Cerrar" outcome="/index" />
+               </div>
+           </p:dialog>
+
+            <p:confirmDialog global="true">
+                <div class="centrarBotonesDialog">
+                    <p:button value="Aceptar" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                    <p:button value="Cancelar" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                </div>
+            </p:confirmDialog>
         </div>
+        </h:form>
         
     </ui:define>
 </ui:composition>

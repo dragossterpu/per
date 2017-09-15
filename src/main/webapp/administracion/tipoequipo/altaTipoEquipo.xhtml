@@ -8,24 +8,24 @@
         <div class="bloqueFormulario">
             <h:form id="form">
                 <h:outputLabel for="codigo" value="Código del tipo de equipo (*):" />
-                <p:inputText id="codigo" value="#{codigo}" required="#{param['form:enviar']!=null}"  requiredMessage="Introduzca el código del tipo de equipo" maxlength="5" converter="#{trimConverter}" validator="#{codigoTipoEquipoValidator.validate}" />
+                <p:inputText id="codigo" value="#{codigo}" required="true"  requiredMessage="Introduzca el código del tipo de equipo" maxlength="5" converter="#{trimConverter}" validator="#{codigoTipoEquipoValidator.validate}" />
                 <p:messages for="codigo" autoUpdate="true" closable="true" />
 
                 <h:outputLabel for="descripcion" value="Descripción del tipo de equipo (*):" />
-                <p:inputText id="descripcion" value="#{descripcion}" required="#{param['form:enviar']!=null}"  requiredMessage="Introduzca la descripción del tipo de equipo" maxlength="100" converter="#{trimConverter}" />
+                <p:inputText id="descripcion" value="#{descripcion}" required="true"  requiredMessage="Introduzca la descripción del tipo de equipo" maxlength="100" converter="#{trimConverter}" />
                 <p:messages for="descripcion" autoUpdate="true" closable="true" />
 
                 <div class="botonesFormulario">
-                    <p:commandButton id="enviar" actionListener="#{tipoEquipoBean.altaTipo(codigo, descripcion)}" value="Crear tipo de equipo" icon="fa fa-fw fa-save" />
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
+                    <p:commandButton actionListener="#{tipoEquipoBean.altaTipo(codigo, descripcion)}" value="Crear tipo de equipo" icon="fa fa-fw fa-save" />
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" action="/administracion/tipoequipo/tiposEquipo?faces-redirect=true" immediate="true">
                          <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
                     </p:commandButton>
                 </div>
-                
-                 <p:confirmDialog global="true">
+
+                <p:confirmDialog global="true">
                     <div class="centrarBotonesDialog">
-                        <p:button outcome="/administracion/tipoequipo/tiposEquipo" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
-                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+                        <p:button value="Aceptar" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                        <p:button value="Cancelar" styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
                     </div>
                 </p:confirmDialog>
 

@@ -48,24 +48,27 @@ public class SelectItemsConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String submitedValue) {
         Object entity = null;
         List<UIComponent> childrenList = component.getChildren();
+        Iterator<UIComponent> iteratorChildren = childrenList.iterator();
         boolean encontrado = false;
-        for (int childrenIndex = 0; childrenIndex < childrenList.size() && !encontrado; childrenIndex++) {
-            UIComponent child = childrenList.get(childrenIndex);
+        UIComponent child;
+        Object item = null;
+        while (iteratorChildren.hasNext() && !encontrado) {
+            child = iteratorChildren.next();
             if (child instanceof UISelectItems) {
                 UISelectItems uiSelectItems = (UISelectItems) child;
                 @SuppressWarnings("unchecked")
                 List<SelectItem> listaItems = (List<SelectItem>) uiSelectItems.getValue();
                 if (listaItems != null) {
-                    Iterator<SelectItem> iterator = listaItems.iterator();
-                    while (iterator.hasNext() && !encontrado) {
-                        Object item = iterator.next();
+                    Iterator<SelectItem> iteratorItems = listaItems.iterator();
+                    while (iteratorItems.hasNext() && !encontrado) {
+                        item = iteratorItems.next();
                         encontrado = submitedValue.equals(item.toString());
-                        if (encontrado) {
-                            entity = item;
-                        }
                     }
                 }
             }
+        }
+        if (encontrado) {
+            entity = item;
         }
         return entity;
     }
