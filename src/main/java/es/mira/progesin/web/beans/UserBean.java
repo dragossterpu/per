@@ -324,7 +324,7 @@ public class UserBean implements Serializable {
             String descripcionCorreo = Utilities.camposModificados(original, modificado);
             
             if (!descripcionCorreo.isEmpty()) {
-                StringBuffer descripcion = new StringBuffer("Modificación del usuario : ").append(user.getUsername());
+                StringBuilder descripcion = new StringBuilder("Modificación del usuario : ").append(user.getUsername());
                 
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
