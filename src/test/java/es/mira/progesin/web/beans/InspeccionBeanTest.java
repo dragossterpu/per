@@ -263,9 +263,10 @@ public class InspeccionBeanTest {
     @Test
     public final void testAltaInspeccion() {
         List<Inspeccion> inspeccionesAsignadasActuales = new ArrayList<>();
-        // Inspeccion ins = mock(Inspeccion.class);
-        Inspeccion inspeccion = Inspeccion.builder().build();
-        inspeccion.setInspecciones(inspeccionesAsignadasActuales);
+        Equipo equipo = new Equipo();
+        equipo.setNombreEquipo("Equipo A");
+        Inspeccion inspeccion = Inspeccion.builder().equipo(equipo).id(1L).anio(2018)
+                .inspecciones(inspeccionesAsignadasActuales).build();
         inspeccionBean.setInspeccion(inspeccion);
         ArgumentCaptor<Inspeccion> inspGuardada = ArgumentCaptor.forClass(Inspeccion.class);
         

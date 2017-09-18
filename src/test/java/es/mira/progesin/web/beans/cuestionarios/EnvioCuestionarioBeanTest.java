@@ -282,36 +282,10 @@ public class EnvioCuestionarioBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#enviarCuestionario()}.
+     * @throws ExcepcionRollback excepción RollBack
      */
     @Test
-    public final void testEnviarCuestionarioExisteCorreo() {
-        String correoEnvio = CORREO;
-        Inspeccion inspeccion = new Inspeccion();
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setInspeccion(inspeccion);
-        cuestionarioEnvio.setCorreoEnvio(CORREO);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        when(solDocService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);
-        when(solDocService.findNoFinalizadaPorCorreoDestinatario(correoEnvio)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio)).thenReturn(null);
-        when(userService.exists(correoEnvio)).thenReturn(true);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        
-        envioCuestionarioBean.enviarCuestionario();
-        verify(userService, times(1)).exists(correoEnvio);
-        PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
-                any(String.class));
-        
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#enviarCuestionario()}.
-     * @throws ExcepcionRollback
-     */
-    @Test
-    public final void testEnviarCuestionarioNoExisteCorreo() throws ExcepcionRollback {
+    public final void testEnviarCuestionario() throws ExcepcionRollback {
         String correoEnvio = CORREO;
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setAmbito(AmbitoInspeccionEnum.PN);
@@ -328,22 +302,23 @@ public class EnvioCuestionarioBeanTest {
         when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);
         when(solDocService.findNoFinalizadaPorCorreoDestinatario(correoEnvio)).thenReturn(null);
         when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio)).thenReturn(null);
-        when(userService.exists(correoEnvio)).thenReturn(false);
+        when(userService.exists(correoEnvio)).thenReturn(true);
         envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
         
-        User user = mock(User.class);
+        User user = new User();
+        user.setUsername(CORREO);
         List<User> users = new ArrayList<>();
         users.add(user);
         when(userService.crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class))).thenReturn(users);
         
         envioCuestionarioBean.enviarCuestionario();
-        PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
-                any(String.class));
-        verify(userService, times(1)).exists(correoEnvio);
+        
         verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class));
         verify(cuestionarioEnvioService, times(1)).crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio),
                 paramCaptor.capture());
+        PowerMockito.verifyStatic(times(1));
+        FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
+                any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
@@ -355,9 +330,9 @@ public class EnvioCuestionarioBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#enviarCuestionario()}.
-     * @throws ExcepcionRollback
+     * @throws ExcepcionRollback excepción RollBack
      */
-    public final void testEnviarCuestionarioNoExisteCorreoException() throws ExcepcionRollback {
+    public final void testEnviarCuestionarioException() throws ExcepcionRollback {
         String correoEnvio = CORREO;
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setAmbito(AmbitoInspeccionEnum.PN);
