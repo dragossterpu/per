@@ -30,11 +30,11 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
@@ -102,12 +102,6 @@ public class EnvioCuestionarioBeanTest {
     private IInspeccionesService inspeccionService;
     
     /**
-     * Servicio de Solicitud de documentación.
-     */
-    @Mock
-    private ISolicitudDocumentacionService solDocService;
-    
-    /**
      * Servicio de registro de actividad.
      */
     @Mock
@@ -130,6 +124,12 @@ public class EnvioCuestionarioBeanTest {
      */
     @Mock
     private INotificacionService notificacionService;
+    
+    /**
+     * Servicio de Solicitud de documentación.
+     */
+    @Mock
+    private ISolicitudDocumentacionService solDocService;
     
     /**
      * Simulacion de EnvioCuestionarioBean.
@@ -308,9 +308,10 @@ public class EnvioCuestionarioBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#enviarCuestionario()}.
+     * @throws ExcepcionRollback
      */
     @Test
-    public final void testEnviarCuestionarioNoExisteCorreo() {
+    public final void testEnviarCuestionarioNoExisteCorreo() throws ExcepcionRollback {
         String correoEnvio = CORREO;
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setAmbito(AmbitoInspeccionEnum.PN);
@@ -354,9 +355,9 @@ public class EnvioCuestionarioBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#enviarCuestionario()}.
+     * @throws ExcepcionRollback
      */
-    @Test
-    public final void testEnviarCuestionarioNoExisteCorreoException() {
+    public final void testEnviarCuestionarioNoExisteCorreoException() throws ExcepcionRollback {
         String correoEnvio = CORREO;
         Inspeccion inspeccion = new Inspeccion();
         inspeccion.setAmbito(AmbitoInspeccionEnum.PN);
@@ -391,8 +392,8 @@ public class EnvioCuestionarioBeanTest {
         users.add(user);
         when(userService.crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class))).thenReturn(users);
         
-        doThrow(TransientDataAccessResourceException.class).when(cuestionarioEnvioService)
-                .crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio), paramCaptor.capture());
+        doThrow(ExcepcionRollback.class).when(cuestionarioEnvioService).crearYEnviarCuestionario(eq(users),
+                eq(cuestionarioEnvio), paramCaptor.capture());
         envioCuestionarioBean.enviarCuestionario();
         verify(userService, times(1)).exists(correoEnvio);
         verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class));
@@ -403,132 +404,6 @@ public class EnvioCuestionarioBeanTest {
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
                 any(Exception.class));
         
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#inspeccionSinTareasPendientes()}.
-     */
-    @Test
-    public final void testInspeccionSinTareasPendientes() {
-        Inspeccion inspeccion = mock(Inspeccion.class);
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setInspeccion(inspeccion);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        when(solDocService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);
-        assertThat(envioCuestionarioBean.inspeccionSinTareasPendientes()).isTrue();
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#inspeccionSinTareasPendientes()}.
-     */
-    @Test
-    public final void testInspeccionConSolicitudesPendientes() {
-        TipoInspeccion tipoInspeccion = new TipoInspeccion();
-        tipoInspeccion.setCodigo(CODIGOINSPECCION);
-        Inspeccion inspeccion = new Inspeccion();
-        inspeccion.setTipoInspeccion(tipoInspeccion);
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setInspeccion(inspeccion);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        when(solDocService.findNoFinalizadaPorInspeccion(inspeccion))
-                .thenReturn(mock(SolicitudDocumentacionPrevia.class));
-        when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion)).thenReturn(null);
-        boolean resultado = envioCuestionarioBean.inspeccionSinTareasPendientes();
-        PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
-                eq(null));
-        assertThat(resultado).isFalse();
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#inspeccionSinTareasPendientes()}.
-     */
-    @Test
-    public final void testInspeccionConCuestionariosPendientes() {
-        TipoInspeccion tipoInspeccion = new TipoInspeccion();
-        tipoInspeccion.setCodigo(CODIGOINSPECCION);
-        Inspeccion inspeccion = new Inspeccion();
-        inspeccion.setTipoInspeccion(tipoInspeccion);
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setInspeccion(inspeccion);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        when(solDocService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorInspeccion(inspeccion))
-                .thenReturn(mock(CuestionarioEnvio.class));
-        boolean resultado = envioCuestionarioBean.inspeccionSinTareasPendientes();
-        PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
-                eq(null));
-        assertThat(resultado).isFalse();
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#usuarioSinTareasPendientes()}.
-     */
-    @Test
-    public final void testUsuarioSinTareasPendientes() {
-        String correoEnvio = CORREO;
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setCorreoEnvio(CORREO);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        when(solDocService.findNoFinalizadaPorCorreoDestinatario(correoEnvio)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio)).thenReturn(null);
-        assertThat(envioCuestionarioBean.usuarioSinTareasPendientes()).isTrue();
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#usuarioSinTareasPendientes()}.
-     */
-    @Test
-    public final void testUsuarioConSolicitudesPendientes() {
-        String correoEnvio = CORREO;
-        Inspeccion inspeccion = new Inspeccion();
-        inspeccion.setId(1L);
-        inspeccion.setAnio(2017);
-        SolicitudDocumentacionPrevia solicitud = new SolicitudDocumentacionPrevia();
-        solicitud.setInspeccion(inspeccion);
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setCorreoEnvio(CORREO);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        
-        when(solDocService.findNoFinalizadaPorCorreoDestinatario(correoEnvio)).thenReturn(solicitud);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio)).thenReturn(null);
-        boolean resultado = envioCuestionarioBean.usuarioSinTareasPendientes();
-        PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
-                eq(null));
-        assertThat(resultado).isFalse();
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.cuestionarios.EnvioCuestionarioBean#usuarioSinTareasPendientes()}.
-     */
-    @Test
-    public final void testUsuarioConCuestionariosPendientes() {
-        String correoEnvio = CORREO;
-        Inspeccion inspeccion = new Inspeccion();
-        inspeccion.setId(1L);
-        inspeccion.setAnio(2017);
-        CuestionarioEnvio cuestionarioEnvio = new CuestionarioEnvio();
-        cuestionarioEnvio.setCorreoEnvio(CORREO);
-        cuestionarioEnvio.setInspeccion(inspeccion);
-        envioCuestionarioBean.setCuestionarioEnvio(cuestionarioEnvio);
-        
-        when(solDocService.findNoFinalizadaPorCorreoDestinatario(correoEnvio)).thenReturn(null);
-        when(cuestionarioEnvioService.findNoFinalizadoPorCorreoEnvio(correoEnvio)).thenReturn(cuestionarioEnvio);
-        boolean resultado = envioCuestionarioBean.usuarioSinTareasPendientes();
-        
-        PowerMockito.verifyStatic(times(1));
-        FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
-                eq(null));
-        assertThat(resultado).isFalse();
     }
     
     /**

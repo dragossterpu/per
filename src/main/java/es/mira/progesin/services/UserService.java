@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -95,6 +96,19 @@ public class UserService implements IUserService {
     @Override
     public boolean exists(String id) {
         return userRepository.exists(id);
+    }
+    
+    /**
+     * Comprueba si existe el usuario provisinal en BBDD.
+     * 
+     * @param username Usuario a comprobar
+     * @throws ExcepcionRollback se lanza si el usuario ya existe
+     */
+    @Override
+    public void comprobarNoExisteUsuarioProvisional(String username) throws ExcepcionRollback {
+        if (userRepository.exists(username)) {
+            throw new ExcepcionRollback("El usuario con correo " + username + " ya existe en el sistema.");
+        }
     }
     
     /**

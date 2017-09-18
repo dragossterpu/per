@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionario;
@@ -130,8 +131,26 @@ public interface ICuestionarioEnvioService {
      * @param listadoUsuariosProvisionales remitentes del cuestionario
      * @param cuestionarioEnvio enviado
      * @param paramPlantilla parámetros de la plantilla
+     * @throws ExcepcionRollback Excepción que se lanza si no cumple las validaciones
      */
     void crearYEnviarCuestionario(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
-            Map<String, String> paramPlantilla);
+            Map<String, String> paramPlantilla) throws ExcepcionRollback;
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asociados a la inspeccion.
+     * 
+     * @param inspeccion inspección a comprobar
+     * @throws ExcepcionRollback Excepción que se lanza si la inspección tiene solicitudes o cuestionarios pendientes
+     */
+    void inspeccionSinTareasPendientes(Inspeccion inspeccion) throws ExcepcionRollback;
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asignados al correo electrónico elegido para
+     * esta solicitud. Devuelve una excepción en caso de que existan.
+     * 
+     * @param correoEnvio Correo del destinario usado para crear los usuarios provisionales
+     * @throws ExcepcionRollback Excepción que se lanza si el usuario tiene solicitudes o cuestionarios pendientes
+     */
+    void usuarioSinTareasPendientes(String correoEnvio) throws ExcepcionRollback;
     
 }

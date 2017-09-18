@@ -32,6 +32,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
 import es.mira.progesin.persistence.entities.Provincia;
@@ -165,9 +166,10 @@ public class CuestionarioEnvioServiceTest {
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List, CuestionarioEnvio, Map)}
      * .
+     * @throws ExcepcionRollback
      */
     @Test
-    public void crearYEnviarCuestionario() {
+    public void crearYEnviarCuestionario() throws ExcepcionRollback {
         List<User> listadoUsuariosProvisionales = new ArrayList<User>();
         listadoUsuariosProvisionales.add(User.builder().username("usuario").password("password").build());
         CuestionarioPersonalizado cuestionarioPersonalizado = CuestionarioPersonalizado.builder().id(1L).build();

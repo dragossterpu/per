@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
@@ -40,7 +39,7 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
      * @return lista de asignaciones con id
      */
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public List<AreaUsuarioCuestEnv> save(List<AreaUsuarioCuestEnv> listaAreasUsuarioCuestEnv) {
         return (List<AreaUsuarioCuestEnv>) areaUsuarioCuestEnvRepository.save(listaAreasUsuarioCuestEnv);
     }
@@ -81,7 +80,7 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
         areaUsuarioCuestEnvRepository.deleteByIdCuestionarioEnviado(idCuestionarioEnviado);
         
     }
-
+    
     /**
      * Asigna las áreas a los usuarios provisionales elegidos por el principal.
      * 
@@ -98,6 +97,6 @@ public class AreaUsuarioCuestEnvService implements IAreaUsuarioCuestEnvService {
         });
         usuariosAsignados.forEach(usuarioProv -> userService.cambiarEstado(usuarioProv, EstadoEnum.ACTIVO));
         
-       return (List<AreaUsuarioCuestEnv>) areaUsuarioCuestEnvRepository.save(listaAreasUsuarioCuestEnv);
+        return (List<AreaUsuarioCuestEnv>) areaUsuarioCuestEnvRepository.save(listaAreasUsuarioCuestEnv);
     }
 }

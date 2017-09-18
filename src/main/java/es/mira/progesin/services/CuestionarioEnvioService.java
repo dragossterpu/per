@@ -15,11 +15,13 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ExcepcionRollback;
+import es.mira.progesin.exceptions.anotacion.TransactionalRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
 import es.mira.progesin.persistence.entities.cuestionarios.AreasCuestionario;
@@ -31,6 +33,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.enums.CuestionarioEnviadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestionarioRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
@@ -91,12 +94,6 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
     private IPreguntaCuestionarioRepository preguntasRepository;
     
     /**
-     * Servicio de areas asignadas a un usuario de cuestionario enviado.
-     */
-    @Autowired
-    private IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
-    
-    /**
      * Servicio para usar los métodos usados junto con criteria.
      */
     @Autowired
@@ -107,6 +104,18 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      */
     @Autowired
     IConfiguracionRespuestasCuestionarioRepository configuracionRespuestaRepository;
+    
+    /**
+     * Servicio de Solicitud de documentación.
+     */
+    @Autowired
+    private ISolicitudDocumentacionService solDocService;
+    
+    /**
+     * Respositorio de áreas asignadas a un usuario de cuestionario enviado.
+     */
+    @Autowired
+    private IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
     
     /**
      * Constructor usado para el test.
@@ -125,17 +134,23 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
      * 
      * @param listadoUsuariosProvisionales remitentes del cuestionario
      * @param cuestionarioEnvio enviado
-     * @param paramPlantilla correo electrónico de los remitentes
+     * @param paramPlantilla parámetros de la plantilla
+     * @throws ExcepcionRollback Excepción que se lanza si no cumple las validaciones
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @TransactionalRollback
     public void crearYEnviarCuestionario(List<User> listadoUsuariosProvisionales, CuestionarioEnvio cuestionarioEnvio,
-            Map<String, String> paramPlantilla) {
+            Map<String, String> paramPlantilla) throws ExcepcionRollback {
+        // Validaciones
+        inspeccionSinTareasPendientes(cuestionarioEnvio.getInspeccion());
+        usuarioSinTareasPendientes(cuestionarioEnvio.getCorreoEnvio());
+        userService.comprobarNoExisteUsuarioProvisional(cuestionarioEnvio.getCorreoEnvio());
+        
         userService.save(listadoUsuariosProvisionales);
         CuestionarioEnvio cuestionarioEnviado = cuestionarioEnvioRepository.save(cuestionarioEnvio);
         List<AreaUsuarioCuestEnv> areasUsuarioCuestEnv = asignarAreasUsuarioProvPrincipal(cuestionarioEnviado,
                 listadoUsuariosProvisionales.get(0));
-        areaUsuarioCuestEnvService.save(areasUsuarioCuestEnv);
+        areaUsuarioCuestEnvRepository.save(areasUsuarioCuestEnv);
         
         String asunto = "Envío de cuestionario " + cuestionarioEnvio.getInspeccion().getTipoUnidad().getDescripcion()
                 + " de " + cuestionarioEnvio.getInspeccion().getNombreUnidad() + " ("
@@ -147,6 +162,53 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
         
         inspeccionesService.cambiarEstado(cuestionarioEnvio.getInspeccion(),
                 EstadoInspeccionEnum.F_PEND_RECIBIR_CUESTIONARIO);
+    }
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asociados a la inspeccion.
+     * 
+     * @param inspeccion inspección a comprobar
+     * @throws ExcepcionRollback Excepción que se lanza si la inspección tiene solicitudes o cuestionarios pendientes
+     */
+    @Override
+    public void inspeccionSinTareasPendientes(Inspeccion inspeccion) throws ExcepcionRollback {
+        SolicitudDocumentacionPrevia solicitudPendiente = solDocService.findNoFinalizadaPorInspeccion(inspeccion);
+        if (solicitudPendiente != null) {
+            throw new ExcepcionRollback(
+                    "No se puede enviar el cuestionario ya que existe una solicitud en curso para esta inspección. Debe finalizarla o anularla antes de proseguir.");
+        }
+        CuestionarioEnvio cuestionarioPendiente = findNoFinalizadoPorInspeccion(inspeccion);
+        if (cuestionarioPendiente != null) {
+            throw new ExcepcionRollback(
+                    "No se puede enviar el cuestionario ya que existe otro cuestionario en curso para esta inspección. Debe finalizarlo o anularlo antes de proseguir.");
+        }
+    }
+    
+    /**
+     * Comprueba si no existen solicitudes o cuestionarios sin finalizar asignados al correo electrónico elegido para
+     * esta solicitud. Devuelve una excepción en caso de que existan.
+     * 
+     * @param correoEnvio Correo del destinario usado para crear los usuarios provisionales
+     * @throws ExcepcionRollback Excepción que se lanza si el usuario tiene solicitudes o cuestionarios pendientes
+     */
+    @Override
+    public void usuarioSinTareasPendientes(String correoEnvio) throws ExcepcionRollback {
+        SolicitudDocumentacionPrevia solicitudPendiente = solDocService
+                .findNoFinalizadaPorCorreoDestinatario(correoEnvio);
+        if (solicitudPendiente != null) {
+            throw new ExcepcionRollback("No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
+                    + ", ya existe una solicitud en curso para la inspeccion "
+                    + solicitudPendiente.getInspeccion().getNumero()
+                    + ". Debe finalizarla o anularla antes de proseguir.");
+            
+        }
+        CuestionarioEnvio cuestionarioPendiente = findNoFinalizadoPorCorreoEnvio(correoEnvio);
+        if (cuestionarioPendiente != null) {
+            throw new ExcepcionRollback("No se puede enviar el cuestionario al destinatario con correo " + correoEnvio
+                    + ", ya existe otro cuestionario en curso para la inspeccion "
+                    + cuestionarioPendiente.getInspeccion().getNumero()
+                    + ". Debe finalizarlo o anularlo antes de proseguir.");
+        }
     }
     
     /**
@@ -390,7 +452,7 @@ public class CuestionarioEnvioService implements ICuestionarioEnvioService {
                 userService.delete(cuerpoCorreo + i + restoCorreo);
             }
         }
-        areaUsuarioCuestEnvService.deleteByIdCuestionarioEnviado(cuestionario.getId());
+        areaUsuarioCuestEnvRepository.deleteByIdCuestionarioEnviado(cuestionario.getId());
         
         inspeccionesService.cambiarEstado(cuestionario.getInspeccion(),
                 EstadoInspeccionEnum.G_PENDIENTE_VISITA_INSPECCION);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Departamento;
 import es.mira.progesin.persistence.entities.Equipo;
@@ -193,4 +194,12 @@ public interface IUserService {
      * @return Usuarios resultantes
      */
     List<User> listaUsuariosProvisionalesCorreo(String correo);
+    
+    /**
+     * Comprueba si existe el usuario provisinal en BBDD.
+     * 
+     * @param username Usuario a comprobar
+     * @throws ExcepcionRollback se lanza si el usuario ya existe
+     */
+    void comprobarNoExisteUsuarioProvisional(String username) throws ExcepcionRollback;
 }
