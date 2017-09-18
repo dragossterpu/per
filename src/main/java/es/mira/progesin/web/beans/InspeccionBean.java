@@ -387,11 +387,14 @@ public class InspeccionBean implements Serializable {
             
             if (!descripcionRegistro.isEmpty()) {
                 StringBuilder descripcion = new StringBuilder();
-                descripcion.append("Inspección " + inspeccion.getNumero() + " modificada. Ver a continuación:\n\n");
-                descripcion.append(descripcionRegistro);
+                descripcion.append("Inspección " + inspeccion.getNumero() + " modificada.");
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.INSPECCION.getDescripcion());
+                
+                // Mandamos las notificaciones.
+                descripcion.append("Ver a continuación:\n\n");
+                descripcion.append(descripcionRegistro);
                 notificacionesService.crearNotificacionEquipo(descripcion.toString(),
                         SeccionesEnum.INSPECCION.getDescripcion(), inspeccion.getEquipo());
                 notificacionesService.crearNotificacionRol(descripcion.toString(),
