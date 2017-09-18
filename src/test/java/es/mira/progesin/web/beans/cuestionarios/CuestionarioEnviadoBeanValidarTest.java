@@ -46,10 +46,10 @@ import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
@@ -109,7 +109,7 @@ public class CuestionarioEnviadoBeanValidarTest {
      * Mock Repositorio de respuestas de cuestionario.
      */
     @Mock
-    private IRespuestaCuestionarioRepository respuestaRepository;
+    private IRespuestaCuestionarioService respuestaService;
     
     /**
      * Captor de tipo AreaUsuarioCuestEnv.
@@ -218,8 +218,7 @@ public class CuestionarioEnviadoBeanValidarTest {
         when(visualizarCuestionario.getMapaValidacionRespuestas()).thenReturn(mapaValidacionRespuestas);
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
-        verify(respuestaRepository, times(1)).save(listaRespuestasValidadas.capture());
-        verify(respuestaRepository, times(1)).flush();
+        verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestasValidadas.capture());
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Validación"),
                 any(String.class));
@@ -291,8 +290,7 @@ public class CuestionarioEnviadoBeanValidarTest {
         when(visualizarCuestionario.getMapaValidacionRespuestas()).thenReturn(mapaValidacionRespuestas);
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
-        verify(respuestaRepository, times(1)).save(listaRespuestasValidadas.capture());
-        verify(respuestaRepository, times(1)).flush();
+        verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestasValidadas.capture());
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Validación"),
                 any(String.class));
@@ -406,11 +404,11 @@ public class CuestionarioEnviadoBeanValidarTest {
         mapaValidacionRespuestas.put(pregunta2, true);
         
         when(visualizarCuestionario.getMapaValidacionRespuestas()).thenReturn(mapaValidacionRespuestas);
-        doThrow(TransientDataAccessResourceException.class).when(respuestaRepository)
-                .save(listaRespuestasValidadas.capture());
+        doThrow(TransientDataAccessResourceException.class).when(respuestaService)
+                .transaccSaveConRespuestas(listaRespuestasValidadas.capture());
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
-        verify(respuestaRepository, times(1)).save(listaRespuestasValidadas.capture());
+        verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestasValidadas.capture());
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));

@@ -30,10 +30,10 @@ import es.mira.progesin.persistence.entities.cuestionarios.RespuestaCuestionario
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
-import es.mira.progesin.persistence.repositories.IRespuestaCuestionarioRepository;
 import es.mira.progesin.services.ICuestionarioEnvioService;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
+import es.mira.progesin.services.IRespuestaCuestionarioService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.ICorreoElectronico;
@@ -62,10 +62,10 @@ public class CuestionarioEnviadoBean implements Serializable {
     private static final String DESCRIPCION = "Cuestionario para la inspección ";
     
     /**
-     * Repositorio de respuestas de cuestionario.
+     * Servicio de respuestas de cuestionario.
      */
     @Autowired
-    private transient IRespuestaCuestionarioRepository respuestaRepository;
+    private transient IRespuestaCuestionarioService respuestaService;
     
     /**
      * Objeto con parámetros de búsqueda de cuestionarios enviados.
@@ -253,8 +253,7 @@ public class CuestionarioEnviadoBean implements Serializable {
             });
             
             if (listaRespuestasValidadas.isEmpty() == Boolean.FALSE) {
-                respuestaRepository.save(listaRespuestasValidadas);
-                respuestaRepository.flush();
+                respuestaService.transaccSaveConRespuestas(listaRespuestasValidadas);
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Validación",
                         "Se ha validado con éxito las respuestas");
             } else {
