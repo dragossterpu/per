@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.informes.AsignSubareaInformeUser;
 import es.mira.progesin.persistence.entities.informes.Informe;
@@ -120,15 +121,17 @@ public interface IInformeService {
      * 
      * @param inspeccion inspección a partir de la que se creará el informe
      * @param modeloInformePersonalizado modelo que se utilizará para crear el informe
+     * @throws ExcepcionRollback Excepción lanzada si no se puede crear el informe
      */
-    void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado);
+    void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado)
+            throws ExcepcionRollback;
     
     /**
      * Comprueba si existen otros informes no anulados asociados a la inspeccion.
      * 
      * @param inspeccion inspeccion asociada al informe
-     * @return boolean
+     * @throws ExcepcionRollback Excepción que se lanza si ya existe un informe para esta inspección sin anular
      */
-    boolean existsByInspeccionAndFechaBajaIsNull(Inspeccion inspeccion);
+    void existsByInspeccionAndFechaBajaIsNull(Inspeccion inspeccion) throws ExcepcionRollback;
     
 }

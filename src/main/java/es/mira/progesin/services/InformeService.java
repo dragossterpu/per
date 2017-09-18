@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ExcepcionRollback;
+import es.mira.progesin.exceptions.anotacion.TransactionalRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
@@ -384,25 +386,33 @@ public class InformeService implements IInformeService {
      * 
      * @param inspeccion inspección a partir de la que se creará el informe
      * @param modeloInformePersonalizado modelo que se utilizará para crear el informe
+     * @throws ExcepcionRollback Excepción lanzada si no se puede crear el informe
      */
     @Override
-    public void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado) {
+    @TransactionalRollback
+    public void crearInforme(Inspeccion inspeccion, ModeloInformePersonalizado modeloInformePersonalizado)
+            throws ExcepcionRollback {
+        // Validación
+        existsByInspeccionAndFechaBajaIsNull(inspeccion);
+        
         Informe nuevoInforme = Informe.builder().modeloPersonalizado(modeloInformePersonalizado).inspeccion(inspeccion)
                 .build();
+        informeRepository.save(nuevoInforme);
         inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.I_ELABORACION_INFORME);
         inspeccionService.save(inspeccion);
-        informeRepository.save(nuevoInforme);
     }
     
     /**
      * Comprueba si existen otros informes no anulados asociados a la inspeccion.
      * 
      * @param inspeccion inspeccion asociada al informe
-     * @return boolean
+     * @throws ExcepcionRollback Excepción que se lanza si ya existe un informe para esta inspección sin anular
      */
     @Override
-    public boolean existsByInspeccionAndFechaBajaIsNull(Inspeccion inspeccion) {
-        return informeRepository.existsByInspeccionAndFechaBajaIsNull(inspeccion);
+    public void existsByInspeccionAndFechaBajaIsNull(Inspeccion inspeccion) throws ExcepcionRollback {
+        if (informeRepository.existsByInspeccionAndFechaBajaIsNull(inspeccion))
+            throw new ExcepcionRollback(
+                    "No se puede crear un informe ya que existe otro para esta inspección. Debe anularlo antes de proseguir.");
     }
     
 }

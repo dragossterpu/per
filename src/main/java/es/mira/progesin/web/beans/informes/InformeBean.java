@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
@@ -195,20 +196,12 @@ public class InformeBean implements Serializable {
      */
     public void crearInforme(Inspeccion inspeccion) {
         try {
-            boolean existeOtro = informeService.existsByInspeccionAndFechaBajaIsNull(inspeccion);
-            if (existeOtro) {
-                String mensaje = "No se puede crear un informe ya que existe otro para esta inspección. "
-                        + "Debe anularlo antes de proseguir.";
-                FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, mensaje, "", null);
-            } else {
-                informeService.crearInforme(inspeccion, modeloInformePersonalizado);
-                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                        "El informe ha sido creado con éxito.");
-            }
-        } catch (DataAccessException e) {
-            e.printStackTrace();
+            informeService.crearInforme(inspeccion, modeloInformePersonalizado);
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
+                    "El informe ha sido creado con éxito.");
+        } catch (ExcepcionRollback e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
-                    "Se ha producido un error al crear el informe");
+                    e.getMessage());
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
         }
     }
