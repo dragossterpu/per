@@ -18,7 +18,6 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,6 +37,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.CorreoException;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelUsuarios;
 import es.mira.progesin.persistence.entities.CuerpoEstado;
 import es.mira.progesin.persistence.entities.Empleo;
@@ -378,27 +378,28 @@ public class UserBeanTest {
     
     /**
      * Test method for {@link es.mira.progesin.web.beans.UserBean#modificarUsuario()}.
+     * @throws ProgesinException excepción Progesin
      */
     @Test
-    @Ignore
-    public void modificarUsuario() {
-        User userOriginal = User.builder().estado(EstadoEnum.INACTIVO).username(SYSTEM).correo("correo").build();
+    public void modificarUsuario() throws ProgesinException {
+        User userOriginal = User.builder().estado(EstadoEnum.INACTIVO).username(SYSTEM).correo(CORREOEZENTIS).build();
         User userModifi = User.builder().estado(EstadoEnum.ACTIVO).correo(CORREOEZENTIS).username(SYSTEM)
                 .fechaInactivo(new Date()).build();
-        when(userService.findOne(userModifi.getUsername())).thenReturn(userOriginal, userModifi);
+        userBean.setUser(userOriginal);
+        when(userService.findOne(userBean.getUser().getUsername())).thenReturn(userOriginal);
+        when(userService.save(userBean.getUser())).thenReturn(userModifi);
+        when(Utilities.camposModificados(userOriginal, userModifi)).thenReturn("modificado");
         
         userBean.modificarUsuario();
         
-        verify(userService, times(1)).save(userBean.getUser());
+        verify(userService, times(1)).save(userModifi);
         
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
-        
-        verify(correoElectronico, times(1)).envioCorreo(eq(userBean.getUser().getCorreo()), any(String.class),
+        verify(correoElectronico, times(1)).envioCorreo(eq(userModifi.getCorreo()), any(String.class),
                 any(String.class));
         
-        assertThat(userBean.getUser().getFechaInactivo()).isNull();
     }
     
     /**

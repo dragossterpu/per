@@ -316,14 +316,14 @@ public class UserBean implements Serializable {
             if (original.getEstado() != user.getEstado()) {
                 cambiarEstado(user);
             }
-            userService.save(user);
-            User modificado = userService.findOne(user.getUsername());
+            User modificado = userService.save(user);
+            // User modificado = userService.findOne(user.getUsername());
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El usuario ha sido modificado con éxito");
             
             String descripcionCorreo = Utilities.camposModificados(original, modificado);
             
-            if (descripcionCorreo != null && !descripcionCorreo.isEmpty()) {
+            if (!descripcionCorreo.isEmpty()) {
                 StringBuilder descripcion = new StringBuilder("Modificación del usuario : ").append(user.getUsername());
                 
                 // Guardamos la actividad en bbdd
