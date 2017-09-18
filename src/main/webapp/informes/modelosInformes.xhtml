@@ -17,7 +17,9 @@
                     </p:column>
                     
                     <p:column styleClass="botonTabla">
-                        <p:commandButton title="Visualizar modelo" icon="fa fa-eye"  action="#{modelosInformeBean.visualizarModelo(modelo)}" />
+                        <p:button title="Visualizar modelo" icon="fa fa-eye" outcome="/informes/visualizarModeloInforme?faces-redirect=true">
+                            <f:param name="idModelo" value="#{modelo.id}" />
+                        </p:button>
                     </p:column>
                     <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones}">
                         <p:commandButton title="Crear nuevo modelo a partir de este" icon="fa fa-clone" action="#{nuevoModeloInformeBean.clonarInforme(modelo)}" />

@@ -48,10 +48,10 @@ public interface IModeloInformeService {
     /**
      * Visualiza un modelo de informe.
      * 
-     * @param modeloVisualizar Modelo que se desea visualizar.
+     * @param id id del modelo Modelo que se desea visualizar.
      * @return Modelo a visualizar.
      */
-    ModeloInforme visualizarModelo(ModeloInforme modeloVisualizar);
+    ModeloInforme visualizarModelo(Long id);
     
     /**
      * Carga el mapa de relaciones áreas-subáreas para la lista de áreas recibida como parámetro.

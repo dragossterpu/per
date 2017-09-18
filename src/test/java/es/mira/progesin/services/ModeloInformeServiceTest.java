@@ -202,7 +202,7 @@ public class ModeloInformeServiceTest {
         when(modeloInformeRepository.findOne(1L)).thenReturn(modeloVisualizar);
         when(areaInformeService.findByModeloInformeId(1L)).thenReturn(areas);
         
-        ModeloInforme respuesta = modeloInformeService.visualizarModelo(modeloVisualizar);
+        ModeloInforme respuesta = modeloInformeService.visualizarModelo(1L);
         verify(modeloInformeRepository, times(1)).findOne(1L);
         assertThat(respuesta.getAreas().get(0).getId()).isEqualTo(1L);
     }

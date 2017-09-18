@@ -124,14 +124,14 @@ public class ModeloInformeService implements IModeloInformeService {
     /**
      * Visualiza un modelo de informe.
      * 
-     * @param modeloVisualizar Modelo que se desea visualizar.
+     * @param idModelo clave del modelo que se desea visualizar.
      * @return Modelo a visualizar.
      */
     @Override
-    public ModeloInforme visualizarModelo(ModeloInforme modeloVisualizar) {
+    public ModeloInforme visualizarModelo(Long idModelo) {
         ModeloInforme respuesta;
         
-        respuesta = modeloInformeRepository.findOne(modeloVisualizar.getId());
+        respuesta = modeloInformeRepository.findOne(idModelo);
         respuesta.setAreas(areainformeservice.findByModeloInformeId(respuesta.getId()));
         
         return respuesta;
