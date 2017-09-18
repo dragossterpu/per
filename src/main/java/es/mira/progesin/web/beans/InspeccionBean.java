@@ -383,18 +383,17 @@ public class InspeccionBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "La inspección ha sido modificada con éxito");
             
-            String descripcionRegistro = Utilities.camposModificados(inspeccionNoMod, inspeccion);
+            String descripcionCorreo = Utilities.camposModificados(inspeccionNoMod, inspeccion);
             
-            if (!descripcionRegistro.isEmpty()) {
-                StringBuilder descripcion = new StringBuilder();
-                descripcion.append("Inspección " + inspeccion.getNumero() + " modificada.");
+            if (!descripcionCorreo.isEmpty()) {
+                StringBuilder descripcion = new StringBuilder("Inspección " + inspeccion.getNumero() + " modificada.");
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion.toString(), TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.INSPECCION.getDescripcion());
                 
                 // Mandamos las notificaciones.
                 descripcion.append("Ver a continuación:\n\n");
-                descripcion.append(descripcionRegistro);
+                descripcion.append(descripcionCorreo);
                 notificacionesService.crearNotificacionEquipo(descripcion.toString(),
                         SeccionesEnum.INSPECCION.getDescripcion(), inspeccion.getEquipo());
                 notificacionesService.crearNotificacionRol(descripcion.toString(),
