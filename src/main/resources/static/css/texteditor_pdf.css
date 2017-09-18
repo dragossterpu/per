@@ -21,11 +21,11 @@
   margin: 7.5pt;
 }
 
-.ql-editor ol.titulos>li {
+.ql-editor ol.titulos>li .enumerado {
     counter-increment: item;
 }
 
-.ql-editor ol.titulos>li h1, h2, h3, h4:before {
+.ql-editor ol.titulos>li .enumerado:before {
     content: counters(item, ".") ". ";  
 }
 

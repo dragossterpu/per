@@ -457,13 +457,10 @@ public class InformeBean implements Serializable {
      * Borra la asignación de un subárea de un informe a un inspector.
      * 
      * @param subarea subárea seleccionada
-     * @param guardar guardar estado del informe antes de desasignar
      */
-    public void desasignarSubarea(SubareaInforme subarea, Boolean guardar) {
+    public void desasignarSubarea(SubareaInforme subarea) {
         try {
-            if (guardar) {
-                setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
-            }
+            setInforme(informeService.guardarInforme(informe, mapaRespuestas, mapaAsignaciones));
             asignSubareaInformeUserService.deleteBySubareaAndInforme(subarea, informe);
             generarMapaAsignaciones();
             generarMapaAreasSubareas();
