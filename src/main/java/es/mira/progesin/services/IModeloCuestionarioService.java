@@ -45,9 +45,9 @@ public interface IModeloCuestionarioService {
     /**
      * Visualiza un modelo de cuestionario.
      * 
-     * @param modeloVisualizar Modelo a visualizar.
+     * @param id Modelo a visualizar.
      * @return Modelo visualizado
      */
-    ModeloCuestionario visualizarModelo(ModeloCuestionario modeloVisualizar);
+    ModeloCuestionario visualizarModelo(Integer id);
     
 }

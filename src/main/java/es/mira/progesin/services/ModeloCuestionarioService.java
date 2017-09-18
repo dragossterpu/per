@@ -96,6 +96,7 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
      * @return Modelo eliminado
      */
     @Override
+    @Transactional
     public ModeloCuestionario eliminarModelo(ModeloCuestionario modelo) {
         ModeloCuestionario modeloActualizado = null;
         
@@ -107,9 +108,10 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
                 modeloActualizado = modeloCuestionarioRepository.save(modelo);
                 
             } else {
-                
-                modeloCuestionarioRepository.delete(modelo);
-                
+                if (modeloCuestionarioRepository.exists(modelo.getId())) {
+                    modeloCuestionarioRepository.delete(modelo);
+                    
+                }
                 modeloActualizado = modelo;
             }
             String descripcion = "Se ha eliminado el modelo de cuestionario: " + modelo.getDescripcion();
@@ -126,14 +128,14 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
     /**
      * Visualiza un modelo de cuestionario.
      * 
-     * @param modeloVisualizar Modelo a visualizar.
+     * @param id Modelo a visualizar.
      * @return Modelo visualizado
      */
     @Override
-    public ModeloCuestionario visualizarModelo(ModeloCuestionario modeloVisualizar) {
-        ModeloCuestionario visualiza = modeloCuestionarioRepository.findOne(modeloVisualizar.getId());
+    public ModeloCuestionario visualizarModelo(Integer id) {
+        ModeloCuestionario visualiza = modeloCuestionarioRepository.findOne(id);
         List<AreasCuestionario> listaAreas = areaCuestionarioService
-                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(modeloVisualizar.getId());
+                .findDistinctByIdCuestionarioAndFechaBajaIsNullOrderByOrdenAsc(id);
         for (AreasCuestionario area : listaAreas) {
             List<PreguntasCuestionario> listaPreguntas = preguntasRepository
                     .findByAreaAndFechaBajaIsNullOrderByOrdenAsc(area);
@@ -142,5 +144,4 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
         visualiza.setAreas(listaAreas);
         return visualiza;
     }
-    
 }

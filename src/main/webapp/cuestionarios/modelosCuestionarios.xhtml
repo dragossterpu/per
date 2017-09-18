@@ -21,7 +21,9 @@
                     </p:column>
 
                     <p:column styleClass="botonTabla">
-                        <p:commandButton title="Ver preguntas del modelo"  icon="fa fa-eye"  action="#{modelosCuestionarioBean.visualizarModelo(cuestionario)}"/>
+                        <p:button title="Ver preguntas del modelo"  icon="fa fa-eye" outcome="/cuestionarios/visualizarModeloCuestionario?faces-redirect=true">
+                        	<f:param name="idModelo" value="#{cuestionario.id}" />
+                        </p:button>
                     </p:column>
                     <p:column styleClass="botonTabla" rendered="#{esJefeInspecciones or esEquipo}">
                         <h:commandLink title="Crear nuevo cuestionario personalizado" styleClass="fa fa-copy ui-button ui-state-default ui-CommandLink ui-CommandLink-icono" action="#{edicionCuestionarioBean.editarCuestionario(cuestionario)}"  />

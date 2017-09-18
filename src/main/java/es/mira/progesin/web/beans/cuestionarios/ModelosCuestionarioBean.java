@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.services.IModeloCuestionarioService;
 import es.mira.progesin.util.FacesUtilities;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("modelosCuestionarioBean")
-@Scope("session")
+@Scope(FacesViewScope.NAME)
 public class ModelosCuestionarioBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -70,15 +71,4 @@ public class ModelosCuestionarioBean implements Serializable {
         }
     }
     
-    /**
-     * Visualiza el modelo recibido como parámetro.
-     * 
-     * @param modeloVisualizar Modelo a visualizar
-     * @return ruta de la vista visualizarModeloInforme
-     */
-    public String visualizarModelo(ModeloCuestionario modeloVisualizar) {
-        this.modeloCuestionario = modeloCuestionarioService.visualizarModelo(modeloVisualizar);
-        
-        return "/cuestionarios/visualizarModeloCuestionario?faces-redirect=true";
-    }
 }
