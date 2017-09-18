@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.DatosTablaGenerica;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.cuestionarios.AreaUsuarioCuestEnv;
@@ -56,7 +57,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Controller("responderCuestionarioBean")
-@Scope("session")
+@Scope(FacesViewScope.NAME)
 public class ResponderCuestionarioBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
