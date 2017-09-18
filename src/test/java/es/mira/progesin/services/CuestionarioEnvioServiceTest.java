@@ -45,8 +45,10 @@ import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioPersonali
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
 import es.mira.progesin.persistence.entities.enums.EstadoEnum;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
+import es.mira.progesin.persistence.repositories.IAreaUsuarioCuestEnvRepository;
 import es.mira.progesin.persistence.repositories.ICuestionarioEnvioRepository;
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
+import es.mira.progesin.persistence.repositories.IUserRepository;
 import es.mira.progesin.util.ICorreoElectronico;
 
 /**
@@ -91,6 +93,12 @@ public class CuestionarioEnvioServiceTest {
     private transient IInspeccionesService inspeccionesService;
     
     /**
+     * Mock Servicio de Solicitud de documentación.
+     */
+    @Mock
+    private ISolicitudDocumentacionService solDocService;
+    
+    /**
      * Simulación objeto correoElectrónico.
      */
     @Mock
@@ -103,10 +111,16 @@ public class CuestionarioEnvioServiceTest {
     private transient IPreguntaCuestionarioRepository preguntasRepository;
     
     /**
-     * Simulación del servicio de áreas/usuario.
+     * Simulación del repositorio de áreas/usuario.
      */
     @Mock
-    private transient IAreaUsuarioCuestEnvService areaUsuarioCuestEnvService;
+    private IAreaUsuarioCuestEnvRepository areaUsuarioCuestEnvRepository;
+    
+    /**
+     * Mock Repositorio de usuarios.
+     */
+    @Mock
+    private IUserRepository userRepository;
     
     /**
      * Servicio de cuestionarios enviados.
@@ -166,7 +180,7 @@ public class CuestionarioEnvioServiceTest {
      * Test method for
      * {@link es.mira.progesin.services.CuestionarioEnvioService#crearYEnviarCuestionario(List, CuestionarioEnvio, Map)}
      * .
-     * @throws ExcepcionRollback
+     * @throws ExcepcionRollback rollback
      */
     @Test
     public void crearYEnviarCuestionario() throws ExcepcionRollback {
@@ -187,13 +201,23 @@ public class CuestionarioEnvioServiceTest {
         CuestionarioEnvio cuestionarioEnviado = CuestionarioEnvio.builder().id(1L)
                 .cuestionarioPersonalizado(cuestionarioPersonalizado).inspeccion(inspeccion).correoEnvio("correo")
                 .motivoCuestionario("motivo").build();
-        when(cuestionarioEnvioRepository.save(cuestionarioEnviado)).thenReturn(cuestionarioEnviado);
+        when(solDocService.findNoFinalizadaPorInspeccion(inspeccion)).thenReturn(null);
+        when(cuestionarioEnvioRepository.findByFechaAnulacionIsNullAndFechaFinalizacionIsNullAndInspeccion(inspeccion))
+                .thenReturn(null);
+        when(solDocService.findNoFinalizadaPorCorreoDestinatario(cuestionarioEnviado.getCorreoEnvio()))
+                .thenReturn(null);
+        when(cuestionarioEnvioRepository.findByCorreoEnvioAndFechaFinalizacionIsNullAndFechaAnulacionIsNull(
+                cuestionarioEnviado.getCorreoEnvio())).thenReturn(null);
         List<PreguntasCuestionario> preguntasElegidas = new ArrayList<>();
         preguntasElegidas
                 .add(PreguntasCuestionario.builder().id(1L).area(AreasCuestionario.builder().id(1L).build()).build());
         preguntasElegidas
                 .add(PreguntasCuestionario.builder().id(2L).area(AreasCuestionario.builder().id(2L).build()).build());
         when(preguntasRepository.findPreguntasElegidasCuestionarioPersonalizado(1L)).thenReturn(preguntasElegidas);
+        
+        when(cuestionarioEnvioRepository.save(cuestionarioEnviado)).thenReturn(cuestionarioEnviado);
+        
+        when(userRepository.exists(cuestionarioEnviado.getCorreoEnvio())).thenReturn(false);
         
         Map<String, String> paramPlantilla = new HashMap<>();
         paramPlantilla.put("textoEnvioCuestionario", "motivo");
@@ -206,7 +230,7 @@ public class CuestionarioEnvioServiceTest {
         
         verify(userService, times(1)).save(listadoUsuariosProvisionales);
         verify(cuestionarioEnvioRepository, times(1)).save(cuestionarioEnviado);
-        verify(areaUsuarioCuestEnvService, times(1)).save(areasUsuarioCuestEnvCaptor.capture());
+        verify(areaUsuarioCuestEnvRepository, times(1)).save(areasUsuarioCuestEnvCaptor.capture());
         assertThat(areasUsuarioCuestEnvCaptor.getValue()).hasSize(2);
         verify(correoElectronico, times(1)).envioCorreo(eq("correo"), any(String.class),
                 eq(Constantes.TEMPLATEENVIOCUESTIONARIO), eq(paramPlantilla));
@@ -248,14 +272,14 @@ public class CuestionarioEnvioServiceTest {
     public void transaccSaveElimUsuariosProv() {
         CuestionarioEnvio cuestionario = CuestionarioEnvio.builder().id(1L).correoEnvio("correo@dominio.es").build();
         when(userService.exists(any(String.class))).thenReturn(Boolean.TRUE);
-        when(userService.exists("correo9@dominio.es")).thenReturn(Boolean.FALSE);
+        when(userService.exists("correo9@dominio.es")).thenReturn(Boolean.TRUE);
         
         cuestionarioEnvioService.transaccSaveElimUsuariosProv(cuestionario);
         
         verify(cuestionarioEnvioRepository, times(1)).save(cuestionario);
         verify(userService, times(10)).exists(any(String.class));
-        verify(userService, times(9)).delete(any(String.class));
-        verify(areaUsuarioCuestEnvService, times(1)).deleteByIdCuestionarioEnviado(cuestionario.getId());
+        verify(userService, times(10)).delete(any(String.class));
+        verify(areaUsuarioCuestEnvRepository, times(1)).deleteByIdCuestionarioEnviado(cuestionario.getId());
         verify(inspeccionesService, times(1)).cambiarEstado(cuestionario.getInspeccion(),
                 EstadoInspeccionEnum.G_PENDIENTE_VISITA_INSPECCION);
     }
