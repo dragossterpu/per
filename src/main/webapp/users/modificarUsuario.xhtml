@@ -161,10 +161,11 @@
             <h:outputLabel value="Tiempo inactivo: #{userBean.diasInactividad} días" styleClass="negrita centrado #{userBean.user.fechaInactivo != null ? 'rojo' : ''}" />
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{userBean.modificarUsuario}" value="Guardar cambios" icon="fa fa-fw fa-save" rendered="#{not noEsAdmin and not esProvisional}" />
-                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" action="/users/usuarios?faces-redirect=true" immediate="true">
+                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" action="/users/usuarios?faces-redirect=true" immediate="true" rendered="#{not noEsAdmin and not esProvisional}">
                      <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
                 </p:commandButton>
                 <p:commandButton actionListener="#{userBean.restaurarClave}" value="Restaurar clave" rendered="#{not noEsAdmin}" icon="fa fa-unlock-alt" immediate="true" />
+                <p:button value="Volver" outcome="/users/usuarios" rendered="#{noEsAdmin}" icon="fa fa-fw fa-undo"/>
             </div>
 
             <p:confirmDialog global="true">

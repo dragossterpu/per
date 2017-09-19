@@ -385,10 +385,11 @@ public class UserBeanTest {
         User userOriginal = User.builder().estado(EstadoEnum.INACTIVO).username(SYSTEM).correo(CORREOEZENTIS).build();
         User userModifi = User.builder().estado(EstadoEnum.ACTIVO).correo(CORREOEZENTIS).username(SYSTEM)
                 .fechaInactivo(new Date()).build();
-        userBean.setUser(userOriginal);
+        userBean.setUser(userModifi);
         when(userService.findOne(userBean.getUser().getUsername())).thenReturn(userOriginal);
         when(userService.save(userBean.getUser())).thenReturn(userModifi);
-        when(Utilities.camposModificados(userOriginal, userModifi)).thenReturn("modificado");
+        when(Utilities.camposModificados(userOriginal, userModifi))
+                .thenReturn("estado (Antes 'INACTIVO' ahora modificado a 'ACTIVO')\n\r");
         
         userBean.modificarUsuario();
         

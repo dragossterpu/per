@@ -77,10 +77,10 @@
 	                   </p:columnToggler>
 	               </f:facet>
 	                 
-	               <p:column headerText="Nombre" sortBy="#{informePersonalizado.nombre}" width="130" visible="#{informePersonalizadoBean.list[0]}" exportable="#{informePersonalizadoBean.list[0]}">
+	               <p:column headerText="Nombre" sortBy="#{informePersonalizado.nombre}" visible="#{informePersonalizadoBean.list[0]}" exportable="#{informePersonalizadoBean.list[0]}">
 	                   <h:outputText value="#{informePersonalizado.nombre}" />
 	               </p:column>
-	               <p:column headerText="Modelo" sortBy="#{informePersonalizado.modeloInforme.id}" width="130" visible="#{informePersonalizadoBean.list[1]}" exportable="#{informePersonalizadoBean.list[1]}">
+	               <p:column headerText="Modelo" sortBy="#{informePersonalizado.modeloInforme.id}" visible="#{informePersonalizadoBean.list[1]}" exportable="#{informePersonalizadoBean.list[1]}">
 	                   <h:outputText value="#{informePersonalizado.modeloInforme.nombre}" />
 	               </p:column>
 	               <p:column headerText="Alta" sortBy="#{informePersonalizado.fechaAlta}" width="70" visible="#{informePersonalizadoBean.list[2]}" exportable="#{informePersonalizadoBean.list[2]}">

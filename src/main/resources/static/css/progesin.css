@@ -383,8 +383,13 @@ select {
     background-color: #fff;
 }
 
+.selectPasos {
+    padding: 10px 10px;
+}
+
 .listaPaso .ui-datalist-data {
-    padding: 0;
+    padding: 0 10px 0 0;
+    text-align: justify;
 }
 
 .listaPaso .ui-datalist-item {

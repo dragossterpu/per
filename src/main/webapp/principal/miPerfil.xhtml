@@ -111,31 +111,40 @@
             <div class="columnaIzdaFormulario">
                 <h:outputLabel for="claveActual" value="Contraseña actual:" />
                 <p:password value="#{miPerfilBean.claveActual}" required="true"  id="claveActual" requiredMessage="Introduzca la contraseña actual" />
-
+                
                 <h:outputLabel for="claveNueva" value="Nueva contraseña:" />
                 <p:password value="#{miPerfilBean.claveNueva}" required="true" feedback="true" id="claveNueva" requiredMessage="Introduzca la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
-
+                
                 <h:outputLabel for="claveConfirm" value="Confirmar contraseña:" />
                 <p:password value="#{miPerfilBean.claveConfirm}" required="true" feedback="true" id="claveConfirm" requiredMessage="Repita la nueva contraseña" promptLabel="Por favor, introduce una contraseña" weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" />
-
-                <p:commandButton id="guardar" value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-save" title="Guardar la contraseña"/>
-                <p:commandButton value="Limpiar" update="passwordForm" process="@this" title="Limpiar el formulario" icon="fa fa-eraser">
-                    <p:resetInput target="passwordForm" />
-                </p:commandButton>                
-                <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" title="Cancelar y volver a la pantalla principal" action="/index?faces-redirect=true" immediate="true">
-                     <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
-                </p:commandButton>
-                 <p:button id="volver" value="Volver" outcome="/index" title="Volver a la pantalla principal"/>
-            
-                <p:messages id="messages" autoUpdate="true" closable="true" />   
-           </div>
                 
+                <div class="botonesFormulario">
+                    <p:commandButton id="guardar" value="Guardar" action="#{miPerfilBean.cambiarClave}" update="passwordForm" icon="fa fa-save" title="Guardar la contraseña"/>
+                    <p:commandButton value="Limpiar" update="passwordForm" process="@this" title="Limpiar el formulario" icon="fa fa-eraser">
+                        <p:resetInput target="passwordForm" />
+                    </p:commandButton>                
+                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" title="Cancelar y volver a la pantalla principal" action="/index?faces-redirect=true" immediate="true">
+                         <p:confirm header="Cancelar" message="¿Está seguro que desea cancelar esta operación?. Se perderán los datos introducidos" icon="fa fa-warning-sign" />
+                    </p:commandButton>
+                </div>
+            </div>
+            
+            <div class="columnaDchaFormulario">
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+            </div>
+            
+            <div class="bloqueFormulario">
+               <div class="botonesFormulario">
+                     <p:button id="volver" value="Volver" outcome="/index" title="Volver a la pantalla principal"/>
+               </div>
+            </div>
+           
             <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
                <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
                <div class="centrarBotonesDialog">
                    <p:button value="Cerrar" outcome="/index" />
                </div>
-           </p:dialog>
+            </p:dialog>
 
             <p:confirmDialog global="true">
                 <div class="centrarBotonesDialog">
@@ -145,6 +154,6 @@
             </p:confirmDialog>
         </div>
         </h:form>
-        
+            
     </ui:define>
 </ui:composition>

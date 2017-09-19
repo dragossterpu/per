@@ -3,7 +3,6 @@
         
         <ui:param name="titulo" value="Guía" />
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-        <h3>#{titulo}</h3>
         
         <h:form id="formGuias">
 
@@ -17,11 +16,13 @@
 
             <p:messages autoUpdate="true" showSummary="true" closable="true" />
 
-            <h4>Pasos</h4>
-            <p:dataList var="paso" value="#{guiaBean.listaPasos}" type="ordered" styleClass="listaPaso">
-                <h:outputText value="#{paso.paso}" escape="false" />
-            </p:dataList>
-
+            <div class="bloqueFormulario">
+                <h4>Pasos</h4>
+                <p:dataList var="paso" value="#{guiaBean.listaPasos}" type="ordered" styleClass="listaPaso">
+                    <h:outputText value="#{paso.paso}" escape="false" />
+                </p:dataList>
+            </div>
+            
             <div class="botonesFormulario">
                 <p:button outcome="/guias/buscaGuias?faces-redirect=true" value="Volver" icon="fa fa-fw fa-undo" />
             </div>

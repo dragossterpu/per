@@ -3,7 +3,6 @@
         
         <ui:param name="titulo" value="Guía personalizada" />
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-        <h3>#{titulo}</h3>
         
         <h:form id="formGuias">
 
@@ -28,7 +27,7 @@
                 </p:dataList>
             </div>
 
-            <div class="bloqueVistaTitulo">
+            <div class="bloqueFormulario">
                 <h4>Pasos</h4>
                 <p:dataList var="paso" value="#{guiaPersonalizadaBean.listaPasos}" type="ordered" styleClass="listaPaso">
                     <h:outputText value="#{paso.paso}" />

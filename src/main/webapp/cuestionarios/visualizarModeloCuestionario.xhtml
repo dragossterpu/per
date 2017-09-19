@@ -6,9 +6,8 @@
 			<f:event type="preRenderView" listener="#{visualizarCuestionarioBean.visualizarModelo}" />
 		</f:metadata>
 
-		<ui:param name="titulo" value="Visualizar modelo de cuestionario" />
+		<ui:param name="titulo" value="Ver modelo de cuestionario" />
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-        <h3>#{titulo}</h3>
         
         <div class="tituloCuestionario">
             <h:outputText value="#{visualizarCuestionarioBean.modeloCuestionario.descripcion}" />

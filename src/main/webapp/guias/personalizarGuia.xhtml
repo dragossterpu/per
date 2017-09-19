@@ -40,7 +40,7 @@
                         </p:commandButton>
                     </h:panelGrid>
                 </h:panelGrid>
-                <div id="pasos">
+                <div id="pasos" class="selectPasos">
                     <my:selectManyCheckboxAll value="#{guiaBean.listaPasosSeleccionados}">
                         <f:selectItems value="#{guiaBean.listaPasos}" var="paso" itemLabel="#{paso.paso}" itemValue="#{paso}" />
                     </my:selectManyCheckboxAll>
