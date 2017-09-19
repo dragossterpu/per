@@ -88,6 +88,24 @@ public class InformeService implements IInformeService {
     private IInspeccionesService inspeccionService;
     
     /**
+     * Constructor vacío.
+     * 
+     */
+    public InformeService() {
+    }
+    
+    /**
+     * Constructor usado para el test.
+     * 
+     * @param sessionFact Factoría de sesiones
+     * @param criteriaServ Servicio Criteria
+     */
+    public InformeService(SessionFactory sessionFact, ICriteriaService criteriaServ) {
+        this.sessionFactory = sessionFact;
+        this.criteriaService = criteriaServ;
+    }
+    
+    /**
      * Guarda la información de un informe en la bdd.
      * 
      * @param informe informe creado o modificado
