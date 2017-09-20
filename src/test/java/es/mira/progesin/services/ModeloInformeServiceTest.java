@@ -188,8 +188,7 @@ public class ModeloInformeServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.ModeloInformeService#visualizarModelo(es.mira.progesin.persistence.entities.informes.ModeloInforme)}.
+     * Test method for {@link es.mira.progesin.services.ModeloInformeService#visualizarModelo(Long)}.
      */
     @Test
     public final void testVisualizarModelo() {
