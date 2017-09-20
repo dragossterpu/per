@@ -340,10 +340,10 @@ public class GestorDocumentalBean implements Serializable {
         User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Inspeccion> respuesta = new ArrayList<>();
         
-        if (RoleEnum.ROLE_ADMIN.equals(usuario.getRole())) {
-            respuesta = inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
-        } else {
+        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuario.getRole())) {
             respuesta = inspeccionesService.buscarPorNombreUnidadONumeroUsuario(infoInspeccion, usuario);
+        } else {
+            respuesta = inspeccionesService.buscarPorNombreUnidadONumero(infoInspeccion);
         }
         
         return respuesta;
