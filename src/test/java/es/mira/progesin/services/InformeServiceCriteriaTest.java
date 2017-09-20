@@ -36,7 +36,7 @@ import es.mira.progesin.persistence.entities.informes.Informe;
 import es.mira.progesin.web.beans.informes.InformeBusqueda;
 
 /**
- * Test del servicio de guías donde se usa criteria de hibernate.
+ * Test del servicio de Informes donde se usa criteria de hibernate.
  * 
  * @author EZENTIS
  *
