@@ -145,9 +145,7 @@
                                 <p:outputLabel value="¿Está seguro que desea eliminar éste usuario?"></p:outputLabel>
                                 <p:outputLabel value="Tiempo inactivo: #{userBean.diasInactividad} días."></p:outputLabel>
                                 <div class="centrarBotonesDialog">
-                                    <p:commandButton value="Sí" styleClass="ui-confirmdialog-yes" icon="fa fa-check" actionListener="#{userBean.eliminarUsuario(user)}"  
-                                        update="tablaUsuarios" oncomplete="">
-                                        </p:commandButton>
+                                    <p:commandButton value="Sí" styleClass="ui-confirmdialog-yes" icon="fa fa-check" actionListener="#{userBean.eliminarUsuario(user)}" update="tablaUsuarios" onsuccess="PF('dialogoEliminar').hide()"/>
                                     <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="fa fa-remove" onclick="PF('dialogoEliminar').hide()"/>
                                 </div>
                             </p:dialog>
@@ -156,8 +154,8 @@
                     </p:column>
                           
                     <f:facet name="footer">
-       				 Resultado de la búsqueda: #{userBean.model.rowCount} usuarios.
-    			</f:facet>
+           				 Resultado de la búsqueda: #{userBean.model.rowCount} usuarios.
+        			</f:facet>
                 </p:dataTable>
             </p:outputPanel>
 

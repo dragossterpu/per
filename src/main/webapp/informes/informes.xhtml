@@ -144,7 +144,7 @@
                                 <h:outputLabel for="inputMotivo" value="Motivo (*):" />
                                 <p:inputTextarea widgetVar="inputMotivo" id="inputMotivo" value="#{motivoAnulacion}" maxlength="2000" required="#{param['anular']!=null}" requiredMessage="Introduzca el motivo para anular el informe" converter="#{trimConverter}" onfocus="$(this).val('')"/>
                                 <div class="centrarBotonesDialog">
-                                    <p:commandButton value="Confirmar" action="#{informeBean.anularInforme(informe, motivoAnulacion)}" process="@this,inputMotivo" onclick="PF('informeDialog').hide()" update="tablaInformes">
+                                    <p:commandButton value="Confirmar" action="#{informeBean.anularInforme(informe, motivoAnulacion)}" process="@this,inputMotivo" onsuccess="PF('informeDialog').hide()" update="tablaInformes">
                                         <f:param name="anular" value="true"/>
                                     </p:commandButton>
                                     <p:commandButton value="Cerrar" onclick="PF('informeDialog').hide()" update="busquedaInforme"/>
