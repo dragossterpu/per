@@ -58,7 +58,6 @@ import es.mira.progesin.util.FacesUtilities;
  *
  * @author EZENTIS
  */
-
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, ModificarModeloCuestionarioBean.class })
@@ -262,7 +261,6 @@ public class ModificarModeloCuestionarioBeanTest {
         assertThat(modificarModeloCuestionarioBean.getTipoPersonalizado()).isEmpty();
         
         assertThat(redireccion).isEqualTo("/cuestionarios/modificarModeloCuestionario?faces-redirect=true");
-        
     }
     
     /**
@@ -291,7 +289,6 @@ public class ModificarModeloCuestionarioBeanTest {
         assertThat(modificarModeloCuestionarioBean.getListadoValoresFila()).isNotNull();
         assertThat(modificarModeloCuestionarioBean.getTipoPersonalizado()).isEmpty();
         assertThat(redireccion).isEqualTo("/cuestionarios/modificarModeloCuestionario?faces-redirect=true");
-        
     }
     
     /**
@@ -316,7 +313,6 @@ public class ModificarModeloCuestionarioBeanTest {
                 .isEqualTo(modeloCuestionario.getId());
         assertThat(modificarModeloCuestionarioBean.getModeloCuestionario().getAreas())
                 .isEqualTo(modificarModeloCuestionarioBean.getListaAreasCuestionario());
-        
     }
     
     /**
@@ -385,7 +381,6 @@ public class ModificarModeloCuestionarioBeanTest {
         assertThat(modificarModeloCuestionarioBean.getListaAreasCuestionarioVisualizar().contains(area)).isFalse();
         assertThat(modificarModeloCuestionarioBean.getModeloCuestionario().getAreas())
                 .isEqualTo(modificarModeloCuestionarioBean.getListaAreasCuestionario());
-        
     }
     
     /**
@@ -740,14 +735,13 @@ public class ModificarModeloCuestionarioBeanTest {
      * {@link es.mira.progesin.web.beans.cuestionarios.ModificarModeloCuestionarioBean#aniadeValor(java.lang.String, java.lang.String)}.
      */
     @Test
-    public final void testAniadeValorNoRADIO() {
+    public final void testAniadeValorNoRADIOSinSuperarLimite() {
         String valor = VALORTEST;
         String tipoRespuesta = "tipo_test";
         modificarModeloCuestionarioBean.setListadoValoresNuevaRespuesta(new ArrayList<>());
-        for (int i = 0; i < 20; i++) {
-            modificarModeloCuestionarioBean.getListadoValoresNuevaRespuesta().add(String.valueOf(i));
+        for (int i = 0; i < 30; i++) {
+            modificarModeloCuestionarioBean.aniadeValor(valor, tipoRespuesta);
         }
-        modificarModeloCuestionarioBean.aniadeValor(valor, tipoRespuesta);
         assertThat(modificarModeloCuestionarioBean.getListadoValoresNuevaRespuesta().size()).isEqualTo(20);
     }
     
@@ -958,7 +952,6 @@ public class ModificarModeloCuestionarioBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
-        
     }
     
     /**
@@ -978,7 +971,6 @@ public class ModificarModeloCuestionarioBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
-        
     }
     
     /**
@@ -1028,7 +1020,6 @@ public class ModificarModeloCuestionarioBeanTest {
      */
     @Test
     public final void testOnSelectTipoTabla() {
-        modificarModeloCuestionarioBean.setDatosTabla(datosTabla);
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = new ArrayList<>();
         SelectEvent event = mock(SelectEvent.class);
         String tipo = "TABLANUEVA";
@@ -1038,7 +1029,6 @@ public class ModificarModeloCuestionarioBeanTest {
         
         modificarModeloCuestionarioBean.onSelectTipo(event);
         verify(datosTabla, times(1)).crearTabla(valoresColumnas);
-        
     }
     
     /**
@@ -1047,7 +1037,6 @@ public class ModificarModeloCuestionarioBeanTest {
      */
     @Test
     public final void testOnSelectTipoMatriz() {
-        modificarModeloCuestionarioBean.setDatosTabla(datosTabla);
         List<ConfiguracionRespuestasCuestionario> valoresColumnas = new ArrayList<>();
         SelectEvent event = mock(SelectEvent.class);
         String tipo = "MATRIZNUEVA";

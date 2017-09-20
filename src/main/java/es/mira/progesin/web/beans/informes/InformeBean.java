@@ -2,7 +2,6 @@ package es.mira.progesin.web.beans.informes;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -58,11 +57,6 @@ import lombok.Setter;
 public class InformeBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    
-    /**
-     * Formato de fecha.
-     */
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * Informe con respuestas.
@@ -286,7 +280,6 @@ public class InformeBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar el informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
@@ -306,7 +299,6 @@ public class InformeBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El informe ha sido guardado con éxito.");
         } catch (DataAccessException e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al guardar el informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
@@ -331,7 +323,6 @@ public class InformeBean implements Serializable {
                         "El informe ha sido finalizado con éxito.", "dialogFinalizar");
             }
         } catch (DataAccessException e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al finalizar el informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
@@ -397,8 +388,7 @@ public class InformeBean implements Serializable {
         informeFormateado.append("</div>");
         
         // Asegurarse de que es XHTML
-        String informeXHTML = Utilities.limpiarHtml(informeFormateado.toString());
-        return informeXHTML;
+        return Utilities.limpiarHtml(informeFormateado.toString());
     }
     
     /**
@@ -415,7 +405,7 @@ public class InformeBean implements Serializable {
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
                     informe.getInspeccion().getMunicipio().getName());
-            String fechaFinalizacion = sdf.format(informe.getFechaFinalizacion());
+            String fechaFinalizacion = Utilities.getFechaFormateada(informe.getFechaFinalizacion(), "dd/MM/yyyy");
             String autor = informe.getUsernameFinalizacion();
             
             if ("PDF".equals(tipoArchivo)) {
@@ -426,7 +416,6 @@ public class InformeBean implements Serializable {
                         autor));
             }
         } catch (ProgesinException e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error en la generación del " + tipoArchivo);
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
@@ -446,7 +435,6 @@ public class InformeBean implements Serializable {
             generarMapaAreasSubareas();
             generarMapaRespuestas();
         } catch (DataAccessException e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al asignar una subárea del informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
@@ -466,7 +454,6 @@ public class InformeBean implements Serializable {
             generarMapaAreasSubareas();
             generarMapaRespuestas();
         } catch (DataAccessException e) {
-            e.printStackTrace();
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                     "Se ha producido un error al desaignar una subárea del informe, inténtelo de nuevo más tarde");
             regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
