@@ -468,9 +468,13 @@ public class GestorDocumentalBeanTest {
         inspecciones.add(insp1);
         User user = User.builder().username("administrador").role(RoleEnum.ROLE_ADMIN).build();
         Documento doc1 = spy(Documento.class);
+        TipoDocumento tipo = TipoDocumento.builder().nombre("prueba").build();
         doc1.setId(1L);
+        doc1.setTipoDocumento(tipo);
+        
         Documento doc2 = spy(Documento.class);
         doc2.setId(2L);
+        doc2.setTipoDocumento(tipo);
         List<Documento> documentos = new ArrayList<>();
         documentos.add(doc1);
         documentos.add(doc2);
@@ -485,8 +489,6 @@ public class GestorDocumentalBeanTest {
         when(model.getDatasource()).thenReturn(documentos);
         when(documentoService.listaInspecciones(doc1)).thenReturn(inspecciones);
         when(model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null)).thenReturn(documentos);
-        when(documentoService.perteneceACuestionario(doc1)).thenReturn(1L);
-        when(documentoService.perteneceASolicitud(doc1)).thenReturn(3L);
         when(authentication.getPrincipal()).thenReturn(user);
         
         gestorDocumentalBeanMock.buscaDocumento();
@@ -508,10 +510,13 @@ public class GestorDocumentalBeanTest {
         List<Inspeccion> inspecciones = new ArrayList<>();
         inspecciones.add(insp1);
         User user = User.builder().username("usuario").role(RoleEnum.ROLE_EQUIPO_INSPECCIONES).build();
+        TipoDocumento tipo = TipoDocumento.builder().nombre("prueba").build();
         Documento doc1 = spy(Documento.class);
         doc1.setId(1L);
+        doc1.setTipoDocumento(tipo);
         Documento doc2 = spy(Documento.class);
         doc2.setId(2L);
+        doc2.setTipoDocumento(tipo);
         List<Documento> documentos = new ArrayList<>();
         documentos.add(doc1);
         documentos.add(doc2);
@@ -526,8 +531,7 @@ public class GestorDocumentalBeanTest {
         when(model.getDatasource()).thenReturn(documentos);
         when(documentoService.listaInspecciones(doc1)).thenReturn(inspecciones);
         when(model.load(0, 20, "fechaAlta", SortOrder.DESCENDING, null)).thenReturn(documentos);
-        when(documentoService.perteneceACuestionario(doc1)).thenReturn(1L);
-        when(documentoService.perteneceASolicitud(doc1)).thenReturn(3L);
+        
         when(authentication.getPrincipal()).thenReturn(user);
         
         gestorDocumentalBeanMock.buscaDocumento();
@@ -762,6 +766,7 @@ public class GestorDocumentalBeanTest {
         
         Documento docTest = new Documento();
         docTest.setId(2L);
+        docTest.setNombre("Prueba");
         gestorDocumentalBeanMock.setDocumento(docTest);
         when(documentoService.save(docTest)).thenReturn(docTest);
         gestorDocumentalBeanMock.modificaDocumento();
@@ -769,6 +774,7 @@ public class GestorDocumentalBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.GESTOR.getDescripcion()), any(String.class));
+        
     }
     
     /**

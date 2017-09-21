@@ -20,6 +20,7 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StreamUtils;
@@ -28,6 +29,7 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.Documento;
@@ -181,7 +183,6 @@ public class DocumentoService implements IDocumentoService {
     /**
      * Recibe el id de un documento como parámetro y devuelve un stream para realizar la descarga.
      * 
-     * 
      * @param id Documento a descargar
      * @return DefaultStreamedContent Flujo de descarga
      */
@@ -203,7 +204,6 @@ public class DocumentoService implements IDocumentoService {
     /**
      * Recibe un archivo UploadedFile del que recupera los datos para generar un Documento que se almacenará en base de
      * datos. Devuelve el documento almacenado.
-     * 
      * 
      * @param file fichero a cargar en BDD
      * @param tipo tipo de documentp
@@ -316,6 +316,13 @@ public class DocumentoService implements IDocumentoService {
         
         creaCriteria(busquedaDocumento, criteriaDocumento);
         
+        User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean esEquipo = RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuario.getRole());
+        
+        if (esEquipo) {
+            criteriaService.creaCriteriaEquipoInspeccion(criteriaDocumento, usuario.getUsername());
+        }
+        
         criteriaService.prepararPaginacionOrdenCriteria(criteriaDocumento, first, pageSize, sortField, sortOrder, "id");
         
         @SuppressWarnings("unchecked")
@@ -332,6 +339,7 @@ public class DocumentoService implements IDocumentoService {
      * @param criteria Criteria al que se añadirán los parámetros.
      */
     private void creaCriteria(DocumentoBusqueda busquedaDocumento, Criteria criteria) {
+        
         if (busquedaDocumento.getFechaDesde() != null) {
             criteria.add(Restrictions.ge(Constantes.FECHAALTA, busquedaDocumento.getFechaDesde()));
         }
@@ -434,17 +442,6 @@ public class DocumentoService implements IDocumentoService {
     }
     
     /**
-     * Devuelve el id del Cuestionarios que tiene asociado a una respuesta el documento pasado como parámetro.
-     * 
-     * @param documento del que se desea recuperar el cuestionario
-     * @return id del cuestionario
-     */
-    @Override
-    public Long perteneceACuestionario(Documento documento) {
-        return documentoRepository.perteneceACuestionario(documento.getId());
-    }
-    
-    /**
      * Devuelve el número de cuestionarios enviados que tienen adjunta la plantilla pasada como parámetro.
      * 
      * @param documento Identificador de la plantilla
@@ -453,17 +450,6 @@ public class DocumentoService implements IDocumentoService {
     @Override
     public Long plantillaPerteneceACuestionario(Documento documento) {
         return documentoRepository.plantillaPerteneceACuestionario(documento.getId());
-    }
-    
-    /**
-     * Devuelve el id de la solicitud de documentación que tiene asociado el documento pasado como parámetro.
-     * 
-     * @param documento del que se desea recuperar la solicitud
-     * @return id de la solicitud
-     */
-    @Override
-    public Long perteneceASolicitud(Documento documento) {
-        return documentoRepository.perteneceASolicitud(documento.getId());
     }
     
     /**
@@ -520,8 +506,9 @@ public class DocumentoService implements IDocumentoService {
     public boolean documentoEnInspeccionUsuario(User usuario, Documento documento) {
         boolean respuesta = false;
         List<Inspeccion> listaInspeccionesAsociadas = listaInspecciones(documento);
+        boolean esEquipo = RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuario.getRole());
         
-        if (listaInspeccionesAsociadas.isEmpty()) {
+        if (listaInspeccionesAsociadas.isEmpty() || !esEquipo) {
             respuesta = true;
         } else {
             List<Inspeccion> listaInspeccionesUsuario = inspeccionRepository

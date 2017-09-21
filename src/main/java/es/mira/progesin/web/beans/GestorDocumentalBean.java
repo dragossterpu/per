@@ -371,7 +371,8 @@ public class GestorDocumentalBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
                         SeccionesEnum.GESTOR.getDescripcion(), "Se ha guardado su documento con éxito");
                 recargaLista();
-                
+                registroActividadService.altaRegActividad("Se ha creado el documento ".concat(nombreDocumento),
+                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GESTOR.getDescripcion());
                 RequestContext.getCurrentInstance().reset("formAlta:asociado");
                 nombreDoc = "";
                 listaInspecciones = new ArrayList<>();
@@ -417,6 +418,8 @@ public class GestorDocumentalBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
                     SeccionesEnum.GESTOR.getDescripcion(), "Se ha modificado el documento");
             recargaLista();
+            registroActividadService.altaRegActividad("Se ha modificado el documento ".concat(documento.getNombre()),
+                    TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GESTOR.getDescripcion());
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,
@@ -538,15 +541,14 @@ public class GestorDocumentalBean implements Serializable {
         
         User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
-        boolean perteneceACuestionario = documentoService.perteneceACuestionario(doc) != null;
-        boolean perteneceASolicitud = documentoService.perteneceASolicitud(doc) != null;
+        boolean perteneceACuestionario = doc.getTipoDocumento().getNombre().equalsIgnoreCase("cuestionario");
+        boolean perteneceASolicitud = doc.getTipoDocumento().getNombre().equalsIgnoreCase("documentación salida ipss");
         boolean plantillaAdjuntaCuestionario = documentoService.plantillaPerteneceACuestionario(doc) > 0;
         boolean documentoEnInspeccionUsuario = documentoService.documentoEnInspeccionUsuario(usuario, doc);
         
-        boolean esAdmin = RoleEnum.ROLE_ADMIN.equals(usuario.getRole());
+        return perteneceACuestionario || perteneceASolicitud || !documentoEnInspeccionUsuario
+                || plantillaAdjuntaCuestionario;
         
-        return perteneceACuestionario || perteneceASolicitud || plantillaAdjuntaCuestionario
-                || (!documentoEnInspeccionUsuario && !esAdmin);
     }
     
 }

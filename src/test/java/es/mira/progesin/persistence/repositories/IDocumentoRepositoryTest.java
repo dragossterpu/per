@@ -64,25 +64,6 @@ public class IDocumentoRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#perteneceACuestionario(Long)}.
-     */
-    @Test
-    public void testPerteneceACuestionario() {
-        Long resp = documentoRepository.perteneceACuestionario(1L);
-        assertThat(resp).isEqualTo(1L);
-    }
-    
-    /**
-     * Test method for {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#perteneceASolicitud(Long)}.
-     */
-    @Test
-    public void testPerteneceASolicitud() {
-        Long resp = documentoRepository.perteneceASolicitud(4L);
-        assertThat(resp).isEqualTo(6L);
-    }
-    
-    /**
-     * Test method for
      * {@link es.mira.progesin.persistence.repositories.IDocumentoRepository#deleteByFechaBajaIsNotNull()}.
      */
     @Test

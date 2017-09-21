@@ -47,15 +47,6 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
     void deleteByFechaBajaIsNotNull();
     
     /**
-     * Devuelve el id del cuestionario que tenga adjunto a una respuesta el documento recibido como parámetro.
-     * 
-     * @param idDocumento Id del documento a buscar
-     * @return id del cuestionario si existe
-     */
-    @Query(value = "select id_cuestionario_enviado from respuestas_cuest_docs where id_documento=?1", nativeQuery = true)
-    Long perteneceACuestionario(Long idDocumento);
-    
-    /**
      * Devuelve el número de cuestionarios enviados que tienen adjunta la plantilla pasada como parámetro.
      * 
      * @param idDocumento Identificador de la plantilla
@@ -63,15 +54,6 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
      */
     @Query(value = "select count(id_cuest_env) from cuest_env_plantilla where id_plantilla=?1", nativeQuery = true)
     Long plantillaPerteneceACuestionario(Long idDocumento);
-    
-    /**
-     * Devuelve el id de la solicitud que tenga adjunto el documento recibido como parámetro.
-     * 
-     * @param idDocumento Id del documento a buscar
-     * @return id de la solicitud si existe
-     */
-    @Query(value = "select id_solicitud_previa from solicitud_previa_docs where id_documento=?1", nativeQuery = true)
-    Long perteneceASolicitud(Long idDocumento);
     
     /**
      * Devuelve los documentos que corresponden a un tipo de documento.

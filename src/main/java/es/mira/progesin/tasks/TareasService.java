@@ -126,7 +126,7 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Recordatorio de la necesidad de enviar un cuestionario. El proceso se ejecutará de lunes a viernes a las 8 de la
+     * Recordatorio de la necesidad de enviar un cuestionario. El proceso se ejecutará todos los días a las 8 de la
      * mañana.
      */
     @Override
@@ -179,8 +179,8 @@ public class TareasService implements ITareasService {
     }
     
     /**
-     * Recordatorio de la necesidad de enviar la documentación solicitada. El proceso se ejecutará de lunes a viernes a
-     * las 8 de la mañana.
+     * Recordatorio de la necesidad de enviar la documentación solicitada. El proceso se ejecutará todos los días a las
+     * 8 de la mañana.
      */
     @Override
     @Scheduled(cron = "0 0 8 * * ?")

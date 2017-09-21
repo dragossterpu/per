@@ -373,32 +373,6 @@ public class DocumentoServiceTest {
     }
     
     /**
-     * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#perteneceACuestionario(es.mira.progesin.persistence.entities.gd.Documento)}
-     * .
-     */
-    @Test
-    public final void testPerteneceACuestionario() {
-        Documento doc = new Documento();
-        doc.setId(3L);
-        documentoRepository.perteneceACuestionario(doc.getId());
-        verify(documentoRepository, times(1)).perteneceACuestionario(doc.getId());
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.services.DocumentoService#perteneceASolicitud(es.mira.progesin.persistence.entities.gd.Documento)}
-     * .
-     */
-    @Test
-    public final void testPerteneceASolicitud() {
-        Documento doc = new Documento();
-        doc.setId(3L);
-        documentoRepository.perteneceASolicitud(doc.getId());
-        verify(documentoRepository, times(1)).perteneceASolicitud(doc.getId());
-    }
-    
-    /**
      * Test method for {@link es.mira.progesin.services.DocumentoService#vaciarPapelera()}.
      */
     @Test

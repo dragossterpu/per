@@ -174,22 +174,6 @@ public interface IDocumentoService {
     List<Inspeccion> listaInspecciones(Documento documento);
     
     /**
-     * Devuelve el id del Cuestionarios que tiene asociado a una respuesta el documento pasado como parámetro.
-     * 
-     * @param documento del que se desea recuperar el cuestionario
-     * @return id del cuestionario
-     */
-    Long perteneceACuestionario(Documento documento);
-    
-    /**
-     * Devuelve el id de la solicitud de documentación que tiene asociado el documento pasado como parámetro.
-     * 
-     * @param documento del que se desea recuperar la solicitud
-     * @return id de la solicitud
-     */
-    Long perteneceASolicitud(Documento documento);
-    
-    /**
      * Elimina todos los documentos almacenados en la papelera.
      * 
      * @return Lista de documentos eliminados

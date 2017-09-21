@@ -1,15 +1,21 @@
 package es.mira.progesin.services;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.primefaces.model.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RoleEnum;
@@ -22,6 +28,12 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
  */
 @Service("criteriaService")
 public class CriteriaService implements ICriteriaService {
+    
+    /**
+     * Servicio de equipos.
+     */
+    @Autowired
+    private IEquipoService equipoService;
     
     /**
      * Prepara el criteria pasado como parámetro para la paginación de Primefaces.
@@ -63,5 +75,23 @@ public class CriteriaService implements ICriteriaService {
             subquery.setProjection(Projections.property("miembro.equipo"));
             criteria.add(Property.forName("equipo.id").in(subquery));
         }
+    }
+    
+    /**
+     * Añade al criteria la búsqueda según el/los equipo/s de inspección.
+     * 
+     * @param criteria Criteria al que se añade el criterio
+     * @param username Usuario sobre el que se quiere hacer la consulta..
+     * 
+     */
+    @Override
+    public void creaCriteriaEquipoInspeccion(Criteria criteria, String username) {
+        List<Equipo> equipos = equipoService.buscarEquiposByUsername(username);
+        
+        criteria.createAlias("documento.inspeccion", "inspeccion", JoinType.LEFT_OUTER_JOIN);
+        Criterion[] clavesOr = new Criterion[2];
+        clavesOr[0] = Restrictions.in("inspeccion.equipo", equipos);
+        clavesOr[1] = Restrictions.isNull("inspeccion.equipo");
+        criteria.add(Restrictions.or(clavesOr));
     }
 }
