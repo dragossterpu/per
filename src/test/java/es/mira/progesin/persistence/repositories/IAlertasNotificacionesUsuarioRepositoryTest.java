@@ -63,7 +63,7 @@ public class IAlertasNotificacionesUsuarioRepositoryTest {
     @Test
     public final void testFindByUsuarioAndTipo() {
         List<AlertasNotificacionesUsuario> listAlertasNotificaciones = alertasNotificacionesUsuarioRepository
-                .findByUsuarioAndTipo("jcarranz", TipoMensajeEnum.ALERTA);
+                .findByUsuarioAndTipoOrderByFechaAltaDesc("jcarranz", TipoMensajeEnum.ALERTA);
         assertThat(listAlertasNotificaciones).hasSize(1);
     }
     

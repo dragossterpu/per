@@ -56,6 +56,6 @@ public interface IAlertasNotificacionesUsuarioRepository extends CrudRepository<
      * 
      */
     
-    List<AlertasNotificacionesUsuario> findByUsuarioAndTipo(String usuario, TipoMensajeEnum tipo);
+    List<AlertasNotificacionesUsuario> findByUsuarioAndTipoOrderByFechaAltaDesc(String usuario, TipoMensajeEnum tipo);
     
 }

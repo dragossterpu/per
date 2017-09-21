@@ -162,10 +162,11 @@ public class AlertasNotificacionesUsuarioServiceTest {
         List<AlertasNotificacionesUsuario> mensajesAlertaTest = new ArrayList<>();
         mensajesAlertaTest.add(mensaje1);
         mensajesAlertaTest.add(mensaje2);
-        when(mensajeRepository.findByUsuarioAndTipo(USUARIOLOGUEADO, TipoMensajeEnum.ALERTA))
+        when(mensajeRepository.findByUsuarioAndTipoOrderByFechaAltaDesc(USUARIOLOGUEADO, TipoMensajeEnum.ALERTA))
                 .thenReturn(mensajesAlertaTest);
         List<Alerta> alertas = alertasNotificacionesUsuarioServiceMock.findAlertasByUser(USUARIOLOGUEADO);
-        verify(mensajeRepository, times(1)).findByUsuarioAndTipo(USUARIOLOGUEADO, TipoMensajeEnum.ALERTA);
+        verify(mensajeRepository, times(1)).findByUsuarioAndTipoOrderByFechaAltaDesc(USUARIOLOGUEADO,
+                TipoMensajeEnum.ALERTA);
         verify(alertaService, times(1)).findOne(1L);
         verify(alertaService, times(1)).findOne(2L);
         assertThat(alertas).isNotNull();
@@ -189,11 +190,12 @@ public class AlertasNotificacionesUsuarioServiceTest {
         List<AlertasNotificacionesUsuario> mensajesNotificacionesTest = new ArrayList<>();
         mensajesNotificacionesTest.add(mensaje1);
         mensajesNotificacionesTest.add(mensaje2);
-        when(mensajeRepository.findByUsuarioAndTipo(USUARIOLOGUEADO, TipoMensajeEnum.NOTIFICACION))
+        when(mensajeRepository.findByUsuarioAndTipoOrderByFechaAltaDesc(USUARIOLOGUEADO, TipoMensajeEnum.NOTIFICACION))
                 .thenReturn(mensajesNotificacionesTest);
         List<Notificacion> notificaciones = alertasNotificacionesUsuarioServiceMock
                 .findNotificacionesByUser(USUARIOLOGUEADO);
-        verify(mensajeRepository, times(1)).findByUsuarioAndTipo(USUARIOLOGUEADO, TipoMensajeEnum.NOTIFICACION);
+        verify(mensajeRepository, times(1)).findByUsuarioAndTipoOrderByFechaAltaDesc(USUARIOLOGUEADO,
+                TipoMensajeEnum.NOTIFICACION);
         verify(notificacionService, times(1)).findOne(3L);
         verify(notificacionService, times(1)).findOne(4L);
         assertThat(notificaciones).isNotNull();

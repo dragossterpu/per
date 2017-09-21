@@ -99,7 +99,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
      */
     @Override
     public List<Alerta> findAlertasByUser(String user) {
-        List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipo(user,
+        List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipoOrderByFechaAltaDesc(user,
                 TipoMensajeEnum.ALERTA);
         List<Alerta> respuesta = new ArrayList<>();
         
@@ -120,7 +120,7 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
      */
     @Override
     public List<Notificacion> findNotificacionesByUser(String user) {
-        List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipo(user,
+        List<AlertasNotificacionesUsuario> mensajesAlerta = mensajeRepo.findByUsuarioAndTipoOrderByFechaAltaDesc(user,
                 TipoMensajeEnum.NOTIFICACION);
         List<Notificacion> respuesta = new ArrayList<>();
         
