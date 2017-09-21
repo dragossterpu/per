@@ -6,7 +6,6 @@
                     
             <ui:param name="titulo" value="Informe" />
             <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-            <h3>#{titulo}</h3>
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
             <h:commandLink style="float: right;" actionListener="#{informeBean.exportarInforme('DOCX')}" rendered="#{yaFinalizado}">
@@ -19,6 +18,8 @@
             </h:commandLink>
             
             <div class="ql-snow ql-editor" id="informe" >
+                <h1 class="nombreInforme">Inspección realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.name}</h1>
+
                 <ol class="titulos">
 	                <ui:repeat value="#{informeBean.listaAreas}" var="area">
 		                <li>

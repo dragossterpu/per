@@ -30,12 +30,8 @@
                                 </h:outputFormat>
                             </p:outputPanel>
                             
-                            <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="informe" rendered="#{empty informeBean.mapaAsignaciones[subarea]}">
-                                <p:confirm header="Obtener asignación de subárea" icon="fa fa-exclamation-triangle" message="Ésta acción guardará el estado actual del informe"/>
-                            </p:commandButton>
-                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="informe" rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}">
-                                <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="Ésta acción guardará el estado actual del informe"/>
-                            </p:commandButton>
+                            <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="informe" rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
+                            <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="informe" rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
                             <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="informe" rendered="#{(not empty informeBean.mapaAsignaciones[subarea]) and (informeBean.mapaAsignaciones[subarea] ne request.remoteUser) and (esJefeEquipoInspeccion or esJefeInspecciones)}">
                                 <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario con una posible pérdida de datos no guardados"/>
                                  </p:commandButton>

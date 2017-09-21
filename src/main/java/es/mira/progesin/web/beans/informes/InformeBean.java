@@ -401,7 +401,7 @@ public class InformeBean implements Serializable {
             String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
                     informe.getInspeccion().getAnio());
             String informeXHTML = generarInformeXHTML();
-            String titulo = String.format("Inspección realizada a la %s de la %s de %s",
+            String titulo = String.format("Inspección realizada a %s de %s de %s",
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
                     informe.getInspeccion().getMunicipio().getName());
