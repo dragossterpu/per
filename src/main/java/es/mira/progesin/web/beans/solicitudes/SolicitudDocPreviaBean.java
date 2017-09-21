@@ -416,6 +416,11 @@ public class SolicitudDocPreviaBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.getDescripcion());
             
+            notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(),
+                    RoleEnum.ROLE_SERVICIO_APOYO);
+            notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(),
+                    solicitudDocumentacionPrevia.getInspeccion().getEquipo());
+            
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al finalizar la solicitud, inténtelo de nuevo más tarde");

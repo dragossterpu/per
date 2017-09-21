@@ -327,6 +327,10 @@ public class SolicitudDocPreviaBeanTest {
         verify(solicitudDocumentacionService, times(1)).transaccSaveElimUsuarioProv(eq(solicitud), eq(CORREO));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
+        verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(RoleEnum.ROLE_SERVICIO_APOYO));
+        verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(solicitud.getInspeccion().getEquipo()));
     }
     
     /**

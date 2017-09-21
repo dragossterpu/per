@@ -28,7 +28,7 @@
                         <h:outputText value="#{miembro.posicion.descripcion}" />
                     </p:column>
 
-                    <p:column width="20" exportable="false" rendered="#{not yaAnulado and esJefeInspecciones}">
+                    <p:column styleClass="botonTabla" exportable="false" rendered="#{not yaAnulado and esJefeInspecciones}">
                         <p:commandButton title="Eliminar" icon="fa fa-trash" actionListener="#{equiposBean.eliminarMiembro(miembro)}" update="modificarEquipo" disabled="#{miembro.posicion eq 'JEFE_EQUIPO'}">
                             <p:confirm header="Eliminar componente del equipo" message="¿Está seguro que desea eliminar este componente del equipo?" icon="fa fa-warning-sign" />
                         </p:commandButton>
