@@ -103,9 +103,9 @@ public class NuevoModeloInformeBean implements Serializable {
                 correcto = false;
                 textoError = "Debe asignar algún área al modelo para poder pasar a la siguiente pantalla";
             }
-        }
-        
-        if ("finalizar".equals(event.getNewStep())) {
+            
+        } else if ("finalizar".equals(event.getNewStep())) {
+            
             for (AreaInforme area : listaAreas) {
                 List<SubareaInforme> lista = area.getSubareas();
                 if (lista.isEmpty()) {
