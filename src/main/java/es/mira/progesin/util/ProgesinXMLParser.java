@@ -15,7 +15,6 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 
 import es.mira.progesin.constantes.Constantes;
-import es.mira.progesin.util.Base64ImageProvider;
 
 /**
  * @author Ezentis

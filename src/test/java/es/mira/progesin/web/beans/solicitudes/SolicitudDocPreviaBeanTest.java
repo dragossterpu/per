@@ -296,9 +296,6 @@ public class SolicitudDocPreviaBeanTest {
                 .correoDestinatario(CORREO).asunto("asunto").build();
         solicitudDocPreviaBean.setSolicitudDocumentacionPrevia(solicitud);
         when(userService.exists(CORREO)).thenReturn(Boolean.FALSE);
-        List<RoleEnum> listRoles = new ArrayList<>();
-        listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
-        listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
         when(Utilities.getPassword()).thenCallRealMethod();
         when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
         
@@ -310,7 +307,9 @@ public class SolicitudDocPreviaBeanTest {
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
-                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(listRoles));
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(RoleEnum.ROLE_SERVICIO_APOYO));
+        verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(solicitud.getInspeccion().getEquipo()));
     }
     
     /**

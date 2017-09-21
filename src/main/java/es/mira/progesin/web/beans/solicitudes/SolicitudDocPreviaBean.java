@@ -380,11 +380,10 @@ public class SolicitudDocPreviaBean implements Serializable {
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                         SeccionesEnum.DOCUMENTACION.getDescripcion());
                 
-                List<RoleEnum> listRoles = new ArrayList<>();
-                listRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
-                listRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
                 notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(),
-                        listRoles);
+                        RoleEnum.ROLE_SERVICIO_APOYO);
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(),
+                        solicitudDocumentacionPrevia.getInspeccion().getEquipo());
             }
         } catch (DataAccessException | CorreoException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
