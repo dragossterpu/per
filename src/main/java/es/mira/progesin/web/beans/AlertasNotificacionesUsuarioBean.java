@@ -103,7 +103,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
-            String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
+            String descripcion = "Se ha eliminado la alerta: " + alerta.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Alertas");
         } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Alertas", e);
@@ -123,7 +123,7 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     notif.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
-            String descripcion = "Se ha eliminado la notificación :" + notif.getDescripcion();
+            String descripcion = "Se ha eliminado la notificación: " + notif.getDescripcion();
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Notificaciones");
         } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Notificaciones", e);

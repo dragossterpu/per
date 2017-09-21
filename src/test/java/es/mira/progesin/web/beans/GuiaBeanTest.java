@@ -775,8 +775,8 @@ public class GuiaBeanTest {
         when(guiaService.findOne(guia.getId())).thenReturn(guia);
         guiaBean.anular(guia);
         verify(guiaService, times(1)).guardaGuia(guia);
-        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.GUIAS.getDescripcion()));
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.GUIAS.getDescripcion()));
         assertThat(guia.getFechaAnulacion()).isNotNull();
         assertThat(guia.getUsernameAnulacion()).isNotNull();
         
@@ -847,8 +847,8 @@ public class GuiaBeanTest {
         guiaBean.activa(guia);
         
         verify(guiaService, times(1)).guardaGuia(guia);
-        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.GUIAS.getDescripcion()));
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.GUIAS.getDescripcion()));
         assertThat(guia.getFechaAnulacion()).isNull();
         assertThat(guia.getUsernameAnulacion()).isNull();
     }

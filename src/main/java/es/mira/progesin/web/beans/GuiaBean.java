@@ -528,7 +528,7 @@ public class GuiaBean implements Serializable {
                 guiaAux.setUsernameAnulacion(SecurityContextHolder.getContext().getAuthentication().getName());
                 guiaService.guardaGuia(guiaAux);
                 regActividadService.altaRegActividad("Se ha anulado la guía '".concat(guiaAux.getNombre()),
-                        TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                        TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);
             }
@@ -589,7 +589,7 @@ public class GuiaBean implements Serializable {
                 guiaService.guardaGuia(guiaAux);
                 regActividadService.altaRegActividad(
                         Constantes.LAGUIA.concat(guiaAux.getNombre().concat("' ha sido activada")),
-                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                        TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
                 
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);

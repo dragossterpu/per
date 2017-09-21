@@ -411,7 +411,7 @@ public class SolicitudDocPreviaBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Finalización",
                     "Se ha finalizado con éxito la solicitud de documentación");
             
-            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero() + "finalizada";
+            String descripcion = DESCRIPCION + solicitudDocumentacionPrevia.getInspeccion().getNumero() + " finalizada";
             
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
                     SeccionesEnum.DOCUMENTACION.getDescripcion());

@@ -77,7 +77,7 @@ public class AlertasBean implements Serializable {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
             listaAlertas.remove(alerta);
-            String descripcion = "Se ha eliminado la alerta :" + alerta.getDescripcion();
+            String descripcion = "Se ha eliminado la alerta: " + alerta.getDescripcion();
             // Guardamos la actividad en bbdd
             
             regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),

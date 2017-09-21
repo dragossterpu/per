@@ -78,7 +78,7 @@ public class NotificacionesBean implements Serializable {
         notificacion.setFechaBaja(new Date());
         notificacion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
         
-        String descripcion = "Se ha eliminado la notificación " + notificacion.getDescripcion();
+        String descripcion = "Se ha eliminado la notificación: " + notificacion.getDescripcion();
         
         regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                 SeccionesEnum.NOTIFICACIONES.getDescripcion());
