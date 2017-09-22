@@ -1381,6 +1381,12 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos PARAMETROS...
 prompt =========================================================================
 
+--******************************************************************************************************
+
+-- CAMBIAR LA URL DE ACCESO AL SISTEMA
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('URLPROGESIN','URLPROGESIN','http://194.224.253.45:8080/progesin');
+
+-- CAMBIAR CONFIGURACIÓN DEL SERVIDOR DE CORREO
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.host','mail','smtp.gmail.com');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.ssl.trust','mail','smtp.gmail.com');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','587');
@@ -1388,6 +1394,12 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.user','mail','pr
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('UserPwd','mail','ipss2016');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','true');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable','mail','true');
+
+-- ELIMINAR EZENTIS COMO DOMINIO VÁLIDO EN PRODUCCIÓN
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosCorreo','ezentis.com|interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
+
+--******************************************************************************************************
+
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoCorreo','datosApoyo','apoyo_ipss@interior.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoPuesto','datosApoyo','Inspección de Personal y Servicios de Seguridad');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoTelefono','datosApoyo','915372505');
@@ -1405,8 +1417,6 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PNG','extensiones','image/
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('BMP','extensiones','image/bmp');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PUB','extensiones','application/x-mspublisher');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PDF','extensiones','application/pdf');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('URLPROGESIN','URLPROGESIN','http://194.224.253.45:8080/progesin');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('dominiosCorreo','dominiosCorreo','ezentis.com|interior.es|policia.es|dgp.mir.es|guardiacivil.org|guardiacivil.es');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');

@@ -321,8 +321,11 @@ public class EnvioCuestionarioBeanTest {
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
+        List<RoleEnum> rolesNotif = new ArrayList<>();
+        rolesNotif.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+        rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
         verify(notificacionService, times(1)).crearNotificacionRol(any(String.class),
-                eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), eq(RoleEnum.ROLE_JEFE_INSPECCIONES));
+                eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), eq(rolesNotif));
         verify(notificacionService, times(1)).crearNotificacionEquipo(any(String.class),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), eq(cuestionarioEnvio.getInspeccion().getEquipo()));
         

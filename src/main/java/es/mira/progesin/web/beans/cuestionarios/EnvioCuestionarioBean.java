@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,8 +184,11 @@ public class EnvioCuestionarioBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.CUESTIONARIO.getDescripcion());
             
+            List<RoleEnum> rolesNotif = new ArrayList<>();
+            rolesNotif.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+            rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
             notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
-                    RoleEnum.ROLE_JEFE_INSPECCIONES);
+                    rolesNotif);
             
             notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
                     cuestionarioEnvio.getInspeccion().getEquipo());
