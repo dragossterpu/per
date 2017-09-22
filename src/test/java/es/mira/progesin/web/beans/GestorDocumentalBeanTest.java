@@ -392,8 +392,6 @@ public class GestorDocumentalBeanTest {
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
-        verify(registroActividadService, times(1)).altaRegActividad(any(String.class),
-                eq(TipoRegistroEnum.ERROR.name()), eq(SeccionesEnum.GESTOR.getDescripcion()));
         verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(ProgesinException.class));
         
