@@ -1,8 +1,8 @@
 {% extends "/static/templates/templateCorreoBase.html" %}
 
 {% block contenido %}
-<p>{{textoEnvioCuestionario}}</p>
-<p>Como parte de la inspección iniciada, se envían las instrucciones para acceder y cumplimentar el cuestionario con fecha límite de envío {{ fechaLimite}}.</p>
+<p style="white-space: pre-line;">Motivo del cuestionario:<br/> {{textoEnvioCuestionario}}</p>
+<p>Como parte de la inspección iniciada, se envían las instrucciones para acceder y cumplimentar el cuestionario con fecha límite de envío {{fechaLimite}}.</p>
 <p>Habrá que proceder del siguiente modo:</p>
 <p>1. Para responder el cuestionario debe conectarse a la aplicación PROGESIN mediante el enlace <span style="color:blue">{{URLPROGESIN}}</span>.<br/><br/>
 &#10004; Los usuarios de acceso a la aplicación son:<br/>

@@ -268,7 +268,7 @@ public final class Constantes {
      * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
      * contraseña.
      */
-    public static final String TEMPLATEENVIOCUESTIONARIO = "/static/templates/templateEviarCuestionario.html";
+    public static final String TEMPLATEENVIOCUESTIONARIO = "/static/templates/templateEnviarCuestionario.html";
     
     /**
      * Constante ruta recurso plantilla (html) con etiquetas pebble para generar correos electrónicos de recuperación de
