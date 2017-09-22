@@ -242,10 +242,12 @@ public class GuiaPersonalizadaBeanTest {
     public final void testAnular() {
         GuiaPersonalizada guia = new GuiaPersonalizada();
         guia.setId(1L);
+        guia.setNombreGuiaPersonalizada("Guía_test");
         when(guiaPersonalizadaService.findOne(guia.getId())).thenReturn(guia);
         guiaPersonalizadaBean.anular(guia);
         verify(guiaPersonalizadaService, times(1)).anular(guia);
-        
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.GUIAS.getDescripcion()));
     }
     
     /**
@@ -268,9 +270,13 @@ public class GuiaPersonalizadaBeanTest {
      */
     @Test
     public final void testEliminar() {
-        GuiaPersonalizada guia = mock(GuiaPersonalizada.class);
+        GuiaPersonalizada guia = new GuiaPersonalizada();
+        guia.setId(1L);
+        guia.setNombreGuiaPersonalizada("Guía_test");
         guiaPersonalizadaBean.eliminar(guia);
         verify(guiaPersonalizadaService, times(1)).eliminar(guia);
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
+                eq(SeccionesEnum.GUIAS.getDescripcion()));
         
     }
     
@@ -349,8 +355,8 @@ public class GuiaPersonalizadaBeanTest {
         when(guiaPersonalizadaService.findOne(guia.getId())).thenReturn(guia);
         when(guiaPersonalizadaService.save(guia)).thenReturn(guia);
         guiaPersonalizadaBean.activa(guia);
-        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
-                eq(SeccionesEnum.GUIAS.getDescripcion()));
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class),
+                eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.GUIAS.getDescripcion()));
         
     }
     

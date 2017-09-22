@@ -392,7 +392,7 @@ public class InspeccionBean implements Serializable {
                         SeccionesEnum.INSPECCION.getDescripcion());
                 
                 // Mandamos las notificaciones.
-                descripcion.append("Ver a continuación:\n\n");
+                descripcion.append("Ver a continuación:\n");
                 descripcion.append(descripcionCorreo);
                 notificacionesService.crearNotificacionEquipo(descripcion.toString(),
                         SeccionesEnum.INSPECCION.getDescripcion(), inspeccion.getEquipo());

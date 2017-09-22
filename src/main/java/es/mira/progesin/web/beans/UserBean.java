@@ -332,8 +332,6 @@ public class UserBean implements Serializable {
                 
                 descripcion.append("<br>").append(descripcionCorreo);
                 
-                descripcion.toString().replace("<br>", "\n").replace("<strong>", "").replace("</strong>", "");
-                
                 // Enviamos correo
                 correo.envioCorreo(user.getCorreo(), "Usuario modificado",
                         "<p>Se han realizado cambios en su perfil de usuario en la herramienta PROGESIN</p>"

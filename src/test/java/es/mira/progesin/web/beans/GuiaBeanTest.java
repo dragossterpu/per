@@ -667,6 +667,9 @@ public class GuiaBeanTest {
         
         guiaBean.guardarPersonalizada(nombreGuia);
         verify(guiaPersonalizadaService, times(1)).save(any(GuiaPersonalizada.class));
+        
+        verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
+                eq(SeccionesEnum.GUIAS.getDescripcion()));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.GUIAS.getDescripcion()), any(String.class));

@@ -161,6 +161,9 @@ public class GuiaPersonalizadaBean implements Serializable {
         GuiaPersonalizada guiaAux = guiaPersonalizadaService.findOne(personalizada.getId());
         if (guiaAux != null) {
             guiaPersonalizadaService.anular(guiaAux);
+            regActividadService.altaRegActividad(
+                    "La guía personalizada'".concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido anulada")),
+                    TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
         } else {
             noExisteGuiaMensaje();
         }
@@ -175,6 +178,10 @@ public class GuiaPersonalizadaBean implements Serializable {
      */
     public void eliminar(GuiaPersonalizada personalizada) {
         guiaPersonalizadaService.eliminar(personalizada);
+        regActividadService.altaRegActividad(
+                "La guía personalizada'"
+                        .concat(personalizada.getNombreGuiaPersonalizada().concat("' ha sido eliminada")),
+                TipoRegistroEnum.BAJA.name(), SeccionesEnum.GUIAS.getDescripcion());
         
     }
     
@@ -237,8 +244,9 @@ public class GuiaPersonalizadaBean implements Serializable {
                 guiaAux.setUsernameAnulacion(null);
                 guiaPersonalizadaService.save(guiaAux);
                 regActividadService.altaRegActividad(
-                        "La guía '".concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido activada")),
-                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
+                        "La guía personalizada'"
+                                .concat(guiaAux.getNombreGuiaPersonalizada().concat("' ha sido activada")),
+                        TipoRegistroEnum.MODIFICACION.name(), SeccionesEnum.GUIAS.getDescripcion());
                 
             } catch (DataAccessException e) {
                 regActividadService.altaRegActividadError(SeccionesEnum.GUIAS.getDescripcion(), e);

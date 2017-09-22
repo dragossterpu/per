@@ -486,6 +486,10 @@ public class GuiaBean implements Serializable {
                 personalizada.setPasosElegidos(listaPasosSeleccionados);
                 personalizada.setInspeccion(listaInspecciones);
                 guiaPersonalizadaService.save(personalizada);
+                regActividadService.altaRegActividad(
+                        "La guía personalizada'"
+                                .concat(personalizada.getNombreGuiaPersonalizada().concat("' ha sido creada")),
+                        TipoRegistroEnum.ALTA.name(), SeccionesEnum.GUIAS.getDescripcion());
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
                         SeccionesEnum.GUIAS.getDescripcion(), "Se ha guardado su guía personalizada con éxito");
                 
