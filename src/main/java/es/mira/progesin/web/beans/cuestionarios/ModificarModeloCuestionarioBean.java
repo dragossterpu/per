@@ -22,6 +22,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionarioId;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
@@ -579,6 +580,13 @@ public class ModificarModeloCuestionarioBean {
                     SeccionesEnum.CUESTIONARIO.getDescripcion());
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "",
                     "El cuestionario se ha creado con éxito");
+            
+            List<RoleEnum> rolesNotif = new ArrayList<>();
+            rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
+            rolesNotif.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+            notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.CUESTIONARIO.getDescripcion(),
+                    rolesNotif);
+            
         } catch (DataAccessException e) {
             registroActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR,

@@ -383,6 +383,15 @@ public class CuestionarioEnviadoBean implements Serializable {
                         Constantes.TEMPLATEMODIFICACIONFECHACUESTIONARIO, paramPlantilla);
                 
                 mensajeCorreoEnviado = ". Se ha comunicado al destinatario de la unidad el cambio de fecha.";
+                
+                notificacionService.crearNotificacionRol(
+                        "Modificado plazo envío cuestionario de la inspección "
+                                + cuestionario.getInspeccion().getNumero(),
+                        SeccionesEnum.CUESTIONARIO.getDescripcion(), RoleEnum.ROLE_SERVICIO_APOYO);
+                notificacionService.crearNotificacionEquipo(
+                        "Modificado plazo envío cuestionario de la inspección "
+                                + cuestionario.getInspeccion().getNumero(),
+                        SeccionesEnum.CUESTIONARIO.getDescripcion(), cuestionario.getInspeccion().getEquipo());
             }
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                     "El cuestionario ha sido modificado con éxito" + mensajeCorreoEnviado);

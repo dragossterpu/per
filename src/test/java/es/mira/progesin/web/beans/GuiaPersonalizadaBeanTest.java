@@ -58,6 +58,12 @@ import es.mira.progesin.util.WordGeneratorGuias;
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class })
 public class GuiaPersonalizadaBeanTest {
+    
+    /**
+     * Nombre de la guía.
+     */
+    private static String NOMBREGUIA = "Guía_test";
+    
     /**
      * Simulación del securityContext.
      */
@@ -242,7 +248,7 @@ public class GuiaPersonalizadaBeanTest {
     public final void testAnular() {
         GuiaPersonalizada guia = new GuiaPersonalizada();
         guia.setId(1L);
-        guia.setNombreGuiaPersonalizada("Guía_test");
+        guia.setNombreGuiaPersonalizada(NOMBREGUIA);
         when(guiaPersonalizadaService.findOne(guia.getId())).thenReturn(guia);
         guiaPersonalizadaBean.anular(guia);
         verify(guiaPersonalizadaService, times(1)).anular(guia);
@@ -272,7 +278,7 @@ public class GuiaPersonalizadaBeanTest {
     public final void testEliminar() {
         GuiaPersonalizada guia = new GuiaPersonalizada();
         guia.setId(1L);
-        guia.setNombreGuiaPersonalizada("Guía_test");
+        guia.setNombreGuiaPersonalizada(NOMBREGUIA);
         guiaPersonalizadaBean.eliminar(guia);
         verify(guiaPersonalizadaService, times(1)).eliminar(guia);
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
@@ -349,7 +355,7 @@ public class GuiaPersonalizadaBeanTest {
     public final void testActiva() {
         GuiaPersonalizada guia = new GuiaPersonalizada();
         guia.setId(1L);
-        guia.setNombreGuiaPersonalizada("Guía_test");
+        guia.setNombreGuiaPersonalizada(NOMBREGUIA);
         guia.setFechaAnulacion(new Date());
         guia.setUsernameAnulacion("ezentis");
         when(guiaPersonalizadaService.findOne(guia.getId())).thenReturn(guia);
@@ -368,7 +374,7 @@ public class GuiaPersonalizadaBeanTest {
     public final void testActivaGuiaSaveException() {
         GuiaPersonalizada guia = new GuiaPersonalizada();
         guia.setId(1L);
-        guia.setNombreGuiaPersonalizada("Guía_test");
+        guia.setNombreGuiaPersonalizada(NOMBREGUIA);
         guia.setFechaAnulacion(new Date());
         guia.setUsernameAnulacion("ezentis");
         when(guiaPersonalizadaService.findOne(guia.getId())).thenReturn(guia);

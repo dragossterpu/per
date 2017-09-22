@@ -301,8 +301,6 @@ public class ProvisionalSolicitudBean implements Serializable {
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Borrador",
                     "El borrador se ha guardado con éxito");
-            String descripcion = "Solicitud documentación previa cuestionario para la inspección "
-                    + solicitudDocumentacionPrevia.getInspeccion().getNumero();
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),

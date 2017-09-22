@@ -41,6 +41,7 @@ import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuest
 import es.mira.progesin.persistence.entities.cuestionarios.ConfiguracionRespuestasCuestionarioId;
 import es.mira.progesin.persistence.entities.cuestionarios.ModeloCuestionario;
 import es.mira.progesin.persistence.entities.cuestionarios.PreguntasCuestionario;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.enums.TiposRespuestasPersonalizables;
@@ -48,6 +49,7 @@ import es.mira.progesin.persistence.repositories.IConfiguracionRespuestasCuestio
 import es.mira.progesin.persistence.repositories.IPreguntaCuestionarioRepository;
 import es.mira.progesin.services.IAreaCuestionarioService;
 import es.mira.progesin.services.IModeloCuestionarioService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.DataTableView;
 import es.mira.progesin.util.FacesUtilities;
@@ -62,6 +64,7 @@ import es.mira.progesin.util.FacesUtilities;
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class, SecurityContextHolder.class, ModificarModeloCuestionarioBean.class })
 public class ModificarModeloCuestionarioBeanTest {
+    
     /**
      * Constante nombre de área.
      */
@@ -149,6 +152,12 @@ public class ModificarModeloCuestionarioBeanTest {
     private IRegistroActividadService registroActividadService;
     
     /**
+     * Mock de servicio de notificaciones.
+     */
+    @Mock
+    private INotificacionService notificacionesService;
+    
+    /**
      * Mock de repositorio de configuración de preguntas.
      */
     @Mock
@@ -187,7 +196,6 @@ public class ModificarModeloCuestionarioBeanTest {
      * Inicializa el test.
      * @throws Exception lanzada
      */
-    
     @Before
     public void setUp() throws Exception {
         PowerMockito.mockStatic(FacesUtilities.class);
@@ -989,6 +997,11 @@ public class ModificarModeloCuestionarioBeanTest {
         verify(modeloCuestionarioService, times(1)).save(modeloCuestionario);
         verify(registroActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
+        List<RoleEnum> rolesNotif = new ArrayList<>();
+        rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
+        rolesNotif.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+        verify(notificacionesService, times(1)).crearNotificacionRol(any(String.class),
+                eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), eq(rolesNotif));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
