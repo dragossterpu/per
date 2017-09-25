@@ -493,18 +493,4 @@ button.botonToggler {
     float: right;
 }
 
-.ql-tooltip.ql-editing {
-    left: 5px !important; /* anula posición dinámica diálogo flotante enlaces */
-    box-shadow: 3px 3px 4px;
-}
-
-.nombreInforme {
-    font-size: 2em;
-    font-weight: bold;
-    text-transform: uppercase;
-    clear:both;
-    text-align: center;
-    max-width:80%;
-    margin: auto;
-}
 

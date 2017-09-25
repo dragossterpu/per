@@ -51,6 +51,8 @@
                 <p:commandButton actionListener="#{gestorDocumentalBean.limpiarBusqueda}" update="form" value="Limpiar" icon="fa fa-eraser" />
                 <p:commandButton action="#{gestorDocumentalBean.nuevoDocumento}" value="Subir documento" icon="fa fa-upload"/>
             </div>
+            
+            <p:separator styleClass="separator ui-state-disabled" />
 
             <p:outputPanel layout="block" id="panelDocumentos">
                 <p:outputPanel styleClass="mensajeSinResultados" rendered="#{gestorDocumentalBean.model.rowCount eq 0}">

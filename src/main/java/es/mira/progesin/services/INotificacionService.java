@@ -54,7 +54,7 @@ public interface INotificacionService {
      * 
      */
     
-    void crearNotificacionRol(String seccion, String descripcion, List<RoleEnum> roles);
+    void crearNotificacionRol(String descripcion, String seccion, List<RoleEnum> roles);
     
     /**
      *

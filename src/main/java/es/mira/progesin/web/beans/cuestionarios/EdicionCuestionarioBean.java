@@ -129,7 +129,7 @@ public class EdicionCuestionarioBean {
     }
     
     /**
-     * Guarda el cuestionario en base de datos.
+     * Guarda el cuestionario personalizado en base de datos.
      * 
      * @param nombreCuestionario a guardar
      */
@@ -149,11 +149,18 @@ public class EdicionCuestionarioBean {
             }
             cp.setPreguntasElegidas(preguntasElegidas);
             cuestionarioPersonalizadoService.save(cp);
+            
+            String descripcion = "Se ha creado el cuestionario personalizado: ".concat(nombreCuestionario)
+                    .concat(" a partir del modelo: ").concat(modeloCuestionario.getDescripcion());
+            regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.CUESTIONARIO.getDescripcion());
+            
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO,
-                    SeccionesEnum.CUESTIONARIO.getDescripcion(), "Se ha guardado su cuestionario con éxito");
+                    SeccionesEnum.CUESTIONARIO.getDescripcion(),
+                    "Se ha guardado su cuestionario personalizado con éxito");
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
-                    "Se ha producido un error al guardar el cuestionario");
+                    "Se ha producido un error al guardar el cuestionario personalizadp");
             regActividadService.altaRegActividadError(SeccionesEnum.CUESTIONARIO.getDescripcion(), e);
         }
     }

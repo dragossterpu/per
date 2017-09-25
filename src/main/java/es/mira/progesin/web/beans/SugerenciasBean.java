@@ -18,6 +18,7 @@ import es.mira.progesin.exceptions.CorreoException;
 import es.mira.progesin.persistence.entities.Sugerencia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ISugerenciaService;
 import es.mira.progesin.services.IUserService;
@@ -165,6 +166,10 @@ public class SugerenciasBean implements Serializable {
                     .append(" sobre el módulo ").append(sugerencia.getModulo()).append("\r\n \"")
                     .append(sugerencia.getDescripcion()).append("\" \r\n \r\n").append(contestacion);
             correo.envioCorreo(user.getCorreo(), asunto, mensaje.toString());
+            
+            regActividadService.altaRegActividad(mensaje.toString(), TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.SUGERENCIAS.getDescripcion());
+            
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Contestación",
                     "Mensaje de respuesta enviado correctamente.");
         } catch (CorreoException e) {

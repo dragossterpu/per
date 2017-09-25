@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.INuevoModeloInformeService;
 import es.mira.progesin.util.FacesUtilities;
 import lombok.Getter;
@@ -62,6 +65,12 @@ public class NuevoModeloInformeBean implements Serializable {
      */
     @Autowired
     private INuevoModeloInformeService nuevoModeloInformeService;
+    
+    /**
+     * Servicio de notificaciones.
+     */
+    @Autowired
+    private INotificacionService notificacionesService;
     
     /**
      * Inicializa el objeto y redirige a la vista de creación de nuevo modelo de informe.
@@ -185,6 +194,10 @@ public class NuevoModeloInformeBean implements Serializable {
      */
     public void grabaInforme() {
         if (nuevoModeloInformeService.guardaModelo(nuevoModelo, listaAreas) != null) {
+            String mensaje = "Se ha creado un nuevo modelo de informe: ".concat(nuevoModelo.getNombre());
+            notificacionesService.crearNotificacionRol(mensaje, SeccionesEnum.INFORMES.getDescripcion(),
+                    RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+            
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Nuevo modelo de informe",
                     "Se ha creado el nuevo modelo con éxito");
             

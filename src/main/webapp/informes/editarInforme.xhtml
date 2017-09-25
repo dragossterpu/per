@@ -11,6 +11,7 @@
         <h:form id="informe">
 
             
+            <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
 			<p:accordionPanel id="acordeonAreas" value="#{informeBean.listaAreas}" var="area"  activeIndex="#{informeBean.indicesActivosAreas}"
                                           multiple="true">
 				<p:tab title="#{informeBean.listaAreas.indexOf(area)+1}. #{area.descripcion}">
@@ -23,18 +24,19 @@
                             </f:facet>
                         
                             <p:outputPanel id="panelTextoRespuestas" rendered="#{informeBean.mapaAsignaciones[subarea] ne request.remoteUser}">
-                                <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
+                                <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false" styleClass="ql-editor"/>
                                 <h:outputFormat rendered="#{not empty informeBean.mapaRespuestas[subarea][1]}">
                                     <h5><h:outputText value="Conclusiones y propuestas."/></h5>
-                                    <h:outputText value="#{informeBean.mapaRespuestas[subarea][1]}" escape="false"/>
+                                    <h:outputText value="#{informeBean.mapaRespuestas[subarea][1]}" escape="false" styleClass="ql-editor"/>
                                 </h:outputFormat>
+                                <br/>
                             </p:outputPanel>
                             
                             <p:commandButton value="Editar" icon="fa fa-plus-square" actionListener="#{informeBean.asignarSubarea(subarea)}" update="informe" rendered="#{empty informeBean.mapaAsignaciones[subarea]}"/>
                             <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="informe" rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}"/>
                             <p:commandButton value="Liberar" icon="fa fa-minus-square" actionListener="#{informeBean.desasignarSubarea(subarea)}" update="informe" rendered="#{(not empty informeBean.mapaAsignaciones[subarea]) and (informeBean.mapaAsignaciones[subarea] ne request.remoteUser) and (esJefeEquipoInspeccion or esJefeInspecciones)}">
                                 <p:confirm header="Liberar asignación de subárea" icon="fa fa-exclamation-triangle" message="¿Está seguro de que desea liberarla?, ésto afectará a otro usuario con una posible pérdida de datos no guardados"/>
-                                 </p:commandButton>
+                            </p:commandButton>
                             
                             <p:outputPanel rendered="#{informeBean.mapaAsignaciones[subarea] eq request.remoteUser}" id="panelEditorRespuestas">
                                 <p:textEditor id="editortexto" value="#{informeBean.mapaRespuestas[subarea][0]}" height="300" style="margin-bottom:10px"

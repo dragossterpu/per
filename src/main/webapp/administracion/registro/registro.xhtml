@@ -44,8 +44,10 @@
             <div class="botonesFormulario">
                 <p:commandButton actionListener="#{regActividadBean.buscarRegActividad}" value="Buscar" update="panelRegActividad" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
                 <p:commandButton actionListener="#{regActividadBean.limpiarBusqueda}" value="Limpiar" update="busquedalistaRegActividad" icon="fa fa-eraser" />
-
             </div>
+            
+            <p:separator styleClass="separator ui-state-disabled" />
+            
             <p:outputPanel layout="block" id="panelRegActividad">
                 <p:outputPanel styleClass="mensajeSinResultados" rendered="#{regActividadBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.

@@ -31,6 +31,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaService;
@@ -252,7 +253,11 @@ public class TipoInspeccionBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.INSPECCION.getDescripcion()));
-        
+        List<RoleEnum> rolesNotif = new ArrayList<>();
+        rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
+        rolesNotif.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+        verify(notificacionesService, times(1)).crearNotificacionRol(any(String.class),
+                eq(SeccionesEnum.INSPECCION.getDescripcion()), eq(rolesNotif));
     }
     
     /**

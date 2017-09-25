@@ -115,6 +115,9 @@
                 <p:commandButton value="Aceptar/Volver" icon="fa fa-user-plus" action="#{inspeccionBean.asociarInspecciones}" rendered="#{esAsociacion}" />
 
             </div>
+            
+            <p:separator styleClass="separator ui-state-disabled" />
+            
             <p:outputPanel layout="block" id="panelInspecciones">
                 <p:outputPanel styleClass="mensajeSinResultados" rendered="#{inspeccionBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.

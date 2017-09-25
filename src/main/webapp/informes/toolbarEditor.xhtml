@@ -22,18 +22,16 @@
         <button class="ql-script" value="super" title="Superíndice"></button>
     </span>
     <span class="ql-formats">
-        <select  class="ql-header" title="Encabezado">
-            <option selected="selected">Normal</option>
-            <option value="3">Título 3</option>
-            <option value="4">Título 4</option>
-        </select>
-    </span>
-    <span class="ql-formats">
         <button class="ql-list" value="ordered" title="Lista numerada"></button>
         <button class="ql-list" value="bullet" title="Lista no numerada"></button>
         <button class="ql-indent" value="-1" title="Disminuir sangría"></button>
         <button class="ql-indent" value="+1" title="Aumentar sangría"></button>
-        <select class="ql-align" title="Alineación"></select>
+        <select class="ql-align" title="Alineación">
+            <option /><!-- left -->
+            <option value="center" />
+            <option value="right" />
+            <option value="justify" selected="selected" />
+        </select>
     </span>
     <span class="ql-formats">
         <button class="ql-link" title="Añadir enlace"></button>

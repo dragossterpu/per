@@ -16,21 +16,21 @@
                 <p:graphicImage value="/images/pdf.png" style="padding: 0" />
                 <p:fileDownload value="#{informeBean.file}" />
             </h:commandLink>
-            
-            <div class="ql-snow ql-editor" id="informe" >
-                <h1 class="nombreInforme">Inspección realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.name}</h1>
-
+            <br/>
+            <h1 class="nombreInforme">Inspección realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.name}</h1>
+                        
+            <div class="ql-editor" id="informe" >
                 <ol class="titulos">
 	                <ui:repeat value="#{informeBean.listaAreas}" var="area">
 		                <li>
-		                   <h4 class="enumerado"><h:outputText value="#{area.descripcion}"/></h4>
+		                   <h2 class="enumerado"><h:outputText value="#{area.descripcion}"/></h2>
 		                    <ol class="titulos">
 			                    <ui:repeat value="#{informeBean.mapaAreasSubareas[area]}" var="subarea">
 			                        <li>
-                                        <h4 class="enumerado"><h:outputText value="#{subarea.descripcion}"/></h4>
+                                        <h3 class="enumerado"><h:outputText value="#{subarea.descripcion}"/></h3>
     			                        <h:outputText value="#{informeBean.mapaRespuestas[subarea][0]}" escape="false"/>
                                         <h:outputFormat rendered="#{not empty informeBean.mapaRespuestas[subarea][1]}">
-                                            <li><h5><h:outputText value="Conclusiones y propuestas."/></h5></li>
+                                            <li><h4><h:outputText value="Conclusiones y propuestas."/></h4></li>
                                             <h:outputText value="#{informeBean.mapaRespuestas[subarea][1]}" escape="false"/>
                                         </h:outputFormat>
                                     </li>

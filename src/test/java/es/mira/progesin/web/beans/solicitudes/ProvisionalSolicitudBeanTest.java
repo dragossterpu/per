@@ -272,12 +272,11 @@ public class ProvisionalSolicitudBeanTest {
      * @throws ProgesinException lanzada
      */
     @Test
-    public final void testGestionarCargaDocumentoNoEsDocumentacion() throws ProgesinException {
-        ArgumentCaptor<TipoDocumento> tipoDoc = ArgumentCaptor.forClass(TipoDocumento.class);
+    public final void testGestionarCargaDocumentoNoEsDocumentacion() {
         FileUploadEvent event = mock(FileUploadEvent.class);
         UploadedFile archivo = mock(UploadedFile.class);
         when(event.getFile()).thenReturn(archivo);
-        when(archivo.getFileName()).thenReturn(NOMBREFILE);
+        when(archivo.getFileName()).thenReturn("otroNombre");
         when(archivo.getContentType()).thenReturn(NOMBREPDF);
         when(verificadorExtensiones.extensionCorrecta(archivo)).thenReturn(true);
         
@@ -287,26 +286,17 @@ public class ProvisionalSolicitudBeanTest {
         
         List<DocumentacionPrevia> listDocumentacionPrevia = new ArrayList<>();
         DocumentacionPrevia documentacionPrevia = new DocumentacionPrevia();
-        documentacionPrevia.setNombre("fileName2");
+        documentacionPrevia.setNombre(NOMBREFILE);
         List<String> listaExtensiones = new ArrayList<>();
         listaExtensiones.add(EXTENSIONPDF);
         documentacionPrevia.setExtensiones(listaExtensiones);
         listDocumentacionPrevia.add(documentacionPrevia);
         
-        SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = new SolicitudDocumentacionPrevia();
-        solicitudDocumentacionPrevia.setInspeccion(mock(Inspeccion.class));
-        solicitudDocumentacionPrevia.setDocumentos(new ArrayList<>());
-        provisionalSolicitudBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
-        
-        when(documentoService.cargaDocumento(eq(archivo), tipoDoc.capture(),
-                eq(solicitudDocumentacionPrevia.getInspeccion()))).thenReturn(mock(Documento.class));
-        
-        when(solicitudDocumentacionService.save(provisionalSolicitudBean.getSolicitudDocumentacionPrevia()))
-                .thenReturn(provisionalSolicitudBean.getSolicitudDocumentacionPrevia());
-        
         provisionalSolicitudBean.setListadoDocumentosPrevios(listDocumentacionPrevia);
         
         provisionalSolicitudBean.gestionarCargaDocumento(event);
+        
+        verify(solicitudDocumentacionService, times(0)).save(any(SolicitudDocumentacionPrevia.class));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
@@ -348,12 +338,11 @@ public class ProvisionalSolicitudBeanTest {
                 eq(solicitudDocumentacionPrevia.getInspeccion())))
                         .thenThrow(TransientDataAccessResourceException.class);
         
-        when(solicitudDocumentacionService.save(provisionalSolicitudBean.getSolicitudDocumentacionPrevia()))
-                .thenReturn(provisionalSolicitudBean.getSolicitudDocumentacionPrevia());
-        
         provisionalSolicitudBean.setListadoDocumentosPrevios(listDocumentacionPrevia);
         
         provisionalSolicitudBean.gestionarCargaDocumento(event);
+        
+        verify(solicitudDocumentacionService, times(0)).save(any(SolicitudDocumentacionPrevia.class));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));

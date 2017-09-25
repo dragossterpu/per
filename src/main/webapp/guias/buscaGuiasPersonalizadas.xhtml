@@ -49,6 +49,9 @@
                     <span class="ui-CommandLink-texto">Limpiar</span>
                 </h:commandLink>
             </div>
+            
+            <p:separator styleClass="separator ui-state-disabled" />
+            
             <p:outputPanel layout="block" id="panelGuias">
                 <p:outputPanel styleClass="mensajeSinResultados" rendered="#{guiaPersonalizadaBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.

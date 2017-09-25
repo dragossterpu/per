@@ -110,7 +110,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
             Image pie = PngImage.getImage(StreamUtil.getResourceStream(Constantes.PIEINFORMEPDF));
             pie.scaleToFit(document.right() - document.leftMargin(), document.bottomMargin());
             pie.setAbsolutePosition((document.right() + document.leftMargin() - pie.getScaledWidth()) / 2,
-                    document.bottom() - 40);
+                    document.bottom() - 60);
             document.add(pie);
             
             PdfContentByte cb = writer.getDirectContent();
@@ -126,7 +126,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
             
             // Número de página
             String text = String.format("Página %s de ", writer.getPageNumber());
-            float textBase = document.bottom() - 25;
+            float textBase = document.bottom() - 45;
             float textSize = baseFont.getWidthPoint(text, FOOTERTEXTSIZE);
             cb.beginText();
             cb.setFontAndSize(baseFont, FOOTERTEXTSIZE);

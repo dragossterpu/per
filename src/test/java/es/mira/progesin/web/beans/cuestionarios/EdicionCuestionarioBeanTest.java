@@ -230,6 +230,7 @@ public class EdicionCuestionarioBeanTest {
         String nombreCuestionario = "cuestionario_test";
         ModeloCuestionario modCuestionario = new ModeloCuestionario();
         modCuestionario.setId(1);
+        modCuestionario.setDescripcion("modelo_test");
         edicionCuestionarioBean.setModeloCuestionario(modCuestionario);
         AreasCuestionario area = new AreasCuestionario();
         area.setId(1L);
@@ -247,6 +248,8 @@ public class EdicionCuestionarioBeanTest {
         
         edicionCuestionarioBean.guardarFormulario(nombreCuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).save(cuestionarioPersonalizadoCaptor.capture());
+        registroActividadService.altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
+                eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), any(String.class));

@@ -118,7 +118,7 @@ public class TipoInspeccionBean implements Serializable {
                 FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
                         "Baja. Tipo de inspección eliminada con éxito.", "", null);
                 
-                String descripcion = "Se ha eliminado el tipo de inspección: " + tipo.getCodigo() + "("
+                String descripcion = "Se ha eliminado el tipo de inspección: " + tipo.getCodigo() + " ("
                         + tipo.getDescripcion() + ")";
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
@@ -152,7 +152,7 @@ public class TipoInspeccionBean implements Serializable {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_INFO,
                     "Modificación. Tipo de inspección modificado con éxito.", "", null);
             
-            String descripcion = "Se ha modificado el tipo de inspección: " + tipo.getCodigo() + "("
+            String descripcion = "Se ha modificado el tipo de inspección: " + tipo.getCodigo() + " ("
                     + tipo.getDescripcion() + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.MODIFICACION.name(),
@@ -186,7 +186,7 @@ public class TipoInspeccionBean implements Serializable {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El tipo de inspección ha sido creado con éxito.");
             
-            String descripcionTipo = "Se ha dado de alta el tipo de inspección: " + codigo + "(" + descripcion + ")";
+            String descripcionTipo = "Se ha dado de alta el tipo de inspección: " + codigo + " (" + descripcion + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());

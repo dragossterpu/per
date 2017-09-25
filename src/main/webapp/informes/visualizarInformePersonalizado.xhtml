@@ -6,15 +6,15 @@
         <h3>#{titulo}</h3>
         
         <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
-        <div class="ql-snow ql-editor">
+        <div class="ql-editor">
             <ol class="titulos">
                 <ui:repeat value="#{informePersonalizadoBean.listaAreas}" var="area">
                     <li>
-                        <h4 class="enumerado"><h:outputText value="#{area.descripcion}"/></h4>
+                        <h3 class="enumerado"><h:outputText value="#{area.descripcion}"/></h3>
                         <ol class="titulos">
                             <ui:repeat value="#{informePersonalizadoBean.mapaAreasSubareas[area]}" var="subarea">
                                 <li>
-                                    <h:outputText value="#{subarea.descripcion}" styleClass="enumerado"/>
+                                    <h4><h:outputText value="#{subarea.descripcion}" styleClass="enumerado"/></h4>
                                 </li>
                             </ui:repeat>
                         </ol>

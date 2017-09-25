@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
@@ -183,6 +184,9 @@ public class TipoDocumentacionBean implements Serializable {
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.DOCUMENTACION.getDescripcion());
+            
+            notificacionService.crearNotificacionRol(descripcion, SeccionesEnum.DOCUMENTACION.getDescripcion(),
+                    RoleEnum.ROLE_SERVICIO_APOYO);
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, "Error",
                     "Se ha producido un error al dar de alta la documentación, inténtelo de nuevo más tarde");

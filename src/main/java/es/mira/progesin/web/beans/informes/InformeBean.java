@@ -37,6 +37,7 @@ import es.mira.progesin.services.IAsignSubareaInformeUserService;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IModeloInformePersonalizadoService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.RegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.util.HtmlDocxGenerator;
@@ -131,6 +132,12 @@ public class InformeBean implements Serializable {
     private transient RegistroActividadService regActividadService;
     
     /**
+     * Servicio de notificaciones.
+     */
+    @Autowired
+    private transient INotificacionService notificacionesService;
+    
+    /**
      * Archivo descargable generado a partir del informe.
      */
     private transient StreamedContent file;
@@ -191,6 +198,14 @@ public class InformeBean implements Serializable {
     public void crearInforme(Inspeccion inspeccion) {
         try {
             informeService.crearInforme(inspeccion, modeloInformePersonalizado);
+            
+            String mensaje = "Se ha creado un informe para la inspección: ".concat(inspeccion.getNumero());
+            regActividadService.altaRegActividad(mensaje, TipoRegistroEnum.ALTA.name(),
+                    SeccionesEnum.INFORMES.getDescripcion());
+            
+            notificacionesService.crearNotificacionEquipo(mensaje, SeccionesEnum.INFORMES.getDescripcion(),
+                    inspeccion.getEquipo());
+            
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
                     "El informe ha sido creado con éxito.");
         } catch (ExcepcionRollback e) {
@@ -319,6 +334,21 @@ public class InformeBean implements Serializable {
                         "No se puede finalizar el informe al existir subáreas sin responder");
             } else {
                 setInforme(informeGuardado);
+                
+                String mensaje = "Se ha finalizado el informe para la inspección: "
+                        .concat(informeGuardado.getInspeccion().getNumero());
+                
+                regActividadService.altaRegActividad(mensaje, TipoRegistroEnum.MODIFICACION.name(),
+                        SeccionesEnum.INFORMES.name());
+                
+                List<RoleEnum> rolesNotif = new ArrayList<>();
+                rolesNotif.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+                rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
+                notificacionesService.crearNotificacionRol(mensaje, SeccionesEnum.INFORMES.getDescripcion(),
+                        rolesNotif);
+                notificacionesService.crearNotificacionEquipo(mensaje, SeccionesEnum.INFORMES.getDescripcion(),
+                        informeGuardado.getInspeccion().getEquipo());
+                
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Modificación",
                         "El informe ha sido finalizado con éxito.", "dialogFinalizar");
             }
@@ -353,6 +383,14 @@ public class InformeBean implements Serializable {
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                     SeccionesEnum.INFORMES.getDescripcion());
             
+            List<RoleEnum> rolesNotif = new ArrayList<>();
+            rolesNotif.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+            rolesNotif.add(RoleEnum.ROLE_SERVICIO_APOYO);
+            notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INFORMES.getDescripcion(),
+                    rolesNotif);
+            notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INFORMES.getDescripcion(),
+                    informeAnulado.getInspeccion().getEquipo());
+            
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                     "Se ha producido un error al anular la informe, inténtelo de nuevo más tarde", null);
@@ -367,7 +405,7 @@ public class InformeBean implements Serializable {
      */
     private String generarInformeXHTML() {
         StringBuilder informeFormateado = new StringBuilder();
-        informeFormateado.append("<div class=\"ql-snow ql-editor\">");
+        informeFormateado.append("<div class=\"ql-editor\">");
         AtomicInteger i = new AtomicInteger(0);
         listaAreas.forEach(area -> {
             informeFormateado.append("<h1>" + i.incrementAndGet() + ". ");

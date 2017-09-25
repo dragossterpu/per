@@ -81,7 +81,7 @@ public class HtmlPdfGenerator {
             generarPortada(documento, writer, titulo, fechaFinalizacion);
             
             // Márgenes para el resto de páginas
-            documento.setMargins(40, 40, 80, 60);
+            documento.setMargins(40, 40, 80, 80);
             documento.newPage();
             
             // Parser

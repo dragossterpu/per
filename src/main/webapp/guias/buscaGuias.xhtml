@@ -44,8 +44,10 @@
                 <h:commandLink title="Nueva guía" action="#{guiaBean.nuevaGuia}" styleClass="fa fa-user-plus ui-state-default ui-corner-all ui-CommandLink ui-CommandLink-icono-texto" rendered="#{esEquipoInspeccion}">
                     <span class="ui-CommandLink-texto">Nueva guía</span>
                 </h:commandLink>
-
             </div>
+            
+            <p:separator styleClass="separator ui-state-disabled" />
+            
             <p:outputPanel layout="block" id="panelGuias">
                 <p:outputPanel styleClass="mensajeSinResultados" rendered="#{guiaBean.model.rowCount eq 0}">
 				No existe ningún resultado que cumpla los parámetros de su búsqueda.

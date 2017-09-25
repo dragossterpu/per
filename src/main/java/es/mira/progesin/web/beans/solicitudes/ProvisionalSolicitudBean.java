@@ -3,6 +3,7 @@ package es.mira.progesin.web.beans.solicitudes;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -160,15 +161,15 @@ public class ProvisionalSolicitudBean implements Serializable {
     private boolean esDocumentacionPrevia(UploadedFile archivo) {
         String nombreArchivo = archivo.getFileName();
         String extensionArchivo = extensiones.get(archivo.getContentType());
-        boolean respuesta = false;
-        for (DocumentacionPrevia dp : listadoDocumentosPrevios) {
-            if (nombreArchivo.toLowerCase().startsWith(dp.getNombre().toLowerCase())
-                    && dp.getExtensiones().contains(extensionArchivo)) {
-                respuesta = true;
-                break;
-            }
+        boolean esValido = false;
+        Iterator<DocumentacionPrevia> iterator = listadoDocumentosPrevios.iterator();
+        DocumentacionPrevia dp;
+        while (iterator.hasNext() && !esValido) {
+            dp = iterator.next();
+            esValido = nombreArchivo.toLowerCase().startsWith(dp.getNombre().toLowerCase())
+                    && dp.getExtensiones().contains(extensionArchivo);
         }
-        return respuesta;
+        return esValido;
     }
     
     /**
