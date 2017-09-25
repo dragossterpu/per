@@ -266,8 +266,6 @@ public class GestorDocumentalBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                         "La extensión del fichero '" + event.getFile().getFileName()
                                 + "' no corresponde a su tipo real");
-                registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",
-                        TipoRegistroEnum.ERROR.name(), SeccionesEnum.GESTOR.getDescripcion());
             }
             
         } catch (ProgesinException ex) {
