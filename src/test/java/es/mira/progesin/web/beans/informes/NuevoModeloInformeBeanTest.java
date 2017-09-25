@@ -4,6 +4,7 @@
 package es.mira.progesin.web.beans.informes;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -28,10 +29,13 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.ModeloInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.INuevoModeloInformeService;
 import es.mira.progesin.util.FacesUtilities;
 
@@ -41,7 +45,6 @@ import es.mira.progesin.util.FacesUtilities;
  *
  * @author EZENTIS
  */
-
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.security.*")
 @PrepareForTest({ FacesUtilities.class })
@@ -52,6 +55,12 @@ public class NuevoModeloInformeBeanTest {
      */
     @Mock
     private INuevoModeloInformeService nuevoModeloInformeService;
+    
+    /**
+     * Servicio de notificaciones.
+     */
+    @Mock
+    private INotificacionService notificacionesService;
     
     /**
      * Bean de NuevoModeloInformeBean.
@@ -268,12 +277,15 @@ public class NuevoModeloInformeBeanTest {
      */
     @Test
     public final void testGrabaInforme() {
-        ModeloInforme modelo = mock(ModeloInforme.class);
+        ModeloInforme modelo = ModeloInforme.builder().nombre("modelo_test").build();
         nuevoModeloInformeBean.setNuevoModelo(modelo);
-        nuevoModeloInformeBean.setListaAreas(new ArrayList<>());
-        when(nuevoModeloInformeService.guardaModelo(modelo, nuevoModeloInformeBean.getListaAreas())).thenReturn(modelo);
+        List<AreaInforme> listaAreas = new ArrayList<>();
+        nuevoModeloInformeBean.setListaAreas(listaAreas);
+        when(nuevoModeloInformeService.guardaModelo(modelo, listaAreas)).thenReturn(modelo);
         nuevoModeloInformeBean.grabaInforme();
         
+        verify(notificacionesService, times(1)).crearNotificacionRol(any(String.class),
+                eq(SeccionesEnum.INFORMES.getDescripcion()), eq(RoleEnum.ROLE_EQUIPO_INSPECCIONES));
         PowerMockito.verifyStatic(times(1));
         FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Nuevo modelo de informe",
                 "Se ha creado el nuevo modelo con éxito");

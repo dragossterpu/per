@@ -34,14 +34,15 @@ import org.springframework.dao.TransientDataAccessResourceException;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.persistence.entities.gd.TipoDocumentacion;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.gd.ITipoDocumentacionService;
 import es.mira.progesin.util.FacesUtilities;
 import es.mira.progesin.web.beans.ApplicationBean;
-import es.mira.progesin.web.beans.solicitudes.TipoDocumentacionBean;
 
 /**
  * Test del bean TipoDocumentacionBean.
@@ -61,22 +62,29 @@ public class TipoDocumentacionBeanTest {
     private ITipoDocumentacionService tipoDocumentacionServiceMock;
     
     /**
-     * Bean de tipo de documentación.
-     */
-    @InjectMocks
-    private TipoDocumentacionBean tipoDocumentacionBeanMock;
-    
-    /**
      * Simulación del servicio de registro de actividad.
      */
     @Mock
     private IRegistroActividadService regActividadServiceMock;
     
     /**
+     * Simulación del servicio de notificaciones.
+     * 
+     */
+    @Mock
+    private INotificacionService notificacionServiceMock;
+    
+    /**
      * Simulación del bean de configuración de la aplicación.
      */
     @Mock
     private ApplicationBean applicationBeanMock;
+    
+    /**
+     * Bean de tipo de documentación.
+     */
+    @InjectMocks
+    private TipoDocumentacionBean tipoDocumentacionBeanMock;
     
     /**
      * Listado de extensiones.
@@ -220,6 +228,8 @@ public class TipoDocumentacionBeanTest {
         tipoDocumentacionBeanMock.altaTipo();
         
         verify(tipoDocumentacionServiceMock, times(1)).save(tipoDocumentacionCaptor.capture());
+        verify(notificacionServiceMock, times(1)).crearNotificacionRol(any(String.class),
+                eq(SeccionesEnum.DOCUMENTACION.getDescripcion()), eq(RoleEnum.ROLE_SERVICIO_APOYO));
         verify(regActividadServiceMock, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.DOCUMENTACION.getDescripcion()));
         verify(regActividadServiceMock, times(0))

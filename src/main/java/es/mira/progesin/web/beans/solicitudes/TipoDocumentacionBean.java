@@ -93,28 +93,28 @@ public class TipoDocumentacionBean implements Serializable {
      * 
      */
     @Autowired
-    transient ApplicationBean applicationBean;
+    private transient ApplicationBean applicationBean;
     
     /**
      * Variable utilizada para inyectar el servicio de tipo de documentación.
      * 
      */
     @Autowired
-    transient ITipoDocumentacionService tipoDocumentacionService;
+    private transient ITipoDocumentacionService tipoDocumentacionService;
     
     /**
      * Variable utilizada para inyectar el servicio del registro de actividad.
      * 
      */
     @Autowired
-    transient IRegistroActividadService regActividadService;
+    private transient IRegistroActividadService regActividadService;
     
     /**
      * Variable utilizada para inyectar el servicio de notificaciones.
      * 
      */
     @Autowired
-    transient INotificacionService notificacionService;
+    private transient INotificacionService notificacionService;
     
     /**
      * Muestra el listado de tipos de documentación disponibles. Se llama desde el menu lateral.
