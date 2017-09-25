@@ -4,11 +4,7 @@
 package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -28,9 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 
@@ -109,20 +102,6 @@ public class NotificacionesBeanTest {
         alertasBeanMock.setList(listaToogle);
         alertasBeanMock.onToggle(eventMock);
         assertThat(listaToogle.get(0)).isFalse();
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.NotificacionesBean#eliminarNotificacion(es.mira.progesin.persistence.entities.Notificacion)}.
-     */
-    @Test
-    public final void testEliminarNotificacion() {
-        Notificacion notif = new Notificacion();
-        alertasBeanMock.eliminarNotificacion(notif);
-        verify(regActividad, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.NOTIFICACIONES.getDescripcion()));
-        assertThat(notif.getFechaBaja()).isNotNull();
-        assertThat(notif.getUsernameBaja()).isNotNull();
     }
     
     /**

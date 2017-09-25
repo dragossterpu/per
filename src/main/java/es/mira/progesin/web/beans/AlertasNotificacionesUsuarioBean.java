@@ -17,7 +17,6 @@ import es.mira.progesin.lazydata.LazyModelNotificaciones;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.INotificacionService;
@@ -103,8 +102,6 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     alerta.getIdAlerta(), TipoMensajeEnum.ALERTA);
-            String descripcion = "Se ha eliminado la alerta: " + alerta.getDescripcion();
-            regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Alertas");
         } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Alertas", e);
         }
@@ -123,8 +120,6 @@ public class AlertasNotificacionesUsuarioBean implements Serializable {
         try {
             alertasNotificacionesUsuarioService.delete(SecurityContextHolder.getContext().getAuthentication().getName(),
                     notif.getIdNotificacion(), TipoMensajeEnum.NOTIFICACION);
-            String descripcion = "Se ha eliminado la notificación: " + notif.getDescripcion();
-            regActividad.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(), "Notificaciones");
         } catch (DataAccessException e) {
             regActividad.altaRegActividadError("Notificaciones", e);
         }

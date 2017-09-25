@@ -330,7 +330,13 @@ public class InspeccionBean implements Serializable {
                     + inspeccion.getEquipo().getNombreEquipo();
             regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
-            alertaService.crearAlertaEquipo(SeccionesEnum.INSPECCION.getDescripcion(), descripcion, inspeccion);
+            notificacionesService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                    inspeccion.getEquipo());
+            List<RoleEnum> listaRoles = new ArrayList<>();
+            listaRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
+            listaRoles.add(RoleEnum.ROLE_JEFE_INSPECCIONES);
+            notificacionesService.crearNotificacionRol(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                    listaRoles);
             
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
@@ -398,6 +404,10 @@ public class InspeccionBean implements Serializable {
                         SeccionesEnum.INSPECCION.getDescripcion(), inspeccion.getEquipo());
                 notificacionesService.crearNotificacionRol(descripcion.toString(),
                         SeccionesEnum.INSPECCION.getDescripcion(), RoleEnum.ROLE_SERVICIO_APOYO);
+                if (!inspeccionNoMod.getEstadoInspeccion().equals(inspeccion.getEstadoInspeccion())) {
+                    notificacionesService.crearNotificacionRol(descripcion.toString(),
+                            SeccionesEnum.INSPECCION.getDescripcion(), RoleEnum.ROLE_JEFE_INSPECCIONES);
+                }
             }
             
         } catch (DataAccessException | ProgesinException e) {

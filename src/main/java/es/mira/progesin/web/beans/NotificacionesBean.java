@@ -2,7 +2,6 @@ package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,13 +10,9 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.mira.progesin.jsf.scope.FacesViewScope;
-import es.mira.progesin.persistence.entities.Notificacion;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import lombok.Getter;
@@ -66,23 +61,6 @@ public class NotificacionesBean implements Serializable {
     
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
-    }
-    
-    /**
-     * Realiza una eliminación lógico de la notificación (le pone fecha de baja) La notificacion seleccionada de la
-     * tabla de notificaciones.
-     * 
-     * @param notificacion Notificación a eliminar
-     */
-    public void eliminarNotificacion(Notificacion notificacion) {
-        notificacion.setFechaBaja(new Date());
-        notificacion.setUsernameBaja(SecurityContextHolder.getContext().getAuthentication().getName());
-        
-        String descripcion = "Se ha eliminado la notificación: " + notificacion.getDescripcion();
-        
-        regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
-                SeccionesEnum.NOTIFICACIONES.getDescripcion());
-        
     }
     
     /**

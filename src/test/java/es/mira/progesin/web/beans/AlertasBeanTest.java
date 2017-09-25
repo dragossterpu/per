@@ -4,12 +4,7 @@
 package es.mira.progesin.web.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -25,15 +20,11 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.primefaces.event.ToggleEvent;
-import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.Alerta;
-import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
-import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
@@ -104,59 +95,6 @@ public class AlertasBeanTest {
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("usuarioLogueado");
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.AlertasBean#eliminarAlertas(es.mira.progesin.persistence.entities.Alerta)}.
-     */
-    @Test
-    public final void testEliminarAlertas() {
-        List<Alerta> alertas = new ArrayList<>();
-        Alerta alerta1 = new Alerta();
-        alerta1.setIdAlerta(1L);
-        Alerta alerta2 = new Alerta();
-        alerta2.setIdAlerta(2L);
-        alertas.add(alerta1);
-        alertas.add(alerta2);
-        alertasBeanMock.setListaAlertas(alertas);
-        
-        alertasBeanMock.eliminarAlertas(alerta1);
-        
-        verify(alertasNotificacionesUsuarioService, times(1)).delete(
-                SecurityContextHolder.getContext().getAuthentication().getName(), alerta1.getIdAlerta(),
-                TipoMensajeEnum.ALERTA);
-        verify(regActividad, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                eq(SeccionesEnum.ALERTAS.getDescripcion()));
-        assertThat(alertasBeanMock.getListaAlertas()).hasSize(1);
-    }
-    
-    /**
-     * Test method for
-     * {@link es.mira.progesin.web.beans.AlertasBean#eliminarAlertas(es.mira.progesin.persistence.entities.Alerta)}.
-     */
-    @Test
-    public final void testEliminarAlertasException() {
-        List<Alerta> alertas = new ArrayList<>();
-        Alerta alerta1 = new Alerta();
-        alerta1.setIdAlerta(1L);
-        Alerta alerta2 = new Alerta();
-        alerta2.setIdAlerta(2L);
-        alertas.add(alerta1);
-        alertas.add(alerta2);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        
-        doThrow(TransientDataAccessResourceException.class).when(alertasNotificacionesUsuarioService).delete(username,
-                alerta1.getIdAlerta(), TipoMensajeEnum.ALERTA);
-        
-        alertasBeanMock.setListaAlertas(alertas);
-        alertasBeanMock.eliminarAlertas(alerta1);
-        
-        verify(alertasNotificacionesUsuarioService, times(1)).delete(username, alerta1.getIdAlerta(),
-                TipoMensajeEnum.ALERTA);
-        verify(regActividad, times(1)).altaRegActividadError(eq(SeccionesEnum.ALERTAS.getDescripcion()),
-                any(TransientDataAccessResourceException.class));
-        assertThat(alertasBeanMock.getListaAlertas()).hasSize(2);
     }
     
     /**

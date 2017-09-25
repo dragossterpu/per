@@ -35,6 +35,7 @@ import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaService;
 import es.mira.progesin.services.IInspeccionesService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
@@ -92,6 +93,12 @@ public class TipoInspeccionBeanTest {
      */
     @Mock
     private Authentication authentication;
+    
+    /**
+     * Mock del servicio de las notificaciones.
+     */
+    @Mock
+    private INotificacionService notificacionesService;
     
     /**
      * Bean de tipo de inspeccion.
@@ -245,6 +252,7 @@ public class TipoInspeccionBeanTest {
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.INSPECCION.getDescripcion()));
+        
     }
     
     /**

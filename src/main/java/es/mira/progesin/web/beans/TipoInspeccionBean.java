@@ -1,6 +1,7 @@
 package es.mira.progesin.web.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,10 +18,12 @@ import org.springframework.stereotype.Controller;
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.jsf.scope.FacesViewScope;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IGuiaService;
 import es.mira.progesin.services.IInspeccionesService;
+import es.mira.progesin.services.INotificacionService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.services.ITipoInspeccionService;
 import es.mira.progesin.util.FacesUtilities;
@@ -79,6 +82,13 @@ public class TipoInspeccionBean implements Serializable {
      */
     @Autowired
     private transient IGuiaService guiaService;
+    
+    /**
+     * Variable utilizada para inyectar el servicio de las notificaciones.
+     * 
+     */
+    @Autowired
+    private transient INotificacionService notificacionesService;
     
     /**
      * Recarga la lista de tipos de inspeccion.
@@ -174,12 +184,19 @@ public class TipoInspeccionBean implements Serializable {
             listaTipoInspeccion.add(tipoNuevo);
             
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Alta",
-                    "El tipo de inspección ha sido creado con éxito. Los cambios surtirán efecto al inicar sesión.");
+                    "El tipo de inspección ha sido creado con éxito.");
             
             String descripcionTipo = "Se ha dado de alta el tipo de inspección: " + codigo + "(" + descripcion + ")";
             // Guardamos la actividad en bbdd
             regActividadService.altaRegActividad(descripcionTipo, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.INSPECCION.getDescripcion());
+            
+            List<RoleEnum> listaRoles = new ArrayList<>();
+            listaRoles.add(RoleEnum.ROLE_SERVICIO_APOYO);
+            listaRoles.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+            
+            notificacionesService.crearNotificacionRol(descripcionTipo, SeccionesEnum.INSPECCION.getDescripcion(),
+                    listaRoles);
             
         } catch (DataAccessException e) {
             FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,

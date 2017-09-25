@@ -466,7 +466,7 @@ public class GestorDocumentalBeanTest {
         inspecciones.add(insp1);
         User user = User.builder().username("administrador").role(RoleEnum.ROLE_ADMIN).build();
         Documento doc1 = spy(Documento.class);
-        TipoDocumento tipo = TipoDocumento.builder().nombre("prueba").build();
+        TipoDocumento tipo = TipoDocumento.builder().id(9L).nombre("prueba").build();
         doc1.setId(1L);
         doc1.setTipoDocumento(tipo);
         
@@ -508,7 +508,7 @@ public class GestorDocumentalBeanTest {
         List<Inspeccion> inspecciones = new ArrayList<>();
         inspecciones.add(insp1);
         User user = User.builder().username("usuario").role(RoleEnum.ROLE_EQUIPO_INSPECCIONES).build();
-        TipoDocumento tipo = TipoDocumento.builder().nombre("prueba").build();
+        TipoDocumento tipo = TipoDocumento.builder().id(9L).nombre("prueba").build();
         Documento doc1 = spy(Documento.class);
         doc1.setId(1L);
         doc1.setTipoDocumento(tipo);

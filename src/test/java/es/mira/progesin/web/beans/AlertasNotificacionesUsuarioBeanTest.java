@@ -29,7 +29,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.persistence.entities.Notificacion;
 import es.mira.progesin.persistence.entities.enums.TipoMensajeEnum;
-import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
 import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
@@ -124,8 +123,6 @@ public class AlertasNotificacionesUsuarioBeanTest {
         verify(alertasNotificacionesUsuarioService, times(1)).delete(
                 SecurityContextHolder.getContext().getAuthentication().getName(), alerta.getIdAlerta(),
                 TipoMensajeEnum.ALERTA);
-        verify(regActividad, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                any(String.class));
     }
     
     /**
@@ -158,8 +155,6 @@ public class AlertasNotificacionesUsuarioBeanTest {
         verify(alertasNotificacionesUsuarioService, times(1)).delete(
                 SecurityContextHolder.getContext().getAuthentication().getName(), notificacion.getIdNotificacion(),
                 TipoMensajeEnum.NOTIFICACION);
-        verify(regActividad, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
-                any(String.class));
     }
     
     /**

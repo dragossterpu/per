@@ -46,7 +46,6 @@ import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.EquipoService;
-import es.mira.progesin.services.IAlertaService;
 import es.mira.progesin.services.IInspeccionesService;
 import es.mira.progesin.services.IMunicipioService;
 import es.mira.progesin.services.INotificacionService;
@@ -102,12 +101,6 @@ public class InspeccionBeanTest {
      */
     @Mock
     private IRegistroActividadService regActividadService;
-    
-    /**
-     * Mock del servicio de las alertas.
-     */
-    @Mock
-    private IAlertaService alertaService;
     
     /**
      * Mock del servicio de las notificaciones.
@@ -275,8 +268,6 @@ public class InspeccionBeanTest {
         verify(inspeccionesService, times(1)).save(inspGuardada.capture());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.INSPECCION.getDescripcion()));
-        verify(alertaService, times(1)).crearAlertaEquipo(eq(SeccionesEnum.INSPECCION.getDescripcion()),
-                any(String.class), eq(inspGuardada.getValue()));
         assertThat(inspGuardada.getValue().getEstadoInspeccion()).isEqualTo(EstadoInspeccionEnum.A_SIN_INICIAR);
     }
     

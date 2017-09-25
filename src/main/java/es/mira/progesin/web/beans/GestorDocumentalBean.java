@@ -266,6 +266,8 @@ public class GestorDocumentalBean implements Serializable {
                 FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, CARGAFICHEROS,
                         "La extensión del fichero '" + event.getFile().getFileName()
                                 + "' no corresponde a su tipo real");
+                registroActividadService.altaRegActividad("La extensión del fichero no corresponde a su tipo real",
+                        TipoRegistroEnum.ERROR.name(), SeccionesEnum.GESTOR.getDescripcion());
             }
             
         } catch (ProgesinException ex) {
@@ -539,8 +541,8 @@ public class GestorDocumentalBean implements Serializable {
         
         User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
-        boolean perteneceACuestionario = doc.getTipoDocumento().getNombre().equalsIgnoreCase("cuestionario");
-        boolean perteneceASolicitud = doc.getTipoDocumento().getNombre().equalsIgnoreCase("documentación salida ipss");
+        boolean perteneceACuestionario = doc.getTipoDocumento().getId().equals(6L);
+        boolean perteneceASolicitud = doc.getTipoDocumento().getNombre().equals(9L);
         boolean plantillaAdjuntaCuestionario = documentoService.plantillaPerteneceACuestionario(doc) > 0;
         boolean documentoEnInspeccionUsuario = documentoService.documentoEnInspeccionUsuario(usuario, doc);
         

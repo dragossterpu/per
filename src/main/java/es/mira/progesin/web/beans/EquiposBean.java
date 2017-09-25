@@ -217,7 +217,7 @@ public class EquiposBean implements Serializable {
             descripcion.append("Jefe de equipo: ");
             descripcion.append(jefe.getUsuario().getNombreCompleto());
             descripcion.append("\n\n");
-            descripcion.append("Nombre de componentes ");
+            descripcion.append("Nombre de componentes: ");
             descripcion.append(nombresCompletos);
             
             // Guardamos la actividad en bbdd
@@ -288,6 +288,8 @@ public class EquiposBean implements Serializable {
                 // Guardamos la actividad en bbdd
                 regActividadService.altaRegActividad(descripcion, TipoRegistroEnum.BAJA.name(),
                         SeccionesEnum.INSPECCION.getDescripcion());
+                notificacionService.crearNotificacionEquipo(descripcion, SeccionesEnum.INSPECCION.getDescripcion(),
+                        equipo);
             }
             
         } catch (DataAccessException e) {
