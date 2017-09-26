@@ -24,7 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
@@ -48,12 +47,6 @@ public class NotificacionesBeanTest {
      */
     @Mock
     private Authentication authentication;
-    
-    /**
-     * Mock Repositorio de alertas.
-     */
-    @Mock
-    private IRegistroActividadService regActividad;
     
     /**
      * Simulación del Gestor Documental.

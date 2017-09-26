@@ -26,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.mira.progesin.persistence.entities.Alerta;
 import es.mira.progesin.services.IAlertasNotificacionesUsuarioService;
-import es.mira.progesin.services.IRegistroActividadService;
 import es.mira.progesin.util.FacesUtilities;
 
 /**
@@ -55,12 +54,6 @@ public class AlertasBeanTest {
      */
     @Mock
     private IAlertasNotificacionesUsuarioService alertasNotificacionesUsuarioService;
-    
-    /**
-     * Mock Repositorio de alertas.
-     */
-    @Mock
-    private IRegistroActividadService regActividad;
     
     /**
      * Simulación del Gestor Documental.

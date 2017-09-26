@@ -12,6 +12,10 @@ ul {
     padding: 0;
 }
 
+div.ql-editor {
+    padding: 0 10px;
+}
+
 .ql-tooltip.ql-editing {
     left: 5px !important; /* anula posición dinámica diálogo flotante enlaces */
     box-shadow: 3px 3px 4px;
