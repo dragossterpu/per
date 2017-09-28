@@ -217,7 +217,9 @@ public class DocumentoService implements IDocumentoService {
             throws ProgesinException {
         try {
             Documento documento = documentoRepository.save(crearDocumento(file, tipo, inspeccion));
-            registroActividadService.altaRegActividad("cargaFichero", TipoRegistroEnum.ALTA.name(),
+            String mensaje = "Se ha cargado el documento " + documento.getNombre() + " para la inspección "
+                    + inspeccion.getNumero();
+            registroActividadService.altaRegActividad(mensaje, TipoRegistroEnum.ALTA.name(),
                     SeccionesEnum.GESTOR.getDescripcion());
             
             return documento;

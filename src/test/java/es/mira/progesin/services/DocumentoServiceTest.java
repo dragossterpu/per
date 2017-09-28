@@ -214,8 +214,8 @@ public class DocumentoServiceTest {
     @Test
     public final void testCargaDocumento() throws IOException, ProgesinException {
         PowerMockito.mockStatic(StreamUtils.class);
-        Inspeccion inspeccion = null;
-        TipoDocumento tipo = mock(TipoDocumento.class);
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).build();
+        TipoDocumento tipo = TipoDocumento.builder().nombre("tipoTest").build();
         
         InputStream inputStream = mock(InputStream.class);
         UploadedFile uploadedFile = mock(UploadedFile.class);
@@ -226,8 +226,11 @@ public class DocumentoServiceTest {
         when(uploadedFile.getContentType()).thenReturn("application-test/test-stream");
         when(uploadedFile.getInputstream()).thenReturn(inputStream);
         when(StreamUtils.copyToByteArray(uploadedFile.getInputstream())).thenReturn(byteArray);
+        Documento documentoGuardado = Documento.builder().nombre("TestUploadFile.txt").build();
+        when(documentoRepository.save(any(Documento.class))).thenReturn(documentoGuardado);
         
         documentosServiceMock.cargaDocumento(uploadedFile, tipo, inspeccion);
+        
         verify(documentoRepository, times(1)).save(any(Documento.class));
         verify(registroActividadService, times(1)).altaRegActividad(any(String.class), any(String.class),
                 any(String.class));
