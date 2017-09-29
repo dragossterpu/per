@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -220,7 +221,7 @@ public class CuestionarioPersonalizadoBeanTest {
         
         cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).save(cuestionario);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
                 eq(null));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
@@ -245,7 +246,7 @@ public class CuestionarioPersonalizadoBeanTest {
         
         cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).delete(cuestionario);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
                 eq(null));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
@@ -268,7 +269,7 @@ public class CuestionarioPersonalizadoBeanTest {
         when(authentication.getPrincipal()).thenReturn(user);
         
         cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), any(String.class), any(String.class),
                 eq(null));
         
@@ -292,7 +293,7 @@ public class CuestionarioPersonalizadoBeanTest {
         
         cuestionarioPersonalizadoBean.eliminarCuestionario(cuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).delete(cuestionario);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class), eq(null));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -333,7 +334,7 @@ public class CuestionarioPersonalizadoBeanTest {
         cuestionario.setFechaBaja(new Date());
         String redireccion = cuestionarioPersonalizadoBean.mostrarFormularioEnvio(cuestionario);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), any(String.class), any(String.class),
                 eq(null));
         assertThat(redireccion).isNull();

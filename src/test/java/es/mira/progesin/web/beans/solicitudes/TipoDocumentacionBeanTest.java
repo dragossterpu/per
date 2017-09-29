@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -175,7 +176,7 @@ public class TipoDocumentacionBeanTest {
         doThrow(TransientDataAccessResourceException.class).when(tipoDocumentacionServiceMock).delete(tipoDoc.getId());
         
         tipoDocumentacionBeanMock.eliminarDocumentacion(tipoDoc);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         verify(regActividadServiceMock, times(1)).altaRegActividadError(
@@ -257,7 +258,7 @@ public class TipoDocumentacionBeanTest {
                 .save(tipoDocumentacionCaptor.capture());
         
         tipoDocumentacionBeanMock.altaTipo();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         verify(regActividadServiceMock, times(1)).altaRegActividadError(
@@ -300,7 +301,7 @@ public class TipoDocumentacionBeanTest {
         doThrow(TransientDataAccessResourceException.class).when(tipoDocumentacionServiceMock).save(tipoDoc);
         
         tipoDocumentacionBeanMock.onRowEdit(event);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
     }

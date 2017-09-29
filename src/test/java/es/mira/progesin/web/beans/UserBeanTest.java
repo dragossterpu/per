@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -194,7 +195,7 @@ public class UserBeanTest {
         userBean.altaUsuario();
         
         // Comprobamos que se muestra el mensaje en pantalla
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq("username"));
     }
@@ -220,7 +221,7 @@ public class UserBeanTest {
                 eq(Constantes.TEMPLATEALTAPLICACION), eq(paramPlantilla));
         
         // Comprobamos que se muestra el mensaje en pantalla
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Alta"), any(String.class));
         
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
@@ -242,7 +243,7 @@ public class UserBeanTest {
         
         userBean.altaUsuario();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Alta"), any(String.class));
         
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.USUARIOS.getDescripcion()),
@@ -264,7 +265,7 @@ public class UserBeanTest {
         
         userBean.altaUsuario();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         
@@ -395,7 +396,7 @@ public class UserBeanTest {
         
         verify(userService, times(1)).save(userModifi);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         verify(correoElectronico, times(1)).envioCorreo(eq(userModifi.getCorreo()), any(String.class),
@@ -420,7 +421,7 @@ public class UserBeanTest {
         
         verify(userService, times(1)).save(userBean.getUser());
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }
@@ -436,7 +437,7 @@ public class UserBeanTest {
         
         userBean.restaurarClave();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Clave"), any(String.class));
     }
     
@@ -455,7 +456,7 @@ public class UserBeanTest {
         
         userBean.restaurarClave();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Clave"), any(String.class));
     }
     

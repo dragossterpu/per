@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -268,7 +269,7 @@ public class EquiposBeanTest {
         Equipo equipo = Equipo.builder().id(1L).nombreEquipo(NOMBREQUIPO).build();
         when(inspeccionesService.existenInspeccionesNoFinalizadas(equipo)).thenReturn(true);
         equipoBean.eliminarEquipo(equipo);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class), eq(null));
     }
@@ -304,7 +305,7 @@ public class EquiposBeanTest {
         equipoBean.eliminarEquipo(equipo);
         
         verify(equipoService, times(1)).save(equipoCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class), eq(null));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.INSPECCION.getDescripcion()),
@@ -334,7 +335,7 @@ public class EquiposBeanTest {
         equipo.setId(1L);
         when(equipoService.findOne(equipo.getId())).thenReturn(null);
         String ruta_vista = equipoBean.getFormModificarEquipo(equipo);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         assertThat(ruta_vista).isNull();
@@ -419,7 +420,7 @@ public class EquiposBeanTest {
         
         equipoBean.cambiarJefeEquipo();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -518,7 +519,7 @@ public class EquiposBeanTest {
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
         assertThat(nombre_paso).isEqualTo(JEFEEQUIPO);
@@ -563,7 +564,7 @@ public class EquiposBeanTest {
         
         String nombre_paso = equipoBean.onFlowProcess(event);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
         assertThat(nombre_paso).isEqualTo(MIEMBROS);

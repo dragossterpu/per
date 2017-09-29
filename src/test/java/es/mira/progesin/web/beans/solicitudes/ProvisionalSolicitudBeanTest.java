@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -241,7 +242,7 @@ public class ProvisionalSolicitudBeanTest {
         provisionalSolicitudBean.setListadoDocumentosPrevios(listDocumentacionPrevia);
         
         provisionalSolicitudBean.gestionarCargaDocumento(event);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
                 any(String.class));
     }
@@ -261,7 +262,7 @@ public class ProvisionalSolicitudBeanTest {
         
         provisionalSolicitudBean.gestionarCargaDocumento(event);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
     }
@@ -297,7 +298,7 @@ public class ProvisionalSolicitudBeanTest {
         provisionalSolicitudBean.gestionarCargaDocumento(event);
         
         verify(solicitudDocumentacionService, times(0)).save(any(SolicitudDocumentacionPrevia.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
     }
@@ -343,7 +344,7 @@ public class ProvisionalSolicitudBeanTest {
         provisionalSolicitudBean.gestionarCargaDocumento(event);
         
         verify(solicitudDocumentacionService, times(0)).save(any(SolicitudDocumentacionPrevia.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
@@ -415,7 +416,7 @@ public class ProvisionalSolicitudBeanTest {
     public final void testDescargarFicheroException() throws ProgesinException {
         when(documentoService.descargaDocumento(1L)).thenThrow(ProgesinException.class);
         provisionalSolicitudBean.descargarFichero(1L);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 eq(null));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
@@ -441,7 +442,7 @@ public class ProvisionalSolicitudBeanTest {
         
         verify(solicitudDocumentacionService, times(1)).transaccSaveInactivaUsuarioProv(eq(solicitudDocPrevia),
                 eq(solicitudDocPrevia.getCorreoDestinatario()));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         
@@ -473,7 +474,7 @@ public class ProvisionalSolicitudBeanTest {
         
         verify(solicitudDocumentacionService, times(1)).transaccSaveInactivaUsuarioProv(eq(solicitudDocPrevia),
                 eq(solicitudDocPrevia.getCorreoDestinatario()));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
@@ -493,7 +494,7 @@ public class ProvisionalSolicitudBeanTest {
         provisionalSolicitudBean.setSolicitudDocumentacionPrevia(solicitudDocPrevia);
         provisionalSolicitudBean.guardarBorrardor();
         verify(solicitudDocumentacionService, times(1)).save(solicitudDocPrevia);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
     }
@@ -509,7 +510,7 @@ public class ProvisionalSolicitudBeanTest {
                 .thenThrow(TransientDataAccessResourceException.class);
         provisionalSolicitudBean.guardarBorrardor();
         verify(solicitudDocumentacionService, times(1)).save(solicitudDocPrevia);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),
@@ -547,7 +548,7 @@ public class ProvisionalSolicitudBeanTest {
         provisionalSolicitudBean.imprimirPdf();
         
         verify(pdfGenerator, times(1)).exportarPdf();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.DOCUMENTACION.getDescripcion()),

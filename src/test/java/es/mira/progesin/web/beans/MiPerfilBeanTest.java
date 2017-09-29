@@ -10,6 +10,7 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import javax.faces.application.FacesMessage;
 
@@ -128,7 +129,7 @@ public class MiPerfilBeanTest {
         
         miPerfilBeanMock.cambiarClave();
         verify(userService, timeout(1)).save(userCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class), any(String.class));
     }
@@ -165,7 +166,7 @@ public class MiPerfilBeanTest {
         miPerfilBeanMock.setClaveActual(passActual);
         
         miPerfilBeanMock.cambiarClave();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -188,7 +189,7 @@ public class MiPerfilBeanTest {
         miPerfilBeanMock.setClaveActual(passActual);
         
         miPerfilBeanMock.cambiarClave();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }

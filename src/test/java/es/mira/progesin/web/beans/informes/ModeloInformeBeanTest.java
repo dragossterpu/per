@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,7 +141,7 @@ public class ModeloInformeBeanTest {
         ModeloInforme modelo = mock(ModeloInforme.class);
         when(modeloInformeService.eliminarModelo(modelo)).thenReturn(null);
         modeloInformeBean.eliminarModelo(modelo);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class), eq(null));
     }

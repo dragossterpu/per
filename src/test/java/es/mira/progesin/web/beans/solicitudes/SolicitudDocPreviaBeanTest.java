@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -279,7 +280,7 @@ public class SolicitudDocPreviaBeanTest {
         solicitudDocPreviaBean.enviarSolicitud();
         
         verify(userService, times(1)).exists(CORREO);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq("Envío abortado"),
                 any(String.class));
     }

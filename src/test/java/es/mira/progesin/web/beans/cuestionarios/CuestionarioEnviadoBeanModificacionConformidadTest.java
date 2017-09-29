@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -200,7 +201,7 @@ public class CuestionarioEnviadoBeanModificacionConformidadTest {
         cuestionarioEnviadoBeanMock.modificarCuestionario();
         
         verify(cuestionarioEnvioService, times(1)).save(cuestionarioEnviado);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
@@ -219,7 +220,7 @@ public class CuestionarioEnviadoBeanModificacionConformidadTest {
         cuestionarioEnviadoBeanMock.modificarCuestionario();
         
         verify(cuestionarioEnvioService, times(1)).save(cuestionarioEnviado);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -260,7 +261,7 @@ public class CuestionarioEnviadoBeanModificacionConformidadTest {
         cuestionarioEnviadoBeanMock.modificarCuestionario();
         
         verify(cuestionarioEnvioService, times(1)).save(cuestionarioEnviado);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 eq(Constantes.FALLOCORREO));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -307,7 +308,7 @@ public class CuestionarioEnviadoBeanModificacionConformidadTest {
         verify(cuestionarioEnvioService, times(1)).transaccSaveActivaUsuariosProv(cuestionarioEnviado);
         verify(correoElectronico, times(1)).envioCorreo(eq(cuestionarioEnviado.getCorreoEnvio()), any(String.class),
                 eq(Constantes.TEMPLATENOCONFORMECUESTIONARIO), eq(paramPlantilla));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
@@ -338,7 +339,7 @@ public class CuestionarioEnviadoBeanModificacionConformidadTest {
         
         verify(cuestionarioEnvioService, times(1)).transaccSaveActivaUsuariosProv(cuestionarioEnviado);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -384,7 +385,7 @@ public class CuestionarioEnviadoBeanModificacionConformidadTest {
         
         cuestionarioEnviadoBeanMock.noConformeCuestionario(motivo);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 eq(Constantes.FALLOCORREO));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),

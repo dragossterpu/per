@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -321,7 +322,7 @@ public class InformeBeanTest {
         informeBean.guardarInforme();
         
         verify(informeService, times(1)).guardarInforme(informe, mapaRespuestas, mapaAsignaciones);
-        PowerMockito.verifyStatic();
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Modificación"),
                 any(String.class));
     }
@@ -361,7 +362,7 @@ public class InformeBeanTest {
         informeBean.desasignarInforme();
         
         verify(informeService, times(1)).desasignarInforme(informe, mapaRespuestas, mapaAsignaciones);
-        PowerMockito.verifyStatic();
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Modificación"),
                 any(String.class));
     }
@@ -407,7 +408,7 @@ public class InformeBeanTest {
                 eq(SeccionesEnum.INFORMES.getDescripcion()), eq(rolesNotif));
         verify(notificacionesService, times(1)).crearNotificacionEquipo(any(String.class),
                 eq(SeccionesEnum.INFORMES.getDescripcion()), eq(informe.getInspeccion().getEquipo()));
-        PowerMockito.verifyStatic();
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Modificación"),
                 any(String.class), any(String.class));
     }
@@ -491,7 +492,7 @@ public class InformeBeanTest {
                 any(String.class), any(String.class))).thenReturn(mock(DefaultStreamedContent.class));
         
         informeBean.exportarInforme("PDF");
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(Utilities.class, times(1));
         Utilities.limpiarHtml(any(String.class));
         verify(htmlPdfGenerator, times(1)).generarInformePdf(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class));
@@ -546,7 +547,7 @@ public class InformeBeanTest {
                 any(String.class), any(String.class))).thenReturn(mock(DefaultStreamedContent.class));
         
         informeBean.exportarInforme("DOCX");
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(Utilities.class, times(1));
         Utilities.limpiarHtml(any(String.class));
         verify(htmlDocxGenerator, times(1)).generarInformeDocx(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class));

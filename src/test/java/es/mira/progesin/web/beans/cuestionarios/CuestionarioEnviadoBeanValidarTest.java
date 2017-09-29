@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -219,14 +220,14 @@ public class CuestionarioEnviadoBeanValidarTest {
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
         verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestasValidadas.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Validación"),
                 any(String.class));
         verify(cuestionarioEnvioService, times(1)).transaccSaveElimUsuariosProv(cuestionarioEnviado);
         assertThat(cuestionarioEnviado.getUsernameFinalizacion()).isNotNull();
         assertThat(cuestionarioEnviado.getFechaFinalizacion()).isNotNull();
         assertThat(cuestionarioEnviado.getFechaNoConforme()).isNull();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Finalización"),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
@@ -291,7 +292,7 @@ public class CuestionarioEnviadoBeanValidarTest {
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
         verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestasValidadas.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), eq("Validación"),
                 any(String.class));
     }
@@ -349,7 +350,7 @@ public class CuestionarioEnviadoBeanValidarTest {
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -409,7 +410,7 @@ public class CuestionarioEnviadoBeanValidarTest {
         
         cuestionarioEnviadoBeanMock.validarRespuestas();
         verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestasValidadas.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +138,7 @@ public class TipoInspeccionBeanTest {
         
         tipoInspeccionBean.eliminarTipo(tipo);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
     }
@@ -152,7 +153,7 @@ public class TipoInspeccionBeanTest {
         
         tipoInspeccionBean.eliminarTipo(tipo);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
     }
@@ -170,7 +171,7 @@ public class TipoInspeccionBeanTest {
         tipoInspeccionBean.eliminarTipo(tipo);
         
         verify(tipoInspeccionService, times(1)).borrarTipo(tipo);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
                 eq(null));
     }
@@ -188,7 +189,7 @@ public class TipoInspeccionBeanTest {
         tipoInspeccionBean.eliminarTipo(tipo);
         
         verify(tipoInspeccionService, times(1)).borrarTipo(tipo);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
                 eq(null));
     }
@@ -203,7 +204,7 @@ public class TipoInspeccionBeanTest {
         
         tipoInspeccionBean.eliminarTipo(tipo);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         

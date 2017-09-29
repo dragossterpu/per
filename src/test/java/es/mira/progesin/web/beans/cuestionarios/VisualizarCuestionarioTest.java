@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -563,7 +564,7 @@ public class VisualizarCuestionarioTest {
         visualizarCuestionario.descargarFichero(doc);
         verify(documentoService, times(1)).descargaDocumento(doc);
         assertThat(visualizarCuestionario.getFile()).isNull();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         regActividadService.altaRegActividadError(any(String.class), any(TransientDataAccessResourceException.class));
@@ -596,7 +597,7 @@ public class VisualizarCuestionarioTest {
         doThrow(ProgesinException.class).when(wordGenerator).exportar(cuestionarioPersonalizado);
         
         visualizarCuestionario.crearDocumentoWordCuestionarioPersonalizado(cuestionarioPersonalizado);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(any(String.class), any(ProgesinException.class));
@@ -628,7 +629,7 @@ public class VisualizarCuestionarioTest {
         
         visualizarCuestionario.crearPdfCuestionarioEnviado(cuestionarioEnviado);
         verify(pdfGenerator, times(1)).exportarPdf();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(any(String.class), any(ProgesinException.class));

@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
         <primefaces.version>6.1</primefaces.version>
         <mockito.version>2.7.22</mockito.version>
-        <powermock.version>1.7.0</powermock.version>
+        <powermock.version>1.7.3</powermock.version>
         <itext.version>5.5.9</itext.version>
         <xmlworker.version>5.5.9</xmlworker.version>
         <jsoup.version>1.10.2</jsoup.version>
@@ -300,7 +300,6 @@
             <name>Prime Repo</name>
             <url>http://repository.primefaces.org</url>
         </repository>
-
     </repositories>
 
 

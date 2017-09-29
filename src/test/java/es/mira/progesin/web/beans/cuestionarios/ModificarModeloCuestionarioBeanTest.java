@@ -11,6 +11,7 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -483,7 +484,7 @@ public class ModificarModeloCuestionarioBeanTest {
         String tipoNueva = "TEXTAREA";
         
         modificarModeloCuestionarioBean.aniadePregunta(mock(AreasCuestionario.class), preguntaNueva, tipoNueva);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
         
     }
@@ -498,7 +499,7 @@ public class ModificarModeloCuestionarioBeanTest {
         String tipoNueva = "";
         
         modificarModeloCuestionarioBean.aniadePregunta(mock(AreasCuestionario.class), preguntaNueva, tipoNueva);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
         
     }
@@ -624,7 +625,7 @@ public class ModificarModeloCuestionarioBeanTest {
         modificarModeloCuestionarioBean.setListaAreasCuestionario(new ArrayList<>());
         
         String siguientePaso = modificarModeloCuestionarioBean.onFlowProcess(event);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
         assertThat(siguientePaso).isEqualTo(PASOTIPORESPUESTAS);
     }
@@ -706,7 +707,7 @@ public class ModificarModeloCuestionarioBeanTest {
         when(event.getOldStep()).thenReturn(PASOFINALIZAR);
         
         String siguientePaso = modificarModeloCuestionarioBean.onFlowProcess(event);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
         assertThat(siguientePaso).isEqualTo(PASOFINALIZAR);
     }
@@ -813,7 +814,7 @@ public class ModificarModeloCuestionarioBeanTest {
     public final void testGuardaTipoRespuestaVacia() {
         String nombreTipoPregunta = "";
         modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
     }
     
@@ -826,7 +827,7 @@ public class ModificarModeloCuestionarioBeanTest {
         String nombreTipoPregunta = INPUT;
         modificarModeloCuestionarioBean.setListadoValoresNuevaRespuesta(new ArrayList<>());
         modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
     }
     
@@ -844,7 +845,7 @@ public class ModificarModeloCuestionarioBeanTest {
         modificarModeloCuestionarioBean.setListadoValoresFila(new ArrayList<>());
         
         modificarModeloCuestionarioBean.guardaTipoRespuesta(nombreTipoPregunta);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), eq(null), eq(null));
     }
     
@@ -937,7 +938,7 @@ public class ModificarModeloCuestionarioBeanTest {
         verify(configuracionRespuestasCuestionarioRepository, times(1)).save(tipoRespuestaNuevo);
         verify(registroActividadService, times(1)).altaRegActividadError(
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), any(TransientDataAccessResourceException.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }
@@ -957,7 +958,7 @@ public class ModificarModeloCuestionarioBeanTest {
         verify(modeloCuestionarioService, times(1)).save(modeloCuestionario);
         verify(registroActividadService, times(1)).altaRegActividad(any(String.class),
                 eq(TipoRegistroEnum.MODIFICACION.name()), eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
     }
@@ -976,7 +977,7 @@ public class ModificarModeloCuestionarioBeanTest {
         verify(modeloCuestionarioService, times(1)).save(modeloCuestionario);
         verify(registroActividadService, times(1)).altaRegActividadError(
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), any(TransientDataAccessResourceException.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }
@@ -1002,7 +1003,7 @@ public class ModificarModeloCuestionarioBeanTest {
         rolesNotif.add(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
         verify(notificacionesService, times(1)).crearNotificacionRol(any(String.class),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), eq(rolesNotif));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
     }
@@ -1022,7 +1023,7 @@ public class ModificarModeloCuestionarioBeanTest {
         verify(modeloCuestionarioService, times(1)).save(modeloCuestionario);
         verify(registroActividadService, times(1)).altaRegActividadError(
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), any(TransientDataAccessResourceException.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }

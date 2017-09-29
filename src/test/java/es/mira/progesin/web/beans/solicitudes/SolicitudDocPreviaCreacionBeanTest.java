@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -329,7 +330,7 @@ public class SolicitudDocPreviaCreacionBeanTest {
         
         String nombre_paso = SolicitudDocPreviaCreacionBean.onFlowProcess(event);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(""));
         assertThat(nombre_paso).isEqualTo(DOCUMENTACION);

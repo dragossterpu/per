@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,7 +216,7 @@ public class EdicionCuestionarioBeanTest {
         edicionCuestionarioBean.setListaAreasCuestionario(new ArrayList<>());
         
         String redireccion = edicionCuestionarioBean.previsualizarFormulario();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         assertThat(redireccion).isNull();
@@ -250,7 +251,7 @@ public class EdicionCuestionarioBeanTest {
         verify(cuestionarioPersonalizadoService, times(1)).save(cuestionarioPersonalizadoCaptor.capture());
         registroActividadService.altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()), any(String.class));
     }
@@ -282,7 +283,7 @@ public class EdicionCuestionarioBeanTest {
         
         edicionCuestionarioBean.guardarFormulario(nombreCuestionario);
         verify(cuestionarioPersonalizadoService, times(1)).save(cuestionarioPersonalizadoCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(registroActividadService, times(1)).altaRegActividadError(

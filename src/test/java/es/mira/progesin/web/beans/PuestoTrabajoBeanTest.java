@@ -9,6 +9,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +131,7 @@ public class PuestoTrabajoBeanTest {
         puestoTrabajoBean.eliminarPuesto(puesto);
         
         // Comprobamos que se muestra el mensaje en pantalla
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -178,7 +179,7 @@ public class PuestoTrabajoBeanTest {
         String descripcionPuesto = DESCRIPCIONPUESTO;
         puestoTrabajoBean.altaPuesto(descripcionPuesto);
         verify(puestoTrabajoService, times(1)).save(puestoTrabajoCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
@@ -196,7 +197,7 @@ public class PuestoTrabajoBeanTest {
                 .save(puestoTrabajoCaptor.capture());
         puestoTrabajoBean.altaPuesto(descripcionPuesto);
         verify(puestoTrabajoService, times(1)).save(puestoTrabajoCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),
@@ -217,7 +218,7 @@ public class PuestoTrabajoBeanTest {
         when(event.getObject()).thenReturn(puesto);
         puestoTrabajoBean.onRowEdit(event);
         verify(puestoTrabajoService, times(1)).save(puesto);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 eq(puesto.getDescripcion()), eq(null));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class),
@@ -238,7 +239,7 @@ public class PuestoTrabajoBeanTest {
         doThrow(TransientDataAccessResourceException.class).when(puestoTrabajoService).save(puesto);
         puestoTrabajoBean.onRowEdit(event);
         verify(puestoTrabajoService, times(1)).save(puesto);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(Constantes.ERRORMENSAJE),
                 any(String.class), eq(null));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.ADMINISTRACION.getDescripcion()),

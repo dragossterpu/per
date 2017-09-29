@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.Date;
 import java.util.Map;
@@ -251,7 +252,7 @@ public class SolicitudDocPreviaBeanValidacionEliminacionTest {
         
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), eq("Eliminación abortada"),
                 any(String.class), eq(null));
     }
@@ -267,7 +268,7 @@ public class SolicitudDocPreviaBeanValidacionEliminacionTest {
         
         solicitudDocPreviaBean.eliminarSolicitud(solicitud);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), eq("Eliminación abortada"),
                 any(String.class), eq(null));
     }

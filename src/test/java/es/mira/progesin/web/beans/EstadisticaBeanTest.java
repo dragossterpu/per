@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -240,11 +241,11 @@ public class EstadisticaBeanTest {
                 .thenReturn(file);
         estadisticaBean.filtraPDF(mock(TipoInspeccion.class), mock(Provincia.class), mock(Date.class), mock(Date.class),
                 "imagen,Test");
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(ImageIO.class, times(1));
         ImageIO.read(byteArrayCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(File.class, times(1));
         File.createTempFile(OUT, PNG);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(ImageIO.class, times(1));
         ImageIO.write(any(RenderedImage.class), eq("png"), any(File.class));
         verify(estadisticaService, times(1)).exportar(any(InspeccionBusqueda.class), eq(estadosSeleccionados),
                 any(File.class));
@@ -269,13 +270,13 @@ public class EstadisticaBeanTest {
         estadisticaBean.filtraPDF(mock(TipoInspeccion.class), mock(Provincia.class), mock(Date.class), mock(Date.class),
                 "imagen,Test");
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(ImageIO.class, times(1));
         ImageIO.read(byteArrayCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(File.class, times(1));
         File.createTempFile(OUT, PNG);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(ImageIO.class, times(1));
         ImageIO.write(any(RenderedImage.class), eq("png"), any(File.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
     }

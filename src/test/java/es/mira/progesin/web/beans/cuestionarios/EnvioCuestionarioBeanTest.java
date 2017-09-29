@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -275,7 +276,7 @@ public class EnvioCuestionarioBeanTest {
         
         envioCuestionarioBean.completarDatosSolicitudPrevia();
         verify(solDocService, times(1)).findFinalizadasPorInspeccion(inspeccion);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), any(String.class), any(String.class),
                 eq(null));
     }
@@ -316,7 +317,7 @@ public class EnvioCuestionarioBeanTest {
         verify(userService, times(1)).crearUsuariosProvisionalesCuestionario(eq(correoEnvio), any(String.class));
         verify(cuestionarioEnvioService, times(1)).crearYEnviarCuestionario(eq(users), eq(cuestionarioEnvio),
                 paramCaptor.capture());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),

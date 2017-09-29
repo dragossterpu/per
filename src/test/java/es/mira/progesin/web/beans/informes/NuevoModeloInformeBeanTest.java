@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +140,7 @@ public class NuevoModeloInformeBeanTest {
         
         nuevoModeloInformeBean.onFlowProcess(event);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), errorCaptor.capture(), eq(null),
                 eq(null));
         
@@ -286,7 +287,7 @@ public class NuevoModeloInformeBeanTest {
         
         verify(notificacionesService, times(1)).crearNotificacionRol(any(String.class),
                 eq(SeccionesEnum.INFORMES.getDescripcion()), eq(RoleEnum.ROLE_EQUIPO_INSPECCIONES));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Nuevo modelo de informe",
                 "Se ha creado el nuevo modelo con éxito");
     }
@@ -302,7 +303,7 @@ public class NuevoModeloInformeBeanTest {
         when(nuevoModeloInformeService.guardaModelo(modelo, nuevoModeloInformeBean.getListaAreas())).thenReturn(null);
         nuevoModeloInformeBean.grabaInforme();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                 "Se ha producido un error al crear el modelo de informe");
     }

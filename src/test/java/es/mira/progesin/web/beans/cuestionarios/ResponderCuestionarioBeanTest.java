@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -259,7 +260,7 @@ public class ResponderCuestionarioBeanTest {
         verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture());
         verify(visualizarCuestionario, times(1)).getMapaDocumentos();
         verify(visualizarCuestionario, times(1)).construirTipoRespuestaTablaMatrizConDatos();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
     }
@@ -301,7 +302,7 @@ public class ResponderCuestionarioBeanTest {
         verify(visualizarCuestionario, times(1)).getMapaRespuestas();
         verify(respuestaService, times(1)).transaccSaveConRespuestas(listaRespuestaCuestionarioCaptor.capture());
         verify(visualizarCuestionario, times(1)).getMapaRespuestasTabla();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -327,7 +328,7 @@ public class ResponderCuestionarioBeanTest {
         verify(respuestaService, times(1)).transaccSaveConRespuestasInactivaUsuariosProv(
                 eq(responderCuestionarioBean.getCuestionarioEnviado()), listaRespuestasCaptor.capture());
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class), any());
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.ALTA.name()),
                 eq(SeccionesEnum.CUESTIONARIO.getDescripcion()));
@@ -349,7 +350,7 @@ public class ResponderCuestionarioBeanTest {
         listaAreasUsuarioCuestEnv.add(areaUsuario);
         responderCuestionarioBean.setListaAreasUsuarioCuestEnv(listaAreasUsuarioCuestEnv);
         responderCuestionarioBean.enviarCuestionario();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -375,7 +376,7 @@ public class ResponderCuestionarioBeanTest {
         verify(respuestaService, times(1)).transaccSaveConRespuestasInactivaUsuariosProv(
                 eq(responderCuestionarioBean.getCuestionarioEnviado()), listaRespuestasCaptor.capture());
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -455,7 +456,7 @@ public class ResponderCuestionarioBeanTest {
         responderCuestionarioBean.subirFichero(event);
         
         verify(respuestaService, times(1)).esExtensionCorrecta(archivoSubido);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
     }
@@ -499,7 +500,7 @@ public class ResponderCuestionarioBeanTest {
         verify(visualizarCuestionario, times(1)).getMapaRespuestas();
         verify(respuestaService, times(1)).saveConDocumento(respuestaCaptor.capture(), archivoSubidoCaptor.capture());
         verify(visualizarCuestionario, times(1)).getMapaDocumentos();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -565,7 +566,7 @@ public class ResponderCuestionarioBeanTest {
         
         verify(respuestaService, times(1)).eliminarDocumentoRespuesta(respuestaCaptor.capture(), eq(documento));
         verify(visualizarCuestionario, times(1)).getMapaDocumentos();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -667,7 +668,7 @@ public class ResponderCuestionarioBeanTest {
         responderCuestionarioBean.asignarAreas();
         
         verify(areaUsuarioCuestEnvService, times(1)).asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
     }
@@ -690,7 +691,7 @@ public class ResponderCuestionarioBeanTest {
         responderCuestionarioBean.asignarAreas();
         
         verify(areaUsuarioCuestEnvService, times(1)).asignarAreasUsuarioYActivar(listaAreasUsuarioCuestEnv);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),
@@ -721,7 +722,7 @@ public class ResponderCuestionarioBeanTest {
         
         verify(respuestaService, times(1)).guardarRespuestasYAsignarAreasPrincipal(listaRespuestas, USUARIOLOGUEADO,
                 cuestionarioEnviado.getCorreoEnvio(), listaAreasUsuarioCuestEnv);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class), eq("dialogMessageReasignar"));
     }
@@ -806,7 +807,7 @@ public class ResponderCuestionarioBeanTest {
         
         responderCuestionarioBean.descargarPlantilla(plantilla);
         verify(respuestaService, times(1)).descargarPlantilla(plantilla.getId());
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),

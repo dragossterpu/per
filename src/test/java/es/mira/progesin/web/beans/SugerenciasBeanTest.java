@@ -11,6 +11,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -146,13 +147,13 @@ public class SugerenciasBeanTest {
         
         verify(sugerenciasServiceMock, times(1)).save(sugerencia);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO), any(String.class),
                 any(String.class));
         
         assertThat(ruta).isEqualTo("/principal/crearSugerencia?faces-redirect=true");
         
-        PowerMockito.verifyStatic(never());
+        verifyStatic(FacesUtilities.class, never());
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         
@@ -177,7 +178,7 @@ public class SugerenciasBeanTest {
         
         verify(sugerenciasServiceMock, times(1)).save(sugerencia);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         
@@ -220,7 +221,7 @@ public class SugerenciasBeanTest {
         sugerenciasBeanMock.eliminarSugerencia(sugerencia);
         
         verify(sugerenciasServiceMock, times(1)).delete(id);
-        PowerMockito.verifyStatic(never());
+        verifyStatic(FacesUtilities.class, never());
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         
@@ -249,7 +250,7 @@ public class SugerenciasBeanTest {
         sugerenciasBeanMock.eliminarSugerencia(sugerencia);
         
         verify(sugerenciasServiceMock, times(1)).delete(id);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 any(String.class));
         

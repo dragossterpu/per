@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,7 +246,7 @@ public class CuestionarioEnviadoBeanTest {
         assertThat(cuestionarioEnvio.getFechaAnulacion()).isNotNull();
         assertThat(cuestionarioEnvio.getUsernameAnulacion()).isNotNull();
         verify(cuestionarioEnvioService, times(1)).transaccSaveElimUsuariosProv(cuestionarioEnvio);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_INFO), any(String.class), any(String.class),
                 eq(null));
         verify(regActividadService, times(1)).altaRegActividad(any(String.class), eq(TipoRegistroEnum.BAJA.name()),
@@ -278,7 +279,7 @@ public class CuestionarioEnviadoBeanTest {
         cuestionarioEnvio.setInspeccion(inspeccion);
         cuestionarioEnvio.setCorreoEnvio(CORREOENVIO);
         cuestionarioEnviadoBeanMock.eliminarCuestionario(cuestionarioEnvio);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_WARN), any(String.class), any(String.class),
                 eq(null));
     }
@@ -308,7 +309,7 @@ public class CuestionarioEnviadoBeanTest {
         
         cuestionarioEnviadoBeanMock.eliminarCuestionario(cuestionarioEnvio);
         verify(cuestionarioEnvioService, times(1)).transaccSaveElimUsuariosProv(cuestionarioEnvio);
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), eq(TipoRegistroEnum.ERROR.name()),
                 any(String.class), eq(null));
         verify(regActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.CUESTIONARIO.getDescripcion()),

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -320,7 +321,7 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.descargarFichero(doc1);
         assertThat(gestorDocumentalBeanMock.getFile()).isNull();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
@@ -338,7 +339,7 @@ public class GestorDocumentalBeanTest {
         when(documentoService.findOne(doc1.getId())).thenReturn(null);
         gestorDocumentalBeanMock.descargarFichero(doc1);
         assertThat(gestorDocumentalBeanMock.getFile()).isNull();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }
@@ -389,7 +390,7 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.cargaFichero(event);
         assertThat(gestorDocumentalBeanMock.getDocumento()).isNull();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         verify(registroActividadService, never()).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
@@ -421,7 +422,7 @@ public class GestorDocumentalBeanTest {
         
         verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),
                 any(ProgesinException.class));
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
         
@@ -615,7 +616,7 @@ public class GestorDocumentalBeanTest {
         doNothing().when(requestContext).reset("formAlta:asociado");
         gestorDocumentalBeanMock.creaDocumento(NOMBREDOC, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.GESTOR.getDescripcion()), any(String.class));
         assertThat(gestorDocumentalBeanMock.getDocumento().getNombre()).isEqualTo(nombreDocTest);
@@ -668,7 +669,7 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -687,7 +688,7 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.setNombreDoc("nombreTest");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -706,7 +707,7 @@ public class GestorDocumentalBeanTest {
         gestorDocumentalBeanMock.setNombreDoc("");
         gestorDocumentalBeanMock.creaDocumento(nombreDocTest, tipoDocTest, descripcionTest, materiaIndexadaTest);
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(eq(FacesMessage.SEVERITY_ERROR), any(String.class), any(String.class),
                 eq(null));
     }
@@ -749,7 +750,7 @@ public class GestorDocumentalBeanTest {
         String ruta = gestorDocumentalBeanMock.editarDocumento(docTest);
         assertThat(gestorDocumentalBeanMock.getDocumento()).isNull();
         assertThat(ruta).isNull();
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR), any(String.class),
                 any(String.class));
     }
@@ -769,7 +770,7 @@ public class GestorDocumentalBeanTest {
         when(documentoService.save(docTest)).thenReturn(docTest);
         gestorDocumentalBeanMock.modificaDocumento();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_INFO),
                 eq(SeccionesEnum.GESTOR.getDescripcion()), any(String.class));
         
@@ -786,7 +787,7 @@ public class GestorDocumentalBeanTest {
         when(documentoService.save(docTest)).thenThrow(TransientDataAccessResourceException.class);
         gestorDocumentalBeanMock.modificaDocumento();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(eq(FacesMessage.SEVERITY_ERROR),
                 eq(SeccionesEnum.GESTOR.getDescripcion()), any(String.class));
         verify(registroActividadService, times(1)).altaRegActividadError(eq(SeccionesEnum.GESTOR.getDescripcion()),

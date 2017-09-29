@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -213,7 +214,7 @@ public class ModeloInformePersonalizadoBeanTest {
         
         String ruta = modeloInformePersonalizadoBean.previsualizarCreacionInformePersonalizado();
         
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR,
                 "Debe seleccionar al menos un subapartado para el informe", "", null);
         assertThat(ruta).isNull();
@@ -235,7 +236,7 @@ public class ModeloInformePersonalizadoBeanTest {
         modeloInformePersonalizadoBean.guardarInformePersonalizado(NOMBREINFORME);
         
         verify(requestContext, times(1)).execute("PF('informeDialog').hide()");
-        PowerMockito.verifyStatic(times(1));
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_INFO, "Informe personalizado",
                 "Se ha guardado con éxito");
     }
@@ -255,7 +256,7 @@ public class ModeloInformePersonalizadoBeanTest {
         modeloInformePersonalizadoBean.guardarInformePersonalizado(NOMBREINFORME);
         
         verify(requestContext).execute("PF('informeDialog').hide()");
-        PowerMockito.verifyStatic();
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, TipoRegistroEnum.ERROR.name(),
                 "Se ha producido un error al guardar el informe");
     }
@@ -269,7 +270,7 @@ public class ModeloInformePersonalizadoBeanTest {
         ModeloInformePersonalizado modeloPersonalizado = mock(ModeloInformePersonalizado.class);
         when(informePersonalizadoService.eliminarModeloPersonalizado(modeloPersonalizado)).thenReturn(null);
         modeloInformePersonalizadoBean.eliminarModeloPersonalizado(modeloPersonalizado);
-        PowerMockito.verifyStatic();
+        verifyStatic(FacesUtilities.class, times(1));
         FacesUtilities.setMensajeInformativo(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
                 "Se ha producido un error al eliminar el informe personalizado, inténtelo de nuevo más tarde", null);
     }
