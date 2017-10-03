@@ -327,9 +327,13 @@
             <id>sonarqube</id>
 
             <properties>
+                <jacoco.version>0.7.9</jacoco.version>
                 <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+				<sonar.coverage.exclusions>**/webapp/**/*</sonar.coverage.exclusions>
                 <!-- force sonar to reuse reports generated during build cycle -->
                 <!-- <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis> -->
+				<jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
+				<jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
             </properties>
 
             <dependencies>
@@ -338,6 +342,13 @@
                     <artifactId>jsr305</artifactId>
                     <version>3.0.0</version>
                 </dependency>
+				<dependency>
+					<groupId>org.jacoco</groupId>
+					<artifactId>org.jacoco.agent</artifactId>
+					<classifier>runtime</classifier>
+					<version>${jacoco.version}</version>
+					<scope>test</scope>
+				</dependency>
             </dependencies>
 
             <build>
@@ -351,27 +362,46 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.7.9</version>
+						<version>${jacoco.version}</version>
+		                <!-- <configuration>
+		                    <excludes>
+		                        <exclude>**/persistence/**/*</exclude>
+                                <exclude>**/webapp/**/*</exclude>
+                                <exclude>**/resources/**/*</exclude>
+		                    </excludes>
+		                </configuration> -->
                         <executions>
                             <execution>
-                                <id>prepare-unit-tests</id>
+								<id>default-instrument</id>
                                 <goals>
-                                    <goal>prepare-agent</goal>
+									<goal>instrument</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>prepare-integration-tests</id>
+								<id>default-restore-instrumented-classes</id>
                                 <goals>
-                                    <goal>prepare-agent</goal>
+									<goal>restore-instrumented-classes</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>default-report</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>report</goal>
                                 </goals>
-                                <phase>pre-integration-test</phase>
-                                <configuration>
-                                    <propertyname>itCoverageAgent</propertyname>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
-
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.12.2</version>
+						<configuration>
+							<systemPropertyVariables>
+								<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+							</systemPropertyVariables>
+						</configuration>
+					</plugin>
                 </plugins>
             </build>
         </profile>
