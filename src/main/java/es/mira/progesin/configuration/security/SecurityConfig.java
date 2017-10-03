@@ -125,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
         // configuración para el manejo de las sessiones de los usuarios
         http.sessionManagement().maximumSessions(MAXCONCURRENTUSERSESSIONS).maxSessionsPreventsLogin(false)
-                .sessionRegistry(sessionRegistry());
+                .sessionRegistry(sessionRegistry()).expiredUrl(Constantes.RUTALOGIN);
         
     }
     
@@ -134,7 +134,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 
      * @return SessionRegistry
      */
-    @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
