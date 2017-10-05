@@ -71,7 +71,7 @@ public class ModeloCuestionarioService implements IModeloCuestionarioService {
     /**
      * Busca todos los modelos de cuestionario que hay en BBDD.
      * 
-     * @return List<ModeloCuestionario> lista de modelos en BBDD
+     * @return lista de modelos en BBDD
      */
     @Override
     public List<ModeloCuestionario> findAllByFechaBajaIsNull() {

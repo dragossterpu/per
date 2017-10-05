@@ -59,7 +59,7 @@ public class ModeloInformeService implements IModeloInformeService {
     /**
      * Busca todos los modelos de informe que hay en BBDD.
      * 
-     * @return List<ModeloInforme> lista de modelos en BBDD
+     * @return lista de modelos en BBDD
      */
     @Override
     public List<ModeloInforme> findAll() {

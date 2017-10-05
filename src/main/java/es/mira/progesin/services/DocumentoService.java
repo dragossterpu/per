@@ -102,7 +102,7 @@ public class DocumentoService implements IDocumentoService {
      * Busca todos los documentos no dados de baja lógica.
      * 
      * 
-     * @return Iterable<Documento> Documentos seleccionados
+     * @return Lista de documentos seleccionados
      * 
      */
     @Override
@@ -114,7 +114,7 @@ public class DocumentoService implements IDocumentoService {
      * Busca todos los documentos eliminados (dados de baja lógica).
      * 
      * 
-     * @return Iterable<Documento> Documentos seleccionados
+     * @return Lista de documentos seleccionados
      * 
      */
     @Override
@@ -138,7 +138,7 @@ public class DocumentoService implements IDocumentoService {
      * documentos guardados.
      * 
      * @param entities Documentos a salvar
-     * @return Iterable<Documento> Documentos salvado
+     * @return lista de documentos salvados
      * 
      */
     @Override
@@ -151,7 +151,7 @@ public class DocumentoService implements IDocumentoService {
      * guardado.
      * 
      * @param entity Documento Documento a guardar
-     * @return Documento Documento guardado
+     * @return documento guardado
      */
     @Override
     @Transactional(readOnly = false)

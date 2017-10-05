@@ -20,14 +20,14 @@ public interface IDocumentoRepository extends CrudRepository<Documento, Long> {
     /**
      * Recupera el listado de documentos que no han sido dados de baja.
      * 
-     * @return List<Documento> lista de documentos encontrados
+     * @return lista de documentos encontrados
      */
     List<Documento> findByFechaBajaIsNull();
     
     /**
      * Recupera el listado de documentos que han sido dados de baja.
      * 
-     * @return List<Documento> lista de documentos encontrados
+     * @return lista de documentos encontrados
      */
     List<Documento> findByFechaBajaIsNotNull();
     

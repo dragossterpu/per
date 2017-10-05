@@ -44,7 +44,7 @@ public class FacesUtilities {
      * 
      * @author Ezentis
      * @param pagina deseada
-     * @param paramGET cadena con parametros que se quieran pasar a la página destino separados por '&'
+     * @param paramGET cadena con parametros que se quieran pasar a la página destino separados por '&amp;'
      */
     public void redirect(String pagina, String paramGET) {
         FacesContext ctx = FacesContext.getCurrentInstance();
@@ -60,14 +60,15 @@ public class FacesUtilities {
     }
     
     /**
-     * Muestra una cuadro de diálogo con información. El cuadro de diálogo debe tener como nombre (widgetVar) "dialogMessage".
+     * Muestra una cuadro de diálogo con información. El cuadro de diálogo debe tener como nombre (widgetVar)
+     * "dialogMessage".
      * 
      * @author Ezentis
      * @param severity gravedad del aviso
      * @param summary resumen
      * @param detail detalles del mensaje
      */
-    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail ) {
+    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail) {
         setMensajeConfirmacionDialog(severity, summary, detail, "dialogMessage");
     }
     
@@ -80,7 +81,8 @@ public class FacesUtilities {
      * @param detail detalles del mensaje
      * @param widgetVarName Nombre del cuadro de diálogo
      */
-    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail, String widgetVarName) {
+    public static void setMensajeConfirmacionDialog(Severity severity, String summary, String detail,
+            String widgetVarName) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = new FacesMessage(severity, summary, detail);
         FacesContext.getCurrentInstance().addMessage(widgetVarName, message);

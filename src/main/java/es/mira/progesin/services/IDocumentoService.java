@@ -35,7 +35,7 @@ public interface IDocumentoService {
      * documentos guardados.
      * 
      * @param entities Documentos a salvar
-     * @return Iterable<Documento> Documentos salvado
+     * @return Lista de documentos salvados
      * 
      */
     
@@ -104,7 +104,7 @@ public interface IDocumentoService {
      * Busca todos los documentos no dados de baja lógica.
      * 
      * 
-     * @return Iterable<Documento> Documentos seleccionados
+     * @return Lista de documentos seleccionados
      * 
      */
     
@@ -114,7 +114,7 @@ public interface IDocumentoService {
      * Busca todos los documentos eliminados (dados de baja lógica).
      * 
      * 
-     * @return Iterable<Documento> Documentos seleccionados
+     * @return Lista de documentos seleccionados
      * 
      */
     

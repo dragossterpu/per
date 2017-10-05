@@ -36,7 +36,7 @@ public class IAlertasNotificacionesUsuarioRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository#findByUsuario(java.lang.String)}.
+     * {@link es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository#findByUsuario(String)}.
      */
     @Test
     public final void testFindByUsuario() {
@@ -47,7 +47,7 @@ public class IAlertasNotificacionesUsuarioRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository#findByUsuarioAndTipoAndIdMensaje(java.lang.String, es.mira.progesin.persistence.entities.enums.TipoMensajeEnum, java.lang.Long)}.
+     * {@link es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository#findByUsuarioAndTipoAndIdMensaje(String, TipoMensajeEnum, Long)}.
      */
     @Test
     public final void testFindByUsuarioAndTipoAndIdMensaje() {
@@ -58,10 +58,10 @@ public class IAlertasNotificacionesUsuarioRepositoryTest {
     
     /**
      * Test method for
-     * {@link es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository#findByUsuarioAndTipo(java.lang.String, es.mira.progesin.persistence.entities.enums.TipoMensajeEnum)}.
+     * {@link es.mira.progesin.persistence.repositories.IAlertasNotificacionesUsuarioRepository#findByUsuarioAndTipoOrderByFechaAltaDesc(String, TipoMensajeEnum)}.
      */
     @Test
-    public final void testFindByUsuarioAndTipo() {
+    public final void findByUsuarioAndTipoOrderByFechaAltaDesc() {
         List<AlertasNotificacionesUsuario> listAlertasNotificaciones = alertasNotificacionesUsuarioRepository
                 .findByUsuarioAndTipoOrderByFechaAltaDesc("jcarranz", TipoMensajeEnum.ALERTA);
         assertThat(listAlertasNotificaciones).hasSize(1);

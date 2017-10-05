@@ -117,8 +117,8 @@ public class GuiaService implements IGuiaService {
      * 
      * Devuelve la lista de pasos contenidos en una guía recibida como parámetro.
      * 
-     * @return List<GuiaPasos>
      * @param guia Guía de la que se desean recuperar los pasos
+     * @return lista de pasos
      * 
      */
     @Override
@@ -199,7 +199,7 @@ public class GuiaService implements IGuiaService {
      * @param sortOrder Sentido de la ordenación
      * @param busqueda Objeto que contiene los parámetros de búsqueda
      * 
-     * @return List<Guia> Listado resultante de la búsqueda
+     * @return Listado resultante de la búsqueda
      * 
      */
     @Override

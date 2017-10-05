@@ -235,8 +235,8 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
      * Recupera la lista de notificaciones en función de una lista contenida en una lista de
      * AlertasNotificacionesUsuario pasada como parámetro.
      * 
-     * @param lista List<AlertasNotificacionesUsuario>
-     * @return List<Notificacion>
+     * @param lista Lista de mensajes (alertas o notificaciones)
+     * @return Lista de notificaciones
      * 
      */
     @Override
@@ -253,8 +253,8 @@ public class AlertasNotificacionesUsuarioService implements IAlertasNotificacion
      * Recupera la lista de alertas en función de una lista contenida en una lista de AlertasNotificacionesUsuario
      * pasada como parámetro.
      * 
-     * @param lista List<AlertasNotificacionesUsuario>
-     * @return List<Alerta>
+     * @param lista Lista de mensajes (alertas o notificaciones)
+     * @return Lista de alertas
      * 
      */
     @Override
