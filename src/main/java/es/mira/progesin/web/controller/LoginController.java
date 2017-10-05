@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,18 +47,6 @@ public class LoginController {
             respuesta = Constantes.LOGIN;
         }
         return respuesta;
-    }
-    
-    /**
-     * Intercepta peticiones a la ruta de login "/logout" e invalida la sesión actual del usuario.
-     * 
-     * @param session sesión asociada a la petición actual
-     * @return acción de login mapeada en el dispatcher
-     */
-    @RequestMapping(method = RequestMethod.GET, value = Constantes.RUTALOGOUT)
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return Constantes.LOGIN;
     }
     
 }

@@ -121,11 +121,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(authenticationFailureHandlerPersonalizado);
         
         // Cierre de sesión
-        http.logout().logoutUrl(Constantes.RUTALOGOUT).logoutSuccessUrl(Constantes.RUTALOGIN);
+        http.logout().invalidateHttpSession(true).logoutUrl(Constantes.RUTALOGOUT)
+                .logoutSuccessUrl(Constantes.RUTALOGIN).deleteCookies("JSESSIONID");
         
         // configuración para el manejo de las sessiones de los usuarios
-        http.sessionManagement().maximumSessions(MAXCONCURRENTUSERSESSIONS).maxSessionsPreventsLogin(false)
-                .sessionRegistry(sessionRegistry()).expiredUrl(Constantes.RUTALOGIN);
+        http.sessionManagement().invalidSessionUrl(Constantes.RUTALOGIN).maximumSessions(MAXCONCURRENTUSERSESSIONS)
+                .maxSessionsPreventsLogin(false).sessionRegistry(sessionRegistry()).expiredUrl(Constantes.RUTALOGIN);
         
     }
     
