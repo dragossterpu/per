@@ -1387,12 +1387,9 @@ prompt =========================================================================
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('URLPROGESIN','URLPROGESIN','http://194.224.253.45:8080/progesin');
 
 -- CAMBIAR CONFIGURACIÓN DEL SERVIDOR DE CORREO
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.host','mail','smtp.gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.ssl.trust','mail','smtp.gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','587');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.user','mail','progesinipss@gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('UserPwd','mail','ipss2016');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','true');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.host','mail','localhost');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','25');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','false');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable','mail','true');
 
 -- ELIMINAR EZENTIS COMO DOMINIO VÁLIDO EN PRODUCCIÓN

@@ -63,7 +63,6 @@ public class CorreoElectronico implements ICorreoElectronico {
     public void conexionServidor() {
         
         Map<String, String> parametrosMail = applicationBean.getMapaParametros().get("mail");
-        String pass = parametrosMail.get("UserPwd");
         
         Properties mailProperties = new Properties();
         
@@ -75,8 +74,6 @@ public class CorreoElectronico implements ICorreoElectronico {
         }
         
         mailSender.setJavaMailProperties(mailProperties);
-        mailSender.setPassword(pass);
-        
     }
     
     /**
