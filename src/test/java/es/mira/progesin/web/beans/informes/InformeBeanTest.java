@@ -491,7 +491,7 @@ public class InformeBeanTest {
         when(htmlPdfGenerator.generarInformePdf(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class))).thenReturn(mock(DefaultStreamedContent.class));
         
-        informeBean.exportarInforme("PDF");
+        informeBean.exportarInforme("PDF", "completo");
         verifyStatic(Utilities.class, times(1));
         Utilities.limpiarHtml(any(String.class));
         verify(htmlPdfGenerator, times(1)).generarInformePdf(any(String.class), any(String.class), any(String.class),
@@ -546,7 +546,7 @@ public class InformeBeanTest {
         when(htmlDocxGenerator.generarInformeDocx(any(String.class), any(String.class), any(String.class),
                 any(String.class), any(String.class))).thenReturn(mock(DefaultStreamedContent.class));
         
-        informeBean.exportarInforme("DOCX");
+        informeBean.exportarInforme("DOCX", "conclusiones");
         verifyStatic(Utilities.class, times(1));
         Utilities.limpiarHtml(any(String.class));
         verify(htmlDocxGenerator, times(1)).generarInformeDocx(any(String.class), any(String.class), any(String.class),

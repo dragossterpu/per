@@ -8,15 +8,34 @@
             <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
-            <h:commandLink style="float: right;" actionListener="#{informeBean.exportarInforme('DOCX')}" rendered="#{yaFinalizado}">
-                <p:graphicImage value="/images/doc.png" style="padding: 0" />
-                <p:fileDownload value="#{informeBean.file}" />
-            </h:commandLink>
-            <h:commandLink style="float: right;" actionListener="#{informeBean.exportarInforme('PDF')}" rendered="#{yaFinalizado}">
-                <p:graphicImage value="/images/pdf.png" style="padding: 0" />
-                <p:fileDownload value="#{informeBean.file}" />
-            </h:commandLink>
+            <p:outputPanel rendered="#{yaFinalizado}" style="float: right;">
+                <table>
+                <tr>
+                    <th>Informe completo</th>
+                    <td><h:commandLink actionListener="#{informeBean.exportarInforme('DOCX', 'completo')}" title="Informe completo">
+                        <p:graphicImage value="/images/doc.png" style="padding: 0" />
+                        <p:fileDownload value="#{informeBean.file}" />
+                    </h:commandLink>
+                    <h:commandLink actionListener="#{informeBean.exportarInforme('PDF', 'completo')}" title="Informe completo">
+                        <p:graphicImage value="/images/pdf.png" style="padding: 0" />
+                        <p:fileDownload value="#{informeBean.file}" />
+                    </h:commandLink></td>
+                </tr>
+                <tr>
+                    <th>Conclusiones</th>
+                    <td><h:commandLink actionListener="#{informeBean.exportarInforme('DOCX', 'conclusiones')}" title="Conclusiones">
+                        <p:graphicImage value="/images/doc.png" style="padding: 0" />
+                        <p:fileDownload value="#{informeBean.file}" />
+                    </h:commandLink>
+                    <h:commandLink actionListener="#{informeBean.exportarInforme('PDF', 'conclusiones')}" title="Conclusiones">
+                        <p:graphicImage value="/images/pdf.png" style="padding: 0" />
+                        <p:fileDownload value="#{informeBean.file}" />
+                    </h:commandLink></td>
+                </tr>
+                </table>
+            </p:outputPanel>
             <br/>
+            
             <h1 class="nombreInforme">Inspección realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.name}</h1>
                         
             <div class="ql-editor" id="informe" >
