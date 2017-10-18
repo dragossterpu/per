@@ -540,7 +540,7 @@ public class GestorDocumentalBean implements Serializable {
         User usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
         boolean perteneceACuestionario = doc.getTipoDocumento().getId().equals(6L);
-        boolean perteneceASolicitud = doc.getTipoDocumento().getNombre().equals(9L);
+        boolean perteneceASolicitud = doc.getTipoDocumento().getId().equals(8L);
         boolean plantillaAdjuntaCuestionario = documentoService.plantillaPerteneceACuestionario(doc) > 0;
         boolean documentoEnInspeccionUsuario = documentoService.documentoEnInspeccionUsuario(usuario, doc);
         

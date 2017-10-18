@@ -182,8 +182,8 @@ public class ProvisionalSolicitudBean implements Serializable {
     public String gestionarCargaDocumento(FileUploadEvent event) {
         try {
             UploadedFile archivo = event.getFile();
-            // 9 es el id del tipodocumento para "DOCUMENTACIÓN SALIDA IPSS"
-            TipoDocumento tipo = TipoDocumento.builder().id(9L).build();
+            // 8 es el id del tipodocumento para "DOCUMENTACIÓN ENTRADA IPSS"
+            TipoDocumento tipo = TipoDocumento.builder().id(8L).build();
             if (verificadorExtensiones.extensionCorrecta(archivo)) {
                 if (esDocumentacionPrevia(archivo)) {
                     Documento documento = documentoService.cargaDocumento(archivo, tipo,
