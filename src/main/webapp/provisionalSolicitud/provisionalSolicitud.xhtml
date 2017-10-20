@@ -67,30 +67,30 @@
 
                 <h4>Datos Interlocutor</h4>
 
-                <h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor  (*):" />
+                <h:outputLabel for="nombreCompletoInterlocutor" value="Nombre completo del interlocutor (*):" />
                 <p:inputText id="nombreCompletoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el nombre completo del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="nombreCompletoInterlocutor" autoUpdate="true" closable="true" />
 
-                <h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor  (*):" />
+                <h:outputLabel for="categoriaInterlocutor" value="Categoría del interlocutor (*):" />
                 <p:inputText id="categoriaInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.categoriaInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca la categoría del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="categoriaInterlocutor" autoUpdate="true" closable="true" />
 
-                <h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor  (*):" />
+                <h:outputLabel for="cargoInterlocutor" value="Cargo del interlocutor (*):" />
                 <p:inputText id="cargoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.cargoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el cargo del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="cargoInterlocutor" autoUpdate="true" closable="true" />
 
 
-                <h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor  (*):" />
+                <h:outputLabel for="telefonoInterlocutor" value="Teléfono del interlocutor (*):" />
                 <p:inputNumber id="telefonoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.telefonoInterlocutor}" maxValue="999999999" decimalPlaces="0" thousandSeparator="" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el teléfono del interlocutor " converter="#{trimConverter}"/>
                 <p:messages for="telefonoInterlocutor" autoUpdate="true" closable="true" />
 
-                <h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor  (*):" />
+                <h:outputLabel for="correoCorporativoInterlocutor" value="Correo corporativo del interlocutor (*):" />
                 <p:inputText id="correoCorporativoInterlocutor" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}" required="#{param['form:enviar']!=null}" requiredMessage="Introduzca el correo corporativo del interlocutor " validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                     <p:messages for="correoCorporativoInterlocutor" autoUpdate="true" closable="true" />
                 </p:inputText>
 
-                <h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor  :" />
+                <h:outputLabel for="correoCorporativoInterlocutorCompl" value="Correo corporativo complementario del interlocutor:" />
                 <p:inputText id="correoCorporativoInterlocutorCompl" value="#{provisionalSolicitudBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}" validatorMessage="Formato de correo incorrecto o dominio no válido." converter="#{trimConverter}">
                     <f:validateRegex pattern="(?i)^[_a-z0-9-\+]+(\.[_a-z0-9-]+)*@(#{applicationBean.dominiosValidos})$" />
                     <p:messages for="correoCorporativoInterlocutorCompl" autoUpdate="true" closable="true" />

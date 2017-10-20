@@ -72,21 +72,23 @@
                 <h4>Datos interlocutor</h4>
 
                 <div class="bloqueInterlocutor">
-                    <br></br>
+                    <br/>
                     <p>Nombre completo: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.nombreCompletoInterlocutor}</p>
                     <p>Categoría: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.categoriaInterlocutor}</p>
                     <p>Cargo: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.cargoInterlocutor}</p>
-                    <p>Telefono: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.telefonoInterlocutor}</p>
+                    <p>Teléfono: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.telefonoInterlocutor}</p>
                     <p>Correo corporativo: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutor}</p>
+                    <p:outputLabel rendered="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}"><p>Correo corporativo complementario: #{solicitudDocPreviaBean.solicitudDocumentacionPrevia.correoCorporativoInterlocutorCompl}</p></p:outputLabel>
                 </div>
 
             </p:outputPanel>
 
-            <p:outputPanel rendered="#{not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.documentos and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
+            <p:outputPanel rendered="#{not empty solicitudDocPreviaBean.listadoDocumentosPrevios and not empty solicitudDocPreviaBean.solicitudDocumentacionPrevia.fechaCumplimentacion}">
 
                 <div class="bloqueDocumentos">
-                    <p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.documentos}">
-                        <p:column headerText="Nombre">
+                    <br/>
+                    <p:dataTable id="documentosSubidos" var="documento" value="#{solicitudDocPreviaBean.solicitudDocumentacionPrevia.documentos}" emptyMessage="No hay documentos">
+                        <p:column headerText="Documentos aportados">
                             <h:outputText value="#{documento.nombre}" />
                         </p:column>
                         <p:column styleClass="botonTabla">

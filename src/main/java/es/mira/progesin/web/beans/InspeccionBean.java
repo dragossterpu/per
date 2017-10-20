@@ -314,10 +314,8 @@ public class InspeccionBean implements Serializable {
     
     /**
      * Método que guarda la inspección nueva creada en la base de datos.
-     * @return null nos quedamos en la vista actual.
-     * 
      */
-    public String altaInspeccion() {
+    public void altaInspeccion() {
         try {
             inspeccion.setEstadoInspeccion(EstadoInspeccionEnum.A_SIN_INICIAR);
             inspeccion.setInspecciones(inspeccionesAsignadasActuales);
@@ -341,7 +339,6 @@ public class InspeccionBean implements Serializable {
         } catch (DataAccessException e) {
             regActividadService.altaRegActividadError(SeccionesEnum.INSPECCION.getDescripcion(), e);
         }
-        return null;
     }
     
     /**

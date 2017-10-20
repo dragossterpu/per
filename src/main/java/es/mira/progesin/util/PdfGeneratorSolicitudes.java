@@ -17,6 +17,7 @@ import com.itextpdf.layout.property.TextAlignment;
 import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.DocumentacionPrevia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.gd.Documento;
 import lombok.Setter;
 
 /**
@@ -133,6 +134,33 @@ public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
     }
     
     /**
+     * Crear una tabla con la documentación subida.
+     * 
+     * @return tabla
+     */
+    private Table crearTablaDocumentos() {
+        Table tabla = new Table(1);
+        tabla.setWidthPercent(100);
+        tabla.setKeepTogether(true);
+        tabla.setMarginTop(10);
+        tabla.setMarginBottom(10);
+        
+        tabla.addHeaderCell("Documentos aportados");
+        tabla.getHeader().setBackgroundColor(Color.LIGHT_GRAY);
+        tabla.getHeader().setTextAlignment(TextAlignment.CENTER);
+        
+        List<Documento> listaDocumentos = solicitudDocPrevia.getDocumentos();
+        if (listaDocumentos.isEmpty()) {
+            tabla.addCell("No hay documentos");
+        } else
+            for (Documento documento : listaDocumentos) {
+                tabla.addCell(documento.getNombre());
+            }
+        
+        return tabla;
+    }
+    
+    /**
      * Genera el contenido que se mostrará en el PDF.
      * 
      * @param document Documento pdf al que se adjuntará el contenido
@@ -188,5 +216,24 @@ public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
         document.add(new Paragraph(
                 "El Jefe del Equipo Auditor encargado de dirigir y coordinar la Inspección, próximamente, se pondrá en contacto con el Jefe de esa Unidad a los fines expuestos.")
                         .setPaddingTop(20));
+        
+        if (solicitudDocPrevia.getFechaCumplimentacion() != null) {
+            
+            document.add(new Paragraph("Datos del interlocutor: ").setBold().setPaddingTop(20));
+            document.add(new Paragraph("Nombre completo: ")
+                    .add(new Text(solicitudDocPrevia.getNombreCompletoInterlocutor())));
+            document.add(new Paragraph("Categoría: ").add(new Text(solicitudDocPrevia.getCategoriaInterlocutor())));
+            document.add(new Paragraph("Cargo: ").add(new Text(solicitudDocPrevia.getCargoInterlocutor())));
+            document.add(new Paragraph("Teléfono: ").add(new Text(solicitudDocPrevia.getTelefonoInterlocutor())));
+            document.add(new Paragraph("Correo corporativo: ")
+                    .add(new Text(solicitudDocPrevia.getCorreoCorporativoInterlocutor())));
+            if (solicitudDocPrevia.getCorreoCorporativoInterlocutorCompl() != null) {
+                document.add(new Paragraph("Correo corporativo complementario: ")
+                        .add(new Text(solicitudDocPrevia.getCorreoCorporativoInterlocutorCompl())));
+            }
+        }
+        
+        document.add(crearTablaDocumentos());
+        
     }
 }
