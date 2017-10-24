@@ -231,9 +231,9 @@ public class PdfGeneratorSolicitudes extends PdfAbstractGenerator {
                 document.add(new Paragraph("Correo corporativo complementario: ")
                         .add(new Text(solicitudDocPrevia.getCorreoCorporativoInterlocutorCompl())));
             }
+            
+            document.add(crearTablaDocumentos());
         }
-        
-        document.add(crearTablaDocumentos());
         
     }
 }
