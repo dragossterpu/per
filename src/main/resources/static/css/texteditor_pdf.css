@@ -1,6 +1,7 @@
 * {
     line-height: 120%;
     text-align: justify;
+    font-family: Arial, serif;
 }
 
 ul {
@@ -174,7 +175,7 @@ div.ql-editor {
 }
 
 .ql-editor .ql-font-serif {
-    font-family: Calibri, serif
+    font-family: Arial, serif
 }
 
 .ql-editor .ql-font-monospace {
@@ -325,3 +326,4 @@ div.ql-editor {
 body {
     font-size: 9.75pt;/*13px;*/
 }
+
