@@ -430,15 +430,60 @@ public class InformeBean implements Serializable {
     }
     
     /**
+     * Genera XHTML con los datos del informe.
+     * 
+     * @return texto completo del informe
+     */
+    private String generarConclusionesXHTML() {
+        StringBuilder informeFormateado = new StringBuilder();
+        informeFormateado.append("<div class=\"ql-editor\">");
+        AtomicInteger i = new AtomicInteger(0);
+        Map<AreaInforme, List<SubareaInforme>> mapaAreasSubareasConclusiones = new HashMap<>();
+        mapaRespuestas.forEach((subarea, respuesta) -> {
+            if (respuesta[1] != null) {
+                mapaAreasSubareasConclusiones.computeIfAbsent(subarea.getArea(), k -> new ArrayList<>()).add(subarea);
+            }
+        });
+        
+        List<AreaInforme> listaAreasConclusiones = new ArrayList<>(mapaAreasSubareasConclusiones.keySet());
+        Collections.sort(listaAreasConclusiones, (o1, o2) -> Long.compare(o1.getOrden(), o2.getOrden()));
+        
+        listaAreasConclusiones.forEach(area -> {
+            informeFormateado.append("<h1>" + i.incrementAndGet() + ". ");
+            informeFormateado.append(area.getDescripcion());
+            informeFormateado.append("</h1>");
+            AtomicInteger j = new AtomicInteger(0);
+            mapaAreasSubareasConclusiones.get(area).forEach(subarea -> {
+                informeFormateado.append("<h2>" + i.get() + "." + j.incrementAndGet() + ". ");
+                informeFormateado.append(subarea.getDescripcion());
+                informeFormateado.append("</h2>");
+                informeFormateado.append(mapaRespuestas.get(subarea)[1]);
+            });
+        });
+        informeFormateado.append("</div>");
+        
+        // Asegurarse de que es XHTML
+        return Utilities.limpiarHtml(informeFormateado.toString());
+    }
+    
+    /**
      * Exportar un archivo PDF o DOCX con los datos del informe.
      * 
      * @param tipoArchivo formato al que se exporta el informe
+     * @param tipoInforme completo o sólo conclusiones
      */
-    public void exportarInforme(String tipoArchivo) {
+    public void exportarInforme(String tipoArchivo, String tipoInforme) {
         try {
+            String informeXHTML = null;
             String nombreArchivo = String.format("Informe_Inspeccion_%s-%s", informe.getInspeccion().getId(),
                     informe.getInspeccion().getAnio());
-            String informeXHTML = generarInformeXHTML();
+            
+            if ("completo".equals(tipoInforme)) {
+                informeXHTML = generarInformeXHTML();
+            } else if ("conclusiones".equals(tipoInforme)) {
+                informeXHTML = generarConclusionesXHTML();
+            }
+            
             String titulo = String.format("Inspección realizada a %s de %s de %s",
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
