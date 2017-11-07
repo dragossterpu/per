@@ -1,5 +1,6 @@
 package es.mira.progesin.web.beans.informes;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,8 @@ import lombok.Setter;
 @Getter
 @Controller("visualizarInformeBean")
 @Scope(FacesViewScope.NAME)
-public class VisualizarModeloInformeBean {
+public class VisualizarModeloInformeBean implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     /**
      * Id del modelo a visualizar.

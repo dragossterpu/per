@@ -1,5 +1,7 @@
 package es.mira.progesin.web.beans.cuestionarios;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,8 @@ import lombok.Setter;
 @Getter
 @Controller("visualizarCuestionarioBean")
 @Scope(FacesViewScope.NAME)
-public class VisualizarModeloCuestionarioBean {
+public class VisualizarModeloCuestionarioBean implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     /**
      * Id del modelo a visualizar.
