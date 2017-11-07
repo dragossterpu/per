@@ -251,11 +251,14 @@ public class GuiaBean implements Serializable {
      */
     
     public void aniadePaso(String paso) {
-        GuiaPasos nuevaPregunta = new GuiaPasos();
-        nuevaPregunta.setPaso(paso);
-        nuevaPregunta.setIdGuia(guia);
-        listaPasos.add(nuevaPregunta);
-        listaPasosGrabar.add(nuevaPregunta);
+        
+        if (paso.isEmpty() == Boolean.FALSE) {
+            GuiaPasos nuevaPregunta = new GuiaPasos();
+            nuevaPregunta.setPaso(paso);
+            nuevaPregunta.setIdGuia(guia);
+            listaPasos.add(nuevaPregunta);
+            listaPasosGrabar.add(nuevaPregunta);
+        }
     }
     
     /**

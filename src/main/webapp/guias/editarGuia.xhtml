@@ -34,7 +34,7 @@
                     <p:inputTextarea id="nuevoPaso" binding="#{nuevoPaso}" maxlength="2000" counter="contador" counterTemplate="Quedan {0} caracteres." converter="#{trimConverter}" />
                     <p:outputLabel id="contador" />
                     <p:commandButton actionListener="#{guiaBean.aniadePaso(nuevoPaso.value)}" update="orderListPasos, nuevoPaso" value="Añadir paso" icon="fa fa-fw fa-plus">
-                        <p:resetInput target="nuevoPaso"></p:resetInput>
+                        <p:resetInput target="nuevoPaso"/>
                     </p:commandButton>
                     <p:commandButton actionListener="#{guiaBean.borraPaso}" update="orderListPasos" value="Eliminar paso" icon="fa fa-fw fa-minus" />
 
