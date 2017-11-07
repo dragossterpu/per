@@ -6,12 +6,14 @@
                             
         <ui:param name="titulo" value="Redactar informe" />
         <f:event listener="#{navegacionBean.adelante(titulo, request.servletPath)}" type="preRenderView"/>
-        <h3>#{titulo}</h3>
             
         <h:form id="informe">
 
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
+            
+            <h1 class="nombreInforme">Inspección #{informeBean.informe.inspeccion.tipoInspeccion.descripcion} realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.name}</h1>
+              
 			<p:accordionPanel id="acordeonAreas" value="#{informeBean.listaAreas}" var="area"  activeIndex="#{informeBean.indicesActivosAreas}"
                                           multiple="true">
 				<p:tab title="#{informeBean.listaAreas.indexOf(area)+1}. #{area.descripcion}">
