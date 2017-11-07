@@ -1446,10 +1446,10 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos TIPOS_UNIDAD...
 prompt =========================================================================
 
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Cª Distrito');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Cª Local');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Cª Provincial');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañia');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Comisaría Distrito');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Comisaría Local');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Comisaría Provincial');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañía');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'CIE');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Comandancia');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'JSP');
