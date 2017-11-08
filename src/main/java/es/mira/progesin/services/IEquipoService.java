@@ -87,8 +87,8 @@ public interface IEquipoService {
      * Devuelve el equipo de un miembro con Rol jefe.
      * 
      * @param paramLogin username jefe
-     * @return Equipo devuelto
+     * @return lista de equipos a los que pertenece el jefe
      */
-    Equipo buscarEquipoByJefe(@Param("infoLogin") String paramLogin);
+    List<Equipo> buscarEquipoByJefe(@Param("infoLogin") String paramLogin);
     
 }

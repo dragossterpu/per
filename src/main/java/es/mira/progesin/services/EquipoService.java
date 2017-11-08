@@ -231,10 +231,10 @@ public class EquipoService implements IEquipoService {
      * Devuelve el equipo de un miembro con Rol jefe.
      * 
      * @param paramLogin username jefe
-     * @return Equipo devuelto
+     * @return lista de equipos a los que pertenece el jefe
      */
     @Override
-    public Equipo buscarEquipoByJefe(String paramLogin) {
+    public List<Equipo> buscarEquipoByJefe(String paramLogin) {
         return equipoRepository.buscarEquipoByJefe(paramLogin);
     }
     
