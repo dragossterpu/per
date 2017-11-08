@@ -3,8 +3,13 @@ package es.mira.progesin.web.beans.informes;
 import java.io.Serializable;
 import java.util.Date;
 
+import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
+import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -69,5 +74,38 @@ public class InformeBusqueda implements Serializable {
      * Filtro nombre unidad inspeccionada a la que se envía la informe.
      */
     private String nombreUnidad;
+    
+    // Añadidos para el nuevo buscador
+    
+    /**
+     * Lista de subáreas seleccionadas.
+     */
+    private String[] selectedSubAreas;
+    
+    /**
+     * Filtro de equipo de la inspección.
+     * 
+     */
+    private Equipo equipo;
+    
+    /**
+     * Filtro cuatrimestre.
+     */
+    private CuatrimestreEnum cuatrimestre;
+    
+    /**
+     * Filtro tipo de unidad.
+     */
+    private TipoUnidad tipoUnidad;
+    
+    /**
+     * Filtro provincia.
+     */
+    private Provincia provincia;
+    
+    /**
+     * Filtro municipio.
+     */
+    private Municipio municipio;
     
 }

@@ -38,4 +38,11 @@ public interface ISubareaInformeService {
      */
     List<SubareaInforme> findByArea(AreaInforme area);
     
+    /**
+     * Devuelve un listado de todas las subáreas.
+     * 
+     * @return Listado de subáreas.
+     */
+    List<SubareaInforme> findAll();
+    
 }

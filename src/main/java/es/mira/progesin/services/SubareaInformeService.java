@@ -57,4 +57,14 @@ public class SubareaInformeService implements ISubareaInformeService {
     public List<SubareaInforme> findByArea(AreaInforme area) {
         return subareaInformeRepository.findByArea(area);
     }
+    
+    /**
+     * Devuelve un listado de todas las subáreas.
+     * 
+     * @return Listado de subáreas.
+     */
+    @Override
+    public List<SubareaInforme> findAll() {
+        return (List<SubareaInforme>) subareaInformeRepository.findAll();
+    }
 }

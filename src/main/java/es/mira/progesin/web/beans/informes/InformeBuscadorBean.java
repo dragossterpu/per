@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
 
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
@@ -15,7 +16,15 @@ import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInforme;
+import es.mira.progesin.persistence.entities.Equipo;
+import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
+import es.mira.progesin.services.IAreaInformeService;
+import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInformeService;
+import es.mira.progesin.services.ISubareaInformeService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,6 +53,12 @@ public class InformeBuscadorBean implements Serializable {
     private static final int NUMCOLSTABLA = 12;
     
     /**
+     * Variable utilizada para almacenar el valor de la provincia seleccionada.
+     * 
+     */
+    private Provincia provinciSelec;
+    
+    /**
      * Objeto de búsqueda de informes.
      */
     private InformeBusqueda informeBusqueda;
@@ -54,17 +69,58 @@ public class InformeBuscadorBean implements Serializable {
     private LazyModelInforme model;
     
     /**
+     * Lista de subáreas.
+     */
+    private List<SubareaInforme> listaSubareas;
+    
+    /**
+     * Lista de Subareas seleccionadas.
+     */
+    List<SelectItem> listaSelectSubAreas; // TODO Revisar
+    
+    /**
+     * Lista de informes seleccionados.
+     */
+    List<Informe> listaInformesSeleccionados;
+    
+    /**
+     * Lista de equipos.
+     */
+    private List<Equipo> listaEquipos;
+    
+    /**
      * Servicio de informes.
      */
     @Autowired
     private transient IInformeService informeService;
     
     /**
+     * Servicio de equipos.
+     */
+    @Autowired
+    private transient IEquipoService equipoService;
+    
+    /**
+     * Servicio de subáreas.
+     */
+    @Autowired
+    private transient ISubareaInformeService subareaInformeService;
+    
+    /**
+     * Servicio de áreas.
+     */
+    @Autowired
+    private transient IAreaInformeService areaInformeService;
+    
+    /**
      * Inicializa el bean.
      */
     @PostConstruct
     public void init() {
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         model = new LazyModelInforme(informeService);
+        listaSelectSubAreas = cargaListaSubareas();
+        
         setInformeBusqueda(model.getBusqueda());
         
         setList(new ArrayList<>());
@@ -88,6 +144,7 @@ public class InformeBuscadorBean implements Serializable {
      * Borra los resultados de búsquedas anteriores.
      */
     public void limpiarBusqueda() {
+        setProvinciSelec(null);
         setInformeBusqueda(new InformeBusqueda());
         model.setRowCount(0);
     }
@@ -98,6 +155,7 @@ public class InformeBuscadorBean implements Serializable {
      * 
      */
     public void buscarInforme() {
+        informeBusqueda.setProvincia(provinciSelec);
         model.setBusqueda(informeBusqueda);
         model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
     }
@@ -110,5 +168,51 @@ public class InformeBuscadorBean implements Serializable {
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
     }
+    
+    /**
+     * Carga la lista de subáreas.
+     * 
+     * @return Lista de elementos seleccionables generada a partir de la lista de subáreas.
+     */
+    private List<SelectItem> cargaListaSubareas() {
+        
+        List<SelectItem> listaSelect = new ArrayList<SelectItem>();
+        
+        List<AreaInforme> listaAreas = areaInformeService.findAll();
+        
+        // for (AreaInforme area : listaAreas) {
+        // SelectItemGroup nuevoGrupo = new SelectItemGroup(area.getDescripcion());
+        // List<SubareaInforme> lista = subareaInformeService.findByArea(area);
+        // SelectItem[] elementos = new SelectItem[lista.size()];
+        // for (int i = 0; i < lista.size(); i++) {
+        // elementos[i] = new SelectItem(lista.get(i).getId().toString(), lista.get(i).getDescripcion()); // TODO
+        // // Revisar
+        // }
+        // nuevoGrupo.setSelectItems(elementos);
+        // listaSelect.add(nuevoGrupo);
+        // }
+        for (AreaInforme area : listaAreas) {
+            String pre = area.getDescripcion().concat(": ");
+            List<SubareaInforme> lista = subareaInformeService.findByArea(area);
+            for (int i = 0; i < lista.size(); i++) {
+                listaSelect.add(new SelectItem(lista.get(i).getId(), pre.concat(lista.get(i).getDescripcion()))); // TODO
+                // Revisar
+            }
+        }
+        
+        return listaSelect;
+    }
+    
+    // private List<SelectItem> cargaListaSubareas() {
+    //
+    // List<SelectItem> listaSelect = new ArrayList<SelectItem>();
+    //
+    // List<SubareaInforme> listaAreas = subareaInformeService.findAll();
+    //
+    // for (SubareaInforme area : listaAreas) {
+    // listaSelect.add(new SelectItem(area.getId().toString(), area.getDescripcion()));
+    // }
+    // return listaSelect;
+    // }
     
 }

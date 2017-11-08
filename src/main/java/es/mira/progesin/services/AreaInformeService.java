@@ -74,4 +74,14 @@ public class AreaInformeService implements IAreaInformeService {
         return areaInformeRepository.findByModeloInformeId(modeloId);
     }
     
+    /**
+     * Recupera todas las áreas de informes.
+     * 
+     * @return Listado de áreas recuperadas.
+     */
+    @Override
+    public List<AreaInforme> findAll() {
+        return (List<AreaInforme>) areaInformeRepository.findAll();
+    }
+    
 }

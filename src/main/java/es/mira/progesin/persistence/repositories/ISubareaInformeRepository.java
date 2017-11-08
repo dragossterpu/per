@@ -41,4 +41,8 @@ public interface ISubareaInformeRepository extends CrudRepository<SubareaInforme
      * @return Lista de subáreas.
      */
     List<SubareaInforme> findByArea(AreaInforme area);
+    
+    // @Override
+    // List<SubareaInforme> findAll();
+    
 }

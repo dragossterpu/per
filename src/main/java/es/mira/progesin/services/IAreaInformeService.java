@@ -41,4 +41,11 @@ public interface IAreaInformeService {
      */
     List<AreaInforme> findByModeloInformeId(Long modeloId);
     
+    /**
+     * Recupera todas las áreas de informes.
+     * 
+     * @return Listado de áreas recuperadas.
+     */
+    List<AreaInforme> findAll();
+    
 }
