@@ -301,11 +301,10 @@ public class InspeccionBean implements Serializable {
         inspeccion.setInspecciones(new ArrayList<>());
         setProvinciSelec(null);
         
-        listaEquipos = equipoService.findByFechaBajaIsNull();
-        Equipo equipo = equipoService.buscarEquipoByJefe(user.getUsername());
-        if (equipo != null) {
-            listaEquipos = new ArrayList<>();
-            listaEquipos.add(equipo);
+        if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(user.getRole())) {
+            listaEquipos = equipoService.buscarEquipoByJefe(user.getUsername());
+        } else {
+            listaEquipos = equipoService.findByFechaBajaIsNull();
         }
         
         return "/inspecciones/altaInspeccion?faces-redirect=true";
