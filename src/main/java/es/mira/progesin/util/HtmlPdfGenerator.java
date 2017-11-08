@@ -128,14 +128,14 @@ public class HtmlPdfGenerator {
         ctT.setSimpleColumn(24, 540, 400, 300);
         ctT.setAlignment(Element.ALIGN_CENTER);
         ctT.setLeading(28);
-        ctT.setText(new Phrase(titulo, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 28)));
+        ctT.setText(new Phrase(titulo, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 24)));
         ctT.go();
         
         ColumnText ctF = new ColumnText(portada);
-        ctF.setSimpleColumn(524, 100, 50, 50);
-        ctF.setAlignment(Element.ALIGN_RIGHT);
+        ctF.setSimpleColumn(890, 100, 50, 50);
+        ctF.setAlignment(Element.ALIGN_CENTER);
         ctF.setLeading(22);
-        ctF.setText(new Phrase(fechaFinalizacion, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22)));
+        ctF.setText(new Phrase(fechaFinalizacion, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
         ctF.go();
         
         documento.setMargins(0, 0, 0, 0);

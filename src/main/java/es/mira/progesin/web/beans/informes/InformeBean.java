@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.faces.application.FacesMessage;
 
-import org.apache.commons.lang.WordUtils;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -485,13 +484,12 @@ public class InformeBean implements Serializable {
                 informeXHTML = generarConclusionesXHTML();
             }
             
-            String titulo = String.format("Inspección %s realizada a %s de %s de %s",
+            String titulo = String.format("Informe de la Inspección %s realizada a %s de %s de %s",
                     informe.getInspeccion().getTipoInspeccion().getDescripcion(),
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
-                    informe.getInspeccion().getMunicipio().getName());
-            String fechaFinalizacion = WordUtils
-                    .capitalize(Utilities.getFechaFormateada(informe.getFechaFinalizacion(), "MMM - yyyy"));
+                    informe.getInspeccion().getMunicipio().getName()).toUpperCase();
+            String fechaFinalizacion = Utilities.getFechaFormateada(informe.getFechaFinalizacion(), "MMMM 'de' yyyy");
             String autor = informe.getUsernameFinalizacion();
             
             if ("PDF".equals(tipoArchivo)) {

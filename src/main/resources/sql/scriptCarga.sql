@@ -1446,13 +1446,13 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos TIPOS_UNIDAD...
 prompt =========================================================================
 
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Comisaría Distrito');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Comisaría de Distrito');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Comisaría Local');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Comisaría Provincial');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañía');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'CIE');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'Centro de Internamiento de Extranjeros');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Comandancia');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'JSP');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'Jefatura Superior de Policía');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Puesto Fronterizo');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Servicio Central');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (10,'U.E. y D.');
