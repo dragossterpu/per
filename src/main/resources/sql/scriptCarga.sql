@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  30/08/2018   
+prompt    Actualización: 8/11/2018   
 prompt =========================================================================
 
 
@@ -1405,15 +1405,19 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoFax','datosApoyo','91
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoSecretaria','datosApoyo','SECRETARIA DE ESTADO DE SEGURIDAD');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOC','extensiones','application/msword');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOCX','extensiones','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ODT','extensiones','application/vnd.oasis.opendocument.text');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPT','extensiones','application/vnd.ms-powerpoint');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPTX','extensiones','application/vnd.openxmlformats-officedocument.presentationml.presentation');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ODP','extensiones','application/vnd.oasis.opendocument.presentation');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('XLS','extensiones','application/vnd.ms-excel');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('XLSX','extensiones','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ODS','extensiones','application/vnd.oasis.opendocument.spreadsheet');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('JPEG','extensiones','image/jpeg');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PNG','extensiones','image/png');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('BMP','extensiones','image/bmp');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PUB','extensiones','application/x-mspublisher');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PDF','extensiones','application/pdf');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ZIP','extensiones','application/x-zip-compressed');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');
