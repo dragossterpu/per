@@ -10,6 +10,27 @@
 
         <div id="listadoDocumentacion">
             <h:form id="form">
+                <p:outputPanel rendered="#{not empty tipoDocumentacionBean.listaTipoDocumentacion}">
+                    <h:commandLink>
+                        <p:graphicImage value="/images/xls.png" />
+                        <p:dataExporter type="xls" target="tablaDocumentacion" fileName="lista_documentacion" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaDocumentacion" fileName="lista_documentacion" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/csv.png" />
+                        <p:dataExporter type="csv" target="tablaDocumentacion" fileName="lista_documentacion" />
+                    </h:commandLink>
+                    <h:commandLink action="#{exportadorWord.exportDoc('lista_documentacion', false, 'form:tablaDocumentacion', SeccionesEnum.DOCUMENTACION)}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
+                     <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaDocumentacion" />
+                    </h:commandLink>
+                </p:outputPanel>
                 <p:dataTable id="tablaDocumentacion" var="tipoDocumentacion" draggableColumns="true" rows="20" paginator="true" resizableColumns="true" value="#{tipoDocumentacionBean.listaTipoDocumentacion}" editable="#{esJefeInspeccionesApoyo}" onkeypress="if (event.keyCode == 13) {return false; }">
                     <p:ajax event="rowEdit" listener="#{tipoDocumentacionBean.onRowEdit}" update=":form:msgs" />
                     <f:facet name="header">
