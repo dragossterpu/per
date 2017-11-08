@@ -42,7 +42,7 @@
 
             <div class="botonesFormulario">
                 <p:commandButton id="Guardar" value="Guardar" actionListener="#{sugerenciasBean.guardarSugerencia(modulo, descripcion)}" icon="fa fa-save" />
-                <p:commandButton value="Limpiar" update="panel" process="@this">
+                <p:commandButton value="Limpiar" update="panel" icon="fa fa-eraser" process="@this">
                     <p:resetInput target="panel" />
                 </p:commandButton>
                 <p:commandButton value="Cancelar" icon="fa fa-fw fa-undo" >
