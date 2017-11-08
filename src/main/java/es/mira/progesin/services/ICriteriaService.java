@@ -3,6 +3,8 @@ package es.mira.progesin.services;
 import org.hibernate.Criteria;
 import org.primefaces.model.SortOrder;
 
+import es.mira.progesin.web.beans.DocumentoBusqueda;
+
 /**
  * Interfaz utilizada para reducir la duplicidad de código en los critera de los buscadores.
  * 
@@ -36,7 +38,16 @@ public interface ICriteriaService {
      * 
      * @param criteria Criteria al que se añade el criterio
      * @param username Usuario sobre el que se quiere hacer la consulta.
+     * @param busquedaDocumento Objeto de búsqueda
      * 
      */
-    void creaCriteriaEquipoInspeccion(Criteria criteria, String username);
+    void creaCriteriaEquipoInspeccion(Criteria criteria, String username, DocumentoBusqueda busquedaDocumento);
+    
+    /**
+     * Añade al criteria la búsqueda según el equipo de inspección y el tipo de inspección.
+     * 
+     * @param criteria Criteria al que se añade el criterio
+     * 
+     */
+    void creaCriteriaEquipoInformes(Criteria criteria);
 }

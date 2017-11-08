@@ -25,6 +25,7 @@ import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -182,8 +183,9 @@ public class EquiposBean implements Serializable {
         this.setListadoPotencialesMiembros(new ArrayList<>());
         this.setEquipo(new Equipo());
         this.setTipoEquipo(null);
-        listaUsuarios = userService.buscarNoMiembroEquipoNoJefe(null);
-        listadoPotencialesJefes.addAll(userService.buscarUserSinEquipo());
+        
+        listaUsuarios = userService.findByfechaBajaIsNullAndRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
+        listadoPotencialesJefes.addAll(listaUsuarios);
         listadoPotencialesMiembros.addAll(listaUsuarios);
         skip = false;
         return "/equipos/altaEquipo?faces-redirect=true";
@@ -361,7 +363,7 @@ public class EquiposBean implements Serializable {
      */
     public String getFormCambiarJefeEquipo() {
         this.jefeSeleccionado = null;
-        listaUsuarios = userService.buscarUserSinEquipo();
+        listaUsuarios = userService.findByfechaBajaIsNullAndRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES); // TODO Cambiar
         return "/equipos/cambiarJefeEquipo?faces-redirect=true";
     }
     

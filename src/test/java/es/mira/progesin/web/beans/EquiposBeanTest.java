@@ -41,6 +41,7 @@ import es.mira.progesin.persistence.entities.Miembro;
 import es.mira.progesin.persistence.entities.TipoEquipo;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.RolEquipoEnum;
+import es.mira.progesin.persistence.entities.enums.RoleEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.enums.TipoRegistroEnum;
 import es.mira.progesin.services.IEquipoService;
@@ -189,7 +190,7 @@ public class EquiposBeanTest {
         usuarios.add(User.builder().username("miembro1").nombre("nombreMiembro1").apellido1("apellido1Miembro1")
                 .apellido2("apellido2Miembro1").build());
         when(userService.buscarNoMiembroEquipoNoJefe(null)).thenReturn(usuarios);
-        when(userService.buscarUserSinEquipo()).thenReturn(usuarios);
+        when(userService.findByfechaBajaIsNullAndRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES)).thenReturn(usuarios);
         
         String rutaVista = equipoBean.getFormAltaEquipo();
         
@@ -377,7 +378,7 @@ public class EquiposBeanTest {
         
         String ruta_vista = equipoBean.getFormCambiarJefeEquipo();
         
-        verify(userService, times(1)).buscarUserSinEquipo();
+        verify(userService, times(1)).findByfechaBajaIsNullAndRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
         assertThat(ruta_vista).isEqualTo("/equipos/cambiarJefeEquipo?faces-redirect=true");
     }
     

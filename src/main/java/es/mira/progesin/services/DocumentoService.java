@@ -322,7 +322,15 @@ public class DocumentoService implements IDocumentoService {
         boolean esEquipo = RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuario.getRole());
         
         if (esEquipo) {
-            criteriaService.creaCriteriaEquipoInspeccion(criteriaDocumento, usuario.getUsername());
+            criteriaService.creaCriteriaEquipoInspeccion(criteriaDocumento, usuario.getUsername(), busquedaDocumento);
+        } else {
+            if (busquedaDocumento.getInspeccion() != null) {
+                criteriaDocumento.createAlias("inspeccion", "inspecciones");
+                criteriaDocumento.add(Restrictions.eq("inspecciones.id", busquedaDocumento.getInspeccion().getId()));
+                criteriaDocumento
+                        .add(Restrictions.eq("inspecciones.anio", busquedaDocumento.getInspeccion().getAnio()));
+                
+            }
         }
         
         criteriaService.prepararPaginacionOrdenCriteria(criteriaDocumento, first, pageSize, sortField, sortOrder, "id");
@@ -359,12 +367,12 @@ public class DocumentoService implements IDocumentoService {
             criteria.add(Restrictions.eq("tipoDocumento", busquedaDocumento.getTipoDocumento()));
         }
         
-        if (busquedaDocumento.getInspeccion() != null) {
-            criteria.createAlias("inspeccion", "inspecciones");
-            criteria.add(Restrictions.eq("inspecciones.id", busquedaDocumento.getInspeccion().getId()));
-            criteria.add(Restrictions.eq("inspecciones.anio", busquedaDocumento.getInspeccion().getAnio()));
-            
-        }
+        // if (busquedaDocumento.getInspeccion() != null) {
+        // criteria.createAlias("inspeccion", "inspecciones");
+        // criteria.add(Restrictions.eq("inspecciones.id", busquedaDocumento.getInspeccion().getId()));
+        // criteria.add(Restrictions.eq("inspecciones.anio", busquedaDocumento.getInspeccion().getAnio()));
+        //
+        // }
         
         if (busquedaDocumento.isEliminado()) {
             criteria.add(Restrictions.isNotNull("fechaBaja"));

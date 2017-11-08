@@ -9,8 +9,10 @@ import java.util.concurrent.TimeUnit;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.exceptions.anotacion.TransactionalRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
@@ -288,6 +292,15 @@ public class InformeService implements IInformeService {
                     MatchMode.ANYWHERE));
         }
         
+        if (informeBusqueda.getSelectedSubAreas() != null && informeBusqueda.getSelectedSubAreas().length > 0) {
+            criteria.createAlias("informe.modeloPersonalizado", "modelo"); // TODO Revisar
+            criteria.createAlias("modelo.subareas", "subarea");
+            Long[] longArea = new Long[informeBusqueda.getSelectedSubAreas().length];
+            for (int i = 0; i < informeBusqueda.getSelectedSubAreas().length; i++) {
+                longArea[i] = Long.parseLong(informeBusqueda.getSelectedSubAreas()[i]);
+            }
+            criteria.add(Restrictions.in("subarea.id", longArea));
+        }
         criteriaInspeccion(criteria, informeBusqueda);
         criteriaEstadoInforme(criteria, informeBusqueda.getEstado());
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -320,8 +333,37 @@ public class InformeService implements IInformeService {
             criteria.add(Restrictions.ilike("inspeccion.nombreUnidad", informeBusqueda.getNombreUnidad(),
                     MatchMode.ANYWHERE));
         }
-        criteriaService.setCriteriaEquipo(criteria);
+        if (informeBusqueda.getCuatrimestre() != null) {
+            criteria.add(Restrictions.eq("inspeccion.cuatrimestre", informeBusqueda.getCuatrimestre()));
+        }
         
+        criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
+        if (informeBusqueda.getTipoUnidad() != null) {
+            criteria.add(Restrictions.eq("tipoEquipo.id", informeBusqueda.getTipoUnidad().getId()));
+        }
+        
+        if (informeBusqueda.getMunicipio() != null) {
+            criteria.add(Restrictions.eq("inspeccion.municipio", informeBusqueda.getMunicipio()));
+        }
+        
+        criteriaMunicipio(criteria, informeBusqueda.getProvincia());
+        criteriaService.creaCriteriaEquipoInformes(criteria);
+        
+    }
+    
+    /**
+     * Añade al criteria el filtro de municipio.
+     * 
+     * @param criteria Criteria al que se añadirán los parámetros.
+     * @param provincia Provincia por la que se filtra
+     */
+    private void criteriaMunicipio(Criteria criteria, Provincia provincia) {
+        if (provincia != null) {
+            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
+            subquery.add(Restrictions.eq("munic.provincia", provincia));
+            subquery.setProjection(Projections.property("munic.id"));
+            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
+        }
     }
     
     /**
