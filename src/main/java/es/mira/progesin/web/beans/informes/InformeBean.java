@@ -489,8 +489,16 @@ public class InformeBean implements Serializable {
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
                     informe.getInspeccion().getMunicipio().getName()).toUpperCase();
-            String fechaFinalizacion = Utilities.getFechaFormateada(informe.getFechaFinalizacion(), "MMMM 'de' yyyy");
-            String autor = informe.getUsernameFinalizacion();
+            
+            String fechaFinalizacion = "";
+            if (informe.getFechaFinalizacion() != null) {
+                fechaFinalizacion = Utilities.getFechaFormateada(informe.getFechaFinalizacion(), "MMMM 'de' yyyy");
+            }
+            
+            String autor = "";
+            if (informe.getUsernameFinalizacion() != null) {
+                autor = informe.getUsernameFinalizacion();
+            }
             
             if ("PDF".equals(tipoArchivo)) {
                 setFile(htmlPdfGenerator.generarInformePdf(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
