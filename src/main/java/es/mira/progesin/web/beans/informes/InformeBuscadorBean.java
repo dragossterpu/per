@@ -117,9 +117,9 @@ public class InformeBuscadorBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        listaEquipos = equipoService.findByFechaBajaIsNull();
+        // listaEquipos = equipoService.findByFechaBajaIsNull(); TODO pasar a nuevo buscador Ruben
         model = new LazyModelInforme(informeService);
-        listaSelectSubAreas = cargaListaSubareas();
+        // listaSelectSubAreas = cargaListaSubareas(); TODO pasar a nuevo buscador Ruben
         
         setInformeBusqueda(model.getBusqueda());
         

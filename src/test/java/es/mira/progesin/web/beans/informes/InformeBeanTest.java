@@ -41,6 +41,8 @@ import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
 import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
@@ -172,7 +174,7 @@ public class InformeBeanTest {
         PowerMockito.mockStatic(FacesUtilities.class);
         PowerMockito.mockStatic(SecurityContextHolder.class);
         
-        when(Utilities.getFechaFormateada(any(Date.class), eq("dd/MM/yyyy"))).thenCallRealMethod();
+        when(Utilities.getFechaFormateada(any(Date.class), any(String.class))).thenCallRealMethod();
         PowerMockito.mockStatic(SecurityContextHolder.class);
         when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -461,10 +463,14 @@ public class InformeBeanTest {
         List<RespuestaInforme> respuestas = new ArrayList<>();
         respuestas.add(RespuestaInforme.builder().subarea(subarea).texto(RESPUESTATEST.getBytes())
                 .conclusiones(CONCLUSIONESTEST.getBytes()).build());
+        TipoInspeccion tipoInspeccion = TipoInspeccion.builder().descripcion("tipoInspeccionTest").build();
         TipoUnidad tipoUnidad = TipoUnidad.builder().id(1L).descripcion("tipoUnidadTest").build();
-        Municipio municipio = Municipio.builder().id(1L).name("municipioTest").build();
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).tipoUnidad(tipoUnidad)
-                .ambito(AmbitoInspeccionEnum.GC).municipio(municipio).equipo(mock(Equipo.class)).build();
+        Provincia provincia = new Provincia();
+        provincia.setNombre("provinciaTest");
+        Municipio municipio = Municipio.builder().id(1L).name("municipioTest").provincia(provincia).build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).tipoInspeccion(tipoInspeccion)
+                .tipoUnidad(tipoUnidad).ambito(AmbitoInspeccionEnum.GC).municipio(municipio).equipo(mock(Equipo.class))
+                .build();
         Informe informe = Informe.builder().id(1L).inspeccion(inspeccion).modeloPersonalizado(modeloPersonalizado)
                 .respuestas(respuestas).fechaFinalizacion(new Date()).usernameFinalizacion("usuario_test").build();
         informeBean.setInforme(informe);
@@ -516,10 +522,14 @@ public class InformeBeanTest {
         List<RespuestaInforme> respuestas = new ArrayList<>();
         respuestas.add(RespuestaInforme.builder().subarea(subarea).texto(RESPUESTATEST.getBytes())
                 .conclusiones(CONCLUSIONESTEST.getBytes()).build());
+        TipoInspeccion tipoInspeccion = TipoInspeccion.builder().descripcion("tipoInspeccionTest").build();
         TipoUnidad tipoUnidad = TipoUnidad.builder().id(1L).descripcion("tipoUnidadTest").build();
-        Municipio municipio = Municipio.builder().id(1L).name("municipioTest").build();
-        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).tipoUnidad(tipoUnidad)
-                .ambito(AmbitoInspeccionEnum.GC).municipio(municipio).equipo(mock(Equipo.class)).build();
+        Provincia provincia = new Provincia();
+        provincia.setNombre("provinciaTest");
+        Municipio municipio = Municipio.builder().id(1L).name("municipioTest").provincia(provincia).build();
+        Inspeccion inspeccion = Inspeccion.builder().id(1L).anio(2017).tipoInspeccion(tipoInspeccion)
+                .tipoUnidad(tipoUnidad).ambito(AmbitoInspeccionEnum.GC).municipio(municipio).equipo(mock(Equipo.class))
+                .build();
         Informe informe = Informe.builder().id(1L).inspeccion(inspeccion).modeloPersonalizado(modeloPersonalizado)
                 .respuestas(respuestas).fechaFinalizacion(new Date()).usernameFinalizacion("usuario_test").build();
         informeBean.setInforme(informe);
