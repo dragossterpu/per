@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  04/10/2017   
+prompt    Actualización:  10/11/2017   
 prompt =========================================================================
 
 prompt =========================================================================
@@ -1427,12 +1427,9 @@ prompt =========================================================================
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('URLPROGESIN','URLPROGESIN','http://194.224.253.45:8080/progesin');
 
 -- CAMBIAR CONFIGURACIÓN DEL SERVIDOR DE CORREO
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.host','mail','smtp.gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.ssl.trust','mail','smtp.gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','587');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.user','mail','progesinipss@gmail.com');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('UserPwd','mail','ipss2016');
-Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','true');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.host','mail','localhost');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.port','mail','25');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.auth','mail','false');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('mail.smtp.starttls.enable','mail','true');
 
 -- ELIMINAR EZENTIS COMO DOMINIO VÁLIDO EN PRODUCCIÓN
@@ -1448,15 +1445,19 @@ Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoFax','datosApoyo','91
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ApoyoSecretaria','datosApoyo','SECRETARIA DE ESTADO DE SEGURIDAD');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOC','extensiones','application/msword');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('DOCX','extensiones','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ODT','extensiones','application/vnd.oasis.opendocument.text');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPT','extensiones','application/vnd.ms-powerpoint');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PPTX','extensiones','application/vnd.openxmlformats-officedocument.presentationml.presentation');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ODP','extensiones','application/vnd.oasis.opendocument.presentation');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('XLS','extensiones','application/vnd.ms-excel');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('XLSX','extensiones','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ODS','extensiones','application/vnd.oasis.opendocument.spreadsheet');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('JPEG','extensiones','image/jpeg');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PNG','extensiones','image/png');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('BMP','extensiones','image/bmp');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PUB','extensiones','application/x-mspublisher');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('PDF','extensiones','application/pdf');
+Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('ZIP','extensiones','application/x-zip-compressed');
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasDocumentacion','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('plazoDiasCuestionario','tareas',5);
 Insert into PARAMETROS (CLAVE,SECCION,VALOR) values ('correoApoyo','tareas','apoyo_ipss@interior.es');
@@ -1485,13 +1486,13 @@ prompt =========================================================================
 prompt Ejecutando inserción de datos TIPOS_UNIDAD...
 prompt =========================================================================
 
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Cª Distrito');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Cª Local');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Cª Provincial');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañia');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'CIE');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (1,'Comisaría de Distrito');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (2,'Comisaría Local');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (3,'Comisaría Provincial');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañía');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'Centro de Internamiento de Extranjeros');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Comandancia');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'JSP');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'Jefatura Superior de Policía');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Puesto Fronterizo');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Servicio Central');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (10,'U.E. y D.');
