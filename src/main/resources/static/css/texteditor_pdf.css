@@ -27,13 +27,13 @@ div.ql-editor {
 }
 
 .nombreInforme {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
     text-transform: uppercase;
     clear:both;
     text-align: center;
     max-width:80%;
-    margin: auto;
+    margin: 20px auto;
 }
 
 .ql-editor ol.titulos {
