@@ -488,7 +488,7 @@ public class InformeBean implements Serializable {
                     informe.getInspeccion().getTipoInspeccion().getDescripcion(),
                     informe.getInspeccion().getTipoUnidad().getDescripcion(),
                     informe.getInspeccion().getAmbito().getDescripcion(),
-                    informe.getInspeccion().getMunicipio().getName()).toUpperCase();
+                    informe.getInspeccion().getMunicipio().getProvincia().getNombre()).toUpperCase();
             
             String fechaFinalizacion = "";
             if (informe.getFechaFinalizacion() != null) {

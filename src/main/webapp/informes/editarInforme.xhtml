@@ -12,7 +12,7 @@
             
             <link rel="stylesheet" href="#{request.contextPath}/css/texteditor_pdf.css" />
             
-            <h1 class="nombreInforme">Inspección #{informeBean.informe.inspeccion.tipoInspeccion.descripcion} realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.name}</h1>
+            <h1 class="nombreInforme">Informe de la Inspección #{informeBean.informe.inspeccion.tipoInspeccion.descripcion} realizada a #{informeBean.informe.inspeccion.tipoUnidad.descripcion} de #{informeBean.informe.inspeccion.ambito.descripcion} de #{informeBean.informe.inspeccion.municipio.provincia.nombre}</h1>
               
 			<p:accordionPanel id="acordeonAreas" value="#{informeBean.listaAreas}" var="area"  activeIndex="#{informeBean.indicesActivosAreas}"
                                           multiple="true">
