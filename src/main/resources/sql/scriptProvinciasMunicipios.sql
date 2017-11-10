@@ -1,20 +1,20 @@
 
 
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('1',2,'0'), 'Araba/Álava', 'VI');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('1',2,'0'), 'Araba', 'VI');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('2',2,'0'), 'Albacete', 'AB');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('3',2,'0'), 'Alicante/Alacant', 'A');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('3',2,'0'), 'Alicante', 'A');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('4',2,'0'), 'Almería', 'AL');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('5',2,'0'), 'Ávila', 'AV');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('6',2,'0'), 'Badajoz', 'BA');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('7',2,'0'), 'Balears, Illes', 'IB');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('7',2,'0'), 'Illes Balears', 'IB');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('8',2,'0'), 'Barcelona', 'B');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('9',2,'0'), 'Burgos', 'BU');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('10',2,'0'), 'Cáceres', 'CC');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('11',2,'0'), 'Cádiz', 'CA');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('12',2,'0'), 'Castellón/Castelló', 'CS');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('12',2,'0'), 'Castellón', 'CS');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('13',2,'0'), 'Ciudad Real', 'CR');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('14',2,'0'), 'Córdoba', 'CO');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('15',2,'0'), 'Coruña, A', 'C');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('15',2,'0'), 'A Coruña', 'C');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('16',2,'0'), 'Cuenca', 'CU');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('17',2,'0'), 'Girona', 'GE / GI');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('18',2,'0'), 'Granada', 'GR');
@@ -25,7 +25,7 @@ insert into provincias (codigo, nombre,codigo_mn) values (lpad('22',2,'0'), 'Hue
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('23',2,'0'), 'Jaén', 'J');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('24',2,'0'), 'León', 'LE');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('25',2,'0'), 'Lleida', 'L');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('26',2,'0'), 'Rioja, la', 'LO');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('26',2,'0'), 'La Rioja', 'LO');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('27',2,'0'), 'Lugo', 'LU');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('28',2,'0'), 'Madrid', 'M');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('29',2,'0'), 'Málaga', 'MA');
@@ -34,7 +34,7 @@ insert into provincias (codigo, nombre,codigo_mn) values (lpad('31',2,'0'), 'Nav
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('32',2,'0'), 'Ourense', 'OR / OU');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('33',2,'0'), 'Asturias', 'O');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('34',2,'0'), 'Palencia', 'P');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('35',2,'0'), 'Palmas, Las', 'GC');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('35',2,'0'), 'Las Palmas', 'GC');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('36',2,'0'), 'Pontevedra', 'PO');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('37',2,'0'), 'Salamanca', 'sa');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('38',2,'0'), 'Santa Cruz de Tenerife', 'TF');
@@ -45,7 +45,7 @@ insert into provincias (codigo, nombre,codigo_mn) values (lpad('42',2,'0'), 'Sor
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('43',2,'0'), 'Tarragona', 'T');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('44',2,'0'), 'Teruel', 'TE');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('45',2,'0'), 'Toledo', 'TO');
-insert into provincias (codigo, nombre,codigo_mn) values (lpad('46',2,'0'), 'Valencia/València', 'V');
+insert into provincias (codigo, nombre,codigo_mn) values (lpad('46',2,'0'), 'Valencia', 'V');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('47',2,'0'), 'Valladolid', 'VA');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('48',2,'0'), 'Bizkaia', 'BI');
 insert into provincias (codigo, nombre,codigo_mn) values (lpad('49',2,'0'), 'Zamora', 'ZA');
