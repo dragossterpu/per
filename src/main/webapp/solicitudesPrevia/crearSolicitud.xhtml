@@ -39,9 +39,6 @@
                                 <h:outputLabel for="anioInspeccion" value="Año inspección:" />
                                 <p:inputText id="anioInspeccion" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.inspeccion.anio}" disabled="true" />
 
-                                <h:outputLabel for="asunto" value="Asunto (*):" />
-                                <p:inputText id="asunto" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.asunto}" required="true" requiredMessage="Es obligatorio un asunto" converter="#{trimConverter}" />
-
                                 <h:outputLabel for="destinatario" value="Destinatario (*):" />
                                 <p:inputText id="destinatario" value="#{solicitudDocPreviaCreacionBean.solicitudDocumentacionPrevia.destinatario}" required="true" requiredMessage="Es obligatorio un destinatario" converter="#{trimConverter}" />
 

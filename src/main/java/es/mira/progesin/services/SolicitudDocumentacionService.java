@@ -334,11 +334,9 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
         
         TipoInspeccion tipoInspeccion = solicitudDocumentacionPrevia.getInspeccion().getTipoInspeccion();
         
-        String asunto = "Comunicación Inspección "
-                + solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion() + " de "
-                + solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad() + " ("
-                + solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre()
-                + "). Número de expediente " + solicitudDocumentacionPrevia.getInspeccion().getNumero() + ".";
+        StringBuilder asunto = new StringBuilder(solicitudDocumentacionPrevia.getAsunto())
+                .append(". Número de expediente ").append(solicitudDocumentacionPrevia.getInspeccion().getNumero())
+                .append(".");
         
         Map<String, String> paramPlantilla = new HashMap<>();
         paramPlantilla.put("tipoInspeccion", tipoInspeccion.getDescripcion());
@@ -349,8 +347,8 @@ public class SolicitudDocumentacionService implements ISolicitudDocumentacionSer
             plantilla = Constantes.TEMPLATESOLICITUDPREVIACUESTIONARIOIGS;
         }
         
-        correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto, plantilla,
-                paramPlantilla);
+        correoElectronico.envioCorreo(solicitudDocumentacionPrevia.getCorreoDestinatario(), asunto.toString(),
+                plantilla, paramPlantilla);
     }
     
     /**

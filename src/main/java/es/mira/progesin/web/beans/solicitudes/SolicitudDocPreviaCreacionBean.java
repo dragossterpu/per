@@ -135,6 +135,17 @@ public class SolicitudDocPreviaCreacionBean implements Serializable {
         try {
             // Comprobar que la inspeccion o el usuario no tengan solicitudes o cuestionarios sin finalizar
             if (inspeccionSinTareasPendientes() && usuarioSinTareasPendientes()) {
+                
+                StringBuilder asunto = new StringBuilder("Comunicación Inspección ")
+                        .append(solicitudDocumentacionPrevia.getInspeccion().getTipoInspeccion().getDescripcion())
+                        .append(" ")
+                        .append(solicitudDocumentacionPrevia.getInspeccion().getTipoUnidad().getDescripcion())
+                        .append(" de ").append(solicitudDocumentacionPrevia.getInspeccion().getNombreUnidad())
+                        .append(" (")
+                        .append(solicitudDocumentacionPrevia.getInspeccion().getMunicipio().getProvincia().getNombre())
+                        .append(")");
+                solicitudDocumentacionPrevia.setAsunto(asunto.toString());
+                
                 solicitudDocumentacionService.transaccSaveAltaDocumentos(solicitudDocumentacionPrevia,
                         documentosSeleccionados);
                 
