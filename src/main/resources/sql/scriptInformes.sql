@@ -7,7 +7,7 @@ prompt    SCRIPT CARGA DE MODELOS DE INFORME
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Fecha actualización: 07/11/2017
+prompt    Fecha actualización: 15/11/2017
 prompt =========================================================================
 
 
@@ -94,6 +94,28 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Evolución delictiva.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 3);
 
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 1.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 2.', SEQ_AREASINFORME.CURRVAL, 2);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 3.', SEQ_AREASINFORME.CURRVAL, 3);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 4.', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 5.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 6.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 7.', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 8.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 9.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 10.', SEQ_AREASINFORME.CURRVAL, 10);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 11.', SEQ_AREASINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 12.', SEQ_AREASINFORME.CURRVAL, 12);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 13.', SEQ_AREASINFORME.CURRVAL, 13);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 14.', SEQ_AREASINFORME.CURRVAL, 14);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 15.', SEQ_AREASINFORME.CURRVAL, 15);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 16.', SEQ_AREASINFORME.CURRVAL, 16);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 17.', SEQ_AREASINFORME.CURRVAL, 17);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 18.', SEQ_AREASINFORME.CURRVAL, 18);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 19.', SEQ_AREASINFORME.CURRVAL, 19);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 20.', SEQ_AREASINFORME.CURRVAL, 20);
+
 COMMIT;
 
 prompt =========================================================================
@@ -170,6 +192,28 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Evolución delictiva.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones y propuestas.', SEQ_AREASINFORME.CURRVAL, 3);
 
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 1.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 2.', SEQ_AREASINFORME.CURRVAL, 2);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 3.', SEQ_AREASINFORME.CURRVAL, 3);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 4.', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 5.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 6.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 7.', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 8.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 9.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 10.', SEQ_AREASINFORME.CURRVAL, 10);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 11.', SEQ_AREASINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 12.', SEQ_AREASINFORME.CURRVAL, 12);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 13.', SEQ_AREASINFORME.CURRVAL, 13);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 14.', SEQ_AREASINFORME.CURRVAL, 14);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 15.', SEQ_AREASINFORME.CURRVAL, 15);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 16.', SEQ_AREASINFORME.CURRVAL, 16);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 17.', SEQ_AREASINFORME.CURRVAL, 17);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 18.', SEQ_AREASINFORME.CURRVAL, 18);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 19.', SEQ_AREASINFORME.CURRVAL, 19);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 20.', SEQ_AREASINFORME.CURRVAL, 20);
+
 COMMIT;
 
 prompt =========================================================================
@@ -238,7 +282,26 @@ insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Propuestas finales.', SEQ_AREASINFORME.CURRVAL, 1);
 
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 13);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexos.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 1.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 2.', SEQ_AREASINFORME.CURRVAL, 2);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 3.', SEQ_AREASINFORME.CURRVAL, 3);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 4.', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 5.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 6.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 7.', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 8.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 9.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 10.', SEQ_AREASINFORME.CURRVAL, 10);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 11.', SEQ_AREASINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 12.', SEQ_AREASINFORME.CURRVAL, 12);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 13.', SEQ_AREASINFORME.CURRVAL, 13);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 14.', SEQ_AREASINFORME.CURRVAL, 14);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 15.', SEQ_AREASINFORME.CURRVAL, 15);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 16.', SEQ_AREASINFORME.CURRVAL, 16);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 17.', SEQ_AREASINFORME.CURRVAL, 17);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 18.', SEQ_AREASINFORME.CURRVAL, 18);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 19.', SEQ_AREASINFORME.CURRVAL, 19);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 20.', SEQ_AREASINFORME.CURRVAL, 20);
 
 COMMIT;
 
@@ -269,14 +332,33 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Redacción de la Memoria Anual y Programación Anual.', SEQ_AREASINFORME.CURRVAL, 12);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Otros aspectos evaluados.', SEQ_AREASINFORME.CURRVAL, 13);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'CONCLUSIONES FINALES', SEQ_MODELOINFORME.CURRVAL, 2);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'CONCLUSIONES FINALES', SEQ_MODELOINFORME.CURRVAL, 4);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones finales.', SEQ_AREASINFORME.CURRVAL, 1);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'PROPUESTAS FINALES', SEQ_MODELOINFORME.CURRVAL, 2);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'PROPUESTAS FINALES', SEQ_MODELOINFORME.CURRVAL, 5);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Propuestas finales.', SEQ_AREASINFORME.CURRVAL, 1);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 2);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexos.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 1.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 2.', SEQ_AREASINFORME.CURRVAL, 2);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 3.', SEQ_AREASINFORME.CURRVAL, 3);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 4.', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 5.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 6.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 7.', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 8.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 9.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 10.', SEQ_AREASINFORME.CURRVAL, 10);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 11.', SEQ_AREASINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 12.', SEQ_AREASINFORME.CURRVAL, 12);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 13.', SEQ_AREASINFORME.CURRVAL, 13);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 14.', SEQ_AREASINFORME.CURRVAL, 14);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 15.', SEQ_AREASINFORME.CURRVAL, 15);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 16.', SEQ_AREASINFORME.CURRVAL, 16);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 17.', SEQ_AREASINFORME.CURRVAL, 17);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 18.', SEQ_AREASINFORME.CURRVAL, 18);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 19.', SEQ_AREASINFORME.CURRVAL, 19);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 20.', SEQ_AREASINFORME.CURRVAL, 20);
 
 COMMIT;
 
@@ -307,13 +389,32 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Redacción de la Memoria Anual y Programación Anual.', SEQ_AREASINFORME.CURRVAL, 12);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Otros aspectos evaluados.', SEQ_AREASINFORME.CURRVAL, 13);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'CONCLUSIONES FINALES', SEQ_MODELOINFORME.CURRVAL, 2);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'CONCLUSIONES FINALES', SEQ_MODELOINFORME.CURRVAL, 4);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Conclusiones finales.', SEQ_AREASINFORME.CURRVAL, 1);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'PROPUESTAS FINALES', SEQ_MODELOINFORME.CURRVAL, 2);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'PROPUESTAS FINALES', SEQ_MODELOINFORME.CURRVAL, 5);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Propuestas finales.', SEQ_AREASINFORME.CURRVAL, 1);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 2);
-insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexos.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'ANEXOS', SEQ_MODELOINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 1.', SEQ_AREASINFORME.CURRVAL, 1);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 2.', SEQ_AREASINFORME.CURRVAL, 2);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 3.', SEQ_AREASINFORME.CURRVAL, 3);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 4.', SEQ_AREASINFORME.CURRVAL, 4);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 5.', SEQ_AREASINFORME.CURRVAL, 5);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 6.', SEQ_AREASINFORME.CURRVAL, 6);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 7.', SEQ_AREASINFORME.CURRVAL, 7);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 8.', SEQ_AREASINFORME.CURRVAL, 8);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 9.', SEQ_AREASINFORME.CURRVAL, 9);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 10.', SEQ_AREASINFORME.CURRVAL, 10);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 11.', SEQ_AREASINFORME.CURRVAL, 11);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 12.', SEQ_AREASINFORME.CURRVAL, 12);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 13.', SEQ_AREASINFORME.CURRVAL, 13);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 14.', SEQ_AREASINFORME.CURRVAL, 14);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 15.', SEQ_AREASINFORME.CURRVAL, 15);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 16.', SEQ_AREASINFORME.CURRVAL, 16);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 17.', SEQ_AREASINFORME.CURRVAL, 17);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 18.', SEQ_AREASINFORME.CURRVAL, 18);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 19.', SEQ_AREASINFORME.CURRVAL, 19);
+insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Anexo 20.', SEQ_AREASINFORME.CURRVAL, 20);
 
 COMMIT;

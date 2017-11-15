@@ -7,7 +7,7 @@ prompt    SCRIPT IMPLANTACIÓN PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Actualización:  10/11/2017   
+prompt    Actualización:  15/11/2017   
 prompt =========================================================================
 
 prompt =========================================================================
@@ -1493,10 +1493,12 @@ Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (4,'Compañía');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (5,'Centro de Internamiento de Extranjeros');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (6,'Comandancia');
 Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (7,'Jefatura Superior de Policía');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Puesto Fronterizo');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Servicio Central');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (10,'U.E. y D.');
-Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (11,'Zona');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (8,'Puesto Principal');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (9,'Puesto Ordinario');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (10,'Puesto Fronterizo');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (11,'Servicio Central');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (12,'U.E. y D.');
+Insert into TIPOS_UNIDAD (ID,DESCRIPCION) values (13,'Zona');
 
 prompt =========================================================================
 prompt + Tarea5
