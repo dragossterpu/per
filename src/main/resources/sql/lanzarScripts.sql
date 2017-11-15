@@ -15,7 +15,8 @@ prompt =========================================================================
 prompt Ejecutando SCRIPT IMPLANTACIÓN PROGESIN...
 prompt =========================================================================
 
-@scriptCarga.sql
+--@scriptCarga.sql
+@scriptCargaNuevo.sql
 
 prompt =========================================================================
 prompt Carga finalizada...
@@ -33,7 +34,10 @@ prompt Ejecutando SCRIPT CARGA DE CUESTIONARIOS...
 prompt =========================================================================
 
 --@scriptCuestionarios.sql
-@lanzaCuestionarios.sql
+--@lanzaCuestionarios.sql
+@cuestionarioGC.sql
+@cuestionarioPN.sql
+@ScriptCIES.sql
 
 prompt =========================================================================
 prompt Ejecutando SCRIPT CARGA DE GUIAS...
