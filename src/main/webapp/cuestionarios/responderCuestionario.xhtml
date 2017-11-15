@@ -99,8 +99,8 @@
 
                                         </p:columns>
                                         <f:facet name="footer">
-                                            <p:commandButton value="Añadir fila" actionListener="#{responderCuestionarioBean.visualizarCuestionario.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" id="aniadirFila" rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}" />
-                                            <p:commandButton value="Eliminar fila" actionListener="#{responderCuestionarioBean.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}" />
+                                            <p:commandButton value="Añadir fila" actionListener="#{responderCuestionarioBean.visualizarCuestionario.aniadirFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" id="aniadirFila" rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}" process="tablaPregunta" partialSubmit="true"/>
+                                            <p:commandButton value="Eliminar fila" actionListener="#{responderCuestionarioBean.eliminarFilaRespuestaTabla(preguntaArea)}" update="tablaPregunta" rendered="#{responderCuestionarioBean.mapaAreaUsuarioCuestEnv[preguntaArea.area.id] eq request.remoteUser}" process="tablaPregunta" partialSubmit="true"/>
                                         </f:facet>
                                     </p:dataTable>
 
