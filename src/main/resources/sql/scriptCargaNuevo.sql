@@ -1703,7 +1703,7 @@ Insert into EQUIPO (ID,FECHA_ALTA,USERNAME_ALTA,JEFE_EQUIPO,NOMBRE_EQUIPO,ID_TIP
 Insert into MIEMBROS (ID,POSICION,USUARIO,ID_EQUIPO) values (seq_miembros.nextval,'JEFE_EQUIPO','ccasilla',seq_equipo.currval);
 Insert into MIEMBROS (ID,POSICION,USUARIO,ID_EQUIPO) values (seq_miembros.nextval,'MIEMBRO','rjmartinez',seq_equipo.currval);
 Insert into MIEMBROS (ID,POSICION,USUARIO,ID_EQUIPO) values (seq_miembros.nextval,'MIEMBRO','rmartine',seq_equipo.currval);
-Insert into MIEMBROS (ID,POSICION,USUARIO,ID_EQUIPO) values (seq_miembros.nextval,'MIEMBRO','jmiranda',seq_equipo.currval);
+Insert into MIEMBROS (ID,POSICION,USUARIO,ID_EQUIPO) values (seq_miembros.nextval,'MIEMBRO','jmirandap',seq_equipo.currval);
 Insert into MIEMBROS (ID,POSICION,USUARIO,ID_EQUIPO) values (seq_miembros.nextval,'MIEMBRO','fernanc',seq_equipo.currval);
 
 Insert into EQUIPO (ID,FECHA_ALTA,USERNAME_ALTA,JEFE_EQUIPO,NOMBRE_EQUIPO,ID_TIPO_EQUIPO) values (seq_equipo.nextval,to_timestamp('21/09/2017','DD/MM/RR'),'system','fjimenezm','Equipo 3',1);

@@ -7,9 +7,15 @@ prompt    LANZADOR SCRIPTS CARGA PROGESIN
 prompt
 prompt    Autor: EZENTIS
 prompt
-prompt    Fecha creación: 12/09/2017
+prompt    Fecha modificación: 15/11/2017
 prompt =========================================================================
 
+
+prompt =========================================================================
+prompt Ejecutando SCRIPT LIMPIEZA TABLAS...
+prompt =========================================================================
+
+@limpia.sql
 
 prompt =========================================================================
 prompt Ejecutando SCRIPT IMPLANTACIÓN PROGESIN...
@@ -35,9 +41,7 @@ prompt =========================================================================
 
 --@scriptCuestionarios.sql
 --@lanzaCuestionarios.sql
-@cuestionarioGC.sql
-@cuestionarioPN.sql
-@ScriptCIES.sql
+@cuestionarios.sql
 
 prompt =========================================================================
 prompt Ejecutando SCRIPT CARGA DE GUIAS...
