@@ -30,7 +30,11 @@ import org.primefaces.event.FlowEvent;
 import org.springframework.dao.TransientDataAccessResourceException;
 
 import es.mira.progesin.persistence.entities.Inspeccion;
+import es.mira.progesin.persistence.entities.Municipio;
+import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.SolicitudDocumentacionPrevia;
+import es.mira.progesin.persistence.entities.TipoInspeccion;
+import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.cuestionarios.CuestionarioEnvio;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
@@ -129,13 +133,30 @@ public class SolicitudDocPreviaCreacionBeanTest {
     }
     
     /**
+     * Prepara la inspección asociada a la documentación previa.
+     * @return inspeccion
+     */
+    private Inspeccion cargarDatosInspeccion() {
+        Inspeccion inspeccion = new Inspeccion();
+        TipoInspeccion tipoInspeccion = TipoInspeccion.builder().descripcion("general periódica").build();
+        TipoUnidad tipoUnidad = TipoUnidad.builder().descripcion("tipo unidad").build();
+        inspeccion.setTipoInspeccion(tipoInspeccion);
+        inspeccion.setTipoUnidad(tipoUnidad);
+        inspeccion.setNombreUnidad("nombre Unidad");
+        Municipio municipio = Municipio.builder().provincia(Provincia.builder().nombre("provincia").build()).build();
+        inspeccion.setMunicipio(municipio);
+        return inspeccion;
+    }
+    
+    /**
      * Test method for {@link es.mira.progesin.web.beans.solicitudes.SolicitudDocPreviaCreacionBean#crearSolicitud()}.
      */
     @Test
     public void crearSolicitud() {
-        Inspeccion inspeccion = mock(Inspeccion.class);
+        
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).correoDestinatario(CORREO).build();
+                .inspeccion(cargarDatosInspeccion()).correoDestinatario(CORREO).build();
+        
         SolicitudDocPreviaCreacionBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         SolicitudDocPreviaCreacionBean.setDocumentosSeleccionados(documentosSeleccionados);
@@ -194,9 +215,8 @@ public class SolicitudDocPreviaCreacionBeanTest {
      */
     @Test
     public void crearSolicitud_Excepcion() {
-        Inspeccion inspeccion = mock(Inspeccion.class);
         SolicitudDocumentacionPrevia solicitudDocumentacionPrevia = SolicitudDocumentacionPrevia.builder().id(1L)
-                .inspeccion(inspeccion).correoDestinatario(CORREO).build();
+                .inspeccion(cargarDatosInspeccion()).correoDestinatario(CORREO).build();
         SolicitudDocPreviaCreacionBean.setSolicitudDocumentacionPrevia(solicitudDocumentacionPrevia);
         List<TipoDocumentacion> documentosSeleccionados = new ArrayList<>();
         SolicitudDocPreviaCreacionBean.setDocumentosSeleccionados(documentosSeleccionados);
