@@ -2,6 +2,7 @@ package es.mira.progesin.web.beans.informes;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Municipio;
@@ -11,6 +12,8 @@ import es.mira.progesin.persistence.entities.TipoUnidad;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.CuatrimestreEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -80,7 +83,12 @@ public class InformeBusqueda implements Serializable {
     /**
      * Lista de subáreas seleccionadas.
      */
-    private String[] selectedSubAreas;
+    private List<SubareaInforme> selectedSubAreas;
+    
+    /**
+     * Array de listas seleccionadas.
+     */
+    private List<AreaInforme> selectedAreas;
     
     /**
      * Filtro de equipo de la inspección.

@@ -42,7 +42,12 @@ public interface ISubareaInformeRepository extends CrudRepository<SubareaInforme
      */
     List<SubareaInforme> findByArea(AreaInforme area);
     
-    // @Override
-    // List<SubareaInforme> findAll();
+    /**
+     * Devuelve el listado de subáreas pertenecientes cuyp id se recibe como parámetro.
+     * 
+     * @param areaId Id del área de la que se desean obtener las subáreas.
+     * @return Lista de subáreas.
+     */
+    List<SubareaInforme> findByAreaId(Long areaId);
     
 }

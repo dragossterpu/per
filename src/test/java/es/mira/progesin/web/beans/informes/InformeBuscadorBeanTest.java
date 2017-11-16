@@ -23,7 +23,11 @@ import org.primefaces.model.Visibility;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.lazydata.LazyModelInforme;
+import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum;
+import es.mira.progesin.persistence.entities.informes.AreaInforme;
+import es.mira.progesin.services.IAreaInformeService;
+import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInformeService;
 
 /**
@@ -41,6 +45,18 @@ public class InformeBuscadorBeanTest {
      */
     @Mock
     private IInformeService informeService;
+    
+    /**
+     * Servicio de equipos.
+     */
+    @Mock
+    private transient IEquipoService equipoService;
+    
+    /**
+     * Servicio de áreas.
+     */
+    @Mock
+    private transient IAreaInformeService areaInformeService;
     
     /**
      * Bean de ModeloInformePersonalizado.
@@ -72,6 +88,13 @@ public class InformeBuscadorBeanTest {
     public final void testInit() {
         InformeBusqueda informeBusqueda = new InformeBusqueda();
         informeBusqueda.setAmbitoInspeccion(AmbitoInspeccionEnum.PN);
+        List<Equipo> lista = new ArrayList<>();
+        lista.add(Equipo.builder().id(1L).build());
+        when(equipoService.findByFechaBajaIsNull()).thenReturn(lista);
+        
+        List<AreaInforme> listaAreas = new ArrayList<>();
+        listaAreas.add(AreaInforme.builder().id(1L).build());
+        when(areaInformeService.findAll()).thenReturn(listaAreas);
         
         informeBuscadorBean.init();
         assertThat(informeBuscadorBean.getModel()).isNotNull();

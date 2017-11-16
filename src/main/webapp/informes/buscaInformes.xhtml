@@ -1,0 +1,194 @@
+<ui:composition template="/layouts/layoutInterior.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <ui:param name="esJefeInspecciones" value="#{p:ifAnyGranted('JEFE_INSPECCIONES,ADMIN')}" />
+        <ui:param name="esEquipo" value="#{p:ifGranted('EQUIPO_INSPECCIONES')}" />
+        <p:importConstants type="es.mira.progesin.constantes.Constantes" var="Constantes" />
+        
+        <ui:param name="titulo" value="Búsqueda de informes resumidos" />
+        <f:event listener="#{navegacionBean.recomenzar(titulo, request.servletPath)}" type="preRenderView"/>
+        <h3>#{titulo}</h3>
+        
+        <h:form id="busquedaInforme">
+        <div class="bloqueFormulario">
+            <div class="columnaIzdaFormulario">
+                <h:outputLabel for="anioInspeccion" value="Año:" />
+                <p:inputNumber id="anioInspeccion" decimalPlaces="0" thousandSeparator="" maxlength="4" converter="javax.faces.Integer" maxValue="9999" value="#{informeBuscadorBean.informeBusqueda.anioInspeccion}" />
+                
+                <h:outputLabel for="cuatrimestreInspeccionSelect" value="Cuatrimestre de inspección:" />
+                <p:importEnum type="es.mira.progesin.persistence.entities.enums.CuatrimestreEnum" var="cuatrimestres" allSuffix="ALL_ENUM_VALUES" />
+                <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.cuatrimestre}" id="cuatrimestreInspeccionSelect">
+                   <f:selectItem itemLabel="Todos" itemValue="" />
+                   <f:selectItems value="#{cuatrimestres.ALL_ENUM_VALUES}" var="cuatrimestre" itemLabel="#{cuatrimestre.descripcion}" itemValue="#{cuatrimestre}" />
+                </p:selectOneMenu>
+                
+                 <h:outputLabel for="provinciasSelect" value="Provincia:" />
+                 <p:selectOneMenu value="#{informeBuscadorBean.provinciSelec}" id="provinciasSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
+                     <f:selectItem itemLabel="Todos" itemValue="" />
+                     <f:selectItems value="#{applicationBean.listaProvincias}" var="provincia" itemLabel="#{provincia.nombre}" itemValue="#{provincia}" />
+                     <p:ajax event="change" update="municipiosSelect" partialSubmit="true" listener="#{inspeccionBean.onChangeProvincia(informeBuscadorBean.provinciSelec)}" />
+                 </p:selectOneMenu>
+
+                 <h:outputLabel for="municipiosSelect" value="Municipio:" />
+                 <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.municipio}" id="municipiosSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
+                     <f:selectItem itemLabel="Todos" itemValue="" />
+                     <f:selectItems value="#{inspeccionBean.listaMunicipios}" var="municipio" itemLabel="#{municipio.name}" itemValue="#{municipio}" />
+                 </p:selectOneMenu>              
+            </div>
+            
+            <div class="columnaDchaFormulario">
+                <h:outputLabel for="ambitoInspeccionSelect" value="Ámbito de inspección:" />
+                <p:importEnum type="es.mira.progesin.persistence.entities.enums.AmbitoInspeccionEnum" var="ambitos" allSuffix="ALL_ENUM_VALUES" />
+                <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.ambitoInspeccion}" id="ambitoInspeccionSelect">
+                    <f:selectItem itemLabel="Todos" itemValue="" />
+                    <f:selectItems value="#{ambitos.ALL_ENUM_VALUES}" var="ambito" itemLabel="#{ambito.descripcion}" itemValue="#{ambito}" />
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="equipoSelect" value="Equipo de inspección:" />
+                <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.equipo}" id="equipoSelect" filter="true" filterMatchMode="startsWith" converter="#{selectConverter}">
+                    <f:selectItem itemLabel="Todos" itemValue="" />
+                    <f:selectItems value="#{informeBuscadorBean.listaEquipos}" var="equipo" itemLabel="#{equipo.nombreEquipo}" itemValue="#{equipo}" />
+                </p:selectOneMenu>
+                 
+                <h:outputLabel for="tipoUnidadSelect" value="Tipo de unidad:" />
+                <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.tipoUnidad}" id="tipoUnidadSelect" converter="#{selectConverter}">
+                    <f:selectItem itemLabel="Todos" itemValue="" />
+                    <f:selectItems value="#{applicationBean.listaTiposUnidad}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                </p:selectOneMenu>
+                    
+                <h:outputLabel for="tipoInspeccionSelect" value="Tipo de Inspección" />
+                <p:selectOneMenu value="#{informeBuscadorBean.informeBusqueda.tipoInspeccion}" id="tipoInspeccionSelect" converter="#{selectConverter}">
+                    <f:selectItem itemLabel="Todos" itemValue="" />
+                    <f:selectItems value="#{applicationBean.listaTiposInspeccion}" var="tipo" itemLabel="#{tipo.descripcion}" itemValue="#{tipo}" />
+                </p:selectOneMenu>
+                
+                 
+                
+            </div>
+            <div class="columnaIzdaFormulario">
+              <h:outputLabel for="areasSelect" value="Áreas" />
+              <p:selectCheckboxMenu  styleClass="selectorMultiple" id="areasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedAreas}" label="Áreas" multiple="true"
+                                            filter="true" filterMatchMode="contains" converter="#{selectConverter}">
+                  <f:selectItems value="#{informeBuscadorBean.listaAreas}" var="area" itemLabel="#{area.descripcion}" itemValue="#{area}"/>
+                  <p:ajax event="change" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
+                  <p:ajax event="toggleSelect" update="subareasSelect" partialSubmit="true" listener="#{informeBuscadorBean.cargaListaSubareas()}" />
+              </p:selectCheckboxMenu>
+              
+              <h:outputLabel for="subareasSelect" value="Subáreas" />
+                   <p:selectCheckboxMenu styleClass="selectorMultiple" id="subareasSelect" value="#{informeBuscadorBean.informeBusqueda.selectedSubAreas}" label="SubÁreas" multiple="true"
+                                                 filter="true" filterMatchMode="contains" converter="#{selectConverter}">
+                       <f:selectItems value="#{informeBuscadorBean.listaSubareas}" var="subarea"  itemLabel="#{subarea.area.descripcion} : #{subarea.descripcion}" itemValue="#{subarea}"/>
+                   </p:selectCheckboxMenu>
+           </div>        
+        </div>
+        <div class="botonesFormulario">
+            <p:commandButton actionListener="#{informeBuscadorBean.buscarInformesAgrupar}" value="Buscar" update="panelInformes" icon="fa fa-search" oncomplete="$('.mensajeSinResultados').css('opacity', 1)" />
+            <p:commandButton actionListener="#{informeBuscadorBean.limpiarBusqueda}" value="Limpiar" update="busquedaInforme" icon="fa fa-eraser" />
+            <h:commandLink actionListener="#{informeBuscadorBean.exportar}"  styleClass="ui-state-default ui-corner-all fa fa-user-plus ui-CommandLink ui-CommandLink-icono-texto">
+               <h:outputText styleClass="ui-CommandLink-texto" value="Exportar" />
+               <p:fileDownload value="#{informeBuscadorBean.file}" />
+            </h:commandLink>
+        </div>
+
+        <p:separator styleClass="separator ui-state-disabled" />
+
+        <p:outputPanel layout="block" id="panelInformes">
+                <p:outputPanel styleClass="mensajeSinResultados" rendered="#{informeBuscadorBean.model.rowCount eq 0}">
+                    No existe ningún resultado que cumpla los parámetros de su búsqueda.
+                </p:outputPanel>
+                <p:outputPanel rendered="#{informeBuscadorBean.model.rowCount ne 0}">
+                    <h:commandLink>
+                        <p:graphicImage value="/images/xls.png" />
+                        <p:dataExporter type="xls" target="tablaInformes" fileName="lista_informes" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/pdf.png" />
+                        <p:dataExporter type="pdf" target="tablaInformes" fileName="lista_informes" />
+                    </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage value="/images/csv.png" />
+                        <p:dataExporter type="csv" target="tablaInformes" fileName="lista_informes" />
+                    </h:commandLink>
+                    <h:commandLink action="#{exportadorWord.exportDoc('lista_informes', false, 'busquedaInforme:tablaInformes', SeccionesEnum.INFORMES)}">
+                        <p:graphicImage value="/images/doc.png" /> 
+                    </h:commandLink>
+                     <h:commandLink>
+                        <p:graphicImage value="/images/imprimir.jpg" />
+                        <p:printer target="tablaInformes" />
+                    </h:commandLink>
+                </p:outputPanel>
+                
+                <p:dataTable var="informe"  draggableColumns="true" value="#{informeBuscadorBean.model}" id="tablaInformes" paginator="true" 
+                paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" 
+                rowsPerPageTemplate="5,10,15,20" rows="#{Constantes.TAMPAGINA}" resizableColumns="true" rendered="#{informeBuscadorBean.model.rowCount ne 0}" 
+                rowSelectMode="checkbox" selection="#{informeBuscadorBean.listaInformesSeleccionados}" rowKey="#{inspeccion.id}" 
+                emptyMessage="No existe ningún resultado que cumpla los parámetros de su búsqueda.">
+                    <f:facet name="header">
+                        Informes
+                        <p:commandButton id="toggler" type="button" value="Columnas" styleClass="botonToggler" icon="fa fa-th" />
+                        <p:columnToggler datasource="tablaInformes" trigger="toggler">
+                            <p:ajax event="toggle" listener="#{informeBuscadorBean.onToggle}" />
+                        </p:columnToggler>
+                    </f:facet>
+                    <p:column selectionMode="multiple" styleClass="columnaSeleccionTabla" exportable="false"/>
+                    <p:column headerText="Núm. exp." sortBy="#{informe.inspeccion.id}" width="60" visible="#{informeBuscadorBean.list[0]}" exportable="#{informeBuscadorBean.list[0]}">
+                        <h:outputText value="#{informe.inspeccion.id}" />
+                    </p:column>
+                    <p:column headerText="Ámbito Inspección" sortBy="#{informe.inspeccion.ambitoInspeccion}" width="60" visible="#{informeBuscadorBean.list[1]}" exportable="#{informeBuscadorBean.list[1]}">
+                        <h:outputText value="#{informe.inspeccion.ambito.descripcion}" />
+                    </p:column>
+                    <p:column headerText="Tipo Inspección" sortBy="#{informe.inspeccion.tipoInspeccion.codigo}" width="100" visible="#{informeBuscadorBean.list[2]}" exportable="#{informeBuscadorBean.list[2]}">
+                        <h:outputText value="#{informe.inspeccion.tipoInspeccion.codigo}" />
+                    </p:column>
+                    <p:column headerText="Unidad" sortBy="#{informe.inspeccion.nombreUnidad}" width="100" visible="#{informeBuscadorBean.list[3]}" exportable="#{informeBuscadorBean.list[3]}">
+                        <h:outputText value="#{informe.inspeccion.nombreUnidad}" />
+                    </p:column>
+                    <p:column headerText="Alta" sortBy="#{informe.fechaAlta}" width="70" visible="#{informeBuscadorBean.list[4]}" exportable="#{informeBuscadorBean.list[4]}">
+                        <h:outputText value="#{informe.fechaAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Finalizado" sortBy="#{informe.fechaFinalizacion}" width="70" visible="#{informeBuscadorBean.list[5]}" exportable="#{informeBuscadorBean.list[5]}">
+                        <h:outputText value="#{informe.fechaFinalizacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Anulado" sortBy="#{informe.fechaBaja}" width="70" visible="#{informeBuscadorBean.list[6]}" exportable="#{informeBuscadorBean.list[6]}">
+                        <h:outputText value="#{informe.fechaBaja}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Motivo anul." sortBy="#{informe.fechaBaja}" width="70" visible="#{informeBuscadorBean.list[7]}" exportable="#{informeBuscadorBean.list[7]}">
+                        <h:outputText id="motivo" value="#{informe.motivoAnulacion.length() gt 40 ? fn:substring(informe.motivoAnulacion,0,40).concat('...') : informe.motivoAnulacion}" />
+                        <p:tooltip id="toolTipMotivo" for="motivo" value="#{informe.motivoAnulacion}" position="bottom"/>       
+                    </p:column>
+                    <p:column headerText="I. Personalizado" sortBy="#{informe.modeloPersonalizado.nombre}" width="100" visible="#{informeBuscadorBean.list[8]}" exportable="#{informeBuscadorBean.list[8]}">
+                        <h:outputText value="#{informe.modeloPersonalizado.nombre}" />
+                    </p:column>
+                    <p:column styleClass="botonTabla" exportable="false" toggleable="false">
+                        <p:commandButton title="Ver informe" icon="fa fa-eye" action="#{informeBean.getFormVisualizarInforme(informe.id)}" />
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        Resultado de la búsqueda: #{informeBuscadorBean.model.rowCount} informes.
+                    </f:facet>
+                </p:dataTable>
+                
+               <p:dialog id="dialog" widgetVar="dialogMessage" header="INFO" closable="false">
+                    <p:messages for="dialogMessage" autoUpdate="true" showDetail="true" showSummary="true" />
+                    <div class="centrarBotonesDialog">
+                        <p:button value="Cerrar" outcome="/informes/buscaInformes" />
+                    </div>
+                </p:dialog>
+                
+                
+                
+               
+                <p:messages globalOnly="true" autoUpdate="true" showSummary="true" showDetail="true" closable="true"/>
+
+            </p:outputPanel>
+            
+        </h:form>
+
+    </ui:define>
+</ui:composition>

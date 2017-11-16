@@ -1,30 +1,48 @@
 package es.mira.progesin.web.beans.informes;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import es.mira.progesin.constantes.Constantes;
+import es.mira.progesin.exceptions.ProgesinException;
 import es.mira.progesin.lazydata.LazyModelInforme;
 import es.mira.progesin.persistence.entities.Equipo;
 import es.mira.progesin.persistence.entities.Provincia;
+import es.mira.progesin.persistence.entities.User;
+import es.mira.progesin.persistence.entities.enums.InformeEnum;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
 import es.mira.progesin.persistence.entities.informes.AreaInforme;
 import es.mira.progesin.persistence.entities.informes.Informe;
+import es.mira.progesin.persistence.entities.informes.RespuestaInforme;
 import es.mira.progesin.persistence.entities.informes.SubareaInforme;
 import es.mira.progesin.services.IAreaInformeService;
 import es.mira.progesin.services.IEquipoService;
 import es.mira.progesin.services.IInformeService;
 import es.mira.progesin.services.ISubareaInformeService;
+import es.mira.progesin.services.RegistroActividadService;
+import es.mira.progesin.util.FacesUtilities;
+import es.mira.progesin.util.HtmlDocxGenerator;
+import es.mira.progesin.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -64,6 +82,11 @@ public class InformeBuscadorBean implements Serializable {
     private InformeBusqueda informeBusqueda;
     
     /**
+     * Lista de las áreas disponibles.
+     */
+    private List<AreaInforme> listaAreas;
+    
+    /**
      * LazyModel para la visualización de datos paginados en la vista.
      */
     private LazyModelInforme model;
@@ -76,12 +99,12 @@ public class InformeBuscadorBean implements Serializable {
     /**
      * Lista de Subareas seleccionadas.
      */
-    List<SelectItem> listaSelectSubAreas; // TODO Revisar
+    private List<SelectItem> listaSelectSubAreas;
     
     /**
      * Lista de informes seleccionados.
      */
-    List<Informe> listaInformesSeleccionados;
+    private List<Informe> listaInformesSeleccionados;
     
     /**
      * Lista de equipos.
@@ -107,19 +130,37 @@ public class InformeBuscadorBean implements Serializable {
     private transient ISubareaInformeService subareaInformeService;
     
     /**
+     * Servicio del registro de actividad.
+     */
+    @Autowired
+    private transient RegistroActividadService regActividadService;
+    
+    /**
+     * Fichero a descargar.
+     */
+    private transient StreamedContent file;
+    
+    /**
      * Servicio de áreas.
      */
     @Autowired
     private transient IAreaInformeService areaInformeService;
     
     /**
+     * Generador de DOCX.
+     */
+    @Autowired
+    private transient HtmlDocxGenerator htmlDocxGenerator;
+    
+    /**
      * Inicializa el bean.
      */
     @PostConstruct
     public void init() {
-        // listaEquipos = equipoService.findByFechaBajaIsNull(); TODO pasar a nuevo buscador Ruben
+        listaEquipos = equipoService.findByFechaBajaIsNull();
         model = new LazyModelInforme(informeService);
-        // listaSelectSubAreas = cargaListaSubareas(); TODO pasar a nuevo buscador Ruben
+        
+        listaAreas = areaInformeService.findAll();
         
         setInformeBusqueda(model.getBusqueda());
         
@@ -141,10 +182,22 @@ public class InformeBuscadorBean implements Serializable {
     }
     
     /**
+     * Devuelve al formulario de búsqueda de informes resumidos a su estado inicial y borra los resultados de búsquedas
+     * anteriores si se navega desde el menú u otra sección.
+     * 
+     * @return ruta siguiente
+     */
+    public String getFormBusquedaInformesResumidos() {
+        limpiarBusqueda();
+        return "/informes/buscaInformes?faces-redirect=true";
+    }
+    
+    /**
      * Borra los resultados de búsquedas anteriores.
      */
     public void limpiarBusqueda() {
         setProvinciSelec(null);
+        setListaInformesSeleccionados(null);
         setInformeBusqueda(new InformeBusqueda());
         model.setRowCount(0);
     }
@@ -161,6 +214,18 @@ public class InformeBuscadorBean implements Serializable {
     }
     
     /**
+     * Busca los informes según los filtros introducidos en el formulario de búsqueda.
+     * 
+     * 
+     */
+    public void buscarInformesAgrupar() {
+        informeBusqueda.setProvincia(provinciSelec);
+        informeBusqueda.setEstado(InformeEnum.FINALIZADO);
+        model.setBusqueda(informeBusqueda);
+        model.load(0, Constantes.TAMPAGINA, "fechaAlta", SortOrder.DESCENDING, null);
+    }
+    
+    /**
      * Controla las columnas visibles en la lista de resultados del buscador.
      * 
      * @param e checkbox de la columna seleccionada
@@ -171,48 +236,118 @@ public class InformeBuscadorBean implements Serializable {
     
     /**
      * Carga la lista de subáreas.
-     * 
-     * @return Lista de elementos seleccionables generada a partir de la lista de subáreas.
+     *
      */
-    private List<SelectItem> cargaListaSubareas() {
-        
-        List<SelectItem> listaSelect = new ArrayList<SelectItem>();
-        
-        List<AreaInforme> listaAreas = areaInformeService.findAll();
-        
-        // for (AreaInforme area : listaAreas) {
-        // SelectItemGroup nuevoGrupo = new SelectItemGroup(area.getDescripcion());
-        // List<SubareaInforme> lista = subareaInformeService.findByArea(area);
-        // SelectItem[] elementos = new SelectItem[lista.size()];
-        // for (int i = 0; i < lista.size(); i++) {
-        // elementos[i] = new SelectItem(lista.get(i).getId().toString(), lista.get(i).getDescripcion()); // TODO
-        // // Revisar
-        // }
-        // nuevoGrupo.setSelectItems(elementos);
-        // listaSelect.add(nuevoGrupo);
-        // }
-        for (AreaInforme area : listaAreas) {
-            String pre = area.getDescripcion().concat(": ");
-            List<SubareaInforme> lista = subareaInformeService.findByArea(area);
-            for (int i = 0; i < lista.size(); i++) {
-                listaSelect.add(new SelectItem(lista.get(i).getId(), pre.concat(lista.get(i).getDescripcion()))); // TODO
-                // Revisar
-            }
+    
+    public void cargaListaSubareas() {
+        listaSubareas = new ArrayList<>();
+        for (AreaInforme area : informeBusqueda.getSelectedAreas()) {
+            listaSubareas.addAll(subareaInformeService.findByArea(area));
         }
-        
-        return listaSelect;
     }
     
-    // private List<SelectItem> cargaListaSubareas() {
-    //
-    // List<SelectItem> listaSelect = new ArrayList<SelectItem>();
-    //
-    // List<SubareaInforme> listaAreas = subareaInformeService.findAll();
-    //
-    // for (SubareaInforme area : listaAreas) {
-    // listaSelect.add(new SelectItem(area.getId().toString(), area.getDescripcion()));
-    // }
-    // return listaSelect;
-    // }
+    /**
+     * Exporta los informes seleccionados.
+     */
+    public void exportar() {
+        if (listaInformesSeleccionados != null && !listaInformesSeleccionados.isEmpty()) {
+            
+            Collections.sort(listaInformesSeleccionados,
+                    (o1, o2) -> Long.compare(o1.getInspeccion().getId(), o2.getInspeccion().getId()));
+            
+            Map<Informe, List<RespuestaInforme>> mapaRespuestas = new HashMap<Informe, List<RespuestaInforme>>();
+            
+            for (Informe inf : listaInformesSeleccionados) {
+                List<RespuestaInforme> listaRespuestasPosibles = informeService.findConRespuestas(inf.getId())
+                        .getRespuestas();
+                List<RespuestaInforme> listaRespuestas = new ArrayList<>();
+                if (!informeBusqueda.getSelectedAreas().isEmpty()) {
+                    for (RespuestaInforme respuesta : listaRespuestasPosibles) {
+                        if (informeBusqueda.getSelectedAreas().contains(respuesta.getSubarea())
+                                || respuesta.getSubarea().getDescripcion().toLowerCase().contains("conclusiones")) {
+                            listaRespuestas.add(respuesta);
+                        }
+                    }
+                    mapaRespuestas.put(inf, listaRespuestas);
+                } else {
+                    mapaRespuestas.put(inf, listaRespuestasPosibles);
+                }
+            }
+            
+            String informeXHTML = generarXHTML(mapaRespuestas);
+            
+            String nombreArchivo = "InformeResumido"; // TODO Cambiar nombre
+            String titulo = "Informes resumidos";
+            String fechaFinalizacion = Utilities.getFechaFormateada(new Date(), "MMMM 'de' yyyy");
+            User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            
+            try {
+                setFile(htmlDocxGenerator.generarInformeDocx(nombreArchivo, informeXHTML, titulo, fechaFinalizacion,
+                        usuarioActual.getUsername()));
+            } catch (ProgesinException e) {
+                FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                        "Se ha producido un error en la generación del " + "DOCX");
+                regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+            }
+        } else {
+            FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                    "No hay ningún informe seleccionado para exportar");
+        }
+    }
+    
+    /**
+     * Generador de código XHTML para la exportación.
+     * 
+     * @param mapa con los los datos a convertir
+     * @return Cadena de texto con los datos en formato XHTML
+     */
+    private String generarXHTML(Map<Informe, List<RespuestaInforme>> mapa) {
+        StringBuilder informeFormateado = new StringBuilder();
+        informeFormateado.append("<div class=\"ql-editor\">");
+        AtomicInteger i = new AtomicInteger(0);
+        List<Informe> listaInformes = new ArrayList<>();
+        listaInformes.addAll(mapa.keySet());
+        
+        listaInformes.forEach(informe -> {
+            informeFormateado.append("<h2>" + i.incrementAndGet() + ". ");
+            
+            String titulo = String.format("Informe de la Inspección %s realizada a %s de %s de %s",
+                    informe.getInspeccion().getTipoInspeccion().getDescripcion(),
+                    informe.getInspeccion().getTipoUnidad().getDescripcion(),
+                    informe.getInspeccion().getAmbito().getDescripcion(),
+                    informe.getInspeccion().getMunicipio().getProvincia().getNombre()).toUpperCase();
+            
+            informeFormateado.append("Informe de la inspección " + titulo);
+            informeFormateado.append("</h2>");
+            AtomicInteger j = new AtomicInteger(0);
+            
+            List<RespuestaInforme> listaRespuestas = mapa.get(informe);
+            
+            listaRespuestas.forEach(respuesta -> {
+                
+                String tituloSubarea = String.format("%s : %s", respuesta.getSubarea().getArea().getDescripcion(),
+                        respuesta.getSubarea().getDescripcion());
+                
+                informeFormateado.append("<h3>" + i.get() + "." + j.incrementAndGet() + ". ");
+                informeFormateado.append(tituloSubarea);
+                informeFormateado.append("</h3>");
+                try {
+                    if (respuesta.getConclusiones() != null) {
+                        informeFormateado.append(new String(respuesta.getConclusiones(), "UTF-8"));
+                    } else {
+                        informeFormateado.append("Sin conclusiones");
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    FacesUtilities.setMensajeConfirmacionDialog(FacesMessage.SEVERITY_ERROR, Constantes.ERRORMENSAJE,
+                            "Se ha producido un error en la recuperación del texto");
+                    regActividadService.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
+                }
+                informeFormateado.append("</h2>");
+                
+            });
+        });
+        
+        return Utilities.limpiarHtml(informeFormateado.toString());
+    }
     
 }

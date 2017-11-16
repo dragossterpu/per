@@ -363,7 +363,7 @@ public class EquiposBean implements Serializable {
      */
     public String getFormCambiarJefeEquipo() {
         this.jefeSeleccionado = null;
-        listaUsuarios = userService.findByfechaBajaIsNullAndRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES); // TODO Cambiar
+        listaUsuarios = userService.findByfechaBajaIsNullAndRole(RoleEnum.ROLE_EQUIPO_INSPECCIONES);
         return "/equipos/cambiarJefeEquipo?faces-redirect=true";
     }
     

@@ -25,7 +25,6 @@ import es.mira.progesin.exceptions.ExcepcionRollback;
 import es.mira.progesin.exceptions.anotacion.TransactionalRollback;
 import es.mira.progesin.persistence.entities.Inspeccion;
 import es.mira.progesin.persistence.entities.Municipio;
-import es.mira.progesin.persistence.entities.Provincia;
 import es.mira.progesin.persistence.entities.User;
 import es.mira.progesin.persistence.entities.enums.EstadoInspeccionEnum;
 import es.mira.progesin.persistence.entities.enums.InformeEnum;
@@ -292,12 +291,12 @@ public class InformeService implements IInformeService {
                     MatchMode.ANYWHERE));
         }
         
-        if (informeBusqueda.getSelectedSubAreas() != null && informeBusqueda.getSelectedSubAreas().length > 0) {
+        if (informeBusqueda.getSelectedSubAreas() != null && !informeBusqueda.getSelectedSubAreas().isEmpty()) {
             criteria.createAlias("informe.modeloPersonalizado", "modelo"); // TODO Revisar
             criteria.createAlias("modelo.subareas", "subarea");
-            Long[] longArea = new Long[informeBusqueda.getSelectedSubAreas().length];
-            for (int i = 0; i < informeBusqueda.getSelectedSubAreas().length; i++) {
-                longArea[i] = Long.parseLong(informeBusqueda.getSelectedSubAreas()[i]);
+            Long[] longArea = new Long[informeBusqueda.getSelectedSubAreas().size()];
+            for (int i = 0; i < informeBusqueda.getSelectedSubAreas().size(); i++) {
+                longArea[i] = informeBusqueda.getSelectedSubAreas().get(i).getId();
             }
             criteria.add(Restrictions.in("subarea.id", longArea));
         }
@@ -315,7 +314,6 @@ public class InformeService implements IInformeService {
     private void criteriaInspeccion(Criteria criteria, InformeBusqueda informeBusqueda) {
         criteria.createAlias("informe.inspeccion", "inspeccion"); // inner join
         criteria.createAlias("inspeccion.tipoInspeccion", "tipoInspeccion"); // inner join
-        criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
         
         if (informeBusqueda.getIdInspeccion() != null) {
             criteria.add(Restrictions.eq("inspeccion.id", Long.parseLong(informeBusqueda.getIdInspeccion())));
@@ -337,33 +335,58 @@ public class InformeService implements IInformeService {
             criteria.add(Restrictions.eq("inspeccion.cuatrimestre", informeBusqueda.getCuatrimestre()));
         }
         
-        criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
+        // if (informeBusqueda.getEquipo() != null) {
+        // criteria.add(Restrictions.eq("inspeccion.equipo", informeBusqueda.getEquipo()));
+        // }
+        //
+        // if (informeBusqueda.getTipoUnidad() != null) {
+        // criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
+        // criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
+        // criteria.add(Restrictions.eq("tipoEquipo.id", informeBusqueda.getTipoUnidad().getId()));
+        // }
+        
+        criteriaEquipo(criteria, informeBusqueda);
+        criteriaMunicipio(criteria, informeBusqueda);
+        criteriaService.creaCriteriaEquipoInformes(criteria);
+        
+    }
+    
+    /**
+     * Añade al criteria la búsqueda por equipo y tipo de equipo.
+     * 
+     * @param criteria Criteria al que se añadirán los parámetros.
+     * @param informeBusqueda Objeto de búsqueda
+     */
+    private void criteriaEquipo(Criteria criteria, InformeBusqueda informeBusqueda) {
+        if (informeBusqueda.getEquipo() != null) {
+            criteria.add(Restrictions.eq("inspeccion.equipo", informeBusqueda.getEquipo()));
+        }
+        
         if (informeBusqueda.getTipoUnidad() != null) {
+            criteria.createAlias("inspeccion.equipo", "equipo"); // inner join
+            criteria.createAlias("equipo.tipoEquipo", "tipoEquipo"); // inner join
             criteria.add(Restrictions.eq("tipoEquipo.id", informeBusqueda.getTipoUnidad().getId()));
+        }
+    }
+    
+    /**
+     * Añade al criteria el filtro de provincias y municipios.
+     * 
+     * @param criteria Criteria al que se añadirán los parámetros.
+     * @param informeBusqueda Objeto de búsqueda
+     */
+    private void criteriaMunicipio(Criteria criteria, InformeBusqueda informeBusqueda) {
+        if (informeBusqueda.getProvincia() != null) {
+            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
+            subquery.add(Restrictions.eq("munic.provincia", informeBusqueda.getProvincia()));
+            subquery.setProjection(Projections.property("munic.id"));
+            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
         }
         
         if (informeBusqueda.getMunicipio() != null) {
             criteria.add(Restrictions.eq("inspeccion.municipio", informeBusqueda.getMunicipio()));
         }
         
-        criteriaMunicipio(criteria, informeBusqueda.getProvincia());
-        criteriaService.creaCriteriaEquipoInformes(criteria);
-        
-    }
-    
-    /**
-     * Añade al criteria el filtro de municipio.
-     * 
-     * @param criteria Criteria al que se añadirán los parámetros.
-     * @param provincia Provincia por la que se filtra
-     */
-    private void criteriaMunicipio(Criteria criteria, Provincia provincia) {
-        if (provincia != null) {
-            DetachedCriteria subquery = DetachedCriteria.forClass(Municipio.class, "munic");
-            subquery.add(Restrictions.eq("munic.provincia", provincia));
-            subquery.setProjection(Projections.property("munic.id"));
-            criteria.add(Property.forName("inspeccion.municipio").in(subquery));
-        }
     }
     
     /**

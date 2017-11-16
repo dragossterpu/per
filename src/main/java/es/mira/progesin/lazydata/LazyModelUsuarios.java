@@ -63,7 +63,7 @@ public class LazyModelUsuarios extends LazyDataModel<User> implements Serializab
      * @param filters mapa de filtros. Este valor no se utiliza en esta sobreescritura.
      * @return lista de registros que corresponden a los criterios de búsqueda
      */
-    // @Override
+    
     @Override
     public List<User> load(int first, int pageSize, String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {

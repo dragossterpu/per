@@ -71,7 +71,7 @@ public class CriteriaService implements ICriteriaService {
      * @param criteria criteria al que se desea añadir la restricción
      */
     @Override
-    public void setCriteriaEquipo(Criteria criteria) { // TODO Modificar
+    public void setCriteriaEquipo(Criteria criteria) {
         User usuarioActual = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (RoleEnum.ROLE_EQUIPO_INSPECCIONES.equals(usuarioActual.getRole())) {
             DetachedCriteria subquery = DetachedCriteria.forClass(Miembro.class, "miembro");
@@ -101,7 +101,6 @@ public class CriteriaService implements ICriteriaService {
         criteria.add(Restrictions.or(clavesOr));
         
         if (busquedaDocumento.getInspeccion() != null) {
-            // criteria.createAlias("inspeccion", "inspecciones");
             criteria.add(Restrictions.eq("inspeccion.id", busquedaDocumento.getInspeccion().getId()));
             criteria.add(Restrictions.eq("inspeccion.anio", busquedaDocumento.getInspeccion().getAnio()));
             
