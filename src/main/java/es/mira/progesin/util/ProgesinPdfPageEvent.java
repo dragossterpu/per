@@ -21,6 +21,8 @@ import com.itextpdf.text.pdf.codec.PngImage;
 
 import es.mira.progesin.constantes.Constantes;
 import es.mira.progesin.exceptions.ProgesinException;
+import es.mira.progesin.persistence.entities.enums.SeccionesEnum;
+import es.mira.progesin.services.RegistroActividadService;
 
 /**
  * Generador de cabeceras y pie para PDF de informes en HTML.
@@ -42,6 +44,11 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
      * Tamaño fuente.
      */
     private static final float FOOTERTEXTSIZE = 10f;
+    
+    /**
+     * Servicio para el registro de actividad.
+     */
+    private transient RegistroActividadService regActividad;
     
     /**
      * Inicio del documento.
@@ -66,7 +73,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
                 insertarPie(writer, document);
                 
             } catch (ProgesinException e) {
-                e.printStackTrace();
+                regActividad.altaRegActividadError(SeccionesEnum.INFORMES.getDescripcion(), e);
             }
         }
     }

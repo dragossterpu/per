@@ -130,7 +130,8 @@ public class HtmlDocxGenerator implements Serializable {
      */
     private void importarXHTML(String documentoXHTML) throws Docx4JException {
         XHTMLImporterImpl xhtmlImporter = new XHTMLImporterImpl(documento);
-        documento.getMainDocumentPart().getContent().addAll(xhtmlImporter.convert(documentoXHTML, null));
+        String xhtmlSinNbsp = documentoXHTML.replaceAll("nbsp", "#160");
+        documento.getMainDocumentPart().getContent().addAll(xhtmlImporter.convert(xhtmlSinNbsp, null));
     }
     
     /**

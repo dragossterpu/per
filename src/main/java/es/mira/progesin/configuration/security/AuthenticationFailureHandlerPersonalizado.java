@@ -40,7 +40,7 @@ public class AuthenticationFailureHandlerPersonalizado extends SimpleUrlAuthenti
         
         String usuario = request.getParameter("username");
         
-        StringBuffer textoReg = new StringBuffer("Se ha producido un intento de login fallido en el sistema\n\n");
+        StringBuilder textoReg = new StringBuilder("Se ha producido un intento de login fallido en el sistema\n\n");
         textoReg.append("Usuario implicado: ").append(usuario).append('\n');
         textoReg.append("Error detectado: ");
         if (exception.getMessage().contains("locked")) {

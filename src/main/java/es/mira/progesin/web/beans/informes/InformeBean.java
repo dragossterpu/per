@@ -251,8 +251,8 @@ public class InformeBean implements Serializable {
      */
     private void generarMapaRespuestas() {
         mapaRespuestas = new HashMap<>();
-        mapaAreasSubareas.forEach(
-                (area, subareas) -> subareas.forEach(subarea -> mapaRespuestas.put(subarea, new String[] { "", "" })));
+        mapaAreasSubareas.forEach((area, subareas) -> subareas
+                .forEach(subarea -> mapaRespuestas.put(subarea, new String[] { null, null })));
         informe.getRespuestas().forEach(respuesta -> {
             try {
                 String[] resp = new String[2];
@@ -416,7 +416,9 @@ public class InformeBean implements Serializable {
                 informeFormateado.append("<h2>" + i.get() + "." + j.incrementAndGet() + ". ");
                 informeFormateado.append(subarea.getDescripcion());
                 informeFormateado.append("</h2>");
-                informeFormateado.append(mapaRespuestas.get(subarea)[0]);
+                if (mapaRespuestas.get(subarea)[0] != null) {
+                    informeFormateado.append(mapaRespuestas.get(subarea)[0]);
+                }
                 if (mapaRespuestas.get(subarea)[1] != null) {
                     informeFormateado.append("<h3>Conclusiones y propuestas.</h3>");
                     informeFormateado.append(mapaRespuestas.get(subarea)[1]);
@@ -424,7 +426,6 @@ public class InformeBean implements Serializable {
             });
         });
         informeFormateado.append("</div>");
-        
         // Asegurarse de que es XHTML
         return Utilities.limpiarHtml(informeFormateado.toString());
     }

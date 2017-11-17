@@ -104,7 +104,7 @@ public class EstadisticaService implements IEstadisticaService {
         List<Inspeccion> listaInspecciones = inspeccionesService.buscarInspeccionPorCriteriaEstadisticas(filtro);
         
         for (Inspeccion inspeccion : listaInspecciones) {
-            List<Inspeccion> lista = null;
+            List<Inspeccion> lista;
             EstadoInspeccionEnum estado = inspeccion.getEstadoInspeccion();
             if (mapaEstados.get(estado) != null) {
                 lista = mapaEstados.get(estado);
