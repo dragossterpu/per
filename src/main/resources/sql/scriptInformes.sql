@@ -317,7 +317,7 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'DATOS GENERALES', SEQ_MODELOINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Estructura, dependencia y ámbito de competencia (Unidades, personas e infraestructuras).', SEQ_AREASINFORME.CURRVAL, 1);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'DATOS GENERALES', SEQ_MODELOINFORME.CURRVAL, 3);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'RESULTADOS DEL TRABAJO', SEQ_MODELOINFORME.CURRVAL, 3);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Plan de Prevención.', SEQ_AREASINFORME.CURRVAL, 1);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Evaluaciones de Riesgos y Propuesta de Planificación Preventiva.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Planes de Emergencia y de Autoprotección.', SEQ_AREASINFORME.CURRVAL, 3);
@@ -374,7 +374,7 @@ insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBARE
 insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'DATOS GENERALES', SEQ_MODELOINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Estructura, dependencia y ámbito de competencia (Unidades, personas e infraestructuras).', SEQ_AREASINFORME.CURRVAL, 1);
 
-insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'DATOS GENERALES', SEQ_MODELOINFORME.CURRVAL, 3);
+insert into areas_informe(id, descripcion, modelo_informe_id, orden) values (SEQ_AREASINFORME.NEXTVAL, 'RESULTADOS DEL TRABAJO', SEQ_MODELOINFORME.CURRVAL, 3);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Plan de Prevención.', SEQ_AREASINFORME.CURRVAL, 1);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Evaluaciones de Riesgos y Propuesta de Planificación Preventiva.', SEQ_AREASINFORME.CURRVAL, 2);
 insert into subareas_informe(id, descripcion, area_id, orden) values (SEQ_SUBAREASINFORME.NEXTVAL, 'Planes de Emergencia y de Autoprotección.', SEQ_AREASINFORME.CURRVAL, 3);

@@ -497,7 +497,7 @@ button.botonToggler {
     {
         display: block;
         width:782px; 
-        max-height: 25px;
-        overflow: hidden;
+        max-height: 250px;
+        overflow: auto;
     }
 

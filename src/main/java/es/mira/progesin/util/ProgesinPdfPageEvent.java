@@ -43,7 +43,7 @@ public class ProgesinPdfPageEvent extends PdfPageEventHelper {
     /**
      * Tamaño fuente.
      */
-    private static final float FOOTERTEXTSIZE = 10f;
+    private static final float FOOTERTEXTSIZE = 8f;
     
     /**
      * Servicio para el registro de actividad.

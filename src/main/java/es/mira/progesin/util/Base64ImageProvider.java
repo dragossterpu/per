@@ -22,7 +22,7 @@ public class Base64ImageProvider extends AbstractImageProvider {
     /**
      * Factor de escala para las imágenes de los documentos PDF.
      */
-    private static final float ESCALA = 60f;
+    private static final float ESCALA = 70f;
     
     /**
      * Devuelve la imagen que se encuentra codificada en base64 (usado en la generación en pdf de los informes, al
